@@ -1,0 +1,1004 @@
+commit 1590d46ad7da8908b80d0b27a60df68802978758
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 28 20:43:46 2010 -0600
+
+    version 0.1.9
+
+commit 840558ffd31aaf15df679be04dc45d45a4336d11
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 28 20:41:36 2010 -0600
+
+    add Task.create_item_from_hash
+
+commit 42696968d34ae8942e485f3bc11f5729f9e9c6a1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 28 17:15:35 2010 -0600
+
+    added ability to create Contacts from a hash
+
+commit b079a4855023d6de0cfbffef2517a947858eff32
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 28 13:43:54 2010 -0600
+
+    Add some error handling for bad logins.
+
+commit fb83f736e38d7493f6a94463220cfc4830731ef8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Nov 27 16:17:11 2010 -0600
+
+    had to change const_get to eval because Rails2 misbehaves with
+    const_get.
+
+commit 705b7e53ed462bfc2566d64bbbc769ca0a97a3e0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Nov 27 15:34:03 2010 -0600
+
+    fix bug with Item::get_item so it returns the appropriate subclass of
+    the item now.
+
+commit b562618478b1ef6a959bfa44850ccd7335688b5c
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 26 22:15:03 2010 -0600
+
+    add ability to get parent folder from Item
+
+commit 3e135ac03bcfc16558ee757b1807a22e7258aa8f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 26 21:34:33 2010 -0600
+
+    refactor GenericFolder.find_folders to remove duplicate code from
+    subclasses.
+
+commit 145bea2d6416c8f00c7291fa75355f060a82e5e4
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 24 15:54:22 2010 -0600
+
+    Revert "Removed old meeting_*.rb files.  CalendarItem should be able to handle"
+    
+    This reverts commit 588df93c581150d9e333e030ac9980bb1c0ea3c4.
+
+commit d5286ca26c7c19fa9a7c6ab7341e5138f8f54fa2
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 24 11:52:03 2010 -0600
+
+    version 0.1.8
+
+commit bdafe72440455fcddbe7d529962d3e64ed976269
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 24 11:50:50 2010 -0600
+
+    change CalendarFolder#items_between to an alias of #find_items
+
+commit 4e64e4a90a44977ab7c6a41acdfd8083fa6dffd1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 24 09:29:19 2010 -0600
+
+    fix issue with CalendarFolder#todays_items
+
+commit 2ef2dd8bc55526835ceedc2132bac40d780746fe
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 23 15:01:57 2010 -0600
+
+    override GenericFolder find_folders methods for Calendar Folders.
+    CalendarFolders do not support the same restrictions, but the do support
+    a :calendar_view restriction.
+
+commit 8947ec39ceaf1f2b9b8463e28a776440260ba4b0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 23 14:57:34 2010 -0600
+
+    add CalendarItem#resources attendee type
+
+commit 8379c389e3ec0f13098006c688eddd3cc4a00c9a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 23 14:49:51 2010 -0600
+
+    bug fix for #define_attendees
+
+commit 154df7798a1728a3458f07773988abc3a3e2d0d9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 23 13:43:54 2010 -0600
+
+    add #folder_sync_hierarchy to SOAP calls.
+    add required_attendees and optional_attendees to CalendarItem
+
+commit f0552c6a9ea4a5306440f6660215c8f07e0175af
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Nov 18 11:48:28 2010 -0600
+
+    Add attachment support to Message#to_mail.
+
+commit cd02e0617d7f5714ffdd6fe2034c131cfbfe183b
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 17 20:50:52 2010 -0600
+
+    Cleaned up dynamic method creators. Added ability to re-map method
+    names.
+
+commit 588df93c581150d9e333e030ac9980bb1c0ea3c4
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 17 20:01:02 2010 -0600
+
+    Removed old meeting_*.rb files.  CalendarItem should be able to handle
+    it all.
+
+commit 73b58f48429a0fe646eb727fc22f35672838f8f4
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 15 11:35:50 2010 -0600
+
+    code documentation enhancement
+
+commit 77df5f4d480744e517f5489aed94079a7fd1ece9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 14 22:52:33 2010 -0600
+
+    version 0.1.7
+
+commit 002a3562533991ff27270c6d44e2c055b63fc9d8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 14 20:17:47 2010 -0600
+
+    changed Message.send back to returning true on success
+
+commit b756a46c4f9fc7ec54b0f954fd23b9ffa20e47a2
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Nov 14 10:53:21 2010 -0600
+
+    Added BPOS work-around GenericFolder#sync_items_sync!
+    Added a way to clear out synchornization GenericFolder#clear_sync_state!
+    Added additional tests for new methods
+
+commit bfa1569fbeb9b7af81f0ebe84408dc376891e416
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 10 11:13:59 2010 -0600
+
+    Added ability to mark/unmark an Item read Item#mark_read!, Item#mark_unread!
+
+commit 40299edf5013e05427900bccea9d64db41b17942
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 10 10:09:15 2010 -0600
+
+    Added properties to ItemShape for get_item so that you can request
+    :body_type of Text only.
+    Added EWS init methods to meeting request
+
+commit 3c73c2556f6c4cdd33601eed90ab8815201e476d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 14:13:55 2010 -0500
+
+    version up for hash insertion bugs
+
+commit ecac0e11754a436248688aca17c33bb1b2c4aaed
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 13:47:57 2010 -0500
+
+    version 0.1.5b
+
+commit d9bc83a83c83d832eb30b6e3f309c80e4e36350a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 13:44:20 2010 -0500
+
+    Fixed issue with GenericFolder#items_since and #items_between for
+    versions of Ruby less than 1.8.7.  It had to do with insertion order
+    of Hashes.
+
+commit bf5426fec4862020b5186caf15d77550f00649ab
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 12:05:28 2010 -0500
+
+    version 0.1.5
+
+commit 62dbad34702f88505a846a6e9da730ab4c69ae2c
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 11:47:50 2010 -0500
+
+    Fixed some issues with the Item#method_missing logic.
+
+commit efe2ea11a1cc9ce523f9304af1de1f3b057b02a6
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 11:17:05 2010 -0500
+
+    Added a Message#to_mail method that returns an object of type Mail.
+      see the 'mail' gem for more info on this object type.  Its main
+      benefit is that it allows you to print a Message item in
+      RFC2822 compliant output.
+      Also added a Changlog.
+      Fixed a bug dealing with the #headers method
+
+commit 46b8482e0e399ddd32c794e2fdf832d6ee0ebc51
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 5 08:59:50 2010 -0500
+
+    Refactored ews_service.rb with new #invoke method
+    Fixed a bug in viewpoint.rb where if the logged in user included the
+    domain in the username the #me method would bomb.
+
+commit 3c5da0912e6a90e5d4ca9a817988b3cba36803f1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Nov 4 14:55:34 2010 -0500
+
+    added support for setting the CA path
+
+commit 3e86cb1c4e627df339de088ba0f5c4774bad9a34
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 3 22:38:56 2010 -0500
+
+    fixed a performance issue with fetching attachments.
+
+commit ad20c9ee5cdaa0452f0fa72e50b11d518a569de4
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 3 22:18:50 2010 -0500
+
+    added a meta method to create methods from non-default attribute names
+
+commit ebc4fc8eaf114ce783f9eb2be52476904970202c
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 2 10:05:00 2010 -0500
+
+    version up
+
+commit ebf0d91ee992dd68d09ca847e43ad28c9d3acf1e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 2 10:04:35 2010 -0500
+
+    added rspec test for attachments
+
+commit 74847ec96d61920d1c47bd9eee1e59493558fb34
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 1 23:19:37 2010 -0500
+
+    fixed bug with 1.8.x clients and adding attachments.
+
+commit 936655f5e2b04077b8339b897b561322958f3e64
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 29 15:36:09 2010 -0500
+
+    version up
+
+commit f4ac82ccbcb53af1ad1eb39ad0bd75361d3acaa8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 29 15:23:03 2010 -0500
+
+    changed spec.opts to .rspec
+
+commit 424c7ad34c44bca7d978770fe4919d60360ad08a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 29 15:02:51 2010 -0500
+
+    added wiki to README
+
+commit 3106afad99d4c9c830783eda244b42ceb5c61009
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 29 14:58:33 2010 -0500
+
+    Official support for FileAttachment items.
+
+commit 3e678273f16a0d21c174886a6a51dd791770c4ee
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Oct 28 17:08:34 2010 -0500
+
+    rudimentary attachment saving support.  much refactoring needs to happen.
+
+commit 0037bd3a29442bf755b82953346dea38a0f21fde
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Oct 27 11:53:59 2010 -0500
+
+    Can fetch attachments via SOAP now.  Need to add it to model
+
+commit 3888194ecb4fd7bcdb390a1ba30f30a3e668db6f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Oct 17 11:13:48 2010 -0500
+
+    find_folder_by_name now searches subfolders.
+
+commit ccdc51cfe5684b167b6965f777237278b4346206
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 31 10:22:36 2010 -0500
+
+    push subscribe, contact adds
+
+commit 23adfdffd21ffce17d841c1a3ac6914fc6ad985b
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Aug 11 08:53:30 2010 -0500
+
+    Added find_folders method to individual folder types.
+    Fixed an issue with Task deletion.
+
+commit 676df508a7b2f00e5e01ad930db823cd9e50418e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Aug 6 16:02:09 2010 -0500
+
+    added ability to get OOF settings
+
+commit 142d7472cdd26ef13ebc415141a43ce624f77930
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Aug 6 15:27:12 2010 -0500
+
+    version up
+
+commit b66e851bd9223fa94340360ddd9e4fdf7a6054b2
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Aug 6 09:16:53 2010 -0500
+
+    rails class load fix. Issue #4
+
+commit 40c62eba5725e945cc5f17e37234e145d3ad1e80
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Aug 4 16:02:55 2010 -0500
+
+    Positional Hash fix for Ruby 1.8.7
+
+commit a4b16d2e5e10ada4c9759a923bba3f1b2b1929b1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Aug 4 15:11:46 2010 -0500
+
+    Added attachment handling to Message#send.  More RSPEC tests.
+
+commit a4c3aef0d3095d3ad5c52d9daabb3027f00b87e0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 3 23:22:49 2010 -0500
+
+    added more RSPEC tests for new GenericFolder methods
+
+commit a41812217f3821985f53805c02643d40eeefb428
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 3 23:16:13 2010 -0500
+
+    Added GenericFolder::folder_names GenericFolder::get_folder_by_name
+
+commit 626f523ba3face89f2b0b91db15fcec9d49372e9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 3 22:51:57 2010 -0500
+
+    Added Item#move! Item#copy
+
+commit 60dbdfd1f53ee77f743502ba6e0eac3f3e8afbec
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 3 16:25:20 2010 -0500
+
+    removed old examples. do not work with current version
+
+commit afc090fb4814028fa7344c15d71c130be7b3e37e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Aug 3 09:53:53 2010 -0500
+
+    added to docs. added ability to set the http driver for SOAP.
+
+commit e94f39d1911edfd9a521516916f17de185a5afab
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Aug 2 11:58:39 2010 -0500
+
+    Version changes
+
+commit b39b9eee616b2429bbc2930831c4232aadf0651a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Aug 2 10:29:33 2010 -0500
+
+    added subject search
+
+commit 9983cace05f715cd77ca0da6f7cd772301c9ca71
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Aug 2 09:32:49 2010 -0500
+
+    Writing unit tests
+
+commit 900d8495073a660fb8c7409c9ffbe6425fdfa870
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Aug 2 02:18:00 2010 -0500
+
+    refactoring to add search restrictions
+
+commit 8f45ec1c808d72c59acd088a2415a04a685039b8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Aug 1 22:36:17 2010 -0500
+
+    added basic functions RSPEC
+
+commit eaa03d2d770fe9e6a2ae3b112f2be76fd7290df6
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 31 23:27:28 2010 -0500
+
+    README design goals
+
+commit d830e002b1a261472d671134794d7087de2a7a2f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 31 18:16:31 2010 -0500
+
+    Added to readme. Minor parameter swap in GenericFolder::get_folder
+
+commit d31a56ef490743756c6c84416e26565b08dbafb1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 31 17:34:59 2010 -0500
+
+    Added Viewpoint::EWS::EWS#me method.
+    This will return the MailboxUser object associated with the connected user.
+
+commit b081f2a98436acd6bb087c5a333b5cb454735268
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 31 16:52:50 2010 -0500
+
+    refactoring, added folder creation/deletion
+
+commit e5defc2f2b8e21c80d0c7da287aee848170c885b
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 30 22:20:44 2010 -0500
+
+    delegate methods all work, but they are not very stable.
+    Major refactoring is needed.
+
+commit f57edb8dbc3e134b19f88db5e015853543b1d685
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 30 15:57:24 2010 -0500
+
+    added delegate access and fixed a couple issues
+
+commit 552bb6892cd39c4768663d76fae941c2b1f3fc98
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 30 12:00:37 2010 -0500
+
+    Item creation methods
+
+commit c0de24fbca76f70a8629dcdae1fca38d4b60bac0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 29 16:07:09 2010 -0500
+
+    Minor bug fix for sync and a Ruby 1.8 fix.
+
+commit 59be25ec4cfb4d0a300428e55cc70eb733c7bf91
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 29 15:34:30 2010 -0500
+
+    Better handle CalendarItem creation.
+
+commit 6a8758cdbae8fa8b427acf94bf1b8c782e6c7bea
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 29 09:11:56 2010 -0500
+
+    CalendarItem creation method renamed.
+
+commit 34daba45d45f97177f74418f6379cb781d7c7ce6
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 29 01:33:29 2010 -0500
+
+    forgot to add String extensions to git
+
+commit edf49686a04b9102363bec13671420b433ebcb13
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 29 01:29:58 2010 -0500
+
+    basic CalendarItem creation working.  Needs a lot of work though.
+
+commit a7f20f9d55897c9d742df43d15fbb4e9d61ad8e0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 23:54:09 2010 -0500
+
+    Items when deleted are now unusable.
+    Removed the Message#to_rfc822 method.  Would like to reimplement some day.
+
+commit 6219800c0b64e29cb7c07a107079f0273dc308dd
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 23:23:21 2010 -0500
+
+    ruby_case and camel_case are now String instance methods.
+    Fixed a bug with item sync where deleted items were trying to create a Item type even though that is not possible.
+
+commit 768d4978a1465cd2c882f0d3aed41bd4275e8279
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 22:29:53 2010 -0500
+
+    Added new README and simplified viewpoint.rb
+
+commit 12047f4fca88e1b3effb280037f18a769ca97c46
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 22:09:49 2010 -0500
+
+    Added more FolderTypes to correspond to Exchange
+
+commit fc2829cdcfdfdbfc9172447080c60194e52acf58
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 21:55:19 2010 -0500
+
+    modifying the folder model to better fit Exchange naming
+
+commit 92840d8c978ff14878dae5c68fc18db9880daf7b
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 21:16:12 2010 -0500
+
+    massive model changes.  see the diff log.
+
+commit 3344b656c06e6827f70d77861c6ec16abe735151
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 28 00:36:45 2010 -0500
+
+    Added new Model module for dynamic instance method creation
+
+commit ce42e66787f80540e662e749bd830e97f7a250a8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Jul 27 17:16:31 2010 -0500
+
+    added a bunch more features. lots of clean-up needed
+
+commit a5c91232609e0eed0ec24e0e366f0d713c44aaa7
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Jul 26 15:03:00 2010 -0500
+
+    got CalendarFolder working through the proxy.
+
+commit 07db13ed2a70e118069abcafba7cd52baa7f2088
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Jul 26 14:15:53 2010 -0500
+
+    resolve_names is now working from the proxy interface
+
+commit 6ab7e570c1310a23ddf5bc4d323a52e0b83a1388
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Jul 26 13:15:22 2010 -0500
+
+    Added xml_to_hash method for parser.
+
+commit e6cee60a18feff09d2c9cfe208b59426f0238a05
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Jul 26 00:27:43 2010 -0500
+
+    Adding parsing for MailboxUsers
+
+commit 78ba7acc39f5ef214f42efbaa6b3965e9e3ae637
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Jul 25 20:52:37 2010 -0700
+
+    added camel_case convenience method
+
+commit c3dfbd3bf09477f0ab4817432815d6cbdbdbca84
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 23 23:12:36 2010 -0500
+
+    reorging and refactoring....
+
+commit f648cb9b2d0ebcfcca8c306d236cca510150db7a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 23 18:40:07 2010 -0500
+
+    cleaning up code from soap4r
+
+commit dde3730ccebd700451826a6e26311b7968bb2096
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 23 17:08:24 2010 -0500
+
+    Now SOAP namespaces are set in the SOAP module.  I think everything should be set to use the variables now.
+
+commit 8c0a3d45271725ea23ffeb6e011f7854435f5790
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 23 14:05:23 2010 -0700
+
+    removed old stubs. will add them back in as needed.
+
+commit a1ce6321157a0269d4abf8e2d44027c80ed51f7d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 22 16:28:28 2010 -0700
+
+    refactoring code. lots of minor code changes
+
+commit b2d6a452b7e9bcc928eef1dc5df63d7cb0b5e26e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 22 15:59:28 2010 -0700
+
+    Documentation. Added SOAP debugging to return raw SOAP envelope
+
+commit 0fb578b6a68ca9fe45d8c316986bd4ba42477349
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 22 14:49:46 2010 -0700
+
+    more refactoring
+
+commit 6c1caf3bae6d761be6f3dd0551b798575a44e45f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 22 14:42:28 2010 -0700
+
+    file restructuring
+
+commit 40801151d07fde243192d3a8bd6227f1a9c437b9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 22 09:26:44 2010 -0700
+
+    code refactoring
+
+commit 851bc91b98f86dad1901c41254c982abf89115a9
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Jul 21 17:11:59 2010 -0700
+
+    More work on subscriptions
+
+commit 918bab81db52e43205edf4d72be21e2a58cdf879
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Jul 21 17:00:30 2010 -0700
+
+    Work on folder subscriptions.
+
+commit d4b68f164ccdab2753d8b012d8ae5d663d0374b7
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Jul 21 14:14:19 2010 -0700
+
+    code clean-up
+
+commit f34d2738829eb5587c811b849e8cfce60a1ee9d7
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Tue Jul 20 18:55:57 2010 -0700
+
+    code clean-up
+
+commit 195dc412bec6ba2fd452fa247d3dbf0dd2475315
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Jul 20 18:30:05 2010 -0700
+
+    array simplification
+
+commit ae479c0a2d7ffe51c8491e20514876f23103dde9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 17 13:43:34 2010 -0500
+
+    get_folder is partially implemented as a Class method
+
+commit ccf0ff8630a705a22c401663f20b95625cc262b9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sat Jul 17 13:03:38 2010 -0500
+
+    Starting work on the "View" interfaces
+
+commit 1a34169faa4cedc299f0d6a7be480084c8ca7478
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 16:03:15 2010 -0500
+
+    work on create_item.  meetings work now
+
+commit db9acb32df6545fc70577def74fb37bf1ac6bcf4
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 14:48:38 2010 -0500
+
+    adding exception classes
+
+commit 2c592712e0ed0ebfedfb44c3b673e985b32f1346
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 11:46:40 2010 -0500
+
+    added build helpers.
+
+commit 95061195d6b51e1e99bff00cdd673b5c75b3ed1c
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 10:25:23 2010 -0500
+
+    subscribe, get_events, unsubscribe are working
+
+commit e9cfa2d206f2793befda3342493e6e8d6b3d070f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 08:14:27 2010 -0500
+
+    documented parse method
+
+commit 8e10854ea87a96bd3e3ff1d1954cecd7dfe6539a
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 16 08:11:07 2010 -0500
+
+    create_mail_item working. misc changes
+
+commit 9f1cdbf797e08d4d7879cecdb27d642902a385ea
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Jul 15 10:05:52 2010 -0500
+
+    Added basic get_item, find_item functionality
+
+commit 9f606f2b5c4812a393f396930719e89b7f381530
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 17:14:47 2010 -0500
+
+    find_folder and get_folder are now working.  need to refactor to simplify.
+
+commit d611633276fd744c57320a5fe96182a32c38c6fa
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 15:11:25 2010 -0500
+
+    resolve_names is now working.
+
+commit 816ef7a6509c298d8ffef5d451573c2b47a33523
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 11:34:02 2010 -0500
+
+    more handsoap integrations
+
+commit d9cec252b838585c6cde989364cb36360c240a49
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 10:50:22 2010 -0500
+
+    UNUSABLE but the foundation is layed for Handsoap.  Now the fun work starts.
+
+commit 5d20c7c64857246e706b3ce18ed705e751b7db3d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 10:27:13 2010 -0500
+
+    added base handsoap files
+
+commit 62e25a999045b30ae8d529b0322d9a6b5f973502
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Jul 14 10:15:31 2010 -0500
+
+    removed legacy exchwebserv. new base methods added.
+
+commit 5846fdd3d1a9bbb3436ee259d43ae57bb9076802
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 2 11:53:29 2010 -0500
+
+    modified year in preamble
+
+commit 7a2230913df38121b8fd6f9502a16d49d88d9cc1
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 2 11:52:23 2010 -0500
+
+    added utilities
+
+commit e0019338af10db1733b84d800ec5a42fe865caa2
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 2 11:51:33 2010 -0500
+
+    laying out the Handsoap foundation.
+
+commit 4a8893fdd949714d4717733fae6ab983bb2b73de
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Jul 2 11:43:30 2010 -0500
+
+    deleted old soap4r stuff.
+
+commit 2138cb2ba00feae611495cfbfb51e37ef8cb0425
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Dec 8 10:09:42 2009 -0600
+
+    documentation changes
+
+commit 568dd929de8e0e732ec3d859e2ae9508964b9c27
+Merge: fdfb74b 8690778
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Dec 7 10:21:14 2009 -0600
+
+    Merge branch 'master' of git@github.com:zenchild/Viewpoint
+
+commit 8690778fb2c15d3b4f1699ca5eec1de533e1d7c1
+Author: Dan Wanek <dwanek@woden.asgard.net>
+Date:   Mon Dec 7 09:44:09 2009 -0600
+
+    Added Highline support back in.
+
+commit fdfb74b0f65fc03cb4835808845ab8ec091455c9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Nov 17 11:55:02 2009 -0600
+
+    added ability to fetch alternate Id types; added deps to Rakefile
+
+commit 81856d1e548d7698245ce1e18667bfdb8562c066
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 16 22:52:44 2009 -0600
+
+    updated README about NTLM dep
+
+commit 59f9d107460112ef59e5812ad44bb0a559be9bb8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 16 14:50:42 2009 -0600
+
+    code clean-up
+
+commit eb6bac237387b1ed6b8a81a514696922fb8d8d61
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 16 13:11:06 2009 -0600
+
+    added errors.rb
+
+commit 333eed945f2487beaf76490daf772e62867c406f
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 16 13:09:37 2009 -0600
+
+    additional fixes to better support subscriptions
+
+commit 6c3bbf6822eea1b0045f9afa509eb2b95e8c00ae
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 16 10:54:07 2009 -0600
+
+    better subscription return values
+
+commit f9ff088b1c5373eb9d584368795cb4da0d5fbb74
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Nov 13 15:48:58 2009 -0600
+
+    fixed subscription stuff
+
+commit 02e6e3c18de260cd3f7dc9ae6e61b34de7361be8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Nov 12 16:37:52 2009 -0600
+
+    added method to get OWA id from message id
+
+commit 79faefa00b75aef7cdd4449faf70d44af1a3b08d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Nov 12 16:20:35 2009 -0600
+
+    minor change to initialization
+
+commit 63c7b57b455f202dd117b0689d822fcf9cb248d8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 16:09:53 2009 -0600
+
+    example fixes and Rakefile change
+
+commit 8c913bf50ae620d3fc26f33955925f321398e9b8
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 15:22:49 2009 -0600
+
+    elaborated on RSpec tests
+
+commit a794d4eba74b5dcd8d9e9dba42d7b84bf484d97d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 14:12:29 2009 -0600
+
+    Rakefile changes
+
+commit f9eaba92850d9c0f28c645536916bc134d4914b7
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 13:57:12 2009 -0600
+
+    documentation changes
+
+commit c5ccad5032af648d976e04171261d6a2149d4faa
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 13:47:17 2009 -0600
+
+    more clean-up.  file re-arrangement
+
+commit e091d33bfda615f6985ec4a021d42cad07d8958d
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 12:15:43 2009 -0600
+
+    clean-up and created Rakefile for gem build
+
+commit 88ab88e0d2c0a47262648d62bd834cf951a4d871
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Nov 9 11:02:15 2009 -0600
+
+    moveItem works now.  Also added per-user .viewpointrc
+
+commit 4dfe0436c012464511147029f32a1e1830562ced
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 4 16:27:34 2009 -0600
+
+    Had to back out of turning "get_item" to private because it is used
+    outside of the class.
+
+commit 13bc48692f8e352c9975bbc19d4704f3d7f214b5
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Nov 4 11:31:00 2009 -0600
+
+    Cleaning up the interface.  Marked private methods that return EWS
+    types.  They aren't meant for public consuption.
+
+commit 007fa4e1fb2a8234093fcac6f13127ec8d8deb79
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 23 13:24:17 2009 -0500
+
+    Fixed some issues with iCal output and added cal2ical.rb in the examples
+    folder.
+
+commit cb14ab01a14494f38a631af4ea23860d84207080
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Oct 22 16:24:04 2009 -0500
+
+    Added basic iCalendar export functionality.  See README.
+
+commit 30760d41a738a103a2f8f3aba22f6fb91af7912e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Wed Oct 21 11:22:00 2009 -0500
+
+    Missed changes do to datamapper removal.  Examples should work again.
+
+commit 46f4971efca443be81804171d5d58ac6eff44fc5
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Tue Oct 13 00:26:38 2009 -0500
+
+    Webclient is functionally working, but it's not pretty.
+
+commit 1e9af16964745dff0d49fd08264a11c5f44c6763
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 9 23:53:41 2009 -0500
+
+    Successfully decouples datamapper.  Code documentation needs updating.
+
+commit e1256e527d6dcc0b1a6009261f62bc09a2b50690
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 9 23:21:17 2009 -0500
+
+    Added beginnings of a Viewpoint Web client in Sinatra. '/demo' works for now.
+
+commit 9e4584da65cf87b39f669ac91f6285c8619ac708
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 9 18:38:59 2009 -0500
+
+    Enhanced do_auth in ExchWebServ
+
+commit 303726bc37976beec8591ad50f967b4897c38dc9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 9 15:03:05 2009 -0500
+
+    Major changes in the structure.  Added a master module for organization.
+
+commit 7a0ff9285bc1885be02712759f07e2b918f3a862
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Oct 8 23:11:27 2009 -0500
+
+    More work on ews fusefs
+
+commit c09d5cffe2402e230cd7b2c0a49e886002cca72e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Oct 8 16:58:38 2009 -0500
+
+    Major work on EWS MailDir Fuse filesystem... that's a mouthful!
+
+commit e1ef2c97651f9d897c71ca6ad25f4084cc9f8ce2
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Thu Oct 8 00:23:59 2009 -0500
+
+    Example FUSEfs.  Working on maildir formated fs.  Other changes to code
+    and README.
+
+commit 04823cdec1dfffcba77e5025981f8a8fffb1dd9b
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Oct 7 01:20:05 2009 -0500
+
+    Basic test client
+
+commit 4d74420ae4dd98632e41dbc8fc5c1372fb236d68
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Oct 7 01:18:52 2009 -0500
+
+    Continuing work on proxy items.  Functional changes to
+    NonEmptyArrayOfPathsToElementType
+
+commit 394673fc448dbecbc554b8ed44f2259873f10ca0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Oct 5 23:43:30 2009 -0500
+
+    added movedEvent to subscription since deleting an item in Exchange
+    moves the item to the Deleted Items folder.
+
+commit a62b311f35dc04b9c0849af504e8fb1d25487ed0
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Oct 5 23:31:54 2009 -0500
+
+    Added subscription and get_item capapbilities to folder.
+
+commit c2f1fa237d8992aa0f46cc39284fc031d477313e
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Mon Oct 5 21:25:21 2009 -0500
+
+    Changed folder to class to datamapper inheritance works.  Other misc
+    changes.
+
+commit e5d33dfaf2073b6a5251391e338deafa71daf616
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Sun Oct 4 23:29:33 2009 -0500
+
+    More changes to defaultMappingRegistry in relation to RestrictionType.
+    Most of the stuff should be working now, but I may have to revisit
+    the idea of "path" in the individual elements of RestrictionType.
+
+commit 4deb2e34e148836a5c5c3fb46844ed73d23e92e9
+Author: Dan Wanek <dan.wanek@gmail.com>
+Date:   Fri Oct 2 16:51:20 2009 -0500
+
+    Pretty major changes working around a FindItem bug in Exchange.  See:
+    http://social.technet.microsoft.com/forums/en-US/exchangesvrdevelopment/thread/a02dea87-7b64-44f4-92f4-d5dff3fcf55a/
+
+commit 2bf93ba4208c5f1df80812ccf2c464e34cd71f5d
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Thu Oct 1 21:50:36 2009 -0500
+
+    Added wsdl, testing and some substance to viewpoint.rb
+
+commit 4bd4f21cfbcfd033cc2ef6834c5f1c316f2f4320
+Author: Dan Wanek <dwanek@woden.(none)>
+Date:   Wed Sep 30 18:48:11 2009 -0500
+
+    Initial git commit.

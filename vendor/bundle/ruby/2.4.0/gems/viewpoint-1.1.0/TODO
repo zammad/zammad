@@ -1,0 +1,17 @@
+h2. TODOS
+
+* Automate "deepening" of Model objects by over-riding method_missing
+
+<pre>
+if object.is_shallow? && all_methods.index(method)
+  deepen!
+else
+  raise the NoMethod error
+</pre>
+
+* Clean-up exceptions.  There is exception raising in the Model that will never ocurr because it is already being checked for in the Parser
+
+* Refactor #find_folders methods.  There is a lot of duplicate code right now and it could be simplified quite a bit.
+
+* Test TODO
+** Test for undefined methods and make sure the method_missing method isn't causing problems

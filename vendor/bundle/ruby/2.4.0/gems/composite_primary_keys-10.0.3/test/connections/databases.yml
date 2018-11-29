@@ -1,0 +1,30 @@
+mysql:
+  adapter: mysql2
+  username: root
+  password: mysql
+  database: composite_primary_keys_unittest
+
+oracle:
+  adapter: oracle_enhanced
+  database: xe
+  username: SYSTEM
+  password: oracle
+  host: localhost
+
+postgresql:
+  adapter: postgresql
+  database: composite_primary_keys_unittest
+  username: postgres
+  host: localhost
+
+sqlite:
+  adapter: sqlite3
+  database: <%= File.join(project_root, 'db', 'composite_primary_keys_unittest.sqlite') %>
+
+sqlserver:
+  adapter: sqlserver
+  username: cpk
+  password: cpk
+  database: composite_primary_keys_unittest
+  host: localhost
+  port: 1433

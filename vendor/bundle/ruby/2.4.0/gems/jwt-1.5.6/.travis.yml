@@ -1,0 +1,13 @@
+sudo: false
+cache: bundler
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+  - 2.2.0
+  - 2.3.0
+script: "bundle exec rspec"
+addons:
+  code_climate:
+    repo_token: e87b175db123ab42ca2ca4420abaa13c0dc2085608402b9a25f08a83ca3ba202

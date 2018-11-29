@@ -1,0 +1,418 @@
+== 2.2.2 / 2017-04-11
+
+Enhancements
+- limit the depth of nested exceptions [PR #167]
+
+== 2.2.1 / 2017-04-09
+
+Enhancements
+- show exception `cause` if one exists [PR #165]
+
+== 2.2.0 / 2017-03-09
+
+Enhancements
+- diagnostic context inheritance is now optional [PR #160]
+- add support for setting a UTC offset [PR #157]
+- setting a basepath for call tracing [PR #154]
+
+Bug Fixes
+- use thread-local variables for diagnostic contexts [PR #162]
+- replace `Fixnum` with `Integer` [PR #161]
+- fixed a race condition in the rolling file appender [PR #151]
+
+Deprecations
+- dropped Ruby 1.9 support
+
+== 2.1.0 / 2016-03-13
+
+Enhancements
+- appender factories now fail explicitly on bad arguments [PR #117]
+- console loggers (stdout, stderr) use `write` for compatibility [PR #127]
+- allow whitespace in traced method names [PR #128]
+- accessor methods for `backtrace` settings [PR #134]
+- asynchronous writing from buffered appenders [PR #135]
+- improve date format performance when outputting microseconds [PR #136]
+- added some thread safety to log level setters [PR #137]
+- use `write` everywhere instead of `syswrite` [PR #138]
+
+Bug Fixes
+- fixing encodings in tests [PR #116]
+- fix Rails4 logger compatibility [PR #121]
+- explicitly adding the MIT license [PR #123]
+- update `object_id` format in inspect methods [PR #133]
+- fixed Travis-CI tests
+
+== 2.0.0 / 2015-03-28
+
+Enhancements
+- added event filtering via the Filter framework
+- improvements to buffered logging
+- code readability improvements around meta-programming
+
+Bug Fixes
+- fixed an `already initialized error`
+- avoid unnecessary mutex-ing in logger lookup
+
+Deprecations
+- dropped Ruby 1.8 support
+- removed logger consolidation
+- removed YAML style configuration
+- removed the Logging::Stats module
+- removed the Hash#getopt method
+- removed the Growl appender
+- moved the Email appender to the logging-email plugin gem
+
+== 1.8.2 / 2014-01-29
+
+Bug Fixes
+- Adding a `formatter` method for Rails 4 compatibility
+
+== 1.8.1 / 2013-01-02
+
+Bug Fixes
+- Diagnostic context thread inheritance [issue #56]
+- Fixing trace reporting in JRuby 1.7
+
+== 1.8.0 / 2012-09-13
+
+Enhancements
+- Appenders handle string encodings [issue #46]
+- Support for diagnostic contexts [issues #23, #32, #42]
+- Enable JSON formatting of log message [issue #34]
+
+Bug Fixes
+- Fix clash with ActiveSupport autoloader (chewie) [issue #39]
+
+== 1.7.2 / 2012-04-03
+
+Bug Fixes
+- Fixed segmentation fault on exit [issue #30]
+- Fixed syswrite warning when IO contains unflushed data in buffer [issue #31]
+- Added "mingw" to the list of Windows host versions
+
+== 1.7.1 / 2012-03-05
+
+Bug Fixes
+- Fixed deprecated use of Config::* [issue #29]
+
+== 1.7.0 / 2012-02-18
+
+Enhancements
+- Move appender factories [issue #28]
+- ActionMail compatible options in the email appender [issue #27]
+- Add TLS support to the email appender [issue #25]
+- Refactoring appender shutdown [issue #20]
+Bug Fixes
+- File locking fails on windows using JRuby [issue #22]
+
+== 1.6.2 / 2012-01-05
+
+Bug Fixes
+- Fix typo in the Readme [issue #14]
+- Fix spelling in a variety of places [issue #15]
+- Solaris does not have Syslog#LOG_PERROR defined [issue #17]
+- Fix failing tests for Ruby 1.9.3 [issue #18]
+- Check for RUBY_ENGINE for Ruby 1.8.7 [issue #19]
+- Whitespace and '# EOF' cleanup
+- Support for Rubinious
+
+== 1.6.1 / 2011-09-09
+
+Bug Fixes
+- Rails compatibility methods [issue #11]
+- Blocked rolling file appender [issue #12]
+
+== 1.6.0 / 2011-08-22
+
+Enhancements
+- Adding periodic flushing of buffered messages [issue #10]
+- Accessor for a logger's appenders [issue #9]
+- Better support for capturing log messages in RSpec version 1 & 2
+
+== 1.5.2 / 2011-07-07
+
+Bug Fixes
+- Changing working directory breaks rolling file appenders [issue #8]
+
+== 1.5.1 / 2011-06-03
+
+Bug Fixes
+- IO streams cannot be buffered when using syswrite
+- JRuby does not allow shared locks on write only file descriptors
+- Fixing tests for JRuby 1.6.X
+
+== 1.5.0 / 2011-03-22
+
+Minor Enhancements
+- removed mutexes in favor of IO#syswrite
+- no round tripping through the buffer array when auto_flushing is true
+- added a Proxy object that will log all methods called on it
+- colorization of log messages
+
+== 1.4.3 / 2010-05-31
+
+Bug Fixes
+- rolling file appender calling "super" within a block [Sebastian Georgi]
+
+== 1.4.2 / 2010-04-18
+
+Bug Fixes
+- missing require for fileutils
+
+== 1.4.1 / 2010-03-23
+
+Bug Fixes
+- flock(LOCK_UN) was causing errors on windows [issue 4]
+
+== 1.4.0 / 2010-03-16
+
+Minor Enhancements
+- Compatibility with the Rack::CommonLogger
+
+== 1.3.0 / 2009-12-18
+
+Minor Enhancements
+- Using copy/truncate semantics for a faster RollingFile appender
+- Global reopen method for using Logging in forked environments
+- RollingFile appender can use date stamps instead of numbers
+
+== 1.2.3 / 2009-12-01
+
+1 bug fix
+  - Using a reentrant mutex to avoid deadlock in some Rails applications
+
+== 1.2.2 / 2009-08-18
+
+1 minor enhancement
+  - Created a reset method for the logging framework
+
+== 1.2.1 / 2009-08-14
+
+1 bug fix
+  - Using a bug-fix version of little-plugger
+
+== 1.2.0 / 2009-08-14
+
+2 minor enhancements
+  - Added a gem based plugin system
+  - LogEvent is now a struct (slightly faster)
+
+== 1.1.4 / 2009-05-28
+
+1 minor enhancement
+  - Added a Logging.shutdown method to close out all appenders
+
+== 1.1.3 / 2009-05-13
+
+1 bug fix
+  - Fixing an alias bug on the JRuby platform
+
+== 1.1.2 / 2009-05-05
+
+1 minor enhancement
+  - Added two new require methods to Kernel
+
+== 1.1.1 / 2009-04-30
+
+1 minor enhancement
+  - Added a 'filename' method to the file appenders
+
+== 1.1.0 / 2009-04-21
+
+3 minor enhancements
+  - Added a "global" logger method
+  - Loggers can be consolidated on a per-namespace basis
+  - Added a precision to the logger name specifier in the pattern layout
+    [addresses http://github.com/TwP/logging/issues#issue/1]
+
+== 1.0.0 / 2009-04-17
+
+2 major enhancements
+  - Refactored access to the appenders
+  - Created a much cleaner way to initialize the logging framework
+3 minor enhancements
+  - Added a YAML layout option
+  - Added a JSON layout option
+  - Cration of an "examples" directory
+1 bug fix
+  - Logging initialization happens implicitly when a logger, layout, or
+    appender is created
+
+== 0.9.8 / 2009-04-11
+
+2 minor enhancements
+  - Adding a to_s method to the StringIo appender's StringIO object
+  - Added a Spec::LoggingHelper class that will capture log messages
+    when using rspec style testing
+
+== 0.9.7 / 2009-03-17
+
+1 minor enhancement
+  - Added a StringIO appender
+1 bug fix
+  - Handling objects that cannot be dumped via YAML [Tim Galeckas]
+
+== 0.9.6 / 2009-02-02
+
+2 minor enhancements
+  - Ruby 1.9.1 compatability
+  - JRuby 1.1.5 compatability
+
+== 0.9.5 / 2009-01-25
+
+2 minor enhancements
+  - The pattern layout can output the current thread name
+    if set using Thread.current[:name]         [valodzka]
+  - Added buffered logging to all IO based loggers
+    (console, file, rolling file)
+1 bug fix
+  - Uncaught TimeoutError in the e-mail appender
+
+== 0.9.4 / 2008-10-04
+
+2 minor enhancements
+  - Flag to suppress exception backtraces from being logged
+  - Cleaning up color codes on Growl output
+4 bug fixes
+  - Child loggers were not being found in some cases
+  - RollingFileAppender fails to reopen the log file if
+    the log file is deleted.
+  - Fixed a copy/paste error in the YAML configurator
+  - Bug in the configurator where a nil object was being used
+
+== 0.9.3 / 2008-09-12
+
+2 minor enhancement
+  - Added a class for tracking basic statistics
+  - Will use the 'fastthread' gem if availble
+
+== 0.9.2 / 2008-09-03
+
+2 bug fixes
+  - Properly generates logger names for anonymous classes and
+    modules and meta-classes
+  - Fixed the rescue clause when 'turn' cannot be required
+
+== 0.9.1 / 2008-08-14
+
+1 minor enhancement
+  - added a method to show the logging configuration
+2 bug fixes
+  - checking for sync method on the IO streams before calling
+  - fixed the internal logging levels
+
+== 0.9.0 / 2008-07-16
+
+2 minor enhancement
+  - Exceptions from appenders are captured and logged
+  - Internal logger for the Logging framework (disabled by default)
+  - Added a DSL configuration format (more readable than YAML)
+1 bug fix
+  - Modules could not have their own logger instance
+
+== 0.8.0 / 2008-07-02
+
+1 minor enhancement
+  - Setting the log level of a parent will cause this level to
+    be propagated to the children
+1 bug fix
+  - Fixed error with the e-mail appender and missing hostname
+
+== 0.7.1 / 2008-02-25
+
+1 minor enhancement
+  - Removed dependency on the Lockfile gem (brought the ruby
+    file into the logging/stelan directory)
+1 bug fix
+  - Fixed bug with age based rolling: was not multi-process safe
+
+== 0.7.0 / 2008-02-12
+
+1 major enhancement
+  - Rails compatibility
+    * renamed Logger#add method to Logger#add_appenders
+    * renamed Logger#remove method to Logger#remove_appenders
+    * renamed Logger#clear method to Logger#clear_appenders
+    * added a new Logger#add method that conforms to the calling
+      semantics of the Ruby stdlib Logger 
+
+2 minor enhancements
+  - Speed improvements and test coverage
+  - Created a top-level Logging.init method that is used to
+    define the default logging levels
+
+1 bug fix
+  - Tweaked windows detection code
+
+== 0.6.3 / 2008-02-08
+
+2 minor enhancements
+  - YAML configuration now supports multiple keys -- i.e. development
+    or production or whatever
+  - Reorganized a lot of files so that requiring files is cleaner and
+    more deterministic
+
+== 0.6.2 / 2008-02-06
+
+2 bug fixes
+  - An extra e-mail was being pushed out when the e-mail
+    appender was closed
+  - Created an at_exit handler to close all appenders
+
+== 0.6.1 / 2008-01-01
+
+1 bug fix
+  - Fixed include order to avoid double loading when testing
+
+== 0.6.0 / 2007-12-26
+
+* Using the new 'getopt' method for handling option hashes
+* Rolling file appender is safe for multiple processes
+* Added an e-mail appender from Jeremy Hinegardner
+* Updated tests for the appenders
+
+== 0.5.3 / 2007-12-08
+
+* Fixed the quoting for messages sent to the growl appender
+
+== 0.5.2 / 2007-11-28
+
+* Updated the library to work with Ruby 1.9
+* Fixed coalescing with the growl appender
+
+== 0.5.1 / 2007-11-18
+
+* Fixed a bug on Windows when attempting to load the syslog library
+
+== 0.5.0 / 2007-11-18
+
+* Added the ability to log via the syslog daemon
+* Can send messages to the Growl notification system on Mac OS X
+* The Growl appender can coalesce messages of the same title/priority
+
+== 0.4.0 / 2007-03-21
+
+* Added a microsecond flag to the Pattern layout
+* All appenders write immediately upon receipt of a logging event
+* Added a basic logging method that returns a logger object configured in
+  the same manner as the standard Ruby logger
+* Fixed a bug caused by nil log messages
+
+== 0.3.1 / 2007-02-08
+
+* Bugfix Release
+
+== 0.3.0 / 2007-02-01
+
+* Remove the ability to log multiple objects from a single log method call
+
+== 0.2.0 / 2007-01-29
+
+* The "once every four years" release
+* Storage and retrieval of appenders by name
+* YAML configuration support
+* Rolling file appender
+
+== 0.1.0 / 2007-01-12
+
+* Birthday!

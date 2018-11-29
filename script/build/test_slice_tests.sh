@@ -27,7 +27,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_available_types_test.rb
-  rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -50,7 +49,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
   rm test/browser/agent_ticket_update5_test.rb
-  rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_ticket_zoom_hide_test.rb
   rm test/browser/agent_user_manage_test.rb
@@ -105,7 +103,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_available_types_test.rb
-  rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -128,7 +125,6 @@ elif [ "$LEVEL" == '2' ]; then
   # test/browser/agent_ticket_update3_test.rb
   # test/browser/agent_ticket_update4_test.rb
   # rm test/browser/agent_ticket_update5_test.rb
-  # rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   # test/browser/agent_ticket_update_and_reload_test.rb
   # test/browser/agent_ticket_zoom_hide_test.rb
   rm test/browser/agent_user_manage_test.rb
@@ -183,7 +179,6 @@ elif [ "$LEVEL" == '3' ]; then
   # test/browser/agent_ticket_attachment_test.rb
   # test/browser/agent_ticket_auto_assignment_test.rb
   # rm test/browser/agent_ticket_create_available_types_test.rb
-  # rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   #rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   # rm test/browser/agent_ticket_create_default_type_test.rb
   # test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -206,7 +201,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
   rm test/browser/agent_ticket_update5_test.rb
-  rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_ticket_zoom_hide_test.rb
   rm test/browser/agent_user_manage_test.rb
@@ -261,7 +255,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_available_types_test.rb
-  rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -284,7 +277,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
   rm test/browser/agent_ticket_update5_test.rb
-  rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_ticket_zoom_hide_test.rb
   rm test/browser/agent_user_manage_test.rb
@@ -338,7 +330,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_available_types_test.rb
-  rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -361,7 +352,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
   rm test/browser/agent_ticket_update5_test.rb
-  rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_ticket_zoom_hide_test.rb
   # test/browser/agent_user_manage_test.rb
@@ -418,7 +408,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_available_types_test.rb
-  rm test/browser/agent_ticket_create_attachment_missing_after_reload_test.rb
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -441,7 +430,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
   rm test/browser/agent_ticket_update5_test.rb
-  rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_ticket_zoom_hide_test.rb
   rm test/browser/agent_user_manage_test.rb

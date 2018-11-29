@@ -1,0 +1,25 @@
+os: Visual Studio 2015
+
+environment:
+  matrix:
+    - platform: x86
+      configuration: Debug
+    - platform: x86
+      configuration: Release
+    - platform: x64
+      configuration: Debug
+    - platform: x64
+      configuration: Release
+
+matrix:
+  fast_finish: false
+
+build:
+  parallel: true
+  project: Argon2.sln
+  verbosity: minimal
+
+test_script:
+  - ps: kats\test.ps1
+  - ps: if ("Release" -eq $env:configuration) { vs2015\build\Argon2OptTestCI.exe }
+  - ps: if ("Release" -eq $env:configuration) { vs2015\build\Argon2RefTestCI.exe }

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec bundle exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP:=127.0.0.1} -p ${ZAMMAD_WEBSOCKET_PORT:=6042} start $@

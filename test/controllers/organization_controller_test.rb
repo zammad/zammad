@@ -14,7 +14,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -27,7 +27,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -40,7 +40,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -51,18 +51,18 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create!(
+    @organization = Organization.create_or_update(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create!(
+    @organization2 = Organization.create_or_update(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create!(
+    @organization3 = Organization.create_or_update(
       name: 'Rest Org #3',
     )
 
     # create customer with org
-    @customer_with_org = User.create!(
+    @customer_with_org = User.create_or_update(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -229,7 +229,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.01 organization show and response format' do
-    organization = Organization.create!(
+    organization = Organization.create_or_update(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -297,7 +297,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.02 organization index and response format' do
-    organization = Organization.create!(
+    organization = Organization.create_or_update(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -420,7 +420,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.04 ticket update and response formats' do
-    organization = Organization.create!(
+    organization = Organization.create_or_update(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -510,7 +510,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   test '05.03 csv import - admin access' do
 
     UserInfo.current_user_id = 1
-    customer1 = User.create!(
+    customer1 = User.create_or_update(
       login: 'customer1-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',
@@ -518,7 +518,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
       password: 'customerpw',
       active: true,
     )
-    customer2 = User.create!(
+    customer2 = User.create_or_update(
       login: 'customer2-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',
@@ -531,8 +531,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple_col_not_existing.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
     post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -546,8 +545,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'name2' for Organization.", result['errors'][1])
 
     # valid file try
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
     post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -561,8 +559,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_nil(Organization.find_by(name: 'organization-member-import2'))
 
     # valid file
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
     post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)

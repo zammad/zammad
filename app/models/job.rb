@@ -24,9 +24,8 @@ Job.run
 
   def self.run
     start_at = Time.zone.now
-    jobs = Job.where(active: true)
+    jobs = Job.where(active: true, running: false)
     jobs.each do |job|
-      next if !job.executable?
       job.run(false, start_at)
     end
     true
@@ -76,7 +75,6 @@ job.run(true)
 
     self.processed = ticket_count || 0
     self.running = true
-    self.last_run_at = Time.zone.now
     save!
 
     tickets&.each do |ticket|
@@ -95,9 +93,6 @@ job.run(true)
 
     # only execute jobs, older then 1 min, to give admin posibility to change
     return false if updated_at > Time.zone.now - 1.minute
-
-    # check if job got stuck
-    return false if running == true && last_run_at && Time.zone.now - 1.day < last_run_at
 
     # check if jobs need to be executed
     # ignore if job was running within last 10 min.

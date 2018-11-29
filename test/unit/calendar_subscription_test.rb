@@ -6,13 +6,13 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
 
     # create base
     group_default = Group.lookup(name: 'Users')
-    group_calendar = Group.create!(
+    group_calendar = Group.create_or_update(
       name: 'CalendarSubscription',
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create!(
+    agent1 = User.create_or_update(
       login: 'ticket-calendar-subscription-agent1@example.com',
       firstname: 'Notification',
       lastname: 'Agent1',
@@ -25,7 +25,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create!(
+    agent2 = User.create_or_update(
       login: 'ticket-calendar-subscription-agent2@example.com',
       firstname: 'Notification',
       lastname: 'Agent2',
@@ -46,7 +46,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer1 = User.create!(
+    customer1 = User.create_or_update(
       login: 'ticket-calendar-subscription-customer1@example.com',
       firstname: 'Notification',
       lastname: 'Customer1',
@@ -60,7 +60,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer2 = User.create!(
+    customer2 = User.create_or_update(
       login: 'ticket-calendar-subscription-customer2@example.com',
       firstname: 'Notification',
       lastname: 'Customer2',
@@ -85,7 +85,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:37:00',
-      updated_at: '2016-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -97,7 +96,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:38:00',
-      updated_at: '2016-02-05 16:38:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -110,7 +108,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending_time: '2016-02-07 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:39:00',
-      updated_at: '2016-02-05 16:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -123,7 +120,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending_time: '2016-02-07 16:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:40:00',
-      updated_at: '2016-02-05 16:40:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -135,7 +131,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:41:00',
-      updated_at: '2016-02-05 16:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -149,7 +144,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:42:00',
-      updated_at: '2016-02-05 16:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -163,7 +157,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:37:00',
-      updated_at: '2016-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -175,7 +168,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:38:00',
-      updated_at: '2016-02-05 17:38:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -188,7 +180,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending_time: '2016-02-08 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:39:00',
-      updated_at: '2016-02-05 17:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -201,7 +192,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending_time: '2016-02-08 16:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:40:00',
-      updated_at: '2016-02-05 17:40:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -213,7 +203,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:41:00',
-      updated_at: '2016-02-05 17:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -227,7 +216,6 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:42:00',
-      updated_at: '2016-02-05 17:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -186,8 +186,8 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
-    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
-    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     customer = browser_instance
     location(
@@ -299,8 +299,8 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
-    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
-    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     customer = browser_instance
     location(
@@ -383,7 +383,7 @@ class ChatTest < TestCase
     )
     click(
       browser: agent,
-      css: '.active .chat-window .js-disconnect:not(.is-hidden)',
+      css: '.active .chat-window .js-disconnect',
     )
     click(
       browser: agent,
@@ -407,8 +407,8 @@ class ChatTest < TestCase
       browser: customer,
       css: '.zammad-chat-is-open',
     )
-    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
-    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
     sleep 2
     click(
       browser: customer,
@@ -454,16 +454,14 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
-    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
-    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     # set chat preferences
     click(
       browser: agent,
       css: '.active .js-settings',
     )
-
-    modal_ready(browser: agent)
     set(
       browser: agent,
       css: '.modal [name="chat::phrase::1"]',
@@ -608,8 +606,8 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
-    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
-    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     exists(
       browser: agent,

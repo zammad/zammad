@@ -1,0 +1,22 @@
+production:
+ adapter: mysql2
+ database: zammad
+ pool: 50
+ timeout: 5000
+ encoding: utf8
+ username: PrintAuraSupport
+ password: PReadnokBemepA8
+ host: 35.184.141.59
+ port: 3306
+
+
+# production:
+#  adapter: postgresql
+#  database: nuvane_wrdp1
+#  pool: 50
+#  timeout: 5000
+#  encoding: utf8
+#  username: PrintAuraSupport
+#  password: PReadnokBemepA8
+#  host: 35.192.80.214
+#  port: 5432

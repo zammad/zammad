@@ -1,0 +1,14 @@
+language: c
+
+compiler:
+  - clang
+  - gcc
+
+os:
+  - linux
+  - osx
+
+script: make && make testci
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

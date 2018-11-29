@@ -5,7 +5,7 @@ class EmailProcessIdentifySenderMax < ActiveSupport::TestCase
 
   test 'text max created recipients per email' do
     current_users = User.count
-    email_raw_string = "From: #{generate_recipient}
+    email_raw_string = "From: #{generate_recipient(1)}
 To: #{generate_recipient(22)}
 Cc: #{generate_recipient(22)}
 Subject: test max sender identify
@@ -18,9 +18,17 @@ Some Text"
     assert_equal(current_users + 41, User.count)
   end
 
-  def generate_recipient(count = 1)
-    uid = -> { rand(999_999_999_999_999) }
-    Array.new(count) { "#{uid.call}@#{uid.call}.example.com" }.join(', ')
+  def generate_recipient(count)
+    recipients = ''
+    count.times.each do
+      if recipients.present?
+        recipients += ', '
+      end
+      domain = "#{Time.zone.now.to_i}-#{rand(999_999_999_999_999)}.example.com"
+      email = "#{Time.zone.now.to_i}-#{rand(999_999_999_999_999)}@#{domain}"
+      recipients += email
+    end
+    recipients
   end
 
 end

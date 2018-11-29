@@ -1,0 +1,7144 @@
+---
+- locale: ja
+  format: string
+  source: Subject
+  target: 表題
+  target_initial: 表題
+- locale: ja
+  format: time
+  source: date
+  target: yyyy/mm/dd
+  target_initial: yyyy/mm/dd
+- locale: ja
+  format: time
+  source: timestamp
+  target: yyyy/mm/dd HH:MM
+  target_initial: yyyy/mm/dd HH:MM
+- locale: ja
+  format: string
+  source: Action
+  target: 操作
+  target_initial: 操作
+- locale: ja
+  format: string
+  source: Actions
+  target: 操作
+  target_initial: 操作
+- locale: ja
+  format: string
+  source: Active
+  target: 有効
+  target_initial: 有効
+- locale: ja
+  format: string
+  source: Add
+  target: 追加
+  target_initial: 追加
+- locale: ja
+  format: string
+  source: Age
+  target: 経過時間
+  target_initial: 経過時間
+- locale: ja
+  format: string
+  source: Apply
+  target: 適用
+  target_initial: 適用
+- locale: ja
+  format: string
+  source: Apr
+  target: 4月
+  target_initial: 4月
+- locale: ja
+  format: string
+  source: Attachment
+  target: 添付ファイル
+  target_initial: 添付ファイル
+- locale: ja
+  format: string
+  source: Aug
+  target: 8月
+  target_initial: 8月
+- locale: ja
+  format: string
+  source: Authentication
+  target: 認証
+  target_initial: 認証
+- locale: ja
+  format: string
+  source: Cancel
+  target: 取消
+  target_initial: 取消
+- locale: ja
+  format: string
+  source: City
+  target: 住所
+  target_initial: 住所
+- locale: ja
+  format: string
+  source: Closed
+  target: 完了
+  target_initial: 完了
+- locale: ja
+  format: string
+  source: Closed Tickets
+  target: 完了チケット
+  target_initial: 完了チケット
+- locale: ja
+  format: string
+  source: Country
+  target: 国
+  target_initial: 国
+- locale: ja
+  format: string
+  source: Create
+  target: 作成
+  target_initial: 作成
+- locale: ja
+  format: string
+  source: Create your first ticket
+  target: チケット作成
+  target_initial: チケット作成
+- locale: ja
+  format: string
+  source: Created
+  target: 作成日時
+  target_initial: 作成日時
+- locale: ja
+  format: string
+  source: Current password
+  target: 現在のパスワード
+  target_initial: 現在のパスワード
+- locale: ja
+  format: string
+  source: Days
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: Dec
+  target: 12月
+  target_initial: 12月
+- locale: ja
+  format: string
+  source: Delete
+  target: 削除
+  target_initial: 削除
+- locale: ja
+  format: string
+  source: Direction
+  target: 方向
+  target_initial: 方向
+- locale: ja
+  format: string
+  source: Edit
+  target: 編集
+  target_initial: 編集
+- locale: ja
+  format: string
+  source: Email
+  target: メール
+  target_initial: メール
+- locale: ja
+  format: string
+  source: Escalated Tickets
+  target: エスカレーションチケット
+  target_initial: エスカレーションチケット
+- locale: ja
+  format: string
+  source: Feb
+  target: 2月
+  target_initial: 2月
+- locale: ja
+  format: string
+  source: Filter
+  target: フィルタ
+  target_initial: フィルタ
+- locale: ja
+  format: string
+  source: First Response Time
+  target: 初回応答期限
+  target_initial: 初回応答期限
+- locale: ja
+  format: string
+  source: Firstname
+  target: 姓
+  target_initial: 姓
+- locale: ja
+  format: string
+  source: Forgot password?
+  target: パスワードを忘れましたか？
+  target_initial: パスワードを忘れましたか？
+- locale: ja
+  format: string
+  source: From
+  target: 差出人
+  target_initial: 差出人
+- locale: ja
+  format: string
+  source: Group
+  target: グループ
+  target_initial: グループ
+- locale: ja
+  format: string
+  source: Groups
+  target: グループ
+  target_initial: グループ
+- locale: ja
+  format: string
+  source: History
+  target: 履歴
+  target_initial: 履歴
+- locale: ja
+  format: string
+  source: Hours
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: Jan
+  target: 1月
+  target_initial: 1月
+- locale: ja
+  format: string
+  source: Jul
+  target: 7月
+  target_initial: 7月
+- locale: ja
+  format: string
+  source: Jun
+  target: 6月
+  target_initial: 6月
+- locale: ja
+  format: string
+  source: Language
+  target: 言語
+  target_initial: 言語
+- locale: ja
+  format: string
+  source: Lastname
+  target: 名
+  target_initial: 名
+- locale: ja
+  format: string
+  source: Linked Objects
+  target: 連結済対象
+  target_initial: 連結済対象
+- locale: ja
+  format: string
+  source: Loading...
+  target: 読み込み中...
+  target_initial: 読み込み中...
+- locale: ja
+  format: string
+  source: Mar
+  target: 3月
+  target_initial: 3月
+- locale: ja
+  format: string
+  source: May
+  target: 5月
+  target_initial: 5月
+- locale: ja
+  format: string
+  source: Merge
+  target: 結合
+  target_initial: 結合
+- locale: ja
+  format: string
+  source: Month
+  target: 月
+  target_initial: 月
+- locale: ja
+  format: string
+  source: My Tickets
+  target: 担当チケット
+  target_initial: 担当チケット
+- locale: ja
+  format: string
+  source: New
+  target: 新規
+  target_initial: 新規
+- locale: ja
+  format: string
+  source: New Ticket
+  target: 新規チケット
+  target_initial: 新規チケット
+- locale: ja
+  format: string
+  source: Next...
+  target: 次へ...
+  target_initial: 次へ...
+- locale: ja
+  format: string
+  source: Note
+  target: メモ
+  target_initial: メモ
+- locale: ja
+  format: string
+  source: Nov
+  target: 11月
+  target_initial: 11月
+- locale: ja
+  format: string
+  source: Number
+  target: 番号
+  target_initial: 番号
+- locale: ja
+  format: string
+  source: Oct
+  target: 10月
+  target_initial: 10月
+- locale: ja
+  format: string
+  source: Open Tickets
+  target: オープンチケット
+  target_initial: オープンチケット
+- locale: ja
+  format: string
+  source: Organization
+  target: 組織
+  target_initial: 組織
+- locale: ja
+  format: string
+  source: Owner
+  target: 所有者
+  target_initial: 所有者
+- locale: ja
+  format: string
+  source: Password
+  target: パスワード
+  target_initial: パスワード
+- locale: ja
+  format: string
+  source: Pending till
+  target: 保留時間
+  target_initial: 保留時間
+- locale: ja
+  format: string
+  source: Phone
+  target: 電話
+  target_initial: 電話
+- locale: ja
+  format: string
+  source: Priority
+  target: 優先度
+  target_initial: 優先度
+- locale: ja
+  format: string
+  source: Profile
+  target: プロファイル
+  target_initial: プロファイル
+- locale: ja
+  format: string
+  source: Reinstall
+  target: 再インストール
+  target_initial: 再インストール
+- locale: ja
+  format: string
+  source: Remove
+  target: 削除
+  target_initial: 削除
+- locale: ja
+  format: string
+  source: Reset
+  target: リセット
+  target_initial: リセット
+- locale: ja
+  format: string
+  source: Roles
+  target: ロール
+  target_initial: ロール
+- locale: ja
+  format: string
+  source: Save
+  target: 保存
+  target_initial: 保存
+- locale: ja
+  format: string
+  source: Search
+  target: 検索
+  target_initial: 検索
+- locale: ja
+  format: string
+  source: Sep
+  target: 9月
+  target_initial: 9月
+- locale: ja
+  format: string
+  source: Settings
+  target: 設定
+  target_initial: 設定
+- locale: ja
+  format: string
+  source: Signature
+  target: 署名
+  target_initial: 署名
+- locale: ja
+  format: string
+  source: Signatures
+  target: 署名
+  target_initial: 署名
+- locale: ja
+  format: string
+  source: Solution Time
+  target: 解決期限
+  target_initial: 解決期限
+- locale: ja
+  format: string
+  source: State
+  target: 状態
+  target_initial: 状態
+- locale: ja
+  format: string
+  source: Street
+  target: 建物名
+  target_initial: 建物名
+- locale: ja
+  format: string
+  source: Submit
+  target: 送信
+  target_initial: 送信
+- locale: ja
+  format: string
+  source: Templates
+  target: テンプレート
+  target_initial: テンプレート
+- locale: ja
+  format: string
+  source: Title
+  target: タイトル
+  target_initial: タイトル
+- locale: ja
+  format: string
+  source: To
+  target: 宛先
+  target_initial: 宛先
+- locale: ja
+  format: string
+  source: Type
+  target: タイプ
+  target_initial: タイプ
+- locale: ja
+  format: string
+  source: Update
+  target: 更新
+  target_initial: 更新
+- locale: ja
+  format: string
+  source: Update Time
+  target: 更新期限
+  target_initial: 更新期限
+- locale: ja
+  format: string
+  source: User
+  target: ユーザー
+  target_initial: ユーザー
+- locale: ja
+  format: string
+  source: Vendor
+  target: ベンダー
+  target_initial: ベンダー
+- locale: ja
+  format: string
+  source: Welcome!
+  target: ようこそ！
+  target_initial: ようこそ！
+- locale: ja
+  format: string
+  source: Year
+  target: 年
+  target_initial: 年
+- locale: ja
+  format: string
+  source: Zip
+  target: 郵便番号
+  target_initial: 郵便番号
+- locale: ja
+  format: string
+  source: hour
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: installed
+  target: インストール済
+  target_initial: インストール済
+- locale: ja
+  format: string
+  source: merged
+  target: 結合済
+  target_initial: 結合済
+- locale: ja
+  format: string
+  source: minute
+  target: 分
+  target_initial: 分
+- locale: ja
+  format: string
+  source: none
+  target: なし
+  target_initial: なし
+- locale: ja
+  format: string
+  source: of
+  target: "/"
+  target_initial: "/"
+- locale: ja
+  format: string
+  source: or
+  target: または
+  target_initial: または
+- locale: ja
+  format: string
+  source: removed
+  target: 削除
+  target_initial: 削除
+- locale: ja
+  format: string
+  source: sms
+  target: SMS
+  target_initial: SMS
+- locale: ja
+  format: string
+  source: uninstalled
+  target: 未インストール
+  target_initial: 未インストール
+- locale: ja
+  format: string
+  source: Admin
+  target: 管理
+  target_initial: 管理
+- locale: ja
+  format: string
+  source: Agent
+  target: 担当者
+  target_initial: 担当者
+- locale: ja
+  format: string
+  source: All
+  target: 全て
+  target_initial: 全て
+- locale: ja
+  format: string
+  source: Cc
+  target: Cc
+  target_initial: Cc
+- locale: ja
+  format: string
+  source: Comment
+  target: コメント
+  target_initial: コメント
+- locale: ja
+  format: string
+  source: Display
+  target: 表示
+  target_initial: 表示
+- locale: ja
+  format: string
+  source: Edit Customer
+  target: 顧客を編集
+  target_initial: 顧客を編集
+- locale: ja
+  format: string
+  source: Go Back
+  target: 戻る
+  target_initial: 戻る
+- locale: ja
+  format: string
+  source: Import
+  target: インポート
+  target_initial: インポート
+- locale: ja
+  format: string
+  source: Message
+  target: メッセージ
+  target_initial: メッセージ
+- locale: ja
+  format: string
+  source: Name
+  target: 名前
+  target_initial: 名前
+- locale: ja
+  format: string
+  source: Options
+  target: オプション
+  target_initial: オプション
+- locale: ja
+  format: string
+  source: System
+  target: システム
+  target_initial: システム
+- locale: ja
+  format: string
+  source: Ticket
+  target: チケット
+  target_initial: チケット
+- locale: ja
+  format: string
+  source: Tickets
+  target: チケット
+  target_initial: チケット
+- locale: ja
+  format: string
+  source: Version
+  target: バージョン
+  target_initial: バージョン
+- locale: ja
+  format: string
+  source: pending reminder
+  target: 保留 (期限付)
+  target_initial: 保留 (期限付)
+- locale: ja
+  format: string
+  source: Host
+  target: ホスト
+  target_initial: ホスト
+- locale: ja
+  format: string
+  source: Port
+  target: Port
+  target_initial: Port
+- locale: ja
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: ja
+  format: string
+  source: SystemID
+  target: システムID
+  target_initial: システムID
+- locale: ja
+  format: string
+  source: Upload
+  target: アップロード
+  target_initial: アップロード
+- locale: ja
+  format: string
+  source: Create Template
+  target: テンプレート作成
+  target_initial: テンプレート作成
+- locale: ja
+  format: string
+  source: Send Email
+  target: Eメールの送信
+  target_initial: Eメールの送信
+- locale: ja
+  format: string
+  source: Text
+  target: 本文
+  target_initial: 本文
+- locale: ja
+  format: string
+  source: Install Package
+  target: パッケージをインストール
+  target_initial: パッケージをインストール
+- locale: ja
+  format: string
+  source: Location
+  target: ロケーション
+  target_initial: ロケーション
+- locale: ja
+  format: string
+  source: Login
+  target: ログイン
+  target_initial: ログイン
+- locale: ja
+  format: string
+  source: Mobile
+  target: 携帯電話
+  target_initial: 携帯電話
+- locale: ja
+  format: string
+  source: Next
+  target: 次へ
+  target_initial: 次へ
+- locale: ja
+  format: string
+  source: Status
+  target: ステータス
+  target_initial: ステータス
+- locale: ja
+  format: string
+  source: Calendar
+  target: カレンダー
+  target_initial: カレンダー
+- locale: ja
+  format: string
+  source: Configuration
+  target: 設定
+  target_initial: 設定
+- locale: ja
+  format: string
+  source: Intro
+  target: イントロ
+  target_initial: イントロ
+- locale: ja
+  format: string
+  source: Session
+  target: セッション
+  target_initial: セッション
+- locale: ja
+  format: string
+  source: Created by
+  target: 作成者
+  target_initial: 作成者
+- locale: ja
+  format: string
+  source: Description
+  target: 説明
+  target_initial: 説明
+- locale: ja
+  format: string
+  source: Escalation times
+  target: エスカレーション時間
+  target_initial: エスカレーション時間
+- locale: ja
+  format: string
+  source: Friday
+  target: 金曜日
+  target_initial: 金曜日
+- locale: ja
+  format: string
+  source: Monday
+  target: 月曜日
+  target_initial: 月曜日
+- locale: ja
+  format: string
+  source: Preview
+  target: プレビュー
+  target_initial: プレビュー
+- locale: ja
+  format: string
+  source: Saturday
+  target: 土曜日
+  target_initial: 土曜日
+- locale: ja
+  format: string
+  source: Sunday
+  target: 日曜日
+  target_initial: 日曜日
+- locale: ja
+  format: string
+  source: Thursday
+  target: 木曜日
+  target_initial: 木曜日
+- locale: ja
+  format: string
+  source: Time
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: Tuesday
+  target: 火曜日
+  target_initial: 火曜日
+- locale: ja
+  format: string
+  source: Wednesday
+  target: 水曜日
+  target_initial: 水曜日
+- locale: ja
+  format: string
+  source: Chat
+  target: チャット
+  target_initial: チャット
+- locale: ja
+  format: string
+  source: April
+  target: 4月
+  target_initial: 4月
+- locale: ja
+  format: string
+  source: August
+  target: 8月
+  target_initial: 8月
+- locale: ja
+  format: string
+  source: Close
+  target: 完了
+  target_initial: 完了
+- locale: ja
+  format: string
+  source: Continue
+  target: 続ける
+  target_initial: 続ける
+- locale: ja
+  format: string
+  source: December
+  target: 12月
+  target_initial: 12月
+- locale: ja
+  format: string
+  source: February
+  target: 2月
+  target_initial: 2月
+- locale: ja
+  format: string
+  source: Fri
+  target: 金
+  target_initial: 金
+- locale: ja
+  format: string
+  source: January
+  target: 1月
+  target_initial: 1月
+- locale: ja
+  format: string
+  source: July
+  target: 7月
+  target_initial: 7月
+- locale: ja
+  format: string
+  source: June
+  target: 6月
+  target_initial: 6月
+- locale: ja
+  format: string
+  source: March
+  target: 3月
+  target_initial: 3月
+- locale: ja
+  format: string
+  source: Mon
+  target: 月
+  target_initial: 月
+- locale: ja
+  format: string
+  source: November
+  target: 11月
+  target_initial: 11月
+- locale: ja
+  format: string
+  source: October
+  target: 10月
+  target_initial: 10月
+- locale: ja
+  format: string
+  source: Open
+  target: 対応中
+  target_initial: 対応中
+- locale: ja
+  format: string
+  source: Sat
+  target: 土
+  target_initial: 土
+- locale: ja
+  format: string
+  source: Send
+  target: 送信
+  target_initial: 送信
+- locale: ja
+  format: string
+  source: September
+  target: 9月
+  target_initial: 9月
+- locale: ja
+  format: string
+  source: Sun
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: Thu
+  target: 木
+  target_initial: 木
+- locale: ja
+  format: string
+  source: Tue
+  target: 火
+  target_initial: 火
+- locale: ja
+  format: string
+  source: Wed
+  target: 水
+  target_initial: 水
+- locale: ja
+  format: string
+  source: closed
+  target: 完了
+  target_initial: 完了
+- locale: ja
+  format: string
+  source: day
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: days
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: email
+  target: メール
+  target_initial: メール
+- locale: ja
+  format: string
+  source: hours
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: minutes
+  target: 分
+  target_initial: 分
+- locale: ja
+  format: string
+  source: 'no'
+  target: いいえ
+  target_initial: いいえ
+- locale: ja
+  format: string
+  source: note
+  target: メモ
+  target_initial: メモ
+- locale: ja
+  format: string
+  source: open
+  target: 対応中
+  target_initial: 対応中
+- locale: ja
+  format: string
+  source: phone
+  target: 電話
+  target_initial: 電話
+- locale: ja
+  format: string
+  source: 'yes'
+  target: はい
+  target_initial: はい
+- locale: ja
+  format: string
+  source: All tickets
+  target: 全てのチケット
+  target_initial: 全てのチケット
+- locale: ja
+  format: string
+  source: Child
+  target: 子
+  target_initial: 子
+- locale: ja
+  format: string
+  source: Content
+  target: 内容
+  target_initial: 内容
+- locale: ja
+  format: string
+  source: Customer
+  target: 顧客
+  target_initial: 顧客
+- locale: ja
+  format: string
+  source: Day
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: Down
+  target: 降順
+  target_initial: 降順
+- locale: ja
+  format: string
+  source: Email address
+  target: メールアドレス
+  target_initial: メールアドレス
+- locale: ja
+  format: string
+  source: Escalation
+  target: エスカレーション
+  target_initial: エスカレーション
+- locale: ja
+  format: string
+  source: Fax
+  target: Fax
+  target_initial: Fax
+- locale: ja
+  format: string
+  source: Finish
+  target: 完了
+  target_initial: 完了
+- locale: ja
+  format: string
+  source: Last run
+  target: 最終実行
+  target_initial: 最終実行
+- locale: ja
+  format: string
+  source: Logout
+  target: ログアウト
+  target_initial: ログアウト
+- locale: ja
+  format: string
+  source: New group
+  target: 新規グループ
+  target_initial: 新規グループ
+- locale: ja
+  format: string
+  source: New password
+  target: 新しいパスワード
+  target_initial: 新しいパスワード
+- locale: ja
+  format: string
+  source: 'No'
+  target: いいえ
+  target_initial: いいえ
+- locale: ja
+  format: string
+  source: Normal
+  target: 標準
+  target_initial: 標準
+- locale: ja
+  format: string
+  source: Notice
+  target: 通知
+  target_initial: 通知
+- locale: ja
+  format: string
+  source: Open tickets
+  target: 対応中チケット
+  target_initial: 対応中チケット
+- locale: ja
+  format: string
+  source: Parent
+  target: 親
+  target_initial: 親
+- locale: ja
+  format: string
+  source: Pending
+  target: 保留
+  target_initial: 保留
+- locale: ja
+  format: string
+  source: Previous
+  target: 過去
+  target_initial: 過去
+- locale: ja
+  format: string
+  source: Reply
+  target: 返信
+  target_initial: 返信
+- locale: ja
+  format: string
+  source: Split
+  target: 分割
+  target_initial: 分割
+- locale: ja
+  format: string
+  source: and
+  target: "-"
+  target_initial: "-"
+- locale: ja
+  format: string
+  source: new
+  target: 新規
+  target_initial: 新規
+- locale: ja
+  format: string
+  source: week
+  target: 週
+  target_initial: 週
+- locale: ja
+  format: string
+  source: Agents
+  target: 担当者
+  target_initial: 担当者
+- locale: ja
+  format: string
+  source: Example
+  target: 例
+  target_initial: 例
+- locale: ja
+  format: string
+  source: Expires
+  target: 期限切れ
+  target_initial: 期限切れ
+- locale: ja
+  format: string
+  source: Select
+  target: 選択
+  target_initial: 選択
+- locale: ja
+  format: string
+  source: Dashboard
+  target: ダッシュボード
+  target_initial: ダッシュボード
+- locale: ja
+  format: string
+  source: Date
+  target: 日付
+  target_initial: 日付
+- locale: ja
+  format: string
+  source: Hour
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: Add Link
+  target: リンクを追加
+  target_initial: リンクを追加
+- locale: ja
+  format: string
+  source: Add Tag
+  target: タグを追加
+  target_initial: タグを追加
+- locale: ja
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: ja
+  format: string
+  source: Manage
+  target: 管理
+  target_initial: 管理
+- locale: ja
+  format: string
+  source: Users
+  target: ユーザ
+  target_initial: ユーザ
+- locale: ja
+  format: string
+  source: Management
+  target: 管理
+  target_initial: 管理
+- locale: ja
+  format: string
+  source: Organizations
+  target: 組織
+  target_initial: 組織
+- locale: ja
+  format: string
+  source: Translations
+  target: !binary |-
+    57+76KizFBQ=
+  target_initial: !binary |-
+    57+76KizFBQ=
+- locale: ja
+  format: string
+  source: not translated
+  target: !binary |-
+    bm90IHRyYW5zbGF0ZWQUFBQUFBQU
+  target_initial: !binary |-
+    bm90IHRyYW5zbGF0ZWQUFBQUFBQU
+- locale: ja
+  format: string
+  source: "∅ Waiting time today"
+  target: "∅ Waiting time today"
+  target_initial: "∅ Waiting time today"
+- locale: ja
+  format: string
+  source: "%s Migration"
+  target: "%s Migration"
+  target_initial: "%s Migration"
+- locale: ja
+  format: string
+  source: Credit card
+  target: クレジットカード
+  target_initial: クレジットカード
+- locale: ja
+  format: string
+  source: Group by
+  target: 表示選択方法
+  target_initial: 表示選択方法
+- locale: ja
+  format: string
+  source: Credit card number
+  target: クレジットカード番号
+  target_initial: クレジットカード番号
+- locale: ja
+  format: string
+  source: Save as template
+  target: テンプレートとして保存
+  target_initial: テンプレートとして保存
+- locale: ja
+  format: string
+  source: Sign out
+  target: サインアウト
+  target_initial: サインアウト
+- locale: ja
+  format: string
+  source: Security
+  target: セキュリティー
+  target_initial: セキュリティー
+- locale: ja
+  format: string
+  source: Attributes
+  target: 属性
+  target_initial: 属性
+- locale: ja
+  format: string
+  source: Select the customer of the ticket or create one.
+  target: チケットの顧客を選択するか、作成します。
+  target_initial: チケットの顧客を選択するか、作成します。
+- locale: ja
+  format: string
+  source: New User
+  target: 新規ユーザー
+  target_initial: 新規ユーザー
+- locale: ja
+  format: string
+  source: close
+  target: 閉じる
+  target_initial: 閉じる
+- locale: ja
+  format: string
+  source: pending
+  target: 保留中
+  target_initial: 保留中
+- locale: ja
+  format: string
+  source: Activity Stream
+  target: アクティビティーの流れ
+  target_initial: アクティビティーの流れ
+- locale: ja
+  format: string
+  source: updated
+  target: 更新済
+  target_initial: 更新済
+- locale: ja
+  format: string
+  source: created
+  target: 作成済
+  target_initial: 作成済
+- locale: ja
+  format: string
+  source: Unassigned Tickets
+  target: 未割り当てチケット
+  target_initial: 未割り当てチケット
+- locale: ja
+  format: string
+  source: Unassigned & Open Tickets
+  target: 未割り当て対応中のチケット
+  target_initial: 未割り当て対応中のチケット
+- locale: ja
+  format: string
+  source: All Tickets
+  target: 全てのチケット
+  target_initial: 全てのチケット
+- locale: ja
+  format: string
+  source: Password (confirm)
+  target: パスワード (確認)
+  target_initial: パスワード (確認)
+- locale: ja
+  format: string
+  source: Role
+  target: 役割
+  target_initial: 役割
+- locale: ja
+  format: string
+  source: Base
+  target: ベース
+  target_initial: ベース
+- locale: ja
+  format: string
+  source: Sender Format
+  target: 送信者のフォーマット
+  target_initial: 送信者のフォーマット
+- locale: ja
+  format: string
+  source: Product Name
+  target: 製品名
+  target_initial: 製品名
+- locale: ja
+  format: string
+  source: Linked Accounts
+  target: リンクされたアカウント
+  target_initial: リンクされたアカウント
+- locale: ja
+  format: string
+  source: Sign in with
+  target: 次でサインイン
+  target_initial: 次でサインイン
+- locale: ja
+  format: string
+  source: Username or email
+  target: ユーザー名またはメールアドレス
+  target_initial: ユーザー名またはメールアドレス
+- locale: ja
+  format: string
+  source: Week
+  target: 週
+  target_initial: 週
+- locale: ja
+  format: string
+  source: Remember me
+  target: このアカウントを記憶する
+  target_initial: このアカウントを記憶する
+- locale: ja
+  format: string
+  source: Sign in using
+  target: 次を用いてサインイン
+  target_initial: 次を用いてサインイン
+- locale: ja
+  format: string
+  source: New to
+  target: 次は初めて
+  target_initial: 次は初めて
+- locale: ja
+  format: string
+  source: join today!
+  target: 今すぐ参加！
+  target_initial: 今すぐ参加！
+- locale: ja
+  format: string
+  source: Sign up
+  target: サインアップ
+  target_initial: サインアップ
+- locale: ja
+  format: string
+  source: Sign in
+  target: サインイン
+  target_initial: サインイン
+- locale: ja
+  format: string
+  source: Create my account
+  target: アカウント作成
+  target_initial: アカウント作成
+- locale: ja
+  format: string
+  source: Login successfully! Have a nice day!
+  target: ログインできました！ よい一日を！
+  target_initial: ログインできました！ よい一日を！
+- locale: ja
+  format: string
+  source: Last contact
+  target: 直近のコンタクト
+  target_initial: 直近のコンタクト
+- locale: ja
+  format: string
+  source: First response
+  target: 最初の応答
+  target_initial: 最初の応答
+- locale: ja
+  format: string
+  source: Ticket %s created!
+  target: チケット %sが作成できました！
+  target_initial: チケット %sが作成できました！
+- locale: ja
+  format: string
+  source: See more
+  target: もっと見る
+  target_initial: もっと見る
+- locale: ja
+  format: string
+  source: Forgot your password?
+  target: パスワードをお忘れですか？
+  target_initial: パスワードをお忘れですか？
+- locale: ja
+  format: string
+  source: set to internal
+  target: 内部に設定
+  target_initial: 内部に設定
+- locale: ja
+  format: string
+  source: set to public
+  target: 公開に設定
+  target_initial: 公開に設定
+- locale: ja
+  format: string
+  source: split
+  target: スプリット
+  target_initial: スプリット
+- locale: ja
+  format: string
+  source: raw
+  target: 列
+  target_initial: 列
+- locale: ja
+  format: string
+  source: 1 low
+  target: 1 低
+  target_initial: 1 低
+- locale: ja
+  format: string
+  source: 2 normal
+  target: 2 通常
+  target_initial: 2 通常
+- locale: ja
+  format: string
+  source: 3 high
+  target: 3 髙
+  target_initial: 3 髙
+- locale: ja
+  format: string
+  source: public
+  target: 公開
+  target_initial: 公開
+- locale: ja
+  format: string
+  source: internal
+  target: 内部
+  target_initial: 内部
+- locale: ja
+  format: string
+  source: Attach files
+  target: ファイルを添付
+  target_initial: ファイルを添付
+- locale: ja
+  format: string
+  source: Visibility
+  target: 可視性
+  target_initial: 可視性
+- locale: ja
+  format: string
+  source: twitter status
+  target: ツイッターのステータス
+  target_initial: ツイッターのステータス
+- locale: ja
+  format: string
+  source: twitter direct-message
+  target: ツイッターのダイレクトメッセージ
+  target_initial: ツイッターのダイレクトメッセージ
+- locale: ja
+  format: string
+  source: All Open Tickets
+  target: 全ての対応中チケット
+  target_initial: 全ての対応中チケット
+- locale: ja
+  format: string
+  source: Links
+  target: リンク
+  target_initial: リンク
+- locale: ja
+  format: string
+  source: Change Customer
+  target: 顧客を変更
+  target_initial: 顧客を変更
+- locale: ja
+  format: string
+  source: My Organization Tickets
+  target: 私の組織のチケット
+  target_initial: 私の組織のチケット
+- locale: ja
+  format: string
+  source: My Organization
+  target: 私の組織
+  target_initial: 私の組織
+- locale: ja
+  format: string
+  source: Assignment Timeout
+  target: 割当てのタイムアウト
+  target_initial: 割当てのタイムアウト
+- locale: ja
+  format: string
+  source: We've sent password reset instructions to your email address.
+  target: メールアドレスにパスワードのリセット方法を送信しました。
+  target_initial: メールアドレスにパスワードのリセット方法を送信しました。
+- locale: ja
+  format: string
+  source: Push my changes
+  target: 変更を適用
+  target_initial: 変更を適用
+- locale: ja
+  format: string
+  source: Choose your new password.
+  target: 新規パスワードを選択してください。
+  target_initial: 新規パスワードを選択してください。
+- locale: ja
+  format: string
+  source: Woo hoo! Your password has been changed!
+  target: やったぁ！ パスワードが変更されました！
+  target_initial: やったぁ！ パスワードが変更されました！
+- locale: ja
+  format: string
+  source: Please try to login!
+  target: 再度お試しください！
+  target_initial: 再度お試しください！
+- locale: ja
+  format: string
+  source: Username or email address invalid, please try again.
+  target: ユーザー名またはメールアドレスが正しくありません。再度お試しください。
+  target_initial: ユーザー名またはメールアドレスが正しくありません。再度お試しください。
+- locale: ja
+  format: string
+  source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  target: 1、2分以内にやり方が届かない場合は、メールの迷惑メールフォルダーを確認するか、再度リクエストをお送りください。
+  target_initial: 1、2分以内にやり方が届かない場合は、メールの迷惑メールフォルダーを確認するか、再度リクエストをお送りください。
+- locale: ja
+  format: string
+  source: again
+  target: 再度
+  target_initial: 再度
+- locale: ja
+  format: string
+  source: Please click the button below to create your first one.
+  target: 下のボタンをクリックして、最初のものを作成してください。
+  target_initial: 下のボタンをクリックして、最初のものを作成してください。
+- locale: ja
+  format: string
+  source: First Solution
+  target: 最初のソリューション
+  target_initial: 最初のソリューション
+- locale: ja
+  format: string
+  source: uninstall
+  target: アンインストール
+  target_initial: アンインストール
+- locale: ja
+  format: string
+  source: install
+  target: インストール
+  target_initial: インストール
+- locale: ja
+  format: string
+  source: reinstall
+  target: 再インストール
+  target_initial: 再インストール
+- locale: ja
+  format: string
+  source: deactivate
+  target: 非アクティブ化する
+  target_initial: 非アクティブ化する
+- locale: ja
+  format: string
+  source: activate
+  target: アクティブ化する
+  target_initial: アクティブ化する
+- locale: ja
+  format: string
+  source: deactivated
+  target: 非アクティブ化済
+  target_initial: 非アクティブ化済
+- locale: ja
+  format: string
+  source: activated
+  target: アクティブな状態に設定済
+  target_initial: アクティブな状態に設定済
+- locale: ja
+  format: string
+  source: Change order
+  target: 順序を変更
+  target_initial: 順序を変更
+- locale: ja
+  format: string
+  source: Items per page
+  target: ページ当たりのアイテム数
+  target_initial: ページ当たりのアイテム数
+- locale: ja
+  format: string
+  source: Call Outbound
+  target: 外部呼び出し
+  target_initial: 外部呼び出し
+- locale: ja
+  format: string
+  source: Create an inbound Ticket
+  target: 受信チケットの作成
+  target_initial: 受信チケットの作成
+- locale: ja
+  format: string
+  source: Create an outbound Ticket (will send this as email to customer)
+  target: 送信チケットの作成 (顧客にメールとして送信)
+  target_initial: 送信チケットの作成 (顧客にメールとして送信)
+- locale: ja
+  format: string
+  source: Article Count
+  target: 記事数
+  target_initial: 記事数
+- locale: ja
+  format: string
+  source: Article
+  target: 記事
+  target_initial: 記事
+- locale: ja
+  format: string
+  source: First Response
+  target: 最初の応答
+  target_initial: 最初の応答
+- locale: ja
+  format: string
+  source: up
+  target: 上
+  target_initial: 上
+- locale: ja
+  format: string
+  source: down
+  target: 下
+  target_initial: 下
+- locale: ja
+  format: string
+  source: Inbound
+  target: 受信
+  target_initial: 受信
+- locale: ja
+  format: string
+  source: Outbound
+  target: 送信
+  target_initial: 送信
+- locale: ja
+  format: string
+  source: Adresses
+  target: 住所
+  target_initial: 住所
+- locale: ja
+  format: string
+  source: Moved in
+  target: 入居
+  target_initial: 入居
+- locale: ja
+  format: string
+  source: Moved out
+  target: 転出
+  target_initial: 転出
+- locale: ja
+  format: string
+  source: Invitation sent!
+  target: 招待を送信しました！
+  target_initial: 招待を送信しました！
+- locale: ja
+  format: string
+  source: Can't create user
+  target: ユーザーを作成できません！
+  target_initial: ユーザーを作成できません！
+- locale: ja
+  format: string
+  source: Update successful!
+  target: アップデートができました！
+  target_initial: アップデートができました！
+- locale: ja
+  format: string
+  source: Invite Agents
+  target: エージェントを招待
+  target_initial: エージェントを招待
+- locale: ja
+  format: string
+  source: Getting started!
+  target: さぁ、始めよう！
+  target_initial: さぁ、始めよう！
+- locale: ja
+  format: string
+  source: Create Admin
+  target: 管理を作成
+  target_initial: 管理を作成
+- locale: ja
+  format: string
+  source: Configure Channels
+  target: チャネルを設定
+  target_initial: チャネルを設定
+- locale: ja
+  format: string
+  source: Send invitation
+  target: 招待を送信
+  target_initial: 招待を送信
+- locale: ja
+  format: string
+  source: Follow up possible
+  target: フォローアップできます
+  target_initial: フォローアップできます
+- locale: ja
+  format: string
+  source: Assign Follow Ups
+  target: フォローアップを割当て
+  target_initial: フォローアップを割当て
+- locale: ja
+  format: string
+  source: Change your password
+  target: パスワードを変更してください
+  target_initial: パスワードを変更してください
+- locale: ja
+  format: string
+  source: Link Accounts
+  target: アカウントをリンクする
+  target_initial: アカウントをリンクする
+- locale: ja
+  format: string
+  source: Change your language.
+  target: 言語を変更します。
+  target_initial: 言語を変更します。
+- locale: ja
+  format: string
+  source: Call Inbound
+  target: 内部呼び出し
+  target_initial: 内部呼び出し
+- locale: ja
+  format: string
+  source: Work Disposition
+  target: 作業配置
+  target_initial: 作業配置
+- locale: ja
+  format: string
+  source: Business Times
+  target: 営業時間
+  target_initial: 営業時間
+- locale: ja
+  format: string
+  source: New SLA
+  target: 新SLA
+  target_initial: 新SLA
+- locale: ja
+  format: string
+  source: Conditions where SLA is used
+  target: SLAの使用条件
+  target_initial: SLAの使用条件
+- locale: ja
+  format: string
+  source: Add Attribute
+  target: 属性を追加
+  target_initial: 属性を追加
+- locale: ja
+  format: string
+  source: Back to top
+  target: トップに戻る
+  target_initial: トップに戻る
+- locale: ja
+  format: string
+  source: Discard your unsaved changes.
+  target: 保存されていない変更を破棄する。
+  target_initial: 保存されていない変更を破棄する。
+- locale: ja
+  format: string
+  source: 'Copy to clipboard: Ctrl+C, Enter'
+  target: 'クリップボードにコピー: Ctrl+C、Enter'
+  target_initial: 'クリップボードにコピー: Ctrl+C、Enter'
+- locale: ja
+  format: string
+  source: Keywords
+  target: キーワード
+  target_initial: キーワード
+- locale: ja
+  format: string
+  source: Send to clients
+  target: クライアントに送信
+  target_initial: クライアントに送信
+- locale: ja
+  format: string
+  source: Feedback about our new Interface
+  target: 新規インターフェイスについてのご意見
+  target_initial: 新規インターフェイスについてのご意見
+- locale: ja
+  format: string
+  source: What ideas do you have?
+  target: どのような考えをお持ちですか？
+  target_initial: どのような考えをお持ちですか？
+- locale: ja
+  format: string
+  source: Attach Screenshot of page
+  target: ページのスクリーンショットを添付
+  target_initial: ページのスクリーンショットを添付
+- locale: ja
+  format: string
+  source: Thanks for your Feedback!
+  target: ご意見をありがとうございます！
+  target_initial: ご意見をありがとうございます！
+- locale: ja
+  format: string
+  source: What can you do here?
+  target: ここで何ができますか？
+  target_initial: ここで何ができますか？
+- locale: ja
+  format: string
+  source: Here you can create one.
+  target: ここで作成できます。
+  target_initial: ここで作成できます。
+- locale: ja
+  format: string
+  source: Fold in
+  target: 折りたたむ
+  target_initial: 折りたたむ
+- locale: ja
+  format: string
+  source: from
+  target: 送信元
+  target_initial: 送信元
+- locale: ja
+  format: string
+  source: to
+  target: 宛先
+  target_initial: 宛先
+- locale: ja
+  format: string
+  source: "%s ago"
+  target: "%s 前"
+  target_initial: "%s 前"
+- locale: ja
+  format: string
+  source: in %s
+  target: "%s に"
+  target_initial: "%s に"
+- locale: ja
+  format: string
+  source: Mark all as seen.
+  target: 全て既読として印をつけます。
+  target_initial: 全て既読として印をつけます。
+- locale: ja
+  format: string
+  source: Enter Answer or
+  target: 答えを入力する または
+  target_initial: 答えを入力する または
+- locale: ja
+  format: string
+  source: session started
+  target: セッション開始
+  target_initial: セッション開始
+- locale: ja
+  format: string
+  source: Original
+  target: オリジナル
+  target_initial: オリジナル
+- locale: ja
+  format: string
+  source: is the same
+  target: は同じです
+  target_initial: は同じです
+- locale: ja
+  format: string
+  source: Target
+  target: ターゲット
+  target_initial: ターゲット
+- locale: ja
+  format: string
+  source: Words
+  target: 語数
+  target_initial: 語数
+- locale: ja
+  format: string
+  source: Reload application
+  target: アプリケーションを再ロード
+  target_initial: アプリケーションを再ロード
+- locale: ja
+  format: string
+  source: set internal
+  target: 内部に設定
+  target_initial: 内部に設定
+- locale: ja
+  format: string
+  source: Recipients
+  target: 受取人
+  target_initial: 受取人
+- locale: ja
+  format: string
+  source: Uploading
+  target: アップロード中
+  target_initial: アップロード中
+- locale: ja
+  format: string
+  source: Cancel Upload
+  target: アップロードをキャンセル
+  target_initial: アップロードをキャンセル
+- locale: ja
+  format: string
+  source: Create new Customer
+  target: 新規顧客を作成
+  target_initial: 新規顧客を作成
+- locale: ja
+  format: string
+  source: pending close
+  target: 保留中の完了
+  target_initial: 保留中の完了
+- locale: ja
+  format: string
+  source: now
+  target: たった今
+  target_initial: たった今
+- locale: ja
+  format: string
+  source: Tags
+  target: タグ
+  target_initial: タグ
+- locale: ja
+  format: string
+  source: Edit Organization
+  target: 組織を編集
+  target_initial: 組織を編集
+- locale: ja
+  format: string
+  source: Channel
+  target: チャネル
+  target_initial: チャネル
+- locale: ja
+  format: string
+  source: reply
+  target: 返信
+  target_initial: 返信
+- locale: ja
+  format: string
+  source: New Add-On
+  target: 新規アドオン
+  target_initial: 新規アドオン
+- locale: ja
+  format: string
+  source: Edit Addon
+  target: アドオンを編集
+  target_initial: アドオンを編集
+- locale: ja
+  format: string
+  source: New Branch
+  target: 新規ブランチ
+  target_initial: 新規ブランチ
+- locale: ja
+  format: string
+  source: Edit Branch
+  target: ブランチを編集
+  target_initial: ブランチを編集
+- locale: ja
+  format: string
+  source: Build Test Release
+  target: テストリリースを構築
+  target_initial: テストリリースを構築
+- locale: ja
+  format: string
+  source: New Release
+  target: 新規リリース
+  target_initial: 新規リリース
+- locale: ja
+  format: string
+  source: Changes
+  target: 変更
+  target_initial: 変更
+- locale: ja
+  format: string
+  source: All pending reached Tickets
+  target: 全ての保留中の到達チケット
+  target_initial: 全ての保留中の到達チケット
+- locale: ja
+  format: string
+  source: Confirm
+  target: 確認
+  target_initial: 確認
+- locale: ja
+  format: string
+  source: Profiles
+  target: プロファイル
+  target_initial: プロファイル
+- locale: ja
+  format: string
+  source: Channels
+  target: チャネル
+  target_initial: チャネル
+- locale: ja
+  format: string
+  source: Twitter
+  target: ツイッター
+  target_initial: ツイッター
+- locale: ja
+  format: string
+  source: Facebook
+  target: Facebook
+  target_initial: Facebook
+- locale: ja
+  format: string
+  source: Packages
+  target: パッケージ
+  target_initial: パッケージ
+- locale: ja
+  format: string
+  source: Objects
+  target: オブジェクト
+  target_initial: オブジェクト
+- locale: ja
+  format: string
+  source: Maintenance
+  target: メンテナンス
+  target_initial: メンテナンス
+- locale: ja
+  format: string
+  source: Sessions
+  target: セッション
+  target_initial: セッション
+- locale: ja
+  format: string
+  source: Search for users
+  target: ユーザーを検索
+  target_initial: ユーザーを検索
+- locale: ja
+  format: string
+  source: Addons
+  target: アドオン
+  target_initial: アドオン
+- locale: ja
+  format: string
+  source: Source
+  target: ソース
+  target_initial: ソース
+- locale: ja
+  format: string
+  source: Object Manager
+  target: オブジェクトマネージャー
+  target_initial: オブジェクトマネージャー
+- locale: ja
+  format: string
+  source: Sync Changes
+  target: Syncの変更
+  target_initial: Syncの変更
+- locale: ja
+  format: string
+  source: New Attribute
+  target: 新規属性
+  target_initial: 新規属性
+- locale: ja
+  format: string
+  source: Members
+  target: メンバー
+  target_initial: メンバー
+- locale: ja
+  format: string
+  source: Add a Note
+  target: メモを追加
+  target_initial: メモを追加
+- locale: ja
+  format: string
+  source: Shared organization
+  target: 組織の共有
+  target_initial: 組織の共有
+- locale: ja
+  format: string
+  source: Notifications
+  target: 通知
+  target_initial: 通知
+- locale: ja
+  format: string
+  source: Mark all as read
+  target: 全てを既読として印付けする
+  target_initial: 全てを既読として印付けする
+- locale: ja
+  format: string
+  source: My Group
+  target: マイグループ
+  target_initial: マイグループ
+- locale: ja
+  format: string
+  source: My Stats
+  target: マイ統計
+  target_initial: マイ統計
+- locale: ja
+  format: string
+  source: Add-ons
+  target: アドオン
+  target_initial: アドオン
+- locale: ja
+  format: string
+  source: Tools
+  target: ツール
+  target_initial: ツール
+- locale: ja
+  format: string
+  source: Ticket Hook
+  target: チケットフック
+  target_initial: チケットフック
+- locale: ja
+  format: string
+  source: Ticket Hook Position
+  target: チケットフックの位置
+  target_initial: チケットフックの位置
+- locale: ja
+  format: string
+  source: Authentication via LinkedIn
+  target: LinkedInで認証
+  target_initial: LinkedInで認証
+- locale: ja
+  format: string
+  source: Authentication via Google
+  target: Googleで認証
+  target_initial: Googleで認証
+- locale: ja
+  format: string
+  source: Twitter Secret
+  target: ツイッターの秘密
+  target_initial: ツイッターの秘密
+- locale: ja
+  format: string
+  source: Twitter Key
+  target: ツイッターのキー
+  target_initial: ツイッターのキー
+- locale: ja
+  format: string
+  source: At a glance
+  target: 一見
+  target_initial: 一見
+- locale: ja
+  format: string
+  source: Needed
+  target: 必要
+  target_initial: 必要
+- locale: ja
+  format: string
+  source: Minimal size
+  target: 最小サイズ
+  target_initial: 最小サイズ
+- locale: ja
+  format: string
+  source: Lost Password
+  target: 紛失パスワード
+  target_initial: 紛失パスワード
+- locale: ja
+  format: string
+  source: Prio
+  target: Prio
+  target_initial: Prio
+- locale: ja
+  format: string
+  source: Available for Role
+  target: 役割を果たせる
+  target_initial: 役割を果たせる
+- locale: ja
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: ja
+  format: string
+  source: New Overview
+  target: 新規概要
+  target_initial: 新規概要
+- locale: ja
+  format: string
+  source: New Organization
+  target: 新規組織
+  target_initial: 新規組織
+- locale: ja
+  format: string
+  source: New Group
+  target: 新規グループ
+  target_initial: 新規グループ
+- locale: ja
+  format: string
+  source: Enable Ticket creation
+  target: チケット作成を有効化
+  target_initial: チケット作成を有効化
+- locale: ja
+  format: string
+  source: Max. Email Size
+  target: 最大のメールサイズ
+  target_initial: 最大のメールサイズ
+- locale: ja
+  format: string
+  source: Maximal size in MB of emails.
+  target: MB単位でのメールの最大サイズ
+  target_initial: MB単位でのメールの最大サイズ
+- locale: ja
+  format: string
+  source: Notification Sender
+  target: 通知の送信者
+  target_initial: 通知の送信者
+- locale: ja
+  format: string
+  source: Import Mode
+  target: インポートモード
+  target_initial: インポートモード
+- locale: ja
+  format: string
+  source: Import Endpoint
+  target: インポートのエンドポイント
+  target_initial: インポートのエンドポイント
+- locale: ja
+  format: string
+  source: Import Key
+  target: インポートキー
+  target_initial: インポートキー
+- locale: ja
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: ja
+  format: string
+  source: Storage
+  target: ストレージ
+  target_initial: ストレージ
+- locale: ja
+  format: string
+  source: Geo Services
+  target: ジオサービス
+  target_initial: ジオサービス
+- locale: ja
+  format: string
+  source: Frontend
+  target: フロントエンド
+  target_initial: フロントエンド
+- locale: ja
+  format: string
+  source: http type
+  target: httpタイプ
+  target_initial: httpタイプ
+- locale: ja
+  format: string
+  source: Storage Mechanism
+  target: ストレージメカニズム
+  target_initial: ストレージメカニズム
+- locale: ja
+  format: string
+  source: Geo IP Backend
+  target: ジオIPバックエンド
+  target_initial: ジオIPバックエンド
+- locale: ja
+  format: string
+  source: Geo Location Backend
+  target: ジオロケーションバックエンド
+  target_initial: ジオロケーションバックエンド
+- locale: ja
+  format: string
+  source: Releases
+  target: リリース
+  target_initial: リリース
+- locale: ja
+  format: string
+  source: Branches
+  target: ブランチ
+  target_initial: ブランチ
+- locale: ja
+  format: string
+  source: Recent Releases
+  target: 最近のリリース
+  target_initial: 最近のリリース
+- locale: ja
+  format: string
+  source: Recent Addons
+  target: 最近のアドオン
+  target_initial: 最近のアドオン
+- locale: ja
+  format: string
+  source: SLAs
+  target: SLA
+  target_initial: SLA
+- locale: ja
+  format: string
+  source: Checksum
+  target: チェックサム
+  target_initial: チェックサム
+- locale: ja
+  format: string
+  source: Authentication via Facebook
+  target: Facebookで認証
+  target_initial: Facebookで認証
+- locale: ja
+  format: string
+  source: Authentication via Twitter
+  target: ツイッターで認証
+  target_initial: ツイッターで認証
+- locale: ja
+  format: string
+  source: Maximal failed logins
+  target: 失敗ログイン最大数
+  target_initial: 失敗ログイン最大数
+- locale: ja
+  format: string
+  source: Maximal failed logins after account is inactive.
+  target: アカウントが非アクティブになった後の失敗ログイン最大数
+  target_initial: アカウントが非アクティブになった後の失敗ログイン最大数
+- locale: ja
+  format: string
+  source: Digit required
+  target: 必要な桁数
+  target_initial: 必要な桁数
+- locale: ja
+  format: string
+  source: Enables users to create their own account via web interface.
+  target: ウェブインターフェイスで、ユーザーが自分でアカウント作成できるようにします。
+  target_initial: ウェブインターフェイスで、ユーザーが自分でアカウント作成できるようにします。
+- locale: ja
+  format: string
+  source: New User Accounts
+  target: 新規ユーザーアカウント
+  target_initial: 新規ユーザーアカウント
+- locale: ja
+  format: string
+  source: Defines OTRS endpoint auth key.
+  target: OTRSエンドポイント認証キーを定義します。
+  target_initial: OTRSエンドポイント認証キーを定義します。
+- locale: ja
+  format: string
+  source: Defines OTRS endpoint to import users, ticket, states and articles.
+  target: OTRSエンドポイントを定義してユーザー、チケット、ステート、記事をインポートします。
+  target_initial: OTRSエンドポイントを定義してユーザー、チケット、ステート、記事をインポートします。
+- locale: ja
+  format: string
+  source: Defines the backend for geo location lookups.
+  target: ジオロケーション検索用のバックエンドを定義
+  target_initial: ジオロケーション検索用のバックエンドを定義
+- locale: ja
+  format: string
+  source: Defines the backend for geo ip lookups.
+  target: ジオIP検索用のバックエンドを定義
+  target_initial: ジオIP検索用のバックエンドを定義
+- locale: ja
+  format: string
+  source: New Profile
+  target: 新規プロファイル
+  target_initial: 新規プロファイル
+- locale: ja
+  format: string
+  source: Register as a new customer
+  target: 新規顧客として登録
+  target_initial: 新規顧客として登録
+- locale: ja
+  format: string
+  source: here
+  target: ここ
+  target_initial: ここ
+- locale: ja
+  format: string
+  source: Reset Password
+  target: パスワードをリセット
+  target_initial: パスワードをリセット
+- locale: ja
+  format: string
+  source: Cancel & Go Back
+  target: キャンセルして戻る
+  target_initial: キャンセルして戻る
+- locale: ja
+  format: string
+  source: Tickets of User
+  target: ユーザーのチケット
+  target_initial: ユーザーのチケット
+- locale: ja
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: お使いのメールアドレスで弊社サポートチームと連絡されている場合は、すでに登録されています。
+  target_initial: お使いのメールアドレスで弊社サポートチームと連絡されている場合は、すでに登録されています。
+- locale: ja
+  format: string
+  source: Login with %s
+  target: "%s でログイン"
+  target_initial: "%s でログイン"
+- locale: ja
+  format: string
+  source: You can request your password
+  target: パスワードをリクエスト可能
+  target_initial: パスワードをリクエスト可能
+- locale: ja
+  format: string
+  source: Password needs to contain 2 lower and 2 upper characters.
+  target: パスワードには小文字2つと大文字2つ必要です。
+  target_initial: パスワードには小文字2つと大文字2つ必要です。
+- locale: ja
+  format: string
+  source: Password needs to have at least one digit.
+  target: パスワードには数字が少なくとも1つ必要です。
+  target_initial: パスワードには数字が少なくとも1つ必要です。
+- locale: ja
+  format: string
+  source: Shoot
+  target: 撮影
+  target_initial: 撮影
+- locale: ja
+  format: string
+  source: Discard
+  target: 廃棄
+  target_initial: 廃棄
+- locale: ja
+  format: string
+  source: Camera
+  target: カメラ
+  target_initial: カメラ
+- locale: ja
+  format: string
+  source: Online
+  target: オンライン
+  target_initial: オンライン
+- locale: ja
+  format: string
+  source: Email & Online
+  target: メールとオンライン
+  target_initial: メールとオンライン
+- locale: ja
+  format: string
+  source: no criteria
+  target: 条件なし
+  target_initial: 条件なし
+- locale: ja
+  format: string
+  source: Owned by nobody
+  target: 誰にも所有されていません
+  target_initial: 誰にも所有されていません
+- locale: ja
+  format: string
+  source: Owned by me
+  target: 私が所有
+  target_initial: 私が所有
+- locale: ja
+  format: string
+  source: Criteria
+  target: 条件
+  target_initial: 条件
+- locale: ja
+  format: string
+  source: Matrix
+  target: マトリックス
+  target_initial: マトリックス
+- locale: ja
+  format: string
+  source: Avatar
+  target: アバター
+  target_initial: アバター
+- locale: ja
+  format: string
+  source: No template created yet.
+  target: まだテンプレートは作成されていません。
+  target_initial: まだテンプレートは作成されていません。
+- locale: ja
+  format: string
+  source: Save Template
+  target: テンプレートを保存
+  target_initial: テンプレートを保存
+- locale: ja
+  format: string
+  source: Choose Template
+  target: テンプレートを選択
+  target_initial: テンプレートを選択
+- locale: ja
+  format: string
+  source: Outbound Call
+  target: 外部呼び出し
+  target_initial: 外部呼び出し
+- locale: ja
+  format: string
+  source: Received Call
+  target: 内部呼び出し
+  target_initial: 内部呼び出し
+- locale: ja
+  format: string
+  source: Choose attributes and then save them as a new template.
+  target: 属性を選択し、新規テンプレートとして保存します。
+  target_initial: 属性を選択し、新規テンプレートとして保存します。
+- locale: ja
+  format: string
+  source: Tickets of Organization
+  target: 組織のチケット
+  target_initial: 組織のチケット
+- locale: ja
+  format: string
+  source: Frequency
+  target: 頻度
+  target_initial: 頻度
+- locale: ja
+  format: string
+  source: Save new template
+  target: 新規テンプレートを保存
+  target_initial: 新規テンプレートを保存
+- locale: ja
+  format: string
+  source: Triggers
+  target: トリガー
+  target_initial: トリガー
+- locale: ja
+  format: string
+  source: Schedulers
+  target: スケジューラー
+  target_initial: スケジューラー
+- locale: ja
+  format: string
+  source: New Project
+  target: 新規プロジェクト
+  target_initial: 新規プロジェクト
+- locale: ja
+  format: string
+  source: Time Tracking
+  target: 時間の追跡
+  target_initial: 時間の追跡
+- locale: ja
+  format: string
+  source: Projects
+  target: プロジェクト
+  target_initial: プロジェクト
+- locale: ja
+  format: string
+  source: Will also be included in emails as an X-Header.
+  target: Xヘッダーとして、メールにも含まれます。
+  target_initial: Xヘッダーとして、メールにも含まれます。
+- locale: ja
+  format: string
+  source: Send client stats to central server.
+  target: クライアントの統計を中央サーバーに送信します。
+  target_initial: クライアントの統計を中央サーバーに送信します。
+- locale: ja
+  format: string
+  source: Activates lost password feature for users.
+  target: ユーザーの紛失したパスワード機能をアクティブ化します。
+  target_initial: ユーザーの紛失したパスワード機能をアクティブ化します。
+- locale: ja
+  format: string
+  source: Restore Defaults
+  target: デフォルトを復元
+  target_initial: デフォルトを復元
+- locale: ja
+  format: string
+  source: Package
+  target: パッケージ
+  target_initial: パッケージ
+- locale: ja
+  format: string
+  source: Ticket Number Format
+  target: チケット番号のフォーマット
+  target_initial: チケット番号のフォーマット
+- locale: ja
+  format: string
+  source: Ticket Subject Size
+  target: チケット表題のサイズ
+  target_initial: チケット表題のサイズ
+- locale: ja
+  format: string
+  source: App Secret
+  target: アプリの秘訣
+  target_initial: アプリの秘訣
+- locale: ja
+  format: string
+  source: App ID
+  target: アプリのID
+  target_initial: アプリのID
+- locale: ja
+  format: string
+  source: Send client stats
+  target: クライアントの統計を送信
+  target_initial: クライアントの統計を送信
+- locale: ja
+  format: string
+  source: Client storage
+  target: クライアントのストレージ
+  target_initial: クライアントのストレージ
+- locale: ja
+  format: string
+  source: Fully Qualified Domain Name
+  target: 完全適格なドメイン名
+  target_initial: 完全適格なドメイン名
+- locale: ja
+  format: string
+  source: Status Code
+  target: ステータスコード
+  target_initial: ステータスコード
+- locale: ja
+  format: string
+  source: Delete File
+  target: ファイルを削除
+  target_initial: ファイルを削除
+- locale: ja
+  format: string
+  source: Select Template
+  target: テンプレートを選択
+  target_initial: テンプレートを選択
+- locale: ja
+  format: string
+  source: Tag
+  target: タグ
+  target_initial: タグ
+- locale: ja
+  format: string
+  source: Push Changes
+  target: 変更を適用
+  target_initial: 変更を適用
+- locale: ja
+  format: string
+  source: Template Title
+  target: テンプレートのタイトル
+  target_initial: テンプレートのタイトル
+- locale: ja
+  format: string
+  source: Layout Reference
+  target: レイアウト参照
+  target_initial: レイアウト参照
+- locale: ja
+  format: string
+  source: Pink
+  target: ピンク
+  target_initial: ピンク
+- locale: ja
+  format: string
+  source: Purple
+  target: 紫
+  target_initial: 紫
+- locale: ja
+  format: string
+  source: Switch to
+  target: 次に切替
+  target_initial: 次に切替
+- locale: ja
+  format: string
+  source: Logo
+  target: ロゴ
+  target_initial: ロゴ
+- locale: ja
+  format: string
+  source: Zammad looks like this for "%s"
+  target: '"%s"に対して、Zammadはこの様に見えます'
+  target_initial: '"%s"に対して、Zammadはこの様に見えます'
+- locale: ja
+  format: string
+  source: Blue
+  target: 青
+  target_initial: 青
+- locale: ja
+  format: string
+  source: Green
+  target: 緑
+  target_initial: 緑
+- locale: ja
+  format: string
+  source: Yellow
+  target: 黄
+  target_initial: 黄
+- locale: ja
+  format: string
+  source: First Steps
+  target: 最初のステップ
+  target_initial: 最初のステップ
+- locale: ja
+  format: string
+  source: Store
+  target: 保存
+  target_initial: 保存
+- locale: ja
+  format: string
+  source: New Macro
+  target: 新規マクロ
+  target_initial: 新規マクロ
+- locale: ja
+  format: string
+  source: Setup Finished
+  target: 設定完了
+  target_initial: 設定完了
+- locale: ja
+  format: string
+  source: Block Notifications
+  target: 通知をブロック
+  target_initial: 通知をブロック
+- locale: ja
+  format: string
+  source: Browser
+  target: ブラウザー
+  target_initial: ブラウザー
+- locale: ja
+  format: string
+  source: Configure Base
+  target: ベースを設定
+  target_initial: ベースを設定
+- locale: ja
+  format: string
+  source: Company Inc.
+  target: 会社
+  target_initial: 会社
+- locale: ja
+  format: string
+  source: Connect Channels
+  target: チャネルを接続
+  target_initial: チャネルを接続
+- locale: ja
+  format: string
+  source: Organization Name
+  target: 組織名
+  target_initial: 組織名
+- locale: ja
+  format: string
+  source: Your Logo
+  target: あなたのロゴ
+  target_initial: あなたのロゴ
+- locale: ja
+  format: string
+  source: System URL
+  target: システムのURL
+  target_initial: システムのURL
+- locale: ja
+  format: string
+  source: Skip
+  target: スキップ
+  target_initial: スキップ
+- locale: ja
+  format: string
+  source: Enter Template Name
+  target: テンプレート名を入力
+  target_initial: テンプレート名を入力
+- locale: ja
+  format: string
+  source: Address
+  target: 住所
+  target_initial: 住所
+- locale: ja
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: ja
+  format: string
+  source: Send Mails via
+  target: 次でメールを送信
+  target_initial: 次でメールを送信
+- locale: ja
+  format: string
+  source: Enable Chat
+  target: チャットをオン
+  target_initial: チャットをオン
+- locale: ja
+  format: string
+  source: Maintenance Message
+  target: メンテナンスメッセージ
+  target_initial: メンテナンスメッセージ
+- locale: ja
+  format: string
+  source: Continue session
+  target: セッションを継続
+  target_initial: セッションを継続
+- locale: ja
+  format: string
+  source: View from user's perspective
+  target: ユーザーの視点から見る
+  target_initial: ユーザーの視点から見る
+- locale: ja
+  format: string
+  source: Status Type
+  target: ステータスタイプ
+  target_initial: ステータスタイプ
+- locale: ja
+  format: string
+  source: Project
+  target: プロジェクト
+  target_initial: プロジェクト
+- locale: ja
+  format: string
+  source: Show
+  target: 表示
+  target_initial: 表示
+- locale: ja
+  format: string
+  source: escalation
+  target: エスカレーション
+  target_initial: エスカレーション
+- locale: ja
+  format: string
+  source: Twitter App Credentials
+  target: ツイッターアプリの認証情報
+  target_initial: ツイッターアプリの認証情報
+- locale: ja
+  format: string
+  source: new & open
+  target: 新規と対応中
+  target_initial: 新規と対応中
+- locale: ja
+  format: string
+  source: Notes
+  target: メモ
+  target_initial: メモ
+- locale: ja
+  format: string
+  source: Direct URL
+  target: 直接URL
+  target_initial: 直接URL
+- locale: ja
+  format: string
+  source: Calendars
+  target: カレンダー
+  target_initial: カレンダー
+- locale: ja
+  format: string
+  source: Business Hours
+  target: 営業時間
+  target_initial: 営業時間
+- locale: ja
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% が現在実行中"
+  target_initial: "%s% が現在実行中"
+- locale: ja
+  format: string
+  source: Updated at
+  target: 次で更新済
+  target_initial: 次で更新済
+- locale: ja
+  format: string
+  source: Updated by
+  target: 次が更新済
+  target_initial: 次が更新済
+- locale: ja
+  format: string
+  source: Created at
+  target: 次で作成済
+  target_initial: 次で作成済
+- locale: ja
+  format: string
+  source: No filter.
+  target: フィルターなし。
+  target_initial: フィルターなし。
+- locale: ja
+  format: string
+  source: is
+  target: は
+  target_initial: は
+- locale: ja
+  format: string
+  source: 'Average: %s%'
+  target: '平均: %s%'
+  target_initial: '平均: %s%'
+- locale: ja
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: '私に割り当てられたチケット: %s 中 %s'
+  target_initial: '私に割り当てられたチケット: %s 中 %s'
+- locale: ja
+  format: string
+  source: 'Average: %s'
+  target: '平均: %s'
+  target_initial: '平均: %s'
+- locale: ja
+  format: string
+  source: Assigned
+  target: 割当て済
+  target_initial: 割当て済
+- locale: ja
+  format: string
+  source: Channel Distribution
+  target: チャネル配分
+  target_initial: チャネル配分
+- locale: ja
+  format: string
+  source: 'Total: %s'
+  target: '総数: %s'
+  target_initial: '総数: %s'
+- locale: ja
+  format: string
+  source: 'Average: %s minutes'
+  target: '平均: %s 分'
+  target_initial: '平均: %s 分'
+- locale: ja
+  format: string
+  source: Form
+  target: 送信者
+  target_initial: 送信者
+- locale: ja
+  format: string
+  source: before (absolute)
+  target: 前 (絶対）
+  target_initial: 前 (絶対）
+- locale: ja
+  format: string
+  source: matches
+  target: マッチ
+  target_initial: マッチ
+- locale: ja
+  format: string
+  source: Timeframe for solving the problem.
+  target: 問題解決の予定時間。
+  target_initial: 問題解決の予定時間。
+- locale: ja
+  format: string
+  source: Timeframe for every following response.
+  target: 次の各応答に対する予定時間。
+  target_initial: 次の各応答に対する予定時間。
+- locale: ja
+  format: string
+  source: Timeframe for the first response.
+  target: 最初の応答に対する予定時間。
+  target_initial: 最初の応答に対する予定時間。
+- locale: ja
+  format: string
+  source: after (relative)
+  target: 後 (比較)
+  target_initial: 後 (比較)
+- locale: ja
+  format: string
+  source: before (relative)
+  target: 前 (比較)
+  target_initial: 前 (比較)
+- locale: ja
+  format: string
+  source: contains not
+  target: 含まない
+  target_initial: 含まない
+- locale: ja
+  format: string
+  source: contains
+  target: 含む
+  target_initial: 含む
+- locale: ja
+  format: string
+  source: in hours
+  target: 時間
+  target_initial: 時間
+- locale: ja
+  format: string
+  source: Ticket Selector
+  target: チケットセレクター
+  target_initial: チケットセレクター
+- locale: ja
+  format: string
+  source: is not
+  target: ではない
+  target_initial: ではない
+- locale: ja
+  format: string
+  source: Escalation Times
+  target: エスカレーション時間
+  target_initial: エスカレーション時間
+- locale: ja
+  format: string
+  source: after (absolute)
+  target: 後 (絶対)
+  target_initial: 後 (絶対)
+- locale: ja
+  format: string
+  source: Mood
+  target: ムード
+  target_initial: ムード
+- locale: ja
+  format: string
+  source: Where
+  target: 場所
+  target_initial: 場所
+- locale: ja
+  format: string
+  source: Enter timzone...
+  target: 時間帯を入力…
+  target_initial: 時間帯を入力…
+- locale: ja
+  format: string
+  source: "%s of my tickets escalated."
+  target: 私のチケットの %s がエスカレートされた。
+  target_initial: 私のチケットの %s がエスカレートされた。
+- locale: ja
+  format: string
+  source: Pushing translations to i18n.zammad.com
+  target: i18n.zammad.comに翻訳を送信
+  target_initial: i18n.zammad.comに翻訳を送信
+- locale: ja
+  format: string
+  source: Thanks for contributing!
+  target: ありがとうございます！
+  target_initial: ありがとうございます！
+- locale: ja
+  format: string
+  source: Get latest translations
+  target: 最新の翻訳を入手
+  target_initial: 最新の翻訳を入手
+- locale: ja
+  format: string
+  source: Ticket Subscriptions
+  target: チケットのサブスクリプション
+  target_initial: チケットのサブスクリプション
+- locale: ja
+  format: string
+  source: Reset changes
+  target: 変更のリセット
+  target_initial: 変更のリセット
+- locale: ja
+  format: string
+  source: Web
+  target: ウェブ
+  target_initial: ウェブ
+- locale: ja
+  format: string
+  source: Trigger
+  target: トリガー
+  target_initial: トリガー
+- locale: ja
+  format: string
+  source: Enable/Disable online chat.
+  target: オンラインチャットのオン/オフ
+  target_initial: オンラインチャットのオン/オフ
+- locale: ja
+  format: string
+  source: reached
+  target: 到達
+  target_initial: 到達
+- locale: ja
+  format: string
+  source: today
+  target: 今日
+  target_initial: 今日
+- locale: ja
+  format: string
+  source: at
+  target: 次で
+  target_initial: 次で
+- locale: ja
+  format: string
+  source: Customer Chat
+  target: 顧客チャット
+  target_initial: 顧客チャット
+- locale: ja
+  format: string
+  source: Pending reached
+  target: 保留中の到達
+  target_initial: 保留中の到達
+- locale: ja
+  format: string
+  source: Macros
+  target: マクロ
+  target_initial: マクロ
+- locale: ja
+  format: string
+  source: Report Profiles
+  target: レポートプロファイル
+  target_initial: レポートプロファイル
+- locale: ja
+  format: string
+  source: Devices
+  target: デバイス
+  target_initial: デバイス
+- locale: ja
+  format: string
+  source: Close tab
+  target: 完了タブ
+  target_initial: 完了タブ
+- locale: ja
+  format: string
+  source: Stay on tab
+  target: タブに留まる
+  target_initial: タブに留まる
+- locale: ja
+  format: string
+  source: Close & Tag as Spam
+  target: 完了してスパムとしてタグ付け
+  target_initial: 完了してスパムとしてタグ付け
+- locale: ja
+  format: string
+  source: Report
+  target: レポート
+  target_initial: レポート
+- locale: ja
+  format: string
+  source: Branding
+  target: ブランディング
+  target_initial: ブランディング
+- locale: ja
+  format: string
+  source: Waiting Customers
+  target: 待機顧客
+  target_initial: 待機顧客
+- locale: ja
+  format: string
+  source: Chatting Customers
+  target: チャット中顧客
+  target_initial: チャット中顧客
+- locale: ja
+  format: string
+  source: Active Agents
+  target: アクティブなエージェント
+  target_initial: アクティブなエージェント
+- locale: ja
+  format: string
+  source: Your Email Configuration
+  target: お使いのメール設定
+  target_initial: お使いのメール設定
+- locale: ja
+  format: string
+  source: ended switch to
+  target: 次に切替を終了
+  target_initial: 次に切替を終了
+- locale: ja
+  format: string
+  source: Reopening rate
+  target: レポートレート
+  target_initial: レポートレート
+- locale: ja
+  format: string
+  source: Widget
+  target: ウィジェット
+  target_initial: ウィジェット
+- locale: ja
+  format: string
+  source: Invite Agents/Colleges
+  target: エージェント/同僚を招待
+  target_initial: エージェント/同僚を招待
+- locale: ja
+  format: string
+  source: Enable debugging for implementation.
+  target: 実施のためデバッグをオンにします。
+  target_initial: 実施のためデバッグをオンにします。
+- locale: ja
+  format: string
+  source: Option
+  target: オプション
+  target_initial: オプション
+- locale: ja
+  format: string
+  source: Designer
+  target: デザイナー
+  target_initial: デザイナー
+- locale: ja
+  format: string
+  source: Font size
+  target: フォントサイズ
+  target_initial: フォントサイズ
+- locale: ja
+  format: string
+  source: Flat design.
+  target: フラットデザイン。
+  target_initial: フラットデザイン。
+- locale: ja
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'マイ取扱時間: %s 分'
+  target_initial: 'マイ取扱時間: %s 分'
+- locale: ja
+  format: string
+  source: E. g. recent changed tickets, users or organizations.
+  target: 最近変更したチケット、ユーザー、組織等。
+  target_initial: 最近変更したチケット、ユーザー、組織等。
+- locale: ja
+  format: string
+  source: switch to
+  target: 次に切替
+  target_initial: 次に切替
+- locale: ja
+  format: string
+  source: Accounts
+  target: アカウント
+  target_initial: アカウント
+- locale: ja
+  format: string
+  source: Sender Format Seperator
+  target: 送信者のフォーマットセパレーター
+  target_initial: 送信者のフォーマットセパレーター
+- locale: ja
+  format: string
+  source: Email Notification
+  target: メール通知
+  target_initial: メール通知
+- locale: ja
+  format: string
+  source: Additional follow up detection
+  target: その他のフォローアップ検出
+  target_initial: その他のフォローアップ検出
+- locale: ja
+  format: string
+  source: Defines the sender of email notifications.
+  target: 通知メール送信者の定義
+  target_initial: 通知メール送信者の定義
+- locale: ja
+  format: string
+  source: Destination Group
+  target: デスティネーショングループ
+  target_initial: デスティネーショングループ
+- locale: ja
+  format: string
+  source: Email Address
+  target: メールアドレス
+  target_initial: メールアドレス
+- locale: ja
+  format: string
+  source: Protocol
+  target: プロトコル
+  target_initial: プロトコル
+- locale: ja
+  format: string
+  source: Email Accounts
+  target: メールアカウント
+  target_initial: メールアカウント
+- locale: ja
+  format: string
+  source: escalated
+  target: エスカレート済
+  target_initial: エスカレート済
+- locale: ja
+  format: string
+  source: Escalated
+  target: エスカレート済
+  target_initial: エスカレート済
+- locale: ja
+  format: string
+  source: Connect
+  target: 接続
+  target_initial: 接続
+- locale: ja
+  format: string
+  source: Email Account
+  target: メールアカウント
+  target_initial: メールアカウント
+- locale: ja
+  format: string
+  source: Testing
+  target: テスト中
+  target_initial: テスト中
+- locale: ja
+  format: string
+  source: Verifying...
+  target: 検証中…
+  target_initial: 検証中…
+- locale: ja
+  format: string
+  source: Email Inbound
+  target: 受信メール
+  target_initial: 受信メール
+- locale: ja
+  format: string
+  source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  target: あなたのメールボックスには、すでに %s 通のメールがあります。 Zammad は全てあなたのメールボックスから、Zammad に移動します。
+  target_initial: あなたのメールボックスには、すでに %s 通のメールがあります。 Zammad は全てあなたのメールボックスから、Zammad
+    に移動します。
+- locale: ja
+  format: string
+  source: Email Outbound
+  target: 送信メール
+  target_initial: 送信メール
+- locale: ja
+  format: string
+  source: Organization Support
+  target: 組織サポート
+  target_initial: 組織サポート
+- locale: ja
+  format: string
+  source: Verify sending and receiving
+  target: 送受信を検証
+  target_initial: 送受信を検証
+- locale: ja
+  format: string
+  source: Department Name
+  target: 部署名
+  target_initial: 部署名
+- locale: ja
+  format: string
+  source: support@example.com
+  target: support@example.com
+  target_initial: support@example.com
+- locale: ja
+  format: string
+  source: Feedback Form
+  target: ご意見フォーム
+  target_initial: ご意見フォーム
+- locale: ja
+  format: string
+  source: Widget Designer
+  target: ウィジェットデザイナー
+  target_initial: ウィジェットデザイナー
+- locale: ja
+  format: string
+  source: LinkedIn App Credentials
+  target: LinkedIn アプリの認証情報
+  target_initial: LinkedIn アプリの認証情報
+- locale: ja
+  format: string
+  source: Name of form submit button
+  target: フォーム送信ボタン名
+  target_initial: フォーム送信ボタン名
+- locale: ja
+  format: string
+  source: Message after sending form
+  target: フォーム送信後のメッセージ
+  target_initial: フォーム送信後のメッセージ
+- locale: ja
+  format: string
+  source: Start modal dialog for form.
+  target: フォームに対するモーダルダイアログを開始します。
+  target_initial: フォームに対するモーダルダイアログを開始します。
+- locale: ja
+  format: string
+  source: Show title in form.
+  target: フォームのタイトルを表示。
+  target_initial: フォームのタイトルを表示。
+- locale: ja
+  format: string
+  source: Thank you for your inquiry! We'll contact you soon as possible.
+  target: お問い合わせありがとうございます！ できるだけ迅速にご連絡させて頂きます。
+  target_initial: お問い合わせありがとうございます！ できるだけ迅速にご連絡させて頂きます。
+- locale: ja
+  format: string
+  source: just now
+  target: たった今
+  target_initial: たった今
+- locale: ja
+  format: string
+  source: You have no configured account right now.
+  target: 現在設定されたアカウントはありません。
+  target_initial: 現在設定されたアカウントはありません。
+- locale: ja
+  format: string
+  source: Fixed Email Accounts
+  target: 固定メールアカウント
+  target_initial: 固定メールアカウント
+- locale: ja
+  format: string
+  source: Attached Files
+  target: 添付ファイル
+  target_initial: 添付ファイル
+- locale: ja
+  format: string
+  source: Holidays
+  target: 休日
+  target_initial: 休日
+- locale: ja
+  format: string
+  source: Default
+  target: デフォルト
+  target_initial: デフォルト
+- locale: ja
+  format: string
+  source: New Calendar
+  target: 新規カレンダー
+  target_initial: 新規カレンダー
+- locale: ja
+  format: string
+  source: Some Text
+  target: いくつかのテキスト
+  target_initial: いくつかのテキスト
+- locale: ja
+  format: string
+  source: Inline translation
+  target: インライン翻訳
+  target_initial: インライン翻訳
+- locale: ja
+  format: string
+  source: Just click into the marker and update the words just in place. Enjoy!
+  target: マーカー内をクリックして、単語をアップデートしてください。 お楽しみください！
+  target_initial: マーカー内をクリックして、単語をアップデートしてください。 お楽しみください！
+- locale: ja
+  format: string
+  source: busy
+  target: 取り込み中
+  target_initial: 取り込み中
+- locale: ja
+  format: string
+  source: Text with enabled inline translations looks like
+  target: インライン翻訳をオンにしたテキストは、次のようになります
+  target_initial: インライン翻訳をオンにしたテキストは、次のようになります
+- locale: ja
+  format: string
+  source: If you want to translate it via the translation table, just go ahead below.
+  target: 翻訳テーブルで翻訳したい場合は、次で翻訳してください。
+  target_initial: 翻訳テーブルで翻訳したい場合は、次で翻訳してください。
+- locale: ja
+  format: string
+  source: Text with disabled inline translations looks like
+  target: インライン翻訳をオフにしたテキストは、次のようになります
+  target_initial: インライン翻訳をオフにしたテキストは、次のようになります
+- locale: ja
+  format: string
+  source: All computers and browsers that have access to your Zammad appear here.
+  target: あなたのZammadにアクセスできる全てのコンピューターとブラウザーが、ここに表示されます。
+  target_initial: あなたのZammadにアクセスできる全てのコンピューターとブラウザーが、ここに表示されます。
+- locale: ja
+  format: string
+  source: Next in overview
+  target: 次の概要
+  target_initial: 次の概要
+- locale: ja
+  format: string
+  source: Previous in overview
+  target: 以前の概要
+  target_initial: 以前の概要
+- locale: ja
+  format: string
+  source: Background color
+  target: 背景色
+  target_initial: 背景色
+- locale: ja
+  format: string
+  source: Topics
+  target: トピックス
+  target_initial: トピックス
+- locale: ja
+  format: string
+  source: The default font size is 12px.
+  target: デフォルトのフォントサイズは 12px です。
+  target_initial: デフォルトのフォントサイズは 12px です。
+- locale: ja
+  format: string
+  source: There are too many people in queue for the chat.
+  target: チャットを待っている人が多すぎます。
+  target_initial: チャットを待っている人が多すぎます。
+- locale: ja
+  format: string
+  source: The chat is turned off.
+  target: チャットはオフです。
+  target_initial: チャットはオフです。
+- locale: ja
+  format: string
+  source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  target: ブラウザーが古すぎます。 チャットに使用する WebSocket テクノロジーに対応していません。
+  target_initial: ブラウザーが古すぎます。 チャットに使用する WebSocket テクノロジーに対応していません。
+- locale: ja
+  format: string
+  source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  target: ここでサインアウト、フロントエンド言語の変更、または最新閲覧したアイテムを表示できます。
+  target_initial: ここでサインアウト、フロントエンド言語の変更、または最新閲覧したアイテムを表示できます。
+- locale: ja
+  format: string
+  source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  target: ここで新規チケットを作成できます。 また許可をお持ちの場合は、新規顧客を組織を作成できます。
+  target_initial: ここで新規チケットを作成できます。 また許可をお持ちの場合は、新規顧客を組織を作成できます。
+- locale: ja
+  format: string
+  source: Personal Settings
+  target: 個人設定
+  target_initial: 個人設定
+- locale: ja
+  format: string
+  source: Ticket update
+  target: チケットのアップデート
+  target_initial: チケットのアップデート
+- locale: ja
+  format: string
+  source: Newbie
+  target: 新参者
+  target_initial: 新参者
+- locale: ja
+  format: string
+  source: Ticket reminder reached
+  target: チケットのリマインダーに到達
+  target_initial: チケットのリマインダーに到達
+- locale: ja
+  format: string
+  source: Limit Groups
+  target: 制限グループ
+  target_initial: 制限グループ
+- locale: ja
+  format: string
+  source: Ticket escalation
+  target: チケットのエスカレーション
+  target_initial: チケットのエスカレーション
+- locale: ja
+  format: string
+  source: Not Assigned
+  target: 未割当
+  target_initial: 未割当
+- locale: ja
+  format: string
+  source: New Version
+  target: 新バージョン
+  target_initial: 新バージョン
+- locale: ja
+  format: string
+  source: A new version of Zammad is available, please reload your browser.
+  target: Zammad の新バージョンがありますので、ブラウザーを再読込してください。
+  target_initial: Zammad の新バージョンがありますので、ブラウザーを再読込してください。
+- locale: ja
+  format: string
+  source: Also notify via email
+  target: メールでも通知
+  target_initial: メールでも通知
+- locale: ja
+  format: string
+  source: "%s switched to |%s|!"
+  target: "%s が |%s| に切り替わりました！"
+  target_initial: "%s が |%s| に切り替わりました！"
+- locale: ja
+  format: string
+  source: "%s created Organization |%s|"
+  target: "%s が組織 |%s| を作成"
+  target_initial: "%s が組織 |%s| を作成"
+- locale: ja
+  format: string
+  source: "%s created Group |%s|"
+  target: "%s がグループ |%s| を作成"
+  target_initial: "%s がグループ |%s| を作成"
+- locale: ja
+  format: string
+  source: Pending reminder reached for Ticket |%s|
+  target: チケット |%s| に対する保留のリマインダーに到達
+  target_initial: チケット |%s| に対する保留のリマインダーに到達
+- locale: ja
+  format: string
+  source: "%s updated User |%s|"
+  target: "%s がユーザー |%s| を更新"
+  target_initial: "%s がユーザー |%s| を更新"
+- locale: ja
+  format: string
+  source: "%s updated Group |%s|"
+  target: "%s がグループ |%s| を更新"
+  target_initial: "%s がグループ |%s| を更新"
+- locale: ja
+  format: string
+  source: "%s updated Organization |%s|"
+  target: "%s が組織 |%s| を更新"
+  target_initial: "%s が組織 |%s| を更新"
+- locale: ja
+  format: string
+  source: "%s created Article for |%s|"
+  target: "%s が |%s| に対する記事を作成"
+  target_initial: "%s が |%s| に対する記事を作成"
+- locale: ja
+  format: string
+  source: Ticket |%s| is escalated!
+  target: チケット %s がエスカレートされました！
+  target_initial: チケット %s がエスカレートされました！
+- locale: ja
+  format: string
+  source: "%s started a new session"
+  target: "%s が新セッションを開始"
+  target_initial: "%s が新セッションを開始"
+- locale: ja
+  format: string
+  source: Subscription Settings
+  target: サブスクリプション設定
+  target_initial: サブスクリプション設定
+- locale: ja
+  format: string
+  source: Most recent activity
+  target: 最新のアクティビティー
+  target_initial: 最新のアクティビティー
+- locale: ja
+  format: string
+  source: View this in Zammad
+  target: Zammad でこれを表示
+  target_initial: Zammad でこれを表示
+- locale: ja
+  format: string
+  source: Manage your notifications settings
+  target: 通知設定を管理
+  target_initial: 通知設定を管理
+- locale: ja
+  format: string
+  source: "%s created User |%s|"
+  target: "%s がユーザー |%s| を作成"
+  target_initial: "%s がユーザー |%s| を作成"
+- locale: ja
+  format: string
+  source: Sending...
+  target: 送信中…
+  target_initial: 送信中…
+- locale: ja
+  format: string
+  source: Reply to last article
+  target: 最後の記事に返信
+  target_initial: 最後の記事に返信
+- locale: ja
+  format: string
+  source: Open note box
+  target: メモボックスを開く
+  target_initial: メモボックスを開く
+- locale: ja
+  format: string
+  source: Enable/disable inline translations
+  target: インライン翻訳をオン/オフ
+  target_initial: インライン翻訳をオン/オフ
+- locale: ja
+  format: string
+  source: Select item
+  target: アイテムを選択
+  target_initial: アイテムを選択
+- locale: ja
+  format: string
+  source: Used when composing a text
+  target: テキスト作成時に使用
+  target_initial: テキスト作成時に使用
+- locale: ja
+  format: string
+  source: Text editing
+  target: テキスト編集
+  target_initial: テキスト編集
+- locale: ja
+  format: string
+  source: Used when viewing a Ticket
+  target: チケット表示時に使用
+  target_initial: チケット表示時に使用
+- locale: ja
+  format: string
+  source: Update as closed
+  target: 完了としてアップデート
+  target_initial: 完了としてアップデート
+- locale: ja
+  format: string
+  source: Open reply box
+  target: 応答ボックスを開く
+  target_initial: 応答ボックスを開く
+- locale: ja
+  format: string
+  source: Removes any hyperlink
+  target: ハイパーリンクを全て削除
+  target_initial: ハイパーリンクを全て削除
+- locale: ja
+  format: string
+  source: Format as h3 heading
+  target: h3ヘディングとしてフォーマット
+  target_initial: h3ヘディングとしてフォーマット
+- locale: ja
+  format: string
+  source: Format as h2 heading
+  target: h2ヘディングとしてフォーマット
+  target_initial: h2ヘディングとしてフォーマット
+- locale: ja
+  format: string
+  source: Format as h1 heading
+  target: h1ヘディングとしてフォーマット
+  target_initial: h1ヘディングとしてフォーマット
+- locale: ja
+  format: string
+  source: Format as ordered list
+  target: 順序付けしたリストとしてフォーマット
+  target_initial: 順序付けしたリストとしてフォーマット
+- locale: ja
+  format: string
+  source: Format as unordered list
+  target: 順序付けしていないリストとしてフォーマット
+  target_initial: 順序付けしていないリストとしてフォーマット
+- locale: ja
+  format: string
+  source: Inserts a horizontal rule
+  target: 水平ルールを挿入
+  target_initial: 水平ルールを挿入
+- locale: ja
+  format: string
+  source: Removes the formatting
+  target: フォーマットを解除
+  target_initial: フォーマットを解除
+- locale: ja
+  format: string
+  source: Format as //strikethrough//
+  target: "//取消線//としてフォーマット"
+  target_initial: "//取消線//としてフォーマット"
+- locale: ja
+  format: string
+  source: Format as ||italic||
+  target: "||イタリック||としてフォーマット"
+  target_initial: "||イタリック||としてフォーマット"
+- locale: ja
+  format: string
+  source: Format as |bold|
+  target: "|太字|としてフォーマット"
+  target_initial: "|太字|としてフォーマット"
+- locale: ja
+  format: string
+  source: Manage Tags
+  target: タグの管理
+  target_initial: タグの管理
+- locale: ja
+  format: string
+  source: Format as _underlined_
+  target: _下線付き_としてフォーマット
+  target_initial: _下線付き_としてフォーマット
+- locale: ja
+  format: string
+  source: Move left and right
+  target: 左右に移動
+  target_initial: 左右に移動
+- locale: ja
+  format: string
+  source: Move up and down
+  target: 上下に移動
+  target_initial: 上下に移動
+- locale: ja
+  format: string
+  source: Used in lists (views and results)
+  target: リストとして使用 (ビューと結果)
+  target_initial: リストとして使用 (ビューと結果)
+- locale: ja
+  format: string
+  source: Confirm/submit dialog
+  target: ダイアログを確認/送信
+  target_initial: ダイアログを確認/送信
+- locale: ja
+  format: string
+  source: Previous tab
+  target: 前のタブ
+  target_initial: 前のタブ
+- locale: ja
+  format: string
+  source: Next in tab
+  target: 次のタブ
+  target_initial: 次のタブ
+- locale: ja
+  format: string
+  source: Close current tab
+  target: 現在のタブを閉じる
+  target_initial: 現在のタブを閉じる
+- locale: ja
+  format: string
+  source: List of shortcuts
+  target: ショートカットのリスト
+  target_initial: ショートカットのリスト
+- locale: ja
+  format: string
+  source: Used anywhere (admin only)
+  target: どこでも使用 (管理者のみ)
+  target_initial: どこでも使用 (管理者のみ)
+- locale: ja
+  format: string
+  source: Used anywhere
+  target: どこでも使用
+  target_initial: どこでも使用
+- locale: ja
+  format: string
+  source: Keyboard Shortcuts
+  target: キーボードショートカット
+  target_initial: キーボードショートカット
+- locale: ja
+  format: string
+  source: Set article to internal/public
+  target: 記事を内部/公開に設定
+  target_initial: 記事を内部/公開に設定
+- locale: ja
+  format: string
+  source: Search...
+  target: 検索中…
+  target_initial: 検索中…
+- locale: ja
+  format: string
+  source: Add alarm to pending reminder and escalated tickets.
+  target: 保留中のリマインダーとエスカレートされたチケットにアラームを追加
+  target_initial: 保留中のリマインダーとエスカレートされたチケットにアラームを追加
+- locale: ja
+  format: string
+  source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  target: ここでサインアウト、フロントエンド言語の変更、最新閲覧したアイテムを表示できます。
+  target_initial: ここでサインアウト、フロントエンド言語の変更、最新閲覧したアイテムを表示できます。
+- locale: ja
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s がチケット |%s| をアップデート"
+  target_initial: "%s がチケット |%s| をアップデート"
+- locale: ja
+  format: string
+  source: "%s created Ticket |%s|"
+  target: "%s がチケット |%s| を作成"
+  target_initial: "%s がチケット |%s| を作成"
+- locale: ja
+  format: string
+  source: clear
+  target: クリアー
+  target_initial: クリアー
+- locale: ja
+  format: string
+  source: This template saves the following attributes
+  target: このテンプレートは次の属性を保存します
+  target_initial: このテンプレートは次の属性を保存します
+- locale: ja
+  format: string
+  source: With templates you can pre-fill ticket attributes.
+  target: テンプレートでは、チケットの属性をあらかじめ記入できます。
+  target_initial: テンプレートでは、チケットの属性をあらかじめ記入できます。
+- locale: ja
+  format: string
+  source: Online Forms
+  target: オンラインフォーム
+  target_initial: オンラインフォーム
+- locale: ja
+  format: string
+  source: How to use it
+  target: 利用方法
+  target_initial: 利用方法
+- locale: ja
+  format: string
+  source: Create Macros
+  target: マクロの作成
+  target_initial: マクロの作成
+- locale: ja
+  format: string
+  source: Create Overviews
+  target: 概要の作成
+  target_initial: 概要の作成
+- locale: ja
+  format: string
+  source: Additional Channels
+  target: 追加のチャネル
+  target_initial: 追加のチャネル
+- locale: ja
+  format: string
+  source: Starting Zammad
+  target: Zammadの起動
+  target_initial: Zammadの起動
+- locale: ja
+  format: string
+  source: Invite
+  target: 招待
+  target_initial: 招待
+- locale: ja
+  format: string
+  source: Invite Colleagues
+  target: 同僚を招待
+  target_initial: 同僚を招待
+- locale: ja
+  format: string
+  source: Full Name
+  target: 姓名
+  target_initial: 姓名
+- locale: ja
+  format: string
+  source: Create a Test Ticket
+  target: テストチケットの作成
+  target_initial: テストチケットの作成
+- locale: ja
+  format: string
+  source: Administrator Account
+  target: 管理者アカウント
+  target_initial: 管理者アカウント
+- locale: ja
+  format: string
+  source: migrate from another system
+  target: 別のシステムからの移行
+  target_initial: 別のシステムからの移行
+- locale: ja
+  format: string
+  source: Or
+  target: または
+  target_initial: または
+- locale: ja
+  format: string
+  source: Setup new System
+  target: 新規システムの設定
+  target_initial: 新規システムの設定
+- locale: ja
+  format: string
+  source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  target: オプション§デバッグ§を§真§にしてデバッグをオンにすると、理由が javascriptコンソールに印刷されます。
+  target_initial: オプション§デバッグ§を§真§にしてデバッグをオンにすると、理由が javascriptコンソールに印刷されます。
+- locale: ja
+  format: string
+  source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  target: 'Zammad チャットには、jQueryが必要です。 ご自分のウェブサイトで既にご使用でない場合、次のように含めてください:'
+  target_initial: 'Zammad チャットには、jQueryが必要です。 ご自分のウェブサイトで既にご使用でない場合、次のように含めてください:'
+- locale: ja
+  format: string
+  source: Flat Design
+  target: フラットデザイン
+  target_initial: フラットデザイン
+- locale: ja
+  format: string
+  source: 'There can be several reasons for the chat to not show up:'
+  target: 'チャットが表示されない理由は、いくつかあります:'
+  target_initial: 'チャットが表示されない理由は、いくつかあります:'
+- locale: ja
+  format: string
+  source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  target: ボタンを押してチャットを開くようにするには、オプション§表示§を§偽§に設定して、クラス§open-zammad-chat§をボタンに追加します。
+  target_initial: ボタンを押してチャットを開くようにするには、オプション§表示§を§偽§に設定して、クラス§open-zammad-chat§をボタンに追加します。
+- locale: ja
+  format: string
+  source: Manually open chat
+  target: 手動でチャット開始
+  target_initial: 手動でチャット開始
+- locale: ja
+  format: string
+  source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  target: チャットは、サーバーへの接続が確立され、オンラインでのチャット相手がいる場合に表示されます。
+  target_initial: チャットは、サーバーへの接続が確立され、オンラインでのチャット相手がいる場合に表示されます。
+- locale: ja
+  format: string
+  source: Requirements
+  target: 要件
+  target_initial: 要件
+- locale: ja
+  format: string
+  source: Usage
+  target: 利用
+  target_initial: 利用
+- locale: ja
+  format: string
+  source: Chat Title
+  target: チャットタイトル
+  target_initial: チャットタイトル
+- locale: ja
+  format: string
+  source: Can be in any CSS color format.
+  target: どのようなCSS色フォーマットでも可。
+  target_initial: どのようなCSS色フォーマットでも可。
+- locale: ja
+  format: string
+  source: Shown when the chat is closed.
+  target: チャットを閉じたときに、表示されます。
+  target_initial: チャットを閉じたときに、表示されます。
+- locale: ja
+  format: string
+  source: You can create multiple chat topics.
+  target: 複数のチャットトピックスを作成できます。
+  target_initial: 複数のチャットトピックスを作成できます。
+- locale: ja
+  format: string
+  source: Preview Width
+  target: プレビュー幅
+  target_initial: プレビュー幅
+- locale: ja
+  format: string
+  source: Max. clients in waitlist
+  target: 待機リストの最大クライアント数
+  target_initial: 待機リストの最大クライアント数
+- locale: ja
+  format: string
+  source: John Smith
+  target: John Smith
+  target_initial: John Smith
+- locale: ja
+  format: string
+  source: Load
+  target: ロード
+  target_initial: ロード
+- locale: ja
+  format: string
+  source: Last sync at
+  target: 最近のsync
+  target_initial: 最近のsync
+- locale: ja
+  format: string
+  source: Invite Customer
+  target: 顧客を招待
+  target_initial: 顧客を招待
+- locale: ja
+  format: string
+  source: done
+  target: 完了
+  target_initial: 完了
+- locale: ja
+  format: string
+  source: disconnect
+  target: 切断
+  target_initial: 切断
+- locale: ja
+  format: string
+  source: New password (confirm)
+  target: 新規パスワード (確認)
+  target_initial: 新規パスワード (確認)
+- locale: ja
+  format: string
+  source: The URL to this installation of Zammad.
+  target: ZammadのこのインストールへのURL。
+  target_initial: ZammadのこのインストールへのURL。
+- locale: ja
+  format: string
+  source: Enter Title...
+  target: タイトルを入力…
+  target_initial: タイトルを入力…
+- locale: ja
+  format: string
+  source: Folder
+  target: フォルダー
+  target_initial: フォルダー
+- locale: ja
+  format: string
+  source: Department
+  target: 部署
+  target_initial: 部署
+- locale: ja
+  format: string
+  source: Year(s)
+  target: 年
+  target_initial: 年
+- locale: ja
+  format: string
+  source: Month(s)
+  target: 月
+  target_initial: 月
+- locale: ja
+  format: string
+  source: Day(s)
+  target: 日
+  target_initial: 日
+- locale: ja
+  format: string
+  source: Hour(s)
+  target: 時
+  target_initial: 時
+- locale: ja
+  format: string
+  source: Minute(s)
+  target: 分
+  target_initial: 分
+- locale: ja
+  format: string
+  source: within last (relative)
+  target: 最後の中 (比較)
+  target_initial: 最後の中 (比較)
+- locale: ja
+  format: string
+  source: within next (relative)
+  target: 次の中 (比較)
+  target_initial: 次の中 (比較)
+- locale: ja
+  format: string
+  source: Conditions for shown Tickets
+  target: 表示したチケットの条件
+  target_initial: 表示したチケットの条件
+- locale: ja
+  format: string
+  source: Only available for Users with shared Organization
+  target: 共有組織のあるユーザーのみ利用可能
+  target_initial: 共有組織のあるユーザーのみ利用可能
+- locale: ja
+  format: string
+  source: Available for User
+  target: ユーザーが利用可能
+  target_initial: ユーザーが利用可能
+- locale: ja
+  format: string
+  source: Sure to delete this object?
+  target: このオブジェクトを削除してもよろしいですか？
+  target_initial: このオブジェクトを削除してもよろしいですか？
+- locale: ja
+  format: string
+  source: Experts
+  target: エキスパート
+  target_initial: エキスパート
+- locale: ja
+  format: string
+  source: Organization & Department Name
+  target: 組織名と部署名
+  target_initial: 組織名と部署名
+- locale: ja
+  format: string
+  source: current user
+  target: 現在のユーザー
+  target_initial: 現在のユーザー
+- locale: ja
+  format: string
+  source: specific user
+  target: 特定のユーザー
+  target_initial: 特定のユーザー
+- locale: ja
+  format: string
+  source: Run every %s at %s
+  target: "%s ごとに %s で実行"
+  target_initial: "%s ごとに %s で実行"
+- locale: ja
+  format: string
+  source: Disable Notifications
+  target: 通知を無効にする
+  target_initial: 通知を無効にする
+- locale: ja
+  format: string
+  source: Execute changes on objects
+  target: オブジェクトの変更を実行
+  target_initial: オブジェクトの変更を実行
+- locale: ja
+  format: string
+  source: Conditions for effected objects
+  target: 達成できたオブジェクトの条件
+  target_initial: 達成できたオブジェクトの条件
+- locale: ja
+  format: string
+  source: When should the job run?
+  target: いつジョブを実行しますか？
+  target_initial: いつジョブを実行しますか？
+- locale: ja
+  format: string
+  source: New Scheduler
+  target: 新規スケジューラー
+  target_initial: 新規スケジューラー
+- locale: ja
+  format: string
+  source: Will process
+  target: 処理します
+  target_initial: 処理します
+- locale: ja
+  format: string
+  source: Scheduled for
+  target: 次に予定済
+  target_initial: 次に予定済
+- locale: ja
+  format: string
+  source: Has processed
+  target: 処理済
+  target_initial: 処理済
+- locale: ja
+  format: string
+  source: Duration
+  target: 期間
+  target_initial: 期間
+- locale: ja
+  format: string
+  source: ringing
+  target: 呼出し中
+  target_initial: 呼出し中
+- locale: ja
+  format: string
+  source: not reached
+  target: 未到達
+  target_initial: 未到達
+- locale: ja
+  format: string
+  source: not exist
+  target: 存在しません
+  target_initial: 存在しません
+- locale: ja
+  format: string
+  source: connected
+  target: 接続済
+  target_initial: 接続済
+- locale: ja
+  format: string
+  source: CTI
+  target: CTI
+  target_initial: CTI
+- locale: ja
+  format: string
+  source: attached
+  target: 添付済
+  target_initial: 添付済
+- locale: ja
+  format: string
+  source: enclosed
+  target: 同封済
+  target_initial: 同封済
+- locale: ja
+  format: string
+  source: Integrations
+  target: 統合
+  target_initial: 統合
+- locale: ja
+  format: string
+  source: maybe
+  target: おそらく
+  target_initial: おそらく
+- locale: ja
+  format: string
+  source: Enclosure
+  target: 同封物
+  target_initial: 同封物
+- locale: ja
+  format: string
+  source: Changes were made that require a database update.
+  target: データベースのアップデートを要する変更がありました。
+  target_initial: データベースのアップデートを要する変更がありました。
+- locale: ja
+  format: string
+  source: Database Update required
+  target: データベースのアップデートが必要です
+  target_initial: データベースのアップデートが必要です
+- locale: ja
+  format: string
+  source: Update Database
+  target: データベースのアップデート
+  target_initial: データベースのアップデート
+- locale: ja
+  format: string
+  source: Discard Changes
+  target: 変更を廃棄
+  target_initial: 変更を廃棄
+- locale: ja
+  format: string
+  source: required
+  target: 必要
+  target_initial: 必要
+- locale: ja
+  format: string
+  source: shown
+  target: 表示
+  target_initial: 表示
+- locale: ja
+  format: string
+  source: inactive
+  target: 非アクティブ
+  target_initial: 非アクティブ
+- locale: ja
+  format: string
+  source: active
+  target: アクティブ
+  target_initial: アクティブ
+- locale: ja
+  format: string
+  source: Visible
+  target: 見える
+  target_initial: 見える
+- locale: ja
+  format: string
+  source: Used in object views
+  target: オブジェクトビューに使用
+  target_initial: オブジェクトビューに使用
+- locale: ja
+  format: string
+  source: "...add object title"
+  target: "... オブジェクトタイトルを追加"
+  target_initial: "... オブジェクトタイトルを追加"
+- locale: ja
+  format: string
+  source: "...of whole textarea"
+  target: "... テキストエリア全体の"
+  target_initial: "... テキストエリア全体の"
+- locale: ja
+  format: string
+  source: Mode
+  target: モード
+  target_initial: モード
+- locale: ja
+  format: string
+  source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  target: Zammadのメンテナンスモードをオンまたはオフ オンの場合は管理者以外は全てログアウトされ、管理者のみが新規セッションを開始できます。
+  target_initial: Zammadのメンテナンスモードをオンまたはオフ オンの場合は管理者以外は全てログアウトされ、管理者のみが新規セッションを開始できます。
+- locale: ja
+  format: string
+  source: Open Ticket# %s
+  target: Ticket# %sに対応
+  target_initial: Ticket# %sに対応
+- locale: ja
+  format: string
+  source: Resend verification email
+  target: 確認メールを再送信
+  target_initial: 確認メールを再送信
+- locale: ja
+  format: string
+  source: Account not verified
+  target: アカウントが確認されていません
+  target_initial: アカウントが確認されていません
+- locale: ja
+  format: string
+  source: Unable to verify email. Please contact your administrator.
+  target: メールを確認できません。 管理者に問い合わせて下さい。
+  target_initial: メールを確認できません。 管理者に問い合わせて下さい。
+- locale: ja
+  format: string
+  source: Navigate through article
+  target: 記事中をナビゲート
+  target_initial: 記事中をナビゲート
+- locale: ja
+  format: string
+  source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  target: メールが見つからない場合は、迷惑メール、ごみ箱、SNSその他のフォルダーを探してみてください。
+  target_initial: メールが見つからない場合は、迷惑メール、ごみ箱、SNSその他のフォルダーを探してみてください。
+- locale: ja
+  format: string
+  source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  target: _%s_にメールを送信しました。 メール中のリンクをクリックして、アカウントを認証してください。
+  target_initial: _%s_にメールを送信しました。 メール中のリンクをクリックして、アカウントを認証してください。
+- locale: ja
+  format: string
+  source: Scroll down to see new messages
+  target: 下にスクロールして、新規メッセージを見て下さい
+  target_initial: 下にスクロールして、新規メッセージを見て下さい
+- locale: ja
+  format: string
+  source: Zammad Karma
+  target: Zammadのカルマ
+  target_initial: Zammadのカルマ
+- locale: ja
+  format: string
+  source: You have closed a ticket
+  target: チケットを完了しました
+  target_initial: チケットを完了しました
+- locale: ja
+  format: string
+  source: Karma Trends
+  target: カルマトレンド
+  target_initial: カルマトレンド
+- locale: ja
+  format: string
+  source: What affects your Zammad Karma?
+  target: あなたのZammadカルマに影響を与えるものは、何ですか？
+  target_initial: あなたのZammadカルマに影響を与えるものは、何ですか？
+- locale: ja
+  format: string
+  source: You have created a ticket
+  target: チケットを作成しました
+  target_initial: チケットを作成しました
+- locale: ja
+  format: string
+  source: You have answered a ticket within 1h
+  target: 1時間以内にチケットに回答しました
+  target_initial: 1時間以内にチケットに回答しました
+- locale: ja
+  format: string
+  source: Usage of advanced features
+  target: 高度な機能の利用
+  target_initial: 高度な機能の利用
+- locale: ja
+  format: string
+  source: Latest updates
+  target: 最近のアップデート
+  target_initial: 最近のアップデート
+- locale: ja
+  format: string
+  source: Hero
+  target: ヒーロー
+  target_initial: ヒーロー
+- locale: ja
+  format: string
+  source: Evangelist
+  target: 伝道者
+  target_initial: 伝道者
+- locale: ja
+  format: string
+  source: Expert
+  target: エキスパート
+  target_initial: エキスパート
+- locale: ja
+  format: string
+  source: Professional
+  target: プロ
+  target_initial: プロ
+- locale: ja
+  format: string
+  source: Intermediate
+  target: 中級
+  target_initial: 中級
+- locale: ja
+  format: string
+  source: Your current level
+  target: 現在のレベル
+  target_initial: 現在のレベル
+- locale: ja
+  format: string
+  source: Your karma is |%s|.
+  target: あなたのカルマは |%s| です。
+  target_initial: あなたのカルマは |%s| です。
+- locale: ja
+  format: string
+  source: You are an |%s|.
+  target: あなたは |%s| です。
+  target_initial: あなたは |%s| です。
+- locale: ja
+  format: string
+  source: Beginner
+  target: ビギナー
+  target_initial: ビギナー
+- locale: ja
+  format: string
+  source: Karma Level
+  target: カルマのレベル
+  target_initial: カルマのレベル
+- locale: ja
+  format: string
+  source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  target: Zammadカルマは、あなたの生産性を追跡、可視化する強力なツールです。
+  target_initial: Zammadカルマは、あなたの生産性を追跡、可視化する強力なツールです。
+- locale: ja
+  format: string
+  source: Show Search Details
+  target: 検索の詳細を表示
+  target_initial: 検索の詳細を表示
+- locale: ja
+  format: string
+  source: Master
+  target: マスター
+  target_initial: マスター
+- locale: ja
+  format: string
+  source: OK, I've copied my token
+  target: マイトークンをコピーしました
+  target_initial: マイトークンをコピーしました
+- locale: ja
+  format: string
+  source: Clients
+  target: クライアント
+  target_initial: クライアント
+- locale: ja
+  format: string
+  source: Callback URL
+  target: コールバックURL
+  target_initial: コールバックURL
+- locale: ja
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: ja
+  format: string
+  source: Last used
+  target: 直近の利用
+  target_initial: 直近の利用
+- locale: ja
+  format: string
+  source: What is it?
+  target: 何ですか？
+  target_initial: 何ですか？
+- locale: ja
+  format: string
+  source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  target: ZammadをOAuthプロバイダーとして使用するアプリケーションと、あなたのアカウントでの使用を承認したアプリケーションを管理してください。
+  target_initial: ZammadをOAuthプロバイダーとして使用するアプリケーションと、あなたのアカウントでの使用を承認したアプリケーションを管理してください。
+- locale: ja
+  format: string
+  source: Pick a name for the application, and we'll give you a unique token.
+  target: アプリケーションに名称を付けていただくと、一意のトークンを差し上げます。
+  target_initial: アプリケーションに名称を付けていただくと、一意のトークンを差し上げます。
+- locale: ja
+  format: string
+  source: New App
+  target: 新規アプリ
+  target_initial: 新規アプリ
+- locale: ja
+  format: string
+  source: Applications
+  target: アプリケーション
+  target_initial: アプリケーション
+- locale: ja
+  format: string
+  source: OK, I\'ve copied my token
+  target: マイトークンをコピーしました
+  target_initial: マイトークンをコピーしました
+- locale: ja
+  format: string
+  source: Token Access
+  target: トークンアクセス
+  target_initial: トークンアクセス
+- locale: ja
+  format: string
+  source: Your New Personal Access Token
+  target: あなたの新規パーソナルアクセストークン
+  target_initial: あなたの新規パーソナルアクセストークン
+- locale: ja
+  format: string
+  source: Personal Access Tokens
+  target: パーソナルアクセストークン
+  target_initial: パーソナルアクセストークン
+- locale: ja
+  format: string
+  source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  target: Zammad APIへのアクセスを要する、使用アプリケーションに対するパーソナルアクセストークンを作成できます。
+  target_initial: Zammad APIへのアクセスを要する、使用アプリケーションに対するパーソナルアクセストークンを作成できます。
+- locale: ja
+  format: string
+  source: Add a Personal Access Token
+  target: パーソナルアクセストークンを追加
+  target_initial: パーソナルアクセストークンを追加
+- locale: ja
+  format: string
+  source: has changed
+  target: が変更されました
+  target_initial: が変更されました
+- locale: ja
+  format: string
+  source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  target: セキュリティーのため、APIトークンは一度のみ表示されます。 継続する前にどこか安全なところにコピーする必要があります。
+  target_initial: セキュリティーのため、APIトークンは一度のみ表示されます。 継続する前にどこか安全なところにコピーする必要があります。
+- locale: ja
+  format: string
+  source: You have tickets that are over 2 days overdue
+  target: 2日以上期限の過ぎたチケットがあります
+  target_initial: 2日以上期限の過ぎたチケットがあります
+- locale: ja
+  format: string
+  source: You have escalated tickets
+  target: エスカレートされたチケットがあります
+  target_initial: エスカレートされたチケットがあります
+- locale: ja
+  format: string
+  source: Please type §%s§ to proceed or close this modal to cancel.
+  target: "§%s§ と入力して先に進むか、このモーダルを閉じてキャンセルしてください。"
+  target_initial: "§%s§ と入力して先に進むか、このモーダルを閉じてキャンセルしてください。"
+- locale: ja
+  format: string
+  source: annually
+  target: 毎年
+  target_initial: 毎年
+- locale: ja
+  format: string
+  source: monthly
+  target: 毎月
+  target_initial: 毎月
+- locale: ja
+  format: string
+  source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  target: このアクションを行うと、データを損失します。 間違ったアクションを避けるため、意図を確認していただきます。
+  target_initial: このアクションを行うと、データを損失します。 間違ったアクションを避けるため、意図を確認していただきます。
+- locale: ja
+  format: string
+  source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  target: あなたは、Zammadアカウントをキャンセルしようとしています。 本当に行いますか？
+  target_initial: あなたは、Zammadアカウントをキャンセルしようとしています。 本当に行いますか？
+- locale: ja
+  format: string
+  source: Confirmation required
+  target: 確認が必要です
+  target_initial: 確認が必要です
+- locale: ja
+  format: string
+  source: Payment Method
+  target: 支払い方法
+  target_initial: 支払い方法
+- locale: ja
+  format: string
+  source: Enables user authentication via %s. Register your app first at [%s](%s).
+  target: "%sでユーザー認証を有効化します。 まず[%s](%s)で、アプリを登録してください。"
+  target_initial: "%sでユーザー認証を有効化します。 まず[%s](%s)で、アプリを登録してください。"
+- locale: ja
+  format: string
+  source: Authentication via %s
+  target: "%sで認証"
+  target_initial: "%sで認証"
+- locale: ja
+  format: string
+  source: VAT ID
+  target: VAT ID
+  target_initial: VAT ID
+- locale: ja
+  format: string
+  source: Payment method
+  target: 支払い方法
+  target_initial: 支払い方法
+- locale: ja
+  format: string
+  source: Amount
+  target: 金額
+  target_initial: 金額
+- locale: ja
+  format: string
+  source: VAT
+  target: VAT
+  target_initial: VAT
+- locale: ja
+  format: string
+  source: tax
+  target: 税金
+  target_initial: 税金
+- locale: ja
+  format: string
+  source: Billing Cycle
+  target: 請求サイクル
+  target_initial: 請求サイクル
+- locale: ja
+  format: string
+  source: Please enter a valid "%s"!
+  target: 有効な "%s" を入力してください！
+  target_initial: 有効な "%s" を入力してください！
+- locale: ja
+  format: string
+  source: Cardholder
+  target: カード名義人
+  target_initial: カード名義人
+- locale: ja
+  format: string
+  source: Expiration (MM/YYYY)
+  target: 有効期限 (MM/YYYY)
+  target_initial: 有効期限 (MM/YYYY)
+- locale: ja
+  format: string
+  source: Subscription
+  target: サブスクリプション
+  target_initial: サブスクリプション
+- locale: ja
+  format: string
+  source: Summary
+  target: サマリー
+  target_initial: サマリー
+- locale: ja
+  format: string
+  source: Your trial is running till %s
+  target: あなたのトライアルは %sまでです
+  target_initial: あなたのトライアルは %sまでです
+- locale: ja
+  format: string
+  source: Billing
+  target: 請求
+  target_initial: 請求
+- locale: ja
+  format: string
+  source: Do you want to cancel your subscription?
+  target: サブスクリプションをキャンセルしますか？
+  target_initial: サブスクリプションをキャンセルしますか？
+- locale: ja
+  format: string
+  source: Yes, please cancel my subscription
+  target: はい、サブスクリプションをキャンセルしてください
+  target_initial: はい、サブスクリプションをキャンセルしてください
+- locale: ja
+  format: string
+  source: Update payment method
+  target: 支払い方法をアップデート
+  target_initial: 支払い方法をアップデート
+- locale: ja
+  format: string
+  source: per agent / month
+  target: エージェント/月ごと
+  target_initial: エージェント/月ごと
+- locale: ja
+  format: string
+  source: Billed annually
+  target: 毎年請求
+  target_initial: 毎年請求
+- locale: ja
+  format: string
+  source: or %s %s monthly
+  target: または毎月 %s %s
+  target_initial: または毎月 %s %s
+- locale: ja
+  format: string
+  source: Payment history
+  target: 支払履歴
+  target_initial: 支払履歴
+- locale: ja
+  format: string
+  source: Billing information
+  target: 請求情報
+  target_initial: 請求情報
+- locale: ja
+  format: string
+  source: Next payment due
+  target: 次の請求期限
+  target_initial: 次の請求期限
+- locale: ja
+  format: string
+  source: Selected
+  target: 選択済
+  target_initial: 選択済
+- locale: ja
+  format: string
+  source: Postal Code
+  target: 郵便番号
+  target_initial: 郵便番号
+- locale: ja
+  format: string
+  source: Pay with
+  target: 次で支払い
+  target_initial: 次で支払い
+- locale: ja
+  format: string
+  source: CVV
+  target: CVV
+  target_initial: CVV
+- locale: ja
+  format: string
+  source: Update subscription
+  target: サブスクリプションをアップデート
+  target_initial: サブスクリプションをアップデート
+- locale: ja
+  format: string
+  source: Your account got canceled at %s! Your system will be removed at %s
+  target: アカウントは、%sにキャンセルされました！ あなたのシステムは%sに削除されます
+  target_initial: アカウントは、%sにキャンセルされました！ あなたのシステムは%sに削除されます
+- locale: ja
+  format: string
+  source: Yes, undo my subscription cancel
+  target: はい、サブスクリプションをキャンセルしないでください
+  target_initial: はい、サブスクリプションをキャンセルしないでください
+- locale: ja
+  format: string
+  source: You use %s in text but no attachment is attached. Do you want to continue?
+  target: あなたはテキストに%sを使用していますが、添付物がありません。 継続しますか？
+  target_initial: あなたはテキストに%sを使用していますが、添付物がありません。 継続しますか？
+- locale: ja
+  format: string
+  source: Overviews
+  target: 概要
+  target_initial: 概要
+- locale: ja
+  format: string
+  source: Not configured
+  target: 未設定
+  target_initial: 未設定
+- locale: ja
+  format: string
+  source: My assigned Tickets
+  target: 割り当てられたチケット
+  target_initial: 割り当てられたチケット
+- locale: ja
+  format: string
+  source: Unassigned & Open
+  target: 未割り当てと対応中
+  target_initial: 未割り当てと対応中
+- locale: ja
+  format: string
+  source: My pending reached Tickets
+  target: 私の保留中の到達チケット
+  target_initial: 私の保留中の到達チケット
+- locale: ja
+  format: string
+  source: Sure?
+  target: 良いですか？
+  target_initial: 良いですか？
+- locale: ja
+  format: string
+  source: Sounds
+  target: 音
+  target_initial: 音
+- locale: ja
+  format: string
+  source: SLA Times
+  target: SLA時間
+  target_initial: SLA時間
+- locale: ja
+  format: string
+  source: Execute changes on objects.
+  target: オブジェクトの変更を実行
+  target_initial: オブジェクトの変更を実行
+- locale: ja
+  format: string
+  source: Subscribe to iCalendar feed
+  target: iCalendarフィードにサブスクライブ
+  target_initial: iCalendarフィードにサブスクライブ
+- locale: ja
+  format: string
+  source: Why doesn't the chat show up?
+  target: なぜチャットが表示されないのですか？
+  target_initial: なぜチャットが表示されないのですか？
+- locale: ja
+  format: string
+  source: New Tags
+  target: 新規タグ
+  target_initial: 新規タグ
+- locale: ja
+  format: string
+  source: Holidays iCalendar Feed
+  target: 休日iCalendarフィード
+  target_initial: 休日iCalendarフィード
+- locale: ja
+  format: string
+  source: Macro
+  target: マクロ
+  target_initial: マクロ
+- locale: ja
+  format: string
+  source: Total
+  target: 総数
+  target_initial: 総数
+- locale: ja
+  format: string
+  source: Scheduler
+  target: スケジューラー
+  target_initial: スケジューラー
+- locale: ja
+  format: string
+  source: Realtime
+  target: リアルタイム
+  target_initial: リアルタイム
+- locale: ja
+  format: string
+  source: reply all
+  target: 全てに返信
+  target_initial: 全てに返信
+- locale: ja
+  format: string
+  source: Reporting
+  target: 報告
+  target_initial: 報告
+- locale: ja
+  format: string
+  source: Permissions
+  target: 許可
+  target_initial: 許可
+- locale: ja
+  format: string
+  source: No Entries
+  target: 記載無し
+  target_initial: 記載無し
+- locale: ja
+  format: string
+  source: Count
+  target: 記事数
+  target_initial: 記事数
+- locale: ja
+  format: string
+  source: Allow users to add new tags.
+  target: ユーザーの新規タグ追加を許可
+  target_initial: ユーザーの新規タグ追加を許可
+- locale: ja
+  format: string
+  source: Default at Signup
+  target: サインアップ時のデフォルト
+  target_initial: サインアップ時のデフォルト
+- locale: ja
+  format: string
+  source: Changed
+  target: 変更済
+  target_initial: 変更済
+- locale: ja
+  format: string
+  source: Order
+  target: 順序
+  target_initial: 順序
+- locale: ja
+  format: string
+  source: Username
+  target: ユーザー名
+  target_initial: ユーザー名
+- locale: ja
+  format: string
+  source: Value
+  target: 値
+  target_initial: 値
+- locale: ja
+  format: string
+  source: This service sends notifications to your %s channel.
+  target: このサービスは、あなたの %sチャネルに通知を送信します。
+  target_initial: このサービスは、あなたの %sチャネルに通知を送信します。
+- locale: ja
+  format: string
+  source: Recent logs
+  target: 最近のログ
+  target_initial: 最近のログ
+- locale: ja
+  format: string
+  source: Default caller id for outbound calls.
+  target: 外部通話に対するデフォルトの通話者ID。
+  target_initial: 外部通話に対するデフォルトの通話者ID。
+- locale: ja
+  format: string
+  source: Default caller id
+  target: デフォルトの呼出しID
+  target_initial: デフォルトの呼出しID
+- locale: ja
+  format: string
+  source: Default caller id.
+  target: デフォルトの呼出しID。
+  target_initial: デフォルトの呼出しID。
+- locale: ja
+  format: string
+  source: Set outbound caller id
+  target: 外部呼び出しIDを設定
+  target_initial: 外部呼び出しIDを設定
+- locale: ja
+  format: string
+  source: Destination caller id
+  target: デスティネーション呼出しID
+  target_initial: デスティネーション呼出しID
+- locale: ja
+  format: string
+  source: Add attachment option to upload.
+  target: アップロードに添付オプションを追加。
+  target_initial: アップロードに添付オプションを追加。
+- locale: ja
+  format: string
+  source: Caller id to block
+  target: ブロックする呼出しID
+  target_initial: ブロックする呼出しID
+- locale: ja
+  format: string
+  source: Blocked caller ids based on sender caller id.
+  target: 送信者呼出しIDに基づく、ブロックされた呼出しIDです。
+  target_initial: 送信者呼出しIDに基づく、ブロックされた呼出しIDです。
+- locale: ja
+  format: string
+  source: Also caller id of outbound calls can be changed.
+  target: 外部呼び出しの呼出しIDも変更可能です。
+  target_initial: 外部呼び出しの呼出しIDも変更可能です。
+- locale: ja
+  format: string
+  source: This service shows you contacts of incoming calls and a caller list in realtime.
+  target: このサービスは、受け取り通話の連絡先と呼出し者リストをリアルタイム表示します。
+  target_initial: このサービスは、受け取り通話の連絡先と呼出し者リストをリアルタイム表示します。
+- locale: ja
+  format: string
+  source: VoIP service provider with realtime push.
+  target: リアルタイムプッシュのあるVoIPサービスプロバイダー
+  target_initial: リアルタイムプッシュのあるVoIPサービスプロバイダー
+- locale: ja
+  format: string
+  source: A team communication tool for the 21st century.
+  target: 21世紀のチームコミュニケーションツールです。
+  target_initial: 21世紀のチームコミュニケーションツールです。
+- locale: ja
+  format: string
+  source: Domain based assignment
+  target: ドメインベースの割当て
+  target_initial: ドメインベースの割当て
+- locale: ja
+  format: string
+  source: Ticket |%s| will escalate soon!
+  target: チケット |%s| は、もうすぐエスカレートされます！
+  target_initial: チケット |%s| は、もうすぐエスカレートされます！
+- locale: ja
+  format: string
+  source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  target: チケットに対する識別子。Ticket#、Call#、MyTicket#など。 デフォルトはTicket#です。
+  target_initial: チケットに対する識別子。Ticket#、Call#、MyTicket#など。 デフォルトはTicket#です。
+- locale: ja
+  format: string
+  source: The format of the subject.
+  target: 件名のフォーマットです。
+  target_initial: 件名のフォーマットです。
+- locale: ja
+  format: string
+  source: "|Left| means |[Ticket#12345] Some Subject|"
+  target: "|Left| は、 |[Ticket#12345] 何らかの件名|の意味です"
+  target_initial: "|Left| は、 |[Ticket#12345] 何らかの件名|の意味です"
+- locale: ja
+  format: string
+  source: "|Right| means |Some Subject [Ticket#12345]|"
+  target: "|Right| は、|何らかの件名 [Ticket#12345]|の意味です"
+  target_initial: "|Right| は、|何らかの件名 [Ticket#12345]|の意味です"
+- locale: ja
+  format: string
+  source: left
+  target: 左
+  target_initial: 左
+- locale: ja
+  format: string
+  source: Recent Customer Tickets
+  target: 最近の顧客チケット
+  target_initial: 最近の顧客チケット
+- locale: ja
+  format: string
+  source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  target: '|なし| は、 |何らかの件名| (チケット番号なし) という意味です。 最後の例では、"postmaster___follow___up___search___in"
+    を有効化して、メールのヘッダーや本文に基づいてフォローアップを認識してください。'
+  target_initial: '|なし| は、 |何らかの件名| (チケット番号なし) という意味です。 最後の例では、"postmaster___follow___up___search___in"
+    を有効化して、メールのヘッダーや本文に基づいてフォローアップを認識してください。'
+- locale: ja
+  format: string
+  source: right
+  target: 右
+  target_initial: 右
+- locale: ja
+  format: string
+  source: Domain
+  target: ドメイン
+  target_initial: ドメイン
+- locale: ja
+  format: string
+  source: Min. size of number
+  target: 数の最小サイズ
+  target_initial: 数の最小サイズ
+- locale: ja
+  format: string
+  source: Access to Agent Tickets based on Group Access
+  target: グループアクセスに基づいたエージェントチケットへのアクセス
+  target_initial: グループアクセスに基づいたエージェントチケットへのアクセス
+- locale: ja
+  format: string
+  source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  target: '|日付| では、チケット数は現在の日付、SystemID、カウンターによって作成されます。 フォーマットは "年.月.日.SystemID.カウンター"
+    (例. 201206231010138, 201206231010139) のようになります。'
+  target_initial: '|日付| では、チケット数は現在の日付、SystemID、カウンターによって作成されます。 フォーマットは "年.月.日.SystemID.カウンター"
+    (例. 201206231010138, 201206231010139) のようになります。'
+- locale: ja
+  format: string
+  source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  target: '|増加| はチケット番号を増加させ、SystemIDとカウンターは"SystemID.Counter"のフォーマットで使います (例. 1010138,
+    1010139)。'
+  target_initial: '|増加| はチケット番号を増加させ、SystemIDとカウンターは"SystemID.Counter"のフォーマットで使います
+    (例. 1010138, 1010139)。'
+- locale: ja
+  format: string
+  source: Selects the ticket number generator module.
+  target: チケット番号作成モジュールを選択してください。
+  target_initial: チケット番号作成モジュールを選択してください。
+- locale: ja
+  format: string
+  source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  target: メール（回答とメールチケットから送信されたもの）の送信者フィールドを定義します。
+  target_initial: メール（回答とメールチケットから送信されたもの）の送信者フィールドを定義します。
+- locale: ja
+  format: string
+  source: Defines the separator between the agents real name and the given group email
+    address.
+  target: エージェントの実名と与えられたグループメールアドレス間のセパレーターをリアルタイムで定義します。
+  target_initial: エージェントの実名と与えられたグループメールアドレス間のセパレーターをリアルタイムで定義します。
+- locale: ja
+  format: string
+  source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  target: メール返信の件名の最初のテキスト。RE、AW、ASなど。
+  target_initial: メール返信の件名の最初のテキスト。RE、AW、ASなど。
+- locale: ja
+  format: string
+  source: Ticket Subject Reply
+  target: チケット件名返信
+  target_initial: チケット件名返信
+- locale: ja
+  format: string
+  source: Geo Calendar Service
+  target: ジオカレンダーサービス
+  target_initial: ジオカレンダーサービス
+- locale: ja
+  format: string
+  source: If this regex matches, no notification will be send by the sender.
+  target: このregexがマッチする場合、送信者から通知は送信されません。
+  target_initial: このregexがマッチする場合、送信者から通知は送信されません。
+- locale: ja
+  format: string
+  source: Show all...
+  target: 全て表示…
+  target_initial: 全て表示…
+- locale: ja
+  format: string
+  source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  target: ウェブインターフェイスで、顧客がチケット作成できるグループを定義します。 "-" は、全グループが利用可能なことを示します。
+  target_initial: ウェブインターフェイスで、顧客がチケット作成できるグループを定義します。 "-" は、全グループが利用可能なことを示します。
+- locale: ja
+  format: string
+  source: Group selection for Ticket creation
+  target: チケット作成用のグループ選択
+  target_initial: チケット作成用のグループ選択
+- locale: ja
+  format: string
+  source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  target: ウェブインターフェイス、ウェブブラウザーのタブ、タイトルバーに表示されるアプリケーション名を定義します。
+  target_initial: ウェブインターフェイス、ウェブブラウザーのタブ、タイトルバーに表示されるアプリケーション名を定義します。
+- locale: ja
+  format: string
+  source: Will be shown in the app and is included in email footers.
+  target: アプリに表示され、メールフッターに含まれます。
+  target_initial: アプリに表示され、メールフッターに含まれます。
+- locale: ja
+  format: string
+  source: Defines the logo of the application, shown in the web interface.
+  target: ウェブインターフェイスに表示されるアプリケーションのロゴを定義します。
+  target_initial: ウェブインターフェイスに表示されるアプリケーションのロゴを定義します。
+- locale: ja
+  format: string
+  source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  target: すでに生産されているシステムについても、データを失うことなく、新規添付物に対してバックエンドを切り替えられます。
+  target_initial: すでに生産されているシステムについても、データを失うことなく、新規添付物に対してバックエンドを切り替えられます。
+- locale: ja
+  format: string
+  source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  target: バックエンドから別のバックエンドにすでに保存された添付物を移動するには、次をコンソールから実行してください。
+  target_initial: バックエンドから別のバックエンドにすでに保存された添付物を移動するには、次をコンソールから実行してください。
+- locale: ja
+  format: string
+  source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  target: ジオロケーション検索用のバックエンドを定義して、ジオロケーションアドレスを保存します。
+  target_initial: ジオロケーション検索用のバックエンドを定義して、ジオロケーションアドレスを保存します。
+- locale: ja
+  format: string
+  source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  target: ジオIP検索用のバックエンドを定義 IPアドレスが表示されている場合は、IPアドレスの場所も表示してください。
+  target_initial: ジオIP検索用のバックエンドを定義 IPアドレスが表示されている場合は、IPアドレスの場所も表示してください。
+- locale: ja
+  format: string
+  source: Defines the backend for user and organization image lookups.
+  target: ユーザーと組織画像検索用のバックエンドを定義します。
+  target_initial: ユーザーと組織画像検索用のバックエンドを定義します。
+- locale: ja
+  format: string
+  source: Image Service
+  target: 画像サービス
+  target_initial: 画像サービス
+- locale: ja
+  format: string
+  source: Access to %s
+  target: "%sへのアクセス"
+  target_initial: "%sへのアクセス"
+- locale: ja
+  format: string
+  source: Use client storage to cache data to perform speed of application.
+  target: クライアントストレージを用いてデータをキャッシュし、アプリケーションのスピードを実行してください。
+  target_initial: クライアントストレージを用いてデータをキャッシュし、アプリケーションのスピードを実行してください。
+- locale: ja
+  format: string
+  source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  target: ジオカレンダー検索用のバックエンドを定義します。 最初のカレンダー群に使用。
+  target_initial: ジオカレンダー検索用のバックエンドを定義します。 最初のカレンダー群に使用。
+- locale: ja
+  format: string
+  source: Send client stats/error message to central server to improve the usability.
+  target: クライアントの統計/エラーメッセージを中央サーバーに送信して、使いやすさを改善します。
+  target_initial: クライアントの統計/エラーメッセージを中央サーバーに送信して、使いやすさを改善します。
+- locale: ja
+  format: string
+  source: To select placeholders from a list, just enter "::".
+  target: リストからプレースホルダーを選択するには、 "::" を入力してください。
+  target_initial: リストからプレースホルダーを選択するには、 "::" を入力してください。
+- locale: ja
+  format: string
+  source: TextModule
+  target: TextModule
+  target_initial: TextModule
+- locale: ja
+  format: string
+  source: Current User
+  target: 現在のユーザー
+  target_initial: 現在のユーザー
+- locale: ja
+  format: string
+  source: Assign Users based on users domain.
+  target: ユーザードメインに基づいてユーザーを割当てます。
+  target_initial: ユーザードメインに基づいてユーザーを割当てます。
+- locale: ja
+  format: string
+  source: New Trigger
+  target: New Trigger
+  target_initial: New Trigger
+- locale: ja
+  format: string
+  source: Create rules that single out the tickets for the Service Level Agreement.
+  target: サービス内容契約（SLA）についてのチケットを選び出すルールを生成します。
+  target_initial: サービス内容契約（SLA）についてのチケットを選び出すルールを生成します。
+- locale: ja
+  format: string
+  source: Feature disabled!
+  target: 機能はオフです！
+  target_initial: 機能はオフです！
+- locale: ja
+  format: string
+  source: Notification
+  target: 通知
+  target_initial: 通知
+- locale: ja
+  format: string
+  source: Config
+  target: 設定
+  target_initial: 設定
+- locale: ja
+  format: string
+  source: Overview
+  target: 概要
+  target_initial: 概要
+- locale: ja
+  format: string
+  source: Article#
+  target: 記事#
+  target_initial: 記事#
+- locale: ja
+  format: string
+  source: Nothing selected
+  target: 選択なし
+  target_initial: 選択なし
+- locale: ja
+  format: string
+  source: Link
+  target: リンク
+  target_initial: リンク
+- locale: ja
+  format: string
+  source: Change %s
+  target: "%s変更"
+  target_initial: "%s変更"
+- locale: ja
+  format: string
+  source: User Preferences
+  target: ユーザー基本設定
+  target_initial: ユーザー基本設定
+- locale: ja
+  format: string
+  source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  target: current_user.id とcurrent_user.organization_idに基づいた顧客チケットへのアクセス
+  target_initial: current_user.id とcurrent_user.organization_idに基づいた顧客チケットへのアクセス
+- locale: ja
+  format: string
+  source: Manage %s Settings
+  target: "%s設定の管理"
+  target_initial: "%s設定の管理"
+- locale: ja
+  format: string
+  source: Manage %s
+  target: "%sの管理"
+  target_initial: "%sの管理"
+- locale: ja
+  format: string
+  source: New Role
+  target: 新規役割
+  target_initial: 新規役割
+- locale: ja
+  format: string
+  source: Assign follow up to latest agent again.
+  target: 最近のエージェントにフォローアップを再割当て
+  target_initial: 最近のエージェントにフォローアップを再割当て
+- locale: ja
+  format: string
+  source: reject follow up/do not reopen Ticket
+  target: フォローアップを拒否/チケットに再対応しない
+  target_initial: フォローアップを拒否/チケットに再対応しない
+- locale: ja
+  format: string
+  source: do not reopen Ticket but create new Ticket
+  target: チケットに再対応しないが、新規チケットを生成する
+  target_initial: チケットに再対応しないが、新規チケットを生成する
+- locale: ja
+  format: string
+  source: Follow up for closed ticket possible or not.
+  target: 完了チケットに対するフォローアップが可能か否か。
+  target_initial: 完了チケットに対するフォローアップが可能か否か。
+- locale: ja
+  format: string
+  source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  target: 割り当てたエージェントが対応していない場合は、割当てが数分でタイムアウトします。 チケットは未割り当てとして表示されます。
+  target_initial: 割り当てたエージェントが対応していない場合は、割当てが数分でタイムアウトします。 チケットは未割り当てとして表示されます。
+- locale: ja
+  format: string
+  source: Notes are visible to agents only, never to customers.
+  target: メモはエージェントのみが見ることができ、顧客には決して見えません。
+  target_initial: メモはエージェントのみが見ることができ、顧客には決して見えません。
+- locale: ja
+  format: string
+  source: Monitoring
+  target: モニタリング
+  target_initial: モニタリング
+- locale: ja
+  format: string
+  source: Current Token
+  target: 現在のトークン
+  target_initial: 現在のトークン
+- locale: ja
+  format: string
+  source: no issues
+  target: 問題なし
+  target_initial: 問題なし
+- locale: ja
+  format: string
+  source: Current Status
+  target: 現在のステータス
+  target_initial: 現在のステータス
+- locale: ja
+  format: string
+  source: Health information can be retrieved as JSON using
+  target: 健康上の情報は、JSONで取得可能
+  target_initial: 健康上の情報は、JSONで取得可能
+- locale: ja
+  format: string
+  source: Health Check
+  target: 健康チェック
+  target_initial: 健康チェック
+- locale: ja
+  format: string
+  source: Merge to Ticket#
+  target: Ticket#にマージ
+  target_initial: Ticket#にマージ
+- locale: ja
+  format: string
+  source: Recent viewed Tickets
+  target: 最近見たチケット
+  target_initial: 最近見たチケット
+- locale: ja
+  format: string
+  source: Back
+  target: 戻る
+  target_initial: 戻る
+- locale: ja
+  format: string
+  source: specific organization
+  target: 特定の組織
+  target_initial: 特定の組織
+- locale: ja
+  format: string
+  source: current user organization
+  target: 現在のユーザー組織
+  target_initial: 現在のユーザー組織
+- locale: ja
+  format: string
+  source: not set (not defined)
+  target: 設定無し（定義なし）
+  target_initial: 設定無し（定義なし）
+- locale: ja
+  format: string
+  source: "%s required!"
+  target: "%sが必要です！"
+  target_initial: "%sが必要です！"
+- locale: ja
+  format: string
+  source: No such master ticket number!
+  target: このようなマスターチケット番号はありません！
+  target_initial: このようなマスターチケット番号はありません！
+- locale: ja
+  format: string
+  source: You need to configure the Zammad endpoints in the Sipgate web interface
+  target: Sipgateウェブインターフェイスで、Zammadエンドポイントを設定する必要があります
+  target_initial: Sipgateウェブインターフェイスで、Zammadエンドポイントを設定する必要があります
+- locale: ja
+  format: string
+  source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  target: Checksumを使うと、カウンターには最後にチェックサムが追加されます。 フォーマットは %s (%sなど) のように見えます。
+  target_initial: Checksumを使うと、カウンターには最後にチェックサムが追加されます。 フォーマットは %s (%sなど) のように見えます。
+- locale: ja
+  format: string
+  source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  target: テストチケットが生成されました。概要の"%s" %lでこれを見ることができます。
+  target_initial: テストチケットが生成されました。概要の"%s" %lでこれを見ることができます。
+- locale: ja
+  format: string
+  source: Play user interface sound effects
+  target: ユーザーインターフェイスの効果音を再生
+  target_initial: ユーザーインターフェイスの効果音を再生
+- locale: ja
+  format: string
+  source: There is no agent online.
+  target: オンラインのエージェントはいません。
+  target_initial: オンラインのエージェントはいません。
+- locale: ja
+  format: string
+  source: Subscribe to public holidays in
+  target: 次で祝祭日にサブスクライブ
+  target_initial: 次で祝祭日にサブスクライブ
+- locale: ja
+  format: string
+  source: Notification Sound
+  target: 通知音
+  target_initial: 通知音
+- locale: ja
+  format: string
+  source: This might take some time where the system can't be used.
+  target: システムが使用できない場合は、しばらく時間がかかることがあります。
+  target_initial: システムが使用できない場合は、しばらく時間がかかることがあります。
+- locale: ja
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 小文字2つと大文字2つ
+  target_initial: 小文字2つと大文字2つ
+- locale: ja
+  format: string
+  source: Create Text Modules
+  target: テキストモジュールの作成
+  target_initial: テキストモジュールの作成
+- locale: ja
+  format: string
+  source: Powered by
+  target: Powered by
+  target_initial: Powered by
+- locale: ja
+  format: string
+  source: Continue anyway
+  target: 続行
+  target_initial: 続行
+- locale: ja
+  format: string
+  source: Base Objects
+  target: ベースオブジェクト
+  target_initial: ベースオブジェクト
+- locale: ja
+  format: string
+  source: Import from
+  target: 次からインポート
+  target_initial: 次からインポート
+- locale: ja
+  format: string
+  source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  target: インストールの最後のプラグインに与えられたリンクを入力して、2つのシステムをリンクしてください。
+  target_initial: インストールの最後のプラグインに与えられたリンクを入力して、2つのシステムをリンクしてください。
+- locale: ja
+  format: string
+  source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  target: ZammadにインポートできないOTRS BPMプロセスを検出しました。こうしたワークフローは現在サポートしていません。
+  target_initial: ZammadにインポートできないOTRS BPMプロセスを検出しました。こうしたワークフローは現在サポートしていません。
+- locale: ja
+  format: string
+  source: Migration Plugin for %s
+  target: "%s用の移行プラグイン"
+  target_initial: "%s用の移行プラグイン"
+- locale: ja
+  format: string
+  source: Link %s
+  target: リンク %s
+  target_initial: リンク %s
+- locale: ja
+  format: string
+  source: Migrate %s Data
+  target: "%s データを移行"
+  target_initial: "%s データを移行"
+- locale: ja
+  format: string
+  source: Download and install the %s Migration Plugin on your %s instance.
+  target: "%s インスタンスに%s移行プラグインをダウンロードして、インストールしてください。"
+  target_initial: "%s インスタンスに%s移行プラグインをダウンロードして、インストールしてください。"
+- locale: ja
+  format: string
+  source: Download %s Migration Plugin
+  target: "%s移行プラグインをダウンロード"
+  target_initial: "%s移行プラグインをダウンロード"
+- locale: ja
+  format: string
+  source: 'Attention: These will be your login password after the import is completed.'
+  target: '注意: インポート完了後、これがあなたのログインパスワードとなります。'
+  target_initial: '注意: インポート完了後、これがあなたのログインパスワードとなります。'
+- locale: ja
+  format: string
+  source: API token
+  target: APIトークン
+  target_initial: APIトークン
+- locale: ja
+  format: string
+  source: Enter your Email address and the %s API token gained from your
+  target: お使いのメールアドレスと%s 次から得たAPIトークンを入力してください
+  target_initial: お使いのメールアドレスと%s 次から得たAPIトークンを入力してください
+- locale: ja
+  format: string
+  source: "%s credentials"
+  target: "%s 認証情報"
+  target_initial: "%s 認証情報"
+- locale: ja
+  format: string
+  source: Enter credentials
+  target: 認証情報を入力
+  target_initial: 認証情報を入力
+- locale: ja
+  format: string
+  source: Enter the URL of your %s system
+  target: お使いの%sシステムのURLを入力
+  target_initial: お使いの%sシステムのURLを入力
+- locale: ja
+  format: string
+  source: Enter your email address and the %s API token gained from your admin interface.
+  target: お使いのメールアドレスと、管理者インターフェイスから得た%s APIトークンを入力してください。
+  target_initial: お使いのメールアドレスと、管理者インターフェイスから得た%s APIトークンを入力してください。
+- locale: ja
+  format: string
+  source: Test Connection
+  target: テスト接続
+  target_initial: テスト接続
+- locale: ja
+  format: string
+  source: Password for proxy connection.
+  target: プロキシ接続のパスワードです。
+  target_initial: プロキシ接続のパスワードです。
+- locale: ja
+  format: string
+  source: Username for proxy connection.
+  target: プロキシ接続のユーザー名です。
+  target_initial: プロキシ接続のユーザー名です。
+- locale: ja
+  format: string
+  source: Bank Name
+  target: 銀行名
+  target_initial: 銀行名
+- locale: ja
+  format: string
+  source: Proxy address.
+  target: プロキシ住所です。
+  target_initial: プロキシ住所です。
+- locale: ja
+  format: string
+  source: Proxy Settings
+  target: プロキシ設定
+  target_initial: プロキシ設定
+- locale: ja
+  format: string
+  source: Password needs to have at least minimal size of characters.
+  target: パスワードには、少なくとも文字の最小サイズが必要です。
+  target_initial: パスワードには、少なくとも文字の最小サイズが必要です。
+- locale: ja
+  format: string
+  source: Max size of the subject in an email reply.
+  target: メール返信の件名の最大サイズです。
+  target_initial: メール返信の件名の最大サイズです。
+- locale: ja
+  format: string
+  source: Tab has changed, do you really want to close it?
+  target: タブが変更されました。完了してもよろしいですか？
+  target_initial: タブが変更されました。完了してもよろしいですか？
+- locale: ja
+  format: string
+  source: '|%s| stores all attachments in the "%s".'
+  target: '|%s| は、全添付物を"%s"に保存します。'
+  target_initial: '|%s| は、全添付物を"%s"に保存します。'
+- locale: ja
+  format: string
+  source: skip
+  target: スキップ
+  target_initial: スキップ
+- locale: ja
+  format: string
+  source: Time Accounting
+  target: 時間会計
+  target_initial: 時間会計
+- locale: ja
+  format: string
+  source: Selector
+  target: セレクター
+  target_initial: セレクター
+- locale: ja
+  format: string
+  source: Time Units Total
+  target: 総時間単位
+  target_initial: 総時間単位
+- locale: ja
+  format: string
+  source: Time Units
+  target: 時間単位
+  target_initial: 時間単位
+- locale: ja
+  format: string
+  source: Enable time accounting for following matching tickets.
+  target: マッチした次のチケットに対する時間会計を有効化します。
+  target_initial: マッチした次のチケットに対する時間会計を有効化します。
+- locale: ja
+  format: string
+  source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  target: 同時に、弊社アカウントのZammad GmbHに直接引き落とされるよう弊社の金融機関に許可を与えます。
+  target_initial: 同時に、弊社アカウントのZammad GmbHに直接引き落とされるよう弊社の金融機関に許可を与えます。
+- locale: ja
+  format: string
+  source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  target: チャットが見えるはずの各ページのソースコードに、ウィジェットコードを挿入してください。 ページのソースコードの最後、クローズタグ`</body>`の前に置いて下さい。
+  target_initial: チャットが見えるはずの各ページのソースコードに、ウィジェットコードを挿入してください。 ページのソースコードの最後、クローズタグ`</body>`の前に置いて下さい。
+- locale: ja
+  format: string
+  source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  target: 私はここに、Zammad GmbHが私の口座から期限の来た金額を直接引き落とすことを、将来さらなる通知を行うまで許可します。
+  target_initial: 私はここに、Zammad GmbHが私の口座から期限の来た金額を直接引き落とすことを、将来さらなる通知を行うまで許可します。
+- locale: ja
+  format: string
+  source: SEPA Direct Debit
+  target: SEPA直接引き落とし
+  target_initial: SEPA直接引き落とし
+- locale: ja
+  format: string
+  source: Account Holder
+  target: 口座名義人
+  target_initial: 口座名義人
+- locale: ja
+  format: string
+  source: Germany
+  target: ドイツ
+  target_initial: ドイツ
+- locale: ja
+  format: string
+  source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  target: SEPA-ベース直接引き落とし権限の、撤回までの発行
+  target_initial: SEPA-ベース直接引き落とし権限の、撤回までの発行
+- locale: ja
+  format: string
+  source: Last contact (agent)
+  target: 最近のコンタクト（エージェント）
+  target_initial: 最近のコンタクト（エージェント）
+- locale: ja
+  format: string
+  source: Last contact (customer)
+  target: 最近のコンタクト（顧客）
+  target_initial: 最近のコンタクト（顧客）
+- locale: ja
+  format: string
+  source: Closing time
+  target: 閉店時間
+  target_initial: 閉店時間
+- locale: ja
+  format: string
+  source: You have not created a ticket yet.
+  target: まだチケットを作成していません。
+  target_initial: まだチケットを作成していません。
+- locale: ja
+  format: string
+  source: The way to communicate with us is this thing called "ticket".
+  target: 弊社との通信方法は、この「チケット」と呼ばれるものです。
+  target_initial: 弊社との通信方法は、この「チケット」と呼ばれるものです。
+- locale: ja
+  format: string
+  source: Reopened
+  target: 再対応
+  target_initial: 再対応
+- locale: ja
+  format: string
+  source: Bulk action executed!
+  target: バルクアクションが実行されました！
+  target_initial: バルクアクションが実行されました！
+- locale: ja
+  format: string
+  source: Successful!
+  target: できました！
+  target_initial: できました！
+- locale: ja
+  format: string
+  source: Time zone
+  target: 時間帯
+  target_initial: 時間帯
+- locale: ja
+  format: string
+  source: select attachment...
+  target: 添付物の選択…
+  target_initial: 添付物の選択…
+- locale: ja
+  format: string
+  source: Invite customers to create issues in Zammad
+  target: Zammadでの割り当てを作成するため顧客を招待
+  target_initial: Zammadでの割り当てを作成するため顧客を招待
+- locale: ja
+  format: string
+  source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  target: Checksumを使うと、カウンターにチェックサムが追加されます。 フォーマットは %s (%sなど) のように見えます。
+  target_initial: Checksumを使うと、カウンターにチェックサムが追加されます。 フォーマットは %s (%sなど) のように見えます。
+- locale: ja
+  format: string
+  source: An open source monitoring tool.
+  target: オープンソースモニタリングツール。
+  target_initial: オープンソースモニタリングツール。
+- locale: ja
+  format: string
+  source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  target: このサービスを設定するには、新規の |"Incoming webhook"| をあなたの %s 統合パネルに作成し、下のウェブフックURLを入力してください。
+  target_initial: このサービスを設定するには、新規の |"Incoming webhook"| をあなたの %s 統合パネルに作成し、下のウェブフックURLを入力してください。
+- locale: ja
+  format: string
+  source: When notification is being sent.
+  target: 通知が送信された場合。
+  target_initial: 通知が送信された場合。
+- locale: ja
+  format: string
+  source: Only for these groups.
+  target: これらのグループに対してのみ。
+  target_initial: これらのグループに対してのみ。
+- locale: ja
+  format: string
+  source: iCalendar links from Google will get fetched once a day
+  target: GoogleからのiCalendarリンクは、一日1回フェッチします
+  target_initial: GoogleからのiCalendarリンクは、一日1回フェッチします
+- locale: ja
+  format: string
+  source: Automatically show chat
+  target: チャットを自動的に表示
+  target_initial: チャットを自動的に表示
+- locale: ja
+  format: string
+  source: New text module
+  target: 次のテキストモジュール
+  target_initial: 次のテキストモジュール
+- locale: ja
+  format: string
+  source: Your account has not been verified. Please click the link in the verification
+    email.
+  target: アカウントが確認されていません。 確認メール中のリンクをクリックして下さい。
+  target_initial: アカウントが確認されていません。 確認メール中のリンクをクリックして下さい。
+- locale: ja
+  format: string
+  source: Woo hoo! Your email address has been verified!
+  target: やった！ メールアドレスが確認できました！
+  target_initial: やった！ メールアドレスが確認できました！
+- locale: ja
+  format: string
+  source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  target: ログインページにメッセージを入れて下さい。 変更するには、下のテキストエリアをクリックして、インラインで変更してください。
+  target_initial: ログインページにメッセージを入れて下さい。 変更するには、下のテキストエリアをクリックして、インラインで変更してください。
+- locale: ja
+  format: string
+  source: "...add object link URL"
+  target: "... オブジェクトリンクURLを追加"
+  target_initial: "... オブジェクトリンクURLを追加"
+- locale: ja
+  format: string
+  source: Copy current object number (e. g. Ticket#) to clipboard
+  target: 現在のオブジェクト番号（Ticket#など）をクリップボードにコピー
+  target_initial: 現在のオブジェクト番号（Ticket#など）をクリップボードにコピー
+- locale: ja
+  format: string
+  source: Please execute database changes only in a maintenance time-slot.
+  target: メンテナンスタイムスロットでのみ、データベース変更を実行してください。
+  target_initial: メンテナンスタイムスロットでのみ、データベース変更を実行してください。
+- locale: ja
+  format: string
+  source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  target: フォームを使うと、ウェブページにフォームを追加でき、これでご自身のためにチケットを直接生成できます。
+  target_initial: フォームを使うと、ウェブページにフォームを追加でき、これでご自身のためにチケットを直接生成できます。
+- locale: ja
+  format: string
+  source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  target: ここでチケット、顧客、組織を検索できます。 ワイルドカード §*§ を用いて、全て検索してください。 例. §smi*§ または §rosent*l§。
+    また、||二重引用符|| を用いて、フレーズ§"フレーズ"§を検索できます。
+  target_initial: ここでチケット、顧客、組織を検索できます。 ワイルドカード §*§ を用いて、全て検索してください。 例. §smi*§ または
+    §rosent*l§。 また、||二重引用符|| を用いて、フレーズ§"フレーズ"§を検索できます。
+- locale: ja
+  format: string
+  source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  target: ご自身のウェブページにウィジェットを作成し、訪問者があなたとチャットできるようにできます。
+  target_initial: ご自身のウェブページにウィジェットを作成し、訪問者があなたとチャットできるようにできます。
+- locale: ja
+  format: string
+  source: You need to add the following Javascript code snippet to your web page
+  target: 次のJavascriptコードスニペットを、ウェブページに追加する必要があります。
+  target_initial: 次のJavascriptコードスニペットを、ウェブページに追加する必要があります。
+- locale: ja
+  format: string
+  source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  target: チャットを表示する各ページのソースコードに、ウィジェットコードを挿入してください。 ページのソースコードの最後、クローズタグ`</body>`の前に置いて下さい。
+  target_initial: チャットを表示する各ページのソースコードに、ウィジェットコードを挿入してください。 ページのソースコードの最後、クローズタグ`</body>`の前に置いて下さい。
+- locale: ja
+  format: string
+  source: Set up the communication channels you want to use with your Zammad.
+  target: Zammadで使いたい通信チャネルを設定してください。
+  target_initial: Zammadで使いたい通信チャネルを設定してください。
+- locale: ja
+  format: string
+  source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  target: お使いになりたいカレンダーアプリに次のURLを追加して、カレンダーでご自身のチケットを見て下さい。
+  target_initial: お使いになりたいカレンダーアプリに次のURLを追加して、カレンダーでご自身のチケットを見て下さい。
+- locale: ja
+  format: string
+  source: Don't load CSS for form. You need to generate your own CSS for the form.
+  target: フォームにCSSをロードしないでください。 フォームにはご自身のCSSを生成する必要があります。
+  target_initial: フォームにCSSをロードしないでください。 フォームにはご自身のCSSを生成する必要があります。
+- locale: ja
+  format: string
+  source: Text modules
+  target: テキストモジュール
+  target_initial: テキストモジュール
+- locale: ja
+  format: string
+  source: A test ticket has been created, you can find it in your overview |"%s"|
+  target: テストチケットが生成されました。概要の"%s"でこれを見ることができます。
+  target_initial: テストチケットが生成されました。概要の"%s"でこれを見ることができます。
+- locale: ja
+  format: string
+  source: Here you see a quick overview of your and other agents' performance.
+  target: ここではご自身の、また他のエージェントの実績をす早く見ることができます。
+  target_initial: ここではご自身の、また他のエージェントの実績をす早く見ることができます。
+- locale: ja
+  format: string
+  source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  target: ここでは対応中、割当て済、エスカレートしたチケットの概要が分ります。
+  target_initial: ここでは対応中、割当て済、エスカレートしたチケットの概要が分ります。
+- locale: ja
+  format: string
+  source: Real name
+  target: 実名
+  target_initial: 実名
+- locale: ja
+  format: string
+  source: Date & Time
+  target: 日時
+  target_initial: 日時
+- locale: ja
+  format: string
+  source: Enter your username or email address
+  target: ユーザー名とメールアドレスを入力してください
+  target_initial: ユーザー名とメールアドレスを入力してください
+- locale: ja
+  format: string
+  source: Copy to clipboard
+  target: クリップボードにコピー
+  target_initial: クリップボードにコピー
+- locale: ja
+  format: string
+  source: Client Secret
+  target: クライアントの秘密
+  target_initial: クライアントの秘密
+- locale: ja
+  format: string
+  source: Username / email
+  target: ユーザー名/メールアドレス
+  target_initial: ユーザー名/メールアドレス
+- locale: ja
+  format: string
+  source: Ticket Number Increment
+  target: チケット番号増分
+  target_initial: チケット番号増分
+- locale: ja
+  format: string
+  source: Get latest Translation
+  target: 最新の翻訳を入手
+  target_initial: 最新の翻訳を入手
+- locale: ja
+  format: string
+  source: Title of the form
+  target: フォームのタイトル
+  target_initial: フォームのタイトル
+- locale: ja
+  format: string
+  source: "%s ended switch to |%s|!"
+  target: "%s が |%s| への切替を完了！"
+  target_initial: "%s が |%s| への切替を完了！"
+- locale: ja
+  format: string
+  source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  target: 対応して作業するには、チケット |#%s| を直接 %l または概要 |"%s"| %l でクリックして、チケットをクリックしてください。
+  target_initial: 対応して作業するには、チケット |#%s| を直接 %l または概要 |"%s"| %l でクリックして、チケットをクリックしてください。
+- locale: ja
+  format: string
+  source: Send a message to all logged in users.
+  target: ログインしたユーザー全てにメッセージを送信。
+  target_initial: ログインしたユーザー全てにメッセージを送信。
+- locale: ja
+  format: string
+  source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  target: Zammadは、現在メンテナンスモードです。 管理者のみがログインできます。 メンテナンスウィンドウが終了するまで待って下さい。
+  target_initial: Zammadは、現在メンテナンスモードです。 管理者のみがログインできます。 メンテナンスウィンドウが終了するまで待って下さい。
+- locale: ja
+  format: string
+  source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  target: ユーザー名/メールアドレスとパスワードを用いて承認ユーザーに対して、REST APIアクセスを有効にしてください。
+  target_initial: ユーザー名/メールアドレスとパスワードを用いて承認ユーザーに対して、REST APIアクセスを有効にしてください。
+- locale: ja
+  format: string
+  source: "%s% have been reopened"
+  target: "%s%が再対応されました"
+  target_initial: "%s%が再対応されました"
+- locale: ja
+  format: string
+  source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  target: フィルターを用いると、新規チケットを特定のグループに出す、またはVIP顧客のチケットに一定の優先順位を設定できます。
+  target_initial: フィルターを用いると、新規チケットを特定のグループに出す、またはVIP顧客のチケットに一定の優先順位を設定できます。
+- locale: ja
+  format: string
+  source: Here you will find the latest activities of your system.
+  target: ここではあなたのシステムの最近の活動を見ることができます。
+  target_initial: ここではあなたのシステムの最近の活動を見ることができます。
+- locale: ja
+  format: string
+  source: Your tickets in process
+  target: 処理中のあなたのチケット
+  target_initial: 処理中のあなたのチケット
+- locale: ja
+  format: string
+  source: Third-party Applications
+  target: サードパーティーアプリケーション
+  target_initial: サードパーティーアプリケーション
+- locale: ja
+  format: string
+  source: Recently viewed
+  target: 最近見た
+  target_initial: 最近見た
+- locale: ja
+  format: string
+  source: Drop files here
+  target: ここにファイルをドロップ
+  target_initial: ここにファイルをドロップ
+- locale: ja
+  format: string
+  source: "%s of your tickets are currently in process."
+  target: あなたのチケットの%sが、現在実行中です。
+  target_initial: あなたのチケットの%sが、現在実行中です。
+- locale: ja
+  format: string
+  source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  target: あなたのアカウントで、新規セッションが作成されました。 このセッションは、衝突をさけるために停止されます。
+  target_initial: あなたのアカウントで、新規セッションが作成されました。 このセッションは、衝突をさけるために停止されます。
+- locale: ja
+  format: string
+  source: Account Time
+  target: アカウント時間
+  target_initial: アカウント時間
+- locale: ja
+  format: string
+  source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  target: 翻訳を容易にするため、"%s"を押してインライン翻訳をオン、オフできます。
+  target_initial: 翻訳を容易にするため、"%s"を押してインライン翻訳をオン、オフできます。
+- locale: ja
+  format: string
+  source: Sender
+  target: 送信者
+  target_initial: 送信者
+- locale: ja
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: チケットに共に対応するため、エージェント/同僚を招待
+  target_initial: チケットに共に対応するため、エージェント/同僚を招待
+- locale: ja
+  format: string
+  source: See less
+  target: 少なめに表示
+  target_initial: 少なめに表示
+- locale: ja
+  format: string
+  source: assign tickets
+  target: チケット割り当て
+  target_initial: チケット割り当て
+- locale: ja
+  format: string
+  source: submit
+  target: 提出
+  target_initial: 提出
+- locale: ja
+  format: string
+  source: run macro
+  target: マクロを実行
+  target_initial: マクロを実行
+- locale: ja
+  format: string
+  source: drag here to cancel
+  target: ここにドラッグしてキャンセル
+  target_initial: ここにドラッグしてキャンセル
+- locale: ja
+  format: string
+  source: "%s people"
+  target: "%s人"
+  target_initial: "%s人"
+- locale: ja
+  format: string
+  source: No unread notifications for you. :)
+  target: 未読通知はありません。 :)
+  target_initial: 未読通知はありません。 :)
+- locale: ja
+  format: string
+  source: Service
+  target: サービス
+  target_initial: サービス
+- locale: ja
+  format: string
+  source: A powerfull service to get more information about your customers.
+  target: あなたの顧客についてもっと情報を得るための強力なツールです。
+  target_initial: あなたの顧客についてもっと情報を得るための強力なツールです。
+- locale: ja
+  format: string
+  source: Back to my view
+  target: マイビューに戻る
+  target_initial: マイビューに戻る
+- locale: ja
+  format: string
+  source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  target: サブスクリプションをキャンセルすると、Zammadは使えなくなります。
+  target_initial: サブスクリプションをキャンセルすると、Zammadは使えなくなります。
+- locale: ja
+  format: string
+  source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  target: チケットに対して定期的に回答し、期限通りに完了する、またテキストモジュール、チケットリマインダー、チケットのタグ付けなどの高度な機能を利用すると、|ポジティブなカルマが蓄積|
+    されます。 チケットに再対応、チケットをエスカレート、または2日以上期限を過ぎたチケットのある場合、Zammad |カルマは減少| します。
+  target_initial: チケットに対して定期的に回答し、期限通りに完了する、またテキストモジュール、チケットリマインダー、チケットのタグ付けなどの高度な機能を利用すると、|ポジティブなカルマが蓄積|
+    されます。 チケットに再対応、チケットをエスカレート、または2日以上期限を過ぎたチケットのある場合、Zammad |カルマは減少| します。
+- locale: ja
+  format: string
+  source: Set caller id of outbound calls based on destination caller id.
+  target: デスティネーション呼出しIDに基づいて、外部呼び出しの呼出しIDを設定します。
+  target_initial: デスティネーション呼出しIDに基づいて、外部呼び出しの呼出しIDを設定します。
+- locale: ja
+  format: string
+  source: Defines if a customer can create tickets via the web interface.
+  target: ウェブインターフェイスで、顧客がチケット作成をできるかを定義します。
+  target_initial: ウェブインターフェイスで、顧客がチケット作成をできるかを定義します。
+- locale: ja
+  format: string
+  source: Customers in the organization can view each other items.
+  target: 組織中の顧客は、お互いのアイテムを見ることができます。
+  target_initial: 組織中の顧客は、お互いのアイテムを見ることができます。
+- locale: ja
+  format: string
+  source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  target: お問い合わせありがとうございます(#%s)！ 早速お返事を差し上げます。
+  target_initial: お問い合わせありがとうございます(#%s)！ 早速お返事を差し上げます。
+- locale: ja
+  format: string
+  source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  target: チケット属性への別のアプローチに従ううち、Zammadには通常無いダイナミックなフィールドを多く発見しました。 Zammadは、チケット分類のためにカスタムフィールドの他にタグも用います。
+    この差異は、OTRS内のあなたの現在のダイナミックフィールドに比べて、あなたのチケット属性/タグに新たな考えを創り出します。
+  target_initial: チケット属性への別のアプローチに従ううち、Zammadには通常無いダイナミックなフィールドを多く発見しました。 Zammadは、チケット分類のためにカスタムフィールドの他にタグも用います。
+    この差異は、OTRS内のあなたの現在のダイナミックフィールドに比べて、あなたのチケット属性/タグに新たな考えを創り出します。
+- locale: ja
+  format: string
+  source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  target: デフォルトでは、フォローアップの確認はメールの件名で行われます。 この設定では、フォローアップ確認が実行されるフィールドをさらに追加できます。
+  target_initial: デフォルトでは、フォローアップの確認はメールの件名で行われます。 この設定では、フォローアップ確認が実行されるフィールドをさらに追加できます。
+- locale: ja
+  format: string
+  source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  target: トークン（ユーザー名/メールアドレスやパスワードではなく）を用いて、REST APIを有効にしてください。 各ユーザーは、ユーザープロファイルに自分自身のアクセストークンを作成する必要があります。
+  target_initial: トークン（ユーザー名/メールアドレスやパスワードではなく）を用いて、REST APIを有効にしてください。 各ユーザーは、ユーザープロファイルに自分自身のアクセストークンを作成する必要があります。
+- locale: ja
+  format: string
+  source: Unassigned email addresses, assign them to a channel or delete them.
+  target: 未割り当てのメールアドレス。チャネルに割り当てるか、削除してください。
+  target_initial: 未割り当てのメールアドレス。チャネルに割り当てるか、削除してください。
+- locale: ja
+  format: string
+  source: |-
+    Find what you search. E. g. "search phrase";";
+    "Extended Search
+  target: 探しているものを見つけてください。 「検索文字列」など
+  target_initial: 探しているものを見つけてください。 「検索文字列」など
+- locale: ja
+  format: string
+  source: |-
+    Move all from "%s" to "%s";";
+    "Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.
+  target: '"%s"から"%s";"にすべて移動;"システムの完全適格なドメイン名を定義します。 この設定は、アプリケーションを利用したすべてのメッセージ形式にある変数#{setting.fqdn}
+    として利用でき、あなたのシステム内でのチケットへのリンクを構築します。'
+  target_initial: '"%s"から"%s";"にすべて移動;"システムの完全適格なドメイン名を定義します。 この設定は、アプリケーションを利用したすべてのメッセージ形式にある変数#{setting.fqdn}
+    として利用でき、あなたのシステム内でのチケットへのリンクを構築します。'
+- locale: ja
+  format: string
+  source: My closed Tickets
+  target: 私の完了チケット
+  target_initial: 私の完了チケット
+- locale: ja
+  format: string
+  source: HTTP type
+  target: HTTP type
+  target_initial: HTTP type
+- locale: ja
+  format: string
+  source: Network
+  target: Network
+  target_initial: Network
+- locale: ja
+  format: string
+  source: Disable
+  target: 無効
+  target_initial: 無効
+- locale: ja
+  format: string
+  source: Connecting ...
+  target: 接続中 ...
+  target_initial: 接続中 ...
+- locale: ja
+  format: string
+  source: Reply-To
+  target: Reply-To
+  target_initial: Reply-To
+- locale: ja
+  format: string
+  source: failed
+  target: 失敗
+  target_initial: 失敗
+- locale: ja
+  format: string
+  source: Configure
+  target: 設定
+  target_initial: 設定
+- locale: ja
+  format: string
+  source: Enable
+  target: 有効
+  target_initial: 有効
+- locale: ja
+  format: string
+  source: Change
+  target: 変更
+  target_initial: 変更
+- locale: ja
+  format: string
+  source: contains all
+  target: 全てを含む
+  target_initial: 全てを含む
+- locale: ja
+  format: string
+  source: contains all not
+  target: 全てを含まない
+  target_initial: 全てを含まない
+- locale: ja
+  format: string
+  source: contains one
+  target: 一つは含む
+  target_initial: 一つは含む
+- locale: ja
+  format: string
+  source: Wrong Username or Password combination.
+  target: ユーザー名またはパスワードが違います
+  target_initial: ユーザー名またはパスワードが違います
+- locale: ja
+  format: string
+  source: Save configuration
+  target: 設定保存
+  target_initial: 設定保存
+- locale: ja
+  format: string
+  source: Running...
+  target: 処理中 ...
+  target_initial: 処理中 ...
+- locale: ja
+  format: string
+  source: contains one not
+  target: 一つは含まない
+  target_initial: 一つは含まない
+- locale: ja
+  format: string
+  source: Telegram
+  target: Telegram
+  target_initial: Telegram
+- locale: ja
+  format: string
+  source: Add Bot
+  target: Botを追加
+  target_initial: Botを追加
+- locale: ja
+  format: string
+  source: All Agents
+  target: 全てのエージェント
+  target_initial: 全てのエージェント
+- locale: ja
+  format: string
+  source: Feedback
+  target: フィードバック
+  target_initial: フィードバック
+- locale: ja
+  format: string
+  source: Accounted Time
+  target: 作業時間
+  target_initial: 作業時間
+- locale: ja
+  format: string
+  source: Messages
+  target: メッセージ
+  target_initial: メッセージ
+- locale: ja
+  format: string
+  source: Services
+  target: サービス
+  target_initial: サービス
+- locale: ja
+  format: string
+  source: Additional follow-up detection
+  target: Additional follow-up detection
+  target_initial: Additional follow-up detection
+- locale: ja
+  format: string
+  source: Add sender initials to end of a tweet.
+  target: Add sender initials to end of a tweet.
+  target_initial: Add sender initials to end of a tweet.
+- locale: ja
+  format: string
+  source: Auto close
+  target: 自動クローズ
+  target_initial: 自動クローズ
+- locale: ja
+  format: string
+  source: Billing E-Mail Address
+  target: 請求電子メールアドレス
+  target_initial: 請求電子メールアドレス
+- locale: ja
+  format: string
+  source: Geo IP Service
+  target: Geo IP サービス
+  target_initial: Geo IP サービス
+- locale: ja
+  format: string
+  source: Geo Location Service
+  target: Geo ロケーションサービス
+  target_initial: Geo ロケーションサービス
+- locale: ja
+  format: string
+  source: "%s user to %s user"
+  target: "%s user to %s user"
+  target_initial: "%s user to %s user"
+- locale: ja
+  format: string
+  source: Analyzing entries with given configuration...
+  target: Analyzing entries with given configuration...
+  target_initial: Analyzing entries with given configuration...
+- locale: ja
+  format: string
+  source: Analyzing structure...
+  target: Analyzing structure...
+  target_initial: Analyzing structure...
+- locale: ja
+  format: string
+  source: Already charged in this periode
+  target: Already charged in this periode
+  target_initial: Already charged in this periode
+- locale: ja
+  format: string
+  source: "%s groups to %s roles assignments"
+  target: "%s groups to %s roles assignments"
+  target_initial: "%s groups to %s roles assignments"
+- locale: ja
+  format: string
+  source: Connect Twitter App
+  target: Twitter Appに接続
+  target_initial: Twitter Appに接続
+- locale: ja
+  format: string
+  source: Article Last Sender
+  target: 直近の投稿者
+  target_initial: 直近の投稿者
+- locale: ja
+  format: string
+  source: Bots
+  target: Bots
+  target_initial: Bots
+- locale: ja
+  format: string
+  source: Connect Facebook App
+  target: Facebook Appに接続
+  target_initial: Facebook Appに接続
+- locale: ja
+  format: string
+  source: Email - subject field
+  target: Eメール件名
+  target_initial: Eメール件名
+- locale: ja
+  format: string
+  source: Agent limit exceeded, please check your account settings.
+  target: Agent limit exceeded, please check your account settings.
+  target_initial: Agent limit exceeded, please check your account settings.
+- locale: ja
+  format: string
+  source: Add this class to a button on your page that should open the chat.
+  target: Add this class to a button on your page that should open the chat.
+  target_initial: Add this class to a button on your page that should open the chat.
+- locale: ja
+  format: string
+  source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  target: ウェブ画面で、チケット作成を許可するグループを指定します。 "-" はすべてのグループに対して許可します。
+  target_initial: ウェブ画面で、チケット作成を許可するグループを指定します。 "-" はすべてのグループに対して許可します。
+- locale: ja
+  format: string
+  source: Uninstall
+  target: アンインストール
+  target_initial: アンインストール
+- locale: ja
+  format: string
+  source: Base DN
+  target: ベースDN
+  target_initial: ベースDN
+- locale: ja
+  format: string
+  source: Urgency
+  target: 緊急
+  target_initial: 緊急
+- locale: ja
+  format: string
+  source: Till
+  target: 迄
+  target_initial: 迄
+- locale: ja
+  format: string
+  source: delete
+  target: 削除
+  target_initial: 削除
+- locale: ja
+  format: string
+  source: Out of Office
+  target: 不在
+  target_initial: 不在
+- locale: ja
+  format: string
+  source: forward
+  target: 転送
+  target_initial: 転送
+- locale: ja
+  format: string
+  source: untouched
+  target: 未着手
+  target_initial: 未着手
+- locale: ja
+  format: string
+  source: Updating Database
+  target: データベースを更新しています
+  target_initial: データベースを更新しています
+- locale: ja
+  format: string
+  source: No proxy for the following hosts.
+  target: 以下のホストはプロキシを除外します。
+  target_initial: 以下のホストはプロキシを除外します。
+- locale: ja
+  format: string
+  source: Extended Search
+  target: 詳細検索
+  target_initial: 詳細検索
+- locale: ja
+  format: string
+  source: Locale
+  target: ロケール
+  target_initial: ロケール
+- locale: ja
+  format: string
+  source: Out of office replacement
+  target: 代理 ( 不在の時 )
+  target_initial: 代理 ( 不在の時 )
+- locale: ja
+  format: string
+  source: Minimum length
+  target: 最小文字数
+  target_initial: 最小文字数
+- locale: ja
+  format: string
+  source: Number of failed logins after account will be deactivated.
+  target: 次の回数ログインに失敗すると、アカウントを無効にします
+  target_initial: 次の回数ログインに失敗すると、アカウントを無効にします
+- locale: ja
+  format: string
+  source: Password needs to contain at least one digit.
+  target: パスワードに数字を必須にしますか？
+  target_initial: パスワードに数字を必須にしますか？
+- locale: ja
+  format: string
+  source: Password needs to have at least a minimal number of characters.
+  target: パスワードの最小文字数
+  target_initial: パスワードの最小文字数
+- locale: ja
+  format: string
+  source: Maximum failed logins
+  target: 最大失敗回数
+  target_initial: 最大失敗回数
+- locale: ja
+  format: string
+  source: Bind Password
+  target: ユーザに対するパスワード
+  target_initial: ユーザに対するパスワード
+- locale: ja
+  format: string
+  source: Bind User
+  target: ユーザ名
+  target_initial: ユーザ名
+- locale: ja
+  format: string
+  source: Last sync
+  target: 最終同期
+  target_initial: 最終同期
+- locale: ja
+  format: string
+  source: This is Zammad version %s
+  target: お使いのZammadのバージョンは%sです。
+  target_initial: お使いのZammadのバージョンは%sです。
+- locale: ja
+  format: string
+  source: Configurable in the admin interface of %s.
+  target: "%sの管理者インターフェイスで設定可能です。"
+  target_initial: "%sの管理者インターフェイスで設定可能です。"
+- locale: ja
+  format: string
+  source: No %s configured.
+  target: "%sが設定されていません。"
+  target_initial: "%sが設定されていません。"
+- locale: ja
+  format: string
+  source: Endpoint
+  target: エンドポイント
+  target_initial: エンドポイント
+- locale: ja
+  format: string
+  source: Counting entries. This may take a while.
+  target: 登録された内容を集計中です。しばらくお待ちください。
+  target_initial: 登録された内容を集計中です。しばらくお待ちください。
+- locale: ja
+  format: string
+  source: Mapping
+  target: マッピング
+  target_initial: マッピング
+- locale: ja
+  format: string
+  source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  target: システムのFQDN(完全修飾ドメイン名)を定義します。この設定は変数として使用され、#{setting.fqdn}はアプリケーションで使用されるすべてのメッセージ入力フォームで使用され、システム内のチケットへのリンクを埋め込みます。
+  target_initial: システムのFQDN(完全修飾ドメイン名)を定義します。この設定は変数として使用され、#{setting.fqdn}はアプリケーションで使用されるすべてのメッセージ入力フォームで使用され、システム内のチケットへのリンクを埋め込みます。
+- locale: ja
+  format: string
+  source: Defines pretty date format.
+  target: 日付の形式を定義します。
+  target_initial: 日付の形式を定義します。
+- locale: ja
+  format: string
+  source: Pretty Date
+  target: 日付
+  target_initial: 日付
+- locale: ja
+  format: string
+  source: Defines the system default language.
+  target: デフォルトの言語設定を定義します。
+  target_initial: デフォルトの言語設定を定義します。
+- locale: ja
+  format: string
+  source: Define the http protocol of your instance.
+  target: お使いのHTTPプロトコルを定義します。
+  target_initial: お使いのHTTPプロトコルを定義します。
+- locale: ja
+  format: string
+  source: Max. length of the subject in an email reply.
+  target: 返信メールのタイトルの文字数上限
+  target_initial: 返信メールのタイトルの文字数上限
+- locale: ja
+  format: string
+  source: Maximum size in MB of emails.
+  target: メールのサイズ上限 (MB)
+  target_initial: メールのサイズ上限 (MB)
+- locale: ja
+  format: string
+  source: Sender based on Reply-To header
+  target: 返信アドレス (Reply-to ヘッダー)
+  target_initial: 返信アドレス (Reply-to ヘッダー)
+- locale: ja
+  format: string
+  source: Customer selection based on sender and receiver list
+  target: 送受信リストによる顧客選択
+  target_initial: 送受信リストによる顧客選択
+- locale: ja
+  format: string
+  source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  target: 初期設定としてメールタイトルからのフォローアップチェックが有効になっています。この設定によって追加のフォローアップチェックをどの項目で有効にするのか設定することができます。
+  target_initial: 初期設定としてメールタイトルからのフォローアップチェックが有効になっています。この設定によって追加のフォローアップチェックをどの項目で有効にするのか設定することができます。
+- locale: ja
+  format: string
+  source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  target: 送信者がエージェントだったら、受信リストの先頭ユーザーを顧客として登録する
+  target_initial: 送信者がエージェントだったら、受信リストの先頭ユーザーを顧客として登録する
+- locale: ja
+  format: string
+  source: Maximum Email Size
+  target: メールのサイズ上限
+  target_initial: メールのサイズ上限
+- locale: ja
+  format: string
+  source: Sender Format Separator
+  target: 送信者の区切り文字
+  target_initial: 送信者の区切り文字
+- locale: ja
+  format: string
+  source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  target: 返信メールのタイトルの先頭のテキスト [例] RE, AW, or AS
+  target_initial: 返信メールのタイトルの先頭のテキスト [例] RE, AW, or AS
+- locale: ja
+  format: string
+  source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  target: Fromヘッダーの様式 ( 回答とメールチケットからの送信分 )を定義します。
+  target_initial: Fromヘッダーの様式 ( 回答とメールチケットからの送信分 )を定義します。
+- locale: ja
+  format: string
+  source: Defines the separator between the agent's real name and the given group
+    email address.
+  target: エージェントの実名と与えられたグループメールアドレスの間に区切り文字を定義します。
+  target_initial: エージェントの実名と与えられたグループメールアドレスの間に区切り文字を定義します。
+- locale: ja
+  format: string
+  source: Location of an external chat.css file.
+  target: chat.cssの外部ファイルの保存先
+  target_initial: chat.cssの外部ファイルの保存先
+- locale: ja
+  format: string
+  source: LDAP Host
+  target: LDAPホスト
+  target_initial: LDAPホスト
+- locale: ja
+  format: string
+  source: LDAP integration for user management.
+  target: ユーザー管理のためのLDAP連携
+  target_initial: ユーザー管理のためのLDAP連携
+- locale: ja
+  format: string
+  source: Start new
+  target: 更新する
+  target_initial: 更新する
+- locale: ja
+  format: string
+  source: Yes, change my subscription
+  target: はい、受信を変更してください。
+  target_initial: はい、受信を変更してください。
+- locale: ja
+  format: string
+  source: Exchange integration for contacts management.
+  target: 連絡先の管理のためのExchange連携
+  target_initial: 連絡先の管理のためのExchange連携
+- locale: ja
+  format: string
+  source: This service enables Zammad to connect with your Exchange server.
+  target: このサービスはZammadのExchangeサーバーへの接続を有効にします。
+  target_initial: このサービスはZammadのExchangeサーバーへの接続を有効にします。
+- locale: ja
+  format: string
+  source: This service enables Zammad to connect with your LDAP server.
+  target: このサービスはZammadのLDAPサーバーへの接続を有効にします。
+  target_initial: このサービスはZammadのLDAPサーバーへの接続を有効にします。
+- locale: ja
+  format: string
+  source: People who create Tickets ask for help.
+  target: チケットの作成者/お問い合わせをしてきた担当者
+  target_initial: チケットの作成者/お問い合わせをしてきた担当者
+- locale: ja
+  format: string
+  source: To work on Tickets.
+  target: チケットの対応者
+  target_initial: チケットの対応者
+- locale: ja
+  format: string
+  source: skipped
+  target: スキップ
+  target_initial: スキップ
+- locale: ja
+  format: string
+  source: You have no configured %s right now.
+  target: 現在、設定された%sはありません。
+  target_initial: 現在、設定された%sはありません。
+- locale: ja
+  format: string
+  source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  target: チケットの識別子 [例] Ticket# Call# MyTicket# [初期値] Ticket#
+  target_initial: チケットの識別子 [例] Ticket# Call# MyTicket# [初期値] Ticket#
+- locale: ja
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: サポートチームからメールでご連絡させていただいた場合、あなたのメールアドレスはすでに登録されています。
+  target_initial: サポートチームからメールでご連絡させていただいた場合、あなたのメールアドレスはすでに登録されています。
+- locale: ja
+  format: string
+  source: Default visibility for new note.
+  target: 新しいメモに対する初期表示
+  target_initial: 新しいメモに対する初期表示
+- locale: ja
+  format: string
+  source: Note - default visibility
+  target: メモ - 初期表示
+  target_initial: メモ - 初期表示
+- locale: ja
+  format: string
+  source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  target: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+  target_initial: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+- locale: ja
+  format: string
+  source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  target: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+  target_initial: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+- locale: ja
+  format: string
+  source: Use sender initials at end of an tweet.
+  target: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+  target_initial: 件名欄をメールに使用します。いいえの場合はチケットのタイトルを件名として使用します。
+- locale: ja
+  format: string
+  source: Twitter - tweet initials
+  target: Twitter - イニシャル
+  target_initial: Twitter - イニシャル
+- locale: ja
+  format: string
+  source: Email - full quote
+  target: メール - 引用
+  target_initial: メール - 引用
+- locale: ja
+  format: string
+  source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  target: すべてのあなたの返答メールに引用したい場合は有効にしてください。引用はあなたの返答メールの末尾に挿入されます。もし文章の一部だけを挿入のなら、当該部分を選択した状態で[返信]を押してください。(この機能はいつでも利用可能です)
+  target_initial: すべてのあなたの返答メールに引用したい場合は有効にしてください。引用はあなたの返答メールの末尾に挿入されます。もし文章の一部だけを挿入のなら、当該部分を選択した状態で[返信]を押してください。(この機能はいつでも利用可能です)
+- locale: ja
+  format: string
+  source: Password Access
+  target: パスワード認証
+  target_initial: パスワード認証
+- locale: ja
+  format: string
+  source: If this regex matches, no notification will be sent by the sender.
+  target: 正規表現にマッチした場合、通知されません。
+  target_initial: 正規表現にマッチした場合、通知されません。
+- locale: ja
+  format: string
+  source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  target: "%sとZammadを接続することができます。 あなたは最初にZammadと%sを接続する必要があります。"
+  target_initial: "%sとZammadを接続することができます。 あなたは最初にZammadと%sを接続する必要があります。"
+- locale: ja
+  format: string
+  source: Invalid ticket selector conditions
+  target: チケットの抽出条件が無効です
+  target_initial: チケットの抽出条件が無効です
+- locale: ja
+  format: string
+  source: This service allows you to connect %s with %s.
+  target: このサービスは%sと%sの接続を可能にします。
+  target_initial: このサービスは%sと%sの接続を可能にします。
+- locale: ja
+  format: string
+  source: CMDB to document complex relations of your network components.
+  target: ネットワークコンポーネントの複雑な関係を情報管理できるようにする構成管理データベース(CMDB)
+  target_initial: ネットワークコンポーネントの複雑な関係を情報管理できるようにする構成管理データベース(CMDB)
+- locale: ja
+  format: string
+  source: New Application
+  target: アプリケーションを追加
+  target_initial: アプリケーションを追加
+- locale: ja
+  format: string
+  source: Requesting the Grant
+  target: 権限のリクエスト
+  target_initial: 権限のリクエスト
+- locale: ja
+  format: string
+  source: Getting an Access Token
+  target: アクセストークンの取得
+  target_initial: アクセストークンの取得
+- source: Find what you search. E. g. "search phrase"
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to enhance performance of application.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Report Profile
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Installed
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Delivery failed
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Meine zugewiesenen Tickets
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Invoice
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Billed monthly
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Payment by invoice
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Your new selection
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Plan
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Annual
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Change Objects
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Read
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Shared
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Text missing
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Full
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: To configure your system.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Products
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Receipt
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: forwarded
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Caller log
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Last customer contact (without consideration an agent has replied to it)
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Delete records
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Last customer contact (with consideration an agent has replied to it)
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The import was successful.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Update existing records
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Bulk import allows you to create and update many records at once.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: 'The following changes have been made:'
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Update existing records with the attributes specified in the import data.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The data must be in the comma separated values (CSV) format and saved as
+    UTF-8. You can import a CSV file or paste the data directly into the text area.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: The test run was successful.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Ticket Last Contact Behaviour
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been created."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Select CSV file
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Alternatively, you can use the Zammad API to import data.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: 'The following changes are made:'
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Sets the last customer contact based on the last contact of a customer or
+    on the last contact of a customer to whom an agent has not yet responded.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Clone
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Delete all existing records first.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Define an exception of "automatic assignment" for certain users (e.g. executives).
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Example CSV file for download.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are created."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Records that exist in the import data (but not in Zammad) will always be
+    created.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Exception users
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been updated."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Create new records
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Yes, start real import.
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are updated."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are deleted."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: Paste in CSV data
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) were deleted."
+  format: string
+  locale: ja
+  target: ''
+  target_initial: ''

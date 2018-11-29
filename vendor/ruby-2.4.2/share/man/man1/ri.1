@@ -1,0 +1,199 @@
+.TH RI 1 "Ruby Programmers Reference Guide" "July 10, 2013" "UNIX"
+.SH NAME
+\fBri\fP
+\- Ruby API reference front end
+.SH SYNOPSIS
+.br
+\fBri\fP
+[\fB\-Ti\fP]
+[\fB\-d\fP \fIdirectory\fP]
+[\fB\-f\fP \fIformat\fP]
+[\fB\--list-doc-dirs\fP]
+[\fB\--no-standard-docs\fP]
+[\fB\--\fP[\fBno-\fP]{\fBsystem\fP|\fBsite\fP|\fBgems\fP|\fBhome\fP}]
+[\fB\--\fP[\fBno-\fP]\fBuse-cache\fP]
+[\fB\--width\fP=\fIwidth\fP]
+[\fItarget\fP ...]
+.SH DESCRIPTION
+\fBri\fP
+is a CLI front end for the Ruby API reference.
+You can search and read API reference for classes and methods with
+\fB.\fP
+
+\fBri\fP
+is a part of Ruby.
+
+\fItarget\fP
+can be one of the following forms:
+It Class
+for classes
+It Class::method
+for class methods
+It Class#method
+for instance methods
+It Class.method
+for both class and instance methods
+It method
+for both class and instance methods
+
+All class names may be abbreviated to their minimum unambiguous form. If a name
+is ambiguous, all valid options will be listed.
+
+For example:
+
+ri Fil
+.br
+ri File
+.br
+ri File.new
+.br
+ri zip
+.br
+
+Note that shell quoting may be required for method names containing
+punctuation:
+
+ri 'Array.[]'
+.br
+ri compact\!
+.br
+.SH OPTIONS
+
+.TP
+\fB\--version\fP
+Prints the version of
+\fB.\fP
+
+.TP
+\fB\-T\fP
+.TP
+\fB\--no-pager\fP
+Send output directly to stdout, rather than to a pager.
+
+.TP
+\fB\-d\fP \fIdirectory\fP
+.TP
+\fB\--doc-dir\fP=\fIdirectory\fP
+List of directories from which to source documentation in addition to the standard
+directories.  May be repeated.
+
+.TP
+\fB\-f\fP \fIFORMAT\fP
+.TP
+\fB\--fmt\fP \fIFORMAT\fP
+.TP
+\fB\--format\fP=FORMAT
+Format to use when displaying output:
+
+ansi, bs, html, plain, simple
+
+Use 'bs' (backspace) with most pager programs. To use ANSI, either disable the
+pager or tell the pager to allow control characters.
+
+.TP
+\fB\-i\fP
+.TP
+\fB\--interactive\fP
+This makes
+\fBri\fP
+go into interactive mode.
+
+When
+\fBri\fP
+is in interactive mode it will allow the user to disambiguate lists of
+methods in case multiple methods match against a method search string.  It also
+will allow the user to enter in a method name (with auto-completion, if readline
+is supported) when viewing a class.
+
+.TP
+\fB\--list-doc-dirs\fP
+List the directories from which ri will source documentation on stdout and exit.
+
+.TP
+\fB\--no-standard-docs\fP
+Do not include documentation from the Ruby standard library,
+\fIsite_lib\fP,
+installed gems, or
+\fI~/.rdoc\fP.
+
+Equivalent to specifying the options
+\fB\--no-system\fP,\fB\--no-site\fP,\fB\--no-gems\fP,
+and
+\fB\--no-home\fP.
+
+.TP
+\fB\--\fP[\fBno-\fP]\fBsystem\fP
+Include documentation from Ruby's standard library.  Defaults to true.
+
+.TP
+\fB\--\fP[\fBno-\fP]\fBsite\fP
+ Include documentation from libraries installed in site_lib. Defaults to true.
+
+.TP
+\fB\--\fP[\fBno-\fP]\fBgems\fP
+Include documentation from RubyGems. Defaults to true.
+
+.TP
+\fB\--\fP[\fBno-\fP]\fBhome\fP
+Include documentation stored in ~/.rdoc.  Defaults to true.
+
+.TP
+\fB\--\fP[\fBno-\fP]\fBuse-cache\fP
+Whether or not to use
+\fBNs\fP
+'s cache. True by default.
+
+.TP
+\fB\-w\fP \fIwidth\fP
+.TP
+\fB\--width\fP=\fIwidth\fP
+Set the width of the output.
+
+
+.SH ENVIRONMENT
+
+.TP
+.B RI
+Additional options.
+
+.TP
+.B PAGER
+Used as the name of pager program for displaying.
+
+.TP
+.B HOME
+.TP
+.B USERPROFILE
+.TP
+.B HOMEPATH
+Path to user's home directory.
+
+.SH FILES
+
+.TP
+.B ~/.ri
+Caches recently referenced documents here.
+
+.TP
+.B ~/.rdoc
+Searches user-wide documents here.
+
+
+.SH SEE ALSO
+\fBruby\fP(1)
+\fBrdoc\fP(1)
+\fBgem\fP(1)
+
+.SH REPORTING BUGS
+Security vulnerabilities should be reported via an email to
+<security@ruby-lang.org>.
+Reported problems will be published after being fixed.
+
+And you can report other bugs and feature requests via the
+Ruby Issue Tracking System
+(\fBhttps://bugs.ruby-lang.org/\fP).
+Do not report security vulnerabilities
+via the system because it publishes the vulnerabilities immediately.
+.SH AUTHORS
+Written by Dave Thomas
+<dave@pragmaticprogrammer.com>

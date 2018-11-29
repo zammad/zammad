@@ -1,0 +1,15 @@
+[Unit]
+StopWhenUnneeded=true
+Requires=zammad-worker.service
+After=zammad-worker.service
+
+[Service]
+Environment=APP_PROCESS_INDEX=__PROCESS_INDEX__
+ExecStart=/usr/bin/zammad run worker
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+
+[Install]
+WantedBy=zammad-worker.service

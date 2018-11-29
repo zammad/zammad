@@ -133,6 +133,8 @@ module HasGroups
   #
   # @return [Array<Group>] Groups the instance has the given access(es) to.
   def groups_access(access)
+    return [] if !active?
+    return [] if !groups_access_permission?
     group_ids = group_ids_access(access)
     Group.where(id: group_ids)
   end

@@ -86,7 +86,7 @@ class ArticleViewItem extends App.ObserverController
 
   constructor: ->
     super
-    @seeMore = false
+    @seeMore = true
 
     # set expand of text area only once
     @bind('ui::ticket::shown', (data) =>

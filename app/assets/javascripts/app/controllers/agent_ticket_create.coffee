@@ -8,18 +8,19 @@ class App.TicketCreate extends App.Controller
     'click .js-cancel':      'cancel'
 
   types: {
+    'email-out': {
+      icon: 'email',
+      label: 'Send Email'
+    },
     'phone-in': {
       icon: 'received-calls',
       label: 'Received Call'
     },
-    'phone-out': {
-      icon: 'outbound-calls',
-      label: 'Outbound Call'
-    },
     'email-out': {
       icon: 'email',
-      label: 'Send Email'
-    }
+      label: 'Internal Ticket'
+    },
+  
   }
 
   constructor: (params) ->
@@ -98,21 +99,22 @@ class App.TicketCreate extends App.Controller
 
     # set form type attributes
     articleSenderTypeMap =
-      'phone-in':
-        sender:  'Customer'
-        article: 'phone'
-        title:   'Call Inbound'
-        screen:  'create_phone_in'
-      'phone-out':
-        sender:  'Agent'
-        article: 'phone'
-        title:   'Call Outbound'
-        screen:  'create_phone_out'
       'email-out':
         sender:  'Agent'
         article: 'email'
         title:   'Email'
         screen:  'create_email_out'
+      'phone-out':
+        sender:  'Agent'
+        article: 'phone'
+        title:   'Internal Ticket'
+        screen:  'create_phone_out'
+      'phone-in':
+        sender:  'Customer'
+        article: 'phone'
+        title:   'Call Inbound'
+        screen:  'create_phone_in'
+      
     @articleAttributes = articleSenderTypeMap[type]
 
     # update form
@@ -256,8 +258,6 @@ class App.TicketCreate extends App.Controller
       params = template.options
     else if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
       params = App.TaskManager.get(@taskKey).state
-      params.attachments = App.TaskManager.get(@taskKey).attachments
-
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
 
@@ -310,9 +310,6 @@ class App.TicketCreate extends App.Controller
       form_id: @formId
       model:   App.TicketArticle
       screen:  'create_top'
-      events:
-        'fileUploadStart .richtext': => @submitDisable()
-        'fileUploadStop .richtext': => @submitEnable()
       params:  params
       taskKey: @taskKey
     )
@@ -513,7 +510,7 @@ class App.TicketCreate extends App.Controller
       @sidebarWidget.postParams(ticket: ticket)
 
     # disable form
-    @submitDisable(e)
+    @formDisable(e)
     ui = @
     ticket.save(
       done: ->
@@ -545,25 +542,13 @@ class App.TicketCreate extends App.Controller
 
       fail: (settings, details) ->
         ui.log 'errors', details
-        ui.submitEnable(e)
+        ui.formEnable(e)
         ui.notify(
           type:    'error'
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
           timeout: 6000
         )
     )
-
-  submitDisable: (e) =>
-    if e
-      @formDisable(e)
-      return
-    @formDisable(@$('.js-submit'), 'button')
-
-  submitEnable: (e) =>
-    if e
-      @formEnable(e)
-      return
-    @formEnable(@$('.js-submit'), 'button')
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'

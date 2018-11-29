@@ -1,0 +1,14 @@
+mcdonalds:
+  franchise_id: 1
+  store_id: 1
+  name: McDonalds
+
+subway_one:
+  franchise_id: 2
+  store_id: 1
+  name: Subway 1
+
+subway_two:
+  franchise_id: 2
+  store_id: 2
+  name: Subway 2

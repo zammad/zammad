@@ -1,0 +1,11 @@
+name_prefix_mr:
+  id: 1
+  reference_code: 1
+  code_label: MR
+  abbreviation: Mr
+
+name_prefix_mrs:
+  id: 2
+  reference_code: 1
+  code_label: MRS
+  abbreviation: Mrs

@@ -237,7 +237,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
       t.column :order,                :string,  limit: 2500,   null: false
       t.column :group_by,             :string,  limit: 250,    null: true
-      t.column :group_direction,      :string,  limit: 250,    null: true
       t.column :organization_shared,  :boolean,                null: false, default: false
       t.column :out_of_office,        :boolean,                null: false, default: false
       t.column :view,                 :string,  limit: 1000,   null: false
@@ -453,7 +452,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.string  :name,                   limit: 250,    null: true
       t.text    :perform,                limit: 500.kilobytes + 1, null: false
       t.boolean :active,                                null: false, default: true
-      t.string  :ux_flow_next_up,                       null: false, default: 'none'
       t.string  :note,                   limit: 250,    null: true
       t.integer :updated_by_id,                         null: false
       t.integer :created_by_id,                         null: false

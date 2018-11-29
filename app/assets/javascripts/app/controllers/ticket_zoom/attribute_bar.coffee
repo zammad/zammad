@@ -4,8 +4,8 @@ class App.TicketZoomAttributeBar extends App.Controller
     '.js-reset': 'resetButton'
 
   events:
-    'mousedown .js-openDropdownMacro':    'toggleMacroMenu'
-    'click .js-openDropdownMacro':        'preventDefaultAndstopPropagation'
+    'mousedown .js-openDropdownMacro':    'toggleDropdownMacro'
+    'click .js-openDropdownMacro':        'stopPropagation'
     'mouseup .js-dropdownActionMacro':    'performTicketMacro'
     'mouseenter .js-dropdownActionMacro': 'onActionMacroMouseEnter'
     'mouseleave .js-dropdownActionMacro': 'onActionMacroMouseLeave'
@@ -14,7 +14,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   constructor: ->
     super
 
-    @secondaryAction = 'stayOnTab'
+    @secondaryAction = 'closeTab'
 
     @subscribeId = App.Macro.subscribe(@checkMacroChanges)
     @render()
@@ -69,26 +69,24 @@ class App.TicketZoomAttributeBar extends App.Controller
     return if macroLastUpdated is @macroLastUpdated
     @render()
 
-  toggleMacroMenu: =>
-    if @buttonDropdown.hasClass('is-open')
-      @closeMacroMenu()
-      return
-    @openMacroMenu()
+  toggleDropdownMacro: =>
+    if @buttonDropdown.hasClass 'is-open'
+      @closeMacroDropdown()
+    else
+      @buttonDropdown.addClass 'is-open'
+      $(document).bind 'click.buttonDropdown', @closeMacroDropdown
 
-  openMacroMenu: =>
-    @buttonDropdown.addClass 'is-open'
-    $(document).bind 'click.buttonDropdown', @closeMacroMenu
-
-  closeMacroMenu: =>
+  closeMacroDropdown: =>
     @buttonDropdown.removeClass 'is-open'
     $(document).unbind 'click.buttonDropdown'
 
   performTicketMacro: (e) =>
     macroId = $(e.currentTarget).data('id')
+    console.log 'perform action', @$(e.currentTarget).text(), macroId
     macro = App.Macro.find(macroId)
 
-    @callback(e, macro)
-    @closeMacroMenu()
+    @callback(e, macro.perform)
+    @closeMacroDropdown()
 
   onActionMacroMouseEnter: (e) =>
     @$(e.currentTarget).addClass('is-active')

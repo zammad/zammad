@@ -1,0 +1,9 @@
+music:
+  id: 1
+  name: Guitar
+  feed_size: 500
+
+iphone:
+  id: 2
+  name: iPhone
+  feed_size: 500

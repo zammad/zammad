@@ -1,0 +1,7110 @@
+---
+- locale: sv-se
+  format: time
+  source: date
+  target: mm/dd/yyyy
+  target_initial: mm/dd/yyyy
+- locale: sv-se
+  format: time
+  source: timestamp
+  target: mm/dd/yyyy HH:MM
+  target_initial: mm/dd/yyyy HH:MM
+- locale: sv-se
+  format: string
+  source: Oct
+  target: okt
+  target_initial: okt
+- locale: sv-se
+  format: string
+  source: Action
+  target: Åtgärd
+  target_initial: Åtgärd
+- locale: sv-se
+  format: string
+  source: Actions
+  target: Åtgärder
+  target_initial: Åtgärder
+- locale: sv-se
+  format: string
+  source: Active
+  target: Aktivera
+  target_initial: Aktivera
+- locale: sv-se
+  format: string
+  source: Add
+  target: Lägg till
+  target_initial: Lägg till
+- locale: sv-se
+  format: string
+  source: Admin
+  target: Administration
+  target_initial: Administration
+- locale: sv-se
+  format: string
+  source: Age
+  target: Ålder
+  target_initial: Ålder
+- locale: sv-se
+  format: string
+  source: Agent
+  target: Agent
+  target_initial: Agent
+- locale: sv-se
+  format: string
+  source: All
+  target: Alla
+  target_initial: Alla
+- locale: sv-se
+  format: string
+  source: Apply
+  target: Verkställ
+  target_initial: Verkställ
+- locale: sv-se
+  format: string
+  source: Apr
+  target: apr
+  target_initial: apr
+- locale: sv-se
+  format: string
+  source: Aug
+  target: aug
+  target_initial: aug
+- locale: sv-se
+  format: string
+  source: Authentication
+  target: Autentisering
+  target_initial: Autentisering
+- locale: sv-se
+  format: string
+  source: Cancel
+  target: Avbryt
+  target_initial: Avbryt
+- locale: sv-se
+  format: string
+  source: Cc
+  target: Kopia
+  target_initial: Kopia
+- locale: sv-se
+  format: string
+  source: City
+  target: Stad
+  target_initial: Stad
+- locale: sv-se
+  format: string
+  source: Closed
+  target: Stängda
+  target_initial: Stängda
+- locale: sv-se
+  format: string
+  source: Closed Tickets
+  target: Låsta ärenden
+  target_initial: Låsta ärenden
+- locale: sv-se
+  format: string
+  source: Comment
+  target: Kommentar
+  target_initial: Kommentar
+- locale: sv-se
+  format: string
+  source: Country
+  target: Land
+  target_initial: Land
+- locale: sv-se
+  format: string
+  source: Create
+  target: Skapa
+  target_initial: Skapa
+- locale: sv-se
+  format: string
+  source: Create Template
+  target: Skapa mall
+  target_initial: Skapa mall
+- locale: sv-se
+  format: string
+  source: Created
+  target: Skapat
+  target_initial: Skapat
+- locale: sv-se
+  format: string
+  source: Days
+  target: Dagar
+  target_initial: Dagar
+- locale: sv-se
+  format: string
+  source: Dec
+  target: dec
+  target_initial: dec
+- locale: sv-se
+  format: string
+  source: Delete
+  target: Radera
+  target_initial: Radera
+- locale: sv-se
+  format: string
+  source: Direction
+  target: Riktning
+  target_initial: Riktning
+- locale: sv-se
+  format: string
+  source: Edit
+  target: Redigera
+  target_initial: Redigera
+- locale: sv-se
+  format: string
+  source: Edit Customer
+  target: Redigera kund
+  target_initial: Redigera kund
+- locale: sv-se
+  format: string
+  source: Email
+  target: E-post
+  target_initial: E-post
+- locale: sv-se
+  format: string
+  source: Feb
+  target: feb
+  target_initial: feb
+- locale: sv-se
+  format: string
+  source: Filter
+  target: Filter
+  target_initial: Filter
+- locale: sv-se
+  format: string
+  source: Firstname
+  target: Förnamn
+  target_initial: Förnamn
+- locale: sv-se
+  format: string
+  source: From
+  target: Från
+  target_initial: Från
+- locale: sv-se
+  format: string
+  source: Go Back
+  target: Tillbaka
+  target_initial: Tillbaka
+- locale: sv-se
+  format: string
+  source: Group
+  target: Grupp
+  target_initial: Grupp
+- locale: sv-se
+  format: string
+  source: Groups
+  target: Grupper
+  target_initial: Grupper
+- locale: sv-se
+  format: string
+  source: History
+  target: Historik
+  target_initial: Historik
+- locale: sv-se
+  format: string
+  source: Host
+  target: Värd
+  target_initial: Värd
+- locale: sv-se
+  format: string
+  source: Hours
+  target: Timmar
+  target_initial: Timmar
+- locale: sv-se
+  format: string
+  source: Import
+  target: Importera
+  target_initial: Importera
+- locale: sv-se
+  format: string
+  source: Jan
+  target: jan
+  target_initial: jan
+- locale: sv-se
+  format: string
+  source: Jul
+  target: jul
+  target_initial: jul
+- locale: sv-se
+  format: string
+  source: Jun
+  target: jun
+  target_initial: jun
+- locale: sv-se
+  format: string
+  source: Language
+  target: Språk
+  target_initial: Språk
+- locale: sv-se
+  format: string
+  source: Lastname
+  target: Efternamn
+  target_initial: Efternamn
+- locale: sv-se
+  format: string
+  source: Loading...
+  target: Laddar...
+  target_initial: Laddar...
+- locale: sv-se
+  format: string
+  source: Location
+  target: Plats
+  target_initial: Plats
+- locale: sv-se
+  format: string
+  source: Login
+  target: Inloggning
+  target_initial: Inloggning
+- locale: sv-se
+  format: string
+  source: Mar
+  target: mar
+  target_initial: mar
+- locale: sv-se
+  format: string
+  source: May
+  target: maj
+  target_initial: maj
+- locale: sv-se
+  format: string
+  source: Merge
+  target: Sammanfoga
+  target_initial: Sammanfoga
+- locale: sv-se
+  format: string
+  source: Message
+  target: Meddelande
+  target_initial: Meddelande
+- locale: sv-se
+  format: string
+  source: Mobile
+  target: Mobil
+  target_initial: Mobil
+- locale: sv-se
+  format: string
+  source: Month
+  target: Månad
+  target_initial: Månad
+- locale: sv-se
+  format: string
+  source: My Tickets
+  target: Mina ärenden
+  target_initial: Mina ärenden
+- locale: sv-se
+  format: string
+  source: Name
+  target: Namn
+  target_initial: Namn
+- locale: sv-se
+  format: string
+  source: New
+  target: Nytt
+  target_initial: Nytt
+- locale: sv-se
+  format: string
+  source: New Ticket
+  target: Nytt ärende
+  target_initial: Nytt ärende
+- locale: sv-se
+  format: string
+  source: Next
+  target: Nästa
+  target_initial: Nästa
+- locale: sv-se
+  format: string
+  source: Next...
+  target: Nästa...
+  target_initial: Nästa...
+- locale: sv-se
+  format: string
+  source: Note
+  target: Notering
+  target_initial: Notering
+- locale: sv-se
+  format: string
+  source: Nov
+  target: nov
+  target_initial: nov
+- locale: sv-se
+  format: string
+  source: Number
+  target: Nummer
+  target_initial: Nummer
+- locale: sv-se
+  format: string
+  source: Open Tickets
+  target: Öppna ärenden
+  target_initial: Öppna ärenden
+- locale: sv-se
+  format: string
+  source: Options
+  target: Tillval
+  target_initial: Tillval
+- locale: sv-se
+  format: string
+  source: Organization
+  target: Organisation
+  target_initial: Organisation
+- locale: sv-se
+  format: string
+  source: Owner
+  target: Ägare
+  target_initial: Ägare
+- locale: sv-se
+  format: string
+  source: Password
+  target: Lösenord
+  target_initial: Lösenord
+- locale: sv-se
+  format: string
+  source: Pending till
+  target: Väntande tills
+  target_initial: Väntande tills
+- locale: sv-se
+  format: string
+  source: Phone
+  target: Telefon
+  target_initial: Telefon
+- locale: sv-se
+  format: string
+  source: Priority
+  target: Prioritet
+  target_initial: Prioritet
+- locale: sv-se
+  format: string
+  source: Profile
+  target: Profil
+  target_initial: Profil
+- locale: sv-se
+  format: string
+  source: Reinstall
+  target: Ominstallera
+  target_initial: Ominstallera
+- locale: sv-se
+  format: string
+  source: Remove
+  target: Ta bort
+  target_initial: Ta bort
+- locale: sv-se
+  format: string
+  source: Reset
+  target: Nollställ
+  target_initial: Nollställ
+- locale: sv-se
+  format: string
+  source: Roles
+  target: Roller
+  target_initial: Roller
+- locale: sv-se
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: sv-se
+  format: string
+  source: Save
+  target: Spara
+  target_initial: Spara
+- locale: sv-se
+  format: string
+  source: Search
+  target: Sök
+  target_initial: Sök
+- locale: sv-se
+  format: string
+  source: Send Email
+  target: Skicka e-post
+  target_initial: Skicka e-post
+- locale: sv-se
+  format: string
+  source: Sep
+  target: sep
+  target_initial: sep
+- locale: sv-se
+  format: string
+  source: Settings
+  target: Inställningar
+  target_initial: Inställningar
+- locale: sv-se
+  format: string
+  source: Signature
+  target: Signatur
+  target_initial: Signatur
+- locale: sv-se
+  format: string
+  source: Signatures
+  target: Signaturer
+  target_initial: Signaturer
+- locale: sv-se
+  format: string
+  source: Solution Time
+  target: Lösningstid
+  target_initial: Lösningstid
+- locale: sv-se
+  format: string
+  source: State
+  target: Status
+  target_initial: Status
+- locale: sv-se
+  format: string
+  source: Status
+  target: Status
+  target_initial: Status
+- locale: sv-se
+  format: string
+  source: Street
+  target: Gata
+  target_initial: Gata
+- locale: sv-se
+  format: string
+  source: Subject
+  target: Ämne
+  target_initial: Ämne
+- locale: sv-se
+  format: string
+  source: Submit
+  target: Spara
+  target_initial: Spara
+- locale: sv-se
+  format: string
+  source: System
+  target: System
+  target_initial: System
+- locale: sv-se
+  format: string
+  source: SystemID
+  target: SystemID
+  target_initial: SystemID
+- locale: sv-se
+  format: string
+  source: Templates
+  target: Mallar
+  target_initial: Mallar
+- locale: sv-se
+  format: string
+  source: Text
+  target: Text
+  target_initial: Text
+- locale: sv-se
+  format: string
+  source: Ticket
+  target: Ärende
+  target_initial: Ärende
+- locale: sv-se
+  format: string
+  source: Tickets
+  target: Ärenden
+  target_initial: Ärenden
+- locale: sv-se
+  format: string
+  source: Title
+  target: Titel
+  target_initial: Titel
+- locale: sv-se
+  format: string
+  source: To
+  target: Till
+  target_initial: Till
+- locale: sv-se
+  format: string
+  source: Type
+  target: Typ
+  target_initial: Typ
+- locale: sv-se
+  format: string
+  source: Update
+  target: Uppdatera
+  target_initial: Uppdatera
+- locale: sv-se
+  format: string
+  source: Upload
+  target: Ladda upp
+  target_initial: Ladda upp
+- locale: sv-se
+  format: string
+  source: User
+  target: Användare
+  target_initial: Användare
+- locale: sv-se
+  format: string
+  source: Vendor
+  target: Leverantör
+  target_initial: Leverantör
+- locale: sv-se
+  format: string
+  source: Version
+  target: Version
+  target_initial: Version
+- locale: sv-se
+  format: string
+  source: Welcome!
+  target: Välkommen!
+  target_initial: Välkommen!
+- locale: sv-se
+  format: string
+  source: Year
+  target: År
+  target_initial: År
+- locale: sv-se
+  format: string
+  source: Zip
+  target: Postnr
+  target_initial: Postnr
+- locale: sv-se
+  format: string
+  source: hour
+  target: timme
+  target_initial: timme
+- locale: sv-se
+  format: string
+  source: installed
+  target: installerad
+  target_initial: installerad
+- locale: sv-se
+  format: string
+  source: merged
+  target: sammanfogat
+  target_initial: sammanfogat
+- locale: sv-se
+  format: string
+  source: minute
+  target: minut
+  target_initial: minut
+- locale: sv-se
+  format: string
+  source: none
+  target: inga
+  target_initial: inga
+- locale: sv-se
+  format: string
+  source: of
+  target: av
+  target_initial: av
+- locale: sv-se
+  format: string
+  source: or
+  target: eller
+  target_initial: eller
+- locale: sv-se
+  format: string
+  source: removed
+  target: borttagen
+  target_initial: borttagen
+- locale: sv-se
+  format: string
+  source: sms
+  target: sms
+  target_initial: sms
+- locale: sv-se
+  format: string
+  source: uninstalled
+  target: avinstallerad
+  target_initial: avinstallerad
+- locale: sv-se
+  format: string
+  source: Calendar
+  target: Kalender
+  target_initial: Kalender
+- locale: sv-se
+  format: string
+  source: Configuration
+  target: Konfiguration
+  target_initial: Konfiguration
+- locale: sv-se
+  format: string
+  source: Intro
+  target: Intro
+  target_initial: Intro
+- locale: sv-se
+  format: string
+  source: Session
+  target: Session
+  target_initial: Session
+- locale: sv-se
+  format: string
+  source: Created by
+  target: Skapat av
+  target_initial: Skapat av
+- locale: sv-se
+  format: string
+  source: Description
+  target: Beskrivning
+  target_initial: Beskrivning
+- locale: sv-se
+  format: string
+  source: Friday
+  target: Fredag
+  target_initial: Fredag
+- locale: sv-se
+  format: string
+  source: Monday
+  target: Måndag
+  target_initial: Måndag
+- locale: sv-se
+  format: string
+  source: Saturday
+  target: Lördag
+  target_initial: Lördag
+- locale: sv-se
+  format: string
+  source: Sunday
+  target: Söndag
+  target_initial: Söndag
+- locale: sv-se
+  format: string
+  source: Thursday
+  target: Torsdag
+  target_initial: Torsdag
+- locale: sv-se
+  format: string
+  source: Time
+  target: Tid
+  target_initial: Tid
+- locale: sv-se
+  format: string
+  source: Tuesday
+  target: Tisdag
+  target_initial: Tisdag
+- locale: sv-se
+  format: string
+  source: Wednesday
+  target: Onsdag
+  target_initial: Onsdag
+- locale: sv-se
+  format: string
+  source: Chat
+  target: Chat
+  target_initial: Chat
+- locale: sv-se
+  format: string
+  source: April
+  target: April
+  target_initial: April
+- locale: sv-se
+  format: string
+  source: August
+  target: Augusti
+  target_initial: Augusti
+- locale: sv-se
+  format: string
+  source: Close
+  target: Stäng
+  target_initial: Stäng
+- locale: sv-se
+  format: string
+  source: Continue
+  target: Fortsätt
+  target_initial: Fortsätt
+- locale: sv-se
+  format: string
+  source: December
+  target: December
+  target_initial: December
+- locale: sv-se
+  format: string
+  source: February
+  target: Februari
+  target_initial: Februari
+- locale: sv-se
+  format: string
+  source: Fri
+  target: fre
+  target_initial: fre
+- locale: sv-se
+  format: string
+  source: January
+  target: Januari
+  target_initial: Januari
+- locale: sv-se
+  format: string
+  source: July
+  target: Juli
+  target_initial: Juli
+- locale: sv-se
+  format: string
+  source: June
+  target: Juni
+  target_initial: Juni
+- locale: sv-se
+  format: string
+  source: March
+  target: Mars
+  target_initial: Mars
+- locale: sv-se
+  format: string
+  source: Mon
+  target: mån
+  target_initial: mån
+- locale: sv-se
+  format: string
+  source: November
+  target: November
+  target_initial: November
+- locale: sv-se
+  format: string
+  source: October
+  target: Oktober
+  target_initial: Oktober
+- locale: sv-se
+  format: string
+  source: Open
+  target: Öppna
+  target_initial: Öppna
+- locale: sv-se
+  format: string
+  source: Sat
+  target: lör
+  target_initial: lör
+- locale: sv-se
+  format: string
+  source: Send
+  target: Skicka
+  target_initial: Skicka
+- locale: sv-se
+  format: string
+  source: September
+  target: September
+  target_initial: September
+- locale: sv-se
+  format: string
+  source: Sun
+  target: sön
+  target_initial: sön
+- locale: sv-se
+  format: string
+  source: Thu
+  target: tor
+  target_initial: tor
+- locale: sv-se
+  format: string
+  source: Tue
+  target: tis
+  target_initial: tis
+- locale: sv-se
+  format: string
+  source: Wed
+  target: ons
+  target_initial: ons
+- locale: sv-se
+  format: string
+  source: closed
+  target: stängt
+  target_initial: stängt
+- locale: sv-se
+  format: string
+  source: day
+  target: dag
+  target_initial: dag
+- locale: sv-se
+  format: string
+  source: days
+  target: dagar
+  target_initial: dagar
+- locale: sv-se
+  format: string
+  source: email
+  target: e-post
+  target_initial: e-post
+- locale: sv-se
+  format: string
+  source: hours
+  target: timmar
+  target_initial: timmar
+- locale: sv-se
+  format: string
+  source: minutes
+  target: minuter
+  target_initial: minuter
+- locale: sv-se
+  format: string
+  source: 'no'
+  target: inga
+  target_initial: inga
+- locale: sv-se
+  format: string
+  source: open
+  target: öppen
+  target_initial: öppen
+- locale: sv-se
+  format: string
+  source: phone
+  target: telefon
+  target_initial: telefon
+- locale: sv-se
+  format: string
+  source: 'yes'
+  target: ja
+  target_initial: ja
+- locale: sv-se
+  format: string
+  source: All tickets
+  target: Alla ärenden
+  target_initial: Alla ärenden
+- locale: sv-se
+  format: string
+  source: Child
+  target: Barn
+  target_initial: Barn
+- locale: sv-se
+  format: string
+  source: Content
+  target: Innehåll
+  target_initial: Innehåll
+- locale: sv-se
+  format: string
+  source: Customer
+  target: Kund
+  target_initial: Kund
+- locale: sv-se
+  format: string
+  source: Day
+  target: Dag
+  target_initial: Dag
+- locale: sv-se
+  format: string
+  source: Down
+  target: Ner
+  target_initial: Ner
+- locale: sv-se
+  format: string
+  source: Email address
+  target: E-postadress
+  target_initial: E-postadress
+- locale: sv-se
+  format: string
+  source: Escalation
+  target: Eskalering
+  target_initial: Eskalering
+- locale: sv-se
+  format: string
+  source: Fax
+  target: Fax
+  target_initial: Fax
+- locale: sv-se
+  format: string
+  source: Finish
+  target: Slut
+  target_initial: Slut
+- locale: sv-se
+  format: string
+  source: Logout
+  target: Logga ut
+  target_initial: Logga ut
+- locale: sv-se
+  format: string
+  source: New group
+  target: Ny grupp
+  target_initial: Ny grupp
+- locale: sv-se
+  format: string
+  source: New password
+  target: Nytt lösenord
+  target_initial: Nytt lösenord
+- locale: sv-se
+  format: string
+  source: 'No'
+  target: Nej
+  target_initial: Nej
+- locale: sv-se
+  format: string
+  source: Normal
+  target: Normal
+  target_initial: Normal
+- locale: sv-se
+  format: string
+  source: Notice
+  target: OBS
+  target_initial: OBS
+- locale: sv-se
+  format: string
+  source: Open tickets
+  target: Öppna ärenden
+  target_initial: Öppna ärenden
+- locale: sv-se
+  format: string
+  source: Parent
+  target: Förälder
+  target_initial: Förälder
+- locale: sv-se
+  format: string
+  source: Pending
+  target: Väntande
+  target_initial: Väntande
+- locale: sv-se
+  format: string
+  source: Reply
+  target: Svara
+  target_initial: Svara
+- locale: sv-se
+  format: string
+  source: Split
+  target: Dela
+  target_initial: Dela
+- locale: sv-se
+  format: string
+  source: and
+  target: och
+  target_initial: och
+- locale: sv-se
+  format: string
+  source: new
+  target: ny
+  target_initial: ny
+- locale: sv-se
+  format: string
+  source: week
+  target: vecka
+  target_initial: vecka
+- locale: sv-se
+  format: string
+  source: Agents
+  target: Handläggare
+  target_initial: Handläggare
+- locale: sv-se
+  format: string
+  source: Example
+  target: Exempel
+  target_initial: Exempel
+- locale: sv-se
+  format: string
+  source: Expires
+  target: Upphör
+  target_initial: Upphör
+- locale: sv-se
+  format: string
+  source: Select
+  target: Välj
+  target_initial: Välj
+- locale: sv-se
+  format: string
+  source: Dashboard
+  target: Dashboard
+  target_initial: Dashboard
+- locale: sv-se
+  format: string
+  source: Date
+  target: Datum
+  target_initial: Datum
+- locale: sv-se
+  format: string
+  source: Save as template
+  target: Spara som mall
+  target_initial: Spara som mall
+- locale: sv-se
+  format: string
+  source: 2 normal
+  target: 2 normal
+  target_initial: 2 normal
+- locale: sv-se
+  format: string
+  source: Your Logo
+  target: Din logotyp
+  target_initial: Din logotyp
+- locale: sv-se
+  format: string
+  source: Widget
+  target: Widget
+  target_initial: Widget
+- locale: sv-se
+  format: string
+  source: Week
+  target: Vecka
+  target_initial: Vecka
+- locale: sv-se
+  format: string
+  source: VAT ID
+  target: VAT ID
+  target_initial: VAT ID
+- locale: sv-se
+  format: string
+  source: Twitter
+  target: Twitter
+  target_initial: Twitter
+- locale: sv-se
+  format: string
+  source: Pink
+  target: Rosa
+  target_initial: Rosa
+- locale: sv-se
+  format: string
+  source: Personal Settings
+  target: Personliga Inställningar
+  target_initial: Personliga Inställningar
+- locale: sv-se
+  format: string
+  source: to
+  target: till
+  target_initial: till
+- locale: sv-se
+  format: string
+  source: Yellow
+  target: Gul
+  target_initial: Gul
+- locale: sv-se
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: sv-se
+  format: string
+  source: Web
+  target: Webb
+  target_initial: Webb
+- locale: sv-se
+  format: string
+  source: Order
+  target: Order
+  target_initial: Order
+- locale: sv-se
+  format: string
+  source: activate
+  target: aktivera
+  target_initial: aktivera
+- locale: sv-se
+  format: string
+  source: Add Link
+  target: Lägg till länk
+  target_initial: Lägg till länk
+- locale: sv-se
+  format: string
+  source: active
+  target: aktiv
+  target_initial: aktiv
+- locale: sv-se
+  format: string
+  source: 3 high
+  target: hög
+  target_initial: hög
+- locale: sv-se
+  format: string
+  source: activated
+  target: aktiverad
+  target_initial: aktiverad
+- locale: sv-se
+  format: string
+  source: Address
+  target: Adress
+  target_initial: Adress
+- locale: sv-se
+  format: string
+  source: Assigned
+  target: Tilldelad
+  target_initial: Tilldelad
+- locale: sv-se
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: sv-se
+  format: string
+  source: Invitation sent!
+  target: Inbjudan skickad!
+  target_initial: Inbjudan skickad!
+- locale: sv-se
+  format: string
+  source: Germany
+  target: Tyskland
+  target_initial: Tyskland
+- locale: sv-se
+  format: string
+  source: install
+  target: installera
+  target_initial: installera
+- locale: sv-se
+  format: string
+  source: Links
+  target: Länkar
+  target_initial: Länkar
+- locale: sv-se
+  format: string
+  source: from
+  target: från
+  target_initial: från
+- locale: sv-se
+  format: string
+  source: is the same
+  target: är samma
+  target_initial: är samma
+- locale: sv-se
+  format: string
+  source: Maintenance
+  target: Underhåll
+  target_initial: Underhåll
+- locale: sv-se
+  format: string
+  source: Green
+  target: Grön
+  target_initial: Grön
+- locale: sv-se
+  format: string
+  source: is
+  target: är
+  target_initial: är
+- locale: sv-se
+  format: string
+  source: Logo
+  target: Logo
+  target_initial: Logo
+- locale: sv-se
+  format: string
+  source: is not
+  target: är inte
+  target_initial: är inte
+- locale: sv-se
+  format: string
+  source: just now
+  target: just nu
+  target_initial: just nu
+- locale: sv-se
+  format: string
+  source: Full Name
+  target: Fullständigt namn
+  target_initial: Fullständigt namn
+- locale: sv-se
+  format: string
+  source: Invite
+  target: Inbjudan
+  target_initial: Inbjudan
+- locale: sv-se
+  format: string
+  source: John Smith
+  target: John Smith
+  target_initial: John Smith
+- locale: sv-se
+  format: string
+  source: Load
+  target: Ladda
+  target_initial: Ladda
+- locale: sv-se
+  format: string
+  source: maybe
+  target: kanske
+  target_initial: kanske
+- locale: sv-se
+  format: string
+  source: Macro
+  target: Macro
+  target_initial: Macro
+- locale: sv-se
+  format: string
+  source: Frontend
+  target: Frontend
+  target_initial: Frontend
+- locale: sv-se
+  format: string
+  source: inactive
+  target: inaktiv
+  target_initial: inaktiv
+- locale: sv-se
+  format: string
+  source: Invite Customer
+  target: Bjud in kunder
+  target_initial: Bjud in kunder
+- locale: sv-se
+  format: string
+  source: Invoice
+  target: Faktura
+  target_initial: Faktura
+- locale: sv-se
+  format: string
+  source: Installed
+  target: Installerad
+  target_initial: Installerad
+- locale: sv-se
+  format: string
+  source: Link
+  target: Länk
+  target_initial: Länk
+- locale: sv-se
+  format: string
+  source: Lost Password
+  target: Glömt Lösenord
+  target_initial: Glömt Lösenord
+- locale: sv-se
+  format: string
+  source: Macros
+  target: Macros
+  target_initial: Macros
+- locale: sv-se
+  format: string
+  source: left
+  target: vänster
+  target_initial: vänster
+- locale: sv-se
+  format: string
+  source: 1 low
+  target: 1 låg
+  target_initial: 1 låg
+- locale: sv-se
+  format: string
+  source: All Open Tickets
+  target: Alla öppna ärenden
+  target_initial: Alla öppna ärenden
+- locale: sv-se
+  format: string
+  source: All Tickets
+  target: Alla ärenden
+  target_initial: Alla ärenden
+- locale: sv-se
+  format: string
+  source: public
+  target: publik
+  target_initial: publik
+- locale: sv-se
+  format: string
+  source: Role
+  target: Roll
+  target_initial: Roll
+- locale: sv-se
+  format: string
+  source: Security
+  target: Säkerhet
+  target_initial: Säkerhet
+- locale: sv-se
+  format: string
+  source: See more
+  target: Se mer
+  target_initial: Se mer
+- locale: sv-se
+  format: string
+  source: Sign in
+  target: Logga in
+  target_initial: Logga in
+- locale: sv-se
+  format: string
+  source: Sign out
+  target: Logga ut
+  target_initial: Logga ut
+- locale: sv-se
+  format: string
+  source: uninstall
+  target: avinstallera
+  target_initial: avinstallera
+- locale: sv-se
+  format: string
+  source: Users
+  target: Användare
+  target_initial: Användare
+- locale: sv-se
+  format: string
+  source: Add Tag
+  target: Lägg till tagg
+  target_initial: Lägg till tagg
+- locale: sv-se
+  format: string
+  source: Profiles
+  target: Profiler
+  target_initial: Profiler
+- locale: sv-se
+  format: string
+  source: Recipients
+  target: Mottagare
+  target_initial: Mottagare
+- locale: sv-se
+  format: string
+  source: reply
+  target: svara
+  target_initial: svara
+- locale: sv-se
+  format: string
+  source: Send invitation
+  target: Skicka inbjudan
+  target_initial: Skicka inbjudan
+- locale: sv-se
+  format: string
+  source: Tags
+  target: Taggar
+  target_initial: Taggar
+- locale: sv-se
+  format: string
+  source: Save Template
+  target: Spara mall
+  target_initial: Spara mall
+- locale: sv-se
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: sv-se
+  format: string
+  source: Username / email
+  target: Användarnamn / E-post
+  target_initial: Användarnamn / E-post
+- locale: sv-se
+  format: string
+  source: Project
+  target: Projekt
+  target_initial: Projekt
+- locale: sv-se
+  format: string
+  source: Save new template
+  target: Spara ny mall
+  target_initial: Spara ny mall
+- locale: sv-se
+  format: string
+  source: Show
+  target: Visa
+  target_initial: Visa
+- locale: sv-se
+  format: string
+  source: Tag
+  target: Tagg
+  target_initial: Tagg
+- locale: sv-se
+  format: string
+  source: Blue
+  target: Blå
+  target_initial: Blå
+- locale: sv-se
+  format: string
+  source: Purple
+  target: Lila
+  target_initial: Lila
+- locale: sv-se
+  format: string
+  source: Preview
+  target: Förhandsgranska
+  target_initial: Förhandsgranska
+- locale: sv-se
+  format: string
+  source: Attached Files
+  target: Bifogade filer
+  target_initial: Bifogade filer
+- locale: sv-se
+  format: string
+  source: today
+  target: idag
+  target_initial: idag
+- locale: sv-se
+  format: string
+  source: Sending...
+  target: Skickar...
+  target_initial: Skickar...
+- locale: sv-se
+  format: string
+  source: Search...
+  target: Sök...
+  target_initial: Sök...
+- locale: sv-se
+  format: string
+  source: attached
+  target: bifogade
+  target_initial: bifogade
+- locale: sv-se
+  format: string
+  source: reply all
+  target: svara alla
+  target_initial: svara alla
+- locale: sv-se
+  format: string
+  source: Username
+  target: Användarnamn
+  target_initial: Användarnamn
+- locale: sv-se
+  format: string
+  source: Postal Code
+  target: Postnummer
+  target_initial: Postnummer
+- locale: sv-se
+  format: string
+  source: right
+  target: höger
+  target_initial: höger
+- locale: sv-se
+  format: string
+  source: up
+  target: upp
+  target_initial: upp
+- locale: sv-se
+  format: string
+  source: Show all...
+  target: Visa alla...
+  target_initial: Visa alla...
+- locale: sv-se
+  format: string
+  source: run macro
+  target: kör macro
+  target_initial: kör macro
+- locale: sv-se
+  format: string
+  source: See less
+  target: Se mindre
+  target_initial: Se mindre
+- locale: sv-se
+  format: string
+  source: Sender
+  target: Avsändare
+  target_initial: Avsändare
+- locale: sv-se
+  format: string
+  source: submit
+  target: skicka
+  target_initial: skicka
+- locale: sv-se
+  format: string
+  source: Telegram
+  target: Telegram
+  target_initial: Telegram
+- locale: sv-se
+  format: string
+  source: Uninstall
+  target: Avinstallera
+  target_initial: Avinstallera
+- locale: sv-se
+  format: string
+  source: Attach files
+  target: Bifogade filer
+  target_initial: Bifogade filer
+- locale: sv-se
+  format: string
+  source: Projects
+  target: Projekt
+  target_initial: Projekt
+- locale: sv-se
+  format: string
+  source: Reply-To
+  target: Svara till
+  target_initial: Svara till
+- locale: sv-se
+  format: string
+  source: assign tickets
+  target: tilldela ärenden
+  target_initial: tilldela ärenden
+- locale: sv-se
+  format: string
+  source: Sure?
+  target: Helt säker?
+  target_initial: Helt säker?
+- locale: sv-se
+  format: string
+  source: Username or email
+  target: Användarnamn eller E-post
+  target_initial: Användarnamn eller E-post
+- locale: sv-se
+  format: string
+  source: Invite Agents
+  target: Bjud in handläggare
+  target_initial: Bjud in handläggare
+- locale: sv-se
+  format: string
+  source: Items per page
+  target: Antal per sida
+  target_initial: Antal per sida
+- locale: sv-se
+  format: string
+  source: join today!
+  target: Anslut dig idag!
+  target_initial: Anslut dig idag!
+- locale: sv-se
+  format: string
+  source: Last contact
+  target: Senast kontakt
+  target_initial: Senast kontakt
+- locale: sv-se
+  format: string
+  source: Outbound
+  target: Utgående
+  target_initial: Utgående
+- locale: sv-se
+  format: string
+  source: Ticket %s created!
+  target: 'Ärende %s skapad! '
+  target_initial: 'Ärende %s skapad! '
+- locale: sv-se
+  format: string
+  source: Can't create user
+  target: Kan ej skapa användare
+  target_initial: Kan ej skapa användare
+- locale: sv-se
+  format: string
+  source: Change Customer
+  target: Ändra kund
+  target_initial: Ändra kund
+- locale: sv-se
+  format: string
+  source: close
+  target: stäng
+  target_initial: stäng
+- locale: sv-se
+  format: string
+  source: created
+  target: skapad
+  target_initial: skapad
+- locale: sv-se
+  format: string
+  source: Forgot password?
+  target: Glömt lösenord?
+  target_initial: Glömt lösenord?
+- locale: sv-se
+  format: string
+  source: Forgot your password?
+  target: Har du glömt ditt lösenord?
+  target_initial: Har du glömt ditt lösenord?
+- locale: sv-se
+  format: string
+  source: internal
+  target: intern
+  target_initial: intern
+- locale: sv-se
+  format: string
+  source: updated
+  target: uppdaterad
+  target_initial: uppdaterad
+- locale: sv-se
+  format: string
+  source: My Group
+  target: Min grupp
+  target_initial: Min grupp
+- locale: sv-se
+  format: string
+  source: New SLA
+  target: Nytt SLA
+  target_initial: Nytt SLA
+- locale: sv-se
+  format: string
+  source: now
+  target: nu
+  target_initial: nu
+- locale: sv-se
+  format: string
+  source: Prio
+  target: Prio
+  target_initial: Prio
+- locale: sv-se
+  format: string
+  source: Changes
+  target: Ändningar
+  target_initial: Ändningar
+- locale: sv-se
+  format: string
+  source: Change your password
+  target: Byt lösenord
+  target_initial: Byt lösenord
+- locale: sv-se
+  format: string
+  source: Change your language.
+  target: Byt språk.
+  target_initial: Byt språk.
+- locale: sv-se
+  format: string
+  source: Confirm
+  target: Bekräfta
+  target_initial: Bekräfta
+- locale: sv-se
+  format: string
+  source: Facebook
+  target: Facebook
+  target_initial: Facebook
+- locale: sv-se
+  format: string
+  source: Translations
+  target: Översättningar
+  target_initial: Översättningar
+- locale: sv-se
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: sv-se
+  format: string
+  source: New Project
+  target: Nytt projekt
+  target_initial: Nytt projekt
+- locale: sv-se
+  format: string
+  source: Online
+  target: Online
+  target_initial: Online
+- locale: sv-se
+  format: string
+  source: Outbound Call
+  target: Utgående samtal
+  target_initial: Utgående samtal
+- locale: sv-se
+  format: string
+  source: Avatar
+  target: Avatar
+  target_initial: Avatar
+- locale: sv-se
+  format: string
+  source: Camera
+  target: Kamera
+  target_initial: Kamera
+- locale: sv-se
+  format: string
+  source: Delete File
+  target: Radera fil
+  target_initial: Radera fil
+- locale: sv-se
+  format: string
+  source: http type
+  target: http typ
+  target_initial: http typ
+- locale: sv-se
+  format: string
+  source: Triggers
+  target: Triggers
+  target_initial: Triggers
+- locale: sv-se
+  format: string
+  source: Maintenance Message
+  target: Underhåll meddelande
+  target_initial: Underhåll meddelande
+- locale: sv-se
+  format: string
+  source: Notes
+  target: Anteckningar
+  target_initial: Anteckningar
+- locale: sv-se
+  format: string
+  source: Organization Name
+  target: Bolags namn
+  target_initial: Bolags namn
+- locale: sv-se
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: 'Ärenden tilldelade till mig:'
+  target_initial: 'Ärenden tilldelade till mig:'
+- locale: sv-se
+  format: string
+  source: 'Total: %s'
+  target: 'Totalt: %s'
+  target_initial: 'Totalt: %s'
+- locale: sv-se
+  format: string
+  source: 'Average: %s'
+  target: 'Genomsnitt: %s'
+  target_initial: 'Genomsnitt: %s'
+- locale: sv-se
+  format: string
+  source: 'Average: %s minutes'
+  target: 'Genomsnitt: %s minuter'
+  target_initial: 'Genomsnitt: %s minuter'
+- locale: sv-se
+  format: string
+  source: Browser
+  target: Webbläsare
+  target_initial: Webbläsare
+- locale: sv-se
+  format: string
+  source: Close tab
+  target: Stäng tabb
+  target_initial: Stäng tabb
+- locale: sv-se
+  format: string
+  source: contains
+  target: innehåller
+  target_initial: innehåller
+- locale: sv-se
+  format: string
+  source: contains not
+  target: innehåller inte
+  target_initial: innehåller inte
+- locale: sv-se
+  format: string
+  source: Designer
+  target: Designer
+  target_initial: Designer
+- locale: sv-se
+  format: string
+  source: Devices
+  target: Enheter
+  target_initial: Enheter
+- locale: sv-se
+  format: string
+  source: Font size
+  target: Typsnitt storlek
+  target_initial: Typsnitt storlek
+- locale: sv-se
+  format: string
+  source: Trigger
+  target: Trigger
+  target_initial: Trigger
+- locale: sv-se
+  format: string
+  source: Updated at
+  target: 'Uppdaterades '
+  target_initial: 'Uppdaterades '
+- locale: sv-se
+  format: string
+  source: Waiting Customers
+  target: Väntande kunder
+  target_initial: Väntande kunder
+- locale: sv-se
+  format: string
+  source: Keywords
+  target: Nyckelord
+  target_initial: Nyckelord
+- locale: sv-se
+  format: string
+  source: Last sync at
+  target: Senast synkning skedde
+  target_initial: Senast synkning skedde
+- locale: sv-se
+  format: string
+  source: Or
+  target: eller
+  target_initial: eller
+- locale: sv-se
+  format: string
+  source: busy
+  target: upptagen
+  target_initial: upptagen
+- locale: sv-se
+  format: string
+  source: CTI
+  target: CTI
+  target_initial: CTI
+- locale: sv-se
+  format: string
+  source: current user
+  target: nuvarande användare
+  target_initial: nuvarande användare
+- locale: sv-se
+  format: string
+  source: Experts
+  target: Experter
+  target_initial: Experter
+- locale: sv-se
+  format: string
+  source: Integrations
+  target: Integrationer
+  target_initial: Integrationer
+- locale: sv-se
+  format: string
+  source: Year(s)
+  target: År
+  target_initial: År
+- locale: sv-se
+  format: string
+  source: Last used
+  target: Senast använd
+  target_initial: Senast använd
+- locale: sv-se
+  format: string
+  source: Latest updates
+  target: Senaste uppdateringar
+  target_initial: Senaste uppdateringar
+- locale: sv-se
+  format: string
+  source: Credit card number
+  target: Kreditkortsnummer
+  target_initial: Kreditkortsnummer
+- locale: sv-se
+  format: string
+  source: Expert
+  target: Expert
+  target_initial: Expert
+- locale: sv-se
+  format: string
+  source: has changed
+  target: har ändrats
+  target_initial: har ändrats
+- locale: sv-se
+  format: string
+  source: Hero
+  target: Hjälte
+  target_initial: Hjälte
+- locale: sv-se
+  format: string
+  source: VAT
+  target: VAT
+  target_initial: VAT
+- locale: sv-se
+  format: string
+  source: Your karma is |%s|.
+  target: 'Din karma är |%s|. '
+  target_initial: 'Din karma är |%s|. '
+- locale: sv-se
+  format: string
+  source: My assigned Tickets
+  target: Mina tilldelade ärenden
+  target_initial: Mina tilldelade ärenden
+- locale: sv-se
+  format: string
+  source: Total
+  target: Totalt
+  target_initial: Totalt
+- locale: sv-se
+  format: string
+  source: Changed
+  target: Ändrad
+  target_initial: Ändrad
+- locale: sv-se
+  format: string
+  source: CVV
+  target: CVV
+  target_initial: CVV
+- locale: sv-se
+  format: string
+  source: Domain
+  target: Domän
+  target_initial: Domän
+- locale: sv-se
+  format: string
+  source: New Role
+  target: Ny roll
+  target_initial: Ny roll
+- locale: sv-se
+  format: string
+  source: Back
+  target: Tillbaka
+  target_initial: Tillbaka
+- locale: sv-se
+  format: string
+  source: Change %s
+  target: 'Ändra %s '
+  target_initial: 'Ändra %s '
+- locale: sv-se
+  format: string
+  source: Current Status
+  target: Nuvarande status
+  target_initial: Nuvarande status
+- locale: sv-se
+  format: string
+  source: Current User
+  target: Nuvarande användare
+  target_initial: Nuvarande användare
+- locale: sv-se
+  format: string
+  source: Last contact (agent)
+  target: Senast kontakt (handläggare)
+  target_initial: Senast kontakt (handläggare)
+- locale: sv-se
+  format: string
+  source: Bank Name
+  target: Bankens namn
+  target_initial: Bankens namn
+- locale: sv-se
+  format: string
+  source: Import from
+  target: Importera från
+  target_initial: Importera från
+- locale: sv-se
+  format: string
+  source: Bots
+  target: Bots
+  target_initial: Bots
+- locale: sv-se
+  format: string
+  source: Change
+  target: Ändra
+  target_initial: Ändra
+- locale: sv-se
+  format: string
+  source: HTTP type
+  target: HTTP typ
+  target_initial: HTTP typ
+- locale: sv-se
+  format: string
+  source: Updating Database
+  target: Uppdaterar databas
+  target_initial: Uppdaterar databas
+- locale: sv-se
+  format: string
+  source: Messages
+  target: Meddelanden
+  target_initial: Meddelanden
+- locale: sv-se
+  format: string
+  source: My closed Tickets
+  target: Mina stängda ärenden
+  target_initial: Mina stängda ärenden
+- locale: sv-se
+  format: string
+  source: contains one
+  target: innehåller en
+  target_initial: innehåller en
+- locale: sv-se
+  format: string
+  source: contains all not
+  target: innehåller inte alla
+  target_initial: innehåller inte alla
+- locale: sv-se
+  format: string
+  source: Feedback
+  target: Feedback
+  target_initial: Feedback
+- locale: sv-se
+  format: string
+  source: Update successful!
+  target: Uppdatering klar!
+  target_initial: Uppdatering klar!
+- locale: sv-se
+  format: string
+  source: LDAP Host
+  target: LDAP Host
+  target_initial: LDAP Host
+- locale: sv-se
+  format: string
+  source: Last contact (customer)
+  target: Senast kontakt (kund)
+  target_initial: Senast kontakt (kund)
+- locale: sv-se
+  format: string
+  source: Updated by
+  target: 'Uppdaterad av '
+  target_initial: 'Uppdaterad av '
+- locale: sv-se
+  format: string
+  source: Add a Note
+  target: Lägg till anteckning
+  target_initial: Lägg till anteckning
+- locale: sv-se
+  format: string
+  source: Adresses
+  target: Adresser
+  target_initial: Adresser
+- locale: sv-se
+  format: string
+  source: All Agents
+  target: Alla handläggare
+  target_initial: Alla handläggare
+- locale: sv-se
+  format: string
+  source: again
+  target: igen
+  target_initial: igen
+- locale: sv-se
+  format: string
+  source: Active Agents
+  target: Aktiva handläggare
+  target_initial: Aktiva handläggare
+- locale: sv-se
+  format: string
+  source: Login with %s
+  target: Logga in med %s
+  target_initial: Logga in med %s
+- locale: sv-se
+  format: string
+  source: Credit card
+  target: Kreditkort
+  target_initial: Kreditkort
+- locale: sv-se
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: Bjud in handläggare/kollegor
+  target_initial: Bjud in handläggare/kollegor
+- locale: sv-se
+  format: string
+  source: Current password
+  target: Nuvarande lösenord
+  target_initial: Nuvarande lösenord
+- locale: sv-se
+  format: string
+  source: Invite Agents/Colleges
+  target: Bjud in handläggare/kollegor
+  target_initial: Bjud in handläggare/kollegor
+- locale: sv-se
+  format: string
+  source: Update Database
+  target: Uppdatera databas
+  target_initial: Uppdatera databas
+- locale: sv-se
+  format: string
+  source: Invite Colleagues
+  target: Bjud in kollegor
+  target_initial: Bjud in kollegor
+- locale: sv-se
+  format: string
+  source: Karma Level
+  target: Karma Level
+  target_initial: Karma Level
+- locale: sv-se
+  format: string
+  source: Karma Trends
+  target: Karma Trends
+  target_initial: Karma Trends
+- locale: sv-se
+  format: string
+  source: Merge to Ticket#
+  target: Slå ihop Ärende#
+  target_initial: Slå ihop Ärende#
+- locale: sv-se
+  format: string
+  source: 'Average: %s%'
+  target: 'Genomsnitt: %s%'
+  target_initial: 'Genomsnitt: %s%'
+- locale: sv-se
+  format: string
+  source: Last run
+  target: Senast körd
+  target_initial: Senast körd
+- locale: sv-se
+  format: string
+  source: Last sync
+  target: Senast synkad
+  target_initial: Senast synkad
+- locale: sv-se
+  format: string
+  source: Health Check
+  target: Hälsocheck
+  target_initial: Hälsocheck
+- locale: sv-se
+  format: string
+  source: Organizations
+  target: Bolag
+  target_initial: Bolag
+- locale: sv-se
+  format: string
+  source: Time Tracking
+  target: Tidsredovisning
+  target_initial: Tidsredovisning
+- locale: sv-se
+  format: string
+  source: Topics
+  target: Ämnen
+  target_initial: Ämnen
+- locale: sv-se
+  format: string
+  source: Cancel Upload
+  target: Avbryt uppladdning
+  target_initial: Avbryt uppladdning
+- locale: sv-se
+  format: string
+  source: contains one not
+  target: innehåller inte en
+  target_initial: innehåller inte en
+- locale: sv-se
+  format: string
+  source: Create Admin
+  target: Skapa admin
+  target_initial: Skapa admin
+- locale: sv-se
+  format: string
+  source: You are an |%s|.
+  target: 'Du är en |%s|. '
+  target_initial: 'Du är en |%s|. '
+- locale: sv-se
+  format: string
+  source: Created at
+  target: 'Skapad '
+  target_initial: 'Skapad '
+- locale: sv-se
+  format: string
+  source: contains all
+  target: innehåller allt
+  target_initial: innehåller allt
+- locale: sv-se
+  format: string
+  source: Tools
+  target: Verktyg
+  target_initial: Verktyg
+- locale: sv-se
+  format: string
+  source: Uploading
+  target: Laddar upp
+  target_initial: Laddar upp
+- locale: sv-se
+  format: string
+  source: Ticket Number Format
+  target: Format ärendenummer
+  target_initial: Format ärendenummer
+- locale: sv-se
+  format: string
+  source: Ticket |%s| is escalated!
+  target: Ärende |%s| eskalerar!
+  target_initial: Ärende |%s| eskalerar!
+- locale: sv-se
+  format: string
+  source: Verifying...
+  target: Bekräftar...
+  target_initial: Bekräftar...
+- locale: sv-se
+  format: string
+  source: Update as closed
+  target: Uppdatera till stängd
+  target_initial: Uppdatera till stängd
+- locale: sv-se
+  format: string
+  source: Token Access
+  target: Token Access
+  target_initial: Token Access
+- locale: sv-se
+  format: string
+  source: Update subscription
+  target: Uppdatera prenumeration
+  target_initial: Uppdatera prenumeration
+- locale: sv-se
+  format: string
+  source: User Preferences
+  target: Användarpreferenser
+  target_initial: Användarpreferenser
+- locale: sv-se
+  format: string
+  source: Time zone
+  target: Tidszon
+  target_initial: Tidszon
+- locale: sv-se
+  format: string
+  source: This is Zammad version %s
+  target: Detta är Zammad version
+  target_initial: Detta är Zammad version
+- locale: sv-se
+  format: string
+  source: Ticket |%s| will escalate soon!
+  target: Ärende |%s| är påväg att eskalera!
+  target_initial: Ärende |%s| är påväg att eskalera!
+- locale: sv-se
+  format: string
+  source: Time Accounting
+  target: Tidsredovisning
+  target_initial: Tidsredovisning
+- locale: sv-se
+  format: string
+  source: Update payment method
+  target: Uppdatera betalningsmetod
+  target_initial: Uppdatera betalningsmetod
+- locale: sv-se
+  format: string
+  source: Create new Customer
+  target: Skapa ny kund
+  target_initial: Skapa ny kund
+- locale: sv-se
+  format: string
+  source: My Organization
+  target: MIn organisation
+  target_initial: MIn organisation
+- locale: sv-se
+  format: string
+  source: My Organization Tickets
+  target: Min organisations ärenden
+  target_initial: Min organisations ärenden
+- locale: sv-se
+  format: string
+  source: New User
+  target: Ny användare
+  target_initial: Ny användare
+- locale: sv-se
+  format: string
+  source: reinstall
+  target: ominstallera
+  target_initial: ominstallera
+- locale: sv-se
+  format: string
+  source: Remember me
+  target: Kom ihåg mig
+  target_initial: Kom ihåg mig
+- locale: sv-se
+  format: string
+  source: deactivate
+  target: inaktivera
+  target_initial: inaktivera
+- locale: sv-se
+  format: string
+  source: deactivated
+  target: inaktiverad
+  target_initial: inaktiverad
+- locale: sv-se
+  format: string
+  source: Manage
+  target: Administration
+  target_initial: Administration
+- locale: sv-se
+  format: string
+  source: Activity Stream
+  target: Aktivitetsflöde
+  target_initial: Aktivitetsflöde
+- locale: sv-se
+  format: string
+  source: Sign in with
+  target: Logga in med
+  target_initial: Logga in med
+- locale: sv-se
+  format: string
+  source: Attachment
+  target: Bilagor
+  target_initial: Bilagor
+- locale: sv-se
+  format: string
+  source: Article Count
+  target: Antal inlägg
+  target_initial: Antal inlägg
+- locale: sv-se
+  format: string
+  source: Change order
+  target: Ändra order
+  target_initial: Ändra order
+- locale: sv-se
+  format: string
+  source: down
+  target: ner
+  target_initial: ner
+- locale: sv-se
+  format: string
+  source: split
+  target: dela upp
+  target_initial: dela upp
+- locale: sv-se
+  format: string
+  source: Attach Screenshot of page
+  target: Bifoga skärmdump av sidan
+  target_initial: Bifoga skärmdump av sidan
+- locale: sv-se
+  format: string
+  source: My Stats
+  target: Min statistik
+  target_initial: Min statistik
+- locale: sv-se
+  format: string
+  source: New Overview
+  target: Ny översikt
+  target_initial: Ny översikt
+- locale: sv-se
+  format: string
+  source: Shared organization
+  target: Delad organisation
+  target_initial: Delad organisation
+- locale: sv-se
+  format: string
+  source: Channel
+  target: Kanal
+  target_initial: Kanal
+- locale: sv-se
+  format: string
+  source: Channels
+  target: Kanaler
+  target_initial: Kanaler
+- locale: sv-se
+  format: string
+  source: Original
+  target: Original
+  target_initial: Original
+- locale: sv-se
+  format: string
+  source: Call Inbound
+  target: Inkommande samtal
+  target_initial: Inkommande samtal
+- locale: sv-se
+  format: string
+  source: Mark all as read
+  target: Markera alla som lästa
+  target_initial: Markera alla som lästa
+- locale: sv-se
+  format: string
+  source: "%s ago"
+  target: "%s sedan"
+  target_initial: "%s sedan"
+- locale: sv-se
+  format: string
+  source: New Organization
+  target: Ny organisation
+  target_initial: Ny organisation
+- locale: sv-se
+  format: string
+  source: New Group
+  target: Ny grupp
+  target_initial: Ny grupp
+- locale: sv-se
+  format: string
+  source: SLAs
+  target: SLA
+  target_initial: SLA
+- locale: sv-se
+  format: string
+  source: No template created yet.
+  target: Inga mallar har skapats ännu.
+  target_initial: Inga mallar har skapats ännu.
+- locale: sv-se
+  format: string
+  source: Owned by me
+  target: Ägs av mig
+  target_initial: Ägs av mig
+- locale: sv-se
+  format: string
+  source: Owned by nobody
+  target: Ägs inte av någon
+  target_initial: Ägs inte av någon
+- locale: sv-se
+  format: string
+  source: App ID
+  target: App ID
+  target_initial: App ID
+- locale: sv-se
+  format: string
+  source: Password needs to have at least one digit.
+  target: Lösenord måste ha minst en siffra
+  target_initial: Lösenord måste ha minst en siffra
+- locale: sv-se
+  format: string
+  source: New Profile
+  target: Ny profil
+  target_initial: Ny profil
+- locale: sv-se
+  format: string
+  source: Releases
+  target: Uppdateringar
+  target_initial: Uppdateringar
+- locale: sv-se
+  format: string
+  source: Register as a new customer
+  target: Registrera som ny kund
+  target_initial: Registrera som ny kund
+- locale: sv-se
+  format: string
+  source: Recent Releases
+  target: Senaste uppdateringarna
+  target_initial: Senaste uppdateringarna
+- locale: sv-se
+  format: string
+  source: Push Changes
+  target: Skicka in ändringar
+  target_initial: Skicka in ändringar
+- locale: sv-se
+  format: string
+  source: Push my changes
+  target: Skicka in mina ändringar
+  target_initial: Skicka in mina ändringar
+- locale: sv-se
+  format: string
+  source: Form
+  target: Formulär
+  target_initial: Formulär
+- locale: sv-se
+  format: string
+  source: Send Mails via
+  target: Skicka e-post via
+  target_initial: Skicka e-post via
+- locale: sv-se
+  format: string
+  source: Calendars
+  target: Kalendrar
+  target_initial: Kalendrar
+- locale: sv-se
+  format: string
+  source: "∅ Waiting time today"
+  target: "∅ Väntetid idag"
+  target_initial: "∅ Väntetid idag"
+- locale: sv-se
+  format: string
+  source: Mood
+  target: Tillstånd
+  target_initial: Tillstånd
+- locale: sv-se
+  format: string
+  source: Reopening rate
+  target: Återöppningsgrad
+  target_initial: Återöppningsgrad
+- locale: sv-se
+  format: string
+  source: System URL
+  target: System URL
+  target_initial: System URL
+- locale: sv-se
+  format: string
+  source: New Calendar
+  target: Ny kalender
+  target_initial: Ny kalender
+- locale: sv-se
+  format: string
+  source: Email Address
+  target: E-postadress
+  target_initial: E-postadress
+- locale: sv-se
+  format: string
+  source: Widget Designer
+  target: Widget Designer
+  target_initial: Widget Designer
+- locale: sv-se
+  format: string
+  source: Accounts
+  target: Konton
+  target_initial: Konton
+- locale: sv-se
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'Min handläggningstid: %s minuter'
+  target_initial: 'Min handläggningstid: %s minuter'
+- locale: sv-se
+  format: string
+  source: Previous
+  target: Föregående
+  target_initial: Föregående
+- locale: sv-se
+  format: string
+  source: support@example.com
+  target: support@exempel.se
+  target_initial: support@exempel.se
+- locale: sv-se
+  format: string
+  source: New Macro
+  target: Nytt makro
+  target_initial: Nytt makro
+- locale: sv-se
+  format: string
+  source: Create Overviews
+  target: Skapa översikt
+  target_initial: Skapa översikt
+- locale: sv-se
+  format: string
+  source: Create a Test Ticket
+  target: Skapa ett testärende
+  target_initial: Skapa ett testärende
+- locale: sv-se
+  format: string
+  source: New password (confirm)
+  target: Nytt lösenord (bekräfta)
+  target_initial: Nytt lösenord (bekräfta)
+- locale: sv-se
+  format: string
+  source: specific user
+  target: specifik användare
+  target_initial: specifik användare
+- locale: sv-se
+  format: string
+  source: required
+  target: obligatorisk
+  target_initial: obligatorisk
+- locale: sv-se
+  format: string
+  source: Month(s)
+  target: Månad(er)
+  target_initial: Månad(er)
+- locale: sv-se
+  format: string
+  source: Day(s)
+  target: Dag(ar)
+  target_initial: Dag(ar)
+- locale: sv-se
+  format: string
+  source: Minute(s)
+  target: Minut(er)
+  target_initial: Minut(er)
+- locale: sv-se
+  format: string
+  source: Scheduled for
+  target: Schemalagd för
+  target_initial: Schemalagd för
+- locale: sv-se
+  format: string
+  source: Payment history
+  target: Betalningshistorik
+  target_initial: Betalningshistorik
+- locale: sv-se
+  format: string
+  source: Payment method
+  target: Betalningsmetod
+  target_initial: Betalningsmetod
+- locale: sv-se
+  format: string
+  source: Payment Method
+  target: Betalningsmetod
+  target_initial: Betalningsmetod
+- locale: sv-se
+  format: string
+  source: Account not verified
+  target: Kontot är ej verifierat
+  target_initial: Kontot är ej verifierat
+- locale: sv-se
+  format: string
+  source: Beginner
+  target: Nybörjare
+  target_initial: Nybörjare
+- locale: sv-se
+  format: string
+  source: Billed annually
+  target: Fakturerad årsvis
+  target_initial: Fakturerad årsvis
+- locale: sv-se
+  format: string
+  source: Callback URL
+  target: Callback URL
+  target_initial: Callback URL
+- locale: sv-se
+  format: string
+  source: Clients
+  target: Kunder
+  target_initial: Kunder
+- locale: sv-se
+  format: string
+  source: Subscription
+  target: Prenumeration
+  target_initial: Prenumeration
+- locale: sv-se
+  format: string
+  source: Overviews
+  target: Översikter
+  target_initial: Översikter
+- locale: sv-se
+  format: string
+  source: Pay with
+  target: Betald med
+  target_initial: Betald med
+- locale: sv-se
+  format: string
+  source: Permissions
+  target: Rättigheter
+  target_initial: Rättigheter
+- locale: sv-se
+  format: string
+  source: Billing information
+  target: Betalningsinformation
+  target_initial: Betalningsinformation
+- locale: sv-se
+  format: string
+  source: Sounds
+  target: Ljud
+  target_initial: Ljud
+- locale: sv-se
+  format: string
+  source: SLA Times
+  target: SLA tider
+  target_initial: SLA tider
+- locale: sv-se
+  format: string
+  source: specific organization
+  target: specifik organisation
+  target_initial: specifik organisation
+- locale: sv-se
+  format: string
+  source: New Trigger
+  target: Ny Trigger
+  target_initial: Ny Trigger
+- locale: sv-se
+  format: string
+  source: Overview
+  target: Översikt
+  target_initial: Översikt
+- locale: sv-se
+  format: string
+  source: Access to %s
+  target: 'Åtkomst till %s '
+  target_initial: 'Åtkomst till %s '
+- locale: sv-se
+  format: string
+  source: Article#
+  target: Inlägg
+  target_initial: Inlägg
+- locale: sv-se
+  format: string
+  source: Powered by
+  target: Powered by
+  target_initial: Powered by
+- locale: sv-se
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 2 gemener och 2 versaler
+  target_initial: 2 gemener och 2 versaler
+- locale: sv-se
+  format: string
+  source: Account Holder
+  target: Kontoinnehavare
+  target_initial: Kontoinnehavare
+- locale: sv-se
+  format: string
+  source: API token
+  target: API token
+  target_initial: API token
+- locale: sv-se
+  format: string
+  source: Reopened
+  target: Återöppnande
+  target_initial: Återöppnande
+- locale: sv-se
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: sv-se
+  format: string
+  source: Date & Time
+  target: Dag & Tid
+  target_initial: Dag & Tid
+- locale: sv-se
+  format: string
+  source: "%s% have been reopened"
+  target: "%s% har återöppnats"
+  target_initial: "%s% har återöppnats"
+- locale: sv-se
+  format: string
+  source: Text modules
+  target: Text moduler
+  target_initial: Text moduler
+- locale: sv-se
+  format: string
+  source: Payment by invoice
+  target: Betalning via faktura
+  target_initial: Betalning via faktura
+- locale: sv-se
+  format: string
+  source: Add Bot
+  target: Lägg till bot
+  target_initial: Lägg till bot
+- locale: sv-se
+  format: string
+  source: Running...
+  target: Körs...
+  target_initial: Körs...
+- locale: sv-se
+  format: string
+  source: Billed monthly
+  target: Fakturerad månadsvis
+  target_initial: Fakturerad månadsvis
+- locale: sv-se
+  format: string
+  source: Save configuration
+  target: Spara konfiguration
+  target_initial: Spara konfiguration
+- locale: sv-se
+  format: string
+  source: Cardholder
+  target: Kortinnehavare
+  target_initial: Kortinnehavare
+- locale: sv-se
+  format: string
+  source: Password (confirm)
+  target: Lösenord (bekräfta)
+  target_initial: Lösenord (bekräfta)
+- locale: sv-se
+  format: string
+  source: Customer Chat
+  target: Kundchat
+  target_initial: Kundchat
+- locale: sv-se
+  format: string
+  source: View this in Zammad
+  target: Visa i webbläsare
+  target_initial: Visa i webbläsare
+- locale: sv-se
+  format: string
+  source: Edit Organization
+  target: Ändra organisation
+  target_initial: Ändra organisation
+- locale: sv-se
+  format: string
+  source: Sign in using
+  target: 'Logga in via '
+  target_initial: 'Logga in via '
+- locale: sv-se
+  format: string
+  source: Select Template
+  target: Välj mall
+  target_initial: Välj mall
+- locale: sv-se
+  format: string
+  source: monthly
+  target: månadsvis
+  target_initial: månadsvis
+- locale: sv-se
+  format: string
+  source: Cancel & Go Back
+  target: Avbryt & Gå tillbaka
+  target_initial: Avbryt & Gå tillbaka
+- locale: sv-se
+  format: string
+  source: Call Outbound
+  target: Utgående samtal
+  target_initial: Utgående samtal
+- locale: sv-se
+  format: string
+  source: Password needs to contain at least one digit.
+  target: Lösenordet måste innehålla minst en siffra
+  target_initial: Lösenordet måste innehålla minst en siffra
+- locale: sv-se
+  format: string
+  source: Billing E-Mail Address
+  target: Faktura e-postadress
+  target_initial: Faktura e-postadress
+- locale: sv-se
+  format: string
+  source: Password needs to contain 2 lower and 2 upper characters.
+  target: Lösenordet måste innehålla 2 versaler och 2 gemener
+  target_initial: Lösenordet måste innehålla 2 versaler och 2 gemener
+- locale: sv-se
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% är pågående"
+  target_initial: "%s% är pågående"
+- locale: sv-se
+  format: string
+  source: Run every %s at %s
+  target: Kör varje %s vid %s
+  target_initial: Kör varje %s vid %s
+- locale: sv-se
+  format: string
+  source: Subscription Settings
+  target: Prenumerationsinställningar
+  target_initial: Prenumerationsinställningar
+- locale: sv-se
+  format: string
+  source: Recent viewed Tickets
+  target: Senast visade ärendena
+  target_initial: Senast visade ärendena
+- locale: sv-se
+  format: string
+  source: Starting Zammad
+  target: Startar Zammad
+  target_initial: Startar Zammad
+- locale: sv-se
+  format: string
+  source: Attributes
+  target: Attribut
+  target_initial: Attribut
+- locale: sv-se
+  format: string
+  source: Authentication via Google
+  target: Autentisering via Google
+  target_initial: Autentisering via Google
+- locale: sv-se
+  format: string
+  source: Link Accounts
+  target: Länka konton
+  target_initial: Länka konton
+- locale: sv-se
+  format: string
+  source: Authentication via Twitter
+  target: Autentisering via Twitter
+  target_initial: Autentisering via Twitter
+- locale: sv-se
+  format: string
+  source: Block Notifications
+  target: Blockera notifikationer
+  target_initial: Blockera notifikationer
+- locale: sv-se
+  format: string
+  source: Manage your notifications settings
+  target: Administrera dina notiser
+  target_initial: Administrera dina notiser
+- locale: sv-se
+  format: string
+  source: annually
+  target: årligen
+  target_initial: årligen
+- locale: sv-se
+  format: string
+  source: Authentication via %s
+  target: Autentisering via %s
+  target_initial: Autentisering via %s
+- locale: sv-se
+  format: string
+  source: Billing
+  target: Debitering
+  target_initial: Debitering
+- locale: sv-se
+  format: string
+  source: Your tickets in process
+  target: Dina pågående ärenden
+  target_initial: Dina pågående ärenden
+- locale: sv-se
+  format: string
+  source: Recently viewed
+  target: Senast öppnade
+  target_initial: Senast öppnade
+- locale: sv-se
+  format: string
+  source: Linked Accounts
+  target: Länkade konton
+  target_initial: Länkade konton
+- locale: sv-se
+  format: string
+  source: Authentication via LinkedIn
+  target: Autentisering via LinkedIn
+  target_initial: Autentisering via LinkedIn
+- locale: sv-se
+  format: string
+  source: Authentication via Facebook
+  target: Autentisering via Facebook
+  target_initial: Autentisering via Facebook
+- locale: sv-se
+  format: string
+  source: Choose your new password.
+  target: Välj ditt nya lösenord
+  target_initial: Välj ditt nya lösenord
+- locale: sv-se
+  format: string
+  source: Choose Template
+  target: Välj mall
+  target_initial: Välj mall
+- locale: sv-se
+  format: string
+  source: Company Inc.
+  target: Företag AB
+  target_initial: Företag AB
+- locale: sv-se
+  format: string
+  source: Department Name
+  target: Avdelningsnamn
+  target_initial: Avdelningsnamn
+- locale: sv-se
+  format: string
+  source: Email Account
+  target: E-postkonto
+  target_initial: E-postkonto
+- locale: sv-se
+  format: string
+  source: Department
+  target: Avdelning
+  target_initial: Avdelning
+- locale: sv-se
+  format: string
+  source: Do you want to cancel your subscription?
+  target: Vill du avsluta din prenumeration?
+  target_initial: Vill du avsluta din prenumeration?
+- locale: sv-se
+  format: string
+  source: Extended Search
+  target: Utökat sök
+  target_initial: Utökat sök
+- locale: sv-se
+  format: string
+  source: Expiration (MM/YYYY)
+  target: Giltighet (MM/YYYY)
+  target_initial: Giltighet (MM/YYYY)
+- locale: sv-se
+  format: string
+  source: Domain based assignment
+  target: Domänbaserad tilldelning
+  target_initial: Domänbaserad tilldelning
+- locale: sv-se
+  format: string
+  source: Create your first ticket
+  target: Skapa ditt första ärende
+  target_initial: Skapa ditt första ärende
+- locale: sv-se
+  format: string
+  source: Delivery failed
+  target: Leverans misslyckades
+  target_initial: Leverans misslyckades
+- locale: sv-se
+  format: string
+  source: Email - subject field
+  target: E-post - Ämnesrad
+  target_initial: E-post - Ämnesrad
+- locale: sv-se
+  format: string
+  source: Email Accounts
+  target: E-postkonton
+  target_initial: E-postkonton
+- locale: sv-se
+  format: string
+  source: First Steps
+  target: Första stegen
+  target_initial: Första stegen
+- locale: sv-se
+  format: string
+  source: Product Name
+  target: Produktnamn
+  target_initial: Produktnamn
+- locale: sv-se
+  format: string
+  source: Enter Answer or
+  target: Skriv Svar eller
+  target_initial: Skriv Svar eller
+- locale: sv-se
+  format: string
+  source: Source
+  target: Ursprung
+  target_initial: Ursprung
+- locale: sv-se
+  format: string
+  source: Words
+  target: Ord
+  target_initial: Ord
+- locale: sv-se
+  format: string
+  source: not translated
+  target: ej översatta
+  target_initial: ej översatta
+- locale: sv-se
+  format: string
+  source: Reload application
+  target: Ladda om applikationen
+  target_initial: Ladda om applikationen
+- locale: sv-se
+  format: string
+  source: Send a message to all logged in users.
+  target: Skicka meddelande till alla inloggade användare
+  target_initial: Skicka meddelande till alla inloggade användare
+- locale: sv-se
+  format: string
+  source: Mode
+  target: Underhållsläge
+  target_initial: Underhållsläge
+- locale: sv-se
+  format: string
+  source: Disable
+  target: Inaktivera
+  target_initial: Inaktivera
+- locale: sv-se
+  format: string
+  source: Notification Sender
+  target: Avsändare notifieringar
+  target_initial: Avsändare notifieringar
+- locale: sv-se
+  format: string
+  source: Max. clients in waitlist
+  target: MAX ANTAL KUNDER I VÄNTELISTA
+  target_initial: MAX ANTAL KUNDER I VÄNTELISTA
+- locale: sv-se
+  format: string
+  source: Schedulers
+  target: Schemaläggare
+  target_initial: Schemaläggare
+- locale: sv-se
+  format: string
+  source: Get latest Translation
+  target: Hämta senaste översättningen
+  target_initial: Hämta senaste översättningen
+- locale: sv-se
+  format: string
+  source: Get latest translations
+  target: Hämta senaste översättningarna
+  target_initial: Hämta senaste översättningarna
+- locale: sv-se
+  format: string
+  source: Reset changes
+  target: Återställ ändringar
+  target_initial: Återställ ändringar
+- locale: sv-se
+  format: string
+  source: Keyboard Shortcuts
+  target: Tangentbordsgenvägar
+  target_initial: Tangentbordsgenvägar
+- locale: sv-se
+  format: string
+  source: Newbie
+  target: Nybörjare
+  target_initial: Nybörjare
+- locale: sv-se
+  format: string
+  source: Scheduler
+  target: Schemaläggaren
+  target_initial: Schemaläggaren
+- locale: sv-se
+  format: string
+  source: Next in overview
+  target: Nästa i översikten
+  target_initial: Nästa i översikten
+- locale: sv-se
+  format: string
+  source: Hour
+  target: Timma
+  target_initial: Timma
+- locale: sv-se
+  format: string
+  source: Stay on tab
+  target: Stanna på flik
+  target_initial: Stanna på flik
+- locale: sv-se
+  format: string
+  source: Unassigned Tickets
+  target: Ej tilldelade Ärenden
+  target_initial: Ej tilldelade Ärenden
+- locale: sv-se
+  format: string
+  source: Unassigned & Open Tickets
+  target: Ej tilldelade och Öppna Ärenden
+  target_initial: Ej tilldelade och Öppna Ärenden
+- locale: sv-se
+  format: string
+  source: Unassigned & Open
+  target: Ej tilldelade och Öppna
+  target_initial: Ej tilldelade och Öppna
+- locale: sv-se
+  format: string
+  source: My pending reached Tickets
+  target: Mina framflyttade och utgångna Ärenden
+  target_initial: Mina framflyttade och utgångna Ärenden
+- locale: sv-se
+  format: string
+  source: Notifications
+  target: Notifieringar
+  target_initial: Notifieringar
+- locale: sv-se
+  format: string
+  source: Out of Office
+  target: Frånvaruhantering
+  target_initial: Frånvaruhantering
+- locale: sv-se
+  format: string
+  source: Packages
+  target: Paket
+  target_initial: Paket
+- locale: sv-se
+  format: string
+  source: Package
+  target: Paket
+  target_initial: Paket
+- locale: sv-se
+  format: string
+  source: Management
+  target: Hantering
+  target_initial: Hantering
+- locale: sv-se
+  format: string
+  source: Install Package
+  target: Installera paket
+  target_initial: Installera paket
+- locale: sv-se
+  format: string
+  source: Channel Distribution
+  target: KANALDISTRUBITION
+  target_initial: KANALDISTRUBITION
+- locale: sv-se
+  format: string
+  source: "%s started a new session"
+  target: "%s startade en session"
+  target_initial: "%s startade en session"
+- locale: sv-se
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s uppdaterade Ärende |%s|"
+  target_initial: "%s uppdaterade Ärende |%s|"
+- locale: sv-se
+  format: string
+  source: "%s updated User |%s|"
+  target: "%s uppdaterade Användare |%s|"
+  target_initial: "%s uppdaterade Användare |%s|"
+- locale: sv-se
+  format: string
+  source: "%s created User |%s|"
+  target: "%s skapade Användare |%s|"
+  target_initial: "%s skapade Användare |%s|"
+- locale: sv-se
+  format: string
+  source: Frequency
+  target: FREKVENS
+  target_initial: FREKVENS
+- locale: sv-se
+  format: string
+  source: Tickets of User
+  target: Ärende för Användare
+  target_initial: Ärende för Användare
+- locale: sv-se
+  format: string
+  source: Email Outbound
+  target: Utgående e-post
+  target_initial: Utgående e-post
+- locale: sv-se
+  format: string
+  source: Enable Chat
+  target: Aktivera Chatten
+  target_initial: Aktivera Chatten
+- locale: sv-se
+  format: string
+  source: Email Inbound
+  target: Inkommande e-post
+  target_initial: Inkommande e-post
+- locale: sv-se
+  format: string
+  source: Enable
+  target: Aktivera
+  target_initial: Aktivera
+- locale: sv-se
+  format: string
+  source: Accounted Time
+  target: REDOVISAD TID
+  target_initial: REDOVISAD TID
+- locale: sv-se
+  format: string
+  source: Chat Title
+  target: Chatt-titel
+  target_initial: Chatt-titel
+- locale: sv-se
+  format: string
+  source: select attachment...
+  target: bifoga bilaga
+  target_initial: bifoga bilaga
+- locale: sv-se
+  format: string
+  source: set to internal
+  target: sätt till intern
+  target_initial: sätt till intern
+- locale: sv-se
+  format: string
+  source: Branding
+  target: Varumärke
+  target_initial: Varumärke
+- locale: sv-se
+  format: string
+  source: No unread notifications for you. :)
+  target: Inga nya notifieringar :)
+  target_initial: Inga nya notifieringar :)
+- locale: sv-se
+  format: string
+  source: at
+  target: kl
+  target_initial: kl
+- locale: sv-se
+  format: string
+  source: Third-party Applications
+  target: Tredjepartstillägg
+  target_initial: Tredjepartstillägg
+- locale: sv-se
+  format: string
+  source: How to use it
+  target: Hur man gör
+  target_initial: Hur man gör
+- locale: sv-se
+  format: string
+  source: Tickets of Organization
+  target: Ärenden för Företag
+  target_initial: Ärenden för Företag
+- locale: sv-se
+  format: string
+  source: set to public
+  target: sätt som publik
+  target_initial: sätt som publik
+- locale: sv-se
+  format: string
+  source: Default at Signup
+  target: STANDARD VID REGISTRERING
+  target_initial: STANDARD VID REGISTRERING
+- locale: sv-se
+  format: string
+  source: Available for Role
+  target: TILLGÄNGLIG FÖR ROLL
+  target_initial: TILLGÄNGLIG FÖR ROLL
+- locale: sv-se
+  format: string
+  source: New Tags
+  target: Ny tagg
+  target_initial: Ny tagg
+- locale: sv-se
+  format: string
+  source: Allow users to add new tags.
+  target: Tillåt användare att skapa nya taggar
+  target_initial: Tillåt användare att skapa nya taggar
+- locale: sv-se
+  format: string
+  source: Manage Tags
+  target: Editera Taggar
+  target_initial: Editera Taggar
+- locale: sv-se
+  format: string
+  source: Count
+  target: ANTAL
+  target_initial: ANTAL
+- locale: sv-se
+  format: string
+  source: Holidays
+  target: LEDIGA DAGAR
+  target_initial: LEDIGA DAGAR
+- locale: sv-se
+  format: string
+  source: Business Hours
+  target: ÖPPETTIDER
+  target_initial: ÖPPETTIDER
+- locale: sv-se
+  format: string
+  source: Default
+  target: Standard
+  target_initial: Standard
+- locale: sv-se
+  format: string
+  source: No Entries
+  target: INGET ATT VISA
+  target_initial: INGET ATT VISA
+- locale: sv-se
+  format: string
+  source: Enable time accounting for following matching tickets.
+  target: Aktivera tidsredovisning för nedanstående filtrering av ärenden.
+  target_initial: Aktivera tidsredovisning för nedanstående filtrering av ärenden.
+- locale: sv-se
+  format: string
+  source: Time Units
+  target: TID
+  target_initial: TID
+- locale: sv-se
+  format: string
+  source: Time Units Total
+  target: TOTAL TID
+  target_initial: TOTAL TID
+- locale: sv-se
+  format: string
+  source: Inbound
+  target: Inkommande
+  target_initial: Inkommande
+- locale: sv-se
+  format: string
+  source: Protocol
+  target: Protokoll
+  target_initial: Protokoll
+- locale: sv-se
+  format: string
+  source: Email Notification
+  target: E-postnotifieringar
+  target_initial: E-postnotifieringar
+- locale: sv-se
+  format: string
+  source: Base
+  target: Bas
+  target_initial: Bas
+- locale: sv-se
+  format: string
+  source: New User Accounts
+  target: Tillåt nya användarkonton
+  target_initial: Tillåt nya användarkonton
+- locale: sv-se
+  format: string
+  source: Enables users to create their own account via web interface.
+  target: Tillåt användare att skapa nytt konto via webgränssnittet.
+  target_initial: Tillåt användare att skapa nytt konto via webgränssnittet.
+- locale: sv-se
+  format: string
+  source: Activates lost password feature for users.
+  target: Tillåt att användare kan använda funktionen Glömt Lösenord.
+  target_initial: Tillåt att användare kan använda funktionen Glömt Lösenord.
+- locale: sv-se
+  format: string
+  source: Members
+  target: Medlemmar
+  target_initial: Medlemmar
+- locale: sv-se
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: Du är redan registrerad med din e-post om du har varit i kontakt med vår
+    support.
+  target_initial: Du är redan registrerad med din e-post om du har varit i kontakt
+    med vår support.
+- locale: sv-se
+  format: string
+  source: in %s
+  target: om %s
+  target_initial: om %s
+- locale: sv-se
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: Du är redan registrerad med din e-post om du har varit i kontakt med vår
+    support.
+  target_initial: Du är redan registrerad med din e-post om du har varit i kontakt
+    med vår support.
+- locale: sv-se
+  format: string
+  source: You can request your password
+  target: Du kan få ditt lösenord
+  target_initial: Du kan få ditt lösenord
+- locale: sv-se
+  format: string
+  source: here
+  target: här
+  target_initial: här
+- locale: sv-se
+  format: string
+  source: escalation
+  target: eskalering
+  target_initial: eskalering
+- locale: sv-se
+  format: string
+  source: forward
+  target: vidarebefordra
+  target_initial: vidarebefordra
+- locale: sv-se
+  format: string
+  source: delete
+  target: radera
+  target_initial: radera
+- locale: sv-se
+  format: string
+  source: Escalated
+  target: Eskalerade
+  target_initial: Eskalerade
+- locale: sv-se
+  format: string
+  source: Edit Branch
+  target: Redigera branch
+  target_initial: Redigera branch
+- locale: sv-se
+  format: string
+  source: Add Attribute
+  target: Lägg till attribut
+  target_initial: Lägg till attribut
+- locale: sv-se
+  format: string
+  source: Additional Channels
+  target: Ytterligare kanaler
+  target_initial: Ytterligare kanaler
+- locale: sv-se
+  format: string
+  source: Article
+  target: Artikel
+  target_initial: Artikel
+- locale: sv-se
+  format: string
+  source: Assign Follow Ups
+  target: Tilldela uppföljning
+  target_initial: Tilldela uppföljning
+- locale: sv-se
+  format: string
+  source: Create my account
+  target: Skapa mitt konto
+  target_initial: Skapa mitt konto
+- locale: sv-se
+  format: string
+  source: First response
+  target: Första svar
+  target_initial: Första svar
+- locale: sv-se
+  format: string
+  source: First Response
+  target: Första svar
+  target_initial: Första svar
+- locale: sv-se
+  format: string
+  source: First Response Time
+  target: Första svarstid
+  target_initial: Första svarstid
+- locale: sv-se
+  format: string
+  source: First Solution
+  target: Första lösning
+  target_initial: Första lösning
+- locale: sv-se
+  format: string
+  source: Business Times
+  target: Affärstider
+  target_initial: Affärstider
+- locale: sv-se
+  format: string
+  source: New to
+  target: Ny till
+  target_initial: Ny till
+- locale: sv-se
+  format: string
+  source: note
+  target: anteckning
+  target_initial: anteckning
+- locale: sv-se
+  format: string
+  source: pending
+  target: väntande
+  target_initial: väntande
+- locale: sv-se
+  format: string
+  source: raw
+  target: raw
+  target_initial: raw
+- locale: sv-se
+  format: string
+  source: twitter status
+  target: twitterstatus
+  target_initial: twitterstatus
+- locale: sv-se
+  format: string
+  source: Add-ons
+  target: Tillägg
+  target_initial: Tillägg
+- locale: sv-se
+  format: string
+  source: App Secret
+  target: Apphemlighet
+  target_initial: Apphemlighet
+- locale: sv-se
+  format: string
+  source: Back to my view
+  target: Tillbaka till min vy
+  target_initial: Tillbaka till min vy
+- locale: sv-se
+  format: string
+  source: Branches
+  target: Brancher
+  target_initial: Brancher
+- locale: sv-se
+  format: string
+  source: Client Secret
+  target: Klienthemlighet
+  target_initial: Klienthemlighet
+- locale: sv-se
+  format: string
+  source: Copy to clipboard
+  target: Kopiera till urklipp
+  target_initial: Kopiera till urklipp
+- locale: sv-se
+  format: string
+  source: Criteria
+  target: Kriterie
+  target_initial: Kriterie
+- locale: sv-se
+  format: string
+  source: Back to top
+  target: Tillbaka till toppen
+  target_initial: Tillbaka till toppen
+- locale: sv-se
+  format: string
+  source: Checksum
+  target: Checksum
+  target_initial: Checksum
+- locale: sv-se
+  format: string
+  source: Discard your unsaved changes.
+  target: Kasta dina osparade ändringar.
+  target_initial: Kasta dina osparade ändringar.
+- locale: sv-se
+  format: string
+  source: Display
+  target: Visa
+  target_initial: Visa
+- locale: sv-se
+  format: string
+  source: Edit Addon
+  target: Redigera tillägg
+  target_initial: Redigera tillägg
+- locale: sv-se
+  format: string
+  source: New Add-On
+  target: Nytt tillägg
+  target_initial: Nytt tillägg
+- locale: sv-se
+  format: string
+  source: New Attribute
+  target: Nytt attribut
+  target_initial: Nytt attribut
+- locale: sv-se
+  format: string
+  source: New Branch
+  target: Ny branch
+  target_initial: Ny branch
+- locale: sv-se
+  format: string
+  source: New Release
+  target: Ny utgåva
+  target_initial: Ny utgåva
+- locale: sv-se
+  format: string
+  source: Objects
+  target: Objekt
+  target_initial: Objekt
+- locale: sv-se
+  format: string
+  source: Port
+  target: Port
+  target_initial: Port
+- locale: sv-se
+  format: string
+  source: Reset Password
+  target: Återställ lösenord
+  target_initial: Återställ lösenord
+- locale: sv-se
+  format: string
+  source: Restore Defaults
+  target: Återställ till standard
+  target_initial: Återställ till standard
+- locale: sv-se
+  format: string
+  source: Search for users
+  target: Sök efter användare
+  target_initial: Sök efter användare
+- locale: sv-se
+  format: string
+  source: Storage
+  target: Lagring
+  target_initial: Lagring
+- locale: sv-se
+  format: string
+  source: Switch to
+  target: Växla till
+  target_initial: Växla till
+- locale: sv-se
+  format: string
+  source: Target
+  target: Mål
+  target_initial: Mål
+- locale: sv-se
+  format: string
+  source: Thanks for your Feedback!
+  target: Tack för din feedback!
+  target_initial: Tack för din feedback!
+- locale: sv-se
+  format: string
+  source: Twitter Key
+  target: Twitternyckel
+  target_initial: Twitternyckel
+- locale: sv-se
+  format: string
+  source: Twitter Secret
+  target: Twitterhemlighet
+  target_initial: Twitterhemlighet
+- locale: sv-se
+  format: string
+  source: after (absolute)
+  target: efter (absolut)
+  target_initial: efter (absolut)
+- locale: sv-se
+  format: string
+  source: after (relative)
+  target: efter (relativ)
+  target_initial: efter (relativ)
+- locale: sv-se
+  format: string
+  source: Connect
+  target: Anslut
+  target_initial: Anslut
+- locale: sv-se
+  format: string
+  source: Connect Channels
+  target: Anslut kanaler
+  target_initial: Anslut kanaler
+- locale: sv-se
+  format: string
+  source: Continue session
+  target: Fortsätt session
+  target_initial: Fortsätt session
+- locale: sv-se
+  format: string
+  source: Flat design.
+  target: Flat design.
+  target_initial: Flat design.
+- locale: sv-se
+  format: string
+  source: Enter timzone...
+  target: Ange tidzon...
+  target_initial: Ange tidzon...
+- locale: sv-se
+  format: string
+  source: before (absolute)
+  target: före (absolut)
+  target_initial: före (absolut)
+- locale: sv-se
+  format: string
+  source: Chatting Customers
+  target: Chattande kunder
+  target_initial: Chattande kunder
+- locale: sv-se
+  format: string
+  source: Direct URL
+  target: Direktlänk
+  target_initial: Direktlänk
+- locale: sv-se
+  format: string
+  source: Enable/Disable online chat.
+  target: Aktivera/inaktivera onlinechatt
+  target_initial: Aktivera/inaktivera onlinechatt
+- locale: sv-se
+  format: string
+  source: new & open
+  target: ny och öppen
+  target_initial: ny och öppen
+- locale: sv-se
+  format: string
+  source: Option
+  target: Alternativ
+  target_initial: Alternativ
+- locale: sv-se
+  format: string
+  source: Some Text
+  target: Någon text
+  target_initial: Någon text
+- locale: sv-se
+  format: string
+  source: switch to
+  target: växla till
+  target_initial: växla till
+- locale: sv-se
+  format: string
+  source: Testing
+  target: Testar
+  target_initial: Testar
+- locale: sv-se
+  format: string
+  source: Thanks for contributing!
+  target: Tack för att du har bidragit!
+  target_initial: Tack för att du har bidragit!
+- locale: sv-se
+  format: string
+  source: Title of the form
+  target: Formulärtitel
+  target_initial: Formulärtitel
+- locale: sv-se
+  format: string
+  source: clear
+  target: rensa
+  target_initial: rensa
+- locale: sv-se
+  format: string
+  source: Close current tab
+  target: Stäng nuvarande tabb
+  target_initial: Stäng nuvarande tabb
+- locale: sv-se
+  format: string
+  source: Create Macros
+  target: Skapa makron
+  target_initial: Skapa makron
+- locale: sv-se
+  format: string
+  source: Flat Design
+  target: Flat Design
+  target_initial: Flat Design
+- locale: sv-se
+  format: string
+  source: done
+  target: färdig
+  target_initial: färdig
+- locale: sv-se
+  format: string
+  source: Not Assigned
+  target: Ej tilldelad
+  target_initial: Ej tilldelad
+- locale: sv-se
+  format: string
+  source: Online Forms
+  target: Onlineformulär
+  target_initial: Onlineformulär
+- locale: sv-se
+  format: string
+  source: Open note box
+  target: Öppna anteckningsruta
+  target_initial: Öppna anteckningsruta
+- locale: sv-se
+  format: string
+  source: Open reply box
+  target: Öppna svarsruta
+  target_initial: Öppna svarsruta
+- locale: sv-se
+  format: string
+  source: Removes the formatting
+  target: Tar bort formatering
+  target_initial: Tar bort formatering
+- locale: sv-se
+  format: string
+  source: Requirements
+  target: Krav
+  target_initial: Krav
+- locale: sv-se
+  format: string
+  source: Setup new System
+  target: Installera nytt system
+  target_initial: Installera nytt system
+- locale: sv-se
+  format: string
+  source: Usage
+  target: Användning
+  target_initial: Användning
+- locale: sv-se
+  format: string
+  source: connected
+  target: anslutna
+  target_initial: anslutna
+- locale: sv-se
+  format: string
+  source: Folder
+  target: Katalog
+  target_initial: Katalog
+- locale: sv-se
+  format: string
+  source: Enter Title...
+  target: Ange titel...
+  target_initial: Ange titel...
+- locale: sv-se
+  format: string
+  source: Available for User
+  target: Tillgänglig för användare
+  target_initial: Tillgänglig för användare
+- locale: sv-se
+  format: string
+  source: Discard Changes
+  target: Avbryt ändringar
+  target_initial: Avbryt ändringar
+- locale: sv-se
+  format: string
+  source: Duration
+  target: Varaktighet
+  target_initial: Varaktighet
+- locale: sv-se
+  format: string
+  source: New App
+  target: Ny app
+  target_initial: Ny app
+- locale: sv-se
+  format: string
+  source: not exist
+  target: finns ej
+  target_initial: finns ej
+- locale: sv-se
+  format: string
+  source: "...of whole textarea"
+  target: "...av hel textarea"
+  target_initial: "...av hel textarea"
+- locale: sv-se
+  format: string
+  source: Personal Access Tokens
+  target: Personal Access Tokens
+  target_initial: Personal Access Tokens
+- locale: sv-se
+  format: string
+  source: Resend verification email
+  target: Skicka bekräftelsemail igen
+  target_initial: Skicka bekräftelsemail igen
+- locale: sv-se
+  format: string
+  source: Not configured
+  target: Inte konfigurerad
+  target_initial: Inte konfigurerad
+- locale: sv-se
+  format: string
+  source: per agent / month
+  target: per agent / månad
+  target_initial: per agent / månad
+- locale: sv-se
+  format: string
+  source: Recent logs
+  target: Senaste loggar
+  target_initial: Senaste loggar
+- locale: sv-se
+  format: string
+  source: Selected
+  target: Vald
+  target_initial: Vald
+- locale: sv-se
+  format: string
+  source: Summary
+  target: Sammanfattning
+  target_initial: Sammanfattning
+- locale: sv-se
+  format: string
+  source: Continue anyway
+  target: Fortsätt iallafall
+  target_initial: Fortsätt iallafall
+- locale: sv-se
+  format: string
+  source: Create Text Modules
+  target: Skapa textmoduler
+  target_initial: Skapa textmoduler
+- locale: sv-se
+  format: string
+  source: current user organization
+  target: nuvarande användares organisation
+  target_initial: nuvarande användares organisation
+- locale: sv-se
+  format: string
+  source: Manage %s
+  target: Hantera %s
+  target_initial: Hantera %s
+- locale: sv-se
+  format: string
+  source: Nothing selected
+  target: Inget är valt
+  target_initial: Inget är valt
+- locale: sv-se
+  format: string
+  source: Notification
+  target: Notifikation
+  target_initial: Notifikation
+- locale: sv-se
+  format: string
+  source: Recent Customer Tickets
+  target: Senaste kundtickets
+  target_initial: Senaste kundtickets
+- locale: sv-se
+  format: string
+  source: TextModule
+  target: TextModul
+  target_initial: TextModul
+- locale: sv-se
+  format: string
+  source: There is no agent online.
+  target: Inga agenter är online.
+  target_initial: Inga agenter är online.
+- locale: sv-se
+  format: string
+  source: Drop files here
+  target: Släpp filer här
+  target_initial: Släpp filer här
+- locale: sv-se
+  format: string
+  source: Enter credentials
+  target: Ange uppgifter
+  target_initial: Ange uppgifter
+- locale: sv-se
+  format: string
+  source: New text module
+  target: Ny textmodul
+  target_initial: Ny textmodul
+- locale: sv-se
+  format: string
+  source: Only for these groups.
+  target: Endast för dessa grupper.
+  target_initial: Endast för dessa grupper.
+- locale: sv-se
+  format: string
+  source: Proxy Settings
+  target: Proxyinställningar
+  target_initial: Proxyinställningar
+- locale: sv-se
+  format: string
+  source: Proxy address.
+  target: Proxyadress
+  target_initial: Proxyadress
+- locale: sv-se
+  format: string
+  source: Real name
+  target: Verkligt namn
+  target_initial: Verkligt namn
+- locale: sv-se
+  format: string
+  source: Successful!
+  target: Lyckad!
+  target_initial: Lyckad!
+- locale: sv-se
+  format: string
+  source: Test Connection
+  target: Testa anslutning
+  target_initial: Testa anslutning
+- locale: sv-se
+  format: string
+  source: drag here to cancel
+  target: dra hit för att avbryta
+  target_initial: dra hit för att avbryta
+- locale: sv-se
+  format: string
+  source: Network
+  target: Nätverk
+  target_initial: Nätverk
+- locale: sv-se
+  format: string
+  source: New Application
+  target: Ny applikation
+  target_initial: Ny applikation
+- locale: sv-se
+  format: string
+  source: Password Access
+  target: Lösenordsåtkomst
+  target_initial: Lösenordsåtkomst
+- locale: sv-se
+  format: string
+  source: Report Profile
+  target: Rapporteringsprofil
+  target_initial: Rapporteringsprofil
+- locale: sv-se
+  format: string
+  source: Service
+  target: Service
+  target_initial: Service
+- locale: sv-se
+  format: string
+  source: "%s people"
+  target: "%s personer"
+  target_initial: "%s personer"
+- locale: sv-se
+  format: string
+  source: Connect Facebook App
+  target: Anslut Facebook app
+  target_initial: Anslut Facebook app
+- locale: sv-se
+  format: string
+  source: Connect Twitter App
+  target: Anslut Twitter-app
+  target_initial: Anslut Twitter-app
+- locale: sv-se
+  format: string
+  source: Full
+  target: Full
+  target_initial: Full
+- locale: sv-se
+  format: string
+  source: Endpoint
+  target: Endpoint
+  target_initial: Endpoint
+- locale: sv-se
+  format: string
+  source: Read
+  target: Läs
+  target_initial: Läs
+- locale: sv-se
+  format: string
+  source: Replacement
+  target: Ersättning
+  target_initial: Ersättning
+- locale: sv-se
+  format: string
+  source: Shared
+  target: Delad
+  target_initial: Delad
+- locale: sv-se
+  format: string
+  source: Text missing
+  target: Text saknas
+  target_initial: Text saknas
+- locale: sv-se
+  format: string
+  source: Receipt
+  target: Kvitto
+  target_initial: Kvitto
+- locale: sv-se
+  format: string
+  source: Additional follow up detection
+  target: 'Ytterligare '
+  target_initial: 'Ytterligare '
+- locale: sv-se
+  format: string
+  source: Addons
+  target: Tillägg
+  target_initial: Tillägg
+- locale: sv-se
+  format: string
+  source: Annual
+  target: Årlig
+  target_initial: Årlig
+- locale: sv-se
+  format: string
+  source: Discard
+  target: Avbryt
+  target_initial: Avbryt
+- locale: sv-se
+  format: string
+  source: The chat is turned off.
+  target: Chatten är avstängd.
+  target_initial: Chatten är avstängd.
+- locale: sv-se
+  format: string
+  source: Applications
+  target: Applikationer
+  target_initial: Applikationer
+- locale: sv-se
+  format: string
+  source: Background color
+  target: Bakgrundsfärg
+  target_initial: Bakgrundsfärg
+- locale: sv-se
+  format: string
+  source: Current Token
+  target: Nuvarande token
+  target_initial: Nuvarande token
+- locale: sv-se
+  format: string
+  source: Billing Cycle
+  target: Faktureringspreiod
+  target_initial: Faktureringspreiod
+- locale: sv-se
+  format: string
+  source: Client storage
+  target: Klientlagring
+  target_initial: Klientlagring
+- locale: sv-se
+  format: string
+  source: Config
+  target: Konfiguration
+  target_initial: Konfiguration
+- locale: sv-se
+  format: string
+  source: Configure
+  target: Konfigurera
+  target_initial: Konfigurera
+- locale: sv-se
+  format: string
+  source: Configure Channels
+  target: Konfigurera kanaler
+  target_initial: Konfigurera kanaler
+- locale: sv-se
+  format: string
+  source: Connecting ...
+  target: Ansluter ...
+  target_initial: Ansluter ...
+- locale: sv-se
+  format: string
+  source: Notification Sound
+  target: Notifikationsljud
+  target_initial: Notifikationsljud
+- locale: sv-se
+  format: string
+  source: Products
+  target: Produkter
+  target_initial: Produkter
+- locale: sv-se
+  format: string
+  source: Received Call
+  target: Mottagna samtal
+  target_initial: Mottagna samtal
+- locale: sv-se
+  format: string
+  source: Setup Finished
+  target: Installationen avslutad
+  target_initial: Installationen avslutad
+- locale: sv-se
+  format: string
+  source: before (relative)
+  target: före (relativ)
+  target_initial: före (relativ)
+- locale: sv-se
+  format: string
+  source: disconnect
+  target: koppla från
+  target_initial: koppla från
+- locale: sv-se
+  format: string
+  source: Automatically show chat
+  target: Visa chatt automatiskt
+  target_initial: Visa chatt automatiskt
+- locale: sv-se
+  format: string
+  source: Disable Notifications
+  target: Inaktivera notifikationer
+  target_initial: Inaktivera notifikationer
+- locale: sv-se
+  format: string
+  source: Defines pretty date format.
+  target: Definierar läsbart datumformat
+  target_initial: Definierar läsbart datumformat
+- locale: sv-se
+  format: string
+  source: Email & Online
+  target: E-post och online
+  target_initial: E-post och online
+- locale: sv-se
+  format: string
+  source: Removes any hyperlink
+  target: Tar bort alla länkar
+  target_initial: Tar bort alla länkar
+- locale: sv-se
+  format: string
+  source: Password for proxy connection.
+  target: Lösenord för anslutning via proxy.
+  target_initial: Lösenord för anslutning via proxy.
+- locale: sv-se
+  format: string
+  source: Sign up
+  target: Registrera
+  target_initial: Registrera
+- locale: sv-se
+  format: string
+  source: Sync Changes
+  target: Synkronisera ändringar
+  target_initial: Synkronisera ändringar
+- locale: sv-se
+  format: string
+  source: "%s created Article for |%s|"
+  target: "%s skapade en artikel åt |%s|"
+  target_initial: "%s skapade en artikel åt |%s|"
+- locale: sv-se
+  format: string
+  source: Hour(s)
+  target: Timme/timmar
+  target_initial: Timme/timmar
+- locale: sv-se
+  format: string
+  source: Holidays iCalendar Feed
+  target: iCalendar-flöde med helgdagar
+  target_initial: iCalendar-flöde med helgdagar
+- source: Select the customer of the ticket or create one.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Escalated Tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sender Format
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Login successfully! Have a nice day!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Visibility
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: twitter direct-message
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Linked Objects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Assignment Timeout
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We've sent password reset instructions to your email address.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter your username or email address
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Woo hoo! Your password has been changed!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please try to login!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Username or email address invalid, please try again.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please click the button below to create your first one.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Group by
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Create an inbound Ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Create an outbound Ticket (will send this as email to customer)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Moved in
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Getting started!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Follow up possible
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Work Disposition
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Conditions where SLA is used
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Update Time
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Copy to clipboard: Ctrl+C, Enter'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Send to clients
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Feedback about our new Interface
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What ideas do you have?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What can you do here?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you can create one.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Mark all as seen.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: session started
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: set internal
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: pending close
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: pending reminder
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Build Test Release
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: All pending reached Tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sessions
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Object Manager
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Hook
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Hook Position
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Needed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Minimal size
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable Ticket creation
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Max. Email Size
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximal size in MB of emails.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Import Mode
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Import Endpoint
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Import Key
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo Services
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Storage Mechanism
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo IP Backend
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo Location Backend
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: At a glance
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Recent Addons
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins after account is inactive.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Digit required
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint auth key.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: no criteria
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Matrix
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Choose attributes and then save them as a new template.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Send client stats to central server.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Size
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Send client stats
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Fully Qualified Domain Name
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Status Code
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Template Title
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Layout Reference
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Zammad looks like this for "%s"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Store
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Skip
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter Template Name
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: View from user's perspective
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Status Type
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Twitter App Credentials
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: No filter.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: matches
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Timeframe for solving the problem.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Timeframe for every following response.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Timeframe for the first response.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: in hours
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Selector
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Escalation Times
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Where
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s of my tickets escalated."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Pushing translations to i18n.zammad.com
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Subscriptions
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: reached
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Pending reached
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Report Profiles
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Close & Tag as Spam
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Report
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your Email Configuration
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable debugging for implementation.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: E. g. recent changed tickets, users or organizations.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sender Format Seperator
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the sender of email notifications.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Destination Group
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: escalated
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Organization Support
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Verify sending and receiving
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Feedback Form
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: LinkedIn App Credentials
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Name of form submit button
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Message after sending form
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Start modal dialog for form.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Show title in form.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry! We'll contact you soon as possible.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have no configured account right now.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Fixed Email Accounts
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Inline translation
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Just click into the marker and update the words just in place. Enjoy!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Text with enabled inline translations looks like
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If you want to translate it via the translation table, just go ahead below.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Text with disabled inline translations looks like
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: All computers and browsers that have access to your Zammad appear here.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Previous in overview
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The default font size is 12px.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: There are too many people in queue for the chat.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket update
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket reminder reached
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Limit Groups
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket escalation
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: New Version
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A new version of Zammad is available, please reload your browser.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Also notify via email
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s ended switch to |%s|!"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s switched to |%s|!"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s created Organization |%s|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s created Group |%s|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Pending reminder reached for Ticket |%s|
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s updated Group |%s|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s updated Organization |%s|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Most recent activity
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Reply to last article
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable/disable inline translations
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Select item
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used when composing a text
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Text editing
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used when viewing a Ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as h3 heading
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as h2 heading
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as h1 heading
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as ordered list
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as unordered list
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Inserts a horizontal rule
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as //strikethrough//
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as ||italic||
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as |bold|
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Format as _underlined_
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Move left and right
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Move up and down
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used in lists (views and results)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Confirm/submit dialog
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Previous tab
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Next in tab
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: List of shortcuts
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used anywhere (admin only)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used anywhere
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Set article to internal/public
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Add alarm to pending reminder and escalated tickets.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s created Ticket |%s|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With templates you can pre-fill ticket attributes.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Administrator Account
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: migrate from another system
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'There can be several reasons for the chat to not show up:'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Manually open chat
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Can be in any CSS color format.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Shown when the chat is closed.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can create multiple chat topics.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Preview Width
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The URL to this installation of Zammad.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: within last (relative)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: within next (relative)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Conditions for shown Tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Only available for Users with shared Organization
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sure to delete this object?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Organization & Department Name
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Conditions for effected objects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: When should the job run?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: New Scheduler
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Will process
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Has processed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: ringing
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: not reached
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Changes were made that require a database update.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Database Update required
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: shown
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Visible
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Used in object views
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "...add object title"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Unable to verify email. Please contact your administrator.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Navigate through article
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Scroll down to see new messages
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Zammad Karma
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have closed a ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What affects your Zammad Karma?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have created a ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have answered a ticket within 1h
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Usage of advanced features
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Evangelist
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Professional
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Intermediate
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your current level
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Find what you search. E. g. "search phrase"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Show Search Details
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Master
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: OK, I've copied my token
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What is it?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Pick a name for the application, and we'll give you a unique token.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: OK, I\'ve copied my token
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Add a Personal Access Token
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have tickets that are over 2 days overdue
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have escalated tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Confirmation required
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enables user authentication via %s. Register your app first at [%s](%s).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Amount
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: tax
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please enter a valid "%s"!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your trial is running till %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Yes, please cancel my subscription
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: or %s %s monthly
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your account got canceled at %s! Your system will be removed at %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Yes, undo my subscription cancel
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You use %s in text but no attachment is attached. Do you want to continue?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Subscribe to iCalendar feed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Why doesn't the chat show up?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Realtime
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Reporting
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Value
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Default caller id for outbound calls.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Default caller id
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Default caller id.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Set outbound caller id
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Caller id to block
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Blocked caller ids based on sender caller id.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Also caller id of outbound calls can be changed.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: VoIP service provider with realtime push.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A team communication tool for the 21st century.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The format of the subject.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "|Left| means |[Ticket#12345] Some Subject|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "|Right| means |Some Subject [Ticket#12345]|"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Min. size of number
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Selects the ticket number generator module.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agents real name and the given group email
+    address.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Reply
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo Calendar Service
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be send by the sender.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines if a customer can create tickets via the web interface.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Group selection for Ticket creation
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Will be shown in the app and is included in email footers.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the logo of the application, shown in the web interface.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for user and organization image lookups.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Image Service
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to perform speed of application.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Send client stats/error message to central server to improve the usability.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Assign Users based on users domain.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Create rules that single out the tickets for the Service Level Agreement.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Customers in the organization can view each other items.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Feature disabled!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Access to Agent Tickets based on Group Access
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Manage %s Settings
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Assign follow up to latest agent again.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: do not reopen Ticket but create new Ticket
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Follow up for closed ticket possible or not.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Notes are visible to agents only, never to customers.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Monitoring
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: no issues
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Health information can be retrieved as JSON using
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: not set (not defined)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s required!"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: No such master ticket number!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Play user interface sound effects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Subscribe to public holidays in
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Open Ticket# %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Add attachment option to upload.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Base Objects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Migration Plugin for %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Link %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Migrate %s Data
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Migration"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Download %s Migration Plugin
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Attention: These will be your login password after the import is completed.'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s credentials"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter the URL of your %s system
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Username for proxy connection.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least minimal size of characters.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Max size of the subject in an email reply.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: skip
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Selector
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: SEPA Direct Debit
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Closing time
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have not created a ticket yet.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The way to communicate with us is this thing called "ticket".
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Bulk action executed!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Invite customers to create issues in Zammad
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: An open source monitoring tool.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: iCalendar links from Google will get fetched once a day
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your account has not been verified. Please click the link in the verification
+    email.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Woo hoo! Your email address has been verified!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "...add object link URL"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Copy current object number (e. g. Ticket#) to clipboard
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please execute database changes only in a maintenance time-slot.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You need to add the following Javascript code snippet to your web page
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Set up the communication channels you want to use with your Zammad.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Don't load CSS for form. You need to generate your own CSS for the form.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A test ticket has been created, you can find it in your overview |"%s"|
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you see a quick overview of your and other agents' performance.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Tab has changed, do you really want to close it?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: '|%s| stores all attachments in the "%s".'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Unassigned email addresses, assign them to a channel or delete them.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you will find the latest activities of your system.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s of your tickets are currently in process."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Account Time
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: A powerfull service to get more information about your customers.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to enhance performance of application.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo Location Service
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Getting an Access Token
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Number of failed logins after account will be deactivated.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sender Format Separator
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Wrong Username or Password combination.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least a minimal number of characters.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Requesting the Grant
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Location of an external chat.css file.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Minimum length
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Geo IP Service
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Services
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Add this class to a button on your page that should open the chat.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Meine zugewiesenen Tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Define the http protocol of your instance.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Yes, change my subscription
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Already charged in this periode
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Your new selection
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Plan
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Analyzing structure...
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Bind Password
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Bind User
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: failed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: skipped
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: untouched
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Mapping
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Base DN
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Article Last Sender
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximum size in MB of emails.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximum Email Size
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Additional follow-up detection
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You have no configured %s right now.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Default visibility for new note.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Note - default visibility
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Maximum failed logins
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Email - full quote
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Change Objects
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Start new
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Urgency
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Exchange integration for contacts management.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Till
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Auto close
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Agent limit exceeded, please check your account settings.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Configurable in the admin interface of %s.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: People who create Tickets ask for help.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Add sender initials to end of a tweet.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To configure your system.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: To work on Tickets.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Defines the system default language.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: No proxy for the following hosts.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Locale
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: forwarded
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Caller log
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Last customer contact (without consideration an agent has replied to it)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Delete records
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Last customer contact (with consideration an agent has replied to it)
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The import was successful.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Update existing records
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Bulk import allows you to create and update many records at once.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'The following changes have been made:'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Update existing records with the attributes specified in the import data.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The data must be in the comma separated values (CSV) format and saved as
+    UTF-8. You can import a CSV file or paste the data directly into the text area.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: The test run was successful.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Ticket Last Contact Behaviour
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been created."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Select CSV file
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Alternatively, you can use the Zammad API to import data.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: 'The following changes are made:'
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Sets the last customer contact based on the last contact of a customer or
+    on the last contact of a customer to whom an agent has not yet responded.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Clone
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Delete all existing records first.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Define an exception of "automatic assignment" for certain users (e.g. executives).
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Example CSV file for download.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are created."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Records that exist in the import data (but not in Zammad) will always be
+    created.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Exception users
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been updated."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Create new records
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Yes, start real import.
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are updated."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are deleted."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: Paste in CSV data
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) were deleted."
+  format: string
+  locale: sv-se
+  target: ''
+  target_initial: ''

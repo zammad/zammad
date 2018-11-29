@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.4.0
+  - 2.3.3
+  - jruby-9000
+before_install:
+  - gem install bundler
+  - gem update --system
+install: bin/setup
+script:
+  - cd ext/argon2_wrap/ && make test && cd ../..
+  - bundle exec rake test
+  - CODECLIMATE_REPO_TOKEN=2b619b81040453ecbcf1cf0869e1238c4bbaab666a42e7dd94d762c747c0f51a bundle exec codeclimate-test-reporter

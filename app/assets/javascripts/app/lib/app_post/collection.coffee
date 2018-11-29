@@ -74,9 +74,9 @@ class _collectionSingleton extends Spine.Module
         if !_.isEmpty(later)
           loadAssetsLater[type] = later
 
-    # process existing assets
-    for type, collections of loadAssetsLater
-      App[type].refresh(collections)
+      # process existing assets
+      for type, collections of loadAssetsLater
+        App[type].refresh(collections)
 
     if params.targetModel
       for type, collections of assets
@@ -110,18 +110,19 @@ class _collectionSingleton extends Spine.Module
         # check if new object is newer, just load newer objects
         if object.updated_at
           currentUpdatedAt = appObject.updatedAt(key)
+          objectToLoad = undefined
           if currentUpdatedAt
             if currentUpdatedAt < object.updated_at
-              if params.later
-                listToRefreshLater.push object
-                @log 'debug', 'refresh newer later', params.type, key
-              else
-                listToRefresh.push object
-                @log 'debug', 'refresh newer', params.type, key
-
+              objectToLoad = object
+              @log 'debug', 'refresh newer', params.type, key
           else
-            listToRefresh.push object
-            @log 'debug', 'refresh new no current updated_at', params.type, key
+            objectToLoad = object
+            @log 'debug', 'refresh try no updated_at', params.type, key
+          if objectToLoad
+            if params.later
+              listToRefreshLater.push objectToLoad
+            else
+              listToRefresh.push object
         else
           listToRefresh.push object
           @log 'debug', 'refresh new', params.type, key

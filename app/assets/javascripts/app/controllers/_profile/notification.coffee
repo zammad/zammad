@@ -73,7 +73,7 @@ class Index extends App.ControllerSubContent
       user_group_config = false
 
     groups = []
-    group_ids = App.User.find(@Session.get('id')).allGroupIds()
+    group_ids = App.User.find(@Session.get('id')).all_group_ids()
     if group_ids
       for group_id in group_ids
         group = App.Group.find(group_id)

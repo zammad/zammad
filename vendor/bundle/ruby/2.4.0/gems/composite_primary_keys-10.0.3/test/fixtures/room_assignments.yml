@@ -1,0 +1,24 @@
+jacksons_room:
+    student_id: 1
+    dorm_id: 1
+    room_id: 1
+
+bobs_room:
+    student_id: 2
+    dorm_id: 1
+    room_id: 1
+
+kellys_room:
+    student_id: 3
+    dorm_id: 1
+    room_id: 2
+
+jordans_room:
+    student_id: 4
+    dorm_id: 1
+    room_id: 2
+
+brads_room:
+    student_id: 5
+    dorm_id: 1
+    room_id: 3

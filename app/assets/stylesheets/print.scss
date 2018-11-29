@@ -11,29 +11,6 @@
   border-bottom: 1px solid hsl(0,0%,90%);
 }
 
-html {
-  height: auto;
-}
-
-body,
-.content {
-  background: none;
-  color: black;
-}
-
-// Disable flex to allow multi page prints in Firefox: https://bugzilla.mozilla.org/show_bug.cgi?id=939897
-body,
-#app,
-#app > .content.active,
-.tabsSidebar-holder,
-main {
-  display: block;
-}
-
-#app {
-  min-width: 0;
-}
-
 /*
 
   Dashboard
@@ -77,85 +54,9 @@ main {
 }
 
 .tabsSidebar-sidebarSpacer {
-  margin: 0;
-  transition: none;
+  margin-right: 0;
 }
 
-.textBubble-content {
-  height: auto !important;
-}
-
-.tabsSidebar-tabsSpacer {
-  padding: 0 !important;
-  overflow: visible;
-}
-
-.ticket-article,
-.article-new {
-  max-width: none;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.ticketZoom {
-  background: none;
-}
-
-.textBubble {
-  padding: 20px;
-  border: 1px solid !important;
-  background: white !important;
-}
-
-.bubble-arrow:after {
-  background: white !important;
-  border-color: black !important;
-}
-
-.article-meta {
-  color: black;
-  background: none;
-  border: 1px dashed hsl(240,2%,60%);
-  padding: 11px 10px 1px;
-  
-  &.top {
-    border-bottom-width: 0;
-  }
-  
-  &.bottom {
-    border-top-width: 0;
-    padding-top: 7px;
-    padding-bottom: 3px;
-  }
-  
-  &-clip {
-    height: auto !important;
-  }
-
-  &-icon {
-    fill: currentColor;
-  }
-}
-
-.article-content {
-  color: inherit;
-  
-  a[href]:after {
-    content: none !important;
-  }
-}
-
-.article-content-meta {
-  opacity: 1 !important;
-  display: block !important;
-  transform: none !important;
-  position: static;
-}
-
-.attachments.attachments--list {
-  border-color: currentColor !important;
-}
-
-.avatar {
-  border: 1px solid black;
+.article-meta .article-meta-key {
+  display: none;
 }

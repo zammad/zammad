@@ -1,0 +1,63 @@
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/ffi-1.9.18/ext/ffi_c
+/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/bin/ruby -r ./siteconf20171217-805-1td4zaz.rb extconf.rb
+checking for ffi_call() in -lffi... yes
+checking for ffi_prep_closure()... yes
+checking for ffi_raw_call()... yes
+checking for ffi_prep_raw_closure()... yes
+checking for shlwapi.h... no
+checking for rb_thread_blocking_region()... no
+checking for rb_thread_call_with_gvl()... yes
+checking for rb_thread_call_without_gvl()... yes
+checking for ffi_prep_cif_var()... yes
+creating extconf.h
+creating Makefile
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/ffi-1.9.18/ext/ffi_c
+make "DESTDIR=" clean
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/ffi-1.9.18/ext/ffi_c
+make "DESTDIR="
+compiling AbstractMemory.c
+compiling ArrayType.c
+compiling Buffer.c
+compiling Call.c
+In file included from Call.h:36:0,
+                 from Function.h:48,
+                 from Call.c:57:
+Call.c: In function ‘rbffi_do_blocking_call’:
+Thread.h:78:39: warning: implicit declaration of function ‘rb_thread_call_without_gvl’ [-Wimplicit-function-declaration]
+ # define rbffi_thread_blocking_region rb_thread_call_without_gvl
+                                       ^
+Call.c:355:5: note: in expansion of macro ‘rbffi_thread_blocking_region’
+     rbffi_thread_blocking_region(call_blocking_function, data, (void *) -1, NULL);
+     ^
+compiling ClosurePool.c
+compiling DataConverter.c
+compiling DynamicLibrary.c
+compiling Function.c
+Function.c: In function ‘async_cb_event’:
+Function.c:563:9: warning: implicit declaration of function ‘rb_thread_call_without_gvl’ [-Wimplicit-function-declaration]
+         rb_thread_call_without_gvl(async_cb_wait, &w, async_cb_stop, &w);
+         ^
+compiling FunctionInfo.c
+compiling LastError.c
+compiling LongDouble.c
+compiling MappedType.c
+compiling MemoryPointer.c
+compiling MethodHandle.c
+compiling Platform.c
+compiling Pointer.c
+compiling Struct.c
+compiling StructByReference.c
+compiling StructByValue.c
+compiling StructLayout.c
+compiling Thread.c
+compiling Type.c
+compiling Types.c
+compiling Variadic.c
+compiling ffi.c
+linking shared-object ffi_c.so
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/ffi-1.9.18/ext/ffi_c
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 ffi_c.so ./.gem.20171217-805-1ypc67j

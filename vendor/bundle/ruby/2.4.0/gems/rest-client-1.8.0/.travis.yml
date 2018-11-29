@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - "1.9.2"
+  - "1.9.3"
+  - "2.0.0"
+  # Forgo 2.1.0 until Travis has a satisfactory fix for
+  # https://github.com/travis-ci/travis-ci/issues/2220
+  - "2.1"  # always the latest 2.1.x
+  - "jruby-19mode"
+script:
+  bundle exec rake test
+branches:
+  except:
+    - "readme-edits"

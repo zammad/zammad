@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'integration_test_helper'
 
 class ElasticsearchTest < ActiveSupport::TestCase
   include SearchindexHelper
@@ -11,7 +11,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'es-agent@example.com',
       firstname: 'E',
       lastname: 'S',
@@ -36,7 +36,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @customer1 = User.create!(
+    @customer1 = User.create_or_update(
       login: 'es-customer1@example.com',
       firstname: 'ES',
       lastname: 'Customer1',
@@ -48,7 +48,8 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @customer2 = User.create!(
+    sleep 1
+    @customer2 = User.create_or_update(
       login: 'es-customer2@example.com',
       firstname: 'ES',
       lastname: 'Customer2',
@@ -60,7 +61,8 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @customer3 = User.create!(
+    sleep 1
+    @customer3 = User.create_or_update(
       login: 'es-customer3@example.com',
       firstname: 'ES',
       lastname: 'Customer3',
@@ -71,10 +73,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-
-    # execute background jobs to index created/changed objects
-    Scheduler.worker(true)
-
   end
 
   # check search attributes
@@ -142,7 +140,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -203,7 +201,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -214,7 +212,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-pdf1.pdf')),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-pdf1.pdf')),
       filename: 'es-pdf1.pdf',
       preferences: {},
       created_by_id: 1,
@@ -225,7 +223,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-box1.box')),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-box1.box')),
       filename: 'mail1.box',
       preferences: {},
       created_by_id: 1,
@@ -236,13 +234,13 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-too-big.txt')),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-too-big.txt')),
       filename: 'es-too-big.txt',
       preferences: {},
       created_by_id: 1,
     )
     ticket1.tag_add('someTagA', 1)
-    travel 1.minute
+    sleep 1
 
     ticket2 = Ticket.create!(
       title: 'something else',
@@ -268,7 +266,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     ticket2.tag_add('someTagB', 1)
-    travel 1.minute
+    sleep 1
 
     ticket3 = Ticket.create!(
       title: 'something else',
@@ -295,7 +293,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # execute background jobs
     Scheduler.worker(true)
-    sleep 2 # for ES to come ready/indexed
+    sleep 4
 
     # search as @agent
 
@@ -407,7 +405,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for tags
     result = Ticket.search(
       current_user: @agent,
-      query: 'tags:someTagA',
+      query: 'tag:someTagA',
       limit: 15,
     )
     assert(result[0], 'record 1')
@@ -416,7 +414,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tags:someTagB',
+      query: 'tag:someTagB',
       limit: 15,
     )
     assert(result[0], 'record 2')
@@ -433,12 +431,13 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # execute background jobs
     Scheduler.worker(true)
-    sleep 2 # for ES to come ready/indexed
+
+    sleep 4
 
     # search for tags
     result = Ticket.search(
       current_user: @agent,
-      query: 'tags:someTagA',
+      query: 'tag:someTagA',
       limit: 15,
     )
     assert(!result[0], 'record 1')
@@ -446,7 +445,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tags:someTagB',
+      query: 'tag:someTagB',
       limit: 15,
     )
     assert(result[0], 'record 2')
@@ -455,7 +454,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tags:someTagC',
+      query: 'tag:someTagC',
       limit: 15,
     )
     assert(result[0], 'record 1')

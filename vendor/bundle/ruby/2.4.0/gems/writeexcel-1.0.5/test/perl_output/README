@@ -1,0 +1,31 @@
+###############################################################################
+# This file contains sample output from the Spreadsheet::WriteExcel Perl
+# module. Used for testing file sizes/contents
+###############################################################################
+
+Files:
+
+ws_  -> from Worksheet.pm
+f_   -> from Format.pm
+ole_ -> from OLEWriter.pm
+
+f_font_biff
+  Output of the _get_font call
+
+f_font_key
+  Output of the _get_font_key call
+
+f_xf_biff
+  Output of the _get_xf call
+
+ws_colinfo
+  Output of the _store_colinfo call (default values)
+
+ws_store_dimensions
+  Output of the _store_dimensions call
+
+ws_store_window2
+  Output of the _store_window call
+
+ws_store_selection
+  Output of the _store_selection call

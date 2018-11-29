@@ -1,0 +1,34 @@
+have_library: checking for -lstdc++... -------------------- yes
+
+"gcc -o conftest -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0/x86_64-linux -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0/ruby/backward -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0 -I.    -O3 -fno-fast-math -g -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wno-tautological-compare -Wno-parentheses-equality -Wno-constant-logical-operand -Wno-self-assign -Wunused-variable -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wno-maybe-uninitialized conftest.c  -L. -L/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -Wl,-rpath,/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -lruby-static  -lpthread -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -o conftest -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0/x86_64-linux -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0/ruby/backward -I/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/include/ruby-2.4.0 -I.    -O3 -fno-fast-math -g -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wno-tautological-compare -Wno-parentheses-equality -Wno-constant-logical-operand -Wno-self-assign -Wunused-variable -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wno-maybe-uninitialized conftest.c  -L. -L/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -Wl,-rpath,/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/tmp/d20180606-47-kgvji3/opt/zammad/vendor/ruby-2.4.4/lib -lruby-static -lstdc++  -lpthread -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: 
+14: int t(void) { ; return 0; }
+/* end */
+
+--------------------
+

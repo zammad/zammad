@@ -1,0 +1,17 @@
+santiago-cpk:
+  id: 1
+  user_id: 1
+  group_id: 1
+  status: Active
+
+drnic-cpk:
+  id: 2
+  user_id: 2
+  group_id: 1
+  status: Owner
+
+cfis-cpk:
+  id: 3
+  user_id: 3
+  group_id: 2
+  status: Active

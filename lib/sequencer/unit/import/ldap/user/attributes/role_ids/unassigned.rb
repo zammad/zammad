@@ -10,7 +10,7 @@ class Sequencer
 
                 skip_any_action
 
-                uses :dn_roles, :ldap_config, :mapped, :instance
+                uses :resource, :dn_roles, :ldap_config, :mapped
                 provides :action
 
                 def process
@@ -25,7 +25,9 @@ class Sequencer
                   # if unassigned users should not get skipped
                   return if ldap_config[:unassigned_users] != 'skip_sync'
 
-                  if instance&.active
+                  instance = state.optional(:instance)
+
+                  if instance.present?
                     # deactivate instance if role assignment is lost
                     instance.update!(active: false)
                     state.provide(:action, :deactivated)

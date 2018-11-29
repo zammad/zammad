@@ -1,0 +1,123 @@
+= writeexcel
+
+Write to a cross-platform Excel binary file.
+
+{<img src="https://badge.fury.io/rb/writeexcel.png" alt="Gem Version" />}[http://badge.fury.io/rb/writeexcel]
+
+== Description
+
+This library is converted from Spreadsheet::WriteExcel module of Perl.
+http://search.cpan.org/~jmcnamara/Spreadsheet-WriteExcel-2.38/
+
+Original description is below:
+
+    The Spreadsheet::WriteExcel module can be used to create a cross-
+    platform Excel binary file. Multiple worksheets can be added to a
+    workbook and formatting can be applied to cells. Text, numbers,
+    formulas, hyperlinks, images and charts can be written to the cells.
+
+    TThe Excel file produced by this module is compatible with 97,
+    2000, 2002, 2003 and 2007.
+
+    The module will work on the majority of Windows, UNIX and
+    Macintosh platforms. Generated files are also compatible with the
+    spreadsheet applications Gnumeric and OpenOffice.org.
+
+    This module cannot be used to read an Excel file.
+
+== Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'writeexcel'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install writeexcel
+
+== Usage
+
+See Reference http://writeexcel.web.fc2.com/ .
+You must save source file in UTF8, and run ruby with -Ku option or set $KCODE='u' in Ruby 1.8.
+
+Example Code:
+
+    require 'writeexcel'
+
+    # Create a new Excel Workbook
+    workbook = WriteExcel.new('ruby.xls')
+
+    # Add worksheet(s)
+    worksheet  = workbook.add_worksheet
+    worksheet2 = workbook.add_worksheet
+
+    # Add and define a format
+    format = workbook.add_format
+    format.set_bold
+    format.set_color('red')
+    format.set_align('right')
+
+    # write a formatted and unformatted string.
+    worksheet.write(1, 1, 'Hi Excel.', format)  # cell B2
+    worksheet.write(2, 1, 'Hi Excel.')          # cell B3
+
+    # write a number and formula using A1 notation
+    worksheet.write('B4', 3.14159)
+    worksheet.write('B5', '=SIN(B4/4)')
+
+    # write to file
+    workbook.close
+
+== Difference with Perl module
+
+* WriteExcel.new()
+  * accept default format parameter such as new('foo.xls', :font => 'Roman', :size => 12)
+* Unary minus is supported, but it will be stored as '-1*'. ex) '=-1' -> '=-1*1', '=-SIN(PI()/2)' => '=-1*SIN(PI()/2)'
+* Worksheet.write(row, col, token, format)
+  * if token.kind_of?(Numeric) then call write_number, if token.kind_of?(String) then not call write_number().
+* Worksheet.keep_leading_zeros()
+  * ignore. if write 0001, use string such as write(1,2, '0001')
+* and ......
+
+== Recent Change
+v1.0.5
+* use test-unit gem instead of test/unit.
+
+v1.0.4
+* put formula parsers classes in a module to avoid namespace conflicts. (thanks Kevin)
+
+v1.0.3
+* Bug fix issue 29. bug in extern sheet reference.
+
+v1.0.2
+* Bug fix issue 28. bug in non ascii worksheet names.
+* Bug fix in testcase issue 28. fail due to defferent timezone.
+
+v1.0.1
+* Bug fix issue 25. bug in Chart#set_legend.
+
+v1.0.0
+* Bug fix in Workbook#set_properties.
+
+== Author
+
+Original was written in Perl by John McNamara (jmcnamara@cpan.org).
+
+Convert to ruby by Hideo Nakamura (cxn03651@msj.biglobe.ne.jp)
+Copyright (c) 2009-2014 Hideo NAKAMURA. See LICENSE.txt for details.
+
+== License
+
+See LICENSE.txt
+
+== Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

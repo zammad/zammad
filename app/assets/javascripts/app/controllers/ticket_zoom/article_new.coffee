@@ -47,10 +47,6 @@ class App.TicketZoomArticleNew extends App.Controller
     if @defaults.body or @isIE10()
       @openTextarea(null, true)
 
-    if _.isArray(@defaults.attachments)
-      for attachment in @defaults.attachments
-        @renderAttachment(attachment)
-
     # set article type and expand text area
     @bind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id.toString() isnt @ticket_id.toString()
@@ -179,7 +175,7 @@ class App.TicketZoomArticleNew extends App.Controller
       key:             'File'
       data:
         form_id: @form_id
-      maxSimultaneousUploads: 1
+      maxSimultaneousUploads: 1,
       onFileAdded:            (file) =>
 
         file.on(
@@ -188,17 +184,18 @@ class App.TicketZoomArticleNew extends App.Controller
             @attachmentPlaceholder.addClass('hide')
             @attachmentUpload.removeClass('hide')
             @cancelContainer.removeClass('hide')
-
-            if @callbackFileUploadStart
-              @callbackFileUploadStart()
+            # Disable the update ticket button during uploading
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Uploading'))
+              .addClass('is-disabled')
 
           onAborted: =>
             @attachmentPlaceholder.removeClass('hide')
             @attachmentUpload.addClass('hide')
             @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Update'))
+              .removeClass('is-disabled')
 
           # Called after received response from the server
           onCompleted: (response) =>
@@ -215,9 +212,9 @@ class App.TicketZoomArticleNew extends App.Controller
 
             @renderAttachment(response.data)
             @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Update'))
+              .removeClass('is-disabled')
 
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.

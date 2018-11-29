@@ -1,0 +1,36 @@
+Return-Path: oracle@IG0-1-DB01.example.com
+Received: from mail.example.com (LHLO mail.example.com) (195.30.107.40) by
+ mail.example.com with LMTP; Thu, 18 Sep 2014 09:30:06 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.example.com (Postfix) with ESMTP id 3C7B54710042;
+	Thu, 18 Sep 2014 09:30:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail.example.com
+X-Spam-Flag: NO
+X-Spam-Score: -1.897
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.897 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-1.9, FSL_HELO_NON_FQDN_1=0.001, HELO_NO_DOMAIN=0.001,
+	TO_NO_BRKTS_PCNT=0.001] autolearn=ham
+Received: from mail.example.com ([127.0.0.1])
+	by localhost (mail.example.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AtfOMc9Eru0V; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from mail2.mail.example.com (perls.mail.example.com [195.30.107.84])
+	by mail.example.com (Postfix) with ESMTP id 4DE3C471003F;
+	Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from IG0-1-DB01 (static-62-50-37-197.irtnet.net [62.50.37.197])
+	by mail2.mail.example.com (Postfix) with ESMTP
+	id 43854316E9; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: by IG0-1-DB01 (Postfix, from userid 1000)
+	id 1F4D8383B7; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+To: support@example.com
+Subject: Regelsets im Test-Status gefunden: 1
+Message-Id: <20140918073001.1F4D8383B7@IG0-1-DB01>
+Date: Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+From: oracle@IG0-1-DB01.example.com
+
+begin 644 rulesets-report.csv
+M4E5,15-%5%])1#M.04U%.T%#5$E6.U)53E]-3T1%.T%51$E47TU/1$E&65]$
+M051%"C,X-SM$4"!$2$P@2D])3B`M($5.(#H@16EN;&%D=6YG(&5!0SM4.U--
+*.S$W+C`Y+C$T"@``
+`
+end

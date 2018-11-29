@@ -12,7 +12,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'api-admin',
       firstname: 'API',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'api-agent@example.com',
       firstname: 'API',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer = User.create!(
+    @customer = User.create_or_update(
       login: 'api-customer1@example.com',
       firstname: 'API',
       lastname: 'Customer1',

@@ -1,0 +1,13 @@
+language: ruby
+
+sudo: false
+
+rvm:
+  - 2.4
+  - 2.3
+  - 2.2
+
+gemfile:
+  - gemfiles/activemodel3.gemfile
+  - gemfiles/activemodel4.gemfile
+  - gemfiles/activemodel5.gemfile

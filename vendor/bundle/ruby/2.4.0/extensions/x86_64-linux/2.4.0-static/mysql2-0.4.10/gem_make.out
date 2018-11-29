@@ -1,0 +1,64 @@
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/mysql2-0.4.10/ext/mysql2
+/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/bin/ruby -r ./siteconf20171217-805-dafi81.rb extconf.rb
+checking for rb_absint_size()... yes
+checking for rb_absint_singlebit_p()... yes
+checking for ruby/thread.h... yes
+checking for rb_thread_call_without_gvl() in ruby/thread.h... yes
+checking for rb_thread_blocking_region()... no
+checking for rb_wait_for_single_fd()... yes
+checking for rb_hash_dup()... yes
+checking for rb_intern3()... yes
+checking for rb_big_cmp()... yes
+-----
+Using mysql_config at /usr/bin/mysql_config
+-----
+checking for mysql.h... yes
+checking for errmsg.h... yes
+checking for SSL_MODE_DISABLED in mysql.h... yes
+checking for SSL_MODE_PREFERRED in mysql.h... yes
+checking for SSL_MODE_REQUIRED in mysql.h... yes
+checking for SSL_MODE_VERIFY_CA in mysql.h... yes
+checking for SSL_MODE_VERIFY_IDENTITY in mysql.h... yes
+checking for MYSQL.net.vio in mysql.h... yes
+checking for MYSQL.net.pvio in mysql.h... no
+checking for MYSQL_ENABLE_CLEARTEXT_PLUGIN in mysql.h... yes
+-----
+Setting libpath to /usr/lib/x86_64-linux-gnu
+-----
+creating Makefile
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/mysql2-0.4.10/ext/mysql2
+make "DESTDIR=" clean
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/mysql2-0.4.10/ext/mysql2
+make "DESTDIR="
+compiling client.c
+compiling infile.c
+compiling mysql2_ext.c
+compiling result.c
+result.c: In function ‘rb_mysql_result_alloc_result_buffers’:
+result.c:326:40: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+     wrapper->result_buffers[i].is_null = &wrapper->is_null[i];
+                                        ^
+result.c:328:40: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+     wrapper->result_buffers[i].error   = &wrapper->error[i];
+                                        ^
+result.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-used-but-marked-unused’
+cc1: warning: unrecognized command line option ‘-Wno-static-in-inline’
+cc1: warning: unrecognized command line option ‘-Wno-reserved-id-macro’
+cc1: warning: unrecognized command line option ‘-Wno-missing-variable-declarations’
+cc1: warning: unrecognized command line option ‘-Wno-documentation-unknown-command’
+cc1: warning: unrecognized command line option ‘-Wno-disabled-macro-expansion’
+cc1: warning: unrecognized command line option ‘-Wno-covered-switch-default’
+cc1: warning: unrecognized command line option ‘-Wno-conditional-uninitialized’
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling statement.c
+linking shared-object mysql2/mysql2.so
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/mysql2-0.4.10/ext/mysql2
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 mysql2.so ./.gem.20171217-805-15ptklf/mysql2

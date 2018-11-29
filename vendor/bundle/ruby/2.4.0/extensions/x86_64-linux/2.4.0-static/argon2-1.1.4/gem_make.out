@@ -1,0 +1,15 @@
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/argon2-1.1.4/ext/argon2_wrap
+/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/bin/ruby -r ./siteconf20171217-805-1tlyjir.rb extconf.rb
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/argon2-1.1.4/ext/argon2_wrap
+make "DESTDIR=" clean
+rm -f tests libargon2_wrap.so
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/argon2-1.1.4/ext/argon2_wrap
+make "DESTDIR="
+cc -pthread -O3 -Wall -g -I../phc-winner-argon2/include -I../phc-winner-argon2/src -shared -fPIC ../phc-winner-argon2/src/argon2.c ../phc-winner-argon2/src/core.c ../phc-winner-argon2/src/blake2/blake2b.c ../phc-winner-argon2/src/thread.c ../phc-winner-argon2/src/encoding.c argon_wrap.c ../phc-winner-argon2/src/ref.c -o libargon2_wrap.so
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/argon2-1.1.4/ext/argon2_wrap
+make "DESTDIR=" install
+echo none
+none

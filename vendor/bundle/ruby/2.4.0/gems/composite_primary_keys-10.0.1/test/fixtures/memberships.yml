@@ -1,0 +1,11 @@
+santiago-cpk:
+  user_id: 1
+  group_id: 1
+
+drnic-cpk:
+  user_id: 2
+  group_id: 1
+
+cfis-cpk:
+  user_id: 3
+  group_id: 2

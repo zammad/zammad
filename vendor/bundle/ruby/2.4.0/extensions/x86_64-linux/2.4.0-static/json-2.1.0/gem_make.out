@@ -1,0 +1,13 @@
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/bin/ruby -r ./siteconf20171217-805-wjuggi.rb extconf.rb
+creating Makefile
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for 'all'.
+
+current directory: /tmp/d20171217-46-6dql5a/opt/zammad/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install

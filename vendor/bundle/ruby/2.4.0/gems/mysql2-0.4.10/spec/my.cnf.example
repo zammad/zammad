@@ -1,0 +1,9 @@
+[root]
+host=localhost
+user=LOCALUSERNAME
+password=
+
+[client]
+host=localhost
+user=LOCALUSERNAME
+password=

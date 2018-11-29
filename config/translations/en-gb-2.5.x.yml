@@ -1,0 +1,16 @@
+---
+- locale: en-gb
+  format: time
+  source: date
+  target: dd/mm/yyyy
+  target_initial: dd/mm/yyyy
+- locale: en-gb
+  format: time
+  source: timestamp
+  target: dd/mm/yyyy HH:MM
+  target_initial: dd/mm/yyyy HH:MM
+- locale: en-gb
+  format: string
+  source: Zip
+  target: Postcode
+  target_initial: Postcode

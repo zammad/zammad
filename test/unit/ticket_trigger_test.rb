@@ -721,7 +721,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -847,7 +847,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('text/html', article_p.content_type)
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p1, article_p1, user_p1, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -855,7 +855,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(2, ticket_p1.articles.count)
 
     # process mail with Precedence header (no auto response)
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail2.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail2.box')
     ticket_p2, article_p2, user_p2, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -865,7 +865,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket_p2.articles.count)
 
     # process mail with abuse@ (no auto response)
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail3.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail3.box')
     ticket_p3, article_p3, user_p3, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -951,7 +951,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1016,7 +1016,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1101,7 +1101,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1181,7 +1181,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal(1, ticket_p.articles.count)
@@ -4259,7 +4259,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4300,7 +4300,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4365,75 +4365,5 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal("Thanks for your inquiry (#{ticket.title})!", autoreply.subject)
     assert_equal('Lorem ipsum dolor', autoreply.body)
     assert_equal('text/html', autoreply.content_type)
-  end
-
-  test 'trigger when there is an article body contains matched values' do
-    trigger1 = Trigger.create_or_update(
-      name: 'detect message body',
-      condition: {
-        'article.body' => {
-          'operator' => 'contains',
-          'value' => 'some message',
-        },
-      },
-      perform: {
-        'ticket.tags' => {
-          'operator' => 'add',
-          'value' => 'tag1, tag2',
-        },
-        'notification.email' => {
-          'body' => 'some lala',
-          'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry - loop check (#{ticket.title})!',
-        },
-      },
-      disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    ticket1 = Ticket.create!(
-      title: "some <b>title</b>\n äöüß",
-      group: Group.lookup(name: 'Users'),
-      customer: User.lookup(email: 'nicole.braun@zammad.org'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message <b>note</b>\nnew line",
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'note'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    ticket1.reload
-    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
-    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
-    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], ticket1.tag_list)
-
-    Observer::Transaction.commit
-
-    ticket1.reload
-    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
-    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
-    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w[tag1 tag2], ticket1.tag_list)
-
-    assert_match('- ', article1.from)
-    assert_match('some_recipient@example.com', article1.to)
-    assert_match('some subject', article1.subject)
-    assert_match("some message <b>note</b>\nnew line", article1.body)
-    assert_equal('text/plain', article1.content_type)
   end
 end

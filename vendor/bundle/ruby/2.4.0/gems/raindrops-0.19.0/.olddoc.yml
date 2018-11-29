@@ -1,0 +1,14 @@
+---
+cgit_url: https://bogomips.org/raindrops.git
+git_url: git://bogomips.org/raindrops.git
+rdoc_url: https://bogomips.org/raindrops/
+public_email: raindrops-public@bogomips.org
+ml_url:
+- https://bogomips.org/raindrops-public/
+- http://ou63pmih66umazou.onion/raindrops-public
+nntp_url:
+- nntp://news.public-inbox.org/inbox.comp.lang.ruby.raindrops
+- nntp://ou63pmih66umazou.onion/inbox.comp.lang.ruby.raindrops
+source_code:
+- git clone git://bogomips.org/raindrops.git
+- git clone https://bogomips.org/raindrops.git

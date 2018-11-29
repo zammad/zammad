@@ -1,0 +1,16 @@
+# libargon2 info for pkg-config
+## Template for downstream installers:
+## - replace @HOST_MULTIARCH@ with target arch, eg 'x86_64-linux-gnu'
+## - replace @UPSTREAM_VER@ with current version, eg '20160406'
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib/@HOST_MULTIARCH@
+includedir=${prefix}/include
+
+Name: libargon2
+Description: Development libraries for libargon2
+Version: @UPSTREAM_VER@
+Libs: -L${libdir} -largon2 -lrt -ldl
+Cflags:
+URL: https://github.com/P-H-C/phc-winner-argon2

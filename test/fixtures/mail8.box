@@ -1,0 +1,219 @@
+Return-Path: <Franz.Schaefer@example.com>
+X-Original-To: support@example.com
+Delivered-To: box@samba.edenhofer.de
+Received: from rzsdso2a.dmz.ims.example.com (rzsdso2a.dmz.ims.example.com [1.61.222.171])
+	by samba.edenhofer.de (Postfix) with ESMTP id CFA7A500D3D
+	for <support@example.com>; Mon, 25 Jun 2012 14:39:56 +0100 (BST)
+Received: from rzsdg20f.ims.example.com ([1.23.156.65])
+          by rzsdso2a.dmz.ims.example.com (Lotus Domino Release 8.5.3)
+          with ESMTP id 2012062515400050-113090 ;
+          Mon, 25 Jun 2012 15:40:00 +0200 
+Received: from DERZXEAD01 ([1.171.10.193])
+          by rzsdg20f.ims.example.com (Lotus Domino Release 8.5.3FP1)
+          with ESMTP id 2012062515395579-101607 ;
+          Mon, 25 Jun 2012 15:39:55 +0200 
+To: support@example.com
+Subject: could not rename: ZZZAAuto
+MIME-Version: 1.0
+X-KeepSent: 3898FE05:96DC1A82-C1257A28:004AC544;
+ type=4; flags=0; name=$KeepSent
+X-Mailer: Lotus Notes Release 7.0.2 September 26, 2006
+From: Franz.Schaefer@example.com
+X-MIMETrack: Serialize by Router on DERZXEAD01/SRV/XELLA(Release 8.5.3|September 15, 2011) at
+ 25.06.2012 15:39:55,
+	Serialize complete at 25.06.2012 15:39:55,
+	Itemize by SMTP Server on RZSDG20F/IMSSRV/IMS-Service(Release 8.5.3FP1|March
+ 07, 2012) at 25.06.2012 15:39:55,
+	Serialize by Router on RZSDG20F/IMSSRV/IMS-Service(Release 8.5.3FP1|March
+ 07, 2012) at 25.06.2012 15:40:00,
+	Serialize complete at 25.06.2012 15:40:00,
+	Itemize by SMTP Server on RZSDSO2A/IMSDMZ/IMS-Service(Release 8.5.3|September
+ 15, 2011) at 25.06.2012 15:40:00,
+	Serialize by Router on RZSDSO2A/IMSDMZ/IMS-Service(Release 8.5.3|September
+ 15, 2011) at 25.06.2012 15:40:01,
+	Serialize complete at 25.06.2012 15:40:01
+Message-ID: <OF3898FE05.96DC1A82-ONC1257A28.004AC544-C1257A28.004B1008@example.com>
+Date: Mon, 25 Jun 2012 15:39:52 +0200
+Content-Type: multipart/related; boundary="=_related 004AD64FC1257A28_="
+
+Dies ist eine mehrteilige Nachricht im MIME-Format.
+--=_related 004AD64FC1257A28_=
+Content-Type: multipart/alternative; boundary="=_alternative 004AD64FC1257A28_="
+
+
+--=_alternative 004AD64FC1257A28_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="ISO-8859-1"
+
+Gravierend?
+
+Mit freundlichen Gr=FC=DFen
+
+Franz Sch=E4fer
+Manager Information Systems
+
+Telefon=20
++49 000 000 8565
+franz.schaefer@example.com
+
+Example Stoff GmbH
+Fakultaet
+D=FCsseldorfer Landstra=DFe 395
+D-00000 Hof
+www.example.com
+
+
+Gesch=E4ftsf=FChrung/Management Board: Jan Bauer (Vorsitzender/Chairma=
+n),=20
+Oliver Bauer, Heiko Bauer, Boudewijn Bauer
+Sitz der Gesellschaft / Registered Office: Hof
+Registergericht / Commercial Register of the Local Court: HRB 0000 AG=20
+Hof
+
+--=_alternative 004AD64FC1257A28_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="ISO-8859-1"
+
+
+<br><img src=3Dcid:=5F1=5F08FC9B5808FC7D5C004AD64FC1257A28>
+<br>
+<br><font size=3D2 face=3D"sans-serif">Gravierend?<br>
+</font>
+<table>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">Mit freundlichen Gr=
+=FC=DFen</font></table>
+<br>
+<table>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif"><b>Franz Sch=E4f=
+er</b></font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">Manager Information =
+Systems</font></table>
+<br>
+<table>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">Telefon &nbsp;</font>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">+49 000 000 8565</=
+font>
+<tr>
+<td colspan=3D2 bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">christia=
+n.schaefer@example.com</font></table>
+<br>
+<table>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif"><b>Example Stoff G=
+mbH</b></font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">Fakultaet</font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">D=FCsseldorfer Lands=
+tra=DFe
+395</font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D2 face=3D"sans-serif">D-00000 Hof</fo=
+nt>
+<tr>
+<td bgcolor=3Dwhite><a href=3Dwww.example.com><font size=3D2 color=3Dblue fac=
+e=3D"sans-serif"><u>www.example.com</u></font></a></table>
+<br>
+<table>
+<tr>
+<td bgcolor=3Dwhite>
+<hr>
+<tr>
+<td bgcolor=3Dwhite><font size=3D1 color=3D#808080 face=3D"sans-serif">Gesc=
+h=E4ftsf=FChrung/Management
+Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer,
+Boudewijn Bauer</font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D1 color=3D#808080 face=3D"sans-serif">Sitz=
+ der
+Gesellschaft / Registered Office: Hof</font>
+<tr>
+<td bgcolor=3Dwhite><font size=3D1 color=3D#808080 face=3D"sans-serif">Regi=
+stergericht
+/ Commercial Register of the Local Court: HRB 0000 AG Hof</font></tabl=
+e>
+<br>
+--=_alternative 004AD64FC1257A28_=--
+--=_related 004AD64FC1257A28_=
+Content-Transfer-Encoding: base64
+Content-Type: image/gif
+Content-ID: <_1_08FC9B5808FC7D5C004AD64FC1257A28>
+
+R0lGODlhJgYaAOcAAP////gAAACAgICAgAAAANDQyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAJgYaAEAI/wALCCxA
+YIBBAgASCkjIcKFDhQ0VLgQwkaHFiBAzCphY8aLFjhs7eszYcONHkRRRggSJMSXKkRVjfoTpkeXM
+hxRbvrSZs6dPkj9z8oy5UmPLoCZPXgypk6TMmUZxplyqsibUnhybApVIdenPpEePPgU6FizXm0qv
+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
+--=_related 004AD64FC1257A28_=--

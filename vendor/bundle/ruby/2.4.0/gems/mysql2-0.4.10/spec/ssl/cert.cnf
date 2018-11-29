@@ -1,0 +1,22 @@
+
+[ ca ]
+# January 1, 2015
+default_startdate = 2015010360000Z
+
+[ req ]
+distinguished_name = req_distinguished_name
+
+[ req_distinguished_name ]
+# If this isn't set, the error is error, no objects specified in config file
+commonName = Common Name (hostname, IP, or your name)
+
+countryName_default            = US
+stateOrProvinceName_default    = CA
+localityName_default           = San Francisco
+0.organizationName_default     = mysql2_gem
+organizationalUnitName_default = Mysql2Gem
+emailAddress_default           = mysql2gem@example.com
+
+
+commonName_default             = mysql2gem.example.com
+

@@ -1,0 +1,11 @@
+santiago_first:
+  id: 1
+  user_id: 1
+  article_id: 1
+  rating: 4
+  
+santiago_second:
+  id: 2
+  user_id: 1
+  article_id: 2
+  rating: 5

@@ -47,7 +47,10 @@ class AgentOrganizationProfileTest < TestCase
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    watch_for(
+      css: '.active .modal',
+      value: 'note',
+    )
     watch_for(
       css: '.active .modal',
       value: note,
@@ -62,7 +65,6 @@ class AgentOrganizationProfileTest < TestCase
       value: 'some note abc',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
 
     watch_for(
       css: '.active .profile-window',
@@ -78,14 +80,15 @@ class AgentOrganizationProfileTest < TestCase
     # change lastname back
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
-
-    modal_ready()
+    watch_for(
+      css: '.active .modal',
+      value: 'note',
+    )
     set(
       css: '.modal [name="name"]',
       value: 'Zammad Foundation',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
 
     verify_task(
       data: {

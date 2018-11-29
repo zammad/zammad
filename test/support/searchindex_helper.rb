@@ -25,9 +25,7 @@ module SearchindexHelper
     # Setting.set('es_password', 'zammad')
 
     if ENV['ES_INDEX_RAND'].present?
-      rand_id          = ENV.fetch('CI_JOB_ID', "r#{rand(999)}")
-      test_method_name = method_name.gsub(/[^\w]/, '_')
-      ENV['ES_INDEX']  = "es_index_#{test_method_name}_#{rand_id}_#{rand(999_999_999)}"
+      ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
     end
     if ENV['ES_INDEX'].blank?
       raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
@@ -41,9 +39,11 @@ module SearchindexHelper
   end
 
   def rebuild_searchindex
+    # drop/create indexes
     Rake::Task.clear
     Zammad::Application.load_tasks
+    #Rake::Task["searchindex:drop"].execute
+    #Rake::Task["searchindex:create"].execute
     Rake::Task['searchindex:rebuild'].execute
   end
-
 end

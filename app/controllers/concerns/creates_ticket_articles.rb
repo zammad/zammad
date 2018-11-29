@@ -8,7 +8,6 @@ module CreatesTicketArticles
     # create article if given
     form_id = params[:form_id]
     params.delete(:form_id)
-    subtype = params.delete(:subtype)
 
     # check min. params
     raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
@@ -60,10 +59,6 @@ module CreatesTicketArticles
         o_id: form_id,
       )
     end
-
-    # set subtype of present
-    article.preferences[:subtype] = subtype if subtype.present?
-
     article.save!
 
     # store inline attachments
@@ -121,12 +116,6 @@ module CreatesTicketArticles
     end
 
     return article if form_id.blank?
-
-    # clear in-progress state from taskbar
-    Taskbar
-      .where(user_id: current_user.id)
-      .first { |taskbar| taskbar.persisted_form_id == form_id }
-      &.update!(state: {})
 
     # remove attachments from upload cache
     Store.remove(

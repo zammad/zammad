@@ -21,7 +21,7 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
         (state:new OR state:open) OR priority:”3 normal”
         (state:new OR state:open) AND customer.lastname:smith
         state:(new OR open) AND title:(full text search) # state: new OR open & title: full OR text OR search
-        tags: “some tag”
+        tag: “some tag”
         owner.email: “bod@example.com” AND state: (new OR open OR pending*) # show all open tickets of a certain agent
         state:closed AND _missing_:tag # all closed objects without tags
         article_count: [1 TO 5] # tickets with 1 to 5 articles
@@ -29,22 +29,6 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
         article.from: bob # also article.from can be used
         article.body: heat~ # using the fuzzy operator will also find terms that are similar, in this case also “head”
         article.body: /joh?n(ath[oa]n)/ # using regular expressions
-        user:M
-        user:Max
-        user:Max.
-        user:Max*
-        organization:A_B
-        organization:A_B*
-        user: M
-        user: Max
-        user: Max.
-        user: Max*
-        organization: A_B
-        organization: A_B*
-        id:123
-        number:123
-        id:"123"
-        number:"123"
     )
 
     simple_queries = clean_queries %(
@@ -55,14 +39,14 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
         A_B
         äöü
         123
-        *ax  # wildcards are allowed in simple queries
-        Max*
-        M*x
-        M?x
-        test@example.com
-        test@example.
-        test@example
-        test@
+        user:M
+        user:Max
+        user:Max.
+        organization:A_B
+        user: M
+        user: Max
+        user: Max.
+        organization: A_B
     )
 
     complex_queries.each do |query|

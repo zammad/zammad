@@ -1,0 +1,11 @@
+[Unit]
+StopWhenUnneeded=true
+Requires=zammad.service
+After=zammad.service
+
+[Service]
+# this service is just a placeholder
+ExecStart=/bin/sleep infinity
+
+[Install]
+WantedBy=zammad.service

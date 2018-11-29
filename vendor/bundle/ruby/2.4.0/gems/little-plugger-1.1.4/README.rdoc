@@ -1,0 +1,53 @@
+= Little Plugger
+* by Tim Pease
+* http://github.com/TwP/little-plugger/tree/master
+
+=== DESCRIPTION:
+
+LittlePlugger is a module that provides Gem based plugin management.
+By extending your own class or module with LittlePlugger you can easily
+manage the loading and initializing of plugins provided by other gems.
+
+=== FEATURES:
+
+* List of plugins so that some plugins can be excluded while others are
+  loaded by default.
+* Loading and initializing of plugins.
+* Access to the plugin classes and modules.
+
+LittlePlugger is a distallation of the plugin system from Hoe. It has been
+"genericized" and encapsulated into its own easy to use module.
+
+=== REQUIREMENTS:
+
+Since Little Plugger is a Gem based plugin system, Ruby Gems must be
+installed on your system.
+
+=== INSTALL:
+
+  gem install little-plugger
+
+=== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2009-2011
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

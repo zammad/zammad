@@ -1,0 +1,37 @@
+BUNDLE-VIZ(1)							 BUNDLE-VIZ(1)
+
+
+
+1mNAME0m
+       1mbundle-viz 22m- Generates a visual dependency graph for your Gemfile
+
+1mSYNOPSIS0m
+       1mbundle viz 22m[--file=FILE] [--format=FORMAT] [--requirements] [--version]
+       [--without=GROUP GROUP]
+
+1mDESCRIPTION0m
+       1mviz 22mgenerates a PNG file of the  current  1mGemfile(5)  22mas  a  dependency
+       graph. 1mviz 22mrequires the ruby-graphviz gem (and its dependencies).
+
+       The associated gems must also be installed via 1mbundle install(1)22m.
+
+1mOPTIONS0m
+       1m--file 22mThe name to use for the generated file. See 1m--format 22moption
+
+       1m--format0m
+	      This is output format option. Supported format is png, jpg, svg,
+	      dot ...
+
+       1m--requirements0m
+	      Set to show the version of each required dependency.
+
+       1m--version0m
+	      Set to show each gem version.
+
+       1m--without0m
+	      Exclude gems that are part of the specified named group.
+
+
+
+
+				   June 2017			 BUNDLE-VIZ(1)

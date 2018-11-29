@@ -1,0 +1,7294 @@
+---
+- locale: cs
+  format: time
+  source: date
+  target: dd/mm/yyyy
+  target_initial: dd/mm/yyyy
+- locale: cs
+  format: time
+  source: timestamp
+  target: dd/mm/yyyy HH:MM
+  target_initial: dd/mm/yyyy HH:MM
+- locale: cs
+  format: string
+  source: Action
+  target: Akce
+  target_initial: Akce
+- locale: cs
+  format: string
+  source: Actions
+  target: Akce
+  target_initial: Akce
+- locale: cs
+  format: string
+  source: Active
+  target: Aktivní
+  target_initial: Aktivní
+- locale: cs
+  format: string
+  source: Add
+  target: Přidat
+  target_initial: Přidat
+- locale: cs
+  format: string
+  source: Age
+  target: Stáří
+  target_initial: Stáří
+- locale: cs
+  format: string
+  source: Apply
+  target: Použít
+  target_initial: Použít
+- locale: cs
+  format: string
+  source: Attachment
+  target: Příloha
+  target_initial: Příloha
+- locale: cs
+  format: string
+  source: Cancel
+  target: Storno
+  target_initial: Storno
+- locale: cs
+  format: string
+  source: City
+  target: Město
+  target_initial: Město
+- locale: cs
+  format: string
+  source: Closed
+  target: Uzavřeno
+  target_initial: Uzavřeno
+- locale: cs
+  format: string
+  source: Country
+  target: Země
+  target_initial: Země
+- locale: cs
+  format: string
+  source: Create
+  target: Vytvořit
+  target_initial: Vytvořit
+- locale: cs
+  format: string
+  source: Created
+  target: Vytvořeno
+  target_initial: Vytvořeno
+- locale: cs
+  format: string
+  source: Days
+  target: Dnů
+  target_initial: Dnů
+- locale: cs
+  format: string
+  source: Delete
+  target: Vymazat
+  target_initial: Vymazat
+- locale: cs
+  format: string
+  source: Edit
+  target: Upravit
+  target_initial: Upravit
+- locale: cs
+  format: string
+  source: Email
+  target: Email
+  target_initial: Email
+- locale: cs
+  format: string
+  source: Filter
+  target: Filtr
+  target_initial: Filtr
+- locale: cs
+  format: string
+  source: Firstname
+  target: Jméno
+  target_initial: Jméno
+- locale: cs
+  format: string
+  source: From
+  target: Od
+  target_initial: Od
+- locale: cs
+  format: string
+  source: Group
+  target: Skupina
+  target_initial: Skupina
+- locale: cs
+  format: string
+  source: Groups
+  target: Skupiny
+  target_initial: Skupiny
+- locale: cs
+  format: string
+  source: History
+  target: Historie
+  target_initial: Historie
+- locale: cs
+  format: string
+  source: Hours
+  target: Hodin(y)
+  target_initial: Hodin(y)
+- locale: cs
+  format: string
+  source: Language
+  target: Jazyk
+  target_initial: Jazyk
+- locale: cs
+  format: string
+  source: Lastname
+  target: Příjmení
+  target_initial: Příjmení
+- locale: cs
+  format: string
+  source: Loading...
+  target: Nahrávám...
+  target_initial: Nahrávám...
+- locale: cs
+  format: string
+  source: Merge
+  target: Sloučit
+  target_initial: Sloučit
+- locale: cs
+  format: string
+  source: My Tickets
+  target: Moje tikety
+  target_initial: Moje tikety
+- locale: cs
+  format: string
+  source: New
+  target: Nové
+  target_initial: Nové
+- locale: cs
+  format: string
+  source: New Ticket
+  target: Nový Tiket
+  target_initial: Nový Tiket
+- locale: cs
+  format: string
+  source: Next...
+  target: Další...
+  target_initial: Další...
+- locale: cs
+  format: string
+  source: Note
+  target: Poznámka
+  target_initial: Poznámka
+- locale: cs
+  format: string
+  source: Number
+  target: Číslo
+  target_initial: Číslo
+- locale: cs
+  format: string
+  source: Organization
+  target: Organizace
+  target_initial: Organizace
+- locale: cs
+  format: string
+  source: Owner
+  target: Vlastník
+  target_initial: Vlastník
+- locale: cs
+  format: string
+  source: Password
+  target: Heslo
+  target_initial: Heslo
+- locale: cs
+  format: string
+  source: Phone
+  target: Telefon
+  target_initial: Telefon
+- locale: cs
+  format: string
+  source: Priority
+  target: Priorita
+  target_initial: Priorita
+- locale: cs
+  format: string
+  source: Profile
+  target: Profil
+  target_initial: Profil
+- locale: cs
+  format: string
+  source: Reinstall
+  target: Reinstalovat
+  target_initial: Reinstalovat
+- locale: cs
+  format: string
+  source: Remove
+  target: Odstranit
+  target_initial: Odstranit
+- locale: cs
+  format: string
+  source: Roles
+  target: Role
+  target_initial: Role
+- locale: cs
+  format: string
+  source: Save
+  target: Uložit
+  target_initial: Uložit
+- locale: cs
+  format: string
+  source: Search
+  target: Vyhledat
+  target_initial: Vyhledat
+- locale: cs
+  format: string
+  source: Settings
+  target: Nastavení
+  target_initial: Nastavení
+- locale: cs
+  format: string
+  source: Signature
+  target: Podpis
+  target_initial: Podpis
+- locale: cs
+  format: string
+  source: Signatures
+  target: Podpisy
+  target_initial: Podpisy
+- locale: cs
+  format: string
+  source: Solution Time
+  target: Čas Řešení
+  target_initial: Čas Řešení
+- locale: cs
+  format: string
+  source: State
+  target: Stav
+  target_initial: Stav
+- locale: cs
+  format: string
+  source: Street
+  target: Ulice
+  target_initial: Ulice
+- locale: cs
+  format: string
+  source: Subject
+  target: Předmět
+  target_initial: Předmět
+- locale: cs
+  format: string
+  source: Submit
+  target: Odeslat
+  target_initial: Odeslat
+- locale: cs
+  format: string
+  source: Templates
+  target: Šablony
+  target_initial: Šablony
+- locale: cs
+  format: string
+  source: Title
+  target: Název
+  target_initial: Název
+- locale: cs
+  format: string
+  source: To
+  target: Komu
+  target_initial: Komu
+- locale: cs
+  format: string
+  source: Type
+  target: Typ
+  target_initial: Typ
+- locale: cs
+  format: string
+  source: Update
+  target: Aktualizovat
+  target_initial: Aktualizovat
+- locale: cs
+  format: string
+  source: User
+  target: Uživatel
+  target_initial: Uživatel
+- locale: cs
+  format: string
+  source: Vendor
+  target: Prodavač
+  target_initial: Prodavač
+- locale: cs
+  format: string
+  source: Welcome!
+  target: Vítejte!
+  target_initial: Vítejte!
+- locale: cs
+  format: string
+  source: Zip
+  target: PSČ
+  target_initial: PSČ
+- locale: cs
+  format: string
+  source: day
+  target: den
+  target_initial: den
+- locale: cs
+  format: string
+  source: hour
+  target: hodina
+  target_initial: hodina
+- locale: cs
+  format: string
+  source: installed
+  target: instalováno
+  target_initial: instalováno
+- locale: cs
+  format: string
+  source: merged
+  target: Sloučeno
+  target_initial: Sloučeno
+- locale: cs
+  format: string
+  source: minute
+  target: minuta
+  target_initial: minuta
+- locale: cs
+  format: string
+  source: none
+  target: žádné
+  target_initial: žádné
+- locale: cs
+  format: string
+  source: or
+  target: nebo
+  target_initial: nebo
+- locale: cs
+  format: string
+  source: removed
+  target: odstraněno
+  target_initial: odstraněno
+- locale: cs
+  format: string
+  source: sms
+  target: SMS
+  target_initial: SMS
+- locale: cs
+  format: string
+  source: uninstalled
+  target: odinstalováno
+  target_initial: odinstalováno
+- locale: cs
+  format: string
+  source: Apr
+  target: Dub
+  target_initial: Dub
+- locale: cs
+  format: string
+  source: Aug
+  target: Srp
+  target_initial: Srp
+- locale: cs
+  format: string
+  source: Dec
+  target: Pro
+  target_initial: Pro
+- locale: cs
+  format: string
+  source: Feb
+  target: Úno
+  target_initial: Úno
+- locale: cs
+  format: string
+  source: Jan
+  target: Led
+  target_initial: Led
+- locale: cs
+  format: string
+  source: Jul
+  target: Čvc
+  target_initial: Čvc
+- locale: cs
+  format: string
+  source: Jun
+  target: Čer
+  target_initial: Čer
+- locale: cs
+  format: string
+  source: Mar
+  target: Bře
+  target_initial: Bře
+- locale: cs
+  format: string
+  source: May
+  target: Kvě
+  target_initial: Kvě
+- locale: cs
+  format: string
+  source: Nov
+  target: Lis
+  target_initial: Lis
+- locale: cs
+  format: string
+  source: Oct
+  target: Říj
+  target_initial: Říj
+- locale: cs
+  format: string
+  source: Reset
+  target: Vyresetovat
+  target_initial: Vyresetovat
+- locale: cs
+  format: string
+  source: Sep
+  target: Zář
+  target_initial: Zář
+- locale: cs
+  format: string
+  source: of
+  target: z
+  target_initial: z
+- locale: cs
+  format: string
+  source: Agent
+  target: Řešitel
+  target_initial: Řešitel
+- locale: cs
+  format: string
+  source: All
+  target: Vše
+  target_initial: Vše
+- locale: cs
+  format: string
+  source: Cc
+  target: Kopie
+  target_initial: Kopie
+- locale: cs
+  format: string
+  source: Comment
+  target: Komentář
+  target_initial: Komentář
+- locale: cs
+  format: string
+  source: Message
+  target: Zpráva
+  target_initial: Zpráva
+- locale: cs
+  format: string
+  source: Name
+  target: Jméno
+  target_initial: Jméno
+- locale: cs
+  format: string
+  source: Options
+  target: Možnosti
+  target_initial: Možnosti
+- locale: cs
+  format: string
+  source: System
+  target: Systém
+  target_initial: Systém
+- locale: cs
+  format: string
+  source: Ticket
+  target: Tiket
+  target_initial: Tiket
+- locale: cs
+  format: string
+  source: Tickets
+  target: Tikety
+  target_initial: Tikety
+- locale: cs
+  format: string
+  source: Version
+  target: Verze
+  target_initial: Verze
+- locale: cs
+  format: string
+  source: Host
+  target: Hostitel
+  target_initial: Hostitel
+- locale: cs
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: cs
+  format: string
+  source: SystemID
+  target: Systémové ID
+  target_initial: Systémové ID
+- locale: cs
+  format: string
+  source: Send Email
+  target: Odeslat e-mail
+  target_initial: Odeslat e-mail
+- locale: cs
+  format: string
+  source: Text
+  target: Text
+  target_initial: Text
+- locale: cs
+  format: string
+  source: Location
+  target: Lokalita
+  target_initial: Lokalita
+- locale: cs
+  format: string
+  source: Login
+  target: Přihlášení
+  target_initial: Přihlášení
+- locale: cs
+  format: string
+  source: Next
+  target: Další
+  target_initial: Další
+- locale: cs
+  format: string
+  source: Status
+  target: Stav
+  target_initial: Stav
+- locale: cs
+  format: string
+  source: Calendar
+  target: Kalendář
+  target_initial: Kalendář
+- locale: cs
+  format: string
+  source: Intro
+  target: Úvod
+  target_initial: Úvod
+- locale: cs
+  format: string
+  source: Session
+  target: Relace
+  target_initial: Relace
+- locale: cs
+  format: string
+  source: Created by
+  target: Vytvořeno kým
+  target_initial: Vytvořeno kým
+- locale: cs
+  format: string
+  source: Description
+  target: Popis
+  target_initial: Popis
+- locale: cs
+  format: string
+  source: Friday
+  target: Pátek
+  target_initial: Pátek
+- locale: cs
+  format: string
+  source: Monday
+  target: Pondelí
+  target_initial: Pondelí
+- locale: cs
+  format: string
+  source: Preview
+  target: Zobrazit
+  target_initial: Zobrazit
+- locale: cs
+  format: string
+  source: Saturday
+  target: Sobota
+  target_initial: Sobota
+- locale: cs
+  format: string
+  source: Sunday
+  target: Neděle
+  target_initial: Neděle
+- locale: cs
+  format: string
+  source: Thursday
+  target: Čtvrtek
+  target_initial: Čtvrtek
+- locale: cs
+  format: string
+  source: Time
+  target: Čas
+  target_initial: Čas
+- locale: cs
+  format: string
+  source: Tuesday
+  target: Úterí
+  target_initial: Úterí
+- locale: cs
+  format: string
+  source: Wednesday
+  target: Středa
+  target_initial: Středa
+- locale: cs
+  format: string
+  source: April
+  target: Duben
+  target_initial: Duben
+- locale: cs
+  format: string
+  source: August
+  target: Srpen
+  target_initial: Srpen
+- locale: cs
+  format: string
+  source: Close
+  target: Zavřít
+  target_initial: Zavřít
+- locale: cs
+  format: string
+  source: Continue
+  target: Pokračovat
+  target_initial: Pokračovat
+- locale: cs
+  format: string
+  source: December
+  target: Prosinec
+  target_initial: Prosinec
+- locale: cs
+  format: string
+  source: February
+  target: Únor
+  target_initial: Únor
+- locale: cs
+  format: string
+  source: Fri
+  target: Pá
+  target_initial: Pá
+- locale: cs
+  format: string
+  source: January
+  target: Leden
+  target_initial: Leden
+- locale: cs
+  format: string
+  source: July
+  target: Červenec
+  target_initial: Červenec
+- locale: cs
+  format: string
+  source: June
+  target: Červen
+  target_initial: Červen
+- locale: cs
+  format: string
+  source: March
+  target: Březen
+  target_initial: Březen
+- locale: cs
+  format: string
+  source: Mon
+  target: Po
+  target_initial: Po
+- locale: cs
+  format: string
+  source: November
+  target: Listopad
+  target_initial: Listopad
+- locale: cs
+  format: string
+  source: October
+  target: Říjen
+  target_initial: Říjen
+- locale: cs
+  format: string
+  source: Open
+  target: Otevřít
+  target_initial: Otevřít
+- locale: cs
+  format: string
+  source: Sat
+  target: So
+  target_initial: So
+- locale: cs
+  format: string
+  source: Send
+  target: Odeslat
+  target_initial: Odeslat
+- locale: cs
+  format: string
+  source: September
+  target: Září
+  target_initial: Září
+- locale: cs
+  format: string
+  source: Sun
+  target: Ne
+  target_initial: Ne
+- locale: cs
+  format: string
+  source: Thu
+  target: Čt
+  target_initial: Čt
+- locale: cs
+  format: string
+  source: Tue
+  target: Út
+  target_initial: Út
+- locale: cs
+  format: string
+  source: Wed
+  target: St
+  target_initial: St
+- locale: cs
+  format: string
+  source: closed
+  target: uzavřeno
+  target_initial: uzavřeno
+- locale: cs
+  format: string
+  source: days
+  target: dní(dny)
+  target_initial: dní(dny)
+- locale: cs
+  format: string
+  source: email
+  target: email
+  target_initial: email
+- locale: cs
+  format: string
+  source: hours
+  target: hodin(y)
+  target_initial: hodin(y)
+- locale: cs
+  format: string
+  source: minutes
+  target: minut(y)
+  target_initial: minut(y)
+- locale: cs
+  format: string
+  source: 'no'
+  target: ne
+  target_initial: ne
+- locale: cs
+  format: string
+  source: note
+  target: poznámka
+  target_initial: poznámka
+- locale: cs
+  format: string
+  source: open
+  target: otevřený
+  target_initial: otevřený
+- locale: cs
+  format: string
+  source: phone
+  target: telefon
+  target_initial: telefon
+- locale: cs
+  format: string
+  source: to
+  target: komu
+  target_initial: komu
+- locale: cs
+  format: string
+  source: 'yes'
+  target: ano
+  target_initial: ano
+- locale: cs
+  format: string
+  source: All tickets
+  target: Všechny tikety
+  target_initial: Všechny tikety
+- locale: cs
+  format: string
+  source: Child
+  target: Podřízený
+  target_initial: Podřízený
+- locale: cs
+  format: string
+  source: Content
+  target: Obsah
+  target_initial: Obsah
+- locale: cs
+  format: string
+  source: Customer
+  target: Zákazník
+  target_initial: Zákazník
+- locale: cs
+  format: string
+  source: Down
+  target: Dolu
+  target_initial: Dolu
+- locale: cs
+  format: string
+  source: Escalation
+  target: Eskalace
+  target_initial: Eskalace
+- locale: cs
+  format: string
+  source: Fax
+  target: Fax
+  target_initial: Fax
+- locale: cs
+  format: string
+  source: Finish
+  target: Ukončit
+  target_initial: Ukončit
+- locale: cs
+  format: string
+  source: Logout
+  target: Odhlásit
+  target_initial: Odhlásit
+- locale: cs
+  format: string
+  source: New password
+  target: Nové Heslo
+  target_initial: Nové Heslo
+- locale: cs
+  format: string
+  source: 'No'
+  target: Ne
+  target_initial: Ne
+- locale: cs
+  format: string
+  source: Normal
+  target: Normální
+  target_initial: Normální
+- locale: cs
+  format: string
+  source: Notice
+  target: Poznámka
+  target_initial: Poznámka
+- locale: cs
+  format: string
+  source: Parent
+  target: Nadřazený
+  target_initial: Nadřazený
+- locale: cs
+  format: string
+  source: Previous
+  target: Předchozí
+  target_initial: Předchozí
+- locale: cs
+  format: string
+  source: Reply
+  target: Odpovědět
+  target_initial: Odpovědět
+- locale: cs
+  format: string
+  source: Split
+  target: Rozdělit
+  target_initial: Rozdělit
+- locale: cs
+  format: string
+  source: and
+  target: a
+  target_initial: a
+- locale: cs
+  format: string
+  source: new
+  target: nový
+  target_initial: nový
+- locale: cs
+  format: string
+  source: week
+  target: týden
+  target_initial: týden
+- locale: cs
+  format: string
+  source: Agents
+  target: Řešitelé
+  target_initial: Řešitelé
+- locale: cs
+  format: string
+  source: Example
+  target: Příklad
+  target_initial: Příklad
+- locale: cs
+  format: string
+  source: Expires
+  target: Propadává
+  target_initial: Propadává
+- locale: cs
+  format: string
+  source: Select
+  target: Vybrat
+  target_initial: Vybrat
+- locale: cs
+  format: string
+  source: Dashboard
+  target: Nástěnka
+  target_initial: Nástěnka
+- locale: cs
+  format: string
+  source: Date
+  target: Datum
+  target_initial: Datum
+- locale: cs
+  format: string
+  source: Year
+  target: Rok
+  target_initial: Rok
+- locale: cs
+  format: string
+  source: Assigned
+  target: přiřazené
+  target_initial: přiřazené
+- locale: cs
+  format: string
+  source: Received Call
+  target: Přijatý hovor
+  target_initial: Přijatý hovor
+- locale: cs
+  format: string
+  source: Outbound Call
+  target: Odchozí hovor
+  target_initial: Odchozí hovor
+- locale: cs
+  format: string
+  source: Cancel & Go Back
+  target: Zrušit a jít zpět
+  target_initial: Zrušit a jít zpět
+- locale: cs
+  format: string
+  source: No template created yet.
+  target: Zatím nebyla vytvořena žádná šablona.
+  target_initial: Zatím nebyla vytvořena žádná šablona.
+- locale: cs
+  format: string
+  source: With templates you can pre-fill ticket attributes.
+  target: Se šablonami můžete předvyplnit atributy tiketu.
+  target_initial: Se šablonami můžete předvyplnit atributy tiketu.
+- locale: cs
+  format: string
+  source: Choose attributes and then save them as a new template.
+  target: Vyberte a nastavte atributy a pak zvolte možnost Uložit jako novou šablonu.
+  target_initial: Vyberte a nastavte atributy a pak zvolte možnost Uložit jako novou
+    šablonu.
+- locale: cs
+  format: string
+  source: Save new template
+  target: Uložit jako novou šablonu
+  target_initial: Uložit jako novou šablonu
+- locale: cs
+  format: string
+  source: Month
+  target: Měsíc
+  target_initial: Měsíc
+- locale: cs
+  format: string
+  source: Day
+  target: Den
+  target_initial: Den
+- locale: cs
+  format: string
+  source: Hour
+  target: Hodina
+  target_initial: Hodina
+- locale: cs
+  format: string
+  source: Pending till
+  target: Upomínka
+  target_initial: Upomínka
+- locale: cs
+  format: string
+  source: Tags
+  target: Tagy
+  target_initial: Tagy
+- locale: cs
+  format: string
+  source: Add Tag
+  target: Přidat tag
+  target_initial: Přidat tag
+- locale: cs
+  format: string
+  source: at
+  target: v
+  target_initial: v
+- locale: cs
+  format: string
+  source: Discard your unsaved changes.
+  target: Zrušit neuložené změny?
+  target_initial: Zrušit neuložené změny?
+- locale: cs
+  format: string
+  source: Channel Distribution
+  target: Šíření kanály
+  target_initial: Šíření kanály
+- locale: cs
+  format: string
+  source: "∅ Waiting time today"
+  target: dnešní ∅ čekací doby
+  target_initial: dnešní ∅ čekací doby
+- locale: cs
+  format: string
+  source: 'Average: %s'
+  target: 'Průměr: %s'
+  target_initial: 'Průměr: %s'
+- locale: cs
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: 'Přiřazených tiketů mé osobě: %s ze %s'
+  target_initial: 'Přiřazených tiketů mé osobě: %s ze %s'
+- locale: cs
+  format: string
+  source: 'Average: %s minutes'
+  target: 'Průměr: %s minut'
+  target_initial: 'Průměr: %s minut'
+- locale: cs
+  format: string
+  source: My Stats
+  target: Mé statistiky
+  target_initial: Mé statistiky
+- locale: cs
+  format: string
+  source: Configuration
+  target: Konfigurace
+  target_initial: Konfigurace
+- locale: cs
+  format: string
+  source: is the same
+  target: je stejný
+  target_initial: je stejný
+- locale: cs
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'Má vyřizovací doba: %s minut'
+  target_initial: 'Má vyřizovací doba: %s minut'
+- locale: cs
+  format: string
+  source: First Steps
+  target: První kroky
+  target_initial: První kroky
+- locale: cs
+  format: string
+  source: Activity Stream
+  target: Tok Aktivit
+  target_initial: Tok Aktivit
+- locale: cs
+  format: string
+  source: Overviews
+  target: Přehledy
+  target_initial: Přehledy
+- locale: cs
+  format: string
+  source: My assigned Tickets
+  target: Mé přiřazené Tikety
+  target_initial: Mé přiřazené Tikety
+- locale: cs
+  format: string
+  source: Mood
+  target: Nálada
+  target_initial: Nálada
+- locale: cs
+  format: string
+  source: Source
+  target: zdroj
+  target_initial: zdroj
+- locale: cs
+  format: string
+  source: not translated
+  target: nepřeložená
+  target_initial: nepřeložená
+- locale: cs
+  format: string
+  source: "%s of my tickets escalated."
+  target: "%s mých tiketů bylo eskalováno."
+  target_initial: "%s mých tiketů bylo eskalováno."
+- locale: cs
+  format: string
+  source: No Entries
+  target: žádnézáznamy
+  target_initial: žádnézáznamy
+- locale: cs
+  format: string
+  source: Target
+  target: cíl
+  target_initial: cíl
+- locale: cs
+  format: string
+  source: Original
+  target: Originál
+  target_initial: Originál
+- locale: cs
+  format: string
+  source: 'Total: %s'
+  target: 'Celkem: %s'
+  target_initial: 'Celkem: %s'
+- locale: cs
+  format: string
+  source: Words
+  target: Slova
+  target_initial: Slova
+- locale: cs
+  format: string
+  source: Role
+  target: Role
+  target_initial: Role
+- locale: cs
+  format: string
+  source: New User
+  target: Nový Uživatel
+  target_initial: Nový Uživatel
+- locale: cs
+  format: string
+  source: Users
+  target: Uživatelé
+  target_initial: Uživatelé
+- locale: cs
+  format: string
+  source: Sign out
+  target: Odhlásit
+  target_initial: Odhlásit
+- locale: cs
+  format: string
+  source: Security
+  target: Zabezpečení
+  target_initial: Zabezpečení
+- locale: cs
+  format: string
+  source: Manage
+  target: Spravovat
+  target_initial: Spravovat
+- locale: cs
+  format: string
+  source: Attributes
+  target: Atributy
+  target_initial: Atributy
+- locale: cs
+  format: string
+  source: Organizations
+  target: Organizace
+  target_initial: Organizace
+- locale: cs
+  format: string
+  source: Unassigned & Open Tickets
+  target: Nepřiřazené a Otevřené Tikety
+  target_initial: Nepřiřazené a Otevřené Tikety
+- locale: cs
+  format: string
+  source: Unassigned Tickets
+  target: Nepřiřazené Tikety
+  target_initial: Nepřiřazené Tikety
+- locale: cs
+  format: string
+  source: uninstall
+  target: odinstalovat
+  target_initial: odinstalovat
+- locale: cs
+  format: string
+  source: updated
+  target: aktualizováno
+  target_initial: aktualizováno
+- locale: cs
+  format: string
+  source: My Organization
+  target: Má Organizace
+  target_initial: Má Organizace
+- locale: cs
+  format: string
+  source: internal
+  target: interní
+  target_initial: interní
+- locale: cs
+  format: string
+  source: install
+  target: instalovat
+  target_initial: instalovat
+- locale: cs
+  format: string
+  source: created
+  target: vytvořeno
+  target_initial: vytvořeno
+- locale: cs
+  format: string
+  source: close
+  target: zavřít
+  target_initial: zavřít
+- locale: cs
+  format: string
+  source: 3 high
+  target: 3 vysoká
+  target_initial: 3 vysoká
+- locale: cs
+  format: string
+  source: 2 normal
+  target: 2 normální
+  target_initial: 2 normální
+- locale: cs
+  format: string
+  source: 1 low
+  target: 1 nízká
+  target_initial: 1 nízká
+- locale: cs
+  format: string
+  source: Change Customer
+  target: Změnit Zákazníka
+  target_initial: Změnit Zákazníka
+- locale: cs
+  format: string
+  source: Login successfully! Have a nice day!
+  target: Úspěšné přihlášení!
+  target_initial: Úspěšné přihlášení!
+- locale: cs
+  format: string
+  source: reinstall
+  target: přeinstalovat
+  target_initial: přeinstalovat
+- locale: cs
+  format: string
+  source: Remember me
+  target: Zapamatovat si mne
+  target_initial: Zapamatovat si mne
+- locale: cs
+  format: string
+  source: See more
+  target: Zobrazit více
+  target_initial: Zobrazit více
+- locale: cs
+  format: string
+  source: Visibility
+  target: Viditelnost
+  target_initial: Viditelnost
+- locale: cs
+  format: string
+  source: Week
+  target: Týden
+  target_initial: Týden
+- locale: cs
+  format: string
+  source: Woo hoo! Your password has been changed!
+  target: Jupí! Vaše heslo bylo změněno!
+  target_initial: Jupí! Vaše heslo bylo změněno!
+- locale: cs
+  format: string
+  source: Group by
+  target: Seskupit dle
+  target_initial: Seskupit dle
+- locale: cs
+  format: string
+  source: Forgot password?
+  target: Zapoměl(a) jste heslo?
+  target_initial: Zapoměl(a) jste heslo?
+- locale: cs
+  format: string
+  source: Forgot your password?
+  target: Zapomněl(a) jste heslo?
+  target_initial: Zapomněl(a) jste heslo?
+- locale: cs
+  format: string
+  source: First Solution
+  target: První řešení
+  target_initial: První řešení
+- locale: cs
+  format: string
+  source: First Response
+  target: První odpověď
+  target_initial: První odpověď
+- locale: cs
+  format: string
+  source: Escalated Tickets
+  target: Eskalované Tikety
+  target_initial: Eskalované Tikety
+- locale: cs
+  format: string
+  source: set to internal
+  target: nastavit jako interní
+  target_initial: nastavit jako interní
+- locale: cs
+  format: string
+  source: set to public
+  target: nastavit jako veřejný
+  target_initial: nastavit jako veřejný
+- locale: cs
+  format: string
+  source: Sign up
+  target: Zaregistrovat
+  target_initial: Zaregistrovat
+- locale: cs
+  format: string
+  source: Sign in with
+  target: Přihlásit pomocí
+  target_initial: Přihlásit pomocí
+- locale: cs
+  format: string
+  source: Sign in using
+  target: Přihlásit použitím
+  target_initial: Přihlásit použitím
+- locale: cs
+  format: string
+  source: Sign in
+  target: Přihlásit
+  target_initial: Přihlásit
+- locale: cs
+  format: string
+  source: activate
+  target: aktivovat
+  target_initial: aktivovat
+- locale: cs
+  format: string
+  source: activated
+  target: aktivováno
+  target_initial: aktivováno
+- locale: cs
+  format: string
+  source: Adresses
+  target: Adresy
+  target_initial: Adresy
+- locale: cs
+  format: string
+  source: Invitation sent!
+  target: Pozvánka poslána!
+  target_initial: Pozvánka poslána!
+- locale: cs
+  format: string
+  source: All Tickets
+  target: Všechny Tikety
+  target_initial: Všechny Tikety
+- locale: cs
+  format: string
+  source: pending
+  target: čekající
+  target_initial: čekající
+- locale: cs
+  format: string
+  source: split
+  target: rozdělit
+  target_initial: rozdělit
+- locale: cs
+  format: string
+  source: Linked Accounts
+  target: Propojené účty
+  target_initial: Propojené účty
+- locale: cs
+  format: string
+  source: Links
+  target: Propojení
+  target_initial: Propojení
+- locale: cs
+  format: string
+  source: Closed Tickets
+  target: Uzavřené Tikety
+  target_initial: Uzavřené Tikety
+- locale: cs
+  format: string
+  source: Outbound
+  target: Odchozí
+  target_initial: Odchozí
+- locale: cs
+  format: string
+  source: Password (confirm)
+  target: Heslo (potvrzení)
+  target_initial: Heslo (potvrzení)
+- locale: cs
+  format: string
+  source: Last contact
+  target: Poslední kontakt
+  target_initial: Poslední kontakt
+- locale: cs
+  format: string
+  source: Article Count
+  target: Počet Položek
+  target_initial: Počet Položek
+- locale: cs
+  format: string
+  source: Article
+  target: Položka
+  target_initial: Položka
+- locale: cs
+  format: string
+  source: Base
+  target: Základní
+  target_initial: Základní
+- locale: cs
+  format: string
+  source: Authentication
+  target: Autentizace
+  target_initial: Autentizace
+- locale: cs
+  format: string
+  source: Open Tickets
+  target: Otevřené tikety
+  target_initial: Otevřené tikety
+- locale: cs
+  format: string
+  source: Ticket %s created!
+  target: 'Vytvořen tiket %s! '
+  target_initial: 'Vytvořen tiket %s! '
+- locale: cs
+  format: string
+  source: Change order
+  target: Změnit řazení
+  target_initial: Změnit řazení
+- locale: cs
+  format: string
+  source: public
+  target: veřejné
+  target_initial: veřejné
+- locale: cs
+  format: string
+  source: down
+  target: down
+  target_initial: down
+- locale: cs
+  format: string
+  source: Create an inbound Ticket
+  target: Vytvořit přijatý ticket
+  target_initial: Vytvořit přijatý ticket
+- locale: cs
+  format: string
+  source: Can't create user
+  target: Nemohu vytvořit uživatele
+  target_initial: Nemohu vytvořit uživatele
+- locale: cs
+  format: string
+  source: deactivate
+  target: vypnout
+  target_initial: vypnout
+- locale: cs
+  format: string
+  source: deactivated
+  target: vypnuto
+  target_initial: vypnuto
+- locale: cs
+  format: string
+  source: Please try to login!
+  target: Prosím zkuste se přihlásit!
+  target_initial: Prosím zkuste se přihlásit!
+- locale: cs
+  format: string
+  source: Sender Format
+  target: Formát Odesílatele
+  target_initial: Formát Odesílatele
+- locale: cs
+  format: string
+  source: Mark all as read
+  target: Označit vše jako přečtené
+  target_initial: Označit vše jako přečtené
+- locale: cs
+  format: string
+  source: now
+  target: nyní
+  target_initial: nyní
+- locale: cs
+  format: string
+  source: Objects
+  target: Objekty
+  target_initial: Objekty
+- locale: cs
+  format: string
+  source: from
+  target: od
+  target_initial: od
+- locale: cs
+  format: string
+  source: Copy to clipboard
+  target: Kopírovat do schránky
+  target_initial: Kopírovat do schránky
+- locale: cs
+  format: string
+  source: Changes
+  target: Změny
+  target_initial: Změny
+- locale: cs
+  format: string
+  source: Add a Note
+  target: Přidat poznámku
+  target_initial: Přidat poznámku
+- locale: cs
+  format: string
+  source: Add Attribute
+  target: Přidat Atribut
+  target_initial: Přidat Atribut
+- locale: cs
+  format: string
+  source: Create new Customer
+  target: Vytvořit nového Zákazníka
+  target_initial: Vytvořit nového Zákazníka
+- locale: cs
+  format: string
+  source: Change your password
+  target: Změnit Vaše heslo
+  target_initial: Změnit Vaše heslo
+- locale: cs
+  format: string
+  source: Channel
+  target: Kanál
+  target_initial: Kanál
+- locale: cs
+  format: string
+  source: Change your language.
+  target: Změnit jazyk.
+  target_initial: Změnit jazyk.
+- locale: cs
+  format: string
+  source: Recipients
+  target: Příjemci
+  target_initial: Příjemci
+- locale: cs
+  format: string
+  source: Reload application
+  target: Znovu načíst aplikaci
+  target_initial: Znovu načíst aplikaci
+- locale: cs
+  format: string
+  source: reply
+  target: odpověď
+  target_initial: odpověď
+- locale: cs
+  format: string
+  source: "%s ago"
+  target: "%s zpět"
+  target_initial: "%s zpět"
+- locale: cs
+  format: string
+  source: Work Disposition
+  target: Pracovní zaměření
+  target_initial: Pracovní zaměření
+- locale: cs
+  format: string
+  source: Go Back
+  target: Jít Zpět
+  target_initial: Jít Zpět
+- locale: cs
+  format: string
+  source: Getting started!
+  target: Začínáme!
+  target_initial: Začínáme!
+- locale: cs
+  format: string
+  source: Feedback about our new Interface
+  target: Odezva ohledně nového rozhraní
+  target_initial: Odezva ohledně nového rozhraní
+- locale: cs
+  format: string
+  source: Facebook
+  target: Facebook
+  target_initial: Facebook
+- locale: cs
+  format: string
+  source: Enter Answer or
+  target: Vložte odpověď nebo
+  target_initial: Vložte odpověď nebo
+- locale: cs
+  format: string
+  source: Back to top
+  target: Zpět nahoru
+  target_initial: Zpět nahoru
+- locale: cs
+  format: string
+  source: Call Inbound
+  target: Příchozí Hovor
+  target_initial: Příchozí Hovor
+- locale: cs
+  format: string
+  source: Call Outbound
+  target: Odchozí Hovor
+  target_initial: Odchozí Hovor
+- locale: cs
+  format: string
+  source: set internal
+  target: nastavit na interní
+  target_initial: nastavit na interní
+- locale: cs
+  format: string
+  source: Sessions
+  target: Sezení
+  target_initial: Sezení
+- locale: cs
+  format: string
+  source: session started
+  target: sezení započlo
+  target_initial: sezení započlo
+- locale: cs
+  format: string
+  source: Shared organization
+  target: Sdílená organizace
+  target_initial: Sdílená organizace
+- locale: cs
+  format: string
+  source: pending reminder
+  target: upomínka na čekání
+  target_initial: upomínka na čekání
+- locale: cs
+  format: string
+  source: Notifications
+  target: Oznámení
+  target_initial: Oznámení
+- locale: cs
+  format: string
+  source: New Branch
+  target: Nová Větev
+  target_initial: Nová Větev
+- locale: cs
+  format: string
+  source: New Attribute
+  target: Nový Atribut
+  target_initial: Nový Atribut
+- locale: cs
+  format: string
+  source: Link Accounts
+  target: Propojit účty
+  target_initial: Propojit účty
+- locale: cs
+  format: string
+  source: Management
+  target: Správa
+  target_initial: Správa
+- locale: cs
+  format: string
+  source: Confirm
+  target: Potvrdit
+  target_initial: Potvrdit
+- locale: cs
+  format: string
+  source: Uploading
+  target: Nahrávám
+  target_initial: Nahrávám
+- locale: cs
+  format: string
+  source: Follow up possible
+  target: Možnost znovu otevření
+  target_initial: Možnost znovu otevření
+- locale: cs
+  format: string
+  source: Invite Agents
+  target: Pozvat Řešitele
+  target_initial: Pozvat Řešitele
+- locale: cs
+  format: string
+  source: Attach Screenshot of page
+  target: Přiložit Screenshot stránky
+  target_initial: Přiložit Screenshot stránky
+- locale: cs
+  format: string
+  source: Addons
+  target: Doplňky
+  target_initial: Doplňky
+- locale: cs
+  format: string
+  source: Search for users
+  target: Hledat uživatele
+  target_initial: Hledat uživatele
+- locale: cs
+  format: string
+  source: Members
+  target: Členové
+  target_initial: Členové
+- locale: cs
+  format: string
+  source: Object Manager
+  target: Správce Objektů
+  target_initial: Správce Objektů
+- locale: cs
+  format: string
+  source: Profiles
+  target: Profily
+  target_initial: Profily
+- locale: cs
+  format: string
+  source: Edit Branch
+  target: Upravit Větev
+  target_initial: Upravit Větev
+- locale: cs
+  format: string
+  source: Edit Organization
+  target: Upravit Organizaci
+  target_initial: Upravit Organizaci
+- locale: cs
+  format: string
+  source: Edit Addon
+  target: Přidat Doplněk
+  target_initial: Přidat Doplněk
+- locale: cs
+  format: string
+  source: Build Test Release
+  target: Vytvořit Test Release
+  target_initial: Vytvořit Test Release
+- locale: cs
+  format: string
+  source: Maintenance
+  target: Údržba
+  target_initial: Údržba
+- locale: cs
+  format: string
+  source: Send invitation
+  target: Poslat pozvánku
+  target_initial: Poslat pozvánku
+- locale: cs
+  format: string
+  source: Send to clients
+  target: Poslat klientům
+  target_initial: Poslat klientům
+- locale: cs
+  format: string
+  source: Online
+  target: Online
+  target_initial: Online
+- locale: cs
+  format: string
+  source: Minimal size
+  target: Minimální velikost
+  target_initial: Minimální velikost
+- locale: cs
+  format: string
+  source: Lost Password
+  target: Zapomenuté heslo
+  target_initial: Zapomenuté heslo
+- locale: cs
+  format: string
+  source: here
+  target: zde
+  target_initial: zde
+- locale: cs
+  format: string
+  source: Geo Services
+  target: Geo Služby
+  target_initial: Geo Služby
+- locale: cs
+  format: string
+  source: Discard
+  target: Zrušit
+  target_initial: Zrušit
+- locale: cs
+  format: string
+  source: Create Template
+  target: Vytvořit Šablonu
+  target_initial: Vytvořit Šablonu
+- locale: cs
+  format: string
+  source: Choose Template
+  target: Zvolte šablonu
+  target_initial: Zvolte šablonu
+- locale: cs
+  format: string
+  source: Avatar
+  target: Avatar
+  target_initial: Avatar
+- locale: cs
+  format: string
+  source: Login with %s
+  target: Přihlásit na web %s
+  target_initial: Přihlásit na web %s
+- locale: cs
+  format: string
+  source: You can request your password
+  target: Vaše heslo si vyžádajte
+  target_initial: Vaše heslo si vyžádajte
+- locale: cs
+  format: string
+  source: Username / email
+  target: Uživatelské jméno / email
+  target_initial: Uživatelské jméno / email
+- locale: cs
+  format: string
+  source: Register as a new customer
+  target: Registrovat se jako nový zákazník
+  target_initial: Registrovat se jako nový zákazník
+- locale: cs
+  format: string
+  source: Releases
+  target: Releasy
+  target_initial: Releasy
+- locale: cs
+  format: string
+  source: Reset Password
+  target: Resetovat Heslo
+  target_initial: Resetovat Heslo
+- locale: cs
+  format: string
+  source: Save Template
+  target: Uložit Šablonu
+  target_initial: Uložit Šablonu
+- locale: cs
+  format: string
+  source: Branches
+  target: Větve
+  target_initial: Větve
+- locale: cs
+  format: string
+  source: SLAs
+  target: SLA
+  target_initial: SLA
+- locale: cs
+  format: string
+  source: Camera
+  target: Kamera
+  target_initial: Kamera
+- locale: cs
+  format: string
+  source: Notification Sender
+  target: Rozesílač Oznámení
+  target_initial: Rozesílač Oznámení
+- locale: cs
+  format: string
+  source: New Group
+  target: Nová Skupina
+  target_initial: Nová Skupina
+- locale: cs
+  format: string
+  source: Upload
+  target: Nahrát
+  target_initial: Nahrát
+- locale: cs
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: cs
+  format: string
+  source: Owned by me
+  target: Vlastněné mnou
+  target_initial: Vlastněné mnou
+- locale: cs
+  format: string
+  source: Owned by nobody
+  target: Bez vlastnictví
+  target_initial: Bez vlastnictví
+- locale: cs
+  format: string
+  source: Available for Role
+  target: Dostupné pro Role
+  target_initial: Dostupné pro Role
+- locale: cs
+  format: string
+  source: Authentication via Facebook
+  target: Autentizace přes Facebook
+  target_initial: Autentizace přes Facebook
+- locale: cs
+  format: string
+  source: Authentication via Google
+  target: Autentizace přes Google
+  target_initial: Autentizace přes Google
+- locale: cs
+  format: string
+  source: Admin
+  target: Admin
+  target_initial: Admin
+- locale: cs
+  format: string
+  source: Add-ons
+  target: Doplňky
+  target_initial: Doplňky
+- locale: cs
+  format: string
+  source: New Organization
+  target: Nová Organizace
+  target_initial: Nová Organizace
+- locale: cs
+  format: string
+  source: New Overview
+  target: Nový Přehled
+  target_initial: Nový Přehled
+- locale: cs
+  format: string
+  source: New Profile
+  target: Nový Profil
+  target_initial: Nový Profil
+- locale: cs
+  format: string
+  source: Port
+  target: Port
+  target_initial: Port
+- locale: cs
+  format: string
+  source: Email & Online
+  target: Email & Online
+  target_initial: Email & Online
+- locale: cs
+  format: string
+  source: Digit required
+  target: Vyžadováno číslo
+  target_initial: Vyžadováno číslo
+- locale: cs
+  format: string
+  source: Criteria
+  target: Kritéria
+  target_initial: Kritéria
+- locale: cs
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: cs
+  format: string
+  source: Matrix
+  target: Matice
+  target_initial: Matice
+- locale: cs
+  format: string
+  source: Max. Email Size
+  target: Max. velikost emailu
+  target_initial: Max. velikost emailu
+- locale: cs
+  format: string
+  source: Maximal size in MB of emails.
+  target: Maximální velikost emailů v MB.
+  target_initial: Maximální velikost emailů v MB.
+- locale: cs
+  format: string
+  source: Block Notifications
+  target: Blok Oznámení
+  target_initial: Blok Oznámení
+- locale: cs
+  format: string
+  source: Notes
+  target: Poznámky
+  target_initial: Poznámky
+- locale: cs
+  format: string
+  source: Mobile
+  target: Mobil
+  target_initial: Mobil
+- locale: cs
+  format: string
+  source: Logo
+  target: Logo
+  target_initial: Logo
+- locale: cs
+  format: string
+  source: is
+  target: je
+  target_initial: je
+- locale: cs
+  format: string
+  source: Green
+  target: Zelená
+  target_initial: Zelená
+- locale: cs
+  format: string
+  source: Delete File
+  target: Smazat Soubor
+  target_initial: Smazat Soubor
+- locale: cs
+  format: string
+  source: Blue
+  target: Modrá
+  target_initial: Modrá
+- locale: cs
+  format: string
+  source: Restore Defaults
+  target: Obnovit do základů
+  target_initial: Obnovit do základů
+- locale: cs
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: cs
+  format: string
+  source: Yellow
+  target: Žlutá
+  target_initial: Žlutá
+- locale: cs
+  format: string
+  source: Your Logo
+  target: Vaše Logo
+  target_initial: Vaše Logo
+- locale: cs
+  format: string
+  source: Form
+  target: Formulář
+  target_initial: Formulář
+- locale: cs
+  format: string
+  source: escalation
+  target: eskalace
+  target_initial: eskalace
+- locale: cs
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% je aktuálně rozpracováno"
+  target_initial: "%s% je aktuálně rozpracováno"
+- locale: cs
+  format: string
+  source: 'Average: %s%'
+  target: 'Průměr: %s% '
+  target_initial: 'Průměr: %s% '
+- locale: cs
+  format: string
+  source: Back to my view
+  target: Zpět do mého pohledu
+  target_initial: Zpět do mého pohledu
+- locale: cs
+  format: string
+  source: Browser
+  target: Prohlížeč
+  target_initial: Prohlížeč
+- locale: cs
+  format: string
+  source: Business Hours
+  target: Pracovní Hodiny
+  target_initial: Pracovní Hodiny
+- locale: cs
+  format: string
+  source: Calendars
+  target: Kalendáře
+  target_initial: Kalendáře
+- locale: cs
+  format: string
+  source: Skip
+  target: Přeskočit
+  target_initial: Přeskočit
+- locale: cs
+  format: string
+  source: Address
+  target: Adresa
+  target_initial: Adresa
+- locale: cs
+  format: string
+  source: App ID
+  target: App ID
+  target_initial: App ID
+- locale: cs
+  format: string
+  source: Pink
+  target: Růžová
+  target_initial: Růžová
+- locale: cs
+  format: string
+  source: new & open
+  target: nové a otevřené
+  target_initial: nové a otevřené
+- locale: cs
+  format: string
+  source: New Project
+  target: Nový Projekt
+  target_initial: Nový Projekt
+- locale: cs
+  format: string
+  source: Updated at
+  target: Aktualizováno
+  target_initial: Aktualizováno
+- locale: cs
+  format: string
+  source: Maintenance Message
+  target: Zpráva údržby
+  target_initial: Zpráva údržby
+- locale: cs
+  format: string
+  source: Feedback Form
+  target: Formulář odezvy
+  target_initial: Formulář odezvy
+- locale: cs
+  format: string
+  source: Package
+  target: Balíček
+  target_initial: Balíček
+- locale: cs
+  format: string
+  source: Created at
+  target: Vytvořeno
+  target_initial: Vytvořeno
+- locale: cs
+  format: string
+  source: Schedulers
+  target: Plánovače
+  target_initial: Plánovače
+- locale: cs
+  format: string
+  source: before (absolute)
+  target: před (absolutně)
+  target_initial: před (absolutně)
+- locale: cs
+  format: string
+  source: Continue session
+  target: Pokračovat v sezení
+  target_initial: Pokračovat v sezení
+- locale: cs
+  format: string
+  source: Project
+  target: Projekt
+  target_initial: Projekt
+- locale: cs
+  format: string
+  source: Projects
+  target: Projekty
+  target_initial: Projekty
+- locale: cs
+  format: string
+  source: Purple
+  target: Fialová
+  target_initial: Fialová
+- locale: cs
+  format: string
+  source: Push Changes
+  target: Spustit Změny
+  target_initial: Spustit Změny
+- locale: cs
+  format: string
+  source: Enable Chat
+  target: Aktivovat Chat
+  target_initial: Aktivovat Chat
+- locale: cs
+  format: string
+  source: Direct URL
+  target: Přímá URL
+  target_initial: Přímá URL
+- locale: cs
+  format: string
+  source: Company Inc.
+  target: Společnost s.r.o.
+  target_initial: Společnost s.r.o.
+- locale: cs
+  format: string
+  source: Client storage
+  target: Klientské úložiště
+  target_initial: Klientské úložiště
+- locale: cs
+  format: string
+  source: Tag
+  target: Štítek
+  target_initial: Štítek
+- locale: cs
+  format: string
+  source: Send Mails via
+  target: Odeslat Emaily přes
+  target_initial: Odeslat Emaily přes
+- locale: cs
+  format: string
+  source: Send client stats
+  target: Odeslat klientské statistiky
+  target_initial: Odeslat klientské statistiky
+- locale: cs
+  format: string
+  source: Status Type
+  target: Typ stavu
+  target_initial: Typ stavu
+- locale: cs
+  format: string
+  source: Status Code
+  target: Stavový kód
+  target_initial: Stavový kód
+- locale: cs
+  format: string
+  source: Layout Reference
+  target: Referenční rozvržení
+  target_initial: Referenční rozvržení
+- locale: cs
+  format: string
+  source: matches
+  target: odpovídá
+  target_initial: odpovídá
+- locale: cs
+  format: string
+  source: Connect
+  target: Připojit
+  target_initial: Připojit
+- locale: cs
+  format: string
+  source: contains
+  target: obsahuje
+  target_initial: obsahuje
+- locale: cs
+  format: string
+  source: Chat
+  target: Chat
+  target_initial: Chat
+- locale: cs
+  format: string
+  source: Reset changes
+  target: Resetovat změny
+  target_initial: Resetovat změny
+- locale: cs
+  format: string
+  source: Verifying...
+  target: Ověřuji...
+  target_initial: Ověřuji...
+- locale: cs
+  format: string
+  source: Web
+  target: Web
+  target_initial: Web
+- locale: cs
+  format: string
+  source: Your Email Configuration
+  target: Nastavení Vaší emailové adresy
+  target_initial: Nastavení Vaší emailové adresy
+- locale: cs
+  format: string
+  source: Font size
+  target: Velikost písma
+  target_initial: Velikost písma
+- locale: cs
+  format: string
+  source: Escalated
+  target: Eskalované
+  target_initial: Eskalované
+- locale: cs
+  format: string
+  source: escalated
+  target: eskalované
+  target_initial: eskalované
+- locale: cs
+  format: string
+  source: Escalation Times
+  target: Doby Eskalace
+  target_initial: Doby Eskalace
+- locale: cs
+  format: string
+  source: Branding
+  target: Branding
+  target_initial: Branding
+- locale: cs
+  format: string
+  source: Reopening rate
+  target: Poměr opětovného otevření
+  target_initial: Poměr opětovného otevření
+- locale: cs
+  format: string
+  source: Pending reached
+  target: Dosažená čekání
+  target_initial: Dosažená čekání
+- locale: cs
+  format: string
+  source: Ticket Subscriptions
+  target: Odběr Tiketů
+  target_initial: Odběr Tiketů
+- locale: cs
+  format: string
+  source: Devices
+  target: Zařízení
+  target_initial: Zařízení
+- locale: cs
+  format: string
+  source: Close tab
+  target: Zavřít záložku
+  target_initial: Zavřít záložku
+- locale: cs
+  format: string
+  source: Stay on tab
+  target: Zůstat na záložce
+  target_initial: Zůstat na záložce
+- locale: cs
+  format: string
+  source: before (relative)
+  target: před (relativně)
+  target_initial: před (relativně)
+- locale: cs
+  format: string
+  source: after (absolute)
+  target: po (absolutně)
+  target_initial: po (absolutně)
+- locale: cs
+  format: string
+  source: after (relative)
+  target: po (relativně)
+  target_initial: po (relativně)
+- locale: cs
+  format: string
+  source: Accounts
+  target: Účty
+  target_initial: Účty
+- locale: cs
+  format: string
+  source: contains not
+  target: neobsahuje
+  target_initial: neobsahuje
+- locale: cs
+  format: string
+  source: Protocol
+  target: Protokol
+  target_initial: Protokol
+- locale: cs
+  format: string
+  source: Pushing translations to i18n.zammad.com
+  target: 'Odesílám překlad na i18n.zammad.com  '
+  target_initial: 'Odesílám překlad na i18n.zammad.com  '
+- locale: cs
+  format: string
+  source: Email Accounts
+  target: Emailový účet
+  target_initial: Emailový účet
+- locale: cs
+  format: string
+  source: Email Account
+  target: Emailový účet
+  target_initial: Emailový účet
+- locale: cs
+  format: string
+  source: Email Inbound
+  target: Příchozí Email
+  target_initial: Příchozí Email
+- locale: cs
+  format: string
+  source: Email Outbound
+  target: Odchozí Email
+  target_initial: Odchozí Email
+- locale: cs
+  format: string
+  source: Email Address
+  target: Emailová Adresa
+  target_initial: Emailová Adresa
+- locale: cs
+  format: string
+  source: Enable/Disable online chat.
+  target: Zapnout/Vypnout online chat.
+  target_initial: Zapnout/Vypnout online chat.
+- locale: cs
+  format: string
+  source: Flat design.
+  target: Plochý design.
+  target_initial: Plochý design.
+- locale: cs
+  format: string
+  source: Destination Group
+  target: Cílová Skupina
+  target_initial: Cílová Skupina
+- locale: cs
+  format: string
+  source: Designer
+  target: Dyzajnér
+  target_initial: Dyzajnér
+- locale: cs
+  format: string
+  source: Cancel Upload
+  target: Zrušit nahrávání
+  target_initial: Zrušit nahrávání
+- locale: cs
+  format: string
+  source: Department Name
+  target: Jméno Oddělení
+  target_initial: Jméno Oddělení
+- locale: cs
+  format: string
+  source: Chatting Customers
+  target: Chatující Zákazníci
+  target_initial: Chatující Zákazníci
+- locale: cs
+  format: string
+  source: Invite Agents/Colleges
+  target: Pozvat Řešitele/Kolegy
+  target_initial: Pozvat Řešitele/Kolegy
+- locale: cs
+  format: string
+  source: is not
+  target: není
+  target_initial: není
+- locale: cs
+  format: string
+  source: Option
+  target: Možnost
+  target_initial: Možnost
+- locale: cs
+  format: string
+  source: Get latest translations
+  target: Získat aktuální překlady
+  target_initial: Získat aktuální překlady
+- locale: cs
+  format: string
+  source: Sender Format Seperator
+  target: Formát oddělovače pro Odesílatele
+  target_initial: Formát oddělovače pro Odesílatele
+- locale: cs
+  format: string
+  source: support@example.com
+  target: podpora@prikad.cz
+  target_initial: podpora@prikad.cz
+- locale: cs
+  format: string
+  source: LinkedIn App Credentials
+  target: 'Přihlašovací údaje LinkedIn App '
+  target_initial: 'Přihlašovací údaje LinkedIn App '
+- locale: cs
+  format: string
+  source: Macros
+  target: Makra
+  target_initial: Makra
+- locale: cs
+  format: string
+  source: Additional follow up detection
+  target: Dodatečná detekce znovuotevření
+  target_initial: Dodatečná detekce znovuotevření
+- locale: cs
+  format: string
+  source: Topics
+  target: Témata
+  target_initial: Témata
+- locale: cs
+  format: string
+  source: Holidays
+  target: Svátky
+  target_initial: Svátky
+- locale: cs
+  format: string
+  source: Default
+  target: Výchozí
+  target_initial: Výchozí
+- locale: cs
+  format: string
+  source: Removes any hyperlink
+  target: Odstraní jakýkoli hypertextový odkaz
+  target_initial: Odstraní jakýkoli hypertextový odkaz
+- locale: cs
+  format: string
+  source: Removes the formatting
+  target: Odstraní formátování
+  target_initial: Odstraní formátování
+- locale: cs
+  format: string
+  source: View this in Zammad
+  target: Prohlédnout v Zammadu
+  target_initial: Prohlédnout v Zammadu
+- locale: cs
+  format: string
+  source: Format as unordered list
+  target: Formátovat jako neseřazený seznam
+  target_initial: Formátovat jako neseřazený seznam
+- locale: cs
+  format: string
+  source: Also notify via email
+  target: Také upozornit přes email
+  target_initial: Také upozornit přes email
+- locale: cs
+  format: string
+  source: Pending
+  target: Čekání
+  target_initial: Čekání
+- locale: cs
+  format: string
+  source: Personal Settings
+  target: Osobní nastavení
+  target_initial: Osobní nastavení
+- locale: cs
+  format: string
+  source: Not Assigned
+  target: Nepřiřazené
+  target_initial: Nepřiřazené
+- locale: cs
+  format: string
+  source: Ticket update
+  target: Aktualizace tiketu
+  target_initial: Aktualizace tiketu
+- locale: cs
+  format: string
+  source: Ticket escalation
+  target: Eskalace Tiketu
+  target_initial: Eskalace Tiketu
+- locale: cs
+  format: string
+  source: Limit Groups
+  target: Limitovat na skupiny
+  target_initial: Limitovat na skupiny
+- locale: cs
+  format: string
+  source: Select item
+  target: Vybrat položku
+  target_initial: Vybrat položku
+- locale: cs
+  format: string
+  source: New group
+  target: Nová skupina
+  target_initial: Nová skupina
+- locale: cs
+  format: string
+  source: New Calendar
+  target: Nový Kalendář
+  target_initial: Nový Kalendář
+- locale: cs
+  format: string
+  source: New Version
+  target: Nová Verze
+  target_initial: Nová Verze
+- locale: cs
+  format: string
+  source: Used when viewing a Ticket
+  target: Použito při prohlížení tiketu
+  target_initial: Použito při prohlížení tiketu
+- locale: cs
+  format: string
+  source: Open note box
+  target: Otevřít oblast pro poznámku
+  target_initial: Otevřít oblast pro poznámku
+- locale: cs
+  format: string
+  source: Open reply box
+  target: Otevřít oblast pro odpověď
+  target_initial: Otevřít oblast pro odpověď
+- locale: cs
+  format: string
+  source: The chat is turned off.
+  target: Chat je vypnutý.
+  target_initial: Chat je vypnutý.
+- locale: cs
+  format: string
+  source: Pending reminder reached for Ticket |%s|
+  target: Uplynula doba čekání pro Tiket  |%s|
+  target_initial: Uplynula doba čekání pro Tiket  |%s|
+- locale: cs
+  format: string
+  source: Background color
+  target: Barva pozadí
+  target_initial: Barva pozadí
+- locale: cs
+  format: string
+  source: "%s created User |%s|"
+  target: "%s vytvořil(a) Uživatele |%s| "
+  target_initial: "%s vytvořil(a) Uživatele |%s| "
+- locale: cs
+  format: string
+  source: "%s created Organization |%s|"
+  target: "%s vytvořil(a) Organizaci |%s| "
+  target_initial: "%s vytvořil(a) Organizaci |%s| "
+- locale: cs
+  format: string
+  source: "%s created Article for |%s|"
+  target: "%s vytvořil(a) položku pro |%s| "
+  target_initial: "%s vytvořil(a) položku pro |%s| "
+- locale: cs
+  format: string
+  source: Attached Files
+  target: Přiložené soubory
+  target_initial: Přiložené soubory
+- locale: cs
+  format: string
+  source: Email address
+  target: Emailová adresa
+  target_initial: Emailová adresa
+- locale: cs
+  format: string
+  source: Enable/disable inline translations
+  target: Zapnout/Vypnout vkládaný překlad
+  target_initial: Zapnout/Vypnout vkládaný překlad
+- locale: cs
+  format: string
+  source: just now
+  target: právě teď
+  target_initial: právě teď
+- locale: cs
+  format: string
+  source: Inserts a horizontal rule
+  target: Vloží horizontální čáru
+  target_initial: Vloží horizontální čáru
+- locale: cs
+  format: string
+  source: Sending...
+  target: Odesílám...
+  target_initial: Odesílám...
+- locale: cs
+  format: string
+  source: Some Text
+  target: Nějaký text
+  target_initial: Nějaký text
+- locale: cs
+  format: string
+  source: "%s started a new session"
+  target: "%s spustil nové sezení"
+  target_initial: "%s spustil nové sezení"
+- locale: cs
+  format: string
+  source: "%s switched to |%s|!"
+  target: "%s se přenul jako |%s|! "
+  target_initial: "%s se přenul jako |%s|! "
+- locale: cs
+  format: string
+  source: Most recent activity
+  target: Nejnovější aktivity
+  target_initial: Nejnovější aktivity
+- locale: cs
+  format: string
+  source: Or
+  target: Nebo
+  target_initial: Nebo
+- locale: cs
+  format: string
+  source: Keywords
+  target: Klíčová slova
+  target_initial: Klíčová slova
+- locale: cs
+  format: string
+  source: Invite Customer
+  target: Přizvat Zákazníka
+  target_initial: Přizvat Zákazníka
+- locale: cs
+  format: string
+  source: Invite
+  target: Přizvat
+  target_initial: Přizvat
+- locale: cs
+  format: string
+  source: Folder
+  target: Adresář
+  target_initial: Adresář
+- locale: cs
+  format: string
+  source: done
+  target: hotovo
+  target_initial: hotovo
+- locale: cs
+  format: string
+  source: disconnect
+  target: odpojit
+  target_initial: odpojit
+- locale: cs
+  format: string
+  source: Requirements
+  target: Požadavky
+  target_initial: Požadavky
+- locale: cs
+  format: string
+  source: Search...
+  target: Hledat...
+  target_initial: Hledat...
+- locale: cs
+  format: string
+  source: Used anywhere
+  target: Užito kdekoli
+  target_initial: Užito kdekoli
+- locale: cs
+  format: string
+  source: Format as //strikethrough//
+  target: 'Formátovat jako //přešktlé// '
+  target_initial: 'Formátovat jako //přešktlé// '
+- locale: cs
+  format: string
+  source: Format as _underlined_
+  target: 'Formátovat jako _podtržené_ '
+  target_initial: 'Formátovat jako _podtržené_ '
+- locale: cs
+  format: string
+  source: Enter Title...
+  target: Zadejte Nadpis...
+  target_initial: Zadejte Nadpis...
+- locale: cs
+  format: string
+  source: Flat Design
+  target: Plochý Design
+  target_initial: Plochý Design
+- locale: cs
+  format: string
+  source: Setup new System
+  target: Instalovat nový systém
+  target_initial: Instalovat nový systém
+- locale: cs
+  format: string
+  source: Current password
+  target: Stávající heslo
+  target_initial: Stávající heslo
+- locale: cs
+  format: string
+  source: New Macro
+  target: Nové Makro
+  target_initial: Nové Makro
+- locale: cs
+  format: string
+  source: New password (confirm)
+  target: Nové heslo (potvrzení)
+  target_initial: Nové heslo (potvrzení)
+- locale: cs
+  format: string
+  source: Add Link
+  target: Propojit
+  target_initial: Propojit
+- locale: cs
+  format: string
+  source: Load
+  target: Načíst
+  target_initial: Načíst
+- locale: cs
+  format: string
+  source: List of shortcuts
+  target: Seznam zkratek
+  target_initial: Seznam zkratek
+- locale: cs
+  format: string
+  source: Close current tab
+  target: Zavřít aktuální záložku
+  target_initial: Zavřít aktuální záložku
+- locale: cs
+  format: string
+  source: Set article to internal/public
+  target: Nastavit položku jako interní/veřejnou
+  target_initial: Nastavit položku jako interní/veřejnou
+- locale: cs
+  format: string
+  source: Administrator Account
+  target: Administrátorský Účet
+  target_initial: Administrátorský Účet
+- locale: cs
+  format: string
+  source: "%s created Ticket |%s|"
+  target: "%s vytvořil(a) Ticket |%s| "
+  target_initial: "%s vytvořil(a) Ticket |%s| "
+- locale: cs
+  format: string
+  source: Additional Channels
+  target: Doplňkové kanály
+  target_initial: Doplňkové kanály
+- locale: cs
+  format: string
+  source: Format as |bold|
+  target: 'Formátovat jako |tučné| '
+  target_initial: 'Formátovat jako |tučné| '
+- locale: cs
+  format: string
+  source: Create Overviews
+  target: Vytvořit Náhledy
+  target_initial: Vytvořit Náhledy
+- locale: cs
+  format: string
+  source: Create Macros
+  target: Vytvořit Makra
+  target_initial: Vytvořit Makra
+- locale: cs
+  format: string
+  source: Create a Test Ticket
+  target: Vytvořit Testovací Ticket
+  target_initial: Vytvořit Testovací Ticket
+- locale: cs
+  format: string
+  source: Chat Title
+  target: Nadpis chatu
+  target_initial: Nadpis chatu
+- locale: cs
+  format: string
+  source: Invite Colleagues
+  target: Pozvat kolegy
+  target_initial: Pozvat kolegy
+- locale: cs
+  format: string
+  source: John Smith
+  target: Jan Novák
+  target_initial: Jan Novák
+- locale: cs
+  format: string
+  source: Online Forms
+  target: Online formulář
+  target_initial: Online formulář
+- locale: cs
+  format: string
+  source: Preview Width
+  target: Šířka náhledu
+  target_initial: Šířka náhledu
+- locale: cs
+  format: string
+  source: Starting Zammad
+  target: Spouštím Zammad
+  target_initial: Spouštím Zammad
+- locale: cs
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s aktualizoval ticket |%s| "
+  target_initial: "%s aktualizoval ticket |%s| "
+- locale: cs
+  format: string
+  source: Max. clients in waitlist
+  target: Maximum klientů v seznamu čekajícíh
+  target_initial: Maximum klientů v seznamu čekajícíh
+- locale: cs
+  format: string
+  source: not exist
+  target: neexistuje
+  target_initial: neexistuje
+- locale: cs
+  format: string
+  source: Newbie
+  target: Nováček
+  target_initial: Nováček
+- locale: cs
+  format: string
+  source: Minute(s)
+  target: Minut
+  target_initial: Minut
+- locale: cs
+  format: string
+  source: maybe
+  target: možná
+  target_initial: možná
+- locale: cs
+  format: string
+  source: Integrations
+  target: Integrace
+  target_initial: Integrace
+- locale: cs
+  format: string
+  source: inactive
+  target: neaktivní
+  target_initial: neaktivní
+- locale: cs
+  format: string
+  source: Hour(s)
+  target: Hodin
+  target_initial: Hodin
+- locale: cs
+  format: string
+  source: Duration
+  target: Trvání
+  target_initial: Trvání
+- locale: cs
+  format: string
+  source: required
+  target: vyžadováno
+  target_initial: vyžadováno
+- locale: cs
+  format: string
+  source: Resend verification email
+  target: Znovu poslat ověřovací email
+  target_initial: Znovu poslat ověřovací email
+- locale: cs
+  format: string
+  source: Visible
+  target: Viditelné
+  target_initial: Viditelné
+- locale: cs
+  format: string
+  source: Year(s)
+  target: Rok(y)
+  target_initial: Rok(y)
+- locale: cs
+  format: string
+  source: Zammad Karma
+  target: Zammad Karma
+  target_initial: Zammad Karma
+- locale: cs
+  format: string
+  source: Your current level
+  target: Vaše aktuální úroveň
+  target_initial: Vaše aktuální úroveň
+- locale: cs
+  format: string
+  source: You have created a ticket
+  target: Vytvořil jste tiket
+  target_initial: Vytvořil jste tiket
+- locale: cs
+  format: string
+  source: Expert
+  target: Expert
+  target_initial: Expert
+- locale: cs
+  format: string
+  source: Experts
+  target: Experti
+  target_initial: Experti
+- locale: cs
+  format: string
+  source: active
+  target: aktivní
+  target_initial: aktivní
+- locale: cs
+  format: string
+  source: current user
+  target: stávající uživatel
+  target_initial: stávající uživatel
+- locale: cs
+  format: string
+  source: Last run
+  target: Poslední spuštění
+  target_initial: Poslední spuštění
+- locale: cs
+  format: string
+  source: Latest updates
+  target: Nejnovější aktualizace
+  target_initial: Nejnovější aktualizace
+- locale: cs
+  format: string
+  source: Discard Changes
+  target: Zahodit změny
+  target_initial: Zahodit změny
+- locale: cs
+  format: string
+  source: Available for User
+  target: Dostupné pro Uživatele
+  target_initial: Dostupné pro Uživatele
+- locale: cs
+  format: string
+  source: attached
+  target: přiloženo
+  target_initial: přiloženo
+- locale: cs
+  format: string
+  source: Account not verified
+  target: Účet neověřen
+  target_initial: Účet neověřen
+- locale: cs
+  format: string
+  source: Month(s)
+  target: Měsíc(ů)
+  target_initial: Měsíc(ů)
+- locale: cs
+  format: string
+  source: New Scheduler
+  target: Nový Plánovač
+  target_initial: Nový Plánovač
+- locale: cs
+  format: string
+  source: connected
+  target: připojeno
+  target_initial: připojeno
+- locale: cs
+  format: string
+  source: Day(s)
+  target: Dní
+  target_initial: Dní
+- locale: cs
+  format: string
+  source: Professional
+  target: Profesionál
+  target_initial: Profesionál
+- locale: cs
+  format: string
+  source: Evangelist
+  target: Evangelista
+  target_initial: Evangelista
+- locale: cs
+  format: string
+  source: Department
+  target: Oddělení
+  target_initial: Oddělení
+- locale: cs
+  format: string
+  source: CTI
+  target: CTI
+  target_initial: CTI
+- locale: cs
+  format: string
+  source: Database Update required
+  target: Požadována Aktualizace databáze
+  target_initial: Požadována Aktualizace databáze
+- locale: cs
+  format: string
+  source: Karma Trends
+  target: Trendy karmy
+  target_initial: Trendy karmy
+- locale: cs
+  format: string
+  source: shown
+  target: zobrazeno
+  target_initial: zobrazeno
+- locale: cs
+  format: string
+  source: specific user
+  target: určitý uživatel
+  target_initial: určitý uživatel
+- locale: cs
+  format: string
+  source: Sure to delete this object?
+  target: Určitě chcete smazat tento objekt?
+  target_initial: Určitě chcete smazat tento objekt?
+- locale: cs
+  format: string
+  source: "...add object title"
+  target: "...přidat nadpis objektu"
+  target_initial: "...přidat nadpis objektu"
+- locale: cs
+  format: string
+  source: monthly
+  target: měsíčně
+  target_initial: měsíčně
+- locale: cs
+  format: string
+  source: Cardholder
+  target: Držitel karty
+  target_initial: Držitel karty
+- locale: cs
+  format: string
+  source: VAT
+  target: DPH
+  target_initial: DPH
+- locale: cs
+  format: string
+  source: VAT ID
+  target: DIČ
+  target_initial: DIČ
+- locale: cs
+  format: string
+  source: What is it?
+  target: Co je to?
+  target_initial: Co je to?
+- locale: cs
+  format: string
+  source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  target: Zammad Karma je výkonný nástroj který sleduje a zobrazuje Vaši produktivitu.
+  target_initial: Zammad Karma je výkonný nástroj který sleduje a zobrazuje Vaši produktivitu.
+- locale: cs
+  format: string
+  source: Your karma is |%s|.
+  target: Vaše karma je |%s|.
+  target_initial: Vaše karma je |%s|.
+- locale: cs
+  format: string
+  source: You have escalated tickets
+  target: Máte eskalované tikety
+  target_initial: Máte eskalované tikety
+- locale: cs
+  format: string
+  source: Extended Search
+  target: Rozšířené hledání
+  target_initial: Rozšířené hledání
+- locale: cs
+  format: string
+  source: Billed annually
+  target: Placeno ročně
+  target_initial: Placeno ročně
+- locale: cs
+  format: string
+  source: Billing
+  target: Placení
+  target_initial: Placení
+- locale: cs
+  format: string
+  source: Billing Cycle
+  target: Cyklus plateb
+  target_initial: Cyklus plateb
+- locale: cs
+  format: string
+  source: Amount
+  target: Množství
+  target_initial: Množství
+- locale: cs
+  format: string
+  source: annually
+  target: ročně
+  target_initial: ročně
+- locale: cs
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: cs
+  format: string
+  source: Applications
+  target: Aplikace
+  target_initial: Aplikace
+- locale: cs
+  format: string
+  source: Pay with
+  target: Zaplatit pomocí
+  target_initial: Zaplatit pomocí
+- locale: cs
+  format: string
+  source: Not configured
+  target: Nekonfigurováno
+  target_initial: Nekonfigurováno
+- locale: cs
+  format: string
+  source: Last used
+  target: Naposled použito
+  target_initial: Naposled použito
+- locale: cs
+  format: string
+  source: tax
+  target: daň
+  target_initial: daň
+- locale: cs
+  format: string
+  source: Payment Method
+  target: Platební Metoda
+  target_initial: Platební Metoda
+- locale: cs
+  format: string
+  source: Payment history
+  target: Historie plateb
+  target_initial: Historie plateb
+- locale: cs
+  format: string
+  source: Credit card
+  target: Kreditní karta
+  target_initial: Kreditní karta
+- locale: cs
+  format: string
+  source: Authentication via %s
+  target: Autentizace pomocí %s
+  target_initial: Autentizace pomocí %s
+- locale: cs
+  format: string
+  source: Expiration (MM/YYYY)
+  target: Expirace (MM/YYYY)
+  target_initial: Expirace (MM/YYYY)
+- locale: cs
+  format: string
+  source: OK, I've copied my token
+  target: OK, okopíroval jsem svůj token
+  target_initial: OK, okopíroval jsem svůj token
+- locale: cs
+  format: string
+  source: Postal Code
+  target: Poštovní kód
+  target_initial: Poštovní kód
+- locale: cs
+  format: string
+  source: Do you want to cancel your subscription?
+  target: Chcete zrušit Váš odběr?
+  target_initial: Chcete zrušit Váš odběr?
+- locale: cs
+  format: string
+  source: Find what you search. E. g. "search phrase"
+  target: Najde co hledáte. Např. "hledaná fráze"
+  target_initial: Najde co hledáte. Např. "hledaná fráze"
+- locale: cs
+  format: string
+  source: Clients
+  target: Klienti
+  target_initial: Klienti
+- locale: cs
+  format: string
+  source: Karma Level
+  target: Úroveň karmy
+  target_initial: Úroveň karmy
+- locale: cs
+  format: string
+  source: Please enter a valid "%s"!
+  target: 'Prosím zadejte platný/é/ou "%s"! '
+  target_initial: 'Prosím zadejte platný/é/ou "%s"! '
+- locale: cs
+  format: string
+  source: Show Search Details
+  target: Zobrazit detaily vyhledávání
+  target_initial: Zobrazit detaily vyhledávání
+- locale: cs
+  format: string
+  source: Summary
+  target: Souhrn
+  target_initial: Souhrn
+- locale: cs
+  format: string
+  source: Total
+  target: Celkem
+  target_initial: Celkem
+- locale: cs
+  format: string
+  source: Domain
+  target: Doména
+  target_initial: Doména
+- locale: cs
+  format: string
+  source: Count
+  target: Počet
+  target_initial: Počet
+- locale: cs
+  format: string
+  source: Username
+  target: Uživatelské jméno
+  target_initial: Uživatelské jméno
+- locale: cs
+  format: string
+  source: reply all
+  target: odpovědět všem
+  target_initial: odpovědět všem
+- locale: cs
+  format: string
+  source: Value
+  target: Hodnota
+  target_initial: Hodnota
+- locale: cs
+  format: string
+  source: Changed
+  target: Změněno
+  target_initial: Změněno
+- locale: cs
+  format: string
+  source: SLA Times
+  target: Doby SLA
+  target_initial: Doby SLA
+- locale: cs
+  format: string
+  source: Sounds
+  target: Zvuky
+  target_initial: Zvuky
+- locale: cs
+  format: string
+  source: Permissions
+  target: Přístupová práva
+  target_initial: Přístupová práva
+- locale: cs
+  format: string
+  source: Execute changes on objects.
+  target: Vykonat změny na objektech.
+  target_initial: Vykonat změny na objektech.
+- locale: cs
+  format: string
+  source: Macro
+  target: Makro
+  target_initial: Makro
+- locale: cs
+  format: string
+  source: Scheduler
+  target: Plánovač
+  target_initial: Plánovač
+- locale: cs
+  format: string
+  source: Manage Tags
+  target: Spravovat štítky
+  target_initial: Spravovat štítky
+- locale: cs
+  format: string
+  source: New Tags
+  target: Nové štítky
+  target_initial: Nové štítky
+- locale: cs
+  format: string
+  source: Sure?
+  target: Určitě?
+  target_initial: Určitě?
+- locale: cs
+  format: string
+  source: Min. size of number
+  target: Min. velikost čísla
+  target_initial: Min. velikost čísla
+- locale: cs
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 2 malé a 2 velké znaky
+  target_initial: 2 malé a 2 velké znaky
+- locale: cs
+  format: string
+  source: Feature disabled!
+  target: Vlastnost deaktivována!
+  target_initial: Vlastnost deaktivována!
+- locale: cs
+  format: string
+  source: Back
+  target: Zpět
+  target_initial: Zpět
+- locale: cs
+  format: string
+  source: Current Status
+  target: Stávající Status
+  target_initial: Stávající Status
+- locale: cs
+  format: string
+  source: Current User
+  target: Stávající uživatel
+  target_initial: Stávající uživatel
+- locale: cs
+  format: string
+  source: Notification Sound
+  target: Oznamovací zvuk
+  target_initial: Oznamovací zvuk
+- locale: cs
+  format: string
+  source: Notification
+  target: Oznámení
+  target_initial: Oznámení
+- locale: cs
+  format: string
+  source: Link
+  target: Propojení
+  target_initial: Propojení
+- locale: cs
+  format: string
+  source: Merge to Ticket#
+  target: 'Sloučit s Ticket# '
+  target_initial: 'Sloučit s Ticket# '
+- locale: cs
+  format: string
+  source: Recent Customer Tickets
+  target: Nedávné Tikety Zákazníků
+  target_initial: Nedávné Tikety Zákazníků
+- locale: cs
+  format: string
+  source: Customer Chat
+  target: Zákaznický chat
+  target_initial: Zákaznický chat
+- locale: cs
+  format: string
+  source: Overview
+  target: Přehled
+  target_initial: Přehled
+- locale: cs
+  format: string
+  source: Current Token
+  target: Aktuální Token
+  target_initial: Aktuální Token
+- locale: cs
+  format: string
+  source: Base Objects
+  target: Základní Objekty
+  target_initial: Základní Objekty
+- locale: cs
+  format: string
+  source: Move all from "%s" to "%s"
+  target: 'Přesunout vše z "%s" do "%s" '
+  target_initial: 'Přesunout vše z "%s" do "%s" '
+- locale: cs
+  format: string
+  source: Nothing selected
+  target: Nic není vybráno
+  target_initial: Nic není vybráno
+- locale: cs
+  format: string
+  source: Config
+  target: Konfigurace
+  target_initial: Konfigurace
+- locale: cs
+  format: string
+  source: Continue anyway
+  target: I tak pokračovat
+  target_initial: I tak pokračovat
+- locale: cs
+  format: string
+  source: Powered by
+  target: Powered by
+  target_initial: Powered by
+- locale: cs
+  format: string
+  source: Create Text Modules
+  target: Vytvořit Textové Moduly
+  target_initial: Vytvořit Textové Moduly
+- locale: cs
+  format: string
+  source: Customers in the organization can view each other items.
+  target: Zákazníci v této organizaci se můžou navzájem vidět.
+  target_initial: Zákazníci v této organizaci se můžou navzájem vidět.
+- locale: cs
+  format: string
+  source: User Preferences
+  target: Uživatelská nastavení
+  target_initial: Uživatelská nastavení
+- locale: cs
+  format: string
+  source: specific organization
+  target: určitá organizace
+  target_initial: určitá organizace
+- locale: cs
+  format: string
+  source: "%s required!"
+  target: "%s je vyžadován! "
+  target_initial: "%s je vyžadován! "
+- locale: cs
+  format: string
+  source: Manage %s
+  target: 'Spravovat %s '
+  target_initial: 'Spravovat %s '
+- locale: cs
+  format: string
+  source: Manage %s Settings
+  target: 'Spravovat nastavení pro %s '
+  target_initial: 'Spravovat nastavení pro %s '
+- locale: cs
+  format: string
+  source: Access to %s
+  target: Přístup k %s
+  target_initial: Přístup k %s
+- locale: cs
+  format: string
+  source: Add attachment option to upload.
+  target: Přidat možnost nahrávání příloh.
+  target_initial: Přidat možnost nahrávání příloh.
+- locale: cs
+  format: string
+  source: select attachment...
+  target: vybrat přílohu...
+  target_initial: vybrat přílohu...
+- locale: cs
+  format: string
+  source: Save as template
+  target: Uložit jako šablonu
+  target_initial: Uložit jako šablonu
+- locale: cs
+  format: string
+  source: Woo hoo! Your email address has been verified!
+  target: Jupí! Vaše emailová adresa byla ověřena!
+  target_initial: Jupí! Vaše emailová adresa byla ověřena!
+- locale: cs
+  format: string
+  source: Enter the URL of your %s system
+  target: Zadejte URL vašeho %s systému
+  target_initial: Zadejte URL vašeho %s systému
+- locale: cs
+  format: string
+  source: Bank Name
+  target: Jméno Banky
+  target_initial: Jméno Banky
+- locale: cs
+  format: string
+  source: skip
+  target: přeskočit
+  target_initial: přeskočit
+- locale: cs
+  format: string
+  source: API token
+  target: API token
+  target_initial: API token
+- locale: cs
+  format: string
+  source: Last contact (agent)
+  target: Poslední kontakt (řešitel)
+  target_initial: Poslední kontakt (řešitel)
+- locale: cs
+  format: string
+  source: Link %s
+  target: Propojit %s
+  target_initial: Propojit %s
+- locale: cs
+  format: string
+  source: Last contact (customer)
+  target: Poslední kontakt (zákazník)
+  target_initial: Poslední kontakt (zákazník)
+- locale: cs
+  format: string
+  source: Bulk action executed!
+  target: Hromadná akce provedena!
+  target_initial: Hromadná akce provedena!
+- locale: cs
+  format: string
+  source: Account Holder
+  target: Držitel Účtu
+  target_initial: Držitel Účtu
+- locale: cs
+  format: string
+  source: Proxy address.
+  target: Adresa proxy.
+  target_initial: Adresa proxy.
+- locale: cs
+  format: string
+  source: Enter credentials
+  target: Zadat pověření
+  target_initial: Zadat pověření
+- locale: cs
+  format: string
+  source: Closing time
+  target: Zavírací doba
+  target_initial: Zavírací doba
+- locale: cs
+  format: string
+  source: Only for these groups.
+  target: Jen pro tyto skupiny.
+  target_initial: Jen pro tyto skupiny.
+- locale: cs
+  format: string
+  source: "%s Migration"
+  target: "%s Migrace"
+  target_initial: "%s Migrace"
+- locale: cs
+  format: string
+  source: Successful!
+  target: Úspěšné!
+  target_initial: Úspěšné!
+- locale: cs
+  format: string
+  source: Max size of the subject in an email reply.
+  target: Maximální velikost předmětu v emailové odpovědi.
+  target_initial: Maximální velikost předmětu v emailové odpovědi.
+- locale: cs
+  format: string
+  source: Migrate %s Data
+  target: Migrovat data z %s
+  target_initial: Migrovat data z %s
+- locale: cs
+  format: string
+  source: Migration Plugin for %s
+  target: Migrační plugin pro %s
+  target_initial: Migrační plugin pro %s
+- locale: cs
+  format: string
+  source: Show all...
+  target: Zobrazit vše...
+  target_initial: Zobrazit vše...
+- locale: cs
+  format: string
+  source: Real name
+  target: Skutečné jméno
+  target_initial: Skutečné jméno
+- locale: cs
+  format: string
+  source: Automatically show chat
+  target: Automaticky zobrazit chat
+  target_initial: Automaticky zobrazit chat
+- locale: cs
+  format: string
+  source: "%s of your tickets are currently in process."
+  target: "%s tvých tiketů je v řízení. "
+  target_initial: "%s tvých tiketů je v řízení. "
+- locale: cs
+  format: string
+  source: Date & Time
+  target: Date & Time
+  target_initial: Date & Time
+- locale: cs
+  format: string
+  source: '|%s| stores all attachments in the "%s".'
+  target: '|%s| ukládá všechny přílohy do "%s". '
+  target_initial: '|%s| ukládá všechny přílohy do "%s". '
+- locale: cs
+  format: string
+  source: Unassigned & Open
+  target: Nepřiřazené a otevřené
+  target_initial: Nepřiřazené a otevřené
+- locale: cs
+  format: string
+  source: Update as closed
+  target: Aktualizováno jako uzavřené
+  target_initial: Aktualizováno jako uzavřené
+- locale: cs
+  format: string
+  source: today
+  target: dnes
+  target_initial: dnes
+- locale: cs
+  format: string
+  source: Manage your notifications settings
+  target: Upravte vaše nastavení upozorňování
+  target_initial: Upravte vaše nastavení upozorňování
+- locale: cs
+  format: string
+  source: Show title in form.
+  target: Zobrazit ve formuláři nadpis.
+  target_initial: Zobrazit ve formuláři nadpis.
+- locale: cs
+  format: string
+  source: Geo Location Backend
+  target: Geolokační Backend
+  target_initial: Geolokační Backend
+- locale: cs
+  format: string
+  source: Direction
+  target: Směr
+  target_initial: Směr
+- locale: cs
+  format: string
+  source: Create your first ticket
+  target: Vytvořte Váš první tiket
+  target_initial: Vytvořte Váš první tiket
+- locale: cs
+  format: string
+  source: Choose your new password.
+  target: Zvolte vaše nové heslo.
+  target_initial: Zvolte vaše nové heslo.
+- locale: cs
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: Můžete se pokusit přihlásit s Vaší emailovou adresou pokud jste s námi již
+    byly v předešlém kontaktu od roku 2017.
+  target_initial: Můžete se pokusit přihlásit s Vaší emailovou adresou pokud jste
+    s námi již byly v předešlém kontaktu od roku 2017.
+- locale: cs
+  format: string
+  source: Username or email
+  target: Uživatelské jméno nebo heslo
+  target_initial: Uživatelské jméno nebo heslo
+- locale: cs
+  format: string
+  source: Selected
+  target: Vybráno
+  target_initial: Vybráno
+- locale: cs
+  format: string
+  source: View from user's perspective
+  target: Prohlédnout z uživatelovy perspektivy
+  target_initial: Prohlédnout z uživatelovy perspektivy
+- locale: cs
+  format: string
+  source: Your tickets in process
+  target: Vaše rozpracované tikety
+  target_initial: Vaše rozpracované tikety
+- locale: cs
+  format: string
+  source: First response
+  target: První reakce
+  target_initial: První reakce
+- locale: cs
+  format: string
+  source: Enter your username or email address
+  target: Zadejte Vaše uživatelské jméno nebo emailovou adresu
+  target_initial: Zadejte Vaše uživatelské jméno nebo emailovou adresu
+- locale: cs
+  format: string
+  source: Beginner
+  target: Začátečník
+  target_initial: Začátečník
+- locale: cs
+  format: string
+  source: Business Times
+  target: Pracovní doby
+  target_initial: Pracovní doby
+- locale: cs
+  format: string
+  source: Recent logs
+  target: Poslední záznamy
+  target_initial: Poslední záznamy
+- locale: cs
+  format: string
+  source: Play user interface sound effects
+  target: Přehrát zvuk v uživatelském rozhraní
+  target_initial: Přehrát zvuk v uživatelském rozhraní
+- locale: cs
+  format: string
+  source: Show
+  target: Zobrazit
+  target_initial: Zobrazit
+- locale: cs
+  format: string
+  source: Last sync at
+  target: Poslední synchronizace v době
+  target_initial: Poslední synchronizace v době
+- locale: cs
+  format: string
+  source: pending close
+  target: uzavřené čekání
+  target_initial: uzavřené čekání
+- locale: cs
+  format: string
+  source: up
+  target: nahoru
+  target_initial: nahoru
+- locale: cs
+  format: string
+  source: Updated by
+  target: Aktualizoval
+  target_initial: Aktualizoval
+- locale: cs
+  format: string
+  source: Tools
+  target: Nástroje
+  target_initial: Nástroje
+- locale: cs
+  format: string
+  source: Channels
+  target: Kanály
+  target_initial: Kanály
+- locale: cs
+  format: string
+  source: Username or email address invalid, please try again.
+  target: Uživatelské jméno nebo emailová adresa jsou nesprávné, zkuste to znovu.
+  target_initial: Uživatelské jméno nebo emailová adresa jsou nesprávné, zkuste to
+    znovu.
+- locale: cs
+  format: string
+  source: Recent viewed Tickets
+  target: Nedávno prohlédnuté Tikety
+  target_initial: Nedávno prohlédnuté Tikety
+- locale: cs
+  format: string
+  source: Format as ||italic||
+  target: Formátovat jako ||kurzívu||
+  target_initial: Formátovat jako ||kurzívu||
+- locale: cs
+  format: string
+  source: First Response Time
+  target: První Reakční doba
+  target_initial: První Reakční doba
+- locale: cs
+  format: string
+  source: Enter Template Name
+  target: Zadejte jméno šablony
+  target_initial: Zadejte jméno šablony
+- locale: cs
+  format: string
+  source: Linked Objects
+  target: Propojené Objekty
+  target_initial: Propojené Objekty
+- locale: cs
+  format: string
+  source: Confirmation required
+  target: Požadováno potvrzení
+  target_initial: Požadováno potvrzení
+- locale: cs
+  format: string
+  source: Translations
+  target: Překlady
+  target_initial: Překlady
+- locale: cs
+  format: string
+  source: Frequency
+  target: Četnost
+  target_initial: Četnost
+- locale: cs
+  format: string
+  source: Disable Notifications
+  target: Vypnout Oznámení
+  target_initial: Vypnout Oznámení
+- locale: cs
+  format: string
+  source: Mark all as seen.
+  target: Označit vše jako shlédnuté.
+  target_initial: Označit vše jako shlédnuté.
+- locale: cs
+  format: string
+  source: New Role
+  target: Nová Role
+  target_initial: Nová Role
+- locale: cs
+  format: string
+  source: My Group
+  target: Má Skupina
+  target_initial: Má Skupina
+- locale: cs
+  format: string
+  source: Full Name
+  target: Celé Jméno
+  target_initial: Celé Jméno
+- locale: cs
+  format: string
+  source: Drop files here
+  target: Zde přesuňte soubory
+  target_initial: Zde přesuňte soubory
+- locale: cs
+  format: string
+  source: busy
+  target: zaneprázdněn
+  target_initial: zaneprázdněn
+- locale: cs
+  format: string
+  source: Enter timzone...
+  target: Zvolte časové pásmo...
+  target_initial: Zvolte časové pásmo...
+- locale: cs
+  format: string
+  source: Setup Finished
+  target: Instalace Dokončena
+  target_initial: Instalace Dokončena
+- locale: cs
+  format: string
+  source: Active Agents
+  target: Aktivní Řešitelé
+  target_initial: Aktivní Řešitelé
+- locale: cs
+  format: string
+  source: Navigate through article
+  target: Navigace skrz položku
+  target_initial: Navigace skrz položku
+- locale: cs
+  format: string
+  source: Inbound
+  target: Příchozí
+  target_initial: Příchozí
+- locale: cs
+  format: string
+  source: Germany
+  target: Německo
+  target_initial: Německo
+- locale: cs
+  format: string
+  source: Get latest Translation
+  target: Získat poslední Překlad
+  target_initial: Získat poslední Překlad
+- locale: cs
+  format: string
+  source: Reply to last article
+  target: Odpověď na poslední položku
+  target_initial: Odpověď na poslední položku
+- locale: cs
+  format: string
+  source: Verify sending and receiving
+  target: Ověřit odesílání a příjem
+  target_initial: Ověřit odesílání a příjem
+- locale: cs
+  format: string
+  source: Yes, please cancel my subscription
+  target: Ano, prosím zrušte můj odběr
+  target_initial: Ano, prosím zrušte můj odběr
+- locale: cs
+  format: string
+  source: You have not created a ticket yet.
+  target: Ještě jste nevytvořil tiket.
+  target_initial: Ještě jste nevytvořil tiket.
+- locale: cs
+  format: string
+  source: You have closed a ticket
+  target: Uzavřel jste tiket
+  target_initial: Uzavřel jste tiket
+- locale: cs
+  format: string
+  source: Format as ordered list
+  target: Formátovat jako seřazený seznam
+  target_initial: Formátovat jako seřazený seznam
+- locale: cs
+  format: string
+  source: Billing information
+  target: Informace o platbách
+  target_initial: Informace o platbách
+- locale: cs
+  format: string
+  source: All Open Tickets
+  target: Všechny otevřené tikety
+  target_initial: Všechny otevřené tikety
+- locale: cs
+  format: string
+  source: Keyboard Shortcuts
+  target: Klávesové Zkratky
+  target_initial: Klávesové Zkratky
+- locale: cs
+  format: string
+  source: Ticket reminder reached
+  target: Dosažena upomínka tiketu
+  target_initial: Dosažena upomínka tiketu
+- locale: cs
+  format: string
+  source: "%s updated User |%s|"
+  target: "%s aktualizoval uživatele |%s|"
+  target_initial: "%s aktualizoval uživatele |%s|"
+- locale: cs
+  format: string
+  source: "%s updated Group |%s|"
+  target: "%s aktualizoval Skupinu |%s|"
+  target_initial: "%s aktualizoval Skupinu |%s|"
+- locale: cs
+  format: string
+  source: "%s updated Organization |%s|"
+  target: "%s aktualizoval Organizaci |%s|"
+  target_initial: "%s aktualizoval Organizaci |%s|"
+- locale: cs
+  format: string
+  source: Tickets of User
+  target: Tickety uživatele
+  target_initial: Tickety uživatele
+- locale: cs
+  format: string
+  source: Tickets of Organization
+  target: Tickety Organizace
+  target_initial: Tickety Organizace
+- locale: cs
+  format: string
+  source: Packages
+  target: Balíčky
+  target_initial: Balíčky
+- locale: cs
+  format: string
+  source: Triggers
+  target: Spouštěče
+  target_initial: Spouštěče
+- locale: cs
+  format: string
+  source: Trigger
+  target: Spouštěč
+  target_initial: Spouštěč
+- locale: cs
+  format: string
+  source: Confirm/submit dialog
+  target: Dialog Potvrzení/Odeslání
+  target_initial: Dialog Potvrzení/Odeslání
+- locale: cs
+  format: string
+  source: Holidays iCalendar Feed
+  target: iCalendar zdroj pro svátky
+  target_initial: iCalendar zdroj pro svátky
+- locale: cs
+  format: string
+  source: Scroll down to see new messages
+  target: Srolujte dolů pro zobrazení nových zpráv
+  target_initial: Srolujte dolů pro zobrazení nových zpráv
+- locale: cs
+  format: string
+  source: Tab has changed, do you really want to close it?
+  target: Záložka byla změněna, opravdu ji chcete uzavřít?
+  target_initial: Záložka byla změněna, opravdu ji chcete uzavřít?
+- locale: cs
+  format: string
+  source: "%s created Group |%s|"
+  target: "%s vytvořil(a) Skupinu |%s| "
+  target_initial: "%s vytvořil(a) Skupinu |%s| "
+- locale: cs
+  format: string
+  source: Password for proxy connection.
+  target: Heslo pro spojení přes proxy
+  target_initial: Heslo pro spojení přes proxy
+- locale: cs
+  format: string
+  source: My pending reached Tickets
+  target: Mé s dosaženým čekáním
+  target_initial: Mé s dosaženým čekáním
+- locale: cs
+  format: string
+  source: Credit card number
+  target: Číslo kreditní karty
+  target_initial: Číslo kreditní karty
+- locale: cs
+  format: string
+  source: again
+  target: opakovat
+  target_initial: opakovat
+- locale: cs
+  format: string
+  source: Install Package
+  target: Instalovat Balíček
+  target_initial: Instalovat Balíček
+- locale: cs
+  format: string
+  source: Article#
+  target: Položka#
+  target_initial: Položka#
+- locale: cs
+  format: string
+  source: Authentication via Twitter
+  target: Autentizace pomocí Twitteru
+  target_initial: Autentizace pomocí Twitteru
+- locale: cs
+  format: string
+  source: Authentication via LinkedIn
+  target: Autentizace přes Linkedln
+  target_initial: Autentizace přes Linkedln
+- locale: cs
+  format: string
+  source: Attach files
+  target: Přiložit soubory
+  target_initial: Přiložit soubory
+- locale: cs
+  format: string
+  source: Name of form submit button
+  target: Jméno tlačítka pro odeslání formuláře
+  target_initial: Jméno tlačítka pro odeslání formuláře
+- locale: cs
+  format: string
+  source: Order
+  target: Řazení
+  target_initial: Řazení
+- locale: cs
+  format: string
+  source: Subscription Settings
+  target: Nastavení odběru
+  target_initial: Nastavení odběru
+- locale: cs
+  format: string
+  source: Add alarm to pending reminder and escalated tickets.
+  target: Přidat upozornění na tikety v čekací době a eskalované tikety.
+  target_initial: Přidat upozornění na tikety v čekací době a eskalované tikety.
+- locale: cs
+  format: string
+  source: Change %s
+  target: Změna %s
+  target_initial: Změna %s
+- locale: cs
+  format: string
+  source: Used anywhere (admin only)
+  target: Použito kdekoli (jen administrátoři)
+  target_initial: Použito kdekoli (jen administrátoři)
+- locale: cs
+  format: string
+  source: Close & Tag as Spam
+  target: Zavřít a Oštítkovat jako Spam
+  target_initial: Zavřít a Oštítkovat jako Spam
+- locale: cs
+  format: string
+  source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  target: Bylo vytvořeno nové sezení s Vašim účtem. Pro vyvarování se konfliktu bude
+    toto sezení zastaveno.
+  target_initial: Bylo vytvořeno nové sezení s Vašim účtem. Pro vyvarování se konfliktu
+    bude toto sezení zastaveno.
+- locale: cs
+  format: string
+  source: Proxy Settings
+  target: Nastavení proxy
+  target_initial: Nastavení proxy
+- locale: cs
+  format: string
+  source: Used in object views
+  target: Použito v přehledu objektů
+  target_initial: Použito v přehledu objektů
+- locale: cs
+  format: string
+  source: no issues
+  target: bez problémů
+  target_initial: bez problémů
+- locale: cs
+  format: string
+  source: Items per page
+  target: Položek na stránku
+  target_initial: Položek na stránku
+- locale: cs
+  format: string
+  source: Organization Name
+  target: Jméno organizace
+  target_initial: Jméno organizace
+- locale: cs
+  format: string
+  source: All computers and browsers that have access to your Zammad appear here.
+  target: Seznam všech počítačů a prohlížečů které použily Vaše přihlašovací údaje.
+  target_initial: Seznam všech počítačů a prohlížečů které použily Vaše přihlašovací
+    údaje.
+- locale: cs
+  format: string
+  source: Pick a name for the application, and we'll give you a unique token.
+  target: Po zadání jména používané aplikace bude vygenerován unikátní token.
+  target_initial: Po zadání jména používané aplikace bude vygenerován unikátní token.
+- locale: cs
+  format: string
+  source: OK, I\'ve copied my token
+  target: OK, okopíroval jsem svůj token
+  target_initial: OK, okopíroval jsem svůj token
+- locale: cs
+  format: string
+  source: Allow users to add new tags.
+  target: Dovolit uživatelům přidávat nové štítky.
+  target_initial: Dovolit uživatelům přidávat nové štítky.
+- locale: cs
+  format: string
+  source: Move up and down
+  target: Pohyb nahoru a dolů
+  target_initial: Pohyb nahoru a dolů
+- locale: cs
+  format: string
+  source: Format as h1 heading
+  target: Formátovat jako h1 nadpis
+  target_initial: Formátovat jako h1 nadpis
+- locale: cs
+  format: string
+  source: Follow up for closed ticket possible or not.
+  target: Možnost znovu otevření uzavřených tiketů.
+  target_initial: Možnost znovu otevření uzavřených tiketů.
+- locale: cs
+  format: string
+  source: Open Ticket# %s
+  target: 'Otevřený Ticket# %s '
+  target_initial: 'Otevřený Ticket# %s '
+- locale: cs
+  format: string
+  source: Personal Access Tokens
+  target: Osobní Přístupové Tokeny
+  target_initial: Osobní Přístupové Tokeny
+- locale: cs
+  format: string
+  source: Send a message to all logged in users.
+  target: Odeslat zprávu všem přihlášeným uživatelům.
+  target_initial: Odeslat zprávu všem přihlášeným uživatelům.
+- locale: cs
+  format: string
+  source: Token Access
+  target: Přístup přes Token
+  target_initial: Přístup přes Token
+- locale: cs
+  format: string
+  source: Move left and right
+  target: Pohyb vlevo a vpravo
+  target_initial: Pohyb vlevo a vpravo
+- locale: cs
+  format: string
+  source: Text editing
+  target: Editování textu
+  target_initial: Editování textu
+- locale: cs
+  format: string
+  source: Format as h2 heading
+  target: Formátovat jako h2 nadpis
+  target_initial: Formátovat jako h2 nadpis
+- locale: cs
+  format: string
+  source: Ticket Number Format
+  target: Formát čísla tiketu
+  target_initial: Formát čísla tiketu
+- locale: cs
+  format: string
+  source: Start modal dialog for form.
+  target: Spustit jako Modal Dialog.
+  target_initial: Spustit jako Modal Dialog.
+- locale: cs
+  format: string
+  source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  target: Zde můžete vygenerovat osobní přístupový token pro každou aplikaci od které
+    potřebujete přístup do Zammad API.
+  target_initial: Zde můžete vygenerovat osobní přístupový token pro každou aplikaci
+    od které potřebujete přístup do Zammad API.
+- locale: cs
+  format: string
+  source: Used in lists (views and results)
+  target: Použito v seznamech (přehledy a výsledky)
+  target_initial: Použito v seznamech (přehledy a výsledky)
+- locale: cs
+  format: string
+  source: Fixed Email Accounts
+  target: Pevné Emailové účty
+  target_initial: Pevné Emailové účty
+- locale: cs
+  format: string
+  source: Manually open chat
+  target: Ručně otevřít chat
+  target_initial: Ručně otevřít chat
+- locale: cs
+  format: string
+  source: Message after sending form
+  target: Zpráva po odeslání formuláře
+  target_initial: Zpráva po odeslání formuláře
+- locale: cs
+  format: string
+  source: Shown when the chat is closed.
+  target: Zobrazeno když je chat zavřený
+  target_initial: Zobrazeno když je chat zavřený
+- locale: cs
+  format: string
+  source: Add a Personal Access Token
+  target: Přidat Osobní Přístupový Token
+  target_initial: Přidat Osobní Přístupový Token
+- locale: cs
+  format: string
+  source: Open tickets
+  target: Otevřené tikety
+  target_initial: Otevřené tikety
+- locale: cs
+  format: string
+  source: Edit Customer
+  target: Upravit Zákazníka
+  target_initial: Upravit Zákazníka
+- locale: cs
+  format: string
+  source: Next in tab
+  target: Další záložka
+  target_initial: Další záložka
+- locale: cs
+  format: string
+  source: 'Copy to clipboard: Ctrl+C, Enter'
+  target: 'Kopírování do schránky: Ctrl+C, Enter'
+  target_initial: 'Kopírování do schránky: Ctrl+C, Enter'
+- locale: cs
+  format: string
+  source: Health Check
+  target: Kontrola funčnosti 
+  target_initial: Kontrola funčnosti 
+- locale: cs
+  format: string
+  source: SEPA Direct Debit
+  target: SEPA Inkaso
+  target_initial: SEPA Inkaso
+- locale: cs
+  format: string
+  source: Previous tab
+  target: Předchozí záložka
+  target_initial: Předchozí záložka
+- locale: cs
+  format: string
+  source: "...of whole textarea"
+  target: "...celé textové oblasti"
+  target_initial: "...celé textové oblasti"
+- locale: cs
+  format: string
+  source: Execute changes on objects
+  target: Vykonat změny na objektech
+  target_initial: Vykonat změny na objektech
+- locale: cs
+  format: string
+  source: Health information can be retrieved as JSON using
+  target: Informace o stavu fukčnosti systému lze získat JSON vyčítáním z této adresy
+  target_initial: Informace o stavu fukčnosti systému lze získat JSON vyčítáním z
+    této adresy
+- locale: cs
+  format: string
+  source: Organization Support
+  target: Podpora Organizace
+  target_initial: Podpora Organizace
+- locale: cs
+  format: string
+  source: Email Notification
+  target: Emailové oznamování
+  target_initial: Emailové oznamování
+- locale: cs
+  format: string
+  source: Enable debugging for implementation.
+  target: Zapnout debugging pro implementaci.
+  target_initial: Zapnout debugging pro implementaci.
+- locale: cs
+  format: string
+  source: Used when composing a text
+  target: Použito při sestavování textových polí
+  target_initial: Použito při sestavování textových polí
+- locale: cs
+  format: string
+  source: Format as h3 heading
+  target: Formátovat jako h3 nadpis
+  target_initial: Formátovat jako h3 nadpis
+- locale: cs
+  format: string
+  source: Create my account
+  target: Vytvořit můj účet
+  target_initial: Vytvořit můj účet
+- locale: cs
+  format: string
+  source: Selects the ticket number generator module.
+  target: Zvolte modul generování čísla ticketu.
+  target_initial: Zvolte modul generování čísla ticketu.
+- locale: cs
+  format: string
+  source: Waiting Customers
+  target: Čekající zákazníci
+  target_initial: Čekající zákazníci
+- locale: cs
+  format: string
+  source: Title of the form
+  target: nadpis formuláře
+  target_initial: nadpis formuláře
+- locale: cs
+  format: string
+  source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  target: 'Vystavení přímého pověření inkasa založeného na SEPA až do odvolání:'
+  target_initial: 'Vystavení přímého pověření inkasa založeného na SEPA až do odvolání:'
+- locale: cs
+  format: string
+  source: join today!
+  target: připojte se ještě dnes!
+  target_initial: připojte se ještě dnes!
+- locale: cs
+  format: string
+  source: Maximal failed logins
+  target: Maximum nezdařených přihlášení
+  target_initial: Maximum nezdařených přihlášení
+- locale: cs
+  format: string
+  source: Maximal failed logins after account is inactive.
+  target: Maximum nezdařených přihlášení po kterých bude účet neaktivní.
+  target_initial: Maximum nezdařených přihlášení po kterých bude účet neaktivní.
+- locale: cs
+  format: string
+  source: migrate from another system
+  target: migrovat z jiného systému
+  target_initial: migrovat z jiného systému
+- locale: cs
+  format: string
+  source: Monitoring
+  target: Monitorování
+  target_initial: Monitorování
+- locale: cs
+  format: string
+  source: Disable
+  target: Deaktivovat
+  target_initial: Deaktivovat
+- locale: cs
+  format: string
+  source: Enable
+  target: Aktivovat
+  target_initial: Aktivovat
+- locale: cs
+  format: string
+  source: Service
+  target: Služba
+  target_initial: Služba
+- locale: cs
+  format: string
+  source: Navigation
+  target: Navigace
+  target_initial: Navigace
+- locale: cs
+  format: string
+  source: Done
+  target: Hotovo
+  target_initial: Hotovo
+- locale: cs
+  format: string
+  source: Shown
+  target: Zobrazeno
+  target_initial: Zobrazeno
+- locale: cs
+  format: string
+  source: Required
+  target: Vyžadováno
+  target_initial: Vyžadováno
+- locale: cs
+  format: string
+  source: Today
+  target: Dnes
+  target_initial: Dnes
+- locale: cs
+  format: string
+  source: Don't load CSS for form. You need to generate your own CSS for the form.
+  target: Nenačítat CSS pro formulář. Pro formulář budete muset generovat vlastní
+    CSS.
+  target_initial: Nenačítat CSS pro formulář. Pro formulář budete muset generovat
+    vlastní CSS.
+- locale: cs
+  format: string
+  source: Text modules
+  target: TextModuly
+  target_initial: TextModuly
+- locale: cs
+  format: string
+  source: You need to add the following Javascript code snippet to your web page
+  target: Musíte přidat následující Java Scriptový kód na vaše webové stránky
+  target_initial: Musíte přidat následující Java Scriptový kód na vaše webové stránky
+- locale: cs
+  format: string
+  source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  target: Prohlédněte si tikety ve svém oblíbeném kalendáři přidáním následující URL
+    do vaší aplikace.
+  target_initial: Prohlédněte si tikety ve svém oblíbeném kalendáři přidáním následující
+    URL do vaší aplikace.
+- locale: cs
+  format: string
+  source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  target: Tento dyzajnér vám pomůže přidat na Vaše webové stránky formulář jenž bude
+    pro vás napřímo generovat tiket.
+  target_initial: Tento dyzajnér vám pomůže přidat na Vaše webové stránky formulář
+    jenž bude pro vás napřímo generovat tiket.
+- locale: cs
+  format: string
+  source: Copy current object number (e. g. Ticket#) to clipboard
+  target: Kopírovat do schránky aktuální číslo objektu (např.  Ticket#) 
+  target_initial: Kopírovat do schránky aktuální číslo objektu (např.  Ticket#) 
+- locale: cs
+  format: string
+  source: "...add object link URL"
+  target: "...přidat url adresu objektu"
+  target_initial: "...přidat url adresu objektu"
+- locale: cs
+  format: string
+  source: No unread notifications for you. :)
+  target: Nemáte žádné nepřečtené oznámení. :-)
+  target_initial: Nemáte žádné nepřečtené oznámení. :-)
+- locale: cs
+  format: string
+  source: "%s% have been reopened"
+  target: "%s% bylo opětovně otevřeno"
+  target_initial: "%s% bylo opětovně otevřeno"
+- locale: cs
+  format: string
+  source: Recently Viewed
+  target: Nedávno shlédnuto
+  target_initial: Nedávno shlédnuto
+- locale: cs
+  format: string
+  source: Assignment Timeout
+  target: Lhůta pro přiřazení
+  target_initial: Lhůta pro přiřazení
+- locale: cs
+  format: string
+  source: My Organization Tickets
+  target: Tikety mé organizace
+  target_initial: Tikety mé organizace
+- locale: cs
+  format: string
+  source: New to
+  target: Nový
+  target_initial: Nový
+- locale: cs
+  format: string
+  source: Product Name
+  target: Jméno produktu
+  target_initial: Jméno produktu
+- locale: cs
+  format: string
+  source: raw
+  target: raw
+  target_initial: raw
+- locale: cs
+  format: string
+  source: Create Admin
+  target: Vytvořit Admina
+  target_initial: Vytvořit Admina
+- locale: cs
+  format: string
+  source: New Release
+  target: Nová verze
+  target_initial: Nová verze
+- locale: cs
+  format: string
+  source: New SLA
+  target: Nové SLA
+  target_initial: Nové SLA
+- locale: cs
+  format: string
+  source: New TextModule
+  target: Nový TextModul
+  target_initial: Nový TextModul
+- locale: cs
+  format: string
+  source: New User Accounts
+  target: Nové uživatelské účty
+  target_initial: Nové uživatelské účty
+- locale: cs
+  format: string
+  source: Password needs to contain 2 lower and 2 upper characters.
+  target: Heslo musí obsahovat 2 malé a 2 velké písmena
+  target_initial: Heslo musí obsahovat 2 malé a 2 velké písmena
+- locale: cs
+  format: string
+  source: no criteria
+  target: žádné kritéria
+  target_initial: žádné kritéria
+- locale: cs
+  format: string
+  source: Prio
+  target: Prio
+  target_initial: Prio
+- locale: cs
+  format: string
+  source: Recent Addons
+  target: Nejnovější doplňky
+  target_initial: Nejnovější doplňky
+- locale: cs
+  format: string
+  source: Recent Releases
+  target: Nejnovější vydání
+  target_initial: Nejnovější vydání
+- locale: cs
+  format: string
+  source: Storage
+  target: Úložiště
+  target_initial: Úložiště
+- locale: cs
+  format: string
+  source: Storage Mechanism
+  target: Ukládácí mechanismus
+  target_initial: Ukládácí mechanismus
+- locale: cs
+  format: string
+  source: No filter.
+  target: Žádný filtr.
+  target_initial: Žádný filtr.
+- locale: cs
+  format: string
+  source: Select Template
+  target: Vybrat šablonu
+  target_initial: Vybrat šablonu
+- locale: cs
+  format: string
+  source: Push my changes
+  target: Sdílet mé změny
+  target_initial: Sdílet mé změny
+- locale: cs
+  format: string
+  source: reached
+  target: dosažen
+  target_initial: dosažen
+- locale: cs
+  format: string
+  source: Reporing
+  target: Hlášení
+  target_initial: Hlášení
+- locale: cs
+  format: string
+  source: Report
+  target: Hlášení
+  target_initial: Hlášení
+- locale: cs
+  format: string
+  source: Report Profiles
+  target: Profily hlášení
+  target_initial: Profily hlášení
+- locale: cs
+  format: string
+  source: Testing
+  target: Testování
+  target_initial: Testování
+- locale: cs
+  format: string
+  source: Inline translation
+  target: Inline překlad
+  target_initial: Inline překlad
+- locale: cs
+  format: string
+  source: Text with disabled inline translations looks like
+  target: 'Text s vypnutým inline překladem vypadá takto '
+  target_initial: 'Text s vypnutým inline překladem vypadá takto '
+- locale: cs
+  format: string
+  source: Next in overview
+  target: Další v přehledu
+  target_initial: Další v přehledu
+- locale: cs
+  format: string
+  source: Previous in overview
+  target: Předchozí v přehledu
+  target_initial: Předchozí v přehledu
+- locale: cs
+  format: string
+  source: When should the job run?
+  target: Kdy spustit úkol?
+  target_initial: Kdy spustit úkol?
+- locale: cs
+  format: string
+  source: not reached
+  target: nedosáhlo
+  target_initial: nedosáhlo
+- locale: cs
+  format: string
+  source: Scheduled for
+  target: Plánovač pro
+  target_initial: Plánovač pro
+- locale: cs
+  format: string
+  source: CVV
+  target: CVV
+  target_initial: CVV
+- locale: cs
+  format: string
+  source: New App
+  target: Nová aplikace
+  target_initial: Nová aplikace
+- locale: cs
+  format: string
+  source: or %s %s monthly
+  target: nebo %s %s měsíčně
+  target_initial: nebo %s %s měsíčně
+- locale: cs
+  format: string
+  source: Payment method
+  target: Platební metoda
+  target_initial: Platební metoda
+- locale: cs
+  format: string
+  source: Your trial is running till %s
+  target: 'Vaše trial verze je aktivní do %s '
+  target_initial: 'Vaše trial verze je aktivní do %s '
+- locale: cs
+  format: string
+  source: Realtime
+  target: Realtime
+  target_initial: Realtime
+- locale: cs
+  format: string
+  source: Reporting
+  target: Hlášení
+  target_initial: Hlášení
+- locale: cs
+  format: string
+  source: right
+  target: pravé
+  target_initial: pravé
+- locale: cs
+  format: string
+  source: Subscribe to iCalendar feed
+  target: Odebírat zdroj iCalendar
+  target_initial: Odebírat zdroj iCalendar
+- locale: cs
+  format: string
+  source: Access to Agent Tickets based on Group Access
+  target: Přístup k tiketům řešitelů na základě Skupinového přístupu
+  target_initial: Přístup k tiketům řešitelů na základě Skupinového přístupu
+- locale: cs
+  format: string
+  source: New Trigger
+  target: Nový Spouštěč
+  target_initial: Nový Spouštěč
+- locale: cs
+  format: string
+  source: not set (not defined)
+  target: nenastaveno (nedefinováno)
+  target_initial: nenastaveno (nedefinováno)
+- locale: cs
+  format: string
+  source: TextModule
+  target: TextModul
+  target_initial: TextModul
+- locale: cs
+  format: string
+  source: Time zone
+  target: Časová zóna
+  target_initial: Časová zóna
+- locale: cs
+  format: string
+  source: An open source monitoring tool.
+  target: Opensource monitorovací nástroj.
+  target_initial: Opensource monitorovací nástroj.
+- locale: cs
+  format: string
+  source: Reopened
+  target: Znovuotevřeno
+  target_initial: Znovuotevřeno
+- locale: cs
+  format: string
+  source: Test Connection
+  target: Testování připojení
+  target_initial: Testování připojení
+- locale: cs
+  format: string
+  source: New text module
+  target: Nový textový modul
+  target_initial: Nový textový modul
+- locale: cs
+  format: string
+  source: Recently viewed
+  target: Nedávno shlédnuto
+  target_initial: Nedávno shlédnuto
+- locale: cs
+  format: string
+  source: A open source monitoring tool.
+  target: Opensource monitorovací nástroj.
+  target_initial: Opensource monitorovací nástroj.
+- locale: cs
+  format: string
+  source: Conditions for effected objects
+  target: podmínka pro dotčené objekty
+  target_initial: podmínka pro dotčené objekty
+- locale: cs
+  format: string
+  source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  target: Určuje jméno zobrazované ve webovém rozhraní, záložkách a nadpisu prohlížeče.
+  target_initial: Určuje jméno zobrazované ve webovém rozhraní, záložkách a nadpisu
+    prohlížeče.
+- locale: cs
+  format: string
+  source: Will be shown in the app and is included in email footers.
+  target: Bude zobrazována v app je zahrnuta v patičce webu.
+  target_initial: Bude zobrazována v app je zahrnuta v patičce webu.
+- locale: cs
+  format: string
+  source: Defines the logo of the application, shown in the web interface.
+  target: Reprezentační obrázek zobrazovaný na webu a jiných komponentách.
+  target_initial: Reprezentační obrázek zobrazovaný na webu a jiných komponentách.
+- locale: cs
+  format: string
+  source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  target: Lhůta pro zrušení přiřazení aktuálního řešitele pokud na tiketu nepracuje.
+    Tiket bude po uplynutí této doby zobrazen jako nepřiřazený.
+  target_initial: Lhůta pro zrušení přiřazení aktuálního řešitele pokud na tiketu
+    nepracuje. Tiket bude po uplynutí této doby zobrazen jako nepřiřazený.
+- locale: cs
+  format: string
+  source: Password needs to have at least one digit.
+  target: Heslo musí mít alespoň jeden znak.
+  target_initial: Heslo musí mít alespoň jeden znak.
+- locale: cs
+  format: string
+  source: To do easier translations you can enable and disable inline translation
+    feature by pressing "%s".
+  target: Pro snahší překládání můžete zapnout a vypnout inline překládní použitím
+    klávesové zkratky "%s".
+  target_initial: Pro snahší překládání můžete zapnout a vypnout inline překládní
+    použitím klávesové zkratky "%s".
+- locale: cs
+  format: string
+  source: Just click into the marker and update the words just in place. Enjoy!
+  target: Stačí kliknout na zvýrazněnou položku a na místě slova upravit.
+  target_initial: Stačí kliknout na zvýrazněnou položku a na místě slova upravit.
+- locale: cs
+  format: string
+  source: Client Secret
+  target: Client Secret
+  target_initial: Client Secret
+- locale: cs
+  format: string
+  source: Conditions where SLA is used
+  target: Podmínky kde je SLA použito
+  target_initial: Podmínky kde je SLA použito
+- locale: cs
+  format: string
+  source: If you want to translate it via the translation table, just go ahead below.
+  target: Také můžete překládat přes níže umístěnou tabulku všech přeložitelných výrazů.
+  target_initial: Také můžete překládat přes níže umístěnou tabulku všech přeložitelných
+    výrazů.
+- locale: cs
+  format: string
+  source: Text with enabled inline translations looks like
+  target: 'Text se zapnutým inline překladem vypadá takto '
+  target_initial: 'Text se zapnutým inline překladem vypadá takto '
+- locale: cs
+  format: string
+  source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  target: Přístup k tiketům zákazníka založený na current_user.id a current_user.organisation.id
+  target_initial: Přístup k tiketům zákazníka založený na current_user.id a current_user.organisation.id
+- locale: cs
+  format: string
+  source: Run every %s at %s
+  target: 'Spustit vždy v %s v %s '
+  target_initial: 'Spustit vždy v %s v %s '
+- locale: cs
+  format: string
+  source: New Add-On
+  target: Nový doplněk
+  target_initial: Nový doplněk
+- locale: cs
+  format: string
+  source: Password needs to have at least minimal size of characters.
+  target: Heslo musí mít tento minimální počet znaků
+  target_initial: Heslo musí mít tento minimální počet znaků
+- locale: cs
+  format: string
+  source: per agent / month
+  target: za řešitele na měsíc
+  target_initial: za řešitele na měsíc
+- locale: cs
+  format: string
+  source: Please click the button below to create your first one.
+  target: Klikněte na tlačítko níže pro vytvoření prvního záznamu.
+  target_initial: Klikněte na tlačítko níže pro vytvoření prvního záznamu.
+- locale: cs
+  format: string
+  source: "|Right| means |Some Subject [Ticket#12345]|"
+  target: "|Pravé| myšleno |Nějaký předmět [Ticket#12345]|"
+  target_initial: "|Pravé| myšleno |Nějaký předmět [Ticket#12345]|"
+- locale: cs
+  format: string
+  source: Send client stats to central server.
+  target: Odešle statistiky zákazníků na centrální server.
+  target_initial: Odešle statistiky zákazníků na centrální server.
+- locale: cs
+  format: string
+  source: Sync Changes
+  target: Synchronizace změn
+  target_initial: Synchronizace změn
+- locale: cs
+  format: string
+  source: Thanks for contributing!
+  target: Díky za podporu!
+  target_initial: Díky za podporu!
+- locale: cs
+  format: string
+  source: The default font size is 12px.
+  target: Výchozí velikost písma je 12px.
+  target_initial: Výchozí velikost písma je 12px.
+- locale: cs
+  format: string
+  source: Need recipient in "To" or "Cc".
+  target: Je vyžadován příjemce "Komu" nebo "Kopie".
+  target_initial: Je vyžadován příjemce "Komu" nebo "Kopie".
+- locale: cs
+  format: string
+  source: Text missing
+  target: Chybějící text
+  target_initial: Chybějící text
+- locale: cs
+  format: string
+  source: Connect Twitter App
+  target: Připojit Twitter Aplikaci
+  target_initial: Připojit Twitter Aplikaci
+- locale: cs
+  format: string
+  source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  target: "%s můžete integrovat se Zammad systémem. Nejdřív ale musíte spojit %s se
+    Zammadem."
+  target_initial: "%s můžete integrovat se Zammad systémem. Nejdřív ale musíte spojit
+    %s se Zammadem."
+- locale: cs
+  format: string
+  source: Configure Channels
+  target: Nastavit Kanály
+  target_initial: Nastavit Kanály
+- locale: cs
+  format: string
+  source: Update successful!
+  target: Úspěšně aktualizováno!
+  target_initial: Úspěšně aktualizováno!
+- locale: cs
+  format: string
+  source: twitter status
+  target: twitter status
+  target_initial: twitter status
+- locale: cs
+  format: string
+  source: twitter direct-message
+  target: twitter soukromá zpráva
+  target_initial: twitter soukromá zpráva
+- locale: cs
+  format: string
+  source: All pending reached Tickets
+  target: Všechny odložené tikety
+  target_initial: Všechny odložené tikety
+- locale: cs
+  format: string
+  source: Import
+  target: Importovat
+  target_initial: Importovat
+- locale: cs
+  format: string
+  source: Twitter
+  target: Twitter
+  target_initial: Twitter
+- locale: cs
+  format: string
+  source: in %s
+  target: za %s
+  target_initial: za %s
+- locale: cs
+  format: string
+  source: Import Mode
+  target: Režim importu
+  target_initial: Režim importu
+- locale: cs
+  format: string
+  source: Import Key
+  target: Klíč importu
+  target_initial: Klíč importu
+- locale: cs
+  format: string
+  source: Twitter Key
+  target: Twitter Key
+  target_initial: Twitter Key
+- locale: cs
+  format: string
+  source: Twitter Secret
+  target: Twitter Secret
+  target_initial: Twitter Secret
+- locale: cs
+  format: string
+  source: Activates lost password feature for users.
+  target: Aktivuje u uživatelů funkci pro obnovu ztraceného hesla.
+  target_initial: Aktivuje u uživatelů funkci pro obnovu ztraceného hesla.
+- locale: cs
+  format: string
+  source: App Secret
+  target: App Secret
+  target_initial: App Secret
+- locale: cs
+  format: string
+  source: Twitter App Credentials
+  target: Přihlašovací údaje do Twitter aplikace
+  target_initial: Přihlašovací údaje do Twitter aplikace
+- locale: cs
+  format: string
+  source: How to use it
+  target: Jak na to
+  target_initial: Jak na to
+- locale: cs
+  format: string
+  source: Hero
+  target: Hrdina
+  target_initial: Hrdina
+- locale: cs
+  format: string
+  source: Update Database
+  target: Aktualizovat databázi
+  target_initial: Aktualizovat databázi
+- locale: cs
+  format: string
+  source: Unable to verify email. Please contact your administrator.
+  target: Nepodařilo se ověřit email. Prosím kontaktujte vašeho administrátora.
+  target_initial: Nepodařilo se ověřit email. Prosím kontaktujte vašeho administrátora.
+- locale: cs
+  format: string
+  source: Third-party Applications
+  target: Aplikace třetích stran
+  target_initial: Aplikace třetích stran
+- locale: cs
+  format: string
+  source: Send client stats/error message to central server to improve the usability.
+  target: Odesílat statistiky/chyby klientů na log centrální serveru.
+  target_initial: Odesílat statistiky/chyby klientů na log centrální serveru.
+- locale: cs
+  format: string
+  source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  target: 'Pokud chcete přesunout již uložené přílohy z jednoho ukládacího mechanismu
+    do druhého, musíte v konzoli spustit následující příkazy:'
+  target_initial: 'Pokud chcete přesunout již uložené přílohy z jednoho ukládacího
+    mechanismu do druhého, musíte v konzoli spustit následující příkazy:'
+- locale: cs
+  format: string
+  source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  target: Děkujeme za Vaši odezvu vedenou pod označením (#%s)! Hned jak to bude možné
+    se Vás pokusíme kontaktovat.
+  target_initial: Děkujeme za Vaši odezvu vedenou pod označením (#%s)! Hned jak to
+    bude možné se Vás pokusíme kontaktovat.
+- locale: cs
+  format: string
+  source: Third-Party Applications
+  target: Aplikace třetích stran
+  target_initial: Aplikace třetích stran
+- locale: cs
+  format: string
+  source: There is no agent online.
+  target: Není online žádný řešitel.
+  target_initial: Není online žádný řešitel.
+- locale: cs
+  format: string
+  source: There are too many people in queue for the chat.
+  target: Příliš mnoho lidí čeká ve frontě na chat.
+  target_initial: Příliš mnoho lidí čeká ve frontě na chat.
+- locale: cs
+  format: string
+  source: 'There can be several reasons for the chat to not show up:'
+  target: 'Může být několik důvodů proč se chat nezobrazuje:'
+  target_initial: 'Může být několik důvodů proč se chat nezobrazuje:'
+- locale: cs
+  format: string
+  source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  target: Tento prohlížeč je zastaralý. Nepodporuje technologii (WebSocket) kterou
+    používáme pro službu Chat.
+  target_initial: Tento prohlížeč je zastaralý. Nepodporuje technologii (WebSocket)
+    kterou používáme pro službu Chat.
+- locale: cs
+  format: string
+  source: Use client storage to cache data to perform speed of application.
+  target: Použít klientské úložiště k ukládání dat z mezipaměti (caching) pro zlepšení
+    rychlosti aplikace.
+  target_initial: Použít klientské úložiště k ukládání dat z mezipaměti (caching)
+    pro zlepšení rychlosti aplikace.
+- locale: cs
+  format: string
+  source: Username for proxy connection.
+  target: Uživatelské jméno pro spojení přes proxy
+  target_initial: Uživatelské jméno pro spojení přes proxy
+- locale: cs
+  format: string
+  source: Only available for Users with shared Organization
+  target: Dostupné jen pro uživatele ve sdílené organizaci
+  target_initial: Dostupné jen pro uživatele ve sdílené organizaci
+- locale: cs
+  format: string
+  source: Update payment method
+  target: Aktualizovat platební metodu
+  target_initial: Aktualizovat platební metodu
+- locale: cs
+  format: string
+  source: Set outbound caller id
+  target: Nastavit id odchozího volajícího (outbond caller id)
+  target_initial: Nastavit id odchozího volajícího (outbond caller id)
+- locale: cs
+  format: string
+  source: Import from
+  target: Importovat z
+  target_initial: Importovat z
+- locale: cs
+  format: string
+  source: Image Service
+  target: Služba snímků
+  target_initial: Služba snímků
+- locale: cs
+  format: string
+  source: Notes are visible to agents only, never to customers.
+  target: Poznámky vidí jen řešitelé, nikdy zákazníci.
+  target_initial: Poznámky vidí jen řešitelé, nikdy zákazníci.
+- locale: cs
+  format: string
+  source: The way to communicate with us is this thing called "ticket".
+  target: Komuninikovat s námi můžete pomocí tzv. "Tiketů"
+  target_initial: Komuninikovat s námi můžete pomocí tzv. "Tiketů"
+- locale: cs
+  format: string
+  source: Invite Agents/Colleagues to help working on Tickets
+  target: Pozvat řešitele/kolegy aby Vám pomáhali s tickety
+  target_initial: Pozvat řešitele/kolegy aby Vám pomáhali s tickety
+- locale: cs
+  format: string
+  source: Time Units
+  target: Časové jednotky
+  target_initial: Časové jednotky
+- locale: cs
+  format: string
+  source: Time Units Total
+  target: Celkem časových jednotek
+  target_initial: Celkem časových jednotek
+- locale: cs
+  format: string
+  source: Set up the communication channels you want to use with your Zammad.
+  target: Nastavit komunikační kanály které chcete používat přes Zammad.
+  target_initial: Nastavit komunikační kanály které chcete používat přes Zammad.
+- locale: cs
+  format: string
+  source: Invite Customers to create issues in Zammad
+  target: Pozvěte zákazníky aby řešili záležitosti přes Zammad
+  target_initial: Pozvěte zákazníky aby řešili záležitosti přes Zammad
+- locale: cs
+  format: string
+  source: Invite customers to create issues in Zammad
+  target: Pozvěte zákazníky aby řešili záležitosti přes Zammad
+  target_initial: Pozvěte zákazníky aby řešili záležitosti přes Zammad
+- locale: cs
+  format: string
+  source: Usage of advanced features
+  target: Použití rozšířených funkcí
+  target_initial: Použití rozšířených funkcí
+- locale: cs
+  format: string
+  source: Unassigned email addresses, assign them to a channel or delete them.
+  target: Nepřiřazené emailové adresy, přiřaďte je k danému kanálu, nebo je smažte.
+  target_initial: Nepřiřazené emailové adresy, přiřaďte je k danému kanálu, nebo je
+    smažte.
+- locale: cs
+  format: string
+  source: Unlinked Email Addresses, assign it to a channel or delete it.
+  target: Nepřipojené emailové adresy, přiřaďte je k danému kanálu, nebo je smažte.
+  target_initial: Nepřipojené emailové adresy, přiřaďte je k danému kanálu, nebo je
+    smažte.
+- locale: cs
+  format: string
+  source: Setup the communication channels you want to use with your Zammad.
+  target: Nastavit komunikační kanály které chcete používat přes Zammad.
+  target_initial: Nastavit komunikační kanály které chcete používat přes Zammad.
+- locale: cs
+  format: string
+  source: Import Endpoint
+  target: Endpoint importu
+  target_initial: Endpoint importu
+- locale: cs
+  format: string
+  source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  target: '|Žádný| myšleno |Nějaký předmět| (bez čísla tiketu). V tomto posledním
+    případě by jste měli aktivovat "postmaster__follow__up__search__in" pro detekci
+    znovuotevření založeném na hlavičce a/nebo tělu emailové zprávy.'
+  target_initial: '|Žádný| myšleno |Nějaký předmět| (bez čísla tiketu). V tomto posledním
+    případě by jste měli aktivovat "postmaster__follow__up__search__in" pro detekci
+    znovuotevření založeném na hlavičce a/nebo tělu emailové zprávy.'
+- locale: cs
+  format: string
+  source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  target: Ve výchozím stavu se kontrola znovuotevření provádí přes předmět emailu.
+    Pomocí tohoto nastavení můžete přidat více položek kde se má kontrola znovuotevření
+    tiketu spouštět.
+  target_initial: Ve výchozím stavu se kontrola znovuotevření provádí přes předmět
+    emailu. Pomocí tohoto nastavení můžete přidat více položek kde se má kontrola
+    znovuotevření tiketu spouštět.
+- locale: cs
+  format: string
+  source: Defines the sender of email notifications.
+  target: Nastaví název odesílatele oznámení odeslaných emailem.
+  target_initial: Nastaví název odesílatele oznámení odeslaných emailem.
+- locale: cs
+  format: string
+  source: If this regex matches, no notification will be send by the sender.
+  target: Jestliže tento zpráva bude odpovídat tomuto regexu, odesílateli nebude zaslána
+    odpovědní zpráva.
+  target_initial: Jestliže tento zpráva bude odpovídat tomuto regexu, odesílateli
+    nebude zaslána odpovědní zpráva.
+- locale: cs
+  format: string
+  source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  target: Definuje jak bude vypadat u odeslaných emailů políčko "Od" (odpovědi a nové
+    emailové tikety)
+  target_initial: Definuje jak bude vypadat u odeslaných emailů políčko "Od" (odpovědi
+    a nové emailové tikety)
+- locale: cs
+  format: string
+  source: Defines the separator between the agents real name and the given group email
+    address.
+  target: Definuje oddělovač mezi řešitelovým skutečným jménem a danou emailovou adresou
+    skupiny.
+  target_initial: Definuje oddělovač mezi řešitelovým skutečným jménem a danou emailovou
+    adresou skupiny.
+- locale: cs
+  format: string
+  source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  target: Text na začítku předmětu v emailové odpovědi, např. RE, AW nebo AS.
+  target_initial: Text na začítku předmětu v emailové odpovědi, např. RE, AW nebo
+    AS.
+- locale: cs
+  format: string
+  source: Ticket Subject Reply
+  target: Předmět v odpovědi k tiketu
+  target_initial: Předmět v odpovědi k tiketu
+- locale: cs
+  format: string
+  source: Ticket Subject Size
+  target: Velikost Předmětu Tiketu
+  target_initial: Velikost Předmětu Tiketu
+- locale: cs
+  format: string
+  source: Defines the backend for user and organization image lookups.
+  target: Definuje službu pro prohledání obrázků/avatarů organizací a uživatelů.
+  target_initial: Definuje službu pro prohledání obrázků/avatarů organizací a uživatelů.
+- locale: cs
+  format: string
+  source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  target: Nastavuje modul služby starající se o nalezení a uložení geolokací na základě
+    zadaných adres budov.
+  target_initial: Nastavuje modul služby starající se o nalezení a uložení geolokací
+    na základě zadaných adres budov.
+- locale: cs
+  format: string
+  source: Geo Calendar Service
+  target: Geo Calendar Služba
+  target_initial: Geo Calendar Služba
+- locale: cs
+  format: string
+  source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  target: Mechanismus pro nové přílohy můžete přepínat beze ztráty dat a to i v systému
+    který je již v produkčním režimu.
+  target_initial: Mechanismus pro nové přílohy můžete přepínat beze ztráty dat a to
+    i v systému který je již v produkčním režimu.
+- locale: cs
+  format: string
+  source: The URL to this installation of Zammad.
+  target: URL odkaz na tuto instalaci Zammadu.
+  target_initial: URL odkaz na tuto instalaci Zammadu.
+- locale: cs
+  format: string
+  source: Thanks for your Feedback!
+  target: Díky za vaši odezvu!
+  target_initial: Díky za vaši odezvu!
+- locale: cs
+  format: string
+  source: Conditions for shown Tickets
+  target: Podmínky pro zobrazení tiketů
+  target_initial: Podmínky pro zobrazení tiketů
+- locale: cs
+  format: string
+  source: Frontend
+  target: Frontend
+  target_initial: Frontend
+- locale: cs
+  format: string
+  source: Assign Follow Ups
+  target: Přiřazení znovuotevření
+  target_initial: Přiřazení znovuotevření
+- locale: cs
+  format: string
+  source: Checksum
+  target: Kontrolní součet
+  target_initial: Kontrolní součet
+- locale: cs
+  format: string
+  source: http type
+  target: typ http
+  target_initial: typ http
+- locale: cs
+  format: string
+  source: You have no configured account right now.
+  target: Aktuálně nemáte nastavený účet.
+  target_initial: Aktuálně nemáte nastavený účet.
+- locale: cs
+  format: string
+  source: E. g. recent changed tickets, users or organizations.
+  target: Např. nedávno změněné tikety, uživatelé nebo organizace.
+  target_initial: Např. nedávno změněné tikety, uživatelé nebo organizace.
+- locale: cs
+  format: string
+  source: Template Title
+  target: Nadpis šablony
+  target_initial: Nadpis šablony
+- locale: cs
+  format: string
+  source: has changed
+  target: byl změněn
+  target_initial: byl změněn
+- locale: cs
+  format: string
+  source: Has processed
+  target: Byl zpracován
+  target_initial: Byl zpracován
+- locale: cs
+  format: string
+  source: Caller id to block
+  target: ID volajícího pro blokování
+  target_initial: ID volajícího pro blokování
+- locale: cs
+  format: string
+  source: Ticket |%s| will escalate soon!
+  target: Tiket |%s| bude brzy eskalovat!
+  target_initial: Tiket |%s| bude brzy eskalovat!
+- locale: cs
+  format: string
+  source: The format of the subject.
+  target: Formát předmětu.
+  target_initial: Formát předmětu.
+- locale: cs
+  format: string
+  source: left
+  target: levé
+  target_initial: levé
+- locale: cs
+  format: string
+  source: Can be in any CSS color format.
+  target: Může být jakémkoli CSS formátu barev.
+  target_initial: Může být jakémkoli CSS formátu barev.
+- locale: cs
+  format: string
+  source: Changes were made that require a database update.
+  target: Provedené změny které vyžadují aktualizaci databáze.
+  target_initial: Provedené změny které vyžadují aktualizaci databáze.
+- locale: cs
+  format: string
+  source: Default caller id
+  target: Výchozí id volajícího
+  target_initial: Výchozí id volajícího
+- locale: cs
+  format: string
+  source: Default caller id.
+  target: Výchozí ID volajícího.
+  target_initial: Výchozí ID volajícího.
+- locale: cs
+  format: string
+  source: within last (relative)
+  target: během posledních (relativně)
+  target_initial: během posledních (relativně)
+- locale: cs
+  format: string
+  source: within next (relative)
+  target: během dalších (relativně)
+  target_initial: během dalších (relativně)
+- locale: cs
+  format: string
+  source: You have tickets that are over 2 days overdue
+  target: Máte tikety které jsou přes 2 dny po termínu
+  target_initial: Máte tikety které jsou přes 2 dny po termínu
+- locale: cs
+  format: string
+  source: You can create multiple chat topics.
+  target: Můžete vytvořit několik diskusních témat.
+  target_initial: Můžete vytvořit několik diskusních témat.
+- locale: cs
+  format: string
+  source: You are an |%s|.
+  target: Jste |%s|.
+  target_initial: Jste |%s|.
+- locale: cs
+  format: string
+  source: Organization & Department Name
+  target: Jméno organizace a oddělení
+  target_initial: Jméno organizace a oddělení
+- locale: cs
+  format: string
+  source: ringing
+  target: vyzvání
+  target_initial: vyzvání
+- locale: cs
+  format: string
+  source: Time Accounting
+  target: Počítání času
+  target_initial: Počítání času
+- locale: cs
+  format: string
+  source: Assign follow up to latest agent again.
+  target: Přiřadit znovuotevření poslednímu řešiteli.
+  target_initial: Přiřadit znovuotevření poslednímu řešiteli.
+- locale: cs
+  format: string
+  source: Create rules that single out the tickets for the Service Level Agreement.
+  target: Vytvořte pravidla která vyčlení tikety pro SLA.
+  target_initial: Vytvořte pravidla která vyčlení tikety pro SLA.
+- locale: cs
+  format: string
+  source: current user organization
+  target: organizace stávajícího uživatele
+  target_initial: organizace stávajícího uživatele
+- locale: cs
+  format: string
+  source: Download %s Migration Plugin
+  target: Stáhnout plugin pro migraci z %s
+  target_initial: Stáhnout plugin pro migraci z %s
+- locale: cs
+  format: string
+  source: Please execute database changes only in a maintenance time-slot.
+  target: Prosím spouštějte změny databáze jen v době režimu údržby.
+  target_initial: Prosím spouštějte změny databáze jen v době režimu údržby.
+- locale: cs
+  format: string
+  source: No such master ticket number!
+  target: Nenalezeno číslo nadřazeného tiketu!
+  target_initial: Nenalezeno číslo nadřazeného tiketu!
+- locale: cs
+  format: string
+  source: assign tickets
+  target: přiřadit tikety
+  target_initial: přiřadit tikety
+- locale: cs
+  format: string
+  source: submit
+  target: odeslat
+  target_initial: odeslat
+- locale: cs
+  format: string
+  source: "%s people"
+  target: "%s lidí"
+  target_initial: "%s lidí"
+- locale: cs
+  format: string
+  source: Sender
+  target: Odesílatel
+  target_initial: Odesílatel
+- locale: cs
+  format: string
+  source: See less
+  target: Zobrazit méně
+  target_initial: Zobrazit méně
+- locale: cs
+  format: string
+  source: run macro
+  target: spustit makro
+  target_initial: spustit makro
+- locale: cs
+  format: string
+  source: Account Time
+  target: Započtená doba
+  target_initial: Započtená doba
+- locale: cs
+  format: string
+  source: drag here to cancel
+  target: přesuňte zde pro zrušení
+  target_initial: přesuňte zde pro zrušení
+- locale: cs
+  format: string
+  source: Domain based assignment
+  target: Přiřazování dle domény
+  target_initial: Přiřazování dle domény
+- locale: cs
+  format: string
+  source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  target: '|Přírůstek| navyšuje číslo tiketu, Systémové ID a počítalo jsou požity
+    ve formátu "SystemID.Counter" (např. 1010138 kde 101 je systémové ID a počítadlo
+    je na hodnotě 0138).'
+  target_initial: '|Přírůstek| navyšuje číslo tiketu, Systémové ID a počítalo jsou
+    požity ve formátu "SystemID.Counter" (např. 1010138 kde 101 je systémové ID a
+    počítadlo je na hodnotě 0138).'
+- locale: cs
+  format: string
+  source: Enable time accounting for following matching tickets.
+  target: Povolit počítání času pro odpovídající tikety.
+  target_initial: Povolit počítání času pro odpovídající tikety.
+- locale: cs
+  format: string
+  source: Facebook Account
+  target: Facebook Účet
+  target_initial: Facebook Účet
+- locale: cs
+  format: string
+  source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  target: Zapíná nebo vypíná režim údržby systému Zammad. Pokud je zapnuto, všichni
+    uživatelé bez administrátorského opravánění budou odhlášení a jen administrátoři
+    můžou započít nové sezení resp. přihlásit se.
+  target_initial: Zapíná nebo vypíná režim údržby systému Zammad. Pokud je zapnuto,
+    všichni uživatelé bez administrátorského opravánění budou odhlášení a jen administrátoři
+    můžou započít nové sezení resp. přihlásit se.
+- locale: cs
+  format: string
+  source: Assign Users based on users domain.
+  target: Přiřadit uživatele do této organizace dle emailové/webové domény uživatele.
+  target_initial: Přiřadit uživatele do této organizace dle emailové/webové domény
+    uživatele.
+- locale: cs
+  format: string
+  source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  target: '|Datum| čísla tiketů budou generovány dle aktuálního data, systémového
+    ID a počítadla. Výsledek bude ve formátu "Rok.Měsíc.Den.SystémovéID.Počítadlo"
+    (např. 201706231010138 kde 2017 je rok, 06 měsíc, 23 den v měsíci, 101 systémové
+    ID a 0138 hodnota počítadla).'
+  target_initial: '|Datum| čísla tiketů budou generovány dle aktuálního data, systémového
+    ID a počítadla. Výsledek bude ve formátu "Rok.Měsíc.Den.SystémovéID.Počítadlo"
+    (např. 201706231010138 kde 2017 je rok, 06 měsíc, 23 den v měsíci, 101 systémové
+    ID a 0138 hodnota počítadla).'
+- locale: cs
+  format: string
+  source: "|Left| means |[Ticket#12345] Some Subject|"
+  target: "|Levý| myšleno jako |[Ticket#12345] Nějaký předmět|\t"
+  target_initial: "|Levý| myšleno jako |[Ticket#12345] Nějaký předmět|\t"
+- locale: cs
+  format: string
+  source: Create an outbound Ticket (will send this as email to customer)
+  target: Vytvořit odchozí tiket (jenž bude zaslán emailem zákazníkovi)
+  target_initial: Vytvořit odchozí tiket (jenž bude zaslán emailem zákazníkovi)
+- locale: cs
+  format: string
+  source: Enable Ticket creation
+  target: Povolit vytváření tiketů
+  target_initial: Povolit vytváření tiketů
+- locale: cs
+  format: string
+  source: Group selection for Ticket creation
+  target: Výběr skupiny pro vytvořené tikety
+  target_initial: Výběr skupiny pro vytvořené tikety
+- locale: cs
+  format: string
+  source: Ticket Selector
+  target: Filtrování dotčený tiketů
+  target_initial: Filtrování dotčený tiketů
+- locale: cs
+  format: string
+  source: Thank you for your inquiry! We'll contact you soon as possible.
+  target: Děkujeme za Vaši odezvu! Pokusíme se Vás kontaktovat hned jak to bude možné.
+  target_initial: Děkujeme za Vaši odezvu! Pokusíme se Vás kontaktovat hned jak to
+    bude možné.
+- locale: cs
+  format: string
+  source: Ticket Hook
+  target: Indentifikátor tiketu
+  target_initial: Indentifikátor tiketu
+- locale: cs
+  format: string
+  source: Pages
+  target: Stránky
+  target_initial: Stránky
+- locale: cs
+  format: string
+  source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  target: Ppokud bude aktivována funce kontrolního součtu, bude jeho hodnota přidána
+    k počítadlu. Výsledný formát čísla tiketu bude "%s" (např. %s).
+  target_initial: Ppokud bude aktivována funce kontrolního součtu, bude jeho hodnota
+    přidána k počítadlu. Výsledný formát čísla tiketu bude "%s" (např. %s).
+- locale: cs
+  format: string
+  source: Default caller id for outbound calls.
+  target: Výchozí ID volajícího pro odchozí hovory.
+  target_initial: Výchozí ID volajícího pro odchozí hovory.
+- locale: cs
+  format: string
+  source: Subscribe to public holidays in
+  target: Odebírat veřejné svátky ze země
+  target_initial: Odebírat veřejné svátky ze země
+- locale: cs
+  format: string
+  source: Ticket Hook Position
+  target: Pozice identifikátoru tiketu
+  target_initial: Pozice identifikátoru tiketu
+- locale: cs
+  format: string
+  source: You have answered a ticket within 1h
+  target: Odpověděl jste na tiket během 1h
+  target_initial: Odpověděl jste na tiket během 1h
+- locale: cs
+  format: string
+  source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  target: Vložit správu na přihlašovací stránku. Pro změnu jejího obsahu klikněte
+    do textového pole níže a přímo jej takto upravte.
+  target_initial: Vložit správu na přihlašovací stránku. Pro změnu jejího obsahu klikněte
+    do textového pole níže a přímo jej takto upravte.
+- locale: cs
+  format: string
+  source: Usage
+  target: Použití
+  target_initial: Použití
+- locale: cs
+  format: string
+  source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  target: Pokud chcete aby zákazníci otvírali chat ručně kliknutím na tlačítko, nastavte
+    možnost §show§ to §false§ a tlačítku přiřaďte třídu §open-zammad-chat§.
+  target_initial: Pokud chcete aby zákazníci otvírali chat ručně kliknutím na tlačítko,
+    nastavte možnost §show§ to §false§ a tlačítku přiřaďte třídu §open-zammad-chat§.
+- locale: cs
+  format: string
+  source: Ticket |%s| is escalated!
+  target: Právě eskaloval tiket |%s|!
+  target_initial: Právě eskaloval tiket |%s|!
+- locale: cs
+  format: string
+  source: Selector
+  target: Selektor
+  target_initial: Selektor
+- locale: cs
+  format: string
+  source: A new version of Zammad is available, please reload your browser.
+  target: Je dostupná nová verze systému Zammad. Prosím obnovte stránku ve Vašem prohlížeči.
+  target_initial: Je dostupná nová verze systému Zammad. Prosím obnovte stránku ve
+    Vašem prohlížeči.
+- locale: cs
+  format: string
+  source: Enables users to create their own account via web interface.
+  target: Povolit uživatelům vytvářet jejich vlastní účty přes webové rozhraní.
+  target_initial: Povolit uživatelům vytvářet jejich vlastní účty přes webové rozhraní.
+- locale: cs
+  format: string
+  source: iCalendar links from Google will get fetched once a day
+  target: iCalendar odkazy z webu Google budou staženy jednou denně
+  target_initial: iCalendar odkazy z webu Google budou staženy jednou denně
+- locale: cs
+  format: string
+  source: Select the customer of the ticket or create one.
+  target: Vyberte tiket zákazníka nebo vytvořte nový.
+  target_initial: Vyberte tiket zákazníka nebo vytvořte nový.
+- locale: cs
+  format: string
+  source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  target: Spravovat aplikace které mohou používat Zammad systém jako OAuth poskytovatele
+    a aplikace které jste již autorizoval(a) pro používání Vašeho účtu.
+  target_initial: Spravovat aplikace které mohou používat Zammad systém jako OAuth
+    poskytovatele a aplikace které jste již autorizoval(a) pro používání Vašeho účtu.
+- locale: cs
+  format: string
+  source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  target: Vložté kód widgetu do zdrojového kódu každé stránky kde má být chat zobrazen.
+    Kód by měl být umístěn na konci kódu stránky před ukončovací značkou/tagem §</body>§.
+  target_initial: Vložté kód widgetu do zdrojového kódu každé stránky kde má být chat
+    zobrazen. Kód by měl být umístěn na konci kódu stránky před ukončovací značkou/tagem
+    §</body>§.
+- locale: cs
+  format: string
+  source: A team communication tool for the 21st century.
+  target: Týmový komunikační nástroj pro 21. století.
+  target_initial: Týmový komunikační nástroj pro 21. století.
+- locale: cs
+  format: string
+  source: Default at Signup
+  target: Výchozí při registraci
+  target_initial: Výchozí při registraci
+- locale: cs
+  format: string
+  source: Defines if a customer can create tickets via the web interface.
+  target: Povolit uživatelům vytváření tiketů přes webové rozhraní.
+  target_initial: Povolit uživatelům vytváření tiketů přes webové rozhraní.
+- locale: cs
+  format: string
+  source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  target: Povolit REST API s autentizací pomocí tokenů (bez uživatelského jména/emailové
+    adresy a hesla). Každý uživatel si musí v uživatelském profilu vytvořit vlastní
+    přístupový token.
+  target_initial: Povolit REST API s autentizací pomocí tokenů (bez uživatelského
+    jména/emailové adresy a hesla). Každý uživatel si musí v uživatelském profilu
+    vytvořit vlastní přístupový token.
+- locale: cs
+  format: string
+  source: as
+  target: jako
+  target_initial: jako
+- locale: cs
+  format: string
+  source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  target: 'Zammad Chat vyžaduje knihovnu jQuery. Pokud jQuery na svých stránkách nepoužíváte,
+    přidejte si ji např. pomocí tohoto kódu:'
+  target_initial: 'Zammad Chat vyžaduje knihovnu jQuery. Pokud jQuery na svých stránkách
+    nepoužíváte, přidejte si ji např. pomocí tohoto kódu:'
+- locale: cs
+  format: string
+  source: Why doesn't the chat show up?
+  target: Proč se chat nezobrazuje?
+  target_initial: Proč se chat nezobrazuje?
+- locale: cs
+  format: string
+  source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  target: Pro snadnější překlad můžete zapnout a vypnout inline překládání zmáčknutím
+    klávesové zkratky "%s".
+  target_initial: Pro snadnější překlad můžete zapnout a vypnout inline překládání
+    zmáčknutím klávesové zkratky "%s".
+- locale: cs
+  format: string
+  source: Mode
+  target: Režim údržby
+  target_initial: Režim údržby
+- locale: cs
+  format: string
+  source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  target: Povolit REST API pro autentizaci uživatele pomocí uživatelského jména/emailové
+    adresy a hesla.
+  target_initial: Povolit REST API pro autentizaci uživatele pomocí uživatelského
+    jména/emailové adresy a hesla.
+- locale: cs
+  format: string
+  source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  target: Chat se zobrazí po vytvoření spojení se serverem a pokud je na něm někdo
+    online s kým lze komunikovat.
+  target_initial: Chat se zobrazí po vytvoření spojení se serverem a pokud je na něm
+    někdo online s kým lze komunikovat.
+- locale: cs
+  format: string
+  source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  target: Pokud zapnete debugování nastavením možnosti §debug§ na §true§, důvod bude
+    zobrazen v javascriptové konzoli.
+  target_initial: Pokud zapnete debugování nastavením možnosti §debug§ na §true§,
+    důvod bude zobrazen v javascriptové konzoli.
+- locale: cs
+  format: string
+  source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  target: Pokud neobdržíte instrukce do jedné nebo dvou minut,  zkontrolujte si Vaše
+    emailové spam složky/filtry, případně ještě jednou zkuste zaslat tento požadavek.
+  target_initial: Pokud neobdržíte instrukce do jedné nebo dvou minut,  zkontrolujte
+    si Vaše emailové spam složky/filtry, případně ještě jednou zkuste zaslat tento
+    požadavek.
+- locale: cs
+  format: string
+  source: Geo IP Backend
+  target: Geo IP Služba
+  target_initial: Geo IP Služba
+- locale: cs
+  format: string
+  source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  target: Zde se můžete odhlásit, změnit jazyk veřejné části webu nebo vidět vámi
+    naposled prohlédnuté položky.
+  target_initial: Zde se můžete odhlásit, změnit jazyk veřejné části webu nebo vidět
+    vámi naposled prohlédnuté položky.
+- locale: cs
+  format: string
+  source: Timeframe for every following response.
+  target: Časový rámec pro každou následující reakci.
+  target_initial: Časový rámec pro každou následující reakci.
+- locale: cs
+  format: string
+  source: Timeframe for solving the problem.
+  target: Časový rámec pro vyřešení problému.
+  target_initial: Časový rámec pro vyřešení problému.
+- locale: cs
+  format: string
+  source: Time Tracking
+  target: Sledování času
+  target_initial: Sledování času
+- locale: cs
+  format: string
+  source: Update Time
+  target: Doba aktualizace
+  target_initial: Doba aktualizace
+- locale: cs
+  format: string
+  source: Connect Channels
+  target: Napojit kanály
+  target_initial: Napojit kanály
+- locale: cs
+  format: string
+  source: Defines OTRS endpoint auth key.
+  target: Definuje endpoint autorizační klíč (auth key) pro OTRS.
+  target_initial: Definuje endpoint autorizační klíč (auth key) pro OTRS.
+- locale: cs
+  format: string
+  source: Subscription
+  target: Odběr
+  target_initial: Odběr
+- locale: cs
+  format: string
+  source: Also caller id of outbound calls can be changed.
+  target: Rovněž může být změněno ID volajícího pro odchozí hovory.
+  target_initial: Rovněž může být změněno ID volajícího pro odchozí hovory.
+- locale: cs
+  format: string
+  source: Blocked caller ids based on sender caller id.
+  target: Blokovaná ID volajících na základě odesílatelova ID.
+  target_initial: Blokovaná ID volajících na základě odesílatelova ID.
+- locale: cs
+  format: string
+  source: Callback URL
+  target: Callback URL
+  target_initial: Callback URL
+- locale: cs
+  format: string
+  source: You use %s in text but no attachment is attached. Do you want to continue?
+  target: Používáte v textu slova "%s" ale žádná příloha nebyla přidána. Jste si jisti
+    odesláním?
+  target_initial: Používáte v textu slova "%s" ale žádná příloha nebyla přidána. Jste
+    si jisti odesláním?
+- locale: cs
+  format: string
+  source: Your account got canceled at %s! Your system will be removed at %s
+  target: Váš účet byl zrušen k %s! Váš systém bude odstraněn k datu %s
+  target_initial: Váš účet byl zrušen k %s! Váš systém bude odstraněn k datu %s
+- locale: cs
+  format: string
+  source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  target: Definuje službu pro řízení geolokace kalendáře. Používáno pro vytvoření
+    prvotního kalendáře administrátora.
+  target_initial: Definuje službu pro řízení geolokace kalendáře. Používáno pro vytvoření
+    prvotního kalendáře administrátora.
+- locale: cs
+  format: string
+  source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  target: Byl vytvořen testovací tiket, můžete jej nalézt např. ve vašem přehledu
+    "%s" %l.
+  target_initial: Byl vytvořen testovací tiket, můžete jej nalézt např. ve vašem přehledu
+    "%s" %l.
+- locale: cs
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: cs
+  format: string
+  source: 'Attention: These will be your login password after the import is completed.'
+  target: 'Upozornění: Toto budou vaše přihlašovací heslo po dokončení importu.'
+  target_initial: 'Upozornění: Toto budou vaše přihlašovací heslo po dokončení importu.'
+- locale: cs
+  format: string
+  source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  target: Nastavuje skupiny z kterých zákazník může vytvářet tikety z webového rozhraní/veřejných
+    stránek tohoto systému. "-" znamená, dostupnost pro všechny skupiny.
+  target_initial: Nastavuje skupiny z kterých zákazník může vytvářet tikety z webového
+    rozhraní/veřejných stránek tohoto systému. "-" znamená, dostupnost pro všechny
+    skupiny.
+- locale: cs
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: Pozvat řešitele/kolegy aby Vám pomáhali s tikety
+  target_initial: Pozvat řešitele/kolegy aby Vám pomáhali s tikety
+- locale: cs
+  format: string
+  source: Here you will find the latest activities of your system.
+  target: Zde naleznete poslední aktivity ve Vašem systému
+  target_initial: Zde naleznete poslední aktivity ve Vašem systému
+- locale: cs
+  format: string
+  source: A powerfull service to get more information about your customers.
+  target: Výkonná služba pro získání více informací o vašich zákaznících.
+  target_initial: Výkonná služba pro získání více informací o vašich zákaznících.
+- locale: cs
+  format: string
+  source: A test ticket has been created, you can find it in your overview |"%s"|
+  target: Byl vytvořen testovací tiket, můžete jej nalézt např. ve vašem přehledu
+    |"%s"|
+  target_initial: Byl vytvořen testovací tiket, můžete jej nalézt např. ve vašem přehledu
+    |"%s"|
+- locale: cs
+  format: string
+  source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  target: Můžete vytvořit chatovací widgety pro vaše webové stránky a takto s nimi
+    přes tento systém komunikovat.
+  target_initial: Můžete vytvořit chatovací widgety pro vaše webové stránky a takto
+    s nimi přes tento systém komunikovat.
+- locale: cs
+  format: string
+  source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  target: Zde můžete vyhledávat tikety, organizace nebo zákazníky. Rovněž můžete používat
+    zástupného znaku §*§. Např. §Nov*§ nebo §Nov*a§. Také můžete použít ||dvojitých
+    uvozovek|| pro hledání spojitých frází např.  §"chybná objednávka"§.
+  target_initial: Zde můžete vyhledávat tikety, organizace nebo zákazníky. Rovněž
+    můžete používat zástupného znaku §*§. Např. §Nov*§ nebo §Nov*a§. Také můžete použít
+    ||dvojitých uvozovek|| pro hledání spojitých frází např.  §"chybná objednávka"§.
+- locale: cs
+  format: string
+  source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  target: Pokud Vám email nedorazil, zkontrolujte zda jej nemáte ve složce spamu,
+    záložkách sociálních médií, apod.
+  target_initial: Pokud Vám email nedorazil, zkontrolujte zda jej nemáte ve složce
+    spamu, záložkách sociálních médií, apod.
+- locale: cs
+  format: string
+  source: Where
+  target: Kde
+  target_initial: Kde
+- locale: cs
+  format: string
+  source: Timeframe for the first response.
+  target: Časový rámec pro první reakci.
+  target_initial: Časový rámec pro první reakci.
+- locale: cs
+  format: string
+  source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  target: Zammad je aktuálně v režimu údržby a přihlásit se můžou jen administrátoři.
+    Prosím vyčkejte než bude ukončen režim údržby.
+  target_initial: Zammad je aktuálně v režimu údržby a přihlásit se můžou jen administrátoři.
+    Prosím vyčkejte než bude ukončen režim údržby.
+- locale: cs
+  format: string
+  source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  target: Zde se můžete odhlásit, změnit jazyk veřejné části webu a vidět vámi naposled
+    prohlédnuté položky.
+  target_initial: Zde se můžete odhlásit, změnit jazyk veřejné části webu a vidět
+    vámi naposled prohlédnuté položky.
+- locale: cs
+  format: string
+  source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  target: V tu samou dobu, autorizujeme vašeho kreditního poskytovatele pro zařízení
+    inkasa čerpaného firmou Zammad GmbH z vašeho účtu.
+  target_initial: V tu samou dobu, autorizujeme vašeho kreditního poskytovatele pro
+    zařízení inkasa čerpaného firmou Zammad GmbH z vašeho účtu.
+- locale: cs
+  format: string
+  source: Your account has not been verified. Please click the link in the verification
+    email.
+  target: Váš účet ještě nebyl ověřen. Prosím klikněte na odkaz v ověřovací emailové
+    zprávě jenž vám byla doručena.
+  target_initial: Váš účet ještě nebyl ověřen. Prosím klikněte na odkaz v ověřovací
+    emailové zprávě jenž vám byla doručena.
+- locale: cs
+  format: string
+  source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  target: Chystáte se zrušit váš Zammad účet. Jste si tím ABSOLUTNĚ jist(a)?
+  target_initial: Chystáte se zrušit váš Zammad účet. Jste si tím ABSOLUTNĚ jist(a)?
+- locale: cs
+  format: string
+  source: Topic
+  target: Téma
+  target_initial: Téma
+- locale: cs
+  format: string
+  source: Use client storage to cache data to enhance performance of application.
+  target: Používat klientské úložiště ke cachování dat pro zlepšení výkonu aplikace.
+  target_initial: Používat klientské úložiště ke cachování dat pro zlepšení výkonu
+    aplikace.
+- locale: cs
+  format: string
+  source: Enabled
+  target: aktivní
+  target_initial: aktivní
+- locale: cs
+  format: string
+  source: Connect Facebook App
+  target: Připojit Facebook Aplikaci
+  target_initial: Připojit Facebook Aplikaci
+- locale: cs
+  format: string
+  source: Separate multiple values by ;
+  target: Více hodnot oddělte pomocí ;
+  target_initial: Více hodnot oddělte pomocí ;
+- locale: cs
+  format: string
+  source: Add Account
+  target: Přidat účet
+  target_initial: Přidat účet
+- locale: cs
+  format: string
+  source: Max. concurrent chats
+  target: Maximum souběžných chatů
+  target_initial: Maximum souběžných chatů
+- locale: cs
+  format: string
+  source: Minute
+  target: Minuta
+  target_initial: Minuta
+- locale: cs
+  format: string
+  source: Your callback URL
+  target: Vaše callback URL
+  target_initial: Vaše callback URL
+- locale: cs
+  format: string
+  source: Choose which group %s will get added to.
+  target: Vyberte do které skupiny budou %s přidány.
+  target_initial: Vyberte do které skupiny budou %s přidány.
+- locale: cs
+  format: string
+  source: Wall
+  target: Zeď
+  target_initial: Zeď
+- locale: cs
+  format: string
+  source: The tutorial on how to manage a %s is hosted on our [online documentation](https://zammad.org/documentation/channel/facebook).
+  target: Anglický návod jak nastavit %s je dostupný v [online dokumentaci](https://zammad.org/documentation/channel/facebook).
+  target_initial: Anglický návod jak nastavit %s je dostupný v [online dokumentaci](https://zammad.org/documentation/channel/facebook).
+- locale: cs
+  format: string
+  source: Add this class to a button on your page that should open the chat.
+  target: Třída tlačítka které má otevřít chat.
+  target_initial: Třída tlačítka které má otevřít chat.
+- locale: cs
+  format: string
+  source: Identifier of the chat-topic.
+  target: Identifikátor tématu chatu.
+  target_initial: Identifikátor tématu chatu.
+- locale: cs
+  format: string
+  source: default
+  target: výchozí
+  target_initial: výchozí
+- locale: cs
+  format: string
+  source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  target: CSS velikost písma aka font-size tj. nutno i s jednotkami - např. 12px,
+    1.5em. Pokud zůstane undefined zdědí hodnotu font-size z těla webové stránky.
+  target_initial: CSS velikost písma aka font-size tj. nutno i s jednotkami - např.
+    12px, 1.5em. Pokud zůstane undefined zdědí hodnotu font-size z těla webové stránky.
+- locale: cs
+  format: string
+  source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  target: Nastaví sloužbu která se bude používat pro detekci lokace na základě IP
+    adresy. Použito např. pro kontrolu přihlášení stávajícího uživatele z jiného státu.
+  target_initial: Nastaví sloužbu která se bude používat pro detekci lokace na základě
+    IP adresy. Použito např. pro kontrolu přihlášení stávajícího uživatele z jiného
+    státu.
+- locale: cs
+  format: string
+  source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  target: Definuje službu pro řízení geolokace kalendáře. Používáno pro vytvoření
+    prvotního kalendáře administrátora.
+  target_initial: Definuje službu pro řízení geolokace kalendáře. Používáno pro vytvoření
+    prvotního kalendáře administrátora.
+- locale: cs
+  format: string
+  source: Welcome Title shown on the closed chat. Can contain HTML.
+  target: Uvítací nadpis zobrazení na zavřeném chatu. Může obsahovat HTML elementy.
+  target_initial: Uvítací nadpis zobrazení na zavřeném chatu. Může obsahovat HTML
+    elementy.
+- locale: cs
+  format: string
+  source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  target: Indentifikátor pro jednotlivé tikety např. Ticket#, Call#, MůjTiket#. Ve
+    výchozím stavu nastaveno na Ticket#.
+  target_initial: Indentifikátor pro jednotlivé tikety např. Ticket#, Call#, MůjTiket#.
+    Ve výchozím stavu nastaveno na Ticket#.
+- locale: cs
+  format: string
+  source: Configure App
+  target: Nastavit aplikaci
+  target_initial: Nastavit aplikaci
+- locale: cs
+  format: string
+  source: Enter your %s App Keys
+  target: Vložte Vaše %s App Klíče
+  target_initial: Vložte Vaše %s App Klíče
+- locale: cs
+  format: string
+  source: Greeting
+  target: Pozdrav
+  target_initial: Pozdrav
+- locale: cs
+  format: string
+  source: New Application
+  target: Nová Aplikace
+  target_initial: Nová Aplikace
+- locale: cs
+  format: string
+  source: Removes the shadows for a flat look.
+  target: Odstraní stíny textu, čímž se dosáhne ploché zobrazení.
+  target_initial: Odstraní stíny textu, čímž se dosáhne ploché zobrazení.
+- locale: cs
+  format: string
+  source: Location of an external chat.css file.
+  target: Umístění externího souboru chat.css.
+  target_initial: Umístění externího souboru chat.css.
+- locale: cs
+  format: string
+  source: Application
+  target: Aplikace
+  target_initial: Aplikace
+- locale: cs
+  format: string
+  source: Services
+  target: Služby
+  target_initial: Služby
+- locale: cs
+  format: string
+  source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  target: Pokud necháte prázdné, použije se autodetkce v tomto případě  %s. Autodetekce
+    přečte hostitele z tagu <script>. Pokud nevyčítáte přes tag <script>, musíte zde
+    specifikovat hostitele.
+  target_initial: Pokud necháte prázdné, použije se autodetkce v tomto případě  %s.
+    Autodetekce přečte hostitele z tagu <script>. Pokud nevyčítáte přes tag <script>,
+    musíte zde specifikovat hostitele.
+- locale: cs
+  format: string
+  source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  target: Tato třída bude přidána tlačítku při inicializaci připojení k chatu a bude
+    odstraněna jakmile bude spojení vytvořeno.
+  target_initial: Tato třída bude přidána tlačítku při inicializaci připojení k chatu
+    a bude odstraněna jakmile bude spojení vytvořeno.
+- locale: cs
+  format: string
+  source: Geo Location Service
+  target: Geo Location služba
+  target_initial: Geo Location služba
+- locale: cs
+  format: string
+  source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  target: Konfigurace skupin které mohou vytvářet tikety přes webové rozhraní. "-"
+    znamená že vytváření bude dostupné pro všechny skupiny.
+  target_initial: Konfigurace skupin které mohou vytvářet tikety přes webové rozhraní.
+    "-" znamená že vytváření bude dostupné pro všechny skupiny.
+- locale: cs
+  format: string
+  source: Enables console logging.
+  target: Zapne logování do javascriptové konzole.
+  target_initial: Zapne logování do javascriptové konzole.
+- locale: cs
+  format: string
+  source: Sender Format Separator
+  target: Formát oddělovače pro odesílatele
+  target_initial: Formát oddělovače pro odesílatele
+- locale: cs
+  format: string
+  source: Show the chat when ready.
+  target: Pokud to lze, chat se zobrazí.
+  target_initial: Pokud to lze, chat se zobrazí.
+- locale: cs
+  format: string
+  source: Ticket Interface
+  target: Rozhraní tiketu
+  target_initial: Rozhraní tiketu
+- locale: cs
+  format: string
+  source: Network
+  target: Síť
+  target_initial: Síť
+- locale: cs
+  format: string
+  source: Report Interface
+  target: Rozhraní reportu
+  target_initial: Rozhraní reportu
+- locale: cs
+  format: string
+  source: Requesting the Grant
+  target: Zažádání o autorizaci (Grant Request)
+  target_initial: Zažádání o autorizaci (Grant Request)
+- locale: cs
+  format: string
+  source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  target: Automaticky načítá soubor chat.css. Pokud chcete použít vlastní css, nastavte
+    na false.
+  target_initial: Automaticky načítá soubor chat.css. Pokud chcete použít vlastní
+    css, nastavte na false.
+- locale: cs
+  format: string
+  source: This is Zammad version %s
+  target: Verze tohoto Zammad systému je %s
+  target_initial: Verze tohoto Zammad systému je %s
+- locale: cs
+  format: string
+  source: Where to append the chat to.
+  target: Ke kterému elementu chat připnout.
+  target_initial: Ke kterému elementu chat připnout.
+- locale: cs
+  format: string
+  source: Password Access
+  target: Přístup přes heslo
+  target_initial: Přístup přes heslo
+- locale: cs
+  format: string
+  source: Admin Interface
+  target: Rozhraní administrátora
+  target_initial: Rozhraní administrátora
+- locale: cs
+  format: string
+  source: Geo IP Service
+  target: Geo IP služba
+  target_initial: Geo IP služba
+- locale: cs
+  format: string
+  source: Getting an Access Token
+  target: Získání přístupového Tokenu
+  target_initial: Získání přístupového Tokenu
+- locale: cs
+  format: string
+  source: Config has changed
+  target: Byla změněna konfigurace
+  target_initial: Byla změněna konfigurace
+- locale: cs
+  format: string
+  source: The configuration of Zammad has changed, please reload your browser.
+  target: Konfigurace systému Zammad byla změněna, prosím obnovte si tuto stránku
+    v prohlížeči.
+  target_initial: Konfigurace systému Zammad byla změněna, prosím obnovte si tuto
+    stránku v prohlížeči.
+- locale: cs
+  format: string
+  source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  target: Zde můžete vytvořit nové tickety. Také pokud máte oprávnění, můžete přidat
+    nové zákazníky a organizace.
+  target_initial: Zde můžete vytvořit nové tickety. Také pokud máte oprávnění, můžete
+    přidat nové zákazníky a organizace.
+- locale: cs
+  format: string
+  source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  target: Zde naleznete přehled vašich otevřených, přidělených a eskalovaných ticketů.
+  target_initial: Zde naleznete přehled vašich otevřených, přidělených a eskalovaných
+    ticketů.
+- locale: cs
+  format: string
+  source: Here you see a quick overview of your and other agents' performance.
+  target: Zde uvidíte rychlý přehled o vaší výkonnosti, i výkonnosti dalších agentů.
+  target_initial: Zde uvidíte rychlý přehled o vaší výkonnosti, i výkonnosti dalších
+    agentů.
+- locale: cs
+  format: string
+  source: Annual
+  target: Roční
+  target_initial: Roční
+- locale: cs
+  format: string
+  source: Accounted Time
+  target: Zúčtovaný čas
+  target_initial: Zúčtovaný čas
+- locale: cs
+  format: string
+  source: Add Bot
+  target: Přidat Bota
+  target_initial: Přidat Bota
+- locale: cs
+  format: string
+  source: All Agents
+  target: Všichni agenti
+  target_initial: Všichni agenti
+- locale: cs
+  format: string
+  source: Bots
+  target: Boti
+  target_initial: Boti
+- locale: cs
+  format: string
+  source: Default visibility for new note.
+  target: Základní zobrazení pro novou poznámku.
+  target_initial: Základní zobrazení pro novou poznámku.
+- locale: cs
+  format: string
+  source: Change
+  target: Změna
+  target_initial: Změna
+- locale: cs
+  format: string
+  source: Configure
+  target: Konfiguruj
+  target_initial: Konfiguruj
+- locale: cs
+  format: string
+  source: contains one
+  target: obsahuje jeden
+  target_initial: obsahuje jeden
+- locale: cs
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: Pokud jste již někdy kontaktovali podporu tak máte zaregistrovaný účet.
+  target_initial: Pokud jste již někdy kontaktovali podporu tak máte zaregistrovaný
+    účet.
+- locale: cs
+  format: string
+  source: Password needs to contain at least one digit.
+  target: Heslo musí obsahovat alespoň jednu číslici.
+  target_initial: Heslo musí obsahovat alespoň jednu číslici.
+- locale: cs
+  format: string
+  source: We've sent password reset instructions to your email address.
+  target: Byly vým zaskány instrukce pro obnovení / vytvoření hesla na E-mail.
+  target_initial: Byly vým zaskány instrukce pro obnovení / vytvoření hesla na E-mail.
+- locale: cs
+  format: string
+  source: Store
+  target: Obchod
+  target_initial: Obchod
+- locale: cs
+  format: string
+  source: Uninstall
+  target: Odinstalovat
+  target_initial: Odinstalovat
+- locale: cs
+  format: string
+  source: Delivery failed
+  target: Doručení selhalo
+  target_initial: Doručení selhalo
+- locale: cs
+  format: string
+  source: Invoice
+  target: Faktura
+  target_initial: Faktura
+- locale: cs
+  format: string
+  source: Your new selection
+  target: Váš nový výběr
+  target_initial: Váš nový výběr
+- locale: cs
+  format: string
+  source: Running...
+  target: Běžící...
+  target_initial: Běžící...
+- locale: cs
+  format: string
+  source: delete
+  target: smazat
+  target_initial: smazat
+- locale: cs
+  format: string
+  source: Products
+  target: Produkty
+  target_initial: Produkty
+- locale: cs
+  format: string
+  source: Receipt
+  target: Příjemce
+  target_initial: Příjemce
+- locale: cs
+  format: string
+  source: Analyzing structure...
+  target: Analyzuji strukturu...
+  target_initial: Analyzuji strukturu...
+- locale: cs
+  format: string
+  source: Billed monthly
+  target: Placeno měsíčně
+  target_initial: Placeno měsíčně
+- locale: cs
+  format: string
+  source: Billing E-Mail Address
+  target: E-Mail pro platby
+  target_initial: E-Mail pro platby
+- locale: cs
+  format: string
+  source: Configurable in the admin interface of %s.
+  target: Nastavitelné v admin rozhraní %s
+  target_initial: Nastavitelné v admin rozhraní %s
+- locale: cs
+  format: string
+  source: Base DN
+  target: Base DN
+  target_initial: Base DN
+- locale: cs
+  format: string
+  source: Bind Password
+  target: Bind Password
+  target_initial: Bind Password
+- locale: cs
+  format: string
+  source: Bind User
+  target: Bind User
+  target_initial: Bind User
+- locale: cs
+  format: string
+  source: Connecting ...
+  target: Připojuji ...
+  target_initial: Připojuji ...
+- source: Moved in
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: What ideas do you have?
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: What can you do here?
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Here you can create one.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Display
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Needed
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: At a glance
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Fully Qualified Domain Name
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Switch to
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Zammad looks like this for "%s"
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: System URL
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: in hours
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Widget
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: switch to
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Widget Designer
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: "%s ended switch to |%s|!"
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: clear
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Will process
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: What affects your Zammad Karma?
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Intermediate
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Master
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enables user authentication via %s. Register your app first at [%s](%s).
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Update subscription
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Yes, undo my subscription cancel
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: VoIP service provider with realtime push.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: do not reopen Ticket but create new Ticket
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: "%s credentials"
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Report Profile
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Number of failed logins after account will be deactivated.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: HTTP type
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Updating Database
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Wrong Username or Password combination.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least a minimal number of characters.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Minimum length
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Installed
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Feedback
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Messages
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Meine zugewiesenen Tickets
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: My closed Tickets
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Define the http protocol of your instance.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Telegram
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Yes, change my subscription
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: contains all
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: contains all not
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Payment by invoice
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Already charged in this periode
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Plan
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: contains one not
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Save configuration
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: LDAP Host
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Last sync
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: failed
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: skipped
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: untouched
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Mapping
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Article Last Sender
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Reply-To
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Maximum size in MB of emails.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Maximum Email Size
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Additional follow-up detection
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines pretty date format.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: You have no configured %s right now.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Email - subject field
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Note - default visibility
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Maximum failed logins
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Email - full quote
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Change Objects
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Start new
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Endpoint
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Read
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Urgency
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Exchange integration for contacts management.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Shared
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Till
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Out of Office
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Auto close
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Agent limit exceeded, please check your account settings.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Full
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: People who create Tickets ask for help.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Add sender initials to end of a tweet.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To configure your system.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: To work on Tickets.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: forward
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Defines the system default language.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: No proxy for the following hosts.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Locale
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: cs
+  target: ''
+  target_initial: ''

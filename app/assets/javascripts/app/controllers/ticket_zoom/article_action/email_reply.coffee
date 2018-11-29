@@ -157,8 +157,6 @@ class EmailReply extends App.Controller
 
     type = App.TicketArticleType.findByAttribute(name:'email')
 
-    articleNew.subtype = 'reply'
-
     App.Event.trigger('ui::ticket::setArticleType', {
       ticket: ticket
       type: type
@@ -189,13 +187,11 @@ class EmailReply extends App.Controller
 
     if ui.Config.get('ui_ticket_zoom_article_email_subject')
       if _.isEmpty(article.subject)
-        articleNew.subject = ticket.title
+        articleNew.subject = "FW: #{ticket.title}"
       else
-        articleNew.subject = article.subject
+        articleNew.subject = "FW: #{article.subject}"
 
     type = App.TicketArticleType.findByAttribute(name:'email')
-
-    articleNew.subtype = 'forward'
 
     App.Event.trigger('ui::ticket::setArticleType', {
       ticket: ticket

@@ -60,23 +60,68 @@ class App.ChannelEmailFilter extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ControllerGenericNew(
-      pageData:
-        object: 'Postmaster Filter'
-      genericObject: 'PostmasterFilter'
+    new App.ChannelEmailFilterEdit(
       container: @el.closest('.content')
-      callback: @load
     )
-    
+
   edit: (id, e) =>
     e.preventDefault()
-    new App.ControllerGenericEdit(
-      id: id,
-      pageData:
-        object: 'Postmaster Filter'
-      genericObject: 'PostmasterFilter'
+    new App.ChannelEmailFilterEdit(
+      object:    App.PostmasterFilter.find(id)
       container: @el.closest('.content')
-      callback: @load
+    )
+
+class App.ChannelEmailFilterEdit extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Postmaster Filter'
+
+  content: =>
+    if @object
+      @form = new App.ControllerForm(
+        model:     App.PostmasterFilter,
+        params:    @object,
+        autofocus: true,
+      )
+    else
+      @form = new App.ControllerForm(
+        model:     App.PostmasterFilter,
+        autofocus: true,
+      )
+
+    @form.form
+
+  onSubmit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+    params['channel'] = 'email'
+
+    object = @object || new App.PostmasterFilter
+    object.load(params)
+
+    # validate form
+    errors = @form.validate(params)
+
+    # show errors in form
+    if errors
+      @log 'error', errors
+      @formValidate(form: e.target, errors: errors)
+      return false
+
+    # disable form
+    @formDisable(e)
+
+    # save object
+    object.save(
+      done: =>
+        @close()
+      fail: (settings, details) =>
+        @log 'errors', details
+        @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ChannelEmailSignature extends App.Controller

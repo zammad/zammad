@@ -113,7 +113,6 @@ class App.ControllerTable extends App.Controller
   radio:              false
   renderState:        undefined
   groupBy:            undefined
-  groupDirection:     undefined
 
   shownPerPage: 150
   shownPage: 0
@@ -412,12 +411,6 @@ class App.ControllerTable extends App.Controller
         return if !@bindCheckbox
         return if !@bindCheckbox.events
         return if _.isEmpty(clicks)
-
-        # If a select_all callback exists, then trigger it once insteading of triggering the callback once for each checkbox
-        if @bindCheckbox.select_all
-          @bindCheckbox.select_all(clicks[0]..., e)
-          return
-
         for event, callback of @bindCheckbox.events
           if event == 'click' || event == 'change'
             for click in clicks
@@ -778,9 +771,6 @@ class App.ControllerTable extends App.Controller
       for key of groupObjects
         groupsSorted.push key
       groupsSorted = groupsSorted.sort()
-      # Reverse the sorted groups depending on the groupDirection
-      if @groupDirection == 'DESC'
-        groupsSorted.reverse()
 
       # get new order
       localObjects = []

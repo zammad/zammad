@@ -80,7 +80,7 @@ gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', '2.6.6'
+gem 'mail', '>= 2.7.1.rc1'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'
@@ -120,11 +120,8 @@ gem 'viewpoint'
 group :development, :test do
 
   # debugging
-  gem 'byebug'
   gem 'pry-rails'
   gem 'pry-remote'
-  gem 'pry-rescue'
-  gem 'pry-stack_explorer'
 
   # test frameworks
   gem 'rspec-rails'
@@ -144,7 +141,7 @@ group :development, :test do
   # livereload on template changes (html, js, css)
   gem 'guard',             require: false
   gem 'guard-livereload',  require: false
-  gem 'rack-livereload',   require: false
+  gem 'rack-livereload'
   gem 'rb-fsevent',        require: false
 
   # auto symlinking
@@ -158,15 +155,14 @@ group :development, :test do
   # changelog generation
   gem 'github_changelog_generator'
 
+  # Setting ENV for testing purposes
+  gem 'figaro'
+
   # Use Factory Bot for generating random test data
   gem 'factory_bot_rails'
 
   # mock http calls
   gem 'webmock'
-
-  # record and replay TCP/HTTP transactions
-  gem 'tcr'
-  gem 'vcr'
 end
 
 # Want to extend Zammad with additional gems?
@@ -175,5 +171,4 @@ end
 #               without having your changes overwritten during upgrades.)
 # ZAMMAD DEVS:  Consult the internal wiki
 #               (or else risk pushing unwanted changes to Gemfile.lock!)
-#               https://git.znuny.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
 eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')

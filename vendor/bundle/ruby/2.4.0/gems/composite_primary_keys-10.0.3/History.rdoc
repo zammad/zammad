@@ -1,0 +1,736 @@
+== 10.0.3 (2018-02-25)
+
+* Require a minimum of activerecord version 5.1.5 (Tom Hughes)
+
+== 10.0.2 (2017-12-02)
+
+* Fix frozen string mutation for mysql (Sergey Sein)
+* Fix autosave for belongs_to associations (Fabian Mersch)
+* Require a minimum of activerecord version 5.1.4 (Charlie Savage)
+
+== 10.0.1 (2017-10-08)
+
+* Fixed an error that happened when a table attribute had the same name as the table (Taishi Kasuga)
+
+== 10.0.0 (2017-10-08)
+
+* Support ActiveRecord 5.1.x (Pinak Thakkar, Jordan Owens)
+* Fix Paper Trail compatibility (Sean Linsley)
+* Fix typo in Readme (Mike Gunderloy)
+* Improved sql server support (Artyom Nikolaev)
+
+== 9.0.8 (2017-10-11)
+
+* Fix Paper Trail compatibility (Sean Linsley)
+
+== 9.0.7 (2017-05-22)
+
+* Update sqlite3 to support deletes and updates (Charlie Savage)
+* Specify version for sql server gem so it works with Rails 5.0 (Charlie Savage)
+* Use `datetime` datatype to address Invalid default value for updated_at (Yasuo Honda)
+* Fix ORA-00900 error when it attempts to execute blank statement (pustomytnyk)
+* Override ActiveRecord::Associations::CollectionAssociation#ids_reader (pustomytnyk)
+* Only define #primary_keys if #primary_keys=(value) is called (Charlie Savage)
+* Change `timestamp` to `datetime` for MySQL as ActiveRecord timestamps type does (Oriol Collel)
+* Fix incorrect case statement to get PK for SQLServer (Oriol Collel)
+* Fixes random failures in test_preload_of_polymorphic_association (Boris Peterbarg)
+
+== 9.0.6 (2017-01-08)
+
+* Uncomment tests (Sammy Larbi)
+* Update readme (Charlie Savage)
+
+== 9.0.5 (2017-01-02)
+
+* Don't nest PK twice when looking up id, fixes #319 (Kerey Roper)
+* Simplify database setup  for tests (Charlie Savage)
+* Revamp gem management (Charlie Savage)
+* Add support for Relation#update_all when using joins (Charlie Savage)
+* Add erb support to test database.yml files (Charlie Savage)
+* Sqlserver fixes for ordering (Charlie Savage)
+* Sqlserver refresh (Charlie Savage)
+* Oracle refresh (Charlie Savage)
+* Fix delete_all for MySql (Charlie Savage)
+* Added test cases for preloading associations with and without conditions (Martin Körner)
+* Revamp single association handling to correctly setup SQL binds (Charlie Savage)
+* Remove references to ActiveModel - #352 (Charlie Savage)
+* Fixes for #232, #359, #367 and #371 (Charlie Savage)
+
+== 9.0.4 (2016-08-17)
+* Do not set associations to readonly.  See https://github.com/rails/rails/issues/24093 (Charlie Savage)
+
+== 9.0.2 (2016-08-10)
+* Fix delete_all when used with a join (Charlie Savage)
+
+== 9.0.1 (2016-07-27)
+* Create OR predicates in a nicely balanced tree fixing #320 (Nathan Samson)
+
+== 9.0.0 (2016-07-06)
+* Support connection_specification_name in rails5.0.0.rc1 (pocari)
+
+== 9.0.0.beta1 (2016-04-16)
+* Rails 5 beta support (Sammy Larbi)
+
+== 8.1.5 (2017-01-01)
+
+* Don't nest PK twice when looking up id, fixes #319 (Kerey Roper)
+
+== 8.1.4 (2016-07-27)
+
+* Create OR predicates in a nicely balanced tree fixing #320 (Nathan Samson)
+* Fix find in batches (apurvis)
+
+== 8.1.3 (2016-04-16)
+
+* Make CPK work for Arel::Attributes::Attribute (Rick Xing)
+* Change autosave_association.rb so that association autosave can work (Rick Xing)
+* Fix exception when saving "other_ids=" with a has_many :through association where the source
+  association is polymorphic (Tye Shavik)
+* Fix Arel::Nodes::In where left side is not a column (Tye Shavik)
+
+== 8.1.2 (2015-12-13)
+
+* Fix failing tests
+
+== 8.1.1 (2015-08-04)
+
+* Updates to make Travis CI green (Laust Rud Jacobsen)
+* Travis CI support (Laust Rud Jacobsen)
+* Remove overriden Base#==(comparison_object) which had a different behavior than stock AR method
+  for non-peristed objects (Charlie Savage)
+* Update support for Uniquenes validations (Avi Leavitt)
+* Remove call to verify_active_connections! which was removed from AR 4.1 (Steve Pletcher)
+* Aligned the establish connection paramater handling to be similar to latest version of rails (Harish Shetty)
+
+
+== 8.1.0 (2014-03-23)
+
+* ActiveRecord 4.2.1 support (Charlie Savage)
+* Change parsing of composite ids to fix #290 (Charlie Savage)
+* Add sqlserver setting for test suite (Joachim Herb)
+* Fix sqlserver adapater, isse #224 (Joachim Herb)
+* Update readme file to include version 8.* information (David Silva)
+
+== 8.0.1 (2014-01-24)
+
+* Support optimistic lock and lock_version added to existing fixtures (Kirika)
+
+== 8.0.0 (2014-01-10)
+
+* ActiveRecord 4.2.* support (Sammy Larbi)
+
+== 7.0.14 (2015-08-04)
+
+* Remove overriden Base#==(comparison_object) which had a different behavior than stock AR method
+  for non-peristed objects (Charlie Savage)
+* Update support for Uniquenes validations (Avi Leavitt)
+* Remove call to verify_active_connections! which was removed from AR 4.1 (Steve Pletcher)
+
+== 7.0.13 (2015-01-24)
+
+* Support optimistic lock and lock_version added to existing fixtures (Kirika)
+* README change to convey finding available versions (Aaron Bartell)
+* Fixes indentation in product_tariffs (Zaldabus)
+
+== 7.0.12 (2014-11-09)
+
+* ActiveRecord 4.1.7 support (Tom Hughes)
+* Extract CPK methods to its own module and extending instead of opening the singleton class
+  which fixes Marshal#dump (Nicolás Hock Isaza)
+
+== 7.0.11 (2014-10-10)
+
+* ActiveRecord 4.1.6 support (Tom Hughes, Charlie Savage)
+* Verify MariaDB support and update docs (Isi Robayna)
+* Postgresql binary column support (Piotr Gębala)
+* Fix deleting of records from collection association (akeuk and Charlie Savage)
+* Fix invalid include (shiro16)
+* Improve tests (Yann Marquet)
+
+== 7.0.10 (2014-08-07)
+
+* Update attribute dirty methods to allow attribute *_was
+  fields to be calculated correctly for enum fields (Zachary Salzbank)
+* Update read/write methods to match latest version of ActiveRecord (Charlie Savage)
+
+== 7.0.9 (2014-08-03)
+
+* Second attemp at fixing instantiation of has_many records via :includes that use composite keys - this
+  time take into account no target records (Charlie Savage)
+
+== 7.0.8 (2014-08-03)
+
+* Fix instantiation of has_many records via :includes that use composite keys (Charlie Savage)
+
+== 7.0.7 (2014-07-29)
+
+* Add back support for calling find like this (Sammy Larbi):
+
+  Membership.find('1,1')
+
+== 7.0.7 (2014-07-29)
+
+* Add back support for calling find like this (Sammy Larbi):
+
+  Membership.find('1,1')
+
+== 7.0.6 (2014-07-22)
+
+* Change the way we override ActiveRecord::Persistence to call sequence of included modules such
+  as callbacks (Charlie Savage)
+
+== 7.0.5 (2014-07-21)
+
+* Remove overriden Postgresql adapter code (Charlie Savage)
+
+== 7.0.4 (2014-07-09)
+
+* Fix overriding of Relation#where_values_hash (Pavel)
+* Add travis CI support (Pavel)
+* Run AR's original relation_for_destroy when primary key is not composite (Pavel)
+
+== 7.0.3 (2014-07-04)
+
+* Fixes for Rails 4.1.2+ compatibility (Tom Hughes)
+* Nested attribute fix (Sammy Larb)
+* Test fixes (Sammy Larb)
+* Fixes instantiating join records (Charlie Savage)
+
+== 7.0.2 (2014-06-01)
+
+* Fix id_was when one of the column names is called id (Adrian Hooper)
+* Fix queries that use ActiveRecord objects in the where clause (Adrian Hooper)
+
+== 7.0.1 (2014-05-27)
+
+* Fix setting of timestamps automatically by Rails (Charlie Savage)
+
+== 7.0.0 (2014-05-26)
+
+* Active Record 4.1 support! (Charlie Savage, Tom Hughes, Simon South)
+
+Note there is one big api change.  Previously, CPK supported both of these calls:
+
+  Membership.find(1,1)
+  Membership.find([1,1])
+
+The first one no longer works.  It was removed because it made the internal code simpler
+and makes the intention of the code clearer (especially when finding multiple records).
+If this change causes too much pain then please submit a ticket on Github.
+
+== 6.0.08 (2015-01-24)
+
+* Fix habtm association #delete_records (Uros Jurglic)
+* Support optimistic locking (Toshio Maki)
+* Remove singleton classes on CPK relations (Nicolás Hock Isaza)
+
+== 6.0.7 (2014-10-06)
+
+* Support Rails 4.0.6 (Tom Hughes)
+
+== 6.0.6 (2014-05-26)
+
+* Don't refer to deprecated set_primary_keys in README (Henare Degan)
+* Fix gemspec dependency (Charlie Savage)
+
+== 6.0.5 (2014-05-20)
+
+* Removed debugging output (Dan Draper)
+* Fixes to ensure that has_one associations work correctly (Dan Draper)
+* Fix postgres db migration failure since no result is returned in some cases (seashell-qd)
+* Fix exception raised in method "id=" (seashell.qd@hotmail.com)
+
+== 6.0.3 (2014-04-28)
+
+* Fixes setting of primary key when CPK is not used for a given model (see #191)
+
+== 6.0.2 (2014-04-28)
+
+* Fixes relating to ActiveRecord 4.0.x compatibility (Dan Draper)
+* Ensure that primary key is set on instance when creating new records (Dan Draper)
+
+== 6.0.1 (2013-11-29)
+
+* Handle records == :all in HasManyAssociation#delete_records. Without this calling
+  delete or clear on a has_many assocation can result in an exception (Tom Hughes)
+* Don't include cpk key as an attributes - fixes json serialization - #168 (Charlie Savage)
+* Fix tests running on ruby 1.9.3 (Charlie Savage)
+* Update nested_attributes to work with activerecord 4.0.x (Nick DeLuca)
+
+== 6.0.0 (2013-08-04)
+* ActiveRecord 4.0 support (Sammy Larbi)
+
+== 5.0.13 2013-04-27
+* Batch query improvements (Jordan Byron)
+* Support nested attributes (aiasfina and Charlie Savage)
+
+== 5.0.12 2013-01-21
+* Fix HasManyAssociation foreign_key_present? method to work with non CPK assocations (Charlie Savage)
+
+== 5.0.11 2013-01-19
+* Patch HasManyAssociation foreign_key_present? method to work with array of keys (tbeauvais)
+* Patch reverse_sql_order method to break apart CPKs (tbeauvais)
+* Add test and fix for nested_attributes update (Dinshaw Gobhai)
+* Add test and fix for to_sym exception (Dinshaw Gobhai)
+* Add missing timestamp columns for mysql test_touch.rb (Dinshaw Gobhai)
+
+== 5.0.10 2012-11-21
+* ActiveRecord 3.2.9 compatability (Tom Hughes, Chris Heald, Jack Tang)
+* Add support for find_in_batches (Charlie Savage)
+* Add support for touch method (Macario Ortega)
+* Remove symbolized representation of primary keys to be consistent with ActiveRecord (Tiago Cardoso)
+* Update destroy method to use hash of primary keys over an array. This allows the proper SQL
+  (using IS NULL) to be generated when one of the primary key attributes is nil (Scott Hunter).
+
+== 5.0.9 2012-09-29
+* Enable tests for MS SQL Servder (Enderson Maia)
+* Update ActiveRecord::Base#initialize_dup override in line with ActiveRecord::Base 3.2.5+ (Lucas Maxwell)
+* Require postgresql_adapter.rb also when using activerecord-postgis-adapter (Torsti Schulz)
+* Make cpk_in_predicate build a simple IN when possible (Tom Hughes)
+* Fixed problem loading jdbcpostgresql adapter (Troy Caldwell)
+* Add support for counter cache (Charlie Savage)
+* Fix recreating postgresql database (Charlie Savage)
+* Update dependency to ActiveRecord 3.2.8 or higher (Charlie Savage)
+
+== 5.0.8 2012-07-01
+* Enabled tests for MS SQL Server (Enderson Maia)
+* Update establish_connection to work with Rails 3.2.6 (Ivan Schneider)
+* Fix typos in rake tasks names in README_tests.rdoc (Ivan Schneider)
+* Fix problem with deleting non-CPK in Rails 3.2.5  (Sammy Larbi)
+* Fixes relationship deletion for HABTM in Rails when it passes :all flag instead of
+  an array of IDs.  Also adds new tests and test fixtures (Sammy Larbi)
+* Change mysql db creation to execute one statement each time, since in some setups
+  it will not run multiple statements (Sammy Larbi)
+* Fix multiple assignments to same column due to duplicate keys in @changed_attributes.
+  Includes test fixes (Jan Vlnas)
+
+== 5.0.7 2012-06-03
+* Fixed bug where validates_uniqueness failed for 3 or more primary keys. (Charlie Savage)
+
+== 5.0.6 2012-05-20
+* Fixed bug where setting a belongs_to association to nil would raise an error (Tyler Rick)
+* Remove special case code for 1 column selects and just choose to use Rails version of the
+  method unless we need ours to deal with an Array (Sammy Larbi)
+* Change count tests to actually check for distinct, fix resulting error it
+  demonstrated in the code (Sammy Larbi)
+* Specify mysql2 driver by default (Charlie Savage)
+* Update sqlite tests to run on Windows (Charlie Savage)
+
+== 5.0.5 2012-05-05
+* Count without slower subquery in cases where that is possible (Sammy Larbi)
+* When you call association.build for a has_many association that uses a
+  composite foreign key, the newly built child record should have the values
+  in its belongs_to foreign_key populated from its owner's values (Tyler Rick).
+* Removed test_has_many_with_primary_key method that wasn't being used because
+  another method by the same name was defined below it (Tyler Rick).
+* Fixed a bug that was causing object.changes to raise TypeError (Tyler Rick)
+* Fix error when running rake mysql:rebuild_databases (Tyler Rick)
+* to_param should join with comma instead of minus sign (Tsutomu Kuroda)
+* Fix the "Factories" section of README.rdoc (Tsutomu Kuroda)
+
+== 5.0.4 2012-03-23
+* Update ActiveRecord::AttributeMethods#Write for Rails 3.2.2 (Travis Warlick)
+
+== 5.0.4 2012-03-23
+* Yanked
+
+== 5.0.2 2012-03-16
+* Use .rdoc extension on RDoc files (Elia Schito)
+* Update documentation to use self.primary_keys instead of set_primary_keys (Miguel Fonseca)
+* Added tests for comparing composite ids (Jim Jones)
+* Updating the README for clarity (Brett Fishman)
+* Fix method signature mismatch with active_record (Miguel Fonseca)
+* Fix ref in README (Elia Schito)
+* Add test for habm create (Charlie Savage)
+
+== 5.0.1 2012-02-13
+* Fix deprecation warning that was exactly backwards (Tom Hughes)
+* Fix primary_keys handling in models that inherit from other models
+  but don't redefine their primary_key.  Problem was the inherited
+  models didn't correctly reference their parents primary_keys (Charlie Savage)
+
+== 5.0.0 2012-02-12
+* Fix tests so they pass on MySql (Charlie Savage)
+* Fix calculations to work with duplicate column names (cleesmith)
+* Switch rake tasks for Postgresql and MySql to use ActiveRecord API for
+  creating and dropping databases (Charlie Savage)
+* Follow AR 3.2 lead and introduce self.primary_keys and deprecate set_primary_keys (Charlie Savage)
+* Switch from set_primary_key to self.primary_key= to avoid Rails deprecation (Charlie Savage)
+* Fix issue when using multiple database connections (David Doan)
+* Fix homepage in gemspec and remove email address (Charlie Savage)
+* Add support for string keys to exists? (Jan Vlnas)
+* Fix typo (Jason Karns)
+
+== 5.0.0.rc1 2012-01-16
+* ActiveRecord 3.2 support
+
+== 4.1.2 2012-01-12
+* Helper to allow the same tests to be used for both Oracle and other DBs
+by replacing quoted identifiers with all-caps equivalents on Oracle (Rhett Sutphin)
+* Update Oracle tests (Rhett Sutphin)
+
+== 4.1.1 2011-08-31
+* Support for AR 3.1.1 
+* Make polymorphic belongs_to work in rails 3.1.1 (Tom Hughes)
+* Eliminate relative paths from the test suite (Rhett Sutphin)
+* Minor improvements to the CPK test runner w/o relative path changes (Rhett Sutphin)
+* Remove stray puts (Rhett Sutphin)
+* Allow AR logs to go to a file when running tests.  This commit allows you to
+  specify a file to use instead via the CPK_LOGFILE environment variable.
+  STDOUT is still the default. (Rhett Sutphin)
+* Use ADAPTER env variable to select database to test.  For example:
+
+    ADAPTER=sqlite3 ruby test/test_suite.rb
+    (Rhett Sutphin)
+
+* Eliminate constant redef warnings during test runs (Rhett Sutphin)
+* Add missing fixture declarations (Rhett Sutphin)
+* Standardize on integer PKs in polymorphic fixtures  (Rhett Sutphin)
+* Fix tiny file name typos (Buck)
+
+== 4.0.0 2011-08-31
+* Support for AR 3.1
+
+== 4.0.0.beta9 2011-08-22
+* Fix eager-loading in AR 3.1.rc6.
+
+== 4.0.0.beta9 2011-082-22
+* Fix eager-loading in AR 3.1.rc6.
+
+== 4.0.0.beta8 2011-082-22
+* Sqlite 3 fixes (Jan Vlnas)
+* Fixes for to_key method (Jan Vlnas)
+* Compatible with Rails 3.1 RC6 (Ari Epstein, Travis Warlick)
+
+== 4.0.0.beta7 2011-07-26
+* Compatible with Rails 3.1 RC5 (TycoooN)
+* Do not use Arel::Nodes::Or to combine predicates because it creates a
+  deeply nested stack that blows up.
+
+== 4.0.0.beta4 2011-07-22
+* Compatible with Rails 3.1 stable branch.  No longer works with RC4 (Charlie Savage)
+* Do not require loading of postgresql gem unless needed (Charlie Savage)
+
+== 4.0.0.beta3 2011-07-08
+* Fix the ability to update the values of a primary key (Travis Warlick)
+* Support port and host configurations for postgres rake tasks (Travis Warlick)
+
+== 4.0.0.beta2 2011-06-21
+* ActiveRecord 3.1 RC4 compatibility.
+* Fix instantiation of CPK models with included associations
+
+== 4.0.0.beta1 2011-06-09
+* ActiveRecord 3.1 RC1 compatibility.  This required a significant rewrite due to
+  all the changes in AR 3.1 versus 3.0.
+
+== 3.1.11 2012-05-20
+Fix AssociationReflection#derive_primary_key for belongs_to relationships (Heinrich Lee Yu).
+
+== 3.1.10 2011-07-08
+* Bugfix for belongs_to with includes (John Ash)
+* Improved tests for calling clear on a habtm association, which involved (David Rueck)
+* Fixed bug that resulted in unrelated records being deleted when calling (David Rueck)
+* Output deprecation warnings about extra columns in join table CPK-aware (David Rueck)
+
+
+== 3.1.9 2011-06-04
+* Improve HABTM association tests (David Rueck)
+* Remove deprecated Rake tasks (Charlie Savage)
+
+== 3.1.8 2011-05-26
+* Fix calling clear on a HABTM associate (David Rueck)
+
+== 3.1.7 2011-05-26
+* Support regular AR models having one or many composite models (Jacques Fuentes)
+* Minor test cleanup (Charlie Savage)
+* Make version requirements more explicit (Charlie Savage)
+* Remove Arel extensions used for calculations (Charlie Savage)
+* Fix test that included wrong error constant
+
+== 3.1.6 2011-04-03
+* Updated belongs_to association to be a bit more flexible with non-CPK (Charlie Savage)
+  base models (Jacques Fuentes)
+* Fix uniqueness check (David Rueck)
+* Fix write issue when one of they keys in a composite key is
+  called id (Tom Hughes)
+
+
+== 3.1.5 2011-03-24
+* Fix simple calculation methods (Charlie Savage)
+* Fix instantiation of cpk records via associations  (Charlie Savage)
+* Fix Relation#delete (Charlie Savage)
+* Fix Relation#destroy (Charlie Savage)
+
+
+== 3.1.4 2011-03-06
+* Support ActiveRecord 3.0.5 - interpolate_sql was removed and
+  replaced by interpolate_and_sanitize_sql (Charlie Savage)
+* Fix persistence methods to support destroy callbacks (Charlie Savage)
+* Support rake 0.9.0 beta (Charlie Savage)
+
+
+== 3.1.2 2011-02-26
+* Add back in support for find('3,3') which makes it possible to
+  do find(params[id]).  This implementation is simpler than earlier version
+  improving code readability.
+* Support for finding multiple records either via find([1,2], [3,4])
+* Remove to_composite_ids method which is no longer needed
+
+
+== 3.1.1 2011-02-07
+* Implement id_before_type_cast (Jason Lewis)
+* Add in tests for Model.includes(:other_model)
+* Fix object comparison with nil in composite primary keys (StackNG)
+* Make it easier to run tests with different database adapters (Toby Cabot)
+* Fix AssociationReflection#primary_key_name for polymorphic relationships (Dave Doan)
+
+
+== 3.1.0 2010-12-17
+* Add back in rake test tasks (Toby Cabot)
+* Add support for multiple string composite keys (wouter)
+* Remove support for find('3,3').  Instead use find([3,3])
+
+
+== 3.0.9 2010-12-04
+* Fix up support for composite key fixtures.
+
+
+== 3.0.8 2010-12-04
+* Fix for translation issue in unique validation.  Thanks to Daniel Berger for the patch.
+* Fix to support child classes of composite primary key models
+
+
+== 3.0.7 2010-11-29
+* Fix has and belongs to many associations implementation.
+
+
+== 3.0.6 2010-11-29  (yanked)
+* Add full support for has and belongs to many associations.
+
+
+== 3.0.5 2010-11-28 (yanked)
+* Apply patch from Marian Rudzynski for fixing up attribute_methods/primary_key
+* Apply patch from Toby Cabot to fix up various sqlite3 issues
+* Add partial support for has and belongs to many associations.  Currently a cpk model
+  can have a habtm, but a normal model cannot have a habtm to a cpk model (its actually
+  not too hard to add, but one step at a time...)
+
+
+== 3.0.4 2010-11-21
+* Support deleting records when dependent is set to :delete_all
+* Switch the method #id to return a CompositeKeys instance (thus going back to how
+  this was done in previous CPK versions)
+
+
+== 3.0.3 2010-11-19
+* Support ActiveRecord 3.0.3 and Arel 2+
+* Require ActiveRecord 3.0.3 as minimum dependency
+* Fix double quoting issue with table names - thanks to Kevin Motschiedler for a patch.
+* Fix SQLiteAdapter class inheritance issue - thanks to Brandon Hauff for a patch.
+
+
+== 3.0.1.b3 2010-11-07
+
+* Fix bug in joining to :has_one association
+* Added support for Model.find(:last)
+* Added support for finding via associations with
+  limited ids.  For example find(:include => :foo, :limit => 1)
+
+== 3.0.1.b2 2010-11-06
+
+* Port to Rails 3.0 and Ruby 1.9.2
+
+* Backwards compatability issues
+  + You can no longer define a composite primary key with a single field.  If you
+    try, your model will just default to a standard active record model.  Removing
+    this corner case simplified the code.
+  + Removed CompositePrimaryKeys::CompositeKeys.  This was done so that the #to_s
+    method on composite ids, such as [1,2], returns "[1, 2]".  This in turns
+    reduces the amount of core Rails code that needs to be overridden.
+  + Setting attribute values by string is no longer supported. For example, this
+    no longer works:
+      my_record[[:main_id, :secondary_id]] = '1,2'
+    Instead, do  this:
+      my_record[[:main_id, :secondary_id]] = [1,2]
+    Once again, this was done to reduce the amount of overridden Rails code
+  + At the moment, complex finds with nested arrays do not work.  For example
+    find([[1,2], [3,4]))
+  + Count methods no longer work.  For example, Tariff.count(:include => :product_tariffs)
+    in the TestAssociations#test_count test returns an error.  This is because Rails 3.0
+    uses Arel to perform such calculations, and its not obvious (at least to me) how to
+    hook into this new mechanism to support tables with composite keys.
+  + The TestPolymorphic#test_polymorphic_has_many_through is currently failing, but this
+    looks like an ActiveRecord 3.0 bug to me.
+
+== 2.3.5.1 2010-02-13
+
+* Resolved "warning: already initialized constant HasManyThroughCantAssociateThroughHasManyReflection" [Titi Ala'ilima]
+
+== 2.3.5 2009-12-16
+
+* Fixed several bugs in has_one and has_many associations when :primary_key specified [kpumuk]
+
+== 2.3.2 2009-07-16
+
+* explicitly load associations.rb due to some getting an unitialized constant error
+
+== 2.3.2 2009-05-28
+
+* get tests working again with AR 2.3.2
+
+== 2.2.1 2009-01-21
+
+* fix ActiveRecord#exists? to work when passing conditions instead of ids
+
+== 2.2.0 2008-10-29
+
+* Rails 2.2.0 compatibility
+
+== 1.1.0 2008-10-29
+
+* fixes to get cpk working for Rails 2.1.2
+
+== 1.0.10 2008-10-22
+
+* add composite key where clause creator method [timurv]
+
+== 1.0.9 2008-09-08
+
+* fix postgres tests
+* fix for delete_records when has_many association has composite keys [darxriggs]
+* more consistent table/column name quoting [pbrant]
+
+== 1.0.8 2008-08-27
+
+* fix has_many :through for non composite models [thx rcarver]
+
+== 1.0.7 2008-08-12
+
+* fix for the last fix -- when has_many is composite and belongs_to is single
+
+== 1.0.6 2008-08-06
+
+* fix associations create
+
+== 1.0.5 2008-07-25
+
+* fix for calculations with a group by clause [thx Sirius Black]
+
+== 1.0.4 2008-07-15
+
+* support for oracle_enhanced adapter [thx Raimonds Simanovskis]
+
+== 1.0.3 2008-07-13
+
+* more fixes and tests for has many through [thx Menno van der Sman]
+
+== 1.0.2 2008-06-07
+
+* fix for has many through when through association has composite keys
+
+== 1.0.1 2008-06-06
+
+* Oracle fixes
+
+== 1.0.0 2008-06-05
+
+* Support for Rails 2.1
+
+== 0.9.93 2008-06-01
+
+* set fixed dependency on activerecord 2.0.2
+
+== 0.9.92 2008-02-22
+
+* Support for has_and_belongs_to_many
+
+== 0.9.91 2008-01-27
+
+* Incremented activerecord dependency to 2.0.2 [thx emmanuel.pirsch]
+
+== 0.9.90 2008-01-27
+
+* Trial release for rails/activerecord 2.0.2 supported
+
+== 0.9.1 2007-10-28
+
+* Migrations fix - allow :primary_key => [:name] to work [no unit test] [thx Shugo Maeda]
+
+== 0.9.0 2007-09-28
+
+* Added support for polymorphs [thx nerdrew]
+* init.rb file so gem can be installed as a plugin for Rails [thx nerdrew]
+* Added ibm_db support [thx K Venkatasubramaniyan]
+* Support for cleaning dependents [thx K Venkatasubramaniyan]
+* Rafactored db rake tasks into namespaces
+* Added namespaced tests (e.g. mysql:test for test_mysql)
+
+== 0.8.6 / 2007-6-12
+
+* 1 emergency fix due to Rails Core change
+  * Rails v7004 removed #quote; fixed with connection.quote_column_name [thx nerdrew]
+
+== 0.8.5 / 2007-6-5
+
+* 1 change due to Rails Core change
+  * Can no longer use RAILS_CONNECTION_ADAPTERS from Rails core
+* 7 dev improvement:
+  * Changed History.txt syntax to rdoc format
+  * Added deploy tasks
+  * Removed CHANGELOG + migrated into History.txt
+  * Changed PKG_NAME -> GEM_NAME in Rakefile
+  * Renamed README -> README.txt for :publish_docs task
+  * Added :check_version task
+  * VER => VERS in rakefile
+* 1 website improvement:
+  * website/index.txt includes link to "8 steps to fix other ppls code"
+
+== 0.8.4 / 2007-5-3
+
+* 1 bugfix
+  * Corrected ids_list => ids in the exception message. That'll teach me for not adding unit tests before fixing bugs.
+
+== 0.8.3 / 2007-5-3
+
+* 1 bugfix
+  * Explicit reference to ::ActiveRecord::RecordNotFound
+* 1 website addition:
+  * Added routing help [Pete Sumskas]
+
+== 0.8.2 / 2007-4-11
+
+* 1 major enhancement:
+  * Oracle unit tests!! [Darrin Holst]
+  * And they work too
+
+== 0.8.1 / 2007-4-10
+
+* 1 bug fix:
+  * Fixed the distinct(count) for oracle (removed 'as')
+
+== 0.8.0 / 2007-4-6
+
+* 1 major enhancement:
+  * Support for calcualtions on associations
+* 2 new DB supported:
+  * Tests run on sqlite
+  * Tests run on postgresql
+* History.txt to keep track of changes like these
+* Using Hoe for Rakefile
+* Website generator rake tasks
+
+== 0.3.3
+* id=
+* create now work
+
+== 0.1.4
+* it was important that #{primary_key} for composites --> 'key1,key2' and not 'key1key2' so created PrimaryKeys class
+
+== 0.0.1
+* Initial version
+* set_primary_keys(*keys) is the activation class method to transform an ActiveRecord into a composite primary key AR
+* find(*ids) supports the passing of
+  * id sets: Foo.find(2,1),
+  * lists of id sets: Foo.find([2,1], [7,3], [8,12]),
+  * and even stringified versions of the above:
+  * Foo.find '2,1' or Foo.find '2,1;7,3'

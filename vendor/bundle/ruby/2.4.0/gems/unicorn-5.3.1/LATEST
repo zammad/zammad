@@ -1,0 +1,103 @@
+=== unicorn 5.3.0 / 2017-04-01 08:03 UTC
+
+  A couple of portability fixes from Dylan Thacker-Smith and
+  Jeremy Evans since 5.3.0.pre1 over a week ago, but this looks
+  ready for a stable release, today.
+
+  When I started this over 8 years ago, I wondered if this would
+  just end up being an April Fools' joke.  Guess not.  I guess I
+  somehow tricked people into using a terribly marketed web server
+  that cannot talk directly to untrusted clients :x  Anyways,
+  unicorn won't be able to handle slow clients 8 years from now,
+  either, or 80 years from now.  And I vow never to learn to use
+  new-fangled things like epoll, kqueue, or threads :P
+
+  Anyways, this is a largish release with several new features,
+  and no backwards incompatibilities.
+
+  Simon Eskildsen contributed heavily using TCP_INFO under Linux
+  to implement the (now 5 year old) check_client_connection feature:
+
+    https://bogomips.org/unicorn/Unicorn/Configurator.html#method-i-check_client_connection
+    https://bogomips.org/unicorn-public/?q=s:check_client_connection&d:..20170401&x=t
+
+  This also led to FreeBSD and OpenBSD portability improvements in
+  one of our dependencies, raindrops:
+
+     https://bogomips.org/raindrops-public/20170323024829.GA5190@dcvr/T/#u
+
+  Jeremy Evans contributed several new features.  First he
+  implemented after_worker_exit to aid debugging:
+
+    https://bogomips.org/unicorn/Unicorn/Configurator.html#method-i-after_worker_exit
+    https://bogomips.org/unicorn-public/?q=s:after_worker_exit&d:..20170401&x=t#t
+
+  And then security-related features to isolate workers.  Workers
+  may now chroot to drop access to the master filesystem, and the
+  new after_worker_ready configuration hook now exists to aid with
+  chroot support in workers:
+
+    https://bogomips.org/unicorn/Unicorn/Configurator.html#method-i-after_worker_ready
+    https://bogomips.org/unicorn/Unicorn/Worker.html#method-i-user
+    https://bogomips.org/unicorn-public/?q=s:after_worker_ready&d:..20170401&x=t#t
+    https://bogomips.org/unicorn-public/?q=s:chroot&d:..20170401&x=t#t
+
+  Additionally, workers may run in a completely different VM space
+  (nullifying preload_app and any CoW savings) with the new
+  worker_exec option:
+
+    https://bogomips.org/unicorn/Unicorn/Configurator.html#method-i-worker_exec
+    https://bogomips.org/unicorn-public/?q=s:worker_exec&d:..20170401&x=t#t
+
+  There are also several improvements to FreeBSD and OpenBSD
+  support with the addition of these features.
+
+  shortlog of changes since v5.2.0 (2016-10-31):
+
+  Dylan Thacker-Smith (1):
+        Check for Socket::TCP_INFO constant before trying to get TCP_INFO
+
+  Eric Wong (30):
+        drop rb_str_set_len compatibility replacement
+        TUNING: document THP caveat for Linux users
+        tee_input: simplify condition for IO#write
+        remove response_start_sent
+        http_request: freeze constant strings passed IO#write
+        Revert "remove response_start_sent"
+        t/t0012-reload-empty-config.sh: access ivars directly if needed
+        t0011-active-unix-socket.sh: fix race condition in test
+        new test for check_client_connection
+        revert signature change to HttpServer#process_client
+        support "struct tcp_info" on non-Linux and Ruby 2.2+
+        unicorn_http: reduce rb_global_variable calls
+        oob_gc: rely on opt_aref_with optimization on Ruby 2.2+
+        http_request: reduce insn size for check_client_connection
+        freebsd: avoid EINVAL when setting accept filter
+        test-lib: expr(1) portability fix
+        tests: keep disabled tests defined
+        test_exec: SO_KEEPALIVE value only needs to be true
+        doc: fix links to raindrops project
+        http_request: support proposed Raindrops::TCP states on non-Linux
+        ISSUES: expand on mail archive info + subscription disclaimer
+        test_ccc: use a pipe to synchronize test
+        doc: remove private email support address
+        input: update documentation and hide internals.
+        http_server: initialize @pid ivar
+        gemspec: remove olddoc from build dependency
+        doc: add version annotations for new features
+        unicorn 5.3.0.pre1
+        doc: note after_worker_exit is also 5.3.0+
+        test_exec: SO_KEEPALIVE value only needs to be true (take #2)
+
+  Jeremy Evans (7):
+        Add after_worker_exit configuration option
+        Fix code example in after_worker_exit documentation
+        Add support for chroot to Worker#user
+        Add after_worker_ready configuration option
+        Add worker_exec configuration option
+        Don't pass a block for fork when forking workers
+        Check for SocketError on first ccc attempt
+
+  Simon Eskildsen (1):
+        check_client_connection: use tcp state on linux
+

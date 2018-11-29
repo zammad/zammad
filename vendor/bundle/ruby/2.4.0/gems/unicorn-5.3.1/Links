@@ -1,0 +1,56 @@
+= Related Projects
+
+If you're interested in unicorn, you may be interested in some of the projects
+listed below.  If you have any links to add/change/remove, please tell us at
+mailto:unicorn-public@bogomips.org!
+
+== Disclaimer
+
+The unicorn project is not responsible for the content in these links.
+Furthermore, the unicorn project has never, does not and will never endorse:
+
+* any for-profit entities or services
+* any non-{Free Software}[http://www.gnu.org/philosophy/free-sw.html]
+
+The existence of these links does not imply endorsement of any entities
+or services behind them.
+
+=== For use with unicorn
+
+* {Bluepill}[https://github.com/arya/bluepill] -
+  a simple process monitoring tool written in Ruby
+
+* {golden_brindle}[https://github.com/simonoff/golden_brindle] - tool to
+  manage multiple unicorn instances/applications on a single server
+
+* {raindrops}[https://bogomips.org/raindrops/] - real-time stats for
+  preforking Rack servers
+
+* {UnXF}[https://bogomips.org/unxf/]  Un-X-Forward* the Rack environment,
+  useful since unicorn is designed to be deployed behind a reverse proxy.
+
+=== unicorn is written to work with
+
+* {Rack}[http://rack.github.io/] - a minimal interface between webservers
+  supporting Ruby and Ruby frameworks
+
+* {Ruby}[https://www.ruby-lang.org/en/] - the programming language of
+  Rack and unicorn
+
+* {nginx}[http://nginx.org/] (Free versions) -
+  the reverse proxy for use with unicorn
+
+=== Derivatives
+
+* {Green Unicorn}[http://gunicorn.org/] - a Python version of unicorn
+
+* {Starman}[http://search.cpan.org/dist/Starman/] - Plack/PSGI version
+  of unicorn
+
+=== Prior Work
+
+* {Mongrel}[http://rubygems.org/gems/mongrel] - the awesome webserver
+  unicorn is based on
+
+* {david}[https://bogomips.org/david.git] - a tool to explain why you need
+  nginx in front of unicorn

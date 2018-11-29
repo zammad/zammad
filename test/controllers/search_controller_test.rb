@@ -15,7 +15,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'search-admin',
       firstname: 'Search',
       lastname: 'Admin',
@@ -28,7 +28,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'search-agent@example.com',
       firstname: 'Search 1234',
       lastname: 'Agent',
@@ -41,7 +41,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'search-customer1@example.com',
       firstname: 'Search',
       lastname: 'Customer1',
@@ -52,13 +52,13 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create!(
+    @organization = Organization.create_or_update(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create!(
+    @organization2 = Organization.create_or_update(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create!(
+    @organization3 = Organization.create_or_update(
       name: 'Rest Org #3',
     )
     @organization4 = Organization.create!(
@@ -69,7 +69,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer with org
-    @customer_with_org2 = User.create!(
+    @customer_with_org2 = User.create_or_update(
       login: 'search-customer2@example.com',
       firstname: 'Search',
       lastname: 'Customer2',
@@ -80,7 +80,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    @customer_with_org3 = User.create!(
+    @customer_with_org3 = User.create_or_update(
       login: 'search-customer3@example.com',
       firstname: 'Search',
       lastname: 'Customer3',

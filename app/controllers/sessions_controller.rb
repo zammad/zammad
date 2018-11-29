@@ -69,7 +69,7 @@ class SessionsController < ApplicationController
       user_id = session[:user_id]
     end
 
-    if !user_id || !User.exists?(user_id)
+    if !user_id
       # get models
       models = SessionHelper.models()
 
@@ -114,13 +114,12 @@ class SessionsController < ApplicationController
   # "Delete" a login, aka "log the user out"
   def destroy
 
-    reset_session
-
     # Remove the user id from the session
     @_current_user = nil
 
     # reset session
     request.env['rack.session.options'][:expire_after] = nil
+    session.clear
 
     render json: {}
   end

@@ -192,10 +192,6 @@ returns
     path
   end
 
-  def attributes_for_display
-    slice :id, :filename, :size, :preferences
-  end
-
   def provider
     file = Store::File.find_by(id: store_file_id)
     if !file

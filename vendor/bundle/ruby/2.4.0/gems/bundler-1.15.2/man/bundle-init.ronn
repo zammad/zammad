@@ -1,0 +1,18 @@
+bundle-init(1) -- Generates a Gemfile into the current working directory
+========================================================================
+
+## SYNOPSIS
+
+`bundle init` [--gemspec=FILE]
+
+## DESCRIPTION
+
+Init generates a default `Gemfile(5)` in the current working directory. When
+adding a `Gemfile(5)` to a gem with a gemspec, the `--gemspec` option will
+automatically add each dependency listed in the gemspec file to the newly
+created `Gemfile(5)`.
+
+## OPTIONS
+
+* `--gemspec`:
+  Use the specified .gemspec to create the `Gemfile(5)`

@@ -1,0 +1,15 @@
+[Unit]
+StopWhenUnneeded=true
+Requires=zammad-rake.service
+After=zammad-rake.service
+
+[Service]
+Environment=APP_PROCESS_INDEX=__PROCESS_INDEX__
+ExecStart=/usr/bin/zammad run rake
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+
+[Install]
+WantedBy=zammad-rake.service

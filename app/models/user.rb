@@ -19,13 +19,11 @@ class User < ApplicationModel
   has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
   belongs_to              :organization,   inverse_of: :members
 
-  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
-  before_validation :check_mail_delivery_failed, on: :update
+  before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  after_commit    :update_caller_id
   before_destroy  :destroy_longer_required_objects
 
   store :preferences
@@ -356,34 +354,25 @@ returns
 
   def self.create_from_hash!(hash)
 
+    role_ids = Role.signup_role_ids
     url = ''
     hash['info']['urls']&.each_value do |local_url|
       next if local_url.blank?
       url = local_url
     end
-    begin
-      data = {
-        login: hash['info']['nickname'] || hash['uid'],
-        firstname: hash['info']['name'] || hash['info']['display_name'],
-        email: hash['info']['email'],
-        image_source: hash['info']['image'],
-        web: url,
-        address: hash['info']['location'],
-        note: hash['info']['description'],
-        source: hash['provider'],
-        role_ids: Role.signup_role_ids,
-        updated_by_id: 1,
-        created_by_id: 1,
-      }
-      if hash['info']['first_name'].present? && hash['info']['last_name'].present?
-        data[:firstname] = hash['info']['first_name']
-        data[:lastname] = hash['info']['last_name']
-      end
-      create!(data)
-    rescue => e
-      logger.error e
-      raise Exceptions::UnprocessableEntity, e.message
-    end
+    create!(
+      login: hash['info']['nickname'] || hash['uid'],
+      firstname: hash['info']['name'],
+      email: hash['info']['email'],
+      image_source: hash['info']['image'],
+      web: url,
+      address: hash['info']['location'],
+      note: hash['info']['description'],
+      source: hash['provider'],
+      role_ids: role_ids,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
   end
 
 =begin
@@ -543,10 +532,10 @@ returns
     return if username.blank?
 
     # try to find user based on login
-    user = User.find_by(login: username.downcase.strip, active: true)
+    user = User.find_by(login: username.downcase, active: true)
 
     # try second lookup with email
-    user ||= User.find_by(email: username.downcase.strip, active: true)
+    user ||= User.find_by(email: username.downcase, active: true)
 
     # check if email address exists
     return if !user
@@ -840,62 +829,6 @@ returns
     Cache.delete(key)
   end
 
-=begin
-
-try to find correct name
-
-  [firstname, lastname] = User.name_guess('Some Name', 'some.name@example.com')
-
-=end
-
-  def self.name_guess(string, email = nil)
-    return if string.blank? && email.blank?
-    string.strip!
-    firstname = ''
-    lastname = ''
-
-    # "Lastname, Firstname"
-    if string.match?(',')
-      name = string.split(', ', 2)
-      if name.count == 2
-        if name[0].present?
-          lastname = name[0].strip
-        end
-        if name[1].present?
-          firstname = name[1].strip
-        end
-        return [firstname, lastname] if firstname.present? || lastname.present?
-      end
-    end
-
-    # "Firstname Lastname"
-    if string =~ /^(((Dr\.|Prof\.)[[:space:]]|).+?)[[:space:]](.+?)$/i
-      if $1.present?
-        firstname = $1.strip
-      end
-      if $4.present?
-        lastname = $4.strip
-      end
-      return [firstname, lastname] if firstname.present? || lastname.present?
-    end
-
-    # -no name- "firstname.lastname@example.com"
-    if string.blank? && email.present?
-      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
-      if scan[0].present?
-        if scan[0][0].present?
-          firstname = scan[0][0].strip
-        end
-        if scan[0][1].present?
-          lastname = scan[0][1].strip
-        end
-        return [firstname, lastname] if firstname.present? || lastname.present?
-      end
-    end
-
-    nil
-  end
-
   private
 
   def check_name
@@ -909,21 +842,43 @@ try to find correct name
     return true if firstname.present? && lastname.present?
 
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
+
+      # "Lastname, Firstname"
       used_name = firstname.presence || lastname
-      (local_firstname, local_lastname) = User.name_guess(used_name, email)
+      name = used_name.split(', ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.lastname = name[0]
+        end
+        if name[1].present?
+          self.firstname = name[1]
+        end
+        return true
+      end
 
+      # "Firstname Lastname"
+      name = used_name.split(' ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.firstname = name[0]
+        end
+        if name[1].present?
+          self.lastname = name[1]
+        end
+        return true
+      end
+
+    # -no name- "firstname.lastname@example.com"
     elsif firstname.blank? && lastname.blank? && email.present?
-      (local_firstname, local_lastname) = User.name_guess('', email)
-    end
-
-    self.firstname = local_firstname if local_firstname.present?
-    self.lastname = local_lastname if local_lastname.present?
-
-    if firstname.present? && firstname.match(/^[A-z]+$/) && (firstname.downcase == firstname || firstname.upcase == firstname)
-      firstname.capitalize!
-    end
-    if lastname.present? && lastname.match(/^[A-z]+$/) && (lastname.downcase == lastname || lastname.upcase == lastname)
-      lastname.capitalize!
+      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
+      if scan[0]
+        if scan[0][0].present?
+          self.firstname = scan[0][0].capitalize
+        end
+        if scan[0][1].present?
+          self.lastname = scan[0][1].capitalize
+        end
+      end
     end
     true
   end
@@ -1158,15 +1113,15 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def destroy_longer_required_objects
-    ::Authorization.where(user_id: id).destroy_all
-    ::Avatar.remove('User', id)
-    ::Cti::CallerId.where(user_id: id).destroy_all
-    ::Taskbar.where(user_id: id).destroy_all
-    ::Karma::ActivityLog.where(user_id: id).destroy_all
-    ::Karma::User.where(user_id: id).destroy_all
-    ::OnlineNotification.where(user_id: id).destroy_all
-    ::RecentView.where(created_by_id: id).destroy_all
-    ::UserDevice.remove(id)
+    Authorization.where(user_id: id).destroy_all
+    Avatar.remove('User', id)
+    Cti::CallerId.where(user_id: id).destroy_all
+    Taskbar.where(user_id: id).destroy_all
+    Karma::ActivityLog.where(user_id: id).destroy_all
+    Karma::User.where(user_id: id).destroy_all
+    OnlineNotification.where(user_id: id).destroy_all
+    RecentView.where(created_by_id: id).destroy_all
+    UserDevice.remove(id)
     true
   end
 
@@ -1196,17 +1151,5 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('password')
     self.login_failed = 0
     true
-  end
-
-  # When adding/removing a phone number from the User table,
-  # update caller ID table
-  # to adopt/orphan matching Cti::Logs accordingly
-  # (see https://github.com/zammad/zammad/issues/2057)
-  def update_caller_id
-    # skip if "phone" does not change, or changes like [nil, ""]
-    return if persisted? && !previous_changes[:phone]&.any?(&:present?)
-    return if destroyed? && phone.blank?
-
-    Cti::CallerId.build(self)
   end
 end

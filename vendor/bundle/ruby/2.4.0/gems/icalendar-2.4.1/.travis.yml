@@ -1,0 +1,18 @@
+sudo: false
+before_install:
+  - gem install bundler
+language: ruby
+rvm:
+  - 2.3.1
+  - 2.2
+  - 2.1
+  - 2.0
+  - jruby-19mode
+  - rbx-2
+  - ruby-head
+  - jruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+script: bundle exec rake spec

@@ -1,0 +1,29 @@
+From: "Bay" <memberbay+12345@members.somewhat>
+Subject: strange email with empty text/plain
+To: bay@example.com
+Date: 11 Nov 2015 12:07:51 +0000
+Priority: normal
+X-Priority: 3 (Normal)
+Importance: normal
+X-David-SYM: 0
+X-David-Flags: 0
+Message-ID: <7ca10659-214c-4bd0-8438-b935a01c7601@stange>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----_=_NextPart_000_06409CFC.56433DA7"
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_000_06409CFC.56433DA7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+
+
+------_=_NextPart_000_06409CFC.56433DA7
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<b>some html text</b>
+
+------_=_NextPart_000_06409CFC.56433DA7

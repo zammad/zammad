@@ -401,7 +401,6 @@ returns
         error: "Client Error: #{response.inspect}!",
         success: false,
         code: response.code,
-        body: response.body
       )
     when Net::HTTPInternalServerError
       return Result.new(

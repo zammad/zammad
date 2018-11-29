@@ -1,0 +1,6950 @@
+---
+- locale: hu
+  format: time
+  source: date
+  target: yyyy.mm.dd
+  target_initial: yyyy.mm.dd
+- locale: hu
+  format: time
+  source: timestamp
+  target: yyyy.mm.dd HH:MM
+  target_initial: yyyy.mm.dd HH:MM
+- locale: hu
+  format: string
+  source: Action
+  target: Művelet
+  target_initial: Művelet
+- locale: hu
+  format: string
+  source: Actions
+  target: Műveletek
+  target_initial: Műveletek
+- locale: hu
+  format: string
+  source: Active
+  target: Aktiválás
+  target_initial: Aktiválás
+- locale: hu
+  format: string
+  source: Add
+  target: Hozzáadás
+  target_initial: Hozzáadás
+- locale: hu
+  format: string
+  source: Age
+  target: Időtartam
+  target_initial: Időtartam
+- locale: hu
+  format: string
+  source: Apply
+  target: Alkalmaz
+  target_initial: Alkalmaz
+- locale: hu
+  format: string
+  source: Attachment
+  target: Melléklet
+  target_initial: Melléklet
+- locale: hu
+  format: string
+  source: Authentication
+  target: Hitelesítés
+  target_initial: Hitelesítés
+- locale: hu
+  format: string
+  source: Cancel
+  target: Mégse
+  target_initial: Mégse
+- locale: hu
+  format: string
+  source: City
+  target: Város
+  target_initial: Város
+- locale: hu
+  format: string
+  source: Closed
+  target: Lezárt
+  target_initial: Lezárt
+- locale: hu
+  format: string
+  source: Closed Tickets
+  target: Lezárt jegyek
+  target_initial: Lezárt jegyek
+- locale: hu
+  format: string
+  source: Country
+  target: Ország
+  target_initial: Ország
+- locale: hu
+  format: string
+  source: Create
+  target: Létrehozás
+  target_initial: Létrehozás
+- locale: hu
+  format: string
+  source: Created
+  target: Létrehozva
+  target_initial: Létrehozva
+- locale: hu
+  format: string
+  source: Days
+  target: Napok
+  target_initial: Napok
+- locale: hu
+  format: string
+  source: Delete
+  target: Törlés
+  target_initial: Törlés
+- locale: hu
+  format: string
+  source: Direction
+  target: Irány
+  target_initial: Irány
+- locale: hu
+  format: string
+  source: Edit
+  target: Szerkesztés
+  target_initial: Szerkesztés
+- locale: hu
+  format: string
+  source: Email
+  target: E-mail
+  target_initial: E-mail
+- locale: hu
+  format: string
+  source: Filter
+  target: Szűrő
+  target_initial: Szűrő
+- locale: hu
+  format: string
+  source: First Response Time
+  target: Első válaszidő
+  target_initial: Első válaszidő
+- locale: hu
+  format: string
+  source: Firstname
+  target: Keresztnév
+  target_initial: Keresztnév
+- locale: hu
+  format: string
+  source: From
+  target: Feladó
+  target_initial: Feladó
+- locale: hu
+  format: string
+  source: Group
+  target: Csoport
+  target_initial: Csoport
+- locale: hu
+  format: string
+  source: Groups
+  target: Csoportok
+  target_initial: Csoportok
+- locale: hu
+  format: string
+  source: History
+  target: Előzmények
+  target_initial: Előzmények
+- locale: hu
+  format: string
+  source: Hours
+  target: Óra
+  target_initial: Óra
+- locale: hu
+  format: string
+  source: Language
+  target: Nyelv
+  target_initial: Nyelv
+- locale: hu
+  format: string
+  source: Lastname
+  target: Vezetéknév
+  target_initial: Vezetéknév
+- locale: hu
+  format: string
+  source: Loading...
+  target: Betöltés…
+  target_initial: Betöltés…
+- locale: hu
+  format: string
+  source: Merge
+  target: Egyesítés
+  target_initial: Egyesítés
+- locale: hu
+  format: string
+  source: Month
+  target: Hónap
+  target_initial: Hónap
+- locale: hu
+  format: string
+  source: My Tickets
+  target: Saját jegyek
+  target_initial: Saját jegyek
+- locale: hu
+  format: string
+  source: New
+  target: Új
+  target_initial: Új
+- locale: hu
+  format: string
+  source: New Ticket
+  target: Új jegy
+  target_initial: Új jegy
+- locale: hu
+  format: string
+  source: Next...
+  target: Következő...
+  target_initial: Következő...
+- locale: hu
+  format: string
+  source: Note
+  target: Jegyzet
+  target_initial: Jegyzet
+- locale: hu
+  format: string
+  source: Number
+  target: Szám
+  target_initial: Szám
+- locale: hu
+  format: string
+  source: Open Tickets
+  target: Nyitott jegyek
+  target_initial: Nyitott jegyek
+- locale: hu
+  format: string
+  source: Organization
+  target: Szervezet
+  target_initial: Szervezet
+- locale: hu
+  format: string
+  source: Owner
+  target: Tulajdonos
+  target_initial: Tulajdonos
+- locale: hu
+  format: string
+  source: Password
+  target: Jelszó
+  target_initial: Jelszó
+- locale: hu
+  format: string
+  source: Phone
+  target: Telefon
+  target_initial: Telefon
+- locale: hu
+  format: string
+  source: Priority
+  target: Prioritás
+  target_initial: Prioritás
+- locale: hu
+  format: string
+  source: Profile
+  target: Profil
+  target_initial: Profil
+- locale: hu
+  format: string
+  source: Reinstall
+  target: Újratelepítés
+  target_initial: Újratelepítés
+- locale: hu
+  format: string
+  source: Remove
+  target: Eltávolítás
+  target_initial: Eltávolítás
+- locale: hu
+  format: string
+  source: Roles
+  target: Szerepek
+  target_initial: Szerepek
+- locale: hu
+  format: string
+  source: Save
+  target: Mentés
+  target_initial: Mentés
+- locale: hu
+  format: string
+  source: Search
+  target: Keresés
+  target_initial: Keresés
+- locale: hu
+  format: string
+  source: Settings
+  target: Beállítások
+  target_initial: Beállítások
+- locale: hu
+  format: string
+  source: Signature
+  target: Aláírás
+  target_initial: Aláírás
+- locale: hu
+  format: string
+  source: Signatures
+  target: Aláírások
+  target_initial: Aláírások
+- locale: hu
+  format: string
+  source: Solution Time
+  target: Megoldás ideje
+  target_initial: Megoldás ideje
+- locale: hu
+  format: string
+  source: State
+  target: Állapot
+  target_initial: Állapot
+- locale: hu
+  format: string
+  source: Street
+  target: Utca
+  target_initial: Utca
+- locale: hu
+  format: string
+  source: Subject
+  target: Tárgy
+  target_initial: Tárgy
+- locale: hu
+  format: string
+  source: Submit
+  target: Elküldés
+  target_initial: Elküldés
+- locale: hu
+  format: string
+  source: Templates
+  target: Sablonok
+  target_initial: Sablonok
+- locale: hu
+  format: string
+  source: Title
+  target: Titulus
+  target_initial: Titulus
+- locale: hu
+  format: string
+  source: To
+  target: Címzett
+  target_initial: Címzett
+- locale: hu
+  format: string
+  source: Type
+  target: Típus
+  target_initial: Típus
+- locale: hu
+  format: string
+  source: Update
+  target: Frissítés
+  target_initial: Frissítés
+- locale: hu
+  format: string
+  source: User
+  target: Felhasználó
+  target_initial: Felhasználó
+- locale: hu
+  format: string
+  source: Vendor
+  target: Gyártó
+  target_initial: Gyártó
+- locale: hu
+  format: string
+  source: Welcome!
+  target: Üdvözöljük!
+  target_initial: Üdvözöljük!
+- locale: hu
+  format: string
+  source: Year
+  target: Év
+  target_initial: Év
+- locale: hu
+  format: string
+  source: Zip
+  target: Irányítószám
+  target_initial: Irányítószám
+- locale: hu
+  format: string
+  source: hour
+  target: óra
+  target_initial: óra
+- locale: hu
+  format: string
+  source: installed
+  target: telepített
+  target_initial: telepített
+- locale: hu
+  format: string
+  source: merged
+  target: egyesített
+  target_initial: egyesített
+- locale: hu
+  format: string
+  source: minute
+  target: perc
+  target_initial: perc
+- locale: hu
+  format: string
+  source: or
+  target: vagy
+  target_initial: vagy
+- locale: hu
+  format: string
+  source: removed
+  target: törölt
+  target_initial: törölt
+- locale: hu
+  format: string
+  source: sms
+  target: SMS
+  target_initial: SMS
+- locale: hu
+  format: string
+  source: uninstalled
+  target: eltávolított
+  target_initial: eltávolított
+- locale: hu
+  format: string
+  source: Apr
+  target: ápr.
+  target_initial: ápr.
+- locale: hu
+  format: string
+  source: Aug
+  target: aug.
+  target_initial: aug.
+- locale: hu
+  format: string
+  source: Dec
+  target: dec.
+  target_initial: dec.
+- locale: hu
+  format: string
+  source: Feb
+  target: febr.
+  target_initial: febr.
+- locale: hu
+  format: string
+  source: Jan
+  target: jan.
+  target_initial: jan.
+- locale: hu
+  format: string
+  source: Jul
+  target: júl.
+  target_initial: júl.
+- locale: hu
+  format: string
+  source: Jun
+  target: jún.
+  target_initial: jún.
+- locale: hu
+  format: string
+  source: Mar
+  target: márc.
+  target_initial: márc.
+- locale: hu
+  format: string
+  source: May
+  target: máj.
+  target_initial: máj.
+- locale: hu
+  format: string
+  source: Nov
+  target: nov.
+  target_initial: nov.
+- locale: hu
+  format: string
+  source: Oct
+  target: okt.
+  target_initial: okt.
+- locale: hu
+  format: string
+  source: Reset
+  target: Visszaállítás
+  target_initial: Visszaállítás
+- locale: hu
+  format: string
+  source: Sep
+  target: szept.
+  target_initial: szept.
+- locale: hu
+  format: string
+  source: of
+  target: "/"
+  target_initial: "/"
+- locale: hu
+  format: string
+  source: Admin
+  target: Adminisztráció
+  target_initial: Adminisztráció
+- locale: hu
+  format: string
+  source: Agent
+  target: Ügyintéző
+  target_initial: Ügyintéző
+- locale: hu
+  format: string
+  source: All
+  target: Összes
+  target_initial: Összes
+- locale: hu
+  format: string
+  source: Cc
+  target: Másolat
+  target_initial: Másolat
+- locale: hu
+  format: string
+  source: Comment
+  target: Megjegyzés
+  target_initial: Megjegyzés
+- locale: hu
+  format: string
+  source: Display
+  target: Megjelenítés
+  target_initial: Megjelenítés
+- locale: hu
+  format: string
+  source: Go Back
+  target: Vissza
+  target_initial: Vissza
+- locale: hu
+  format: string
+  source: Import
+  target: Importálás
+  target_initial: Importálás
+- locale: hu
+  format: string
+  source: Message
+  target: Üzenet
+  target_initial: Üzenet
+- locale: hu
+  format: string
+  source: Name
+  target: Név
+  target_initial: Név
+- locale: hu
+  format: string
+  source: Options
+  target: Beállítások
+  target_initial: Beállítások
+- locale: hu
+  format: string
+  source: System
+  target: Rendszer
+  target_initial: Rendszer
+- locale: hu
+  format: string
+  source: Ticket
+  target: Jegy
+  target_initial: Jegy
+- locale: hu
+  format: string
+  source: Tickets
+  target: Jegyek
+  target_initial: Jegyek
+- locale: hu
+  format: string
+  source: Version
+  target: Verzió
+  target_initial: Verzió
+- locale: hu
+  format: string
+  source: Host
+  target: Kiszolgáló
+  target_initial: Kiszolgáló
+- locale: hu
+  format: string
+  source: Port
+  target: Port
+  target_initial: Port
+- locale: hu
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: hu
+  format: string
+  source: Online
+  target: Elérhető
+  target_initial: Elérhető
+- locale: hu
+  format: string
+  source: Upload
+  target: Feltöltés
+  target_initial: Feltöltés
+- locale: hu
+  format: string
+  source: Send Email
+  target: E-mail küldése
+  target_initial: E-mail küldése
+- locale: hu
+  format: string
+  source: Text
+  target: Szöveg
+  target_initial: Szöveg
+- locale: hu
+  format: string
+  source: Location
+  target: Hely
+  target_initial: Hely
+- locale: hu
+  format: string
+  source: Login
+  target: Belépés
+  target_initial: Belépés
+- locale: hu
+  format: string
+  source: Mobile
+  target: Mobiltelefon
+  target_initial: Mobiltelefon
+- locale: hu
+  format: string
+  source: Next
+  target: Következő
+  target_initial: Következő
+- locale: hu
+  format: string
+  source: Status
+  target: Állapot
+  target_initial: Állapot
+- locale: hu
+  format: string
+  source: Calendar
+  target: Naptár
+  target_initial: Naptár
+- locale: hu
+  format: string
+  source: Configuration
+  target: Beállítás
+  target_initial: Beállítás
+- locale: hu
+  format: string
+  source: Intro
+  target: Bevezetés
+  target_initial: Bevezetés
+- locale: hu
+  format: string
+  source: Session
+  target: Munkamenet
+  target_initial: Munkamenet
+- locale: hu
+  format: string
+  source: Created by
+  target: Létrehozta
+  target_initial: Létrehozta
+- locale: hu
+  format: string
+  source: Description
+  target: Leírás
+  target_initial: Leírás
+- locale: hu
+  format: string
+  source: Friday
+  target: péntek
+  target_initial: péntek
+- locale: hu
+  format: string
+  source: Monday
+  target: hétfő
+  target_initial: hétfő
+- locale: hu
+  format: string
+  source: Preview
+  target: Előnézet
+  target_initial: Előnézet
+- locale: hu
+  format: string
+  source: Saturday
+  target: szombat
+  target_initial: szombat
+- locale: hu
+  format: string
+  source: Sunday
+  target: vasárnap
+  target_initial: vasárnap
+- locale: hu
+  format: string
+  source: Thursday
+  target: csütörtök
+  target_initial: csütörtök
+- locale: hu
+  format: string
+  source: Time
+  target: Idő
+  target_initial: Idő
+- locale: hu
+  format: string
+  source: Tuesday
+  target: kedd
+  target_initial: kedd
+- locale: hu
+  format: string
+  source: Wednesday
+  target: szerda
+  target_initial: szerda
+- locale: hu
+  format: string
+  source: Chat
+  target: Csevegés
+  target_initial: Csevegés
+- locale: hu
+  format: string
+  source: April
+  target: április
+  target_initial: április
+- locale: hu
+  format: string
+  source: August
+  target: augusztus
+  target_initial: augusztus
+- locale: hu
+  format: string
+  source: Close
+  target: Lezárás
+  target_initial: Lezárás
+- locale: hu
+  format: string
+  source: Continue
+  target: Folytatás
+  target_initial: Folytatás
+- locale: hu
+  format: string
+  source: December
+  target: december
+  target_initial: december
+- locale: hu
+  format: string
+  source: February
+  target: február
+  target_initial: február
+- locale: hu
+  format: string
+  source: Fri
+  target: p
+  target_initial: p
+- locale: hu
+  format: string
+  source: January
+  target: január
+  target_initial: január
+- locale: hu
+  format: string
+  source: July
+  target: július
+  target_initial: július
+- locale: hu
+  format: string
+  source: June
+  target: június
+  target_initial: június
+- locale: hu
+  format: string
+  source: March
+  target: március
+  target_initial: március
+- locale: hu
+  format: string
+  source: Mon
+  target: h
+  target_initial: h
+- locale: hu
+  format: string
+  source: November
+  target: november
+  target_initial: november
+- locale: hu
+  format: string
+  source: October
+  target: október
+  target_initial: október
+- locale: hu
+  format: string
+  source: Open
+  target: Nyitott
+  target_initial: Nyitott
+- locale: hu
+  format: string
+  source: Sat
+  target: szo
+  target_initial: szo
+- locale: hu
+  format: string
+  source: Send
+  target: Küldés
+  target_initial: Küldés
+- locale: hu
+  format: string
+  source: September
+  target: szeptember
+  target_initial: szeptember
+- locale: hu
+  format: string
+  source: Sun
+  target: v
+  target_initial: v
+- locale: hu
+  format: string
+  source: Thu
+  target: cs
+  target_initial: cs
+- locale: hu
+  format: string
+  source: Tue
+  target: k
+  target_initial: k
+- locale: hu
+  format: string
+  source: Wed
+  target: sze
+  target_initial: sze
+- locale: hu
+  format: string
+  source: closed
+  target: lezárt
+  target_initial: lezárt
+- locale: hu
+  format: string
+  source: day
+  target: nap
+  target_initial: nap
+- locale: hu
+  format: string
+  source: days
+  target: nap
+  target_initial: nap
+- locale: hu
+  format: string
+  source: email
+  target: e-mail
+  target_initial: e-mail
+- locale: hu
+  format: string
+  source: hours
+  target: óra
+  target_initial: óra
+- locale: hu
+  format: string
+  source: minutes
+  target: perc
+  target_initial: perc
+- locale: hu
+  format: string
+  source: 'no'
+  target: nem
+  target_initial: nem
+- locale: hu
+  format: string
+  source: none
+  target: nincs
+  target_initial: nincs
+- locale: hu
+  format: string
+  source: note
+  target: jegyzet
+  target_initial: jegyzet
+- locale: hu
+  format: string
+  source: open
+  target: nyitott
+  target_initial: nyitott
+- locale: hu
+  format: string
+  source: phone
+  target: telefon
+  target_initial: telefon
+- locale: hu
+  format: string
+  source: to
+  target: eddig
+  target_initial: eddig
+- locale: hu
+  format: string
+  source: 'yes'
+  target: igen
+  target_initial: igen
+- locale: hu
+  format: string
+  source: All tickets
+  target: Minden jegy
+  target_initial: Minden jegy
+- locale: hu
+  format: string
+  source: Child
+  target: Gyermek
+  target_initial: Gyermek
+- locale: hu
+  format: string
+  source: Content
+  target: Tartalom
+  target_initial: Tartalom
+- locale: hu
+  format: string
+  source: Customer
+  target: Ügyfél
+  target_initial: Ügyfél
+- locale: hu
+  format: string
+  source: Day
+  target: Nap
+  target_initial: Nap
+- locale: hu
+  format: string
+  source: Down
+  target: Le
+  target_initial: Le
+- locale: hu
+  format: string
+  source: Email address
+  target: E-mail cím
+  target_initial: E-mail cím
+- locale: hu
+  format: string
+  source: Escalation
+  target: Eszkaláció
+  target_initial: Eszkaláció
+- locale: hu
+  format: string
+  source: Fax
+  target: Fax
+  target_initial: Fax
+- locale: hu
+  format: string
+  source: Finish
+  target: Befejezés
+  target_initial: Befejezés
+- locale: hu
+  format: string
+  source: Last run
+  target: Utolsó futás
+  target_initial: Utolsó futás
+- locale: hu
+  format: string
+  source: Logout
+  target: Kilépés
+  target_initial: Kilépés
+- locale: hu
+  format: string
+  source: New group
+  target: Új csoport
+  target_initial: Új csoport
+- locale: hu
+  format: string
+  source: New password
+  target: Új jelszó
+  target_initial: Új jelszó
+- locale: hu
+  format: string
+  source: 'No'
+  target: Nem
+  target_initial: Nem
+- locale: hu
+  format: string
+  source: Normal
+  target: Normál
+  target_initial: Normál
+- locale: hu
+  format: string
+  source: Notice
+  target: Értesítés
+  target_initial: Értesítés
+- locale: hu
+  format: string
+  source: Open tickets
+  target: Nyitott jegyek
+  target_initial: Nyitott jegyek
+- locale: hu
+  format: string
+  source: Parent
+  target: Szülő
+  target_initial: Szülő
+- locale: hu
+  format: string
+  source: Pending
+  target: Függőben
+  target_initial: Függőben
+- locale: hu
+  format: string
+  source: Previous
+  target: Előző
+  target_initial: Előző
+- locale: hu
+  format: string
+  source: Reply
+  target: Válasz
+  target_initial: Válasz
+- locale: hu
+  format: string
+  source: Split
+  target: Felosztás
+  target_initial: Felosztás
+- locale: hu
+  format: string
+  source: and
+  target: és
+  target_initial: és
+- locale: hu
+  format: string
+  source: new
+  target: új
+  target_initial: új
+- locale: hu
+  format: string
+  source: week
+  target: hét
+  target_initial: hét
+- locale: hu
+  format: string
+  source: Agents
+  target: Ügyintézők
+  target_initial: Ügyintézők
+- locale: hu
+  format: string
+  source: Example
+  target: Példa
+  target_initial: Példa
+- locale: hu
+  format: string
+  source: Expires
+  target: Lejárat
+  target_initial: Lejárat
+- locale: hu
+  format: string
+  source: Select
+  target: Kiválasztás
+  target_initial: Kiválasztás
+- locale: hu
+  format: string
+  source: Dashboard
+  target: Vezérlőpult
+  target_initial: Vezérlőpult
+- locale: hu
+  format: string
+  source: Date
+  target: Dátum
+  target_initial: Dátum
+- locale: hu
+  format: string
+  source: Branches
+  target: Ágak
+  target_initial: Ágak
+- locale: hu
+  format: string
+  source: Stay on tab
+  target: Maradok az oldalon
+  target_initial: Maradok az oldalon
+- locale: hu
+  format: string
+  source: Customer Chat
+  target: Ügyfél chat
+  target_initial: Ügyfél chat
+- locale: hu
+  format: string
+  source: Created at
+  target: Létrehozva
+  target_initial: Létrehozva
+- locale: hu
+  format: string
+  source: maybe
+  target: talán
+  target_initial: talán
+- locale: hu
+  format: string
+  source: Master
+  target: Master
+  target_initial: Master
+- locale: hu
+  format: string
+  source: Import from
+  target: Import from
+  target_initial: Import from
+- locale: hu
+  format: string
+  source: untouched
+  target: érintetlen
+  target_initial: érintetlen
+- locale: hu
+  format: string
+  source: What can you do here?
+  target: Mit tudok itt csinálni?
+  target_initial: Mit tudok itt csinálni?
+- locale: hu
+  format: string
+  source: Back to top
+  target: Vissza az elejére
+  target_initial: Vissza az elejére
+- locale: hu
+  format: string
+  source: Remember me
+  target: Emlékezz rám
+  target_initial: Emlékezz rám
+- locale: hu
+  format: string
+  source: Sign in
+  target: Belépés
+  target_initial: Belépés
+- locale: hu
+  format: string
+  source: Forgot password?
+  target: Elfelejtett jelszó
+  target_initial: Elfelejtett jelszó
+- locale: hu
+  format: string
+  source: Confirm
+  target: Megerősítés
+  target_initial: Megerősítés
+- locale: hu
+  format: string
+  source: Outbound Call
+  target: Kimenő hívás
+  target_initial: Kimenő hívás
+- locale: hu
+  format: string
+  source: Call Outbound
+  target: Kimenő hívás
+  target_initial: Kimenő hívás
+- locale: hu
+  format: string
+  source: Call Inbound
+  target: Bejövő hívás
+  target_initial: Bejövő hívás
+- locale: hu
+  format: string
+  source: Received Call
+  target: Fogadott hívás
+  target_initial: Fogadott hívás
+- locale: hu
+  format: string
+  source: Activity Stream
+  target: Tevékenységek
+  target_initial: Tevékenységek
+- locale: hu
+  format: string
+  source: 1 low
+  target: 1 alacsony
+  target_initial: 1 alacsony
+- locale: hu
+  format: string
+  source: 2 normal
+  target: 2 normál
+  target_initial: 2 normál
+- locale: hu
+  format: string
+  source: 3 high
+  target: 3 magas
+  target_initial: 3 magas
+- locale: hu
+  format: string
+  source: Links
+  target: Linkek
+  target_initial: Linkek
+- locale: hu
+  format: string
+  source: Tags
+  target: Címkék
+  target_initial: Címkék
+- locale: hu
+  format: string
+  source: Add Tag
+  target: Új Címke
+  target_initial: Új Címke
+- locale: hu
+  format: string
+  source: Tag
+  target: Címke
+  target_initial: Címke
+- locale: hu
+  format: string
+  source: Blue
+  target: Kék
+  target_initial: Kék
+- locale: hu
+  format: string
+  source: Pink
+  target: Rózsaszín
+  target_initial: Rózsaszín
+- locale: hu
+  format: string
+  source: Purple
+  target: Lila
+  target_initial: Lila
+- locale: hu
+  format: string
+  source: Green
+  target: Zöld
+  target_initial: Zöld
+- locale: hu
+  format: string
+  source: Close tab
+  target: Oldal bezárása
+  target_initial: Oldal bezárása
+- locale: hu
+  format: string
+  source: "∅ Waiting time today"
+  target: Várakozási idő ma
+  target_initial: Várakozási idő ma
+- locale: hu
+  format: string
+  source: reply all
+  target: válasz mindenkinek
+  target_initial: válasz mindenkinek
+- locale: hu
+  format: string
+  source: Overview
+  target: Áttekintés
+  target_initial: Áttekintés
+- locale: hu
+  format: string
+  source: Overviews
+  target: Áttekintés
+  target_initial: Áttekintés
+- locale: hu
+  format: string
+  source: Connecting ...
+  target: Kapcsolódás
+  target_initial: Kapcsolódás
+- locale: hu
+  format: string
+  source: reply
+  target: válasz
+  target_initial: válasz
+- locale: hu
+  format: string
+  source: select attachment...
+  target: file csatolás...
+  target_initial: file csatolás...
+- locale: hu
+  format: string
+  source: Enter Answer or
+  target: Írd be a válasz vagy
+  target_initial: Írd be a válasz vagy
+- locale: hu
+  format: string
+  source: Add Link
+  target: Link hozzáadása
+  target_initial: Link hozzáadása
+- locale: hu
+  format: string
+  source: Yellow
+  target: Sárga
+  target_initial: Sárga
+- locale: hu
+  format: string
+  source: created
+  target: létrehozva
+  target_initial: létrehozva
+- locale: hu
+  format: string
+  source: Role
+  target: Szerep
+  target_initial: Szerep
+- locale: hu
+  format: string
+  source: See more
+  target: Kevesebb
+  target_initial: Kevesebb
+- locale: hu
+  format: string
+  source: Users
+  target: Felhasználók
+  target_initial: Felhasználók
+- locale: hu
+  format: string
+  source: Search for users
+  target: Felhasználók keresése
+  target_initial: Felhasználók keresése
+- locale: hu
+  format: string
+  source: Search...
+  target: Keresés...
+  target_initial: Keresés...
+- locale: hu
+  format: string
+  source: Selected
+  target: Kiválasztott
+  target_initial: Kiválasztott
+- locale: hu
+  format: string
+  source: Security
+  target: Biztonság
+  target_initial: Biztonság
+- locale: hu
+  format: string
+  source: See less
+  target: Még több
+  target_initial: Még több
+- locale: hu
+  format: string
+  source: Attributes
+  target: Attribútumok
+  target_initial: Attribútumok
+- locale: hu
+  format: string
+  source: First response
+  target: Első válasz
+  target_initial: Első válasz
+- locale: hu
+  format: string
+  source: First Response
+  target: Első válasz
+  target_initial: Első válasz
+- locale: hu
+  format: string
+  source: from
+  target: feladó
+  target_initial: feladó
+- locale: hu
+  format: string
+  source: Inbound
+  target: Bejövő
+  target_initial: Bejövő
+- locale: hu
+  format: string
+  source: reinstall
+  target: újratelepít
+  target_initial: újratelepít
+- locale: hu
+  format: string
+  source: Target
+  target: Cél
+  target_initial: Cél
+- locale: hu
+  format: string
+  source: Add a Note
+  target: Jegyzet hozzáadása
+  target_initial: Jegyzet hozzáadása
+- locale: hu
+  format: string
+  source: Addons
+  target: Addons
+  target_initial: Addons
+- locale: hu
+  format: string
+  source: Max. Email Size
+  target: Max. email méret
+  target_initial: Max. email méret
+- locale: hu
+  format: string
+  source: Objects
+  target: Objektumok
+  target_initial: Objektumok
+- locale: hu
+  format: string
+  source: Packages
+  target: Csomagok
+  target_initial: Csomagok
+- locale: hu
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: hu
+  format: string
+  source: Storage
+  target: Storage
+  target_initial: Storage
+- locale: hu
+  format: string
+  source: App Secret
+  target: App Secret
+  target_initial: App Secret
+- locale: hu
+  format: string
+  source: Browser
+  target: Böngésző
+  target_initial: Böngésző
+- locale: hu
+  format: string
+  source: http type
+  target: http type
+  target_initial: http type
+- locale: hu
+  format: string
+  source: New Project
+  target: Új project
+  target_initial: Új project
+- locale: hu
+  format: string
+  source: Organization Name
+  target: Szervezet neve
+  target_initial: Szervezet neve
+- locale: hu
+  format: string
+  source: Package
+  target: Csomag
+  target_initial: Csomag
+- locale: hu
+  format: string
+  source: Projects
+  target: Projektek
+  target_initial: Projektek
+- locale: hu
+  format: string
+  source: Schedulers
+  target: Ütemezők
+  target_initial: Ütemezők
+- locale: hu
+  format: string
+  source: Select Template
+  target: Template kiválasztása
+  target_initial: Template kiválasztása
+- locale: hu
+  format: string
+  source: SLAs
+  target: SLAs
+  target_initial: SLAs
+- locale: hu
+  format: string
+  source: escalation
+  target: eszkaláció
+  target_initial: eszkaláció
+- locale: hu
+  format: string
+  source: Create Text Modules
+  target: Új Szöveges Sablon
+  target_initial: Új Szöveges Sablon
+- locale: hu
+  format: string
+  source: Text modules
+  target: Szöveges Sablonok
+  target_initial: Szöveges Sablonok
+- locale: hu
+  format: string
+  source: Discard Changes
+  target: Változások elvetése
+  target_initial: Változások elvetése
+- locale: hu
+  format: string
+  source: Username
+  target: Felhasználónév
+  target_initial: Felhasználónév
+- locale: hu
+  format: string
+  source: Username / email
+  target: Felhasználónév / E-mail
+  target_initial: Felhasználónév / E-mail
+- locale: hu
+  format: string
+  source: Forgot your password?
+  target: Elfelejtetted a jelszavad?
+  target_initial: Elfelejtetted a jelszavad?
+- locale: hu
+  format: string
+  source: New text module
+  target: Új szöveges sablon
+  target_initial: Új szöveges sablon
+- locale: hu
+  format: string
+  source: Week
+  target: Hét
+  target_initial: Hét
+- locale: hu
+  format: string
+  source: public
+  target: nyilvános
+  target_initial: nyilvános
+- locale: hu
+  format: string
+  source: Organizations
+  target: Szervezetek
+  target_initial: Szervezetek
+- locale: hu
+  format: string
+  source: New User
+  target: Új felhasználó
+  target_initial: Új felhasználó
+- locale: hu
+  format: string
+  source: activated
+  target: aktivált
+  target_initial: aktivált
+- locale: hu
+  format: string
+  source: Adresses
+  target: Címek
+  target_initial: Címek
+- locale: hu
+  format: string
+  source: again
+  target: újra
+  target_initial: újra
+- locale: hu
+  format: string
+  source: Words
+  target: Szavak
+  target_initial: Szavak
+- locale: hu
+  format: string
+  source: Visibility
+  target: Láthatóság
+  target_initial: Láthatóság
+- locale: hu
+  format: string
+  source: up
+  target: fel
+  target_initial: fel
+- locale: hu
+  format: string
+  source: twitter status
+  target: twitter státusz
+  target_initial: twitter státusz
+- locale: hu
+  format: string
+  source: Translations
+  target: Fordítások
+  target_initial: Fordítások
+- locale: hu
+  format: string
+  source: Original
+  target: Eredeti
+  target_initial: Eredeti
+- locale: hu
+  format: string
+  source: internal
+  target: belső
+  target_initial: belső
+- locale: hu
+  format: string
+  source: install
+  target: telepít
+  target_initial: telepít
+- locale: hu
+  format: string
+  source: down
+  target: le
+  target_initial: le
+- locale: hu
+  format: string
+  source: Twitter Secret
+  target: Twitter Secret
+  target_initial: Twitter Secret
+- locale: hu
+  format: string
+  source: Twitter
+  target: Twitter
+  target_initial: Twitter
+- locale: hu
+  format: string
+  source: Tools
+  target: Eszközök
+  target_initial: Eszközök
+- locale: hu
+  format: string
+  source: Source
+  target: Forrás
+  target_initial: Forrás
+- locale: hu
+  format: string
+  source: now
+  target: most
+  target_initial: most
+- locale: hu
+  format: string
+  source: New Organization
+  target: Új szervezet
+  target_initial: Új szervezet
+- locale: hu
+  format: string
+  source: New Group
+  target: Új csoport
+  target_initial: Új csoport
+- locale: hu
+  format: string
+  source: Members
+  target: Tagok
+  target_initial: Tagok
+- locale: hu
+  format: string
+  source: Lost Password
+  target: Elfelejtett jelszó
+  target_initial: Elfelejtett jelszó
+- locale: hu
+  format: string
+  source: Maintenance
+  target: Karbantartás
+  target_initial: Karbantartás
+- locale: hu
+  format: string
+  source: Frontend
+  target: Frontend
+  target_initial: Frontend
+- locale: hu
+  format: string
+  source: Channels
+  target: Csatornák
+  target_initial: Csatornák
+- locale: hu
+  format: string
+  source: New User Accounts
+  target: Új felhasználói fiókok
+  target_initial: Új felhasználói fiókok
+- locale: hu
+  format: string
+  source: Matrix
+  target: Matrix
+  target_initial: Matrix
+- locale: hu
+  format: string
+  source: Logo
+  target: Logo
+  target_initial: Logo
+- locale: hu
+  format: string
+  source: Camera
+  target: Camera
+  target_initial: Camera
+- locale: hu
+  format: string
+  source: Address
+  target: Cím
+  target_initial: Cím
+- locale: hu
+  format: string
+  source: Assigned
+  target: Hozzárendelt
+  target_initial: Hozzárendelt
+- locale: hu
+  format: string
+  source: Your Logo
+  target: Saját logo
+  target_initial: Saját logo
+- locale: hu
+  format: string
+  source: Widget
+  target: Widget
+  target_initial: Widget
+- locale: hu
+  format: string
+  source: Web
+  target: Web
+  target_initial: Web
+- locale: hu
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: hu
+  format: string
+  source: today
+  target: ma
+  target_initial: ma
+- locale: hu
+  format: string
+  source: Skip
+  target: Kihagyás
+  target_initial: Kihagyás
+- locale: hu
+  format: string
+  source: Option
+  target: Opció
+  target_initial: Opció
+- locale: hu
+  format: string
+  source: Notes
+  target: Megjegyzés
+  target_initial: Megjegyzés
+- locale: hu
+  format: string
+  source: matches
+  target: egyezés
+  target_initial: egyezés
+- locale: hu
+  format: string
+  source: Calendars
+  target: Naptárak
+  target_initial: Naptárak
+- locale: hu
+  format: string
+  source: Topics
+  target: Témák
+  target_initial: Témák
+- locale: hu
+  format: string
+  source: Protocol
+  target: Protocol
+  target_initial: Protocol
+- locale: hu
+  format: string
+  source: Personal Settings
+  target: Személyes beállítások
+  target_initial: Személyes beállítások
+- locale: hu
+  format: string
+  source: New Calendar
+  target: Új naptár
+  target_initial: Új naptár
+- locale: hu
+  format: string
+  source: Email Address
+  target: Email cím
+  target_initial: Email cím
+- locale: hu
+  format: string
+  source: Load
+  target: Töltés
+  target_initial: Töltés
+- locale: hu
+  format: string
+  source: Keywords
+  target: Kulcsszavak
+  target_initial: Kulcsszavak
+- locale: hu
+  format: string
+  source: John Smith
+  target: John Smith
+  target_initial: John Smith
+- locale: hu
+  format: string
+  source: Folder
+  target: Mappa
+  target_initial: Mappa
+- locale: hu
+  format: string
+  source: Current password
+  target: Aktuális jelszó
+  target_initial: Aktuális jelszó
+- locale: hu
+  format: string
+  source: attached
+  target: csatolt
+  target_initial: csatolt
+- locale: hu
+  format: string
+  source: Visible
+  target: Látható
+  target_initial: Látható
+- locale: hu
+  format: string
+  source: required
+  target: szükséges
+  target_initial: szükséges
+- locale: hu
+  format: string
+  source: Integrations
+  target: Integrációk
+  target_initial: Integrációk
+- locale: hu
+  format: string
+  source: Hero
+  target: Hős
+  target_initial: Hős
+- locale: hu
+  format: string
+  source: Experts
+  target: Szakértők
+  target_initial: Szakértők
+- locale: hu
+  format: string
+  source: Expert
+  target: Szakértő
+  target_initial: Szakértő
+- locale: hu
+  format: string
+  source: Clients
+  target: Ügyfelek
+  target_initial: Ügyfelek
+- locale: hu
+  format: string
+  source: busy
+  target: elfoglalt
+  target_initial: elfoglalt
+- locale: hu
+  format: string
+  source: Sounds
+  target: Hangok
+  target_initial: Hangok
+- locale: hu
+  format: string
+  source: Postal Code
+  target: Irányítószám
+  target_initial: Irányítószám
+- locale: hu
+  format: string
+  source: New App
+  target: Új app
+  target_initial: Új app
+- locale: hu
+  format: string
+  source: monthly
+  target: havi
+  target_initial: havi
+- locale: hu
+  format: string
+  source: Credit card number
+  target: Hitelkártyaszám
+  target_initial: Hitelkártyaszám
+- locale: hu
+  format: string
+  source: Credit card
+  target: Hitelkártya
+  target_initial: Hitelkártya
+- locale: hu
+  format: string
+  source: Cardholder
+  target: Kártyatulajdonos
+  target_initial: Kártyatulajdonos
+- locale: hu
+  format: string
+  source: Billing Cycle
+  target: Számlázási időszak
+  target_initial: Számlázási időszak
+- locale: hu
+  format: string
+  source: Billing
+  target: Számlázás
+  target_initial: Számlázás
+- locale: hu
+  format: string
+  source: left
+  target: bal
+  target_initial: bal
+- locale: hu
+  format: string
+  source: Config
+  target: Config
+  target_initial: Config
+- locale: hu
+  format: string
+  source: skip
+  target: kihagyás
+  target_initial: kihagyás
+- locale: hu
+  format: string
+  source: Monitoring
+  target: Monitoring
+  target_initial: Monitoring
+- locale: hu
+  format: string
+  source: Link
+  target: Link
+  target_initial: Link
+- locale: hu
+  format: string
+  source: Current Status
+  target: Aktuális állapot
+  target_initial: Aktuális állapot
+- locale: hu
+  format: string
+  source: Back
+  target: Vissza
+  target_initial: Vissza
+- locale: hu
+  format: string
+  source: Germany
+  target: Németország
+  target_initial: Németország
+- locale: hu
+  format: string
+  source: Bank Name
+  target: Bank neve
+  target_initial: Bank neve
+- locale: hu
+  format: string
+  source: Services
+  target: Szolgáltatások
+  target_initial: Szolgáltatások
+- locale: hu
+  format: string
+  source: Sender
+  target: Küldő
+  target_initial: Küldő
+- locale: hu
+  format: string
+  source: Network
+  target: Hálózat
+  target_initial: Hálózat
+- locale: hu
+  format: string
+  source: My closed Tickets
+  target: Lezárt hibajegyeim
+  target_initial: Lezárt hibajegyeim
+- locale: hu
+  format: string
+  source: Messages
+  target: Üzenetek
+  target_initial: Üzenetek
+- locale: hu
+  format: string
+  source: Invoice
+  target: Számla
+  target_initial: Számla
+- locale: hu
+  format: string
+  source: Feedback
+  target: Visszajelzés
+  target_initial: Visszajelzés
+- locale: hu
+  format: string
+  source: Enable
+  target: Engedélyez
+  target_initial: Engedélyez
+- locale: hu
+  format: string
+  source: Plan
+  target: Terv
+  target_initial: Terv
+- locale: hu
+  format: string
+  source: Full
+  target: Teljes
+  target_initial: Teljes
+- locale: hu
+  format: string
+  source: Accounts
+  target: Fiókok
+  target_initial: Fiókok
+- locale: hu
+  format: string
+  source: Value
+  target: Érték
+  target_initial: Érték
+- locale: hu
+  format: string
+  source: Total
+  target: Teljes
+  target_initial: Teljes
+- locale: hu
+  format: string
+  source: Service
+  target: Szolgáltatás
+  target_initial: Szolgáltatás
+- locale: hu
+  format: string
+  source: Sending...
+  target: Küldés...
+  target_initial: Küldés...
+- locale: hu
+  format: string
+  source: Reopened
+  target: Újranyitott
+  target_initial: Újranyitott
+- locale: hu
+  format: string
+  source: My Group
+  target: Csoportom
+  target_initial: Csoportom
+- locale: hu
+  format: string
+  source: Direct URL
+  target: Direct URL
+  target_initial: Direct URL
+- locale: hu
+  format: string
+  source: current user
+  target: aktuális felhasználó
+  target_initial: aktuális felhasználó
+- locale: hu
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: hu
+  format: string
+  source: Attach files
+  target: File csatolása
+  target_initial: File csatolása
+- locale: hu
+  format: string
+  source: Username or email
+  target: Felhasználónév vagy email
+  target_initial: Felhasználónév vagy email
+- locale: hu
+  format: string
+  source: Twitter Key
+  target: Twitter Key
+  target_initial: Twitter Key
+- locale: hu
+  format: string
+  source: Trigger
+  target: Trigger
+  target_initial: Trigger
+- locale: hu
+  format: string
+  source: Out of Office
+  target: Házon kívül
+  target_initial: Házon kívül
+- locale: hu
+  format: string
+  source: My assigned Tickets
+  target: Hozzámrendelt hibajegyek
+  target_initial: Hozzámrendelt hibajegyek
+- locale: hu
+  format: string
+  source: Full Name
+  target: Teljes név
+  target_initial: Teljes név
+- locale: hu
+  format: string
+  source: Facebook
+  target: Facebook
+  target_initial: Facebook
+- locale: hu
+  format: string
+  source: Checksum
+  target: Checksum
+  target_initial: Checksum
+- locale: hu
+  format: string
+  source: Channel
+  target: Csatorna
+  target_initial: Csatorna
+- locale: hu
+  format: string
+  source: Hour
+  target: Óra
+  target_initial: Óra
+- locale: hu
+  format: string
+  source: Your current level
+  target: Aktuális szint
+  target_initial: Aktuális szint
+- locale: hu
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: hu
+  format: string
+  source: Shared
+  target: Megosztott
+  target_initial: Megosztott
+- locale: hu
+  format: string
+  source: Maximum Email Size
+  target: Maximális email méret
+  target_initial: Maximális email méret
+- locale: hu
+  format: string
+  source: Disable
+  target: Letilt
+  target_initial: Letilt
+- locale: hu
+  format: string
+  source: All Tickets
+  target: Összes hibajegy
+  target_initial: Összes hibajegy
+- locale: hu
+  format: string
+  source: Attached Files
+  target: Csatolt fileok
+  target_initial: Csatolt fileok
+- locale: hu
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 2 lower and 2 upper characters
+  target_initial: 2 lower and 2 upper characters
+- locale: hu
+  format: string
+  source: Triggers
+  target: Triggerek
+  target_initial: Triggerek
+- locale: hu
+  format: string
+  source: skipped
+  target: kihagyott
+  target_initial: kihagyott
+- locale: hu
+  format: string
+  source: Or
+  target: Vagy
+  target_initial: Vagy
+- locale: hu
+  format: string
+  source: Installed
+  target: Telepített
+  target_initial: Telepített
+- locale: hu
+  format: string
+  source: Current User
+  target: Aktuális felhasználó
+  target_initial: Aktuális felhasználó
+- locale: hu
+  format: string
+  source: active
+  target: aktív
+  target_initial: aktív
+- locale: hu
+  format: string
+  source: Change order
+  target: Sorrend változtatás
+  target_initial: Sorrend változtatás
+- locale: hu
+  format: string
+  source: Flat design.
+  target: Flat design.
+  target_initial: Flat design.
+- locale: hu
+  format: string
+  source: Font size
+  target: Betűméret
+  target_initial: Betűméret
+- locale: hu
+  format: string
+  source: Macros
+  target: Makrók
+  target_initial: Makrók
+- locale: hu
+  format: string
+  source: new & open
+  target: Új & megnyit
+  target_initial: Új & megnyit
+- locale: hu
+  format: string
+  source: Project
+  target: Projekt
+  target_initial: Projekt
+- locale: hu
+  format: string
+  source: Mood
+  target: Hangulat
+  target_initial: Hangulat
+- locale: hu
+  format: string
+  source: Default
+  target: Alapértelmezett
+  target_initial: Alapértelmezett
+- locale: hu
+  format: string
+  source: Organization Support
+  target: Szervezet support
+  target_initial: Szervezet support
+- locale: hu
+  format: string
+  source: Select item
+  target: Elem kiválasztása
+  target_initial: Elem kiválasztása
+- locale: hu
+  format: string
+  source: Administrator Account
+  target: Adminisztrátori fiók
+  target_initial: Adminisztrátori fiók
+- locale: hu
+  format: string
+  source: done
+  target: kész
+  target_initial: kész
+- locale: hu
+  format: string
+  source: Flat Design
+  target: Flat Design
+  target_initial: Flat Design
+- locale: hu
+  format: string
+  source: Hour(s)
+  target: Óra
+  target_initial: Óra
+- locale: hu
+  format: string
+  source: Month(s)
+  target: Hónap
+  target_initial: Hónap
+- locale: hu
+  format: string
+  source: Beginner
+  target: Kezdő
+  target_initial: Kezdő
+- locale: hu
+  format: string
+  source: Duration
+  target: Időtartam
+  target_initial: Időtartam
+- locale: hu
+  format: string
+  source: inactive
+  target: inaktív
+  target_initial: inaktív
+- locale: hu
+  format: string
+  source: Mode
+  target: Mód
+  target_initial: Mód
+- locale: hu
+  format: string
+  source: Newbie
+  target: Newbie
+  target_initial: Newbie
+- locale: hu
+  format: string
+  source: not exist
+  target: nem létezik
+  target_initial: nem létezik
+- locale: hu
+  format: string
+  source: annually
+  target: évente
+  target_initial: évente
+- locale: hu
+  format: string
+  source: Applications
+  target: Applikációk
+  target_initial: Applikációk
+- locale: hu
+  format: string
+  source: Macro
+  target: Macro
+  target_initial: Macro
+- locale: hu
+  format: string
+  source: Not configured
+  target: Nem konfigurált
+  target_initial: Nem konfigurált
+- locale: hu
+  format: string
+  source: Order
+  target: Sorrend
+  target_initial: Sorrend
+- locale: hu
+  format: string
+  source: SLA Times
+  target: SLA idők
+  target_initial: SLA idők
+- locale: hu
+  format: string
+  source: Summary
+  target: Összefoglalás
+  target_initial: Összefoglalás
+- locale: hu
+  format: string
+  source: Sure?
+  target: Biztos?
+  target_initial: Biztos?
+- locale: hu
+  format: string
+  source: tax
+  target: adó
+  target_initial: adó
+- locale: hu
+  format: string
+  source: Domain
+  target: Domain
+  target_initial: Domain
+- locale: hu
+  format: string
+  source: Notification
+  target: Figyelmeztetés
+  target_initial: Figyelmeztetés
+- locale: hu
+  format: string
+  source: right
+  target: jobb
+  target_initial: jobb
+- locale: hu
+  format: string
+  source: New Role
+  target: Új szerepkör
+  target_initial: Új szerepkör
+- locale: hu
+  format: string
+  source: Real name
+  target: Valódi név
+  target_initial: Valódi név
+- locale: hu
+  format: string
+  source: Successful!
+  target: Sikeres!
+  target_initial: Sikeres!
+- locale: hu
+  format: string
+  source: HTTP type
+  target: HTTP type
+  target_initial: HTTP type
+- locale: hu
+  format: string
+  source: run macro
+  target: Makró futtatás
+  target_initial: Makró futtatás
+- locale: hu
+  format: string
+  source: Annual
+  target: Éves
+  target_initial: Éves
+- locale: hu
+  format: string
+  source: failed
+  target: sikertelen
+  target_initial: sikertelen
+- locale: hu
+  format: string
+  source: Auto close
+  target: Automatikus lezárás
+  target_initial: Automatikus lezárás
+- locale: hu
+  format: string
+  source: Minute(s)
+  target: Perc
+  target_initial: Perc
+- locale: hu
+  format: string
+  source: Notifications
+  target: Figyelmeztetések
+  target_initial: Figyelmeztetések
+- locale: hu
+  format: string
+  source: Report
+  target: Jelentés
+  target_initial: Jelentés
+- locale: hu
+  format: string
+  source: Holidays
+  target: Ünnepek
+  target_initial: Ünnepek
+- locale: hu
+  format: string
+  source: Invite
+  target: Meghív
+  target_initial: Meghív
+- locale: hu
+  format: string
+  source: New Profile
+  target: Új profil
+  target_initial: Új profil
+- locale: hu
+  format: string
+  source: Amount
+  target: Összeg
+  target_initial: Összeg
+- locale: hu
+  format: string
+  source: First Solution
+  target: Első megoldás
+  target_initial: Első megoldás
+- locale: hu
+  format: string
+  source: Scheduler
+  target: Ütemező
+  target_initial: Ütemező
+- locale: hu
+  format: string
+  source: Reload application
+  target: Applikáció újratöltése
+  target_initial: Applikáció újratöltése
+- locale: hu
+  format: string
+  source: not translated
+  target: Nem fordított
+  target_initial: Nem fordított
+- locale: hu
+  format: string
+  source: Object Manager
+  target: Objektum manager
+  target_initial: Objektum manager
+- locale: hu
+  format: string
+  source: Removes the formatting
+  target: Formázás eltávolítása
+  target_initial: Formázás eltávolítása
+- locale: hu
+  format: string
+  source: New Scheduler
+  target: Új ütemező
+  target_initial: Új ütemező
+- locale: hu
+  format: string
+  source: Unassigned & Open Tickets
+  target: Gazdátlan és nyitott hibajegyek
+  target_initial: Gazdátlan és nyitott hibajegyek
+- locale: hu
+  format: string
+  source: Escalated Tickets
+  target: Eszkalált hibajegyek
+  target_initial: Eszkalált hibajegyek
+- locale: hu
+  format: string
+  source: Invite Agents
+  target: Ügyintéző meghívása
+  target_initial: Ügyintéző meghívása
+- locale: hu
+  format: string
+  source: Edit Organization
+  target: Szervezet szerkesztése
+  target_initial: Szervezet szerkesztése
+- locale: hu
+  format: string
+  source: Import Key
+  target: Import Key
+  target_initial: Import Key
+- locale: hu
+  format: string
+  source: Import Mode
+  target: Import Mode
+  target_initial: Import Mode
+- locale: hu
+  format: string
+  source: Updated by
+  target: Updatelte
+  target_initial: Updatelte
+- locale: hu
+  format: string
+  source: Where
+  target: Hol
+  target_initial: Hol
+- locale: hu
+  format: string
+  source: Enable Chat
+  target: Chat engedélyezése
+  target_initial: Chat engedélyezése
+- locale: hu
+  format: string
+  source: Enter timzone...
+  target: Időzóna megadás...
+  target_initial: Időzóna megadás...
+- locale: hu
+  format: string
+  source: Escalation Times
+  target: Eszkalációs idő
+  target_initial: Eszkalációs idő
+- locale: hu
+  format: string
+  source: Form
+  target: Form
+  target_initial: Form
+- locale: hu
+  format: string
+  source: Invite Agents/Colleges
+  target: Ügyintéző/Kolléga meghívása
+  target_initial: Ügyintéző/Kolléga meghívása
+- locale: hu
+  format: string
+  source: Verifying...
+  target: Ellenőriz...
+  target_initial: Ellenőriz...
+- locale: hu
+  format: string
+  source: Email Account
+  target: Email fiók
+  target_initial: Email fiók
+- locale: hu
+  format: string
+  source: escalated
+  target: eszkalált
+  target_initial: eszkalált
+- locale: hu
+  format: string
+  source: Escalated
+  target: Eszkalált
+  target_initial: Eszkalált
+- locale: hu
+  format: string
+  source: just now
+  target: épp most
+  target_initial: épp most
+- locale: hu
+  format: string
+  source: Usage
+  target: Használat
+  target_initial: Használat
+- locale: hu
+  format: string
+  source: Year(s)
+  target: Év
+  target_initial: Év
+- locale: hu
+  format: string
+  source: Enter Title...
+  target: Cím megadás...
+  target_initial: Cím megadás...
+- locale: hu
+  format: string
+  source: Invite Customer
+  target: Ügyfél meghívása
+  target_initial: Ügyfél meghívása
+- locale: hu
+  format: string
+  source: Last used
+  target: Utolsó használat
+  target_initial: Utolsó használat
+- locale: hu
+  format: string
+  source: Latest updates
+  target: Utolsó update
+  target_initial: Utolsó update
+- locale: hu
+  format: string
+  source: Unassigned & Open
+  target: Gazdátlan és nyitott
+  target_initial: Gazdátlan és nyitott
+- locale: hu
+  format: string
+  source: Feature disabled!
+  target: Tulajdonság letiltva!
+  target_initial: Tulajdonság letiltva!
+- locale: hu
+  format: string
+  source: Image Service
+  target: Image Service
+  target_initial: Image Service
+- locale: hu
+  format: string
+  source: Last sync
+  target: Utolsó szinkronizálás
+  target_initial: Utolsó szinkronizálás
+- locale: hu
+  format: string
+  source: LDAP Host
+  target: LDAP Host
+  target_initial: LDAP Host
+- locale: hu
+  format: string
+  source: All Agents
+  target: Összes ügyintéző
+  target_initial: Összes ügyintéző
+- locale: hu
+  format: string
+  source: Urgency
+  target: Sürgősség
+  target_initial: Sürgősség
+- locale: hu
+  format: string
+  source: Enable Ticket creation
+  target: Hibajegy létrehozás engedélyezése
+  target_initial: Hibajegy létrehozás engedélyezése
+- locale: hu
+  format: string
+  source: Unassigned Tickets
+  target: Gazdátlan hibajegyek
+  target_initial: Gazdátlan hibajegyek
+- locale: hu
+  format: string
+  source: Invitation sent!
+  target: Meghívó elküldve!
+  target_initial: Meghívó elküldve!
+- locale: hu
+  format: string
+  source: What is it?
+  target: Mi ez?
+  target_initial: Mi ez?
+- locale: hu
+  format: string
+  source: Invite Colleagues
+  target: Kollégák meghívása
+  target_initial: Kollégák meghívása
+- locale: hu
+  format: string
+  source: Email Accounts
+  target: Email fiókok
+  target_initial: Email fiókok
+- locale: hu
+  format: string
+  source: Enable/Disable online chat.
+  target: Online chat Engedélyezés/Tiltás.
+  target_initial: Online chat Engedélyezés/Tiltás.
+- locale: hu
+  format: string
+  source: First Steps
+  target: Első lépések
+  target_initial: Első lépések
+- locale: hu
+  format: string
+  source: Realtime
+  target: Realtime
+  target_initial: Realtime
+- locale: hu
+  format: string
+  source: Nothing selected
+  target: Nincs kiválasztott
+  target_initial: Nincs kiválasztott
+- locale: hu
+  format: string
+  source: Accounted Time
+  target: Könyvelt idő
+  target_initial: Könyvelt idő
+- locale: hu
+  format: string
+  source: My Stats
+  target: Statisztikáim
+  target_initial: Statisztikáim
+- locale: hu
+  format: string
+  source: My Organization
+  target: Saját szervezetem
+  target_initial: Saját szervezetem
+- locale: hu
+  format: string
+  source: New Macro
+  target: Új makró
+  target_initial: Új makró
+- locale: hu
+  format: string
+  source: New SLA
+  target: Új SLA
+  target_initial: Új SLA
+- locale: hu
+  format: string
+  source: New Tags
+  target: Új cimke
+  target_initial: Új cimke
+- locale: hu
+  format: string
+  source: New Trigger
+  target: Új trigger
+  target_initial: Új trigger
+- locale: hu
+  format: string
+  source: New Version
+  target: Új verzió
+  target_initial: Új verzió
+- locale: hu
+  format: string
+  source: Outbound
+  target: Kimenő
+  target_initial: Kimenő
+- locale: hu
+  format: string
+  source: Proxy Settings
+  target: Proxy beállítások
+  target_initial: Proxy beállítások
+- locale: hu
+  format: string
+  source: Releases
+  target: Releasek
+  target_initial: Releasek
+- locale: hu
+  format: string
+  source: Background color
+  target: Háttérszín
+  target_initial: Háttérszín
+- locale: hu
+  format: string
+  source: Bots
+  target: Botok
+  target_initial: Botok
+- locale: hu
+  format: string
+  source: This is Zammad version %s
+  target: This is Helpdesk version %s
+  target_initial: This is Helpdesk version %s
+- locale: hu
+  format: string
+  source: Back to my view
+  target: Vissza a saját nézetemhez
+  target_initial: Vissza a saját nézetemhez
+- locale: hu
+  format: string
+  source: The way to communicate with us is this thing called "ticket".
+  target: Itt tudsz velünk kommunikálni hibajegyeken keresztül.
+  target_initial: Itt tudsz velünk kommunikálni hibajegyeken keresztül.
+- locale: hu
+  format: string
+  source: Third-party Applications
+  target: Third-party applikációk
+  target_initial: Third-party applikációk
+- locale: hu
+  format: string
+  source: Sign out
+  target: Kijelentkezés
+  target_initial: Kijelentkezés
+- locale: hu
+  format: string
+  source: Sign up
+  target: Regisztráció
+  target_initial: Regisztráció
+- locale: hu
+  format: string
+  source: Here you can create one.
+  target: Itt tudsz létrehozni egyet.
+  target_initial: Itt tudsz létrehozni egyet.
+- locale: hu
+  format: string
+  source: Create your first ticket
+  target: Első hibajegy létrehozása
+  target_initial: Első hibajegy létrehozása
+- locale: hu
+  format: string
+  source: You have not created a ticket yet.
+  target: Még nem hoztál létre hibajegyet.
+  target_initial: Még nem hoztál létre hibajegyet.
+- locale: hu
+  format: string
+  source: Sign in with
+  target: Bejelentkezés
+  target_initial: Bejelentkezés
+- locale: hu
+  format: string
+  source: No unread notifications for you. :)
+  target: Nincs olvasatlan értesítés :)
+  target_initial: Nincs olvasatlan értesítés :)
+- locale: hu
+  format: string
+  source: Please click the button below to create your first one.
+  target: A lenti gombra kattintva tudod létrehozni az elsőt.
+  target_initial: A lenti gombra kattintva tudod létrehozni az elsőt.
+- locale: hu
+  format: string
+  source: Account not verified
+  target: A fiók nincs ellenőrizve
+  target_initial: A fiók nincs ellenőrizve
+- locale: hu
+  format: string
+  source: "%s ago"
+  target: ezelőtt
+  target_initial: ezelőtt
+- locale: hu
+  format: string
+  source: pending
+  target: függő
+  target_initial: függő
+- locale: hu
+  format: string
+  source: Password (confirm)
+  target: Jelszó (megerősítés)
+  target_initial: Jelszó (megerősítés)
+- locale: hu
+  format: string
+  source: Manage
+  target: Kezel
+  target_initial: Kezel
+- locale: hu
+  format: string
+  source: pending reminder
+  target: függő emlékeztető
+  target_initial: függő emlékeztető
+- locale: hu
+  format: string
+  source: pending close
+  target: függő lezárt
+  target_initial: függő lezárt
+- locale: hu
+  format: string
+  source: New Branch
+  target: Új ág
+  target_initial: Új ág
+- locale: hu
+  format: string
+  source: Mark all as seen.
+  target: Összes látottnak jelölése
+  target_initial: Összes látottnak jelölése
+- locale: hu
+  format: string
+  source: Profiles
+  target: Profilok
+  target_initial: Profilok
+- locale: hu
+  format: string
+  source: Notification Sender
+  target: Értesítés küldő
+  target_initial: Értesítés küldő
+- locale: hu
+  format: string
+  source: New Release
+  target: Új release
+  target_initial: Új release
+- locale: hu
+  format: string
+  source: New Overview
+  target: Új nézet
+  target_initial: Új nézet
+- locale: hu
+  format: string
+  source: New Attribute
+  target: Új attribútum
+  target_initial: Új attribútum
+- locale: hu
+  format: string
+  source: Mark all as read
+  target: Összes olvasottnak jelölése
+  target_initial: Összes olvasottnak jelölése
+- locale: hu
+  format: string
+  source: Install Package
+  target: Csomag telepítése
+  target_initial: Csomag telepítése
+- locale: hu
+  format: string
+  source: Push Changes
+  target: Push Changes
+  target_initial: Push Changes
+- locale: hu
+  format: string
+  source: Previous tab
+  target: Előző fül
+  target_initial: Előző fül
+- locale: hu
+  format: string
+  source: Online Forms
+  target: Online Forms
+  target_initial: Online Forms
+- locale: hu
+  format: string
+  source: New password (confirm)
+  target: Új jelszó (megerősítés)
+  target_initial: Új jelszó (megerősítés)
+- locale: hu
+  format: string
+  source: Personal Access Tokens
+  target: Personal Access Tokens
+  target_initial: Personal Access Tokens
+- locale: hu
+  format: string
+  source: No Entries
+  target: Nincs bejegyzés
+  target_initial: Nincs bejegyzés
+- locale: hu
+  format: string
+  source: Permissions
+  target: jogosultágok
+  target_initial: jogosultágok
+- locale: hu
+  format: string
+  source: Payment Method
+  target: Fizetési mód
+  target_initial: Fizetési mód
+- locale: hu
+  format: string
+  source: Payment history
+  target: Fizetési előzmények
+  target_initial: Fizetési előzmények
+- locale: hu
+  format: string
+  source: Pay with
+  target: Fizetés
+  target_initial: Fizetés
+- locale: hu
+  format: string
+  source: per agent / month
+  target: ügyintéző / hónap
+  target_initial: ügyintéző / hónap
+- locale: hu
+  format: string
+  source: Manage Tags
+  target: Cimkék kezelése
+  target_initial: Cimkék kezelése
+- locale: hu
+  format: string
+  source: Powered by
+  target: Powered by
+  target_initial: Powered by
+- locale: hu
+  format: string
+  source: Proxy address.
+  target: Proxy cím
+  target_initial: Proxy cím
+- locale: hu
+  format: string
+  source: Play user interface sound effects
+  target: Felhasználói felület hangjainak lejátszása
+  target_initial: Felhasználói felület hangjainak lejátszása
+- locale: hu
+  format: string
+  source: Notification Sound
+  target: Értesítési hang
+  target_initial: Értesítési hang
+- locale: hu
+  format: string
+  source: Link %s
+  target: Link %s
+  target_initial: Link %s
+- locale: hu
+  format: string
+  source: New Application
+  target: Új applikáció
+  target_initial: Új applikáció
+- locale: hu
+  format: string
+  source: Minimum length
+  target: Minimum hossz
+  target_initial: Minimum hossz
+- locale: hu
+  format: string
+  source: Meine zugewiesenen Tickets
+  target: Hozzámrendelt hibajegyek
+  target_initial: Hozzámrendelt hibajegyek
+- locale: hu
+  format: string
+  source: Pending reached
+  target: függő elért
+  target_initial: függő elért
+- locale: hu
+  format: string
+  source: Payment method
+  target: Fizetési mód
+  target_initial: Fizetési mód
+- locale: hu
+  format: string
+  source: Please try to login!
+  target: Próbáljon meg bejelentkezni!
+  target_initial: Próbáljon meg bejelentkezni!
+- locale: hu
+  format: string
+  source: Password Access
+  target: Jelszó hozzáférés
+  target_initial: Jelszó hozzáférés
+- locale: hu
+  format: string
+  source: Open Ticket# %s
+  target: "Nyitott hibajegy# %s\t"
+  target_initial: "Nyitott hibajegy# %s\t"
+- locale: hu
+  format: string
+  source: Organization & Department Name
+  target: Szervezet és részleg neve
+  target_initial: Szervezet és részleg neve
+- locale: hu
+  format: string
+  source: Not Assigned
+  target: Nem hozzárendelt
+  target_initial: Nem hozzárendelt
+- locale: hu
+  format: string
+  source: No filter.
+  target: Nincs szűrő.
+  target_initial: Nincs szűrő.
+- locale: hu
+  format: string
+  source: Minimal size
+  target: Minimális méret
+  target_initial: Minimális méret
+- locale: hu
+  format: string
+  source: Maximum failed logins
+  target: Elrontott bejelentkezések maximuma
+  target_initial: Elrontott bejelentkezések maximuma
+- locale: hu
+  format: string
+  source: join today!
+  target: csatlakozz ma!
+  target_initial: csatlakozz ma!
+- locale: hu
+  format: string
+  source: All Open Tickets
+  target: Összes nyitott hibajegy
+  target_initial: Összes nyitott hibajegy
+- locale: hu
+  format: string
+  source: Product Name
+  target: Termék neve
+  target_initial: Termék neve
+- locale: hu
+  format: string
+  source: Article
+  target: Cikk
+  target_initial: Cikk
+- locale: hu
+  format: string
+  source: Recipients
+  target: Címzettek
+  target_initial: Címzettek
+- locale: hu
+  format: string
+  source: Article Count
+  target: Cikkek száma
+  target_initial: Cikkek száma
+- locale: hu
+  format: string
+  source: Uploading
+  target: Feltöltés
+  target_initial: Feltöltés
+- locale: hu
+  format: string
+  source: Edit Addon
+  target: Addon szerkesztés
+  target_initial: Addon szerkesztés
+- locale: hu
+  format: string
+  source: Edit Customer
+  target: Ügyfél szerkesztés
+  target_initial: Ügyfél szerkesztés
+- locale: hu
+  format: string
+  source: Discard your unsaved changes.
+  target: Változások elvetése
+  target_initial: Változások elvetése
+- locale: hu
+  format: string
+  source: Add-ons
+  target: Add-ons
+  target_initial: Add-ons
+- locale: hu
+  format: string
+  source: SystemID
+  target: SystemID
+  target_initial: SystemID
+- locale: hu
+  format: string
+  source: Edit Branch
+  target: Ág szerkesztés
+  target_initial: Ág szerkesztés
+- locale: hu
+  format: string
+  source: App ID
+  target: App ID
+  target_initial: App ID
+- locale: hu
+  format: string
+  source: Status Code
+  target: Állapot kód
+  target_initial: Állapot kód
+- locale: hu
+  format: string
+  source: Status Type
+  target: Állapot típus
+  target_initial: Állapot típus
+- locale: hu
+  format: string
+  source: Template Title
+  target: Telegram cím
+  target_initial: Telegram cím
+- locale: hu
+  format: string
+  source: Ticket Subject Size
+  target: Ticket tárgy méret
+  target_initial: Ticket tárgy méret
+- locale: hu
+  format: string
+  source: Email & Online
+  target: Email & Online
+  target_initial: Email & Online
+- locale: hu
+  format: string
+  source: Business Hours
+  target: Munkaidő
+  target_initial: Munkaidő
+- locale: hu
+  format: string
+  source: Discard
+  target: Elvet
+  target_initial: Elvet
+- locale: hu
+  format: string
+  source: You can request your password
+  target: Jelszót tudsz igényelni
+  target_initial: Jelszót tudsz igényelni
+- locale: hu
+  format: string
+  source: Login with %s
+  target: 'Bejelentkezés: %s'
+  target_initial: 'Bejelentkezés: %s'
+- locale: hu
+  format: string
+  source: here
+  target: itt
+  target_initial: itt
+- locale: hu
+  format: string
+  source: Tickets of User
+  target: Felhasználó hibajegyei
+  target_initial: Felhasználó hibajegyei
+- locale: hu
+  format: string
+  source: Tickets of Organization
+  target: Cég hibajegyei
+  target_initial: Cég hibajegyei
+- locale: hu
+  format: string
+  source: Reset Password
+  target: Jelszó reset
+  target_initial: Jelszó reset
+- locale: hu
+  format: string
+  source: Testing
+  target: Tesztelés
+  target_initial: Tesztelés
+- locale: hu
+  format: string
+  source: Thanks for contributing!
+  target: Köszönjük a hozzájárulást!
+  target_initial: Köszönjük a hozzájárulást!
+- locale: hu
+  format: string
+  source: 'Total: %s'
+  target: "Teljes: %s\t"
+  target_initial: "Teljes: %s\t"
+- locale: hu
+  format: string
+  source: Email Notification
+  target: Email értesítés
+  target_initial: Email értesítés
+- locale: hu
+  format: string
+  source: Subscription Settings
+  target: Előfizetés beállításai
+  target_initial: Előfizetés beállításai
+- locale: hu
+  format: string
+  source: The chat is turned off.
+  target: A chat ki van kapcsolva.
+  target_initial: A chat ki van kapcsolva.
+- locale: hu
+  format: string
+  source: Ticket escalation
+  target: Hibajegy eszkaláció
+  target_initial: Hibajegy eszkaláció
+- locale: hu
+  format: string
+  source: Sure to delete this object?
+  target: Biztosan letörli ezt az objektumot?
+  target_initial: Biztosan letörli ezt az objektumot?
+- locale: hu
+  format: string
+  source: Professional
+  target: Professzionális
+  target_initial: Professzionális
+- locale: hu
+  format: string
+  source: Token Access
+  target: Token hozzáférés
+  target_initial: Token hozzáférés
+- locale: hu
+  format: string
+  source: You have created a ticket
+  target: Létrehoztál egy hibajegyet
+  target_initial: Létrehoztál egy hibajegyet
+- locale: hu
+  format: string
+  source: You have escalated tickets
+  target: Eszkaláltál egy hibajegyet
+  target_initial: Eszkaláltál egy hibajegyet
+- locale: hu
+  format: string
+  source: Subscription
+  target: Előfizetés
+  target_initial: Előfizetés
+- locale: hu
+  format: string
+  source: VAT
+  target: ÁFA
+  target_initial: ÁFA
+- locale: hu
+  format: string
+  source: VAT ID
+  target: Adószám
+  target_initial: Adószám
+- locale: hu
+  format: string
+  source: Article#
+  target: Cikk#
+  target_initial: Cikk#
+- locale: hu
+  format: string
+  source: API token
+  target: API token
+  target_initial: API token
+- locale: hu
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: hu
+  format: string
+  source: Test Connection
+  target: Teszt kapcsolat
+  target_initial: Teszt kapcsolat
+- locale: hu
+  format: string
+  source: Time zone
+  target: Időzóna
+  target_initial: Időzóna
+- locale: hu
+  format: string
+  source: assign tickets
+  target: hibajegy hozzárendelése
+  target_initial: hibajegy hozzárendelése
+- locale: hu
+  format: string
+  source: An open source monitoring tool.
+  target: Egy nyílt forrású monitoring eszköz
+  target_initial: Egy nyílt forrású monitoring eszköz
+- locale: hu
+  format: string
+  source: submit
+  target: elküld
+  target_initial: elküld
+- locale: hu
+  format: string
+  source: Telegram
+  target: Telegram
+  target_initial: Telegram
+- locale: hu
+  format: string
+  source: Reporting
+  target: Riport
+  target_initial: Riport
+- locale: hu
+  format: string
+  source: System URL
+  target: Rendszer URL
+  target_initial: Rendszer URL
+- locale: hu
+  format: string
+  source: The default font size is 12px.
+  target: Az alapértelmezett betűméret 12px.
+  target_initial: Az alapértelmezett betűméret 12px.
+- locale: hu
+  format: string
+  source: Thanks for your Feedback!
+  target: Köszönjük visszajelzését!
+  target_initial: Köszönjük visszajelzését!
+- locale: hu
+  format: string
+  source: There is no agent online.
+  target: Nincs online ügyintéző
+  target_initial: Nincs online ügyintéző
+- locale: hu
+  format: string
+  source: Ticket Subscriptions
+  target: Hibajegy előfizetések
+  target_initial: Hibajegy előfizetések
+- locale: hu
+  format: string
+  source: User Preferences
+  target: Felhasználó preferenciák
+  target_initial: Felhasználó preferenciák
+- locale: hu
+  format: string
+  source: Wrong Username or Password combination.
+  target: Rossz felhasználónév vagy jelszó.
+  target_initial: Rossz felhasználónév vagy jelszó.
+- locale: hu
+  format: string
+  source: You have closed a ticket
+  target: Lezártál egy hibajegyet
+  target_initial: Lezártál egy hibajegyet
+- locale: hu
+  format: string
+  source: Email - subject field
+  target: Email - tárgy mező
+  target_initial: Email - tárgy mező
+- locale: hu
+  format: string
+  source: We've sent password reset instructions to your email address.
+  target: Elküldtük a jelszó változtatással kapcsolatos információkat az email címedre.
+  target_initial: Elküldtük a jelszó változtatással kapcsolatos információkat az email
+    címedre.
+- locale: hu
+  format: string
+  source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  target: Amennyiben nem az email nem érkezik meg néhány percen belül, ellenőrizd
+    a spam mappádat, vagy próbáld meg újraküldeni a kérést.
+  target_initial: Amennyiben nem az email nem érkezik meg néhány percen belül, ellenőrizd
+    a spam mappádat, vagy próbáld meg újraküldeni a kérést.
+- locale: hu
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: 'Az email cím regisztrálva van a rendszerben, amennyiben kapcsolatba léptél
+    a Divergen Helpdeskkel. '
+  target_initial: 'Az email cím regisztrálva van a rendszerben, amennyiben kapcsolatba
+    léptél a Divergen Helpdeskkel. '
+- locale: hu
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: 'Az email cím regisztrálva van a rendszerben, amennyiben kapcsolatba léptél
+    a Divergen Helpdeskkel. '
+  target_initial: 'Az email cím regisztrálva van a rendszerben, amennyiben kapcsolatba
+    léptél a Divergen Helpdeskkel. '
+- locale: hu
+  format: string
+  source: Get latest translations
+  target: Legújabb fordítások beszerzése
+  target_initial: Legújabb fordítások beszerzése
+- locale: hu
+  format: string
+  source: "%s of my tickets escalated."
+  target: "%s hibajegyem eszkalálódott."
+  target_initial: "%s hibajegyem eszkalálódott."
+- locale: hu
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: 'Hozzámrendelt jegyek: %s / %s'
+  target_initial: 'Hozzámrendelt jegyek: %s / %s'
+- locale: hu
+  format: string
+  source: Create Macros
+  target: Hozzon létre makrókat
+  target_initial: Hozzon létre makrókat
+- locale: hu
+  format: string
+  source: 'Average: %s minutes'
+  target: 'Átlagosan: %s perc'
+  target_initial: 'Átlagosan: %s perc'
+- locale: hu
+  format: string
+  source: 'Average: %s'
+  target: 'Átlagosan: %s'
+  target_initial: 'Átlagosan: %s'
+- locale: hu
+  format: string
+  source: Reopening rate
+  target: Újranyitási arány
+  target_initial: Újranyitási arány
+- locale: hu
+  format: string
+  source: How to use it
+  target: Hogyan kell használni
+  target_initial: Hogyan kell használni
+- locale: hu
+  format: string
+  source: Additional Channels
+  target: További csatornák
+  target_initial: További csatornák
+- locale: hu
+  format: string
+  source: set to internal
+  target: beállítás belsőként
+  target_initial: beállítás belsőként
+- locale: hu
+  format: string
+  source: Change Customer
+  target: Ügyfél megváltoztatása
+  target_initial: Ügyfél megváltoztatása
+- locale: hu
+  format: string
+  source: 'Average: %s%'
+  target: 'Átlagosan: %s%'
+  target_initial: 'Átlagosan: %s%'
+- locale: hu
+  format: string
+  source: "%s% have been reopened"
+  target: Hibajegyek újranyitásának aránya %s%
+  target_initial: Hibajegyek újranyitásának aránya %s%
+- locale: hu
+  format: string
+  source: Your tickets in process
+  target: Folyamatban lévő hibajegyeim
+  target_initial: Folyamatban lévő hibajegyeim
+- locale: hu
+  format: string
+  source: forward
+  target: továbbítás
+  target_initial: továbbítás
+- locale: hu
+  format: string
+  source: Next in overview
+  target: Következő in overview
+  target_initial: Következő in overview
+- locale: hu
+  format: string
+  source: Channel Distribution
+  target: Csatorna eloszlás
+  target_initial: Csatorna eloszlás
+- locale: hu
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'Hibajegy kezelési idő: %s perc'
+  target_initial: 'Hibajegy kezelési idő: %s perc'
+- locale: hu
+  format: string
+  source: Your Email Configuration
+  target: Email beállítások konfigurálása
+  target_initial: Email beállítások konfigurálása
+- locale: hu
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: Ügyintézők/kollégák meghívása a hibajegyek kezeléséhez
+  target_initial: Ügyintézők/kollégák meghívása a hibajegyek kezeléséhez
+- locale: hu
+  format: string
+  source: Create a Test Ticket
+  target: Készítsen egy teszt hibajegyet
+  target_initial: Készítsen egy teszt hibajegyet
+- source: Select the customer of the ticket or create one.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: close
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: updated
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Base
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sender Format
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Linked Accounts
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sign in using
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: New to
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create my account
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Login successfully! Have a nice day!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Last contact
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket %s created!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: set to public
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: split
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: raw
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: twitter direct-message
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Linked Objects
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: My Organization Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Assignment Timeout
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter your username or email address
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Choose your new password.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Woo hoo! Your password has been changed!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Username or email address invalid, please try again.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: uninstall
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: deactivate
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: activate
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: deactivated
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Group by
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Items per page
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create an inbound Ticket
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create an outbound Ticket (will send this as email to customer)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Moved in
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Can't create user
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update successful!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Getting started!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create Admin
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Configure Channels
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send invitation
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Follow up possible
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Assign Follow Ups
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Change your password
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Link Accounts
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Change your language.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Work Disposition
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Business Times
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Conditions where SLA is used
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update Time
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add Attribute
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Copy to clipboard: Ctrl+C, Enter'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Copy to clipboard
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send to clients
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Feedback about our new Interface
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: What ideas do you have?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Attach Screenshot of page
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: in %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Pending till
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: session started
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: is the same
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: set internal
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Cancel Upload
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create new Customer
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: New Add-On
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Build Test Release
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Changes
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: All pending reached Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sessions
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Management
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sync Changes
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Shared organization
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Hook
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Hook Position
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Client Secret
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Authentication via LinkedIn
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Authentication via Google
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Needed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Prio
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Available for Role
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Maximal size in MB of emails.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Import Endpoint
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo Services
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Storage Mechanism
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo IP Backend
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo Location Backend
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: At a glance
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recent Releases
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recent Addons
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Authentication via Facebook
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Authentication via Twitter
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins after account is inactive.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Digit required
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enables users to create their own account via web interface.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint auth key.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Register as a new customer
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Cancel & Go Back
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password needs to contain 2 lower and 2 upper characters.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least one digit.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: no criteria
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Owned by nobody
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Owned by me
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Criteria
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Avatar
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: No template created yet.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Save Template
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create Template
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Choose Template
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Choose attributes and then save them as a new template.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Frequency
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Save new template
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Time Tracking
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send client stats to central server.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Activates lost password feature for users.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Restore Defaults
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Number Format
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send client stats
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Client storage
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Fully Qualified Domain Name
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Delete File
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Layout Reference
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Switch to
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Zammad looks like this for "%s"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Store
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Setup Finished
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Block Notifications
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Company Inc.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Connect Channels
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter Template Name
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send Mails via
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Maintenance Message
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Continue session
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: View from user's perspective
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Show
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Twitter App Credentials
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s% are currently in process"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Updated at
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: is
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: before (absolute)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Timeframe for solving the problem.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Timeframe for every following response.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Timeframe for the first response.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: after (relative)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: before (relative)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains not
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: in hours
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Selector
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: is not
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: after (absolute)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Pushing translations to i18n.zammad.com
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Push my changes
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Get latest Translation
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Reset changes
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: reached
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: at
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Report Profiles
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Devices
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Close & Tag as Spam
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Branding
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Waiting Customers
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Chatting Customers
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Active Agents
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable debugging for implementation.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Designer
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: E. g. recent changed tickets, users or organizations.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: switch to
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sender Format Seperator
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Additional follow up detection
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the sender of email notifications.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Destination Group
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Connect
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Email Inbound
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Email Outbound
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Verify sending and receiving
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Department Name
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: support@example.com
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Feedback Form
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Widget Designer
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Title of the form
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: LinkedIn App Credentials
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Name of form submit button
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Message after sending form
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Start modal dialog for form.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Show title in form.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry! We'll contact you soon as possible.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You have no configured account right now.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Fixed Email Accounts
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Some Text
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Inline translation
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Just click into the marker and update the words just in place. Enjoy!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Text with enabled inline translations looks like
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If you want to translate it via the translation table, just go ahead below.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Text with disabled inline translations looks like
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: All computers and browsers that have access to your Zammad appear here.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Previous in overview
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: There are too many people in queue for the chat.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket update
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket reminder reached
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Limit Groups
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A new version of Zammad is available, please reload your browser.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Also notify via email
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s ended switch to |%s|!"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s switched to |%s|!"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s created Organization |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s created Group |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Pending reminder reached for Ticket |%s|
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s updated User |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s updated Group |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s updated Organization |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s created Article for |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| is escalated!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s started a new session"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Most recent activity
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: View this in Zammad
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Manage your notifications settings
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s created User |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Reply to last article
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Open note box
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable/disable inline translations
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used when composing a text
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Text editing
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used when viewing a Ticket
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update as closed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Open reply box
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Removes any hyperlink
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as h3 heading
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as h2 heading
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as h1 heading
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as ordered list
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as unordered list
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Inserts a horizontal rule
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as //strikethrough//
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as ||italic||
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as |bold|
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Format as _underlined_
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Move left and right
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Move up and down
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used in lists (views and results)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Confirm/submit dialog
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Next in tab
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Close current tab
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: List of shortcuts
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used anywhere (admin only)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used anywhere
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Keyboard Shortcuts
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Set article to internal/public
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add alarm to pending reminder and escalated tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s updated Ticket |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s created Ticket |%s|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: clear
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With templates you can pre-fill ticket attributes.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create Overviews
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Starting Zammad
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: migrate from another system
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Setup new System
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'There can be several reasons for the chat to not show up:'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Manually open chat
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Requirements
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Chat Title
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Can be in any CSS color format.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Shown when the chat is closed.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can create multiple chat topics.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Preview Width
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Max. clients in waitlist
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Last sync at
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: disconnect
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The URL to this installation of Zammad.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Department
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Day(s)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: within last (relative)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: within next (relative)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Conditions for shown Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Only available for Users with shared Organization
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Available for User
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: specific user
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Run every %s at %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Disable Notifications
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Conditions for effected objects
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: When should the job run?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Will process
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Scheduled for
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Has processed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: ringing
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: not reached
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: connected
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: CTI
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Changes were made that require a database update.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Database Update required
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update Database
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: shown
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Used in object views
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "...add object title"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "...of whole textarea"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send a message to all logged in users.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Resend verification email
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Unable to verify email. Please contact your administrator.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Navigate through article
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Scroll down to see new messages
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Zammad Karma
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Karma Trends
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: What affects your Zammad Karma?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You have answered a ticket within 1h
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Usage of advanced features
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Evangelist
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Intermediate
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your karma is |%s|.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You are an |%s|.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Karma Level
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Find what you search. E. g. "search phrase"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Extended Search
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Show Search Details
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: OK, I've copied my token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Callback URL
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Pick a name for the application, and we'll give you a unique token.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: OK, I\'ve copied my token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add a Personal Access Token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: has changed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You have tickets that are over 2 days overdue
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Confirmation required
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enables user authentication via %s. Register your app first at [%s](%s).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Authentication via %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Please enter a valid "%s"!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Expiration (MM/YYYY)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your trial is running till %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Do you want to cancel your subscription?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Yes, please cancel my subscription
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update payment method
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Billed annually
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: or %s %s monthly
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Billing information
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: CVV
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Update subscription
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your account got canceled at %s! Your system will be removed at %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Yes, undo my subscription cancel
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You use %s in text but no attachment is attached. Do you want to continue?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: My pending reached Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Subscribe to iCalendar feed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Why doesn't the chat show up?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Holidays iCalendar Feed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Count
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Allow users to add new tags.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Default at Signup
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Changed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recent logs
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Default caller id for outbound calls.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Default caller id
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Default caller id.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Set outbound caller id
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Caller id to block
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Blocked caller ids based on sender caller id.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Also caller id of outbound calls can be changed.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: VoIP service provider with realtime push.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A team communication tool for the 21st century.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Domain based assignment
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| will escalate soon!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The format of the subject.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "|Left| means |[Ticket#12345] Some Subject|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "|Right| means |Some Subject [Ticket#12345]|"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Min. size of number
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Selects the ticket number generator module.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agents real name and the given group email
+    address.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Reply
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo Calendar Service
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be send by the sender.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines if a customer can create tickets via the web interface.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Group selection for Ticket creation
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Will be shown in the app and is included in email footers.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the logo of the application, shown in the web interface.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for user and organization image lookups.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to perform speed of application.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Send client stats/error message to central server to improve the usability.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: TextModule
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Assign Users based on users domain.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Create rules that single out the tickets for the Service Level Agreement.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Customers in the organization can view each other items.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Change %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Access to Agent Tickets based on Group Access
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Access to %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Manage %s Settings
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Manage %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Assign follow up to latest agent again.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: do not reopen Ticket but create new Ticket
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Follow up for closed ticket possible or not.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Notes are visible to agents only, never to customers.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Current Token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: no issues
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Health information can be retrieved as JSON using
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Health Check
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Merge to Ticket#
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recent Customer Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recent viewed Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: specific organization
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: current user organization
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: not set (not defined)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s required!"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: No such master ticket number!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Subscribe to public holidays in
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add attachment option to upload.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Continue anyway
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Base Objects
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Migration Plugin for %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Migrate %s Data
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s Migration"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Download %s Migration Plugin
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Attention: These will be your login password after the import is completed.'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s credentials"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter credentials
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter the URL of your %s system
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password for proxy connection.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Username for proxy connection.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least minimal size of characters.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Max size of the subject in an email reply.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Time Accounting
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Selector
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Time Units Total
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Time Units
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable time accounting for following matching tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: SEPA Direct Debit
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Last contact (agent)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Last contact (customer)
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Closing time
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Save as template
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Bulk action executed!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Invite customers to create issues in Zammad
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Only for these groups.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: iCalendar links from Google will get fetched once a day
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your account has not been verified. Please click the link in the verification
+    email.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Woo hoo! Your email address has been verified!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "...add object link URL"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Copy current object number (e. g. Ticket#) to clipboard
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Please execute database changes only in a maintenance time-slot.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You need to add the following Javascript code snippet to your web page
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Set up the communication channels you want to use with your Zammad.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Don't load CSS for form. You need to generate your own CSS for the form.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A test ticket has been created, you can find it in your overview |"%s"|
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you see a quick overview of your and other agents' performance.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Date & Time
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Show all...
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Tab has changed, do you really want to close it?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: '|%s| stores all attachments in the "%s".'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Automatically show chat
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Unassigned email addresses, assign them to a channel or delete them.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you will find the latest activities of your system.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Recently viewed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Drop files here
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s of your tickets are currently in process."
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Account Time
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: drag here to cancel
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s people"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: A powerfull service to get more information about your customers.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Change
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to enhance performance of application.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo Location Service
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password needs to contain at least one digit.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Getting an Access Token
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Report Profile
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Number of failed logins after account will be deactivated.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sender Format Separator
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Updating Database
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least a minimal number of characters.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Requesting the Grant
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Location of an external chat.css file.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Uninstall
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Geo IP Service
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add Bot
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add this class to a button on your page that should open the chat.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Delivery failed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Define the http protocol of your instance.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Billed monthly
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Yes, change my subscription
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains all
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains all not
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Payment by invoice
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains one
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Already charged in this periode
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Your new selection
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Billing E-Mail Address
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: contains one not
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Save configuration
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Analyzing structure...
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Bind Password
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Bind User
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Configure
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Mapping
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Base DN
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Running...
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Article Last Sender
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Reply-To
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Maximum size in MB of emails.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Additional follow-up detection
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines pretty date format.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You have no configured %s right now.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Default visibility for new note.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Note - default visibility
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Connect Facebook App
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Connect Twitter App
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Email - full quote
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Change Objects
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Start new
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Endpoint
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Read
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Exchange integration for contacts management.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Till
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Text missing
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Agent limit exceeded, please check your account settings.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Configurable in the admin interface of %s.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: People who create Tickets ask for help.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Add sender initials to end of a tweet.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To configure your system.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: To work on Tickets.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Defines the system default language.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: No proxy for the following hosts.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Locale
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: delete
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Products
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Receipt
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Account Holder
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: hu
+  target: ''
+  target_initial: ''

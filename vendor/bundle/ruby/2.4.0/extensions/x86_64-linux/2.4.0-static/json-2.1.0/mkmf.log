@@ -1,0 +1,66 @@
+have_func: checking for rb_enc_raise() in ruby.h... -------------------- yes
+
+"gcc -o conftest -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/x86_64-linux -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/ruby/backward -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0 -I.    -O3 -fno-fast-math -g -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wno-tautological-compare -Wno-parentheses-equality -Wno-constant-logical-operand -Wno-self-assign -Wunused-variable -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wno-maybe-uninitialized conftest.c  -L. -L/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -lruby-static  -lpthread -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -o conftest -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/x86_64-linux -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/ruby/backward -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0 -I.    -O3 -fno-fast-math -g -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wno-tautological-compare -Wno-parentheses-equality -Wno-constant-logical-operand -Wno-self-assign -Wunused-variable -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wno-maybe-uninitialized conftest.c  -L. -L/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -lruby-static  -lpthread -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:15:57: error: ‘rb_enc_raise’ undeclared (first use in this function)
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_enc_raise; return !p; }
+                                                         ^
+conftest.c:15:57: note: each undeclared identifier is reported only once for each function it appears in
+conftest.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <ruby.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_enc_raise; return !p; }
+/* end */
+
+"gcc -o conftest -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/x86_64-linux -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0/ruby/backward -I/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/include/ruby-2.4.0 -I.    -O3 -fno-fast-math -g -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wno-tautological-compare -Wno-parentheses-equality -Wno-constant-logical-operand -Wno-self-assign -Wunused-variable -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wno-maybe-uninitialized conftest.c  -L. -L/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-R/tmp/d20171217-46-6dql5a/opt/zammad/vendor/ruby-2.4.1/lib -lruby-static  -lpthread -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <ruby.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: extern void rb_enc_raise();
+16: int t(void) { rb_enc_raise(); return 0; }
+/* end */
+
+--------------------
+

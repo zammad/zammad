@@ -369,6 +369,6 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
   end
 
   def read_messaage(file)
-    File.read(Rails.root.join('test', 'data', 'telegram', "#{file}.json"))
+    File.read("test/fixtures/telegram/#{file}.json")
   end
 end

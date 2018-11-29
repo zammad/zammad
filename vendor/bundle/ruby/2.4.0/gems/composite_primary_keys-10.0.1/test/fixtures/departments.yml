@@ -1,0 +1,15 @@
+accounting:
+  department_id: 1
+  location_id: 1
+
+engineering:
+  department_id: 2
+  location_id: 1
+
+human_resources:
+  department_id: 3
+  location_id: 2
+
+offsite_accounting:
+  department_id: 1
+  location_id: 2

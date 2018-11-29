@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetICB_9_2_4_DestInfoWithDestIdResponse xmlns="http://airline.com/">
+      <GetICB_9_2_4_DestInfoWithDestIdResult>
+        <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+          <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="CL_9_2_4_DestInfo" msdata:UseCurrentLocale="true">
+            <xs:complexType>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="CL_9_2_4_DestInfo">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="DESTINATION" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="64" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="COUNTRY" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="AIRPORTNAME" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="70" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="DISTANCE_APT_CTY" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="TRANSPORT_APT_CTY" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="REVCABIN" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="REVCOCKPIT" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="GROUPTEXT" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="50" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="SORT" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="HEADING" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="30" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="VISIBLE" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="SORT1" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="ITEMSORT" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="AUSWAHLTEXT" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="255" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="REVDATE" type="xs:dateTime" minOccurs="0" />
+                      <xs:element name="CABIN" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="COCKPIT" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="APIATA" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:maxLength value="3" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:complexType>
+          </xs:element>
+        </xs:schema>
+        <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+          <DocumentElement xmlns="">
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo1" msdata:rowOrder="0">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>Passengers</GROUPTEXT>
+              <SORT>1</SORT>
+              <HEADING>Disembarking:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>2</SORT1>
+              <ITEMSORT>0</ITEMSORT>
+              <AUSWAHLTEXT>Baby buggies are delivered at aircraft door or stairs.</AUSWAHLTEXT>
+              <REVDATE>2008-09-01T00:00:00+02:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>0</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo2" msdata:rowOrder="1">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>Aircraft</GROUPTEXT>
+              <SORT>2</SORT>
+              <HEADING>Turnaround:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>5.30</SORT1>
+              <ITEMSORT>0</ITEMSORT>
+              <AUSWAHLTEXT>Station applies EST process.</AUSWAHLTEXT>
+              <REVDATE>2009-05-05T00:00:00+02:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>-1</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo3" msdata:rowOrder="2">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>General</GROUPTEXT>
+              <SORT>4</SORT>
+              <HEADING>Addresses:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>8.50</SORT1>
+              <ITEMSORT>1</ITEMSORT>
+              <AUSWAHLTEXT>
+                Station Manager:
+                YYYYYYYY XXXXXXX
+                PMIKXXX
+                Tel.:+34 971 xxx xxx
+                Mobile:+ 34 600 46 xx xx
+              </AUSWAHLTEXT>
+              <REVDATE>2010-02-08T00:00:00+01:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>-1</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo4" msdata:rowOrder="3">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>General</GROUPTEXT>
+              <SORT>4</SORT>
+              <HEADING>Addresses:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>8.50</SORT1>
+              <ITEMSORT>2</ITEMSORT>
+              <AUSWAHLTEXT>
+                Handling Agent:
+                xxxxxxx Airport Services
+                Operations
+                PMIIxxx
+                Tel   +34 971 xxx xxx
+                Passenger Services
+                PMIPXXX
+                Tel : +34 971 xxx xxx
+              </AUSWAHLTEXT>
+              <REVDATE>2010-02-08T00:00:00+01:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>-1</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo5" msdata:rowOrder="4">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>General</GROUPTEXT>
+              <SORT>4</SORT>
+              <HEADING>Announcements:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>11</SORT1>
+              <ITEMSORT>1</ITEMSORT>
+              <AUSWAHLTEXT>Prerecorded Spanish announcements available.</AUSWAHLTEXT>
+              <REVDATE>2009-12-30T00:00:00+01:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>0</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo6" msdata:rowOrder="5">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>General</GROUPTEXT>
+              <SORT>4</SORT>
+              <HEADING>Life jackets / DEMO:</HEADING>
+              <VISIBLE>-1</VISIBLE>
+              <SORT1>12</SORT1>
+              <ITEMSORT>0</ITEMSORT>
+              <AUSWAHLTEXT>
+                Infant life jackets to be distributed.
+                DEMO with life jackets.
+              </AUSWAHLTEXT>
+              <REVDATE>2002-07-24T00:00:00+02:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>0</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+            <CL_9_2_4_DestInfo diffgr:id="CL_9_2_4_DestInfo7" msdata:rowOrder="6">
+              <DESTINATION>PALMA DE MALLORCA</DESTINATION>
+              <COUNTRY>Spain Schengen</COUNTRY>
+              <AIRPORTNAME>Son San Juan</AIRPORTNAME>
+              <DISTANCE_APT_CTY>11 km</DISTANCE_APT_CTY>
+              <REVCABIN>08.02.10</REVCABIN>
+              <REVCOCKPIT>08.02.10</REVCOCKPIT>
+              <GROUPTEXT>Catering</GROUPTEXT>
+              <SORT>5</SORT>
+              <HEADING>General:</HEADING>
+              <VISIBLE>0</VISIBLE>
+              <SORT1>1</SORT1>
+              <ITEMSORT>1</ITEMSORT>
+              <AUSWAHLTEXT>
+                LSG XXX XXXX
+                Tel.: +34 971 xxx xxx or xxx xxx
+                Sita: PMIAXXX
+              </AUSWAHLTEXT>
+              <REVDATE>2005-06-01T00:00:00+02:00</REVDATE>
+              <CABIN>-1</CABIN>
+              <COCKPIT>0</COCKPIT>
+              <APIATA>PMI</APIATA>
+            </CL_9_2_4_DestInfo>
+          </DocumentElement>
+        </diffgr:diffgram>
+      </GetICB_9_2_4_DestInfoWithDestIdResult>
+    </GetICB_9_2_4_DestInfoWithDestIdResponse>
+  </soap:Body>
+</soap:Envelope>

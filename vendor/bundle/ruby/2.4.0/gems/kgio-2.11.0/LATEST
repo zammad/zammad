@@ -1,0 +1,29 @@
+=== kgio 2.11.0 - reverting 2.10.0 breakage / 2016-12-16 22:56 UTC
+
+  Mainly this release reverts back to kgio 2.9.3 behavior by
+  supporting "autopush" functionality in the C extension.
+  Removing this feature in 2.10.0 was a monumental mistake(*) on
+  my part which caused a performance regression for ONE known user
+  of kgio on the deprecated (but supported) Rainbows! server.
+
+  This release does not affect known users outside of Rainbows!,
+  but we may have unknown users, too.
+
+  The attempt at a pure Ruby version of autopush had flaws and
+  regressions in real-world testing, so that was abandoned.
+
+  So yeah, kgio will be supported indefinitely even in the face
+  of internal changes to MRI, but I strongly discourage its use
+  for new projects.
+  Users who only support Ruby 2.3 (and later) are encouraged to
+  use `exception: false` with all *_nonblock methods.
+
+  4 changes since 2.10.0:
+
+        resurrect Kgio.autopush support in pure Ruby [REVERTED]
+        reinstate the original (and dangerous) autopush in C
+        TODO: update with Ruby 2.3 status
+        test: increase test data sizes to fill socket buffers
+
+  (*) - as was making this a separate project, at all
+

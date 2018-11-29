@@ -12,7 +12,7 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -179,43 +179,6 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal(2, overview1.prio)
     assert_equal(1, overview2.prio)
-  end
-
-  test 'create an overview with group_by direction' do
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-
-    params = {
-      name: 'Overview2',
-      link: 'my_overview',
-      roles: Role.where(name: 'Agent').pluck(:name),
-      condition: {
-        'ticket.state_id' => {
-          operator: 'is',
-          value: [1, 2, 3],
-        },
-      },
-      order: {
-        by: 'created_at',
-        direction: 'DESC',
-      },
-      group_by: 'priority',
-      group_direction: 'ASC',
-      view: {
-        d: %w[title customer state created_at],
-        s: %w[number title customer state created_at],
-        m: %w[number title customer state created_at],
-        view_mode_default: 's',
-      },
-    }
-
-    post '/api/v1/overviews', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
-    assert_response(201)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal('Overview2', result['name'])
-    assert_equal('my_overview', result['link'])
-    assert_equal('priority', result['group_by'])
-    assert_equal('ASC', result['group_direction'])
   end
 
 end

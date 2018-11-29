@@ -1,0 +1,40 @@
+# To run tests:
+#  1. Copy this file to test/connections/databases.yml.
+#  2. Update to match the databases you want to test against.
+
+ibm_db:
+  database: ocdpdev
+  username: db2inst1
+  password: password
+  host: localhost
+
+mysql:
+  adapter: mysql2
+  username: root
+  password: mysql
+  database: composite_primary_keys_unittest
+
+oracle:
+  adapter: oracle_enhanced
+  database: xe
+  username: SYSTEM
+  password: oracle
+  host: localhost
+
+postgresql:
+  adapter: postgresql
+  database: composite_primary_keys_unittest
+  username: postgres
+  host: localhost
+
+sqlite:
+  adapter: sqlite3
+  database: <%= File.join(project_root, 'db', 'composite_primary_keys_unittest.sqlite') %>
+
+sqlserver:
+  adapter: sqlserver
+  username: cpk
+  password: cpk
+  database: composite_primary_keys_unittest
+  host: localhost
+  port: 1433

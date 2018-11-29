@@ -157,7 +157,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(false, result.success?)
     assert_equal('401', result.code)
-    assert_equal("HTTP Basic: Access denied.\n", result.body)
+    assert_equal(NilClass, result.body.class)
 
     # post / 200
     result = UserAgent.post(
@@ -195,7 +195,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(false, result.success?)
     assert_equal('401', result.code)
-    assert_equal("HTTP Basic: Access denied.\n", result.body)
+    assert_equal(NilClass, result.body.class)
 
     # put / 200
     result = UserAgent.put(
@@ -233,7 +233,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(false, result.success?)
     assert_equal('401', result.code)
-    assert_equal("HTTP Basic: Access denied.\n", result.body)
+    assert_equal(NilClass, result.body.class)
 
     # delete / 200
     result = UserAgent.delete(
@@ -264,7 +264,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(false, result.success?)
     assert_equal('401', result.code)
-    assert_equal("HTTP Basic: Access denied.\n", result.body)
+    assert_equal(NilClass, result.body.class)
   end
 
   # check
@@ -315,7 +315,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(false, result.success?)
     assert_equal('401', result.code)
-    assert_equal("HTTP Basic: Access denied.\n", result.body)
+    assert_equal(NilClass, result.body.class)
   end
 
   # check
@@ -479,7 +479,7 @@ class UserAgentTest < ActiveSupport::TestCase
       assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
     end
 
-    # get / 404
+    # get / 401
     result = UserAgent.get(
       "#{host}/test/not_existing",
       {

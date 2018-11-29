@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require "irb"
+require "rubygems"
+
+$LOAD_PATH.unshift "lib"
+require "logging"
+
+IRB.start

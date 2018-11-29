@@ -12,7 +12,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin_full = User.create!(
+    @admin_full = User.create_or_update(
       login: 'setting-admin',
       firstname: 'Setting',
       lastname: 'Admin',
@@ -23,7 +23,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       groups: groups,
     )
 
-    role_api = Role.create!(
+    role_api = Role.create_or_update(
       name: 'AdminApi',
       note: 'To configure your api.',
       preferences: {
@@ -34,7 +34,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       created_by_id: 1
     )
     role_api.permission_grant('admin.api')
-    @admin_api = User.create!(
+    @admin_api = User.create_or_update(
       login: 'setting-admin-api',
       firstname: 'Setting',
       lastname: 'Admin Api',
@@ -47,7 +47,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'setting-agent@example.com',
       firstname: 'Setting',
       lastname: 'Agent',
@@ -60,7 +60,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'setting-customer1@example.com',
       firstname: 'Setting',
       lastname: 'Customer1',

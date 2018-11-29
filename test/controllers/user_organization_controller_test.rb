@@ -14,7 +14,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @backup_admin = User.create!(
+    @backup_admin = User.create_or_update(
       login: 'backup-admin',
       firstname: 'Backup',
       lastname: 'Agent',
@@ -25,7 +25,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
       groups: groups,
     )
 
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -51,7 +51,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -62,21 +62,18 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create!(
+    @organization = Organization.create_or_update(
       name: 'Rest Org',
-      note: 'Rest Org A',
     )
-    @organization2 = Organization.create!(
+    @organization2 = Organization.create_or_update(
       name: 'Rest Org #2',
-      note: 'Rest Org B',
     )
-    @organization3 = Organization.create!(
+    @organization3 = Organization.create_or_update(
       name: 'Rest Org #3',
-      note: 'Rest Org C',
     )
 
     # create customer with org
-    @customer_with_org = User.create!(
+    @customer_with_org = User.create_or_update(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',

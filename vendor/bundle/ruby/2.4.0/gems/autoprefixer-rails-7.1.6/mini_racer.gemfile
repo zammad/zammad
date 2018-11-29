@@ -1,0 +1,16 @@
+source 'https://rubygems.org'
+
+gemspec
+
+gem 'execjs'
+gem 'rails',     '>= 5.0.2'
+gem 'sprockets', '>= 4.0.0.beta4'
+
+# Cannot use shared.gemfile, because therubyracer requires an older version
+# of libv8 than mini_racer
+gem 'mini_racer', platforms: [:mri, :rbx]
+
+gem 'racc',   platforms: :rbx
+gem 'rubysl', platforms: :rbx
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]

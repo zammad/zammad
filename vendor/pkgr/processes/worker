@@ -1,0 +1,2 @@
+#!/bin/sh
+exec bundle exec script/scheduler.rb start -t $@

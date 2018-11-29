@@ -1,0 +1,11 @@
+a:
+  franchise_id: 1
+  store_id: 1
+  city_id: 1
+  suburb_id: 1
+  
+b:
+  franchise_id: 1
+  store_id: 1
+  city_id: 2
+  suburb_id: 1

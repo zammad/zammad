@@ -330,7 +330,7 @@ class App.ControllerForm extends App.Controller
           bookmarkable: @bookmarkable
         )
       )
-      fullItem.find('.controls').prepend(item)
+      fullItem.find('.controls').prepend( item )
 
       # hide/show item
       if attribute.hide
@@ -632,49 +632,48 @@ class App.ControllerForm extends App.Controller
       App.Log.error 'ControllerForm', 'no form found!', form
     form
 
-  @disable: (form, type = 'form') ->
+  @disable: (form) ->
     lookupForm = @findForm(form)
 
-    if lookupForm && type is 'form'
+    if lookupForm
       if lookupForm.is('button, input, select, textarea, div, span')
-        console.log(2)
         App.Log.debug 'ControllerForm', 'disable item...', lookupForm
-        lookupForm.prop('readonly', true)
-        lookupForm.prop('disabled', true)
+        lookupForm.attr('readonly', true)
+        lookupForm.attr('disabled', true)
         return
       App.Log.debug 'ControllerForm', 'disable form...', lookupForm
 
       # set forms to read only during communication with backend
-      lookupForm.find('button, input, select, textarea').prop('readonly', true)
+      lookupForm.find('button, input, select, textarea').attr('readonly', true)
 
       # disable additionals submits
-      lookupForm.find('button').prop('disabled', true)
+      lookupForm.find('button').attr('disabled', true)
     else
       App.Log.debug 'ControllerForm', 'disable item...', form
-      form.prop('readonly', true)
-      form.prop('disabled', true)
+      form.attr('readonly', true)
+      form.attr('disabled', true)
 
-  @enable: (form, type = 'form') ->
+  @enable: (form) ->
 
     lookupForm = @findForm(form)
 
-    if lookupForm && type is 'form'
+    if lookupForm
       if lookupForm.is('button, input, select, textarea, div, span')
         App.Log.debug 'ControllerForm', 'disable item...', lookupForm
-        lookupForm.prop('readonly', false)
-        lookupForm.prop('disabled', false)
+        lookupForm.attr('readonly', false)
+        lookupForm.attr('disabled', false)
         return
       App.Log.debug 'ControllerForm', 'enable form...', lookupForm
 
       # enable fields again
-      lookupForm.find('button, input, select, textarea').prop('readonly', false)
+      lookupForm.find('button, input, select, textarea').attr('readonly', false)
 
       # enable submits again
-      lookupForm.find('button').prop('disabled', false)
+      lookupForm.find('button').attr('disabled', false)
     else
       App.Log.debug 'ControllerForm', 'enable item...', form
-      form.prop('readonly', false)
-      form.prop('disabled', false)
+      form.attr('readonly', false)
+      form.attr('disabled', false)
 
   @validate: (data) ->
 

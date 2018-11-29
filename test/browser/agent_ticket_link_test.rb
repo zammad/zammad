@@ -46,8 +46,7 @@ class AgentTicketLinkTest < TestCase
     click(
       css: '.content.active .links .js-add',
     )
-
-    modal_ready()
+    sleep 2
 
     set(
       css: '.content.active .modal-body [name="ticket_number"]',

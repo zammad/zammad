@@ -1,0 +1,17 @@
+AllCops:
+  Exclude:
+    - "spec/dummy/db/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+LineLength:
+  Exclude:
+    - spec/**/*
+
+StringLiterals:
+  Enabled: false
+
+TrailingBlankLines:
+  Enabled: true

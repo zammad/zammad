@@ -1,0 +1,21 @@
+---
+- locale: en-ca
+  format: time
+  source: date
+  target: yyyy-mm-dd
+  target_initial: yyyy-mm-dd
+- locale: en-ca
+  format: time
+  source: timestamp
+  target: yyyy-mm-dd HH:MM
+  target_initial: yyyy-mm-dd HH:MM
+- locale: en-ca
+  format: string
+  source: Zip
+  target: Postal Code
+  target_initial: Postal Code
+- locale: en-ca
+  format: string
+  source: Mobile
+  target: Cell
+  target_initial: Cell

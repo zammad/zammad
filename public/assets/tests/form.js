@@ -713,6 +713,13 @@ test("form handler check with and without fieldset", function() {
 
 test("form postmaster filter", function() {
 
+// check match area
+
+// check set area
+
+// add match rule
+
+// add set rule
   App.TicketPriority.refresh([
     {
       id:   1,
@@ -762,10 +769,6 @@ test("form postmaster filter", function() {
       },
       'x-zammad-ticket-priority_id': {
         value: '1'
-      },
-      'x-zammad-ticket-tags': {
-        operator: 'add',
-        value: 'test, test1'
       }
     },
   }
@@ -809,120 +812,44 @@ test("form postmaster filter", function() {
       },
       'x-zammad-ticket-priority_id': {
         value: '1'
-      },
-      'x-zammad-ticket-tags': {
-        operator: 'add',
-        value: 'test, test1'
       }
     },
   };
   deepEqual(params, test_params, 'form param check')
-
   el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
   el.find('[name="set::x-zammad-ticket-customer_id::value"]').closest('.js-filterElement').find('.js-remove').click()
-
-  params = App.ControllerForm.params(el)
-  test_params = {
-    input1: 'some not used default',
-    input2: 'some name',
-    match: {
-      from: {
-        operator: 'contains',
-        value: 'some@address'
-      },
-      subject: {
-        operator: 'contains',
-        value: 'some subject'
-      }
-    },
-    set: {
-      'x-zammad-ticket-owner_id': {
-        value: 'owner',
-        value_completion: ''
-      },
-      'x-zammad-ticket-group_id': {
-        value: '1'
-      },
-      'x-zammad-ticket-tags': {
-        operator: 'add',
-        value: 'test, test1'
-      },
-    },
-  };
-  deepEqual(params, test_params, 'form param check')
-
-  el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').click()
-
-  params = App.ControllerForm.params(el)
-  test_params = {
-    input1: 'some not used default',
-    input2: 'some name',
-    match: {
-      from: {
-        operator: 'contains',
-        value: 'some@address'
-      },
-      subject: {
-        operator: 'contains',
-        value: 'some subject'
-      }
-    },
-    set: {
-      'x-zammad-ticket-owner_id': {
-        value: 'owner',
-        value_completion: ''
-      },
-      'x-zammad-ticket-group_id': {
-        value: '1'
-      },
-      'x-zammad-ticket-priority_id': {
-        value: '1'
-      },
-      'x-zammad-ticket-tags': {
-        operator: 'add',
-        value: 'test, test1'
-      },
-    },
-  };
-  deepEqual(params, test_params, 'form param check')
-
   App.Delay.set(function() {
-    test("form postmaster filter - needed to do delayed because of tag ui", function() {
-      el.find('[name="set::x-zammad-ticket-tags::value"]').closest('.js-filterElement').find('.token .close').last().click()
-      params = App.ControllerForm.params(el)
-      test_params = {
-        input1: 'some not used default',
-        input2: 'some name',
-        match: {
-          from: {
-            operator: 'contains',
-            value: 'some@address'
+      test("form param check after remove click", function() {
+        params = App.ControllerForm.params(el)
+        test_params = {
+          input1: 'some not used default',
+          input2: 'some name',
+          match: {
+            from: {
+              operator: 'contains',
+              value: 'some@address'
+            },
+            subject: {
+              operator: 'contains',
+              value: 'some subject'
+            }
           },
-          subject: {
-            operator: 'contains',
-            value: 'some subject'
-          }
-        },
-        set: {
-          'x-zammad-ticket-owner_id': {
-            value: 'owner',
-            value_completion: ''
+          set: {
+            'x-zammad-ticket-owner_id': {
+              value: 'owner',
+              value_completion: ''
+            },
+            'x-zammad-ticket-group_id': {
+              value: '1'
+            },
           },
-          'x-zammad-ticket-group_id': {
-            value: '1'
-          },
-          'x-zammad-ticket-priority_id': {
-            value: '1'
-          },
-          'x-zammad-ticket-tags': {
-            operator: 'add',
-            value: 'test'
-          },
-        },
-      };
-      deepEqual(params, test_params, 'form param check')
-    })
-  }, 500);
+        };
+        deepEqual(params, test_params, 'form param check')
+      });
+    },
+    1000
+  );
+
 });
 
 test("form selector", function() {
@@ -1457,50 +1384,4 @@ test("form select with empty option list", function() {
     select6: 'B',
   }
   deepEqual(params, test_params)
-});
-
-test("form elements with sort check", function() {
-
-  $('#forms').append('<hr><h1>form elements with sort check</h1><form id="form16"></form>')
-  var el = $('#form16')
-  var defaults = {}
-  new App.ControllerForm({
-    el:        el,
-    model:     {
-      configure_attributes: [
-        { name: 'select1', display: 'Select1', tag: 'select', null: true, default: 'XY', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
-        { name: 'checkbox1', display: 'Checkbox1', tag: 'checkbox', null: false, default: 'A', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
-        { name: 'radio1', display: 'Radio1', tag: 'radio', null: false, default: 'A', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
-      ],
-    },
-    params: defaults,
-    autofocus: true
-  });
-
-  params = App.ControllerForm.params(el)
-  test_params = {
-    select1: 'XY',
-    checkbox1: 'A',
-    radio1: 'A',
-  }
-  deepEqual(params, test_params)
-
-  equal('AA', el.find('[name=select1] option')[0].text)
-  equal('äöü', el.find('[name=select1] option')[1].text)
-  equal('b', el.find('[name=select1] option')[2].text)
-  equal('B', el.find('[name=select1] option')[3].text)
-  equal('XX', el.find('[name=select1] option')[4].text)
-
-  equal('XX', el.find('[name=checkbox1]')[0].value)
-  equal('', el.find('[name=checkbox1]')[1].value)
-  equal('XY', el.find('[name=checkbox1]')[2].value)
-  equal('B', el.find('[name=checkbox1]')[3].value)
-  equal('A', el.find('[name=checkbox1]')[4].value)
-
-  equal('XX', el.find('[name=radio1]')[0].value)
-  equal('', el.find('[name=radio1]')[1].value)
-  equal('XY', el.find('[name=radio1]')[2].value)
-  equal('B', el.find('[name=radio1]')[3].value)
-  equal('A', el.find('[name=radio1]')[4].value)
-
 });

@@ -1,0 +1,10 @@
+---
+cgit_url: http://bogomips.org/kgio.git
+git_url: git://bogomips.org/kgio.git
+ml_url: http://bogomips.org/kgio-public/
+rdoc_url: http://bogomips.org/kgio/
+public_email: kgio-public@bogomips.org
+private_email: kgio@bogomips.org
+noindex:
+- LATEST
+- TODO

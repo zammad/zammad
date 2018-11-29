@@ -33,7 +33,7 @@ class AgentTicketUpdate4Test < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 240,
+      timeout: 120,
     )
     sleep 5
     watch_for(

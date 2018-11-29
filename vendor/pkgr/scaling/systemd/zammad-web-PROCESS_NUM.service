@@ -1,0 +1,15 @@
+[Unit]
+StopWhenUnneeded=true
+Requires=zammad-web.service
+After=zammad-web.service
+
+[Service]
+Environment=APP_PROCESS_INDEX=__PROCESS_INDEX__
+ExecStart=/usr/bin/zammad run web
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+
+[Install]
+WantedBy=zammad-web.service

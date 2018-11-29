@@ -1,0 +1,36 @@
+= Issues
+
+The kgio {mailing list}[mailto:kgio-public@bogomips.org] is the best
+place to report bugs, submit patches and/or obtain support after you
+have searched the mailing list archives at http://bogomips.org/kgio-public/
+and {documentation}[http://bogomips.org/kgio].
+
+* Do not {top post}[http://catb.org/jargon/html/T/top-post.html] in replies
+* Quote only the relevant portions of the message you're replying to
+* Do not send any HTML mail at all
+
+If your issue is of a sensitive nature or you're just shy in public,
+then feel free to email us privately at mailto:kgio@bogomips.org
+instead and your issue will be handled discreetly.
+
+If you don't get a response within a few days, we may have forgotten
+about it so feel free to ask again.
+
+== Submitting Patches
+
+See the HACKING document (and additionally, the
+Documentation/SubmittingPatches document distributed with git) on
+guidelines for patch submission.
+
+== Mailing List Info
+
+* subscribe: mailto:kgio-public+subscribe@bogomips.org
+* post: mailto:kgio-public@bogomips.org
+* private: mailto:kgio@bogomips.org
+
+== Mailing List Archives
+
+* http://bogomips.org/kgio-public/
+* git://bogomips.org/kgio-public/
+  (see http://ssoma.public-inbox.org/ for layout)
+* NNTP coming soon

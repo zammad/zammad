@@ -38,7 +38,10 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'note',
+    )
     watch_for(
       css: '.content.active .modal',
       value: 'some note 123',
@@ -53,7 +56,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     watch_for(
       css: '.content.active .profile-window',
@@ -69,14 +71,15 @@ class AgentProfilePermissionsTest < TestCase
     # change lastname back
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
-
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'note',
+    )
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     verify_task(
       data: {
@@ -187,17 +190,17 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    modal_ready()
     set(
       css: '.modal [name="lastname"]',
       value: 'B2',
     )
+
     set(
       css: '.modal [data-name="note"]',
       value: 'some note abc',
     )
+
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     watch_for(
       css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -209,11 +212,16 @@ class AgentProfilePermissionsTest < TestCase
       value: 'Nicole B2',
     )
 
+    sleep 2
     # change lastname back
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions')
     click(css: 'li[data-type="customer-edit"]')
 
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'note',
+    )
+
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
@@ -223,7 +231,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     watch_for(
       css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -262,21 +269,17 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    # scroll to the Avatar at the top of the zoom view and click it
-    # scrolling is needed because the browser might have scrolled down
-    # caused by a undeliverable email (of the created ticket)
-    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
-    scroll_to(
-      position: 'botton',
-      css:      zoom_top_avatar_selector,
-    )
-    click(css: zoom_top_avatar_selector)
+    click(css: '.content.active .tabsSidebar-holder .js-avatar')
 
     # check and change note again in edit screen
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'note',
+    )
+
     set(
       css: '.modal [name="lastname"]',
       value: 'B2',
@@ -286,7 +289,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     watch_for(
       css: '.content.active .profile-window',
@@ -303,7 +305,10 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'note',
+    )
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
@@ -313,7 +318,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
 
     verify_task(
       data: {
@@ -349,25 +353,9 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    begin
-      retries ||= 0
+    click(css: '.content.active .tabsSidebar-holder .js-avatar')
 
-      # scroll to the Avatar at the top of the zoom view and click it
-      # scrolling is needed because the browser might have scrolled down
-      # caused by a undeliverable email (of the created ticket)
-      zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
-      scroll_to(
-        position: 'botton',
-        css:      zoom_top_avatar_selector,
-      )
-      click(css: zoom_top_avatar_selector)
-
-      click(css: '.content.active .js-action .icon-arrow-down', fast: true)
-      exists_not(css: '.content.active .js-action [data-type="edit"]')
-    rescue Selenium::WebDriver::Error::UnknownError
-      sleep retries
-      retries += 1
-      retry if retries < 3
-    end
+    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
+    exists_not(css: '.content.active .js-action [data-type="edit"]')
   end
 end

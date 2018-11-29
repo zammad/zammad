@@ -14,7 +14,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @backup_admin = User.create!(
+    @backup_admin = User.create_or_update(
       login: 'backup-admin',
       firstname: 'Backup',
       lastname: 'Agent',
@@ -25,7 +25,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
       groups: groups,
     )
 
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -51,7 +51,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -62,18 +62,18 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create!(
+    @organization = Organization.create_or_update(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create!(
+    @organization2 = Organization.create_or_update(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create!(
+    @organization3 = Organization.create_or_update(
       name: 'Rest Org #3',
     )
 
     # create customer with org
-    @customer_with_org = User.create!(
+    @customer_with_org = User.create_or_update(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -978,8 +978,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple_col_not_existing.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple_col_not_existing.csv'), 'text/csv')
     post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -993,8 +992,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'firstname2' for User.", result['errors'][1])
 
     # valid file try
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
     post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -1008,8 +1006,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_nil(User.find_by(login: 'user-simple-import2'))
 
     # valid file
-    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
-    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
     post '/api/v1/users/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -1036,102 +1033,6 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
     user1.destroy!
     user2.destroy!
-  end
-
-  test 'user search sortable' do
-    firstname = "user_search_sortable #{rand(999_999_999)}"
-
-    roles = Role.where(name: 'Customer')
-    user1 = User.create_or_update(
-      login: 'rest-user_search_sortableA@example.com',
-      firstname: "#{firstname} A",
-      lastname: 'user_search_sortableA',
-      email: 'rest-user_search_sortableA@example.com',
-      password: 'user_search_sortableA',
-      active: true,
-      roles: roles,
-      organization_id: @organization.id,
-      out_of_office: false,
-      created_at: '2016-02-05 17:42:00',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    user2 = User.create_or_update(
-      login: 'rest-user_search_sortableB@example.com',
-      firstname: "#{firstname} B",
-      lastname: 'user_search_sortableB',
-      email: 'rest-user_search_sortableB@example.com',
-      password: 'user_search_sortableB',
-      active: true,
-      roles: roles,
-      organization_id: @organization.id,
-      out_of_office_start_at: '2016-02-06 19:42:00',
-      out_of_office_end_at: '2016-02-07 19:42:00',
-      out_of_office_replacement_id: 1,
-      out_of_office: true,
-      created_at: '2016-02-05 19:42:00',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Scheduler.worker(true)
-    sleep 2 # let es time to come ready
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user1.id, user2.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'firstname', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user1.id, user2.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'firstname', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user2.id, user1.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[firstname created_at], order_by: %w[desc asc] }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user2.id, user1.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[firstname created_at], order_by: %w[desc asc] }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user2.id, user1.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'out_of_office', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user1.id, user2.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'out_of_office', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user2.id, user1.id], result)
-
-    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[created_by_id created_at], order_by: %w[asc asc] }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Array, result.class)
-    result.collect! { |v| v['id'] }
-    assert_equal([user1.id, user2.id], result)
   end
 
 end

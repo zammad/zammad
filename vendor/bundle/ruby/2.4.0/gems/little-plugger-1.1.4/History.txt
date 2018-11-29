@@ -1,0 +1,35 @@
+== 1.1.4 / 2015-08-27
+
+* 1 bug fix
+  * Fixing specs for Ruby 2.0
+
+== 1.1.3 / 2011-11-17
+
+* 1 bug fix
+  * Ensuring gem files are in a sorted order
+
+== 1.1.2 / 2010-02-01
+
+* 1 bug fix
+  * Resovling some circular dependencies
+
+== 1.1.1 / 2009-11-08
+
+* 1 bug fix
+  * Catching script errors and standard errors when loading plugins
+
+== 1.1.0 / 2009-11-04
+
+* 2 minor enhancements
+  * Loading the first plugin found by name (instead of the last)
+  * Plugins can be disregarded so they will not be loaded
+
+== 1.0.1 / 2009-08-14
+
+* 1 bug fix
+  * Using the wrong file extension for the File#basename call
+
+== 1.0.0 / 2009-07-16
+
+* 1 major enhancement
+  * Birthday!

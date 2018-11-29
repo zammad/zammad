@@ -1,0 +1,13 @@
+before_install:
+  - gem update bundler
+  - bundle --version
+  - gem update --system
+  - gem --version
+rvm:
+  - 2.3.0
+  - 2.2
+  - 2.1
+  - 2.0
+  - 1.9.3
+  - jruby-19mode
+  - rbx-2

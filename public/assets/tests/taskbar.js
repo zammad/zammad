@@ -40,6 +40,7 @@ test( "taskbar basic tests", function() {
   deepEqual(task.state, 'abc')
   deepEqual(task.params, { "a": 12 })
 
+
   App.TaskManager.execute({
     key:        'TestKey2',
     controller: 'TestController1',
@@ -257,60 +258,12 @@ test( "taskbar basic tests", function() {
   equal(App.TaskManager.nextTaskUrl(), false)
   equal(App.TaskManager.nextTaskUrl(), false)
 
-  // check max tabs
-  var times = 5;
-  App.TaskManager.tasksAutoCleanupDelayTime(200)
-  App.TaskManager.tasksAutoCleanupTaskMax(3)
+  // destroy task bar
+  App.TaskManager.reset()
 
-  for(var i=0; i < times; i++){
-    App.TaskManager.execute({
-      key:        'TestKeyLoop' + i,
-      controller: 'TestController1',
-      params:     {
-        message: "#" + i,
-      },
-      show:       true,
-      persistent: false,
-    })
-  }
-  equal(App.TaskManager.all().length, 5)
+  // check if any taskar exists
+  equal($('#taskbars .content').length, 0, "check available active contents")
 
 })
-
-App.Delay.set(function() {
-  test( "taskbar check max tabs 2", function() {
-
-    equal(App.TaskManager.all().length, 3)
-
-    var times = 5;
-    for(var i=0; i < times; i++){
-      App.TaskManager.execute({
-        key:        'TestKeyLoop2' + i,
-        controller: 'TestController1',
-        params:     {
-          message: "#" + i,
-          changedState: true
-        },
-        show:       true,
-        persistent: false,
-      })
-    }
-    equal(App.TaskManager.all().length, 8)
-
-  })
-}, 1000);
-
-App.Delay.set(function() {
-  test( "taskbar check max tabs 5", function() {
-
-    equal(App.TaskManager.all().length, 5)
-
-    // destroy task bar
-    App.TaskManager.reset()
-
-    // check if any taskar exists
-    equal($('#taskbars .content').length, 0, "check available active contents")
-  })
-}, 2000);
 
 }

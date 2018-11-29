@@ -1,0 +1,168 @@
+Return-Path: <MAILER-DAEMON>
+Delivered-To: edenhofer@zammad.example
+Received: by mx1.zammad.com (Postfix)
+	id 9246B20C3E96; Sun, 30 Aug 2015 16:56:06 +0200 (CEST)
+Date: Sun, 30 Aug 2015 16:56:06 +0200 (CEST)
+From: MAILER-DAEMON@mx1.zammad.com (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: edenhofer@zammad.example
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="EF1A820C3E97.1440946566/mx1.zammad.com"
+Message-Id: <20150830145606.9246B20C3E96@mx1.zammad.com>
+
+This is a MIME-encapsulated message.
+
+--EF1A820C3E97.1440946566/mx1.zammad.com
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host mx1.zammad.com.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<not_existing@znuny.com>: host arber.znuny.com[88.198.51.81] said: 550 5.1.1
+    <not_existing@znuny.com>: Recipient address rejected: User unknown (in
+    reply to RCPT TO command)
+
+--EF1A820C3E97.1440946566/mx1.zammad.com
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mx1.zammad.com
+X-Postfix-Queue-ID: EF1A820C3E97
+X-Postfix-Sender: rfc822; edenhofer@zammad.example
+Arrival-Date: Sun, 30 Aug 2015 16:56:02 +0200 (CEST)
+
+Final-Recipient: rfc822; not_existing@znuny.com
+Original-Recipient: rfc822;not_existing@znuny.com
+Action: failed
+Status: 5.1.1
+Remote-MTA: dns; arber.znuny.com
+Diagnostic-Code: smtp; 550 5.1.1 <not_existing@znuny.com>: Recipient address
+    rejected: User unknown
+
+--EF1A820C3E97.1440946566/mx1.zammad.com
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Return-Path: <edenhofer@zammad.example>
+Received: from appnode2.dc.zammad.com (appnode2.dc.zammad.com [144.1.1.1])
+	by mx1.zammad.com (Postfix) with ESMTP id 4B9BB20C3E96
+	for <not_existing@znuny.com>; Sun, 30 Aug 2015 16:56:02 +0200 (CEST)
+Received: by appnode2.dc.zammad.com (Postfix, from userid 1001)
+	id 36680141408; Sun, 30 Aug 2015 16:56:07 +0200 (CEST)
+Date: Sun, 30 Aug 2015 16:56:07 +0200
+From: Martin Edenhofer via Zammad Helpdesk <edenhofer@zammad.example>
+To: Martin Edenhofer <not_existing@znuny.com>
+Message-ID: <20150830145601.30.608881@edenhofer.zammad.com>
+In-Reply-To: 
+Subject: test [Ticket#10010]
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="--==_mimepart_55e319872c918_39d5375468c949db";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Organization: 
+X-Mailer: Zammad Mail Service (1.x)
+X-znuny-MailScanner-Information: Please contact the ISP for more information
+X-znuny-MailScanner-ID: 4B9BB20C3E96.A3EE2
+X-znuny-MailScanner: Found to be clean
+X-znuny-MailScanner-From: edenhofer@zammad.example
+X-Spam-Status: No
+
+
+----==_mimepart_55e319872c918_39d5375468c949db
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_55e319872c5bd_39d5375468c94778";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_55e319872c5bd_39d5375468c94778
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+is somebody there?
+
+Martin Edenhofer
+
+--
+ Super Support - Waterford Business Park
+ 5201 Blue Lagoon Drive - 8th Floor & 9th Floor - Miami, 33126 USA
+ Email: [1] hot@example.com - Web: [2] http://www.example.com/
+--
+
+
+[1] mailto:hot@example.com
+[2] http://www.example.com/
+----==_mimepart_55e319872c5bd_39d5375468c94778
+Content-Type: multipart/related;
+ boundary="--==_mimepart_55e319872c7db_39d5375468c9486e";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_55e319872c7db_39d5375468c9486e
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+    body {
+      width:90% !important;
+      -webkit-text-size-adjust:90%;
+      -ms-text-size-adjust:90%;
+      font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;;
+    }
+    img {
+      outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;
+    }
+    a img {
+      border:none;
+    }
+    table td {
+      border-collapse: collapse;
+    }
+    table {
+      border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
+    }
+    p, table, div, td {
+      max-width: 600px;
+    }
+    p {
+      margin: 0;
+    }
+    blockquote, pre {
+      margin: 0px;
+      padding: 8px 12px 8px 12px;
+    }
+
+    </style>
+  <head>
+  <body style="font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"><div>Hello,</div><div><br></div><div>is somebody there?</div><br><div data-signature="true" data-signature-id="1"><div>Martin Edenhofer</div><div><br></div><div>--</div><div> Super Support - Waterford Business Park</div><div> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA</div><div> Email: <a href="mailto:hot@example.com" title="mailto:hot@example.com" target="_blank">hot@example.com</a> - Web: <a href="http://www.example.com/" title="http://www.example.com/" target="_blank">http://www.example.com/</a></div><div>--</div></div></body>
+</html>
+
+----==_mimepart_55e319872c7db_39d5375468c9486e--
+
+----==_mimepart_55e319872c5bd_39d5375468c94778--
+
+----==_mimepart_55e319872c918_39d5375468c949db--
+
+--EF1A820C3E97.1440946566/mx1.zammad.com--

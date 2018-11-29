@@ -12,7 +12,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create!(
+    @admin = User.create_or_update(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create!(
+    @agent = User.create_or_update(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create!(
+    @customer_without_org = User.create_or_update(
       login: 'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname: 'Customer1',
@@ -796,7 +796,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '02.03 ticket with wrong ticket id' do
-    group = Group.create!(
+    group = Group.create_or_update(
       name: "GroupWithoutPermission-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,
@@ -2038,7 +2038,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '06.01 - ticket with follow up possible set to new_ticket' do
-    group = Group.create!(
+    group = Group.create_or_update(
       name: "GroupWithNoFollowUp-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,
@@ -2110,7 +2110,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '07.01 ticket merge' do
-    group_no_permission = Group.create!(
+    group_no_permission = Group.create_or_update(
       name: 'GroupWithNoPermission',
       active: true,
       updated_by_id: 1,
@@ -2175,7 +2175,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '07.02 ticket merge - change permission' do
-    group_change_permission = Group.create!(
+    group_change_permission = Group.create_or_update(
       name: 'GroupWithChangePermission',
       active: true,
       updated_by_id: 1,
@@ -2210,97 +2210,6 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Hash, result.class)
     assert_equal('success', result['result'])
     assert_equal(ticket2.id, result['master_ticket']['id'])
-  end
-
-  test '08.01 ticket search sorted' do
-    title = "ticket pagination #{rand(999_999_999)}"
-    tickets = []
-
-    ticket1 = Ticket.create!(
-      title: "#{title} A",
-      group: Group.lookup(name: 'Users'),
-      customer_id: @customer_without_org.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2018-02-05 17:42:00',
-      updated_at: '2018-02-05 20:42:00',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Ticket::Article.create!(
-      type: Ticket::Article::Type.lookup(name: 'note'),
-      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-      from: 'sender',
-      subject: 'subject',
-      body: 'some body',
-      ticket_id: ticket1.id,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    ticket2 = Ticket.create!(
-      title: "#{title} B",
-      group: Group.lookup(name: 'Users'),
-      customer_id: @customer_without_org.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '3 hoch'),
-      created_at: '2018-02-05 19:42:00',
-      updated_at: '2018-02-05 19:42:00',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Ticket::Article.create!(
-      type: Ticket::Article::Type.lookup(name: 'note'),
-      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-      from: 'sender',
-      subject: 'subject',
-      body: 'some body',
-      ticket_id: ticket2.id,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket1.id, ticket2.id], result['tickets'])
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket1.id, ticket2.id], result['tickets'])
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket1.id, ticket2.id], result['tickets'])
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket2.id, ticket1.id], result['tickets'])
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[asc asc] }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket1.id, ticket2.id], result['tickets'])
-
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc]  }, headers: @headers.merge('Authorization' => credentials)
-    assert_response(200)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal([ticket2.id, ticket1.id], result['tickets'])
   end
 
 end

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+  <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
+    <User>
+      <DisplayName>Bill Lumbergh</DisplayName>
+      <LegacyDN>/o=ExchangeLabs/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Recipients/cn=asdfasdfasdfasdfasdfadf-Bill Lumb</LegacyDN>
+      <AutoDiscoverSMTPAddress>blumbergh@initech.local</AutoDiscoverSMTPAddress>
+      <DeploymentId>33333333-3333-3333-3333-3333333333333</DeploymentId>
+    </User>
+    <Account>
+      <AccountType>email</AccountType>
+      <Action>settings</Action>
+      <MicrosoftOnline>True</MicrosoftOnline>
+      <Protocol>
+        <Type>EXCH</Type>
+        <Server>22222222-2222-2222-2222-222222222222@initech.local</Server>
+        <ServerDN>/o=ExchangeLabs/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Configuration/cn=Servers/cn=22222222-2222-2222-2222-222222222222@initech.local</ServerDN>
+        <ServerVersion>73C1809A</ServerVersion>
+        <MdbDN>/o=ExchangeLabs/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Configuration/cn=Servers/cn=22222222-2222-2222-2222-222222222222@initech.local/cn=Microsoft Private MDB</MdbDN>
+        <PublicFolderServer>outlook.office365.com</PublicFolderServer>
+        <AuthPackage>Anonymous</AuthPackage>
+        <ASUrl>https://outlook.office365.com/EWS/Exchange.asmx</ASUrl>
+        <EwsUrl>https://outlook.office365.com/EWS/Exchange.asmx</EwsUrl>
+        <EmwsUrl>https://outlook.office365.com/EWS/Exchange.asmx</EmwsUrl>
+        <SharingUrl>https://outlook.office365.com/EWS/Exchange.asmx</SharingUrl>
+        <EcpUrl>https://outlook.office365.com/ecp/</EcpUrl>
+        <EcpUrl-um>?rfr=olk&amp;p=customize/voicemail.aspx&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-um>
+        <EcpUrl-aggr>?rfr=olk&amp;p=personalsettings/EmailSubscriptions.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-aggr>
+        <EcpUrl-mt>PersonalSettings/DeliveryReport.aspx?rfr=olk&amp;exsvurl=1&amp;IsOWA=&lt;IsOWA&gt;&amp;MsgID=&lt;MsgID&gt;&amp;Mbx=&lt;Mbx&gt;&amp;realm=initech.local</EcpUrl-mt>
+        <EcpUrl-ret>?rfr=olk&amp;p=organize/retentionpolicytags.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-ret>
+        <EcpUrl-sms>?rfr=olk&amp;p=sms/textmessaging.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-sms>
+        <EcpUrl-publish>customize/calendarpublishing.slab?rfr=olk&amp;exsvurl=1&amp;FldID=&lt;FldID&gt;&amp;realm=initech.local</EcpUrl-publish>
+        <EcpUrl-photo>PersonalSettings/EditAccount.aspx?rfr=olk&amp;chgPhoto=1&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-photo>
+        <EcpUrl-connect>Connect/Main.aspx?rfr=olk&amp;exsvurl=1&amp;Provider=&lt;Provider&gt;&amp;Action=&lt;Action&gt;&amp;realm=initech.local</EcpUrl-connect>
+        <EcpUrl-tm>?rfr=olk&amp;ftr=TeamMailbox&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tm>
+        <EcpUrl-tmCreating>?rfr=olk&amp;ftr=TeamMailboxCreating&amp;SPUrl=&lt;SPUrl&gt;&amp;Title=&lt;Title&gt;&amp;SPTMAppUrl=&lt;SPTMAppUrl&gt;&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tmCreating>
+        <EcpUrl-tmEditing>?rfr=olk&amp;ftr=TeamMailboxEditing&amp;Id=&lt;Id&gt;&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tmEditing>
+        <EcpUrl-extinstall>Extension/InstalledExtensions.slab?rfr=olk&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-extinstall>
+        <OOFUrl>https://outlook.office365.com/EWS/Exchange.asmx</OOFUrl>
+        <UMUrl>https://outlook.office365.com/EWS/UM2007Legacy.asmx</UMUrl>
+        <OABUrl>https://outlook.office365.com/OAB/99999999-9999-9999-9999-999999999999/</OABUrl>
+        <ServerExclusiveConnect>off</ServerExclusiveConnect>
+      </Protocol>
+      <Protocol>
+        <Type>EXPR</Type>
+        <Server>outlook.office365.com</Server>
+        <SSL>On</SSL>
+        <AuthPackage>Basic</AuthPackage>
+        <ASUrl>https://outlook.office365.com/EWS/Exchange.asmx</ASUrl>
+        <EwsUrl>https://outlook.office365.com/EWS/Exchange.asmx</EwsUrl>
+        <EmwsUrl>https://outlook.office365.com/EWS/Exchange.asmx</EmwsUrl>
+        <SharingUrl>https://outlook.office365.com/EWS/Exchange.asmx</SharingUrl>
+        <EcpUrl>https://outlook.office365.com/ecp/</EcpUrl>
+        <EcpUrl-um>?rfr=olk&amp;p=customize/voicemail.aspx&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-um>
+        <EcpUrl-aggr>?rfr=olk&amp;p=personalsettings/EmailSubscriptions.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-aggr>
+        <EcpUrl-mt>PersonalSettings/DeliveryReport.aspx?rfr=olk&amp;exsvurl=1&amp;IsOWA=&lt;IsOWA&gt;&amp;MsgID=&lt;MsgID&gt;&amp;Mbx=&lt;Mbx&gt;&amp;realm=initech.local</EcpUrl-mt>
+        <EcpUrl-ret>?rfr=olk&amp;p=organize/retentionpolicytags.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-ret>
+        <EcpUrl-sms>?rfr=olk&amp;p=sms/textmessaging.slab&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-sms>
+        <EcpUrl-publish>customize/calendarpublishing.slab?rfr=olk&amp;exsvurl=1&amp;FldID=&lt;FldID&gt;&amp;realm=initech.local</EcpUrl-publish>
+        <EcpUrl-photo>PersonalSettings/EditAccount.aspx?rfr=olk&amp;chgPhoto=1&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-photo>
+        <EcpUrl-connect>Connect/Main.aspx?rfr=olk&amp;exsvurl=1&amp;Provider=&lt;Provider&gt;&amp;Action=&lt;Action&gt;&amp;realm=initech.local</EcpUrl-connect>
+        <EcpUrl-tm>?rfr=olk&amp;ftr=TeamMailbox&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tm>
+        <EcpUrl-tmCreating>?rfr=olk&amp;ftr=TeamMailboxCreating&amp;SPUrl=&lt;SPUrl&gt;&amp;Title=&lt;Title&gt;&amp;SPTMAppUrl=&lt;SPTMAppUrl&gt;&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tmCreating>
+        <EcpUrl-tmEditing>?rfr=olk&amp;ftr=TeamMailboxEditing&amp;Id=&lt;Id&gt;&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-tmEditing>
+        <EcpUrl-extinstall>Extension/InstalledExtensions.slab?rfr=olk&amp;exsvurl=1&amp;realm=initech.local</EcpUrl-extinstall>
+        <OOFUrl>https://outlook.office365.com/EWS/Exchange.asmx</OOFUrl>
+        <UMUrl>https://outlook.office365.com/EWS/UM2007Legacy.asmx</UMUrl>
+        <OABUrl>https://outlook.office365.com/OAB/99999999-9999-9999-9999-999999999999/</OABUrl>
+        <ServerExclusiveConnect>on</ServerExclusiveConnect>
+        <CertPrincipalName>msstd:outlook.com</CertPrincipalName>
+        <EwsPartnerUrl>https://outlook.office365.com/EWS/Exchange.asmx</EwsPartnerUrl>
+        <GroupingInformation>ZC4PR14</GroupingInformation>
+      </Protocol>
+      <Protocol>
+        <Type>WEB</Type>
+        <Internal>
+          <OWAUrl AuthenticationMethod="LiveIdFba, OAuth">https://outlook.office365.com/owa/</OWAUrl>
+          <Protocol>
+            <Type>EXCH</Type>
+            <ASUrl>https://outlook.office365.com/EWS/Exchange.asmx</ASUrl>
+          </Protocol>
+        </Internal>
+        <External>
+          <OWAUrl AuthenticationMethod="Fba">https://outlook.office365.com/owa/initech.local/</OWAUrl>
+          <Protocol>
+            <Type>EXPR</Type>
+            <ASUrl>https://outlook.office365.com/EWS/Exchange.asmx</ASUrl>
+          </Protocol>
+        </External>
+      </Protocol>
+    </Account>
+  </Response>
+</Autodiscover>

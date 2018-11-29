@@ -1,0 +1,655 @@
+current directory: /tmp/d20180207-47-f4wg56/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.2/ext/nokogiri
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/bin/ruby -r ./siteconf20180207-806-1oh7689.rb extconf.rb
+checking if the C compiler accepts ... yes
+Building nokogiri using system libraries.
+checking for xmlParseDoc() in libxml/parser.h... yes
+checking for xsltParseStylesheetDoc() in libxslt/xslt.h... yes
+checking for exsltFuncRegister() in libexslt/exslt.h... yes
+checking for xmlHasFeature()... yes
+checking for xmlFirstElementChild()... yes
+checking for xmlRelaxNGSetParserStructuredErrors()... yes
+checking for xmlRelaxNGSetParserStructuredErrors()... yes
+checking for xmlRelaxNGSetValidStructuredErrors()... yes
+checking for xmlSchemaSetValidStructuredErrors()... yes
+checking for xmlSchemaSetParserStructuredErrors()... yes
+creating Makefile
+
+current directory: /tmp/d20180207-47-f4wg56/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.2/ext/nokogiri
+make "DESTDIR=" clean
+
+current directory: /tmp/d20180207-47-f4wg56/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.2/ext/nokogiri
+make "DESTDIR="
+compiling html_document.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./html_document.h:4,
+                 from html_document.c:1:
+html_document.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+html_document.c:16:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "0*", &rest);
+   ^
+html_document.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling html_element_description.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./html_element_description.h:4,
+                 from html_element_description.c:1:
+html_element_description.c: In function ‘get_description’:
+html_element_description.c:252:40: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+   return Data_Wrap_Struct(klass, 0, 0, (void *)description);
+                                        ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:1150:34: note: in definition of macro ‘Data_Wrap_Struct’
+     rb_data_object_wrap((klass),(sval),(RUBY_DATA_FUNC)(mark),(RUBY_DATA_FUNC)(free))
+                                  ^
+html_element_description.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling html_entity_lookup.c
+compiling html_sax_parser_context.c
+compiling html_sax_push_parser.c
+compiling nokogiri.c
+compiling xml_attr.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_attr.h:4,
+                 from xml_attr.c:1:
+xml_attr.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_attr.c:58:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &document, &name, &rest);
+   ^
+xml_attr.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_attribute_decl.c
+compiling xml_cdata.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_cdata.h:4,
+                 from xml_cdata.c:1:
+xml_cdata.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_cdata.c:23:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &doc, &content, &rest);
+   ^
+xml_cdata.c:28:56: warning: pointer targets in passing argument 1 of ‘strlen’ differ in signedness [-Wpointer-sign]
+   content_str_len = (content_str == NULL) ? 0 : strlen(content_str);
+                                                        ^
+In file included from ./nokogiri.h:5:0,
+                 from ./xml_cdata.h:4,
+                 from xml_cdata.c:1:
+/usr/include/string.h:394:15: note: expected ‘const char *’ but argument is of type ‘const xmlChar * {aka const unsigned char *}’
+ extern size_t strlen (const char *__s)
+               ^
+xml_cdata.c:28:21: warning: conversion to ‘int’ from ‘size_t {aka long unsigned int}’ may alter its value [-Wconversion]
+   content_str_len = (content_str == NULL) ? 0 : strlen(content_str);
+                     ^
+xml_cdata.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_comment.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_comment.h:4,
+                 from xml_comment.c:1:
+xml_comment.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_comment.c:21:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &document, &content, &rest);
+   ^
+xml_comment.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_document.c
+xml_document.c: In function ‘set_encoding’:
+xml_document.c:182:12: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+       free((char *) doc->encoding); /* this may produce a gcc cast warning */
+            ^
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_document.h:4,
+                 from xml_document.c:1:
+xml_document.c: In function ‘duplicate_document’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_document.c:327:6: note: in expansion of macro ‘rb_scan_args’
+   if(rb_scan_args(argc, argv, "01", &level) == 0)
+      ^
+xml_document.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_document.c:354:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "0*", &rest);
+   ^
+xml_document.c: In function ‘create_entity’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_document.c:433:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "14", &name, &type, &external_id, &system_id,
+   ^
+xml_document.c: In function ‘canonicalize’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_document.c:508:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "03", &mode, &incl_ns, &with_comments);
+   ^
+xml_document.c:535:15: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+       ns[i] = (xmlChar*) ptr;
+               ^
+xml_document.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_document_fragment.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_document_fragment.h:4,
+                 from xml_document_fragment.c:1:
+xml_document_fragment.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_document_fragment.c:17:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "1*", &document, &rest);
+   ^
+xml_document_fragment.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_dtd.c
+compiling xml_element_content.c
+compiling xml_element_decl.c
+compiling xml_encoding_handler.c
+compiling xml_entity_decl.c
+compiling xml_entity_reference.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_entity_reference.h:4,
+                 from xml_entity_reference.c:1:
+xml_entity_reference.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_entity_reference.c:18:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &document, &name, &rest);
+   ^
+xml_entity_reference.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_io.c
+compiling xml_libxml2_hacks.c
+compiling xml_namespace.c
+xml_namespace.c: In function ‘dealloc_namespace’:
+xml_namespace.c:17:13: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+     xmlFree((xmlChar *)ns->href);
+             ^
+xml_namespace.c:20:13: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+     xmlFree((xmlChar *)ns->prefix);
+             ^
+xml_namespace.c: In function ‘part_of_an_xpath_node_set_eh’:
+xml_namespace.c:67:49: warning: passing argument 1 of ‘Nokogiri_namespace_eh’ from incompatible pointer type [-Wincompatible-pointer-types]
+   return (node->next && ! Nokogiri_namespace_eh(node->next));
+                                                 ^
+xml_namespace.c:27:5: note: expected ‘xmlNodePtr {aka struct _xmlNode *}’ but argument is of type ‘struct _xmlNs *’
+ int Nokogiri_namespace_eh(xmlNodePtr node)
+     ^
+xml_namespace.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_node.c
+xml_node.c: In function ‘reparent_node_with’:
+xml_node.c:170:7: warning: enumeration value ‘XML_ATTRIBUTE_NODE’ not handled in switch [-Wswitch]
+       switch (reparentee->type) {
+       ^
+xml_node.c:170:7: warning: enumeration value ‘XML_ENTITY_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_DOCUMENT_FRAG_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_NOTATION_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_HTML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_DTD_NODE’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_ELEMENT_DECL’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_ATTRIBUTE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_ENTITY_DECL’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_NAMESPACE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_XINCLUDE_START’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_XINCLUDE_END’ not handled in switch [-Wswitch]
+xml_node.c:170:7: warning: enumeration value ‘XML_DOCB_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_ATTRIBUTE_NODE’ not handled in switch [-Wswitch]
+       switch (reparentee->type) {
+       ^
+xml_node.c:188:7: warning: enumeration value ‘XML_ENTITY_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_DOCUMENT_TYPE_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_DOCUMENT_FRAG_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_NOTATION_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_HTML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_DTD_NODE’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_ELEMENT_DECL’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_ATTRIBUTE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_ENTITY_DECL’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_NAMESPACE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_XINCLUDE_START’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_XINCLUDE_END’ not handled in switch [-Wswitch]
+xml_node.c:188:7: warning: enumeration value ‘XML_DOCB_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_ELEMENT_NODE’ not handled in switch [-Wswitch]
+       switch (reparentee->type) {
+       ^
+xml_node.c:199:7: warning: enumeration value ‘XML_ATTRIBUTE_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_CDATA_SECTION_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_ENTITY_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_PI_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_COMMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_DOCUMENT_TYPE_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_DOCUMENT_FRAG_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_NOTATION_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_HTML_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_DTD_NODE’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_ELEMENT_DECL’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_ATTRIBUTE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_ENTITY_DECL’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_NAMESPACE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_XINCLUDE_START’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_XINCLUDE_END’ not handled in switch [-Wswitch]
+xml_node.c:199:7: warning: enumeration value ‘XML_DOCB_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_CDATA_SECTION_NODE’ not handled in switch [-Wswitch]
+     switch (parent->type) {
+     ^
+xml_node.c:167:5: warning: enumeration value ‘XML_ENTITY_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_PI_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_COMMENT_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_DOCUMENT_TYPE_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_NOTATION_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_DTD_NODE’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_ELEMENT_DECL’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_ATTRIBUTE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_ENTITY_DECL’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_NAMESPACE_DECL’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_XINCLUDE_START’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_XINCLUDE_END’ not handled in switch [-Wswitch]
+xml_node.c:167:5: warning: enumeration value ‘XML_DOCB_DOCUMENT_NODE’ not handled in switch [-Wswitch]
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_node.h:4,
+                 from xml_node.c:1:
+xml_node.c: In function ‘duplicate_node’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_node.c:501:6: note: in expansion of macro ‘rb_scan_args’
+   if(rb_scan_args(argc, argv, "01", &level) == 0)
+      ^
+xml_node.c: In function ‘get’:
+xml_node.c:847:11: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+   colon = (xmlChar *)xmlStrchr(attribute, (const xmlChar)':');
+           ^
+xml_node.c:865:11: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+   xmlFree((void *)attribute);
+           ^
+xml_node.c:869:11: warning: cast discards ‘const’ qualifier from pointer target type [-Wcast-qual]
+   xmlFree((void *)value);
+           ^
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_node.h:4,
+                 from xml_node.c:1:
+xml_node.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_node.c:1327:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &name, &document, &rest);
+   ^
+xml_node.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_node_set.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_node_set.h:4,
+                 from xml_node_set.c:1:
+xml_node_set.c: In function ‘slice’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_node_set.c:293:5: note: in expansion of macro ‘rb_scan_args’
+     rb_scan_args(argc, argv, "11", NULL, NULL);
+     ^
+xml_node_set.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_processing_instruction.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_processing_instruction.h:4,
+                 from xml_processing_instruction.c:1:
+xml_processing_instruction.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_processing_instruction.c:20:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "3*", &document, &name, &content, &rest);
+   ^
+xml_processing_instruction.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_reader.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_reader.h:4,
+                 from xml_reader.c:1:
+xml_reader.c: In function ‘from_memory’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_reader.c:533:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "13", &rb_buffer, &rb_url, &encoding, &rb_options);
+   ^
+xml_reader.c: In function ‘from_io’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_reader.c:577:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "13", &rb_io, &rb_url, &encoding, &rb_options);
+   ^
+xml_reader.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_relax_ng.c
+compiling xml_sax_parser.c
+compiling xml_sax_parser_context.c
+compiling xml_sax_push_parser.c
+compiling xml_schema.c
+compiling xml_syntax_error.c
+compiling xml_text.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_text.h:4,
+                 from xml_text.c:1:
+xml_text.c: In function ‘new’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_text.c:18:3: note: in expansion of macro ‘rb_scan_args’
+   rb_scan_args(argc, argv, "2*", &string, &document, &rest);
+   ^
+xml_text.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_xpath_context.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xml_xpath_context.h:4,
+                 from xml_xpath_context.c:1:
+xml_xpath_context.c: In function ‘evaluate’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xml_xpath_context.c:200:6: note: in expansion of macro ‘rb_scan_args’
+   if(rb_scan_args(argc, argv, "11", &search_path, &xpath_handler) == 1)
+      ^
+xml_xpath_context.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xslt_stylesheet.c
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xslt_stylesheet.h:4,
+                 from xslt_stylesheet.c:1:
+xslt_stylesheet.c: In function ‘transform’:
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2201:5: warning: conversion to ‘int’ from ‘long unsigned int’ may alter its value [-Wconversion]
+     ((varc)/(rb_scan_args_count(fmt, varc)))
+     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2209:11: note: in expansion of macro ‘rb_scan_args_verify_count’
+  verify = rb_scan_args_verify_count(fmt, varc); \
+           ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2324:9: note: in expansion of macro ‘rb_scan_args_verify’
+        (rb_scan_args_verify(fmt, varc), vars))
+         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:2151:9: note: in expansion of macro ‘rb_scan_args0’
+         rb_scan_args0(argc,argvp,fmt,\
+         ^
+xslt_stylesheet.c:141:5: note: in expansion of macro ‘rb_scan_args’
+     rb_scan_args(argc, argv, "11", &xmldoc, &paramobj);
+     ^
+In file included from /tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby.h:33:0,
+                 from ./nokogiri.h:33,
+                 from ./xslt_stylesheet.h:4,
+                 from xslt_stylesheet.c:1:
+xslt_stylesheet.c: In function ‘initFunc’:
+xslt_stylesheet.c:217:21: warning: passing argument 1 of ‘rb_data_object_get’ makes integer from pointer without a cast [-Wint-conversion]
+     Data_Get_Struct(ctxt->style->_private, nokogiriXsltStylesheetTuple,
+                     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:1188:41: note: in definition of macro ‘Data_Get_Struct’
+     ((sval) = (type*)rb_data_object_get(obj))
+                                         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:1352:1: note: expected ‘VALUE {aka long unsigned int}’ but argument is of type ‘void *’
+ rb_data_object_get(VALUE obj)
+ ^
+xslt_stylesheet.c: In function ‘shutdownFunc’:
+xslt_stylesheet.c:230:21: warning: passing argument 1 of ‘rb_data_object_get’ makes integer from pointer without a cast [-Wint-conversion]
+     Data_Get_Struct(ctxt->style->_private, nokogiriXsltStylesheetTuple,
+                     ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:1188:41: note: in definition of macro ‘Data_Get_Struct’
+     ((sval) = (type*)rb_data_object_get(obj))
+                                         ^
+/tmp/d20180207-47-f4wg56/opt/zammad/vendor/ruby-2.4.2/include/ruby-2.4.0/ruby/ruby.h:1352:1: note: expected ‘VALUE {aka long unsigned int}’ but argument is of type ‘void *’
+ rb_data_object_get(VALUE obj)
+ ^
+xslt_stylesheet.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+linking shared-object nokogiri/nokogiri.so
+Cleaning files only used during build.
+rm -rf /tmp/d20180207-47-f4wg56/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.2/ports/archives
+
+current directory: /tmp/d20180207-47-f4wg56/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.2/ext/nokogiri
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 nokogiri.so ./.gem.20180207-806-h5cyr4/nokogiri

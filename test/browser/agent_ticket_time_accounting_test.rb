@@ -41,7 +41,11 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4',
@@ -49,8 +53,10 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
-
+    watch_for_disappear(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '4',
@@ -74,7 +80,11 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4,6',
@@ -82,8 +92,10 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
-
+    watch_for_disappear(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '4.6',
@@ -99,7 +111,10 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.active .js-submit',
     )
 
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4abc',
@@ -117,7 +132,10 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    watch_for_disappear(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '8.6',
@@ -134,11 +152,6 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active .js-timeAccountingSetting',
       type: 'off',
     )
-
-    # make sure "off" AJAX request gets completed
-    # otherwise following tests might fail because
-    # off still active timeaccounting
-    logout()
   end
 
   def test_closing_time_accounting_modal_by_clicking_background
@@ -180,18 +193,29 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
 
     # Click outside the modal to make it disappear
     execute(
       js: 'document.elementFromPoint(300, 100).click();',
     )
-    modal_disappear()
+    watch_for_disappear(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
 
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
+
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4',
@@ -199,7 +223,10 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    watch_for_disappear(
+      css: '.content.active .modal',
+      value: 'Time Accounting',
+    )
 
     # disable time accounting
     click(

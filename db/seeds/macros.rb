@@ -13,7 +13,6 @@ Macro.create_if_not_exists(
       value: '',
     },
   },
-  ux_flow_next_up: 'next_task',
   note: 'example macro',
   active: true,
 )

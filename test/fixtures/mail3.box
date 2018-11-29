@@ -1,0 +1,433 @@
+Return-Path: <k.guenther@example.com>
+X-Original-To: me@example.com
+Delivered-To: martin@samba.example.com
+X-Greylist: delayed 80660 seconds by postgrey-1.32 at samba; Fri, 04 May 2012 08:12:40 BST
+Received: from smtprelay02.example.com (smtprelay02.example.com [8.6.1.1])
+	by samba.example.com (Postfix) with ESMTP id 91B9A500D3D
+	for <me@example.com>; Fri,  4 May 2012 08:12:40 +0100 (BST)
+Received: from [1.1.0.2] (helo=exchange.eu)
+	by smtprelay02.example.com with esmtps (TLSv1:RC4-MD5:128)
+	(Exim 4.68)
+	(envelope-from <k.guenther@example.com>)
+	id 1SQCh0-0008V2-7x
+	for me@example.com; Fri, 04 May 2012 09:12:42 +0200
+Received: from ECR04PUBLIC.exchange.local ([1.1.2.4]) by
+ efe02.exchange.local ([1.1.0.2]) with mapi; Fri, 4 May 2012 09:12:42 +0200
+From: =?iso-8859-1?Q?G=FCnther_John_=7C_Example_GmbH?=
+	<k.guenther@example.com>
+To: Fritz Bauer <me@example.com>
+Date: Fri, 4 May 2012 09:12:46 +0200
+Subject: Ticket Templates
+Thread-Topic: Ticket Templates
+Thread-Index: Ac0pEkehxk8anBjgRfSXKBLb2B04CAAstiNQ
+Message-ID: <F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6@ECR04PUBLIC.exchange.local>
+References: <Ac0SKyO0ohW3bm9XSn21z9MOn530bg==>
+ <970531F2D9256C459C026FC3137B0BBD012D6F13@Exchange2.example.com>
+ <CAOXJ6SQ49ZRmAmZF0eacHeBoFFpmDfwJ-y1WP+sHUu2yrOfORA@mail.example.com>
+ <2B0ECF06-5BF6-483F-902A-BD19B99B8D68@example.com>
+In-Reply-To: <2B0ECF06-5BF6-483F-902A-BD19B99B8D68@example.com>
+Accept-Language: de-DE
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+acceptlanguage: de-DE
+Content-Type: multipart/alternative;
+	boundary="_000_F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6ECCR04PUBLICe_"
+MIME-Version: 1.0
+
+--_000_F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6ECCR04PUBLICe_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hallo Fritz,
+
+ich m=F6chte mich gern f=FCr den Beta-Test f=FCr die Ticket Templates unter=
+ XXXX 2.4 anmelden.
+
+
+Mit freundlichen Gr=FC=DFen
+John G=FCnther
+
+example.com<http://example.com> - profitieren S=
+ie vom umfangreichen Daten-Netzwerk
+
+_ __ ___ ____________________________ ___ __ _
+
+Example GmbH
+Some What
+
+Sitz: Someware-Stra=DFe 9, XXXXX Someware
+
+M: +49 (0)  XXX XX XX 70
+T: +49 (0) XXX XX XX 22
+F: +49 (0) XXX XX XX 11
+W: www.example.com
+
+Gesch=E4ftsf=FChrer: John Smith
+HRB XXXXXX AG Someware
+St.-Nr.: XXX/XXX/XXXXX
+
+ISO 9001:2008 Zertifiziert -Qualit=E4tsstandard mit Zukunft
+_ __ ___ ____________________________ ___ __ _
+
+Diese Information ist ausschlie=DFlich f=FCr den Adressaten bestimmt und ka=
+nn vertrauliche oder gesetzlich gesch=FCtzte Informationen enthalten. Wenn =
+Sie nicht der bestimmungsgem=E4=DFe Adressat sind, unterrichten Sie bitte d=
+en Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgem=
+=E4=DFen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, =
+weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.
+
+Von: Fritz Bauer [mailto:me@example.com]
+Gesendet: Donnerstag, 3. Mai 2012 11:51
+An: John Smith
+Cc: Smith, John Marian; johnel.stock@example.com; ole.brei@example.com=
+; G=FCnther John | Example GmbH; bkopon@example.com; john.heisterhagen@tea=
+m.example.com; sven.rocked@example.com; michael.house@example.com; t=
+gutzeit@example.com
+Betreff: Re: XXXX::XXX Erweiterung - Anh=E4nge an CI's
+
+Hallo,
+
+ich versuche an den Punkten anzukn=FCpfen.
+
+a) LDAP Muster Konfigdatei
+
+https://wiki.lab.example.com/doku.php?id=3Dxxxx:start&#ldap
+
+PS: Es gibt noch eine Reihe weiterer M=F6glichkeiten, vor allem im Bezug au=
+f Agenten-Rechte/LDAP Gruppen Synchronisation. Wenn Ihr hier weitere Inform=
+ationen ben=F6tigt, einfach im Wiki die Aufgabenbeschreibung rein machen un=
+d ich kann eine Beispiel-Config dazu legen.
+
+
+b) Ticket Templates
+Wir haben das Paket vom alten Maintainer =FCbernommen, es l=E4uft nun auf O=
+TRS 2.4, XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere Funktionen e=
+rg=E4nzt und w=FCrden es gerne hier in diesen Kreis zum Beta-Test bereit st=
+ellen.
+
+Vorgehen:
+Wer Interesse hat, bitte eine Email an mich und ich versende Zug=E4nge zu d=
+en Beta-Test-Systemen. Nach ca. 2 Wochen werden wir die Erweiterungen in de=
+r Version 1.0 ver=F6ffentlichen.
+
+
+c) XXXX Entwickler Schulung
+Weil es immer wieder Thema war, falls jemand Interesse hat, das XXXX =
+bietet nun auch XXXX Entwickler Schulungen an (http://www.example.com/kur=
+s/xxxx_entwickler/).
+
+
+d) Genelle Fragen?
+Haben sich beim ein oder anderen generell noch Fragen aufgetan?
+
+
+Viele Gr=FC=DFe!
+
+-Fritz
+On May 2, 2012, at 14:25 , John Smith wrote:
+
+
+Moin Moin,
+
+die Antwort ist zwar etwas sp=E4t, aber nach der Schulung war ich krank und=
+ danach
+hatte ich viel zu tun auf der Arbeit, sodass ich keine Zeit f=FCr XXXX hatt=
+e.
+Ich denke das ist allgemein das Problem, wenn sowas nebenbei gemacht werden=
+ muss.
+
+Wie auch immer, danke f=FCr die mail mit dem XXX Zusatz auch wenn das zur =
+Zeit bei der Example nicht relevant ist.
+
+Ich habe im XXXX Wiki den Punkt um die Vorlagen angef=FCgt.
+Ticket Template von John B=E4cker
+Bei uns habe ich das Ticket Template von John B=E4cker in der Version 0.1.=
+96 unter XXXX 3.0.10 implementiert.
+
+Fritz wollte sich auch um das andere Ticket Template Modul k=FCmmern und u=
+ns zur Verf=FCgung stellen, welches unter XXXX 3.0 nicht lauff=E4hig sein s=
+ollte.
+
+
+Im Wiki kann ich die LDAP Muster Konfigdatei nicht finden.
+Hat die jemand von euch zuf=E4lligerweise ?
+
+
+Danke und Gru=DF
+John Smith
+
+
+Am 4. April 2012 08:24 schrieb Smith, John Marian <john.smith@example.com<mail=
+to:john.smith@example.com>>:
+Hallo zusammen,
+
+
+
+ich hoffe Ihr seid noch gut nach Hause gekommen am Mittwoch. Der XXX Kurs =
+Donnerstag und Freitag war noch ganz gut, wobei ich mir den letzten halben =
+Tag eigentlich h=E4tte schenken k=F6nnen.
+
+Soweit ich wei=DF arbeitet Ihr nicht mit XXX? Falls doch habe ich hier ein=
+e tolle (eigentlich) kostenpflichtige Erweiterung f=FCr Euch.
+
+Es handelt sich um eine programmiertes Paket von der XXXX AG. Die Weitergab=
+e ist legal.
+
+Mit dem Paket kann man Anh=E4nge an CI's (Configuration Items) verkn=FCpfen=
+. Das ist sehr praktisch wenn man zum Beispiel Rechnungen an Server, Comput=
+ern und und und anh=E4ngen m=F6chte.
+
+
+
+Der Dank geht an Frank Linden, der uns das Paket kostenlos zur Verf=FCgung =
+gestellt hat.
+
+
+
+Viele Gr=FC=DFe aus Someware
+
+
+
+John
+
+_________________________
+SysAdmin
+John Marian Smith
+IT-Management
+
+Example GmbH & Co. KG
+Der Provider f=FCr
+Mehrwertdienste & YYY
+
+Someware 23
+XXXXX Someware
+
+Tel. (01802) XX XX XX - 42
+Fax (01802) XX XX XX - 99
+nur 6 Cent je Anruf aus dem dt. Festnetz,
+max. 42 Cent pro Min. aus dem Mobilfunknetz
+
+E-Mail john.smith@Example.de<mailto:john.smith@Example.de>
+Web www.Example.de<http://www.Example.de>
+Amtsgericht Someware HRA xxxxxxxx
+Komplement=E4rin: Example Verwaltungs- GmbH
+Vertreten durch: Somebody, Somebody
+Amtsgericht Someware HRB XXX XXX
+
+_________________________
+Highlights der Example Contact Center-Suite:
+Virtual XXX&Power-XXX, Self-Services&XXX-Portale,
+XXX-/Web-Kundenbefragungen, CRM, PEP, YYY
+
+--_000_F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6ECCR04PUBLICe_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; charset=3Diso-8859-=
+1">
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40"><head><meta name=3DGenerator content=3D"Microso=
+ft Word 12 (filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.E-MailFormatvorlage17
+	{mso-style-type:personal-reply;
+	font-family:"Calibri","sans-serif";
+	color:#1F497D;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 2.0cm 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DDE link=3Dblue vlink=
+=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span style=3D'fon=
+t-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497D'>Hallo Marti=
+n,<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:11.0p=
+t;font-family:"Calibri","sans-serif";color:#1F497D'><o:p>&nbsp;</o:p></span=
+></p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Cali=
+bri","sans-serif";color:#1F497D'>ich m=F6chte mich gern f=FCr den Beta-Test=
+ f=FCr die Ticket Templates unter XXXX 2.4 anmelden.<o:p></o:p></span></p><=
+p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Calibri","=
+sans-serif";color:#1F497D'><o:p>&nbsp;</o:p></span></p><div><p class=3DMsoN=
+ormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D'><=
+o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10=
+.5pt;font-family:Consolas;color:#1F497D'>Mit freundlichen Gr=FC=DFen<o:p></=
+o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10.5pt;font-fa=
+mily:Consolas;color:#1F497D'>John G=FCnther<o:p></o:p></span></p><p class=
+=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F=
+497D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span style=3D'font-=
+size:10.5pt;font-family:Consolas;color:#1F497D'><a href=3D"http://www.GeoFa=
+chDatenServer.de"><span style=3D'color:blue'>example.com</spa=
+n></a> &#8211; profitieren Sie vom umfangreichen Daten-Netzwerk <o:p></o=
+:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10.5pt;font-fam=
+ily:Consolas;color:#1F497D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNorma=
+l><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D'>_ __ =
+___ ____________________________ ___ __ _<o:p></o:p></span></p><p class=3DM=
+soNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D=
+'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span style=3D'font-size=
+:10.5pt;font-family:Consolas;color:#1F497D'>Example GmbH<o:p></o:p></span=
+></p><p class=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Conso=
+las;color:#1F497D'>Some What<o:p></o:p></span></p><p class=
+=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F=
+497D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span style=3D'font-=
+size:10.5pt;font-family:Consolas;color:#1F497D'>Sitz: Someware-Stra=DFe =
+9, XXXXX Someware<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D=
+'font-size:10.5pt;font-family:Consolas;color:#1F497D'><o:p>&nbsp;</o:p></sp=
+an></p><p class=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Con=
+solas;color:#1F497D'>M: +49 (0)=A0 XXX XX XX 70<o:p></o:p></span></p><p c=
+lass=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color=
+:#1F497D'>T: +49 (0) XXX XX XX 22<o:p></o:p></span></p><p class=3DMsoNor=
+mal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D'>F: =
++49 (0) XXX XX XX 11<o:p></o:p></span></p><p class=3DMsoNormal><span sty=
+le=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D'>W: www.example=
+.de <o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10.=
+5pt;font-family:Consolas;color:#1F497D'><o:p>&nbsp;</o:p></span></p><p clas=
+s=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1=
+F497D'>Gesch=E4ftsf=FChrer: John Smith<o:p></o:p></span></p><p class=
+=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#1F=
+497D'>HRB XXXXXX AG Someware<o:p></o:p></span></p><p class=3DMsoNormal><span=
+ style=3D'font-size:10.5pt;font-family:Consolas;color:#1F497D'>St.-Nr.: 112=
+/107/05858<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-si=
+ze:10.5pt;font-family:Consolas;color:#1F497D'><o:p>&nbsp;</o:p></span></p><=
+p class=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;co=
+lor:#1F497D'>ISO 9001:2008 Zertifiziert -Qualit=E4tsstandard mit Zukunft <o=
+:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10.5pt;fo=
+nt-family:Consolas;color:#1F497D'>_ __ ___ ____________________________ ___=
+ __ _<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10=
+.5pt;font-family:Consolas;color:#1F497D'><o:p>&nbsp;</o:p></span></p><p cla=
+ss=3DMsoNormal><span style=3D'font-size:10.5pt;font-family:Consolas;color:#=
+1F497D'>Diese Information ist ausschlie=DFlich f=FCr den Adressaten bestimm=
+t und kann vertrauliche oder gesetzlich gesch=FCtzte Informationen enthalte=
+n. Wenn Sie nicht der bestimmungsgem=E4=DFe Adressat sind, unterrichten Sie=
+ bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmu=
+ngsgem=E4=DFen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speic=
+hern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwe=
+nden.<o:p></o:p></span></p></div><p class=3DMsoNormal><span style=3D'font-s=
+ize:11.0pt;font-family:"Calibri","sans-serif";color:#1F497D'><o:p>&nbsp;</o=
+:p></span></p><div><div style=3D'border:none;border-top:solid #B5C4DF 1.0pt=
+;padding:3.0pt 0cm 0cm 0cm'><p class=3DMsoNormal><b><span style=3D'font-siz=
+e:10.0pt;font-family:"Tahoma","sans-serif"'>Von:</span></b><span style=3D'f=
+ont-size:10.0pt;font-family:"Tahoma","sans-serif"'> Fritz Bauer [mailt=
+o:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b=
+>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratcz=
+ak@example.com; ole.brei@example.com; G=FCnther John | Example GmbH; bko=
+pon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com;=
+ michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: O=
+TRS::XXX Erweiterung - Anh=E4nge an CI's<o:p></o:p></span></p></div></div>=
+<p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Hallo,<o:p><=
+/o:p></p><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=
+=3DMsoNormal>ich versuche an den Punkten anzukn=FCpfen.&nbsp;<o:p></o:p></p=
+></div><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=
+=3DMsoNormal><b>a)&nbsp;LDAP Muster Konfigdatei</b><o:p></o:p></p></div><di=
+v><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNormal=
+><a href=3D"https://wiki.lab.example.com/doku.php?id=3Dxxxx:start&amp;#ld=
+ap">https://wiki.lab.example.com/doku.php?id=3Dxxxx:start&amp;#ldap</a><o=
+:p></o:p></p></div><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><di=
+v><p class=3DMsoNormal>PS: Es gibt noch eine Reihe weiterer M=F6glichkeiten=
+, vor allem im Bezug auf Agenten-Rechte/LDAP Gruppen Synchronisation. Wenn =
+Ihr hier weitere Informationen ben=F6tigt, einfach im Wiki die Aufgabenbesc=
+hreibung rein machen und ich kann eine Beispiel-Config dazu legen.<o:p></o:=
+p></p></div><div><p class=3DMsoNormal>&nbsp;<o:p></o:p></p></div><div><p cl=
+ass=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNormal><b>b) =
+Ticket Templates</b><o:p></o:p></p></div><div><p class=3DMsoNormal>Wir habe=
+n das Paket vom alten Maintainer =FCbernommen, es l=E4uft nun auf XXXX 2.4,=
+ XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere Funktionen erg=E4nzt=
+ und w=FCrden es gerne hier in diesen Kreis zum Beta-Test bereit stellen.&n=
+bsp;<o:p></o:p></p></div><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></d=
+iv><div><p class=3DMsoNormal>Vorgehen:<o:p></o:p></p></div><div><p class=3D=
+MsoNormal>Wer Interesse hat, bitte eine Email an mich und ich versende Zug=
+=E4nge zu den Beta-Test-Systemen. Nach ca. 2 Wochen werden wir die Erweiter=
+ungen in der Version 1.0 ver=F6ffentlichen.<o:p></o:p></p></div><div><p cla=
+ss=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNormal><o:p>&n=
+bsp;</o:p></p></div><div><p class=3DMsoNormal><b>c) XXXX Entwickler Schulun=
+g</b><o:p></o:p></p></div><div><p class=3DMsoNormal>Weil es immer wieder Th=
+ema war, falls jemand Interesse hat, das XXXX bietet nun auch&nbsp;OT=
+RS Entwickler Schulungen an (<a href=3D"http://www.example.com/kurs/xxxx_=
+entwickler/">http://www.example.com/kurs/xxxx_entwickler/</a>).<o:p></o:p=
+></p></div><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p cla=
+ss=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNormal><b>d) G=
+enelle Fragen?</b><o:p></o:p></p></div><div><p class=3DMsoNormal>Haben sich=
+ beim ein oder anderen generell noch Fragen aufgetan?<o:p></o:p></p></div><=
+div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNorm=
+al><o:p>&nbsp;</o:p></p></div><div><p class=3DMsoNormal>Viele Gr=FC=DFe!<o:=
+p></o:p></p></div><div><p class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div=
+><div><p class=3DMsoNormal style=3D'margin-bottom:12.0pt'>-Fritz<o:p></o:p=
+></p></div><p class=3DMsoNormal>On May 2, 2012, at 14:25 , John Smith=
+ wrote:<br><br><br><o:p></o:p></p><p class=3DMsoNormal>Moin Moin,<br><br>di=
+e Antwort ist zwar etwas sp=E4t, aber nach der Schulung war ich krank und d=
+anach<br>hatte ich viel zu tun auf der Arbeit, sodass ich keine Zeit f=FCr =
+XXXX hatte.<br>Ich denke das ist allgemein das Problem, wenn sowas nebenbei=
+ gemacht werden muss.<br><br>Wie auch immer, danke f=FCr die mail mit dem I=
+TSM Zusatz auch wenn das zur Zeit bei der Example nicht relevant ist.<b=
+r><br>Ich habe im XXXX Wiki den Punkt um die Vorlagen angef=FCgt.<br>=
+Ticket Template von John B=E4cker<br>Bei uns habe ich das Ticket Template =
+von John B=E4cker in der Version 0.1.96 unter XXXX 3.0.10&nbsp;implementie=
+rt.&nbsp;<br><br>Fritz wollte sich auch um das andere Ticket Template Modu=
+l k=FCmmern und uns zur Verf=FCgung stellen, welches unter XXXX 3.0 nicht l=
+auff=E4hig sein sollte.<br><br><br>Im Wiki kann ich die LDAP Muster Konfigd=
+atei nicht finden.<br>Hat die jemand von euch zuf=E4lligerweise ?<br><br><b=
+r>Danke und Gru=DF<br>John Smith<br><br><br>Am 4. April 2012 08:24 schrieb =
+Smith, John Marian&nbsp;&lt;<a href=3D"mailto:john.smith@example.com">john.hin=
+z@example.com</a>&gt;:<br>Hallo zusammen,<br><br>&nbsp;<br><br>ich hoffe Ihr se=
+id noch gut nach Hause gekommen am Mittwoch. Der XXX Kurs Donnerstag und F=
+reitag war noch ganz gut, wobei ich mir den letzten halben Tag eigentlich h=
+=E4tte&nbsp;schenken k=F6nnen.<br><br>Soweit ich wei=DF arbeitet Ihr nicht =
+mit XXX? Falls doch habe ich hier eine tolle (eigentlich) kostenpflichtige=
+ Erweiterung f=FCr Euch.<br><br>Es handelt sich um eine programmiertes Pake=
+t von der XXXX AG. Die Weitergabe ist legal.<br><br>Mit dem Paket kann man =
+Anh=E4nge an CI&#8217;s (Configuration Items) verkn=FCpfen. Das ist sehr pr=
+aktisch wenn man zum Beispiel Rechnungen an Server, Computern und und und a=
+nh=E4ngen&nbsp;m=F6chte.<br><br>&nbsp;<br><br>Der Dank geht an Frank Linden=
+, der uns das Paket kostenlos zur Verf=FCgung gestellt hat.<br><br>&nbsp;<b=
+r><br>Viele Gr=FC=DFe aus Someware<br><br>&nbsp;<br><br>John<br><br>_______=
+__________________<br>SysAdmin<br>John Marian Smith<br>IT-Mana=
+gement<br><br>Example GmbH &amp; Co. KG<br>Der Provider f=FCr<br>Mehrwertdiens=
+te &amp; YYY<br><br>Someware 23<br>XXXXX Someware<br><=
+br>Tel. (01802) XX XX XX - 42<br>Fax (01802) XX XX XX - 99<br>nur 6 Cent je=
+ Anruf aus dem dt. Festnetz,<br>max. 42 Cent pro Min. aus dem Mobilfunknetz=
+<br><br>E-Mail <a href=3D"mailto:john.smith@Example.de">john.smith@Example.de</a><b=
+r>Web&nbsp;<a href=3D"http://www.Example.de">www.Example.de</a><br>Amtsgericht Ha=
+nnover HRA xxxxxxxx<br>Komplement=E4rin: Example Verwaltungs- GmbH<br>Vertreten =
+durch: Somebody, Somebody<br>Amtsgericht Someware HRB XXX XXX<br><br=
+>_________________________&nbsp;<br>Highlights der Example Contact Center-Suit=
+e:<br>Virtual XXX&amp;Power-XXX, Self-Services&amp;XXX-Portale,<br>XXX=
+-/Web-Kundenbefragungen, CRM, PEP, YYY<o:p></o:p></p></div></=
+div></body></html>=
+
+--_000_F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6ECCR04PUBLICe_--

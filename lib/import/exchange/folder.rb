@@ -5,8 +5,6 @@ module Import
     class Folder
       include ::Mixin::RailsLogger
 
-      DEFAULT_ROOTS = %i[root msgfolderroot publicfoldersroot].freeze
-
       def initialize(connection)
         @connection = connection
         @lookup_map = {}
@@ -29,36 +27,49 @@ module Import
       end
 
       def all
-        @all ||= children(*DEFAULT_ROOTS)
+        # request folders only if neccessary and store the result
+        @all ||= children(%i[root msgfolderroot publicfoldersroot])
       end
 
-      def children(*parents)
-        return [] if parents.empty?
+      def children(parent_identifiers)
+        parent_identifiers.each_with_object([]) do |parent_identifier, result|
 
-        direct_descendants = parents.map(&method(:request_children))
-                                    .flatten.uniq.compact
+          child_folders = request_children(parent_identifier)
 
-        direct_descendants | children(*direct_descendants)
+          next if child_folders.blank?
+
+          child_folder_ids = child_folders.collect(&:id)
+          child_folders   += children(child_folder_ids)
+
+          result.concat(child_folders)
+        end
       end
 
       def display_path(folder)
-        display_name  = folder.display_name.utf8_encode(fallback: :read_as_sanitized_binary)
+        display_name = folder.display_name
+        return display_name if !folder.parent_folder_id
+
+        parent_folder = find(folder.parent_folder_id)
+        return display_name if !parent_folder
+
         parent_folder = id_folder_map[folder.parent_folder_id]
+        return display_name if !parent_folder
 
-        return display_name if parent_folder.blank?
+        # recursive
+        parent_folder_path = display_path(parent_folder)
 
-        "#{display_path(parent_folder)} -> #{display_name}"
+        "#{parent_folder_path} -> #{display_name}"
       rescue Viewpoint::EWS::EwsError
-        display_name
+        folder.display_name
       end
 
       private
 
-      def request_children(parent)
-        parent = parent.id if parent.respond_to?(:id) # type coercion
-        @connection.folders(root: parent)
+      def request_children(parent_identifier)
+        @connection.folders(root: parent_identifier)
       rescue Viewpoint::EWS::EwsFolderNotFound => e
-        logger.warn(e) && return
+        logger.warn(e)
+        nil
       end
     end
   end

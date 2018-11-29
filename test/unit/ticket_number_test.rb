@@ -60,9 +60,6 @@ class TicketNumberTest < ActiveSupport::TestCase
 
   test 'number check' do
     Setting.set('ticket_number_increment', { checksum: false, min_size: 5 })
-
-    Setting.set('system_id', 1)
-
     ticket = Ticket.create!(
       title: 'test 1',
       group: Group.lookup(name: 'Users'),
@@ -136,8 +133,6 @@ class TicketNumberTest < ActiveSupport::TestCase
   test 'date check' do
     Setting.set('ticket_number', 'Ticket::Number::Date')
     Setting.set('ticket_number_date', { checksum: false })
-
-    Setting.set('system_id', 1)
 
     ticket = Ticket.create!(
       title: 'test 1',

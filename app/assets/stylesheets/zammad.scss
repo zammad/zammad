@@ -1358,8 +1358,7 @@ label,
 .inline-label,
 .label-success,
 .label-warning,
-.label-danger,
-.fileUpload label {
+.label-danger {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -3151,7 +3150,7 @@ footer {
   .menu-item {
     padding: 0 15px;
     height: 48px;
-    color: rgba(240, 250, 255, .25);
+    color: hsl(200,87%,45%);
     border-bottom: 1px solid rgba(240, 250, 255, .05);
     text-decoration: none;
     display: flex;
@@ -3199,7 +3198,7 @@ footer {
     @include bidi-style(margin-right, 15px, margin-left, 0);
     width: 24px;
     height: 24px;
-    fill: hsl(206,7%,37%);
+    fill: hsl(200,87%,45%);
   }
 
   .menu-item-name {
@@ -4729,6 +4728,11 @@ footer {
 
 .ticketZoom {
   background: #f8f9fa;
+  /*
+    force ticket zoom to show scrollbars
+    because we offset the tabs bar when the os shows scrollbars
+  */
+  min-height: 101%;
 }
 
 .ticketZoom-controls {
@@ -5541,12 +5545,6 @@ footer {
 
 .tabsSidebar-tabsSpacer {
   @include bidi-style(padding-right, 62px !important, padding-left, 0);
-  /*
-    force div to show scrollbars
-    because we offset the sidebar tabs when the os shows scrollbars
-  */
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 
 .tabsSidebar-sidebarSpacer {
@@ -6593,11 +6591,12 @@ footer {
   .dropdown li:hover,
   .dropdown li.is-active {
     background: hsl(205,90%,60%);
+  }
 
-    + li {
+    .dropdown li:hover + li,
+    .dropdown li.is-active + li {
       box-shadow: none;
     }
-  }
 
   .dropdown-menu > li.danger:hover,
   .dropdown-menu > li.danger.is-active {
@@ -6737,9 +6736,9 @@ footer {
 }
 
 .recipientList-entry {
+  @extend .u-clickable;
   display: flex;
   align-items: center;
-  @extend .u-clickable;
 }
 
   .recipientList-entry .recipientList-iconSpacer {
@@ -6748,7 +6747,6 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
   }
 
   .recipientList-icon {
@@ -6758,12 +6756,13 @@ footer {
     opacity: 0.2;
   }
 
-  .recipientList--new,
-  .recipientList-entry:hover,
-  .recipientList-entry.is-active {
-    .recipientList-icon {
-      opacity: 1;
-    }
+  .recipientList--new .recipientList-icon {
+    opacity: 1;
+  }
+
+  .recipientList-entry:hover .recipientList-icon,
+  .recipientList-entry.is-active .recipientList-icon {
+    opacity: 1;
   }
 
   .recipientList-name {
@@ -6771,16 +6770,6 @@ footer {
     @include bidi-style(margin-left, 10px, margin-right, 0);
     flex: 1;
     @extend .u-textTruncate;
-  }
-
-  .recipientList-status {
-    opacity: 0.5;
-    margin: 0 10px;
-    flex-shrink: 1;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   .recipientList-arrow {
@@ -7379,10 +7368,6 @@ label + .wizard-buttonList {
   padding: 0;
   @extend %clickable;
   opacity: 0;
-  
-  &:focus + label {
-    text-decoration: underline;
-  }
 }
 
 .imagePreview img {

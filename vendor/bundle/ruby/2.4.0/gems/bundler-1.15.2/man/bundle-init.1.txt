@@ -1,0 +1,24 @@
+BUNDLE-INIT(1)							BUNDLE-INIT(1)
+
+
+
+1mNAME0m
+       1mbundle-init 22m- Generates a Gemfile into the current working directory
+
+1mSYNOPSIS0m
+       1mbundle init 22m[--gemspec=FILE]
+
+1mDESCRIPTION0m
+       Init  generates	a default 1mGemfile(5) 22min the current working directory.
+       When adding a 1mGemfile(5) 22mto a gem with a gemspec, the 1m--gemspec  22moption
+       will  automatically  add  each dependency listed in the gemspec file to
+       the newly created 1mGemfile(5)22m.
+
+1mOPTIONS0m
+       1m--gemspec0m
+	      Use the specified .gemspec to create the 1mGemfile(5)0m
+
+
+
+
+				   June 2017			BUNDLE-INIT(1)

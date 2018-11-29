@@ -1,0 +1,19 @@
+=== raindrops 0.19.0 - Rack 2.x middleware compatibility / 2017-08-09 23:52 UTC
+
+  This release fixes Rack 2.x compatibility for the few users of
+  Raindrops::Middleware
+  <https://bogomips.org/raindrops/Raindrops/Middleware.html>.
+  Thanks to Dmytro Shteflyuk for this release.
+
+  No need to upgrade unless you use Raindrops::Middleware with
+  Rack 2.x.
+
+  There's also a few minor, inconsequential cleanups.
+
+  Dmytro Shteflyuk (1):
+        Properly override respond_to? in Raindrops::Middleware::Proxy
+
+  Eric Wong (2):
+        Ruby thread compatibility updates
+        tcp_info: remove unnecessary extconf.h include
+

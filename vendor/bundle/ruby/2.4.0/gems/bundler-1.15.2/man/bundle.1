@@ -1,0 +1,128 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "BUNDLE" "1" "July 2017" "" ""
+.
+.SH "NAME"
+\fBbundle\fR \- Ruby Dependency Management
+.
+.SH "SYNOPSIS"
+\fBbundle\fR COMMAND [\-\-no\-color] [\-\-verbose] [ARGS]
+.
+.SH "DESCRIPTION"
+Bundler manages an \fBapplication\'s dependencies\fR through its entire life across many machines systematically and repeatably\.
+.
+.P
+See the bundler website \fIhttp://bundler\.io\fR for information on getting started, and Gemfile(5) for more information on the \fBGemfile\fR format\.
+.
+.SH "OPTIONS"
+.
+.TP
+\fB\-\-no\-color\fR
+Print all output without color
+.
+.TP
+\fB\-\-verbose\fR
+Print out additional logging information
+.
+.SH "BUNDLE COMMANDS"
+We divide \fBbundle\fR subcommands into primary commands and utilities\.
+.
+.SH "PRIMARY COMMANDS"
+.
+.TP
+\fBbundle install(1)\fR \fIbundle\-install\.1\.html\fR
+Install the gems specified by the \fBGemfile\fR or \fBGemfile\.lock\fR
+.
+.TP
+\fBbundle update(1)\fR \fIbundle\-update\.1\.html\fR
+Update dependencies to their latest versions
+.
+.TP
+\fBbundle package(1)\fR \fIbundle\-package\.1\.html\fR
+Package the \.gem files required by your application into the \fBvendor/cache\fR directory
+.
+.TP
+\fBbundle exec(1)\fR \fIbundle\-exec\.1\.html\fR
+Execute a script in the context of the current bundle
+.
+.TP
+\fBbundle config(1)\fR \fIbundle\-config\.1\.html\fR
+Specify and read configuration options for bundler
+.
+.TP
+\fBbundle help(1)\fR
+Display detailed help for each subcommand
+.
+.SH "UTILITIES"
+.
+.TP
+\fBbundle add(1)\fR
+Add the named gem to the Gemfile and run \fBbundle install\fR
+.
+.TP
+\fBbundle binstubs(1)\fR
+Generate binstubs for executables in a gem
+.
+.TP
+\fBbundle check(1)\fR
+Determine whether the requirements for your application are installed and available to bundler
+.
+.TP
+\fBbundle show(1)\fR
+Show the source location of a particular gem in the bundle
+.
+.TP
+[\fBbundle outdated(1)\fR][bundle\-outdated]
+Show all of the outdated gems in the current bundle
+.
+.TP
+\fBbundle console(1)\fR
+Start an IRB session in the context of the current bundle
+.
+.TP
+\fBbundle open(1)\fR
+Open an installed gem in the editor
+.
+.TP
+[\fBbundle lock(1)\fR][bundle\-lock]
+Generate a lockfile for your dependencies
+.
+.TP
+\fBbundle viz(1)\fR
+Generate a visual representation of your dependencies
+.
+.TP
+\fBbundle init(1)\fR
+Generate a simple \fBGemfile\fR, placed in the current directory
+.
+.TP
+\fBbundle gem(1)\fR \fIbundle\-gem\.1\.html\fR
+Create a simple gem, suitable for development with bundler
+.
+.TP
+\fBbundle platform(1)\fR \fIbundle\-platform\.1\.html\fR
+Display platform compatibility information
+.
+.TP
+\fBbundle clean(1)\fR
+Clean up unused gems in your bundler directory
+.
+.TP
+\fBbundle doctor(1)\fR
+Display warnings about common potential problems
+.
+.SH "PLUGINS"
+When running a command that isn\'t listed in PRIMARY COMMANDS or UTILITIES, Bundler will try to find an executable on your path named \fBbundler\-<command>\fR and execute it, passing down any extra arguments to it\.
+.
+.SH "OBSOLETE"
+These commands are obsolete and should no longer be used
+.
+.IP "\(bu" 4
+\fBbundle cache(1)\fR
+.
+.IP "\(bu" 4
+\fBbundle list(1)\fR
+.
+.IP "" 0
+

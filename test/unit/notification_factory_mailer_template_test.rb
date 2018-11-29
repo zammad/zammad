@@ -70,7 +70,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
 
     result = NotificationFactory::Mailer.template(
       template: 'password_reset',
-      locale: 'xx-us',
+      locale: 'es-us',
       objects:  {
         user: agent1,
       },
@@ -107,7 +107,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     changes = {}
     result = NotificationFactory::Mailer.template(
       template: 'ticket_create',
-      locale: 'xx-us',
+      locale: 'es-us',
       objects:  {
         ticket: ticket,
         article: article,
@@ -163,7 +163,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     }
     result = NotificationFactory::Mailer.template(
       template: 'ticket_update',
-      locale: 'xx-us',
+      locale: 'es-us',
       objects:  {
         ticket: ticket,
         article: article,

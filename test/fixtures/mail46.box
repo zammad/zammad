@@ -1,0 +1,130 @@
+Received: from localhost by bob.example.io
+	with SpamAssassin (version 3.4.0);
+	Wed, 15 Mar 2017 13:00:46 +0100
+From: "武兰成" <Glopelf7121@example.com>
+To: <info@example.de>
+Subject: 转发：整体提升企业服务水平
+Date: Wed, 15 Mar 2017 20:00:44 +0800
+Message-Id: <SAK20170315$4E67588A.$7208A8B9@example.com>
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on bob.example.io
+X-Spam-Flag: YES
+X-Spam-Level: *********
+X-Spam-Status: Yes, score=9.4 required=5.0 tests=HELO_DYNAMIC_IPADDR,
+	HTML_MESSAGE,MIME_HTML_MOSTLY,MPART_ALT_DIFF,RCVD_IN_BRBL_LASTEXT,
+	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_PBL,RDNS_NONE,SUBJECT_NEEDS_ENCODING,
+	SUBJ_ILLEGAL_CHARS autolearn=no autolearn_force=no version=3.4.0
+Content-Type: multipart/mixed; boundary="----------=_58C92CEE.B3199ED3"
+
+This is a multi-part message in MIME format.
+
+------------=_58C92CEE.B3199ED3
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+
+Software zur Erkennung von "Spam" auf dem Rechner
+
+    bob.example.io
+
+hat die eingegangene E-mail als m鰃liche "Spam"-Nachricht identifiziert.
+Die urspr黱gliche Nachricht wurde an diesen Bericht angeh鋘gt, so dass
+Sie sie anschauen k鰊nen (falls es doch eine legitime E-Mail ist) oder
+鋒nliche unerw黱schte Nachrichten in Zukunft markieren k鰊nen.
+Bei Fragen zu diesem Vorgang wenden Sie sich bitte an
+
+    the administrator of that system
+
+Vorschau: “Ladies and gentlemen,” he said loudly, waving for quiet.
+   “What an extraordinary moment this is! The perfect moment for me to make
+   a little announcement I've been sitting on for some time! [...] 
+
+Inhaltsanalyse im Detail:   (9.4 Punkte, 5.0 ben鰐igt)
+
+Pkte Regelname              Beschreibung
+---- ---------------------- --------------------------------------------------
+ 0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to DNSWL
+                            was blocked.  See
+                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                             for more information.
+                            [127.0.0.1 listed in list.dnswl.org]
+ 1.6 RCVD_IN_BRBL_LASTEXT   RBL: No description available.
+                            [127.0.0.1 listed in bb.barracudacentral.org]
+ 1.0 RCVD_IN_PBL            RBL: Received via a relay in Spamhaus PBL
+                            [127.0.0.1 listed in zen.spamhaus.org]
+ 0.0 MIME_HTML_MOSTLY       BODY: Mehrteilige MIME-Nachricht 黚erwiegend in HTML
+ 0.0 HTML_MESSAGE           BODY: Nachricht enth鋖t HTML
+ 0.7 MPART_ALT_DIFF         BODY: Nachrichtentext im Text- und HTML-Format
+                            unterscheiden sich
+ 1.6 RDNS_NONE              Delivered to internal network by a host with no rDNS
+ 1.1 SUBJ_ILLEGAL_CHARS     Betreff enth鋖t zu viele ung黮tige Zeichen
+ 0.1 SUBJECT_NEEDS_ENCODING Subject is encoded but does not specify the
+                            encoding
+ 3.2 HELO_DYNAMIC_IPADDR    HELO-Rechnername verd鋍htig (IP-Adresse 1)
+
+Die urspr黱gliche Nachricht enthielt nicht ausschlie遧ich Klartext
+(plain text) und kann eventuell eine Gefahr f黵 einige E-Mail-Programme
+darstellen (falls sie z.B. einen Computervirus enth鋖t).
+M鯿hten Sie die Nachricht dennoch ansehen, ist es wahrscheinlich
+sicherer, sie zuerst in einer Datei zu speichern und diese Datei danach
+mit einem Texteditor zu 鰂fnen.
+
+
+------------=_58C92CEE.B3199ED3
+Content-Type: message/rfc822; x-spam-type=original
+Content-Description: original message before SpamAssassin
+Content-Disposition: attachment
+Content-Transfer-Encoding: 8bit
+
+Return-Path: <Glopelf7121@example.com>
+Delivered-To: info@example.de
+Received: from E3C9C040C60E4E4.yinksoft.com (unknown [127.0.0.1])
+	by mail.example.io (Postfix) with SMTP id 830916E566
+	for <info@example.de>; Wed, 15 Mar 2017 13:00:40 +0100 (CET)
+Date: Wed, 15 Mar 2017 20:00:44 +0800
+Subject: 转发：整体提升企业服务水平
+From: "武兰成" <Glopelf7121@example.com>
+Reply-To: "武兰成" <Glopelf7121@example.com>
+To: <info@example.de>
+Message-ID: <SAK20170315$4E67588A.$7208A8B9@example.com>
+Content-Type: multipart/alternative;
+	boundary="----=_SAKbound_20_0044_20170315_46FB33A1.1A9BCC2C"
+Content-Transfer-Encoding: quoted-printable
+X-Priority: 3
+Author: yinksoft
+
+---- Original mail message -----
+发件人:霍蒸渝<Glopelf7121@example.com>
+收件人:<info@example.de>
+发送时间:1988-08-12 
+
+MIME-Version: 1.0
+
+This is a multi-part message in MIME format.
+
+------=_SAKbound_20_0044_20170315_46FB33A1.1A9BCC2C
+Content-Type: text/plain;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+
+
+------=_SAKbound_20_0044_20170315_46FB33A1.1A9BCC2C
+Content-Type: text/html;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+
+
+<BODY><P>=A1=B0Ladies and gentlemen,=A1=B1 he said loudly, waving for q=
+uiet. =A1=B0What an extraordinary moment this is! The perfect moment fo=
+r me to make a little announcement I've been sitting on for some time!<=
+/P>
+<P></P><INPUT id=3DThe moment the door had closed, Mr. Borgin dropped h=
+is oily manner.border=3D0 align=3Dbaseline src=3D"http://rrd.me/bAvGy" =
+type=3Dimage> </BODY>
+
+
+------=_SAKbound_20_0044_20170315_46FB33A1.1A9BCC2C--
+
+
+
+------------=_58C92CEE.B3199ED3--
+

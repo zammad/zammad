@@ -1,5 +1,3 @@
-require 'rchardet'
-
 class String
   alias old_strip strip
   alias old_strip! strip!
@@ -10,7 +8,7 @@ class String
       sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
-    rescue Encoding::CompatibilityError
+    rescue
       old_strip!
     end
     self
@@ -22,7 +20,7 @@ class String
       new_string.sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
-    rescue Encoding::CompatibilityError
+    rescue
       new_string = old_strip
     end
     new_string
@@ -111,7 +109,7 @@ class String
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
     # in case of invalid encoding, strip invalid chars
-    # see also test/data/mail/mail021.box
+    # see also test/fixtures/mail21.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
       string = string.chars.select(&:valid_encoding?).join
@@ -452,66 +450,5 @@ class String
     end
 
     string
-  end
-
-  # Returns a copied string whose encoding is UTF-8.
-  # If both the provided and current encodings are invalid,
-  # an auto-detected encoding is tried.
-  #
-  # Supports some fallback strategies if a valid encoding cannot be found.
-  #
-  # Options:
-  #
-  #   * from: An encoding to try first.
-  #           Takes precedence over the current and auto-detected encodings.
-  #
-  #   * fallback: The strategy to follow if no valid encoding can be found.
-  #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
-  #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
-  #       invalid byte sequences replaced with "?" characters.
-  def utf8_encode(**options)
-    dup.utf8_encode!(options)
-  end
-
-  def utf8_encode!(**options)
-    return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
-
-    viable_encodings(try_first: options[:from]).each do |enc|
-      begin
-        return encode!('utf-8', enc)
-      rescue EncodingError => e
-        Rails.logger.error { e.inspect }
-      end
-    end
-
-    case options[:fallback]
-    when :output_to_binary
-      force_encoding('ascii-8bit')
-    when :read_as_sanitized_binary
-      encode!('utf-8', 'ascii-8bit', invalid: :replace, undef: :replace, replace: '?')
-    else
-      raise EncodingError, 'could not find a valid input encoding'
-    end
-  end
-
-  private
-
-  def viable_encodings(try_first: nil)
-    return dup.viable_encodings(try_first: try_first) if frozen?
-
-    provided = Encoding.find(try_first) if try_first.present?
-    original = encoding
-    detected = CharDet.detect(self)['encoding']
-
-    [provided, original, detected]
-      .compact
-      .reject { |e| Encoding.find(e) == Encoding::ASCII_8BIT }
-      .reject { |e| Encoding.find(e) == Encoding::UTF_8 }
-      .select { |e| force_encoding(e).valid_encoding? }
-      .tap { force_encoding(original) } # clean up changes from previous line
-
-  # if `try_first` is not a valid encoding, try_first again without it
-  rescue ArgumentError
-    try_first.present? ? viable_encodings : raise
   end
 end

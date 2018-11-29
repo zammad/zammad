@@ -1,0 +1,6989 @@
+---
+- locale: ru
+  format: time
+  source: date
+  target: dd.mm.yyyy
+  target_initial: dd.mm.yyyy
+- locale: ru
+  format: time
+  source: timestamp
+  target: dd.mm.yyyy HH:MM
+  target_initial: dd.mm.yyyy HH:MM
+- locale: ru
+  format: string
+  source: Action
+  target: Действие
+  target_initial: Действие
+- locale: ru
+  format: string
+  source: Actions
+  target: Действия
+  target_initial: Действия
+- locale: ru
+  format: string
+  source: Active
+  target: Активный
+  target_initial: Активный
+- locale: ru
+  format: string
+  source: Add
+  target: Добавить
+  target_initial: Добавить
+- locale: ru
+  format: string
+  source: Age
+  target: Возраст
+  target_initial: Возраст
+- locale: ru
+  format: string
+  source: Apply
+  target: Применить
+  target_initial: Применить
+- locale: ru
+  format: string
+  source: Aug
+  target: Авг
+  target_initial: Авг
+- locale: ru
+  format: string
+  source: Authentication
+  target: Аутентификация
+  target_initial: Аутентификация
+- locale: ru
+  format: string
+  source: Cancel
+  target: Отменить
+  target_initial: Отменить
+- locale: ru
+  format: string
+  source: City
+  target: Город
+  target_initial: Город
+- locale: ru
+  format: string
+  source: Closed
+  target: Закрытые
+  target_initial: Закрытые
+- locale: ru
+  format: string
+  source: Country
+  target: Страна
+  target_initial: Страна
+- locale: ru
+  format: string
+  source: Create
+  target: Создать
+  target_initial: Создать
+- locale: ru
+  format: string
+  source: Created
+  target: Создан/а
+  target_initial: Создан/а
+- locale: ru
+  format: string
+  source: Current password
+  target: Текущий пароль
+  target_initial: Текущий пароль
+- locale: ru
+  format: string
+  source: Days
+  target: Дни
+  target_initial: Дни
+- locale: ru
+  format: string
+  source: Dec
+  target: Дек
+  target_initial: Дек
+- locale: ru
+  format: string
+  source: Delete
+  target: Удалить
+  target_initial: Удалить
+- locale: ru
+  format: string
+  source: Direction
+  target: Направление
+  target_initial: Направление
+- locale: ru
+  format: string
+  source: Edit
+  target: Редактировать
+  target_initial: Редактировать
+- locale: ru
+  format: string
+  source: Email
+  target: Email
+  target_initial: Email
+- locale: ru
+  format: string
+  source: Feb
+  target: Фев
+  target_initial: Фев
+- locale: ru
+  format: string
+  source: Filter
+  target: Фильтр
+  target_initial: Фильтр
+- locale: ru
+  format: string
+  source: Firstname
+  target: Имя
+  target_initial: Имя
+- locale: ru
+  format: string
+  source: Forgot password?
+  target: Забыли пароль?
+  target_initial: Забыли пароль?
+- locale: ru
+  format: string
+  source: From
+  target: Отправитель
+  target_initial: Отправитель
+- locale: ru
+  format: string
+  source: Group
+  target: Группа
+  target_initial: Группа
+- locale: ru
+  format: string
+  source: Groups
+  target: Группы
+  target_initial: Группы
+- locale: ru
+  format: string
+  source: History
+  target: История
+  target_initial: История
+- locale: ru
+  format: string
+  source: Hours
+  target: Часы
+  target_initial: Часы
+- locale: ru
+  format: string
+  source: Jan
+  target: Янв
+  target_initial: Янв
+- locale: ru
+  format: string
+  source: Jul
+  target: Июл
+  target_initial: Июл
+- locale: ru
+  format: string
+  source: Jun
+  target: Июн
+  target_initial: Июн
+- locale: ru
+  format: string
+  source: Language
+  target: Язык
+  target_initial: Язык
+- locale: ru
+  format: string
+  source: Lastname
+  target: Фамилия
+  target_initial: Фамилия
+- locale: ru
+  format: string
+  source: Loading...
+  target: Загрузка...
+  target_initial: Загрузка...
+- locale: ru
+  format: string
+  source: Mar
+  target: Мар
+  target_initial: Мар
+- locale: ru
+  format: string
+  source: May
+  target: Май
+  target_initial: Май
+- locale: ru
+  format: string
+  source: Merge
+  target: Объединить
+  target_initial: Объединить
+- locale: ru
+  format: string
+  source: Month
+  target: Месяц
+  target_initial: Месяц
+- locale: ru
+  format: string
+  source: My Tickets
+  target: Мои заявки
+  target_initial: Мои заявки
+- locale: ru
+  format: string
+  source: New
+  target: Новое
+  target_initial: Новое
+- locale: ru
+  format: string
+  source: New Ticket
+  target: Новая заявка
+  target_initial: Новая заявка
+- locale: ru
+  format: string
+  source: Next...
+  target: Вперед...
+  target_initial: Вперед...
+- locale: ru
+  format: string
+  source: Note
+  target: Заметка
+  target_initial: Заметка
+- locale: ru
+  format: string
+  source: Nov
+  target: Ноя
+  target_initial: Ноя
+- locale: ru
+  format: string
+  source: Number
+  target: Число
+  target_initial: Число
+- locale: ru
+  format: string
+  source: Oct
+  target: Окт
+  target_initial: Окт
+- locale: ru
+  format: string
+  source: Organization
+  target: Организация
+  target_initial: Организация
+- locale: ru
+  format: string
+  source: Owner
+  target: Владелец
+  target_initial: Владелец
+- locale: ru
+  format: string
+  source: Password
+  target: Пароль
+  target_initial: Пароль
+- locale: ru
+  format: string
+  source: Pending till
+  target: В ожидании еще
+  target_initial: В ожидании еще
+- locale: ru
+  format: string
+  source: Phone
+  target: Телефон
+  target_initial: Телефон
+- locale: ru
+  format: string
+  source: Priority
+  target: Приоритет
+  target_initial: Приоритет
+- locale: ru
+  format: string
+  source: Profile
+  target: Параметры
+  target_initial: Параметры
+- locale: ru
+  format: string
+  source: Reinstall
+  target: Переустановить
+  target_initial: Переустановить
+- locale: ru
+  format: string
+  source: Remove
+  target: Удалить
+  target_initial: Удалить
+- locale: ru
+  format: string
+  source: Roles
+  target: Роли
+  target_initial: Роли
+- locale: ru
+  format: string
+  source: Save
+  target: Сохранить
+  target_initial: Сохранить
+- locale: ru
+  format: string
+  source: Search
+  target: Поиск
+  target_initial: Поиск
+- locale: ru
+  format: string
+  source: Sep
+  target: Сен
+  target_initial: Сен
+- locale: ru
+  format: string
+  source: Settings
+  target: Параметры
+  target_initial: Параметры
+- locale: ru
+  format: string
+  source: Signature
+  target: Подпись
+  target_initial: Подпись
+- locale: ru
+  format: string
+  source: Signatures
+  target: Подписи
+  target_initial: Подписи
+- locale: ru
+  format: string
+  source: State
+  target: Состояние
+  target_initial: Состояние
+- locale: ru
+  format: string
+  source: Street
+  target: Улица
+  target_initial: Улица
+- locale: ru
+  format: string
+  source: Subject
+  target: Тема
+  target_initial: Тема
+- locale: ru
+  format: string
+  source: Submit
+  target: Отправить
+  target_initial: Отправить
+- locale: ru
+  format: string
+  source: Templates
+  target: Шаблоны
+  target_initial: Шаблоны
+- locale: ru
+  format: string
+  source: Title
+  target: Заголовок
+  target_initial: Заголовок
+- locale: ru
+  format: string
+  source: To
+  target: Получатель
+  target_initial: Получатель
+- locale: ru
+  format: string
+  source: Type
+  target: Тип
+  target_initial: Тип
+- locale: ru
+  format: string
+  source: Update
+  target: Обновить
+  target_initial: Обновить
+- locale: ru
+  format: string
+  source: User
+  target: Пользователь
+  target_initial: Пользователь
+- locale: ru
+  format: string
+  source: Vendor
+  target: Изготовитель
+  target_initial: Изготовитель
+- locale: ru
+  format: string
+  source: Year
+  target: Год
+  target_initial: Год
+- locale: ru
+  format: string
+  source: Zip
+  target: Индекс
+  target_initial: Индекс
+- locale: ru
+  format: string
+  source: hour
+  target: час
+  target_initial: час
+- locale: ru
+  format: string
+  source: installed
+  target: установлено
+  target_initial: установлено
+- locale: ru
+  format: string
+  source: merged
+  target: объединенные
+  target_initial: объединенные
+- locale: ru
+  format: string
+  source: minute
+  target: минута
+  target_initial: минута
+- locale: ru
+  format: string
+  source: none
+  target: нет
+  target_initial: нет
+- locale: ru
+  format: string
+  source: of
+  target: из
+  target_initial: из
+- locale: ru
+  format: string
+  source: or
+  target: или
+  target_initial: или
+- locale: ru
+  format: string
+  source: removed
+  target: удаленная
+  target_initial: удаленная
+- locale: ru
+  format: string
+  source: sms
+  target: SMS
+  target_initial: SMS
+- locale: ru
+  format: string
+  source: Apr
+  target: Апр
+  target_initial: Апр
+- locale: ru
+  format: string
+  source: Reset
+  target: Отклонить
+  target_initial: Отклонить
+- locale: ru
+  format: string
+  source: Agent
+  target: Агент
+  target_initial: Агент
+- locale: ru
+  format: string
+  source: All
+  target: Все
+  target_initial: Все
+- locale: ru
+  format: string
+  source: Cc
+  target: Копия
+  target_initial: Копия
+- locale: ru
+  format: string
+  source: Comment
+  target: Комментарий
+  target_initial: Комментарий
+- locale: ru
+  format: string
+  source: Display
+  target: Отобразить
+  target_initial: Отобразить
+- locale: ru
+  format: string
+  source: Go Back
+  target: Назад
+  target_initial: Назад
+- locale: ru
+  format: string
+  source: Import
+  target: Импорт
+  target_initial: Импорт
+- locale: ru
+  format: string
+  source: Message
+  target: Сообщение
+  target_initial: Сообщение
+- locale: ru
+  format: string
+  source: Name
+  target: Имя
+  target_initial: Имя
+- locale: ru
+  format: string
+  source: Options
+  target: Настройки
+  target_initial: Настройки
+- locale: ru
+  format: string
+  source: System
+  target: Система
+  target_initial: Система
+- locale: ru
+  format: string
+  source: Ticket
+  target: Заявка
+  target_initial: Заявка
+- locale: ru
+  format: string
+  source: Tickets
+  target: Заявки
+  target_initial: Заявки
+- locale: ru
+  format: string
+  source: Version
+  target: Версия
+  target_initial: Версия
+- locale: ru
+  format: string
+  source: Host
+  target: Сервер
+  target_initial: Сервер
+- locale: ru
+  format: string
+  source: Port
+  target: Порт
+  target_initial: Порт
+- locale: ru
+  format: string
+  source: SystemID
+  target: SystemID
+  target_initial: SystemID
+- locale: ru
+  format: string
+  source: Online
+  target: Online
+  target_initial: Online
+- locale: ru
+  format: string
+  source: Upload
+  target: Загрузить
+  target_initial: Загрузить
+- locale: ru
+  format: string
+  source: Create Template
+  target: Создать шаблон
+  target_initial: Создать шаблон
+- locale: ru
+  format: string
+  source: Text
+  target: Текст
+  target_initial: Текст
+- locale: ru
+  format: string
+  source: Location
+  target: Местоположение
+  target_initial: Местоположение
+- locale: ru
+  format: string
+  source: Login
+  target: Вход
+  target_initial: Вход
+- locale: ru
+  format: string
+  source: Next
+  target: Вперед
+  target_initial: Вперед
+- locale: ru
+  format: string
+  source: Status
+  target: Статус
+  target_initial: Статус
+- locale: ru
+  format: string
+  source: Calendar
+  target: Календарь
+  target_initial: Календарь
+- locale: ru
+  format: string
+  source: Configuration
+  target: Конфигурация
+  target_initial: Конфигурация
+- locale: ru
+  format: string
+  source: Intro
+  target: Интро
+  target_initial: Интро
+- locale: ru
+  format: string
+  source: Session
+  target: Сеанс
+  target_initial: Сеанс
+- locale: ru
+  format: string
+  source: Created by
+  target: Создал
+  target_initial: Создал
+- locale: ru
+  format: string
+  source: Description
+  target: Описание
+  target_initial: Описание
+- locale: ru
+  format: string
+  source: Friday
+  target: Пятница
+  target_initial: Пятница
+- locale: ru
+  format: string
+  source: Monday
+  target: Понедельник
+  target_initial: Понедельник
+- locale: ru
+  format: string
+  source: Saturday
+  target: Суббота
+  target_initial: Суббота
+- locale: ru
+  format: string
+  source: Sunday
+  target: Воскресенье
+  target_initial: Воскресенье
+- locale: ru
+  format: string
+  source: Thursday
+  target: Четверг
+  target_initial: Четверг
+- locale: ru
+  format: string
+  source: Time
+  target: Время
+  target_initial: Время
+- locale: ru
+  format: string
+  source: Tuesday
+  target: Вторник
+  target_initial: Вторник
+- locale: ru
+  format: string
+  source: Wednesday
+  target: Среда
+  target_initial: Среда
+- locale: ru
+  format: string
+  source: Chat
+  target: Чат
+  target_initial: Чат
+- locale: ru
+  format: string
+  source: April
+  target: Апрель
+  target_initial: Апрель
+- locale: ru
+  format: string
+  source: August
+  target: Август
+  target_initial: Август
+- locale: ru
+  format: string
+  source: Close
+  target: Закрыть
+  target_initial: Закрыть
+- locale: ru
+  format: string
+  source: Continue
+  target: Продолжить
+  target_initial: Продолжить
+- locale: ru
+  format: string
+  source: December
+  target: Декабрь
+  target_initial: Декабрь
+- locale: ru
+  format: string
+  source: February
+  target: Февраль
+  target_initial: Февраль
+- locale: ru
+  format: string
+  source: Fri
+  target: Птн
+  target_initial: Птн
+- locale: ru
+  format: string
+  source: January
+  target: Январь
+  target_initial: Январь
+- locale: ru
+  format: string
+  source: July
+  target: Июль
+  target_initial: Июль
+- locale: ru
+  format: string
+  source: June
+  target: Июнь
+  target_initial: Июнь
+- locale: ru
+  format: string
+  source: March
+  target: Март
+  target_initial: Март
+- locale: ru
+  format: string
+  source: Mon
+  target: Пнд
+  target_initial: Пнд
+- locale: ru
+  format: string
+  source: November
+  target: Ноябрь
+  target_initial: Ноябрь
+- locale: ru
+  format: string
+  source: October
+  target: Октябрь
+  target_initial: Октябрь
+- locale: ru
+  format: string
+  source: Open
+  target: Открытые
+  target_initial: Открытые
+- locale: ru
+  format: string
+  source: Sat
+  target: Сбт
+  target_initial: Сбт
+- locale: ru
+  format: string
+  source: Send
+  target: Отправить
+  target_initial: Отправить
+- locale: ru
+  format: string
+  source: September
+  target: Сентябрь
+  target_initial: Сентябрь
+- locale: ru
+  format: string
+  source: Sun
+  target: Вск
+  target_initial: Вск
+- locale: ru
+  format: string
+  source: Thu
+  target: Чтв
+  target_initial: Чтв
+- locale: ru
+  format: string
+  source: Tue
+  target: Втр
+  target_initial: Втр
+- locale: ru
+  format: string
+  source: Wed
+  target: Срд
+  target_initial: Срд
+- locale: ru
+  format: string
+  source: closed
+  target: закрыта
+  target_initial: закрыта
+- locale: ru
+  format: string
+  source: day
+  target: день
+  target_initial: день
+- locale: ru
+  format: string
+  source: days
+  target: дней
+  target_initial: дней
+- locale: ru
+  format: string
+  source: email
+  target: email
+  target_initial: email
+- locale: ru
+  format: string
+  source: hours
+  target: часов
+  target_initial: часов
+- locale: ru
+  format: string
+  source: minutes
+  target: минут
+  target_initial: минут
+- locale: ru
+  format: string
+  source: 'no'
+  target: нет
+  target_initial: нет
+- locale: ru
+  format: string
+  source: note
+  target: заметка
+  target_initial: заметка
+- locale: ru
+  format: string
+  source: open
+  target: открыта
+  target_initial: открыта
+- locale: ru
+  format: string
+  source: phone
+  target: звонок
+  target_initial: звонок
+- locale: ru
+  format: string
+  source: to
+  target: по
+  target_initial: по
+- locale: ru
+  format: string
+  source: 'yes'
+  target: да
+  target_initial: да
+- locale: ru
+  format: string
+  source: All tickets
+  target: Все заявки
+  target_initial: Все заявки
+- locale: ru
+  format: string
+  source: Child
+  target: Потомок
+  target_initial: Потомок
+- locale: ru
+  format: string
+  source: Content
+  target: Содержание
+  target_initial: Содержание
+- locale: ru
+  format: string
+  source: Customer
+  target: Клиент
+  target_initial: Клиент
+- locale: ru
+  format: string
+  source: Day
+  target: День
+  target_initial: День
+- locale: ru
+  format: string
+  source: Down
+  target: Вниз
+  target_initial: Вниз
+- locale: ru
+  format: string
+  source: Escalation
+  target: Эскалация
+  target_initial: Эскалация
+- locale: ru
+  format: string
+  source: Fax
+  target: Факс
+  target_initial: Факс
+- locale: ru
+  format: string
+  source: Finish
+  target: Закончить
+  target_initial: Закончить
+- locale: ru
+  format: string
+  source: Logout
+  target: Выход
+  target_initial: Выход
+- locale: ru
+  format: string
+  source: New group
+  target: Новая группа
+  target_initial: Новая группа
+- locale: ru
+  format: string
+  source: New password
+  target: Новый пароль
+  target_initial: Новый пароль
+- locale: ru
+  format: string
+  source: 'No'
+  target: Нет
+  target_initial: Нет
+- locale: ru
+  format: string
+  source: Normal
+  target: Обычная
+  target_initial: Обычная
+- locale: ru
+  format: string
+  source: Notice
+  target: Замечание
+  target_initial: Замечание
+- locale: ru
+  format: string
+  source: Parent
+  target: Родитель
+  target_initial: Родитель
+- locale: ru
+  format: string
+  source: Pending
+  target: Напоминание
+  target_initial: Напоминание
+- locale: ru
+  format: string
+  source: Previous
+  target: Назад
+  target_initial: Назад
+- locale: ru
+  format: string
+  source: Reply
+  target: Ответить
+  target_initial: Ответить
+- locale: ru
+  format: string
+  source: Split
+  target: Разделить
+  target_initial: Разделить
+- locale: ru
+  format: string
+  source: and
+  target: и
+  target_initial: и
+- locale: ru
+  format: string
+  source: new
+  target: новая
+  target_initial: новая
+- locale: ru
+  format: string
+  source: week
+  target: неделя
+  target_initial: неделя
+- locale: ru
+  format: string
+  source: Agents
+  target: Агенты
+  target_initial: Агенты
+- locale: ru
+  format: string
+  source: Example
+  target: Пример
+  target_initial: Пример
+- locale: ru
+  format: string
+  source: Expires
+  target: Истекает
+  target_initial: Истекает
+- locale: ru
+  format: string
+  source: Select
+  target: Выбор
+  target_initial: Выбор
+- locale: ru
+  format: string
+  source: Dashboard
+  target: Дайджест
+  target_initial: Дайджест
+- locale: ru
+  format: string
+  source: Date
+  target: Дата
+  target_initial: Дата
+- locale: ru
+  format: string
+  source: Calendars
+  target: Календарь
+  target_initial: Календарь
+- locale: ru
+  format: string
+  source: "%s credentials"
+  target: "%s credentials"
+  target_initial: "%s credentials"
+- locale: ru
+  format: string
+  source: 1 low
+  target: 1 Низкий
+  target_initial: 1 Низкий
+- locale: ru
+  format: string
+  source: 3 high
+  target: 3 высокий
+  target_initial: 3 высокий
+- locale: ru
+  format: string
+  source: Unassigned & Open
+  target: Новые заявки
+  target_initial: Новые заявки
+- locale: ru
+  format: string
+  source: My assigned Tickets
+  target: Мои заявки
+  target_initial: Мои заявки
+- locale: ru
+  format: string
+  source: Unassigned & Open Tickets
+  target: Новые заявки
+  target_initial: Новые заявки
+- locale: ru
+  format: string
+  source: Pending reached
+  target: Отложенные просроченные
+  target_initial: Отложенные просроченные
+- locale: ru
+  format: string
+  source: select attachment...
+  target: прикрепите файл...
+  target_initial: прикрепите файл...
+- locale: ru
+  format: string
+  source: 2 normal
+  target: 2 средний
+  target_initial: 2 средний
+- locale: ru
+  format: string
+  source: My pending reached Tickets
+  target: Мои отложенные заявки просроченные
+  target_initial: Мои отложенные заявки просроченные
+- locale: ru
+  format: string
+  source: Escalated
+  target: Эскалированые
+  target_initial: Эскалированые
+- locale: ru
+  format: string
+  source: Enter Answer or
+  target: Ответьте или
+  target_initial: Ответьте или
+- locale: ru
+  format: string
+  source: Organizations
+  target: Организации
+  target_initial: Организации
+- locale: ru
+  format: string
+  source: "%s ago"
+  target: "%s назад"
+  target_initial: "%s назад"
+- locale: ru
+  format: string
+  source: Management
+  target: Управление
+  target_initial: Управление
+- locale: ru
+  format: string
+  source: pending close
+  target: Ожидает закрытия
+  target_initial: Ожидает закрытия
+- locale: ru
+  format: string
+  source: Created at
+  target: Создано в
+  target_initial: Создано в
+- locale: ru
+  format: string
+  source: "%s ended switch to |%s|!"
+  target: "%s ended switch to |%s|!"
+  target_initial: "%s ended switch to |%s|!"
+- locale: ru
+  format: string
+  source: Users
+  target: Пользователи
+  target_initial: Пользователи
+- locale: ru
+  format: string
+  source: reply
+  target: Ответить
+  target_initial: Ответить
+- locale: ru
+  format: string
+  source: reply all
+  target: Ответить всем
+  target_initial: Ответить всем
+- locale: ru
+  format: string
+  source: "%s created Organization |%s|"
+  target: "%s created Organization |%s|"
+  target_initial: "%s created Organization |%s|"
+- locale: ru
+  format: string
+  source: "%s created Ticket |%s|"
+  target: "%s created Ticket |%s|"
+  target_initial: "%s created Ticket |%s|"
+- locale: ru
+  format: string
+  source: "%s created User |%s|"
+  target: "%s created User |%s|"
+  target_initial: "%s created User |%s|"
+- locale: ru
+  format: string
+  source: All Open Tickets
+  target: Все открытые заявки
+  target_initial: Все открытые заявки
+- locale: ru
+  format: string
+  source: Add a Note
+  target: Добавить заметку
+  target_initial: Добавить заметку
+- locale: ru
+  format: string
+  source: Add Bot
+  target: Добавить бота
+  target_initial: Добавить бота
+- locale: ru
+  format: string
+  source: Add Link
+  target: Добавить ссылку
+  target_initial: Добавить ссылку
+- locale: ru
+  format: string
+  source: Add Attribute
+  target: Добавить аттрибут
+  target_initial: Добавить аттрибут
+- locale: ru
+  format: string
+  source: Keywords
+  target: Ключевые слова
+  target_initial: Ключевые слова
+- locale: ru
+  format: string
+  source: Add Tag
+  target: Добавить тег
+  target_initial: Добавить тег
+- locale: ru
+  format: string
+  source: Active Agents
+  target: Активные агенты
+  target_initial: Активные агенты
+- locale: ru
+  format: string
+  source: Keyboard Shortcuts
+  target: Горячие клавиши
+  target_initial: Горячие клавиши
+- locale: ru
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: ru
+  format: string
+  source: Adresses
+  target: Адреса
+  target_initial: Адреса
+- locale: ru
+  format: string
+  source: All Tickets
+  target: Все заявки
+  target_initial: Все заявки
+- locale: ru
+  format: string
+  source: Address
+  target: Адрес
+  target_initial: Адрес
+- locale: ru
+  format: string
+  source: Administrator Account
+  target: Административная учетная запись
+  target_initial: Административная учетная запись
+- locale: ru
+  format: string
+  source: "%s of my tickets escalated."
+  target: "%s of my tickets escalated."
+  target_initial: "%s of my tickets escalated."
+- locale: ru
+  format: string
+  source: "%s of your tickets are currently in process."
+  target: "%s of your tickets are currently in process."
+  target_initial: "%s of your tickets are currently in process."
+- locale: ru
+  format: string
+  source: Ticket %s created!
+  target: Заявка %s создана!
+  target_initial: Заявка %s создана!
+- locale: ru
+  format: string
+  source: created
+  target: создано
+  target_initial: создано
+- locale: ru
+  format: string
+  source: current user
+  target: текущий пользователь
+  target_initial: текущий пользователь
+- locale: ru
+  format: string
+  source: pending reminder
+  target: ЗНИ
+  target_initial: ЗНИ
+- locale: ru
+  format: string
+  source: Triggers
+  target: Автоответы
+  target_initial: Автоответы
+- locale: ru
+  format: string
+  source: Overviews
+  target: Обзор
+  target_initial: Обзор
+- locale: ru
+  format: string
+  source: Sign out
+  target: Выход
+  target_initial: Выход
+- locale: ru
+  format: string
+  source: Sign in
+  target: Вход
+  target_initial: Вход
+- locale: ru
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: ru
+  format: string
+  source: Sign up
+  target: Регистрация
+  target_initial: Регистрация
+- locale: ru
+  format: string
+  source: activate
+  target: активировать
+  target_initial: активировать
+- locale: ru
+  format: string
+  source: activated
+  target: активированный
+  target_initial: активированный
+- locale: ru
+  format: string
+  source: Save new template
+  target: Сохранить новый шаблон
+  target_initial: Сохранить новый шаблон
+- locale: ru
+  format: string
+  source: active
+  target: активный
+  target_initial: активный
+- locale: ru
+  format: string
+  source: Scheduler
+  target: Планировщик
+  target_initial: Планировщик
+- locale: ru
+  format: string
+  source: Access to %s
+  target: Доступ к
+  target_initial: Доступ к
+- locale: ru
+  format: string
+  source: Account Holder
+  target: Владелец
+  target_initial: Владелец
+- locale: ru
+  format: string
+  source: Account Time
+  target: Время аккаунта
+  target_initial: Время аккаунта
+- locale: ru
+  format: string
+  source: Accounted Time
+  target: Учетное время
+  target_initial: Учетное время
+- locale: ru
+  format: string
+  source: Schedulers
+  target: Планировщики
+  target_initial: Планировщики
+- locale: ru
+  format: string
+  source: Hour
+  target: Час
+  target_initial: Час
+- locale: ru
+  format: string
+  source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  target: Доступ к клиентским тикетам на основе current_user.id и current_user.organization_id
+  target_initial: Доступ к клиентским тикетам на основе current_user.id и current_user.organization_id
+- locale: ru
+  format: string
+  source: Activates lost password feature for users.
+  target: Активировать восстановление пароля для пользователей.
+  target_initial: Активировать восстановление пароля для пользователей.
+- locale: ru
+  format: string
+  source: Save Template
+  target: Сохранить шаблон
+  target_initial: Сохранить шаблон
+- locale: ru
+  format: string
+  source: run macro
+  target: запустить макрос
+  target_initial: запустить макрос
+- locale: ru
+  format: string
+  source: Access to Agent Tickets based on Group Access
+  target: Доступ к тикетам на основе группового доступа
+  target_initial: Доступ к тикетам на основе группового доступа
+- locale: ru
+  format: string
+  source: Accounts
+  target: Аккаунты
+  target_initial: Аккаунты
+- locale: ru
+  format: string
+  source: Save as template
+  target: Сохранить как шаблон
+  target_initial: Сохранить как шаблон
+- locale: ru
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 2 строчных и 2 прописных символа
+  target_initial: 2 строчных и 2 прописных символа
+- locale: ru
+  format: string
+  source: Account not verified
+  target: Аккаунт не подтвержден
+  target_initial: Аккаунт не подтвержден
+- locale: ru
+  format: string
+  source: Security
+  target: Безопасность
+  target_initial: Безопасность
+- locale: ru
+  format: string
+  source: Admin
+  target: Admin
+  target_initial: Admin
+- locale: ru
+  format: string
+  source: Lost Password
+  target: Забыл пароль
+  target_initial: Забыл пароль
+- locale: ru
+  format: string
+  source: Logo
+  target: Логотип
+  target_initial: Логотип
+- locale: ru
+  format: string
+  source: Macro
+  target: Макрос
+  target_initial: Макрос
+- locale: ru
+  format: string
+  source: Create Macros
+  target: Создать макросы
+  target_initial: Создать макросы
+- locale: ru
+  format: string
+  source: Macros
+  target: Макросы
+  target_initial: Макросы
+- locale: ru
+  format: string
+  source: Translations
+  target: Переводы / Языки
+  target_initial: Переводы / Языки
+- locale: ru
+  format: string
+  source: Twitter
+  target: Twitter
+  target_initial: Twitter
+- locale: ru
+  format: string
+  source: Twitter Key
+  target: Twitter Key
+  target_initial: Twitter Key
+- locale: ru
+  format: string
+  source: Twitter Secret
+  target: Twitter Secret
+  target_initial: Twitter Secret
+- locale: ru
+  format: string
+  source: Tags
+  target: Теги
+  target_initial: Теги
+- locale: ru
+  format: string
+  source: Pushing translations to i18n.zammad.com
+  target: Отправка переводов на i18n.zammad.com
+  target_initial: Отправка переводов на i18n.zammad.com
+- locale: ru
+  format: string
+  source: Thanks for contributing!
+  target: Благодарим за содействие!
+  target_initial: Благодарим за содействие!
+- locale: ru
+  format: string
+  source: Testing
+  target: Тестирование
+  target_initial: Тестирование
+- locale: ru
+  format: string
+  source: New Tags
+  target: Новые теги
+  target_initial: Новые теги
+- locale: ru
+  format: string
+  source: Test Connection
+  target: Тестовое подключение
+  target_initial: Тестовое подключение
+- locale: ru
+  format: string
+  source: Telegram
+  target: Telegram
+  target_initial: Telegram
+- locale: ru
+  format: string
+  source: Get latest translations
+  target: Получить последние переводы
+  target_initial: Получить последние переводы
+- locale: ru
+  format: string
+  source: Thanks for your Feedback!
+  target: Спасибо за ваш отзыв!
+  target_initial: Спасибо за ваш отзыв!
+- locale: ru
+  format: string
+  source: Manage Tags
+  target: Управление тегами
+  target_initial: Управление тегами
+- locale: ru
+  format: string
+  source: uninstall
+  target: удалить
+  target_initial: удалить
+- locale: ru
+  format: string
+  source: Welcome!
+  target: Добро пожаловать!
+  target_initial: Добро пожаловать!
+- locale: ru
+  format: string
+  source: Create Admin
+  target: Создать администратора
+  target_initial: Создать администратора
+- locale: ru
+  format: string
+  source: Update successful!
+  target: Обновление успешно завершено!
+  target_initial: Обновление успешно завершено!
+- locale: ru
+  format: string
+  source: Closed Tickets
+  target: Закрыть тикет
+  target_initial: Закрыть тикет
+- locale: ru
+  format: string
+  source: First response
+  target: Первый ответ
+  target_initial: Первый ответ
+- locale: ru
+  format: string
+  source: First Response
+  target: Первый ответ
+  target_initial: Первый ответ
+- locale: ru
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: ru
+  format: string
+  source: First Response Time
+  target: Время первого ответа
+  target_initial: Время первого ответа
+- locale: ru
+  format: string
+  source: Solution Time
+  target: Время решения
+  target_initial: Время решения
+- locale: ru
+  format: string
+  source: Username / email
+  target: Логин / email
+  target_initial: Логин / email
+- locale: ru
+  format: string
+  source: Yellow
+  target: Желтый
+  target_initial: Желтый
+- locale: ru
+  format: string
+  source: Time Tracking
+  target: Отслеживание времени
+  target_initial: Отслеживание времени
+- locale: ru
+  format: string
+  source: Trigger
+  target: Автоответ
+  target_initial: Автоответ
+- locale: ru
+  format: string
+  source: Web
+  target: Web
+  target_initial: Web
+- locale: ru
+  format: string
+  source: Your Logo
+  target: Ваш логотип
+  target_initial: Ваш логотип
+- locale: ru
+  format: string
+  source: Business Hours
+  target: Рабочие часы
+  target_initial: Рабочие часы
+- locale: ru
+  format: string
+  source: Timeframe for solving the problem.
+  target: Сроки решения проблемы.
+  target_initial: Сроки решения проблемы.
+- locale: ru
+  format: string
+  source: Timeframe for the first response.
+  target: Сроки для первого ответа.
+  target_initial: Сроки для первого ответа.
+- locale: ru
+  format: string
+  source: Verifying...
+  target: Проверка ...
+  target_initial: Проверка ...
+- locale: ru
+  format: string
+  source: Create Overviews
+  target: Создать обзор
+  target_initial: Создать обзор
+- locale: ru
+  format: string
+  source: VAT
+  target: НДС
+  target_initial: НДС
+- locale: ru
+  format: string
+  source: VAT ID
+  target: НДС ID
+  target_initial: НДС ID
+- locale: ru
+  format: string
+  source: CVV
+  target: CVV
+  target_initial: CVV
+- locale: ru
+  format: string
+  source: Update subscription
+  target: Обновить подписку
+  target_initial: Обновить подписку
+- locale: ru
+  format: string
+  source: Username
+  target: Логин
+  target_initial: Логин
+- locale: ru
+  format: string
+  source: Value
+  target: Значение
+  target_initial: Значение
+- locale: ru
+  format: string
+  source: User Preferences
+  target: Пользовательские настройки
+  target_initial: Пользовательские настройки
+- locale: ru
+  format: string
+  source: Closing time
+  target: Время закрытия
+  target_initial: Время закрытия
+- locale: ru
+  format: string
+  source: Time Accounting
+  target: Учет времени
+  target_initial: Учет времени
+- locale: ru
+  format: string
+  source: Time Units Total
+  target: Единицы времени ОБЩЕЕ
+  target_initial: Единицы времени ОБЩЕЕ
+- locale: ru
+  format: string
+  source: Time zone
+  target: Часовой пояс
+  target_initial: Часовой пояс
+- locale: ru
+  format: string
+  source: Date & Time
+  target: Время и дата
+  target_initial: Время и дата
+- locale: ru
+  format: string
+  source: Uninstall
+  target: Удалить
+  target_initial: Удалить
+- locale: ru
+  format: string
+  source: Week
+  target: Неделя
+  target_initial: Неделя
+- locale: ru
+  format: string
+  source: Create new Customer
+  target: Создать нового клиента
+  target_initial: Создать нового клиента
+- locale: ru
+  format: string
+  source: What is it?
+  target: Что это?
+  target_initial: Что это?
+- locale: ru
+  format: string
+  source: Create my account
+  target: Создать мой аккаунт
+  target_initial: Создать мой аккаунт
+- locale: ru
+  format: string
+  source: Update payment method
+  target: Обновить способ оплаты
+  target_initial: Обновить способ оплаты
+- locale: ru
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: ru
+  format: string
+  source: Create a Test Ticket
+  target: Создать тестовый тикет
+  target_initial: Создать тестовый тикет
+- locale: ru
+  format: string
+  source: Business Times
+  target: Рабочее время
+  target_initial: Рабочее время
+- locale: ru
+  format: string
+  source: Timeframe for every following response.
+  target: Сроки для каждого последующего ответа.
+  target_initial: Сроки для каждого последующего ответа.
+- locale: ru
+  format: string
+  source: Time Units
+  target: Единицы времени
+  target_initial: Единицы времени
+- locale: ru
+  format: string
+  source: Profiles
+  target: Профили
+  target_initial: Профили
+- locale: ru
+  format: string
+  source: Project
+  target: Проект
+  target_initial: Проект
+- locale: ru
+  format: string
+  source: Report
+  target: Отчет
+  target_initial: Отчет
+- locale: ru
+  format: string
+  source: Reporting
+  target: Составление отчетов
+  target_initial: Составление отчетов
+- locale: ru
+  format: string
+  source: Push my changes
+  target: Отправка моих изменений
+  target_initial: Отправка моих изменений
+- locale: ru
+  format: string
+  source: Real name
+  target: Настоящее имя
+  target_initial: Настоящее имя
+- locale: ru
+  format: string
+  source: Manage
+  target: Управление
+  target_initial: Управление
+- locale: ru
+  format: string
+  source: Channels
+  target: Каналы
+  target_initial: Каналы
+- locale: ru
+  format: string
+  source: Connect Channels
+  target: Подключение каналов
+  target_initial: Подключение каналов
+- locale: ru
+  format: string
+  source: not translated
+  target: не переведены
+  target_initial: не переведены
+- locale: ru
+  format: string
+  source: Configure Channels
+  target: Настроить каналы
+  target_initial: Настроить каналы
+- locale: ru
+  format: string
+  source: Change Customer
+  target: Измененить клиента
+  target_initial: Измененить клиента
+- locale: ru
+  format: string
+  source: Cancel Upload
+  target: Отменить загрузку
+  target_initial: Отменить загрузку
+- locale: ru
+  format: string
+  source: Changes
+  target: Изменения
+  target_initial: Изменения
+- locale: ru
+  format: string
+  source: Blue
+  target: Голубой
+  target_initial: Голубой
+- locale: ru
+  format: string
+  source: Camera
+  target: Камера
+  target_initial: Камера
+- locale: ru
+  format: string
+  source: Branding
+  target: Брендинг
+  target_initial: Брендинг
+- locale: ru
+  format: string
+  source: Callback URL
+  target: Callback URL
+  target_initial: Callback URL
+- locale: ru
+  format: string
+  source: Cardholder
+  target: Владелец карточки
+  target_initial: Владелец карточки
+- locale: ru
+  format: string
+  source: Bots
+  target: Боты
+  target_initial: Боты
+- locale: ru
+  format: string
+  source: Change
+  target: Изменить
+  target_initial: Изменить
+- locale: ru
+  format: string
+  source: Cancel & Go Back
+  target: Отмена и возврат
+  target_initial: Отмена и возврат
+- locale: ru
+  format: string
+  source: Changed
+  target: Изменено
+  target_initial: Изменено
+- locale: ru
+  format: string
+  source: My Organization
+  target: Моя организация
+  target_initial: Моя организация
+- locale: ru
+  format: string
+  source: My Stats
+  target: Моя статистика
+  target_initial: Моя статистика
+- locale: ru
+  format: string
+  source: monthly
+  target: ежемесячно
+  target_initial: ежемесячно
+- locale: ru
+  format: string
+  source: Monitoring
+  target: Мониторинг
+  target_initial: Мониторинг
+- locale: ru
+  format: string
+  source: My Group
+  target: Моя группа
+  target_initial: Моя группа
+- locale: ru
+  format: string
+  source: Designer
+  target: Конструктор формы
+  target_initial: Конструктор формы
+- locale: ru
+  format: string
+  source: Most recent activity
+  target: Последняя активность
+  target_initial: Последняя активность
+- locale: ru
+  format: string
+  source: Linked Accounts
+  target: Связанные аккаунты
+  target_initial: Связанные аккаунты
+- locale: ru
+  format: string
+  source: Chatting Customers
+  target: Беседа с клиентами
+  target_initial: Беседа с клиентами
+- locale: ru
+  format: string
+  source: A powerfull service to get more information about your customers.
+  target: Мощный сервис для получения дополнительной информации о ваших клиентах.
+  target_initial: Мощный сервис для получения дополнительной информации о ваших клиентах.
+- locale: ru
+  format: string
+  source: Password needs to contain at least one digit.
+  target: Пароль должен содержать хотя бы одну цифру.
+  target_initial: Пароль должен содержать хотя бы одну цифру.
+- locale: ru
+  format: string
+  source: Frontend
+  target: Внешний интерфейс
+  target_initial: Внешний интерфейс
+- locale: ru
+  format: string
+  source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  target: Определяет имя приложения, отображаемое в веб-интерфейсе, вкладках и строке
+    заголовка веб-браузера.
+  target_initial: Определяет имя приложения, отображаемое в веб-интерфейсе, вкладках
+    и строке заголовка веб-браузера.
+- locale: ru
+  format: string
+  source: Avatar
+  target: Аватар
+  target_initial: Аватар
+- locale: ru
+  format: string
+  source: Subscription Settings
+  target: Настройки подписки
+  target_initial: Настройки подписки
+- locale: ru
+  format: string
+  source: Send a message to all logged in users.
+  target: Отправьте сообщение всем зарегистрированным пользователям.
+  target_initial: Отправьте сообщение всем зарегистрированным пользователям.
+- locale: ru
+  format: string
+  source: no issues
+  target: без изменений
+  target_initial: без изменений
+- locale: ru
+  format: string
+  source: Applications
+  target: Приложения
+  target_initial: Приложения
+- locale: ru
+  format: string
+  source: A team communication tool for the 21st century.
+  target: Чат для гиков
+  target_initial: Чат для гиков
+- locale: ru
+  format: string
+  source: Number of failed logins after account will be deactivated.
+  target: Количество неудачных попыток входа в систему. После чего доступ блокируется
+  target_initial: Количество неудачных попыток входа в систему. После чего доступ
+    блокируется
+- locale: ru
+  format: string
+  source: Services
+  target: Сервисы
+  target_initial: Сервисы
+- locale: ru
+  format: string
+  source: Installed
+  target: Установлен
+  target_initial: Установлен
+- locale: ru
+  format: string
+  source: Sessions
+  target: Сессии подключения
+  target_initial: Сессии подключения
+- locale: ru
+  format: string
+  source: Target
+  target: перевод
+  target_initial: перевод
+- locale: ru
+  format: string
+  source: Service
+  target: Сервис
+  target_initial: Сервис
+- locale: ru
+  format: string
+  source: Install Package
+  target: Установить пакеты
+  target_initial: Установить пакеты
+- locale: ru
+  format: string
+  source: Integrations
+  target: Интеграции
+  target_initial: Интеграции
+- locale: ru
+  format: string
+  source: is the same
+  target: не имеет перевода
+  target_initial: не имеет перевода
+- locale: ru
+  format: string
+  source: install
+  target: Установить
+  target_initial: Установить
+- locale: ru
+  format: string
+  source: Maintenance
+  target: Обслуживание
+  target_initial: Обслуживание
+- locale: ru
+  format: string
+  source: If you want to translate it via the translation table, just go ahead below.
+  target: Если вы хотите перевести его через таблицу переводов, просто перейдите ниже.
+  target_initial: Если вы хотите перевести его через таблицу переводов, просто перейдите
+    ниже.
+- locale: ru
+  format: string
+  source: Resend verification email
+  target: Отправить письмо с подтверждением
+  target_initial: Отправить письмо с подтверждением
+- locale: ru
+  format: string
+  source: Reset changes
+  target: Сбросить изменения
+  target_initial: Сбросить изменения
+- locale: ru
+  format: string
+  source: Text with disabled inline translations looks like
+  target: 'Текст с отключенными встроенными переводами выглядит так:'
+  target_initial: 'Текст с отключенными встроенными переводами выглядит так:'
+- locale: ru
+  format: string
+  source: Just click into the marker and update the words just in place. Enjoy!
+  target: Нажмите на поле и просто введите необходимый перевод.
+  target_initial: Нажмите на поле и просто введите необходимый перевод.
+- locale: ru
+  format: string
+  source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  target: Для активации быстрого перевода используйте сочетание клавиш  "%s".
+  target_initial: Для активации быстрого перевода используйте сочетание клавиш  "%s".
+- locale: ru
+  format: string
+  source: Reset Password
+  target: Сброс пароля
+  target_initial: Сброс пароля
+- locale: ru
+  format: string
+  source: Words
+  target: Слова
+  target_initial: Слова
+- locale: ru
+  format: string
+  source: Source
+  target: Оригинал
+  target_initial: Оригинал
+- locale: ru
+  format: string
+  source: session started
+  target: начало сессии
+  target_initial: начало сессии
+- locale: ru
+  format: string
+  source: Object Manager
+  target: Диспетчер объектов
+  target_initial: Диспетчер объектов
+- locale: ru
+  format: string
+  source: Objects
+  target: Объекты
+  target_initial: Объекты
+- locale: ru
+  format: string
+  source: Maintenance Message
+  target: Сообщение об обслуживании
+  target_initial: Сообщение об обслуживании
+- locale: ru
+  format: string
+  source: Inline translation
+  target: Встроенный перевод
+  target_initial: Встроенный перевод
+- locale: ru
+  format: string
+  source: Text with enabled inline translations looks like
+  target: 'Текст с включенными встроенными переводами выглядит так:'
+  target_initial: 'Текст с включенными встроенными переводами выглядит так:'
+- locale: ru
+  format: string
+  source: New Organization
+  target: Новая организация
+  target_initial: Новая организация
+- locale: ru
+  format: string
+  source: Available for Role
+  target: ДОСТУПЕН ДЛЯ группы
+  target_initial: ДОСТУПЕН ДЛЯ группы
+- locale: ru
+  format: string
+  source: No Entries
+  target: НЕТ ЗАПИСИ
+  target_initial: НЕТ ЗАПИСИ
+- locale: ru
+  format: string
+  source: Title of the form
+  target: название формы
+  target_initial: название формы
+- locale: ru
+  format: string
+  source: Don't load CSS for form. You need to generate your own CSS for the form.
+  target: Использовать собственные стили CSS для формы
+  target_initial: Использовать собственные стили CSS для формы
+- locale: ru
+  format: string
+  source: Email Accounts
+  target: Учетные записи 
+  target_initial: Учетные записи 
+- locale: ru
+  format: string
+  source: Destination Group
+  target: Группы
+  target_initial: Группы
+- locale: ru
+  format: string
+  source: Domain based assignment
+  target: привязать к домену
+  target_initial: привязать к домену
+- locale: ru
+  format: string
+  source: New Overview
+  target: Добавить обзор
+  target_initial: Добавить обзор
+- locale: ru
+  format: string
+  source: New Calendar
+  target: Новый календарь
+  target_initial: Новый календарь
+- locale: ru
+  format: string
+  source: Selector
+  target: Селектор
+  target_initial: Селектор
+- locale: ru
+  format: string
+  source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  target: Вы можете добавить форму на свою веб-страницу, которая создаст тикет для
+    вас.
+  target_initial: Вы можете добавить форму на свою веб-страницу, которая создаст тикет
+    для вас.
+- locale: ru
+  format: string
+  source: Message after sending form
+  target: СООБЩЕНИЕ ПОСЛЕ ОТПРАВКИ
+  target_initial: СООБЩЕНИЕ ПОСЛЕ ОТПРАВКИ
+- locale: ru
+  format: string
+  source: Start modal dialog for form.
+  target: Открывать формы в модальном окне.
+  target_initial: Открывать формы в модальном окне.
+- locale: ru
+  format: string
+  source: You need to add the following Javascript code snippet to your web page
+  target: Вам нужно добавить следующий фрагмент кода Javascript на свою веб-страницу
+  target_initial: Вам нужно добавить следующий фрагмент кода Javascript на свою веб-страницу
+- locale: ru
+  format: string
+  source: Outbound
+  target: Исходящие
+  target_initial: Исходящие
+- locale: ru
+  format: string
+  source: New Group
+  target: Новая группа
+  target_initial: Новая группа
+- locale: ru
+  format: string
+  source: Execute changes on objects.
+  target: Выполнить действия с тикетом.
+  target_initial: Выполнить действия с тикетом.
+- locale: ru
+  format: string
+  source: Allow users to add new tags.
+  target: Разрешить пользователям добавлять новые теги.
+  target_initial: Разрешить пользователям добавлять новые теги.
+- locale: ru
+  format: string
+  source: Enable time accounting for following matching tickets.
+  target: Включить учет времени для следующих тикетов.
+  target_initial: Включить учет времени для следующих тикетов.
+- locale: ru
+  format: string
+  source: Protocol
+  target: Протокол
+  target_initial: Протокол
+- locale: ru
+  format: string
+  source: Defines the sender of email notifications.
+  target: Определяет отправителя уведомлений по электронной почте.
+  target_initial: Определяет отправителя уведомлений по электронной почте.
+- locale: ru
+  format: string
+  source: Max. clients in waitlist
+  target: Максимальное число клиентов в списке ожидания
+  target_initial: Максимальное число клиентов в списке ожидания
+- locale: ru
+  format: string
+  source: Original
+  target: оригинал
+  target_initial: оригинал
+- locale: ru
+  format: string
+  source: New User
+  target: Новый пользователь
+  target_initial: Новый пользователь
+- locale: ru
+  format: string
+  source: Shared organization
+  target: общий доступ
+  target_initial: общий доступ
+- locale: ru
+  format: string
+  source: Link
+  target: ссылка
+  target_initial: ссылка
+- locale: ru
+  format: string
+  source: Holidays
+  target: Выходные / праздники
+  target_initial: Выходные / праздники
+- locale: ru
+  format: string
+  source: Enable Ticket creation
+  target: Включить создание тикетов
+  target_initial: Включить создание тикетов
+- locale: ru
+  format: string
+  source: Add attachment option to upload.
+  target: Вложенный файл для формы
+  target_initial: Вложенный файл для формы
+- locale: ru
+  format: string
+  source: Domain
+  target: Домен
+  target_initial: Домен
+- locale: ru
+  format: string
+  source: Overview
+  target: Обзор
+  target_initial: Обзор
+- locale: ru
+  format: string
+  source: Available for User
+  target: Доступен для пользователей
+  target_initial: Доступен для пользователей
+- locale: ru
+  format: string
+  source: New Trigger
+  target: Новый Автоответ
+  target_initial: Новый Автоответ
+- locale: ru
+  format: string
+  source: Defines if a customer can create tickets via the web interface.
+  target: Определяет возможность создания тикетов через веб-интерфейс..
+  target_initial: Определяет возможность создания тикетов через веб-интерфейс..
+- locale: ru
+  format: string
+  source: Name of form submit button
+  target: Текст на кнопке
+  target_initial: Текст на кнопке
+- locale: ru
+  format: string
+  source: Show title in form.
+  target: Показывать заголовок в форме.
+  target_initial: Показывать заголовок в форме.
+- locale: ru
+  format: string
+  source: Enable debugging for implementation.
+  target: Включить отладку
+  target_initial: Включить отладку
+- locale: ru
+  format: string
+  source: Inbound
+  target: Входящие
+  target_initial: Входящие
+- locale: ru
+  format: string
+  source: Disable
+  target: Отключить
+  target_initial: Отключить
+- locale: ru
+  format: string
+  source: Sender Format
+  target: Формат отправителя
+  target_initial: Формат отправителя
+- locale: ru
+  format: string
+  source: New Macro
+  target: Новый макрос
+  target_initial: Новый макрос
+- locale: ru
+  format: string
+  source: Default
+  target: По умолчанию
+  target_initial: По умолчанию
+- locale: ru
+  format: string
+  source: Group selection for Ticket creation
+  target: Выбор группы для создания тикетов
+  target_initial: Выбор группы для создания тикетов
+- locale: ru
+  format: string
+  source: Preview
+  target: Предпросмотр
+  target_initial: Предпросмотр
+- locale: ru
+  format: string
+  source: Email Address
+  target: Email А
+  target_initial: Email А
+- locale: ru
+  format: string
+  source: With Filters you can e. g. dispatch new Tickets into certain groups or set
+    a certain priority for Tickets of an VIP customer.
+  target: С помощью фильтров вы можете распределять тикеты в определенные группы или
+    устанавливать определенный приоритет для тикетов VIP-клиента.
+  target_initial: С помощью фильтров вы можете распределять тикеты в определенные
+    группы или устанавливать определенный приоритет для тикетов VIP-клиента.
+- locale: ru
+  format: string
+  source: Email Notification
+  target: Уведомление по электронной почте
+  target_initial: Уведомление по электронной почте
+- locale: ru
+  format: string
+  source: Notification Sender
+  target: Отправитель уведомлений
+  target_initial: Отправитель уведомлений
+- locale: ru
+  format: string
+  source: Block Notifications
+  target: Блокировка уведомлений
+  target_initial: Блокировка уведомлений
+- locale: ru
+  format: string
+  source: Preview Width
+  target: выбрать устройство для предпросмотра
+  target_initial: выбрать устройство для предпросмотра
+- locale: ru
+  format: string
+  source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  target: Вы можете создавать виджеты чата для своих веб-страниц, чтобы посетители
+    могли общаться с вами.
+  target_initial: Вы можете создавать виджеты чата для своих веб-страниц, чтобы посетители
+    могли общаться с вами.
+- locale: ru
+  format: string
+  source: Digit required
+  target: Цифры в пароле
+  target_initial: Цифры в пароле
+- locale: ru
+  format: string
+  source: Send client stats/error message to central server to improve the usability.
+  target: Отправить клиентскую статистику / сообщение об ошибке на центральный сервер
+    для улучшения удобства использования.
+  target_initial: Отправить клиентскую статистику / сообщение об ошибке на центральный
+    сервер для улучшения удобства использования.
+- locale: ru
+  format: string
+  source: Proxy Settings
+  target: Настройки Proxy
+  target_initial: Настройки Proxy
+- locale: ru
+  format: string
+  source: Members
+  target: Пользователи
+  target_initial: Пользователи
+- locale: ru
+  format: string
+  source: Confirm
+  target: Подтвердить
+  target_initial: Подтвердить
+- locale: ru
+  format: string
+  source: Discard Changes
+  target: Отменить изменения
+  target_initial: Отменить изменения
+- locale: ru
+  format: string
+  source: Invite
+  target: приграсить
+  target_initial: приграсить
+- locale: ru
+  format: string
+  source: Activity Stream
+  target: Действия в системе
+  target_initial: Действия в системе
+- locale: ru
+  format: string
+  source: Send Email
+  target: Email
+  target_initial: Email
+- locale: ru
+  format: string
+  source: Limit Groups
+  target: Ограничить группы
+  target_initial: Ограничить группы
+- locale: ru
+  format: string
+  source: Pick a name for the application, and we'll give you a unique token.
+  target: Выберите имя для приложения, и мы дадим вам уникальный токен.
+  target_initial: Выберите имя для приложения, и мы дадим вам уникальный токен.
+- locale: ru
+  format: string
+  source: Devices
+  target: Устройства
+  target_initial: Устройства
+- locale: ru
+  format: string
+  source: Token Access
+  target: Доступ к токенам
+  target_initial: Доступ к токенам
+- locale: ru
+  format: string
+  source: Change your password
+  target: Измените свой пароль
+  target_initial: Измените свой пароль
+- locale: ru
+  format: string
+  source: Packages
+  target: Пакеты
+  target_initial: Пакеты
+- locale: ru
+  format: string
+  source: Reload application
+  target: Обновить заявку
+  target_initial: Обновить заявку
+- locale: ru
+  format: string
+  source: This is Zammad version %s
+  target: Версия Zammsd %s
+  target_initial: Версия Zammsd %s
+- locale: ru
+  format: string
+  source: New Application
+  target: Новое приложение
+  target_initial: Новое приложение
+- locale: ru
+  format: string
+  source: VoIP service provider with realtime push.
+  target: Поставщик услуг VoIP с поддержкой реального времени.
+  target_initial: Поставщик услуг VoIP с поддержкой реального времени.
+- locale: ru
+  format: string
+  source: Password needs to contain 2 lower and 2 upper characters.
+  target: Пароль должен содержать 2 строчных и 2 прописных символа
+  target_initial: Пароль должен содержать 2 строчных и 2 прописных символа
+- locale: ru
+  format: string
+  source: Authentication via %s
+  target: Аутентификация через %s
+  target_initial: Аутентификация через %s
+- locale: ru
+  format: string
+  source: Client storage
+  target: Клиентское хранилище
+  target_initial: Клиентское хранилище
+- locale: ru
+  format: string
+  source: Username for proxy connection.
+  target: Логин
+  target_initial: Логин
+- locale: ru
+  format: string
+  source: Next in overview
+  target: Следующий
+  target_initial: Следующий
+- locale: ru
+  format: string
+  source: Your tickets in process
+  target: Ваши тикеты в работе
+  target_initial: Ваши тикеты в работе
+- locale: ru
+  format: string
+  source: Create Text Modules
+  target: Создать Text Modules
+  target_initial: Создать Text Modules
+- locale: ru
+  format: string
+  source: "%s updated Organization |%s|"
+  target: "%s обновил организацию |%s|"
+  target_initial: "%s обновил организацию |%s|"
+- locale: ru
+  format: string
+  source: Attributes
+  target: Атрибуты
+  target_initial: Атрибуты
+- locale: ru
+  format: string
+  source: Received Call
+  target: Входящий вызов
+  target_initial: Входящий вызов
+- locale: ru
+  format: string
+  source: Status Type
+  target: ТИП СОСТОЯНИЯ
+  target_initial: ТИП СОСТОЯНИЯ
+- locale: ru
+  format: string
+  source: Add a Personal Access Token
+  target: Добавление идентификатора персонального доступа
+  target_initial: Добавление идентификатора персонального доступа
+- locale: ru
+  format: string
+  source: "%s created Article for |%s|"
+  target: "%s создал статью для |%s|"
+  target_initial: "%s создал статью для |%s|"
+- locale: ru
+  format: string
+  source: All computers and browsers that have access to your Zammad appear here.
+  target: Здесь отображаются все компьютеры и браузеры, имеющие доступ к вашему Zammad.
+  target_initial: Здесь отображаются все компьютеры и браузеры, имеющие доступ к вашему
+    Zammad.
+- locale: ru
+  format: string
+  source: Ticket Subscriptions
+  target: Подписки на тикеты
+  target_initial: Подписки на тикеты
+- locale: ru
+  format: string
+  source: Customer Chat
+  target: Чат с сайта
+  target_initial: Чат с сайта
+- locale: ru
+  format: string
+  source: Package
+  target: Пакеты
+  target_initial: Пакеты
+- locale: ru
+  format: string
+  source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  target: Включить или отключить режим обслуживания Zammad. Если включено, все не-администраторы
+    будут отключены от системы и только администраторы могут начать новый сеанс.
+  target_initial: Включить или отключить режим обслуживания Zammad. Если включено,
+    все не-администраторы будут отключены от системы и только администраторы могут
+    начать новый сеанс.
+- locale: ru
+  format: string
+  source: Health Check
+  target: Проверка
+  target_initial: Проверка
+- locale: ru
+  format: string
+  source: Health information can be retrieved as JSON using
+  target: ответ статуса будет отдан через JSON
+  target_initial: ответ статуса будет отдан через JSON
+- locale: ru
+  format: string
+  source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  target: Включить доступ к REST API, используя имя пользователя / адрес электронной
+    почты и пароль для авторизации.
+  target_initial: Включить доступ к REST API, используя имя пользователя / адрес электронной
+    почты и пароль для авторизации.
+- locale: ru
+  format: string
+  source: Enables users to create their own account via web interface.
+  target: Позволяет пользователям создавать свою собственную учетную запись через
+    веб-интерфейс.
+  target_initial: Позволяет пользователям создавать свою собственную учетную запись
+    через веб-интерфейс.
+- locale: ru
+  format: string
+  source: Password needs to have at least a minimal number of characters.
+  target: Пароль должен содержать хотя бы минимальное количество символов.
+  target_initial: Пароль должен содержать хотя бы минимальное количество символов.
+- locale: ru
+  format: string
+  source: Network
+  target: Сеть
+  target_initial: Сеть
+- locale: ru
+  format: string
+  source: Product Name
+  target: Наименование
+  target_initial: Наименование
+- locale: ru
+  format: string
+  source: split
+  target: разделить
+  target_initial: разделить
+- locale: ru
+  format: string
+  source: set to public
+  target: открытый доступ
+  target_initial: открытый доступ
+- locale: ru
+  format: string
+  source: Invite customers to create issues in Zammad
+  target: Предложить клиентам создавать заявки в Zammad
+  target_initial: Предложить клиентам создавать заявки в Zammad
+- locale: ru
+  format: string
+  source: Outbound Call
+  target: Исходящий вызов
+  target_initial: Исходящий вызов
+- locale: ru
+  format: string
+  source: Ticket update
+  target: Тикет обновлен
+  target_initial: Тикет обновлен
+- locale: ru
+  format: string
+  source: Link Accounts
+  target: Связать аккаунты
+  target_initial: Связать аккаунты
+- locale: ru
+  format: string
+  source: Notifications
+  target: Оповещения
+  target_initial: Оповещения
+- locale: ru
+  format: string
+  source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  target: Чтобы посмотреть свои тикеты в календаре, добавьте следующий URL-адрес в
+    приложение календаря.
+  target_initial: Чтобы посмотреть свои тикеты в календаре, добавьте следующий URL-адрес
+    в приложение календаря.
+- locale: ru
+  format: string
+  source: Change your language.
+  target: Выберите ваш язык
+  target_initial: Выберите ваш язык
+- locale: ru
+  format: string
+  source: Waiting Customers
+  target: Клиенты в ожидании
+  target_initial: Клиенты в ожидании
+- locale: ru
+  format: string
+  source: Remember me
+  target: запомнить меня
+  target_initial: запомнить меня
+- locale: ru
+  format: string
+  source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  target: Добавьте приветственное сообщение в редакторе, расположенном ниже.
+  target_initial: Добавьте приветственное сообщение в редакторе, расположенном ниже.
+- locale: ru
+  format: string
+  source: Current Status
+  target: Текущее состояние
+  target_initial: Текущее состояние
+- locale: ru
+  format: string
+  source: Password Access
+  target: Доступ по паролю
+  target_initial: Доступ по паролю
+- locale: ru
+  format: string
+  source: An open source monitoring tool.
+  target: Инструмент мониторинга с открытым исходным кодом.
+  target_initial: Инструмент мониторинга с открытым исходным кодом.
+- locale: ru
+  format: string
+  source: Needed
+  target: НЕОБХОДИМО
+  target_initial: НЕОБХОДИМО
+- locale: ru
+  format: string
+  source: Send client stats
+  target: Отправить статистику по клиенту
+  target_initial: Отправить статистику по клиенту
+- locale: ru
+  format: string
+  source: Proxy address.
+  target: Proxy адрес.
+  target_initial: Proxy адрес.
+- locale: ru
+  format: string
+  source: Close tab
+  target: Закрыть вкладку
+  target_initial: Закрыть вкладку
+- locale: ru
+  format: string
+  source: Tab has changed, do you really want to close it?
+  target: Изменения не будут сохранены, вы действительно хотите закрыть ее?
+  target_initial: Изменения не будут сохранены, вы действительно хотите закрыть ее?
+- locale: ru
+  format: string
+  source: First Steps
+  target: Первые шаги
+  target_initial: Первые шаги
+- locale: ru
+  format: string
+  source: How to use it
+  target: Как это работает
+  target_initial: Как это работает
+- locale: ru
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: Пригласите агентов/коллег, чтобы они помогали работать с билетами
+  target_initial: Пригласите агентов/коллег, чтобы они помогали работать с билетами
+- locale: ru
+  format: string
+  source: "%s updated Group |%s|"
+  target: "%s обновил группу |%s|"
+  target_initial: "%s обновил группу |%s|"
+- locale: ru
+  format: string
+  source: Also notify via email
+  target: УВЕДОМЛЯЮТСЯ ЧЕРЕЗ EMAIL
+  target_initial: УВЕДОМЛЯЮТСЯ ЧЕРЕЗ EMAIL
+- locale: ru
+  format: string
+  source: Show
+  target: Показать
+  target_initial: Показать
+- locale: ru
+  format: string
+  source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  target: Вы можете создать личный токен доступа для каждого приложения, которое вы
+    используете, которому необходим доступ к Zammad API.
+  target_initial: Вы можете создать личный токен доступа для каждого приложения, которое
+    вы используете, которому необходим доступ к Zammad API.
+- locale: ru
+  format: string
+  source: New password (confirm)
+  target: Новый пароль (продублировать)
+  target_initial: Новый пароль (продублировать)
+- locale: ru
+  format: string
+  source: Send to clients
+  target: Отправить клиентам 
+  target_initial: Отправить клиентам 
+- locale: ru
+  format: string
+  source: Mode
+  target: Закрыть на обслуживание
+  target_initial: Закрыть на обслуживание
+- locale: ru
+  format: string
+  source: Current Token
+  target: Текущий токен
+  target_initial: Текущий токен
+- locale: ru
+  format: string
+  source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  target: Включить REST API, используя токены. Каждому пользователю необходимо создать
+    собственные токены доступа в профиле пользователя.
+  target_initial: Включить REST API, используя токены. Каждому пользователю необходимо
+    создать собственные токены доступа в профиле пользователя.
+- locale: ru
+  format: string
+  source: New User Accounts
+  target: Новые учетные записи пользователей
+  target_initial: Новые учетные записи пользователей
+- locale: ru
+  format: string
+  source: Minimum length
+  target: Минимальная длина
+  target_initial: Минимальная длина
+- locale: ru
+  format: string
+  source: Base
+  target: Базовые
+  target_initial: Базовые
+- locale: ru
+  format: string
+  source: Use client storage to cache data to enhance performance of application.
+  target: Используйте хранилище клиентов для кэширования данных для повышения производительности
+    приложения.
+  target_initial: Используйте хранилище клиентов для кэширования данных для повышения
+    производительности приложения.
+- locale: ru
+  format: string
+  source: Password for proxy connection.
+  target: Пароль
+  target_initial: Пароль
+- locale: ru
+  format: string
+  source: Defines the logo of the application, shown in the web interface.
+  target: Определяет логотип приложения, отображаемый в веб-интерфейсе.
+  target_initial: Определяет логотип приложения, отображаемый в веб-интерфейсе.
+- locale: ru
+  format: string
+  source: Discard your unsaved changes.
+  target: Отмените несохраненные изменения.
+  target_initial: Отмените несохраненные изменения.
+- locale: ru
+  format: string
+  source: Reopening rate
+  target: возвраты
+  target_initial: возвраты
+- locale: ru
+  format: string
+  source: Additional Channels
+  target: Дополнительные каналы
+  target_initial: Дополнительные каналы
+- locale: ru
+  format: string
+  source: Permissions
+  target: Права доступа
+  target_initial: Права доступа
+- locale: ru
+  format: string
+  source: Frequency
+  target: активность
+  target_initial: активность
+- locale: ru
+  format: string
+  source: With templates you can pre-fill ticket attributes.
+  target: С шаблонами вы можете предварительно заполнить атрибуты тикета.
+  target_initial: С шаблонами вы можете предварительно заполнить атрибуты тикета.
+- locale: ru
+  format: string
+  source: Notification Sound
+  target: ЗВУК УВЕДОМЛЕНИЯ
+  target_initial: ЗВУК УВЕДОМЛЕНИЯ
+- locale: ru
+  format: string
+  source: Stay on tab
+  target: Оставайтесь на вкладке
+  target_initial: Оставайтесь на вкладке
+- locale: ru
+  format: string
+  source: Open Tickets
+  target: Открытых тикетов
+  target_initial: Открытых тикетов
+- locale: ru
+  format: string
+  source: set to internal
+  target: закрытый доступ
+  target_initial: закрытый доступ
+- locale: ru
+  format: string
+  source: Your Email Configuration
+  target: Настройка электронной почты
+  target_initial: Настройка электронной почты
+- locale: ru
+  format: string
+  source: Invite Colleagues
+  target: Пригласить коллег
+  target_initial: Пригласить коллег
+- locale: ru
+  format: string
+  source: "%s started a new session"
+  target: "%s авторизовался"
+  target_initial: "%s авторизовался"
+- locale: ru
+  format: string
+  source: Order
+  target: сортировка
+  target_initial: сортировка
+- locale: ru
+  format: string
+  source: No template created yet.
+  target: Шаблон еще не создан.
+  target_initial: Шаблон еще не создан.
+- locale: ru
+  format: string
+  source: Sounds
+  target: Звуки
+  target_initial: Звуки
+- locale: ru
+  format: string
+  source: Group by
+  target: группировать по
+  target_initial: группировать по
+- locale: ru
+  format: string
+  source: Choose attributes and then save them as a new template.
+  target: Выберите атрибуты и сохраните их как новый шаблон.
+  target_initial: Выберите атрибуты и сохраните их как новый шаблон.
+- locale: ru
+  format: string
+  source: Not Assigned
+  target: НЕ НАЗНАЧЕН
+  target_initial: НЕ НАЗНАЧЕН
+- locale: ru
+  format: string
+  source: Play user interface sound effects
+  target: Звуковые эффекты пользовательского интерфейса
+  target_initial: Звуковые эффекты пользовательского интерфейса
+- locale: ru
+  format: string
+  source: Last used
+  target: ПОСЛЕДНИЙ ИСПОЛЬЗУЕМЫЙ
+  target_initial: ПОСЛЕДНИЙ ИСПОЛЬЗУЕМЫЙ
+- locale: ru
+  format: string
+  source: See more
+  target: Развернуть
+  target_initial: Развернуть
+- locale: ru
+  format: string
+  source: Manage your notifications settings
+  target: Управление настройками уведомлений
+  target_initial: Управление настройками уведомлений
+- locale: ru
+  format: string
+  source: Attached Files
+  target: Вложенный файл
+  target_initial: Вложенный файл
+- locale: ru
+  format: string
+  source: Channel
+  target: КАНАЛ
+  target_initial: КАНАЛ
+- locale: ru
+  format: string
+  source: Mark all as read
+  target: отметить все как прочитанное
+  target_initial: отметить все как прочитанное
+- locale: ru
+  format: string
+  source: disconnect
+  target: отключиться
+  target_initial: отключиться
+- locale: ru
+  format: string
+  source: Follow up possible
+  target: Возможно переоткрытие (follow up)
+  target_initial: Возможно переоткрытие (follow up)
+- locale: ru
+  format: string
+  source: Add-ons
+  target: Дополнения
+  target_initial: Дополнения
+- locale: ru
+  format: string
+  source: Browser
+  target: Браузер
+  target_initial: Браузер
+- locale: ru
+  format: string
+  source: Feedback Form
+  target: Форма обратной связи
+  target_initial: Форма обратной связи
+- locale: ru
+  format: string
+  source: Experts
+  target: Эксперты
+  target_initial: Эксперты
+- locale: ru
+  format: string
+  source: Evangelist
+  target: Евангелист
+  target_initial: Евангелист
+- locale: ru
+  format: string
+  source: Extended Search
+  target: Расширенный поиск
+  target_initial: Расширенный поиск
+- locale: ru
+  format: string
+  source: Bulk action executed!
+  target: Массовое действие выполнено!
+  target_initial: Массовое действие выполнено!
+- locale: ru
+  format: string
+  source: Download %s Migration Plugin
+  target: Загрузить %s плагин миграции
+  target_initial: Загрузить %s плагин миграции
+- locale: ru
+  format: string
+  source: Enter Template Name
+  target: Введите имя шаблона
+  target_initial: Введите имя шаблона
+- locale: ru
+  format: string
+  source: Postal Code
+  target: Почтовый индекс
+  target_initial: Почтовый индекс
+- locale: ru
+  format: string
+  source: assign tickets
+  target: назначить тикеты
+  target_initial: назначить тикеты
+- locale: ru
+  format: string
+  source: Form
+  target: Форма
+  target_initial: Форма
+- locale: ru
+  format: string
+  source: Has processed
+  target: Обработано
+  target_initial: Обработано
+- locale: ru
+  format: string
+  source: New Scheduler
+  target: Новое Расписание
+  target_initial: Новое Расписание
+- locale: ru
+  format: string
+  source: Conditions for effected objects
+  target: Условия отбора объектов
+  target_initial: Условия отбора объектов
+- locale: ru
+  format: string
+  source: Edit Customer
+  target: Редактировать Клиента
+  target_initial: Редактировать Клиента
+- locale: ru
+  format: string
+  source: Expert
+  target: Эксперт
+  target_initial: Эксперт
+- locale: ru
+  format: string
+  source: Will be shown in the app and is included in email footers.
+  target: Будет показано в приложении, а также добавлено внизу отправляемых email.
+  target_initial: Будет показано в приложении, а также добавлено внизу отправляемых
+    email.
+- locale: ru
+  format: string
+  source: Scheduled for
+  target: Запланированно
+  target_initial: Запланированно
+- locale: ru
+  format: string
+  source: Disable Notifications
+  target: Выключить уведомления
+  target_initial: Выключить уведомления
+- locale: ru
+  format: string
+  source: drag here to cancel
+  target: перетянуть сюда для отмены
+  target_initial: перетянуть сюда для отмены
+- locale: ru
+  format: string
+  source: escalated
+  target: эскалация
+  target_initial: эскалация
+- locale: ru
+  format: string
+  source: Plan
+  target: План
+  target_initial: План
+- locale: ru
+  format: string
+  source: Last run
+  target: Последний запуск
+  target_initial: Последний запуск
+- locale: ru
+  format: string
+  source: Will process
+  target: Будет обработано
+  target_initial: Будет обработано
+- locale: ru
+  format: string
+  source: Edit Organization
+  target: Редактировать Организацию
+  target_initial: Редактировать Организацию
+- locale: ru
+  format: string
+  source: Previous tab
+  target: Предыдущая вкладка
+  target_initial: Предыдущая вкладка
+- locale: ru
+  format: string
+  source: Assign follow up to latest agent again.
+  target: Назначать последнего ответственного снова при переоткрытии
+  target_initial: Назначать последнего ответственного снова при переоткрытии
+- locale: ru
+  format: string
+  source: Text modules
+  target: Текстовые блоки
+  target_initial: Текстовые блоки
+- locale: ru
+  format: string
+  source: Count
+  target: Количество
+  target_initial: Количество
+- locale: ru
+  format: string
+  source: New text module
+  target: Новый блок
+  target_initial: Новый блок
+- locale: ru
+  format: string
+  source: do not reopen Ticket but create new Ticket
+  target: не открывать снова, а создавать новый Тикет
+  target_initial: не открывать снова, а создавать новый Тикет
+- locale: ru
+  format: string
+  source: Attach files
+  target: Прикрепить файлы
+  target_initial: Прикрепить файлы
+- locale: ru
+  format: string
+  source: close
+  target: закрыть
+  target_initial: закрыть
+- locale: ru
+  format: string
+  source: Authentication via Google
+  target: Аутентификация через Google
+  target_initial: Аутентификация через Google
+- locale: ru
+  format: string
+  source: Authentication via Facebook
+  target: Аутентификация через Facebook
+  target_initial: Аутентификация через Facebook
+- locale: ru
+  format: string
+  source: Call Inbound
+  target: Входящий вызов
+  target_initial: Входящий вызов
+- locale: ru
+  format: string
+  source: Call Outbound
+  target: Исходящий вызов
+  target_initial: Исходящий вызов
+- locale: ru
+  format: string
+  source: Facebook
+  target: Facebook
+  target_initial: Facebook
+- locale: ru
+  format: string
+  source: Company Inc.
+  target: Компания
+  target_initial: Компания
+- locale: ru
+  format: string
+  source: contains
+  target: содержит
+  target_initial: содержит
+- locale: ru
+  format: string
+  source: Enable Chat
+  target: Включить чат
+  target_initial: Включить чат
+- locale: ru
+  format: string
+  source: Mobile
+  target: Мобильный
+  target_initial: Мобильный
+- locale: ru
+  format: string
+  source: Department Name
+  target: Название департамента
+  target_initial: Название департамента
+- locale: ru
+  format: string
+  source: Email Inbound
+  target: Входящая почта
+  target_initial: Входящая почта
+- locale: ru
+  format: string
+  source: Day(s)
+  target: День (и)
+  target_initial: День (и)
+- locale: ru
+  format: string
+  source: Enter Title...
+  target: Введите название ...
+  target_initial: Введите название ...
+- locale: ru
+  format: string
+  source: Full Name
+  target: Полное имя
+  target_initial: Полное имя
+- locale: ru
+  format: string
+  source: Credit card
+  target: Кредитная карта
+  target_initial: Кредитная карта
+- locale: ru
+  format: string
+  source: Credit card number
+  target: Номер кредитной карты
+  target_initial: Номер кредитной карты
+- locale: ru
+  format: string
+  source: Bank Name
+  target: Название банка
+  target_initial: Название банка
+- locale: ru
+  format: string
+  source: Germany
+  target: Германия
+  target_initial: Германия
+- locale: ru
+  format: string
+  source: contains all
+  target: содержит все
+  target_initial: содержит все
+- locale: ru
+  format: string
+  source: Messages
+  target: Сообщения
+  target_initial: Сообщения
+- locale: ru
+  format: string
+  source: contains one
+  target: содержит один
+  target_initial: содержит один
+- locale: ru
+  format: string
+  source: All Agents
+  target: Все агенты
+  target_initial: Все агенты
+- locale: ru
+  format: string
+  source: API token
+  target: API токен
+  target_initial: API токен
+- locale: ru
+  format: string
+  source: Authentication via Twitter
+  target: Аутентификация через Twitter
+  target_initial: Аутентификация через Twitter
+- locale: ru
+  format: string
+  source: Authentication via LinkedIn
+  target: Аутентификация через LinkedIn
+  target_initial: Аутентификация через LinkedIn
+- locale: ru
+  format: string
+  source: Attach Screenshot of page
+  target: Приложить скриншот страницы
+  target_initial: Приложить скриншот страницы
+- locale: ru
+  format: string
+  source: Attachment
+  target: Вложение
+  target_initial: Вложение
+- locale: ru
+  format: string
+  source: Automatically show chat
+  target: Показывать чат автоматически
+  target_initial: Показывать чат автоматически
+- locale: ru
+  format: string
+  source: Background color
+  target: Цвет фона
+  target_initial: Цвет фона
+- locale: ru
+  format: string
+  source: Beginner
+  target: Начинающий
+  target_initial: Начинающий
+- locale: ru
+  format: string
+  source: Can't create user
+  target: Невозможно создать пользователя
+  target_initial: Невозможно создать пользователя
+- locale: ru
+  format: string
+  source: Chat Title
+  target: Название чата
+  target_initial: Название чата
+- locale: ru
+  format: string
+  source: Close & Tag as Spam
+  target: Закрыть и добавить тег спам
+  target_initial: Закрыть и добавить тег спам
+- locale: ru
+  format: string
+  source: Config
+  target: Конфигурация
+  target_initial: Конфигурация
+- locale: ru
+  format: string
+  source: Confirmation required
+  target: Требуется подтверждение
+  target_initial: Требуется подтверждение
+- locale: ru
+  format: string
+  source: contains not
+  target: не содержит
+  target_initial: не содержит
+- locale: ru
+  format: string
+  source: Department
+  target: Департамент
+  target_initial: Департамент
+- locale: ru
+  format: string
+  source: Email Outbound
+  target: Исходящая почта
+  target_initial: Исходящая почта
+- locale: ru
+  format: string
+  source: Feedback
+  target: Обратная связь
+  target_initial: Обратная связь
+- locale: ru
+  format: string
+  source: Forgot your password?
+  target: Забыли пароль?
+  target_initial: Забыли пароль?
+- locale: ru
+  format: string
+  source: Clients
+  target: Клиенты
+  target_initial: Клиенты
+- locale: ru
+  format: string
+  source: Change order
+  target: Изменить заказ
+  target_initial: Изменить заказ
+- locale: ru
+  format: string
+  source: A new version of Zammad is available, please reload your browser.
+  target: Новая версия Zammad доступна. Пожалуйста перезагрузите браузер.
+  target_initial: Новая версия Zammad доступна. Пожалуйста перезагрузите браузер.
+- locale: ru
+  format: string
+  source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  target: Новая сессия создана под вашим именем
+  target_initial: Новая сессия создана под вашим именем
+- locale: ru
+  format: string
+  source: Role
+  target: Роль
+  target_initial: Роль
+- locale: ru
+  format: string
+  source: Username or email
+  target: Имя пользователя или почта
+  target_initial: Имя пользователя или почта
+- locale: ru
+  format: string
+  source: Linked Objects
+  target: Связанные объекты
+  target_initial: Связанные объекты
+- locale: ru
+  format: string
+  source: Links
+  target: Ссылки
+  target_initial: Ссылки
+- locale: ru
+  format: string
+  source: New Branch
+  target: Новая ветка
+  target_initial: Новая ветка
+- locale: ru
+  format: string
+  source: Search for users
+  target: Поиск пользователей
+  target_initial: Поиск пользователей
+- locale: ru
+  format: string
+  source: set internal
+  target: установить интервал
+  target_initial: установить интервал
+- locale: ru
+  format: string
+  source: reinstall
+  target: переустановить
+  target_initial: переустановить
+- locale: ru
+  format: string
+  source: Releases
+  target: Релизы
+  target_initial: Релизы
+- locale: ru
+  format: string
+  source: Minimal size
+  target: Наименьший размер
+  target_initial: Наименьший размер
+- locale: ru
+  format: string
+  source: Discard
+  target: Отмена
+  target_initial: Отмена
+- locale: ru
+  format: string
+  source: Direct URL
+  target: Прямая ссылка
+  target_initial: Прямая ссылка
+- locale: ru
+  format: string
+  source: Mood
+  target: Настроение
+  target_initial: Настроение
+- locale: ru
+  format: string
+  source: Notes
+  target: Заметки
+  target_initial: Заметки
+- locale: ru
+  format: string
+  source: Organization Name
+  target: Название организации
+  target_initial: Название организации
+- locale: ru
+  format: string
+  source: Pink
+  target: Розовый
+  target_initial: Розовый
+- locale: ru
+  format: string
+  source: Purple
+  target: Фиолетовый
+  target_initial: Фиолетовый
+- locale: ru
+  format: string
+  source: "∅ Waiting time today"
+  target: Время ожидания сегодня
+  target_initial: Время ожидания сегодня
+- locale: ru
+  format: string
+  source: today
+  target: сегодня
+  target_initial: сегодня
+- locale: ru
+  format: string
+  source: 'Total: %s'
+  target: 'Всего: %s'
+  target_initial: 'Всего: %s'
+- locale: ru
+  format: string
+  source: Tickets of User
+  target: Запросы пользователя
+  target_initial: Запросы пользователя
+- locale: ru
+  format: string
+  source: Matrix
+  target: Матрица
+  target_initial: Матрица
+- locale: ru
+  format: string
+  source: Layout Reference
+  target: Примеры страниц
+  target_initial: Примеры страниц
+- locale: ru
+  format: string
+  source: Or
+  target: Или
+  target_initial: Или
+- locale: ru
+  format: string
+  source: Sending...
+  target: Отправляю...
+  target_initial: Отправляю...
+- locale: ru
+  format: string
+  source: Topics
+  target: Темы
+  target_initial: Темы
+- locale: ru
+  format: string
+  source: Hero
+  target: Герой
+  target_initial: Герой
+- locale: ru
+  format: string
+  source: John Smith
+  target: Неизвестный
+  target_initial: Неизвестный
+- locale: ru
+  format: string
+  source: New App
+  target: Новое приложение
+  target_initial: Новое приложение
+- locale: ru
+  format: string
+  source: Scroll down to see new messages
+  target: Прокрутите вниз, чтобы увидеть новые сообщения
+  target_initial: Прокрутите вниз, чтобы увидеть новые сообщения
+- locale: ru
+  format: string
+  source: Search...
+  target: Поиск...
+  target_initial: Поиск...
+- locale: ru
+  format: string
+  source: Minute(s)
+  target: мин.
+  target_initial: мин.
+- locale: ru
+  format: string
+  source: Month(s)
+  target: мес.
+  target_initial: мес.
+- locale: ru
+  format: string
+  source: Latest updates
+  target: Последние обновления
+  target_initial: Последние обновления
+- locale: ru
+  format: string
+  source: Pay with
+  target: Оплатить с помощью
+  target_initial: Оплатить с помощью
+- locale: ru
+  format: string
+  source: Payment Method
+  target: Способ оплаты
+  target_initial: Способ оплаты
+- locale: ru
+  format: string
+  source: Selected
+  target: Выбрать
+  target_initial: Выбрать
+- locale: ru
+  format: string
+  source: Sure?
+  target: Уверены?
+  target_initial: Уверены?
+- locale: ru
+  format: string
+  source: Total
+  target: Всего
+  target_initial: Всего
+- locale: ru
+  format: string
+  source: Nothing selected
+  target: Ничего не выбрано
+  target_initial: Ничего не выбрано
+- locale: ru
+  format: string
+  source: Open Ticket# %s
+  target: Открыть тикет №%s
+  target_initial: Открыть тикет №%s
+- locale: ru
+  format: string
+  source: There is no agent online.
+  target: Агента нет в сети.
+  target_initial: Агента нет в сети.
+- locale: ru
+  format: string
+  source: Link %s
+  target: Ссылка %s
+  target_initial: Ссылка %s
+- locale: ru
+  format: string
+  source: Show all...
+  target: Показать всё...
+  target_initial: Показать всё...
+- locale: ru
+  format: string
+  source: skip
+  target: пропустить
+  target_initial: пропустить
+- locale: ru
+  format: string
+  source: Successful!
+  target: Успешно!
+  target_initial: Успешно!
+- locale: ru
+  format: string
+  source: Drop files here
+  target: Перетяните мышкой файл сюда
+  target_initial: Перетяните мышкой файл сюда
+- locale: ru
+  format: string
+  source: Enable
+  target: Активировать
+  target_initial: Активировать
+- locale: ru
+  format: string
+  source: Last sync
+  target: Последняя синхронизация
+  target_initial: Последняя синхронизация
+- locale: ru
+  format: string
+  source: See less
+  target: Свернуть
+  target_initial: Свернуть
+- locale: ru
+  format: string
+  source: Sender
+  target: Отправитель
+  target_initial: Отправитель
+- locale: ru
+  format: string
+  source: submit
+  target: отправить
+  target_initial: отправить
+- locale: ru
+  format: string
+  source: skipped
+  target: пропущено
+  target_initial: пропущено
+- locale: ru
+  format: string
+  source: Maximum size in MB of emails.
+  target: Максимальный размер письма в мегабайтах
+  target_initial: Максимальный размер письма в мегабайтах
+- locale: ru
+  format: string
+  source: Geo Services
+  target: Службы геолокации
+  target_initial: Службы геолокации
+- locale: ru
+  format: string
+  source: Storage
+  target: Хранилище
+  target_initial: Хранилище
+- locale: ru
+  format: string
+  source: Delivery failed
+  target: Отправка не удалась
+  target_initial: Отправка не удалась
+- locale: ru
+  format: string
+  source: Do you want to cancel your subscription?
+  target: Вы хотите отменить подписку?
+  target_initial: Вы хотите отменить подписку?
+- locale: ru
+  format: string
+  source: Invite Agents/Colleges
+  target: Пригласить агентов и коллег
+  target_initial: Пригласить агентов и коллег
+- locale: ru
+  format: string
+  source: Invoice
+  target: Счёт
+  target_initial: Счёт
+- locale: ru
+  format: string
+  source: Online Forms
+  target: Веб формы
+  target_initial: Веб формы
+- locale: ru
+  format: string
+  source: Maximum Email Size
+  target: Максимальный размер писем
+  target_initial: Максимальный размер писем
+- locale: ru
+  format: string
+  source: Invite Customer
+  target: Пригласить пользователя
+  target_initial: Пригласить пользователя
+- locale: ru
+  format: string
+  source: Notification
+  target: Уведомление
+  target_initial: Уведомление
+- locale: ru
+  format: string
+  source: Save configuration
+  target: Сохранить конфигурацию
+  target_initial: Сохранить конфигурацию
+- locale: ru
+  format: string
+  source: Delete File
+  target: Удалить файл
+  target_initial: Удалить файл
+- locale: ru
+  format: string
+  source: Password (confirm)
+  target: Пароль (подтверждение)
+  target_initial: Пароль (подтверждение)
+- locale: ru
+  format: string
+  source: Notes are visible to agents only, never to customers.
+  target: Заметки видны только агентам
+  target_initial: Заметки видны только агентам
+- locale: ru
+  format: string
+  source: Only for these groups.
+  target: Только для этих групп
+  target_initial: Только для этих групп
+- locale: ru
+  format: string
+  source: Skip
+  target: Пропустить
+  target_initial: Пропустить
+- locale: ru
+  format: string
+  source: tax
+  target: налог
+  target_initial: налог
+- locale: ru
+  format: string
+  source: Only available for Users with shared Organization
+  target: Доступно только для пользователей с общей Организацией
+  target_initial: Доступно только для пользователей с общей Организацией
+- locale: ru
+  format: string
+  source: Woo hoo! Your email address has been verified!
+  target: Ура! Ваш почтовый адрес проверен успешно!
+  target_initial: Ура! Ваш почтовый адрес проверен успешно!
+- locale: ru
+  format: string
+  source: Woo hoo! Your password has been changed!
+  target: Ура! Ваш пароль был изменён!
+  target_initial: Ура! Ваш пароль был изменён!
+- locale: ru
+  format: string
+  source: Tickets of Organization
+  target: Запросы организации
+  target_initial: Запросы организации
+- locale: ru
+  format: string
+  source: List of shortcuts
+  target: Список сокращений
+  target_initial: Список сокращений
+- locale: ru
+  format: string
+  source: Where
+  target: Где
+  target_initial: Где
+- locale: ru
+  format: string
+  source: Last sync at
+  target: 'Последняя синхронизация была в '
+  target_initial: 'Последняя синхронизация была в '
+- locale: ru
+  format: string
+  source: Tools
+  target: Инструменты
+  target_initial: Инструменты
+- locale: ru
+  format: string
+  source: "%s% have been reopened"
+  target: "%s% были открыты снова"
+  target_initial: "%s% были открыты снова"
+- locale: ru
+  format: string
+  source: 'Average: %s%'
+  target: 'В среднем %s% '
+  target_initial: 'В среднем %s% '
+- locale: ru
+  format: string
+  source: 'Average: %s'
+  target: 'В среднем %s '
+  target_initial: 'В среднем %s '
+- locale: ru
+  format: string
+  source: 'Average: %s minutes'
+  target: В среднем %s мин.
+  target_initial: В среднем %s мин.
+- locale: ru
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: 'Запросы, назначенные на меня: %s из %s '
+  target_initial: 'Запросы, назначенные на меня: %s из %s '
+- locale: ru
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% сейчас в обработке"
+  target_initial: "%s% сейчас в обработке"
+- locale: ru
+  format: string
+  source: Assigned
+  target: ASSIGNED
+  target_initial: ASSIGNED
+- locale: ru
+  format: string
+  source: Back to my view
+  target: Вернуться к моему виду
+  target_initial: Вернуться к моему виду
+- locale: ru
+  format: string
+  source: Create your first ticket
+  target: Создать ваш первый тикет
+  target_initial: Создать ваш первый тикет
+- locale: ru
+  format: string
+  source: You have not created a ticket yet.
+  target: Вы ещё не создавали тикетов
+  target_initial: Вы ещё не создавали тикетов
+- locale: ru
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s обновил Заявку |%s|"
+  target_initial: "%s обновил Заявку |%s|"
+- locale: ru
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: Вы уже зарегистрированы с вашей электронной почтой, если вы связывались
+    с нашей командой поддержки
+  target_initial: Вы уже зарегистрированы с вашей электронной почтой, если вы связывались
+    с нашей командой поддержки
+- locale: ru
+  format: string
+  source: Email address
+  target: Адрес электронной почты
+  target_initial: Адрес электронной почты
+- locale: ru
+  format: string
+  source: Login with %s
+  target: Вход на %s
+  target_initial: Вход на %s
+- locale: ru
+  format: string
+  source: The way to communicate with us is this thing called "ticket".
+  target: Способ связаться с нами это вещь называемая "тикет".
+  target_initial: Способ связаться с нами это вещь называемая "тикет".
+- locale: ru
+  format: string
+  source: Zammad looks like this for "%s"
+  target: Zammad выглядит как для "%s"
+  target_initial: Zammad выглядит как для "%s"
+- locale: ru
+  format: string
+  source: Please click the button below to create your first one.
+  target: Пожалуйста нажмите кнопку ниж, чтобы создать ваш первый
+  target_initial: Пожалуйста нажмите кнопку ниж, чтобы создать ваш первый
+- locale: ru
+  format: string
+  source: What can you do here?
+  target: Что вы можете тут сделать?
+  target_initial: Что вы можете тут сделать?
+- locale: ru
+  format: string
+  source: "%s switched to |%s|!"
+  target: "%s переключился на |%s|! "
+  target_initial: "%s переключился на |%s|! "
+- locale: ru
+  format: string
+  source: "%s updated User |%s|"
+  target: "%s обновил пользователя |%s| "
+  target_initial: "%s обновил пользователя |%s| "
+- locale: ru
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: ru
+  format: string
+  source: Channel Distribution
+  target: Каналы
+  target_initial: Каналы
+- locale: ru
+  format: string
+  source: Green
+  target: Зеленый
+  target_initial: Зеленый
+- locale: ru
+  format: string
+  source: Report Profiles
+  target: Оповещения
+  target_initial: Оповещения
+- locale: ru
+  format: string
+  source: Back to top
+  target: Вернуться в начало
+  target_initial: Вернуться в начало
+- locale: ru
+  format: string
+  source: Change Objects
+  target: Изменить Объекты
+  target_initial: Изменить Объекты
+- locale: ru
+  format: string
+  source: Enter credentials
+  target: Введите учетные данные
+  target_initial: Введите учетные данные
+- locale: ru
+  format: string
+  source: Unassigned Tickets
+  target: Неназначенные заявки
+  target_initial: Неназначенные заявки
+- locale: ru
+  format: string
+  source: Maximum failed logins
+  target: Максимальное количество неудачных попыток входа
+  target_initial: Максимальное количество неудачных попыток входа
+- locale: ru
+  format: string
+  source: Addons
+  target: Добавления
+  target_initial: Добавления
+- locale: ru
+  format: string
+  source: Billing information
+  target: Платежная информация
+  target_initial: Платежная информация
+- locale: ru
+  format: string
+  source: Configure
+  target: Формировать
+  target_initial: Формировать
+- locale: ru
+  format: string
+  source: No filter.
+  target: Без фильтра
+  target_initial: Без фильтра
+- locale: ru
+  format: string
+  source: Meine zugewiesenen Tickets
+  target: Meine zugewiesenen Tickets
+  target_initial: Meine zugewiesenen Tickets
+- locale: ru
+  format: string
+  source: Add this class to a button on your page that should open the chat.
+  target: Добавьте этот класс к кнопке на своей странице, которая должна открыть чат.
+  target_initial: Добавьте этот класс к кнопке на своей странице, которая должна открыть
+    чат.
+- locale: ru
+  format: string
+  source: Billing Cycle
+  target: Платежный цикл
+  target_initial: Платежный цикл
+- locale: ru
+  format: string
+  source: "...of whole textarea"
+  target: всего текста
+  target_initial: всего текста
+- locale: ru
+  format: string
+  source: A test ticket has been created, you can find it in your overview |"%s"|
+  target: Была создана тестовая заявка, вы можете найти её в своем обзоре
+  target_initial: Была создана тестовая заявка, вы можете найти её в своем обзоре
+- locale: ru
+  format: string
+  source: Confirm/submit dialog
+  target: Подтвердить/отправить диалог
+  target_initial: Подтвердить/отправить диалог
+- locale: ru
+  format: string
+  source: Criteria
+  target: Критерий
+  target_initial: Критерий
+- locale: ru
+  format: string
+  source: Feature disabled!
+  target: 'Функция отключена! '
+  target_initial: 'Функция отключена! '
+- locale: ru
+  format: string
+  source: inactive
+  target: неактивный
+  target_initial: неактивный
+- locale: ru
+  format: string
+  source: switch to
+  target: переключиться
+  target_initial: переключиться
+- locale: ru
+  format: string
+  source: The chat is turned off.
+  target: Чат отключен
+  target_initial: Чат отключен
+- locale: ru
+  format: string
+  source: Yes, please cancel my subscription
+  target: Да, пожалуйста измените мою подписку
+  target_initial: Да, пожалуйста измените мою подписку
+- locale: ru
+  format: string
+  source: Your new selection
+  target: Ваш новый выбор
+  target_initial: Ваш новый выбор
+- locale: ru
+  format: string
+  source: Move left and right
+  target: Переместить вправо и влево
+  target_initial: Переместить вправо и влево
+- locale: ru
+  format: string
+  source: ringing
+  target: вызов
+  target_initial: вызов
+- locale: ru
+  format: string
+  source: The default font size is 12px.
+  target: Размер шрифта по умолчанию 12рх.
+  target_initial: Размер шрифта по умолчанию 12рх.
+- locale: ru
+  format: string
+  source: Continue session
+  target: Продолжение сессии
+  target_initial: Продолжение сессии
+- locale: ru
+  format: string
+  source: Current User
+  target: Текущий Пользователь
+  target_initial: Текущий Пользователь
+- locale: ru
+  format: string
+  source: Feedback about our new Interface
+  target: Отзывы о нашем новом Интерфейсе
+  target_initial: Отзывы о нашем новом Интерфейсе
+- locale: ru
+  format: string
+  source: Last contact
+  target: Последний контакт
+  target_initial: Последний контакт
+- locale: ru
+  format: string
+  source: You can create multiple chat topics.
+  target: Вы можете создать несколько тем в чате.
+  target_initial: Вы можете создать несколько тем в чате.
+- locale: ru
+  format: string
+  source: internal
+  target: внутренний
+  target_initial: внутренний
+- locale: ru
+  format: string
+  source: Out of Office
+  target: Вне Офиса
+  target_initial: Вне Офиса
+- locale: ru
+  format: string
+  source: Personal Settings
+  target: Персональные Настройки
+  target_initial: Персональные Настройки
+- locale: ru
+  format: string
+  source: Register as a new customer
+  target: Зарегистрироваться как новый клиент
+  target_initial: Зарегистрироваться как новый клиент
+- locale: ru
+  format: string
+  source: Third-party Applications
+  target: Third-party Applications
+  target_initial: Third-party Applications
+- locale: ru
+  format: string
+  source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  target: Zammad - это мощный инструмент, который отслеживает и визуализирует вашу
+    производительность.
+  target_initial: Zammad - это мощный инструмент, который отслеживает и визуализирует
+    вашу производительность.
+- locale: ru
+  format: string
+  source: Font size
+  target: Размер шрифта
+  target_initial: Размер шрифта
+- locale: ru
+  format: string
+  source: Last contact (agent)
+  target: Последний контакт (агент)
+  target_initial: Последний контакт (агент)
+- locale: ru
+  format: string
+  source: Send invitation
+  target: Отправить приглашение
+  target_initial: Отправить приглашение
+- locale: ru
+  format: string
+  source: You can request your password
+  target: Вы можете запросить пароль
+  target_initial: Вы можете запросить пароль
+- locale: ru
+  format: string
+  source: SLAs
+  target: SLAs
+  target_initial: SLAs
+- locale: ru
+  format: string
+  source: Payment history
+  target: История платежей
+  target_initial: История платежей
+- locale: ru
+  format: string
+  source: deactivated
+  target: отключено
+  target_initial: отключено
+- locale: ru
+  format: string
+  source: join today!
+  target: присоединись сегодня!
+  target_initial: присоединись сегодня!
+- locale: ru
+  format: string
+  source: Please try to login!
+  target: Пожалуйста попробуйте войти!
+  target_initial: Пожалуйста попробуйте войти!
+- locale: ru
+  format: string
+  source: public
+  target: общественный
+  target_initial: общественный
+- locale: ru
+  format: string
+  source: Sign in with
+  target: Вход с помощью
+  target_initial: Вход с помощью
+- locale: ru
+  format: string
+  source: deactivate
+  target: отключить
+  target_initial: отключить
+- locale: ru
+  format: string
+  source: Choose your new password.
+  target: Выберите новый пароль
+  target_initial: Выберите новый пароль
+- locale: ru
+  format: string
+  source: New to
+  target: Новое
+  target_initial: Новое
+- locale: ru
+  format: string
+  source: pending
+  target: ожидаемый
+  target_initial: ожидаемый
+- locale: ru
+  format: string
+  source: Copy to clipboard
+  target: Копировать в буфер
+  target_initial: Копировать в буфер
+- locale: ru
+  format: string
+  source: Edit Branch
+  target: Редактировать Ветку
+  target_initial: Редактировать Ветку
+- locale: ru
+  format: string
+  source: from
+  target: от
+  target_initial: от
+- locale: ru
+  format: string
+  source: Invite Agents
+  target: Пригласить Агентов
+  target_initial: Пригласить Агентов
+- locale: ru
+  format: string
+  source: Invitation sent!
+  target: Приглашение отправлено!
+  target_initial: Приглашение отправлено!
+- locale: ru
+  format: string
+  source: New Profile
+  target: Новый Профиль
+  target_initial: Новый Профиль
+- locale: ru
+  format: string
+  source: now
+  target: сейчас
+  target_initial: сейчас
+- locale: ru
+  format: string
+  source: Prio
+  target: Приоритет
+  target_initial: Приоритет
+- locale: ru
+  format: string
+  source: What ideas do you have?
+  target: Какие идеи у тебя есть?
+  target_initial: Какие идеи у тебя есть?
+- locale: ru
+  format: string
+  source: New SLA
+  target: Новый SLA
+  target_initial: Новый SLA
+- locale: ru
+  format: string
+  source: Recipients
+  target: Получатель
+  target_initial: Получатель
+- locale: ru
+  format: string
+  source: Restore Defaults
+  target: Восстановление значений по Умолчанию
+  target_initial: Восстановление значений по Умолчанию
+- locale: ru
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: ru
+  format: string
+  source: Uploading
+  target: Загрузка
+  target_initial: Загрузка
+- locale: ru
+  format: string
+  source: Update Time
+  target: Время Обновления
+  target_initial: Время Обновления
+- locale: ru
+  format: string
+  source: up
+  target: вверх
+  target_initial: вверх
+- locale: ru
+  format: string
+  source: down
+  target: вниз
+  target_initial: вниз
+- locale: ru
+  format: string
+  source: here
+  target: здесь
+  target_initial: здесь
+- locale: ru
+  format: string
+  source: App ID
+  target: ID приложения
+  target_initial: ID приложения
+- locale: ru
+  format: string
+  source: is not
+  target: не
+  target_initial: не
+- locale: ru
+  format: string
+  source: is
+  target: is
+  target_initial: is
+- locale: ru
+  format: string
+  source: just now
+  target: только что
+  target_initial: только что
+- locale: ru
+  format: string
+  source: Open tickets
+  target: Открыть тикет
+  target_initial: Открыть тикет
+- locale: ru
+  format: string
+  source: Option
+  target: Опция
+  target_initial: Опция
+- locale: ru
+  format: string
+  source: Switch to
+  target: Переключиться
+  target_initial: Переключиться
+- locale: ru
+  format: string
+  source: Text editing
+  target: Редактирование текста
+  target_initial: Редактирование текста
+- locale: ru
+  format: string
+  source: in hours
+  target: в часах
+  target_initial: в часах
+- locale: ru
+  format: string
+  source: New Version
+  target: Новая Версия
+  target_initial: Новая Версия
+- locale: ru
+  format: string
+  source: Organization Support
+  target: Служба Поддержки
+  target_initial: Служба Поддержки
+- locale: ru
+  format: string
+  source: Removes any hyperlink
+  target: Удалить все гиперссылки
+  target_initial: Удалить все гиперссылки
+- locale: ru
+  format: string
+  source: Send Mails via
+  target: Отправить Письма через
+  target_initial: Отправить Письма через
+- locale: ru
+  format: string
+  source: Tag
+  target: Тег
+  target_initial: Тег
+- locale: ru
+  format: string
+  source: Widget
+  target: Виджет
+  target_initial: Виджет
+- locale: ru
+  format: string
+  source: Widget Designer
+  target: Конструктор Виджетов
+  target_initial: Конструктор Виджетов
+- locale: ru
+  format: string
+  source: Connect
+  target: Связаться
+  target_initial: Связаться
+- locale: ru
+  format: string
+  source: attached
+  target: прикреплен
+  target_initial: прикреплен
+- locale: ru
+  format: string
+  source: Database Update required
+  target: Требуется обновление базы данных
+  target_initial: Требуется обновление базы данных
+- locale: ru
+  format: string
+  source: done
+  target: готово
+  target_initial: готово
+- locale: ru
+  format: string
+  source: Duration
+  target: Период
+  target_initial: Период
+- locale: ru
+  format: string
+  source: Hour(s)
+  target: Час(ы)
+  target_initial: Час(ы)
+- locale: ru
+  format: string
+  source: Back
+  target: Назад
+  target_initial: Назад
+- locale: ru
+  format: string
+  source: Load
+  target: Загрузка
+  target_initial: Загрузка
+- locale: ru
+  format: string
+  source: maybe
+  target: может быть
+  target_initial: может быть
+- locale: ru
+  format: string
+  source: required
+  target: необходимый
+  target_initial: необходимый
+- locale: ru
+  format: string
+  source: Year(s)
+  target: Год(ы)
+  target_initial: Год(ы)
+- locale: ru
+  format: string
+  source: Move up and down
+  target: Переместить вверх и вниз
+  target_initial: Переместить вверх и вниз
+- locale: ru
+  format: string
+  source: Organization & Department Name
+  target: Название Организации и Отдела
+  target_initial: Название Организации и Отдела
+- locale: ru
+  format: string
+  source: Removes the formatting
+  target: Удалить форматирование
+  target_initial: Удалить форматирование
+- locale: ru
+  format: string
+  source: Requirements
+  target: Требования
+  target_initial: Требования
+- locale: ru
+  format: string
+  source: Update Database
+  target: Обновление базы данных
+  target_initial: Обновление базы данных
+- locale: ru
+  format: string
+  source: CTI
+  target: CTI
+  target_initial: CTI
+- locale: ru
+  format: string
+  source: has changed
+  target: изменился
+  target_initial: изменился
+- locale: ru
+  format: string
+  source: You have closed a ticket
+  target: Вы закрыли тикет
+  target_initial: Вы закрыли тикет
+- locale: ru
+  format: string
+  source: Intermediate
+  target: Промежуточный
+  target_initial: Промежуточный
+- locale: ru
+  format: string
+  source: You have created a ticket
+  target: Вы создали тикет
+  target_initial: Вы создали тикет
+- locale: ru
+  format: string
+  source: Your current level
+  target: Текущий уровень
+  target_initial: Текущий уровень
+- locale: ru
+  format: string
+  source: Newbie
+  target: Новичок
+  target_initial: Новичок
+- locale: ru
+  format: string
+  source: Payment method
+  target: Способ оплаты
+  target_initial: Способ оплаты
+- locale: ru
+  format: string
+  source: Recent logs
+  target: Последние логи
+  target_initial: Последние логи
+- locale: ru
+  format: string
+  source: Subscription
+  target: Подписка
+  target_initial: Подписка
+- locale: ru
+  format: string
+  source: Summary
+  target: Резюме
+  target_initial: Резюме
+- locale: ru
+  format: string
+  source: Caller id to block
+  target: 'Заблокировать ID '
+  target_initial: 'Заблокировать ID '
+- locale: ru
+  format: string
+  source: Zammad Karma
+  target: Zammad Karma
+  target_initial: Zammad Karma
+- locale: ru
+  format: string
+  source: Master
+  target: Специалист
+  target_initial: Специалист
+- locale: ru
+  format: string
+  source: Realtime
+  target: Реальное время
+  target_initial: Реальное время
+- locale: ru
+  format: string
+  source: not set (not defined)
+  target: не установлено (не найдено)
+  target_initial: не установлено (не найдено)
+- locale: ru
+  format: string
+  source: Base Objects
+  target: Базовые Объекты
+  target_initial: Базовые Объекты
+- locale: ru
+  format: string
+  source: Merge to Ticket#
+  target: Merge to Ticket#
+  target_initial: Merge to Ticket#
+- locale: ru
+  format: string
+  source: Last contact (customer)
+  target: Последний контакт (клиент)
+  target_initial: Последний контакт (клиент)
+- locale: ru
+  format: string
+  source: Updating Database
+  target: Обновление базы данных
+  target_initial: Обновление базы данных
+- locale: ru
+  format: string
+  source: Wrong Username or Password combination.
+  target: Неверный Логин или Пароль
+  target_initial: Неверный Логин или Пароль
+- locale: ru
+  format: string
+  source: Unable to load information!
+  target: Не удалось загрузить данные!
+  target_initial: Не удалось загрузить данные!
+- locale: ru
+  format: string
+  source: My closed Tickets
+  target: Мои закрытые Тикеты
+  target_initial: Мои закрытые Тикеты
+- locale: ru
+  format: string
+  source: Payment by invoice
+  target: Оплата по счету
+  target_initial: Оплата по счету
+- locale: ru
+  format: string
+  source: Start new
+  target: Начать новый
+  target_initial: Начать новый
+- locale: ru
+  format: string
+  source: Read
+  target: Читать
+  target_initial: Читать
+- locale: ru
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'Время обработки: %s мин.'
+  target_initial: 'Время обработки: %s мин.'
+- locale: ru
+  format: string
+  source: Updated at
+  target: Обновлено в
+  target_initial: Обновлено в
+- locale: ru
+  format: string
+  source: Updated by
+  target: Кем обновлено
+  target_initial: Кем обновлено
+- locale: ru
+  format: string
+  source: again
+  target: снова
+  target_initial: снова
+- locale: ru
+  format: string
+  source: busy
+  target: занят
+  target_initial: занят
+- locale: ru
+  format: string
+  source: We've sent password reset instructions to your email address.
+  target: Инструкции по восстановлению пароля отправлены на ваш e-mail
+  target_initial: Инструкции по восстановлению пароля отправлены на ваш e-mail
+- locale: ru
+  format: string
+  source: Checksum
+  target: Контрольная сумма
+  target_initial: Контрольная сумма
+- locale: ru
+  format: string
+  source: Password needs to have at least one digit.
+  target: В пароле должна быть цифра
+  target_initial: В пароле должна быть цифра
+- locale: ru
+  format: string
+  source: Password needs to have at least minimal size of characters.
+  target: Пароль слишком короткий
+  target_initial: Пароль слишком короткий
+- locale: ru
+  format: string
+  source: Client Secret
+  target: Пароль клиента
+  target_initial: Пароль клиента
+- locale: ru
+  format: string
+  source: Close current tab
+  target: Закрыть текущий таб
+  target_initial: Закрыть текущий таб
+- locale: ru
+  format: string
+  source: Billing E-Mail Address
+  target: E-mail для счетов
+  target_initial: E-mail для счетов
+- locale: ru
+  format: string
+  source: Default at Signup
+  target: По умолчанию при регистрации
+  target_initial: По умолчанию при регистрации
+- locale: ru
+  format: string
+  source: updated
+  target: обновлен
+  target_initial: обновлен
+- locale: ru
+  format: string
+  source: App Secret
+  target: Пароль приложения
+  target_initial: Пароль приложения
+- locale: ru
+  format: string
+  source: Article
+  target: Статья
+  target_initial: Статья
+- locale: ru
+  format: string
+  source: Assignment Timeout
+  target: Таймаут назначения
+  target_initial: Таймаут назначения
+- locale: ru
+  format: string
+  source: Choose Template
+  target: Выберите шаблон
+  target_initial: Выберите шаблон
+- locale: ru
+  format: string
+  source: Create an outbound Ticket (will send this as email to customer)
+  target: Создать исходящий запрос
+  target_initial: Создать исходящий запрос
+- locale: ru
+  format: string
+  source: Getting started!
+  target: Начать!
+  target_initial: Начать!
+- locale: ru
+  format: string
+  source: My Organization Tickets
+  target: Запросы моей организации
+  target_initial: Запросы моей организации
+- locale: ru
+  format: string
+  source: no criteria
+  target: нет критерия
+  target_initial: нет критерия
+- locale: ru
+  format: string
+  source: Projects
+  target: Проекты
+  target_initial: Проекты
+- locale: ru
+  format: string
+  source: Setup Finished
+  target: Установка завершена
+  target_initial: Установка завершена
+- locale: ru
+  format: string
+  source: at
+  target: в
+  target_initial: в
+- locale: ru
+  format: string
+  source: clear
+  target: очистить
+  target_initial: очистить
+- locale: ru
+  format: string
+  source: Folder
+  target: Папка
+  target_initial: Папка
+- locale: ru
+  format: string
+  source: Setup new System
+  target: Установка новой системы
+  target_initial: Установка новой системы
+- locale: ru
+  format: string
+  source: connected
+  target: 'подключено '
+  target_initial: 'подключено '
+- locale: ru
+  format: string
+  source: Default caller id
+  target: Номер по умолчанию
+  target_initial: Номер по умолчанию
+- locale: ru
+  format: string
+  source: Default caller id for outbound calls.
+  target: Номер по умолчанию для исходящих вызовов.
+  target_initial: Номер по умолчанию для исходящих вызовов.
+- locale: ru
+  format: string
+  source: Karma Level
+  target: Уровень кармы
+  target_initial: Уровень кармы
+- locale: ru
+  format: string
+  source: not exist
+  target: не существует
+  target_initial: не существует
+- locale: ru
+  format: string
+  source: Continue anyway
+  target: Всё равно продолжить
+  target_initial: Всё равно продолжить
+- locale: ru
+  format: string
+  source: left
+  target: влево
+  target_initial: влево
+- locale: ru
+  format: string
+  source: Analyzing structure...
+  target: Анализ структуры...
+  target_initial: Анализ структуры...
+- locale: ru
+  format: string
+  source: Annual
+  target: Годовой
+  target_initial: Годовой
+- locale: ru
+  format: string
+  source: Base DN
+  target: Основной DN
+  target_initial: Основной DN
+- locale: ru
+  format: string
+  source: Bind Password
+  target: Пароль привязки
+  target_initial: Пароль привязки
+- locale: ru
+  format: string
+  source: Bind User
+  target: Пользователь привязки
+  target_initial: Пользователь привязки
+- locale: ru
+  format: string
+  source: Connect Facebook App
+  target: Подключить приложение Facebook
+  target_initial: Подключить приложение Facebook
+- locale: ru
+  format: string
+  source: LDAP Host
+  target: Узел LDAP
+  target_initial: Узел LDAP
+- locale: ru
+  format: string
+  source: Running...
+  target: Запуск...
+  target_initial: Запуск...
+- locale: ru
+  format: string
+  source: Auto close state
+  target: Автоматическое закрытие состояния
+  target_initial: Автоматическое закрытие состояния
+- locale: ru
+  format: string
+  source: forward
+  target: переслать
+  target_initial: переслать
+- locale: ru
+  format: string
+  source: Locale
+  target: Локализация
+  target_initial: Локализация
+- locale: ru
+  format: string
+  source: Urgency
+  target: Срочность
+  target_initial: Срочность
+- locale: ru
+  format: string
+  source: after (relative)
+  target: после (относительно)
+  target_initial: после (относительно)
+- locale: ru
+  format: string
+  source: Already charged in this periode
+  target: Уже оплачено в этом периоде.
+  target_initial: Уже оплачено в этом периоде.
+- locale: ru
+  format: string
+  source: annually
+  target: ежегодно
+  target_initial: ежегодно
+- locale: ru
+  format: string
+  source: Article Count
+  target: Количество статей
+  target_initial: Количество статей
+- locale: ru
+  format: string
+  source: Connecting ...
+  target: Подключение...
+  target_initial: Подключение...
+- locale: ru
+  format: string
+  source: Default caller id.
+  target: Номер по умолчанию.
+  target_initial: Номер по умолчанию.
+- locale: ru
+  format: string
+  source: Full
+  target: Полный
+  target_initial: Полный
+- locale: ru
+  format: string
+  source: Login successfully! Have a nice day!
+  target: Успешный вход. Хорошего дня!
+  target_initial: Успешный вход. Хорошего дня!
+- locale: ru
+  format: string
+  source: New Project
+  target: Новый проект
+  target_initial: Новый проект
+- locale: ru
+  format: string
+  source: reached
+  target: достигнуто
+  target_initial: достигнуто
+- locale: ru
+  format: string
+  source: after (absolute)
+  target: после (абсолютно)
+  target_initial: после (абсолютно)
+- locale: ru
+  format: string
+  source: Agent limit exceeded, please check your account settings.
+  target: Превышено количество агентов, проверьте настройки аккаунта.
+  target_initial: Превышено количество агентов, проверьте настройки аккаунта.
+- locale: ru
+  format: string
+  source: Amount
+  target: Количество
+  target_initial: Количество
+- locale: ru
+  format: string
+  source: Article#
+  target: Статья#
+  target_initial: Статья#
+- locale: ru
+  format: string
+  source: Article Last Sender
+  target: Последний отправитель статьи
+  target_initial: Последний отправитель статьи
+- locale: ru
+  format: string
+  source: Connect Twitter App
+  target: Подключить приложение Twitter
+  target_initial: Подключить приложение Twitter
+- locale: ru
+  format: string
+  source: Create an inbound Ticket
+  target: Создать входящий запрос
+  target_initial: Создать входящий запрос
+- locale: ru
+  format: string
+  source: New Role
+  target: Новая роль
+  target_initial: Новая роль
+- locale: ru
+  format: string
+  source: Not configured
+  target: Не настроено
+  target_initial: Не настроено
+- locale: ru
+  format: string
+  source: Reopened
+  target: Переоткрыто
+  target_initial: Переоткрыто
+- locale: ru
+  format: string
+  source: uninstalled
+  target: деинсталлирован
+  target_initial: деинсталлирован
+- locale: ru
+  format: string
+  source: Auto close
+  target: Автозакрытие
+  target_initial: Автозакрытие
+- locale: ru
+  format: string
+  source: To configure your system.
+  target: Настройка системы.
+  target_initial: Настройка системы.
+- locale: ru
+  format: string
+  source: To work on Tickets.
+  target: Работа с заявками.
+  target_initial: Работа с заявками.
+- locale: ru
+  format: string
+  source: People who create Tickets ask for help.
+  target: Люди, которые создают заявки для помощи.
+  target_initial: Люди, которые создают заявки для помощи.
+- locale: ru
+  format: string
+  source: Items per page
+  target: Элементов на странице
+  target_initial: Элементов на странице
+- locale: ru
+  format: string
+  source: in %s
+  target: в %s
+  target_initial: в %s
+- locale: ru
+  format: string
+  source: Ticket Number Format
+  target: Формат номера заявки
+  target_initial: Формат номера заявки
+- locale: ru
+  format: string
+  source: shown
+  target: показывать
+  target_initial: показывать
+- locale: ru
+  format: string
+  source: You have tickets that are over 2 days overdue
+  target: У вас имеются просроченные заявки
+  target_initial: У вас имеются просроченные заявки
+- locale: ru
+  format: string
+  source: Selects the ticket number generator module.
+  target: Определяет способ формирования номера заявки.
+  target_initial: Определяет способ формирования номера заявки.
+- locale: ru
+  format: string
+  source: "%s required!"
+  target: требуется %s!
+  target_initial: требуется %s!
+- locale: ru
+  format: string
+  source: Default visibility for new note.
+  target: Видимость по умолчанию для новой заметки.
+  target_initial: Видимость по умолчанию для новой заметки.
+- locale: ru
+  format: string
+  source: Shared
+  target: Общий
+  target_initial: Общий
+- locale: ru
+  format: string
+  source: Till
+  target: До
+  target_initial: До
+- locale: ru
+  format: string
+  source: delete
+  target: удалить
+  target_initial: удалить
+- locale: ru
+  format: string
+  source: Yes, undo my subscription cancel
+  target: Да, отменить мою подписку
+  target_initial: Да, отменить мою подписку
+- locale: ru
+  format: string
+  source: or sign in using
+  target: или войти используя
+  target_initial: или войти используя
+- locale: ru
+  format: string
+  source: Yes, change my subscription
+  target: Да, изменить мою подписку
+  target_initial: Да, изменить мою подписку
+- locale: ru
+  format: string
+  source: "...add object title"
+  target: "...add object title"
+  target_initial: "...add object title"
+- locale: ru
+  format: string
+  source: Add alarm to pending reminder and escalated tickets.
+  target: Add alarm to pending reminder and escalated tickets.
+  target_initial: Add alarm to pending reminder and escalated tickets.
+- locale: ru
+  format: string
+  source: Additional follow up detection
+  target: Additional follow up detection
+  target_initial: Additional follow up detection
+- locale: ru
+  format: string
+  source: Additional follow-up detection
+  target: Additional follow-up detection
+  target_initial: Additional follow-up detection
+- locale: ru
+  format: string
+  source: "...add object link URL"
+  target: "...add object link URL"
+  target_initial: "...add object link URL"
+- locale: ru
+  format: string
+  source: Billed monthly
+  target: Ежемесячный платёж
+  target_initial: Ежемесячный платёж
+- locale: ru
+  format: string
+  source: Billed annually
+  target: Ежегодный платёж
+  target_initial: Ежегодный платёж
+- locale: ru
+  format: string
+  source: Branches
+  target: Филиалы
+  target_initial: Филиалы
+- locale: ru
+  format: string
+  source: Here you can create one.
+  target: Здесь вы можете создать
+  target_initial: Здесь вы можете создать
+- locale: ru
+  format: string
+  source: First Solution
+  target: Первое Решение
+  target_initial: Первое Решение
+- locale: ru
+  format: string
+  source: Image Service
+  target: Служба Изображений
+  target_initial: Служба Изображений
+- locale: ru
+  format: string
+  source: Fixed Email Accounts
+  target: Фиксированные учетные записи электронной почты
+  target_initial: Фиксированные учетные записи электронной почты
+- locale: ru
+  format: string
+  source: Expiration (MM/YYYY)
+  target: Истечение (MM/ГГГГ)
+  target_initial: Истечение (MM/ГГГГ)
+- locale: ru
+  format: string
+  source: Find what you search. E. g. "search phrase"
+  target: Найдите то, что вы ищете. Например. "поисковая фраза"
+  target_initial: Найдите то, что вы ищете. Например. "поисковая фраза"
+- locale: ru
+  format: string
+  source: New Release
+  target: Новый выпуск
+  target_initial: Новый выпуск
+- locale: ru
+  format: string
+  source: New Attribute
+  target: Новый атрибут
+  target_initial: Новый атрибут
+- locale: ru
+  format: string
+  source: Import Key
+  target: Ключ импорта
+  target_initial: Ключ импорта
+- locale: ru
+  format: string
+  source: Import Endpoint
+  target: Назначение импорта
+  target_initial: Назначение импорта
+- locale: ru
+  format: string
+  source: http type
+  target: тип HTTP
+  target_initial: тип HTTP
+- locale: ru
+  format: string
+  source: support@example.com
+  target: support@example.com
+  target_initial: support@example.com
+- locale: ru
+  format: string
+  source: escalation
+  target: эскалация
+  target_initial: эскалация
+- locale: ru
+  format: string
+  source: Email Account
+  target: Почтовый Ящик
+  target_initial: Почтовый Ящик
+- locale: ru
+  format: string
+  source: Import from
+  target: Импорт из
+  target_initial: Импорт из
+- locale: ru
+  format: string
+  source: Geo IP Service
+  target: Сервис Geo IP
+  target_initial: Сервис Geo IP
+- locale: ru
+  format: string
+  source: You have no configured account right now.
+  target: У вас сейчас нет настроенной учетной записи.
+  target_initial: У вас сейчас нет настроенной учетной записи.
+- locale: ru
+  format: string
+  source: Defines pretty date format.
+  target: Выбор желаемого формата даты.
+  target_initial: Выбор желаемого формата даты.
+- locale: ru
+  format: string
+  source: Recent Releases
+  target: Последние обновления
+  target_initial: Последние обновления
+- locale: ru
+  format: string
+  source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  target: Вы можете подключить %s к Zammad. Сначала потребуется связать ваш Zammad
+    с %s.
+  target_initial: Вы можете подключить %s к Zammad. Сначала потребуется связать ваш
+    Zammad с %s.
+- locale: ru
+  format: string
+  source: Fully Qualified Domain Name
+  target: Полное Имя Домена
+  target_initial: Полное Имя Домена
+- locale: ru
+  format: string
+  source: Template Title
+  target: Имя шаблона
+  target_initial: Имя шаблона
+- locale: ru
+  format: string
+  source: Products
+  target: Продукты
+  target_initial: Продукты
+- locale: ru
+  format: string
+  source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  target: С помощью фильтров вы можете, например, отправлять новые тикеты в определенные
+    группы или установить определенный приоритет для тикетов VIP-клиента.
+  target_initial: С помощью фильтров вы можете, например, отправлять новые тикеты
+    в определенные группы или установить определенный приоритет для тикетов VIP-клиента.
+- locale: ru
+  format: string
+  source: Defines the system default language.
+  target: Выбор языка системы по умолчанию.
+  target_initial: Выбор языка системы по умолчанию.
+- locale: ru
+  format: string
+  source: Define the http protocol of your instance.
+  target: Выберите версию http протокола для вашего экземпляра.
+  target_initial: Выберите версию http протокола для вашего экземпляра.
+- locale: ru
+  format: string
+  source: Exchange integration for contacts management.
+  target: Интеграция с Exchange для управления контактами.
+  target_initial: Интеграция с Exchange для управления контактами.
+- locale: ru
+  format: string
+  source: Recent viewed Tickets
+  target: Последние просмотренные тикеты
+  target_initial: Последние просмотренные тикеты
+- locale: ru
+  format: string
+  source: You have no configured %s right now.
+  target: У вас еще нет настроенного %s.
+  target_initial: У вас еще нет настроенного %s.
+- locale: ru
+  format: string
+  source: Sure to delete this object?
+  target: Точно хотите удалить этот объект?
+  target_initial: Точно хотите удалить этот объект?
+- locale: ru
+  format: string
+  source: Enables user authentication via %s. Register your app first at [%s](%s).
+  target: Включает аутентификацию пользователя через %s. Сперва зарегистрируйте приложение
+    по адресу [%s](%s).
+  target_initial: Включает аутентификацию пользователя через %s. Сперва зарегистрируйте
+    приложение по адресу [%s](%s).
+- locale: ru
+  format: string
+  source: HTTP type
+  target: тип HTTP
+  target_initial: тип HTTP
+- locale: ru
+  format: string
+  source: Import Mode
+  target: Режим импорта
+  target_initial: Режим импорта
+- locale: ru
+  format: string
+  source: Add sender initials to end of a tweet.
+  target: Add sender initials to end of a tweet.
+  target_initial: Add sender initials to end of a tweet.
+- source: Select the customer of the ticket or create one.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Escalated Tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Sign in using
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: raw
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Visibility
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: twitter status
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: twitter direct-message
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter your username or email address
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Username or email address invalid, please try again.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Moved in
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Assign Follow Ups
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Work Disposition
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Conditions where SLA is used
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Copy to clipboard: Ctrl+C, Enter'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Mark all as seen.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: New Add-On
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Edit Addon
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Build Test Release
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: All pending reached Tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Sync Changes
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Hook
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Hook Position
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Max. Email Size
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Maximal size in MB of emails.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Storage Mechanism
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Geo IP Backend
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Geo Location Backend
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: At a glance
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Recent Addons
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins after account is inactive.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint auth key.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Email & Online
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Owned by nobody
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Owned by me
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Send client stats to central server.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Size
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Status Code
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Select Template
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Store
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: System URL
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: View from user's perspective
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Twitter App Credentials
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: new & open
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Push Changes
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: before (absolute)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: matches
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: before (relative)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Selector
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Escalation Times
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter timzone...
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Get latest Translation
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enable/Disable online chat.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Flat design.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: E. g. recent changed tickets, users or organizations.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Sender Format Seperator
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Verify sending and receiving
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: LinkedIn App Credentials
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry! We'll contact you soon as possible.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Some Text
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Previous in overview
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: There are too many people in queue for the chat.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket reminder reached
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket escalation
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "%s created Group |%s|"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Pending reminder reached for Ticket |%s|
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| is escalated!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: View this in Zammad
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Reply to last article
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Open note box
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enable/disable inline translations
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Select item
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used when composing a text
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used when viewing a Ticket
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Update as closed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Open reply box
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as h3 heading
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as h2 heading
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as h1 heading
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as ordered list
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as unordered list
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Inserts a horizontal rule
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as //strikethrough//
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as ||italic||
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as |bold|
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Format as _underlined_
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used in lists (views and results)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Next in tab
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used anywhere (admin only)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used anywhere
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Set article to internal/public
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Starting Zammad
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: migrate from another system
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Flat Design
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'There can be several reasons for the chat to not show up:'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Manually open chat
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Usage
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Can be in any CSS color format.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Shown when the chat is closed.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The URL to this installation of Zammad.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: within last (relative)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: within next (relative)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Conditions for shown Tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: specific user
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Run every %s at %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: When should the job run?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: not reached
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Changes were made that require a database update.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Visible
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Used in object views
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Unable to verify email. Please contact your administrator.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Navigate through article
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Karma Trends
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: What affects your Zammad Karma?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You have answered a ticket within 1h
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Usage of advanced features
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Professional
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Your karma is |%s|.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You are an |%s|.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Show Search Details
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: OK, I've copied my token
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: OK, I\'ve copied my token
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Personal Access Tokens
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You have escalated tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Please enter a valid "%s"!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Your trial is running till %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Billing
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: per agent / month
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: or %s %s monthly
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Your account got canceled at %s! Your system will be removed at %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You use %s in text but no attachment is attached. Do you want to continue?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: SLA Times
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Subscribe to iCalendar feed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Why doesn't the chat show up?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Holidays iCalendar Feed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Set outbound caller id
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Blocked caller ids based on sender caller id.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Also caller id of outbound calls can be changed.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| will escalate soon!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The format of the subject.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "|Left| means |[Ticket#12345] Some Subject|"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "|Right| means |Some Subject [Ticket#12345]|"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: right
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Min. size of number
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agents real name and the given group email
+    address.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Reply
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Geo Calendar Service
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be send by the sender.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for user and organization image lookups.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to perform speed of application.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: TextModule
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Assign Users based on users domain.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Create rules that single out the tickets for the Service Level Agreement.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Customers in the organization can view each other items.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Change %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Manage %s Settings
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Manage %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Follow up for closed ticket possible or not.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Recent Customer Tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: specific organization
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: current user organization
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: No such master ticket number!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Subscribe to public holidays in
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Powered by
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Migration Plugin for %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Migrate %s Data
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "%s Migration"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Attention: These will be your login password after the import is completed.'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter the URL of your %s system
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Max size of the subject in an email reply.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: SEPA Direct Debit
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: iCalendar links from Google will get fetched once a day
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Your account has not been verified. Please click the link in the verification
+    email.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Copy current object number (e. g. Ticket#) to clipboard
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Please execute database changes only in a maintenance time-slot.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Set up the communication channels you want to use with your Zammad.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you see a quick overview of your and other agents' performance.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: '|%s| stores all attachments in the "%s".'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Unassigned email addresses, assign them to a channel or delete them.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you will find the latest activities of your system.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Recently viewed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "%s people"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: No unread notifications for you. :)
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Geo Location Service
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Getting an Access Token
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Report Profile
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Sender Format Separator
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Requesting the Grant
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Location of an external chat.css file.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: contains all not
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: contains one not
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: failed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: untouched
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Mapping
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Reply-To
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Email - subject field
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Note - default visibility
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Email - full quote
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Endpoint
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Text missing
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Configurable in the admin interface of %s.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: No proxy for the following hosts.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Receipt
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: ru
+  target: ''
+  target_initial: ''

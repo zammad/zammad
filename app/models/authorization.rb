@@ -20,25 +20,17 @@ class Authorization < ApplicationModel
       )
 
       # update username of auth entry if empty
-      if !auth.username && hash['info']['nickname'].present?
+      if !auth.username && hash['info']['nickname']
         auth.update!(
           username: hash['info']['nickname'],
         )
       end
 
-      # update firstname/lastname if needed
-      user = User.find(auth.user_id)
-      if user.firstname.blank? && user.lastname.blank?
-        if hash['info']['first_name'].present? && hash['info']['last_name'].present?
-          user.firstname = hash['info']['first_name']
-          user.lastname = hash['info']['last_name']
-        elsif hash['info']['display_name'].present?
-          user.firstname = hash['info']['display_name']
-        end
-      end
-
       # update image if needed
-      if hash['info']['image'].present?
+      if hash['info']['image']
+        user = User.find(auth.user_id)
+
+        # save/update avatar
         avatar = Avatar.add(
           object: 'User',
           o_id: user.id,
@@ -48,13 +40,12 @@ class Authorization < ApplicationModel
           updated_by_id: user.id,
           created_by_id: user.id,
         )
+
+        # update user link
         if avatar && user.image != avatar.store_hash
           user.image = avatar.store_hash
+          user.save
         end
-      end
-
-      if user.changed?
-        user.save
       end
     end
     auth

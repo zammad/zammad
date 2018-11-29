@@ -1,0 +1,177 @@
+= Composite Primary Keys for ActiveRecords
+
+== Summary
+
+ActiveRecords infamously doesn't support composite primary keys.
+This gem, composite_primary_keys, or CPK for short, extends ActiveRecord
+to support composite keys.
+
+== Installation
+
+    gem install composite_primary_keys
+
+If you are using Rails add the following to your Gemfile:
+
+  gem 'composite_primary_keys', '=x.x.x' (see next section about what version to use)
+
+== Versions
+
+Every major version of ActiveRecord has included numerous internal changes.  As a result,
+CPK has to be rewritten for each version of ActiveRecord.  To help keep
+things straight, here is the mapping:
+
+    Version 10.x is designed to work with ActiveRecord 5.1.x (note this is in progress)
+    Version  9.x is designed to work with ActiveRecord 5.0.x
+    Version  8.x is designed to work with ActiveRecord 4.2.x
+    Version  7.x is designed to work with ActiveRecord 4.1.x
+    Version  6.x is designed to work with ActiveRecord 4.0.x
+    Version  5.x is designed to work with ActiveRecord 3.2.x
+    Version  4.x is designed to work with ActiveRecord 3.1.x
+
+Run the following command to list available versions:
+
+    gem list composite_primary_keys -ra
+
+== The basics
+
+A model with composite primary keys is defined like this:
+
+  class Membership < ActiveRecord::Base
+    self.primary_keys = :user_id, :group_id
+    belongs_to :user
+    belongs_to :group
+    has_many :statuses, :class_name => 'MembershipStatus', :foreign_key => [:user_id, :group_id]
+  end
+
+Note the addition of the line:
+
+    self.primary_keys = :user_id, :group_id
+
+
+A model associated with a composite key model is defined like this:
+
+  class MembershipStatus < ActiveRecord::Base
+    belongs_to :membership, :foreign_key => [:user_id, :group_id]
+  end
+
+That is, associations can include composite keys too.  All Rails association types are supported. Nice.
+
+== Usage
+
+Once you’ve created your models to specify composite primary keys (such as the Membership class)
+and associations (such as MembershipStatus#membership), you can uses them like any normal model
+with associations.
+
+But first, lets check out our primary keys.
+
+  MembershipStatus.primary_key # => "id"    # normal single key
+  Membership.primary_key  # => [:user_id, :group_id] # composite keys
+  Membership.primary_key.to_s # => "user_id,group_id"
+
+Now we want to be able to find instances using the same syntax we always use for ActiveRecords…
+
+  MembershipStatus.find(1)    # single id returns single instance
+  => <MembershipStatus:0x392a8c8 @attributes={"id"=>"1", "status"=>"Active"}>
+
+  Membership.find([1,1])  # composite ids returns single instance
+  => <Membership:0x39218b0 @attributes={"user_id"=>"1", "group_id"=>"1"}>
+
+Notice the use of an array to specify the composite key values.
+
+NOTE - API CHANGE.  CPK Version 6.x and earlier used to allow composite keys to be listed out
+like this:
+
+  Membership.find(1,1)
+
+This usage is no longer supported.
+
+== Databases
+
+CPK supports the following databases:
+
+ * PostgreSQL
+ * MySQL
+ * MariaDB
+ * Oracle
+ * DB2
+ * SQLite
+ * SQLServer
+
+== Tests
+
+To run tests you first need to install the appropriate gems for the database you want to test.  Database gems are
+divided into the following bundler groups:
+
+ * mysql
+ * oracle
+ * postgresql
+ * sqlite
+ * sqlserver
+
+Since it is likely you do not have all the above databases installed on your computer, you want to install just the
+gems for your database.  For example, to test postgresql you would install the appropriate gems like this:
+
+  bundler install --without "mysql oracle sqlite sqlserver"
+
+Once you have installed the appropriate gems, the next step is to create the test database. There is a rake
+command for each database. Using our example:
+
+  rake postgresql:build_database
+
+You can also rebuild the database if it already exists using this command:
+
+  rake postgresql:rebuild_database
+
+To get a list of commands for your database use:
+
+  Rake -T
+
+Finally, to run tests:
+
+  rake postgresql:test
+
+Travis build status: {<img src="https://travis-ci.org/composite-primary-keys/composite_primary_keys.svg" alt="Build Status" />}[https://travis-ci.org/composite-primary-keys/composite_primary_keys]
+
+=== DB2
+
+DB2 is no longer supported due to difficulties in getting the ibm_db2 gem to build.  Thus tests
+have not been run against db2.
+
+=== MariaDb (mysql)
+
+MariaDb is fully supported with all tests passing.
+
+=== Oracle
+
+Oracle is fully supported with all tests passing.
+
+=== Postgresql
+
+Postgresql is fully supported with all tests passing.
+
+=== Sqlite 3
+
+The sqlite database is created at the path composite_primary_keys/db.  Note you must *first* create the database using the
+built-in rake task before running tests:
+
+  rake sqlite:build_database
+
+For sqlite3 to work correctly, you must manually require 'composite_primary_keys/connection_adapters/sqlite3_adapter' after
+loading the CPK gem.
+
+=== SqlServer
+
+SqlServer is partially supported.  There are a number of failing tests - patches welcomed.
+
+== Questions, Discussion and Contributions
+
+For help please visit https://github.com/composite-primary-keys/composite_primary_keys.
+
+== Author
+
+First version was written by Dr Nic Williams.
+
+Maintained by Charlie Savage
+
+Contributions by many!
+

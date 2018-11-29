@@ -1,1 +1,0 @@
-<div class="chat-status-message"><%- @message %></div>

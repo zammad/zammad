@@ -140,13 +140,11 @@ class App.SearchableSelect extends Spine.Controller
       when 39 then @autocompleteOrNavigateIn event # right
       when 37 then @autocompleteOrNavigateOut event # left
       when 13 then @onEnter event
-      when 27 then @onEscape event
+      when 27 then @onEscape()
       when 9 then @onTab event
 
   onEscape: ->
-    if @isOpen
-      event.stopPropagation()  # if the input is in a modal, prevent the modal from closing
-      @toggle()
+    @toggle() if @isOpen
 
   getCurrentOptions: ->
     @currentMenu.find('.js-option, .js-enter, .js-back')

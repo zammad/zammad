@@ -1,0 +1,9 @@
+name_prefix:
+  reference_type_id: 1
+  type_label: NAME_PREFIX
+  abbreviation: Name Prefix
+
+gender:
+  reference_type_id: 2
+  type_label: GENDER
+  abbreviation: Gender

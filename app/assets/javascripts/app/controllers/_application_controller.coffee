@@ -138,12 +138,6 @@ class App.Controller extends Spine.Controller
       App.Event.trigger('menu:render')
     @delay(delay, 150)
 
-  closeTab: (key = @taskKey, dest) =>
-    return if !key?
-    App.TaskManager.remove(key)
-    dest ?= App.TaskManager.nextTaskUrl() || '#'
-    @navigate dest
-
   scrollTo: (x = 0, y = 0, delay = 0) ->
     a = ->
       window.scrollTo(x, y)
@@ -182,11 +176,11 @@ class App.Controller extends Spine.Controller
   formParam: (form) ->
     App.ControllerForm.params(form)
 
-  formDisable: (form, type) ->
-    App.ControllerForm.disable(form, type)
+  formDisable: (form) ->
+    App.ControllerForm.disable(form)
 
-  formEnable: (form, type) ->
-    App.ControllerForm.enable(form, type)
+  formEnable: (form) ->
+    App.ControllerForm.enable(form)
 
   formValidate: (data) ->
     App.ControllerForm.validate(data)
@@ -554,10 +548,6 @@ class App.Controller extends Spine.Controller
     item
 
   stopPropagation: (e) ->
-    e.stopPropagation()
-
-  preventDefaultAndstopPropagation: (e) ->
-    e.preventDefault()
     e.stopPropagation()
 
   startLoading: (el) =>

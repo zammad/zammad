@@ -1,0 +1,11 @@
+cache: bundler
+rvm:
+  - 2.4.0
+  - 2.3.3
+  - 2.2
+notifications:
+  recipients:
+    - cowboyd@thefrontside.net
+before_install:
+  - gem update --system
+script: bundle exec rake compile spec

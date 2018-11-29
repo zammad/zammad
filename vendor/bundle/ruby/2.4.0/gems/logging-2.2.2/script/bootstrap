@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+gem list -i bones >/dev/null 2>&1
+rc=$?
+if [[ $rc != 0 ]]; then
+  gem install bones
+fi
+
+gem list -i rdoc >/dev/null 2>&1
+rc=$?
+if [[ $rc != 0 ]]; then
+  gem install rdoc
+fi
+
+rake gem:install_dependencies

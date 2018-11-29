@@ -254,11 +254,7 @@ class AgentTicketTagTest < TestCase
       browser: browser2,
       js: "$('.content.active .js-name:contains(\"tag3\")').click()",
     )
-
-    modal_ready(
-      browser: browser2,
-    )
-
+    sleep 2
     set(
       browser: browser2,
       css: '.modal [name="name"]',
@@ -312,11 +308,7 @@ class AgentTicketTagTest < TestCase
       browser: browser2,
       js: "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
     )
-
-    modal_ready(
-      browser: browser2,
-    )
-
+    sleep 2
     click(
       browser: browser2,
       css: '.modal .js-submit',

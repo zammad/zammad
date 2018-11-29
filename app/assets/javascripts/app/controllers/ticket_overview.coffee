@@ -1,47 +1,3 @@
-ValidUsersForTicketSelectionMethods =
-  validUsersForTicketSelection: ->
-    items = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
-
-    # we want to display all users for which we can assign the tickets directly
-    # for this we need to get the groups of all selected tickets
-    # after we got those we need to check which users are available in all groups
-    # users that are not in all groups can't get the tickets assigned
-    ticket_ids       = _.map(items, (el) -> $(el).val() )
-    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
-    users            = @usersInGroups(ticket_group_ids)
-
-    # get the list of possible groups for the current user
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    # and order them by name
-    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
-    groups        = App.Group.findAll(group_ids)
-    groups_sorted = _.sortBy(groups, (group) -> group.name)
-
-    # get the number of visible users per group
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    for group in groups
-      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
-
-    {
-      users: users
-      groups: groups_sorted
-    }
-
-  usersInGroups: (group_ids) ->
-    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
-      .pick(group_ids)
-      .values()
-      .map( (e) -> e.owner_id)
-      .value()
-
-    # Underscore's intersection doesn't work when chained
-    ids_in_all_groups = _.intersection(ids_by_group...)
-
-    users = App.User.findAll(ids_in_all_groups)
-    _.sortBy(users, (user) -> user.firstname)
-
 class App.TicketOverview extends App.Controller
   className: 'overviews'
   activeFocus: 'nav'
@@ -68,8 +24,6 @@ class App.TicketOverview extends App.Controller
     'mousedown .item': 'startDragItem'
     'mouseenter .js-batch-hover-target': 'highlightBatchEntry'
     'mouseleave .js-batch-hover-target': 'unhighlightBatchEntry'
-
-  @include ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -586,6 +540,19 @@ class App.TicketOverview extends App.Controller
       .velocity({ opacity: [0.5, 1] }, { duration: 120 })
       .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
 
+  usersInGroups: (group_ids) ->
+    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
+      .pick(group_ids)
+      .values()
+      .map( (e) -> e.owner_id)
+      .value()
+
+    # Underscore's intersection doesn't work when chained
+    ids_in_all_groups = _.intersection(ids_by_group...)
+
+    users = App.User.findAll(ids_in_all_groups)
+    _.sortBy(users, (user) -> user.firstname)
+
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
 
@@ -637,8 +604,33 @@ class App.TicketOverview extends App.Controller
     @renderOptionsMacros()
 
   renderOptionsGroups: =>
+    items = @el.find('[name="bulk"]:checked')
+
+    # we want to display all users for which we can assign the tickets directly
+    # for this we need to get the groups of all selected tickets
+    # after we got those we need to check which users are available in all groups
+    # users that are not in all groups can't get the tickets assigned
+    ticket_ids       = _.map(items, (el) -> $(el).val() )
+    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
+    users            = @usersInGroups(ticket_group_ids)
+
+    # get the list of possible groups for the current user
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
+    # and order them by name
+    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
+    groups        = App.Group.findAll(group_ids)
+    groups_sorted = _.sortBy(groups, (group) -> group.name)
+
+    # get the number of visible users per group
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
+    for group in groups
+      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
+
     @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
-      @validUsersForTicketSelection()
+      users: users
+      groups: groups_sorted
     ))
 
   renderOptionsMacros: =>
@@ -977,7 +969,6 @@ class Table extends App.Controller
       overviewAttributes: @overview.view.s
       objects:            ticketListShow
       groupBy:            @overview.group_by
-      groupDirection:     @overview.group_direction
       orderBy:            @overview.order.by
       orderDirection:     @overview.order.direction
     )
@@ -1094,11 +1085,10 @@ class Table extends App.Controller
           id: object.organization_id
         value
       callbackCheckbox = (id, checked, e) =>
-        if @shouldShowBulkForm()
-          @bulkForm.render()
-          @bulkForm.show()
-        else
+        if @$('table').find('input[name="bulk"]:checked').length == 0
           @bulkForm.hide()
+        else
+          @bulkForm.show()
 
         if @lastChecked && e.shiftKey
           # check items in a row
@@ -1144,7 +1134,6 @@ class Table extends App.Controller
         objects:        ticketListShow
         checkbox:       checkbox
         groupBy:        @overview.group_by
-        groupDirection: @overview.group_direction
         orderBy:        @overview.order.by
         orderDirection: @overview.order.direction
         class: 'table--light'
@@ -1172,7 +1161,6 @@ class Table extends App.Controller
         bindCheckbox:
           events:
             'click': callbackCheckbox
-          select_all: callbackCheckbox
       )
 
     # start user popups
@@ -1193,11 +1181,11 @@ class Table extends App.Controller
 
     # show/hide bulk action
     @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
-      if @shouldShowBulkForm()
-        @bulkForm.show()
-      else
+      if @$('.table-overview').find('input[name="bulk"]:checked').length == 0
         @bulkForm.hide()
         @bulkForm.reset()
+      else
+        @bulkForm.show()
     )
 
     # deselect bulk_all if one item is uncheck observ
@@ -1216,17 +1204,6 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
-
-  shouldShowBulkForm: =>
-    items = @$('table').find('input[name="bulk"]:checked')
-    return false if items.length == 0
-
-    ticket_ids        = _.map(items, (el) -> $(el).val() )
-    ticket_group_ids  = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
-    ticket_group_ids  = _.uniq(ticket_group_ids)
-    allowed_group_ids = App.User.find(@Session.get('id')).allGroupIds('change')
-    allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
-    _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
 
   viewmode: (e) =>
     e.preventDefault()
@@ -1253,8 +1230,6 @@ class BulkForm extends App.Controller
     'click .js-submit':  'submit'
     'click .js-confirm': 'confirm'
     'click .js-cancel':  'reset'
-
-  @include ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -1288,12 +1263,6 @@ class BulkForm extends App.Controller
     @html(App.view('agent_ticket_view/bulk')())
 
     handlers = @Config.get('TicketZoomFormHandler')
-
-    for attribute in @configure_attributes_ticket
-      continue if attribute.name != 'owner_id'
-      {users, groups} = @validUsersForTicketSelection()
-      options = _.map(users, (user) -> {value: user.id, name: user.displayName()} )
-      attribute.possible_groups_owners = options
 
     new App.ControllerForm(
       el: @$('#form-ticket-bulk')
@@ -1560,7 +1529,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::direction'
-      display:   'Order by Direction'
+      display:   'Direction'
       tag:       'select'
       default:   @overview.order.direction
       null:      false
@@ -1578,18 +1547,7 @@ class App.OverviewSettings extends App.ControllerModal
       nulloption: true
       translate:  true
       options:    App.Overview.groupByAttributes()
-    },
-    {
-      name:    'group_direction'
-      display: 'Group by Direction'
-      tag:     'select'
-      default: @overview.group_direction
-      null:    false
-      translate: true
-      options:
-        ASC:   'up'
-        DESC:  'down'
-    },)
+    })
 
     controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
@@ -1612,10 +1570,6 @@ class App.OverviewSettings extends App.ControllerModal
 
     if @overview.order.direction isnt params.order.direction
       @overview.order.direction = params.order.direction
-      @reload_needed = true
-
-    if @overview.group_direction isnt params.group_direction
-      @overview.group_direction = params.group_direction
       @reload_needed = true
 
     for key, value of params.view

@@ -1,0 +1,19 @@
+steve:
+  id: 1
+  department_id: 1
+  location_id: 1
+
+jill:
+  id: 2
+  department_id: 1
+  location_id: 1
+
+sarah:
+  id: 3
+  department_id: 2
+  location_id: 1
+
+robert:
+  id: 4
+  department_id: 2
+  location_id: 1

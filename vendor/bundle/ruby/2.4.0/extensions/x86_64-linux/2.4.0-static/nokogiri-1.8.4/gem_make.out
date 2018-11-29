@@ -1,0 +1,111 @@
+current directory: /tmp/d20180706-47-nhp32c/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.4/ext/nokogiri
+/tmp/d20180706-47-nhp32c/opt/zammad/vendor/ruby-2.4.4/bin/ruby -r ./siteconf20180706-814-zyz8fp.rb extconf.rb
+checking if the C compiler accepts ... yes
+Building nokogiri using system libraries.
+checking for xmlParseDoc() in libxml/parser.h... yes
+checking for xsltParseStylesheetDoc() in libxslt/xslt.h... yes
+checking for exsltFuncRegister() in libexslt/exslt.h... yes
+checking for xmlHasFeature()... yes
+checking for xmlFirstElementChild()... yes
+checking for xmlRelaxNGSetParserStructuredErrors()... yes
+checking for xmlRelaxNGSetParserStructuredErrors()... yes
+checking for xmlRelaxNGSetValidStructuredErrors()... yes
+checking for xmlSchemaSetValidStructuredErrors()... yes
+checking for xmlSchemaSetParserStructuredErrors()... yes
+creating Makefile
+
+current directory: /tmp/d20180706-47-nhp32c/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.4/ext/nokogiri
+make "DESTDIR=" clean
+
+current directory: /tmp/d20180706-47-nhp32c/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.4/ext/nokogiri
+make "DESTDIR="
+compiling html_document.c
+compiling html_element_description.c
+compiling html_entity_lookup.c
+compiling html_sax_parser_context.c
+compiling html_sax_push_parser.c
+compiling nokogiri.c
+compiling xml_attr.c
+compiling xml_attribute_decl.c
+compiling xml_cdata.c
+compiling xml_comment.c
+compiling xml_document.c
+compiling xml_document_fragment.c
+compiling xml_dtd.c
+xml_dtd.c: In function ‘entities’:
+xml_dtd.c:47:47: warning: passing argument 2 of ‘xmlHashScan’ from incompatible pointer type [-Wincompatible-pointer-types]
+   xmlHashScan((xmlHashTablePtr)dtd->entities, element_copier, (void *)hash);
+                                               ^
+In file included from /usr/include/libxml2/libxml/parser.h:18:0,
+                 from ./nokogiri.h:19,
+                 from ./xml_dtd.h:4,
+                 from xml_dtd.c:1:
+/usr/include/libxml2/libxml/hash.h:209:4: note: expected ‘xmlHashScanner {aka void (*)(void *, void *, unsigned char *)}’ but argument is of type ‘void (*)(void *, void *, const xmlChar *) {aka void (*)(void *, void *, const unsigned char *)}’
+    xmlHashScan (xmlHashTablePtr table,
+    ^
+xml_dtd.c: In function ‘notations’:
+xml_dtd.c:69:48: warning: passing argument 2 of ‘xmlHashScan’ from incompatible pointer type [-Wincompatible-pointer-types]
+   xmlHashScan((xmlHashTablePtr)dtd->notations, notation_copier, (void *)hash);
+                                                ^
+In file included from /usr/include/libxml2/libxml/parser.h:18:0,
+                 from ./nokogiri.h:19,
+                 from ./xml_dtd.h:4,
+                 from xml_dtd.c:1:
+/usr/include/libxml2/libxml/hash.h:209:4: note: expected ‘xmlHashScanner {aka void (*)(void *, void *, unsigned char *)}’ but argument is of type ‘void (*)(void *, void *, const xmlChar *) {aka void (*)(void *, void *, const unsigned char *)}’
+    xmlHashScan (xmlHashTablePtr table,
+    ^
+xml_dtd.c: In function ‘attributes’:
+xml_dtd.c:91:49: warning: passing argument 2 of ‘xmlHashScan’ from incompatible pointer type [-Wincompatible-pointer-types]
+   xmlHashScan((xmlHashTablePtr)dtd->attributes, element_copier, (void *)hash);
+                                                 ^
+In file included from /usr/include/libxml2/libxml/parser.h:18:0,
+                 from ./nokogiri.h:19,
+                 from ./xml_dtd.h:4,
+                 from xml_dtd.c:1:
+/usr/include/libxml2/libxml/hash.h:209:4: note: expected ‘xmlHashScanner {aka void (*)(void *, void *, unsigned char *)}’ but argument is of type ‘void (*)(void *, void *, const xmlChar *) {aka void (*)(void *, void *, const unsigned char *)}’
+    xmlHashScan (xmlHashTablePtr table,
+    ^
+xml_dtd.c: In function ‘elements’:
+xml_dtd.c:113:47: warning: passing argument 2 of ‘xmlHashScan’ from incompatible pointer type [-Wincompatible-pointer-types]
+   xmlHashScan((xmlHashTablePtr)dtd->elements, element_copier, (void *)hash);
+                                               ^
+In file included from /usr/include/libxml2/libxml/parser.h:18:0,
+                 from ./nokogiri.h:19,
+                 from ./xml_dtd.h:4,
+                 from xml_dtd.c:1:
+/usr/include/libxml2/libxml/hash.h:209:4: note: expected ‘xmlHashScanner {aka void (*)(void *, void *, unsigned char *)}’ but argument is of type ‘void (*)(void *, void *, const xmlChar *) {aka void (*)(void *, void *, const unsigned char *)}’
+    xmlHashScan (xmlHashTablePtr table,
+    ^
+xml_dtd.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-tautological-compare’
+compiling xml_element_content.c
+compiling xml_element_decl.c
+compiling xml_encoding_handler.c
+compiling xml_entity_decl.c
+compiling xml_entity_reference.c
+compiling xml_io.c
+compiling xml_libxml2_hacks.c
+compiling xml_namespace.c
+compiling xml_node.c
+compiling xml_node_set.c
+compiling xml_processing_instruction.c
+compiling xml_reader.c
+compiling xml_relax_ng.c
+compiling xml_sax_parser.c
+compiling xml_sax_parser_context.c
+compiling xml_sax_push_parser.c
+compiling xml_schema.c
+compiling xml_syntax_error.c
+compiling xml_text.c
+compiling xml_xpath_context.c
+compiling xslt_stylesheet.c
+linking shared-object nokogiri/nokogiri.so
+Cleaning files only used during build.
+rm -rf /tmp/d20180706-47-nhp32c/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.4/ports/archives
+
+current directory: /tmp/d20180706-47-nhp32c/opt/zammad/vendor/bundle/ruby/2.4.0/gems/nokogiri-1.8.4/ext/nokogiri
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 nokogiri.so ./.gem.20180706-814-6qp8ap/nokogiri

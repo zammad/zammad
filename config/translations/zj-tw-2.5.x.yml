@@ -1,0 +1,7116 @@
+---
+- locale: zj-tw
+  format: time
+  source: date
+  target: yyyy.mm.dd
+  target_initial: yyyy.mm.dd
+- locale: zj-tw
+  format: time
+  source: timestamp
+  target: yyyy.mm.dd HH:MM
+  target_initial: yyyy.mm.dd HH:MM
+- locale: zj-tw
+  format: string
+  source: Action
+  target: 操作
+  target_initial: 操作
+- locale: zj-tw
+  format: string
+  source: Actions
+  target: 操作
+  target_initial: 操作
+- locale: zj-tw
+  format: string
+  source: Active
+  target: 激活
+  target_initial: 激活
+- locale: zj-tw
+  format: string
+  source: Add
+  target: 添加
+  target_initial: 添加
+- locale: zj-tw
+  format: string
+  source: Age
+  target: 總時長
+  target_initial: 總時長
+- locale: zj-tw
+  format: string
+  source: Apply
+  target: 應用
+  target_initial: 應用
+- locale: zj-tw
+  format: string
+  source: Apr
+  target: 四月
+  target_initial: 四月
+- locale: zj-tw
+  format: string
+  source: Attachment
+  target: 附件
+  target_initial: 附件
+- locale: zj-tw
+  format: string
+  source: Aug
+  target: 八月
+  target_initial: 八月
+- locale: zj-tw
+  format: string
+  source: Authentication
+  target: 驗証
+  target_initial: 驗証
+- locale: zj-tw
+  format: string
+  source: Cancel
+  target: 取消
+  target_initial: 取消
+- locale: zj-tw
+  format: string
+  source: City
+  target: 城市
+  target_initial: 城市
+- locale: zj-tw
+  format: string
+  source: Closed
+  target: 已關閉
+  target_initial: 已關閉
+- locale: zj-tw
+  format: string
+  source: Closed Tickets
+  target: 關閉的工單
+  target_initial: 關閉的工單
+- locale: zj-tw
+  format: string
+  source: Country
+  target: 國家
+  target_initial: 國家
+- locale: zj-tw
+  format: string
+  source: Create
+  target: 創建
+  target_initial: 創建
+- locale: zj-tw
+  format: string
+  source: Create your first ticket
+  target: 創建第一個工單
+  target_initial: 創建第一個工單
+- locale: zj-tw
+  format: string
+  source: Created
+  target: 創建於
+  target_initial: 創建於
+- locale: zj-tw
+  format: string
+  source: Current password
+  target: 當前密碼
+  target_initial: 當前密碼
+- locale: zj-tw
+  format: string
+  source: Dec
+  target: 十二月
+  target_initial: 十二月
+- locale: zj-tw
+  format: string
+  source: Delete
+  target: 刪除
+  target_initial: 刪除
+- locale: zj-tw
+  format: string
+  source: Direction
+  target: 方向
+  target_initial: 方向
+- locale: zj-tw
+  format: string
+  source: Edit
+  target: 編輯
+  target_initial: 編輯
+- locale: zj-tw
+  format: string
+  source: Email
+  target: 郵件地址
+  target_initial: 郵件地址
+- locale: zj-tw
+  format: string
+  source: Escalated Tickets
+  target: 升級的工單
+  target_initial: 升級的工單
+- locale: zj-tw
+  format: string
+  source: Feb
+  target: 二月
+  target_initial: 二月
+- locale: zj-tw
+  format: string
+  source: Filter
+  target: 過濾器
+  target_initial: 過濾器
+- locale: zj-tw
+  format: string
+  source: First Response Time
+  target: 第一響應時間
+  target_initial: 第一響應時間
+- locale: zj-tw
+  format: string
+  source: Firstname
+  target: 名
+  target_initial: 名
+- locale: zj-tw
+  format: string
+  source: Forgot password?
+  target: 密碼遺忘?
+  target_initial: 密碼遺忘?
+- locale: zj-tw
+  format: string
+  source: Forgot your password?
+  target: 忘記密碼了嗎？
+  target_initial: 忘記密碼了嗎？
+- locale: zj-tw
+  format: string
+  source: From
+  target: 發件人
+  target_initial: 發件人
+- locale: zj-tw
+  format: string
+  source: Group
+  target: 組
+  target_initial: 組
+- locale: zj-tw
+  format: string
+  source: Groups
+  target: 組
+  target_initial: 組
+- locale: zj-tw
+  format: string
+  source: History
+  target: 歷史
+  target_initial: 歷史
+- locale: zj-tw
+  format: string
+  source: Hours
+  target: 小時
+  target_initial: 小時
+- locale: zj-tw
+  format: string
+  source: Jan
+  target: 一月
+  target_initial: 一月
+- locale: zj-tw
+  format: string
+  source: Jul
+  target: 七月
+  target_initial: 七月
+- locale: zj-tw
+  format: string
+  source: Jun
+  target: 六月
+  target_initial: 六月
+- locale: zj-tw
+  format: string
+  source: Language
+  target: 語言
+  target_initial: 語言
+- locale: zj-tw
+  format: string
+  source: Lastname
+  target: 姓
+  target_initial: 姓
+- locale: zj-tw
+  format: string
+  source: Linked Objects
+  target: 已連接的對象
+  target_initial: 已連接的對象
+- locale: zj-tw
+  format: string
+  source: Loading...
+  target: 加載中...
+  target_initial: 加載中...
+- locale: zj-tw
+  format: string
+  source: Mar
+  target: 三月
+  target_initial: 三月
+- locale: zj-tw
+  format: string
+  source: May
+  target: 五月
+  target_initial: 五月
+- locale: zj-tw
+  format: string
+  source: Merge
+  target: 合併
+  target_initial: 合併
+- locale: zj-tw
+  format: string
+  source: Month
+  target: 月
+  target_initial: 月
+- locale: zj-tw
+  format: string
+  source: My Tickets
+  target: 我的工單
+  target_initial: 我的工單
+- locale: zj-tw
+  format: string
+  source: New
+  target: 新建
+  target_initial: 新建
+- locale: zj-tw
+  format: string
+  source: New Ticket
+  target: 新的工單
+  target_initial: 新的工單
+- locale: zj-tw
+  format: string
+  source: Next...
+  target: 下一步...
+  target_initial: 下一步...
+- locale: zj-tw
+  format: string
+  source: Note
+  target: 備註
+  target_initial: 備註
+- locale: zj-tw
+  format: string
+  source: Nov
+  target: 十一月
+  target_initial: 十一月
+- locale: zj-tw
+  format: string
+  source: Number
+  target: 編號
+  target_initial: 編號
+- locale: zj-tw
+  format: string
+  source: Oct
+  target: 十月
+  target_initial: 十月
+- locale: zj-tw
+  format: string
+  source: Organization
+  target: 組織
+  target_initial: 組織
+- locale: zj-tw
+  format: string
+  source: Owner
+  target: 所有者
+  target_initial: 所有者
+- locale: zj-tw
+  format: string
+  source: Password
+  target: 密碼
+  target_initial: 密碼
+- locale: zj-tw
+  format: string
+  source: Pending till
+  target: 掛起至
+  target_initial: 掛起至
+- locale: zj-tw
+  format: string
+  source: Phone
+  target: 電話
+  target_initial: 電話
+- locale: zj-tw
+  format: string
+  source: Priority
+  target: 優先級
+  target_initial: 優先級
+- locale: zj-tw
+  format: string
+  source: Profile
+  target: 搜索條件
+  target_initial: 搜索條件
+- locale: zj-tw
+  format: string
+  source: Reinstall
+  target: 重新安裝
+  target_initial: 重新安裝
+- locale: zj-tw
+  format: string
+  source: Remove
+  target: 刪除
+  target_initial: 刪除
+- locale: zj-tw
+  format: string
+  source: Reset
+  target: 重置
+  target_initial: 重置
+- locale: zj-tw
+  format: string
+  source: Roles
+  target: 角色
+  target_initial: 角色
+- locale: zj-tw
+  format: string
+  source: Save
+  target: 保存
+  target_initial: 保存
+- locale: zj-tw
+  format: string
+  source: Search
+  target: 搜索
+  target_initial: 搜索
+- locale: zj-tw
+  format: string
+  source: Sep
+  target: 九月
+  target_initial: 九月
+- locale: zj-tw
+  format: string
+  source: Settings
+  target: 設置
+  target_initial: 設置
+- locale: zj-tw
+  format: string
+  source: Signature
+  target: 回復簽名
+  target_initial: 回復簽名
+- locale: zj-tw
+  format: string
+  source: Signatures
+  target: 回復簽名
+  target_initial: 回復簽名
+- locale: zj-tw
+  format: string
+  source: Solution Time
+  target: 解決時間
+  target_initial: 解決時間
+- locale: zj-tw
+  format: string
+  source: State
+  target: 狀態
+  target_initial: 狀態
+- locale: zj-tw
+  format: string
+  source: Street
+  target: 街道
+  target_initial: 街道
+- locale: zj-tw
+  format: string
+  source: Subject
+  target: 主題
+  target_initial: 主題
+- locale: zj-tw
+  format: string
+  source: Submit
+  target: 提交
+  target_initial: 提交
+- locale: zj-tw
+  format: string
+  source: Templates
+  target: 模板
+  target_initial: 模板
+- locale: zj-tw
+  format: string
+  source: Title
+  target: 標題
+  target_initial: 標題
+- locale: zj-tw
+  format: string
+  source: To
+  target: 收件人
+  target_initial: 收件人
+- locale: zj-tw
+  format: string
+  source: Type
+  target: 類型
+  target_initial: 類型
+- locale: zj-tw
+  format: string
+  source: Update
+  target: 更新
+  target_initial: 更新
+- locale: zj-tw
+  format: string
+  source: Update Time
+  target: 更新時間
+  target_initial: 更新時間
+- locale: zj-tw
+  format: string
+  source: User
+  target: 用戶
+  target_initial: 用戶
+- locale: zj-tw
+  format: string
+  source: Vendor
+  target: 提供者
+  target_initial: 提供者
+- locale: zj-tw
+  format: string
+  source: Welcome!
+  target: 歡迎！
+  target_initial: 歡迎！
+- locale: zj-tw
+  format: string
+  source: Year
+  target: 年
+  target_initial: 年
+- locale: zj-tw
+  format: string
+  source: Zip
+  target: 郵編
+  target_initial: 郵編
+- locale: zj-tw
+  format: string
+  source: days
+  target: 天
+  target_initial: 天
+- locale: zj-tw
+  format: string
+  source: hour
+  target: 小時
+  target_initial: 小時
+- locale: zj-tw
+  format: string
+  source: installed
+  target: 已安裝
+  target_initial: 已安裝
+- locale: zj-tw
+  format: string
+  source: merged
+  target: 已合併
+  target_initial: 已合併
+- locale: zj-tw
+  format: string
+  source: minute
+  target: 分鐘
+  target_initial: 分鐘
+- locale: zj-tw
+  format: string
+  source: none
+  target: 無
+  target_initial: 無
+- locale: zj-tw
+  format: string
+  source: of
+  target: 在
+  target_initial: 在
+- locale: zj-tw
+  format: string
+  source: removed
+  target: 已刪除
+  target_initial: 已刪除
+- locale: zj-tw
+  format: string
+  source: sms
+  target: " (短信)"
+  target_initial: " (短信)"
+- locale: zj-tw
+  format: string
+  source: uninstalled
+  target: 未安裝
+  target_initial: 未安裝
+- locale: zj-tw
+  format: string
+  source: Admin
+  target: 系統管理
+  target_initial: 系統管理
+- locale: zj-tw
+  format: string
+  source: Agent
+  target: 服務人員
+  target_initial: 服務人員
+- locale: zj-tw
+  format: string
+  source: All
+  target: 全部
+  target_initial: 全部
+- locale: zj-tw
+  format: string
+  source: Cc
+  target: 抄送
+  target_initial: 抄送
+- locale: zj-tw
+  format: string
+  source: Comment
+  target: 註釋
+  target_initial: 註釋
+- locale: zj-tw
+  format: string
+  source: Display
+  target: 顯示
+  target_initial: 顯示
+- locale: zj-tw
+  format: string
+  source: Edit Customer
+  target: 編輯用戶單位
+  target_initial: 編輯用戶單位
+- locale: zj-tw
+  format: string
+  source: Go Back
+  target: 返回
+  target_initial: 返回
+- locale: zj-tw
+  format: string
+  source: Import
+  target: 導入
+  target_initial: 導入
+- locale: zj-tw
+  format: string
+  source: Message
+  target: 消息
+  target_initial: 消息
+- locale: zj-tw
+  format: string
+  source: Name
+  target: 名稱
+  target_initial: 名稱
+- locale: zj-tw
+  format: string
+  source: Options
+  target: 選項
+  target_initial: 選項
+- locale: zj-tw
+  format: string
+  source: System
+  target: 系統
+  target_initial: 系統
+- locale: zj-tw
+  format: string
+  source: Ticket
+  target: 工單
+  target_initial: 工單
+- locale: zj-tw
+  format: string
+  source: Tickets
+  target: 工單
+  target_initial: 工單
+- locale: zj-tw
+  format: string
+  source: Version
+  target: 版本
+  target_initial: 版本
+- locale: zj-tw
+  format: string
+  source: pending reminder
+  target: 掛起提醒
+  target_initial: 掛起提醒
+- locale: zj-tw
+  format: string
+  source: Host
+  target: 主機
+  target_initial: 主機
+- locale: zj-tw
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: zj-tw
+  format: string
+  source: SystemID
+  target: 系統ID
+  target_initial: 系統ID
+- locale: zj-tw
+  format: string
+  source: Upload
+  target: 上傳
+  target_initial: 上傳
+- locale: zj-tw
+  format: string
+  source: Create Template
+  target: 創建模板
+  target_initial: 創建模板
+- locale: zj-tw
+  format: string
+  source: Send Email
+  target: 發送郵件
+  target_initial: 發送郵件
+- locale: zj-tw
+  format: string
+  source: Text
+  target: 正文
+  target_initial: 正文
+- locale: zj-tw
+  format: string
+  source: Install Package
+  target: 安裝軟件包
+  target_initial: 安裝軟件包
+- locale: zj-tw
+  format: string
+  source: Location
+  target: 位置
+  target_initial: 位置
+- locale: zj-tw
+  format: string
+  source: Login
+  target: 登錄
+  target_initial: 登錄
+- locale: zj-tw
+  format: string
+  source: Mobile
+  target: 手機
+  target_initial: 手機
+- locale: zj-tw
+  format: string
+  source: Next
+  target: 下一步
+  target_initial: 下一步
+- locale: zj-tw
+  format: string
+  source: Status
+  target: 狀態
+  target_initial: 狀態
+- locale: zj-tw
+  format: string
+  source: Calendar
+  target: 日曆
+  target_initial: 日曆
+- locale: zj-tw
+  format: string
+  source: Configuration
+  target: 配置
+  target_initial: 配置
+- locale: zj-tw
+  format: string
+  source: Intro
+  target: 介紹
+  target_initial: 介紹
+- locale: zj-tw
+  format: string
+  source: Session
+  target: 會話
+  target_initial: 會話
+- locale: zj-tw
+  format: string
+  source: Created by
+  target: 創建人
+  target_initial: 創建人
+- locale: zj-tw
+  format: string
+  source: Description
+  target: 描述
+  target_initial: 描述
+- locale: zj-tw
+  format: string
+  source: Escalation times
+  target: 升級時間
+  target_initial: 升級時間
+- locale: zj-tw
+  format: string
+  source: Friday
+  target: 星期五
+  target_initial: 星期五
+- locale: zj-tw
+  format: string
+  source: Monday
+  target: 星期一
+  target_initial: 星期一
+- locale: zj-tw
+  format: string
+  source: Preview
+  target: 預覽
+  target_initial: 預覽
+- locale: zj-tw
+  format: string
+  source: Saturday
+  target: 星期六
+  target_initial: 星期六
+- locale: zj-tw
+  format: string
+  source: Sunday
+  target: 星期天
+  target_initial: 星期天
+- locale: zj-tw
+  format: string
+  source: Thursday
+  target: 星期四
+  target_initial: 星期四
+- locale: zj-tw
+  format: string
+  source: Time
+  target: 時間
+  target_initial: 時間
+- locale: zj-tw
+  format: string
+  source: Tuesday
+  target: 星期二
+  target_initial: 星期二
+- locale: zj-tw
+  format: string
+  source: Wednesday
+  target: 星期三
+  target_initial: 星期三
+- locale: zj-tw
+  format: string
+  source: April
+  target: 四月
+  target_initial: 四月
+- locale: zj-tw
+  format: string
+  source: August
+  target: 八月
+  target_initial: 八月
+- locale: zj-tw
+  format: string
+  source: Close
+  target: 關閉
+  target_initial: 關閉
+- locale: zj-tw
+  format: string
+  source: Continue
+  target: 繼續
+  target_initial: 繼續
+- locale: zj-tw
+  format: string
+  source: December
+  target: 十二月
+  target_initial: 十二月
+- locale: zj-tw
+  format: string
+  source: February
+  target: 二月
+  target_initial: 二月
+- locale: zj-tw
+  format: string
+  source: January
+  target: 一月
+  target_initial: 一月
+- locale: zj-tw
+  format: string
+  source: July
+  target: 七月
+  target_initial: 七月
+- locale: zj-tw
+  format: string
+  source: June
+  target: 六月
+  target_initial: 六月
+- locale: zj-tw
+  format: string
+  source: March
+  target: 三月
+  target_initial: 三月
+- locale: zj-tw
+  format: string
+  source: November
+  target: 十一月
+  target_initial: 十一月
+- locale: zj-tw
+  format: string
+  source: October
+  target: 十月
+  target_initial: 十月
+- locale: zj-tw
+  format: string
+  source: Open
+  target: 處理中
+  target_initial: 處理中
+- locale: zj-tw
+  format: string
+  source: Send
+  target: 發送
+  target_initial: 發送
+- locale: zj-tw
+  format: string
+  source: September
+  target: 九月
+  target_initial: 九月
+- locale: zj-tw
+  format: string
+  source: closed
+  target: 已關閉
+  target_initial: 已關閉
+- locale: zj-tw
+  format: string
+  source: day
+  target: 天
+  target_initial: 天
+- locale: zj-tw
+  format: string
+  source: email
+  target: E-Mail
+  target_initial: E-Mail
+- locale: zj-tw
+  format: string
+  source: hours
+  target: 小時
+  target_initial: 小時
+- locale: zj-tw
+  format: string
+  source: minutes
+  target: 分鐘
+  target_initial: 分鐘
+- locale: zj-tw
+  format: string
+  source: 'no'
+  target: 未設置
+  target_initial: 未設置
+- locale: zj-tw
+  format: string
+  source: open
+  target: 處理中
+  target_initial: 處理中
+- locale: zj-tw
+  format: string
+  source: phone
+  target: " (電話)"
+  target_initial: " (電話)"
+- locale: zj-tw
+  format: string
+  source: to
+  target: 至
+  target_initial: 至
+- locale: zj-tw
+  format: string
+  source: 'yes'
+  target: 是
+  target_initial: 是
+- locale: zj-tw
+  format: string
+  source: All tickets
+  target: 所有工單
+  target_initial: 所有工單
+- locale: zj-tw
+  format: string
+  source: Child
+  target: 子
+  target_initial: 子
+- locale: zj-tw
+  format: string
+  source: Content
+  target: 值
+  target_initial: 值
+- locale: zj-tw
+  format: string
+  source: Customer
+  target: 用戶單位
+  target_initial: 用戶單位
+- locale: zj-tw
+  format: string
+  source: Day
+  target: 日
+  target_initial: 日
+- locale: zj-tw
+  format: string
+  source: Down
+  target: 下
+  target_initial: 下
+- locale: zj-tw
+  format: string
+  source: Email address
+  target: 郵件發送地址
+  target_initial: 郵件發送地址
+- locale: zj-tw
+  format: string
+  source: Escalation
+  target: 升級
+  target_initial: 升級
+- locale: zj-tw
+  format: string
+  source: Fax
+  target: 傳真
+  target_initial: 傳真
+- locale: zj-tw
+  format: string
+  source: Finish
+  target: 完成
+  target_initial: 完成
+- locale: zj-tw
+  format: string
+  source: Last run
+  target: 最後運行
+  target_initial: 最後運行
+- locale: zj-tw
+  format: string
+  source: Logout
+  target: 退出
+  target_initial: 退出
+- locale: zj-tw
+  format: string
+  source: New group
+  target: 新的組
+  target_initial: 新的組
+- locale: zj-tw
+  format: string
+  source: New password
+  target: 新密碼
+  target_initial: 新密碼
+- locale: zj-tw
+  format: string
+  source: 'No'
+  target: 否
+  target_initial: 否
+- locale: zj-tw
+  format: string
+  source: Normal
+  target: 普通
+  target_initial: 普通
+- locale: zj-tw
+  format: string
+  source: Notice
+  target: 註意
+  target_initial: 註意
+- locale: zj-tw
+  format: string
+  source: Open tickets
+  target: 處理中的工單
+  target_initial: 處理中的工單
+- locale: zj-tw
+  format: string
+  source: Parent
+  target: 父
+  target_initial: 父
+- locale: zj-tw
+  format: string
+  source: Pending
+  target: 掛起
+  target_initial: 掛起
+- locale: zj-tw
+  format: string
+  source: Previous
+  target: 上一步
+  target_initial: 上一步
+- locale: zj-tw
+  format: string
+  source: Reply
+  target: 回復
+  target_initial: 回復
+- locale: zj-tw
+  format: string
+  source: Split
+  target: 拆分
+  target_initial: 拆分
+- locale: zj-tw
+  format: string
+  source: and
+  target: 及
+  target_initial: 及
+- locale: zj-tw
+  format: string
+  source: new
+  target: 新建
+  target_initial: 新建
+- locale: zj-tw
+  format: string
+  source: week
+  target: 星期
+  target_initial: 星期
+- locale: zj-tw
+  format: string
+  source: Agents
+  target: 服務人員
+  target_initial: 服務人員
+- locale: zj-tw
+  format: string
+  source: Example
+  target: 範例
+  target_initial: 範例
+- locale: zj-tw
+  format: string
+  source: Expires
+  target: 過期
+  target_initial: 過期
+- locale: zj-tw
+  format: string
+  source: Select
+  target: 選擇
+  target_initial: 選擇
+- locale: zj-tw
+  format: string
+  source: Dashboard
+  target: 儀表板
+  target_initial: 儀表板
+- locale: zj-tw
+  format: string
+  source: Date
+  target: 日期
+  target_initial: 日期
+- locale: zj-tw
+  format: string
+  source: Save as template
+  target: 保存為模板
+  target_initial: 保存為模板
+- locale: zj-tw
+  format: string
+  source: Can't create user
+  target: 無法建立使用者
+  target_initial: 無法建立使用者
+- locale: zj-tw
+  format: string
+  source: Change Customer
+  target: 變更客戶
+  target_initial: 變更客戶
+- locale: zj-tw
+  format: string
+  source: Change order
+  target: 變更順序
+  target_initial: 變更順序
+- locale: zj-tw
+  format: string
+  source: Cancel Upload
+  target: 取消上傳
+  target_initial: 取消上傳
+- locale: zj-tw
+  format: string
+  source: Browser
+  target: 瀏覽器
+  target_initial: 瀏覽器
+- locale: zj-tw
+  format: string
+  source: Blue
+  target: 藍色
+  target_initial: 藍色
+- locale: zj-tw
+  format: string
+  source: busy
+  target: 忙碌
+  target_initial: 忙碌
+- locale: zj-tw
+  format: string
+  source: Changed
+  target: 已變更
+  target_initial: 已變更
+- locale: zj-tw
+  format: string
+  source: Change
+  target: 變更
+  target_initial: 變更
+- locale: zj-tw
+  format: string
+  source: Change Objects
+  target: 變更物件
+  target_initial: 變更物件
+- locale: zj-tw
+  format: string
+  source: Calendars
+  target: 行事曆
+  target_initial: 行事曆
+- locale: zj-tw
+  format: string
+  source: "∅ Waiting time today"
+  target: 今日等待時間
+  target_initial: 今日等待時間
+- locale: zj-tw
+  format: string
+  source: Mood
+  target: 心情
+  target_initial: 心情
+- locale: zj-tw
+  format: string
+  source: Assigned
+  target: 被指派
+  target_initial: 被指派
+- locale: zj-tw
+  format: string
+  source: Reopening rate
+  target: 工單重開率
+  target_initial: 工單重開率
+- locale: zj-tw
+  format: string
+  source: Your tickets in process
+  target: 你正在處理的工單
+  target_initial: 你正在處理的工單
+- locale: zj-tw
+  format: string
+  source: Channel Distribution
+  target: 管道分配
+  target_initial: 管道分配
+- locale: zj-tw
+  format: string
+  source: Add a Note
+  target: 加入附註
+  target_initial: 加入附註
+- locale: zj-tw
+  format: string
+  source: Integrations
+  target: 服務整合
+  target_initial: 服務整合
+- locale: zj-tw
+  format: string
+  source: All Tickets
+  target: 全部工單
+  target_initial: 全部工單
+- locale: zj-tw
+  format: string
+  source: All Open Tickets
+  target: 所有開放工單
+  target_initial: 所有開放工單
+- locale: zj-tw
+  format: string
+  source: Attach files
+  target: 夾帶檔案
+  target_initial: 夾帶檔案
+- locale: zj-tw
+  format: string
+  source: Authentication via LinkedIn
+  target: 透過LinkedIn認證
+  target_initial: 透過LinkedIn認證
+- locale: zj-tw
+  format: string
+  source: Authentication via Google
+  target: 透過Google認證
+  target_initial: 透過Google認證
+- locale: zj-tw
+  format: string
+  source: Authentication via Twitter
+  target: 透過Twitter認證
+  target_initial: 透過Twitter認證
+- locale: zj-tw
+  format: string
+  source: Attached Files
+  target: 已附加檔案
+  target_initial: 已附加檔案
+- locale: zj-tw
+  format: string
+  source: Amount
+  target: 數量
+  target_initial: 數量
+- locale: zj-tw
+  format: string
+  source: Applications
+  target: 應用程式
+  target_initial: 應用程式
+- locale: zj-tw
+  format: string
+  source: Authentication via %s
+  target: 透過%s認證
+  target_initial: 透過%s認證
+- locale: zj-tw
+  format: string
+  source: An open source monitoring tool.
+  target: 一個開原監控工具
+  target_initial: 一個開原監控工具
+- locale: zj-tw
+  format: string
+  source: assign tickets
+  target: 指派工單
+  target_initial: 指派工單
+- locale: zj-tw
+  format: string
+  source: A test ticket has been created, you can find it in your overview |"%s"|
+  target: 已建立一個測試工單，你可以在概觀找到|"%s"|
+  target_initial: 已建立一個測試工單，你可以在概觀找到|"%s"|
+- locale: zj-tw
+  format: string
+  source: Annual
+  target: 年度
+  target_initial: 年度
+- locale: zj-tw
+  format: string
+  source: Days
+  target: 日
+  target_initial: 日
+- locale: zj-tw
+  format: string
+  source: Hour
+  target: 時
+  target_initial: 時
+- locale: zj-tw
+  format: string
+  source: Mon
+  target: 禮拜一
+  target_initial: 禮拜一
+- locale: zj-tw
+  format: string
+  source: Tue
+  target: 禮拜二
+  target_initial: 禮拜二
+- locale: zj-tw
+  format: string
+  source: Thu
+  target: 禮拜四
+  target_initial: 禮拜四
+- locale: zj-tw
+  format: string
+  source: Fri
+  target: 禮拜五
+  target_initial: 禮拜五
+- locale: zj-tw
+  format: string
+  source: Sat
+  target: 禮拜六
+  target_initial: 禮拜六
+- locale: zj-tw
+  format: string
+  source: Sun
+  target: 禮拜日
+  target_initial: 禮拜日
+- locale: zj-tw
+  format: string
+  source: or
+  target: 或是
+  target_initial: 或是
+- locale: zj-tw
+  format: string
+  source: Wed
+  target: 禮拜三
+  target_initial: 禮拜三
+- locale: zj-tw
+  format: string
+  source: updated
+  target: 已更新
+  target_initial: 已更新
+- locale: zj-tw
+  format: string
+  source: Unassigned Tickets
+  target: 未指派工單
+  target_initial: 未指派工單
+- locale: zj-tw
+  format: string
+  source: Yellow
+  target: 黃色
+  target_initial: 黃色
+- locale: zj-tw
+  format: string
+  source: Username / email
+  target: 使用者名稱/電子郵件
+  target_initial: 使用者名稱/電子郵件
+- locale: zj-tw
+  format: string
+  source: Verifying...
+  target: 驗證中...
+  target_initial: 驗證中...
+- locale: zj-tw
+  format: string
+  source: Update Database
+  target: 更新資料庫
+  target_initial: 更新資料庫
+- locale: zj-tw
+  format: string
+  source: You have closed a ticket
+  target: 你已關閉一個工單
+  target_initial: 你已關閉一個工單
+- locale: zj-tw
+  format: string
+  source: You have created a ticket
+  target: 你已建立一個工單
+  target_initial: 你已建立一個工單
+- locale: zj-tw
+  format: string
+  source: You have tickets that are over 2 days overdue
+  target: 你有過期兩天以上的工單
+  target_initial: 你有過期兩天以上的工單
+- locale: zj-tw
+  format: string
+  source: Your current level
+  target: 你目前的等級
+  target_initial: 你目前的等級
+- locale: zj-tw
+  format: string
+  source: Username
+  target: 使用者名稱
+  target_initial: 使用者名稱
+- locale: zj-tw
+  format: string
+  source: Username for proxy connection.
+  target: 代理伺服器使用者名稱
+  target_initial: 代理伺服器使用者名稱
+- locale: zj-tw
+  format: string
+  source: Your account has not been verified. Please click the link in the verification
+    email.
+  target: 你的帳號還未通過驗證。請點選電子郵件裡的驗證連結。
+  target_initial: 你的帳號還未通過驗證。請點選電子郵件裡的驗證連結。
+- locale: zj-tw
+  format: string
+  source: Updating Database
+  target: 更新資料庫中
+  target_initial: 更新資料庫中
+- locale: zj-tw
+  format: string
+  source: You can create multiple chat topics.
+  target: 你可以建立多個交談主旨
+  target_initial: 你可以建立多個交談主旨
+- locale: zj-tw
+  format: string
+  source: You have not created a ticket yet.
+  target: 你還未建立任呵工單
+  target_initial: 你還未建立任呵工單
+- locale: zj-tw
+  format: string
+  source: Yes, please cancel my subscription
+  target: 確認取消訂閱服務
+  target_initial: 確認取消訂閱服務
+- locale: zj-tw
+  format: string
+  source: Verify sending and receiving
+  target: 驗證傳送與接收
+  target_initial: 驗證傳送與接收
+- locale: zj-tw
+  format: string
+  source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  target: 你可以針對個別應月程式建立個人存取權杖呼叫Zammad API
+  target_initial: 你可以針對個別應月程式建立個人存取權杖呼叫Zammad API
+- locale: zj-tw
+  format: string
+  source: Update successful!
+  target: 更新成功!
+  target_initial: 更新成功!
+- locale: zj-tw
+  format: string
+  source: You can request your password
+  target: 你可以請求個人密碼
+  target_initial: 你可以請求個人密碼
+- locale: zj-tw
+  format: string
+  source: You need to add the following Javascript code snippet to your web page
+  target: 你必須將以下的 Javascript 程式碼加入至你的網頁原始碼內
+  target_initial: 你必須將以下的 Javascript 程式碼加入至你的網頁原始碼內
+- locale: zj-tw
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: 如果我們曾經連絡過你，就表示你的電子郵件已經註冊完成。
+  target_initial: 如果我們曾經連絡過你，就表示你的電子郵件已經註冊完成。
+- locale: zj-tw
+  format: string
+  source: Woo hoo! Your email address has been verified!
+  target: 喔耶! 你的電子郵件已通過驗證!
+  target_initial: 喔耶! 你的電子郵件已通過驗證!
+- locale: zj-tw
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: zj-tw
+  format: string
+  source: Uploading
+  target: 上傳中
+  target_initial: 上傳中
+- locale: zj-tw
+  format: string
+  source: Authentication via Facebook
+  target: 透過Facebook認證
+  target_initial: 透過Facebook認證
+- locale: zj-tw
+  format: string
+  source: Analyzing structure...
+  target: 分析結構中...
+  target_initial: 分析結構中...
+- locale: zj-tw
+  format: string
+  source: A new version of Zammad is available, please reload your browser.
+  target: Zammad有最新版本，請重整頁面。
+  target_initial: Zammad有最新版本，請重整頁面。
+- locale: zj-tw
+  format: string
+  source: Auto close
+  target: 自動關閉
+  target_initial: 自動關閉
+- locale: zj-tw
+  format: string
+  source: A team communication tool for the 21st century.
+  target: 21世紀的團隊溝通工具
+  target_initial: 21世紀的團隊溝通工具
+- locale: zj-tw
+  format: string
+  source: activate
+  target: 啟用
+  target_initial: 啟用
+- locale: zj-tw
+  format: string
+  source: activated
+  target: 已啟用
+  target_initial: 已啟用
+- locale: zj-tw
+  format: string
+  source: Attach Screenshot of page
+  target: 附加頁面截圖
+  target_initial: 附加頁面截圖
+- locale: zj-tw
+  format: string
+  source: Assign Users based on users domain.
+  target: 依網域指派使用者
+  target_initial: 依網域指派使用者
+- locale: zj-tw
+  format: string
+  source: Sign up
+  target: 註冊
+  target_initial: 註冊
+- locale: zj-tw
+  format: string
+  source: Sign in
+  target: 登入
+  target_initial: 登入
+- locale: zj-tw
+  format: string
+  source: Recent Customer Tickets
+  target: 最近的客戶工單
+  target_initial: 最近的客戶工單
+- locale: zj-tw
+  format: string
+  source: Recently viewed
+  target: 最近瀏覽
+  target_initial: 最近瀏覽
+- locale: zj-tw
+  format: string
+  source: Sign out
+  target: 登出
+  target_initial: 登出
+- locale: zj-tw
+  format: string
+  source: Recent viewed Tickets
+  target: 最近瀏覽的工單
+  target_initial: 最近瀏覽的工單
+- locale: zj-tw
+  format: string
+  source: Removes any hyperlink
+  target: 移除所有超連結
+  target_initial: 移除所有超連結
+- locale: zj-tw
+  format: string
+  source: Change your password
+  target: 變更密碼
+  target_initial: 變更密碼
+- locale: zj-tw
+  format: string
+  source: Create Admin
+  target: 建立管理員
+  target_initial: 建立管理員
+- locale: zj-tw
+  format: string
+  source: Create new Customer
+  target: 建立新客戶
+  target_initial: 建立新客戶
+- locale: zj-tw
+  format: string
+  source: Translations
+  target: 翻譯
+  target_initial: 翻譯
+- locale: zj-tw
+  format: string
+  source: Maintenance
+  target: 維護
+  target_initial: 維護
+- locale: zj-tw
+  format: string
+  source: Choose Template
+  target: 選擇範本
+  target_initial: 選擇範本
+- locale: zj-tw
+  format: string
+  source: Address
+  target: 地址
+  target_initial: 地址
+- locale: zj-tw
+  format: string
+  source: 'Average: %s minutes'
+  target: '平均: %s 分鐘'
+  target_initial: '平均: %s 分鐘'
+- locale: zj-tw
+  format: string
+  source: 'Average: %s'
+  target: '平均: %s'
+  target_initial: '平均: %s'
+- locale: zj-tw
+  format: string
+  source: 'Average: %s%'
+  target: '平均: %s%'
+  target_initial: '平均: %s%'
+- locale: zj-tw
+  format: string
+  source: Chat
+  target: 聊天室
+  target_initial: 聊天室
+- locale: zj-tw
+  format: string
+  source: contains
+  target: 包含
+  target_initial: 包含
+- locale: zj-tw
+  format: string
+  source: contains not
+  target: 不包含
+  target_initial: 不包含
+- locale: zj-tw
+  format: string
+  source: Default
+  target: 預設
+  target_initial: 預設
+- locale: zj-tw
+  format: string
+  source: Administrator Account
+  target: 管理員帳號
+  target_initial: 管理員帳號
+- locale: zj-tw
+  format: string
+  source: Add Link
+  target: 加入連結
+  target_initial: 加入連結
+- locale: zj-tw
+  format: string
+  source: Close current tab
+  target: 關閉當前頁簽
+  target_initial: 關閉當前頁簽
+- locale: zj-tw
+  format: string
+  source: Create a Test Ticket
+  target: 建立測試工單
+  target_initial: 建立測試工單
+- locale: zj-tw
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: zj-tw
+  format: string
+  source: annually
+  target: 每年
+  target_initial: 每年
+- locale: zj-tw
+  format: string
+  source: Beginner
+  target: 新手
+  target_initial: 新手
+- locale: zj-tw
+  format: string
+  source: Monitoring
+  target: 監控
+  target_initial: 監控
+- locale: zj-tw
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 兩小寫和兩大寫
+  target_initial: 兩小寫和兩大寫
+- locale: zj-tw
+  format: string
+  source: contains all
+  target: 包含全部
+  target_initial: 包含全部
+- locale: zj-tw
+  format: string
+  source: contains all not
+  target: 不包含全部
+  target_initial: 不包含全部
+- locale: zj-tw
+  format: string
+  source: 1 low
+  target: 低
+  target_initial: 低
+- locale: zj-tw
+  format: string
+  source: Activates lost password feature for users.
+  target: 啟用使用者密碼遺失功能
+  target_initial: 啟用使用者密碼遺失功能
+- locale: zj-tw
+  format: string
+  source: attached
+  target: 已附加
+  target_initial: 已附加
+- locale: zj-tw
+  format: string
+  source: Change your language.
+  target: 變更語言
+  target_initial: 變更語言
+- locale: zj-tw
+  format: string
+  source: Close tab
+  target: 關閉頁簽
+  target_initial: 關閉頁簽
+- locale: zj-tw
+  format: string
+  source: Confirm
+  target: 確認
+  target_initial: 確認
+- locale: zj-tw
+  format: string
+  source: Packages
+  target: 套件
+  target_initial: 套件
+- locale: zj-tw
+  format: string
+  source: Object Manager
+  target: 物件管理員
+  target_initial: 物件管理員
+- locale: zj-tw
+  format: string
+  source: Objects
+  target: 物件
+  target_initial: 物件
+- locale: zj-tw
+  format: string
+  source: http type
+  target: http 類型
+  target_initial: http 類型
+- locale: zj-tw
+  format: string
+  source: Keyboard Shortcuts
+  target: 快捷鍵
+  target_initial: 快捷鍵
+- locale: zj-tw
+  format: string
+  source: How to use it
+  target: 如何使用
+  target_initial: 如何使用
+- locale: zj-tw
+  format: string
+  source: Keywords
+  target: 關鍵字
+  target_initial: 關鍵字
+- locale: zj-tw
+  format: string
+  source: HTTP type
+  target: HTTP 類型
+  target_initial: HTTP 類型
+- locale: zj-tw
+  format: string
+  source: Last sync
+  target: 上次同步
+  target_initial: 上次同步
+- locale: zj-tw
+  format: string
+  source: Last used
+  target: 上次同步於
+  target_initial: 上次同步於
+- locale: zj-tw
+  format: string
+  source: Remember me
+  target: 記住我
+  target_initial: 記住我
+- locale: zj-tw
+  format: string
+  source: Recent Releases
+  target: 最近的更新
+  target_initial: 最近的更新
+- locale: zj-tw
+  format: string
+  source: Removes the formatting
+  target: 移除所有格式
+  target_initial: 移除所有格式
+- locale: zj-tw
+  format: string
+  source: reply all
+  target: 回覆所有人
+  target_initial: 回覆所有人
+- locale: zj-tw
+  format: string
+  source: Recent logs
+  target: 最近的日誌
+  target_initial: 最近的日誌
+- locale: zj-tw
+  format: string
+  source: Reopened
+  target: 被重開
+  target_initial: 被重開
+- locale: zj-tw
+  format: string
+  source: Reporting
+  target: 統計與報告
+  target_initial: 統計與報告
+- locale: zj-tw
+  format: string
+  source: Resend verification email
+  target: 重寄認證信
+  target_initial: 重寄認證信
+- locale: zj-tw
+  format: string
+  source: reply
+  target: 回覆
+  target_initial: 回覆
+- locale: zj-tw
+  format: string
+  source: reinstall
+  target: 重新安裝
+  target_initial: 重新安裝
+- locale: zj-tw
+  format: string
+  source: Report
+  target: 報表
+  target_initial: 報表
+- locale: zj-tw
+  format: string
+  source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  target: 在登入頁面上顯示一則訊息。請直接點擊下方的文字區域做編輯。
+  target_initial: 在登入頁面上顯示一則訊息。請直接點擊下方的文字區域做編輯。
+- locale: zj-tw
+  format: string
+  source: Schedulers
+  target: 排程工作
+  target_initial: 排程工作
+- locale: zj-tw
+  format: string
+  source: Ticket |%s| is escalated!
+  target: 工單|%s|已升級!
+  target_initial: 工單|%s|已升級!
+- locale: zj-tw
+  format: string
+  source: Ticket update
+  target: 更新工單
+  target_initial: 更新工單
+- locale: zj-tw
+  format: string
+  source: Ticket escalation
+  target: 升級工單
+  target_initial: 升級工單
+- locale: zj-tw
+  format: string
+  source: Ticket %s created!
+  target: 已建立 %s 工單!
+  target_initial: 已建立 %s 工單!
+- locale: zj-tw
+  format: string
+  source: Overviews
+  target: 概觀
+  target_initial: 概觀
+- locale: zj-tw
+  format: string
+  source: Account not verified
+  target: 帳號尚未通過驗證
+  target_initial: 帳號尚未通過驗證
+- locale: zj-tw
+  format: string
+  source: You have escalated tickets
+  target: 你已將工單升級
+  target_initial: 你已將工單升級
+- locale: zj-tw
+  format: string
+  source: Frontend
+  target: 前端
+  target_initial: 前端
+- locale: zj-tw
+  format: string
+  source: Assignment Timeout
+  target: 工單指派逾時
+  target_initial: 工單指派逾時
+- locale: zj-tw
+  format: string
+  source: You have no configured %s right now.
+  target: 你目前還未設置 %s
+  target_initial: 你目前還未設置 %s
+- locale: zj-tw
+  format: string
+  source: Your Email Configuration
+  target: 你的電子郵件設定
+  target_initial: 你的電子郵件設定
+- locale: zj-tw
+  format: string
+  source: Package
+  target: 套件
+  target_initial: 套件
+- locale: zj-tw
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: 如果我們曾經與您聯繫，您的email已經完成註冊。
+  target_initial: 如果我們曾經與您聯繫，您的email已經完成註冊。
+- locale: zj-tw
+  format: string
+  source: Assign Follow Ups
+  target: 追蹤已關閉工單直接指派原先負責人
+  target_initial: 追蹤已關閉工單直接指派原先負責人
+- locale: zj-tw
+  format: string
+  source: not translated
+  target: 尚未翻譯
+  target_initial: 尚未翻譯
+- locale: zj-tw
+  format: string
+  source: Time Accounting
+  target: 計時器
+  target_initial: 計時器
+- locale: zj-tw
+  format: string
+  source: Triggers
+  target: 事件觸發
+  target_initial: 事件觸發
+- locale: zj-tw
+  format: string
+  source: Manage
+  target: 管理
+  target_initial: 管理
+- locale: zj-tw
+  format: string
+  source: Trigger
+  target: 事件觸發
+  target_initial: 事件觸發
+- locale: zj-tw
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: 邀請你的工作夥伴來解決工單
+  target_initial: 邀請你的工作夥伴來解決工單
+- locale: zj-tw
+  format: string
+  source: Create Text Modules
+  target: 建立文字模組
+  target_initial: 建立文字模組
+- locale: zj-tw
+  format: string
+  source: "%s created Ticket |%s|"
+  target: "%s 建立工單 |%s|"
+  target_initial: "%s 建立工單 |%s|"
+- locale: zj-tw
+  format: string
+  source: To work on Tickets.
+  target: 解決工單問題
+  target_initial: 解決工單問題
+- locale: zj-tw
+  format: string
+  source: Invite customers to create issues in Zammad
+  target: 邀請你的客戶來Zammad建立工單
+  target_initial: 邀請你的客戶來Zammad建立工單
+- locale: zj-tw
+  format: string
+  source: Create Macros
+  target: 建立巨集
+  target_initial: 建立巨集
+- locale: zj-tw
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s 更新工單 |%s|"
+  target_initial: "%s 更新工單 |%s|"
+- locale: zj-tw
+  format: string
+  source: "%s created User |%s|"
+  target: "%s 建立使用者 |%s|"
+  target_initial: "%s 建立使用者 |%s|"
+- locale: zj-tw
+  format: string
+  source: Department
+  target: 部門
+  target_initial: 部門
+- locale: zj-tw
+  format: string
+  source: To configure your system.
+  target: 系統調整設定.
+  target_initial: 系統調整設定.
+- locale: zj-tw
+  format: string
+  source: Branding
+  target: 品牌形象
+  target_initial: 品牌形象
+- locale: zj-tw
+  format: string
+  source: My Stats
+  target: 我的數據
+  target_initial: 我的數據
+- locale: zj-tw
+  format: string
+  source: Activity Stream
+  target: 當前活動
+  target_initial: 當前活動
+- locale: zj-tw
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: '指派給我的工單: %s of %s'
+  target_initial: '指派給我的工單: %s of %s'
+- locale: zj-tw
+  format: string
+  source: Permissions
+  target: 權限
+  target_initial: 權限
+- locale: zj-tw
+  format: string
+  source: People who create Tickets ask for help.
+  target: 建立工單尋求支援或協助
+  target_initial: 建立工單尋求支援或協助
+- locale: zj-tw
+  format: string
+  source: 2 normal
+  target: 2 普通
+  target_initial: 2 普通
+- locale: zj-tw
+  format: string
+  source: New Group
+  target: 建立新群駔
+  target_initial: 建立新群駔
+- locale: zj-tw
+  format: string
+  source: Scheduler
+  target: 排程工作
+  target_initial: 排程工作
+- locale: zj-tw
+  format: string
+  source: New Scheduler
+  target: 建立新排程
+  target_initial: 建立新排程
+- locale: zj-tw
+  format: string
+  source: Business Hours
+  target: 工作時間
+  target_initial: 工作時間
+- locale: zj-tw
+  format: string
+  source: Users
+  target: 使用者
+  target_initial: 使用者
+- locale: zj-tw
+  format: string
+  source: 3 high
+  target: 3 高
+  target_initial: 3 高
+- locale: zj-tw
+  format: string
+  source: in hours
+  target: 小時
+  target_initial: 小時
+- locale: zj-tw
+  format: string
+  source: Ticket Selector
+  target: 選擇工單
+  target_initial: 選擇工單
+- locale: zj-tw
+  format: string
+  source: No Entries
+  target: 無資料
+  target_initial: 無資料
+- locale: zj-tw
+  format: string
+  source: Inline translation
+  target: 即時翻譯
+  target_initial: 即時翻譯
+- locale: zj-tw
+  format: string
+  source: Just click into the marker and update the words just in place. Enjoy!
+  target: 啟動後在框內直接輸入翻譯取代原有文字，請慢用。
+  target_initial: 啟動後在框內直接輸入翻譯取代原有文字，請慢用。
+- locale: zj-tw
+  format: string
+  source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  target: 你可以利用 "%s"來啟用或關閉即時翻譯功能。
+  target_initial: 你可以利用 "%s"來啟用或關閉即時翻譯功能。
+- locale: zj-tw
+  format: string
+  source: Push my changes
+  target: 發佈我的變更
+  target_initial: 發佈我的變更
+- locale: zj-tw
+  format: string
+  source: Reset changes
+  target: 還原變更
+  target_initial: 還原變更
+- locale: zj-tw
+  format: string
+  source: Text with enabled inline translations looks like
+  target: 即時翻譯啟動後的文字長這樣
+  target_initial: 即時翻譯啟動後的文字長這樣
+- locale: zj-tw
+  format: string
+  source: Get latest translations
+  target: 下載最新的翻譯
+  target_initial: 下載最新的翻譯
+- locale: zj-tw
+  format: string
+  source: Proxy Settings
+  target: 代理伺服器設定
+  target_initial: 代理伺服器設定
+- locale: zj-tw
+  format: string
+  source: My assigned Tickets
+  target: 我的工單
+  target_initial: 我的工單
+- locale: zj-tw
+  format: string
+  source: Cancel & Go Back
+  target: 取消並回到上一層
+  target_initial: 取消並回到上一層
+- locale: zj-tw
+  format: string
+  source: Report Profile
+  target: 統計報表
+  target_initial: 統計報表
+- locale: zj-tw
+  format: string
+  source: Created at
+  target: 建立於
+  target_initial: 建立於
+- locale: zj-tw
+  format: string
+  source: When should the job run?
+  target: 執行排程工作的時間?
+  target_initial: 執行排程工作的時間?
+- locale: zj-tw
+  format: string
+  source: Holidays
+  target: 假日
+  target_initial: 假日
+- locale: zj-tw
+  format: string
+  source: New User
+  target: 建立新的使用者
+  target_initial: 建立新的使用者
+- locale: zj-tw
+  format: string
+  source: Follow up possible
+  target: 允許追蹤已關閉的工單
+  target_initial: 允許追蹤已關閉的工單
+- locale: zj-tw
+  format: string
+  source: matches
+  target: 符合
+  target_initial: 符合
+- locale: zj-tw
+  format: string
+  source: Password for proxy connection.
+  target: 代理伺服器連線密碼
+  target_initial: 代理伺服器連線密碼
+- locale: zj-tw
+  format: string
+  source: Proxy address.
+  target: 代理伺服器位址
+  target_initial: 代理伺服器位址
+- locale: zj-tw
+  format: string
+  source: Text modules
+  target: 文字模組
+  target_initial: 文字模組
+- locale: zj-tw
+  format: string
+  source: Conditions for effected objects
+  target: 篩選物件與條件
+  target_initial: 篩選物件與條件
+- locale: zj-tw
+  format: string
+  source: Storage
+  target: 資料儲存
+  target_initial: 資料儲存
+- locale: zj-tw
+  format: string
+  source: New Organization
+  target: 新的公司組織
+  target_initial: 新的公司組織
+- locale: zj-tw
+  format: string
+  source: Execute changes on objects
+  target: 執行物件變更
+  target_initial: 執行物件變更
+- locale: zj-tw
+  format: string
+  source: Shared organization
+  target: 共享公司組織
+  target_initial: 共享公司組織
+- locale: zj-tw
+  format: string
+  source: Management
+  target: 管理
+  target_initial: 管理
+- locale: zj-tw
+  format: string
+  source: Send client stats
+  target: 傳送用戶端統計資料
+  target_initial: 傳送用戶端統計資料
+- locale: zj-tw
+  format: string
+  source: Organizations
+  target: 公司組織
+  target_initial: 公司組織
+- locale: zj-tw
+  format: string
+  source: Time zone
+  target: 時區
+  target_initial: 時區
+- locale: zj-tw
+  format: string
+  source: Assign follow up to latest agent again.
+  target: 指派工單先前的負責人
+  target_initial: 指派工單先前的負責人
+- locale: zj-tw
+  format: string
+  source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  target: 如果負責人沒有在限定的時間內開始處理工單，工單狀態會變成尚未指派。
+  target_initial: 如果負責人沒有在限定的時間內開始處理工單，工單狀態會變成尚未指派。
+- locale: zj-tw
+  format: string
+  source: support@example.com
+  target: support@example.com
+  target_initial: support@example.com
+- locale: zj-tw
+  format: string
+  source: Sure?
+  target: 確定嗎?
+  target_initial: 確定嗎?
+- locale: zj-tw
+  format: string
+  source: Third-party Applications
+  target: 第三方應用程式
+  target_initial: 第三方應用程式
+- locale: zj-tw
+  format: string
+  source: This is Zammad version %s
+  target: 這個Zammad的版本為 %s
+  target_initial: 這個Zammad的版本為 %s
+- locale: zj-tw
+  format: string
+  source: Sure to delete this object?
+  target: 確定刪除物件?
+  target_initial: 確定刪除物件?
+- locale: zj-tw
+  format: string
+  source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  target: '回信主旨的開頭。例如: RE, AW或AS。'
+  target_initial: '回信主旨的開頭。例如: RE, AW或AS。'
+- locale: zj-tw
+  format: string
+  source: The default font size is 12px.
+  target: 預設文字大小為12px
+  target_initial: 預設文字大小為12px
+- locale: zj-tw
+  format: string
+  source: Unassigned & Open
+  target: 未指派且處理中的工單
+  target_initial: 未指派且處理中的工單
+- locale: zj-tw
+  format: string
+  source: No proxy for the following hosts.
+  target: 不使用代理伺服器連線至下列主機
+  target_initial: 不使用代理伺服器連線至下列主機
+- locale: zj-tw
+  format: string
+  source: Maximum failed logins
+  target: 登入失敗次數上限
+  target_initial: 登入失敗次數上限
+- locale: zj-tw
+  format: string
+  source: Number of failed logins after account will be deactivated.
+  target: 登入失敗超過次數超過此數後立刻停用帳號
+  target_initial: 登入失敗超過次數超過此數後立刻停用帳號
+- locale: zj-tw
+  format: string
+  source: If you want to translate it via the translation table, just go ahead below.
+  target: 或者你也可以利用以下的表格進行翻譯。
+  target_initial: 或者你也可以利用以下的表格進行翻譯。
+- locale: zj-tw
+  format: string
+  source: Text with disabled inline translations looks like
+  target: 即時翻譯未啟動時的文字長這樣
+  target_initial: 即時翻譯未啟動時的文字長這樣
+- locale: zj-tw
+  format: string
+  source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  target: 使用電子郵件主旨，如不啟用工單標題將會作為電子郵件主旨。
+  target_initial: 使用電子郵件主旨，如不啟用工單標題將會作為電子郵件主旨。
+- locale: zj-tw
+  format: string
+  source: Email - full quote
+  target: Email - 回覆引用全文
+  target_initial: Email - 回覆引用全文
+- locale: zj-tw
+  format: string
+  source: Note - default visibility
+  target: 註記 - 預設瀏覽權限
+  target_initial: 註記 - 預設瀏覽權限
+- locale: zj-tw
+  format: string
+  source: Email - subject field
+  target: Email - 主旨欄位內容
+  target_initial: Email - 主旨欄位內容
+- locale: zj-tw
+  format: string
+  source: Default visibility for new note.
+  target: 新註記的預設瀏覽權限
+  target_initial: 新註記的預設瀏覽權限
+- locale: zj-tw
+  format: string
+  source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  target: 啟用回覆引用全文的功能，引用部分將會在電子郵件的文末。如果你只想要引用部分段落，直接反白該段落後，再點選回覆即可(此功能預設保持為啟動狀態)。
+  target_initial: 啟用回覆引用全文的功能，引用部分將會在電子郵件的文末。如果你只想要引用部分段落，直接反白該段落後，再點選回覆即可(此功能預設保持為啟動狀態)。
+- locale: zj-tw
+  format: string
+  source: Macros
+  target: 巨集
+  target_initial: 巨集
+- locale: zj-tw
+  format: string
+  source: Thanks for your Feedback!
+  target: 感謝您的意見反饋!
+  target_initial: 感謝您的意見反饋!
+- locale: zj-tw
+  format: string
+  source: Thanks for contributing!
+  target: 感謝您的貢獻!
+  target_initial: 感謝您的貢獻!
+- locale: zj-tw
+  format: string
+  source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  target: 感謝您的來信(#%s)! 我們將會儘速與您聯絡!
+  target_initial: 感謝您的來信(#%s)! 我們將會儘速與您聯絡!
+- locale: zj-tw
+  format: string
+  source: Thank you for your inquiry! We'll contact you soon as possible.
+  target: 感謝您的來信! 我們將會儘速與您聯絡!
+  target_initial: 感謝您的來信! 我們將會儘速與您聯絡!
+- locale: zj-tw
+  format: string
+  source: set to internal
+  target: 設為內部
+  target_initial: 設為內部
+- locale: zj-tw
+  format: string
+  source: set to public
+  target: 設為公開
+  target_initial: 設為公開
+- locale: zj-tw
+  format: string
+  source: internal
+  target: 內部
+  target_initial: 內部
+- locale: zj-tw
+  format: string
+  source: public
+  target: 公開
+  target_initial: 公開
+- locale: zj-tw
+  format: string
+  source: Sounds
+  target: 音效
+  target_initial: 音效
+- locale: zj-tw
+  format: string
+  source: Notification Sound
+  target: 通知音效
+  target_initial: 通知音效
+- locale: zj-tw
+  format: string
+  source: Not Assigned
+  target: 尚未指派工單
+  target_initial: 尚未指派工單
+- locale: zj-tw
+  format: string
+  source: Play user interface sound effects
+  target: 撥放使用者介面音效
+  target_initial: 撥放使用者介面音效
+- locale: zj-tw
+  format: string
+  source: Notifications
+  target: 通知
+  target_initial: 通知
+- locale: zj-tw
+  format: string
+  source: Avatar
+  target: 頭像
+  target_initial: 頭像
+- locale: zj-tw
+  format: string
+  source: Devices
+  target: 設備
+  target_initial: 設備
+- locale: zj-tw
+  format: string
+  source: Token Access
+  target: 存取權杖
+  target_initial: 存取權杖
+- locale: zj-tw
+  format: string
+  source: Product Name
+  target: 產品名稱
+  target_initial: 產品名稱
+- locale: zj-tw
+  format: string
+  source: Security
+  target: 安全性
+  target_initial: 安全性
+- locale: zj-tw
+  format: string
+  source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  target: 定義應用程式在網頁界面，瀏覽器頁簽與標題欄的顯示名稱。
+  target_initial: 定義應用程式在網頁界面，瀏覽器頁簽與標題欄的顯示名稱。
+- locale: zj-tw
+  format: string
+  source: Tags
+  target: 標記
+  target_initial: 標記
+- locale: zj-tw
+  format: string
+  source: Accounted Time
+  target: 累計時數
+  target_initial: 累計時數
+- locale: zj-tw
+  format: string
+  source: Escalated
+  target: 已升級
+  target_initial: 已升級
+- locale: zj-tw
+  format: string
+  source: My pending reached Tickets
+  target: 我的提醒已到期的工單
+  target_initial: 我的提醒已到期的工單
+- locale: zj-tw
+  format: string
+  source: Pending reached
+  target: 提醒到期的工單
+  target_initial: 提醒到期的工單
+- locale: zj-tw
+  format: string
+  source: Defines the sender of email notifications.
+  target: 定義電子郵件通知寄件人
+  target_initial: 定義電子郵件通知寄件人
+- locale: zj-tw
+  format: string
+  source: Maximum size in MB of emails.
+  target: 電子郵件大小上線 MB
+  target_initial: 電子郵件大小上線 MB
+- locale: zj-tw
+  format: string
+  source: Notification Sender
+  target: 通知寄件人
+  target_initial: 通知寄件人
+- locale: zj-tw
+  format: string
+  source: Maximum Email Size
+  target: 電子郵件大小上限
+  target_initial: 電子郵件大小上限
+- locale: zj-tw
+  format: string
+  source: Sender Format
+  target: 寄件人格式
+  target_initial: 寄件人格式
+- locale: zj-tw
+  format: string
+  source: Products
+  target: 產品
+  target_initial: 產品
+- locale: zj-tw
+  format: string
+  source: escalation
+  target: 升級
+  target_initial: 升級
+- locale: zj-tw
+  format: string
+  source: created
+  target: 創建於
+  target_initial: 創建於
+- locale: zj-tw
+  format: string
+  source: First Steps
+  target: 新手教學
+  target_initial: 新手教學
+- locale: zj-tw
+  format: string
+  source: split
+  target: 拆單
+  target_initial: 拆單
+- locale: zj-tw
+  format: string
+  source: Discard your unsaved changes.
+  target: 捨棄未儲存的變更
+  target_initial: 捨棄未儲存的變更
+- locale: zj-tw
+  format: string
+  source: Add Tag
+  target: 加入標記
+  target_initial: 加入標記
+- locale: zj-tw
+  format: string
+  source: Links
+  target: 連結
+  target_initial: 連結
+- locale: zj-tw
+  format: string
+  source: "%s of your tickets are currently in process."
+  target: 你的 % 的工單正在處理中
+  target_initial: 你的 % 的工單正在處理中
+- locale: zj-tw
+  format: string
+  source: Enter Answer or
+  target: 輸入筆記或
+  target_initial: 輸入筆記或
+- locale: zj-tw
+  format: string
+  source: select attachment...
+  target: 選取附加檔案
+  target_initial: 選取附加檔案
+- locale: zj-tw
+  format: string
+  source: "%s of my tickets escalated."
+  target: 我的 %s 工單被升級 
+  target_initial: 我的 %s 工單被升級 
+- locale: zj-tw
+  format: string
+  source: "%s% have been reopened"
+  target: "%s% 被重開"
+  target_initial: "%s% 被重開"
+- locale: zj-tw
+  format: string
+  source: 'My handling time: %s minutes'
+  target: '我的處理時間: %s 分鐘'
+  target_initial: '我的處理時間: %s 分鐘'
+- locale: zj-tw
+  format: string
+  source: Close & Tag as Spam
+  target: 關閉並標記為垃圾
+  target_initial: 關閉並標記為垃圾
+- locale: zj-tw
+  format: string
+  source: See more
+  target: 瀏覽更多
+  target_initial: 瀏覽更多
+- locale: zj-tw
+  format: string
+  source: Skip
+  target: 略過
+  target_initial: 略過
+- locale: zj-tw
+  format: string
+  source: skip
+  target: 略過
+  target_initial: 略過
+- locale: zj-tw
+  format: string
+  source: Text editing
+  target: 文字編輯
+  target_initial: 文字編輯
+- locale: zj-tw
+  format: string
+  source: Copy current object number (e. g. Ticket#) to clipboard
+  target: '複製當前物件編號 (例: 工單編號) 至剪貼簿'
+  target_initial: '複製當前物件編號 (例: 工單編號) 至剪貼簿'
+- locale: zj-tw
+  format: string
+  source: Used when viewing a Ticket
+  target: 使用於瀏覽工單
+  target_initial: 使用於瀏覽工單
+- locale: zj-tw
+  format: string
+  source: Search for users
+  target: 搜尋使用者
+  target_initial: 搜尋使用者
+- locale: zj-tw
+  format: string
+  source: Enter credentials
+  target: 輸入帳號密碼
+  target_initial: 輸入帳號密碼
+- locale: zj-tw
+  format: string
+  source: Disable
+  target: 停用
+  target_initial: 停用
+- locale: zj-tw
+  format: string
+  source: Role
+  target: 角色
+  target_initial: 角色
+- locale: zj-tw
+  format: string
+  source: "%s ago"
+  target: "%s 以前"
+  target_initial: "%s 以前"
+- locale: zj-tw
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% 正在處理中"
+  target_initial: "%s% 正在處理中"
+- locale: zj-tw
+  format: string
+  source: Save new template
+  target: 儲存新範本
+  target_initial: 儲存新範本
+- locale: zj-tw
+  format: string
+  source: Save Template
+  target: 儲存範本
+  target_initial: 儲存範本
+- locale: zj-tw
+  format: string
+  source: run macro
+  target: 執行巨集
+  target_initial: 執行巨集
+- locale: zj-tw
+  format: string
+  source: Running...
+  target: 執行中...
+  target_initial: 執行中...
+- locale: zj-tw
+  format: string
+  source: Save configuration
+  target: 儲存設定
+  target_initial: 儲存設定
+- locale: zj-tw
+  format: string
+  source: Push Changes
+  target: 發布變更
+  target_initial: 發布變更
+- locale: zj-tw
+  format: string
+  source: Pushing translations to i18n.zammad.com
+  target: '發布翻譯至 i18n.zammad.com '
+  target_initial: '發布翻譯至 i18n.zammad.com '
+- locale: zj-tw
+  format: string
+  source: current user
+  target: 當前使用者
+  target_initial: 當前使用者
+- locale: zj-tw
+  format: string
+  source: specific user
+  target: 特定使用者
+  target_initial: 特定使用者
+- locale: zj-tw
+  format: string
+  source: Starting Zammad
+  target: '正在啟動 Zammad '
+  target_initial: '正在啟動 Zammad '
+- locale: zj-tw
+  format: string
+  source: Current User
+  target: 當前使用者
+  target_initial: 當前使用者
+- locale: zj-tw
+  format: string
+  source: Execute changes on objects.
+  target: 對物件執行變更
+  target_initial: 對物件執行變更
+- locale: zj-tw
+  format: string
+  source: Macro
+  target: 巨集
+  target_initial: 巨集
+- locale: zj-tw
+  format: string
+  source: New password (confirm)
+  target: 新密碼 (確認)
+  target_initial: 新密碼 (確認)
+- locale: zj-tw
+  format: string
+  source: Manage your notifications settings
+  target: 管理個人通知設定
+  target_initial: 管理個人通知設定
+- locale: zj-tw
+  format: string
+  source: Manually open chat
+  target: 手動開啟聊天室
+  target_initial: 手動開啟聊天室
+- locale: zj-tw
+  format: string
+  source: Manage Tags
+  target: 管理標籤
+  target_initial: 管理標籤
+- locale: zj-tw
+  format: string
+  source: Next in overview
+  target: 下一個工單
+  target_initial: 下一個工單
+- locale: zj-tw
+  format: string
+  source: Stay on tab
+  target: 停留在頁簽
+  target_initial: 停留在頁簽
+- locale: zj-tw
+  format: string
+  source: pending
+  target: 等待
+  target_initial: 等待
+- locale: zj-tw
+  format: string
+  source: pending close
+  target: 等待結案
+  target_initial: 等待結案
+- locale: zj-tw
+  format: string
+  source: See less
+  target: 顯示較少
+  target_initial: 顯示較少
+- locale: zj-tw
+  format: string
+  source: Tickets of Organization
+  target: 公司組織工單
+  target_initial: 公司組織工單
+- locale: zj-tw
+  format: string
+  source: Channel
+  target: 管道
+  target_initial: 管道
+- locale: zj-tw
+  format: string
+  source: Tickets of User
+  target: 使用者的工單
+  target_initial: 使用者的工單
+- locale: zj-tw
+  format: string
+  source: Frequency
+  target: 頻率
+  target_initial: 頻率
+- locale: zj-tw
+  format: string
+  source: Open Tickets
+  target: 處理中的工單
+  target_initial: 處理中的工單
+- locale: zj-tw
+  format: string
+  source: Confirm/submit dialog
+  target: 確認/提交 對話框
+  target_initial: 確認/提交 對話框
+- locale: zj-tw
+  format: string
+  source: Format as h3 heading
+  target: " h3 標題"
+  target_initial: " h3 標題"
+- locale: zj-tw
+  format: string
+  source: Open note box
+  target: 啟用筆記欄
+  target_initial: 啟用筆記欄
+- locale: zj-tw
+  format: string
+  source: Used when composing a text
+  target: 使用於編輯工單內容
+  target_initial: 使用於編輯工單內容
+- locale: zj-tw
+  format: string
+  source: Format as ordered list
+  target: 建立編號清單
+  target_initial: 建立編號清單
+- locale: zj-tw
+  format: string
+  source: Format as |bold|
+  target: "|粗體|"
+  target_initial: "|粗體|"
+- locale: zj-tw
+  format: string
+  source: Format as h2 heading
+  target: " h2 標題"
+  target_initial: " h2 標題"
+- locale: zj-tw
+  format: string
+  source: Previous tab
+  target: 前個頁簽
+  target_initial: 前個頁簽
+- locale: zj-tw
+  format: string
+  source: Format as unordered list
+  target: 建立符號清單
+  target_initial: 建立符號清單
+- locale: zj-tw
+  format: string
+  source: Format as h1 heading
+  target: " h1 標題"
+  target_initial: " h1 標題"
+- locale: zj-tw
+  format: string
+  source: Format as //strikethrough//
+  target: "//刪除線//"
+  target_initial: "//刪除線//"
+- locale: zj-tw
+  format: string
+  source: List of shortcuts
+  target: 快捷鍵清單
+  target_initial: 快捷鍵清單
+- locale: zj-tw
+  format: string
+  source: Next in tab
+  target: 下個頁簽
+  target_initial: 下個頁簽
+- locale: zj-tw
+  format: string
+  source: Format as ||italic||
+  target: "||斜體||"
+  target_initial: "||斜體||"
+- locale: zj-tw
+  format: string
+  source: Format as _underlined_
+  target: _底線_
+  target_initial: _底線_
+- locale: zj-tw
+  format: string
+  source: Inserts a horizontal rule
+  target: 插入水平線
+  target_initial: 插入水平線
+- source: Attributes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Select the customer of the ticket or create one.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: note
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: close
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Unassigned & Open Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password (confirm)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Base
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Linked Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sign in with
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Username or email
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Week
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sign in using
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New to
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: join today!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create my account
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Login successfully! Have a nice day!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last contact
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: First response
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: raw
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Visibility
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: twitter status
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: twitter direct-message
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: My Organization Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: My Organization
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We've sent password reset instructions to your email address.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter your username or email address
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Choose your new password.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Woo hoo! Your password has been changed!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please try to login!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Username or email address invalid, please try again.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: again
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please click the button below to create your first one.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: First Solution
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: uninstall
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: install
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: deactivate
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: deactivated
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: note
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Group by
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Items per page
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create an inbound Ticket
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create an outbound Ticket (will send this as email to customer)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Article Count
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Article
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: First Response
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: up
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: down
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Inbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Outbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Adresses
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Moved in
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invitation sent!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invite Agents
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Getting started!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Configure Channels
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send invitation
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Link Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Call Outbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Call Inbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Work Disposition
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Business Times
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New SLA
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Conditions where SLA is used
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add Attribute
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Back to top
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Copy to clipboard: Ctrl+C, Enter'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Copy to clipboard
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send to clients
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Feedback about our new Interface
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What ideas do you have?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What can you do here?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you can create one.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: from
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: in %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Mark all as seen.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: session started
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Original
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: is the same
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Target
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Words
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Reload application
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: set internal
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Recipients
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: now
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Edit Organization
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Add-On
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Edit Addon
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Branch
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Edit Branch
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Build Test Release
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Release
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Changes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: All pending reached Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Profiles
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Channels
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Twitter
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Facebook
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sessions
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Addons
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Source
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sync Changes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Attribute
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Members
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Mark all as read
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: My Group
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add-ons
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Tools
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Hook
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Hook Position
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Client Secret
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Twitter Secret
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Twitter Key
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Needed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Minimal size
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Lost Password
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Port
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Prio
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Available for Role
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Overview
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable Ticket creation
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Max. Email Size
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Maximal size in MB of emails.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Import Mode
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Import Endpoint
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Import Key
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: SSL
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo Services
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Storage Mechanism
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo IP Backend
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo Location Backend
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Releases
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Branches
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: At a glance
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Recent Addons
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: SLAs
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Checksum
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins after account is inactive.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Digit required
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enables users to create their own account via web interface.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New User Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint auth key.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Profile
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Register as a new customer
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: here
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Reset Password
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Login with %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password needs to contain 2 lower and 2 upper characters.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least one digit.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Discard
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Camera
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Online
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email & Online
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: no criteria
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Owned by nobody
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Owned by me
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Criteria
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Matrix
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: No template created yet.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Outbound Call
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Received Call
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Choose attributes and then save them as a new template.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Project
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Time Tracking
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Projects
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send client stats to central server.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Restore Defaults
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Number Format
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Size
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: App Secret
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: App ID
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Client storage
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Fully Qualified Domain Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Status Code
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Delete File
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Select Template
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Tag
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Template Title
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Layout Reference
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Pink
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Purple
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Switch to
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Logo
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Zammad looks like this for "%s"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Back to my view
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Green
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Store
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Setup Finished
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Block Notifications
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Company Inc.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Connect Channels
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Organization Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your Logo
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: System URL
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter Template Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: VIP
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send Mails via
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable Chat
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Maintenance Message
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Continue session
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: View from user's perspective
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Status Type
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Project
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Show
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Twitter App Credentials
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: new & open
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Notes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Direct URL
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Updated at
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Updated by
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: No filter.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: is
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Total: %s'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Form
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: before (absolute)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Timeframe for solving the problem.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Timeframe for every following response.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Timeframe for the first response.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: after (relative)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: before (relative)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: is not
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Escalation Times
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: after (absolute)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Where
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter timzone...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Get latest Translation
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Subscriptions
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Web
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable/Disable online chat.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: reached
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: today
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: at
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Customer Chat
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Report Profiles
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Waiting Customers
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Chatting Customers
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Active Agents
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Widget
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invite Agents/Colleges
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable debugging for implementation.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Option
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Designer
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Font size
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Flat design.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: E. g. recent changed tickets, users or organizations.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: switch to
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sender Format Seperator
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Notification
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Additional follow up detection
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Destination Group
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Address
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Protocol
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: escalated
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Connect
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Account
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Testing
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Inbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Email Outbound
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Organization Support
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Department Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Feedback Form
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Widget Designer
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Title of the form
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: LinkedIn App Credentials
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Name of form submit button
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Message after sending form
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Start modal dialog for form.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Show title in form.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: just now
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You have no configured account right now.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Fixed Email Accounts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Calendar
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Some Text
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: All computers and browsers that have access to your Zammad appear here.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Previous in overview
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Background color
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Topics
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: There are too many people in queue for the chat.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The chat is turned off.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Personal Settings
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket reminder reached
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Limit Groups
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Version
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Also notify via email
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s ended switch to |%s|!"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s switched to |%s|!"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s created Organization |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s created Group |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Pending reminder reached for Ticket |%s|
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s updated User |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s updated Group |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s updated Organization |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s created Article for |%s|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s started a new session"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Subscription Settings
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Most recent activity
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: View this in Zammad
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sending...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Reply to last article
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable/disable inline translations
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Select item
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Update as closed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Open reply box
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Move left and right
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Move up and down
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Used in lists (views and results)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Used anywhere (admin only)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Used anywhere
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Set article to internal/public
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add alarm to pending reminder and escalated tickets.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: clear
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With templates you can pre-fill ticket attributes.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Online Forms
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create Overviews
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Additional Channels
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invite
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invite Colleagues
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Full Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: migrate from another system
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Or
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Setup new System
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Flat Design
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'There can be several reasons for the chat to not show up:'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Requirements
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Usage
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Chat Title
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Can be in any CSS color format.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Shown when the chat is closed.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Preview Width
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Max. clients in waitlist
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: John Smith
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Load
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last sync at
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Macro
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Search...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invite Customer
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: done
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: disconnect
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The URL to this installation of Zammad.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter Title...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Folder
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Year(s)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Month(s)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Day(s)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Hour(s)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Minute(s)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: within last (relative)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: within next (relative)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Conditions for shown Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Only available for Users with shared Organization
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Available for User
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Experts
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Organization & Department Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Run every %s at %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Disable Notifications
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Will process
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Scheduled for
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Has processed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Duration
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: ringing
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: not reached
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: not exist
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: connected
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: CTI
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: maybe
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Changes were made that require a database update.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Database Update required
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Discard Changes
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: required
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: shown
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: inactive
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: active
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Visible
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Used in object views
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "...add object title"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "...of whole textarea"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Mode
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send a message to all logged in users.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Unable to verify email. Please contact your administrator.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Navigate through article
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Scroll down to see new messages
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Zammad Karma
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Karma Trends
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What affects your Zammad Karma?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You have answered a ticket within 1h
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Usage of advanced features
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Latest updates
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Hero
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Evangelist
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Expert
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Professional
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Intermediate
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Newbie
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your karma is |%s|.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You are an |%s|.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Karma Level
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Find what you search. E. g. "search phrase"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Extended Search
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Show Search Details
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Master
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: OK, I've copied my token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Clients
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Callback URL
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What is it?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Pick a name for the application, and we'll give you a unique token.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New App
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: OK, I\'ve copied my token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Personal Access Tokens
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add a Personal Access Token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: has changed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: monthly
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Confirmation required
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Payment Method
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enables user authentication via %s. Register your app first at [%s](%s).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: VAT ID
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Payment method
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: VAT
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: tax
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billing Cycle
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please enter a valid "%s"!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Cardholder
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Expiration (MM/YYYY)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Credit card number
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Subscription
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Summary
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your trial is running till %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billing
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Do you want to cancel your subscription?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Update payment method
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: per agent / month
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billed annually
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: or %s %s monthly
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Payment history
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billing information
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Selected
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Postal Code
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Pay with
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: CVV
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Credit card
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Update subscription
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your account got canceled at %s! Your system will be removed at %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Yes, undo my subscription cancel
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You use %s in text but no attachment is attached. Do you want to continue?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Not configured
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: SLA Times
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Subscribe to iCalendar feed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Why doesn't the chat show up?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Tags
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Holidays iCalendar Feed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Total
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Realtime
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Count
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Allow users to add new tags.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Default at Signup
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Order
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Value
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Default caller id for outbound calls.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Default caller id
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Default caller id.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Set outbound caller id
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Caller id to block
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Blocked caller ids based on sender caller id.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Also caller id of outbound calls can be changed.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: VoIP service provider with realtime push.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Domain based assignment
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| will escalate soon!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The format of the subject.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "|Left| means |[Ticket#12345] Some Subject|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "|Right| means |Some Subject [Ticket#12345]|"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: left
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: right
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Domain
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Min. size of number
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Selects the ticket number generator module.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agents real name and the given group email
+    address.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Reply
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo Calendar Service
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be send by the sender.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines if a customer can create tickets via the web interface.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Group selection for Ticket creation
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Will be shown in the app and is included in email footers.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the logo of the application, shown in the web interface.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for user and organization image lookups.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Image Service
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to perform speed of application.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Send client stats/error message to central server to improve the usability.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: TextModule
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Trigger
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create rules that single out the tickets for the Service Level Agreement.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Customers in the organization can view each other items.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Feature disabled!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Notification
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Config
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Overview
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Article#
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Nothing selected
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Link
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Change %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: User Preferences
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Access to Agent Tickets based on Group Access
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Access to %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Manage %s Settings
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Manage %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Role
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: do not reopen Ticket but create new Ticket
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Follow up for closed ticket possible or not.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Notes are visible to agents only, never to customers.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Current Token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: no issues
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Current Status
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Health information can be retrieved as JSON using
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Health Check
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Merge to Ticket#
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Back
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: specific organization
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: current user organization
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: not set (not defined)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s required!"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: No such master ticket number!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: There is no agent online.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Subscribe to public holidays in
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Open Ticket# %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add attachment option to upload.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Powered by
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Continue anyway
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Base Objects
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Import from
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Migration Plugin for %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Link %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Migrate %s Data
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Migration"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Download %s Migration Plugin
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Attention: These will be your login password after the import is completed.'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: API token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s credentials"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter the URL of your %s system
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s URL"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Test Connection
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least minimal size of characters.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Max size of the subject in an email reply.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Selector
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Time Units Total
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Time Units
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable time accounting for following matching tickets.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: SEPA Direct Debit
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bank Name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Germany
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last contact (agent)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last contact (customer)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Closing time
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The way to communicate with us is this thing called "ticket".
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bulk action executed!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Successful!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Only for these groups.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: iCalendar links from Google will get fetched once a day
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "...add object link URL"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please execute database changes only in a maintenance time-slot.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Set up the communication channels you want to use with your Zammad.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Don't load CSS for form. You need to generate your own CSS for the form.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you see a quick overview of your and other agents' performance.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Real name
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Date & Time
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Show all...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Tab has changed, do you really want to close it?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: '|%s| stores all attachments in the "%s".'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Automatically show chat
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New text module
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Unassigned email addresses, assign them to a channel or delete them.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you will find the latest activities of your system.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Drop files here
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Account Time
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sender
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: submit
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: drag here to cancel
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s people"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: No unread notifications for you. :)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Service
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: A powerfull service to get more information about your customers.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to enhance performance of application.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo Location Service
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password needs to contain at least one digit.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Getting an Access Token
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password Access
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sender Format Separator
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bots
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Network
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Wrong Username or Password combination.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least a minimal number of characters.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Requesting the Grant
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Location of an external chat.css file.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Minimum length
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: New Application
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Uninstall
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Geo IP Service
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Services
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Installed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Feedback
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add Bot
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add this class to a button on your page that should open the chat.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Delivery failed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Messages
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Meine zugewiesenen Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: My closed Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Define the http protocol of your instance.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Telegram
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invoice
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billed monthly
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Yes, change my subscription
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Payment by invoice
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: contains one
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Already charged in this periode
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Your new selection
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Billing E-Mail Address
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Plan
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: contains one not
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Connecting ...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: LDAP Host
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bind Password
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bind User
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: failed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: skipped
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: untouched
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Configure
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Mapping
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Base DN
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Article Last Sender
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Reply-To
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: All Agents
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Additional follow-up detection
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines pretty date format.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Connect Facebook App
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Connect Twitter App
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Start new
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Endpoint
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Read
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Urgency
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Exchange integration for contacts management.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Shared
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Till
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Out of Office
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: My replacement Tickets
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Text missing
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Agent limit exceeded, please check your account settings.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Full
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Configurable in the admin interface of %s.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Add sender initials to end of a tweet.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: forward
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Defines the system default language.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Locale
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: delete
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Receipt
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Account Holder
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: forwarded
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Caller log
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last customer contact (without consideration an agent has replied to it)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Delete records
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Last customer contact (with consideration an agent has replied to it)
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The import was successful.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Update existing records
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Bulk import allows you to create and update many records at once.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'The following changes have been made:'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Update existing records with the attributes specified in the import data.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The data must be in the comma separated values (CSV) format and saved as
+    UTF-8. You can import a CSV file or paste the data directly into the text area.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: The test run was successful.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Ticket Last Contact Behaviour
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been created."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Select CSV file
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Alternatively, you can use the Zammad API to import data.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: 'The following changes are made:'
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Sets the last customer contact based on the last contact of a customer or
+    on the last contact of a customer to whom an agent has not yet responded.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Clone
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Delete all existing records first.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Define an exception of "automatic assignment" for certain users (e.g. executives).
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Example CSV file for download.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are created."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Records that exist in the import data (but not in Zammad) will always be
+    created.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Exception users
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been updated."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Create new records
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Yes, start real import.
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are updated."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are deleted."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: Paste in CSV data
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) were deleted."
+  format: string
+  locale: zj-tw
+  target: ''
+  target_initial: ''

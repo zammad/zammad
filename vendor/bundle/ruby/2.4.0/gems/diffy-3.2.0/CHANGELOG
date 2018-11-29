@@ -1,0 +1,40 @@
+== 3.1.0 ==
+Side by side diffs.  Thanks Runar Skaare Tveiten!
+
+== 3.0.5 ==
+Improve performance when generating html output (with inline highlighting) on
+long lines. Thanks Jason Barnabe!
+
+== 3.0.4 ==
+handle windows vs. unix line breaks consistently in html output
+
+== 3.0.3 ==
+explicitly unlink tempfiles to avoid occasional file handle leaks
+
+== 3.0.0 ==
+allow_empty_diff is true by default
+
+== 2.1.0 ==
+Windows support
+
+== 2.0.10 ==
+Close tempfile after it's been written to to avoid too many open file handles
+
+== 2.0.9 ==
+Memoize calls to `which diff` which should result in a minor performance
+improvement in high use environments.
+
+== 2.0.8 ==
+Handle non-UTF-8 byte sequences in Ruby 1.9.
+Avoid non-deterministic deletion of temp files when GC runs
+
+== 2.0.7 ==
+Added :allow_empty_diff option
+
+== Oops, need to backfill changelog ==
+
+== 1.0.1 ==
+* Compatibility with ruby 1.8.6 and 1.9
+
+== 1.0.0 ==
+* HTML output and better documentation

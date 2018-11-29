@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'redcloth'
+require 'syntax/convertors/html'
+require 'erb'
+require 'active_support'
+
+version_path = File.join(File.dirname(__FILE__), '..', 'lib', 'composite_primary_keys', 'version.rb')
+require File.expand_path(version_path)
+
+version  = CompositePrimaryKeys::VERSION::STRING
+download = 'http://rubygems.org/gems/composite_primary_keys'
+
+class Fixnum
+  def ordinal
+    # teens
+    return 'th' if (10..19).include?(self % 100)
+    # others
+    case self % 10
+    when 1
+      return 'st'
+    when 2
+      return 'nd'
+    when 3
+      return 'rd'
+    else
+      return 'th'
+    end
+  end
+end
+
+class Time
+  def pretty
+    return "#{mday}#{mday.ordinal} #{strftime('%B')} #{year}"
+  end
+end
+
+def convert_syntax(syntax, source)
+  return Syntax::Convertors::HTML.for_syntax(syntax).convert(source).gsub(%r!^<pre>|</pre>$!,'')
+end
+
+if ARGV.length >= 1
+  src, template = ARGV
+  template ||= File.dirname(__FILE__) + '/../website/template.js'
+else
+  puts("Usage: #{File.split($0).last} source.txt [template.js] > output.html")
+  exit!
+end
+
+template = ERB.new(File.open(template).read)
+
+title = nil
+body = nil
+File.open(src) do |fsrc|
+  title_text = fsrc.readline
+  body_text = fsrc.read
+  title = RedCloth.new(title_text).to_html.gsub(%r!<.*?>!,'').strip
+  body = RedCloth.new(body_text)
+end
+stat = File.stat(src)
+created = stat.ctime
+modified = stat.mtime
+
+$stdout << template.result(binding)

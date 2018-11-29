@@ -1,5 +1,5 @@
 class App.Overview extends App.Model
-  @configure 'Overview', 'name', 'prio', 'condition', 'order', 'group_by', 'group_direction', 'view', 'user_ids', 'organization_shared', 'out_of_office', 'role_ids', 'active'
+  @configure 'Overview', 'name', 'prio', 'condition', 'order', 'group_by', 'view', 'user_ids', 'organization_shared', 'role_ids', 'active'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/overviews'
   @configure_attributes = [
@@ -29,7 +29,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'order::direction'
-      display: 'Order by Direction'
+      display: 'Direction'
       tag:     'select'
       default: 'down'
       null:    false
@@ -53,17 +53,6 @@ class App.Overview extends App.Model
         group:                  'Group'
         owner:                  'Owner'
     },
-    {
-      name:    'group_direction'
-      display: 'Group by Direction'
-      tag:     'select'
-      default: 'down'
-      null:    false
-      translate: true
-      options:
-        ASC:   'up'
-        DESC:  'down'
-    },
     { name: 'active',         display: 'Active',      tag: 'active', default: true },
     { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
     { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
@@ -86,21 +75,6 @@ You can also create overvies and limit them to specific agents or to groups of a
 
   uiUrl: ->
     "#ticket/view/#{@link}"
-
-  tickets: =>
-    App.OverviewListCollection.get(@link).tickets
-
-  indexOf: (ticket) =>
-    # coerce id to Ticket object
-    ticket = App.Ticket.find(ticket) if !(isNaN ticket)
-    _.findIndex(@tickets(), (t) -> t.id == ticket.id)
-
-  nextTicket: (thisTicket) =>
-    thisIndex = @indexOf(thisTicket)
-    if thisIndex >= 0 then @tickets()[thisIndex + 1] else undefined
-
-  prevTicket: (thisTicket) =>
-    @tickets()[@indexOf(thisTicket) - 1]
 
   @groupByAttributes: ->
     groupByAttributes = {}

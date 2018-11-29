@@ -1,0 +1,7125 @@
+---
+- locale: fa-ir
+  format: time
+  source: date
+  target: dd.mm.yyyy
+  target_initial: dd.mm.yyyy
+- locale: fa-ir
+  format: time
+  source: timestamp
+  target: dd.mm.yyyy HH:MM
+  target_initial: dd.mm.yyyy HH:MM
+- locale: fa-ir
+  format: string
+  source: Action
+  target: فعالیت
+  target_initial: فعالیت
+- locale: fa-ir
+  format: string
+  source: Actions
+  target: عملیات‌ها
+  target_initial: عملیات‌ها
+- locale: fa-ir
+  format: string
+  source: Active
+  target: فعال
+  target_initial: فعال
+- locale: fa-ir
+  format: string
+  source: Add
+  target: افزودن
+  target_initial: افزودن
+- locale: fa-ir
+  format: string
+  source: Admin
+  target: مدیریت سیستم
+  target_initial: مدیریت سیستم
+- locale: fa-ir
+  format: string
+  source: Agent
+  target: کارشناس
+  target_initial: کارشناس
+- locale: fa-ir
+  format: string
+  source: Agents
+  target: کارشناسان
+  target_initial: کارشناسان
+- locale: fa-ir
+  format: string
+  source: All
+  target: همه
+  target_initial: همه
+- locale: fa-ir
+  format: string
+  source: All tickets
+  target: همه درخواست‌ها
+  target_initial: همه درخواست‌ها
+- locale: fa-ir
+  format: string
+  source: Apply
+  target: اعمال
+  target_initial: اعمال
+- locale: fa-ir
+  format: string
+  source: Apr
+  target: آپریل
+  target_initial: آپریل
+- locale: fa-ir
+  format: string
+  source: April
+  target: آپریل
+  target_initial: آپریل
+- locale: fa-ir
+  format: string
+  source: Attachment
+  target: پیوست
+  target_initial: پیوست
+- locale: fa-ir
+  format: string
+  source: Aug
+  target: آگوست
+  target_initial: آگوست
+- locale: fa-ir
+  format: string
+  source: August
+  target: آگوست
+  target_initial: آگوست
+- locale: fa-ir
+  format: string
+  source: Back
+  target: بازگشت
+  target_initial: بازگشت
+- locale: fa-ir
+  format: string
+  source: Calendar
+  target: تقویم
+  target_initial: تقویم
+- locale: fa-ir
+  format: string
+  source: Cancel
+  target: لغو
+  target_initial: لغو
+- locale: fa-ir
+  format: string
+  source: Cc
+  target: رونوشت
+  target_initial: رونوشت
+- locale: fa-ir
+  format: string
+  source: Change
+  target: تغییر
+  target_initial: تغییر
+- locale: fa-ir
+  format: string
+  source: Changed
+  target: تغییر یافت
+  target_initial: تغییر یافت
+- locale: fa-ir
+  format: string
+  source: Child
+  target: فرعی
+  target_initial: فرعی
+- locale: fa-ir
+  format: string
+  source: City
+  target: شهر
+  target_initial: شهر
+- locale: fa-ir
+  format: string
+  source: Close
+  target: بستن
+  target_initial: بستن
+- locale: fa-ir
+  format: string
+  source: Closed
+  target: بسته شده
+  target_initial: بسته شده
+- locale: fa-ir
+  format: string
+  source: Comment
+  target: توضیح
+  target_initial: توضیح
+- locale: fa-ir
+  format: string
+  source: Content
+  target: محتوا
+  target_initial: محتوا
+- locale: fa-ir
+  format: string
+  source: Continue
+  target: ادامه
+  target_initial: ادامه
+- locale: fa-ir
+  format: string
+  source: Country
+  target: کشور
+  target_initial: کشور
+- locale: fa-ir
+  format: string
+  source: Create
+  target: ایجاد
+  target_initial: ایجاد
+- locale: fa-ir
+  format: string
+  source: Create Template
+  target: ساخت قالب
+  target_initial: ساخت قالب
+- locale: fa-ir
+  format: string
+  source: Created
+  target: ایجاد شد
+  target_initial: ایجاد شد
+- locale: fa-ir
+  format: string
+  source: Created by
+  target: ایجاد شده توسط
+  target_initial: ایجاد شده توسط
+- locale: fa-ir
+  format: string
+  source: Current password
+  target: رمز عبور کنونی
+  target_initial: رمز عبور کنونی
+- locale: fa-ir
+  format: string
+  source: Customer
+  target: مشترک
+  target_initial: مشترک
+- locale: fa-ir
+  format: string
+  source: Dashboard
+  target: داشبورد
+  target_initial: داشبورد
+- locale: fa-ir
+  format: string
+  source: Date
+  target: تاریخ
+  target_initial: تاریخ
+- locale: fa-ir
+  format: string
+  source: Day
+  target: روز
+  target_initial: روز
+- locale: fa-ir
+  format: string
+  source: Dec
+  target: دسامبر
+  target_initial: دسامبر
+- locale: fa-ir
+  format: string
+  source: December
+  target: دسامبر
+  target_initial: دسامبر
+- locale: fa-ir
+  format: string
+  source: Delete
+  target: حذف
+  target_initial: حذف
+- locale: fa-ir
+  format: string
+  source: Description
+  target: توضیحات
+  target_initial: توضیحات
+- locale: fa-ir
+  format: string
+  source: Direction
+  target: جهت
+  target_initial: جهت
+- locale: fa-ir
+  format: string
+  source: Down
+  target: پائین
+  target_initial: پائین
+- locale: fa-ir
+  format: string
+  source: Edit
+  target: ویرایش
+  target_initial: ویرایش
+- locale: fa-ir
+  format: string
+  source: Edit Customer
+  target: ویرایش مشترک
+  target_initial: ویرایش مشترک
+- locale: fa-ir
+  format: string
+  source: Email
+  target: ایمیل
+  target_initial: ایمیل
+- locale: fa-ir
+  format: string
+  source: Email address
+  target: آدرس ایمیل
+  target_initial: آدرس ایمیل
+- locale: fa-ir
+  format: string
+  source: Example
+  target: مثال
+  target_initial: مثال
+- locale: fa-ir
+  format: string
+  source: Expires
+  target: ابطال
+  target_initial: ابطال
+- locale: fa-ir
+  format: string
+  source: Fax
+  target: نمابر
+  target_initial: نمابر
+- locale: fa-ir
+  format: string
+  source: Feb
+  target: فوریه
+  target_initial: فوریه
+- locale: fa-ir
+  format: string
+  source: February
+  target: فوریه
+  target_initial: فوریه
+- locale: fa-ir
+  format: string
+  source: Filter
+  target: فیلتر
+  target_initial: فیلتر
+- locale: fa-ir
+  format: string
+  source: Finish
+  target: پایان
+  target_initial: پایان
+- locale: fa-ir
+  format: string
+  source: Firstname
+  target: نام
+  target_initial: نام
+- locale: fa-ir
+  format: string
+  source: Fri
+  target: جمعه
+  target_initial: جمعه
+- locale: fa-ir
+  format: string
+  source: Friday
+  target: جمعه
+  target_initial: جمعه
+- locale: fa-ir
+  format: string
+  source: From
+  target: فرستنده
+  target_initial: فرستنده
+- locale: fa-ir
+  format: string
+  source: Group
+  target: گروه
+  target_initial: گروه
+- locale: fa-ir
+  format: string
+  source: Groups
+  target: گروه‌ها
+  target_initial: گروه‌ها
+- locale: fa-ir
+  format: string
+  source: History
+  target: سابقه
+  target_initial: سابقه
+- locale: fa-ir
+  format: string
+  source: Host
+  target: میزبان
+  target_initial: میزبان
+- locale: fa-ir
+  format: string
+  source: Hours
+  target: ساعت
+  target_initial: ساعت
+- locale: fa-ir
+  format: string
+  source: Import
+  target: ورود اطلاعات
+  target_initial: ورود اطلاعات
+- locale: fa-ir
+  format: string
+  source: Install Package
+  target: نصب بسته
+  target_initial: نصب بسته
+- locale: fa-ir
+  format: string
+  source: Jan
+  target: ژانویه
+  target_initial: ژانویه
+- locale: fa-ir
+  format: string
+  source: January
+  target: ژانویه
+  target_initial: ژانویه
+- locale: fa-ir
+  format: string
+  source: Jul
+  target: جولای
+  target_initial: جولای
+- locale: fa-ir
+  format: string
+  source: July
+  target: جولای
+  target_initial: جولای
+- locale: fa-ir
+  format: string
+  source: Jun
+  target: ژون
+  target_initial: ژون
+- locale: fa-ir
+  format: string
+  source: June
+  target: ژون
+  target_initial: ژون
+- locale: fa-ir
+  format: string
+  source: Language
+  target: زبان
+  target_initial: زبان
+- locale: fa-ir
+  format: string
+  source: Last run
+  target: آخرین اجرا
+  target_initial: آخرین اجرا
+- locale: fa-ir
+  format: string
+  source: Lastname
+  target: نام خانوادگی
+  target_initial: نام خانوادگی
+- locale: fa-ir
+  format: string
+  source: Link
+  target: لینک
+  target_initial: لینک
+- locale: fa-ir
+  format: string
+  source: Loading...
+  target: بارگذاری...
+  target_initial: بارگذاری...
+- locale: fa-ir
+  format: string
+  source: Location
+  target: موقعیت
+  target_initial: موقعیت
+- locale: fa-ir
+  format: string
+  source: Login
+  target: ورود به سیستم
+  target_initial: ورود به سیستم
+- locale: fa-ir
+  format: string
+  source: Logout
+  target: 'خروج '
+  target_initial: 'خروج '
+- locale: fa-ir
+  format: string
+  source: Mar
+  target: مارس
+  target_initial: مارس
+- locale: fa-ir
+  format: string
+  source: March
+  target: مارس
+  target_initial: مارس
+- locale: fa-ir
+  format: string
+  source: May
+  target: می
+  target_initial: می
+- locale: fa-ir
+  format: string
+  source: Merge
+  target: 'ادغام '
+  target_initial: 'ادغام '
+- locale: fa-ir
+  format: string
+  source: Message
+  target: پیام
+  target_initial: پیام
+- locale: fa-ir
+  format: string
+  source: Mobile
+  target: تلفن همراه
+  target_initial: تلفن همراه
+- locale: fa-ir
+  format: string
+  source: Mon
+  target: دوشنبه
+  target_initial: دوشنبه
+- locale: fa-ir
+  format: string
+  source: Monday
+  target: دوشنبه
+  target_initial: دوشنبه
+- locale: fa-ir
+  format: string
+  source: Month
+  target: ماه
+  target_initial: ماه
+- locale: fa-ir
+  format: string
+  source: My Tickets
+  target: درخواست‌های من
+  target_initial: درخواست‌های من
+- locale: fa-ir
+  format: string
+  source: Name
+  target: نام
+  target_initial: نام
+- locale: fa-ir
+  format: string
+  source: New
+  target: جدید
+  target_initial: جدید
+- locale: fa-ir
+  format: string
+  source: New Ticket
+  target: درخواست جدید
+  target_initial: درخواست جدید
+- locale: fa-ir
+  format: string
+  source: New group
+  target: گروه جدید
+  target_initial: گروه جدید
+- locale: fa-ir
+  format: string
+  source: New password
+  target: رمز عبور جدید
+  target_initial: رمز عبور جدید
+- locale: fa-ir
+  format: string
+  source: Next
+  target: بعدی
+  target_initial: بعدی
+- locale: fa-ir
+  format: string
+  source: Next...
+  target: بعدی...
+  target_initial: بعدی...
+- locale: fa-ir
+  format: string
+  source: 'No'
+  target: خیر
+  target_initial: خیر
+- locale: fa-ir
+  format: string
+  source: Normal
+  target: عادی
+  target_initial: عادی
+- locale: fa-ir
+  format: string
+  source: Note
+  target: یادداشت
+  target_initial: یادداشت
+- locale: fa-ir
+  format: string
+  source: Notice
+  target: توجه
+  target_initial: توجه
+- locale: fa-ir
+  format: string
+  source: Notification
+  target: اعلان
+  target_initial: اعلان
+- locale: fa-ir
+  format: string
+  source: Nov
+  target: نوامبر
+  target_initial: نوامبر
+- locale: fa-ir
+  format: string
+  source: November
+  target: نوامبر
+  target_initial: نوامبر
+- locale: fa-ir
+  format: string
+  source: Number
+  target: عدد
+  target_initial: عدد
+- locale: fa-ir
+  format: string
+  source: Oct
+  target: اکتبر
+  target_initial: اکتبر
+- locale: fa-ir
+  format: string
+  source: October
+  target: اکتبر
+  target_initial: اکتبر
+- locale: fa-ir
+  format: string
+  source: Open
+  target: باز
+  target_initial: باز
+- locale: fa-ir
+  format: string
+  source: Options
+  target: گزینه‌ها
+  target_initial: گزینه‌ها
+- locale: fa-ir
+  format: string
+  source: Order
+  target: ترتیب
+  target_initial: ترتیب
+- locale: fa-ir
+  format: string
+  source: Organization
+  target: سازمان
+  target_initial: سازمان
+- locale: fa-ir
+  format: string
+  source: Overview
+  target: پیش نمایش
+  target_initial: پیش نمایش
+- locale: fa-ir
+  format: string
+  source: Owner
+  target: صاحب
+  target_initial: صاحب
+- locale: fa-ir
+  format: string
+  source: Parent
+  target: اصلی
+  target_initial: اصلی
+- locale: fa-ir
+  format: string
+  source: Password
+  target: رمز عبور
+  target_initial: رمز عبور
+- locale: fa-ir
+  format: string
+  source: Pending
+  target: معلق
+  target_initial: معلق
+- locale: fa-ir
+  format: string
+  source: Pending till
+  target: تا زمانی که
+  target_initial: تا زمانی که
+- locale: fa-ir
+  format: string
+  source: Permissions
+  target: دسترسی‌ها
+  target_initial: دسترسی‌ها
+- locale: fa-ir
+  format: string
+  source: Phone
+  target: تلفن
+  target_initial: تلفن
+- locale: fa-ir
+  format: string
+  source: Preview
+  target: پیش نمایش
+  target_initial: پیش نمایش
+- locale: fa-ir
+  format: string
+  source: Previous
+  target: قبلی
+  target_initial: قبلی
+- locale: fa-ir
+  format: string
+  source: Priority
+  target: اولویت
+  target_initial: اولویت
+- locale: fa-ir
+  format: string
+  source: Profile
+  target: مشخصات کاربری
+  target_initial: مشخصات کاربری
+- locale: fa-ir
+  format: string
+  source: Remove
+  target: حذف کردن
+  target_initial: حذف کردن
+- locale: fa-ir
+  format: string
+  source: Reply
+  target: پاسخ
+  target_initial: پاسخ
+- locale: fa-ir
+  format: string
+  source: Reset
+  target: ورود مجدد
+  target_initial: ورود مجدد
+- locale: fa-ir
+  format: string
+  source: Roles
+  target: نقش‌ها
+  target_initial: نقش‌ها
+- locale: fa-ir
+  format: string
+  source: Sat
+  target: شنبه
+  target_initial: شنبه
+- locale: fa-ir
+  format: string
+  source: Saturday
+  target: شنبه
+  target_initial: شنبه
+- locale: fa-ir
+  format: string
+  source: Save
+  target: ذخیره
+  target_initial: ذخیره
+- locale: fa-ir
+  format: string
+  source: Search
+  target: جستجو
+  target_initial: جستجو
+- locale: fa-ir
+  format: string
+  source: Select
+  target: انتخاب
+  target_initial: انتخاب
+- locale: fa-ir
+  format: string
+  source: Send
+  target: ارسال
+  target_initial: ارسال
+- locale: fa-ir
+  format: string
+  source: Sender
+  target: فرستنده
+  target_initial: فرستنده
+- locale: fa-ir
+  format: string
+  source: Sep
+  target: سپتامبر
+  target_initial: سپتامبر
+- locale: fa-ir
+  format: string
+  source: September
+  target: سپتامبر
+  target_initial: سپتامبر
+- locale: fa-ir
+  format: string
+  source: Service
+  target: خدمات
+  target_initial: خدمات
+- locale: fa-ir
+  format: string
+  source: Services
+  target: خدمات
+  target_initial: خدمات
+- locale: fa-ir
+  format: string
+  source: Session
+  target: Session
+  target_initial: Session
+- locale: fa-ir
+  format: string
+  source: Settings
+  target: تنظیمات
+  target_initial: تنظیمات
+- locale: fa-ir
+  format: string
+  source: Signature
+  target: امضاء
+  target_initial: امضاء
+- locale: fa-ir
+  format: string
+  source: Signatures
+  target: امضاء
+  target_initial: امضاء
+- locale: fa-ir
+  format: string
+  source: State
+  target: وضعیت
+  target_initial: وضعیت
+- locale: fa-ir
+  format: string
+  source: Status
+  target: وضعیت
+  target_initial: وضعیت
+- locale: fa-ir
+  format: string
+  source: Street
+  target: استان
+  target_initial: استان
+- locale: fa-ir
+  format: string
+  source: Subject
+  target: موضوع
+  target_initial: موضوع
+- locale: fa-ir
+  format: string
+  source: Submit
+  target: ارسال
+  target_initial: ارسال
+- locale: fa-ir
+  format: string
+  source: Sun
+  target: یکشنبه
+  target_initial: یکشنبه
+- locale: fa-ir
+  format: string
+  source: Sunday
+  target: یکشنبه
+  target_initial: یکشنبه
+- locale: fa-ir
+  format: string
+  source: System
+  target: سیستم
+  target_initial: سیستم
+- locale: fa-ir
+  format: string
+  source: SystemID
+  target: شناسه سیستم
+  target_initial: شناسه سیستم
+- locale: fa-ir
+  format: string
+  source: Text
+  target: متن
+  target_initial: متن
+- locale: fa-ir
+  format: string
+  source: Thu
+  target: پنجشنبه
+  target_initial: پنجشنبه
+- locale: fa-ir
+  format: string
+  source: Thursday
+  target: پنجشنبه
+  target_initial: پنجشنبه
+- locale: fa-ir
+  format: string
+  source: Ticket
+  target: درخواست‌ها
+  target_initial: درخواست‌ها
+- locale: fa-ir
+  format: string
+  source: Tickets
+  target: درخواست‌ها
+  target_initial: درخواست‌ها
+- locale: fa-ir
+  format: string
+  source: Time
+  target: زمان
+  target_initial: زمان
+- locale: fa-ir
+  format: string
+  source: Title
+  target: عنوان
+  target_initial: عنوان
+- locale: fa-ir
+  format: string
+  source: To
+  target: گیرنده
+  target_initial: گیرنده
+- locale: fa-ir
+  format: string
+  source: Tue
+  target: سه‌شنبه
+  target_initial: سه‌شنبه
+- locale: fa-ir
+  format: string
+  source: Tuesday
+  target: سه‌شنبه
+  target_initial: سه‌شنبه
+- locale: fa-ir
+  format: string
+  source: Type
+  target: نوع
+  target_initial: نوع
+- locale: fa-ir
+  format: string
+  source: Uninstall
+  target: حذف بسته
+  target_initial: حذف بسته
+- locale: fa-ir
+  format: string
+  source: Update
+  target: بروزرسانی
+  target_initial: بروزرسانی
+- locale: fa-ir
+  format: string
+  source: Upload
+  target: ارسال فایل
+  target_initial: ارسال فایل
+- locale: fa-ir
+  format: string
+  source: User
+  target: کاربر
+  target_initial: کاربر
+- locale: fa-ir
+  format: string
+  source: Username
+  target: نام کاربری
+  target_initial: نام کاربری
+- locale: fa-ir
+  format: string
+  source: Value
+  target: مقدار
+  target_initial: مقدار
+- locale: fa-ir
+  format: string
+  source: Vendor
+  target: عرضه‌کننده
+  target_initial: عرضه‌کننده
+- locale: fa-ir
+  format: string
+  source: Version
+  target: نسخه
+  target_initial: نسخه
+- locale: fa-ir
+  format: string
+  source: Wed
+  target: چهارشنبه
+  target_initial: چهارشنبه
+- locale: fa-ir
+  format: string
+  source: Wednesday
+  target: چهارشنبه
+  target_initial: چهارشنبه
+- locale: fa-ir
+  format: string
+  source: Welcome!
+  target: خوش آمدید
+  target_initial: خوش آمدید
+- locale: fa-ir
+  format: string
+  source: Year
+  target: سال
+  target_initial: سال
+- locale: fa-ir
+  format: string
+  source: Zip
+  target: کد پستی
+  target_initial: کد پستی
+- locale: fa-ir
+  format: string
+  source: and
+  target: و
+  target_initial: و
+- locale: fa-ir
+  format: string
+  source: closed
+  target: بسته شده
+  target_initial: بسته شده
+- locale: fa-ir
+  format: string
+  source: day
+  target: روز
+  target_initial: روز
+- locale: fa-ir
+  format: string
+  source: days
+  target: روز
+  target_initial: روز
+- locale: fa-ir
+  format: string
+  source: email
+  target: ایمیل
+  target_initial: ایمیل
+- locale: fa-ir
+  format: string
+  source: hour
+  target: ساعت
+  target_initial: ساعت
+- locale: fa-ir
+  format: string
+  source: hours
+  target: ساعت
+  target_initial: ساعت
+- locale: fa-ir
+  format: string
+  source: installed
+  target: نصب شده
+  target_initial: نصب شده
+- locale: fa-ir
+  format: string
+  source: merged
+  target: ادغام شد
+  target_initial: ادغام شد
+- locale: fa-ir
+  format: string
+  source: minute
+  target: دقیقه
+  target_initial: دقیقه
+- locale: fa-ir
+  format: string
+  source: minutes
+  target: دقیقه
+  target_initial: دقیقه
+- locale: fa-ir
+  format: string
+  source: new
+  target: جدید
+  target_initial: جدید
+- locale: fa-ir
+  format: string
+  source: 'no'
+  target: خیر
+  target_initial: خیر
+- locale: fa-ir
+  format: string
+  source: none
+  target: "--"
+  target_initial: "--"
+- locale: fa-ir
+  format: string
+  source: note
+  target: یادداشت
+  target_initial: یادداشت
+- locale: fa-ir
+  format: string
+  source: of
+  target: " از "
+  target_initial: " از "
+- locale: fa-ir
+  format: string
+  source: open
+  target: باز
+  target_initial: باز
+- locale: fa-ir
+  format: string
+  source: or
+  target: یا
+  target_initial: یا
+- locale: fa-ir
+  format: string
+  source: phone
+  target: تلفن
+  target_initial: تلفن
+- locale: fa-ir
+  format: string
+  source: removed
+  target: حذف شده
+  target_initial: حذف شده
+- locale: fa-ir
+  format: string
+  source: sms
+  target: پیامک-SMS
+  target_initial: پیامک-SMS
+- locale: fa-ir
+  format: string
+  source: submit
+  target: ارسال
+  target_initial: ارسال
+- locale: fa-ir
+  format: string
+  source: to
+  target: تا
+  target_initial: تا
+- locale: fa-ir
+  format: string
+  source: uninstalled
+  target: نصب نشده
+  target_initial: نصب نشده
+- locale: fa-ir
+  format: string
+  source: week
+  target: هفته
+  target_initial: هفته
+- locale: fa-ir
+  format: string
+  source: 'yes'
+  target: بله
+  target_initial: بله
+- locale: fa-ir
+  format: string
+  source: Users
+  target: Benutzer
+  target_initial: Benutzer
+- locale: fa-ir
+  format: string
+  source: Organizations
+  target: Organisationen
+  target_initial: Organisationen
+- locale: fa-ir
+  format: string
+  source: Security
+  target: Security
+  target_initial: Security
+- locale: fa-ir
+  format: string
+  source: New User
+  target: Neuer Benutzer
+  target_initial: Neuer Benutzer
+- locale: fa-ir
+  format: string
+  source: pending
+  target: wartend
+  target_initial: wartend
+- locale: fa-ir
+  format: string
+  source: updated
+  target: aktuaisiert
+  target_initial: aktuaisiert
+- locale: fa-ir
+  format: string
+  source: All Tickets
+  target: Alle Tickets
+  target_initial: Alle Tickets
+- locale: fa-ir
+  format: string
+  source: Role
+  target: Rolle
+  target_initial: Rolle
+- locale: fa-ir
+  format: string
+  source: Username or email
+  target: Benutzername oder Email
+  target_initial: Benutzername oder Email
+- locale: fa-ir
+  format: string
+  source: Week
+  target: Woche
+  target_initial: Woche
+- locale: fa-ir
+  format: string
+  source: Forgot password?
+  target: Passwort vergessen?
+  target_initial: Passwort vergessen?
+- locale: fa-ir
+  format: string
+  source: Login successfully! Have a nice day!
+  target: 'Anmeldung erfolgreich! '
+  target_initial: 'Anmeldung erfolgreich! '
+- locale: fa-ir
+  format: string
+  source: Last contact
+  target: Letzer Kontakt
+  target_initial: Letzer Kontakt
+- locale: fa-ir
+  format: string
+  source: Forgot your password?
+  target: Haben Sie Ihr Passwort vergessen?
+  target_initial: Haben Sie Ihr Passwort vergessen?
+- locale: fa-ir
+  format: string
+  source: Templates
+  target: Templates
+  target_initial: Templates
+- locale: fa-ir
+  format: string
+  source: Closed Tickets
+  target: geschlossene Tickets
+  target_initial: geschlossene Tickets
+- locale: fa-ir
+  format: string
+  source: 1 low
+  target: 1 niedrig
+  target_initial: 1 niedrig
+- locale: fa-ir
+  format: string
+  source: 2 normal
+  target: 2 normal
+  target_initial: 2 normal
+- locale: fa-ir
+  format: string
+  source: 3 high
+  target: 3 Hoch
+  target_initial: 3 Hoch
+- locale: fa-ir
+  format: string
+  source: public
+  target: öffentlich
+  target_initial: öffentlich
+- locale: fa-ir
+  format: string
+  source: internal
+  target: intern
+  target_initial: intern
+- locale: fa-ir
+  format: string
+  source: Visibility
+  target: Sichtbarkeit
+  target_initial: Sichtbarkeit
+- locale: fa-ir
+  format: string
+  source: twitter status
+  target: twitter status
+  target_initial: twitter status
+- locale: fa-ir
+  format: string
+  source: All Open Tickets
+  target: Alle offenen Tickets
+  target_initial: Alle offenen Tickets
+- locale: fa-ir
+  format: string
+  source: Links
+  target: Links
+  target_initial: Links
+- locale: fa-ir
+  format: string
+  source: Change Customer
+  target: Kunden Ändern
+  target_initial: Kunden Ändern
+- locale: fa-ir
+  format: string
+  source: My Organization Tickets
+  target: Meine Organisations Tickes
+  target_initial: Meine Organisations Tickes
+- locale: fa-ir
+  format: string
+  source: My Organization
+  target: Meine Organisation
+  target_initial: Meine Organisation
+- locale: fa-ir
+  format: string
+  source: Woo hoo! Your password has been changed!
+  target: Glückwunsch! Sie haben Ihr Passwort erfolgreich geändert.
+  target_initial: Glückwunsch! Sie haben Ihr Passwort erfolgreich geändert.
+- locale: fa-ir
+  format: string
+  source: install
+  target: Installieren
+  target_initial: Installieren
+- locale: fa-ir
+  format: string
+  source: activate
+  target: aktiv
+  target_initial: aktiv
+- locale: fa-ir
+  format: string
+  source: activated
+  target: aktiviert
+  target_initial: aktiviert
+- locale: fa-ir
+  format: string
+  source: Group by
+  target: Sortieren nach
+  target_initial: Sortieren nach
+- locale: fa-ir
+  format: string
+  source: Age
+  target: Alter
+  target_initial: Alter
+- locale: fa-ir
+  format: string
+  source: Article Count
+  target: Artikel Anzahl
+  target_initial: Artikel Anzahl
+- locale: fa-ir
+  format: string
+  source: Article
+  target: Artikel
+  target_initial: Artikel
+- locale: fa-ir
+  format: string
+  source: Adresses
+  target: Adressen
+  target_initial: Adressen
+- locale: fa-ir
+  format: string
+  source: Update successful!
+  target: Aktualisierung erfolgreich!
+  target_initial: Aktualisierung erfolgreich!
+- locale: fa-ir
+  format: string
+  source: Invite Agents
+  target: Agenten einladen
+  target_initial: Agenten einladen
+- locale: fa-ir
+  format: string
+  source: Days
+  target: Tage
+  target_initial: Tage
+- locale: fa-ir
+  format: string
+  source: Hour
+  target: Stunde
+  target_initial: Stunde
+- locale: fa-ir
+  format: string
+  source: Add Attribute
+  target: Attribut hinzufügen
+  target_initial: Attribut hinzufügen
+- locale: fa-ir
+  format: string
+  source: Copy to clipboard
+  target: In die Zwischenablage kopieren
+  target_initial: In die Zwischenablage kopieren
+- locale: fa-ir
+  format: string
+  source: "%s ago"
+  target: "%s her"
+  target_initial: "%s her"
+- locale: fa-ir
+  format: string
+  source: Original
+  target: Original
+  target_initial: Original
+- locale: fa-ir
+  format: string
+  source: is the same
+  target: ist identisch
+  target_initial: ist identisch
+- locale: fa-ir
+  format: string
+  source: Target
+  target: Ziel
+  target_initial: Ziel
+- locale: fa-ir
+  format: string
+  source: Words
+  target: Wörter
+  target_initial: Wörter
+- locale: fa-ir
+  format: string
+  source: Cancel Upload
+  target: Hochladen Abbrechen
+  target_initial: Hochladen Abbrechen
+- locale: fa-ir
+  format: string
+  source: pending close
+  target: warten auf Schließung
+  target_initial: warten auf Schließung
+- locale: fa-ir
+  format: string
+  source: Tags
+  target: Tags
+  target_initial: Tags
+- locale: fa-ir
+  format: string
+  source: Add Tag
+  target: Tag hinzufügen
+  target_initial: Tag hinzufügen
+- locale: fa-ir
+  format: string
+  source: New Add-On
+  target: Neues Add-On
+  target_initial: Neues Add-On
+- locale: fa-ir
+  format: string
+  source: Changes
+  target: Änderungen
+  target_initial: Änderungen
+- locale: fa-ir
+  format: string
+  source: Confirm
+  target: Bestätigen
+  target_initial: Bestätigen
+- locale: fa-ir
+  format: string
+  source: Go Back
+  target: Zurück gehen
+  target_initial: Zurück gehen
+- locale: fa-ir
+  format: string
+  source: Twitter
+  target: Twitter
+  target_initial: Twitter
+- locale: fa-ir
+  format: string
+  source: Maintenance
+  target: Wartung
+  target_initial: Wartung
+- locale: fa-ir
+  format: string
+  source: Management
+  target: Management
+  target_initial: Management
+- locale: fa-ir
+  format: string
+  source: Addons
+  target: Addons
+  target_initial: Addons
+- locale: fa-ir
+  format: string
+  source: New Attribute
+  target: Neues Attribut
+  target_initial: Neues Attribut
+- locale: fa-ir
+  format: string
+  source: Members
+  target: Mitglieder
+  target_initial: Mitglieder
+- locale: fa-ir
+  format: string
+  source: Add a Note
+  target: Bemerkung hinzufügen
+  target_initial: Bemerkung hinzufügen
+- locale: fa-ir
+  format: string
+  source: My Group
+  target: Meine Gruppe
+  target_initial: Meine Gruppe
+- locale: fa-ir
+  format: string
+  source: My Stats
+  target: Mein Status
+  target_initial: Mein Status
+- locale: fa-ir
+  format: string
+  source: Add-ons
+  target: Add-ons
+  target_initial: Add-ons
+- locale: fa-ir
+  format: string
+  source: Tools
+  target: Tools
+  target_initial: Tools
+- locale: fa-ir
+  format: string
+  source: Twitter Key
+  target: Twitter Key
+  target_initial: Twitter Key
+- locale: fa-ir
+  format: string
+  source: Minimal size
+  target: Mindestgrösse
+  target_initial: Mindestgrösse
+- locale: fa-ir
+  format: string
+  source: Prio
+  target: Prio
+  target_initial: Prio
+- locale: fa-ir
+  format: string
+  source: URL
+  target: URL
+  target_initial: URL
+- locale: fa-ir
+  format: string
+  source: New Overview
+  target: Neue Übersicht
+  target_initial: Neue Übersicht
+- locale: fa-ir
+  format: string
+  source: New Organization
+  target: Neue Organisation
+  target_initial: Neue Organisation
+- locale: fa-ir
+  format: string
+  source: SLA
+  target: SLA
+  target_initial: SLA
+- locale: fa-ir
+  format: string
+  source: New Group
+  target: Neue Gruppe
+  target_initial: Neue Gruppe
+- locale: fa-ir
+  format: string
+  source: Max. Email Size
+  target: Max. Email Grösse
+  target_initial: Max. Email Grösse
+- locale: fa-ir
+  format: string
+  source: SSL
+  target: SSL
+  target_initial: SSL
+- locale: fa-ir
+  format: string
+  source: Geo Services
+  target: Geo Services
+  target_initial: Geo Services
+- locale: fa-ir
+  format: string
+  source: Frontend
+  target: Frontend
+  target_initial: Frontend
+- locale: fa-ir
+  format: string
+  source: http type
+  target: http type
+  target_initial: http type
+- locale: fa-ir
+  format: string
+  source: At a glance
+  target: Auf einen Blick
+  target_initial: Auf einen Blick
+- locale: fa-ir
+  format: string
+  source: SLAs
+  target: SLAs
+  target_initial: SLAs
+- locale: fa-ir
+  format: string
+  source: Checksum
+  target: Checksum
+  target_initial: Checksum
+- locale: fa-ir
+  format: string
+  source: New Profile
+  target: Neues Profil
+  target_initial: Neues Profil
+- locale: fa-ir
+  format: string
+  source: Cancel & Go Back
+  target: Abbrechen und Zurück
+  target_initial: Abbrechen und Zurück
+- locale: fa-ir
+  format: string
+  source: Username / email
+  target: Benutzername / Email
+  target_initial: Benutzername / Email
+- locale: fa-ir
+  format: string
+  source: You can request your password
+  target: Sie haben ein Passwort angefordet
+  target_initial: Sie haben ein Passwort angefordet
+- locale: fa-ir
+  format: string
+  source: Camera
+  target: Kamera
+  target_initial: Kamera
+- locale: fa-ir
+  format: string
+  source: Email & Online
+  target: Email & Online
+  target_initial: Email & Online
+- locale: fa-ir
+  format: string
+  source: Matrix
+  target: Matrix
+  target_initial: Matrix
+- locale: fa-ir
+  format: string
+  source: Avatar
+  target: Avatar
+  target_initial: Avatar
+- locale: fa-ir
+  format: string
+  source: Tickets of User
+  target: Tickets des Benutzer
+  target_initial: Tickets des Benutzer
+- locale: fa-ir
+  format: string
+  source: Tickets of Organization
+  target: Tickets der Organisation
+  target_initial: Tickets der Organisation
+- locale: fa-ir
+  format: string
+  source: New Project
+  target: Neues Projekt
+  target_initial: Neues Projekt
+- locale: fa-ir
+  format: string
+  source: App Secret
+  target: App Secret
+  target_initial: App Secret
+- locale: fa-ir
+  format: string
+  source: App ID
+  target: App ID
+  target_initial: App ID
+- locale: fa-ir
+  format: string
+  source: Status Code
+  target: Status Code
+  target_initial: Status Code
+- locale: fa-ir
+  format: string
+  source: Delete File
+  target: gelöschte Datei
+  target_initial: gelöschte Datei
+- locale: fa-ir
+  format: string
+  source: Tag
+  target: Tag
+  target_initial: Tag
+- locale: fa-ir
+  format: string
+  source: Pink
+  target: Pink
+  target_initial: Pink
+- locale: fa-ir
+  format: string
+  source: Logo
+  target: Logo
+  target_initial: Logo
+- locale: fa-ir
+  format: string
+  source: Blue
+  target: blau
+  target_initial: blau
+- locale: fa-ir
+  format: string
+  source: Green
+  target: grün
+  target_initial: grün
+- locale: fa-ir
+  format: string
+  source: Yellow
+  target: gelb
+  target_initial: gelb
+- locale: fa-ir
+  format: string
+  source: Browser
+  target: Browser
+  target_initial: Browser
+- locale: fa-ir
+  format: string
+  source: Organization Name
+  target: Organisations Name
+  target_initial: Organisations Name
+- locale: fa-ir
+  format: string
+  source: Your Logo
+  target: Ihr Logo
+  target_initial: Ihr Logo
+- locale: fa-ir
+  format: string
+  source: System URL
+  target: System URL
+  target_initial: System URL
+- locale: fa-ir
+  format: string
+  source: Address
+  target: Adresse
+  target_initial: Adresse
+- locale: fa-ir
+  format: string
+  source: VIP
+  target: VIP
+  target_initial: VIP
+- locale: fa-ir
+  format: string
+  source: Enable Chat
+  target: Chat aktivieren
+  target_initial: Chat aktivieren
+- locale: fa-ir
+  format: string
+  source: Maintenance Message
+  target: Wartungs Nachricht
+  target_initial: Wartungs Nachricht
+- locale: fa-ir
+  format: string
+  source: View from user's perspective
+  target: Aus Kundensicht ansehen
+  target_initial: Aus Kundensicht ansehen
+- locale: fa-ir
+  format: string
+  source: Status Type
+  target: Status Type
+  target_initial: Status Type
+- locale: fa-ir
+  format: string
+  source: Configuration
+  target: Konfiguration
+  target_initial: Konfiguration
+- locale: fa-ir
+  format: string
+  source: Twitter App Credentials
+  target: Twitter App Credentials
+  target_initial: Twitter App Credentials
+- locale: fa-ir
+  format: string
+  source: Intro
+  target: Intro
+  target_initial: Intro
+- locale: fa-ir
+  format: string
+  source: Calendars
+  target: Kalender
+  target_initial: Kalender
+- locale: fa-ir
+  format: string
+  source: Business Hours
+  target: Öffnungszeiten
+  target_initial: Öffnungszeiten
+- locale: fa-ir
+  format: string
+  source: Updated at
+  target: aktualisiert am
+  target_initial: aktualisiert am
+- locale: fa-ir
+  format: string
+  source: Updated by
+  target: aktualisiert von
+  target_initial: aktualisiert von
+- locale: fa-ir
+  format: string
+  source: No filter.
+  target: Keine Filter.
+  target_initial: Keine Filter.
+- locale: fa-ir
+  format: string
+  source: is
+  target: ist
+  target_initial: ist
+- locale: fa-ir
+  format: string
+  source: 'Average: %s%'
+  target: 'Durchschnittlich: %s% '
+  target_initial: 'Durchschnittlich: %s% '
+- locale: fa-ir
+  format: string
+  source: Form
+  target: Formular
+  target_initial: Formular
+- locale: fa-ir
+  format: string
+  source: after (relative)
+  target: nach (relativ)
+  target_initial: nach (relativ)
+- locale: fa-ir
+  format: string
+  source: in hours
+  target: in Stunden
+  target_initial: in Stunden
+- locale: fa-ir
+  format: string
+  source: is not
+  target: ist nicht
+  target_initial: ist nicht
+- locale: fa-ir
+  format: string
+  source: after (absolute)
+  target: nach (absolut)
+  target_initial: nach (absolut)
+- locale: fa-ir
+  format: string
+  source: Enter timzone...
+  target: Zeitzone eingeben...
+  target_initial: Zeitzone eingeben...
+- locale: fa-ir
+  format: string
+  source: "%s of my tickets escalated."
+  target: "%s meiner Tickets sind eskaliert. "
+  target_initial: "%s meiner Tickets sind eskaliert. "
+- locale: fa-ir
+  format: string
+  source: Chat
+  target: Chat
+  target_initial: Chat
+- locale: fa-ir
+  format: string
+  source: Web
+  target: Web
+  target_initial: Web
+- locale: fa-ir
+  format: string
+  source: today
+  target: Heute
+  target_initial: Heute
+- locale: fa-ir
+  format: string
+  source: at
+  target: um
+  target_initial: um
+- locale: fa-ir
+  format: string
+  source: Customer Chat
+  target: Kundenchat
+  target_initial: Kundenchat
+- locale: fa-ir
+  format: string
+  source: Pending reached
+  target: Schließung erreicht
+  target_initial: Schließung erreicht
+- locale: fa-ir
+  format: string
+  source: Macros
+  target: Makros
+  target_initial: Makros
+- locale: fa-ir
+  format: string
+  source: Devices
+  target: Devices
+  target_initial: Devices
+- locale: fa-ir
+  format: string
+  source: "∅ Waiting time today"
+  target: "∅ heutige Wartezeit"
+  target_initial: "∅ heutige Wartezeit"
+- locale: fa-ir
+  format: string
+  source: Branding
+  target: Branding
+  target_initial: Branding
+- locale: fa-ir
+  format: string
+  source: Waiting Customers
+  target: Wartende Kunden
+  target_initial: Wartende Kunden
+- locale: fa-ir
+  format: string
+  source: Active Agents
+  target: aktive Agenten
+  target_initial: aktive Agenten
+- locale: fa-ir
+  format: string
+  source: Your Email Configuration
+  target: Ihre Email Konfiguration
+  target_initial: Ihre Email Konfiguration
+- locale: fa-ir
+  format: string
+  source: Widget
+  target: Widget
+  target_initial: Widget
+- locale: fa-ir
+  format: string
+  source: Invite Agents/Colleges
+  target: Agenten / Kollegen einladen
+  target_initial: Agenten / Kollegen einladen
+- locale: fa-ir
+  format: string
+  source: Option
+  target: Option
+  target_initial: Option
+- locale: fa-ir
+  format: string
+  source: Designer
+  target: Designer
+  target_initial: Designer
+- locale: fa-ir
+  format: string
+  source: Font size
+  target: Schriftgrösse
+  target_initial: Schriftgrösse
+- locale: fa-ir
+  format: string
+  source: Email Notification
+  target: Email Benachrichtigung
+  target_initial: Email Benachrichtigung
+- locale: fa-ir
+  format: string
+  source: Email Accounts
+  target: Email Konten
+  target_initial: Email Konten
+- locale: fa-ir
+  format: string
+  source: Email Account
+  target: Email Konto
+  target_initial: Email Konto
+- locale: fa-ir
+  format: string
+  source: Verifying...
+  target: verifiziere...
+  target_initial: verifiziere...
+- locale: fa-ir
+  format: string
+  source: Organization Support
+  target: Organisation Support
+  target_initial: Organisation Support
+- locale: fa-ir
+  format: string
+  source: Widget Designer
+  target: Widget Designer
+  target_initial: Widget Designer
+- locale: fa-ir
+  format: string
+  source: You have no configured account right now.
+  target: Bislang haben Sie noch kein Konto eröffnet
+  target_initial: Bislang haben Sie noch kein Konto eröffnet
+- locale: fa-ir
+  format: string
+  source: Attached Files
+  target: angehängte Datei
+  target_initial: angehängte Datei
+- locale: fa-ir
+  format: string
+  source: Default
+  target: Default
+  target_initial: Default
+- locale: fa-ir
+  format: string
+  source: New Calendar
+  target: Neuer Kalender
+  target_initial: Neuer Kalender
+- locale: fa-ir
+  format: string
+  source: Ticket update
+  target: Ticket update
+  target_initial: Ticket update
+- locale: fa-ir
+  format: string
+  source: New Version
+  target: Neue Version
+  target_initial: Neue Version
+- locale: fa-ir
+  format: string
+  source: Also notify via email
+  target: Auch per Email Benachrichtigen
+  target_initial: Auch per Email Benachrichtigen
+- locale: fa-ir
+  format: string
+  source: "%s created User |%s|"
+  target: "%s erstellte Benutzer |%s| "
+  target_initial: "%s erstellte Benutzer |%s| "
+- locale: fa-ir
+  format: string
+  source: "%s created Ticket |%s|"
+  target: "%s erstellte Ticket(s) |%s| "
+  target_initial: "%s erstellte Ticket(s) |%s| "
+- locale: fa-ir
+  format: string
+  source: Add Link
+  target: Link hinzufügen
+  target_initial: Link hinzufügen
+- locale: fa-ir
+  format: string
+  source: Create Macros
+  target: Marko erstellen
+  target_initial: Marko erstellen
+- locale: fa-ir
+  format: string
+  source: Additional Channels
+  target: Zusätzlicher Kanal
+  target_initial: Zusätzlicher Kanal
+- locale: fa-ir
+  format: string
+  source: Invite
+  target: Einladen
+  target_initial: Einladen
+- locale: fa-ir
+  format: string
+  source: Invite Colleagues
+  target: Kollegen einladen
+  target_initial: Kollegen einladen
+- locale: fa-ir
+  format: string
+  source: Administrator Account
+  target: Administrator Konto
+  target_initial: Administrator Konto
+- locale: fa-ir
+  format: string
+  source: John Smith
+  target: John Smith
+  target_initial: John Smith
+- locale: fa-ir
+  format: string
+  source: Load
+  target: Laden
+  target_initial: Laden
+- locale: fa-ir
+  format: string
+  source: Keywords
+  target: Keywords
+  target_initial: Keywords
+- locale: fa-ir
+  format: string
+  source: New Macro
+  target: Neues Makro
+  target_initial: Neues Makro
+- locale: fa-ir
+  format: string
+  source: Search...
+  target: Suchen...
+  target_initial: Suchen...
+- locale: fa-ir
+  format: string
+  source: Invite Customer
+  target: Kunden einladen
+  target_initial: Kunden einladen
+- locale: fa-ir
+  format: string
+  source: done
+  target: erledigt
+  target_initial: erledigt
+- locale: fa-ir
+  format: string
+  source: Folder
+  target: Ordner
+  target_initial: Ordner
+- locale: fa-ir
+  format: string
+  source: Year(s)
+  target: Jahr(e)
+  target_initial: Jahr(e)
+- locale: fa-ir
+  format: string
+  source: Month(s)
+  target: Monat(e)
+  target_initial: Monat(e)
+- locale: fa-ir
+  format: string
+  source: Day(s)
+  target: Tag(e)
+  target_initial: Tag(e)
+- locale: fa-ir
+  format: string
+  source: Hour(s)
+  target: Stunde(n)
+  target_initial: Stunde(n)
+- locale: fa-ir
+  format: string
+  source: Minute(s)
+  target: Minute(n)
+  target_initial: Minute(n)
+- locale: fa-ir
+  format: string
+  source: Experts
+  target: Experten
+  target_initial: Experten
+- locale: fa-ir
+  format: string
+  source: current user
+  target: aktueller Benutzer
+  target_initial: aktueller Benutzer
+- locale: fa-ir
+  format: string
+  source: busy
+  target: Besetzt
+  target_initial: Besetzt
+- locale: fa-ir
+  format: string
+  source: CTI
+  target: CTI
+  target_initial: CTI
+- locale: fa-ir
+  format: string
+  source: attached
+  target: angehängt
+  target_initial: angehängt
+- locale: fa-ir
+  format: string
+  source: Update Database
+  target: Update Database
+  target_initial: Update Database
+- locale: fa-ir
+  format: string
+  source: inactive
+  target: inaktiv
+  target_initial: inaktiv
+- locale: fa-ir
+  format: string
+  source: active
+  target: aktive
+  target_initial: aktive
+- locale: fa-ir
+  format: string
+  source: Visible
+  target: sichtbar
+  target_initial: sichtbar
+- locale: fa-ir
+  format: string
+  source: "...of whole textarea"
+  target: "...des gesamten Textbereich"
+  target_initial: "...des gesamten Textbereich"
+- locale: fa-ir
+  format: string
+  source: Mode
+  target: Modus
+  target_initial: Modus
+- locale: fa-ir
+  format: string
+  source: Account not verified
+  target: Konto nicht verifiziert
+  target_initial: Konto nicht verifiziert
+- locale: fa-ir
+  format: string
+  source: Zammad Karma
+  target: Zammad Karma
+  target_initial: Zammad Karma
+- locale: fa-ir
+  format: string
+  source: You have closed a ticket
+  target: Sie haben ein Ticket geschlossen
+  target_initial: Sie haben ein Ticket geschlossen
+- locale: fa-ir
+  format: string
+  source: You have created a ticket
+  target: Sie haben ein neues Ticket eröffnet
+  target_initial: Sie haben ein neues Ticket eröffnet
+- locale: fa-ir
+  format: string
+  source: You have answered a ticket within 1h
+  target: Sie haben innerhalb einer Stunde ein Ticket beantwortet
+  target_initial: Sie haben innerhalb einer Stunde ein Ticket beantwortet
+- locale: fa-ir
+  format: string
+  source: Latest updates
+  target: letzte Aktualisierung
+  target_initial: letzte Aktualisierung
+- locale: fa-ir
+  format: string
+  source: Hero
+  target: Held
+  target_initial: Held
+- locale: fa-ir
+  format: string
+  source: Expert
+  target: Experte
+  target_initial: Experte
+- locale: fa-ir
+  format: string
+  source: Newbie
+  target: Newbie
+  target_initial: Newbie
+- locale: fa-ir
+  format: string
+  source: Master
+  target: Master
+  target_initial: Master
+- locale: fa-ir
+  format: string
+  source: API
+  target: API
+  target_initial: API
+- locale: fa-ir
+  format: string
+  source: New App
+  target: Neue App
+  target_initial: Neue App
+- locale: fa-ir
+  format: string
+  source: Applications
+  target: Applikation
+  target_initial: Applikation
+- locale: fa-ir
+  format: string
+  source: annually
+  target: jährlich
+  target_initial: jährlich
+- locale: fa-ir
+  format: string
+  source: monthly
+  target: monatlich
+  target_initial: monatlich
+- locale: fa-ir
+  format: string
+  source: Confirmation required
+  target: Bestätigung benötigt
+  target_initial: Bestätigung benötigt
+- locale: fa-ir
+  format: string
+  source: VAT ID
+  target: Steuer-Nr / USt-ID
+  target_initial: Steuer-Nr / USt-ID
+- locale: fa-ir
+  format: string
+  source: VAT
+  target: Steuer
+  target_initial: Steuer
+- locale: fa-ir
+  format: string
+  source: tax
+  target: Steuer
+  target_initial: Steuer
+- locale: fa-ir
+  format: string
+  source: Yes, please cancel my subscription
+  target: Ja, bitte stornieren Sie meine Subscription
+  target_initial: Ja, bitte stornieren Sie meine Subscription
+- locale: fa-ir
+  format: string
+  source: Update subscription
+  target: 'Update Subscription '
+  target_initial: 'Update Subscription '
+- locale: fa-ir
+  format: string
+  source: Yes, undo my subscription cancel
+  target: Ja, bitte machen die Stornierung meiner Subscription rückgängig
+  target_initial: Ja, bitte machen die Stornierung meiner Subscription rückgängig
+- locale: fa-ir
+  format: string
+  source: SLA Times
+  target: SLA Zeiten
+  target_initial: SLA Zeiten
+- locale: fa-ir
+  format: string
+  source: New Tags
+  target: Neue Tags
+  target_initial: Neue Tags
+- locale: fa-ir
+  format: string
+  source: Macro
+  target: Makro
+  target_initial: Makro
+- locale: fa-ir
+  format: string
+  source: Allow users to add new tags.
+  target: Benutzern erlauben, neue Tags hinzu zufügen.
+  target_initial: Benutzern erlauben, neue Tags hinzu zufügen.
+- locale: fa-ir
+  format: string
+  source: left
+  target: links
+  target_initial: links
+- locale: fa-ir
+  format: string
+  source: Domain
+  target: Domain
+  target_initial: Domain
+- locale: fa-ir
+  format: string
+  source: Current User
+  target: aktueller Benutzer
+  target_initial: aktueller Benutzer
+- locale: fa-ir
+  format: string
+  source: Config
+  target: Config
+  target_initial: Config
+- locale: fa-ir
+  format: string
+  source: Article#
+  target: Artikel#
+  target_initial: Artikel#
+- locale: fa-ir
+  format: string
+  source: New Role
+  target: Neue Rolle
+  target_initial: Neue Rolle
+- locale: fa-ir
+  format: string
+  source: Monitoring
+  target: Monitoring
+  target_initial: Monitoring
+- locale: fa-ir
+  format: string
+  source: Current Token
+  target: aktueller Token
+  target_initial: aktueller Token
+- locale: fa-ir
+  format: string
+  source: Current Status
+  target: aktueller Status
+  target_initial: aktueller Status
+- locale: fa-ir
+  format: string
+  source: "%s required!"
+  target: "%s benötigt!"
+  target_initial: "%s benötigt!"
+- locale: fa-ir
+  format: string
+  source: 2 lower and 2 upper characters
+  target: 2 kleine und 2 grosse Buchstaben
+  target_initial: 2 kleine und 2 grosse Buchstaben
+- locale: fa-ir
+  format: string
+  source: Link %s
+  target: Link %s
+  target_initial: Link %s
+- locale: fa-ir
+  format: string
+  source: "%s Migration"
+  target: "%s Migration"
+  target_initial: "%s Migration"
+- locale: fa-ir
+  format: string
+  source: API token
+  target: API token
+  target_initial: API token
+- locale: fa-ir
+  format: string
+  source: "%s URL"
+  target: "%s URL"
+  target_initial: "%s URL"
+- locale: fa-ir
+  format: string
+  source: Test Connection
+  target: Testverbindung
+  target_initial: Testverbindung
+- locale: fa-ir
+  format: string
+  source: Account Holder
+  target: Konto Eigentümer
+  target_initial: Konto Eigentümer
+- locale: fa-ir
+  format: string
+  source: Germany
+  target: Deutschland
+  target_initial: Deutschland
+- locale: fa-ir
+  format: string
+  source: Last contact (agent)
+  target: Letzer Kontakt (Agent)
+  target_initial: Letzer Kontakt (Agent)
+- locale: fa-ir
+  format: string
+  source: Last contact (customer)
+  target: Letzer Kontakt (Kunde)
+  target_initial: Letzer Kontakt (Kunde)
+- locale: fa-ir
+  format: string
+  source: You have not created a ticket yet.
+  target: Bislang haben Sie noch kein Ticket eröffnet.
+  target_initial: Bislang haben Sie noch kein Ticket eröffnet.
+- locale: fa-ir
+  format: string
+  source: Successful!
+  target: Erfolgreich!
+  target_initial: Erfolgreich!
+- locale: fa-ir
+  format: string
+  source: Woo hoo! Your email address has been verified!
+  target: Glückwunsch! Ihre Email-Adresse ist verifiziert.
+  target_initial: Glückwunsch! Ihre Email-Adresse ist verifiziert.
+- locale: fa-ir
+  format: string
+  source: Date & Time
+  target: Datum und Zeit
+  target_initial: Datum und Zeit
+- locale: fa-ir
+  format: string
+  source: Your tickets in process
+  target: Ihr Ticket ist in Arbeit
+  target_initial: Ihr Ticket ist in Arbeit
+- locale: fa-ir
+  format: string
+  source: "%s of your tickets are currently in process."
+  target: "%s meiner Tickets sind zur Zeit in Arbeit."
+  target_initial: "%s meiner Tickets sind zur Zeit in Arbeit."
+- locale: fa-ir
+  format: string
+  source: Enable
+  target: aktivieren
+  target_initial: aktivieren
+- locale: fa-ir
+  format: string
+  source: HTTP type
+  target: HTTP type
+  target_initial: HTTP type
+- locale: fa-ir
+  format: string
+  source: Bots
+  target: Bots
+  target_initial: Bots
+- locale: fa-ir
+  format: string
+  source: Network
+  target: Netzwerk
+  target_initial: Netzwerk
+- locale: fa-ir
+  format: string
+  source: Wrong Username or Password combination.
+  target: Falscher Benutzername oder Passwort
+  target_initial: Falscher Benutzername oder Passwort
+- locale: fa-ir
+  format: string
+  source: Minimum length
+  target: Mindestlänge
+  target_initial: Mindestlänge
+- locale: fa-ir
+  format: string
+  source: New Application
+  target: Neue Applikation
+  target_initial: Neue Applikation
+- locale: fa-ir
+  format: string
+  source: Disable
+  target: Deaktivieren
+  target_initial: Deaktivieren
+- locale: fa-ir
+  format: string
+  source: Geo IP Service
+  target: Geo IP Service
+  target_initial: Geo IP Service
+- locale: fa-ir
+  format: string
+  source: Installed
+  target: installiert
+  target_initial: installiert
+- locale: fa-ir
+  format: string
+  source: Add Bot
+  target: Bot hinzufügen
+  target_initial: Bot hinzufügen
+- locale: fa-ir
+  format: string
+  source: Messages
+  target: Nachrichten
+  target_initial: Nachrichten
+- locale: fa-ir
+  format: string
+  source: Meine zugewiesenen Tickets
+  target: Meine zugewiesenen Tickets
+  target_initial: Meine zugewiesenen Tickets
+- locale: fa-ir
+  format: string
+  source: Telegram
+  target: Telegram
+  target_initial: Telegram
+- locale: fa-ir
+  format: string
+  source: Invoice
+  target: Rechnung
+  target_initial: Rechnung
+- locale: fa-ir
+  format: string
+  source: Yes, change my subscription
+  target: Ja, meine Subscription ändern
+  target_initial: Ja, meine Subscription ändern
+- locale: fa-ir
+  format: string
+  source: Annual
+  target: jährlich
+  target_initial: jährlich
+- locale: fa-ir
+  format: string
+  source: LDAP Host
+  target: LDAP Host
+  target_initial: LDAP Host
+- locale: fa-ir
+  format: string
+  source: failed
+  target: fehlgeschlagen
+  target_initial: fehlgeschlagen
+- locale: fa-ir
+  format: string
+  source: Mapping
+  target: Mapping
+  target_initial: Mapping
+- locale: fa-ir
+  format: string
+  source: All Agents
+  target: Alle Agenten
+  target_initial: Alle Agenten
+- locale: fa-ir
+  format: string
+  source: See more
+  target: mehr Zeigen
+  target_initial: mehr Zeigen
+- locale: fa-ir
+  format: string
+  source: Send invitation
+  target: Einladung senden
+  target_initial: Einladung senden
+- locale: fa-ir
+  format: string
+  source: Channel
+  target: Kanal
+  target_initial: Kanal
+- locale: fa-ir
+  format: string
+  source: reply
+  target: antworten
+  target_initial: antworten
+- locale: fa-ir
+  format: string
+  source: Channels
+  target: Kanäle
+  target_initial: Kanäle
+- locale: fa-ir
+  format: string
+  source: Save Template
+  target: Tamplate speichern
+  target_initial: Tamplate speichern
+- locale: fa-ir
+  format: string
+  source: Choose Template
+  target: Template auswählen
+  target_initial: Template auswählen
+- locale: fa-ir
+  format: string
+  source: Send Email
+  target: Email senden
+  target_initial: Email senden
+- locale: fa-ir
+  format: string
+  source: Save new template
+  target: als neues Template speichern
+  target_initial: als neues Template speichern
+- locale: fa-ir
+  format: string
+  source: Report Profiles
+  target: Report Profile
+  target_initial: Report Profile
+- locale: fa-ir
+  format: string
+  source: Report
+  target: Report
+  target_initial: Report
+- locale: fa-ir
+  format: string
+  source: Chatting Customers
+  target: chattender Kunde
+  target_initial: chattender Kunde
+- locale: fa-ir
+  format: string
+  source: Reopening rate
+  target: Wiedereröffnungsrate
+  target_initial: Wiedereröffnungsrate
+- locale: fa-ir
+  format: string
+  source: "%s updated User |%s|"
+  target: "%s aktualisierte Benutzer |%s| "
+  target_initial: "%s aktualisierte Benutzer |%s| "
+- locale: fa-ir
+  format: string
+  source: Reply to last article
+  target: auf den letzten Beitrag antworten
+  target_initial: auf den letzten Beitrag antworten
+- locale: fa-ir
+  format: string
+  source: "%s updated Ticket |%s|"
+  target: "%s aktualisierte Tickets |%s| "
+  target_initial: "%s aktualisierte Tickets |%s| "
+- locale: fa-ir
+  format: string
+  source: Chat Title
+  target: Chat Betreff
+  target_initial: Chat Betreff
+- locale: fa-ir
+  format: string
+  source: required
+  target: benötigt
+  target_initial: benötigt
+- locale: fa-ir
+  format: string
+  source: reply all
+  target: allen Antworten
+  target_initial: allen Antworten
+- locale: fa-ir
+  format: string
+  source: right
+  target: rechts
+  target_initial: rechts
+- locale: fa-ir
+  format: string
+  source: Save as template
+  target: Als Template speichern
+  target_initial: Als Template speichern
+- locale: fa-ir
+  format: string
+  source: select attachment...
+  target: Anhang auswählen...
+  target_initial: Anhang auswählen...
+- locale: fa-ir
+  format: string
+  source: See less
+  target: weniger Zeigen
+  target_initial: weniger Zeigen
+- locale: fa-ir
+  format: string
+  source: run macro
+  target: Makro ausführen
+  target_initial: Makro ausführen
+- locale: fa-ir
+  format: string
+  source: Report Profile
+  target: Report Profil
+  target_initial: Report Profil
+- locale: fa-ir
+  format: string
+  source: Save configuration
+  target: Konfiguration Speichern
+  target_initial: Konfiguration Speichern
+- locale: fa-ir
+  format: string
+  source: Overviews
+  target: مرورکلی
+  target_initial: مرورکلی
+- locale: fa-ir
+  format: string
+  source: Facebook
+  target: فیسبوک
+  target_initial: فیسبوک
+- locale: fa-ir
+  format: string
+  source: Account Time
+  target: Account Time
+  target_initial: Account Time
+- locale: fa-ir
+  format: string
+  source: Unassigned & Open
+  target: بازوتخ
+  target_initial: بازوتخ
+- locale: fa-ir
+  format: string
+  source: First Steps
+  target: گامهای اولیه
+  target_initial: گامهای اولیه
+- locale: fa-ir
+  format: string
+  source: Activity Stream
+  target: جریان فعالیتها
+  target_initial: جریان فعالیتها
+- locale: fa-ir
+  format: string
+  source: Channel Distribution
+  target: کانال های توزیع
+  target_initial: کانال های توزیع
+- locale: fa-ir
+  format: string
+  source: Access to %s
+  target: Access to %s
+  target_initial: Access to %s
+- locale: fa-ir
+  format: string
+  source: Accounted Time
+  target: Accounted Time
+  target_initial: Accounted Time
+- locale: fa-ir
+  format: string
+  source: Accounts
+  target: Accounts
+  target_initial: Accounts
+- locale: fa-ir
+  format: string
+  source: Access to Agent Tickets based on Group Access
+  target: Access to Agent Tickets based on Group Access
+  target_initial: Access to Agent Tickets based on Group Access
+- locale: fa-ir
+  format: string
+  source: Activates lost password feature for users.
+  target: Activates lost password feature for users.
+  target_initial: Activates lost password feature for users.
+- locale: fa-ir
+  format: string
+  source: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  target: Access to Customer Tickets based on current_user.id and current_user.organization_id
+  target_initial: Access to Customer Tickets based on current_user.id and current_user.organization_id
+- locale: fa-ir
+  format: string
+  source: Get latest translations
+  target: دریافت آخرین ترجمه ها
+  target_initial: دریافت آخرین ترجمه ها
+- locale: fa-ir
+  format: string
+  source: What affects your Zammad Karma?
+  target: چه چیزی روی روحیه مشتری مداری شما را تحت تاثیر قرار داده ؟
+  target_initial: چه چیزی روی روحیه مشتری مداری شما را تحت تاثیر قرار داده ؟
+- locale: fa-ir
+  format: string
+  source: Invite customers to create issues in Zammad
+  target: دعوت مشتریان به ایجاد درخواست در سیستم
+  target_initial: دعوت مشتریان به ایجاد درخواست در سیستم
+- locale: fa-ir
+  format: string
+  source: You are going to cancel your Zammad account. Are you ABSOLUTELY sure?
+  target: شما میخواهید حساب RasaCRM خود را لغو کنید ، آیا کاملا مطمئنید ؟
+  target_initial: شما میخواهید حساب RasaCRM خود را لغو کنید ، آیا کاملا مطمئنید ؟
+- locale: fa-ir
+  format: string
+  source: Starting Zammad
+  target: شروع به کار سیستم ارتباط با مشتریان
+  target_initial: شروع به کار سیستم ارتباط با مشتریان
+- locale: fa-ir
+  format: string
+  source: Zammad looks like this for "%s"
+  target: " سیستم ارتباط با مشتریان به نظر برای %s"
+  target_initial: " سیستم ارتباط با مشتریان به نظر برای %s"
+- locale: fa-ir
+  format: string
+  source: again
+  target: مجدد
+  target_initial: مجدد
+- locale: fa-ir
+  format: string
+  source: All computers and browsers that have access to your Zammad appear here.
+  target: 'تمام رایانه ها و مروگرهایی که به سیستم CRM دسترسی دارند اینجا نمایش داده
+    شده است '
+  target_initial: 'تمام رایانه ها و مروگرهایی که به سیستم CRM دسترسی دارند اینجا نمایش
+    داده شده است '
+- locale: fa-ir
+  format: string
+  source: Or
+  target: یا
+  target_initial: یا
+- locale: fa-ir
+  format: string
+  source: Amount
+  target: مقدار
+  target_initial: مقدار
+- locale: fa-ir
+  format: string
+  source: Mood
+  target: حس و حال ( موود)
+  target_initial: حس و حال ( موود)
+- locale: fa-ir
+  format: string
+  source: View this in Zammad
+  target: مشاهده در RasaCRM
+  target_initial: مشاهده در RasaCRM
+- locale: fa-ir
+  format: string
+  source: Zammad Karma is a powerful tool that tracks and visualizes your productivity.
+  target: روحیه مشتری مداری یک ابزار قدرتمند برای پیگیری و ترسیم کارایی شماست
+  target_initial: روحیه مشتری مداری یک ابزار قدرتمند برای پیگیری و ترسیم کارایی شماست
+- locale: fa-ir
+  format: string
+  source: My replacement Tickets
+  target: درخواستهای جایگزینی من
+  target_initial: درخواستهای جایگزینی من
+- locale: fa-ir
+  format: string
+  source: 'My handling time: %s minutes'
+  target: 'زمان رسیدگی من: %s دقیقه'
+  target_initial: 'زمان رسیدگی من: %s دقیقه'
+- locale: fa-ir
+  format: string
+  source: Move left and right
+  target: Move left and right
+  target_initial: Move left and right
+- locale: fa-ir
+  format: string
+  source: Move up and down
+  target: انتقال به بالا و پائین
+  target_initial: انتقال به بالا و پائین
+- locale: fa-ir
+  format: string
+  source: My assigned Tickets
+  target: درخواستهای تخصیص داده شده من
+  target_initial: درخواستهای تخصیص داده شده من
+- locale: fa-ir
+  format: string
+  source: My pending reached Tickets
+  target: درخواتسهای منتظر در دسترس قرار گرفتن من
+  target_initial: درخواتسهای منتظر در دسترس قرار گرفتن من
+- locale: fa-ir
+  format: string
+  source: My closed Tickets
+  target: درخواستهای بسته شده من
+  target_initial: درخواستهای بسته شده من
+- locale: fa-ir
+  format: string
+  source: Assign Follow Ups
+  target: تخصیص پیگیری
+  target_initial: تخصیص پیگیری
+- locale: fa-ir
+  format: string
+  source: Ticket %s created!
+  target: 'درخواست %s ایجاد شد! '
+  target_initial: 'درخواست %s ایجاد شد! '
+- locale: fa-ir
+  format: string
+  source: No Entries
+  target: داده ای جهت نمایش وجود ندارد
+  target_initial: داده ای جهت نمایش وجود ندارد
+- locale: fa-ir
+  format: string
+  source: Article Last Sender
+  target: آخرین ارسال کننده مطلب
+  target_initial: آخرین ارسال کننده مطلب
+- locale: fa-ir
+  format: string
+  source: skipped
+  target: نادیده گرفته شده
+  target_initial: نادیده گرفته شده
+- locale: fa-ir
+  format: string
+  source: 'Tickets assigned to me: %s of %s'
+  target: 'درخواستهای تخصیص داده شده به من : %s از %s '
+  target_initial: 'درخواستهای تخصیص داده شده به من : %s از %s '
+- locale: fa-ir
+  format: string
+  source: Escalated Tickets
+  target: تیکتهای ارجاع داده شده
+  target_initial: تیکتهای ارجاع داده شده
+- locale: fa-ir
+  format: string
+  source: Merge to Ticket#
+  target: 'ادغام با درخواست شماره #'
+  target_initial: 'ادغام با درخواست شماره #'
+- locale: fa-ir
+  format: string
+  source: Discard
+  target: 'نادیده گرفتن '
+  target_initial: 'نادیده گرفتن '
+- locale: fa-ir
+  format: string
+  source: Update as closed
+  target: بروزرسانی به عنوان بسته
+  target_initial: بروزرسانی به عنوان بسته
+- locale: fa-ir
+  format: string
+  source: Uploading
+  target: در حال بارگزاری
+  target_initial: در حال بارگزاری
+- locale: fa-ir
+  format: string
+  source: Total
+  target: کل
+  target_initial: کل
+- locale: fa-ir
+  format: string
+  source: Clients
+  target: مشتریان
+  target_initial: مشتریان
+- locale: fa-ir
+  format: string
+  source: set to public
+  target: ست کردن به عنوان عمومی
+  target_initial: ست کردن به عنوان عمومی
+- locale: fa-ir
+  format: string
+  source: Here you can sign out, change the frontend language or see your latest views
+    items.
+  target: در این قسمت میتوانید از حساب خود خارج شوید، زبان رابط کاربری را تغییر بدهید
+    و آخرین ایتم های خود را مشاهده کنید.
+  target_initial: در این قسمت میتوانید از حساب خود خارج شوید، زبان رابط کاربری را
+    تغییر بدهید و آخرین ایتم های خود را مشاهده کنید.
+- locale: fa-ir
+  format: string
+  source: Here you can create new tickets. Also if you have the permissions you can
+    create new customers and organizations.
+  target: اینجا میتوانید یک درخواست جدید ایجاد کیند ، همچنین اگر دستری داشته باشید
+    میتوانید مشتری و سازمان جدید نیز تعریف کنید.
+  target_initial: اینجا میتوانید یک درخواست جدید ایجاد کیند ، همچنین اگر دستری داشته
+    باشید میتوانید مشتری و سازمان جدید نیز تعریف کنید.
+- locale: fa-ir
+  format: string
+  source: Back to my view
+  target: بازگشت به View من
+  target_initial: بازگشت به View من
+- locale: fa-ir
+  format: string
+  source: Duration
+  target: مدت زمان
+  target_initial: مدت زمان
+- locale: fa-ir
+  format: string
+  source: Closing time
+  target: زمان بستن
+  target_initial: زمان بستن
+- locale: fa-ir
+  format: string
+  source: Here you see a quick overview of your and other agents' performance.
+  target: در این قسمت یک نمای کلی از عملکرد خود و دیگر اپراتورهای سیستم را مشاهده
+    می کنید
+  target_initial: در این قسمت یک نمای کلی از عملکرد خود و دیگر اپراتورهای سیستم را
+    مشاهده می کنید
+- locale: fa-ir
+  format: string
+  source: Here you find your ticket overviews for open, assigned and escalated tickets.
+  target: در این قسمت نمای کلی از درخواستهای باز ، تخصیص داده شده به شما و همچنین
+    دگر/برون سپاری شده را خواهید داشت.
+  target_initial: در این قسمت نمای کلی از درخواستهای باز ، تخصیص داده شده به شما و
+    همچنین دگر/برون سپاری شده را خواهید داشت.
+- locale: fa-ir
+  format: string
+  source: Unassigned & Open Tickets
+  target: درخواستهای تخصیص داده نشده و باز
+  target_initial: درخواستهای تخصیص داده نشده و باز
+- locale: fa-ir
+  format: string
+  source: Close & Tag as Spam
+  target: بستن و نسانه گزاری به عنوان اسپم
+  target_initial: بستن و نسانه گزاری به عنوان اسپم
+- locale: fa-ir
+  format: string
+  source: here
+  target: اینجا
+  target_initial: اینجا
+- locale: fa-ir
+  format: string
+  source: Here you can sign out, change the frontend language and see your last viewed
+    items.
+  target: در این قسمت میتوانید از حساب خود خارج شوید، زبان رابط کاربری را تغییر بدهید
+    و آخرین ایتم های مشاهده شده را ببینید
+  target_initial: در این قسمت میتوانید از حساب خود خارج شوید، زبان رابط کاربری را
+    تغییر بدهید و آخرین ایتم های مشاهده شده را ببینید
+- locale: fa-ir
+  format: string
+  source: Here you can search for tickets, customers and organizations. Use the wildcard
+    §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double
+    quotes|| for searching phrases §"some phrase"§.
+  target: 'اینجا میتوانید تیکتها را جستجو کنید, در مشتریان و سازمانها از §*§ برای
+    پیدا کردن هرچیزی استفاده کنید. مثال. §کوثر*§ or §مهران*l§. میتوانید از  ||double
+    quotes|| برای جستجوی برخی عبارتها §"عبارت مد نظر"§. '
+  target_initial: 'اینجا میتوانید تیکتها را جستجو کنید, در مشتریان و سازمانها از §*§
+    برای پیدا کردن هرچیزی استفاده کنید. مثال. §کوثر*§ or §مهران*l§. میتوانید از  ||double
+    quotes|| برای جستجوی برخی عبارتها §"عبارت مد نظر"§. '
+- locale: fa-ir
+  format: string
+  source: Here you can create one.
+  target: اینجا میتوانید ایجاد کنید یک
+  target_initial: اینجا میتوانید ایجاد کنید یک
+- locale: fa-ir
+  format: string
+  source: Unassigned Tickets
+  target: درخواستهای تخصیص داده نشده
+  target_initial: درخواستهای تخصیص داده نشده
+- locale: fa-ir
+  format: string
+  source: Base
+  target: Base
+  target_initial: Base
+- locale: fa-ir
+  format: string
+  source: close
+  target: بستن
+  target_initial: بستن
+- locale: fa-ir
+  format: string
+  source: Linked Accounts
+  target: 'حسابهای لینک شده '
+  target_initial: 'حسابهای لینک شده '
+- locale: fa-ir
+  format: string
+  source: up
+  target: بالا
+  target_initial: بالا
+- locale: fa-ir
+  format: string
+  source: Update Time
+  target: زمان بروزرسانی
+  target_initial: زمان بروزرسانی
+- locale: fa-ir
+  format: string
+  source: Translations
+  target: ترجمه ها
+  target_initial: ترجمه ها
+- locale: fa-ir
+  format: string
+  source: Back to top
+  target: بازگشت به بالا
+  target_initial: بازگشت به بالا
+- locale: fa-ir
+  format: string
+  source: down
+  target: پائین
+  target_initial: پائین
+- locale: fa-ir
+  format: string
+  source: set to internal
+  target: ست کردن به عنوان داخلی
+  target_initial: ست کردن به عنوان داخلی
+- locale: fa-ir
+  format: string
+  source: split
+  target: جدا سازی
+  target_initial: جدا سازی
+- locale: fa-ir
+  format: string
+  source: Enter Answer or
+  target: پاسخ را وارد کنید یا
+  target_initial: پاسخ را وارد کنید یا
+- locale: fa-ir
+  format: string
+  source: Reset Password
+  target: بازیابی گذرواژه
+  target_initial: بازیابی گذرواژه
+- locale: fa-ir
+  format: string
+  source: Display
+  target: نمایش
+  target_initial: نمایش
+- locale: fa-ir
+  format: string
+  source: "%s% are currently in process"
+  target: "%s% در دست اقدامات "
+  target_initial: "%s% در دست اقدامات "
+- locale: fa-ir
+  format: string
+  source: 'Total: %s'
+  target: 'کل : %s '
+  target_initial: 'کل : %s '
+- locale: fa-ir
+  format: string
+  source: Reset changes
+  target: بازیابی تغییرات
+  target_initial: بازیابی تغییرات
+- locale: fa-ir
+  format: string
+  source: 'Average: %s'
+  target: 'میانگین : %s '
+  target_initial: 'میانگین : %s '
+- locale: fa-ir
+  format: string
+  source: 'Average: %s minutes'
+  target: 'میانگین : %s دقیقه'
+  target_initial: 'میانگین : %s دقیقه'
+- locale: fa-ir
+  format: string
+  source: before (absolute)
+  target: قبل ( قطعی )
+  target_initial: قبل ( قطعی )
+- locale: fa-ir
+  format: string
+  source: before (relative)
+  target: قبل ( مرتبط )
+  target_initial: قبل ( مرتبط )
+- locale: fa-ir
+  format: string
+  source: Close tab
+  target: بستن برگه
+  target_initial: بستن برگه
+- locale: fa-ir
+  format: string
+  source: Purple
+  target: بنفش
+  target_initial: بنفش
+- locale: fa-ir
+  format: string
+  source: Background color
+  target: رنگ پس زمینه
+  target_initial: رنگ پس زمینه
+- locale: fa-ir
+  format: string
+  source: Close current tab
+  target: بستن برگه جاری
+  target_initial: بستن برگه جاری
+- locale: fa-ir
+  format: string
+  source: Split
+  target: جدا سازی
+  target_initial: جدا سازی
+- locale: fa-ir
+  format: string
+  source: Holidays
+  target: تعطیلات
+  target_initial: تعطیلات
+- locale: fa-ir
+  format: string
+  source: Usage
+  target: استفاده
+  target_initial: استفاده
+- locale: fa-ir
+  format: string
+  source: ringing
+  target: در حال زنگ خوردن
+  target_initial: در حال زنگ خوردن
+- locale: fa-ir
+  format: string
+  source: Scheduled for
+  target: زمان بندی شده برای
+  target_initial: زمان بندی شده برای
+- locale: fa-ir
+  format: string
+  source: clear
+  target: پاک کردن
+  target_initial: پاک کردن
+- locale: fa-ir
+  format: string
+  source: How to use it
+  target: چطور از سیستم استفاده کنیم ؟
+  target_initial: چطور از سیستم استفاده کنیم ؟
+- locale: fa-ir
+  format: string
+  source: Beginner
+  target: تازه کار
+  target_initial: تازه کار
+- locale: fa-ir
+  format: string
+  source: Scheduler
+  target: زمان بندی
+  target_initial: زمان بندی
+- locale: fa-ir
+  format: string
+  source: do not reopen Ticket but create new Ticket
+  target: درخواست قبلی را باز نکنید و تیکت جدید ایجاد کنید
+  target_initial: درخواست قبلی را باز نکنید و تیکت جدید ایجاد کنید
+- locale: fa-ir
+  format: string
+  source: Reopened
+  target: بازگشایی شده
+  target_initial: بازگشایی شده
+- locale: fa-ir
+  format: string
+  source: Bank Name
+  target: نام بانک
+  target_initial: نام بانک
+- locale: fa-ir
+  format: string
+  source: drag here to cancel
+  target: 'برای لغو ابه اینجا بکشید '
+  target_initial: 'برای لغو ابه اینجا بکشید '
+- locale: fa-ir
+  format: string
+  source: Drop files here
+  target: فایلها را اینجا رها کنید
+  target_initial: فایلها را اینجا رها کنید
+- locale: fa-ir
+  format: string
+  source: "%s% have been reopened"
+  target: "%s% بازگشایی شد "
+  target_initial: "%s% بازگشایی شد "
+- locale: fa-ir
+  format: string
+  source: Here you will find the latest activities of your system.
+  target: در این قسمت آخرین رخدادهای سیستم را مشاهده می کنید.
+  target_initial: در این قسمت آخرین رخدادهای سیستم را مشاهده می کنید.
+- locale: fa-ir
+  format: string
+  source: Updating Database
+  target: بروزرسانی دیتابیس
+  target_initial: بروزرسانی دیتابیس
+- locale: fa-ir
+  format: string
+  source: Urgency
+  target: اضطرار
+  target_initial: اضطرار
+- locale: fa-ir
+  format: string
+  source: Running...
+  target: درحال اجرا...
+  target_initial: درحال اجرا...
+- locale: fa-ir
+  format: string
+  source: Base DN
+  target: Base DN
+  target_initial: Base DN
+- locale: fa-ir
+  format: string
+  source: Sign in with
+  target: ورود با
+  target_initial: ورود با
+- locale: fa-ir
+  format: string
+  source: Sign out
+  target: خروج
+  target_initial: خروج
+- locale: fa-ir
+  format: string
+  source: created
+  target: ایجاد شده
+  target_initial: ایجاد شده
+- locale: fa-ir
+  format: string
+  source: Recipients
+  target: دریافت کنندگان
+  target_initial: دریافت کنندگان
+- locale: fa-ir
+  format: string
+  source: Assignment Timeout
+  target: سقف زمانی تخصیص
+  target_initial: سقف زمانی تخصیص
+- locale: fa-ir
+  format: string
+  source: Sign in
+  target: ورود
+  target_initial: ورود
+- locale: fa-ir
+  format: string
+  source: Sign in using
+  target: ورود به وسیله
+  target_initial: ورود به وسیله
+- locale: fa-ir
+  format: string
+  source: Sign up
+  target: ثبت نام
+  target_initial: ثبت نام
+- locale: fa-ir
+  format: string
+  source: Solution Time
+  target: مدت زمان راهکار
+  target_initial: مدت زمان راهکار
+- locale: fa-ir
+  format: string
+  source: Change order
+  target: تغییر مرتب سازی
+  target_initial: تغییر مرتب سازی
+- locale: fa-ir
+  format: string
+  source: from
+  target: از
+  target_initial: از
+- locale: fa-ir
+  format: string
+  source: Search for users
+  target: جستجوی کاربران
+  target_initial: جستجوی کاربران
+- locale: fa-ir
+  format: string
+  source: Assigned
+  target: تخصیص داده شده
+  target_initial: تخصیص داده شده
+- locale: fa-ir
+  format: string
+  source: Notes
+  target: یادداشت
+  target_initial: یادداشت
+- locale: fa-ir
+  format: string
+  source: Skip
+  target: رد کردن
+  target_initial: رد کردن
+- locale: fa-ir
+  format: string
+  source: Escalated
+  target: ارجاع داده شده
+  target_initial: ارجاع داده شده
+- locale: fa-ir
+  format: string
+  source: escalation
+  target: ارجاع
+  target_initial: ارجاع
+- locale: fa-ir
+  format: string
+  source: Escalation Times
+  target: زمان ارجاع
+  target_initial: زمان ارجاع
+- locale: fa-ir
+  format: string
+  source: Created at
+  target: 'ایجاد شده در '
+  target_initial: 'ایجاد شده در '
+- locale: fa-ir
+  format: string
+  source: Keyboard Shortcuts
+  target: میانبر های کیبرد برای استفاده سریع از سیستم
+  target_initial: میانبر های کیبرد برای استفاده سریع از سیستم
+- locale: fa-ir
+  format: string
+  source: Not Assigned
+  target: 'تخصیص داده نشده '
+  target_initial: 'تخصیص داده نشده '
+- locale: fa-ir
+  format: string
+  source: Some Text
+  target: یک عبارت ....
+  target_initial: یک عبارت ....
+- locale: fa-ir
+  format: string
+  source: Personal Settings
+  target: تنظیمات اختصاصی کاربر
+  target_initial: تنظیمات اختصاصی کاربر
+- locale: fa-ir
+  format: string
+  source: "%s created Article for |%s|"
+  target: "%s مطلبی برای  |%s| ایجاد کرد"
+  target_initial: "%s مطلبی برای  |%s| ایجاد کرد"
+- locale: fa-ir
+  format: string
+  source: Select item
+  target: انتخاب آیتم
+  target_initial: انتخاب آیتم
+- locale: fa-ir
+  format: string
+  source: Ticket |%s| is escalated!
+  target: 'درخواست |%s|برون/دیگر سپاری شد! '
+  target_initial: 'درخواست |%s|برون/دیگر سپاری شد! '
+- locale: fa-ir
+  format: string
+  source: Escalation
+  target: ارجاع
+  target_initial: ارجاع
+- locale: fa-ir
+  format: string
+  source: specific user
+  target: کاربر خاص
+  target_initial: کاربر خاص
+- locale: fa-ir
+  format: string
+  source: Full Name
+  target: نام کامل
+  target_initial: نام کامل
+- locale: fa-ir
+  format: string
+  source: maybe
+  target: شاید
+  target_initial: شاید
+- locale: fa-ir
+  format: string
+  source: Not configured
+  target: پیکربندی نشده
+  target_initial: پیکربندی نشده
+- locale: fa-ir
+  format: string
+  source: Sounds
+  target: اصوات
+  target_initial: اصوات
+- locale: fa-ir
+  format: string
+  source: Selected
+  target: انتخاب شده
+  target_initial: انتخاب شده
+- locale: fa-ir
+  format: string
+  source: Recent logs
+  target: تگ های اخیر
+  target_initial: تگ های اخیر
+- locale: fa-ir
+  format: string
+  source: Recent viewed Tickets
+  target: درخواستهای تازه مشاهده شده
+  target_initial: درخواستهای تازه مشاهده شده
+- locale: fa-ir
+  format: string
+  source: skip
+  target: رد کردن
+  target_initial: رد کردن
+- locale: fa-ir
+  format: string
+  source: Selector
+  target: انتخاب گر
+  target_initial: انتخاب گر
+- locale: fa-ir
+  format: string
+  source: Recent Customer Tickets
+  target: درخواستهای اخیر مشتری
+  target_initial: درخواستهای اخیر مشتری
+- locale: fa-ir
+  format: string
+  source: Recently viewed
+  target: به تازگی مشاهده شده
+  target_initial: به تازگی مشاهده شده
+- locale: fa-ir
+  format: string
+  source: assign tickets
+  target: تخصیص تیکت ها
+  target_initial: تخصیص تیکت ها
+- locale: fa-ir
+  format: string
+  source: Plan
+  target: پلن
+  target_initial: پلن
+- locale: fa-ir
+  format: string
+  source: Full
+  target: کامل
+  target_initial: کامل
+- locale: fa-ir
+  format: string
+  source: Used in object views
+  target: قابل استفاده در نمایش اشیاء
+  target_initial: قابل استفاده در نمایش اشیاء
+- locale: fa-ir
+  format: string
+  source: Ticket reminder reached
+  target: رسیدن زمان یادآوری درخواست
+  target_initial: رسیدن زمان یادآوری درخواست
+- locale: fa-ir
+  format: string
+  source: Received Call
+  target: تماس دریافت شده
+  target_initial: تماس دریافت شده
+- locale: fa-ir
+  format: string
+  source: With templates you can pre-fill ticket attributes.
+  target: با استفاده از قالبها میتوانید فیلدهای فرم را بصورت خودکار پر کنید
+  target_initial: با استفاده از قالبها میتوانید فیلدهای فرم را بصورت خودکار پر کنید
+- locale: fa-ir
+  format: string
+  source: Choose attributes and then save them as a new template.
+  target: مقادیر را انتخاب کنید و سپس به عنوان یک قالب جدید ذخیره کنید
+  target_initial: مقادیر را انتخاب کنید و سپس به عنوان یک قالب جدید ذخیره کنید
+- locale: fa-ir
+  format: string
+  source: now
+  target: حالا
+  target_initial: حالا
+- locale: fa-ir
+  format: string
+  source: Create new Customer
+  target: ایجاد مشتری جدید
+  target_initial: ایجاد مشتری جدید
+- locale: fa-ir
+  format: string
+  source: Notifications
+  target: اعلان ها
+  target_initial: اعلان ها
+- locale: fa-ir
+  format: string
+  source: not translated
+  target: ترجمه نشده
+  target_initial: ترجمه نشده
+- locale: fa-ir
+  format: string
+  source: Object Manager
+  target: مدیریت اشیاء
+  target_initial: مدیریت اشیاء
+- locale: fa-ir
+  format: string
+  source: Objects
+  target: اشیاء
+  target_initial: اشیاء
+- locale: fa-ir
+  format: string
+  source: Outbound Call
+  target: تماس گرفته شده
+  target_initial: تماس گرفته شده
+- locale: fa-ir
+  format: string
+  source: Block Notifications
+  target: متوقف کردن اطلاع رسانی ها
+  target_initial: متوقف کردن اطلاع رسانی ها
+- locale: fa-ir
+  format: string
+  source: Used when composing a text
+  target: استفاده شده برای متنهای پاسخ
+  target_initial: استفاده شده برای متنهای پاسخ
+- locale: fa-ir
+  format: string
+  source: Used when viewing a Ticket
+  target: برای مشاهده تیکت ها
+  target_initial: برای مشاهده تیکت ها
+- locale: fa-ir
+  format: string
+  source: Ticket escalation
+  target: ارجاع تیکتها
+  target_initial: ارجاع تیکتها
+- locale: fa-ir
+  format: string
+  source: Disable Notifications
+  target: غیر فعال سازی اطلاع رسانی ها
+  target_initial: غیر فعال سازی اطلاع رسانی ها
+- locale: fa-ir
+  format: string
+  source: Discard Changes
+  target: نادیده گرفتن تغییرات
+  target_initial: نادیده گرفتن تغییرات
+- locale: fa-ir
+  format: string
+  source: not reached
+  target: در دسترس نبود
+  target_initial: در دسترس نبود
+- locale: fa-ir
+  format: string
+  source: No unread notifications for you. :)
+  target: اعلان خوانده نشده ای برای شما نیست. :)
+  target_initial: اعلان خوانده نشده ای برای شما نیست. :)
+- locale: fa-ir
+  format: string
+  source: 'Copy to clipboard: Ctrl+C, Enter'
+  target: 'کپی به کلیپ برد : CTRL+C  , Enter'
+  target_initial: 'کپی به کلیپ برد : CTRL+C  , Enter'
+- locale: fa-ir
+  format: string
+  source: Notification Sound
+  target: 'صدای اعلان '
+  target_initial: 'صدای اعلان '
+- locale: fa-ir
+  format: string
+  source: Continue session
+  target: 'ادامه نشست '
+  target_initial: 'ادامه نشست '
+- locale: fa-ir
+  format: string
+  source: No template created yet.
+  target: هنوز قالبی ایجاد نشده است
+  target_initial: هنوز قالبی ایجاد نشده است
+- locale: fa-ir
+  format: string
+  source: Stay on tab
+  target: ماندن در همین برگه
+  target_initial: ماندن در همین برگه
+- locale: fa-ir
+  format: string
+  source: Count
+  target: شمارش
+  target_initial: شمارش
+- locale: fa-ir
+  format: string
+  source: Continue anyway
+  target: در هر صورت ادامه بده
+  target_initial: در هر صورت ادامه بده
+- locale: fa-ir
+  format: string
+  source: Link Accounts
+  target: حساب های لینک شده
+  target_initial: حساب های لینک شده
+- locale: fa-ir
+  format: string
+  source: Remember me
+  target: مرا به خاطر داشته باش
+  target_initial: مرا به خاطر داشته باش
+- locale: fa-ir
+  format: string
+  source: You're already registered with your email address if you've been in touch
+    with our support team.
+  target: 'اگر قبل از این با تیم پشتیبانی در تماس بوده اید با آدرس ایمیل خود در سیستم
+    ثبت نام شده اید ، '
+  target_initial: 'اگر قبل از این با تیم پشتیبانی در تماس بوده اید با آدرس ایمیل خود
+    در سیستم ثبت نام شده اید ، '
+- locale: fa-ir
+  format: string
+  source: Manage
+  target: مدیریت
+  target_initial: مدیریت
+- locale: fa-ir
+  format: string
+  source: Change your password
+  target: گذرواژه خود را تغییر بدهید
+  target_initial: گذرواژه خود را تغییر بدهید
+- locale: fa-ir
+  format: string
+  source: Choose your new password.
+  target: یک گذرواژه جدید انتخاب کنید
+  target_initial: یک گذرواژه جدید انتخاب کنید
+- locale: fa-ir
+  format: string
+  source: Enter your username or email address
+  target: نام کاربری یا آدرس ایمیل خود را وارد نمائید.
+  target_initial: نام کاربری یا آدرس ایمیل خود را وارد نمائید.
+- locale: fa-ir
+  format: string
+  source: Register as a new customer
+  target: ثبت نام به عنوان مشتری جدید
+  target_initial: ثبت نام به عنوان مشتری جدید
+- locale: fa-ir
+  format: string
+  source: Login with %s
+  target: 'ورود به سیستم ارتباط یا مشتریان رسانگار در  %s '
+  target_initial: 'ورود به سیستم ارتباط یا مشتریان رسانگار در  %s '
+- locale: fa-ir
+  format: string
+  source: escalated
+  target: ارجاع شده
+  target_initial: ارجاع شده
+- locale: fa-ir
+  format: string
+  source: New password (confirm)
+  target: گذرواژه جدید ( تکرار برای تائید )
+  target_initial: گذرواژه جدید ( تکرار برای تائید )
+- locale: fa-ir
+  format: string
+  source: Mark all as read
+  target: همه موارد خوانده شد
+  target_initial: همه موارد خوانده شد
+- locale: fa-ir
+  format: string
+  source: Discard your unsaved changes.
+  target: 'نادیده گرفتن تغییرات ذخیره نشده '
+  target_initial: 'نادیده گرفتن تغییرات ذخیره نشده '
+- locale: fa-ir
+  format: string
+  source: Open Tickets
+  target: درخواستهای باز
+  target_initial: درخواستهای باز
+- locale: fa-ir
+  format: string
+  source: Outbound
+  target: خروجی
+  target_initial: خروجی
+- locale: fa-ir
+  format: string
+  source: Owned by me
+  target: تحت مالیک من
+  target_initial: تحت مالیک من
+- locale: fa-ir
+  format: string
+  source: Owned by nobody
+  target: تحت مالکیت هیچ کس
+  target_initial: تحت مالکیت هیچ کس
+- locale: fa-ir
+  format: string
+  source: Push my changes
+  target: اعمال و آپلود تغیرات من
+  target_initial: اعمال و آپلود تغیرات من
+- locale: fa-ir
+  format: string
+  source: Open tickets
+  target: درخواستهای باز
+  target_initial: درخواستهای باز
+- locale: fa-ir
+  format: string
+  source: Open Ticket# %s
+  target: 'درخواست های باز# %s '
+  target_initial: 'درخواست های باز# %s '
+- locale: fa-ir
+  format: string
+  source: Password (confirm)
+  target: رمزعبور ( تائید با تکرار )
+  target_initial: رمزعبور ( تائید با تکرار )
+- locale: fa-ir
+  format: string
+  source: Karma Level
+  target: سطح مشتری مداری
+  target_initial: سطح مشتری مداری
+- locale: fa-ir
+  format: string
+  source: A new version of Zammad is available, please reload your browser.
+  target: نسخه جدید از سیستم در دسترس می باشد.
+  target_initial: نسخه جدید از سیستم در دسترس می باشد.
+- locale: fa-ir
+  format: string
+  source: All pending reached Tickets
+  target: تمام تیکتهای در انتظار برای دسترسی مجدد
+  target_initial: تمام تیکتهای در انتظار برای دسترسی مجدد
+- locale: fa-ir
+  format: string
+  source: join today!
+  target: همین امروز به جمع مشتریان ما بپیوندید !
+  target_initial: همین امروز به جمع مشتریان ما بپیوندید !
+- locale: fa-ir
+  format: string
+  source: Create my account
+  target: حساب من را ایجاد کن
+  target_initial: حساب من را ایجاد کن
+- locale: fa-ir
+  format: string
+  source: just now
+  target: همین حالا
+  target_initial: همین حالا
+- locale: fa-ir
+  format: string
+  source: Karma Trends
+  target: مشتری مداری
+  target_initial: مشتری مداری
+- locale: fa-ir
+  format: string
+  source: A new session was created with your account. This session will be stopped
+    to prevent a conflict.
+  target: یک نشست جدید با حساب کاربری شما ایجاد شده است ، این نشست برای جلوگیری از
+    تداخل متوقف می شود.
+  target_initial: یک نشست جدید با حساب کاربری شما ایجاد شده است ، این نشست برای جلوگیری
+    از تداخل متوقف می شود.
+- locale: fa-ir
+  format: string
+  source: forward
+  target: ارسال
+  target_initial: ارسال
+- locale: fa-ir
+  format: string
+  source: Change your language.
+  target: زبان خود را تغییر دهید.
+  target_initial: زبان خود را تغییر دهید.
+- locale: fa-ir
+  format: string
+  source: What can you do here?
+  target: راهنمای این بخش؟
+  target_initial: راهنمای این بخش؟
+- locale: fa-ir
+  format: string
+  source: Mark all as seen.
+  target: همه رو مشاهده شده قرار بده
+  target_initial: همه رو مشاهده شده قرار بده
+- locale: fa-ir
+  format: string
+  source: pending reminder
+  target: در انتظار یادآورنده
+  target_initial: در انتظار یادآورنده
+- locale: fa-ir
+  format: string
+  source: Shared organization
+  target: سازمان به اشتراک گذاشته شده
+  target_initial: سازمان به اشتراک گذاشته شده
+- locale: fa-ir
+  format: string
+  source: Edit Organization
+  target: ويرايش سازمان
+  target_initial: ويرايش سازمان
+- locale: fa-ir
+  format: string
+  source: Frequency
+  target: نوسانات
+  target_initial: نوسانات
+- locale: fa-ir
+  format: string
+  source: Restore Defaults
+  target: بازیابی پیش تعریف
+  target_initial: بازیابی پیش تعریف
+- locale: fa-ir
+  format: string
+  source: New User Accounts
+  target: حساب های کاربری جدید
+  target_initial: حساب های کاربری جدید
+- locale: fa-ir
+  format: string
+  source: Enable/Disable online chat.
+  target: غیرفعال/فعال سازی چت آنلاین
+  target_initial: غیرفعال/فعال سازی چت آنلاین
+- locale: fa-ir
+  format: string
+  source: Email Address
+  target: آدرس ایمیل
+  target_initial: آدرس ایمیل
+- locale: fa-ir
+  format: string
+  source: "%s started a new session"
+  target: "%s وارد سامانه شد"
+  target_initial: "%s وارد سامانه شد"
+- locale: fa-ir
+  format: string
+  source: Sending...
+  target: در حال ارسال ....
+  target_initial: در حال ارسال ....
+- locale: fa-ir
+  format: string
+  source: Topics
+  target: عناوین
+  target_initial: عناوین
+- locale: fa-ir
+  format: string
+  source: "%s updated Organization |%s|"
+  target: "%s سازمان بروز شده |%s|"
+  target_initial: "%s سازمان بروز شده |%s|"
+- locale: fa-ir
+  format: string
+  source: Department
+  target: حوزه
+  target_initial: حوزه
+- locale: fa-ir
+  format: string
+  source: Create your first ticket
+  target: اولین پرونده خود را ایجاد کنید
+  target_initial: اولین پرونده خود را ایجاد کنید
+- locale: fa-ir
+  format: string
+  source: Reply-To
+  target: پاسخ-به
+  target_initial: پاسخ-به
+- locale: fa-ir
+  format: string
+  source: Show Search Details
+  target: نمایش جزئیات جستجو
+  target_initial: نمایش جزئیات جستجو
+- locale: fa-ir
+  format: string
+  source: Attach files
+  target: فایل ها را ضمیمه کن
+  target_initial: فایل ها را ضمیمه کن
+- locale: fa-ir
+  format: string
+  source: E. g. recent changed tickets, users or organizations.
+  target: همچون آخرین تغییرات پرونده ها، مخاطبین یا سازمان ها.
+  target_initial: همچون آخرین تغییرات پرونده ها، مخاطبین یا سازمان ها.
+- locale: fa-ir
+  format: string
+  source: The way to communicate with us is this thing called "ticket".
+  target: راهکاری که از طریق آن می توانید با ما در ارتباط باشید، به آن می گوئیم "تشکیل
+    پرونده"
+  target_initial: راهکاری که از طریق آن می توانید با ما در ارتباط باشید، به آن می
+    گوئیم "تشکیل پرونده"
+- locale: fa-ir
+  format: string
+  source: Invite agents/colleagues to help working on tickets
+  target: دعوت از کارشناسان/همکاران جهت کمک در رسیدگی به پرونده ها
+  target_initial: دعوت از کارشناسان/همکاران جهت کمک در رسیدگی به پرونده ها
+- locale: fa-ir
+  format: string
+  source: You're already registered with your email adress if you've been in touch
+    with our support team.
+  target: اگر پیش از این با بخش پشتیبانی ما در تماس بوده اید ایمیل شما از قبل ثبت
+    شده است
+  target_initial: اگر پیش از این با بخش پشتیبانی ما در تماس بوده اید ایمیل شما از
+    قبل ثبت شده است
+- locale: fa-ir
+  format: string
+  source: Pending reminder reached for Ticket |%s|
+  target: انتظار یادآورنده برای پرونده |%s| پایان یافت
+  target_initial: انتظار یادآورنده برای پرونده |%s| پایان یافت
+- locale: fa-ir
+  format: string
+  source: "%s updated Group |%s|"
+  target: "%s گروه به روز شده |%s|"
+  target_initial: "%s گروه به روز شده |%s|"
+- locale: fa-ir
+  format: string
+  source: Please click the button below to create your first one.
+  target: Please click the button below to create your first one.
+  target_initial: Please click the button below to create your first one.
+- locale: fa-ir
+  format: string
+  source: delete
+  target: حذف
+  target_initial: حذف
+- locale: fa-ir
+  format: string
+  source: The chat is turned off.
+  target: گفتگوی زنده خاموش شده است
+  target_initial: گفتگوی زنده خاموش شده است
+- locale: fa-ir
+  format: string
+  source: Sure?
+  target: مطمئن هستید؟
+  target_initial: مطمئن هستید؟
+- source: Attributes
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Select the customer of the ticket or create one.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sender Format
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Product Name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New to
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: First response
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: raw
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: twitter direct-message
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Linked Objects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We've sent password reset instructions to your email address.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Please try to login!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Username or email address invalid, please try again.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If you don't receive instructions within a minute or two, check your email's
+    spam and junk filters, or try resending your request.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: First Solution
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: uninstall
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: reinstall
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: deactivate
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: deactivated
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Items per page
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create an inbound Ticket
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create an outbound Ticket (will send this as email to customer)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: First Response
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Inbound
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Moved in
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Moved out
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Invitation sent!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Can't create user
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Getting started!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create Admin
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Configure Channels
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Follow up possible
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Call Outbound
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Call Inbound
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Work Disposition
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Business Times
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New SLA
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Conditions where SLA is used
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: First Response Time
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send to clients
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Feedback about our new Interface
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: What ideas do you have?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Attach Screenshot of page
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Thanks for your Feedback!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Fold in
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: in %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: session started
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Reload application
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: set internal
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Edit Addon
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New Branch
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Edit Branch
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Build Test Release
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New Release
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Profiles
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Packages
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sessions
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Source
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sync Changes
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Hook
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Hook Position
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Client Secret
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication via LinkedIn
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication via Google
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Twitter Secret
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Needed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Lost Password
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Port
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Available for Role
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable Ticket creation
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximal size in MB of emails.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Notification Sender
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Import Mode
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Import Endpoint
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Import Key
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Storage
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Storage Mechanism
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Geo IP Backend
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Geo Location Backend
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Releases
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Branches
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Recent Releases
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Recent Addons
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication via Facebook
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication via Twitter
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximal failed logins after account is inactive.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Digit required
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enables users to create their own account via web interface.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint auth key.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines OTRS endpoint to import users, ticket, states and articles.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo ip lookups.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password needs to contain 2 lower and 2 upper characters.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least one digit.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Shoot
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Online
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: no criteria
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Criteria
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Triggers
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Schedulers
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Time Tracking
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Projects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Will also be included in emails as an X-Header.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send client stats to central server.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Package
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Number Format
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Size
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send client stats
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Client storage
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Fully Qualified Domain Name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Select Template
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Template Title
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Layout Reference
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Switch to
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Store
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Number Increment
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Setup Finished
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Configure Base
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Company Inc.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Connect Channels
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter Template Name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send Mails via
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Project
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Show
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: new & open
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Direct URL
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Push Changes
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: matches
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Timeframe for solving the problem.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Timeframe for every following response.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Timeframe for the first response.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains not
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Selector
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Where
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Pushing translations to i18n.zammad.com
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Thanks for contributing!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Get latest Translation
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Subscriptions
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Trigger
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: reached
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: ended switch to
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable debugging for implementation.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Flat design.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: switch to
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sender Format Seperator
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Additional follow up detection
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the sender of email notifications.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Destination Group
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Protocol
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Connect
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Testing
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Email Inbound
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We have already found %s email(s) in your mailbox. Zammad will move it all
+    from your mailbox into Zammad.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Email Outbound
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Verify sending and receiving
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Department Name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: support@example.com
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Feedback Form
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Title of the form
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: LinkedIn App Credentials
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Name of form submit button
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Message after sending form
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Start modal dialog for form.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Show title in form.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry! We'll contact you soon as possible.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Fixed Email Accounts
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Inline translation
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Just click into the marker and update the words just in place. Enjoy!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Text with enabled inline translations looks like
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If you want to translate it via the translation table, just go ahead below.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Text with disabled inline translations looks like
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Next in overview
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Previous in overview
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The default font size is 12px.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: There are too many people in queue for the chat.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The browser is outdated. It does not support WebSocket - the technology
+    we use for the chat.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Limit Groups
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s ended switch to |%s|!"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s switched to |%s|!"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s created Organization |%s|"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s created Group |%s|"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Subscription Settings
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Most recent activity
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manage your notifications settings
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Open note box
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable/disable inline translations
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Text editing
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Open reply box
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Removes any hyperlink
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as h3 heading
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as h2 heading
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as h1 heading
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as ordered list
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as unordered list
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Inserts a horizontal rule
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Removes the formatting
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as //strikethrough//
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as ||italic||
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as |bold|
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Format as _underlined_
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Used in lists (views and results)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Confirm/submit dialog
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Previous tab
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Next in tab
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: List of shortcuts
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Used anywhere (admin only)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Used anywhere
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Set article to internal/public
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To open and work on it, click on the Ticket |#%s| directly %l or in the
+    overview |"%s"| %l and click on the Ticket.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Add alarm to pending reminder and escalated tickets.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This template saves the following attributes
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Online Forms
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create Overviews
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create a Test Ticket
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: migrate from another system
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Setup new System
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: When you turn on debugging by setting the option §debug§ to §true§ the reason
+    gets printed to the javascript console.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Zammad Chat requires jQuery. If you don''t already use it on your website
+    include it like this:'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Flat Design
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'There can be several reasons for the chat to not show up:'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If you want to open the chat by the press of a button set the option §show§
+    to §false§ and add the class §open-zammad-chat§ to the button.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manually open chat
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The chat will show up once the connection to the server got established
+    and if there is someone online to chat with.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Requirements
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Can be in any CSS color format.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Shown when the chat is closed.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can create multiple chat topics.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Preview Width
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Max. clients in waitlist
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Last sync at
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: disconnect
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The URL to this installation of Zammad.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter Title...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: within last (relative)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: within next (relative)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Conditions for shown Tickets
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Only available for Users with shared Organization
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Available for User
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sure to delete this object?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Organization & Department Name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Run every %s at %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Conditions for effected objects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: When should the job run?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New Scheduler
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Will process
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Has processed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: not exist
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: connected
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: enclosed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Integrations
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enclosure
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Changes were made that require a database update.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Database Update required
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: shown
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "...add object title"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators
+    get logged out_ and _only administrators can start a new session_.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send a message to all logged in users.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Zammad is currently in maintenance mode. Only administrators can login.
+    Please wait until the maintenance window is over.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Resend verification email
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Unable to verify email. Please contact your administrator.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Navigate through article
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If you don\'t see the email, check other places it might be, like your junk,
+    spam, social, or other folders.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We\'ve sent an email to _%s_. Click the link in the email to verify your
+    account.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Scroll down to see new messages
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Usage of advanced features
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Evangelist
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Professional
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Intermediate
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your current level
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your karma is |%s|.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You are an |%s|.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Find what you search. E. g. "search phrase"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Extended Search
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: OK, I've copied my token
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Callback URL
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Last used
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: What is it?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manage applications that can use Zammad as an OAuth provider and applications
+    that you've authorized to use your account.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Pick a name for the application, and we'll give you a unique token.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable REST API access using the username/email address and password for
+    the authentication user.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: OK, I\'ve copied my token
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Token Access
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your New Personal Access Token
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Personal Access Tokens
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can generate a personal access token for each application you use that
+    needs access to the Zammad API.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Add a Personal Access Token
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: has changed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: For security reasons, the API token is shown only once. You'll need to copy
+    it somewhere safe before continuing.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You have tickets that are over 2 days overdue
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You have escalated tickets
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Please type §%s§ to proceed or close this modal to cancel.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This action will lead to data loss. To prevent accidental actions we ask
+    you to confirm your intention.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Payment Method
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enables user authentication via %s. Register your app first at [%s](%s).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Authentication via %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Payment method
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billing Cycle
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Please enter a valid "%s"!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Cardholder
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Expiration (MM/YYYY)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Credit card number
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Subscription
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Summary
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your trial is running till %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billing
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Do you want to cancel your subscription?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Update payment method
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: per agent / month
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billed annually
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: or %s %s monthly
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Payment history
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billing information
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Next payment due
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: When your subscription is canceled, you will no longer be able to use your
+    Zammad.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Postal Code
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Pay with
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: CVV
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Credit card
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your account got canceled at %s! Your system will be removed at %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You |accumulate positive Karma| when you regularly answer and close tickets
+    on time and when you use advanced features such as text modules, ticket reminders
+    or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets,
+    escalated tickets or tickets that are two or more days overdue.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You use %s in text but no attachment is attached. Do you want to continue?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Execute changes on objects.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Subscribe to iCalendar feed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Why doesn't the chat show up?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Holidays iCalendar Feed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manage Tags
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Realtime
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Reporting
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Default at Signup
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service sends notifications to your %s channel.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Default caller id for outbound calls.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Default caller id
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Default caller id.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Set outbound caller id
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Destination caller id
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Set caller id of outbound calls based on destination caller id.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Caller id to block
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Blocked caller ids based on sender caller id.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Also caller id of outbound calls can be changed.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service shows you contacts of incoming calls and a caller list in realtime.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: VoIP service provider with realtime push.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: A team communication tool for the 21st century.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Domain based assignment
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket |%s| will escalate soon!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The format of the subject.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "|Left| means |[Ticket#12345] Some Subject|"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "|Right| means |Some Subject [Ticket#12345]|"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: '|None| means |Some Subject| (without ticket number). In the last case you
+    should enable "postmaster___follow___up___search___in" to recognize followups
+    based on email headers and/or body.'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Min. size of number
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With |Date| the ticket numbers will be generated by the current date, the
+    SystemID and the counter. The format looks like "Year.Month.Day.SystemID.Counter"
+    (e.g. 201206231010138, 201206231010139).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: '|Increment| increments the ticket number, the SystemID and the counter
+    are used with "SystemID.Counter" format (e.g. 1010138, 1010139).'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Selects the ticket number generator module.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines how the From field from the emails (sent from answers and email
+    tickets) should look like.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agents real name and the given group email
+    address.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e.g. RE, AW,
+    or AS.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Subject Reply
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Geo Calendar Service
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be send by the sender.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines if a customer can create tickets via the web interface.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines groups where customer can create tickets via web interface. "-"
+    means all groups are available.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Group selection for Ticket creation
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the name of the application, shown in the web interface, tabs and
+    title bar of the web browser.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Will be shown in the app and is included in email footers.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the logo of the application, shown in the web interface.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can switch between the backend for new attachments even on a system
+    that is already in production without any loss of data.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If you want to move already stored attachments from one backend to another,
+    you need to execute the following via console.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Move all from "%s" to "%s"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Defines the fully qualified domain name of the system. This setting is
+    used as a variable, #{setting.fqdn} which is found in all forms of messaging used
+    by the application, to build links to the tickets within your system.'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo location lookups to store geo locations for
+    addresses.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Show also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for user and organization image lookups.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Image Service
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to perform speed of application.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for inital calendar succession.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Send client stats/error message to central server to improve the usability.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To select placeholders from a list, just enter "::".
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: TextModule
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Assign Users based on users domain.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New Trigger
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create rules that single out the tickets for the Service Level Agreement.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Customers in the organization can view each other items.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Feature disabled!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Nothing selected
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Change %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: User Preferences
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manage %s Settings
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Manage %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Assign follow up to latest agent again.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: reject follow up/do not reopen Ticket
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Follow up for closed ticket possible or not.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Assignment timeout in minutes if assigned agent is not working on it. Ticket
+    will be shown as unassigend.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Notes are visible to agents only, never to customers.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: no issues
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Health information can be retrieved as JSON using
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Health Check
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: specific organization
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: current user organization
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: not set (not defined)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: No such master ticket number!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You need to configure the Zammad endpoints in the Sipgate web interface
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With Checksum the counter will be appended with a checksum at the end. The
+    format looks like %s (e. g. %s).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: A Test Ticket has been created, you can find it in your overview "%s" %l.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Play user interface sound effects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: There is no agent online.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Subscribe to public holidays in
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Add attachment option to upload.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Thank you for your inquiry (#%s)! We'll contact you as soon as possible.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This might take some time where the system can't be used.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create Text Modules
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Powered by
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Base Objects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Import from
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We found a lot of dynamic fields which are not common in Zammad, as we follow
+    a different approach to ticket attributes. Zammad uses also tags in addition to
+    custom fields to classify tickets. This difference can create a new philosophy
+    of your ticket attributes / tags compared to your current use of dynamic fields
+    in OTRS.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter the link provided by the plugin at the end of the installation to
+    link the two systems
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We detected OTRS BPM processes which can't get imported into Zammad, since
+    we currently don't support these kind of workflows.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Migration Plugin for %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Migrate %s Data
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Download and install the %s Migration Plugin on your %s instance.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Download %s Migration Plugin
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Attention: These will be your login password after the import is completed.'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter your Email address and the %s API token gained from your
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s credentials"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter credentials
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter the URL of your %s system
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter your email address and the %s API token gained from your admin interface.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password for proxy connection.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Username for proxy connection.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Proxy address.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Proxy Settings
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least minimal size of characters.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Max size of the subject in an email reply.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: In default the follow up check is done via the subject of an email. With
+    this setting you can add more fields where the follow up check is executed.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Time Accounting
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Time Units Total
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Time Units
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable time accounting for following matching tickets.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: At the same time, We authorize our credit institute to settle the direct
+    debits drawn by Zammad GmbH on our account.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Insert the widget-code into the source code of every page the chat should
+    be visible on. It should be placed at the end of the page source code before the
+    `</body>` closing tag.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: I hereby authorize Zammad GmbH to collect the amounts due from my account
+    by direct debit until further notice.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: SEPA Direct Debit
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Issuance of a SEPA-Base Direct Debit Mandate until revocation:'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Bulk action executed!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Time zone
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With Checksum, a checksum will be appended to the counter. The format looks
+    like "%s" (e. g. %s).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: An open source monitoring tool.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To set up this service you need to create a new |"Incoming webhook"| in
+    your %s integration panel, and enter the web hook URL below.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: When notification is being sent.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Only for these groups.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: iCalendar links from Google will get fetched once a day
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable REST API using tokens (not username/email address and password).
+    Each user needs to create own access tokens in user profile.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your account has not been verified. Please click the link in the verification
+    email.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Put a message on the login page. To change it, click on the text area below
+    and change it in-line.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "...add object link URL"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Copy current object number (e. g. Ticket#) to clipboard
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Please execute database changes only in a maintenance time-slot.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With form you can add a form to your web page which directly generates a
+    ticket for you.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can create chat widgets for your web pages to allow visitors to chat
+    with you.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You need to add the following Javascript code snippet to your web page
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Insert the widget code into the source code of every page the chat shall
+    be visible on. It should be placed at the end of the page's source code before
+    the §</body>§ closing tag.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Set up the communication channels you want to use with your Zammad.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: See your tickets from within your favorite calendar by adding the following
+    URL to your calendar app.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Don't load CSS for form. You need to generate your own CSS for the form.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Text modules
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: A test ticket has been created, you can find it in your overview |"%s"|
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Real name
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Show all...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Tab has changed, do you really want to close it?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: '|%s| stores all attachments in the "%s".'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Automatically show chat
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: New text module
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Unassigned email addresses, assign them to a channel or delete them.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With filters you can e. g. dispatch new tickets into certain groups or set
+    a certain priority for tickets of a VIP customer.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Third-party Applications
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To make translations easier you can enable and disable the inline translation
+    feature by pressing "%s".
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s people"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: A powerfull service to get more information about your customers.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Max. length of the subject in an email reply.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Use client storage to cache data to enhance performance of application.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Geo Location Service
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo IP lookups. Shows also location of an IP address
+    if an IP address is shown.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the backend for geo calendar lookups. Used for initial calendar
+    succession.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password needs to contain at least one digit.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Getting an Access Token
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Where to append the chat to.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Number of failed logins after account will be deactivated.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password Access
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Identifier of the chat-topic.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sender Format Separator
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Unable to load information!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Show the chat when ready.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This is Zammad version %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the system identifier. Every ticket number contains this ID. This
+    ensures that only tickets which belong to your system will be processed as follow-ups
+    (useful when communicating between two instances of Zammad).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Password needs to have at least a minimal number of characters.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Requesting the Grant
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: or sign in using
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Location of an external chat.css file.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits
+    the font-size of the website.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines if ticket can get created via web form.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The text at the beginning of the subject in an email reply, e. g. RE, AW,
+    or AS.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If left empty, the host gets auto-detected - in this case %s. The auto-detection
+    reads out the host from the <script> tag. If you don't include it via a <script>
+    tag you need to specify the host.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enables console logging.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Welcome Title shown on the closed chat. Can contain HTML.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Feedback
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Removes the shadows for a flat look.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Add this class to a button on your page that should open the chat.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This class gets added to the button on initialization and gets removed once
+    the chat connection got established.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Delivery failed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default
+    is Ticket#.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Automatically loads the chat.css file. If you want to use your own css,
+    just set it to false.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Define the http protocol of your instance.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billed monthly
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Invalid agent count value, only numbers are allowed!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains all
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains all not
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 7 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Payment by invoice
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The downgrade of your account will be done at the end of your current already
+    charged periode.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains one
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: We will charge for next full periode
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Already charged in this periode
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Your new selection
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Billing E-Mail Address
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: contains one not
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This option got set manually by the Zammad GmbH. You will recieve an invoice
+    about your Zammad Subscription and you have to pay it within 14 days. Do not change
+    this payment method until you really want it, because this option is a hidden
+    feature which can by only activated by the Zammad Team.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Connecting ...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Job is waiting to get started...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Last sync
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Analyzing structure...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Bind Password
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Bind User
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: untouched
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: With your current configuration the following will happen
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Analyzing entries with given configuration...
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Counting entries. This may take a while.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Note: All not mapped users will get the default signup roles.'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: No %s configured.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Configure
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your LDAP server.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s user to %s user"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s groups to %s roles assignments"
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Invalid ticket selector conditions
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the separator between the agent's real name and the given group
+    email address.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximum size in MB of emails.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines how the From field of emails (sent from answers and email tickets)
+    should look like.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If this regex matches, no notification will be sent by the sender.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Set/overwrite sender/from of email based on reply-to header. Useful to set
+    correct customer if email is received from a third party system on behalf of a
+    customer.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sender based on Reply-To header
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: By default the follow-up check is done via the subject of an email. With
+    this setting you can add more fields for which the follow-up check will be executed.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximum Email Size
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Additional follow-up detection
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: LDAP integration for user management.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines pretty date format.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You have no configured %s right now.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can connect %s with Zammad. You need to connect your Zammad with %s
+    first.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Pretty Date
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Default visibility for new note.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    for subject.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Use sender initials at end of an tweet.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Twitter - tweet initials
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Email - subject field
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Note - default visibility
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Maximum failed logins
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines groups for which a customer can create tickets via web interface.
+    "-" means all groups are available.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Connect Facebook App
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Connect Twitter App
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable if you want to quote the full email in your answer. The quoted email
+    will be put at the end of your answer. If you just want to quote a certain phrase,
+    just mark the text and press reply (this feature is always available).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Email - full quote
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Change Objects
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Replacement
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: CMDB to document complex relations of your network components.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Start new
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Endpoint
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Read
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Out of office replacement
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: There are more than 1000 tickets in the Zendesk system. Due to API rate
+    limit restrictions we can't get the exact number of tickets yet and have to fetch
+    them in batches of 1000. This might take some time, better grab a cup of coffee.
+    The total number of tickets gets updated as soon as the currently known number
+    is surpassed.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Exchange integration for contacts management.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service enables Zammad to connect with your Exchange server.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to users.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Automatically enrich your customers and organizations with fresh, up-to-date
+    intel. Map data directly to object fields.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: What values of %s should be synced to organization.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Shared
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If the host and service is recovered again, the ticket will be closed automatically.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Till
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Out of Office
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create "%s" in the
+    admin interface if %s.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Auto close state
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Auto close
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service receives emails from %s and creates tickets with host and service.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Text missing
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Agent limit exceeded, please check your account settings.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Please fill also some text in!
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain could not be verified. Hackers could steal
+    the credentials or redirect the connection. Or maybe you are using a self-signed
+    certificate.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines if tickets should be closed if service is recovered.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the sender email address of the service emails.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service allows you to connect %s with %s.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the state of auto closed tickets.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the group of created tickets.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To enable %s for sending http requests to %s, you need create a own "notification
+    rule" in %s.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: You can use the following script to post the data to %s.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Configurable in the admin interface of %s.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: People who create Tickets ask for help.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: This service receives http requests or emails from %s and creates tickets
+    with host and service.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Use subject field for emails. If disabled, the ticket title will be used
+    as subject.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Add sender initials to end of a tweet.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To configure your system.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: To work on Tickets.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Proceed
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The certificate of the domain |%s| could not be verified. This may allow
+    hackers to steal your credentials. If you are sure that you are using a self-signed
+    certificate, you can press "Proceed". Otherwise, please "Cancel".
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: If the sender is an agent, set the first user in the recipient list as a
+    customer.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Customer selection based on sender and receiver list
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Defines the system default language.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: No proxy for the following hosts.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Locale
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Join %s
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Products
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'Attention: When creating a ticket an e-mail is sent.'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Receipt
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The form content has been changed. Do you want to close it and lose your
+    changes?
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: forwarded
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Original Formatting
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enter Person or Organization/Company
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Auto Assignment
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Here you define which authorization has access to the attribute.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Automatic account link on initial logon
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Product Version
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Tickets are only assigned automatically if they do not already have an owner.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enables the automatic linking of an existing account on initial login via
+    a third party application. If this is disabled, an existing user must first log
+    into Zammad and then link his "Third Party" account to his Zammad account via
+    Profile -> Linked Accounts.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Enable automatic assignment the first time an agent opens a ticket.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Perform action of the following
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Only available for Users which are replacements for other users.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Match all of the following
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Caller log
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Last customer contact (without consideration an agent has replied to it)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Delete records
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Last customer contact (with consideration an agent has replied to it)
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The import was successful.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Update existing records
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Bulk import allows you to create and update many records at once.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'The following changes have been made:'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Update existing records with the attributes specified in the import data.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The data must be in the comma separated values (CSV) format and saved as
+    UTF-8. You can import a CSV file or paste the data directly into the text area.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: The test run was successful.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Ticket Last Contact Behaviour
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been created."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Select CSV file
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Alternatively, you can use the Zammad API to import data.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: 'The following changes are made:'
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Sets the last customer contact based on the last contact of a customer or
+    on the last contact of a customer to whom an agent has not yet responded.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Clone
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Delete all existing records first.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Define an exception of "automatic assignment" for certain users (e.g. executives).
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Example CSV file for download.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are created."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Records that exist in the import data (but not in Zammad) will always be
+    created.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Exception users
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) have been updated."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Create new records
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Yes, start real import.
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are updated."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) are deleted."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: Paste in CSV data
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''
+- source: "%s Object(s) were deleted."
+  format: string
+  locale: fa-ir
+  target: ''
+  target_initial: ''

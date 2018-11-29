@@ -45,23 +45,15 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment, attachment check should quiet
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt'),
-              Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
-    )
-
-    # upload might take a while
-    watch_for(
-      css:   '.content.active .newTicket .attachments',
-      value: 'upload1.txt',
-    )
-    watch_for(
-      css:   '.content.active .newTicket .attachments',
-      value: 'upload2.jpg',
+      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
     )
 
     # submit form
     click(css: '.content.active .js-submit')
     sleep 5
+
+    # no warning
+    #alert = @browser.switch_to.alert
 
     # check if ticket is shown and attachment exists
     location_check(url: '#ticket/zoom/')
@@ -99,13 +91,7 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment, attachment check should quiet
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt')],
-    )
-
-    # upload might take a while
-    watch_for(
-      css:   '.content.active .article-add .attachments',
-      value: 'upload1.txt',
+      files: ['test/fixtures/upload1.txt'],
     )
 
     # submit form
@@ -146,31 +132,20 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment without body
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt'),
-              Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
-    )
-
-    # upload might take a while
-    watch_for(
-      css:   '.content.active .article-add .attachments',
-      value: 'upload1.txt',
-    )
-    watch_for(
-      css:   '.content.active .article-add .attachments',
-      value: 'upload2.jpg',
+      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
     )
 
     # submit form
     click(css: '.content.active .js-submit')
+    sleep 2
 
     # check warning
-    modal_ready()
     match(
       css: '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
-    modal_disappear()
+    sleep 2
 
     ticket_update(
       data: {
@@ -259,7 +234,7 @@ class AgentTicketAttachmentTest < TestCase
     # modify customer
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
-    modal_ready(browser: browser1)
+    sleep 2
     set(browser: browser1, css: '.modal [name="address"]', value: 'some new address')
     click(browser: browser1, css: '.modal .js-submit')
     modal_disappear(browser: browser1)
@@ -279,7 +254,7 @@ class AgentTicketAttachmentTest < TestCase
     # change org of customer, check if org is shown in sidebar
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
-    modal_ready(browser: browser1)
+    sleep 2
     set(browser: browser1, css: '.modal .js-input', value: 'zammad')
     click(browser: browser1, css: '.modal .js-input')
     click(browser: browser1, css: '.modal .js-option')
@@ -329,21 +304,23 @@ class AgentTicketAttachmentTest < TestCase
     # First test the attachment uploading for new tickets
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [large_file],
+      files: ['test/fixtures/upload2.jpg'],
       no_sleep: true,
     )
-    exists(
-      css: '.content.active .js-submit:disabled',
+    match(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
     )
     watch_for_disappear(
-      css:     '.content.active .js-submit:disabled',
-      timeout: 4.minutes,
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
     )
-    exists(
-      css: '.content.active .js-submit',
+    match(
+      css:   '.js-submit',
+      value: 'Create',
     )
     click(
-      css: '.content.active .js-submit',
+      css: '.active .js-submit',
     )
     sleep 2
 
@@ -356,23 +333,20 @@ class AgentTicketAttachmentTest < TestCase
     )
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [large_file],
+      files: ['test/fixtures/upload2.jpg'],
       no_sleep: true,
     )
-    exists(
-      css: '.content.active .js-submit:disabled',
+    match(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
     )
     watch_for_disappear(
-      css:     '.content.active .js-submit:disabled',
-      timeout: 4.minutes,
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
     )
-  end
-
-  def large_file
-    file = Tempfile.new
-    file.binmode
-    file.write(SecureRandom.random_bytes(6.megabyte))
-    file.close
-    file.path
+    match(
+      css:   '.js-submit',
+      value: 'Update',
+    )
   end
 end
