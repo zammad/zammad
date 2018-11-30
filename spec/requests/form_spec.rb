@@ -127,7 +127,7 @@ RSpec.describe 'Form', type: :request, searchindex: true do
       expect(json_response['errors']['title']).to eq('required')
       expect(json_response['errors']['body']).to eq('required')
 
-      post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'somebody@example.com', title: 'test', body: 'hello' }, as: :json
+      post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'somebody@somedomainthatisinvalid.com', title: 'test', body: 'hello' }, as: :json
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
 
