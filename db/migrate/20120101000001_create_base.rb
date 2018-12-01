@@ -408,6 +408,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :histories, [:id_from]
     add_index :histories, [:value_from], length: 255
     add_index :histories, [:value_to], length: 255
+    add_index :histories, [:related_o_id]
+    add_index :histories, [:related_history_object_id]
+    add_index :histories, %i[o_id history_object_id related_o_id]
     add_foreign_key :histories, :history_types
     add_foreign_key :histories, :history_objects
     add_foreign_key :histories, :history_attributes

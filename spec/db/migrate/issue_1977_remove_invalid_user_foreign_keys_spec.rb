@@ -9,7 +9,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
     context 'invalid User foreign key columns' do
 
       it 'cleans up OnlineNotification#user_id', db_strategy: :reset do
-        witout_foreign_key(:online_notifications, column: :user_id)
+        without_foreign_key(:online_notifications, column: :user_id)
 
         create(:online_notification, user_id: 1337)
         valid = create(:online_notification, user_id: existing_user_id)
@@ -22,8 +22,8 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
       end
 
       it 'cleans up RecentView#created_by_id', db_strategy: :reset do
-        witout_foreign_key(:online_notifications, column: :user_id)
-        witout_foreign_key(:recent_views, column: :created_by_id)
+        without_foreign_key(:online_notifications, column: :user_id)
+        without_foreign_key(:recent_views, column: :created_by_id)
 
         create(:recent_view, created_by_id: 1337)
         valid = create(:recent_view, created_by_id: existing_user_id)
@@ -36,7 +36,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
       end
 
       it 'cleans up Avatar#o_id', db_strategy: :reset do
-        witout_foreign_key(:online_notifications, column: :user_id)
+        without_foreign_key(:online_notifications, column: :user_id)
 
         create(:avatar, object_lookup_id: ObjectLookup.by_name('User'), o_id: 1337)
         valid_ticket = create(:avatar, object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: 1337)

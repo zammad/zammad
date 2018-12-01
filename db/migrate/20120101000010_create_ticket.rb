@@ -111,6 +111,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, [:pending_time]
     add_index :tickets, [:type]
     add_index :tickets, [:time_unit]
+    add_index :tickets, %i[group_id state_id]
+    add_index :tickets, %i[group_id state_id owner_id]
     add_foreign_key :tickets, :groups
     add_foreign_key :tickets, :users, column: :owner_id
     add_foreign_key :tickets, :users, column: :customer_id
