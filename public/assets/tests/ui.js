@@ -241,7 +241,7 @@ test("check pretty date", function() {
 
     result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, long, type);
     diff = 60 * 60 * 24 * 5.5
-    equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24 * 5.5)), diff), 'in 30.5 days')
+    equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24 * 5.5)), diff), 'in 5.5 days')
 
     result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, long, type);
     diff = (60 * 60 * 24 * 30.5);
@@ -323,7 +323,7 @@ test("check pretty date", function() {
     equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 2.5))), 'in 2.5 days')
 
     result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, long, type);
-    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 5.5))), 'in 30.5 days')
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 5.5))), 'in 5.5 days')
 
     result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, long, type);
     equal(result, getTimestamp(new Date(current.getTime() + 60050 * 60 * 24 * 30.5)), 'in 30.5 days')
@@ -337,6 +337,10 @@ test("check pretty date", function() {
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     month = months[date.getMonth()];
 
+    d      = date.getDate()
+    m      = date.getMonth() + 1
+    yfull  = date.getFullYear()
+
     // for less than 6 days
     // weekday HH::MM
     if (diff < (60 * 60 * 24 * 6))
@@ -344,7 +348,7 @@ test("check pretty date", function() {
     else if (current.getYear() == date.getYear())
        string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + date.getHours() + ":" + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
     else
-       string = weekday + ' ' + date
+       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + date.getHours() + ":" + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
     return string;
   }
 
