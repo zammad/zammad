@@ -58,6 +58,9 @@ class ChatTest < ActiveSupport::TestCase
     # with websockets
     assert(User.first)
 
+    # make sure to emulate unconnected WS env
+    ActiveRecord::Base.remove_connection
+
     message = Sessions::Event.run(
       event: 'login',
       payload: {},

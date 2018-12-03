@@ -12,7 +12,12 @@ class Sessions::Event::Base
 
     return if !self.class.instance_variable_get(:@database_connection)
 
-    ActiveRecord::Base.establish_connection
+    if ActiveRecord::Base.connected?
+      @reused_connection = true
+    else
+      @reused_connection = false
+      ActiveRecord::Base.establish_connection
+    end
   end
 
   def self.inherited(subclass)
@@ -138,6 +143,7 @@ class Sessions::Event::Base
   def destroy
     return if !@is_web_socket
     return if !self.class.instance_variable_get(:@database_connection)
+    return if @reused_connection
 
     ActiveRecord::Base.remove_connection
   end
