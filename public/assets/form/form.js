@@ -274,6 +274,7 @@ $(function() {
         _this.render()
         return true
       })
+      window.addEventListener('resize', _this.resizeModalBackdrop.bind(_this));
     }
   }
 
@@ -372,6 +373,12 @@ $(function() {
     }
   }
 
+  Plugin.prototype.resizeModalBackdrop = function() {
+    if (this.$modal) {
+      this.$modal.find('.js-zammad-form-modal-backdrop').css('height', this.$modal.prop('scrollHeight'));
+    }
+  }
+
   // render form
   Plugin.prototype.render = function(e) {
     var _this = this
@@ -380,8 +387,8 @@ $(function() {
     _this.log('debug', 'modalOpenTime:', _this.modalOpenTime)
 
     var element = "<div class=\"" + _this.options.prefixCSS + "modal\">\
-      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-close\"></div>\
-      <div class=\"" + _this.options.prefixCSS + "modal-body\">\
+      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-zammad-form-modal-backdrop\"></div>\
+      <div class=\"" + _this.options.prefixCSS + "modal-body js-zammad-form-modal-body\">\
         <form class=\"zammad-form\"></form>\
       </div>\
     </div>"
@@ -414,7 +421,7 @@ $(function() {
     this.$form  = $form
 
     // bind on close
-    $element.find('.js-close').off('click.zammad-form').on('click.zammad-form', function (e) {
+    $element.find('.js-zammad-form-modal-backdrop').off('click.zammad-form').on('click.zammad-form', function (e) {
       e.preventDefault()
       _this.closeModal()
       return true
@@ -435,6 +442,7 @@ $(function() {
     // append modal to body
     else {
       $('body').append($element)
+      this.resizeModalBackdrop()
     }
 
   }
