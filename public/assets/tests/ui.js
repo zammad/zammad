@@ -340,15 +340,17 @@ test("check pretty date", function() {
     d      = date.getDate()
     m      = date.getMonth() + 1
     yfull  = date.getFullYear()
+    M      = date.getMinutes()
+    H      = date.getHours()
 
     // for less than 6 days
     // weekday HH::MM
     if (diff < (60 * 60 * 24 * 6))
       string = weekday + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
     else if (current.getYear() == date.getYear())
-       string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + date.getHours() + ":" + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
+       string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + (H < 10 ? '0':'') + H + ":" + (M < 10 ? '0':'') + M
     else
-       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + date.getHours() + ":" + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
+       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + (H < 10 ? '0':'') + H + ":" + (M < 10 ? '0':'') + M
     return string;
   }
 
