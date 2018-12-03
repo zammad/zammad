@@ -1,5 +1,26 @@
 # Change Log
 
+## [2.7.1](https://github.com/zammad/zammad/tree/2.7.1) (2018-12-03)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.7.0...2.7.1)
+
+**Implemented enhancements:**
+- Logs flooded with article autosave data [2363](https://github.com/zammad/zammad/issues/2363) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+
+**Fixed bugs:**
+- Unable to process html email with 2k links in an acceptable time [2374](https://github.com/zammad/zammad/issues/2374) [[bug](https://github.com/zammad/zammad/labels/bug)] [[needs verification](https://github.com/zammad/zammad/labels/needs verification)]
+- Zendesk-Import fails for User & Organizations if Plan is below "Team" [2262](https://github.com/zammad/zammad/issues/2262) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Chat does not work due to errors in WebSocket (Database connection) [2353](https://github.com/zammad/zammad/issues/2353) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- selecting the overviews on the I Pad does not work [2330](https://github.com/zammad/zammad/issues/2330) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Lost DB connection causes jobs to not be processed anymore [2343](https://github.com/zammad/zammad/issues/2343) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Role-Filter shows inactive Roles [2332](https://github.com/zammad/zammad/issues/2332) [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- IMAP fetch stops because of request timeout [2321](https://github.com/zammad/zammad/issues/2321) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+- Unable to import (update) users with email addresses als lookup index written in upper letters [2329](https://github.com/zammad/zammad/issues/2329) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Websocket messages are not working correctly via Ajax long polling (e. g. multiple browser tabs can get opened with one session). [2327](https://github.com/zammad/zammad/issues/2327) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Improved error handling of invalid tag for text modules and add current time format (to not use 2018-10-31T08:02:21.917Z format) [2324](https://github.com/zammad/zammad/issues/2324) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Ticket list in overview of customer and organisation random order [2296](https://github.com/zammad/zammad/issues/2296) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend](https://github.com/zammad/zammad/labels/frontend)]
+- Can't forward E-Mail in special cases within Firefox [2305](https://github.com/zammad/zammad/issues/2305) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend](https://github.com/zammad/zammad/labels/frontend)]
+
+
 ## [2.7.0](https://github.com/zammad/zammad/tree/2.7.0) (2018-10-25)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.6.0...2.7.0)
 
