@@ -149,11 +149,14 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      date = @date_format(article.created_at)
-      name = article.updated_by.displayName()
-      email = article.updated_by.email
-      quote_header = App.i18n.translateInline('On %s, %s wrote:', date, name)
-      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
+      quote_header = ''
+      if App.Config.get('ui_ticket_zoom_article_email_full_quote_header')
+        date = @date_format(article.created_at)
+        name = article.updated_by.displayName()
+        email = article.updated_by.email
+        quote_header = App.i18n.translateInline('On %s, %s wrote:', date, name) + '<br><br>'
+
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
