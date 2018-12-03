@@ -31,7 +31,8 @@ class Index extends App.ControllerSubContent
   render: (data) =>
 
     # if no twitter app is registered, show intro
-    if !App.ExternalCredential.findByAttribute('name', 'twitter')
+    external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')
+    if !external_credential
       @html App.view('twitter/index')()
       return
 
@@ -60,6 +61,7 @@ class Index extends App.ControllerSubContent
       channels.push channel
     @html App.view('twitter/list')(
       channels: channels
+      external_credential: external_credential
     )
 
     if @channel_id
@@ -177,7 +179,7 @@ class AppConfig extends App.ControllerModal
         if data.attributes
           if !@external_credential
             @external_credential = new App.ExternalCredential
-          @external_credential.load(name: 'twitter', credentials: @formParams())
+          @external_credential.load(name: 'twitter', credentials: data.attributes)
           @external_credential.save(
             done: =>
               @isChanged = true

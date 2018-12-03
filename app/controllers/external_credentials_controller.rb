@@ -24,8 +24,7 @@ class ExternalCredentialsController < ApplicationController
   end
 
   def app_verify
-    attributes = ExternalCredential.app_verify(params)
-    render json: { attributes: attributes }, status: :ok
+    render json: { attributes: ExternalCredential.app_verify(params.permit!.to_h) }, status: :ok
   rescue => e
     render json: { error: e.message }, status: :ok
   end
@@ -39,7 +38,7 @@ class ExternalCredentialsController < ApplicationController
 
   def callback
     provider = params[:provider].downcase
-    channel = ExternalCredential.link_account(provider, session[:request_token], params)
+    channel = ExternalCredential.link_account(provider, session[:request_token], params.permit!.to_h)
     session[:request_token] = nil
     redirect_to app_url(provider, channel.id)
   end

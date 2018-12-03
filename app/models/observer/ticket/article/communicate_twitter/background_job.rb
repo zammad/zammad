@@ -14,6 +14,21 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     log_error(article, "Can't find ticket.preferences for Ticket.find(#{article.ticket_id})") if !ticket.preferences
     log_error(article, "Can't find ticket.preferences['channel_id'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['channel_id']
     channel = Channel.lookup(id: ticket.preferences['channel_id'])
+
+    # search for same channel channel_screen_name, in case the channel got re-added
+    if !channel
+      Channel.where(area: 'Twitter::Account', active: true).each do |local_channel|
+        next if ticket.preferences[:channel_screen_name].blank?
+        next if !local_channel.options
+        next if local_channel.options[:user].blank?
+        next if local_channel.options[:user][:screen_name].blank?
+        next if local_channel.options[:user][:screen_name] != ticket.preferences[:channel_screen_name]
+
+        channel = local_channel
+        break
+      end
+    end
+
     log_error(article, "No such channel id #{ticket.preferences['channel_id']}") if !channel
     log_error(article, "Channel.find(#{channel.id}) isn't a twitter channel!") if channel.options[:adapter] !~ /\Atwitter/i
 
@@ -36,20 +51,24 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     # fill article with tweet info
 
     # direct message
-    if tweet.class == Twitter::DirectMessage
-      article.from = "@#{tweet.sender.screen_name}"
-      article.to = "@#{tweet.recipient.screen_name}"
+    tweet_id = nil
+    if tweet.is_a?(Hash)
+      tweet_type = 'DirectMessage'
+      tweet_id = tweet[:event][:id].to_s
+      if tweet[:event] && tweet[:event][:type] == 'message_create'
+        #article.from = "@#{tweet.sender.screen_name}"
+        #article.to = "@#{tweet.recipient.screen_name}"
 
-      article.preferences['twitter'] = {
-        created_at: tweet.created_at,
-        recipient_id: tweet.recipient.id,
-        recipient_screen_name: tweet.recipient.screen_name,
-        sender_id: tweet.sender.id,
-        sender_screen_name: tweet.sender.screen_name,
-      }
+        article.preferences['twitter'] = {
+          recipient_id: tweet[:event][:message_create][:target][:recipient_id],
+          sender_id: tweet[:event][:message_create][:sender_id],
+        }
+      end
 
     # regular tweet
     elsif tweet.class == Twitter::Tweet
+      tweet_type = 'Tweet'
+      tweet_id = tweet.id.to_s
       article.from = "@#{tweet.user.screen_name}"
       if tweet.user_mentions
         to = ''
@@ -62,7 +81,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
           mention_ids.push user.id
         end
         article.to = to
-        article.preferences['twitter'] = TweetBase.preferences_cleanup(
+        article.preferences['twitter'] = TwitterSync.preferences_cleanup(
           mention_ids: mention_ids,
           geo: tweet.geo,
           retweeted: tweet.retweeted?,
@@ -85,10 +104,10 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article.preferences['delivery_status'] = 'success'
     article.preferences['delivery_status_date'] = Time.zone.now
 
-    article.message_id = tweet.id.to_s
+    article.message_id = tweet_id
     article.preferences['links'] = [
       {
-        url: "https://twitter.com/statuses/#{tweet.id}",
+        url: "https://twitter.com/statuses/#{tweet_id}",
         target: '_blank',
         name: 'on Twitter',
       },
@@ -96,7 +115,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
 
     article.save!
 
-    Rails.logger.info "Send twitter (#{tweet.class}) to: '#{article.to}' (from #{article.from})"
+    Rails.logger.info "Send twitter (#{tweet_type}) to: '#{article.to}' (from #{article.from})"
 
     article
   end

@@ -20,6 +20,30 @@
       <input id="consumer_secret" type="text" name="consumer_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_secret %><% end %>" class="form-control" required autocomplete="off" >
     </div>
   </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="oauth_token">Twitter Access Token <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="oauth_token" type="text" name="oauth_token" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.oauth_token %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="oauth_token_secret">Twitter Access Token Secret <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="oauth_token_secret" type="text" name="oauth_token_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.oauth_token_secret %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="env">Twitter Dev environment label <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="env" type="text" name="env" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.env %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
     <div class="controls">

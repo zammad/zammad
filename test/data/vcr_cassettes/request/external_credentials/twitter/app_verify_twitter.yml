@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/oauth/request_token
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - OAuth gem v0.5.3
+      Content-Length:
+      - '0'
+      Authorization:
+      - OAuth oauth_callback="http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Ftwitter%2Fcallback",
+        oauth_consumer_key="123", oauth_nonce="MUJuxD5pJylV4EjZdF6Z4aOa4ersvQ7X1Yn79OmI",
+        oauth_signature="fahmle9Bx8I6xsXd4PdB0QjPaog%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1543582248", oauth_version="1.0"
+  response:
+    status:
+      code: 401
+      message: Authorization Required
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 30 Nov 2018 12:50:49 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Fri, 30 Nov 2018 12:50:49 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A154358224907677984; Max-Age=63072000; Expires=Sun, 29 Nov 2020
+        12:50:49 GMT; Path=/; Domain=.twitter.com
+      - personalization_id="v1_HLys+XMhL9WX47EwRLZ9ZQ=="; Max-Age=63072000; Expires=Sun,
+        29 Nov 2020 12:50:49 GMT; Path=/; Domain=.twitter.com
+      Status:
+      - 401 Unauthorized
+      Strict-Transport-Security:
+      - max-age=631138519
+      Www-Authenticate:
+      - OAuth realm="https://api.twitter.com"
+      X-Connection-Hash:
+      - b8e5026ed8e6cef6e85a0e07023a10ad
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '120'
+      X-Transaction:
+      - 002723f700aff7dd
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - 1; mode=block; report=https://twitter.com/i/xss_report
+    body:
+      encoding: ASCII-8BIT
+      string: '{"errors":[{"code":32,"message":"Could not authenticate you."}]}'
+    http_version: 
+  recorded_at: Fri, 30 Nov 2018 12:50:49 GMT
+recorded_with: VCR 4.0.0

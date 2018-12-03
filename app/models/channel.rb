@@ -58,6 +58,7 @@ fetch one account
       self.last_log_in = result[:notice]
       preferences[:last_fetch] = Time.zone.now
       save!
+      return true
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
@@ -66,8 +67,8 @@ fetch one account
       self.last_log_in = error
       preferences[:last_fetch] = Time.zone.now
       save!
+      return false
     end
-
   end
 
 =begin

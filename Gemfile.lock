@@ -1,4 +1,20 @@
 GIT
+  remote: https://github.com/sferik/twitter.git
+  revision: 844818cad07ce490ccb9d8542ebb6b4fc7a61cb4
+  specs:
+    twitter (6.2.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.11)
+      http (~> 3.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
+      memoizable (~> 0.4.0)
+      multipart-post (~> 2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
+
+GIT
   remote: https://github.com/wimm/rubyntlm
   revision: 53969639b87b9e5d5fef560f19cf0d977259591c
   specs:
@@ -189,14 +205,14 @@ GEM
     hashdiff (0.3.7)
     hashie (3.5.6)
     htmlentities (4.3.4)
-    http (3.0.0)
+    http (3.3.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
-      http-form_data (>= 2.0.0.pre.pre2, < 3)
+      http-form_data (~> 2.0)
       http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    http-form_data (2.0.0)
+    http-form_data (2.1.1)
     http_parser.rb (0.6.0)
     httpclient (2.8.3)
     i18n (1.1.1)
@@ -453,17 +469,6 @@ GEM
       faraday (~> 0.9)
       jwt (>= 1.5, <= 2.5)
       nokogiri (>= 1.6, < 2.0)
-    twitter (6.2.0)
-      addressable (~> 2.3)
-      buftok (~> 0.2.0)
-      equalizer (~> 0.0.11)
-      http (~> 3.0)
-      http-form_data (~> 2.0)
-      http_parser.rb (~> 0.6.0)
-      memoizable (~> 0.4.0)
-      multipart-post (~> 2.0)
-      naught (~> 1.0)
-      simple_oauth (~> 0.3.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -584,7 +589,7 @@ DEPENDENCIES
   test-unit
   therubyracer
   twilio-ruby
-  twitter
+  twitter!
   uglifier
   unicorn
   valid_email2

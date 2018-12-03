@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammad&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="some", oauth_nonce="b5b77e1667355db2efc64e178b8a0aaa",
+        oauth_signature="tybPhlz3I5fMRF5%2BE12Pwx3U5XM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1543796201", oauth_token="key", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '62'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 03 Dec 2018 00:16:41 GMT
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A154379620109191613; Expires=Wed, 02 Dec 2020 00:16:41 GMT; Path=/;
+        Domain=.twitter.com
+      - personalization_id="v1_i2UDOt8QXhYvnNAv90Q8jA=="; Expires=Wed, 02 Dec 2020
+        00:16:41 GMT; Path=/; Domain=.twitter.com
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 8af740bd8d5f98022086657c7172b7ee
+      X-Response-Time:
+      - '114'
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":89,"message":"Invalid or expired token."}]}'
+    http_version: 
+  recorded_at: Mon, 03 Dec 2018 00:16:41 GMT
+recorded_with: VCR 4.0.0

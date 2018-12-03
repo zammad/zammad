@@ -93,7 +93,7 @@ RSpec.describe String do
         let(:input_encoding) { Encoding::ISO_8859_1 }
 
         it 'detects the input encoding' do
-          Timeout.timeout(9) do
+          Timeout.timeout(12) do
             expect(subject.utf8_encode(from: 'utf-8')).to eq(original_string)
           end
         end
