@@ -2714,6 +2714,14 @@ ol.tabs li {
   }
 }
 
+.icon-arrow-left,
+.icon-arrow-right,
+.icon-line-left-arrow,
+.icon-line-right-arrow,
+.icon-long-arrow-right {
+  @include rtl(transform, scaleX(-1));
+}
+
 .arrow--disabled {
   opacity: 0.23;
 }
@@ -3507,6 +3515,7 @@ footer {
     opacity: 0;
     transition: 0s;
     transition: .1s 0s;
+    pointer-events: none;
 
     .icon {
       fill: white;
@@ -5909,7 +5918,7 @@ footer {
   border: none;
 
   .icon {
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
     fill: currentColor;
   }
 
