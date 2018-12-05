@@ -164,8 +164,9 @@ group :development, :test do
   # changelog generation
   gem 'github_changelog_generator'
 
-  # Use Factory Bot for generating random test data
+  # generate random test data
   gem 'factory_bot_rails'
+  gem 'faker'
 
   # mock http calls
   gem 'webmock'

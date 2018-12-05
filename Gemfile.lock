@@ -165,6 +165,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    faker (1.9.1)
+      i18n (>= 0.7)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.0.0)
@@ -533,6 +535,7 @@ DEPENDENCIES
   eventmachine
   execjs
   factory_bot_rails
+  faker
   github_changelog_generator
   guard
   guard-livereload
