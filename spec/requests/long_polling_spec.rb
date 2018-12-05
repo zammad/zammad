@@ -75,7 +75,9 @@ RSpec.describe 'LongPolling', type: :request do
 
     it 'send event spool and receive data' do
 
-      authenticated_as(agent_user)
+      # here we use a token for the authentication because the basic auth way with username and password
+      # will update the user by every request and return a different result for the test
+      authenticated_as(agent_user, token: create(:token, action: 'api', user_id: agent_user.id) )
       get '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
       expect(response).to have_http_status(200)
       expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)

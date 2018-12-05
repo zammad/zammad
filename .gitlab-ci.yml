@@ -91,9 +91,7 @@ test:rspec:postgresql:
     - rake zammad:db:init
     - rake test:units
     - ruby -I test/ test/integration/object_manager_test.rb
-    - ruby -I test/ test/integration/object_manager_attributes_controller_test.rb
     - ruby -I test/ test/integration/package_test.rb
-    - ruby -I test/ test/integration/monitoring_controller_test.rb
     - rake db:drop
 
 test:unit:mysql:
@@ -168,18 +166,6 @@ test:integration:user_agent:
     - rake db:drop
   allow_failure: true
 
-test:integration:user_device:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
-  script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/user_device_controller_test.rb
-    - rake db:drop
-
 test:integration:slack:
   <<: *artifacts_error
   stage: test
@@ -206,42 +192,6 @@ test:integration:clearbit:
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
   allow_failure: true
-
-test:integration:telegram:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
-  script:
-    - rake zammad:db:init
-    - ruby -I test test/integration/telegram_controller_test.rb
-    - rake db:drop
-
-test:integration:twilio:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
-  script:
-    - rake zammad:db:init
-    - ruby -I test test/integration/twilio_sms_controller_test.rb
-    - rake db:drop
-
-test:integration:idoit:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
-  script:
-    - rake zammad:db:init
-    - ruby -I test test/integration/idoit_controller_test.rb
-    - rake db:drop
 
 ### Elasticsearch
 

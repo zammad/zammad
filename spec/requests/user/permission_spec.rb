@@ -207,7 +207,16 @@ RSpec.describe 'User endpoint', type: :request do
       expect do
         put api_v1_update_user_path(requested), params: cleaned_params_for(requested).merge(firstname: 'Changed')
       end.to not_change {
-        requested.reload.attributes
+        requested.reload.attributes.tap do |attributes|
+          # take attributes as they are for different users
+          next if requester != requested
+
+          # last_login and updated_at change every time
+          # even if the record itself should not change
+          attributes.delete_if do |key, _value|
+            %w[last_login updated_at].include?(key)
+          end
+        end
       }
 
       expect(response).to have_http_status(:unauthorized)

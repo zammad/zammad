@@ -1,0 +1,154 @@
+require 'rails_helper'
+
+RSpec.describe 'Idoit', type: :request do
+
+  let!(:admin_user) do
+    create(:admin_user, groups: Group.all)
+  end
+  let!(:agent_user) do
+    create(:agent_user, groups: Group.all)
+  end
+  let!(:customer_user) do
+    create(:customer_user)
+  end
+  let!(:token) do
+    'some_token'
+  end
+  let!(:endpoint) do
+    'https://idoit.example.com/i-doit/'
+  end
+
+  before(:each) do
+    Setting.set('idoit_integration', true)
+    Setting.set('idoit_config', {
+                  api_token: token,
+                  endpoint: endpoint,
+                  client_id: '',
+                })
+  end
+
+  describe 'request handling' do
+
+    it 'does unclear urls' do
+
+      params = {
+        api_token: token,
+        endpoint: endpoint,
+        client_id: '',
+      }
+      authenticated_as(agent_user)
+      post '/api/v1/integration/idoit/verify', params: params, as: :json
+      expect(response).to have_http_status(401)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['error']).to eq('Not authorized (user)!')
+
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\"}")
+        .to_return(status: 200, body: read_message('object_types_response'), headers: {})
+
+      params = {
+        api_token: token,
+        endpoint: endpoint,
+        client_id: '',
+      }
+      authenticated_as(admin_user)
+      post '/api/v1/integration/idoit/verify', params: params, as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+
+      params = {
+        api_token: token,
+        endpoint: " #{endpoint}/",
+        client_id: '',
+      }
+      post '/api/v1/integration/idoit/verify', params: params, as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+
+    end
+
+    it 'does list all object types' do
+
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\"}")
+        .to_return(status: 200, body: read_message('object_types_response'), headers: {})
+
+      params = {
+        method: 'cmdb.object_types',
+      }
+      authenticated_as(agent_user)
+      post '/api/v1/integration/idoit', params: params, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+      expect(json_response['response']['result'][0]['id']).to eq('1')
+      expect(json_response['response']['result'][0]['title']).to eq('System service')
+
+      params = {
+        method: 'cmdb.object_types',
+      }
+      authenticated_as(admin_user)
+      post '/api/v1/integration/idoit', params: params, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+      expect(json_response['response']['result'][0]['id']).to eq('1')
+      expect(json_response['response']['result'][0]['title']).to eq('System service')
+
+    end
+
+    it 'does query objects' do
+
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\"}")
+        .to_return(status: 200, body: read_message('object_types_filter_response'), headers: {})
+
+      params = {
+        method: 'cmdb.objects',
+        filter: {
+          ids: ['33']
+        },
+      }
+      authenticated_as(agent_user)
+      post '/api/v1/integration/idoit', params: params, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to_not be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+      expect(json_response['response']['result'][0]['id']).to eq('26')
+      expect(json_response['response']['result'][0]['title']).to eq('demo.example.com')
+      expect(json_response['response']['result'][0]['type_title']).to eq('Virtual server')
+      expect(json_response['response']['result'][0]['cmdb_status_title']).to eq('in operation')
+
+    end
+
+    def read_message(file)
+      File.read(Rails.root.join('test', 'data', 'idoit', "#{file}.json"))
+    end
+  end
+end

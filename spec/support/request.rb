@@ -71,7 +71,7 @@ module ZammadSpecSupportRequest
     # mock authentication otherwise login won't
     # if user has no password (which is expensive to create)
     if password.nil?
-      allow(User).to receive(:authenticate).with(login, '').and_return(user)
+      allow(User).to receive(:authenticate).with(login, '') { user.update_last_login }.and_return(user)
     end
 
     # if we want to authenticate by token
