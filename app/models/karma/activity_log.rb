@@ -29,6 +29,7 @@ add karma activity log of an object
         activity_id: activity.id,
       ).find_by('created_at >= ?', Time.zone.now - activity.once_ttl.seconds)
       return false if !force && latest_activity
+
       score_total = 0
       if last_activity
         score_total = last_activity.score_total

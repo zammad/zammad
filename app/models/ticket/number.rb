@@ -49,10 +49,12 @@ returns
     if !adapter_name
       raise 'Missing ticket_number setting option'
     end
+
     adapter = load_adapter(adapter_name)
     if !adapter
       raise "Can't load ticket_number adapter '#{adapter_name}'"
     end
+
     adapter
   end
 end

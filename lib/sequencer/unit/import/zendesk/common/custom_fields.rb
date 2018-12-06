@@ -26,8 +26,10 @@ class Sequencer
 
             def attributes_hash
               return {} if fields.blank?
+
               fields.each_with_object({}) do |(key, value), result|
                 next if value.nil?
+
                 result[key] = value
               end
             end

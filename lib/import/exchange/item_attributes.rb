@@ -25,6 +25,7 @@ module Import
         properties.each do |key, value|
           if value.is_a?(String)
             next if !%w[true false].include?(value)
+
             properties[key] = value == 'true'
           elsif value.is_a?(Hash)
             properties[key] = booleanize_values(value)

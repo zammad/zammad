@@ -15,6 +15,7 @@ class LdapMultiGroupMapping < ActiveRecord::Migration[4.2]
     # if we need to migrate to new array structure
     ldap_config['group_role_map'].each do |source, dest|
       next if dest.is_a?(Array)
+
       ldap_config['group_role_map'][source] = [dest]
     end
 

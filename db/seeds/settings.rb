@@ -2694,7 +2694,7 @@ Setting.create_if_not_exists(
   area: 'Models::Base',
   description: 'Defines the searchable models.',
   options: {},
-  state: [],
+  state: Models.searchable.map(&:to_s),
   preferences: {
     authentication: true,
   },
@@ -2761,7 +2761,7 @@ Setting.create_if_not_exists(
   name: 'es_attachment_max_size_in_mb',
   area: 'SearchIndex::Elasticsearch',
   description: 'Define max. attachment size for Elasticsearch.',
-  state: 50,
+  state: 10,
   preferences: { online_service_disable: true },
   frontend: false
 )
@@ -3914,6 +3914,27 @@ Setting.create_if_not_exists(
   frontend: false,
 )
 Setting.create_if_not_exists(
+  title: 'sipgate.io alternative fqdn',
+  name: 'sipgate_alternative_fqdn',
+  area: 'Integration::Sipgate::Expert',
+  description: 'Alternative FQDN for callbacks if you operate Zammad in internal network.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'sipgate_alternative_fqdn',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'cti integration',
   name: 'cti_integration',
   area: 'Integration::Switch',
@@ -3970,6 +3991,69 @@ Setting.create_if_not_exists(
     ],
   },
   state: ENV['CTI_TOKEN'] || SecureRandom.urlsafe_base64(20),
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Placetel integration',
+  name: 'placetel_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if Placetel (http://www.placetel.de) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'placetel_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    trigger: ['menu:render', 'cti:reload'],
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Placetel config',
+  name: 'placetel_config',
+  area: 'Integration::Placetel',
+  description: 'Defines the Placetel config.',
+  options: {},
+  state: { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+    cache: ['placetelGetVoipUsers'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'PLACETEL Token',
+  name: 'placetel_token',
+  area: 'Integration::Placetel',
+  description: 'Token for Placetel.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'placetel_token',
+        tag: 'input',
+      },
+    ],
+  },
+  state: ENV['PLACETEL_TOKEN'] || SecureRandom.urlsafe_base64(20),
   preferences: {
     permission: ['admin.integration'],
   },

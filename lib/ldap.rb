@@ -183,6 +183,7 @@ class Ldap
     @host_url = @config[:host_url]
     return if @host_url.blank?
     raise "Invalid host url '#{@host_url}'" if @host_url !~ %r{\A([^:]+)://(.+?)/?\z}
+
     @protocol = $1.to_sym
     @host     = $2
     @ssl      = @protocol == :ldaps
@@ -190,18 +191,21 @@ class Ldap
 
   def parse_host
     return if @host !~ /\A([^:]+):(.+?)\z/
+
     @host = $1
     @port = $2.to_i
   end
 
   def handle_ssl_config
     return if !@ssl
+
     @port       ||= @config.fetch(:port, 636)
     @encryption   = {
       method: :simple_tls,
     }
 
     return if @config[:ssl_verify]
+
     @encryption[:tls_options] = {
       verify_mode: OpenSSL::SSL::VERIFY_NONE
     }

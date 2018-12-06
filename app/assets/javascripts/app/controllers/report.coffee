@@ -193,7 +193,7 @@ class Graph extends App.ControllerContent
     else if @params.timeRange is 'week'
       xaxis = [[0, 'Mon'], [1, 'Tue'], [2, 'Wed'], [3, 'Thr'], [4, 'Fri'], [5, 'Sat'], [6, 'Sun'] ]
     else
-      xaxis = [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'Mai'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]
+      xaxis = [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]
 
     dataPlot = []
     for key, value of data
@@ -307,12 +307,12 @@ class Download extends App.Controller
       value
     callbackIconHeader = (headers) ->
       attribute =
-        name:        'icon'
-        display:     ''
-        translation: false
-        width:       '28px'
-        displayWidth:28
-        unresizable: true
+        name:         'icon'
+        display:      ''
+        translation:  false
+        width:        '28px'
+        displayWidth: 28
+        unresizable:  true
       headers.unshift(0)
       headers[0] = attribute
       headers
@@ -489,7 +489,7 @@ class TimePicker extends App.Controller
         value: 4,
       },
       {
-        display: 'Mai'
+        display: 'May'
         value: 5,
       },
       {

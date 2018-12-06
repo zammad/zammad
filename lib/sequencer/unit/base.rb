@@ -171,6 +171,7 @@ class Sequencer
       # for independent usage. Otherwise it creates a new one.
       def self.declarations_initial(key)
         return Set.new([]) if !superclass.respond_to?(:declarations)
+
         superclass.send(:declarations, key).dup
       end
 
@@ -183,6 +184,7 @@ class Sequencer
         cache = "@#{key}"
         value = scope.instance_variable_get(cache)
         return value if value
+
         value = yield
         scope.instance_variable_set(cache, value)
       end

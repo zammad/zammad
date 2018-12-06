@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 
 class FacebookTest < ActiveSupport::TestCase
@@ -20,6 +19,7 @@ class FacebookTest < ActiveSupport::TestCase
   if !ENV['FACEBOOK_USER']
     raise "ERROR: Need FACEBOOK_USER - hint FACEBOOK_USER='name:1234:access_token'"
   end
+
   user_name         = ENV['FACEBOOK_USER'].split(':')[0]
   user_id           = ENV['FACEBOOK_USER'].split(':')[1]
   user_access_token = ENV['FACEBOOK_USER'].split(':')[2]
@@ -27,6 +27,7 @@ class FacebookTest < ActiveSupport::TestCase
   if !ENV['FACEBOOK_PAGE']
     raise "ERROR: Need FACEBOOK_PAGE - hint FACEBOOK_PAGE='name:1234:access_token'"
   end
+
   page_name = ENV['FACEBOOK_PAGE'].split(':')[0]
   page_id = ENV['FACEBOOK_PAGE'].split(':')[1]
   page_access_token = ENV['FACEBOOK_PAGE'].split(':')[2]
@@ -34,6 +35,7 @@ class FacebookTest < ActiveSupport::TestCase
   if !ENV['FACEBOOK_CUSTOMER']
     raise "ERROR: Need FACEBOOK_CUSTOMER - hint FACEBOOK_CUSTOMER='name:1234:access_token'"
   end
+
   customer_name = ENV['FACEBOOK_CUSTOMER'].split(':')[0]
   customer_id = ENV['FACEBOOK_CUSTOMER'].split(':')[1]
   customer_access_token = ENV['FACEBOOK_CUSTOMER'].split(':')[2]
@@ -86,6 +88,7 @@ class FacebookTest < ActiveSupport::TestCase
     page_found = false
     client.pages.each do |page|
       next if page[:name] != page_name
+
       page_found = true
       assert_equal(page_id, page[:id])
       assert_equal(page_name, page[:name])
@@ -100,6 +103,7 @@ class FacebookTest < ActiveSupport::TestCase
       client = Facebook.new(page['access_token'])
       current_user = client.current_user
       next if page['name'] != page_name
+
       page_found = true
       assert_equal(page_id, current_user['id'])
       assert_equal(page_name, current_user['name'])

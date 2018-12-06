@@ -7,6 +7,7 @@ class ObjectManagerAttributeCreateMiddle < ActiveRecord::Migration[4.2]
       next if attribute.name == 'tags'
       next if !attribute.screens
       next if !attribute.screens['create_bottom']
+
       attribute.screens['create_middle'] = attribute.screens['create_bottom']
       attribute.screens.delete('create_bottom')
       attribute.save!

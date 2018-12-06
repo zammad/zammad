@@ -32,6 +32,7 @@ returns
 
     return if !user.preferences
     return if !user.preferences['notification_config']
+
     matrix = user.preferences['notification_config']['matrix']
     return if !matrix
 
@@ -79,11 +80,14 @@ returns
       end
     end
     return if !matrix[type]
+
     data = matrix[type]
     return if !data
     return if !data['criteria']
+
     channels = data['channel']
     return if !channels
+
     if data['criteria']['owned_by_me'] && owned_by_me
       return {
         user: user,
@@ -97,6 +101,7 @@ returns
       }
     end
     return if !data['criteria']['no']
+
     {
       user: user,
       channels: channels
@@ -212,6 +217,7 @@ retunes
       next if item['object'] != 'Ticket'
       next if item['value_to'] !~ /#{recipient.email}/i
       next if item['value_to'] !~ /#{type}/i
+
       count += 1
     end
     count

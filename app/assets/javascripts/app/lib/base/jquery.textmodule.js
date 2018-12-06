@@ -20,14 +20,13 @@
 
     this.options    = $.extend({}, defaults, options)
 
-    this._defaults  = defaults
-    this._name      = pluginName
+    this._defaults   = defaults
+    this._name       = pluginName
+    this._fixedWidth = true
 
     this.collection = []
     this.active     = false
     this.buffer     = ''
-
-    this._width = 380
 
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
@@ -194,6 +193,7 @@
 
   // create base template
   Plugin.prototype.renderBase = function() {
+    this.untouched = true
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
     this.$widget = this.$element.next()
     this.$widget.on('mousedown', 'li', $.proxy(this.onEntryClick, this))
@@ -209,19 +209,19 @@
     var top            = -( widgetHeight + height ) + this._position.top
     var start          = this._position.left - 6
     var availableWidth = this.$element.innerWidth()
+    var width          = this.$widget.find('.dropdown-menu').width()
 
     if(rtl){
       start = availableWidth - start
     }
 
     // position the element further left if it would break out of the textarea width
-    if (start + this._width > availableWidth) {
-      start = this.$element.innerWidth() - this._width
+    if (start + width > availableWidth) {
+      start = availableWidth - width
     }
 
     var css = {
-      top: top,
-      width: this._width
+      top: top
     }
 
     css[rtl ? 'right' : 'left'] = start
@@ -417,6 +417,13 @@
     }
 
     this.$widget.find('ul').append(elements).scrollTop(9999)
+
+    // keep the width of the dropdown the same even when longer items got filtered out
+    if(this._fixedWidth && this.untouched){
+      this.$widget.find('ul').css('width', this.$widget.find('ul').width());
+      this.untouched = false;
+    }
+
     this.movePosition()
   }
 

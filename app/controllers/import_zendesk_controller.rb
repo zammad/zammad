@@ -93,6 +93,7 @@ class ImportZendeskController < ApplicationController
 
   def import_start
     return if setup_done_response
+
     Setting.set('import_mode', true)
     Setting.set('import_backend', 'zendesk')
 
@@ -129,6 +130,7 @@ class ImportZendeskController < ApplicationController
     if !setup_done
       return false
     end
+
     render json: {
       setup_done: true,
     }

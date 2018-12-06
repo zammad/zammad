@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class AdminRoleTest < TestCase
@@ -226,5 +225,35 @@ class AdminRoleTest < TestCase
     # check if admin exists
     exists_not(css: '[href="#manage"]')
 
+  end
+
+  # regression test for issue #2332 - Role-Filter shows inactive Roles
+  def test_inactive_roles_do_not_show_in_role_filter
+    name = "some role #{rand(99_999_999)}"
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    role_create(
+      data: {
+        name:   name,
+        active: false
+      }
+    )
+
+    click(
+      css:  '.content.active a[href="#manage/users"]',
+    )
+
+    # an inactive role should not appear in the role filter tabs
+    match_not(
+      css:   '.content.active .userSearch',
+      value: name,
+    )
   end
 end

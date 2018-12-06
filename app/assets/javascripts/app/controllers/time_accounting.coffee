@@ -61,7 +61,7 @@ class Index extends App.ControllerSubContent
         value: 4,
       },
       {
-        display: 'Mai'
+        display: 'May'
         value: 5,
       },
       {

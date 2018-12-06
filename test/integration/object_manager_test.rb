@@ -807,6 +807,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     overview = nil
     result.each do |local_overview|
       next if local_overview[:overview][:name] != 'Overview1'
+
       overview = local_overview
       break
     end

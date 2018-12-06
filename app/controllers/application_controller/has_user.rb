@@ -10,6 +10,7 @@ module ApplicationController::HasUser
   def current_user
     user_on_behalf = current_user_on_behalf
     return user_on_behalf if user_on_behalf
+
     current_user_real
   end
 
@@ -20,6 +21,7 @@ module ApplicationController::HasUser
   def current_user_real
     return @_current_user if @_current_user
     return if !session[:user_id]
+
     @_current_user = User.lookup(id: session[:user_id])
   end
 
@@ -49,6 +51,7 @@ module ApplicationController::HasUser
       search_attributes[field] = request.headers['X-On-Behalf-Of']
       @_user_on_behalf = User.find_by(search_attributes)
       next if !@_user_on_behalf
+
       return @_user_on_behalf
     end
 
@@ -89,11 +92,13 @@ module ApplicationController::HasUser
 
     # fill user agent
     return if session[:user_agent]
+
     session[:user_agent] = request.env['HTTP_USER_AGENT']
   end
 
   def valid_session_with_user
     return true if current_user
+
     raise Exceptions::UnprocessableEntity, 'No session user!'
   end
 end

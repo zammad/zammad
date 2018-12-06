@@ -1,0 +1,21 @@
+{
+  "ToCountry": "DE",
+  "ToState": "",
+  "SmsMessageSid": "SM1bd5330f81336e8b54c2d3d9fc1bcb6a",
+  "NumMedia": "0",
+  "ToCity": "",
+  "FromZip": "",
+  "SmsSid": "SM1bd5330f81336e8b54c2d3d9fc1bcb6a",
+  "FromState": "",
+  "SmsStatus": "received",
+  "FromCity": "",
+  "Body": "Ldfhxhcuffufuf. Fifififig.  Fifififiif Fifififiif Fifififiif Fifififiif Fifififiif",
+  "FromCountry": "DE",
+  "To": "+4915700000000",
+  "ToZip": "",
+  "NumSegments": "1",
+  "MessageSid": "SM1bd5330f81336e8b54c2d3d9fc1bcb6a",
+  "AccountSid": "AC78349f4b974f5f6907c513a77d96756d",
+  "From": "+491710000000",
+  "ApiVersion": "2010-04-01"
+}

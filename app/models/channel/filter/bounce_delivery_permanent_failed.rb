@@ -16,6 +16,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
 
       result = Channel::EmailParser.new.parse(attachment[:data])
       next if !result[:message_id]
+
       message_id_md5 = Digest::MD5.hexdigest(result[:message_id])
       article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
       next if !article
@@ -30,11 +31,13 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       if article.sender.name == 'System' || article.sender.name == 'Agent'
         %w[to cc].each do |line|
           next if article[line].blank?
+
           recipients = []
           begin
             list = Mail::AddressList.new(article[line])
             list.addresses.each do |address|
               next if address.address.blank?
+
               recipients.push address.address.downcase
             end
           rescue
@@ -60,6 +63,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
         users = User.where(email: recipient)
         users.each do |user|
           next if !user
+
           user.preferences[:mail_delivery_failed] = true
           user.preferences[:mail_delivery_failed_data] = Time.zone.now
           user.save!

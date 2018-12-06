@@ -1,4 +1,3 @@
-
 require 'test_helper'
 require 'stats/ticket_waiting_time'
 

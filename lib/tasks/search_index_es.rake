@@ -24,8 +24,11 @@ namespace :searchindex do
       number = info['version']['number'].to_s
     end
 
+    settings = {
+      'index.mapping.total_fields.limit': 2000,
+    }
     mapping = {}
-    Models.searchable.each do |local_object|
+    Models.indexable.each do |local_object|
       mapping.merge!(get_mapping_properties_object(local_object))
     end
 
@@ -33,7 +36,8 @@ namespace :searchindex do
     SearchIndexBackend.index(
       action: 'create',
       data: {
-        mappings: mapping
+        mappings: mapping,
+        settings: settings,
       }
     )
 
@@ -111,6 +115,7 @@ namespace :searchindex do
     # update processors
     pipeline = Setting.get('es_pipeline')
     next if pipeline.blank?
+
     print 'delete pipeline (pipeline)... '
     SearchIndexBackend.processors(
       "_ingest/pipeline/#{pipeline}": [
@@ -125,7 +130,7 @@ namespace :searchindex do
   task :reload, [:opts] => :environment do |_t, _args|
 
     puts 'reload data...'
-    Models.searchable.each do |model_class|
+    Models.indexable.each do |model_class|
       puts " reload #{model_class}"
       started_at = Time.zone.now
       puts "  - started at #{started_at}"

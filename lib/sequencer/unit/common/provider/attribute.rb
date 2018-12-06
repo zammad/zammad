@@ -6,6 +6,7 @@ class Sequencer
 
           def process
             return if ignore?
+
             state.provide(attribute, value)
           end
 
@@ -18,6 +19,7 @@ class Sequencer
           def provides
             provides_list = self.class.provides
             raise "Only single provide attribute possible for class #{self.class.name}" if provides_list.size != 1
+
             provides_list.first
           end
 

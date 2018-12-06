@@ -46,6 +46,7 @@ module SessionHelper
   def self.destroy(id)
     session = ActiveRecord::SessionStore::Session.find_by(id: id)
     return if !session
+
     session.destroy
   end
 end

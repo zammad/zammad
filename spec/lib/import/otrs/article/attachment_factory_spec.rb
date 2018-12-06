@@ -27,7 +27,7 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
     expect(Store).to receive(:add).exactly(3).times.with(hash_including(
                                                            object: 'Ticket::Article',
                                                            o_id:   local_article.id,
-    ))
+                                                         ))
   end
 
   def article_attachment_expectations(article_attachments)

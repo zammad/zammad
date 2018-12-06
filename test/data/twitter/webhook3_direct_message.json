@@ -1,0 +1,57 @@
+{
+  "for_user_id": "123",
+  "direct_message_events": [
+    {
+      "type": "message_create",
+      "id": "1063077238797725701",
+      "created_timestamp": "1542292339406",
+      "message_create": {
+        "target": {
+          "recipient_id": "123"
+        },
+        "sender_id": "456",
+        "message_data": {
+          "text": "Hello again!",
+          "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "user_mentions": [],
+            "urls": []
+          }
+        }
+      }
+    }
+  ],
+  "users": {
+    "456": {
+      "id": "456",
+      "created_timestamp": "1290730789000",
+      "name": "Martin Edenhofer",
+      "screen_name": "medenhofer",
+      "description": "Open Source professional and geek. Also known as #OTRS and #Zammad inventor. ;)\r\nEntrepreneur and Advisor for open source people in need.",
+      "url": "https://t.co/whm4HTWdMw",
+      "protected": false,
+      "verified": false,
+      "followers_count": 312,
+      "friends_count": 314,
+      "statuses_count": 222,
+      "profile_image_url": "http://pbs.twimg.com/profile_images/794220000450150401/D-eFg44R_normal.jpg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/794220000450150401/D-eFg44R_normal.jpg"
+    },
+    "123": {
+      "id": "123",
+      "created_timestamp": "1476091912921",
+      "name": "Zammad HQ",
+      "screen_name": "zammadhq",
+      "description": "Helpdesk and Customer Support made easy. Open Source for download or to go with SaaS. #zammad",
+      "url": "https://t.co/XITyrXmhTP",
+      "protected": false,
+      "verified": false,
+      "followers_count": 427,
+      "friends_count": 512,
+      "statuses_count": 437,
+      "profile_image_url": "http://pbs.twimg.com/profile_images/785412960797745152/wxdIvejo_normal.jpg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/785412960797745152/wxdIvejo_normal.jpg"
+    }
+  }
+}

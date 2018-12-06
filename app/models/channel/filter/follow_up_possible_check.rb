@@ -5,6 +5,7 @@ module Channel::Filter::FollowUpPossibleCheck
   def self.run(_channel, mail)
     ticket_id = mail['x-zammad-ticket-id'.to_sym]
     return true if !ticket_id
+
     ticket = Ticket.lookup(id: ticket_id)
     return true if !ticket
     return true if ticket.state.state_type.name !~ /^(closed|merged|removed)/i

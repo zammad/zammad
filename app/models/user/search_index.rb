@@ -24,6 +24,7 @@ returns
       permissions_with_child_ids.each do |permission_id|
         permission = ::Permission.lookup(id: permission_id)
         next if !permission
+
         attributes['permissions'].push permission.name
       end
       attributes['role_ids'] = role_ids
@@ -54,6 +55,7 @@ returns
         next if key == 'password'
         next if !value
         next if value.respond_to?('blank?') && value.blank?
+
         attributes[key] = value
       end
       return if attributes.blank?

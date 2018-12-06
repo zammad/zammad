@@ -56,6 +56,7 @@ class Sequencer
     # fall back to sequence default expecting if no explicit
     # expecting was given for this sequence
     return if !@expecting.nil?
+
     @expecting = @sequence.expecting
   end
 

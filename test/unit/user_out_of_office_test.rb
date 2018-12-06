@@ -7,7 +7,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
 
     groups = Group.all
     roles = Role.where(name: 'Agent')
-    @agent1 = User.create_or_update(
+    @agent1 = User.create!(
       login: 'user-out_of_office-agent1@example.com',
       firstname: 'UserOutOfOffice',
       lastname: 'Agent1',
@@ -18,7 +18,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    @agent2 = User.create_or_update(
+    @agent2 = User.create!(
       login: 'user-out_of_office-agent2@example.com',
       firstname: 'UserOutOfOffice',
       lastname: 'Agent2',
@@ -29,7 +29,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    @agent3 = User.create_or_update(
+    @agent3 = User.create!(
       login: 'user-out_of_office-agent3@example.com',
       firstname: 'UserOutOfOffice',
       lastname: 'Agent3',

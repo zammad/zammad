@@ -55,7 +55,8 @@ RSpec.describe 'Calendars', type: :request do
       expect(json_response['ical_feeds']['http://www.google.com/calendar/ical/de.austrian%23holiday%40group.v.calendar.google.com/public/basic.ics']).to eq('Austria')
       expect(json_response['timezones']).to be_truthy
       expect(json_response['timezones']['Africa/Johannesburg']).to eq(2)
-      expect(json_response['timezones']['America/Sitka']).to eq(-8)
+      expect(json_response['timezones']['America/Sitka']).to be_between(-9, -8)
+      expect(json_response['timezones']['Europe/Berlin']).to be_between(1, 2)
       expect(json_response['assets']).to be_truthy
     end
   end

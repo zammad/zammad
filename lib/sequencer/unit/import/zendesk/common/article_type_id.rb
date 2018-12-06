@@ -29,11 +29,13 @@ class Sequencer
 
             def remote_name_facebook
               return 'facebook feed post' if resource.via.source.rel == 'post'
+
               'facebook feed comment'
             end
 
             def remote_name_twitter
               return 'twitter status' if resource.via.source.rel == 'mention'
+
               'twitter direct message'
             end
 

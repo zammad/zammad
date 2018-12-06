@@ -32,12 +32,15 @@ returns
     end
 
     return data if !self['created_by_id'] && !self['updated_by_id']
+
     app_model_user = User.to_app_model
     %w[created_by_id updated_by_id].each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
+
       user = User.lookup(id: self[ local_user_id ])
       next if !user
+
       data = user.assets(data)
     end
     data
@@ -60,10 +63,12 @@ get assets and record_ids of selector
     send(selector).each do |item, content|
       attribute = item.split(/\./)
       next if !attribute[1]
+
       begin
         attribute_class = attribute[0].to_classname.constantize
       rescue => e
         next if attribute[0] == 'article'
+
         logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"
         next
       end
@@ -73,12 +78,15 @@ get assets and record_ids of selector
       next if !models[attribute_class][:reflections]
       next if !models[attribute_class][:reflections][reflection]
       next if !models[attribute_class][:reflections][reflection].klass
+
       attribute_ref_class = models[attribute_class][:reflections][reflection].klass
       if content['value'].instance_of?(Array)
         content['value'].each do |item_id|
           next if item_id.blank?
+
           attribute_object = attribute_ref_class.lookup(id: item_id)
           next if !attribute_object
+
           assets = attribute_object.assets(assets)
         end
       elsif content['value'].present?
@@ -136,7 +144,7 @@ get assets of object list
 
     def assets_of_object_list(list, assets = {})
       list.each do |item|
-        require item['object'].to_filename
+        require_dependency item['object'].to_filename
         record = Kernel.const_get(item['object']).find(item['o_id'])
         assets = record.assets(assets)
         if item['created_by_id'].present?

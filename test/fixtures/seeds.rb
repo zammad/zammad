@@ -1,4 +1,3 @@
-
 # inital data set as extention to db/seeds.rb
 
 Trigger.destroy_all

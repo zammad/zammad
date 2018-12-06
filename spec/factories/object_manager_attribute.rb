@@ -11,13 +11,13 @@ end
 FactoryBot.define do
   factory :object_manager_attribute, class: ObjectManager::Attribute do
 
-    object_lookup_id 2
+    object_lookup_id { ObjectLookup.by_name('Ticket') }
     name    { generate(:object_manager_attribute_name) }
     display { generate(:object_manager_attribute_display) }
     data_option_new do
       {}
     end
-    editable false
+    editable true
     active   true
     screens  do
       {
@@ -29,8 +29,8 @@ FactoryBot.define do
         'edit' => {}
       }
     end
-    add_attribute(:to_create) { false }
-    to_migrate    false
+    add_attribute(:to_create) { true }
+    to_migrate    true
     to_delete     false
     to_config     false
     position      15
@@ -49,6 +49,43 @@ FactoryBot.define do
         'default'   => '',
         'options'   => {},
         'relation'  => '',
+      }
+    end
+  end
+
+  factory :object_manager_attribute_integer, parent: :object_manager_attribute do
+    data_type   'integer'
+    data_option do
+      {
+        'default'   => 0,
+        'min'       => 0,
+        'max'       => 9999,
+      }
+    end
+  end
+
+  factory :object_manager_attribute_date, parent: :object_manager_attribute do
+    name        'date_attribute'
+    data_type   'date'
+    data_option do
+      {
+        'future' => true,
+        'past' => true,
+        'diff' => 24,
+        'null' => true,
+      }
+    end
+  end
+
+  factory :object_manager_attribute_datetime, parent: :object_manager_attribute do
+    name        'datetime_attribute'
+    data_type   'datetime'
+    data_option do
+      {
+        'future' => true,
+        'past' => true,
+        'diff' => 24,
+        'null' => true,
       }
     end
   end

@@ -103,6 +103,7 @@ curl http://localhost/api/v1/online_notifications/#{id} -v -u #{login}:#{passwor
 
   def show
     return if !access?
+
     model_show_render(OnlineNotification, params)
   end
 
@@ -131,6 +132,7 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
 
   def update
     return if !access?
+
     model_update_render(OnlineNotification, params)
   end
 
@@ -149,6 +151,7 @@ curl http://localhost/api/v1/online_notifications/{id}.json -v -u #{login}:#{pas
 
   def destroy
     return if !access?
+
     model_destroy_render(OnlineNotification, params)
   end
 

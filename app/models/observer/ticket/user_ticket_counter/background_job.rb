@@ -27,6 +27,7 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
     # check if update is needed
     customer = User.lookup(id: @customer_id)
     return true if !customer
+
     need_update = false
     if customer[:preferences][:tickets_open] != tickets_open
       need_update = true
@@ -38,6 +39,7 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
     end
 
     return true if !need_update
+
     customer.updated_by_id = @updated_by_id
     customer.save
   end

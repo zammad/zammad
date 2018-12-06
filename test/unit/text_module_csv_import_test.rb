@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class TextModuleCsvImportTest < ActiveSupport::TestCase
@@ -48,6 +47,20 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert(result[:records].blank?)
     assert_equal('failed', result[:result])
     assert_equal('No records found in file/string for TextModule.', result[:errors][0])
+  end
+
+  test 'verify required lookup headers' do
+    csv_string = "firstname;lastname;active;\nfirstname-simple-import1;lastname-simple-import1;;true\nfirstname-simple-import2;lastname-simple-import2;false\n"
+    result = TextModule.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('No lookup column like id,name for TextModule found.', result[:errors][0])
   end
 
   test 'simple import' do

@@ -380,7 +380,7 @@ class App.TicketCreate extends App.Controller
     @tokanice()
 
   tokanice: ->
-    App.Utils.tokaniceEmails('.content.active input[name=cc]')
+    App.Utils.tokanice('.content.active input[name=cc]', 'email')
 
   localUserInfo: (e) =>
     return if !@sidebarWidget

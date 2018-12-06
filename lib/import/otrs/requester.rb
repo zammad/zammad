@@ -40,6 +40,7 @@ module Import
         )
 
         return result if opts.present?
+
         @cache[object] = result
         @cache[object]
       end
@@ -67,6 +68,7 @@ module Import
       def connection_test
         result = request_json({})
         raise 'API key not valid!' if !result['Success']
+
         true
       end
 
@@ -90,6 +92,7 @@ module Import
         response = post(params)
         result   = handle_response(response)
         raise 'Invalid response' if !result
+
         result
       end
 

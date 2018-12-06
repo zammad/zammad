@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class SessionEnhancedTest < ActiveSupport::TestCase
@@ -155,16 +154,16 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     travel 2.seconds
 
     # check client sessions
-    assert(!Sessions.session_exists?(client_id1), 'check if session is removed')
-    assert(!Sessions.session_exists?(client_id2), 'check if session is removed')
-    assert(!Sessions.session_exists?(client_id3), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id1), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id2), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id3), 'check if session is removed')
 
     sleep 6
 
     # check client threads
-    assert(!Sessions.thread_client_exists?(client_id1), 'check if client is running')
-    assert(!Sessions.thread_client_exists?(client_id2), 'check if client is running')
-    assert(!Sessions.thread_client_exists?(client_id3), 'check if client is running')
+    assert_not(Sessions.thread_client_exists?(client_id1), 'check if client is running')
+    assert_not(Sessions.thread_client_exists?(client_id2), 'check if client is running')
+    assert_not(Sessions.thread_client_exists?(client_id3), 'check if client is running')
 
     # exit jobs
     jobs.exit
@@ -308,10 +307,10 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     travel 2.seconds
 
     # check client sessions
-    assert(!Sessions.session_exists?(client_id1_0), 'check if session is removed')
-    assert(!Sessions.session_exists?(client_id1_1), 'check if session is removed')
-    assert(!Sessions.session_exists?(client_id2), 'check if session is removed')
-    assert(!Sessions.session_exists?(client_id3), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id1_0), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id1_1), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id2), 'check if session is removed')
+    assert_not(Sessions.session_exists?(client_id3), 'check if session is removed')
 
     # exit jobs
     jobs.exit

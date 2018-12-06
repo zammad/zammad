@@ -2,10 +2,8 @@
 
 class Link < ApplicationModel
 
-  # rubocop:disable Rails/InverseOf
   belongs_to :link_type,   class_name: 'Link::Type'
   belongs_to :link_object, class_name: 'Link::Object'
-  # rubocop:enable Rails/InverseOf
 
   after_destroy :touch_link_references
 
@@ -27,6 +25,7 @@ class Link < ApplicationModel
   def self.list(data)
     linkobject = link_object_get( name: data[:link_object] )
     return if !linkobject
+
     items = []
 
     # get links for one site

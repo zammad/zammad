@@ -31,6 +31,7 @@ class Transaction::SignatureDetection
 
     ticket = Ticket.lookup(id: @item[:object_id])
     return if !ticket
+
     article = ticket.articles.first
     return if !article
 
@@ -51,6 +52,7 @@ class Transaction::SignatureDetection
     return if !user
     return if !user.preferences
     return if !user.preferences[:signature_detection]
+
     line = ::SignatureDetection.find_signature_line_by_article(
       user,
       article

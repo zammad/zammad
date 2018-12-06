@@ -2,10 +2,8 @@
 
 class Tag < ApplicationModel
 
-  # rubocop:disable Rails/InverseOf
   belongs_to :tag_object, class_name: 'Tag::Object'
   belongs_to :tag_item,   class_name: 'Tag::Item'
-  # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of
@@ -158,6 +156,7 @@ returns
     tag_search.each_with_object([]) do |tag, result|
       tag_item = Tag::Item.lookup(id: tag.tag_item_id)
       next if !tag_item
+
       result.push tag_item.name
     end
   end
@@ -338,6 +337,7 @@ remove tag item (destroy with reverences)
       hash.each do |key, condition|
         next if %w[ticket.tags x-zammad-ticket-tags].exclude? key
         next if condition[:value].split(', ').exclude? old_name
+
         condition[:value] = update_name(condition[:value], old_name, new_name)
         changed = true
       end
@@ -347,6 +347,7 @@ remove tag item (destroy with reverences)
     def self.update_name(condition, old_name, new_name)
       tags = condition.split(', ')
       return new_name if tags.size == 1
+
       tags = tags.map { |t| t == old_name ? new_name : t }
       tags.join(', ')
     end

@@ -4,7 +4,7 @@ class Index extends App.ControllerSubContent
   constructor: ->
     super
 
-    new App.ControllerGenericIndex(
+    @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
       genericObject: 'TextModule'

@@ -28,6 +28,7 @@ module Import
         history_attribute = @history_attributes[:history_attribute]
         return if !history_attribute
         return if history_attribute_exists?(history_attribute)
+
         @@created_history_attributes[history_attribute] = true
         ::History.attribute_lookup(history_attribute)
       end

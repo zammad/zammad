@@ -17,6 +17,9 @@ fill your database with demo records
 or if you only want to create 100 tickets
 
   FillDB.load(tickets: 100)
+  FillDB.load(agents: 20)
+  FillDB.load(overviews: 20)
+  FillDB.load(tickets: 10000)
 
 =end
 
@@ -170,6 +173,7 @@ or if you only want to create 100 tickets
     state_pool = Ticket::State.all
 
     return if !tickets || tickets.zero?
+
     (1..tickets).each do
       ActiveRecord::Base.transaction do
         customer = customer_pool[ rand(customer_pool.length - 1) ]

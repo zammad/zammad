@@ -13,6 +13,7 @@ class App.Ticket extends App.Model
       { name: 'pending_time',             display: 'Pending till', tag: 'datetime', null: true, width: '130px' },
       { name: 'priority_id',              display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', width: '12%', edit: true, customer: true },
       { name: 'article_count',            display: 'Article#',     readonly: 1, width: '12%' },
+      { name: 'time_unit',                display: 'Accounted Time',          readonly: 1, width: '12%' },
       { name: 'escalation_at',            display: 'Escalation',              tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
       { name: 'last_contact_at',          display: 'Last contact',            tag: 'datetime', null: true, readonly: 1, width: '110px' },
       { name: 'last_contact_agent_at',    display: 'Last contact (agent)',    tag: 'datetime', null: true, readonly: 1, width: '110px' },
@@ -249,7 +250,7 @@ class App.Ticket extends App.Model
     user_id = App.Session.get('id')
     return true if user_id is @customer_id
     return false if !App.User.exists(user_id)
-    group_ids = App.User.find(user_id).all_group_ids(permission)
+    group_ids = App.User.find(user_id).allGroupIds(permission)
     for local_group_id in group_ids
       if local_group_id.toString() is @group_id.toString()
         return true

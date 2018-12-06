@@ -75,6 +75,7 @@ returns
       if !result_es['aggregations']['time_buckets']['buckets']
         raise "Invalid es result, no buckets #{result_es.inspect}"
       end
+
       result_es['aggregations']['time_buckets']['buckets'].each do |item|
         if params[:interval] == 'minute'
           item['key_as_string'] = item['key_as_string'].sub(/:\d\d.\d\d\dZ$/, '')
@@ -85,6 +86,7 @@ returns
         next if !item['doc_count']
         next if item['key_as_string'] !~ /#{start_string}/
         next if match
+
         match = true
         result.push item['doc_count']
         if params[:interval] == 'month'
@@ -100,6 +102,7 @@ returns
         end
       end
       next if match
+
       result.push 0
       if params[:interval] == 'month'
         start = start.next_month
@@ -163,10 +166,13 @@ returns
 
     result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
     return result if params[:sheet].present?
+
     assets = {}
     result[:ticket_ids].each do |ticket_id|
-      ticket_full = Ticket.find(ticket_id)
-      assets = ticket_full.assets(assets)
+      suppress(ActiveRecord::RecordNotFound) do
+        ticket_full = Ticket.find(ticket_id)
+        assets = ticket_full.assets(assets)
+      end
     end
     result[:assets] = assets
     result

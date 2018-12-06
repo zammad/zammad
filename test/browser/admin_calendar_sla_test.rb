@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class AdminCalendarSlaTest < TestCase
@@ -14,7 +13,7 @@ class AdminCalendarSlaTest < TestCase
     calendar_name = "ZZZ some calendar #{rand(99_999_999)}"
     sla_name = "ZZZ some sla #{rand(99_999_999)}"
     timezone = 'Europe/Berlin'
-    timezone_verify = 'Europe/Berlin (GMT+2)'
+    timezone_verify = "Europe/Berlin\s\\(GMT\\+(2|1)\\)"
     calendar_create(
       data: {
         name:     calendar_name,
@@ -67,7 +66,7 @@ class AdminCalendarSlaTest < TestCase
     )
     watch_for(
       css: '.content.active .modal input.js-input',
-      value: Regexp.quote(timezone_verify),
+      value: timezone_verify,
       timeout: 4,
     )
     modal_close()

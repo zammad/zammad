@@ -54,6 +54,7 @@ class Sequencer
 
               def lookup(attribute:, value:)
                 return model_class.identify(value) if model_class.respond_to?(:identify)
+
                 model_class.find_by(attribute => value)
               end
             end

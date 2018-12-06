@@ -4,8 +4,10 @@
       <th style="width: 40px;"></th>
       <th><%- @T('From') %></th>
       <th><%- @T('To') %></th>
+      <!--<th style="width: 100px;"><%- @T('Queue') %></th>-->
       <th style="width: 130px;"><%- @T('Status') %></th>
-      <th style="width: 100px;"><%- @T('Duration') %></th>
+      <th style="width: 80px;"><%- @T('Waiting') %></th>
+      <th style="width: 80px;"><%- @T('Duration') %></th>
       <th style="width: 170px;"><%- @T('Time') %></th>
     </tr>
   </thead>
@@ -83,12 +85,14 @@
           <% end %>
         <% end %>
       </td>
+      <!--<td style="vertical-align: middle"><%= item.queue %></td>-->
       <td style="vertical-align: middle">
         <% if item.state_human: %>
         <%- @Icon('status', "#{item.status_class} inline") %> <%- @T(item.state_human) %>
         <% end %>
       </td>
-      <td style="vertical-align: middle"><%= item.duration %></td>
+      <td style="vertical-align: middle"><%= @time_duration(item.duration_waiting_time) %></td>
+      <td style="vertical-align: middle"><%= @time_duration(item.duration_talking_time) %></td>
       <td style="vertical-align: middle"><%- @humanTime(item.created_at) %></td>
     </tr>
     <% end %>

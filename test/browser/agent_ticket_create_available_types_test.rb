@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 # Regression test for UI enhancement

@@ -23,6 +23,7 @@ module EventBuffer
     puts "#=#= EventBuffer RESET", key
     return if !Thread.current[:event_buffer]
     return if !Thread.current[:event_buffer][key]
+
     Thread.current[:event_buffer][key] = []
   end
 

@@ -15,9 +15,11 @@ class Ticket::TimeAccounting < ApplicationModel
       exists = true
     end
     return false if exists == false
+
     ticket = Ticket.lookup(id: ticket_id)
     return false if !ticket
     return false if ticket.time_unit == time_units
+
     ticket.time_unit = time_units
     ticket.save!
     true

@@ -30,10 +30,12 @@ returns
     attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
 
     # max attachment size
-    attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 40
+    attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 10
+    attachment_total_max_size_in_kb = 314_572
+    attachment_total_max_size_in_kb_current = 0
 
     # collect article data
-    articles = Ticket::Article.where(ticket_id: id)
+    articles = Ticket::Article.where(ticket_id: id).limit(1000)
     attributes['article'] = []
     articles.each do |article|
 
@@ -53,25 +55,30 @@ returns
 
       # lookup attachments
       article_attributes['attachment'] = []
-      article.attachments.each do |attachment|
+      if attachment_total_max_size_in_kb_current < attachment_total_max_size_in_kb
+        article.attachments.each do |attachment|
 
-        # check file size
-        next if !attachment.content
-        next if attachment.content.size / 1024 > attachment_max_size_in_mb * 1024
+          # check file size
+          next if !attachment.content
+          next if attachment.content.size / 1024 > attachment_max_size_in_mb * 1024
 
-        # check ignored files
-        next if !attachment.filename
+          # check ignored files
+          next if !attachment.filename
 
-        filename_extention = attachment.filename.downcase
-        filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
+          filename_extention = attachment.filename.downcase
+          filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
 
-        next if attachments_ignore.include?(filename_extention.downcase)
+          next if attachments_ignore.include?(filename_extention.downcase)
 
-        data = {
-          '_name'    => attachment.filename,
-          '_content' => Base64.encode64(attachment.content).delete("\n")
-        }
-        article_attributes['attachment'].push data
+          attachment_total_max_size_in_kb_current += (attachment.content.size / 1024).to_i
+          next if attachment_total_max_size_in_kb_current > attachment_total_max_size_in_kb
+
+          data = {
+            '_name'    => attachment.filename,
+            '_content' => Base64.encode64(attachment.content).delete("\n")
+          }
+          article_attributes['attachment'].push data
+        end
       end
       attributes['article'].push article_attributes
     end

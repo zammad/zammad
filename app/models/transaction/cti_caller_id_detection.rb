@@ -37,12 +37,14 @@ class Transaction::CtiCallerIdDetection
     if @item[:object] == 'Ticket' && @item[:type] == 'create'
       ticket = Ticket.lookup(id: @item[:object_id])
       return if !ticket
+
       Cti::CallerId.build(ticket)
     end
 
     if @item[:object] == 'User'
       user = User.lookup(id: @item[:object_id])
       return if !user
+
       Cti::CallerId.build(user)
     end
 

@@ -45,6 +45,7 @@ add a new activity entry for an object
       if !permission
         raise "No such Permission #{data[:permission]}"
       end
+
       permission_id = permission.id
     end
 

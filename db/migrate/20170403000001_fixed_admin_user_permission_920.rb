@@ -752,6 +752,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
     }
     ObjectManager::Attribute.all.each do |attribute|
       next if attribute.screens.blank?
+
       screens = {}
       attribute.screens.each do |screen, role_value|
         if role_value.blank?

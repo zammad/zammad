@@ -9,6 +9,7 @@ class Sequencer
 
             def process
               return if dry_run
+
               ::HttpLog.create(
                 direction: 'out',
                 facility:  facility,

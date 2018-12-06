@@ -26,12 +26,14 @@ module Import
 
       def create_or_update(queue)
         return if updated?(queue)
+
         create(queue)
       end
 
       def updated?(queue)
         @local_queue = Group.find_by(id: queue[:id])
         return false if !@local_queue
+
         log "update Group.find_by(id: #{queue[:id]})"
         @local_queue.update!(queue)
         true

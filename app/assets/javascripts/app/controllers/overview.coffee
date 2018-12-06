@@ -9,7 +9,7 @@ class Index extends App.ControllerSubContent
       if attribute.name is 'group_by'
         attribute.options = App.Overview.groupByAttributes()
 
-    new App.ControllerGenericIndex(
+    @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
       genericObject: 'Overview'

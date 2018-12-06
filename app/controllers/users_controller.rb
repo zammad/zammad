@@ -411,6 +411,7 @@ class UsersController < ApplicationController
     }
     %i[role_ids permissions].each do |key|
       next if params[key].blank?
+
       query_params[key] = params[key]
     end
 
@@ -827,6 +828,7 @@ curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "
 
   def out_of_office
     raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+
     user = User.find(current_user.id)
     user.with_lock do
       user.assign_attributes(
@@ -1041,7 +1043,12 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 401 Invalid session.
   def import_start
     permission_check('admin.user')
-    string = params[:data] || params[:file].read.force_encoding('utf-8')
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+
     result = User.csv_import(
       string: string,
       parse_params: {
@@ -1065,6 +1072,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     if Setting.get('password_min_2_lower_2_upper_characters').to_i == 1 && ( password !~ /[A-Z].*[A-Z]/ || password !~ /[a-z].*[a-z]/ )
       return ["Can't update password, it must contain at least 2 lowercase and 2 uppercase characters!"]
     end
+
     true
   end
 end

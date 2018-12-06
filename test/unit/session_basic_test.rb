@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
@@ -95,7 +94,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     Sessions.destroy(client_id1)
 
     # check if session exists
-    assert(!Sessions.session_exists?(client_id1), 'check if session exists')
+    assert_not(Sessions.session_exists?(client_id1), 'check if session exists')
 
   end
 
@@ -132,10 +131,10 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # next check should be empty
     result1 = collection_client1.push
-    assert(!result1, 'check collections - recall')
+    assert_not(result1, 'check collections - recall')
     travel 1.second
     result2 = collection_client2.push
-    assert(!result2, 'check collections - recall')
+    assert_not(result2, 'check collections - recall')
 
     # change collection
     group = Group.first
@@ -236,12 +235,12 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # next check should be empty
     result1 = as_client1.push
-    assert(!result1, 'check as agent1 - recall')
+    assert_not(result1, 'check as agent1 - recall')
 
     # next check should be empty
     travel 4.seconds
     result1 = as_client1.push
-    assert(!result1, 'check as agent1 - recall 2')
+    assert_not(result1, 'check as agent1 - recall 2')
 
     agent1.update!(email: 'activity-stream-agent11@example.com')
     ticket = Ticket.create!(
@@ -290,12 +289,12 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # next check should be empty
     result1 = ticket_create_client1.push
-    assert(!result1, 'check ticket_create - recall')
+    assert_not(result1, 'check ticket_create - recall')
 
     # next check should be empty
     travel 1.second
     result1 = ticket_create_client1.push
-    assert(!result1, 'check ticket_create - recall 2')
+    assert_not(result1, 'check ticket_create - recall 2')
 
     Group.create!(
       name: "SomeTicketCreateGroup::#{rand(999_999)}",

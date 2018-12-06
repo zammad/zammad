@@ -14,13 +14,11 @@ Cache.clear
 # to the matching one of the existing files
 seeds = %w[settings user_nr_1 signatures roles permissions groups links ticket_state_types ticket_states ticket_priorities ticket_article_types ticket_article_senders macros community_user_resources overviews channels report_profiles chats object_manager_attributes schedulers triggers karma_activities]
 
-# loop and require all seedfiles
+# loop over and load all seedfiles
 # files will get executed automatically
 seeds.each do |seed|
-  # we use require relative here since
-  # - we the seeds file to get loaded only once
-  # - we want to require it relative to the current path
-  require_relative "seeds/#{seed}.rb"
+  # we use load here to be able to re-seed in one process (test env)
+  load Rails.root.join('db', 'seeds', "#{seed}.rb")
 end
 
 # reset primary key sequences

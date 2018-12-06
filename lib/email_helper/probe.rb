@@ -221,7 +221,7 @@ returns on fail
       # connection test
       result_inbound = {}
       begin
-        require "channel/driver/#{adapter.to_filename}"
+        require_dependency "channel/driver/#{adapter.to_filename}"
 
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new
@@ -319,7 +319,7 @@ returns on fail
 
       # test connection
       begin
-        require "channel/driver/#{adapter.to_filename}"
+        require_dependency "channel/driver/#{adapter.to_filename}"
 
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new

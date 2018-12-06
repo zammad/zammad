@@ -15,9 +15,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     subject = ticket.subject_build(record.subject,  subject_prefix_mode)
 
     # set retry count
-    if !record.preferences['delivery_retry']
-      record.preferences['delivery_retry'] = 0
-    end
+    record.preferences['delivery_retry'] ||= 0
     record.preferences['delivery_retry'] += 1
 
     # send email
@@ -174,6 +172,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     if Rails.env.production?
       return current_time + attempts * 25.seconds
     end
+
     current_time + 5.seconds
   end
 end

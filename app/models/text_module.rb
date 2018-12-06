@@ -25,6 +25,7 @@ load text modules from online
 
   def self.load(locale, overwrite_existing_item = false)
     raise 'Got no locale' if locale.blank?
+
     locale = locale.split(',').first.downcase # in case of accept_language header is given
     url = "https://i18n.zammad.com/api/v1/text_modules/#{locale}"
 
@@ -44,6 +45,7 @@ load text modules from online
         exists = TextModule.find_by(foreign_id: text_module['foreign_id'])
         if exists
           next if !overwrite_existing_item
+
           exists.update!(text_module.symbolize_keys!)
         else
           text_module[:updated_by_id] = 1
@@ -70,6 +72,7 @@ push text_modules to online
     text_modules_to_push = []
     text_modules.each do |text_module|
       next if !text_module.active
+
       text_modules_to_push.push text_module
     end
 
@@ -108,6 +111,7 @@ push text_modules to online
   def validate_content
     return true if content.blank?
     return true if content.match?(/<.+?>/)
+
     content.gsub!(/(\r\n|\n\r|\r)/, "\n")
     self.content = content.text2html
     true

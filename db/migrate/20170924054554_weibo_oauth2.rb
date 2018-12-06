@@ -3,6 +3,7 @@ class WeiboOauth2 < ActiveRecord::Migration[4.2]
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
+
     Setting.create_if_not_exists(
       title: 'Authentication via %s',
       name: 'auth_weibo',

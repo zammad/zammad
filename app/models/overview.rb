@@ -62,6 +62,7 @@ class Overview < ApplicationModel
 
   def fill_prio
     return true if prio.present?
+
     self.prio = Overview.count + 1
     true
   end
@@ -77,6 +78,7 @@ class Overview < ApplicationModel
 
   def fill_link_on_update
     return true if !changes['name'] && !changes['link']
+
     self.link = if link.present?
                   link_name(link)
                 else

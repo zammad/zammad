@@ -9,6 +9,9 @@ module Cti
     after_commit :update_cti_logs, on: :destroy
     after_commit :update_cti_logs_with_fg_optimization, on: :create
 
+    skip_callback :commit, :after, :update_cti_logs, if: -> { BulkImportInfo.enabled? }
+    skip_callback :commit, :after, :update_cti_logs_with_fg_optimization, if: -> { BulkImportInfo.enabled? }
+
 =begin
 
   Cti::CallerId.maybe_add(
@@ -32,6 +35,7 @@ module Cti
       )
 
       return record if !record.new_record?
+
       record.comment = data[:comment]
       record.save!
     end
@@ -72,10 +76,12 @@ returns
       model = nil
       map.each do |item|
         next if item[:model] != record.class
+
         level = item[:level]
         model = item[:model]
       end
       return if !level || !model
+
       build_item(record, model, level)
     end
 
@@ -92,6 +98,7 @@ returns
         article = record.articles.first
         return if !article
         return if article.sender.name != 'Customer'
+
         record = article
       end
 
@@ -112,8 +119,10 @@ returns
       attributes.each_value do |value|
         next if value.class != String
         next if value.blank?
+
         local_caller_ids = Cti::CallerId.extract_numbers(value)
         next if local_caller_ids.blank?
+
         caller_ids = caller_ids.concat(local_caller_ids)
       end
 
@@ -217,6 +226,7 @@ returns
     def self.extract_numbers(text)
       # see specs for example
       return [] if !text.is_a?(String)
+
       text.scan(/([\d|\s|\-|\(|\)]{6,26})/).map do |match|
         normalize_number(match[0])
       end
@@ -235,6 +245,34 @@ returns
         number
       end
     end
+
+=begin
+
+  from_comment, preferences = Cti::CallerId.get_comment_preferences('00491710000000', 'from')
+
+  returns
+
+  [
+    "Bob Smith",
+    {
+      "from"=>[
+        {
+          "id"=>1961634,
+          "caller_id"=>"491710000000",
+          "comment"=>nil,
+          "level"=>"known",
+          "object"=>"User",
+          "o_id"=>3,
+          "user_id"=>3,
+          "preferences"=>nil,
+          "created_at"=>Mon, 24 Sep 2018 15:19:48 UTC +00:00,
+          "updated_at"=>Mon, 24 Sep 2018 15:19:48 UTC +00:00,
+        }
+      ]
+    }
+  ]
+
+=end
 
     def self.get_comment_preferences(caller_id, direction)
       from_comment_known = ''
@@ -273,17 +311,20 @@ returns
       end
       return [from_comment_known, preferences_known] if from_comment_known.present?
       return ["maybe #{from_comment_maybe}", preferences_maybe] if from_comment_maybe.present?
+
       nil
     end
 
     def update_cti_logs
       return if object != 'User'
+
       UpdateCtiLogsByCallerJob.perform_later(caller_id)
     end
 
     def update_cti_logs_with_fg_optimization
       return if object != 'User'
       return if level != 'known'
+
       UpdateCtiLogsByCallerJob.perform_now(caller_id, limit: 20)
       UpdateCtiLogsByCallerJob.perform_later(caller_id, limit: 40, offset: 20)
     end

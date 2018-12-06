@@ -11,20 +11,21 @@ class Ticket::Article < ApplicationModel
 
   belongs_to :ticket
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article
-
-  # rubocop:disable Rails/InverseOf
   belongs_to :type,       class_name: 'Ticket::Article::Type'
   belongs_to :sender,     class_name: 'Ticket::Article::Sender'
   belongs_to :created_by, class_name: 'User'
   belongs_to :updated_by, class_name: 'User'
   belongs_to :origin_by,  class_name: 'User'
-  # rubocop:enable Rails/InverseOf
 
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
   after_destroy :store_delete
 
   store :preferences
+
+  validates :ticket_id, presence: true
+  validates :type_id, presence: true
+  validates :sender_id, presence: true
 
   sanitized_html :body
 
@@ -45,6 +46,7 @@ class Ticket::Article < ApplicationModel
   # fillup md5 of message id to search easier on very long message ids
   def check_message_id_md5
     return true if message_id.blank?
+
     self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
@@ -75,6 +77,7 @@ returns
       # look for attachment
       article['attachments'].each do |file|
         next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>" )
+
         replace = "#{tag_start}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file[:id]}\"#{tag_end}>"
         inline_attachments[file[:id]] = true
         break
@@ -84,6 +87,7 @@ returns
     new_attachments = []
     article['attachments'].each do |file|
       next if inline_attachments[file[:id]]
+
       new_attachments.push file
     end
     article['attachments'] = new_attachments
@@ -111,6 +115,7 @@ returns
       # look for attachment
       attachments.each do |file|
         next if !file.preferences['Content-ID'] || (file.preferences['Content-ID'] != cid && file.preferences['Content-ID'] != "<#{cid}>" )
+
         inline_attachments[file.id] = true
         break
       end
@@ -118,6 +123,7 @@ returns
     new_attachments = []
     attachments.each do |file|
       next if !inline_attachments[file.id]
+
       new_attachments.push file
     end
     new_attachments
@@ -140,6 +146,7 @@ get body as html
   def body_as_html
     return '' if !body
     return body if content_type && content_type =~ %r{text/html}i
+
     body.text2html
   end
 
@@ -155,6 +162,7 @@ get body as text
   def body_as_text
     return '' if !body
     return body if content_type.blank? || content_type =~ %r{text/plain}i
+
     body.html2text
   end
 
@@ -190,6 +198,7 @@ returns:
       o_id: id,
     )
     return if list.blank?
+
     list[0]
   end
 
@@ -220,6 +229,7 @@ returns:
   def sanitizeable?(attribute, _value)
     return true if attribute != :body
     return false if content_type.blank?
+
     content_type =~ /html/i
   end
 
@@ -274,6 +284,7 @@ returns
   # strip not wanted chars
   def check_subject
     return true if subject.blank?
+
     subject.gsub!(/\s|\t|\r/, ' ')
     true
   end
@@ -281,6 +292,7 @@ returns
   # strip body length or raise exception
   def check_body
     return true if body.blank?
+
     limit = 1_500_000
     current_length = body.length
     return true if body.length <= limit

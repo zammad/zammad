@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class EmailDeliverTest < ActiveSupport::TestCase
@@ -10,6 +9,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     if ENV['MAIL_SERVER_ACCOUNT'].blank?
       raise "Need MAIL_SERVER_ACCOUNT as ENV variable like export MAIL_SERVER_ACCOUNT='user:somepass'"
     end
+
     server_login = ENV['MAIL_SERVER_ACCOUNT'].split(':')[0]
     server_password = ENV['MAIL_SERVER_ACCOUNT'].split(':')[1]
 

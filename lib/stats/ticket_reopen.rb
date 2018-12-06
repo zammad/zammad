@@ -65,6 +65,7 @@ class Stats::TicketReopen
 
   def self.log(object, o_id, changes, updated_by_id)
     return if object != 'Ticket'
+
     ticket = Ticket.lookup(id: o_id)
     return if !ticket
 

@@ -34,5 +34,5 @@
   <h3><%- @T('Retweets') %></h3>
   <p class="description"><%- @T('Choose if retweets should also be converted to tickets.') %></p>
   <input name="track_retweets" type="checkbox" id="setting-chat" value="true" <% if @channel.options.sync.track_retweets: %>checked<% end %>> <%- @T('Track retweets') %>
-
+  <input name="webhook_id" type="hidden" value="<%- @channel.options.sync.webhook_id %>">
 </fieldset>

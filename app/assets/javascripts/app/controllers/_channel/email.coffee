@@ -67,7 +67,7 @@ class App.ChannelEmailFilter extends App.Controller
       container: @el.closest('.content')
       callback: @load
     )
-    
+
   edit: (id, e) =>
     e.preventDefault()
     new App.ControllerGenericEdit(

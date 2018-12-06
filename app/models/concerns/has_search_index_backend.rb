@@ -23,6 +23,7 @@ update search index, if configured - will be executed automatically
 
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
+
     Delayed::Job.enqueue(BackgroundJobSearchIndex.new(self.class.to_s, id))
     true
   end
@@ -38,6 +39,7 @@ delete search index object, will be executed automatically
 
   def search_index_destroy
     return true if ignore_search_indexing?(:destroy)
+
     SearchIndexBackend.remove(self.class.to_s, id)
     true
   end
@@ -87,9 +89,11 @@ returns
     %w[name note].each do |key|
       next if !self[key]
       next if self[key].respond_to?('blank?') && self[key].blank?
+
       attributes[key] = self[key]
     end
     return true if attributes.blank?
+
     attributes
   end
 
@@ -130,6 +134,7 @@ reload search index with full data
       ids.each do |item_id|
         item = find(item_id)
         next if item.ignore_search_indexing?(:destroy)
+
         begin
           item.search_index_update_backend
         rescue => e

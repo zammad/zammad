@@ -9,6 +9,7 @@ module ApplicationHandleInfo
 
   def self.postmaster?
     return false if current.blank?
+
     current.split('.')[1] == 'postmaster'
   end
 end

@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class AutoWizardTest < ActiveSupport::TestCase
@@ -56,6 +55,7 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:email], user.email)
       assert_equal(local_user[:roles].count, user.role_ids.count)
       next if !local_user[:roles]
+
       local_user[:roles].each do |local_role_name|
         local_role = Role.find_by(name: local_role_name)
         assert(user.role_ids.include?(local_role.id))
@@ -65,6 +65,7 @@ class AutoWizardTest < ActiveSupport::TestCase
       group = Group.find_by(name: local_group[:name])
       assert_equal(local_group[:name], group.name)
       next if !local_group[:users]
+
       local_group[:users].each do |local_user_login|
         local_user = User.find_by(login: local_user_login)
         assert(group.user_ids.include?(local_user.id))
@@ -194,6 +195,7 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:lastname], user.lastname)
       assert_equal(local_user[:email], user.email)
       next if !local_user[:roles]
+
       assert_equal(local_user[:roles].count, user.role_ids.count)
       local_user[:roles].each do |local_role_name|
         local_role = Role.find_by(name: local_role_name)
@@ -246,6 +248,7 @@ class AutoWizardTest < ActiveSupport::TestCase
   def auto_wizard_file_exists?
     location = Rails.root.join('auto_wizard.json')
     return false if File.exist?(location)
+
     true
   end
 

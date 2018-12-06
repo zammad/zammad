@@ -66,6 +66,7 @@ examples how to use
 
     # if no object is given, just return
     return '#{no such object}' if object_name.blank? # rubocop:disable Lint/InterpolationCheck
+
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in avalable objects, just return
@@ -75,19 +76,46 @@ examples how to use
     if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
       return "\#{#{key} / no such method}"
     end
+
+    previous_object_refs = ''
     object_methods_s = ''
     object_methods.each do |method_raw|
 
       method = method_raw.strip
+
+      if method == 'value'
+        temp = object_refs
+        object_refs = display_value(previous_object_refs, method, object_methods_s, object_refs)
+        previous_object_refs = temp
+      end
 
       if object_methods_s != ''
         object_methods_s += '.'
       end
       object_methods_s += method
 
+      next if method == 'value'
+
       if object_methods_s == ''
         value = "\#{#{object_name}.#{object_methods_s} / no such method}"
         break
+      end
+
+      arguments = nil
+      if /\A(?<method_id>[^\(]+)\((?<parameter>[^\)]+)\)\z/ =~ method
+
+        if parameter != parameter.to_i.to_s
+          value = "\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}"
+          break
+        end
+
+        begin
+          arguments = Array(parameter.to_i)
+          method    = method_id
+        rescue
+          value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
+          break
+        end
       end
 
       # if method exists
@@ -96,9 +124,11 @@ examples how to use
         break
       end
       begin
-        object_refs = object_refs.send(method.to_sym)
+        previous_object_refs = object_refs
+        object_refs = object_refs.send(method.to_sym, *arguments)
       rescue => e
-        object_refs = "\#{#{object_name}.#{object_methods_s} / e.message}"
+        value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
+        break
       end
     end
     placeholder = if !value
@@ -127,6 +157,7 @@ examples how to use
   # h('fqdn', htmlEscape)
   def h(key)
     return key if !key
+
     CGI.escapeHTML(key.to_s)
   end
 
@@ -135,12 +166,26 @@ examples how to use
   def escaping(key, escape)
     return key if escape == false
     return key if escape.nil? && !@escape
+
     h key
   end
 
   def data_key_valid?(key)
     return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)/i && key !~ /(update|create)d_(at|by)/i
+
     true
   end
 
+  def display_value(object, method_name, previous_method_names, key)
+    return key if method_name != 'value' ||
+                  !key.instance_of?(String)
+
+    attributes = ObjectManager::Attribute
+                 .where(object_lookup_id: ObjectLookup.by_name(object.class.to_s))
+                 .where(name: previous_method_names.split('.').last)
+
+    return key if attributes.count.zero? || attributes.first.data_type != 'select'
+
+    attributes.first.data_option['options'][key] || key
+  end
 end

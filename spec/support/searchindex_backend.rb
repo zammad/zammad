@@ -1,10 +1,9 @@
-require 'rake'
-
 module SearchindexBackendHelper
 
   def configure_elasticsearch(required: false)
     if ENV['ES_URL'].blank?
       return if !required
+
       raise "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
     end
 
@@ -23,6 +22,7 @@ module SearchindexBackendHelper
     if ENV['ES_INDEX'].blank?
       raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
     end
+
     Setting.set('es_index', ENV['ES_INDEX'])
 
     # set max attachment size in mb
@@ -32,8 +32,6 @@ module SearchindexBackendHelper
   end
 
   def rebuild_searchindex
-    Rake::Task.clear
-    Zammad::Application.load_tasks
     Rake::Task['searchindex:rebuild'].execute
   end
 

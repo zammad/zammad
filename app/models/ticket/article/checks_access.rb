@@ -35,6 +35,7 @@ class Ticket
       # @return [nil]
       def access!(user, access)
         return if access?(user, access)
+
         raise Exceptions::NotAuthorized
       end
     end

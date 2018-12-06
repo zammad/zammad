@@ -179,6 +179,7 @@ add avatar by url
         # fetch image
         image = Service::Image.user(url)
         return if !image
+
         data[:resize] = image
         data[:full] = image
       end
@@ -358,6 +359,7 @@ returns:
       store_hash: hash,
     )
     return if !avatar
+
     Store.find(avatar.store_resize_id)
   end
 
@@ -389,6 +391,7 @@ returns:
     ).order('created_at ASC, id DESC')
     avatars.each do |avatar|
       next if avatar.id == avatar_id
+
       avatar.default = false
       avatar.save!
     end

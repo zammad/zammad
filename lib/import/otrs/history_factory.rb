@@ -8,6 +8,7 @@ module Import
 
       def skip?(record, *_args)
         return true if !determine_class(record)
+
         false
       end
 
@@ -27,12 +28,14 @@ module Import
 
       def check_supported(history)
         return if !supported_types.include?(history['HistoryType'])
+
         history['HistoryType']
       end
 
       def check_article(history)
         return if !history['ArticleID']
         return if history['ArticleID'].to_i.zero?
+
         'Article'
       end
     end

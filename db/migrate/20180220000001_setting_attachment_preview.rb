@@ -3,6 +3,7 @@ class SettingAttachmentPreview < ActiveRecord::Migration[5.1]
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
+
     Setting.create_if_not_exists(
       title: 'Sidebar Attachments',
       name: 'ui_ticket_zoom_attachments_preview',

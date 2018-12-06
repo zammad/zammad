@@ -31,6 +31,7 @@ class Observer::Ticket::LastOwnerUpdate < ActiveRecord::Observer
     if record.changes_to_save['group_id'].present?
       group = Group.lookup(id: record.changes_to_save['group_id'][1])
       return true if !group
+
       if group.assignment_timeout.blank? || group.assignment_timeout.zero?
         record.last_owner_update_at = nil
         return true

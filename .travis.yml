@@ -63,6 +63,7 @@ script:
   - rake db:migrate
   - rake db:seed
   - bundle exec rspec
+  - bundle exec rake db:environment:set RAILS_ENV=test
   - rake db:reset
   - rake test:units
   - ruby -I test/ test/integration/object_manager_test.rb

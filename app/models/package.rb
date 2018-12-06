@@ -41,10 +41,12 @@ returns:
       content_package = Base64.decode64(file['content'])
       content_fs      = self.class._read_file(file['location'])
       next if content_package == content_fs
+
       logger.error "File #{file['location']} is different"
       issues[file['location']] = 'changed'
     end
     return nil if issues.blank?
+
     issues
   end
 
@@ -59,6 +61,7 @@ install all packages located under auto_install/*.zpm
   def self.auto_install
     path = "#{@@root}/auto_install/"
     return if !File.exist?(path)
+
     data = []
     Dir.foreach(path) do |entry|
       if entry =~ /\.zpm/ && entry !~ /^\./
@@ -105,6 +108,7 @@ note: will not take down package migrations, use Package.unlink instead
     if package == false
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
+
     logger.debug { package.inspect }
     package
   end
@@ -186,6 +190,7 @@ link files + execute migration up
         if File.exist?(backup_file)
           raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         end
+
         logger.info "Create backup file of #{dest} -> #{backup_file}."
         File.rename(dest.to_s, backup_file)
       end
@@ -307,6 +312,7 @@ returns
     if !package
       raise "No such package '#{package_name}'"
     end
+
     file = _get_bin(package.name, package.version)
     install(string: file, reinstall: true)
     package
@@ -384,6 +390,7 @@ execute all pending package migrations at once
     if !package
       raise "No such package '#{name}' version '#{version}'"
     end
+
     list = Store.list(
       object: 'Package',
       o_id: package.id,
@@ -396,6 +403,7 @@ execute all pending package migrations at once
     if !list.first.content
       raise "No such file in storage #{name} #{version}"
     end
+
     list.first.content
   end
 
@@ -496,6 +504,7 @@ execute all pending package migrations at once
       location = "#{root}/db/addon/#{package.underscore}"
 
       return true if !File.exist?(location)
+
       migrations_done = Package::Migration.where(name: package.underscore)
 
       # get existing migrations
@@ -503,6 +512,7 @@ execute all pending package migrations at once
       Dir.foreach(location) do |entry|
         next if entry == '.'
         next if entry == '..'
+
         migrations_existing.push entry
       end
 
@@ -516,6 +526,7 @@ execute all pending package migrations at once
 
       migrations_existing.each do |migration|
         next if migration !~ /\.rb$/
+
         version = nil
         name    = nil
         if migration =~ /^(.+?)_(.*)\.rb$/
@@ -530,6 +541,7 @@ execute all pending package migrations at once
         done = Package::Migration.find_by(name: package.underscore, version: version)
         if direction == 'reverse'
           next if !done
+
           logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
@@ -540,6 +552,7 @@ execute all pending package migrations at once
           # up
         else
           next if done
+
           logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase

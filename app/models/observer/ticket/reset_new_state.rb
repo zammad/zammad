@@ -23,6 +23,7 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
     # if current ticket state is still new
     ticket = Ticket.find_by(id: record.ticket_id)
     return true if !ticket
+
     new_state = Ticket::State.find_by(default_create: true)
     return true if ticket.state_id != new_state.id
 

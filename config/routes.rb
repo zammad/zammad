@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   files = Dir.glob( "#{dir}/routes/*.rb" )
   files.each do |file|
     if Rails.configuration.cache_classes
-      require file
+      require_dependency file
     else
       load file
     end

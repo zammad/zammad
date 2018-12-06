@@ -96,6 +96,7 @@ class Ldap
 
             result[user_dn_key] ||= []
             next if result[user_dn_key].include?(role)
+
             result[user_dn_key].push(role)
           end
         end
@@ -130,6 +131,7 @@ class Ldap
 
     def handle_config(config)
       return if config.blank?
+
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
     end

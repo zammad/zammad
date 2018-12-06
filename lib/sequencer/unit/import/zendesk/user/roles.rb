@@ -11,11 +11,13 @@ class Sequencer
 
             def roles
               return admin if initiator
+
               map_roles
             end
 
             def map_roles
               return send(zendesk_role) if respond_to?(zendesk_role, true)
+
               logger.error "Unknown mapping for role '#{resource.role.name}' (method: #{zendesk_role})"
               end_user
             end
@@ -30,6 +32,7 @@ class Sequencer
 
             def agent
               return [role_agent] if resource.restricted_agent
+
               admin
             end
 

@@ -18,7 +18,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     'focus #global-search': 'searchFocus'
     'blur #global-search': 'searchBlur'
     'keyup #global-search': 'listNavigate'
-    'click .js-global-search-result': 'andClose'
+    'click .js-global-search-result': 'emptyAndClose'
     'click .js-details-link': 'openExtendedSearch'
     'change .js-menu .js-switch input': 'switch'
 
@@ -159,24 +159,25 @@ class App.Navigation extends App.ControllerWidgetPermanent
         type:      'personal'
       )
 
-  renderResult: (result = []) =>
+  renderResult: (result = [], noChange) =>
+    if noChange
+      return
+    
     @removePopovers()
 
     # remove result if not result exists
     if _.isEmpty(result)
-      @searchContainer.removeClass('open')
-      @globalSearch.close()
-      @searchResult.html('')
+      @searchContainer.removeClass('loading').addClass('no-match')
+      @searchResult.html(App.view('navigation/no_result')())
       return
+
+    @searchContainer.removeClass('no-match loading')
 
     # build markup
     html = App.view('navigation/result')(
       result: result
     )
     @searchResult.html(html)
-
-    # show result list
-    @searchContainer.addClass('open')
 
     @renderPopovers()
 
@@ -202,26 +203,22 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   searchFocus: (e) =>
     @query = '' # reset query cache
-    @searchContainer.addClass('focused')
     App.PopoverProvidable.anyPopoversDestroy()
-    @search()
+    @searchContainer.addClass('focused')
 
   searchBlur: (e) =>
-
     # delay to be able to click x
     update = =>
       query = @searchInput.val().trim()
       if !query
         @emptyAndClose()
         return
-      @searchContainer.removeClass('focused')
 
     @delay(update, 100, 'removeFocused')
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
       @emptyAndClose()
-      @searchInput.blur()
       return
     else if e.keyCode is 38 # up
       @nudge(e, -1)
@@ -230,14 +227,13 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      if @$('.global-search-menu .js-details-link.is-hover').get(0)
-        @openExtendedSearch()
-        return
-      href = @$('.global-search-result .nav-tab.is-hover').attr('href')
-      return if !href
-      @navigate(href)
-      @emptyAndClose()
       @searchInput.blur()
+      href = @$('.global-search-result .nav-tab.is-hover').attr('href')
+      if href
+        @navigate(href)
+      else
+        @openExtendedSearch()
+      @emptyAndClose()
       return
 
     # on other keys, show result
@@ -281,25 +277,33 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @scrollToIfNeeded(prev, false)
 
   emptyAndClose: =>
+    @query = ''
     @searchInput.val('')
-    @searchContainer.removeClass('filled').removeClass('open').removeClass('focused')
+    @searchContainer.removeClass('focused filled open no-match loading')
     @globalSearch.close()
-
     @delayedRemoveAnyPopover()
 
   andClose: =>
+    @query = ''
     @searchInput.blur()
-    @searchContainer.removeClass('open')
+    @searchContainer.removeClass('open no-match loading')
     @globalSearch.close()
-
     @delayedRemoveAnyPopover()
 
   search: =>
     query = @searchInput.val().trim()
-    return if !query
-    return if query is @query
+    @searchContainer.toggleClass('filled', !!query)
+
+    # if we started a new search and already typed something in
+    if query != '' and @query == ''
+      @searchContainer.addClass('open no-match loading')
+
     @query = query
-    @searchContainer.toggleClass('filled', !!@query)
+
+    if @query == ''
+      @searchContainer.removeClass('open')
+      return
+
     @globalSearch.search(query: @query)
 
   filterNavbar: (values, user, parent = null) ->
@@ -399,11 +403,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
       url = params.url
       type = params.type
     if type is 'menu'
-      @$('.js-menu .is-active, .js-details-link.is-active').removeClass('is-active')
+      @$('.js-menu .is-active').removeClass('is-active')
     else
       @$('.is-active').removeClass('is-active')
     return if !url || url is '#'
-    @$("[href=\"#{url}\"]").addClass('is-active')
+    @$(".js-menu [href=\"#{url}\"], .tasks [href=\"#{url}\"]").addClass('is-active')
 
   recentViewNavbarItemsRebuild: =>
 

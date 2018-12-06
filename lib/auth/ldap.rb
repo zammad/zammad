@@ -8,6 +8,7 @@ class Auth
 
     def valid?(user, password)
       return false if !Setting.get('ldap_integration')
+
       ldap_user = ::Ldap::User.new()
 
       # get from config or fallback to login

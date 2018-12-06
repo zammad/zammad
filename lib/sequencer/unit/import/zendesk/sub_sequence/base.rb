@@ -39,6 +39,10 @@ class Sequencer
 
             def resource_iteration(&block)
               resource_collection.public_send(resource_iteration_method, &block)
+            rescue ZendeskAPI::Error::NetworkError => e
+              return if e.response.status.to_s == '403' && resource_klass.in?(%w[UserField OrganizationField])
+
+              raise
             end
 
             def resource_collection

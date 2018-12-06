@@ -21,6 +21,7 @@ all:
 
   def self.sync(dedicated_locale = nil)
     return true if load_from_file(dedicated_locale)
+
     load
   end
 
@@ -171,6 +172,7 @@ get list of translations
     %w[yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday].each do |presort|
       list.each do |item|
         next if item[1] != presort
+
         presorted_list.push item
         list.delete item
         #list.unshift presort
@@ -231,6 +233,7 @@ all:
     locals_to_sync(dedicated_locale).each do |locale|
       file = Rails.root.join(directory, "#{locale}-#{version}.yml")
       return false if !File.exist?(file)
+
       data = YAML.load_file(file)
       to_database(locale, data)
     end
@@ -323,12 +326,14 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
     translation_raw = []
     rows.each do |row|
       raise "Can't import translation, source is missing" if row[0].blank?
+
       if row[1].blank?
         warn "Skipped #{row[0]}, because translation is blank"
         next
       end
       raise "Can't import translation, format is missing" if row[2].blank?
       raise "Can't import translation, format is invalid (#{row[2]})" if row[2] !~ /^(time|string)$/
+
       item = {
         'locale'         => locale.locale,
         'source'         => row[0],
@@ -349,6 +354,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
       next if row[3] != raw['format']
       return false if row[4] == raw['target'] # no update if target is still the same
       return false if row[4] != row[5] # no update if translation has already changed
+
       return [true, Translation.find(row[0])]
     end
     [true, nil]
@@ -362,6 +368,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
         result = Translation.remote_translation_need_update?(translation_raw, translations)
         next if result == false
         next if result.class != Array
+
         if result[1]
           result[1].update!(translation_raw.symbolize_keys!)
           result[1].save
@@ -395,6 +402,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
   def set_initial
     return true if target_initial.present?
     return true if target_initial == ''
+
     self.target_initial = target
     true
   end

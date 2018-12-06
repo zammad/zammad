@@ -30,6 +30,7 @@ class ReportsController < ApplicationController
         backend[:condition] = condition
       end
       next if !backend[:adapter]
+
       result[backend[:name]] = backend[:adapter].aggs(
         range_start: get_params[:start],
         range_end:   get_params[:stop],
@@ -75,6 +76,7 @@ class ReportsController < ApplicationController
     result = {}
     get_params[:metric][:backend].each do |backend|
       next if params[:downloadBackendSelected] != backend[:name]
+
       condition = get_params[:profile].condition
       if backend[:condition]
         backend[:condition].merge(condition)
@@ -82,6 +84,7 @@ class ReportsController < ApplicationController
         backend[:condition] = condition
       end
       next if !backend[:adapter]
+
       result = backend[:adapter].items(
         range_start: get_params[:start],
         range_end:   get_params[:stop],
@@ -95,6 +98,7 @@ class ReportsController < ApplicationController
 
       # generate sheet
       next if !params[:sheet]
+
       content = sheet(get_params[:profile], backend[:display], result)
       send_data(
         content,
@@ -113,11 +117,13 @@ class ReportsController < ApplicationController
     if !params[:profiles] && !params[:profile_id]
       raise Exceptions::UnprocessableEntity, 'No such profiles param'
     end
+
     if params[:profile_id]
       profile = Report::Profile.find(params[:profile_id])
     else
       params[:profiles].each do |profile_id, active|
         next if !active
+
         profile = Report::Profile.find(profile_id)
       end
     end
@@ -129,6 +135,7 @@ class ReportsController < ApplicationController
     if !local_config || !local_config[:metric] || !local_config[:metric][params[:metric].to_sym]
       raise Exceptions::UnprocessableEntity, "No such metric #{params[:metric]}"
     end
+
     metric = local_config[:metric][params[:metric].to_sym]
 
     #{"metric"=>"count", "year"=>2015, "month"=>10, "week"=>43, "day"=>20, "timeSlot"=>"year", "report"=>{"metric"=>"count", "year"=>2015, "month"=>10, "week"=>43, "day"=>20, "timeSlot"=>"year"}}

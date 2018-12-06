@@ -7,6 +7,7 @@ class Sequencer
 
             def process
               return if !Setting.get('system_init_done')
+
               raise 'System is already system_init_done!'
             end
           end

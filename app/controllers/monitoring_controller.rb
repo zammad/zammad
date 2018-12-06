@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status]
+  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status amount_check]
   skip_before_action :verify_csrf_token
 
 =begin
@@ -41,20 +41,23 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
         message = "Channel: #{channel.area} in "
         %w[host user uid].each do |key|
           next if channel.options[key].blank?
+
           message += "key:#{channel.options[key]};"
         end
         issues.push "#{message} #{channel.last_log_in}"
       end
       if channel.preferences && channel.preferences['last_fetch'] && channel.preferences['last_fetch'] < last_run_tolerance
         diff = Time.zone.now - channel.preferences['last_fetch']
-        issues.push "#{message} channel is active but not fetched for #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)} hour"
+        issues.push "#{message} channel is active but not fetched for #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)}"
       end
 
       # outbound channel
       next if channel.status_out != 'error'
+
       message = "Channel: #{channel.area} out "
       %w[host user uid].each do |key|
         next if channel.options[key].blank?
+
         message += "key:#{channel.options[key]};"
       end
       issues.push "#{message} #{channel.last_log_out}"
@@ -76,6 +79,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     Scheduler.where('active = ? AND period > 300', true).where.not(last_run: nil).order(last_run: :asc, period: :asc).each do |scheduler|
       diff = Time.zone.now - (scheduler.last_run + scheduler.period.seconds)
       next if diff < 8.minutes
+
       issues.push "scheduler may not run (last execution of #{scheduler.method} #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)} over) - please contact your system administrator"
       break
     end
@@ -212,6 +216,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       overviews: Overview,
       tickets: Ticket,
       ticket_articles: Ticket::Article,
+      text_modules: TextModule,
     }
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
@@ -232,6 +237,112 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       end
     end
     render json: status
+  end
+
+=begin
+
+get counts about created ticket in certain time slot. s, m, h and d possible.
+
+Resource:
+
+GET /api/v1/monitoring/amount_check?token=XXX&max_warning=2000&max_critical=3000&periode=1h
+
+GET /api/v1/monitoring/amount_check?token=XXX&min_warning=2000&min_critical=3000&periode=1h
+
+GET /api/v1/monitoring/amount_check?token=XXX&periode=1h
+
+Response:
+{
+  "state": "ok",
+  "message": "",
+  "count": 123,
+}
+
+{
+  "state": "warning",
+  "message": "limit of 2000 tickets in 1h reached",
+  "count": 123,
+}
+
+{
+  "state": "critical",
+  "message": "limit of 3000 tickets in 1h reached",
+  "count": 123,
+}
+
+Test:
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&max_warning=2000&max_critical=3000&periode=1h
+
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&min_warning=2000&min_critical=3000&periode=1h
+
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
+
+=end
+
+  def amount_check
+    token_or_permission_check
+
+    raise Exceptions::UnprocessableEntity, 'periode is missing!' if params[:periode].blank?
+
+    scale = params[:periode][-1, 1]
+    raise Exceptions::UnprocessableEntity, 'periode need to have s, m, h or d as last!' if scale !~ /^(s|m|h|d)$/
+
+    periode = params[:periode][0, params[:periode].length - 1]
+    raise Exceptions::UnprocessableEntity, 'periode need to be an integer!' if periode.to_i.zero?
+
+    if scale == 's'
+      created_at = Time.zone.now - periode.to_i.seconds
+    elsif scale == 'm'
+      created_at = Time.zone.now - periode.to_i.minutes
+    elsif scale == 'h'
+      created_at = Time.zone.now - periode.to_i.hours
+    elsif scale == 'd'
+      created_at = Time.zone.now - periode.to_i.days
+    end
+
+    map = [
+      { param: :max_critical, notice: 'critical', type: 'gt' },
+      { param: :min_critical, notice: 'critical', type: 'lt' },
+      { param: :max_warning, notice: 'warning', type: 'gt' },
+      { param: :min_warning, notice: 'warning', type: 'lt' },
+    ]
+    result = {}
+    map.each do |row|
+      next if params[row[:param]].blank?
+      raise Exceptions::UnprocessableEntity, "#{row[:param]} need to be an integer!" if params[row[:param]].to_i.zero?
+
+      count = Ticket.where('created_at >= ?', created_at).count
+
+      if row[:type] == 'gt'
+        if count > params[row[:param]].to_i
+          result = {
+            state: row[:notice],
+            message: "The limit of #{params[row[:param]]} was exceeded with #{count} in the last #{params[:periode]}",
+            count: count,
+          }
+          break
+        end
+        next
+      end
+      next if count > params[row[:param]].to_i
+
+      result = {
+        state: row[:notice],
+        message: "The minimum of #{params[row[:param]]} was undercut by #{count} in the last #{params[:periode]}",
+        count: count,
+      }
+      break
+    end
+
+    if result.blank?
+      result = {
+        state: 'ok',
+        message: '',
+        count: Ticket.where('created_at >= ?', created_at).count,
+      }
+    end
+
+    render json: result
   end
 
   def token
@@ -259,11 +370,13 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     user = authentication_check_only(permission: 'admin.monitoring')
     return if user
     return if Setting.get('monitoring_token') == params[:token]
+
     raise Exceptions::NotAuthorized
   end
 
   def access_check
     return if Permission.find_by(name: 'admin.monitoring', active: true)
+
     raise Exceptions::NotAuthorized
   end
 

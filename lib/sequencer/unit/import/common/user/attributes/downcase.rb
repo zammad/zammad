@@ -14,6 +14,7 @@ class Sequencer
               def process
                 %i[login email].each do |attribute|
                   next if mapped[attribute].blank?
+
                   mapped[attribute].downcase!
                 end
               end

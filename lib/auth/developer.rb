@@ -7,6 +7,7 @@ class Auth
       return false if user.blank?
       return false if Setting.get('developer_mode') != true
       return false if password != 'test'
+
       Rails.logger.info "System in developer mode, authentication for user #{user.login} ok."
       true
     end

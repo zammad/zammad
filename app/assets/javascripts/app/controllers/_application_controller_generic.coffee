@@ -132,6 +132,14 @@ class App.ControllerGenericIndex extends App.Controller
         clear: true
       )
 
+  show: =>
+    if @table
+      @table.show()
+
+  hide: =>
+    if @table
+      @table.hide()
+
   release: =>
     if @subscribeId
       App[ @genericObject ].unsubscribe(@subscribeId)
@@ -295,15 +303,15 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
     App.i18n.translateContent('Sure to delete this object?')
 
   onSubmit: =>
-    @item.destroy(
-      done: =>
-        @close()
-        if @callback
-          @callback()
-      fail: =>
-        @log 'errors'
-        @close()
-    )
+    options = @options || {}
+    options.done = =>
+      @close()
+      if @callback
+        @callback()
+    options.fail = =>
+      @log 'errors'
+      @close()
+    @item.destroy(options)
 
 class App.ControllerConfirm extends App.ControllerModal
   buttonClose: true
@@ -371,6 +379,18 @@ class App.ControllerTabs extends App.Controller
       if !@permissionCheckRedirect(@requiredPermission)
         throw "No permission for #{@requiredPermission}"
 
+  show: =>
+    return if !@controllerList
+    for localeController in @controllerList
+      if localeController && localeController.show
+        localeController.show()
+
+  hide: =>
+    return if !@controllerList
+    for localeController in @controllerList
+      if localeController && localeController.hide
+        localeController.hide()
+
   render: ->
     @html App.view('generic/tabs')(
       header: @header
@@ -386,8 +406,9 @@ class App.ControllerTabs extends App.Controller
         params = tab.params || {}
         params.name = tab.name
         params.target = tab.target
-        params.el = @$( "##{tab.target}" )
-        new tab.controller( params )
+        params.el = @$("##{tab.target}")
+        @controllerList ||= []
+        @controllerList.push new tab.controller(params)
 
     # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
     if @tabs.length <= 1
@@ -422,12 +443,13 @@ class App.ControllerNavSidbar extends App.Controller
         @updateNavigation(true)
     )
 
-  show: (params) =>
+  show: (params = {}) =>
     @navupdate ''
     @shown = true
-    for key, value of params
-      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
-        @[key] = value
+    if params
+      for key, value of params
+        if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+          @[key] = value
     @updateNavigation()
     if @activeController && _.isFunction(@activeController.show)
       @activeController.show(params)
@@ -1320,6 +1342,7 @@ class App.Import extends App.ControllerModal
     params.set('try', true)
     if _.isEmpty(params.get('data'))
       params.delete('data')
+    @formDisable(e)
     @ajax(
       id:          'csv_import'
       type:        'POST'
@@ -1341,6 +1364,14 @@ class App.Import extends App.ControllerModal
           return
         @data = data
         @update()
+        @formEnable(e)
+      error: (data) =>
+        details = data.responseJSON || {}
+        @notify
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          timeout: 6000
+        @formEnable(e)
     )
 
 class App.ImportTryResult extends App.ControllerModal
@@ -1361,10 +1392,23 @@ class App.ImportTryResult extends App.ControllerModal
       import_example_url: "#{@baseUrl}/import"
       result: @result
     ))
+
+    # check if data is processing...
+    if @data
+      result = App.view("#{@templateDirectory}/result")(
+        @data
+      )
+      content.find('.js-error').html(result)
+      if result
+        content.find('.js-error').removeClass('hide')
+      else
+        content.find('.js-error').addClass('hide')
+
     content
 
   onSubmit: (e) =>
     @params.set('try', false)
+    @formDisable(e)
     @ajax(
       id:          'csv_import'
       type:        'POST'
@@ -1386,6 +1430,14 @@ class App.ImportTryResult extends App.ControllerModal
           return
         @data = data
         @update()
+        @formEnable(e)
+      error: (data) =>
+        details = data.responseJSON || {}
+        @notify
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          timeout: 6000
+        @formEnable(e)
     )
 
 class App.ImportResult extends App.ControllerModal

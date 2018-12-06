@@ -18,6 +18,7 @@ class Sequencer
                   if uses.size != 1
                     raise "DynamicAttribute classes can use exactly one attribute. Found #{uses.size}."
                   end
+
                   uses.first
                 end
               end

@@ -40,6 +40,7 @@ module Sessions::CacheIn
     # check if expired
     if @@expires_in[key]
       return true if @@expires_in[key] < Time.zone.now
+
       return false
     end
 
@@ -49,6 +50,7 @@ module Sessions::CacheIn
 
   def self.get(key, params = {})
     return if expired( key, params)
+
     @@data[ key ]
   end
 end

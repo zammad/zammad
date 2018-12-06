@@ -1,4 +1,4 @@
-<div>
+<div class="state-badge">
   <%- @Icon(@object.icon(), @object.iconClass()) %> <span class="<%- @T(@object.iconTextClass()) %>"><%- @object.iconTitle() %></span>
 </div>
 <hr>

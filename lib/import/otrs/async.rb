@@ -52,6 +52,7 @@ module Import
       def status_bg
         state = Cache.get('import:state')
         return state if state
+
         {
           message: 'not running',
         }

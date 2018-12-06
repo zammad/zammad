@@ -19,12 +19,14 @@ module PasswordHash
     return false if !pw_hash
     return true if hashed_argon2?(pw_hash)
     return true if hashed_sha2?(pw_hash)
+
     false
   end
 
   def legacy?(pw_hash, password)
     return false if pw_hash.blank?
     return false if !password
+
     sha2?(pw_hash, password)
   end
 
@@ -46,15 +48,15 @@ module PasswordHash
 
   def sha2?(pw_hash, password)
     return false if !hashed_sha2?(pw_hash)
+
     pw_hash == sha2(password)
   end
 
   def argon2
-    return @argon2 if @argon2
-    @argon2 = Argon2::Password.new(secret: secret)
+    @argon2 ||= Argon2::Password.new(secret: secret)
   end
 
   def secret
-    Setting.get('application_secret')
+    @secret ||= Setting.get('application_secret')
   end
 end

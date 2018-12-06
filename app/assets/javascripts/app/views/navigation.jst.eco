@@ -2,6 +2,7 @@
   <form class="search-holder">
     <input id="global-search" type="search" autocomplete="off">
     <%- @Icon('magnifier') %>
+    <div class="search-loader"><%- @Icon('spinner-small') %></div>
     <div class="empty-search js-emptySearch">
       <%- @Icon('diagonal-cross') %>
     </div>

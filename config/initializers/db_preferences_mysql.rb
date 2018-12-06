@@ -13,6 +13,7 @@ connection = ActiveRecord::Base.connection
 #  mariadb example: "10.1.17-MariaDB"
 server_version = connection.execute('SELECT @@version;').first.first
 raise 'Unable to retrive database version' if server_version.blank?
+
 version_number = Gem::Version.new(server_version.split('-').first)
 vendor         = server_version.split('-').second || 'MySQL'
 

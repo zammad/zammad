@@ -10,6 +10,7 @@ satinize html string based on whiltelist
 =end
 
   def self.strict(string, external = false)
+    @fqdn = Setting.get('fqdn')
 
     # config
     tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
@@ -30,12 +31,13 @@ satinize html string based on whiltelist
     scrubber_link = Loofah::Scrubber.new do |node|
 
       # wrap plain-text URLs in <a> tags
-      if node.is_a?(Nokogiri::XML::Text) && node.ancestors.map(&:name).exclude?('a')
+      if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
         urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
                   .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
                   .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
 
         next if urls.blank?
+
         add_link(node.content, urls, node)
       end
 
@@ -50,6 +52,7 @@ satinize html string based on whiltelist
         end
 
         next if !href_without_spaces.downcase.start_with?('http', 'ftp', '//')
+
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
@@ -106,6 +109,7 @@ satinize html string based on whiltelist
         class_new = ''
         classes.each do |local_class|
           next if !classes_whitelist.include?(local_class.to_s.strip)
+
           if class_new != ''
             class_new += ' '
           end
@@ -121,6 +125,7 @@ satinize html string based on whiltelist
       # move style attributes to css attributes
       attributes_2_css.each do |key|
         next if !node[key]
+
         if node['style'].blank?
           node['style'] = ''
         else
@@ -129,6 +134,7 @@ satinize html string based on whiltelist
         value = node[key]
         node.delete(key)
         next if value.blank?
+
         value += 'px' if !value.match?(/%|px|em/i)
         node['style'] += "#{key}:#{value}"
       end
@@ -140,10 +146,12 @@ satinize html string based on whiltelist
         pears.each do |local_pear|
           prop = local_pear.split(':')
           next if !prop[0]
+
           key = prop[0].strip
           next if !css_properties_whitelist.include?(node.name)
           next if !css_properties_whitelist[node.name].include?(key)
           next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
+
           style += "#{local_pear};"
         end
         node['style'] = style
@@ -155,8 +163,10 @@ satinize html string based on whiltelist
       # scan for invalid link content
       %w[href style].each do |attribute_name|
         next if !node[attribute_name]
+
         href = cleanup_target(node[attribute_name])
         next if href !~ /(javascript|livescript|vbscript):/i
+
         node.delete(attribute_name)
       end
 
@@ -164,6 +174,7 @@ satinize html string based on whiltelist
       node.each do |attribute, _value|
         attribute_name = attribute.downcase
         next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
+
         node.delete(attribute)
       end
 
@@ -225,6 +236,7 @@ cleanup html string:
     tags_backlist = %w[span center]
     scrubber = Loofah::Scrubber.new do |node|
       next if !tags_backlist.include?(node.name)
+
       hit = false
       local_node = nil
       (1..5).each do |_count|
@@ -235,9 +247,11 @@ cleanup html string:
                      end
         break if !local_node
         next if local_node.name != 'td'
+
         hit = true
       end
       next if hit && node.keys.count.positive?
+
       node.replace cleanup_replace_tags(node.children.to_s)
       Loofah::Scrubber::STOP
     end
@@ -352,12 +366,14 @@ cleanup html string:
         text = Nokogiri::XML::Text.new(pre, node.document)
         node.add_next_sibling(text).add_next_sibling(a)
         return if post.blank?
+
         add_link(post, urls, a)
         return
       end
       node.content = pre
       node.add_next_sibling(a)
       return if post.blank?
+
       add_link(post, urls, a)
     end
 
@@ -381,9 +397,10 @@ cleanup html string:
   end
 
   def self.sanitize_attachment_disposition(url)
+    @fqdn ||= Setting.get('fqdn')
     uri = URI(url)
 
-    if uri.host == Setting.get('fqdn') && uri.query.present?
+    if uri.host == @fqdn && uri.query.present?
       params = CGI.parse(uri.query || '')
                   .tap { |p| p.merge!('disposition' => 'attachment') if p.include?('disposition') }
       uri.query = URI.encode_www_form(params)
@@ -404,6 +421,7 @@ cleanup html string:
     return true if url_new == "http://#{url_old}"
     return true if url_old == "https://#{url_new}"
     return true if url_new == "https://#{url_old}"
+
     false
   end
 
@@ -416,6 +434,7 @@ reolace inline images with cid images
 =end
 
   def self.replace_inline_images(string, prefix = rand(999_999_999))
+    fqdn = Setting.get('fqdn')
     attachments_inline = []
     filename_counter = 0
     scrubber = Loofah::Scrubber.new do |node|
@@ -423,7 +442,7 @@ reolace inline images with cid images
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
           filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
-          cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          cid = "#{prefix}.#{rand(999_999_999)}@#{fqdn}"
           filename = cid
           if file_attributes[:file_extention].present?
             filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
@@ -465,6 +484,7 @@ satinize style of img tags
             pears.each do |local_pear|
               prop = local_pear.split(':')
               next if !prop[0]
+
               key = prop[0].strip
               if key == 'height'
                 key = 'max-height'

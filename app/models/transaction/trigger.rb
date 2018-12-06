@@ -37,6 +37,7 @@ class Transaction::Trigger
 
     puts "Transaction::Trigger perform ticket", ticket.pretty_inspect
     return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find_by(id: @item[:article_id])
     end
@@ -44,7 +45,6 @@ class Transaction::Trigger
     original_user_id = UserInfo.current_user_id
 
     Ticket.perform_triggers(ticket, article, @item, @params)
-
     UserInfo.current_user_id = original_user_id
   end
 

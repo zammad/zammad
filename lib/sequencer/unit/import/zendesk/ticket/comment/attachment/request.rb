@@ -25,6 +25,7 @@ class Sequencer
 
                 def failed?
                   return false if response.success?
+
                   logger.error response.error
                   true
                 end

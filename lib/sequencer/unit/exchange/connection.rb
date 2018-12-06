@@ -31,6 +31,7 @@ class Sequencer
 
         def http_opts
           return {} if config[:disable_ssl_verify].blank?
+
           {
             http_opts: {
               ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE

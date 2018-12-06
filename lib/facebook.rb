@@ -36,6 +36,7 @@ disconnect client
 
   def disconnect
     return if !@client
+
     @client = nil
   end
 
@@ -104,9 +105,11 @@ result
   def user(item)
     return if !item['from']
     return if !item['from']['id']
+
     cache_key = "FB:User:Lookup:#{item['from']['id']}"
     cache = Cache.get(cache_key)
     return cache if cache
+
     begin
       result = @client.get_object(item['from']['id'], fields: 'first_name,last_name,email')
     rescue
@@ -141,8 +144,10 @@ result
       # ignore if value is already set
       map.each do |target, source|
         next if user[target].present?
+
         new_value = tweet_user.send(source).to_s
         next if new_value.blank?
+
         user_data[target] = new_value
       end
       user.update!(user_data)
@@ -309,6 +314,7 @@ result
   def to_group(post, group_id, channel, page)
     Rails.logger.debug { 'import post' }
     return if !post['message']
+
     ticket = nil
 
     # use transaction
@@ -330,6 +336,7 @@ result
     if article[:type] != 'facebook feed comment'
       raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end
+
     Rails.logger.debug { 'Create feed comment from article...' }
     post = @client.put_comment(article[:in_reply_to], article[:body])
     Rails.logger.debug { post.inspect }
@@ -352,6 +359,7 @@ result
     return state if !ticket
 
     return ticket.state if ticket.state_id == state.id
+
     Ticket::State.find_by(default_follow_up: true)
   end
 
@@ -361,6 +369,7 @@ result
       next if !lookup[:page_id] && !lookup[:page]
       next if lookup[:page_id] && lookup[:page_id].to_s != page[:id]
       next if lookup[:page] && lookup[:page] != page[:name]
+
       access_token = page[:access_token]
       break
     end
@@ -378,6 +387,7 @@ result
     comments.each do |comment|
       user = to_user(comment)
       next if !user
+
       article_data = {
         from:        "#{user.firstname} #{user.lastname}",
         body:        comment['message'],

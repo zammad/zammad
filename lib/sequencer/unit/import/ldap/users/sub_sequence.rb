@@ -17,6 +17,7 @@ class Sequencer
                 result = sequence_resource(entry)
 
                 next if result[:instance].blank?
+
                 found_ids.push(result[:instance].id)
               end
 

@@ -127,6 +127,7 @@ or with filter:
     if result.data['result'].class == Array
       result.data['result'].each do |item|
         next if !item['id']
+
         item['link'] = "#{_url_cleanup_baseurl(url)}/?objID=#{item['id']}"
         item['link'].gsub!(%r{([^:])//+}, '\\1/')
       end
@@ -137,6 +138,7 @@ or with filter:
   def self._url_cleanup(url)
     url.strip!
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
+
     url = _url_cleanup_baseurl(url)
     url = "#{url}/src/jsonrpc.php"
     url.gsub(%r{([^:])//+}, '\\1/')
@@ -145,6 +147,7 @@ or with filter:
   def self._url_cleanup_baseurl(url)
     url.strip!
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
+
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')
   end

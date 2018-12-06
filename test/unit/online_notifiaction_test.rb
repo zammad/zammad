@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
@@ -124,9 +123,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket1.id))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, false))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, false))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, false))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, true))
 
     ticket1.update!(
@@ -141,10 +140,10 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already open
-    assert(!OnlineNotification.all_seen?('Ticket', ticket1.id))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket1.id))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, true))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, true))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, false))
 
     # case #2
@@ -178,11 +177,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already closed
-    assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, true))
 
     ticket2.update!(
       title: 'Unit Test 1 (äöüß) - update!',
@@ -196,11 +195,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already open
-    assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, false))
 
     # case #3
     ticket3 = Ticket.create(
@@ -232,11 +231,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already new
-    assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, true))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, false))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, true))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, true))
 
     ticket3.update!(
       title: 'Unit Test 2 (äöüß) - update!',
@@ -253,9 +252,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user1, 'update'))
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user2, 'update'))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, true))
 
     article3 = Ticket::Article.create(
@@ -274,7 +273,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already closed but an follow up arrived later
-    assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
@@ -312,11 +311,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already new
-    assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, true))
 
     ticket4.update!(
       title: 'Unit Test 3 (äöüß) - update!',
@@ -330,11 +329,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already open
-    assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, true))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, false))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, true))
 
     # case #5
     ticket5 = Ticket.create(
@@ -366,11 +365,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already new
-    assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, true))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, false))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, true))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, false))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, true))
 
     ticket5.update!(
       title: 'Unit Test 4 (äöüß) - update!',
@@ -384,11 +383,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     # because it's already open
-    assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
+    assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, true))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, false))
-    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, true))
+    assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, true))
 
     # merge tickets - also remove notifications of merged tickets
     tickets[0].merge_to(
@@ -403,14 +402,14 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[1].id)
     assert(notifications.present?, 'should have notifications')
-    assert(!OnlineNotification.all_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
+    assert_not(OnlineNotification.all_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
 
     # delete tickets
     tickets.each do |ticket|
       ticket_id = ticket.id
       ticket.destroy
       found = Ticket.find_by(id: ticket_id)
-      assert(!found, 'Ticket destroyed')
+      assert_not(found, 'Ticket destroyed')
 
       # check if notifications for ticket still exist
       Scheduler.worker(true)
@@ -619,11 +618,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     OnlineNotification.cleanup
 
-    assert(!OnlineNotification.find_by(id: online_notification1.id))
-    assert(!OnlineNotification.find_by(id: online_notification2.id))
+    assert_not(OnlineNotification.find_by(id: online_notification1.id))
+    assert_not(OnlineNotification.find_by(id: online_notification2.id))
     assert(OnlineNotification.find_by(id: online_notification3.id))
-    assert(!OnlineNotification.find_by(id: online_notification4.id))
-    assert(!OnlineNotification.find_by(id: online_notification5.id))
+    assert_not(OnlineNotification.find_by(id: online_notification4.id))
+    assert_not(OnlineNotification.find_by(id: online_notification5.id))
     assert(OnlineNotification.find_by(id: online_notification6.id))
     assert(OnlineNotification.find_by(id: online_notification7.id))
     OnlineNotification.destroy_all

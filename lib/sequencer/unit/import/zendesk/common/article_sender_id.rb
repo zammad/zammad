@@ -12,6 +12,7 @@ class Sequencer
             def article_sender_id
               return article_sender('Customer') if author.role?('Customer')
               return article_sender('Agent') if author.role?('Agent')
+
               article_sender('System')
             end
 

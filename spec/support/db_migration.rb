@@ -42,13 +42,33 @@ module DbMigrationHelper
   # @param [Symbol] column the name of the foreign_key column
   #
   # @example
-  #  witout_foreign_key(:online_notifications, column: :user_id)
+  #  without_foreign_key(:online_notifications, column: :user_id)
   #
   # @return [nil]
-  def witout_foreign_key(from_table, column:)
+  def without_foreign_key(from_table, column:)
     suppress_messages do
       break if !foreign_key_exists?(from_table, column: column)
+
       remove_foreign_key(from_table, column: column)
+    end
+  end
+
+  # Helper method for setting up specs on DB migrations that add indices.
+  # Make sure to define type: :db_migration in your RSpec.describe call
+  # and add `self.use_transactional_tests = false` to your context.
+  #
+  # @param [Symbol] from_table the name of the table with the indexed column
+  # @param [Symbol] name(s) of indexed column(s)
+  #
+  # @example
+  #  without_index(:online_notifications, column: :user_id)
+  #
+  # @return [nil]
+  def without_index(from_table, column:)
+    suppress_messages do
+      break if !index_exists?(from_table, column)
+
+      remove_index(from_table, column: column)
     end
   end
 
@@ -90,7 +110,7 @@ module DbMigrationHelper
   #
   # @return [nil]
   def adds_foreign_key(from_table, column:)
-    witout_foreign_key(from_table, column: column)
+    without_foreign_key(from_table, column: column)
 
     suppress_messages do
       expect do

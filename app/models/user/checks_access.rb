@@ -16,6 +16,7 @@ class User
     def access?(requester, access)
       # full admins can do whatever they want
       return true if requester.permissions?('admin')
+
       send("#{access}able_by?".to_sym, requester)
     end
 
@@ -31,6 +32,7 @@ class User
     # @return [nil]
     def access!(user, access)
       return if access?(user, access)
+
       raise Exceptions::NotAuthorized
     end
 
@@ -42,6 +44,7 @@ class User
       return true if requester.permissions?('ticket.agent')
       # check same organization for customers
       return false if !requester.permissions?('ticket.customer')
+
       same_organization?(requester)
     end
 
@@ -49,6 +52,7 @@ class User
       return true if requester.permissions?('admin.user')
       # allow agents to change customers
       return false if !requester.permissions?('ticket.agent')
+
       permissions?('ticket.customer')
     end
 
@@ -63,6 +67,7 @@ class User
     def same_organization?(requester)
       return false if organization_id.blank?
       return false if requester.organization_id.blank?
+
       organization_id == requester.organization_id
     end
   end

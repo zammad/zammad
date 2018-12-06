@@ -48,6 +48,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     location = %w[address street zip city country]
     location.each do |item|
       next if record[item].blank?
+
       if address.present?
         address += ', '
       end

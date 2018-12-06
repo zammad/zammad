@@ -1,0 +1,18 @@
+Restablecer contraseña para #{config.product_name}
+
+<div>Buenos días #{user.firstname},</div>
+<br>
+<div>hemo recibido una solicitud de restablecimiento de contraseña para #{config.product_name} cuenta <b>#{user.login}</b>.</div>
+<br>
+<div>Si desea restablecer su contraseña, clicar sobre el link abajo (o copiar la URL en el browser
+insertar):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Este link abre a una página donde puede cambiar su contraseña.</div>
+<br>
+<div>Si no desea restablecer su contraseña puede ignorar este mensaje. La contraseña no se cambia.</div>
+<br>
+<div>Siempre atentamente </div>
+<br>
+<div>El equipo #{config.product_name} </div>

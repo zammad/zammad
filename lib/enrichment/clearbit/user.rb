@@ -31,6 +31,7 @@ module Enrichment
         end
 
         return false if !attributes_changed && !organization_synced
+
         @local_user.save if attributes_changed || organization_synced
         true
       end
@@ -40,6 +41,7 @@ module Enrichment
       def mapping?
         @mapping = @config['user_sync'].dup
         return false if @mapping.blank?
+
         # TODO: Refactoring:
         # Currently all target keys are prefixed with
         # user.
@@ -52,17 +54,20 @@ module Enrichment
       def load_remote(data)
         return if !remote_id?(data)
         return if !external_found?
+
         load_previous_changes
       end
 
       def remote_id?(data)
         return if !data
         return if !data['person']
+
         @remote_id = data['person']['id']
       end
 
       def external_found?
         return true if @external_user
+
         @external_user = ExternalSync.find_by(
           source:    @source,
           source_id: @remote_id,
@@ -75,6 +80,7 @@ module Enrichment
       def load_previous_changes
         last_payload = @external_user.last_payload
         return if !last_payload
+
         @previous_changes = ExternalSync.map(
           mapping: @mapping,
           source:  last_payload

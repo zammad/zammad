@@ -85,6 +85,7 @@ returns
             match_content = ''
             ( match_block..match_block_total ).each do |match_block_index|
               break if match_max_content == 10
+
               match_max_content += 1
               match_content += "#{diff_result_array[match_block_index][1..-1]}\n"
             end
@@ -159,6 +160,7 @@ returns
 
   def self.find_signature_line_by_article(user, article)
     return if !user.preferences[:signature_detection]
+
     SignatureDetection.find_signature_line(
       user.preferences[:signature_detection],
       article.body,
@@ -190,6 +192,7 @@ returns
     tickets.each do |ticket|
       article = ticket.articles.first
       next if !article
+
       data = {
         content: article.body,
         content_type: article.content_type,

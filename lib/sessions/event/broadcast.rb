@@ -1,5 +1,15 @@
 class Sessions::Event::Broadcast < Sessions::Event::Base
 
+=begin
+
+Event module to broadcast messages to all client connections.
+
+To execute this manually, just paste the following into the browser console
+
+  App.WebSocket.send({event:'broadcast', recipient: { user_id: [1,2,3]}, data: {some: 'key'}})
+
+=end
+
   def run
 
     # list all current clients

@@ -10,6 +10,7 @@ class Sequencer
 
               def value
                 return if private_methods(false).exclude?(value_method_name)
+
                 send(value_method_name)
               end
 

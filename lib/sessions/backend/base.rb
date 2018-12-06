@@ -25,6 +25,7 @@ class Sessions::Backend::Base
 
   def asset_needed?(record)
     return false if !asset_needed_by_updated_at?(record.class.to_s, record.id, record.updated_at)
+
     true
   end
 
@@ -35,6 +36,7 @@ class Sessions::Backend::Base
     return true if @asset_lookup[class_name][record_id][:updated_at] < updated_at
     return true if @asset_lookup[class_name][record_id][:pushed_at].blank?
     return true if @asset_lookup[class_name][record_id][:pushed_at] < @time_now - 7200
+
     false
   end
 

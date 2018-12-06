@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class KeyboardShortcutsTest < TestCase
@@ -21,6 +20,7 @@ class KeyboardShortcutsTest < TestCase
       (1..4).each do |_count|
         sleep 1
         next if !@browser.find_elements(css: '.modal')[0]
+
         exists = true
       end
       if !exists
@@ -30,6 +30,7 @@ class KeyboardShortcutsTest < TestCase
         (1..4).each do |_count|
           sleep 1
           next if !@browser.find_elements(css: '.modal')[0]
+
           exists = true
         end
       end

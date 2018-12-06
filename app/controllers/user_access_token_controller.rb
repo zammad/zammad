@@ -41,6 +41,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
       keys = Object.const_get('Permission').with_parents(key)
       keys.each do |local_key|
         next if local_permissions_new.key?([local_key])
+
         if local_permissions[local_key] == true
           local_permissions_new[local_key] = true
           next
@@ -51,6 +52,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
     permissions = []
     Permission.all.where(active: true).order(:name).each do |permission|
       next if !local_permissions_new.key?(permission.name) && !current_user.permissions?(permission.name)
+
       permission_attributes = permission.attributes
       if local_permissions_new[permission.name] == false
         permission_attributes['preferences']['disabled'] = true
@@ -93,6 +95,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
     if params[:label].blank?
       raise Exceptions::UnprocessableEntity, 'Need label!'
     end
+
     token = Token.create!(
       action:      'api',
       label:       params[:label],
@@ -124,6 +127,7 @@ curl http://localhost/api/v1/user_access_token/{id} -v -u #{login}:#{password} -
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
     raise Exceptions::UnprocessableEntity, 'Unable to find api token!' if !token
+
     token.destroy!
     render json: {}, status: :ok
   end

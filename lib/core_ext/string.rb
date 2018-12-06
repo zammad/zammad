@@ -87,6 +87,7 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
+
     each_char.select do |c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
@@ -124,11 +125,13 @@ class String
     link_list = ''
     counter   = 0
     if !string_only
-      string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) do
-        link = $2
-        counter = counter + 1
-        link_list += "[#{counter}] #{link}\n"
-        "[#{counter}] "
+      if string.scan(/<a[[:space:]]/i).count < 5_000
+        string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) do
+          link = $2
+          counter = counter + 1
+          link_list += "[#{counter}] #{link}\n"
+          "[#{counter}] "
+        end
       end
     else
       string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
@@ -476,7 +479,21 @@ class String
   def utf8_encode!(**options)
     return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
 
-    viable_encodings(try_first: options[:from]).each do |enc|
+    # convert string to given charset, if valid_encoding? is true
+    if options[:from].present?
+      begin
+        encoding = Encoding.find(options[:from])
+        if encoding.present? && dup.force_encoding(encoding).valid_encoding?
+          force_encoding(encoding)
+          return encode!('utf-8', encoding)
+        end
+      rescue ArgumentError, EncodingError => e
+        Rails.logger.error { e.inspect }
+      end
+    end
+
+    # try to find valid encodings of string
+    viable_encodings.each do |enc|
       begin
         return encode!('utf-8', enc)
       rescue EncodingError => e

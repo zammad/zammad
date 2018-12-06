@@ -55,7 +55,9 @@
 .icon-lock { width: 16px; height: 17px; }
 .icon-logo { width: 42px; height: 36px; }
 .icon-logotype { width: 91px; height: 15px; }
+.icon-long-arrow-down { width: 11px; height: 11px; }
 .icon-long-arrow-right { width: 11px; height: 11px; }
+.icon-low-priority { width: 16px; height: 16px; }
 .icon-magnifier { width: 15px; height: 15px; }
 .icon-marker { width: 17px; height: 19px; }
 .icon-message { width: 24px; height: 24px; }
@@ -64,6 +66,7 @@
 .icon-mood-bad { width: 60px; height: 59px; }
 .icon-mood-good { width: 60px; height: 59px; }
 .icon-mood-ok { width: 60px; height: 59px; }
+.icon-mood-sad { width: 60px; height: 59px; }
 .icon-mood-superbad { width: 60px; height: 59px; }
 .icon-mood-supergood { width: 60px; height: 59px; }
 .icon-mute { width: 16px; height: 16px; }
@@ -94,6 +97,8 @@
 .icon-searchdetail { width: 18px; height: 14px; }
 .icon-signout { width: 15px; height: 19px; }
 .icon-small-dot { width: 16px; height: 16px; }
+.icon-sms { width: 17px; height: 17px; }
+.icon-spinner-small { width: 15px; height: 15px; }
 .icon-split { width: 16px; height: 17px; }
 .icon-status-modified-outer-circle { width: 16px; height: 16px; }
 .icon-status { width: 16px; height: 16px; }

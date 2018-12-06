@@ -55,12 +55,14 @@ class Transaction::Karma
     if @item[:type] == 'reminder_reached'
       return if ticket.owner_id == 1
       return if ticket.pending_time && ticket.pending_time > Time.zone.now - 2.days
+
       Karma::ActivityLog.add('ticket reminder overdue (+2 days)', ticket.owner, 'Ticket', ticket.id)
       return
     end
 
     if @item[:type] == 'escalation'
       return if ticket.owner_id == 1
+
       Karma::ActivityLog.add('ticket escalated', ticket.owner, 'Ticket', ticket.id)
       return
     end
@@ -68,6 +70,7 @@ class Transaction::Karma
     return if @item[:type] != 'update'
     return if !@item[:changes]
     return if !@item[:changes]['state_id']
+
     state_before = Ticket::State.lookup(id: @item[:changes]['state_id'][0])
     state_now = Ticket::State.lookup(id: @item[:changes]['state_id'][1])
 
@@ -76,7 +79,7 @@ class Transaction::Karma
 
       # did user send a response to customer before?
       current_time = @item[:created_at]
-      ticket.articles.reverse.each do |local_article|
+      ticket.articles.reverse_each do |local_article|
         next if local_article.created_at > current_time
         next if local_article.created_by_id != @item[:user_id]
         next if local_article.internal
@@ -103,6 +106,7 @@ class Transaction::Karma
 
   def ticket_article_karma(user)
     return if !@item[:article_id]
+
     article = Ticket::Article.lookup(id: @item[:article_id])
     return if !article
 
@@ -136,6 +140,7 @@ class Transaction::Karma
         last_sender_customer = local_sender.name == 'Customer'
 
         next if local_sender.name != 'Customer'
+
         last_customer_contact = local_article.created_at
       end
       if last_sender_customer && last_customer_contact
@@ -164,8 +169,10 @@ class Transaction::Karma
 
   def tagging(user)
     return if @item[:type] != 'create'
+
     tag = Tag.lookup(id: @item[:object_id])
     return if !tag
+
     Karma::ActivityLog.add('tagging', user, tag.tag_object.name, tag.o_id)
   end
 

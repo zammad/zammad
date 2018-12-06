@@ -36,6 +36,7 @@ class SearchController < ApplicationController
       local_class = object.constantize
       preferences = local_class.search_preferences(current_user)
       next if !preferences
+
       objects_in_order_hash[preferences[:prio]] = local_class
     end
     objects_in_order_hash.keys.sort.reverse_each do |prio|
@@ -53,6 +54,7 @@ class SearchController < ApplicationController
       objects.each do |object|
         preferences = object.constantize.search_preferences(current_user)
         next if !preferences
+
         if preferences[:direct_search_index]
           objects_with_direct_search_index.push object
         else
@@ -62,12 +64,13 @@ class SearchController < ApplicationController
 
       # do only one query to index search backend
       if objects_with_direct_search_index.present?
-        items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
+        items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit)
         items.each do |item|
-          require item[:type].to_filename
+          require_dependency item[:type].to_filename
           local_class = Kernel.const_get(item[:type])
           record = local_class.lookup(id: item[:id])
           next if !record
+
           assets = record.assets(assets)
           item[:type] = local_class.to_app_model.to_s
           result.push item
@@ -87,6 +90,7 @@ class SearchController < ApplicationController
       objects_in_order.each do |object|
         result.each do |item|
           next if item[:type] != object.to_app_model.to_s
+
           item[:id] = item[:id].to_i
           result_in_order.push item
         end

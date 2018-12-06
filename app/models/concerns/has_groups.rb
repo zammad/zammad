@@ -83,6 +83,7 @@ module HasGroups
 
     # check indirect access through Roles if possible
     return false if !respond_to?(:role_access?)
+
     role_access?(group_id, access)
   end
 
@@ -197,6 +198,7 @@ module HasGroups
   # @return [Boolean]
   def groups_access_permission?
     return true if !respond_to?(:permissions?)
+
     permissions?('ticket.agent')
   end
 
@@ -244,6 +246,7 @@ module HasGroups
     # if changes to the map were performed
     # otherwise it's just an update of other attributes
     return if group_access_buffer.nil?
+
     yield
     group_access_buffer = nil
     cache_delete
@@ -356,6 +359,7 @@ module HasGroups
 
     def ensure_group_id_parameter(group_or_id)
       return group_or_id if group_or_id.is_a?(Integer)
+
       group_or_id.id
     end
 

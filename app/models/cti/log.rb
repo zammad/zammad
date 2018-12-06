@@ -1,5 +1,7 @@
 module Cti
   class Log < ApplicationModel
+    include HasSearchIndexBackend
+
     self.table_name = 'cti_logs'
 
     store :preferences
@@ -66,7 +68,8 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    created_at: Time.zone.now,
   )
 
   Cti::Log.create!(
@@ -89,7 +92,8 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    created_at: Time.zone.now - 20.seconds,
   )
 
   Cti::Log.create!(
@@ -112,7 +116,11 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    initialized_at: Time.zone.now - 20.seconds,
+    start_at: Time.zone.now - 30.seconds,
+    duration_waiting_time: 20,
+    created_at: Time.zone.now - 20.seconds,
   )
 
   Cti::Log.create!(
@@ -137,7 +145,13 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    initialized_at: Time.zone.now - 80.seconds,
+    start_at: Time.zone.now - 45.seconds,
+    end_at: Time.zone.now,
+    duration_waiting_time: 35,
+    duration_talking_time: 45,
+    created_at: Time.zone.now - 80.seconds,
   )
 
   Cti::Log.create!(
@@ -162,7 +176,13 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    initialized_at: Time.zone.now - 5.minutes,
+    start_at: Time.zone.now - 3.minutes,
+    end_at: Time.zone.now - 20.seconds,
+    duration_waiting_time: 120,
+    duration_talking_time: 160,
+    created_at: Time.zone.now - 5.minutes,
   )
 
   Cti::Log.create!(
@@ -187,7 +207,13 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    initialized_at: Time.zone.now - 60.minutes,
+    start_at: Time.zone.now - 59.minutes,
+    end_at: Time.zone.now - 2.minutes,
+    duration_waiting_time: 60,
+    duration_talking_time: 3420,
+    created_at: Time.zone.now - 60.minutes,
   )
 
   Cti::Log.create!(
@@ -212,7 +238,13 @@ example data, can be used for demo
           user_id: 2,
         }
       ]
-    }
+    },
+    initialized_at: Time.zone.now - 240.minutes,
+    start_at: Time.zone.now - 235.minutes,
+    end_at: Time.zone.now - 222.minutes,
+    duration_waiting_time: 300,
+    duration_talking_time: 1080,
+    created_at: Time.zone.now - 240.minutes,
   )
 
   Cti::Log.create!(
@@ -224,7 +256,13 @@ example data, can be used for demo
     state: 'hangup',
     start_at: Time.zone.now - 20.seconds,
     end_at: Time.zone.now,
-    preferences: {}
+    preferences: {},
+    initialized_at: Time.zone.now - 1440.minutes,
+    start_at: Time.zone.now - 1430.minutes,
+    end_at: Time.zone.now - 1429.minutes,
+    duration_waiting_time: 600,
+    duration_talking_time: 660,
+    created_at: Time.zone.now - 1440.minutes,
   )
 
 =end
@@ -278,13 +316,14 @@ returns
 processes a incoming event
 
 Cti::Log.process(
-  'cause' => '',
-  'event' => 'newCall',
-  'user' => 'user 1',
-  'from' => '4912347114711',
-  'to' => '4930600000000',
-  'callId' => '43545211', # or call_id
-  'direction' => 'in',
+  cause: '',
+  event: 'newCall',
+  user: 'user 1',
+  from: '4912347114711',
+  to: '4930600000000',
+  callId: '43545211', # or call_id
+  direction: 'in',
+  queue: 'helpdesk', # optional
 )
 
 =end
@@ -293,6 +332,7 @@ Cti::Log.process(
       cause   = params['cause']
       event   = params['event']
       user    = params['user']
+      queue   = params['queue']
       call_id = params['callId'] || params['call_id']
       if user.class == Array
         user = user.join(', ')
@@ -303,7 +343,11 @@ Cti::Log.process(
       preferences = nil
       done = true
       if params['direction'] == 'in'
-        to_comment = user
+        if user.present?
+          to_comment = user
+        elsif queue.present?
+          to_comment = queue
+        end
         from_comment, preferences = CallerId.get_comment_preferences(params['from'], 'from')
       else
         from_comment = user
@@ -318,6 +362,7 @@ Cti::Log.process(
           done = false
         end
         raise "call_id #{call_id} already exists!" if log
+
         create(
           direction: params['direction'],
           from: params['from'],
@@ -326,6 +371,7 @@ Cti::Log.process(
           to_comment: to_comment,
           call_id: call_id,
           comment: cause,
+          queue: queue,
           state: event,
           initialized_at: Time.zone.now,
           preferences: preferences,
@@ -334,6 +380,7 @@ Cti::Log.process(
       when 'answer'
         raise "No such call_id #{call_id}" if !log
         return if log.state == 'hangup' # call is already hangup, ignore answer
+
         log.with_lock do
           log.state = 'answer'
           log.start_at = Time.zone.now
@@ -347,6 +394,7 @@ Cti::Log.process(
         end
       when 'hangup'
         raise "No such call_id #{call_id}" if !log
+
         log.with_lock do
           log.done = done
           if params['direction'] == 'in'
@@ -359,7 +407,7 @@ Cti::Log.process(
           log.state = 'hangup'
           log.end_at = Time.zone.now
           if log.start_at
-            log.duration_talking_time = log.start_at.to_i - log.end_at.to_i
+            log.duration_talking_time = log.end_at.to_i - log.start_at.to_i
           elsif !log.duration_waiting_time && log.initialized_at
             log.duration_waiting_time = log.end_at.to_i - log.initialized_at.to_i
           end
@@ -393,6 +441,7 @@ Cti::Log.process(
     def self.push_caller_list_update?(record)
       list_ids = Cti::Log.log_records.pluck(:id)
       return true if list_ids.include?(record.id)
+
       false
     end
 

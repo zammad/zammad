@@ -30,6 +30,7 @@ module Import
       def create_or_update(user)
         ensure_unique_login(user)
         return if updated?(user)
+
         create(user)
       end
 
@@ -62,6 +63,7 @@ module Import
       def unique_login(user)
         login = user[:login]
         return login if ::User.where('login = ? AND id != ?', login.downcase, user[:id]).count.zero?
+
         "#{login}_#{user[:id]}"
       end
 
@@ -87,6 +89,7 @@ module Import
 
       def password(user)
         return if !user['UserPw']
+
         "{sha2}#{user['UserPw']}"
       end
 
@@ -118,6 +121,7 @@ module Import
         roles(user).each do |role|
           role_lookup = Role.lookup(name: role)
           next if !role_lookup
+
           local_role_ids.push role_lookup.id
         end
         local_role_ids
@@ -147,6 +151,7 @@ module Import
         result = []
         return result if role_object.blank?
         return result if role_object['GroupIDs'].blank?
+
         permissions = role_object['GroupIDs'][ group['ID'] ]
 
         return result if !permissions
@@ -167,6 +172,7 @@ module Import
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
           next if !user['RoleIDs'].include?(role['ID'])
+
           result += groups_from_otrs_groups(role)
         end
         result

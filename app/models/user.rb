@@ -21,12 +21,15 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_validation :check_mail_delivery_failed, on: :update
-  before_create   :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
-  after_create    :avatar_for_email_check
-  after_update    :avatar_for_email_check
-  after_commit    :update_caller_id
-  before_destroy  :destroy_longer_required_objects
+  before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  after_create      :avatar_for_email_check
+  after_update      :avatar_for_email_check
+  after_commit      :update_caller_id
+  before_destroy    :destroy_longer_required_objects
+
+  skip_callback :create, :after, :avatar_for_email_check, if: -> { BulkImportInfo.enabled? }
+  skip_callback :update, :after, :avatar_for_email_check, if: -> { BulkImportInfo.enabled? }
 
   store :preferences
 
@@ -65,6 +68,7 @@ class User < ApplicationModel
   def ignore_search_indexing?(_action)
     # ignore internal user
     return true if id == 1
+
     false
   end
 
@@ -167,6 +171,7 @@ returns
     return false if out_of_office != true
     return false if out_of_office_start_at.blank?
     return false if out_of_office_end_at.blank?
+
     Time.zone.today.between?(out_of_office_start_at, out_of_office_end_at)
   end
 
@@ -186,6 +191,7 @@ returns
   def out_of_office_agent
     return if !out_of_office?
     return if out_of_office_replacement_id.blank?
+
     User.find_by(id: out_of_office_replacement_id)
   end
 
@@ -361,26 +367,31 @@ returns
 
   def self.create_from_hash!(hash)
 
-    role_ids = Role.signup_role_ids
     url = ''
     hash['info']['urls']&.each_value do |local_url|
       next if local_url.blank?
+
       url = local_url
     end
     begin
-      create!(
+      data = {
         login: hash['info']['nickname'] || hash['uid'],
-        firstname: hash['info']['name'],
+        firstname: hash['info']['name'] || hash['info']['display_name'],
         email: hash['info']['email'],
         image_source: hash['info']['image'],
         web: url,
         address: hash['info']['location'],
         note: hash['info']['description'],
         source: hash['provider'],
-        role_ids: role_ids,
+        role_ids: Role.signup_role_ids,
         updated_by_id: 1,
         created_by_id: 1,
-      )
+      }
+      if hash['info']['first_name'].present? && hash['info']['last_name'].present?
+        data[:firstname] = hash['info']['first_name']
+        data[:lastname] = hash['info']['last_name']
+      end
+      create!(data)
     rescue => e
       logger.error e
       raise Exceptions::UnprocessableEntity, e.message
@@ -407,6 +418,7 @@ returns
     list = {}
     ::Permission.select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
       next if permission[1]['selectable'] == false
+
       list[permission[0]] = true
     end
     list
@@ -445,6 +457,7 @@ returns
       else
         permission = ::Permission.lookup(name: local_key)
         break if permission&.active == false
+
         permissions = ::Permission.with_parents(local_key)
         list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
@@ -476,6 +489,7 @@ returns
       where_bind.push "#{permission_name}.%"
     end
     return [] if where == ''
+
     ::Permission.where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
   end
 
@@ -506,15 +520,18 @@ returns
       ::Permission.with_parents(key).each do |local_key|
         permission = ::Permission.lookup(name: local_key)
         next if !permission
+
         permission_ids.push permission.id
       end
       next if permission_ids.blank?
+
       Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
         role_ids.push role_id
       end
       total_role_ids.push role_ids
     end
     return [] if total_role_ids.blank?
+
     condition = ''
     total_role_ids.each do |_role_ids|
       if condition != ''
@@ -726,6 +743,7 @@ returns
     if !group_ids
       return User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids).order('users.updated_at DESC')
     end
+
     User.where(active: true)
         .joins(:users_roles)
         .joins(:users_groups)
@@ -747,14 +765,18 @@ returns
   def self.update_default_preferences_by_permission(permission_name, force = false)
     permission = ::Permission.lookup(name: permission_name)
     return if !permission
+
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
+
     default.deep_stringify_keys!
     User.with_permissions(permission.name).each do |user|
       next if !default[permission.name]
+
       has_changed = false
       default[permission.name].each do |key, value|
         next if !force && user.preferences[key]
+
         has_changed = true
         user.preferences[key] = value
       end
@@ -780,8 +802,10 @@ returns
   def self.update_default_preferences_by_role(role_name, force = false)
     role = Role.lookup(name: role_name)
     return if !role
+
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
+
     default.deep_stringify_keys!
     role.permissions.each do |permission|
       User.update_default_preferences_by_permission(permission.name, force)
@@ -792,12 +816,15 @@ returns
   def check_notifications(other, should_save = true)
     default = Rails.configuration.preferences_default_by_permission
     return if !default
+
     default.deep_stringify_keys!
     has_changed = false
     other.permissions.each do |permission|
       next if !default[permission.name]
+
       default[permission.name].each do |key, value|
         next if preferences[key]
+
         preferences[key] = value
         has_changed = true
       end
@@ -823,6 +850,7 @@ returns
       end
     end
     return if @preferences_default.blank?
+
     preferences_tmp = @preferences_default.merge(preferences)
     self.preferences = preferences_tmp
     @preferences_default = nil
@@ -851,6 +879,7 @@ try to find correct name
 
   def self.name_guess(string, email = nil)
     return if string.blank? && email.blank?
+
     string.strip!
     firstname = ''
     lastname = ''
@@ -936,10 +965,12 @@ try to find correct name
   def check_email
     return true if Setting.get('import_mode')
     return true if email.blank?
+
     self.email = email.downcase.strip
     return true if id == 1
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email.match?(/\s/)
+
     true
   end
 
@@ -978,17 +1009,20 @@ try to find correct name
 
   def check_mail_delivery_failed
     return if email_change.blank?
+
     preferences.delete(:mail_delivery_failed)
   end
 
   def ensure_roles
     return true if role_ids.present?
+
     self.role_ids = Role.signup_role_ids
   end
 
   def ensure_identifier
     return true if email.present? || firstname.present? || lastname.present? || phone.present?
     return true if login.present? && !login.start_with?('auto-')
+
     raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
   end
 
@@ -999,16 +1033,19 @@ try to find correct name
     return true if !changes
     return true if !changes['email']
     return true if !User.find_by(email: email.downcase.strip)
+
     raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
   def validate_roles(role)
     return true if !role_ids # we need role_ids for checking in role_ids below, in this method
     return true if role.preferences[:not].blank?
+
     role.preferences[:not].each do |local_role_name|
       local_role = Role.lookup(name: local_role_name)
       next if !local_role
       next if role_ids.exclude?(local_role.id)
+
       raise "Role #{role.name} conflicts with #{local_role.name}"
     end
     true
@@ -1021,6 +1058,7 @@ try to find correct name
     raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
     raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+
     true
   end
 
@@ -1030,6 +1068,7 @@ try to find correct name
     return true if preferences.blank?
     return true if !preferences[:notification_sound]
     return true if !preferences[:notification_sound][:enabled]
+
     if preferences[:notification_sound][:enabled] == 'true'
       preferences[:notification_sound][:enabled] = true
     elsif preferences[:notification_sound][:enabled] == 'false'
@@ -1037,6 +1076,7 @@ try to find correct name
     end
     class_name = preferences[:notification_sound][:enabled].class.to_s
     raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled need to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
+
     true
   end
 
@@ -1055,6 +1095,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
     raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+
     true
   end
 
@@ -1062,6 +1103,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
     raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+
     true
   end
 
@@ -1075,9 +1117,11 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != true
     return true if !permissions?('ticket.agent')
+
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count + 1
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+
     true
   end
 
@@ -1086,6 +1130,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if active != true
     return true if role.active != true
     return true if !role.with_permission?('ticket.agent')
+
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
 
@@ -1096,6 +1141,7 @@ raise 'Minimum one user need to have admin permissions'
       hint = false
       role_ids.each do |locale_role_id|
         next if !ticket_agent_role_ids.include?(locale_role_id)
+
         hint = true
         break
       end
@@ -1106,6 +1152,7 @@ raise 'Minimum one user need to have admin permissions'
       end
     end
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+
     true
   end
 
@@ -1115,9 +1162,11 @@ raise 'Minimum one user need to have admin permissions'
     puts organization_id
     return true if !email
     return true if organization_id
+
     begin
       domain = Mail::Address.new(email).domain
       return true if !domain
+
       organization = Organization.find_by(domain: domain.downcase, domain_assignment: true)
       return true if !organization
       puts "dba organization"
@@ -1134,6 +1183,7 @@ raise 'Minimum one user need to have admin permissions'
 
     # set the user's locale to the one of the "executing" user
     return true if !UserInfo.current_user_id
+
     user = User.find_by(id: UserInfo.current_user_id)
     return true if !user
     return true if !user.preferences[:locale]
@@ -1177,12 +1227,17 @@ raise 'Minimum one user need to have admin permissions'
     ::RecentView.where(created_by_id: id).destroy_all
     ::UserDevice.remove(id)
     ::Token.where(user_id: id).destroy_all
+    ::StatsStore.remove(
+      object: 'User',
+      o_id: id,
+    )
     true
   end
 
   def ensure_password
     return true if password_empty?
     return true if PasswordHash.crypted?(password)
+
     self.password = PasswordHash.crypt(password)
     true
   end
@@ -1204,6 +1259,7 @@ raise 'Minimum one user need to have admin permissions'
   # reset login_failed if password is changed
   def reset_login_failed
     return true if !will_save_change_to_attribute?('password')
+
     self.login_failed = 0
     true
   end

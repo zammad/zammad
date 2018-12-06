@@ -709,21 +709,41 @@ class App.Utils
       key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
       dataRef = objects
+      dataRefLast = undefined
       for level in levels
-        if level of dataRef
+        if typeof dataRef is 'object' && level of dataRef
+          dataRefLast = dataRef
           dataRef = dataRef[level]
         else
           dataRef = ''
           break
+      value = undefined
+
+      # if value is a function, execute function
       if typeof dataRef is 'function'
         value = dataRef()
+
+      # if value has content
       else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
-        value = dataRef.toString()
+
+        # in case if we have a references object, check what datatype the attribute has
+        # and e. g. convert timestamps/dates to browser locale
+        if dataRefLast?.constructor?.className
+          localClassRef = App[dataRefLast.constructor.className]
+          if localClassRef?.attributesGet
+            attributes = localClassRef.attributesGet()
+            if attributes?[level]
+              if attributes[level]['tag'] is 'datetime'
+                value = App.i18n.translateTimestamp(dataRef)
+              else if attributes[level]['tag'] is 'date'
+                value = App.i18n.translateDate(dataRef)
+
+        # as fallback use value of toString()
+        if !value
+          value = dataRef.toString()
       else
         value = ''
-      #console.log( "tag replacement #{key}, #{value} env: ", objects)
-      if value is ''
-        value = '-'
+      value = '-' if value is ''
       value
     )
 
@@ -753,6 +773,11 @@ class App.Utils
             changes[dataNowkey] = diff
         else if _.isObject( dataNow[dataNowkey] ) &&  _.isObject( dataLast[dataNowkey] )
           changes = @_formDiffChanges( dataNow[dataNowkey], dataLast[dataNowkey], changes )
+        # fix for issue #2042 - incorrect notification when closing a tab after setting up an object
+        # Ignore the diff if both conditions are true:
+        # 1. current value is the empty string (no user input yet)
+        # 2. no previous value (it's a newly added attribute)
+        else if dataNow[dataNowkey] == '' && !dataLast[dataNowkey]?
         else
           changes[dataNowkey] = dataNow[dataNowkey]
     changes
@@ -1021,14 +1046,14 @@ class App.Utils
 
     if type.name is 'phone'
 
-      # inbound call
+      # the article we are replying to is an outbound call
       if article.sender.name is 'Agent'
-        if article.to
+        if article.to?.match(/@/)
           articleNew.to = article.to
 
-      # outbound call
-      else if article.to
-        articleNew.to = article.to
+      # the article we are replying to is an incoming call
+      else if article.from?.match(/@/)
+        articleNew.to = App.Utils.parseAddressListLocal(article.from).join(', ')
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
@@ -1121,7 +1146,7 @@ class App.Utils
     articleNew
 
   # apply email token field with autocompletion
-  @tokaniceEmails: (selector) ->
+  @tokanice: (selector, type) ->
     source = "#{App.Config.get('api_path')}/users/search"
     a = ->
       $(selector).tokenfield(
@@ -1131,7 +1156,7 @@ class App.Utils
           minLength: 2
         },
       ).on('tokenfield:createtoken', (e) ->
-        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+        if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
           e.preventDefault()
           return false
         e.attrs.label = e.attrs.value
@@ -1146,7 +1171,7 @@ class App.Utils
 
     html.find('img').each( (index) ->
       src = $(@).attr('src')
-      if !src.match(/^data:/i)
+      if !src.match(/^(data|cid):/i) # <img src="cid: ..."> may mean broken emails (see issue #2305)
         base64 = App.Utils._htmlImage2DataUrl(@)
         $(@).attr('src', base64)
     )

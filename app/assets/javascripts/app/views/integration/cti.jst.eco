@@ -40,7 +40,7 @@
 <% end %>
         <tr>
           <td class="settings-list-control-cell"><input name="caller_id" value="" placeholder="4930609854189" class="form-control form-control--small js-summary">
-          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my onw note') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my own note') %>" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
       </tbody>
     </table>
@@ -70,7 +70,7 @@
         <tr>
           <td class="settings-list-control-cell"><input name="dest" value="" placeholder="49* or 3230123456789" class="form-control form-control--small js-summary">
           <td class="settings-list-control-cell"><input name="caller_id" value="" placeholder="4930609854189" class="form-control form-control--small js-summary">
-          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my onw note') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my own note') %>" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
       </tbody>
     </table>

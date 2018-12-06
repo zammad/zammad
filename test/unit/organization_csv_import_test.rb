@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class OrganizationCsvImportTest < ActiveSupport::TestCase
@@ -44,6 +43,20 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
     assert(result[:records].blank?)
     assert_equal('failed', result[:result])
     assert_equal('No records found in file/string for Organization.', result[:errors][0])
+  end
+
+  test 'verify required lookup headers' do
+    csv_string = "firstname;lastname;active;\nfirstname-simple-import1;lastname-simple-import1;;true\nfirstname-simple-import2;lastname-simple-import2;false\n"
+    result = Organization.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('No lookup column like id,name for Organization found.', result[:errors][0])
   end
 
   test 'simple import' do
@@ -211,8 +224,8 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
     assert_equal(true, result[:try])
     assert_equal(2, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown attribute 'not existing' for Organization.", result[:errors][0])
-    assert_equal("Line 2: unknown attribute 'not existing' for Organization.", result[:errors][1])
+    assert_equal("Line 1: Unable to create record - unknown attribute 'not existing' for Organization.", result[:errors][0])
+    assert_equal("Line 2: Unable to create record - unknown attribute 'not existing' for Organization.", result[:errors][1])
 
     assert_nil(Organization.find_by(name: 'organization-invalid-import1'))
     assert_nil(Organization.find_by(name: 'organization-invalid-import2'))
@@ -227,8 +240,8 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
     assert_equal(false, result[:try])
     assert_equal(2, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown attribute 'not existing' for Organization.", result[:errors][0])
-    assert_equal("Line 2: unknown attribute 'not existing' for Organization.", result[:errors][1])
+    assert_equal("Line 1: Unable to create record - unknown attribute 'not existing' for Organization.", result[:errors][0])
+    assert_equal("Line 2: Unable to create record - unknown attribute 'not existing' for Organization.", result[:errors][1])
 
     assert_nil(Organization.find_by(name: 'organization-invalid-import1'))
     assert_nil(Organization.find_by(name: 'organization-invalid-import2'))

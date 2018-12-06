@@ -41,6 +41,7 @@ class Stats::TicketChannelDistribution
       type_ids = []
       Ticket::Article::Type.all.each do |type|
         next if type.name !~ /^#{channel[:sender]}/i
+
         type_ids.push type.id
       end
 

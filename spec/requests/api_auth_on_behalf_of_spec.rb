@@ -63,6 +63,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         activity_stream = ActivityStream.find(record_id)
         next if activity_stream.object.name != 'Ticket'
         next if activity_stream.o_id != json_response_ticket['id'].to_i
+
         ticket_created = activity_stream
       end
 
@@ -79,6 +80,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         activity_stream = ActivityStream.find(record['id'])
         next if activity_stream.object.name != 'Ticket'
         next if activity_stream.o_id != json_response_ticket['id']
+
         ticket_created = activity_stream
       end
 

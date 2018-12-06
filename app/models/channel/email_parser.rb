@@ -121,6 +121,7 @@ returns
       file.write msg
     end
     return false if exception == false
+
     raise e.inspect + "\n" + e.backtrace.join("\n")
   end
 
@@ -169,6 +170,7 @@ returns
       if !session_user_id
         raise 'No x-zammad-session-user-id, no sender set!'
       end
+
       session_user = User.lookup(id: session_user_id)
       if !session_user
         raise "No user found for x-zammad-session-user-id: #{session_user_id}!"
@@ -320,23 +322,28 @@ returns
     attribute = nil
     # skip check attributes if it is tags
     return true if header_name == 'x-zammad-ticket-tags'
+
     if header_name =~ /^x-zammad-(.+?)-(followup-|)(.*)$/i
       class_name = $1
       attribute = $3
     end
     return true if !class_name
+
     if class_name.downcase == 'article'
       class_name = 'Ticket::Article'
     end
     return true if !attribute
+
     key_short = attribute[ attribute.length - 3, attribute.length ]
     return true if key_short != '_id'
 
     class_object = Object.const_get(class_name.to_classname)
     return if !class_object
+
     class_instance = class_object.new
 
     return false if !class_instance.association_id_validation(attribute, value)
+
     true
   end
 
@@ -467,6 +474,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     Dir.glob("#{path}/*.eml") do |entry|
       ticket, article, user, mail = Channel::EmailParser.new.process(params, IO.binread(entry))
       next if ticket.blank?
+
       files.push entry
       File.delete(entry)
     end
@@ -535,6 +543,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     body_text = Mail::Utilities.to_lf(body_text)
 
     return body_text.html2html_strict if options[:strict_html]
+
     body_text
   end
 
@@ -567,6 +576,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         attachments.push(*new_attachments)
       rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
         raise e if (fail_count ||= 0).positive?
+
         (fail_count += 1) && retry
       end
     end
@@ -694,6 +704,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         }
         map.each do |type, ext|
           next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+
           filename = if headers_store['Content-Description'].present?
                        "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
                      else
@@ -723,6 +734,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         end
       end
       break if filename_exists == false
+
       filename = if local_extention.present?
                    "#{local_filename}#{i}.#{local_extention}"
                  else
@@ -769,6 +781,7 @@ module Mail
         value = @raw_value.utf8_encode(fallback: :read_as_sanitized_binary)
       end
       return value if value.blank?
+
       value.sub(/^.+?:(\s|)/, '')
     end
   end

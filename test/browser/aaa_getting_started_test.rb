@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
@@ -194,6 +193,7 @@ class AaaGettingStartedTest < TestCase
       fqdn = $1
     end
     raise "Unable to get fqdn based on #{browser_url}" if !fqdn
+
     match(
       css: '.content.active input[name="fqdn"]',
       value: fqdn,
@@ -205,6 +205,7 @@ class AaaGettingStartedTest < TestCase
     accounts = []
     (1..10).each do |count|
       next if !ENV["MAILBOX_AUTO#{count}"]
+
       mailbox_user     = ENV["MAILBOX_AUTO#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_AUTO#{count}"].split(':')[1]
       account = {
@@ -268,6 +269,7 @@ class AaaGettingStartedTest < TestCase
     accounts = []
     (1..10).each do |count|
       next if !ENV["MAILBOX_MANUAL#{count}"]
+
       mailbox_user     = ENV["MAILBOX_MANUAL#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_MANUAL#{count}"].split(':')[1]
       mailbox_inbound  = ENV["MAILBOX_MANUAL#{count}"].split(':')[2]

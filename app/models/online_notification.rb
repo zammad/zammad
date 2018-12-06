@@ -216,6 +216,7 @@ returns:
       next if notification.type_lookup_id != type_id
       next if notification.created_by_id != created_by_user.id
       next if notification.seen != seen
+
       return true
     end
     false

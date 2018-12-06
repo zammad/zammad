@@ -1,0 +1,21 @@
+#{config.product_name}-login rilevato da un nuovo dispositivo
+
+<div>Buongiorno #{user.firstname},</div>
+<br>
+<div>sembra che abbia eseguito l'accesso a <b>un nuovo dispositivo</b> per "#{user_device.created_at}" a:</div>
+<br>
+<div>
+Il suo dispositivo: #{user_device.name}<br>
+La sua posizione (relativa): #{user_device.location}<br>
+Il suo indirizzo IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Il dispositivo è stato aggiunto all'elenco dei dispositivi conosciuti, questo elenco può essere visualizzato qui:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>In caso contrario, rimuovere il dispositivo dall'elenco, modificare la password dell'account e contattare l'amministratore. Qualcuno potrebbe avere accesso non autorizzato al suo account.</div>
+<br>
+<div>Sempre cordiali saluti</div>
+<br>
+<div>Il team #{config.product_name} </div>

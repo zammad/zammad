@@ -118,6 +118,7 @@ returns
 
         # check if verify message exists
         next if mail !~ /#{verify_string}/
+
         Rails.logger.info " - verify email #{verify_string} found"
         m.delete
         disconnect
@@ -196,6 +197,7 @@ returns
 
   def disconnect
     return if !@pop
+
     @pop.finish
   end
 

@@ -1246,7 +1246,7 @@ test("identify signature by HTML", function() {
 });
 
 // check attachment references
-test("check replace tags", function() {
+test("check check attachment reference", function() {
   var message = 'some not existing'
   var result = false
   var verify = App.Utils.checkAttachmentReference(message)
@@ -1285,6 +1285,21 @@ test("check replace tags", function() {
 
 // replace tags
 test("check replace tags", function() {
+  var formatNumber = function(num, digits) {
+    while (num.toString().length < digits) {
+      num = '0' + num
+    }
+    return num
+  }
+  var formatTimestamp = function(timestamp) {
+    localTime = new Date(Date.parse(timestamp))
+    d         = formatNumber(localTime.getDate(), 2)
+    m         = formatNumber(localTime.getMonth() + 1, 2)
+    yfull     = localTime.getFullYear()
+    M         = formatNumber(localTime.getMinutes(), 2)
+    H         = formatNumber(localTime.getHours(), 2)
+    return m + '/' + d + '/' + yfull + ' ' + H + ':' + M
+  }
 
   var message = "<div>#{user.firstname} #{user.lastname}</div>"
   var result  = '<div>Bob Smith</div>'
@@ -1389,6 +1404,35 @@ test("check replace tags", function() {
       firstname: 'Bob',
       lastname: 'Smith',
     },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  user = new App.User({
+    firstname: 'Bob',
+    lastname: 'Smith',
+    created_at: '2018-10-31T10:00:00Z',
+  })
+  message = "<div>#{user.firstname} #{user.created_at}</div>"
+  result  = '<div>Bob ' + formatTimestamp('2018-10-31T10:00:00Z') + '</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.created_at.date}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.created.date}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: user
   }
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
@@ -1508,7 +1552,6 @@ test("check form diff", function() {
      pending_date: '2015-01-28T09:39:00Z',
   }
   diff = {
-    owner_id: '',
   }
   result = App.Utils.formDiff(dataNow, dataLast)
   deepEqual(result, diff, 'check form diff')
@@ -1520,7 +1563,6 @@ test("check form diff", function() {
   }
   dataLast = {}
   diff = {
-    owner_id:  '',
     state_ids: ['1','5','6','7'],
   }
   result = App.Utils.formDiff(dataNow, dataLast)
@@ -1548,7 +1590,6 @@ test("check form diff", function() {
     state_ids: ['1','5','7'],
   }
   diff = {
-    owner_id:  '',
     state_ids: ['6'],
   }
   result = App.Utils.formDiff(dataNow, dataLast)
@@ -1712,6 +1753,30 @@ test("check form diff", function() {
   }
   result = App.Utils.formDiff(dataNow, dataLast)
   deepEqual(result, diff, 'check form diff')
+
+
+  // regression test for issue #2042 - incorrect notification when closing a tab after setting up an object
+  // A newly created attribute will have the empty string as its value, this should be ignored for formDiff comparison
+  dataNow = {
+    test: '',
+  }
+  dataLast = {}
+  diff = {}
+  result = App.Utils.formDiff(dataNow, dataLast)
+  deepEqual(result, diff, 'check form diff for a newly created attribute that is blank')
+
+
+  dataNow = {
+    test: '',
+  }
+  dataLast = {
+    test: '123',
+  }
+  diff = {
+    test: '',
+  }
+  result = App.Utils.formDiff(dataNow, dataLast)
+  deepEqual(result, diff, 'check form diff for setting a previously valid value to blank')
 
 
   dataNow = {
@@ -2100,7 +2165,7 @@ test('check getRecipientArticle format', function() {
     },
   }
   result = {
-    to:          customer.email,
+    to:          'customer@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id3',
@@ -2915,6 +2980,102 @@ test('check getRecipientArticle format', function() {
   verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
   deepEqual(verify, result)
 
+  // Regression test for issue #2184
+  // Case 1
+  // 1. Create a "Received Call" Ticket for article_customer
+  // 2. Change the Customer of the ticket to ticket_customer (but article.from still points to article_customer)
+  // 3. Reply to the first Article
+  // Recipient SHOULD BE Article.from
+
+  var article_customer = {
+    login: 'login',
+    firstname: 'article',
+    lastname: 'lastname',
+    email: 'article_customer@example.com',
+  }
+  var ticket_customer = {
+    login: 'login2',
+    firstname: 'ticket',
+    lastname: 'lastname',
+    email: 'ticket_customer@example.com',
+  }
+  ticket = {
+    customer: ticket_customer,
+  }
+  article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: 'article lastname <article_customer@example.com>',
+    to: 'some group',
+    message_id: 'message_id22',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          'article_customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id22',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  // Regression test for issue #2184
+  // Case 2
+  // 1. Create a "Outbound Call" Ticket for article_customer
+  // 2. Change the Customer of the Ticket to ticket_customer (but article.to still points to article_customer)
+  // 3. Reply to the first Article
+  // Recipient SHOULD BE Article.to
+
+  article_customer = {
+    login: 'login',
+    firstname: 'article',
+    lastname: 'lastname',
+    email: 'article_customer@example.com',
+  }
+  ticket_customer = {
+    login: 'login2',
+    firstname: 'ticket',
+    lastname: 'lastname',
+    email: 'ticket_customer@example.com',
+  }
+  ticket = {
+    customer: ticket_customer,
+  }
+  article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'agent1@example.com',
+    to: article_customer.email,
+    message_id: 'message_id23',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          'article_customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id23',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
 });
 
 test("contentTypeCleanup", function() {
@@ -2980,6 +3141,11 @@ test("htmlImage2DataUrl", function() {
 
   source = '<img src="data:image/jpeg;base64,some_data_123">some <img src="some url">test'
   should = '<img src="data:image/jpeg;base64,some_data_123">some <img src="data:,">test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = '<img src="cid:1234">some test'
+  should = '<img src="cid:1234">some test'
   result = App.Utils.htmlImage2DataUrl(source)
   equal(result, should, source)
 

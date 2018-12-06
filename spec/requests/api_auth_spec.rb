@@ -68,7 +68,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_truthy
     end
 
-    it 'does token auth - admin' do
+    it 'does token auth - admin', last_admin_check: false do
 
       admin_token = create(
         :token,
@@ -289,7 +289,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response).to have_http_status(401)
     end
 
-    it 'does token auth - invalid user - admin' do
+    it 'does token auth - invalid user - admin', last_admin_check: false do
 
       admin_token = create(
         :token,

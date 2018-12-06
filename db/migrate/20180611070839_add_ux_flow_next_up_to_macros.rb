@@ -11,6 +11,7 @@ class AddUxFlowNextUpToMacros < ActiveRecord::Migration[5.1]
 
     macro = Macro.find_by(name: 'Close & Tag as Spam')
     return if !macro
+
     macro.ux_flow_next_up = 'next_task'
     macro.save!
   end

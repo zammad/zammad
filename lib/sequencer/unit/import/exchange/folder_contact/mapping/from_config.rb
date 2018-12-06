@@ -16,8 +16,10 @@ class Sequencer
 
               def from_import_job
                 return if !state.provided?(:import_job)
+
                 payload = import_job.payload
                 return if payload.blank?
+
                 payload[:ews_attributes]
               end
             end

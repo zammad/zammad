@@ -411,6 +411,7 @@ returns
       )
     when Net::HTTPRedirection
       raise 'Too many redirections for the original URL, halting.' if count <= 0
+
       url = response['location']
       return get(url, params, options, count - 1)
     when Net::HTTPOK
@@ -506,6 +507,7 @@ returns
 
     def success?
       return true if @success
+
       false
     end
   end

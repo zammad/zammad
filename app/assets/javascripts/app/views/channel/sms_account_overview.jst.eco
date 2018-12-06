@@ -1,0 +1,130 @@
+<h2><%- @T('SMS Accounts') %></h2>
+
+<% if _.isEmpty(@account_channels): %>
+  <p><%- @T('You have no configured account right now.') %></p>
+<% else: %>
+  <% for channel in @account_channels: %>
+  <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
+    <div class="action-flow" style="width: 100%;">
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %></h3>
+        </div>
+        <% if !_.isEmpty(channel.last_log_in): %>
+        <div class="alert alert--danger">
+          <%= channel.last_log_in %>
+        </div>
+        <% end %>
+      </div>
+
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+        </div>
+        <% if !_.isEmpty(channel.last_log_out): %>
+        <div class="alert alert--danger">
+          <%= channel.last_log_out %>
+        </div>
+        <% end %>
+
+      </div>
+    </div>
+
+    <div class="action-flow" style="width: 100%;">
+      <div class="action-block action-block--flex">
+        <table class="key-value">
+          <tr>
+            <td><%- @T('Adapter') %>
+            <td><%= channel.options.adapter %>
+          <tr>
+            <td><%- @T('Webhook') %>
+            <td><%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/sms_webhook/<%= channel.options?.webhook_token || '?' %>
+          <tr>
+            <td><%- @T('Account') %>
+            <td><%= channel.options.account_id %>
+          <tr>
+            <td><%- @T('Token') %>
+            <td><%= @M(channel.options.token, 1, 2) %>
+          <tr>
+            <td><%- @T('Sender') %>
+            <td><%= channel.options.sender %>
+          <tr>
+            <td><%- @T('Group') %>
+            <td>
+              <div href="#" class="js-channelEdit <% if channel.group.active is false: %>alert alert--danger<% end %>">
+                <% groupName = '' %>
+                <% if channel.group.displayName: %>
+                  <% groupName = channel.group.displayName() %>
+                <% else: %>
+                  <% groupName = channel.group %>
+                <% end %>
+                <% if channel.group.active is false: %>
+                  <%- @T('%s is inactive, please select a active one.', groupName) %>
+                <% else: %>
+                  <%= groupName %>
+                <% end %>
+              </div>
+        </table>
+      </div>
+    </div>
+
+    <div class="action-controls">
+      <div class="btn btn--secondary js-channelEdit"><%- @T('Edit') %></div>
+      <% if channel.active is true: %>
+        <div class="btn btn--secondary js-channelDisable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-channelEnable"><%- @T('Enable') %></div>
+      <% end %>
+      <div class="btn btn--danger btn--secondary js-channelDelete"><%- @T('Delete') %></div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<a class="btn btn--success js-channelEdit"><%- @T('New') %></a>
+
+<h2><%- @T('SMS Notification') %></h2>
+<% if _.isEmpty(@notification_channels): %>
+  <p><%- @T('You have no configured account right now.') %></p>
+  <a class="btn btn--success js-editNotification"><%- @T('New') %></a>
+<% else: %>
+  <% for channel in @notification_channels: %>
+    <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
+      <div class="action-flow action-flow--row">
+        <div class="action-block action-block--flex">
+          <div class="horizontal">
+            <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+          </div>
+          <% if channel.status_in is 'error': %>
+            <div class="alert alert--danger"><%= channel.last_log_in %></div>
+          <% end %>
+          <% if channel.status_out is 'error': %>
+            <div class="alert alert--danger"><%= channel.last_log_out %></div>
+          <% end %>
+          <table class="key-value">
+          <% if channel.options: %>
+            <tr>
+              <td><%- @T('Adapter') %>
+              <td><%= channel.options.adapter %>
+            <tr>
+              <td><%- @T('Token') %>
+              <td><%= @M(channel.options.token, 1, 2) %>
+          <% end %>
+            <tr>
+              <td><%- @T('Sender') %>
+              <td><%= channel.options.sender %>
+          </table>
+        </div>
+      </div>
+      <div class="action-controls">
+        <div class="btn btn--secondary js-editNotification"><%- @T('Edit') %></div>
+        <% if channel.active is true: %>
+          <div class="btn btn--secondary js-channelDisable"><%- @T('Disable') %></div>
+        <% else: %>
+          <div class="btn btn--secondary js-channelEnable"><%- @T('Enable') %></div>
+        <% end %>
+        <div class="btn btn--danger btn--secondary js-channelDelete"><%- @T('Delete') %></div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

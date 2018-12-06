@@ -1,5 +1,5 @@
 # Default enabled cops
-# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+# https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 inherit_from: .rubocop_todo.yml
 
@@ -144,6 +144,10 @@ Style/BracesAroundHashParameters:
   Description: 'Enforce braces style around hash parameters.'
   Enabled: false
 
+Rails/BulkChangeTable:
+  Description: 'Check whether alter queries are combinable.'
+  Enabled: false
+
 Rails/FindEach:
   Description: 'Prefer all.find_each over all.find.'
   Enabled: false
@@ -189,7 +193,7 @@ Lint/BooleanSymbol:
   Enabled: true
   Exclude:
     - "db/seeds/object_manager_attributes.rb"
-    - "test/integration/object_manager_attributes_controller_test.rb"
+    - "spec/requests/integration/object_manager_attributes_spec.rb"
     - "test/integration/object_manager_test.rb"
 
 Lint/InterpolationCheck:

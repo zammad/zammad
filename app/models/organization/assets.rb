@@ -50,8 +50,10 @@ returns
           local_attributes['member_ids'].each do |local_user_id|
             puts "Organization assets memberids local_user_id", local_user_id
             next if data[ app_model_user ] && data[ app_model_user ][ local_user_id ]
+
             user = User.lookup(id: local_user_id)
             next if !user
+
             data = user.assets(data)
           end
         end
@@ -62,9 +64,11 @@ returns
         puts "Organization assets local_user_id", local_user_id
         next if !self[ local_user_id ]
         next if data[ app_model_user ][ self[ local_user_id ] ]
+
         user = User.lookup(id: self[ local_user_id ])
         puts "Organization assets user", user.pretty_inspect
         next if !user
+
         data = user.assets(data)
         puts "Organization assets data(user)", data.pretty_inspect
       end

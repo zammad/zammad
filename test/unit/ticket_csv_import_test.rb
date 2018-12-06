@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class TicketCsvImportTest < ActiveSupport::TestCase
@@ -48,6 +47,20 @@ class TicketCsvImportTest < ActiveSupport::TestCase
     assert(result[:records].blank?)
     assert_equal('failed', result[:result])
     assert_equal('No records found in file/string for Ticket.', result[:errors][0])
+  end
+
+  test 'verify required lookup headers' do
+    csv_string = "firstname;lastname;active;\nfirstname-simple-import1;lastname-simple-import1;;true\nfirstname-simple-import2;lastname-simple-import2;false\n"
+    result = Ticket.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('No lookup column like id,number for Ticket found.', result[:errors][0])
   end
 
   test 'simple import' do
@@ -174,8 +187,8 @@ class TicketCsvImportTest < ActiveSupport::TestCase
     assert_equal(true, result[:try])
     assert_equal(2, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown attribute 'not_existing' for Ticket.", result[:errors][0])
-    assert_equal("Line 2: unknown attribute 'not_existing' for Ticket.", result[:errors][1])
+    assert_equal("Line 1: Unable to create record - unknown attribute 'not_existing' for Ticket.", result[:errors][0])
+    assert_equal("Line 2: Unable to create record - unknown attribute 'not_existing' for Ticket.", result[:errors][1])
 
     assert_nil(Ticket.find_by(number: '123456'))
     assert_nil(Ticket.find_by(number: '123457'))
@@ -190,8 +203,8 @@ class TicketCsvImportTest < ActiveSupport::TestCase
     assert_equal(false, result[:try])
     assert_equal(2, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown attribute 'not_existing' for Ticket.", result[:errors][0])
-    assert_equal("Line 2: unknown attribute 'not_existing' for Ticket.", result[:errors][1])
+    assert_equal("Line 1: Unable to create record - unknown attribute 'not_existing' for Ticket.", result[:errors][0])
+    assert_equal("Line 2: Unable to create record - unknown attribute 'not_existing' for Ticket.", result[:errors][1])
 
     assert_nil(Ticket.find_by(number: '123456'))
     assert_nil(Ticket.find_by(number: '123457'))

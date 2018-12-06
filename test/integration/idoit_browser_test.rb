@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class IntegrationIdoitTest < TestCase
@@ -8,14 +7,17 @@ class IntegrationIdoitTest < TestCase
     if !ENV['IDOIT_API_TOKEN']
       raise "ERROR: Need IDOIT_API_TOKEN - hint IDOIT_API_TOKEN='1234'"
     end
+
     api_token = ENV['IDOIT_API_TOKEN']
     if !ENV['IDOIT_API_ENDPOINT']
       raise "ERROR: Need IDOIT_API_ENDPOINT - hint IDOIT_API_ENDPOINT='1234'"
     end
+
     api_endpoint = ENV['IDOIT_API_ENDPOINT']
     if !ENV['IDOIT_API_CATEGORY']
       raise "ERROR: Need IDOIT_API_CATEGORY - hint IDOIT_API_CATEGORY='Building'"
     end
+
     api_category = ENV['IDOIT_API_CATEGORY']
 
     id = rand(99_999_999)

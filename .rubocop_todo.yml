@@ -40,6 +40,14 @@ Rails/ApplicationRecord:
   Description: 'Check that models subclass ApplicationRecord.'
   Enabled: false
 
+# Browser-Tests inherit from TestCase < Test::Unit::TestCase
+# which does not provide assert_not
+Rails/AssertNot:
+  Description: 'Use `assert_not` instead of `assert !`.'
+  Enabled: true
+  Exclude:
+    - "test/browser/*"
+
 Rails/CreateTableWithTimestamps:
   Description: >-
                   Checks the migration for which timestamps are not included

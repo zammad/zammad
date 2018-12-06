@@ -96,14 +96,17 @@ module Channel::Filter::IdentifySender
     current_count = 0
     ['raw-to', 'raw-cc'].each do |item|
       next if mail[item.to_sym].blank?
+
       begin
         items = mail[item.to_sym].addrs
         next if items.blank?
+
         items.each do |address_data|
           email_address = address_data.address
           next if email_address.blank?
           next if email_address !~ /@/
           next if email_address.match?(/\s/)
+
           user_create(
             firstname: address_data.display_name,
             lastname: '',
@@ -131,6 +134,7 @@ module Channel::Filter::IdentifySender
           next if address.blank?
           next if address !~ /@/
           next if address.match?(/\s/)
+
           user_create(
             firstname: display_name,
             lastname: '',

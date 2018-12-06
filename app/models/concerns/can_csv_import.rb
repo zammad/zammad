@@ -70,6 +70,7 @@ returns
 
       if data[:file].present?
         raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'" if !File.exist?(data[:file])
+
         begin
           file = File.open(data[:file], 'r:UTF-8')
           data[:string] = file.read
@@ -103,11 +104,23 @@ returns
           item.strip!
         end
         next if !item.respond_to?(:downcase!)
+
         item.downcase!
       end
 
       if rows[0].blank?
         errors.push "No records found in file/string for #{new.class}."
+        result = {
+          errors: errors,
+          try: try,
+          result: 'failed',
+        }
+        return result
+      end
+
+      # check if min one lookup key exists
+      if header.count == (header - lookup_keys.map(&:to_s)).count
+        errors.push "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{new.class} found."
         result = {
           errors: errors,
           try: try,
@@ -124,6 +137,7 @@ returns
           row.each_with_index do |item, count|
             next if item.blank?
             next if header[count].nil?
+
             if payload_last[header[count].to_sym].class != Array
               payload_last[header[count].to_sym] = [payload_last[header[count].to_sym]]
             end
@@ -136,6 +150,7 @@ returns
           next if !item
           next if header[count].blank?
           next if @csv_attributes_ignored&.include?(header[count].to_sym)
+
           attributes[header[count].to_sym] = if item.respond_to?(:strip)
                                                item.strip
                                              else
@@ -168,10 +183,15 @@ returns
       payload.each do |attributes|
         line_count += 1
         record = nil
-        %i[id number name login email].each do |lookup_by|
-          next if !attributes[lookup_by]
+        lookup_keys.each do |lookup_by|
+          next if attributes[lookup_by].blank?
+
           params = {}
-          params[lookup_by] = attributes[lookup_by]
+          params[lookup_by] = if %i[email login].include?(lookup_by)
+                                attributes[lookup_by].downcase
+                              else
+                                attributes[lookup_by]
+                              end
           record = lookup(params)
           break if record
         end
@@ -194,6 +214,7 @@ returns
         end
 
         # create object
+        BulkImportInfo.enable
         Transaction.execute(disable_notification: true, reset_user_id: true) do
           UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
           if !record || delete == true
@@ -208,15 +229,17 @@ returns
               end
               record = new(clean_params)
               next if try == true
+
               record.associations_from_param(attributes)
               record.save!
             rescue => e
-              errors.push "Line #{line_count}: #{e.message}"
+              errors.push "Line #{line_count}: Unable to create record - #{e.message}"
               next
             end
           else
             stats[:updated] += 1
             next if try == true
+
             begin
               csv_verify_attributes(clean_params)
               clean_params = param_cleanup(clean_params)
@@ -227,14 +250,20 @@ returns
 
               record.with_lock do
                 record.associations_from_param(attributes)
-                record.update!(clean_params)
+                clean_params.each do |key, value|
+                  record[key] = value
+                end
+                next if !record.changed?
+
+                record.save!
               end
             rescue => e
-              errors.push "Line #{line_count}: #{e.message}"
+              errors.push "Line #{line_count}: Unable to update record - #{e.message}"
               next
             end
           end
         end
+        BulkImportInfo.disable
 
         records.push record
       end
@@ -251,7 +280,6 @@ returns
         try: try,
         result: result,
       }
-
     end
 
 =begin
@@ -278,6 +306,7 @@ verify if attributes are valid, will raise an ArgumentError with "unknown attrib
       end
       clean_params.each_key do |key|
         next if all_clean_attributes.key?(key.to_sym)
+
         raise ArgumentError, "unknown attribute '#{key}' for #{new.class}."
       end
       true
@@ -319,6 +348,7 @@ returns
           next if key == 'created_at'
           next if key == 'updated_at'
           next if header.include?(key)
+
           header.push key
         end
       end
@@ -339,6 +369,7 @@ returns
             record[key].each do |entry|
               entry_count += 1
               next if entry_count == -1
+
               if !rows_to_add[entry_count]
                 rows_to_add[entry_count] = Array.new(header.count + 1) { '' }
               end
@@ -350,6 +381,7 @@ returns
         end
         rows.push row
         next if rows_to_add.count.zero?
+
         rows_to_add.each do |item|
           rows.push item
         end

@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 
 class UserAgentTest < ActiveSupport::TestCase
@@ -493,7 +492,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(false, result.success?)
     assert_equal('404', result.code)
     assert_equal(NilClass, result.body.class)
-    assert(!result.data)
+    assert_not(result.data)
 
     # post / 200
     result = UserAgent.post(

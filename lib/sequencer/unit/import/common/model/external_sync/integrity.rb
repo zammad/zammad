@@ -12,6 +12,7 @@ class Sequencer
                 return if instance.blank?
                 return if instance.id.blank?
                 return if up_to_date?
+
                 create
               end
 
@@ -20,6 +21,7 @@ class Sequencer
               def up_to_date?
                 return false if entry.blank?
                 return true if entry.source_id == remote_id
+
                 entry.update!(source_id: remote_id)
                 true
               end

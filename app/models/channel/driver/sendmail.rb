@@ -23,6 +23,7 @@ class Channel::Driver::Sendmail
 
   def delivery_method
     return :test if Rails.env.test?
+
     :sendmail
   end
 end

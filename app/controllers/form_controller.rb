@@ -205,21 +205,21 @@ class FormController < ApplicationController
     return false if !SearchIndexBackend.enabled?
 
     form_limit_by_ip_per_hour = Setting.get('form_ticket_create_by_ip_per_hour') || 20
-    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1h", form_limit_by_ip_per_hour, 'Ticket')
+    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1h", 'Ticket', limit: form_limit_by_ip_per_hour)
     if result.count >= form_limit_by_ip_per_hour.to_i
       response_access_deny
       return true
     end
 
     form_limit_by_ip_per_day = Setting.get('form_ticket_create_by_ip_per_day') || 240
-    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1d", form_limit_by_ip_per_day, 'Ticket')
+    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1d", 'Ticket', limit: form_limit_by_ip_per_day)
     if result.count >= form_limit_by_ip_per_day.to_i
       response_access_deny
       return true
     end
 
     form_limit_per_day = Setting.get('form_ticket_create_per_day') || 5000
-    result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', form_limit_per_day, 'Ticket')
+    result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', 'Ticket', limit: form_limit_per_day)
     if result.count >= form_limit_per_day.to_i
       response_access_deny
       return true
@@ -230,6 +230,7 @@ class FormController < ApplicationController
 
   def fingerprint_exists?
     return true if params[:fingerprint].present? && params[:fingerprint].length > 30
+
     Rails.logger.info 'No fingerprint given!'
     response_access_deny
     false
@@ -238,6 +239,7 @@ class FormController < ApplicationController
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
     return true if Setting.get('form_ticket_create')
+
     response_access_deny
     false
   end

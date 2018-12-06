@@ -33,6 +33,7 @@ returns calendar object
     # prevent multible setups for same ip
     cache = Cache.get('Calendar.init_setup.done')
     return if cache && cache[:ip] == ip
+
     Cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
 
     # call for calendar suggestion
@@ -171,6 +172,7 @@ returns
       public_holidays.each do |day, meta|
         next if !public_holidays[day]['feed']
         next if meta['feed'] == Digest::MD5.hexdigest(ical_url)
+
         public_holidays.delete(day)
       end
 
@@ -215,6 +217,7 @@ returns
       if !result.success?
         raise result.error
       end
+
       cal_file = result.body
     else
       cal_file = File.open(location)
@@ -234,14 +237,17 @@ returns
           occurrences.each do |occurrence|
             result = Calendar.day_and_comment_by_event(event, occurrence.start_time)
             next if !result
+
             events[result[0]] = result[1]
           end
         end
       end
       next if event.dtstart < Time.zone.now - 1.year
       next if event.dtstart > Time.zone.now + 3.years
+
       result = Calendar.day_and_comment_by_event(event, event.dtstart)
       next if !result
+
       events[result[0]] = result[1]
     end
     events.sort.to_h
@@ -255,6 +261,7 @@ returns
 
     # ignore daylight saving time entries
     return if comment.match?(/(daylight saving|sommerzeit|summertime)/i)
+
     [day, comment]
   end
 
@@ -263,9 +270,11 @@ returns
   # if changed calendar is default, set all others default to false
   def sync_default
     return true if !default
+
     Calendar.find_each do |calendar|
       next if calendar.id == id
       next if !calendar.default
+
       calendar.default = false
       calendar.save
     end
@@ -277,6 +286,7 @@ returns
     if !Calendar.find_by(default: true)
       first = Calendar.order(:created_at, :id).limit(1).first
       return true if !first
+
       first.default = true
       first.save
     end

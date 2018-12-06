@@ -15,6 +15,7 @@ class Observer::Ticket::EscalationUpdate < ActiveRecord::Observer
     return true if Setting.get('import_mode')
 
     return true if !Ticket.exists?(record.id)
+
     record.reload
     record.escalation_calculation
   end

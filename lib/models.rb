@@ -42,10 +42,13 @@ returns
         next if !model_class
         next if !model_class.respond_to? :new
         next if !model_class.respond_to? :table_name
+
         table_name = model_class.table_name # handle models where not table exists, pending migrations
         next if !tables.include?(table_name)
+
         model_object = model_class.new
         next if !model_object.respond_to? :attributes
+
         all[model_class] = {}
         all[model_class][:attributes] = model_class.attribute_names
         all[model_class][:reflections] = model_class.reflections
@@ -60,7 +63,7 @@ returns
 
 =begin
 
-get list of searchable models
+get list of searchable models for UI
 
   result = Models.searchable
 
@@ -71,13 +74,23 @@ returns
 =end
 
   def self.searchable
-    models = []
-    all.each_key do |model_class|
-      next if !model_class
-      next if !model_class.respond_to? :search_preferences
-      models.push model_class
-    end
-    models
+    @searchable ||= Models.all.keys.select { |model| model.respond_to?(:search_preferences) }
+  end
+
+=begin
+
+get list of indexable models
+
+  result = Models.indexable
+
+returns
+
+  [Model1, Model2, Model3]
+
+=end
+
+  def self.indexable
+    @indexable ||= Models.all.keys.select { |model| model.method_defined?(:search_index_update_backend) }
   end
 
 =begin
@@ -126,11 +139,13 @@ returns
       end
 
       next if !model_attributes[:attributes]
+
       ref_attributes.each do |item|
         next if !model_attributes[:attributes].include?(item)
 
         count = model_class.where("#{item} = ?", object_id).count
         next if count.zero?
+
         if !references[model_class.to_s][item]
           references[model_class.to_s][item] = 0
         end
@@ -142,15 +157,18 @@ returns
     # find relations via reflections
     list.each do |model_class, model_attributes|
       next if !model_attributes[:reflections]
+
       model_attributes[:reflections].each_value do |reflection_value|
 
         next if reflection_value.macro != :belongs_to
+
         col_name = "#{reflection_value.name}_id"
         next if ref_attributes.include?(col_name)
 
         if reflection_value.options[:class_name] == object_name
           count = model_class.where("#{col_name} = ?", object_id).count
           next if count.zero?
+
           if !references[model_class.to_s][col_name]
             references[model_class.to_s][col_name] = 0
           end
@@ -163,6 +181,7 @@ returns
 
         count = model_class.where("#{col_name} = ?", object_id).count
         next if count.zero?
+
         if !references[model_class.to_s][col_name]
           references[model_class.to_s][col_name] = 0
         end
@@ -174,6 +193,7 @@ returns
     # cleanup, remove models with empty references
     references.each do |k, v|
       next if v.present?
+
       references.delete(k)
     end
 

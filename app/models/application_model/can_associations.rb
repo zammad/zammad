@@ -23,8 +23,10 @@ returns
       group_ids: :group_ids_access_map=
     }.each do |param, setter|
       next if !params.key?(param)
+
       map = params[param]
       next if !respond_to?(setter)
+
       send(setter, map)
     end
 
@@ -32,9 +34,11 @@ returns
     self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
+
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
       real_ids = real_ids.to_sym
       next if !params.key?(real_ids)
+
       list_of_items = params[real_ids]
       if !params[real_ids].instance_of?(Array)
         list_of_items = [ params[real_ids] ]
@@ -42,12 +46,14 @@ returns
       list = []
       list_of_items.each do |item_id|
         next if !item_id
+
         lookup = assoc.klass.lookup(id: item_id)
 
         # complain if we found no reference
         if !lookup
           raise ArgumentError, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
         end
+
         list.push item_id
       end
       send("#{real_ids}=", list)
@@ -57,16 +63,20 @@ returns
     self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
+
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
       next if !respond_to?(real_ids)
+
       real_values = assoc_name[0, assoc_name.length - 1] + 's'
       real_values = real_values.to_sym
       next if !respond_to?(real_values)
       next if !params[real_values]
+
       if params[real_values].instance_of?(String) || params[real_values].instance_of?(Integer) || params[real_values].instance_of?(Float)
         params[real_values] = [params[real_values]]
       end
       next if !params[real_values].instance_of?(Array)
+
       list = []
       class_object = assoc.klass
       params[real_values].each do |value|
@@ -86,6 +96,7 @@ returns
         if !lookup
           raise ArgumentError, "No lookup value found for '#{assoc_name}': #{value.inspect}"
         end
+
         list.push lookup.id
       end
       send("#{real_ids}=", list)
@@ -123,7 +134,7 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push("#{assoc.table_name}.id")
+      pluck.push("#{assoc.table_name}.id AS #{assoc_name}")
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 
@@ -171,8 +182,10 @@ returns
     self.class.reflect_on_all_associations.map do |assoc|
       next if !respond_to?(assoc.name)
       next if association_attributes_ignored.include?(assoc.name)
+
       ref = send(assoc.name)
       next if !ref
+
       if ref.respond_to?(:first)
         attributes[assoc.name.to_s] = []
         ref.each do |item|
@@ -181,6 +194,7 @@ returns
             next
           end
           next if !item[:name]
+
           attributes[assoc.name.to_s].push item[:name]
         end
         if ref.count.positive? && attributes[assoc.name.to_s].blank?
@@ -193,6 +207,7 @@ returns
         next
       end
       next if !ref[:name]
+
       attributes[assoc.name.to_s] = ref[:name]
     end
 
@@ -207,8 +222,10 @@ returns
       'updated_by_id' => 'updated_by',
     }.each do |source, destination|
       next if !attributes[source]
+
       user = User.lookup(id: attributes[source])
       next if !user
+
       attributes[destination] = user.login
     end
 
@@ -245,14 +262,18 @@ returns
 
       # check if id is assigned
       next if !key.end_with?('_id')
+
       key_short = key.chomp('_id')
 
       self.class.reflect_on_all_associations.map do |assoc|
         next if assoc.name.to_s != key_short
+
         item = assoc.class_name.constantize
         return false if !item.respond_to?(:find_by)
+
         ref_object = item.find_by(id: value)
         return false if !ref_object
+
         return true
       end
     end
@@ -332,6 +353,7 @@ returns
         assoc_name = assoc.name
         value      = data[assoc_name]
         next if !value # next if we do not have a value
+
         ref_name = "#{assoc_name}_id"
 
         # handle _id values
@@ -345,6 +367,7 @@ returns
             if !value.instance_of?(String)
               raise ArgumentError, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
             end
+
             if !lookup
               lookup = class_object.lookup(login: value)
             end
@@ -374,6 +397,7 @@ returns
 
         # handle _ids values
         next if !assoc_name.to_s.end_with?('s')
+
         ref_names = "#{assoc_name.to_s.chomp('s')}_ids"
         generic_object_tmp = new
         next if !generic_object_tmp.respond_to?(ref_names) # if we do have an _ids attribute
@@ -388,6 +412,7 @@ returns
             if !item.instance_of?(String)
               raise ArgumentError, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
             end
+
             if !lookup
               lookup = class_object.lookup(login: item)
             end
@@ -402,6 +427,7 @@ returns
           if !lookup
             raise ArgumentError, "No lookup value found for '#{assoc_name}': #{item.inspect}"
           end
+
           lookup_ids.push lookup.id
         end
 

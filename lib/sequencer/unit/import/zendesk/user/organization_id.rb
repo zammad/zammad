@@ -12,6 +12,7 @@ class Sequencer
             def organization_id
               remote_id = resource.organization_id
               return if remote_id.blank?
+
               organization_map[remote_id]
             end
           end

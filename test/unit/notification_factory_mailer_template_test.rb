@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
@@ -48,10 +47,10 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         user: agent1,
       },
     )
-    assert_match('Zurücksetzen Deines', result[:subject])
+    assert_match('Zurücksetzen Ihres', result[:subject])
     assert_match('wir haben eine Anfrage zum Zurücksetzen', result[:body])
-    assert_match('Dein', result[:body])
-    assert_match('Dein', result[:body])
+    assert_match('Ihr', result[:body])
+    assert_match('Ihr', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_no_match('Your', result[:body])
 
@@ -62,15 +61,15 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         user: agent1,
       },
     )
-    assert_match('Zurücksetzen Deines', result[:subject])
+    assert_match('Zurücksetzen Ihres', result[:subject])
     assert_match('wir haben eine Anfrage zum Zurücksetzen', result[:body])
-    assert_match('Dein', result[:body])
+    assert_match('Ihr', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_no_match('Your', result[:body])
 
     result = NotificationFactory::Mailer.template(
       template: 'password_reset',
-      locale: 'es-us',
+      locale: 'xx-us',
       objects:  {
         user: agent1,
       },
@@ -79,7 +78,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('We received a request to reset the password', result[:body])
     assert_match('Your', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
-    assert_no_match('Dein', result[:body])
+    assert_no_match('Ihr', result[:body])
 
     ticket = Ticket.create(
       group_id: Group.lookup(name: 'Users').id,
@@ -107,7 +106,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     changes = {}
     result = NotificationFactory::Mailer.template(
       template: 'ticket_create',
-      locale: 'es-us',
+      locale: 'xx-us',
       objects:  {
         ticket: ticket,
         article: article,
@@ -163,7 +162,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     }
     result = NotificationFactory::Mailer.template(
       template: 'ticket_update',
-      locale: 'es-us',
+      locale: 'xx-us',
       objects:  {
         ticket: ticket,
         article: article,

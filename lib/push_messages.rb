@@ -2,11 +2,13 @@ module PushMessages
 
   def self.enabled?
     return true if Thread.current[:push_messages].class == Array
+
     false
   end
 
   def self.init
     return true if enabled?
+
     Thread.current[:push_messages] = []
   end
 
@@ -34,6 +36,7 @@ module PushMessages
 
   def self.finish
     return false if !enabled?
+
     Thread.current[:push_messages].each do |message|
       if message[:type] == 'send_to'
         Sessions.send_to(message[:user_id], message[:data])

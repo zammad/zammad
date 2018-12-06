@@ -6,7 +6,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
     context 'config "unassigned_users": "skip_sync"' do
 
-      it 'disables user' do
+      it 'disables user', last_admin_check: false do
 
         user_entry                   = build(:ldap_entry)
         user_entry['objectguid']     = ['user1337']
@@ -99,7 +99,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
     context 'config "unassigned_users": nil / "sigup_roles"' do
 
-      it 'assigns signup roles' do
+      it 'assigns signup roles', last_admin_check: false do
 
         user_entry                   = build(:ldap_entry)
         user_entry['objectguid']     = ['user1337']

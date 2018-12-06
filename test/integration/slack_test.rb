@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 require 'slack'
 
@@ -284,6 +283,7 @@ class SlackTest < ActiveSupport::TestCase
     channel_id = nil
     channels.each do |channel|
       next if channel['name'] != channel_name
+
       channel_id = channel['id']
     end
     if !channel_id
@@ -297,9 +297,11 @@ class SlackTest < ActiveSupport::TestCase
     if !channel_history['messages']
       raise "ERROR: No history messages for channel #{channel_name}/#{channel_id}"
     end
+
     message_count = 0
     channel_history['messages'].each do |message|
       next if !message['text']
+
       if message['text'].match?(/#{search_for}/i)
         message_count += 1
         p "SUCCESS: message with #{search_for} found #{message_count} time(s)!"

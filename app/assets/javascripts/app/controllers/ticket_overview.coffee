@@ -669,17 +669,22 @@ class App.TicketOverview extends App.Controller
 
     # build nav bar
     if @navBarController
-      @navBarController.update
+      @navBarController.update(
         view:        @view
         activeState: true
+      )
 
     if @navBarControllerVertical
-      @navBarControllerVertical.update
+      @navBarControllerVertical.update(
         view:        @view
         activeState: true
+      )
 
     # do not rerender overview if current overview is requested again
-    return if @viewLast is @view
+    if @viewLast is @view
+      if @contentController
+        @contentController.show()
+      return
 
     # remember last view
     @viewLast = @view
@@ -699,6 +704,8 @@ class App.TicketOverview extends App.Controller
       @navBarController.active(false)
     if @navBarControllerVertical
       @navBarControllerVertical.active(false)
+    if @contentController
+      @contentController.hide()
 
   setPosition: (position) =>
     @$('.main').scrollTop(position)
@@ -945,6 +952,14 @@ class Table extends App.Controller
       return if !@view
       @render(App.OverviewListCollection.get(@view))
 
+  show: =>
+    if @table
+      @table.show()
+
+  hide: =>
+    if @table
+      @table.hide()
+
   release: =>
     if @bindId
       App.OverviewListCollection.unbind(@bindId)
@@ -1123,12 +1138,12 @@ class Table extends App.Controller
         @lastChecked = e.currentTarget
       callbackIconHeader = (headers) ->
         attribute =
-          name:        'icon'
-          display:     ''
-          translation: false
-          width:       '28px'
-          displayWidth:28
-          unresizable: true
+          name:         'icon'
+          display:      ''
+          translation:  false
+          width:        '28px'
+          displayWidth: 28
+          unresizable:  true
         headers.unshift(0)
         headers[0] = attribute
         headers
@@ -1139,7 +1154,7 @@ class Table extends App.Controller
         attribute.title  = object.iconTitle()
         value
 
-      @table = new App.ControllerTable(
+      tableArguments =
         tableId:        "ticket_overview_#{@overview.id}"
         overview:       @overview.view.s
         el:             @$('.table-overview')
@@ -1150,7 +1165,7 @@ class Table extends App.Controller
         groupDirection: @overview.group_direction
         orderBy:        @overview.order.by
         orderDirection: @overview.order.direction
-        class: 'table--light'
+        class:          'table--light'
         bindRow:
           events:
             'click': openTicket
@@ -1175,7 +1190,15 @@ class Table extends App.Controller
         bindCheckbox:
           events:
             'click': callbackCheckbox
-      )
+          select_all: callbackCheckbox
+
+      # remember elWidth even if table is not shown but rerendered
+      if @el.width() != 0
+        @elWidth = @el.width()
+      if @elWidth
+        tableArguments.availableWidth = @elWidth
+
+      @table = new App.ControllerTable(tableArguments)
 
     @renderPopovers()
 
@@ -1222,9 +1245,9 @@ class Table extends App.Controller
     ticket_ids        = _.map(items, (el) -> $(el).val() )
     ticket_group_ids  = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
     ticket_group_ids  = _.uniq(ticket_group_ids)
-    user_permissions  = App.Session.get('group_ids')
-    group_permissions = ticket_group_ids.map (id) -> user_permissions[id]
-    _.every(group_permissions, (list) -> 'full' in list || 'change' in list)
+    allowed_group_ids = App.User.find(@Session.get('id')).allGroupIds('change')
+    allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
+    _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
 
   viewmode: (e) =>
     e.preventDefault()

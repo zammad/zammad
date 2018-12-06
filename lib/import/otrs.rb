@@ -135,6 +135,7 @@ module Import
     def imported?(args)
       log "loading #{args[:limit]} #{args[:remote_object]} starting at #{args[:offset]}..."
       return false if !import_action(args[:remote_object], limit: args[:limit], offset: args[:offset], diff: args[:diff])
+
       true
     end
 

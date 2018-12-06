@@ -1,0 +1,162 @@
+{
+  "for_user_id": "123",
+  "tweet_create_events": [
+    {
+      "created_at": "Thu Nov 15 23:31:30 +0000 2018",
+      "id": 1063212927510081536,
+      "id_str": "1063212927510081536",
+      "text": "Hey @medenhofer !  #hello1234 https://t.co/f1kffFlwpN",
+      "display_text_range": [0, 29],
+      "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 123,
+        "id_str": "123",
+        "name": "Zammad HQ",
+        "screen_name": "zammadhq",
+        "location": null,
+        "url": "http://zammad.com",
+        "description": "Helpdesk and Customer Support made easy. Open Source for download or to go with SaaS. #zammad",
+        "translator_type": "none",
+        "protected": false,
+        "verified": false,
+        "followers_count": 427,
+        "friends_count": 512,
+        "listed_count": 20,
+        "favourites_count": 280,
+        "statuses_count": 438,
+        "created_at": "Mon Oct 10 09:31:52 +0000 2016",
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "lang": "en",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "profile_background_color": "000000",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_link_color": "31B068",
+        "profile_sidebar_border_color": "000000",
+        "profile_sidebar_fill_color": "000000",
+        "profile_text_color": "000000",
+        "profile_use_background_image": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/785412960797745152/wxdIvejo_normal.jpg", "profile_image_url_https": "https://pbs.twimg.com/profile_images/785412960797745152/wxdIvejo_normal.jpg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/123/1476097853",
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": null,
+        "follow_request_sent": null,
+        "notifications": null
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [
+          {"text": "hello1234", "indices": [19, 29]}
+        ],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "medenhofer",
+            "name": "Martin Edenhofer",
+            "id": 456,
+            "id_str": "456",
+            "indices": [4, 15]
+          }
+        ],
+        "symbols": [],
+        "media": [
+          {
+            "id": 1063212885961248768,
+            "id_str": "1063212885961248768",
+            "indices": [30, 53],
+            "media_url": "http://pbs.twimg.com/media/DsFKfJRWkAAFEbo.jpg",
+            "media_url_https": "https://pbs.twimg.com/media/DsFKfJRWkAAFEbo.jpg",
+            "url": "https://t.co/f1kffFlwpN",
+            "display_url": "pic.twitter.com/f1kffFlwpN",
+            "expanded_url": "https://twitter.com/zammadhq/status/1063212927510081536/photo/1",
+            "type": "photo",
+            "sizes": {
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "large": {
+                "w": 852,
+                "h": 462,
+                "resize": "fit"
+              },
+              "medium": {
+                "w": 852,
+                "h": 462,
+                "resize": "fit"
+              },
+              "small": {
+                "w": 680,
+                "h": 369,
+                "resize": "fit"
+              }
+            }
+          }
+        ]
+      },
+      "extended_entities": {
+        "media": [
+          {
+            "id": 1063212885961248768,
+            "id_str": "1063212885961248768",
+            "indices": [30, 53],
+            "media_url": "http://pbs.twimg.com/media/DsFKfJRWkAAFEbo.jpg",
+            "media_url_https": "https://pbs.twimg.com/media/DsFKfJRWkAAFEbo.jpg",
+            "url": "https://t.co/f1kffFlwpN",
+            "display_url": "pic.twitter.com/f1kffFlwpN",
+            "expanded_url": "https://twitter.com/zammadhq/status/1063212927510081536/photo/1",
+            "type": "photo",
+            "sizes": {
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "large": {
+                "w": 852,
+                "h": 462,
+                "resize": "fit"
+              },
+              "medium": {
+                "w": 852,
+                "h": 462,
+                "resize": "fit"
+              },
+              "small": {
+                "w": 680,
+                "h": 369,
+                "resize": "fit"
+              }
+            }
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "filter_level": "low",
+      "lang": "und",
+      "timestamp_ms": "1542324690116"
+    }
+  ]
+}

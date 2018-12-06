@@ -15,6 +15,11 @@ class CtiController < ApplicationController
         name: 'sipgate.io',
         enabled: Setting.get('sipgate_integration'),
         url: '#system/integration/sipgate',
+      },
+      {
+        name: 'Placetel',
+        enabled: Setting.get('placetel_integration'),
+        url: '#system/integration/placetel',
       }
     ]
 
