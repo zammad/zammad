@@ -110,9 +110,10 @@ RSpec.describe 'Monitoring', type: :request do
 
       # test storage usage
       string = ''
-      10.times do
+      1000.times do
         string += 'Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text'
       end
+
       Store.add(
         object: 'User',
         o_id: 1,
@@ -141,9 +142,76 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response.key?('counts')).to be_truthy
       expect(json_response.key?('last_created_at')).to be_truthy
 
+      first_json_response_kb = 0
       if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
         expect(json_response['storage'].key?('kB')).to be_truthy
+        expect(json_response['storage']['kB']).to be > 0
+        expect(json_response['storage'].key?('MB')).to be_truthy
+        expect(json_response['storage'].key?('GB')).to be_truthy
+
+        first_json_response_kb = json_response['storage']['kB']
+      else
+        expect(json_response['storage']).to be_falsey
+      end
+
+      # save same file again
+      Store.add(
+        object: 'User',
+        o_id: 1,
+        data: string,
+        filename: 'filename.txt',
+        created_by_id: 1,
+      )
+
+      # status
+      get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to be_falsey
+      expect(json_response.key?('agents')).to be_truthy
+      expect(json_response.key?('last_login')).to be_truthy
+      expect(json_response.key?('counts')).to be_truthy
+      expect(json_response.key?('last_created_at')).to be_truthy
+
+      if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+        expect(json_response['storage']).to be_truthy
+        expect(json_response['storage'].key?('kB')).to be_truthy
+
+        # check if the stores got summarized. value should be the same because the file has the same fingerprint
+        expect(json_response['storage']['kB']).to eq(first_json_response_kb)
+        expect(json_response['storage'].key?('MB')).to be_truthy
+        expect(json_response['storage'].key?('GB')).to be_truthy
+      else
+        expect(json_response['storage']).to be_falsey
+      end
+
+      Store.add(
+        object: 'User',
+        o_id: 1,
+        data: string + '123',
+        filename: 'filename2.txt',
+        created_by_id: 1,
+      )
+
+      # status
+      get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to be_falsey
+      expect(json_response.key?('agents')).to be_truthy
+      expect(json_response.key?('last_login')).to be_truthy
+      expect(json_response.key?('counts')).to be_truthy
+      expect(json_response.key?('last_created_at')).to be_truthy
+
+      if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+        expect(json_response['storage']).to be_truthy
+        expect(json_response['storage'].key?('kB')).to be_truthy
+
+        # check if the stores got summarized. value should be greather than the size of just one file (saved 2 times)
+        expect(json_response['storage']['kB']).to be > first_json_response_kb
         expect(json_response['storage'].key?('MB')).to be_truthy
         expect(json_response['storage'].key?('GB')).to be_truthy
       else
