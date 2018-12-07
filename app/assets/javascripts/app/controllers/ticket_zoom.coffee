@@ -239,6 +239,17 @@ class App.TicketZoom extends App.Controller
     return if !@attributeBar
     @attributeBar.start()
 
+  # scroll to article if given
+  scrollToPosition: (position, delay, article_id) =>
+    scrollToDelay = =>
+      if position is 'article'
+        @scrollToArticle(article_id)
+        @positionPageHeaderUpdate()
+        return
+      @scrollToBottom()
+      @positionPageHeaderUpdate()
+    @delay(scrollToDelay, delay, 'scrollToPosition')
+
   pagePosition: (params = {}) =>
 
     # remember for later
@@ -251,34 +262,23 @@ class App.TicketZoom extends App.Controller
       article_id = @pagePositionData
       @pagePositionData = undefined
 
-    # scroll to article if given
-    scrollToPosition = (position, delay) =>
-      scrollToDelay = =>
-        if position is 'article'
-          @scrollToArticle(article_id)
-          @positionPageHeaderUpdate()
-          return
-        @scrollToBottom()
-        @positionPageHeaderUpdate()
-      @delay(scrollToDelay, delay, 'scrollToPosition')
-
     # trigger shown to article
     if !@shown
       @shown = true
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
-      scrollToPosition('bottom', 50)
+      @scrollToPosition('bottom', 50, article_id)
       return
 
     # scroll to article if given
     if article_id && article_id isnt @last_article_id
       @last_article_id = article_id
-      scrollToPosition('article', 300)
+      @scrollToPosition('article', 300, article_id)
       return
 
     # scroll to end if new article has been added
     if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
       @last_ticket_article_ids = @ticket_article_ids
-      scrollToPosition('bottom', 100)
+      @scrollToPosition('bottom', 100, article_id)
       return
 
   setPosition: (position) =>
@@ -915,6 +915,7 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         @muteTask()
         @submitEnable(e)
+        @scrollToPosition('bottom', 50)
 
       error: (settings, details) =>
         error = undefined
