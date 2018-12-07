@@ -177,10 +177,12 @@ returns
         next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
-        if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
-          older_import += 1
-          Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
-          next
+        if @sync[:import_older_tweets] != true
+          if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
+            older_import += 1
+            Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
+            next
+          end
         end
 
         next if @client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)

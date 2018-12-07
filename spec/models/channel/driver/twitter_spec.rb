@@ -21,6 +21,7 @@ RSpec.describe ::Channel::Driver::Twitter do
           id: 'system_id',
         },
         sync: {
+          import_older_tweets: true,
           track_retweets: true,
           search: [
             {
