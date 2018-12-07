@@ -16,9 +16,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
     'submit form.search-holder': 'preventDefault'
     'dblclick form.search-holder .icon-magnifier': 'openExtendedSearch'
     'focus #global-search': 'searchFocus'
-    'blur #global-search': 'searchBlur'
     'keyup #global-search': 'listNavigate'
-    'click .js-global-search-result': 'emptyAndClose'
+    'click .js-global-search-result': 'emptyAndCloseDelayed'
     'click .js-details-link': 'openExtendedSearch'
     'change .js-menu .js-switch input': 'switch'
 
@@ -162,7 +161,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   renderResult: (result = [], noChange) =>
     if noChange
       return
-    
+
     @removePopovers()
 
     # remove result if not result exists
@@ -202,19 +201,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
     $('#app').append @notificationWidget.el
 
   searchFocus: (e) =>
-    @query = '' # reset query cache
+    @clearDelay('emptyAndCloseDelayed')
+    @throttledSearch()
     App.PopoverProvidable.anyPopoversDestroy()
     @searchContainer.addClass('focused')
-
-  searchBlur: (e) =>
-    # delay to be able to click x
-    update = =>
-      query = @searchInput.val().trim()
-      if !query
-        @emptyAndClose()
-        return
-
-    @delay(update, 100, 'removeFocused')
+    @selectAll(e)
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -231,9 +222,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
       href = @$('.global-search-result .nav-tab.is-hover').attr('href')
       if href
         @navigate(href)
+        @emptyAndCloseDelayed()
       else
         @openExtendedSearch()
-      @emptyAndClose()
       return
 
     # on other keys, show result
@@ -277,18 +268,24 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @scrollToIfNeeded(prev, false)
 
   emptyAndClose: =>
+    @andClose()
+    @andEmpty()
+
+  emptyAndCloseDelayed: =>
+    @andClose()
+    delay = =>
+      @andEmpty()
+    @delay(delay, 60000, 'emptyAndCloseDelayed')
+
+  andEmpty: =>
     @query = ''
     @searchInput.val('')
+
+  andClose: =>
     @searchContainer.removeClass('focused filled open no-match loading')
     @globalSearch.close()
     @delayedRemoveAnyPopover()
-
-  andClose: =>
-    @query = ''
     @searchInput.blur()
-    @searchContainer.removeClass('open no-match loading')
-    @globalSearch.close()
-    @delayedRemoveAnyPopover()
 
   search: =>
     query = @searchInput.val().trim()
@@ -301,9 +298,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @query = query
 
     if @query == ''
-      @searchContainer.removeClass('open')
+      @searchContainer.removeClass('open loading')
       return
 
+    @searchContainer.addClass('open')
     @globalSearch.search(query: @query)
 
   filterNavbar: (values, user, parent = null) ->
@@ -460,7 +458,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     if e
       e.preventDefault()
     query = @searchInput.val()
-    @searchInput.val('').blur()
+    @emptyAndClose()
     if query
       @navigate("#search/#{encodeURIComponent(query)}")
       return
