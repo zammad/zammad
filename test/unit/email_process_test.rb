@@ -108,6 +108,45 @@ Some Textäöü",
         },
       },
       {
+        data: "Sender: me_sender@example.com
+To: customer@example.com
+Subject: äöü some subject 3
+
+Some Textäöü",
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'äöü some subject 3',
+          },
+          1 => {
+            body: 'Some Textäöü',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'me@example.com',
+              email: 'me@example.com',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'customer@example.com',
+              email: 'customer@example.com',
+            },
+          ],
+        },
+      },
+      {
         data: "From: me@example.com
 To: customer@example.com
 Subject:
