@@ -39,5 +39,27 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
         expect(response['Content-Type']).to eq('application/vnd.ms-excel')
       end
     end
+
+    # Regression test for issue #2398 - Missing custom object in database causes error on export in time_accounting
+    # This test is identical to the above one, except with the added step of a pending migration in the beginning
+    context 'with pending attribute migrations, requesting a log report download' do
+      it 'responds with an Excel spreadsheet' do
+        ObjectManager::Attribute.add attributes_for :object_manager_attribute_select
+
+        group   = create(:group)
+        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer )
+        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note') )
+
+        create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
+
+        authenticated_as(admin)
+        get "/api/v1/time_accounting/log/by_ticket/#{year}/#{month}?download=true", params: {}
+
+        expect(response).to have_http_status(200)
+        expect(response['Content-Disposition']).to be_truthy
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"")
+        expect(response['Content-Type']).to eq('application/vnd.ms-excel')
+      end
+    end
   end
 end

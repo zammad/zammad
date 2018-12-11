@@ -219,6 +219,7 @@ class ReportsController < ApplicationController
     # needs to be skipped
     objects = ObjectManager::Attribute.where(editable: true,
                                              active: true,
+                                             to_create: false,
                                              object_lookup_id: ObjectLookup.lookup(name: 'Ticket').id)
                                       .pluck(:name, :display, :data_type, :data_option)
                                       .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option } }
