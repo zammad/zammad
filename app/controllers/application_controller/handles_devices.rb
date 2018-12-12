@@ -59,14 +59,12 @@ module ApplicationController::HandlesDevices
 
     # add device if needed
     http_user_agent = ENV['HTTP_USER_AGENT'] || request.env['HTTP_USER_AGENT']
-    Delayed::Job.enqueue(
-      Observer::UserDeviceLogJob.new(
-        http_user_agent,
-        remote_ip,
-        user.id,
-        session[:user_device_fingerprint],
-        type,
-      )
+    UserDeviceLogJob.perform_later(
+      http_user_agent,
+      remote_ip,
+      user.id,
+      session[:user_device_fingerprint],
+      type,
     )
   end
 end
