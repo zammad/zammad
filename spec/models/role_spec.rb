@@ -2,10 +2,7 @@ require 'rails_helper'
 require 'models/concerns/has_groups_examples'
 
 RSpec.describe Role do
-  let(:group_access_instance) { create(:role) }
-  let(:new_group_access_instance) { build(:role) }
-
-  include_examples 'HasGroups'
+  include_examples 'HasGroups', group_access_factory: :role
 
   context '#validate_agent_limit_by_attributes' do
 
