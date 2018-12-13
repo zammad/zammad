@@ -768,7 +768,7 @@ to send no browser reload event, pass false
         if ENV['APP_RESTART_CMD']
           AppVersion.set(true, 'restart_auto')
           sleep 4
-          Delayed::Job.enqueue(Observer::AppVersionRestartJob.new(ENV['APP_RESTART_CMD']))
+          AppVersionRestartJob.perform_later(ENV['APP_RESTART_CMD'])
         else
           AppVersion.set(true, 'restart_manual')
         end
