@@ -248,7 +248,7 @@ function setup_elasticsearch () {
 
   yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment
 
-  if [ "${ES_CONNECTION}" == "http://127.0.0.1:9200" ]; then
+  if [ "${ES_CONNECTION}" == "http://127.0.0.1:9200" ] || [ "${ES_CONNECTION}" == "http://localhost:9200" ]; then
     ${INIT_CMD} restart elasticsearch
   else
     echo -e "\n It seems you're running an external Elasticsearch server on ${ES_CONNECTION}"
