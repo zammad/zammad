@@ -75,10 +75,10 @@ class TestCase < Test::Unit::TestCase
       begin
         local_browser = browser_instance_remote
         break
-      rescue
+      rescue => e
         wait_until_ready = rand(5..13)
+        log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready, exception: e })
         sleep wait_until_ready
-        log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready })
       end
     end
 
