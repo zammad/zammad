@@ -98,13 +98,7 @@ class AdminChannelEmailTest < TestCase
       value: 'Users',
     )
     click(css: '.modal button.js-submit')
-    sleep 2
-
-    watch_for_disappear(
-      css: '.modal',
-    )
-    sleep 2
-    exists_not(css: '.modal')
+    modal_disappear(timeout: 20)
 
     watch_for(
       css: '.content.active',
