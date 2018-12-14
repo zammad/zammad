@@ -26,7 +26,7 @@ module Import
 
         def attribute_config(object, name, attribute)
           {
-            object:        object,
+            object:        object.to_s,
             name:          name,
             display:       attribute.title,
             data_type:     data_type(attribute),

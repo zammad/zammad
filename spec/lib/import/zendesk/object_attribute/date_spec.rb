@@ -1,9 +1,11 @@
 require 'rails_helper'
+require 'lib/import/zendesk/object_attribute/base_examples'
 
 # required due to some of rails autoloading issues
 require 'import/zendesk/object_attribute/date'
 
 RSpec.describe Import::Zendesk::ObjectAttribute::Date do
+  it_behaves_like Import::Zendesk::ObjectAttribute::Base
 
   it 'imports date object attribute from date object field' do
 

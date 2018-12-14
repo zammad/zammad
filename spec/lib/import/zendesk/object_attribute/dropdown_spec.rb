@@ -1,6 +1,8 @@
 require 'rails_helper'
+require 'lib/import/zendesk/object_attribute/base_examples'
 
 RSpec.describe Import::Zendesk::ObjectAttribute::Dropdown do
+  it_behaves_like Import::Zendesk::ObjectAttribute::Base
 
   it 'imports select object attribute from dropdown object field' do
 

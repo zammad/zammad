@@ -40,7 +40,18 @@ class Sequencer
             def resource_iteration(&block)
               resource_collection.public_send(resource_iteration_method, &block)
             rescue ZendeskAPI::Error::NetworkError => e
-              return if e.response.status.to_s == '403' && resource_klass.in?(%w[UserField OrganizationField])
+              case e.response.status.to_s
+              when '403'
+                return if resource_klass.in?(%w[UserField OrganizationField])
+              when /^5\d\d$/
+                raise if (fail_count ||= 1) > 10
+
+                logger.error e
+                logger.info "Sleeping 10 seconds after ZendeskAPI::Error::NetworkError and retry (##{fail_count}/10)."
+                sleep 10
+
+                (fail_count += 1) && retry
+              end
 
               raise
             end

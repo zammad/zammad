@@ -1,9 +1,11 @@
 require 'rails_helper'
+require 'lib/import/zendesk/object_attribute/base_examples'
 
 # required due to some of rails autoloading issues
 require 'import/zendesk/object_attribute/integer'
 
 RSpec.describe Import::Zendesk::ObjectAttribute::Integer do
+  it_behaves_like Import::Zendesk::ObjectAttribute::Base
 
   it 'imports integer object attribute from integer object field' do
 
