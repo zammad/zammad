@@ -93,10 +93,22 @@ class TestCase < Test::Unit::TestCase
     if ENV['BROWSER_VERSION']
       caps.version  = ENV['BROWSER_VERSION']
     end
+
+    # (ironically) required for timeout checks
+    # https://github.com/zalando/zalenium/issues/469#issuecomment-371417340
+    # https://opensource.zalando.com/zalenium/#usage
+    caps['idleTimeout'] = 300
+
+    http_client = Selenium::WebDriver::Remote::Http::Default.new(
+      open_timeout: 120,
+      read_timeout: 120
+    )
+
     local_browser = Selenium::WebDriver.for(
       :remote,
       url: ENV['REMOTE_URL'],
       desired_capabilities: caps,
+      http_client: http_client,
     )
     @browsers[local_browser.hash] = local_browser
     browser_instance_preferences(local_browser)
