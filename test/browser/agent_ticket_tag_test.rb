@@ -353,7 +353,7 @@ class AgentTicketTagTest < TestCase
   end
 
   def test_b_tags
-    tag_prefix = "tag#{rand(999_999_999)}"
+    tag_prefix = "tag#{rand(1000)}"
 
     @browser = browser_instance
     login(
