@@ -11,7 +11,7 @@ class AdminPermissionsGranularVsFullTest < TestCase
     )
     tasks_close_all()
 
-    click(css: '.user-menu a[title=Admin')
+    click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#manage/groups"]')
     click(css: '.content.active a[data-type="new"]')
 
@@ -21,24 +21,32 @@ class AdminPermissionsGranularVsFullTest < TestCase
     element.clear
     element.send_keys(new_group_name)
     click(css: '.modal button.js-submit')
-
-    sleep(1)
+    modal_disappear
 
     click(css: '.content.active a[href="#manage/users"]')
 
     user_css = '.user-list .js-tableBody tr td'
     watch_for(css: user_css)
-    click(css: user_css)
+    @browser.find_elements(css: '.content.active .user-list td:first-child').each do |entry|
+      next if entry.text.strip != 'master@example.com'
+
+      entry.click
+      break
+    end
 
     modal_ready
 
     scroll_script = "var el = document.getElementsByClassName('modal')[0];"
     scroll_script += 'el.scrollTo(0, el.scrollHeight);'
-
     @browser.execute_script scroll_script
 
     group = @browser.find_elements(css: '.modal .settings-list tbody tr').find do |el|
       el.find_element(css: 'td').text == new_group_name
+    end
+
+    if !group
+      screenshot(comment: 'group_not_found')
+      raise "Can't find group #{new_group_name}"
     end
 
     toggle_checkbox(group, 'full')
