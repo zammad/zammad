@@ -46,7 +46,15 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_url
-    ENV['BROWSER_URL'] || 'http://localhost:3000'
+    return ENV['BROWSER_URL'] if ENV['BROWSER_URL'].present?
+
+    "http://#{host}:3000"
+  end
+
+  def host
+    return 'localhost' if ENV['CI'].blank?
+
+    Socket.ip_address_list.detect(&:ipv4_private?).ip_address
   end
 
   def browser_instance

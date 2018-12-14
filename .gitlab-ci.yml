@@ -1,6 +1,23 @@
-variables:
-  Z_LOCALES: "en-us:de-de"
+image: registry.znuny.com/docker/zammad-application:latest
 
+# Global variables added to the ENV of each job
+variables:
+  # for faster translation loading
+  Z_LOCALES: "en-us:de-de"
+  # Browser tests and variables
+  RAILS_SERVE_STATIC_FILES: "true"
+  REMOTE_URL: "http://selenium:24444/wd/hub"
+  TZ: "Europe/London"
+  # docker elgalu/selenium variables for parallel browser instance creation
+  MAX_INSTANCES: "50"
+  MAX_SESSIONS: "50"
+  # docker-imap-devel variables required for browser tests
+  MAILNAME: "mail.test.dc.zammad.com"
+  MAILBOX_INIT: "zammad@mail.test.dc.zammad.com:zammad"
+  MAIL_ADDRESS: "zammad@mail.test.dc.zammad.com"
+  MAIL_PASS: "zammad"
+
+# Artifacts are stored for failed jobs for 2 days
 .artifacts_error_template: &artifacts_error
   artifacts:
     expire_in: 2 days
@@ -9,12 +26,30 @@ variables:
     - tmp/screenshot*
     - log/*.log
 
+# Workaround to enable usage of mixed SSH and Docker GitLab CI runners
+.docker_env_template: &docker_env
+  tags:
+    - docker
+
+.base_env_template: &base_env
+  <<: *docker_env
+  <<: *artifacts_error
+
+# General required Docker services for different DB envs
+.services_mysql_template: &services_mysql
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+
+.services_postgresql_template: &services_postgresql
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+
+# Initialize env
 before_script:
-  - ruby -v
-  - which ruby
-  - env
-  - test -n "$RNAME" && script/build/test_db_config.sh
-  - test -n "$RNAME" && bundle install -j $(nproc)
+  - test ${CI_JOB_STAGE} != 'pre' && bundle install -j $(nproc)
+  - test ${CI_JOB_STAGE} != 'pre' && ruby script/build/database_config.rb
 
 stages:
   - pre
@@ -24,31 +59,30 @@ stages:
 
 # pre stage
 
-pre:rubocop:
+# Workaround to enable usage of mixed SSH and Docker GitLab CI runners
+.pre_stage_template: &pre_stage
+  <<: *docker_env
   stage: pre
-  tags:
-    - core
+
+pre:rubocop:
+  <<: *pre_stage
   script:
     - bundle exec rubocop
 
 pre:coffeelint:
-  stage: pre
-  tags:
-    - core
+  <<: *pre_stage
   script:
     - coffeelint app/
 
 pre:bundle-audit:
-  stage: pre
-  tags:
-    - core
+  <<: *pre_stage
   script:
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit
 
 pre:github:
-  stage: pre
+  <<: *pre_stage
   tags:
     - deploy
   script:
@@ -59,32 +93,27 @@ pre:github:
 ## RSpec
 
 .script_rspec_template: &script_rspec_definition
-  <<: *artifacts_error
+  <<: *base_env
   variables:
     RAILS_ENV: "test"
   script:
     - rake zammad:db:init
     - bundle exec rspec
-    - rake db:drop
 
 test:rspec:mysql:
   stage: test
-  tags:
-    - core
-    - mysql
+  <<: *services_mysql
   <<: *script_rspec_definition
 
 test:rspec:postgresql:
   stage: test
-  tags:
-    - core
-    - postgresql
+  <<: *services_postgresql
   <<: *script_rspec_definition
 
 ## Unit and Controller tests
 
 .script_unit_template: &script_unit_definition
-  <<: *artifacts_error
+  <<: *base_env
   variables:
     RAILS_ENV: "test"
   script:
@@ -98,214 +127,155 @@ test:rspec:postgresql:
 
 test:unit:mysql:
   stage: test
-  tags:
-    - core
-    - mysql
+  <<: *services_mysql
   <<: *script_unit_definition
 
 test:unit:postgresql:
   stage: test
-  tags:
-    - core
-    - postgresql
+  <<: *services_postgresql
   <<: *script_unit_definition
 
 ## Integration tests
 
-test:integration:email_helper_deliver:
-  <<: *artifacts_error
+.test_integration_template: &test_integration_definition
+  <<: *base_env
+  <<: *services_postgresql
   stage: test
   variables:
     RAILS_ENV: "test"
-  tags:
-    - core
+
+test:integration:email_helper_deliver:
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/email_helper_test.rb
     - ruby -I test/ test/integration/email_deliver_test.rb
     - ruby -I test/ test/integration/email_keep_on_server_test.rb
-    - rake db:drop
 
 test:integration:facebook:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core-facebook
+  <<: *test_integration_definition
   script:
     - rake zammad:db:init
     - ruby -I test/ test/integration/facebook_test.rb
-    - rake db:drop
   allow_failure: true
 
 test:integration:geo:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/geo_calendar_test.rb
     - ruby -I test/ test/integration/geo_location_test.rb
     - ruby -I test/ test/integration/geo_ip_test.rb
-    - rake db:drop
 
 test:integration:user_agent:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/user_agent_test.rb
     - export ZAMMAD_PROXY_TEST=true
     - ruby -I test/ test/integration/user_agent_test.rb
-    - rake db:drop
   allow_failure: true
 
 test:integration:user_device:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/user_device_controller_test.rb
-    - rake db:drop
 
 test:integration:slack:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - echo "gem 'slack-api'" >> Gemfile.local
     - bundle install -j $(nproc)
     - ruby -I test test/integration/slack_test.rb
-    - rake db:drop
 
 test:integration:clearbit:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:unseeded
     - ruby -I test test/integration/clearbit_test.rb
-    - rake db:drop
   allow_failure: true
 
 test:integration:telegram:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:init
     - ruby -I test test/integration/telegram_controller_test.rb
-    - rake db:drop
 
 test:integration:twilio:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:init
     - ruby -I test test/integration/twilio_sms_controller_test.rb
-    - rake db:drop
 
 test:integration:idoit:
-  <<: *artifacts_error
-  stage: test
-  variables:
-    RAILS_ENV: "test"
-  tags:
-    - core
+  <<: *test_integration_definition
   script:
     - rake zammad:db:init
     - ruby -I test test/integration/idoit_controller_test.rb
-    - rake db:drop
 
 ### Elasticsearch
 
 .script_elasticsearch_template: &script_elasticsearch_definition
-  <<: *artifacts_error
+  <<: *base_env
   stage: test
   variables:
     RAILS_ENV: "test"
     ES_INDEX_RAND: "true"
-    ES_URL: "http://localhost:9200"
+    ES_URL: "http://elasticsearch:9200"
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/elasticsearch_active_test.rb
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/integration/report_test.rb
     - bundle exec rspec --tag searchindex
-    - rake db:drop
 
 test:integration:es_mysql:
-  tags:
-    - core
-    - mysql
   <<: *script_elasticsearch_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
 
 test:integration:es_postgresql:
-  tags:
-    - core
-    - postgresql
   <<: *script_elasticsearch_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
 
 ### Zendesk
 
 .script_integration_zendesk_template: &script_integration_zendesk_definition
-  <<: *artifacts_error
+  <<: *base_env
+  <<: *services_postgresql
   stage: test
   variables:
     RAILS_ENV: "test"
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/zendesk_import_test.rb
-    - rake db:drop
   allow_failure: true
 
 test:integration:zendesk_mysql:
-  tags:
-    - core
-    - mysql
+  <<: *services_mysql
   <<: *script_integration_zendesk_definition
 
 test:integration:zendesk_postgresql:
-  tags:
-    - core
-    - postgresql
+  <<: *services_postgresql
   <<: *script_integration_zendesk_definition
 
 ### OTRS
 
 .script_integration_otrs_template: &script_integration_otrs_definition
-  <<: *artifacts_error
+  <<: *base_env
   stage: test
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/otrs_import_test.rb
-    - rake db:drop
 
 .variables_integration_otrs_6_template: &variables_integration_otrs_6_definition
   variables:
@@ -313,54 +283,45 @@ test:integration:zendesk_postgresql:
     IMPORT_OTRS_ENDPOINT: "https://vz1185.test.znuny.com/otrs/public.pl?Action=ZammadMigrator"
 
 test:integration:otrs_6_mysql:
-  tags:
-    - core
-    - mysql
+  <<: *services_mysql
   <<: *script_integration_otrs_definition
   <<: *variables_integration_otrs_6_definition
 
 test:integration:otrs_6_postgresql:
-  tags:
-    - core
-    - postgresql
+  <<: *services_postgresql
   <<: *script_integration_otrs_definition
   <<: *variables_integration_otrs_6_definition
 
 test:integration:otrs_5:
-  tags:
-    - core
+  <<: *services_postgresql
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
   <<: *script_integration_otrs_definition
 
 test:integration:otrs_4:
-  tags:
-    - core
+  <<: *services_postgresql
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
   <<: *script_integration_otrs_definition
 
 test:integration:otrs_33:
-  tags:
-    - core
+  <<: *services_postgresql
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
   <<: *script_integration_otrs_definition
 
 test:integration:otrs_32:
-  tags:
-    - core
+  <<: *services_postgresql
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
   <<: *script_integration_otrs_definition
 
 test:integration:otrs_31:
-  tags:
-    - core
+  <<: *services_postgresql
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -371,15 +332,14 @@ test:integration:otrs_31:
 ## preparation (asset precompile)
 
 browser:build:
+  <<: *base_env
+  <<: *services_postgresql
   stage: test
-  tags:
-    - core
   variables:
     RAILS_ENV: "production"
   script:
     - rake zammad:db:unseeded
     - rake assets:precompile
-    - rake db:drop
   artifacts:
     expire_in: 1 week
     paths:
@@ -390,13 +350,11 @@ browser:build:
 ## Browser core tests
 
 .variables_browser_template: &variables_browser_definition
-  RAILS_SERVE_STATIC_FILES: "true"
   RAILS_ENV: "production"
-  BROWSER_URL: "http://$IP:$BROWSER_PORT"
   APP_RESTART_CMD: "rake zammad:ci:app:restart"
 
 .test_browser_core_template: &test_browser_core_definition
-  <<: *artifacts_error
+  <<: *base_env
   stage: browser-core
   dependencies:
     - browser:build
@@ -405,47 +363,42 @@ browser:build:
 
 test:browser:integration:api_client_ruby:
   <<: *test_browser_core_definition
+  <<: *services_postgresql
   variables:
     <<: *variables_browser_definition
-    TEST_URL: "http://$IP:$BROWSER_PORT/"
-  tags:
-    - browser
   script:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - rake zammad:ci:test:start
-    - git clone git@github.com:zammad/zammad-api-client-ruby.git || rake zammad:ci:test:fail
+    - git clone https://github.com/zammad/zammad-api-client-ruby.git
     - cd zammad-api-client-ruby
     - bundle install -j $(nproc)
-    - bundle exec rspec || (cd .. && rake zammad:ci:test:fail)
-    - cd .. && rake zammad:ci:test:stop
+    - bundle exec rspec
 
 test:browser:integration:api_client_php:
   <<: *test_browser_core_definition
+  <<: *services_postgresql
   variables:
     <<: *variables_browser_definition
-    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://$IP:$BROWSER_PORT"
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "master@example.com"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
-  tags:
-    - browser
   script:
     - RAILS_ENV=test rake db:create
     - rake zammad:ci:test:start zammad:setup:auto_wizard
-    - git clone git@github.com:zammad/zammad-api-client-php || rake zammad:ci:test:fail
+    - git clone https://github.com/zammad/zammad-api-client-php.git
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/local/bin
+    - ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
     - cd zammad-api-client-php
     - composer install
-    - vendor/bin/phpunit || (cd .. && rake zammad:ci:test:fail)
-    - cd .. && rake zammad:ci:test:stop
+    - vendor/bin/phpunit
 
 ### Browser test slices
 
 #### Templates
 
 .script_browser_slice_template: &script_browser_slice_definition
-  stage: browser-core
-  dependencies:
-    - browser:build
   script:
     # temporary workaround to check Yahoo! mailbox only in test:browser:core:ff_3_* tests
     - if [[ $CI_JOB_NAME != test:browser:core:ff_3_* ]]; then unset MAILBOX_AUTO1 ; fi
@@ -456,22 +409,33 @@ test:browser:integration:api_client_php:
     - script/build/test_slice_tests.sh $TEST_SLICE
     - RAILS_ENV=test rake db:create
     - rake zammad:ci:test:start[with_elasticsearch]
-    - rake test:browser || rake zammad:ci:test:fail
-    - rake zammad:ci:test:stop
+    - rake test:browser
 
 .test_browser_core_postgresql_template: &test_browser_core_postgresql_definition
   <<: *test_browser_core_definition
-  tags:
-    - browser
-    - postgresql
   <<: *script_browser_slice_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
+    - name: docker.io/elgalu/selenium:latest
+      alias: selenium
+    - name: registry.znuny.com/docker/docker-imap-devel:latest
+      alias: mail
 
 .test_browser_core_mysql_template: &test_browser_core_mysql_definition
   <<: *test_browser_core_definition
-  tags:
-    - browser
-    - mysql
   <<: *script_browser_slice_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
+    - name: docker.io/elgalu/selenium:latest
+      alias: selenium
+    - name: registry.znuny.com/docker/docker-imap-devel:latest
+      alias: mail
 
 #### Firefox
 
@@ -647,8 +611,16 @@ test:browser:core:chrome_6_postgresql:
 
 ### Auto wizard
 
+.auto_wizard_services_template: &auto_wizard_services
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: docker.io/elgalu/selenium:latest
+      alias: selenium
+
 .test_browser_integration_template: &test_browser_integration_definition
-  <<: *artifacts_error
+  <<: *base_env
+  <<: *auto_wizard_services
   stage: browser-integration
   dependencies:
     - browser:build
@@ -657,18 +629,16 @@ test:browser:core:chrome_6_postgresql:
   script:
     - RAILS_ENV=test rake db:create
     - cp $AUTO_WIZARD_FILE auto_wizard.json
-    - rake zammad:ci:test:start[with_elasticsearch]
-    - ruby -I test/ $TEST_FILE || rake zammad:ci:test:fail
-    - rake zammad:ci:test:stop
+    - rake zammad:ci:test:start
+    - ruby -I test/ $TEST_FILE
 
 .browser_core_auto_wizard_template: &browser_core_auto_wizard_definition
   <<: *test_browser_core_definition
+  <<: *auto_wizard_services
   <<: *script_integration_auto_wizard_definition
 
 test:browser:autowizard_chrome:
   <<: *browser_core_auto_wizard_definition
-  tags:
-    - browser
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
@@ -677,8 +647,6 @@ test:browser:autowizard_chrome:
 
 test:browser:autowizard_ff:
   <<: *browser_core_auto_wizard_definition
-  tags:
-    - browser
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
@@ -693,9 +661,6 @@ test:browser:autowizard_ff:
 
 test:browser:integration:twitter_chrome:
   <<: *browser_integration_auto_wizard_definition
-  tags:
-    - browser
-    - twitter
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
@@ -704,9 +669,6 @@ test:browser:integration:twitter_chrome:
 
 test:browser:integration:twitter_ff:
   <<: *browser_integration_auto_wizard_definition
-  tags:
-    - browser
-    - twitter
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
@@ -715,9 +677,6 @@ test:browser:integration:twitter_ff:
 
 test:browser:integration:facebook_chrome:
   <<: *browser_integration_auto_wizard_definition
-  tags:
-    - browser
-    - facebook
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
@@ -726,9 +685,6 @@ test:browser:integration:facebook_chrome:
 
 test:browser:integration:facebook_ff:
   <<: *browser_integration_auto_wizard_definition
-  tags:
-    - browser
-    - facebook
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
@@ -737,8 +693,6 @@ test:browser:integration:facebook_ff:
 
 test:browser:integration:idoit_chrome:
   <<: *browser_integration_auto_wizard_definition
-  tags:
-    - browser
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
@@ -749,17 +703,15 @@ test:browser:integration:idoit_chrome:
 
 .variables_browser_import_template: &variables_browser_import_definition
   BROWSER: "chrome"
-  BROWSER_URL: "http://$IP:$BROWSER_PORT"
+  RAILS_SERVE_STATIC_FILES: "true"
+  RAILS_ENV: "production"
 
 .browser_integration_import_template: &browser_integration_import_definition
   <<: *test_browser_integration_definition
-  tags:
-    - browser
   script:
     - RAILS_ENV=test rake db:create
     - rake zammad:ci:test:start
     - ruby -I test/ $TEST_FILE
-    - rake zammad:ci:test:stop
 
 test:browser:integration:otrs_chrome:
   <<: *browser_integration_import_definition

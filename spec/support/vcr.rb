@@ -6,7 +6,7 @@ VCR.configure do |config|
   config.ignore_request do |request|
     uri = URI(request.uri)
 
-    ['zammad.com', 'google.com'].any? do |site|
+    ['zammad.com', 'google.com', 'elasticsearch', 'selenium'].any? do |site|
       uri.host.include?(site)
     end
   end
