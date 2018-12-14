@@ -64,6 +64,7 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
     elements = instance.find_elements(xpath: '//b[contains(text(),"äöüß & Test Organization")]')
     elements = elements.select { |x| x.text.present? }
     assert elements
+    # flanky
     assert_equal 'äöüß & Test Organization', elements.first.text
   end
 end

@@ -185,6 +185,7 @@ class JobTest < ActiveSupport::TestCase
     end
     job1.timeplan['minutes'][min.to_s] = true
     job1.save!
+    # flanky
     assert(job1.in_timeplan?(time))
 
     job1.timeplan['hours'][time.hour] = true

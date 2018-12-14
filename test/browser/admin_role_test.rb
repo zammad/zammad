@@ -43,6 +43,7 @@ class AdminRoleTest < TestCase
     )
 
     logout()
+    # flanky
     login(
       username: email,
       password: password,

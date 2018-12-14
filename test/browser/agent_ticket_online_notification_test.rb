@@ -107,6 +107,8 @@ class AgentTicketOnlineNotificationTest < TestCase
       value: 'online notification #3',
       timeout: 6,
     )
+
+    # flanky
     watch_for(
       browser: browser2,
       css: '.js-notificationsCounter',
@@ -166,6 +168,7 @@ class AgentTicketOnlineNotificationTest < TestCase
     items = browser2.find_elements(css: '.js-notificationsContainer .js-item')
     assert_equal(3, items.count)
 
+    # flanky
     items = browser2.find_elements(css: '.js-notificationsContainer .js-item.is-inactive')
     assert_equal(3, items.count)
 
