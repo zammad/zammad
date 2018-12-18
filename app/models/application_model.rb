@@ -18,6 +18,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::ChecksImport
   include ApplicationModel::CanTouchReferences
   include ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
+  include ApplicationModel::HasExistsCheckByObjectAndId
 
   self.abstract_class = true
 end

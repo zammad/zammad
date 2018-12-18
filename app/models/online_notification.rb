@@ -41,6 +41,9 @@ add a new online notification for this user
       object_id = ObjectLookup.by_name(data[:object])
     end
 
+    # check if object for online notification exists
+    exists_by_object_and_id?(data[:object], data[:o_id])
+
     record = {
       o_id: data[:o_id],
       object_lookup_id: object_id,
