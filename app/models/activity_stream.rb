@@ -49,6 +49,9 @@ add a new activity entry for an object
       permission_id = permission.id
     end
 
+    # check if object for online notification exists
+    exists_by_object_and_id?(data[:object], data[:o_id])
+
     # check newest entry - is needed
     result = ActivityStream.where(
       o_id: data[:o_id],

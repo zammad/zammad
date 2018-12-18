@@ -538,10 +538,22 @@ class OnlineNotificationTest < ActiveSupport::TestCase
   end
 
   test 'cleanup check' do
+
+    ticket1 = Ticket.create(
+      group: @group,
+      customer_id: @customer_user.id,
+      owner_id: User.lookup(login: '-').id,
+      title: 'Unit Test 1 (äöüß)!',
+      state_id: Ticket::State.lookup(name: 'closed').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
+    )
+
     online_notification1 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          false,
       user_id:       @agent_user1.id,
       created_by_id: 1,
@@ -552,7 +564,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification2 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          true,
       user_id:       @agent_user1.id,
       created_by_id: 1,
@@ -563,7 +575,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification3 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          false,
       user_id:       @agent_user1.id,
       created_by_id: 1,
@@ -574,7 +586,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification4 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          true,
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
@@ -585,7 +597,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification5 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          true,
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
@@ -596,7 +608,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification6 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          true,
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
@@ -607,7 +619,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     online_notification7 = OnlineNotification.add(
       type:          'create',
       object:        'Ticket',
-      o_id:          123,
+      o_id:          ticket1.id,
       seen:          true,
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
@@ -628,4 +640,32 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     OnlineNotification.destroy_all
   end
 
+  test 'not existing object ref' do
+    assert_raises(RuntimeError) do
+      OnlineNotification.add(
+        type:          'create',
+        object:        'TicketNotExisting',
+        o_id:          123,
+        seen:          false,
+        user_id:       @agent_user1.id,
+        created_by_id: 1,
+        updated_by_id: 1,
+        created_at:    Time.zone.now - 10.months,
+        updated_at:    Time.zone.now - 10.months,
+      )
+    end
+    assert_raises(ActiveRecord::RecordNotFound) do
+      OnlineNotification.add(
+        type:          'create',
+        object:        'Ticket',
+        o_id:          123,
+        seen:          false,
+        user_id:       @agent_user1.id,
+        created_by_id: 1,
+        updated_by_id: 1,
+        created_at:    Time.zone.now - 10.months,
+        updated_at:    Time.zone.now - 10.months,
+      )
+    end
+  end
 end
