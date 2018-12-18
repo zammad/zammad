@@ -9,19 +9,23 @@ FactoryBot.define do
     created_by_id 1
 
     factory :twitter_channel do
+      transient do
+        custom_options { {} }
+      end
+
       area 'Twitter::Account'
       options do
         {
           adapter: 'twitter',
           auth: {
-            consumer_key:       'some',
-            consumer_secret:    'some',
-            oauth_token:        'key',
+            consumer_key: 'some',
+            consumer_secret: 'some',
+            oauth_token: 'key',
             oauth_token_secret: 'secret',
           },
           user: {
-            screen_name: 'system_login',
             id: 'system_id',
+            screen_name: 'system_login',
           },
           sync: {
             import_older_tweets: true,
@@ -29,21 +33,21 @@ FactoryBot.define do
             search: [
               {
                 term: 'zammad',
-                group_id: Group.first.id,
+                group_id: Group.first.id
               },
               {
                 term: 'hash_tag1',
-                group_id: Group.first.id,
-              },
+                group_id: Group.first.id
+              }
             ],
             mentions: {
-              group_id: Group.first.id,
+              group_id: Group.first.id
             },
             direct_messages: {
-              group_id: Group.first.id,
+              group_id: Group.first.id
             }
           }
-        }
+        }.deep_merge(custom_options)
       end
     end
   end
