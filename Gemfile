@@ -145,6 +145,7 @@ group :development, :test do
   gem 'simplecov-rcov'
 
   # UI tests w/ Selenium
+  gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
 
   # livereload on template changes (html, js, css)
