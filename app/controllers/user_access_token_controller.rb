@@ -61,7 +61,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
     end
 
     render json: {
-      tokens: token_list,
+      tokens:      token_list,
       permissions: permissions,
     }, status: :ok
   end

@@ -35,7 +35,7 @@ namespace :searchindex do
     # create indexes
     SearchIndexBackend.index(
       action: 'create',
-      data: {
+      data:   {
         mappings: mapping,
         settings: settings,
       }
@@ -73,21 +73,21 @@ namespace :searchindex do
           action: 'delete',
         },
         {
-          action: 'create',
+          action:      'create',
           description: 'Extract zammad-attachment information from arrays',
-          processors: [
+          processors:  [
             {
               foreach: {
-                field: 'article',
+                field:          'article',
                 ignore_failure: true,
-                processor: {
+                processor:      {
                   foreach: {
-                    field: '_ingest._value.attachment',
+                    field:          '_ingest._value.attachment',
                     ignore_failure: true,
-                    processor: {
+                    processor:      {
                       attachment: {
-                        target_field: '_ingest._value',
-                        field: '_ingest._value._content',
+                        target_field:   '_ingest._value',
+                        field:          '_ingest._value._content',
                         ignore_failure: true,
                       }
                     }
@@ -183,7 +183,7 @@ def get_mapping_properties_object(object)
   object.columns_hash.each do |key, value|
     if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
       result[object.name][:properties][key] = {
-        type: 'string',
+        type:   'string',
         fields: {
           raw: { 'type': 'string', 'index': 'not_analyzed' }
         }
@@ -198,7 +198,7 @@ def get_mapping_properties_object(object)
       }
     elsif value.type == :boolean
       result[object.name][:properties][key] = {
-        type: 'boolean',
+        type:   'boolean',
         fields: {
           raw: { 'type': 'boolean', 'index': 'not_analyzed' }
         }
@@ -240,9 +240,9 @@ def get_mapping_properties_object(object)
         excludes: ['article.attachment']
       }
       result[object.name][:properties][:article] = {
-        type: 'nested',
+        type:              'nested',
         include_in_parent: true,
-        properties: {
+        properties:        {
           attachment: {
             type: 'attachment',
           }

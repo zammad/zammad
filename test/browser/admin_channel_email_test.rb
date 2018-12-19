@@ -15,7 +15,7 @@ class AdminChannelEmailTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -25,14 +25,14 @@ class AdminChannelEmailTest < TestCase
     # check if postmaster filter are shown
     click(css: '.content.active a[href="#c-filter"]')
     match(
-      css: '.content.active #c-filter .overview',
+      css:   '.content.active #c-filter .overview',
       value: 'No Entries',
     )
 
     # check if signatures are shown
     click(css: '.content.active a[href="#c-signature"]')
     match(
-      css: '.content.active #c-signature .overview',
+      css:   '.content.active #c-signature .overview',
       value: 'default',
     )
 
@@ -41,15 +41,15 @@ class AdminChannelEmailTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal input[name="realname"]',
+      css:   '.modal input[name="realname"]',
       value: 'My System',
     )
     set(
-      css: '.modal input[name="email"]',
+      css:   '.modal input[name="email"]',
       value: mailbox_user,
     )
     set(
-      css: '.modal input[name="password"]',
+      css:   '.modal input[name="password"]',
       value: mailbox_password,
     )
     select(
@@ -60,7 +60,7 @@ class AdminChannelEmailTest < TestCase
     sleep 4
 
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: '(already exists|unknown mailbox)',
     )
 
@@ -82,15 +82,15 @@ class AdminChannelEmailTest < TestCase
     modal_ready()
 
     set(
-      css: '.modal input[name="realname"]',
+      css:   '.modal input[name="realname"]',
       value: 'My System',
     )
     set(
-      css: '.modal input[name="email"]',
+      css:   '.modal input[name="email"]',
       value: mailbox_user,
     )
     set(
-      css: '.modal input[name="password"]',
+      css:   '.modal input[name="password"]',
       value: mailbox_password,
     )
     select(
@@ -101,7 +101,7 @@ class AdminChannelEmailTest < TestCase
     modal_disappear(timeout: 20)
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: mailbox_user,
     )
 
@@ -111,12 +111,12 @@ class AdminChannelEmailTest < TestCase
     modal_ready()
 
     set(
-      css: '.modal input[name="options::folder"]',
+      css:   '.modal input[name="options::folder"]',
       value: 'not_existing_folder',
     )
     click(css: '.modal .js-inbound button.js-submit')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'Mailbox doesn\'t exist',
     )
 
@@ -131,7 +131,7 @@ class AdminChannelEmailTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -145,18 +145,18 @@ class AdminChannelEmailTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal input[name="name"]',
+      css:   '.modal input[name="name"]',
       value: filter_name,
     )
     set(
-      css: '.modal input[name="match::from::value"]',
+      css:   '.modal input[name="match::from::value"]',
       value: 'target',
     )
     click(css: '.modal .js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.content.active .table',
+      css:   '.content.active .table',
       value: filter_name,
     )
 
@@ -170,7 +170,7 @@ class AdminChannelEmailTest < TestCase
 
     # confirm the clone exists in the table
     watch_for(
-      css: '.content.active .table',
+      css:   '.content.active .table',
       value: "Clone: #{filter_name}",
     )
   end

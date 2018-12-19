@@ -8,7 +8,7 @@ class Integration::IdoitController < ApplicationController
   def verify
     response = ::Idoit.verify(params[:api_token], params[:endpoint], params[:client_id])
     render json: {
-      result: 'ok',
+      result:   'ok',
       response: response,
     }
   rescue => e
@@ -23,7 +23,7 @@ class Integration::IdoitController < ApplicationController
   def query
     response = ::Idoit.query(params[:method], params[:filter])
     render json: {
-      result: 'ok',
+      result:   'ok',
       response: response,
     }
   rescue => e

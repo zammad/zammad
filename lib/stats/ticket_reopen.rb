@@ -28,12 +28,12 @@ class Stats::TicketReopen
       reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
     {
-      used_for_average: reopen_in_precent,
-      percent: reopen_in_precent,
+      used_for_average:  reopen_in_precent,
+      percent:           reopen_in_precent,
       average_per_agent: '-',
-      state: 'good',
-      count: count,
-      total: total,
+      state:             'good',
+      count:             count,
+      total:             total,
     }
   end
 
@@ -90,11 +90,11 @@ class Stats::TicketReopen
     return if state_type_now.name == 'closed'
 
     StatsStore.add(
-      object: 'User',
-      o_id: ticket.owner_id,
-      key: 'ticket:reopen',
-      data: { ticket_id: ticket.id },
-      created_at: Time.zone.now,
+      object:        'User',
+      o_id:          ticket.owner_id,
+      key:           'ticket:reopen',
+      data:          { ticket_id: ticket.id },
+      created_at:    Time.zone.now,
       created_by_id: updated_by_id,
       updated_by_id: updated_by_id,
     )

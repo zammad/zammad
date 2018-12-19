@@ -99,16 +99,16 @@ returns
     end
     channel.area = 'Telegram::Bot'
     channel.options = {
-      bot: {
-        id: bot['id'],
-        username: bot['username'],
+      bot:            {
+        id:         bot['id'],
+        username:   bot['username'],
         first_name: bot['first_name'],
-        last_name: bot['last_name'],
+        last_name:  bot['last_name'],
       },
       callback_token: callback_token,
-      callback_url: callback_url,
-      api_token: token,
-      welcome: params[:welcome],
+      callback_url:   callback_url,
+      api_token:      token,
+      welcome:        params[:welcome],
     }
     channel.group_id = group.id
     channel.active = true
@@ -243,9 +243,9 @@ returns
     # create or update user
     login = message_user[:username] || message_user[:id]
     user_data = {
-      login: login,
+      login:     login,
       firstname: message_user[:first_name],
-      lastname: message_user[:last_name],
+      lastname:  message_user[:last_name],
     }
     if auth
       user = User.find(auth.user_id)
@@ -329,15 +329,15 @@ returns
     end
 
     ticket = Ticket.new(
-      group_id: group_id,
-      title: title,
-      state_id: Ticket::State.find_by(default_create: true).id,
+      group_id:    group_id,
+      title:       title,
+      state_id:    Ticket::State.find_by(default_create: true).id,
       priority_id: Ticket::Priority.find_by(default_create: true).id,
       customer_id: user.id,
       preferences: {
         channel_id: channel.id,
-        telegram: {
-          bid: params['bid'],
+        telegram:   {
+          bid:     params['bid'],
           chat_id: params[:message][:chat][:id]
         }
       },
@@ -361,27 +361,27 @@ returns
 
     if article
       article.preferences[:edited_message] = {
-        message: {
+        message:   {
           created_at: params[:message][:date],
           message_id: params[:message][:message_id],
-          from: params[:message][:from],
+          from:       params[:message][:from],
         },
         update_id: params[:update_id],
       }
     else
       article = Ticket::Article.new(
-        ticket_id: ticket.id,
-        type_id: Ticket::Article::Type.find_by(name: 'telegram personal-message').id,
-        sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-        from: user(params)[:username],
-        to: "@#{channel[:options][:bot][:username]}",
-        message_id: Telegram.message_id(params),
-        internal: false,
+        ticket_id:   ticket.id,
+        type_id:     Ticket::Article::Type.find_by(name: 'telegram personal-message').id,
+        sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
+        from:        user(params)[:username],
+        to:          "@#{channel[:options][:bot][:username]}",
+        message_id:  Telegram.message_id(params),
+        internal:    false,
         preferences: {
-          message: {
+          message:   {
             created_at: params[:message][:date],
             message_id: params[:message][:message_id],
-            from: params[:message][:from],
+            from:       params[:message][:from],
           },
           update_id: params[:update_id],
         }
@@ -449,13 +449,13 @@ returns
       article.save!
       Store.remove(
         object: 'Ticket::Article',
-        o_id: article.id,
+        o_id:   article.id,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: document_result.body,
-        filename: params[:message][:document][:file_name],
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        document_result.body,
+        filename:    params[:message][:document][:file_name],
         preferences: {
           'Mime-Type' => params[:message][:document][:mime_type],
         },
@@ -475,13 +475,13 @@ returns
       article.save!
       Store.remove(
         object: 'Ticket::Article',
-        o_id: article.id,
+        o_id:   article.id,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: document_result.body,
-        filename: params[:message][:voice][:file_path] || "audio-#{params[:message][:voice][:file_id]}.ogg",
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        document_result.body,
+        filename:    params[:message][:voice][:file_path] || "audio-#{params[:message][:voice][:file_id]}.ogg",
         preferences: {
           'Mime-Type' => params[:message][:voice][:mime_type],
         },
@@ -514,13 +514,13 @@ returns
         document_result = download_file(params[:message][:sticker][:file_id])
         Store.remove(
           object: 'Ticket::Article',
-          o_id: article.id,
+          o_id:   article.id,
         )
         Store.add(
-          object: 'Ticket::Article',
-          o_id: article.id,
-          data: document_result.body,
-          filename: params[:message][:sticker][:file_name] || "#{params[:message][:sticker][:set_name]}.webp",
+          object:      'Ticket::Article',
+          o_id:        article.id,
+          data:        document_result.body,
+          filename:    params[:message][:sticker][:file_name] || "#{params[:message][:sticker][:set_name]}.webp",
           preferences: {
             'Mime-Type' => 'image/webp', # mime type is not given from Telegram API but this is actually WebP
           },
@@ -550,56 +550,56 @@ returns
       # note: used .blank? which is a rails method. empty? does not work on integers (values like date, width, height)  to check.
       # need delete_if to remove any empty hashes, .compact only removes keys with nil values.
       params[:message] = {
-        document: {
+        document:   {
           file_name: params.dig(:channel_post, :document, :file_name),
           mime_type: params.dig(:channel_post, :document, :mime_type),
-          file_id: params.dig(:channel_post, :document, :file_id),
+          file_id:   params.dig(:channel_post, :document, :file_id),
           file_size: params.dig(:channel_post, :document, :filesize),
-          thumb: {
-            file_id: params.dig(:channel_post, :document, :thumb, :file_id),
+          thumb:     {
+            file_id:   params.dig(:channel_post, :document, :thumb, :file_id),
             file_size: params.dig(:channel_post, :document, :thumb, :file_size),
-            width: params.dig(:channel_post, :document, :thumb, :width),
-            height: params.dig(:channel_post, :document, :thumb, :height)
+            width:     params.dig(:channel_post, :document, :thumb, :width),
+            height:    params.dig(:channel_post, :document, :thumb, :height)
           }.compact
         }.delete_if { |_, v| v.blank? },
-        voice: {
-          duration: params.dig(:channel_post, :voice, :duration),
+        voice:      {
+          duration:  params.dig(:channel_post, :voice, :duration),
           mime_type: params.dig(:channel_post, :voice, :mime_type),
-          file_id: params.dig(:channel_post, :voice, :file_id),
+          file_id:   params.dig(:channel_post, :voice, :file_id),
           file_size: params.dig(:channel_post, :voice, :file_size)
         }.compact,
-        sticker: {
-          width: params.dig(:channel_post, :sticker, :width),
-          height: params.dig(:channel_post, :sticker, :height),
-          emoji: params.dig(:channel_post, :sticker, :emoji),
-          set_name: params.dig(:channel_post, :sticker, :set_name),
-          file_id: params.dig(:channel_post, :sticker, :file_id),
+        sticker:    {
+          width:     params.dig(:channel_post, :sticker, :width),
+          height:    params.dig(:channel_post, :sticker, :height),
+          emoji:     params.dig(:channel_post, :sticker, :emoji),
+          set_name:  params.dig(:channel_post, :sticker, :set_name),
+          file_id:   params.dig(:channel_post, :sticker, :file_id),
           file_path: params.dig(:channel_post, :sticker, :file_path),
-          thumb: {
-            file_id: params.dig(:channel_post, :sticker, :thumb, :file_id),
+          thumb:     {
+            file_id:   params.dig(:channel_post, :sticker, :thumb, :file_id),
             file_size: params.dig(:channel_post, :sticker, :thumb, :file_size),
-            width: params.dig(:channel_post, :sticker, :thumb, :width),
-            height: params.dig(:channel_post, :sticker, :thumb, :file_id),
+            width:     params.dig(:channel_post, :sticker, :thumb, :width),
+            height:    params.dig(:channel_post, :sticker, :thumb, :file_id),
             file_path: params.dig(:channel_post, :sticker, :thumb, :file_path)
           }.compact
         }.delete_if { |_, v| v.blank? },
-        chat: {
-          id: params.dig(:channel_post, :chat, :id),
+        chat:       {
+          id:         params.dig(:channel_post, :chat, :id),
           first_name: params.dig(:channel_post, :chat, :title),
-          last_name: 'Channel',
-          username: "channel#{params.dig(:channel_post, :chat, :id)}"
+          last_name:  'Channel',
+          username:   "channel#{params.dig(:channel_post, :chat, :id)}"
         },
-        from: {
-          id: params.dig(:channel_post, :chat, :id),
+        from:       {
+          id:         params.dig(:channel_post, :chat, :id),
           first_name: params.dig(:channel_post, :chat, :title),
-          last_name: 'Channel',
-          username: "channel#{params.dig(:channel_post, :chat, :id)}"
+          last_name:  'Channel',
+          username:   "channel#{params.dig(:channel_post, :chat, :id)}"
         },
-        caption: (params.dig(:channel_post, :caption) || {}),
-        date: params.dig(:channel_post, :date),
+        caption:    (params.dig(:channel_post, :caption) || {}),
+        date:       params.dig(:channel_post, :date),
         message_id: params.dig(:channel_post, :message_id),
-        text: params.dig(:channel_post, :text),
-        photo: (params[:channel_post][:photo].map { |photo| { file_id: photo[:file_id], file_size: photo[:file_size], width: photo[:width], height: photo[:height] } } if params.dig(:channel_post, :photo))
+        text:       params.dig(:channel_post, :text),
+        photo:      (params[:channel_post][:photo].map { |photo| { file_id: photo[:file_id], file_size: photo[:file_size], width: photo[:width], height: photo[:height] } } if params.dig(:channel_post, :photo))
       }.delete_if { |_, v| v.blank? }
       params.delete(:channel_post) # discard unused :channel_post hash
     end
@@ -608,22 +608,22 @@ returns
     if params[:edited_channel_post]
       # updates on telegram can only be on messages, no attachments
       params[:edited_message] = {
-        chat: {
-          id: params.dig(:edited_channel_post, :chat, :id),
+        chat:       {
+          id:         params.dig(:edited_channel_post, :chat, :id),
           first_name: params.dig(:edited_channel_post, :chat, :title),
-          last_name: 'Channel',
-          username:  "channel#{params.dig(:edited_channel_post, :chat, :id)}"
+          last_name:  'Channel',
+          username:   "channel#{params.dig(:edited_channel_post, :chat, :id)}"
         },
-        from: {
-          id: params.dig(:edited_channel_post, :chat, :id),
+        from:       {
+          id:         params.dig(:edited_channel_post, :chat, :id),
           first_name: params.dig(:edited_channel_post, :chat, :title),
-          last_name: 'Channel',
-          username:  "channel#{params.dig(:edited_channel_post, :chat, :id)}"
+          last_name:  'Channel',
+          username:   "channel#{params.dig(:edited_channel_post, :chat, :id)}"
         },
-        date: params.dig(:edited_channel_post, :date),
-        edit_date: params.dig(:edited_channel_post, :edit_date),
+        date:       params.dig(:edited_channel_post, :date),
+        edit_date:  params.dig(:edited_channel_post, :edit_date),
         message_id: params.dig(:edited_channel_post, :message_id),
-        text: params.dig(:edited_channel_post, :text)
+        text:       params.dig(:edited_channel_post, :text)
       }
       params.delete(:edited_channel_post) # discard unused :edited_channel_post hash
     end

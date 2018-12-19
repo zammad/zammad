@@ -85,11 +85,11 @@ class FormController < ApplicationController
     if !customer
       role_ids = Role.signup_role_ids
       customer = User.create(
-        firstname: name,
-        lastname: '',
-        email: email,
-        active: true,
-        role_ids: role_ids,
+        firstname:     name,
+        lastname:      '',
+        email:         email,
+        active:        true,
+        role_ids:      role_ids,
         updated_by_id: 1,
         created_by_id: 1,
       )
@@ -106,31 +106,31 @@ class FormController < ApplicationController
       end
     end
     ticket = Ticket.create!(
-      group_id: group.id,
+      group_id:    group.id,
       customer_id: customer.id,
-      title: params[:title],
+      title:       params[:title],
       preferences: {
         form: {
-          remote_ip: request.remote_ip,
+          remote_ip:       request.remote_ip,
           fingerprint_md5: Digest::MD5.hexdigest(params[:fingerprint]),
         }
       }
     )
     article = Ticket::Article.create!(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.find_by(name: 'web').id,
+      type_id:   Ticket::Article::Type.find_by(name: 'web').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-      body: params[:body],
-      subject: params[:title],
-      internal: false,
+      body:      params[:body],
+      subject:   params[:title],
+      internal:  false,
     )
 
     params[:file]&.each do |file|
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: file.read,
-        filename: file.original_filename,
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        file.read,
+        filename:    file.original_filename,
         preferences: {
           'Mime-Type' => file.content_type,
         }
@@ -141,7 +141,7 @@ class FormController < ApplicationController
 
     result = {
       ticket: {
-        id: ticket.id,
+        id:     ticket.id,
         number: ticket.number
       }
     }

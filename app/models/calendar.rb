@@ -187,9 +187,9 @@ returns
 
         # create new entry
         public_holidays[day] = {
-          active: true,
+          active:  true,
           summary: summary,
-          feed: Digest::MD5.hexdigest(ical_url)
+          feed:    Digest::MD5.hexdigest(ical_url)
         }
       end
       self.last_log = nil

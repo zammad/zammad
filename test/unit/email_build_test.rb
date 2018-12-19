@@ -42,15 +42,15 @@ class EmailBuildTest < ActiveSupport::TestCase
       </html>
     MSG_HTML
     mail = Channel::EmailBuild.build(
-      from: 'sender@example.com',
-      to: 'recipient@example.com',
-      body: html,
+      from:         'sender@example.com',
+      to:           'recipient@example.com',
+      body:         html,
       content_type: 'text/html',
-      attachments: [
+      attachments:  [
         {
           'Mime-Type' => 'image/png',
-          :content      => 'xxx',
-          :filename     => 'somename.png'
+          :content    => 'xxx',
+          :filename   => 'somename.png'
         }
       ],
     )
@@ -101,14 +101,14 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
     MSG_TEXT
     mail = Channel::EmailBuild.build(
-      from: 'sender@example.com',
-      to: 'recipient@example.com',
-      body: text,
+      from:        'sender@example.com',
+      to:          'recipient@example.com',
+      body:        text,
       attachments: [
         {
           'Mime-Type' => 'image/png',
-          :content      => 'xxx',
-          :filename     => 'somename.png'
+          :content    => 'xxx',
+          :filename   => 'somename.png'
         }
       ],
     )
@@ -141,11 +141,11 @@ class EmailBuildTest < ActiveSupport::TestCase
 
   test 'plain email + attachment check 2' do
     ticket1 = Ticket.create!(
-      title: 'some article helper test1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some article helper test1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -153,26 +153,26 @@ class EmailBuildTest < ActiveSupport::TestCase
 
     # create inbound article #1
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      content_type:  'text/html',
+      body:          'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     store1 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file1_normally_should_be_an_ics_calendar_file',
-      filename: 'schedule.ics',
-      preferences: {
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file1_normally_should_be_an_ics_calendar_file',
+      filename:      'schedule.ics',
+      preferences:   {
         'Mime-Type' => 'text/calendar'
       },
       created_by_id: 1,
@@ -185,9 +185,9 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
     MSG_TEXT
     mail = Channel::EmailBuild.build(
-      from: 'sender@example.com',
-      to: 'recipient@example.com',
-      body: text,
+      from:        'sender@example.com',
+      to:          'recipient@example.com',
+      body:        text,
       attachments: [
         store1
       ],
@@ -228,7 +228,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
-      to: 'recipient@example.com',
+      to:   'recipient@example.com',
       body: text,
     )
 

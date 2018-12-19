@@ -6,23 +6,23 @@ class AgentTicketTagTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     # set tag (by tab)
     ticket1 = ticket_create(
-      data: {
+      data:          {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - tags 1',
-        body: 'some body 123äöü - tags 1',
+        group:    'Users',
+        title:    'some subject 123äöü - tags 1',
+        body:     'some body 123äöü - tags 1',
       },
       do_not_submit: true,
     )
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: 'tag1, tag2',
     )
     sendkey(value: :tab)
@@ -52,17 +52,17 @@ class AgentTicketTagTest < TestCase
 
     # set tag (by blur)
     ticket2 = ticket_create(
-      data: {
+      data:          {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - tags 2',
-        body: 'some body 123äöü - tags 2',
+        group:    'Users',
+        title:    'some subject 123äöü - tags 2',
+        body:     'some body 123äöü - tags 2',
       },
       do_not_submit: true,
     )
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: 'tag3, tag4',
     )
     click(css: '#global-search')
@@ -85,19 +85,19 @@ class AgentTicketTagTest < TestCase
     ticket3 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - tags 3',
-        body: 'some body 123äöü - tags 3',
+        group:    'Users',
+        title:    'some subject 123äöü - tags 3',
+        body:     'some body 123äöü - tags 3',
       },
     )
 
     # verify changes in second browser
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     ticket_open_by_search(
       browser: browser2,
@@ -109,7 +109,7 @@ class AgentTicketTagTest < TestCase
       css: '.content.active .js-newTagLabel',
     )
     set(
-      css: '.content.active .js-newTagInput',
+      css:   '.content.active .js-newTagInput',
       value: 'tag1',
     )
     sleep 2
@@ -123,7 +123,7 @@ class AgentTicketTagTest < TestCase
       css: '.content.active .js-newTagLabel',
     )
     set(
-      css: '.content.active .js-newTagInput',
+      css:   '.content.active .js-newTagInput',
       value: 'tag 2',
     )
     sendkey(
@@ -136,7 +136,7 @@ class AgentTicketTagTest < TestCase
       css: '.content.active .js-newTagLabel',
     )
     set(
-      css: '.content.active .js-newTagInput',
+      css:   '.content.active .js-newTagInput',
       value: 'tag3, tag4',
     )
     sendkey(
@@ -149,7 +149,7 @@ class AgentTicketTagTest < TestCase
       css: '.content.active .js-newTagLabel',
     )
     set(
-      css: '.content.active .js-newTagInput',
+      css:   '.content.active .js-newTagInput',
       value: 'tag5',
     )
     click(
@@ -160,25 +160,25 @@ class AgentTicketTagTest < TestCase
     # verify tags
     tags_verify(
       tags: {
-        'tag1' => true,
+        'tag1'  => true,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
 
     sleep 4
     tags_verify(
       browser: browser2,
-      tags: {
-        'tag1' => true,
+      tags:    {
+        'tag1'  => true,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
 
@@ -189,24 +189,24 @@ class AgentTicketTagTest < TestCase
     # verify tags
     tags_verify(
       tags: {
-        'tag1' => true,
+        'tag1'  => true,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
 
     tags_verify(
       browser: browser2,
-      tags: {
-        'tag1' => true,
+      tags:    {
+        'tag1'  => true,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
 
@@ -219,39 +219,39 @@ class AgentTicketTagTest < TestCase
     # verify tags
     tags_verify(
       tags: {
-        'tag1' => false,
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
     tags_verify(
       browser: browser2,
-      tags: {
-        'tag1' => false,
+      tags:    {
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => true,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => true,
+        'tag4'  => true,
+        'tag5'  => true,
       }
     )
 
     # verify changes via admin interface
     click(
       browser: browser2,
-      css: 'a[href="#manage"]',
+      css:     'a[href="#manage"]',
     )
     click(
       browser: browser2,
-      css: '.content.active a[href="#manage/tags"]',
+      css:     '.content.active a[href="#manage/tags"]',
     )
     sleep 3
     execute(
       browser: browser2,
-      js: "$('.content.active .js-name:contains(\"tag3\")').click()",
+      js:      "$('.content.active .js-name:contains(\"tag3\")').click()",
     )
 
     modal_ready(
@@ -260,12 +260,12 @@ class AgentTicketTagTest < TestCase
 
     set(
       browser: browser2,
-      css: '.modal [name="name"]',
-      value: 'TAGXX',
+      css:     '.modal [name="name"]',
+      value:   'TAGXX',
     )
     click(
       browser: browser2,
-      css: '.modal .js-submit',
+      css:     '.modal .js-submit',
     )
     modal_disappear(browser: browser2)
     ticket_open_by_search(
@@ -276,40 +276,40 @@ class AgentTicketTagTest < TestCase
     # verify tags
     tags_verify(
       tags: {
-        'tag1' => false,
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => false,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => false,
+        'tag4'  => true,
+        'tag5'  => true,
         'TAGXX' => true,
       }
     )
     tags_verify(
       browser: browser2,
-      tags: {
-        'tag1' => false,
+      tags:    {
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => false,
-        'tag4' => true,
-        'tag5' => true,
+        'tag2'  => false,
+        'tag3'  => false,
+        'tag4'  => true,
+        'tag5'  => true,
         'TAGXX' => true,
       }
     )
 
     click(
       browser: browser2,
-      css: 'a[href="#manage"]',
+      css:     'a[href="#manage"]',
     )
     click(
       browser: browser2,
-      css: '.content.active a[href="#manage/tags"]',
+      css:     '.content.active a[href="#manage/tags"]',
     )
     sleep 3
     execute(
       browser: browser2,
-      js: "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
+      js:      "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
     )
 
     modal_ready(
@@ -318,7 +318,7 @@ class AgentTicketTagTest < TestCase
 
     click(
       browser: browser2,
-      css: '.modal .js-submit',
+      css:     '.modal .js-submit',
     )
     modal_disappear(browser: browser2)
     ticket_open_by_search(
@@ -329,24 +329,24 @@ class AgentTicketTagTest < TestCase
     # verify tags
     tags_verify(
       tags: {
-        'tag1' => false,
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => false,
-        'tag4' => true,
-        'tag5' => false,
+        'tag2'  => false,
+        'tag3'  => false,
+        'tag4'  => true,
+        'tag5'  => false,
         'TAGXX' => true,
       }
     )
     tags_verify(
       browser: browser2,
-      tags: {
-        'tag1' => false,
+      tags:    {
+        'tag1'  => false,
         'tag 2' => true,
-        'tag2' => false,
-        'tag3' => false,
-        'tag4' => true,
-        'tag5' => false,
+        'tag2'  => false,
+        'tag3'  => false,
+        'tag4'  => true,
+        'tag5'  => false,
         'TAGXX' => true,
       }
     )
@@ -359,7 +359,7 @@ class AgentTicketTagTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -371,60 +371,60 @@ class AgentTicketTagTest < TestCase
     )
 
     set(
-      css: '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' A',
     )
     click(css: '.content.active .js-create .js-submit')
     set(
-      css: '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' a',
     )
     click(css: '.content.active .js-create .js-submit')
     set(
-      css: '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' B',
     )
     click(css: '.content.active .js-create .js-submit')
     set(
-      css: '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' C',
     )
     click(css: '.content.active .js-create .js-submit')
 
     # set tag (by tab)
     ticket1 = ticket_create(
-      data: {
+      data:          {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - tags no new 1',
-        body: 'some body 123äöü - tags no new 1',
+        group:    'Users',
+        title:    'some subject 123äöü - tags no new 1',
+        body:     'some body 123äöü - tags no new 1',
       },
       do_not_submit: true,
     )
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: "#{tag_prefix} A",
     )
     sleep 2
     sendkey(value: :tab)
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: "#{tag_prefix} a",
     )
     sleep 2
     sendkey(value: :tab)
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: "#{tag_prefix} B",
     )
     sleep 2
     sendkey(value: :tab)
     sleep 1
     set(
-      css: '.active .ticket-form-bottom .token-input',
+      css:   '.active .ticket-form-bottom .token-input',
       value: 'NOT EXISTING',
     )
     sleep 2
@@ -445,7 +445,7 @@ class AgentTicketTagTest < TestCase
         "#{tag_prefix} A" => true,
         "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
-        'NOT EXISTING' => false,
+        'NOT EXISTING'    => false,
       }
     )
 
@@ -453,16 +453,16 @@ class AgentTicketTagTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - tags no new 2',
-        body: 'some body 223äöü - tags no new 1',
+        group:    'Users',
+        title:    'some subject 123äöü - tags no new 2',
+        body:     'some body 223äöü - tags no new 1',
       },
     )
     sleep 2
 
     click(css: '.active .sidebar .js-newTagLabel')
     set(
-      css: '.active .sidebar .js-newTagInput',
+      css:   '.active .sidebar .js-newTagInput',
       value: "#{tag_prefix} A",
     )
     sleep 2
@@ -470,7 +470,7 @@ class AgentTicketTagTest < TestCase
     sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
-      css: '.active .sidebar .js-newTagInput',
+      css:   '.active .sidebar .js-newTagInput',
       value: "#{tag_prefix} a",
     )
     sleep 2
@@ -478,7 +478,7 @@ class AgentTicketTagTest < TestCase
     sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
-      css: '.active .sidebar .js-newTagInput',
+      css:   '.active .sidebar .js-newTagInput',
       value: "#{tag_prefix} B",
     )
     sleep 2
@@ -486,7 +486,7 @@ class AgentTicketTagTest < TestCase
     sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
-      css: '.active .sidebar .js-newTagInput',
+      css:   '.active .sidebar .js-newTagInput',
       value: 'NOT EXISTING',
     )
     sleep 2
@@ -499,7 +499,7 @@ class AgentTicketTagTest < TestCase
         "#{tag_prefix} A" => true,
         "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
-        'NOT EXISTING' => false,
+        'NOT EXISTING'    => false,
       }
     )
     reload()
@@ -511,7 +511,7 @@ class AgentTicketTagTest < TestCase
         "#{tag_prefix} A" => true,
         "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
-        'NOT EXISTING' => false,
+        'NOT EXISTING'    => false,
       }
     )
 

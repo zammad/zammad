@@ -19,9 +19,9 @@ class Service::GeoIp::Zammad
         "#{host}#{url}",
         {},
         {
-          json: true,
-          open_timeout: 2,
-          read_timeout: 4,
+          json:          true,
+          open_timeout:  2,
+          read_timeout:  4,
           total_timeout: 4,
         },
       )

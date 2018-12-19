@@ -25,21 +25,21 @@ class ObjectManagerAttributesController < ApplicationController
     # check if attribute already exists
     exists = ObjectManager::Attribute.get(
       object: permitted_params[:object],
-      name: permitted_params[:name],
+      name:   permitted_params[:name],
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
-        object: permitted_params[:object],
-        name: permitted_params[:name],
-        display: permitted_params[:display],
-        data_type: permitted_params[:data_type],
+        object:      permitted_params[:object],
+        name:        permitted_params[:name],
+        display:     permitted_params[:display],
+        data_type:   permitted_params[:data_type],
         data_option: permitted_params[:data_option],
-        active: permitted_params[:active],
-        screens: permitted_params[:screens],
-        position: 1550,
-        editable: true,
+        active:      permitted_params[:active],
+        screens:     permitted_params[:screens],
+        position:    1550,
+        editable:    true,
       )
       render json: object_manager_attribute.attributes_with_association_ids, status: :created
     rescue => e
@@ -52,15 +52,15 @@ class ObjectManagerAttributesController < ApplicationController
   def update
 
     object_manager_attribute = ObjectManager::Attribute.add(
-      object: permitted_params[:object],
-      name: permitted_params[:name],
-      display: permitted_params[:display],
-      data_type: permitted_params[:data_type],
+      object:      permitted_params[:object],
+      name:        permitted_params[:name],
+      display:     permitted_params[:display],
+      data_type:   permitted_params[:data_type],
       data_option: permitted_params[:data_option],
-      active: permitted_params[:active],
-      screens: permitted_params[:screens],
-      position: 1550,
-      editable: true,
+      active:      permitted_params[:active],
+      screens:     permitted_params[:screens],
+      position:    1550,
+      editable:    true,
     )
     render json: object_manager_attribute.attributes_with_association_ids, status: :ok
   rescue => e
@@ -74,7 +74,7 @@ class ObjectManagerAttributesController < ApplicationController
     object_manager_attribute = ObjectManager::Attribute.find(params[:id])
     ObjectManager::Attribute.remove(
       object_lookup_id: object_manager_attribute.object_lookup_id,
-      name: object_manager_attribute.name,
+      name:             object_manager_attribute.name,
     )
     model_destroy_render_item
   rescue => e

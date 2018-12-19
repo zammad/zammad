@@ -84,12 +84,12 @@ class Transaction::Slack
 
     result = NotificationFactory::Slack.template(
       template: template,
-      locale: user[:preferences][:locale],
-      objects: {
-        ticket: ticket,
-        article: article,
+      locale:   user[:preferences][:locale],
+      objects:  {
+        ticket:       ticket,
+        article:      article,
         current_user: current_user,
-        changes: changes,
+        changes:      changes,
       },
     )
 
@@ -166,10 +166,10 @@ class Transaction::Slack
 
       notifier = Slack::Notifier.new(
         local_config['webhook'],
-        channel: local_config['channel'],
-        username: local_config['username'],
-        icon_url: logo_url,
-        mrkdwn: true,
+        channel:     local_config['channel'],
+        username:    local_config['username'],
+        icon_url:    logo_url,
+        mrkdwn:      true,
         http_client: Transaction::Slack::Client,
       )
       if local_config['expand']
@@ -177,9 +177,9 @@ class Transaction::Slack
         result = notifier.ping body
       else
         attachment = {
-          text: result[:body],
+          text:      result[:body],
           mrkdwn_in: ['text'],
-          color: color,
+          color:     color,
         }
         result = notifier.ping result[:subject],
                                attachments: [attachment]
@@ -293,10 +293,10 @@ class Transaction::Slack
         uri.to_s,
         params,
         {
-          open_timeout: 4,
-          read_timeout: 10,
+          open_timeout:  4,
+          read_timeout:  10,
           total_timeout: 20,
-          log: {
+          log:           {
             facility: 'slack_webhook',
           }
         },

@@ -27,7 +27,7 @@ class OtrsImportBrowserTest < TestCase
     sleep 5
 
     watch_for(
-      css: '.otrs-link-error',
+      css:   '.otrs-link-error',
       value: 'Invalid API key.',
     )
 
@@ -39,20 +39,20 @@ class OtrsImportBrowserTest < TestCase
     sleep 5
 
     watch_for_disappear(
-      css: '.otrs-link-error',
+      css:   '.otrs-link-error',
       value: 'Invalid API key.',
     )
     click(css: '.js-migration-check')
 
     watch_for(
-      css: '.wizard-slide:not(.hide)',
+      css:   '.wizard-slide:not(.hide)',
       value: 'Notice',
     )
     click(css: '.js-migration-start')
 
     watch_for(
-      css: 'body',
-      value: 'login',
+      css:     'body',
+      value:   'login',
       timeout: 600,
     )
 

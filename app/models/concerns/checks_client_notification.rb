@@ -36,9 +36,9 @@ class OwnModel < ApplicationModel
     PushMessages.send(
       message: {
         event: class_name + ':create',
-        data: { id: id, updated_at: updated_at }
+        data:  { id: id, updated_at: updated_at }
       },
-      type: 'authenticated',
+      type:    'authenticated',
     )
   end
 
@@ -69,9 +69,9 @@ class OwnModel < ApplicationModel
     PushMessages.send(
       message: {
         event: class_name + ':update',
-        data: { id: id, updated_at: updated_at }
+        data:  { id: id, updated_at: updated_at }
       },
-      type: 'authenticated',
+      type:    'authenticated',
     )
   end
 
@@ -102,9 +102,9 @@ class OwnModel < ApplicationModel
     PushMessages.send(
       message: {
         event: class_name + ':touch',
-        data: { id: id, updated_at: updated_at }
+        data:  { id: id, updated_at: updated_at }
       },
-      type: 'authenticated',
+      type:    'authenticated',
     )
   end
 
@@ -134,9 +134,9 @@ class OwnModel < ApplicationModel
     PushMessages.send(
       message: {
         event: class_name + ':destroy',
-        data: { id: id, updated_at: updated_at }
+        data:  { id: id, updated_at: updated_at }
       },
-      type: 'authenticated',
+      type:    'authenticated',
     )
   end
 end

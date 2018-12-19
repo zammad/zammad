@@ -6,7 +6,7 @@ class KeyboardShortcutsTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
     sleep 2
@@ -99,9 +99,9 @@ class KeyboardShortcutsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Test Ticket for Shortcuts - ABC123',
-        body: 'Test Ticket Body for Shortcuts - ABC123',
+        group:    'Users',
+        title:    'Test Ticket for Shortcuts - ABC123',
+        body:     'Test Ticket Body for Shortcuts - ABC123',
       },
     )
     sleep 5
@@ -190,15 +190,15 @@ class KeyboardShortcutsTest < TestCase
       browser:  @browser_agent,
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     ticket2 = ticket_create(
-      browser:  @browser_agent,
-      data: {
+      browser: @browser_agent,
+      data:    {
         customer: 'nico',
-        group: 'Users',
-        title: 'Test Ticket for Shortcuts II - ABC123',
-        body: 'Test Ticket Body for Shortcuts II - ABC123',
+        group:    'Users',
+        title:    'Test Ticket for Shortcuts II - ABC123',
+        body:     'Test Ticket Body for Shortcuts II - ABC123',
       },
     )
     sleep 5

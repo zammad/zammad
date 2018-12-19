@@ -48,7 +48,7 @@ returns
           authorizations = self.authorizations()
           authorizations.each do |authorization|
             local_accounts[authorization.provider] = {
-              uid: authorization[:uid],
+              uid:      authorization[:uid],
               username: authorization[:username]
             }
           end

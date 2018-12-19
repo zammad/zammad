@@ -8,7 +8,7 @@ class Store
       def self.add(data, sha)
         Store::Provider::DB.create(
           data: data,
-          sha: sha,
+          sha:  sha,
         )
         true
       end

@@ -9,7 +9,7 @@ class AgentticketCreateAttachmentMissingAfterReloadTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -19,11 +19,11 @@ class AgentticketCreateAttachmentMissingAfterReloadTest < TestCase
 
     # create new ticket with no attachment, attachment check should pop up
     ticket_create(
-      data: {
+      data:          {
         customer: 'nico',
-        group: 'Users',
-        title: 'test 6 - ticket 1',
-        body: 'test 6 - ticket 1 body',
+        group:    'Users',
+        title:    'test 6 - ticket 1',
+        body:     'test 6 - ticket 1 body',
       },
       do_not_submit: true,
     )
@@ -43,7 +43,7 @@ class AgentticketCreateAttachmentMissingAfterReloadTest < TestCase
 
     # check if attachment is shown
     match(
-      css: '.content.active .newTicket .attachments .attachment:nth-child(1) .attachment-name',
+      css:   '.content.active .newTicket .attachments .attachment:nth-child(1) .attachment-name',
       value: 'upload1.txt'
     )
 
@@ -53,7 +53,7 @@ class AgentticketCreateAttachmentMissingAfterReloadTest < TestCase
 
     # check if attachment is shown
     match(
-      css: '.content.active .newTicket .attachments .attachment:nth-child(1) .attachment-name',
+      css:   '.content.active .newTicket .attachments .attachment:nth-child(1) .attachment-name',
       value: 'upload1.txt'
     )
   end

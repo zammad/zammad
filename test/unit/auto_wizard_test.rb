@@ -4,36 +4,36 @@ class AutoWizardTest < ActiveSupport::TestCase
 
   test 'a simple' do
     auto_wizard_data = {
-      Users: [
+      Users:    [
         {
-          login: 'master_unit_test01@example.com',
+          login:     'master_unit_test01@example.com',
           firstname: 'Test Master',
-          lastname: 'Agent',
-          email: 'master_unit_test01@example.com',
-          password: 'test',
+          lastname:  'Agent',
+          email:     'master_unit_test01@example.com',
+          password:  'test',
         },
         {
-          login: 'agent1_unit_test01@example.com',
+          login:     'agent1_unit_test01@example.com',
           firstname: 'Agent 1',
-          lastname: 'Test',
-          email: 'agent1_unit_test01@example.com',
-          password: 'test',
-          roles: ['Agent'],
+          lastname:  'Test',
+          email:     'agent1_unit_test01@example.com',
+          password:  'test',
+          roles:     ['Agent'],
         }
       ],
-      Groups: [
+      Groups:   [
         {
-          name: 'some group1',
+          name:  'some group1',
           users: ['master_unit_test01@example.com', 'agent1_unit_test01@example.com']
         }
       ],
       Settings: [
         {
-          name: 'developer_mode',
+          name:  'developer_mode',
           value: true
         },
         {
-          name: 'product_name',
+          name:  'product_name',
           value: 'Zammad UnitTest01 System'
         },
       ]
@@ -79,77 +79,77 @@ class AutoWizardTest < ActiveSupport::TestCase
 
   test 'b complex' do
     auto_wizard_data = {
-      Organizations: [
+      Organizations:    [
         {
-          name: 'Auto Wizard Test Org',
+          name:   'Auto Wizard Test Org',
           shared: false,
         }
       ],
-      Users: [
+      Users:            [
         {
-          login: 'master_unit_test01@example.com',
-          firstname: 'Test Master',
-          lastname: 'Agent',
-          email: 'master_unit_test01@example.com',
-          password: 'test',
+          login:        'master_unit_test01@example.com',
+          firstname:    'Test Master',
+          lastname:     'Agent',
+          email:        'master_unit_test01@example.com',
+          password:     'test',
           organization: 'Auto Wizard Test Org',
-          roles: ['Admin'],
+          roles:        ['Admin'],
         },
         {
-          login: 'agent1_unit_test01@example.com',
+          login:     'agent1_unit_test01@example.com',
           firstname: 'Agent 1',
-          lastname: 'Test',
-          email: 'agent1_unit_test01@example.com',
-          password: 'test',
-          roles: ['Agent'],
+          lastname:  'Test',
+          email:     'agent1_unit_test01@example.com',
+          password:  'test',
+          roles:     ['Agent'],
         }
       ],
-      Groups: [
+      Groups:           [
         {
-          name: 'some group1',
+          name:  'some group1',
           users: ['master_unit_test01@example.com', 'agent1_unit_test01@example.com']
         },
         {
-          name: 'Users',
-          users: ['master_unit_test01@example.com', 'agent1_unit_test01@example.com'],
-          signature: 'default',
+          name:             'Users',
+          users:            ['master_unit_test01@example.com', 'agent1_unit_test01@example.com'],
+          signature:        'default',
           email_address_id: 1,
-          note: 'Standard Group/Pool for Tickets.',
+          note:             'Standard Group/Pool for Tickets.',
         }
       ],
-      Settings: [
+      Settings:         [
         {
-          name: 'developer_mode',
+          name:  'developer_mode',
           value: false,
         },
         {
-          name: 'product_name',
+          name:  'product_name',
           value: 'Zammad UnitTest02 System'
         },
       ],
-      Permissions: [
+      Permissions:      [
         {
-          name: 'admin.session',
+          name:   'admin.session',
           active: false,
         },
         {
-          name: 'admin.session.new',
+          name:   'admin.session.new',
           active: true,
         },
       ],
-      Channels: [
+      Channels:         [
         {
-          id: 1,
-          area: 'Email::Account',
-          group: 'Users',
-          options: {
-            inbound: {
+          id:          1,
+          area:        'Email::Account',
+          group:       'Users',
+          options:     {
+            inbound:  {
               adapter: 'imap',
               options: {
-                host: 'mx1.example.com',
-                user: 'not_existing',
+                host:     'mx1.example.com',
+                user:     'not_existing',
                 password: 'some_pass',
-                ssl: true
+                ssl:      true
               }
             },
             outbound: {
@@ -159,21 +159,21 @@ class AutoWizardTest < ActiveSupport::TestCase
           preferences: {
             online_service_disable: true,
           },
-          active: true
+          active:      true
         }
       ],
-      EmailAddresses: [
+      EmailAddresses:   [
         {
-          id: 1,
+          id:         1,
           channel_id: 1,
-          realname: 'Zammad',
-          email: 'zammad@localhost',
+          realname:   'Zammad',
+          email:      'zammad@localhost',
         }
       ],
       TextModuleLocale: {
         Locale: 'de-de',
       },
-      CalendarSetup: {
+      CalendarSetup:    {
         Ip: '195.65.29.254',
       },
     }

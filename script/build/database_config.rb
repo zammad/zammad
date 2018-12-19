@@ -18,7 +18,7 @@ db_settings_map = {
     'password' => 'zammad',
     'host'     => 'postgresql', # db alias from gitlab-ci.yml
   },
-  'mysql' => {
+  'mysql'      => {
     'adapter'  => 'mysql2',
     'username' => 'root',
     'password' => 'zammad',

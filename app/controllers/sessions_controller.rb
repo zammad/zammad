@@ -51,12 +51,12 @@ class SessionsController < ApplicationController
 
     # return new session data
     render  status: :created,
-            json: {
-              session: user,
-              config: config_frontend,
-              models: models,
+            json:   {
+              session:     user,
+              config:      config_frontend,
+              models:      models,
               collections: collections,
-              assets: assets,
+              assets:      assets,
             }
   end
 
@@ -74,9 +74,9 @@ class SessionsController < ApplicationController
       models = SessionHelper.models()
 
       render json: {
-        error: 'no valid session',
-        config: config_frontend,
-        models: models,
+        error:       'no valid session',
+        config:      config_frontend,
+        models:      models,
         collections: {
           Locale.to_app_model => Locale.where(active: true)
         },
@@ -103,11 +103,11 @@ class SessionsController < ApplicationController
 
     # return current session
     render json: {
-      session: user,
-      config: config_frontend,
-      models: models,
+      session:     user,
+      config:      config_frontend,
+      models:      models,
       collections: collections,
-      assets: assets,
+      assets:      assets,
     }
   end
 
@@ -206,7 +206,7 @@ class SessionsController < ApplicationController
     # check user
     if !params[:id]
       render(
-        json: { message: 'no user given' },
+        json:   { message: 'no user given' },
         status: :not_found
       )
       return false
@@ -215,7 +215,7 @@ class SessionsController < ApplicationController
     user = User.find(params[:id])
     if !user
       render(
-        json: {},
+        json:   {},
         status: :not_found
       )
       return false
@@ -232,7 +232,7 @@ class SessionsController < ApplicationController
 
     render(
       json: {
-        success: true,
+        success:  true,
         location: '',
       },
     )
@@ -250,7 +250,7 @@ class SessionsController < ApplicationController
     user = User.lookup(id: session[:switched_from_user_id])
     if !user
       render(
-        json: {},
+        json:   {},
         status: :not_found
       )
       return false
@@ -270,7 +270,7 @@ class SessionsController < ApplicationController
 
     render(
       json: {
-        success: true,
+        success:  true,
         location: '',
       },
     )
@@ -299,7 +299,7 @@ class SessionsController < ApplicationController
     end
     render json: {
       sessions: sessions_clean,
-      assets: assets,
+      assets:   assets,
     }
   end
 

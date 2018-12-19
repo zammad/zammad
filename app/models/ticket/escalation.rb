@@ -266,12 +266,12 @@ returns
 
     # remember already counted time to do on next update only the diff
     preferences[:escalation_calculation] = {
-      first_response_at: first_response_at,
-      last_update_at: last_update_at,
-      close_at: close_at,
-      sla_id: sla.id,
-      sla_updated_at: sla.updated_at,
-      calendar_id: calendar.id,
+      first_response_at:   first_response_at,
+      last_update_at:      last_update_at,
+      close_at:            close_at,
+      sla_id:              sla.id,
+      sla_updated_at:      sla.updated_at,
+      calendar_id:         calendar.id,
       calendar_updated_at: calendar.updated_at,
       escalation_disabled: escalation_disabled,
     }
@@ -372,10 +372,10 @@ returns
         local_updated_at = saved_change_to_attribute('updated_at')[1]
       end
       history_item = {
-        'attribute' => 'state',
+        'attribute'  => 'state',
         'created_at' => local_updated_at,
         'value_from' => Ticket::State.find(saved_change_to_attribute('state_id')[0]).name,
-        'value_to' => Ticket::State.find(saved_change_to_attribute('state_id')[1]).name,
+        'value_to'   => Ticket::State.find(saved_change_to_attribute('state_id')[1]).name,
       }
       if last_history_state
         last_history_state = history_item

@@ -9,9 +9,9 @@ class EmailSignatureDetectionTest < ActiveSupport::TestCase
     signature_lines = [10, 20, 6]
 
     messages = message_files.zip(signature_lines).map do |f, l|
-      { content: File.read(Rails.root.join('test', 'data', f)),
+      { content:      File.read(Rails.root.join('test', 'data', f)),
         content_type: 'text/plain',
-        line: l }
+        line:         l }
     end
 
     signature = SignatureDetection.find_signature(messages)
@@ -30,9 +30,9 @@ class EmailSignatureDetectionTest < ActiveSupport::TestCase
     signature_lines = [26, 4, 6]
 
     messages = message_files.zip(signature_lines).map do |f, l|
-      { content: File.read(Rails.root.join('test', 'data', f)),
+      { content:      File.read(Rails.root.join('test', 'data', f)),
         content_type: 'text/plain',
-        line: l }
+        line:         l }
     end
 
     signature = SignatureDetection.find_signature(messages)
@@ -58,9 +58,9 @@ class EmailSignatureDetectionTest < ActiveSupport::TestCase
     signature_lines = [8, 29, 6]
 
     messages = message_files.zip(signature_lines).map do |f, l|
-      { content: File.read(Rails.root.join('test', 'data', f)),
+      { content:      File.read(Rails.root.join('test', 'data', f)),
         content_type: 'text/html',
-        line: l }
+        line:         l }
     end
 
     signature = SignatureDetection.find_signature(messages)

@@ -8,7 +8,7 @@ module ClonesTicketArticleAttachments
 
     existing_attachments = Store.list(
       object: 'UploadCache',
-      o_id: params[:form_id],
+      o_id:   params[:form_id],
     )
     attachments = []
     article.attachments.each do |new_attachment|
@@ -31,10 +31,10 @@ module ClonesTicketArticleAttachments
       next if already_added == true
 
       file = Store.add(
-        object: 'UploadCache',
-        o_id: params[:form_id],
-        data: new_attachment.content,
-        filename: new_attachment.filename,
+        object:      'UploadCache',
+        o_id:        params[:form_id],
+        data:        new_attachment.content,
+        filename:    new_attachment.filename,
         preferences: new_attachment.preferences,
       )
       attachments.push file

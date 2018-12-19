@@ -9,7 +9,7 @@ class IntegrationSipgateTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -17,12 +17,12 @@ class IntegrationSipgateTest < TestCase
     click(css: 'a[href="#system/integration/sipgate"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'on'
     )
 
     watch_for(
-      css: 'a[href="#cti"]',
+      css:     'a[href="#cti"]',
       timeout: 4,
     )
 
@@ -35,24 +35,24 @@ class IntegrationSipgateTest < TestCase
     url = URI.join(browser_url, 'api/v1/sipgate/in')
     params = {
       direction: 'in',
-      from: '491715000003',
-      to: '4930600000004',
-      callId: "4991155921769858279-#{id}",
-      cause: 'busy'
+      from:      '491715000003',
+      to:        '4930600000004',
+      callId:    "4991155921769858279-#{id}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
 
     watch_for(
-      css: '.js-phoneMenuItem .counter',
-      value: (call_counter + 1).to_s,
+      css:     '.js-phoneMenuItem .counter',
+      value:   (call_counter + 1).to_s,
       timeout: 4,
     )
 
     check(css: '.content.active .table-checkbox input')
 
     watch_for_disappear(
-      css: '.js-phoneMenuItem .counter',
+      css:     '.js-phoneMenuItem .counter',
       timeout: 6,
     )
 
@@ -61,7 +61,7 @@ class IntegrationSipgateTest < TestCase
     click(css: 'a[href="#system/integration/sipgate"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'off'
     )
   end

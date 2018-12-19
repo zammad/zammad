@@ -1,366 +1,366 @@
 Permission.create_if_not_exists(
-  name: 'admin',
-  note: 'Admin Interface',
+  name:        'admin',
+  note:        'Admin Interface',
   preferences: {},
 )
 Permission.create_if_not_exists(
-  name: 'admin.user',
-  note: 'Manage %s',
+  name:        'admin.user',
+  note:        'Manage %s',
   preferences: {
     translations: ['Users']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.group',
-  note: 'Manage %s',
+  name:        'admin.group',
+  note:        'Manage %s',
   preferences: {
     translations: ['Groups']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.role',
-  note: 'Manage %s',
+  name:        'admin.role',
+  note:        'Manage %s',
   preferences: {
     translations: ['Roles']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.organization',
-  note: 'Manage %s',
+  name:        'admin.organization',
+  note:        'Manage %s',
   preferences: {
     translations: ['Organizations']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.overview',
-  note: 'Manage %s',
+  name:        'admin.overview',
+  note:        'Manage %s',
   preferences: {
     translations: ['Overviews']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.text_module',
-  note: 'Manage %s',
+  name:        'admin.text_module',
+  note:        'Manage %s',
   preferences: {
     translations: ['Text Modules']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.time_accounting',
-  note: 'Manage %s',
+  name:        'admin.time_accounting',
+  note:        'Manage %s',
   preferences: {
     translations: ['Time Accounting']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.macro',
-  note: 'Manage %s',
+  name:        'admin.macro',
+  note:        'Manage %s',
   preferences: {
     translations: ['Macros']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.tag',
-  note: 'Manage %s',
+  name:        'admin.tag',
+  note:        'Manage %s',
   preferences: {
     translations: ['Tags']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.calendar',
-  note: 'Manage %s',
+  name:        'admin.calendar',
+  note:        'Manage %s',
   preferences: {
     translations: ['Calendar']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.sla',
-  note: 'Manage %s',
+  name:        'admin.sla',
+  note:        'Manage %s',
   preferences: {
     translations: ['SLA']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.scheduler',
-  note: 'Manage %s',
+  name:        'admin.scheduler',
+  note:        'Manage %s',
   preferences: {
     translations: ['Scheduler']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.report_profile',
-  note: 'Manage %s',
+  name:        'admin.report_profile',
+  note:        'Manage %s',
   preferences: {
     translations: ['Report Profiles']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_web',
-  note: 'Manage %s',
+  name:        'admin.channel_web',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Web']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_formular',
-  note: 'Manage %s',
+  name:        'admin.channel_formular',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Formular']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_email',
-  note: 'Manage %s',
+  name:        'admin.channel_email',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Email']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_twitter',
-  note: 'Manage %s',
+  name:        'admin.channel_twitter',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Twitter']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_facebook',
-  note: 'Manage %s',
+  name:        'admin.channel_facebook',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Facebook']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_telegram',
-  note: 'Manage %s',
+  name:        'admin.channel_telegram',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Telegram']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_sms',
-  note: 'Manage %s',
+  name:        'admin.channel_sms',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - SMS']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_chat',
-  note: 'Manage %s',
+  name:        'admin.channel_chat',
+  note:        'Manage %s',
   preferences: {
     translations: ['Channel - Chat']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.branding',
-  note: 'Manage %s',
+  name:        'admin.branding',
+  note:        'Manage %s',
   preferences: {
     translations: ['Branding']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.setting_system',
-  note: 'Manage %s Settings',
+  name:        'admin.setting_system',
+  note:        'Manage %s Settings',
   preferences: {
     translations: ['System']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.security',
-  note: 'Manage %s Settings',
+  name:        'admin.security',
+  note:        'Manage %s Settings',
   preferences: {
     translations: ['Security']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.ticket',
-  note: 'Manage %s Settings',
+  name:        'admin.ticket',
+  note:        'Manage %s Settings',
   preferences: {
     translations: ['Ticket']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.package',
-  note: 'Manage %s',
+  name:        'admin.package',
+  note:        'Manage %s',
   preferences: {
     translations: ['Packages']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.integration',
-  note: 'Manage %s',
+  name:        'admin.integration',
+  note:        'Manage %s',
   preferences: {
     translations: ['Integrations']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.api',
-  note: 'Manage %s',
+  name:        'admin.api',
+  note:        'Manage %s',
   preferences: {
     translations: ['API']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.object',
-  note: 'Manage %s',
+  name:        'admin.object',
+  note:        'Manage %s',
   preferences: {
     translations: ['Objects']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.translation',
-  note: 'Manage %s',
+  name:        'admin.translation',
+  note:        'Manage %s',
   preferences: {
     translations: ['Translations']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.monitoring',
-  note: 'Manage %s',
+  name:        'admin.monitoring',
+  note:        'Manage %s',
   preferences: {
     translations: ['Monitoring']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.maintenance',
-  note: 'Manage %s',
+  name:        'admin.maintenance',
+  note:        'Manage %s',
   preferences: {
     translations: ['Maintenance']
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.session',
-  note: 'Manage %s',
+  name:        'admin.session',
+  note:        'Manage %s',
   preferences: {
     translations: ['Sessions']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences',
-  note: 'User Preferences',
+  name:        'user_preferences',
+  note:        'User Preferences',
   preferences: {},
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.password',
-  note: 'Change %s',
+  name:        'user_preferences.password',
+  note:        'Change %s',
   preferences: {
     translations: ['Password']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.notifications',
-  note: 'Manage %s',
+  name:        'user_preferences.notifications',
+  note:        'Manage %s',
   preferences: {
     translations: ['Notifications'],
-    required: ['ticket.agent'],
+    required:     ['ticket.agent'],
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.access_token',
-  note: 'Manage %s',
+  name:        'user_preferences.access_token',
+  note:        'Manage %s',
   preferences: {
     translations: ['Token Access']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.language',
-  note: 'Change %s',
+  name:        'user_preferences.language',
+  note:        'Change %s',
   preferences: {
     translations: ['Language']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.linked_accounts',
-  note: 'Manage %s',
+  name:        'user_preferences.linked_accounts',
+  note:        'Manage %s',
   preferences: {
     translations: ['Linked Accounts']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.device',
-  note: 'Manage %s',
+  name:        'user_preferences.device',
+  note:        'Manage %s',
   preferences: {
     translations: ['Devices']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.avatar',
-  note: 'Manage %s',
+  name:        'user_preferences.avatar',
+  note:        'Manage %s',
   preferences: {
     translations: ['Avatar']
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.calendar',
-  note: 'Access to %s',
+  name:        'user_preferences.calendar',
+  note:        'Access to %s',
   preferences: {
     translations: ['Calendars'],
-    required: ['ticket.agent'],
+    required:     ['ticket.agent'],
   },
 )
 Permission.create_if_not_exists(
-  name: 'user_preferences.out_of_office',
-  note: 'Change %s',
+  name:        'user_preferences.out_of_office',
+  note:        'Change %s',
   preferences: {
     translations: ['Out of Office'],
-    required: ['ticket.agent'],
+    required:     ['ticket.agent'],
   },
 )
 
 Permission.create_if_not_exists(
-  name: 'report',
-  note: 'Report Interface',
+  name:        'report',
+  note:        'Report Interface',
   preferences: {},
 )
 Permission.create_if_not_exists(
-  name: 'ticket',
-  note: 'Ticket Interface',
+  name:        'ticket',
+  note:        'Ticket Interface',
   preferences: {
     disabled: true
   },
 )
 Permission.create_if_not_exists(
-  name: 'ticket.agent',
-  note: 'Access to Agent Tickets based on Group Access',
+  name:        'ticket.agent',
+  note:        'Access to Agent Tickets based on Group Access',
   preferences: {
-    not: ['ticket.customer'],
+    not:    ['ticket.customer'],
     plugin: ['groups']
   },
 )
 Permission.create_if_not_exists(
-  name: 'ticket.customer',
-  note: 'Access to Customer Tickets based on current_user and organization',
+  name:        'ticket.customer',
+  note:        'Access to Customer Tickets based on current_user and organization',
   preferences: {
     not: ['ticket.agent'],
   },
 )
 Permission.create_if_not_exists(
-  name: 'chat',
-  note: 'Access to %s',
+  name:        'chat',
+  note:        'Access to %s',
   preferences: {
     translations: ['Chat']
   },
 )
 Permission.create_if_not_exists(
-  name: 'chat.agent',
-  note: 'Access to %s',
+  name:        'chat.agent',
+  note:        'Access to %s',
   preferences: {
     translations: ['Chat'],
-    not: ['chat.customer'],
+    not:          ['chat.customer'],
   },
 )
 Permission.create_if_not_exists(
-  name: 'cti',
-  note: 'CTI',
+  name:        'cti',
+  note:        'CTI',
   preferences: {
     disabled: true
   },
 )
 Permission.create_if_not_exists(
-  name: 'cti.agent',
-  note: 'Access to %s',
+  name:        'cti.agent',
+  note:        'Access to %s',
   preferences: {
     translations: ['CTI'],
-    not: ['cti.customer'],
+    not:          ['cti.customer'],
   },
 )
 

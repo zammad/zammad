@@ -11,16 +11,16 @@ class Sequencer
               return if dry_run
 
               ::HttpLog.create(
-                direction: 'out',
-                facility:  facility,
-                method:    'tcp',
-                url:       "#{action} -> #{remote_id}",
-                status:    status,
-                ip:        nil,
-                request:   {
+                direction:     'out',
+                facility:      facility,
+                method:        'tcp',
+                url:           "#{action} -> #{remote_id}",
+                status:        status,
+                ip:            nil,
+                request:       {
                   content: mapped,
                 },
-                response: {
+                response:      {
                   message: response
                 },
                 created_by_id: 1,

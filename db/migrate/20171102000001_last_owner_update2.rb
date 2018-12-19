@@ -18,11 +18,11 @@ class LastOwnerUpdate2 < ActiveRecord::Migration[5.1]
     end
 
     Scheduler.create_if_not_exists(
-      name: 'Process auto unassign tickets',
-      method: 'Ticket.process_auto_unassign',
-      period: 10.minutes,
-      prio: 1,
-      active: true,
+      name:          'Process auto unassign tickets',
+      method:        'Ticket.process_auto_unassign',
+      period:        10.minutes,
+      prio:          1,
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -21,9 +21,9 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     if participents_count < 2 || (@session && chat_session.user_id == @session['id'])
       message = {
         event: 'chat_session_closed',
-        data: {
+        data:  {
           session_id: chat_session.session_id,
-          realname: realname,
+          realname:   realname,
         },
       }
 
@@ -41,9 +41,9 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     else
       message = {
         event: 'chat_session_left',
-        data: {
+        data:  {
           session_id: chat_session.session_id,
-          realname: realname,
+          realname:   realname,
         },
       }
     end
@@ -52,8 +52,8 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     # notifiy participients
     {
       event: 'chat_status_close',
-      data: {
-        state: 'ok',
+      data:  {
+        state:      'ok',
         session_id: chat_session.session_id,
       },
     }

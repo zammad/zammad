@@ -195,7 +195,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       create(
         :user_device,
-        user_id: admin_user.id,
+        user_id:     admin_user.id,
         fingerprint: 'fingerprintI',
       )
 

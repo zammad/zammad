@@ -74,9 +74,9 @@ module Sessions::Node
     # write node status file
     data = {
       updated_at_human: Time.now.utc,
-      updated_at: Time.now.utc.to_i,
-      node_id: node_id.to_s,
-      pid: $PROCESS_ID,
+      updated_at:       Time.now.utc.to_i,
+      node_id:          node_id.to_s,
+      pid:              $PROCESS_ID,
     }
     content = data.to_json
 
@@ -126,10 +126,10 @@ module Sessions::Node
     # write node status file
     data = {
       updated_at_human: Time.now.utc,
-      updated_at: Time.now.utc.to_i,
-      node_id: node_id.to_s,
-      client_id: client_id.to_s,
-      pid: $PROCESS_ID,
+      updated_at:       Time.now.utc.to_i,
+      node_id:          node_id.to_s,
+      client_id:        client_id.to_s,
+      pid:              $PROCESS_ID,
     }
     content = data.to_json
 

@@ -9,8 +9,8 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     if !chat_session
       return {
         event: 'chat_session_start',
-        data: {
-          state: 'failed',
+        data:  {
+          state:   'failed',
           message: 'No session available.',
         },
       }
@@ -27,16 +27,16 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
       url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
     end
     user = {
-      name: chat_user.fullname,
+      name:   chat_user.fullname,
       avatar: url,
     }
     data = {
       event: 'chat_session_start',
-      data: {
-        state: 'ok',
-        agent: user,
+      data:  {
+        state:      'ok',
+        agent:      user,
         session_id: chat_session.session_id,
-        chat_id: chat_session.chat_id,
+        chat_id:    chat_session.chat_id,
       },
     }
     # send to customer
@@ -45,7 +45,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     # send to agent
     data = {
       event: 'chat_session_start',
-      data: {
+      data:  {
         session: chat_session.attributes,
       },
     }

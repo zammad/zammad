@@ -13,62 +13,62 @@ class AaaGettingStartedTest < TestCase
     @browser = browser_instance
     location(url: browser_url)
     watch_for(
-      css: '.setup.wizard',
+      css:   '.setup.wizard',
       value: 'setup new system',
     )
     click(css: '.js-start .btn--primary')
     watch_for(
-      css: '.setup.wizard',
+      css:   '.setup.wizard',
       value: 'admin',
     )
     set(
-      css: '.js-admin input[name="firstname"]',
+      css:   '.js-admin input[name="firstname"]',
       value: 'Test Master',
     )
     set(
-      css: '.js-admin input[name="lastname"]',
+      css:   '.js-admin input[name="lastname"]',
       value: 'Agent',
     )
     set(
-      css: '.js-admin input[name="email"]',
+      css:   '.js-admin input[name="email"]',
       value: 'master@example.com',
     )
     set(
-      css: '.js-admin input[name="firstname"]',
+      css:   '.js-admin input[name="firstname"]',
       value: 'Test Master',
     )
     set(
-      css: '.js-admin input[name="password"]',
+      css:   '.js-admin input[name="password"]',
       value: 'test1234äöüß',
     )
     set(
-      css: '.js-admin input[name="password_confirm"]',
+      css:   '.js-admin input[name="password_confirm"]',
       value: 'test1234äöüß',
     )
     click(css: '.js-admin .btn--success')
 
     # getting started - base
     watch_for(
-      css: '.js-base h2',
+      css:   '.js-base h2',
       value: 'Organization',
     )
     set(
-      css: '.js-base input[name="organization"]',
+      css:   '.js-base input[name="organization"]',
       value: 'Some Organization',
     )
     set(
-      css: '.js-base input[name="url"]',
+      css:   '.js-base input[name="url"]',
       value: 'some host',
     )
     click(
       css: '.js-base .btn--primary',
     )
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'A URL looks like',
     )
     set(
-      css: '.js-base input[name="url"]',
+      css:   '.js-base input[name="url"]',
       value: browser_url,
     )
     click(
@@ -77,7 +77,7 @@ class AaaGettingStartedTest < TestCase
 
     # getting started - email notification
     watch_for(
-      css: '.js-outbound h2',
+      css:   '.js-outbound h2',
       value: 'Email Notification',
     )
     location_check(
@@ -89,7 +89,7 @@ class AaaGettingStartedTest < TestCase
 
     # getting started - create email account
     watch_for(
-      css: '.js-channel h2',
+      css:   '.js-channel h2',
       value: 'Connect Channels',
     )
     location_check(
@@ -99,28 +99,28 @@ class AaaGettingStartedTest < TestCase
       css: '.js-channel .email .provider_name',
     )
     set(
-      css: '.js-intro input[name="realname"]',
+      css:   '.js-intro input[name="realname"]',
       value: 'Some Realname',
     )
     set(
-      css: '.js-intro input[name="email"]',
+      css:   '.js-intro input[name="email"]',
       value: mailbox_user,
     )
     set(
-      css: '.js-intro input[name="password"]',
+      css:   '.js-intro input[name="password"]',
       value: mailbox_password,
     )
     click(
       css: '.js-intro .btn--primary',
     )
     watch_for(
-      css: 'body',
-      value: 'verify',
+      css:     'body',
+      value:   'verify',
       timeout: 20,
     )
     watch_for(
-      css: 'body',
-      value: 'invite',
+      css:     'body',
+      value:   'invite',
       timeout: 100,
     )
 
@@ -132,15 +132,15 @@ class AaaGettingStartedTest < TestCase
       css: '.js-agent input[name="firstname"]',
     )
     set(
-      css: '.js-agent input[name="firstname"]',
+      css:   '.js-agent input[name="firstname"]',
       value: 'Agent 1',
     )
     set(
-      css: '.js-agent input[name="lastname"]',
+      css:   '.js-agent input[name="lastname"]',
       value: 'Test',
     )
     set(
-      css: '.js-agent input[name="email"]',
+      css:   '.js-agent input[name="email"]',
       value: 'agent1@example.com',
     )
     # not needed since we hide group selections if only one group exists
@@ -151,7 +151,7 @@ class AaaGettingStartedTest < TestCase
       css: '.js-agent .btn--success',
     )
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Invitation sent',
     )
     location_check(
@@ -161,7 +161,7 @@ class AaaGettingStartedTest < TestCase
       css: '.js-agent .btn--primary',
     )
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'My Stats',
     )
     location_check(
@@ -181,7 +181,7 @@ class AaaGettingStartedTest < TestCase
     )
 
     match(
-      css: '.content.active input[name="organization"]',
+      css:   '.content.active input[name="organization"]',
       value: 'Some Organization',
     )
     click(
@@ -195,7 +195,7 @@ class AaaGettingStartedTest < TestCase
     raise "Unable to get fqdn based on #{browser_url}" if !fqdn
 
     match(
-      css: '.content.active input[name="fqdn"]',
+      css:   '.content.active input[name="fqdn"]',
       value: fqdn,
     )
   end
@@ -210,7 +210,7 @@ class AaaGettingStartedTest < TestCase
       mailbox_password = ENV["MAILBOX_AUTO#{count}"].split(':')[1]
       account = {
         realname: 'auto account',
-        email: mailbox_user,
+        email:    mailbox_user,
         password: mailbox_password,
       }
       accounts.push account
@@ -224,7 +224,7 @@ class AaaGettingStartedTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     accounts.each do |account|
 
@@ -234,28 +234,28 @@ class AaaGettingStartedTest < TestCase
         css: '.js-channel .email .provider_name',
       )
       set(
-        css: '.js-intro input[name="realname"]',
+        css:   '.js-intro input[name="realname"]',
         value: account[:realname],
       )
       set(
-        css: '.js-intro input[name="email"]',
+        css:   '.js-intro input[name="email"]',
         value: account[:email],
       )
       set(
-        css: '.js-intro input[name="password"]',
+        css:   '.js-intro input[name="password"]',
         value: account[:password],
       )
       click(
         css: '.js-intro .btn--primary',
       )
       watch_for(
-        css: 'body',
-        value: 'verify',
+        css:     'body',
+        value:   'verify',
         timeout: 20,
       )
       watch_for(
-        css: 'body',
-        value: 'invite',
+        css:     'body',
+        value:   'invite',
         timeout: 100,
       )
       location_check(
@@ -276,9 +276,9 @@ class AaaGettingStartedTest < TestCase
       mailbox_outbound = ENV["MAILBOX_MANUAL#{count}"].split(':')[3]
       account = {
         realname: 'manual account',
-        email: mailbox_user,
+        email:    mailbox_user,
         password: mailbox_password,
-        inbound: {
+        inbound:  {
           'options::host' => mailbox_inbound,
         },
         outbound: {
@@ -297,7 +297,7 @@ class AaaGettingStartedTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     accounts.each do |account|
 
@@ -308,58 +308,58 @@ class AaaGettingStartedTest < TestCase
         css: '.js-channel .email .provider_name',
       )
       set(
-        css: '.js-intro input[name="realname"]',
+        css:   '.js-intro input[name="realname"]',
         value: account[:realname],
       )
       set(
-        css: '.js-intro input[name="email"]',
+        css:   '.js-intro input[name="email"]',
         value: account[:email],
       )
       set(
-        css: '.js-intro input[name="password"]',
+        css:   '.js-intro input[name="password"]',
         value: account[:password],
       )
       click(
         css: '.js-intro .btn--primary',
       )
       watch_for(
-        css: '.js-inbound h2',
-        value: 'inbound',
+        css:     '.js-inbound h2',
+        value:   'inbound',
         timeout: 220,
       )
       watch_for(
-        css: '.js-inbound',
+        css:   '.js-inbound',
         value: 'manual',
       )
       set(
-        css: '.js-inbound input[name="options::host"]',
+        css:   '.js-inbound input[name="options::host"]',
         value: account[:inbound]['options::host'],
       )
       click(
         css: '.js-inbound .btn--primary',
       )
       watch_for(
-        css: '.js-outbound h2',
+        css:   '.js-outbound h2',
         value: 'outbound',
       )
       select(
-        css: '.js-outbound select[name="adapter"]',
+        css:   '.js-outbound select[name="adapter"]',
         value: 'SMTP - configure your own outgoing SMTP settings',
       )
       set(
-        css: '.js-outbound input[name="options::host"]',
+        css:   '.js-outbound input[name="options::host"]',
         value: account[:outbound]['options::host'],
       )
       click(
         css: '.js-outbound .btn--primary',
       )
       watch_for(
-        css: 'body',
+        css:   'body',
         value: 'verify',
       )
       watch_for(
-        css: 'body',
-        value: 'invite',
+        css:     'body',
+        value:   'invite',
         timeout: 190,
       )
       location_check(

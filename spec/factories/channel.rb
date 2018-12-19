@@ -17,33 +17,33 @@ FactoryBot.define do
       options do
         {
           adapter: 'twitter',
-          auth: {
-            consumer_key: 'some',
-            consumer_secret: 'some',
-            oauth_token: 'key',
+          auth:    {
+            consumer_key:       'some',
+            consumer_secret:    'some',
+            oauth_token:        'key',
             oauth_token_secret: 'secret',
           },
-          user: {
-            id: 'system_id',
+          user:    {
+            id:          'system_id',
             screen_name: 'system_login',
           },
-          sync: {
+          sync:    {
             import_older_tweets: true,
-            track_retweets: true,
-            search: [
+            track_retweets:      true,
+            search:              [
               {
-                term: 'zammad',
+                term:     'zammad',
                 group_id: Group.first.id
               },
               {
-                term: 'hash_tag1',
+                term:     'hash_tag1',
                 group_id: Group.first.id
               }
             ],
-            mentions: {
+            mentions:            {
               group_id: Group.first.id
             },
-            direct_messages: {
+            direct_messages:     {
               group_id: Group.first.id
             }
           }

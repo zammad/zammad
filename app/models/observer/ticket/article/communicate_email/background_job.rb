@@ -53,16 +53,16 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     begin
       message = channel.deliver(
         {
-          message_id: record.message_id,
-          in_reply_to: record.in_reply_to,
-          references: ticket.get_references([record.message_id]),
-          from: record.from,
-          to: record.to,
-          cc: record.cc,
-          subject: subject,
+          message_id:   record.message_id,
+          in_reply_to:  record.in_reply_to,
+          references:   ticket.get_references([record.message_id]),
+          from:         record.from,
+          to:           record.to,
+          cc:           record.cc,
+          subject:      subject,
           content_type: record.content_type,
-          body: record.body,
-          attachments: record.attachments
+          body:         record.body,
+          attachments:  record.attachments
         },
         notification
       )
@@ -103,14 +103,14 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     return if recipient_list == ''
 
     History.add(
-      o_id: record.id,
-      history_type: 'email',
-      history_object: 'Ticket::Article',
-      related_o_id: ticket.id,
+      o_id:                   record.id,
+      history_type:           'email',
+      history_object:         'Ticket::Article',
+      related_o_id:           ticket.id,
       related_history_object: 'Ticket',
-      value_from: record.subject,
-      value_to: recipient_list,
-      created_by_id: record.created_by_id,
+      value_from:             record.subject,
+      value_to:               recipient_list,
+      created_by_id:          record.created_by_id,
     )
   end
 
@@ -142,16 +142,16 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       Observer::Transaction.reset
       UserInfo.current_user_id = 1
       Ticket::Article.create!(
-        ticket_id: local_record.ticket_id,
+        ticket_id:    local_record.ticket_id,
         content_type: 'text/plain',
-        body: "Unable to send email to '#{recipient_list}': #{message}",
-        internal: true,
-        sender: Ticket::Article::Sender.find_by(name: 'System'),
-        type: Ticket::Article::Type.find_by(name: 'note'),
-        preferences: {
+        body:         "Unable to send email to '#{recipient_list}': #{message}",
+        internal:     true,
+        sender:       Ticket::Article::Sender.find_by(name: 'System'),
+        type:         Ticket::Article::Type.find_by(name: 'note'),
+        preferences:  {
           delivery_article_id_related: local_record.id,
-          delivery_message: true,
-          notification: true,
+          delivery_message:            true,
+          notification:                true,
         },
       )
       ticket       = Ticket.find(local_record.ticket_id)

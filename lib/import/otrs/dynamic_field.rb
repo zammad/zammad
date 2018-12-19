@@ -34,10 +34,10 @@ module Import
       def initialize_attribute_config(dynamic_field)
 
         @attribute_config = {
-          object:  dynamic_field['ObjectType'],
-          name:    @internal_name,
-          display: dynamic_field['Label'],
-          screens: {
+          object:        dynamic_field['ObjectType'],
+          name:          @internal_name,
+          display:       dynamic_field['Label'],
+          screens:       {
             view: {
               '-all-' => {
                 shown: true,

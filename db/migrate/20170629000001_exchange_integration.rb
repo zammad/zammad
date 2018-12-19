@@ -7,30 +7,30 @@ class ExchangeIntegration < ActiveRecord::Migration[4.2]
     Setting.set('import_backends', ['Import::Ldap', 'Import::Exchange'])
 
     Setting.create_if_not_exists(
-      title: 'Exchange config',
-      name: 'exchange_config',
-      area: 'Integration::Exchange',
+      title:       'Exchange config',
+      name:        'exchange_config',
+      area:        'Integration::Exchange',
       description: 'Defines the Exchange config.',
-      options: {},
-      state: {},
+      options:     {},
+      state:       {},
       preferences: {
-        prio: 2,
+        prio:       2,
         permission: ['admin.integration'],
       },
-      frontend: false,
+      frontend:    false,
     )
     Setting.create_if_not_exists(
-      title: 'Exchange integration',
-      name: 'exchange_integration',
-      area: 'Integration::Switch',
+      title:       'Exchange integration',
+      name:        'exchange_integration',
+      area:        'Integration::Switch',
       description: 'Defines if Exchange is enabled or not.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'exchange_integration',
-            tag: 'boolean',
+            null:    true,
+            name:    'exchange_integration',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -38,13 +38,13 @@ class ExchangeIntegration < ActiveRecord::Migration[4.2]
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
-        prio: 1,
+        prio:           1,
         authentication: true,
-        permission: ['admin.integration'],
+        permission:     ['admin.integration'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 

@@ -15,7 +15,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
     valid_config = ActiveSupport::HashWithIndifferentAccess.new(
       attributes: {
-        some:    'other',
+        some: 'other',
       }
     )
 

@@ -154,11 +154,11 @@ returns
 
         # send notification
         Transaction::BackgroundJob.run(
-          object: 'Ticket',
-          type: 'reminder_reached',
-          object_id: ticket.id,
+          object:     'Ticket',
+          type:       'reminder_reached',
+          object_id:  ticket.id,
           article_id: article_id,
-          user_id: 1,
+          user_id:    1,
         )
 
         result.push ticket
@@ -201,11 +201,11 @@ returns
       # send escalation
       if ticket.escalation_at < Time.zone.now
         Transaction::BackgroundJob.run(
-          object: 'Ticket',
-          type: 'escalation',
-          object_id: ticket.id,
+          object:     'Ticket',
+          type:       'escalation',
+          object_id:  ticket.id,
           article_id: article_id,
-          user_id: 1,
+          user_id:    1,
         )
         result.push ticket
         next
@@ -213,11 +213,11 @@ returns
 
       # check if warning need to be sent
       Transaction::BackgroundJob.run(
-        object: 'Ticket',
-        type: 'escalation_warning',
-        object_id: ticket.id,
+        object:     'Ticket',
+        type:       'escalation_warning',
+        object_id:  ticket.id,
         article_id: article_id,
-        user_id: 1,
+        user_id:    1,
       )
       result.push ticket
     end
@@ -308,11 +308,11 @@ returns
 
       # create new merge article
       Ticket::Article.create(
-        ticket_id: id,
-        type_id: Ticket::Article::Type.lookup(name: 'note').id,
-        sender_id: Ticket::Article::Sender.lookup(name: 'Agent').id,
-        body: 'merged',
-        internal: false,
+        ticket_id:     id,
+        type_id:       Ticket::Article::Type.lookup(name: 'note').id,
+        sender_id:     Ticket::Article::Sender.lookup(name: 'Agent').id,
+        body:          'merged',
+        internal:      false,
         created_by_id: data[:user_id],
         updated_by_id: data[:user_id],
       )
@@ -322,21 +322,21 @@ returns
       # reassign links to the new ticket
       # rubocop:disable Rails/SkipsModelValidations
       Link.where(
-        link_object_source_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_source_id:    Link::Object.find_by(name: 'Ticket').id,
         link_object_source_value: id,
       ).update_all(link_object_source_value: data[:ticket_id])
       Link.where(
-        link_object_target_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_target_id:    Link::Object.find_by(name: 'Ticket').id,
         link_object_target_value: id,
       ).update_all(link_object_target_value: data[:ticket_id])
       # rubocop:enable Rails/SkipsModelValidations
 
       # link tickets
       Link.add(
-        link_type: 'parent',
-        link_object_source: 'Ticket',
+        link_type:                'parent',
+        link_object_source:       'Ticket',
         link_object_source_value: data[:ticket_id],
-        link_object_target: 'Ticket',
+        link_object_target:       'Ticket',
         link_object_target_value: id
       )
 
@@ -1057,7 +1057,7 @@ perform active triggers on ticket
         # check if ticket selector is matching
         condition['ticket.id'] = {
           operator: 'is',
-          value: ticket.id,
+          value:    ticket.id,
         }
         next if article_selector && !article
 
@@ -1065,7 +1065,7 @@ perform active triggers on ticket
         if article_selector
           condition['article.id'] = {
             operator: 'is',
-            value: article.id,
+            value:    article.id,
           }
         end
 
@@ -1184,7 +1184,7 @@ result
     end
     {
       history: list,
-      assets: assets,
+      assets:  assets,
     }
   end
 
@@ -1278,7 +1278,7 @@ result
   # (see https://github.com/zammad/zammad/issues/1543)
   def build_notification_template_objects(article)
     {
-      ticket: self,
+      ticket:  self,
       article: article || articles.last
     }
   end
@@ -1378,9 +1378,9 @@ result
 
       # loop protection / check if maximal count of trigger mail has reached
       map = {
-        10 => 10,
-        30 => 15,
-        60 => 25,
+        10  => 10,
+        30  => 15,
+        60  => 25,
         180 => 50,
         600 => 100,
       }
@@ -1388,8 +1388,8 @@ result
       map.each do |minutes, count|
         already_sent = Ticket::Article.where(
           ticket_id: id,
-          sender: Ticket::Article::Sender.find_by(name: 'System'),
-          type: Ticket::Article::Type.find_by(name: 'email'),
+          sender:    Ticket::Article::Sender.find_by(name: 'System'),
+          type:      Ticket::Article::Type.find_by(name: 'email'),
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
         next if already_sent < count
 
@@ -1400,9 +1400,9 @@ result
       next if skip
 
       map = {
-        10 => 30,
-        30 => 60,
-        60 => 120,
+        10  => 30,
+        30  => 60,
+        60  => 120,
         180 => 240,
         600 => 360,
       }
@@ -1410,7 +1410,7 @@ result
       map.each do |minutes, count|
         already_sent = Ticket::Article.where(
           sender: Ticket::Article::Sender.find_by(name: 'System'),
-          type: Ticket::Article::Type.find_by(name: 'email'),
+          type:   Ticket::Article::Type.find_by(name: 'email'),
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
         next if already_sent < count
 
@@ -1449,31 +1449,31 @@ result
     # get subject
     subject = NotificationFactory::Mailer.template(
       templateInline: value['subject'],
-      locale: 'en-en',
-      objects: objects,
-      quote: false,
+      locale:         'en-en',
+      objects:        objects,
+      quote:          false,
     )
     subject = subject_build(subject)
 
     body = NotificationFactory::Mailer.template(
       templateInline: value['body'],
-      locale: 'en-en',
-      objects: objects,
-      quote: true,
+      locale:         'en-en',
+      objects:        objects,
+      quote:          true,
     )
 
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
 
     message = Ticket::Article.create(
-      ticket_id: id,
-      to: recipient_string,
-      subject: subject,
-      content_type: 'text/html',
-      body: body,
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'System'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      preferences: {
+      ticket_id:     id,
+      to:            recipient_string,
+      subject:       subject,
+      content_type:  'text/html',
+      body:          body,
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'System'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
+      preferences:   {
         perform_origin: perform_origin,
       },
       updated_by_id: 1,
@@ -1482,10 +1482,10 @@ result
 
     attachments_inline.each do |attachment|
       Store.add(
-        object: 'Ticket::Article',
-        o_id: message.id,
-        data: attachment[:data],
-        filename: attachment[:filename],
+        object:      'Ticket::Article',
+        o_id:        message.id,
+        data:        attachment[:data],
+        filename:    attachment[:filename],
         preferences: attachment[:preferences],
       )
     end
@@ -1547,17 +1547,17 @@ result
 
     # attributes content_type is not needed for SMS
     article = Ticket::Article.create(
-      ticket_id:   id,
-      subject:     'SMS notification',
-      to:          sms_recipients_to,
-      body:        body,
-      internal:    true,
-      sender:      Ticket::Article::Sender.find_by(name: 'System'),
-      type:        Ticket::Article::Type.find_by(name: 'sms'),
-      preferences: {
+      ticket_id:     id,
+      subject:       'SMS notification',
+      to:            sms_recipients_to,
+      body:          body,
+      internal:      true,
+      sender:        Ticket::Article::Sender.find_by(name: 'System'),
+      type:          Ticket::Article::Type.find_by(name: 'sms'),
+      preferences:   {
         perform_origin: perform_origin,
         sms_recipients: sms_recipients.map(&:mobile),
-        channel_id: channel.id,
+        channel_id:     channel.id,
       },
       updated_by_id: 1,
       created_by_id: 1,

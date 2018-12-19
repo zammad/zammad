@@ -16,12 +16,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by id' do
       params = {
-        title: 'a new ticket #3',
-        group: 'Users',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }
@@ -36,12 +36,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       ActivityStream.cleanup(1.year)
 
       params = {
-        title: 'a new ticket #3',
-        group: 'Users',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }
@@ -90,12 +90,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by email' do
       params = {
-        title: 'a new ticket #3',
-        group: 'Users',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }
@@ -108,12 +108,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
     it 'does X-On-Behalf-Of auth - ticket create admin for unknown' do
       params = {
-        title: 'a new ticket #3',
-        group: 'Users',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }
@@ -127,12 +127,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
     it 'does X-On-Behalf-Of auth - ticket create customer for admin' do
       params = {
-        title: 'a new ticket #3',
-        group: 'Users',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }
@@ -146,12 +146,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by email but no permitted action' do
       params = {
-        title: 'a new ticket #3',
-        group: 'secret1234',
-        priority: '2 normal',
-        state: 'new',
+        title:       'a new ticket #3',
+        group:       'secret1234',
+        priority:    '2 normal',
+        state:       'new',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some test 123',
         },
       }

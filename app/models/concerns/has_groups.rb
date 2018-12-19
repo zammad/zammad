@@ -75,8 +75,8 @@ module HasGroups
     return true if group_through.klass.includes(:group).exists?(
       group_through.foreign_key => id,
       group_id: group_id,
-      access:   access,
-      groups:   {
+      access: access,
+      groups: {
         active: true
       }
     )

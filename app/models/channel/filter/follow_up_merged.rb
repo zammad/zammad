@@ -18,7 +18,7 @@ module Channel::Filter::FollowUpMerged
     return if ticket.state.name != 'merged'
 
     links = Link.list(
-      link_object: 'Ticket',
+      link_object:       'Ticket',
       link_object_value: ticket.id
     )
     return if links.blank?

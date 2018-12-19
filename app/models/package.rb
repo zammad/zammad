@@ -234,10 +234,10 @@ returns
 
     # package meta data
     meta = {
-      name: package['name'],
-      version: package['version'],
-      vendor: package['vendor'],
-      state: 'uninstalled',
+      name:          package['name'],
+      version:       package['version'],
+      vendor:        package['vendor'],
+      state:         'uninstalled',
       created_by_id: 1,
       updated_by_id: 1,
     }
@@ -256,10 +256,10 @@ returns
 
       # uninstall files of old package
       uninstall(
-        name: package_db.name,
-        version: package_db.version,
+        name:               package_db.name,
+        version:            package_db.version,
         migration_not_down: true,
-        reinstall: data[:reinstall],
+        reinstall:          data[:reinstall],
       )
     end
 
@@ -267,11 +267,11 @@ returns
     if !data[:reinstall]
       package_db = Package.create(meta)
       Store.add(
-        object: 'Package',
-        o_id: package_db.id,
-        data: package.to_json,
-        filename: "#{meta[:name]}-#{meta[:version]}.zpm",
-        preferences: {},
+        object:        'Package',
+        o_id:          package_db.id,
+        data:          package.to_json,
+        filename:      "#{meta[:name]}-#{meta[:version]}.zpm",
+        preferences:   {},
         created_by_id: UserInfo.current_user_id || 1,
       )
     end
@@ -357,7 +357,7 @@ returns
     # delete package
     if !data[:reinstall]
       record = Package.find_by(
-        name: package['name'],
+        name:    package['name'],
         version: package['version'],
       )
       record.destroy
@@ -384,7 +384,7 @@ execute all pending package migrations at once
 
   def self._get_bin(name, version)
     package = Package.find_by(
-      name: name,
+      name:    name,
       version: version,
     )
     if !package
@@ -393,7 +393,7 @@ execute all pending package migrations at once
 
     list = Store.list(
       object: 'Package',
-      o_id: package.id,
+      o_id:   package.id,
     )
 
     # find file

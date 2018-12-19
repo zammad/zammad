@@ -71,19 +71,19 @@ RSpec.describe Import::OTRS::Ticket do
     let(:object_structure) { load_ticket_json('no_title') }
     let(:zammad_structure) do
       {
-        title: '**EMPTY**',
-        owner_id: 1,
-        customer_id: 1,
+        title:         '**EMPTY**',
+        owner_id:      1,
+        customer_id:   1,
         created_by_id: '3',
         updated_by_id: 1,
-        updated_at: '2014-11-21 00:21:08',
-        created_at: '2014-11-21 00:17:40',
-        number: '20141121305000012',
-        group_id: '1',
-        state_id: '2',
-        priority_id: '3',
-        id: '730',
-        close_at: '2014-11-21 00:21:08'
+        updated_at:    '2014-11-21 00:21:08',
+        created_at:    '2014-11-21 00:17:40',
+        number:        '20141121305000012',
+        group_id:      '1',
+        state_id:      '2',
+        priority_id:   '3',
+        id:            '730',
+        close_at:      '2014-11-21 00:21:08'
       }
     end
 
@@ -103,18 +103,18 @@ RSpec.describe Import::OTRS::Ticket do
     let(:object_structure) { load_ticket_json('unknown_customer') }
     let(:zammad_structure) do
       {
-        owner_id: 1,
-        customer_id: 1337,
+        owner_id:      1,
+        customer_id:   1337,
         created_by_id: 1337,
         updated_by_id: 1,
-        updated_at: '2014-07-17 14:29:44',
-        created_at: '2014-07-17 14:29:43',
-        number: '2014071754002471',
-        group_id: '2',
-        state_id: '1',
-        priority_id: '3',
-        title: 'Ask me about performance',
-        id: '540'
+        updated_at:    '2014-07-17 14:29:44',
+        created_at:    '2014-07-17 14:29:43',
+        number:        '2014071754002471',
+        group_id:      '2',
+        state_id:      '1',
+        priority_id:   '3',
+        title:         'Ask me about performance',
+        id:            '540'
       }
     end
 

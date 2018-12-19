@@ -16,10 +16,10 @@ RSpec.describe 'Ticket Article', type: :request do
 
     it 'does ticket create with agent and articles' do
       params = {
-        title: 'a new ticket #1',
-        group: 'Users',
+        title:       'a new ticket #1',
+        group:       'Users',
         customer_id: customer_user.id,
-        article: {
+        article:     {
           body: 'some body',
         }
       }
@@ -28,10 +28,10 @@ RSpec.describe 'Ticket Article', type: :request do
       expect(response).to have_http_status(201)
 
       params = {
-        ticket_id: json_response['id'],
+        ticket_id:    json_response['id'],
         content_type: 'text/plain', # or text/html
-        body: 'some body',
-        type: 'note',
+        body:         'some body',
+        type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(201)
@@ -48,12 +48,12 @@ RSpec.describe 'Ticket Article', type: :request do
       expect(ticket.articles[1].attachments.count).to eq(0)
 
       params = {
-        ticket_id: json_response['ticket_id'],
+        ticket_id:    json_response['ticket_id'],
         content_type: 'text/html', # or text/html
-        body: 'some body <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+        body:         'some body <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
 AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />',
-        type: 'note',
+        type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(201)
@@ -77,13 +77,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(/@zammad.example.com/)
 
       params = {
-        ticket_id: json_response['ticket_id'],
+        ticket_id:    json_response['ticket_id'],
         content_type: 'text/html', # or text/html
-        body: 'some body',
-        type: 'note',
-        attachments: [
-          'filename' => 'some_file.txt',
-          'data' => 'dGVzdCAxMjM=',
+        body:         'some body',
+        type:         'note',
+        attachments:  [
+          'filename'  => 'some_file.txt',
+          'data'      => 'dGVzdCAxMjM=',
           'mime-type' => 'text/plain',
         ],
       }
@@ -112,11 +112,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response['attachments'][0]['preferences']['Mime-Type']).to eq('text/plain')
 
       params = {
-        ticket_id: json_response['ticket_id'],
+        ticket_id:    json_response['ticket_id'],
         content_type: 'text/plain',
-        body: 'some body',
-        type: 'note',
-        preferences: {
+        body:         'some body',
+        type:         'note',
+        preferences:  {
           some_key1: 123,
         },
       }
@@ -132,7 +132,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles.count).to eq(5)
 
       params = {
-        body: 'some body 2',
+        body:        'some body 2',
         preferences: {
           some_key2: 'abc',
         },
@@ -152,8 +152,8 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
     it 'does ticket create with customer and articles' do
       params = {
-        title: 'a new ticket #2',
-        group: 'Users',
+        title:   'a new ticket #2',
+        group:   'Users',
         article: {
           body: 'some body',
         }
@@ -163,10 +163,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(response).to have_http_status(201)
 
       params = {
-        ticket_id: json_response['id'],
+        ticket_id:    json_response['id'],
         content_type: 'text/plain', # or text/html
-        body: 'some body',
-        type: 'note',
+        body:         'some body',
+        type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(201)
@@ -184,11 +184,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[1].attachments.count).to eq(0)
 
       params = {
-        ticket_id: json_response['ticket_id'],
+        ticket_id:    json_response['ticket_id'],
         content_type: 'text/plain', # or text/html
-        body: 'some body',
-        sender: 'Agent',
-        type: 'note',
+        body:         'some body',
+        sender:       'Agent',
+        type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(201)
@@ -208,12 +208,12 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[2].attachments.count).to eq(0)
 
       params = {
-        ticket_id: json_response['ticket_id'],
+        ticket_id:    json_response['ticket_id'],
         content_type: 'text/plain', # or text/html
-        body: 'some body 2',
-        sender: 'Agent',
-        type: 'note',
-        internal: true,
+        body:         'some body 2',
+        sender:       'Agent',
+        type:         'note',
+        internal:     true,
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(201)
@@ -237,9 +237,9 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       article = create(
         :ticket_article,
         ticket_id: ticket.id,
-        internal: true,
-        sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-        type: Ticket::Article::Type.find_by(name: 'note'),
+        internal:  true,
+        sender:    Ticket::Article::Sender.find_by(name: 'Agent'),
+        type:      Ticket::Article::Type.find_by(name: 'note'),
       )
       expect(ticket.articles.count).to eq(5)
       expect(ticket.articles[4].sender.name).to eq('Agent')
@@ -265,13 +265,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
     it 'does create phone ticket for customer and expected origin_by_id' do
       params = {
-        title: 'a new ticket #1',
-        group: 'Users',
+        title:       'a new ticket #1',
+        group:       'Users',
         customer_id: customer_user.id,
-        article: {
-          body: 'some body',
+        article:     {
+          body:   'some body',
           sender: 'Customer',
-          type: 'phone',
+          type:   'phone',
         }
       }
       authenticated_as(agent_user)
@@ -287,13 +287,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
     it 'does create phone ticket by customer and manipulate origin_by_id' do
       params = {
-        title: 'a new ticket #1',
-        group: 'Users',
+        title:       'a new ticket #1',
+        group:       'Users',
         customer_id: customer_user.id,
-        article: {
-          body: 'some body',
-          sender: 'Customer',
-          type: 'phone',
+        article:     {
+          body:         'some body',
+          sender:       'Customer',
+          type:         'phone',
           origin_by_id: 1,
         }
       }
@@ -310,18 +310,18 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       ticket = create(:ticket)
       article = create(
         :ticket_article,
-        ticket_id: ticket.id,
-        type: Ticket::Article::Type.lookup(name: 'note'),
-        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-        body: '<b>test</b> <img src="cid:15.274327094.140938@ZAMMAD.example.com"/> test <img src="cid:15.274327094.140938.3@ZAMMAD.example.com"/>',
+        ticket_id:    ticket.id,
+        type:         Ticket::Article::Type.lookup(name: 'note'),
+        sender:       Ticket::Article::Sender.lookup(name: 'Customer'),
+        body:         '<b>test</b> <img src="cid:15.274327094.140938@ZAMMAD.example.com"/> test <img src="cid:15.274327094.140938.3@ZAMMAD.example.com"/>',
         content_type: 'text/html',
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file1_normally_should_be_an_image',
-        filename: 'some_file1.jpg',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file1_normally_should_be_an_image',
+        filename:      'some_file1.jpg',
+        preferences:   {
           'Content-Type'        => 'image/jpeg',
           'Mime-Type'           => 'image/jpeg',
           'Content-ID'          => '15.274327094.140938@zammad.example.com',
@@ -330,11 +330,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file2_normally_should_be_an_image',
-        filename: 'some_file2.jpg',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file2_normally_should_be_an_image',
+        filename:      'some_file2.jpg',
+        preferences:   {
           'Content-Type'        => 'image/jpeg',
           'Mime-Type'           => 'image/jpeg',
           'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
@@ -343,35 +343,35 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file3_normally_should_be_an_image',
-        filename: 'some_file3.jpg',
-        preferences: {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.3@zammad.example.com',
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file3_normally_should_be_an_image',
+        filename:      'some_file3.jpg',
+        preferences:   {
+          'Content-Type' => 'image/jpeg',
+          'Mime-Type'    => 'image/jpeg',
+          'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
         },
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file4_normally_should_be_an_image',
-        filename: 'some_file4.jpg',
-        preferences: {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.4@zammad.example.com',
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file4_normally_should_be_an_image',
+        filename:      'some_file4.jpg',
+        preferences:   {
+          'Content-Type' => 'image/jpeg',
+          'Mime-Type'    => 'image/jpeg',
+          'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
         },
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file1_normally_should_be_an_pdf',
-        filename: 'Rechnung_RE-2018-200.pdf',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file1_normally_should_be_an_pdf',
+        filename:      'Rechnung_RE-2018-200.pdf',
+        preferences:   {
           'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
           'Mime-Type'           => 'application/octet-stream',
           'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
@@ -406,20 +406,20 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       )
       article = create(
         :ticket_article,
-        ticket_id: ticket.id,
-        type: Ticket::Article::Type.lookup(name: 'note'),
-        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-        body: '<b>test</b> <img src="cid:15.274327094.140938@zammad.example.com"/>',
-        content_type: 'text/plain',
+        ticket_id:     ticket.id,
+        type:          Ticket::Article::Type.lookup(name: 'note'),
+        sender:        Ticket::Article::Sender.lookup(name: 'Customer'),
+        body:          '<b>test</b> <img src="cid:15.274327094.140938@zammad.example.com"/>',
+        content_type:  'text/plain',
         updated_by_id: 1,
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file1_normally_should_be_an_image',
-        filename: 'some_file1.jpg',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file1_normally_should_be_an_image',
+        filename:      'some_file1.jpg',
+        preferences:   {
           'Content-Type'        => 'image/jpeg',
           'Mime-Type'           => 'image/jpeg',
           'Content-ID'          => '15.274327094.140938@zammad.example.com',
@@ -428,11 +428,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file1_normally_should_be_an_image',
-        filename: 'some_file2.jpg',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file1_normally_should_be_an_image',
+        filename:      'some_file2.jpg',
+        preferences:   {
           'Content-Type'        => 'image/jpeg',
           'Mime-Type'           => 'image/jpeg',
           'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
@@ -441,11 +441,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         created_by_id: 1,
       )
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: 'content_file1_normally_should_be_an_pdf',
-        filename: 'Rechnung_RE-2018-200.pdf',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'content_file1_normally_should_be_an_pdf',
+        filename:      'Rechnung_RE-2018-200.pdf',
+        preferences:   {
           'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
           'Mime-Type'           => 'application/octet-stream',
           'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',

@@ -55,7 +55,7 @@ module Import
             edit: {
               Customer: {
                 shown: attribute.visible_in_portal,
-                null: !attribute.required_in_portal,
+                null:  !attribute.required_in_portal,
               },
             }.merge(config)
           }

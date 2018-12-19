@@ -22,25 +22,25 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Integer do
     )
 
     expected_structure = {
-      object:      'Ticket',
-      name:        'example_field',
-      display:     'Example attribute',
-      data_type:   'integer',
-      data_option: {
+      object:        'Ticket',
+      name:          'example_field',
+      display:       'Example attribute',
+      data_type:     'integer',
+      data_option:   {
         null: false,
         note: 'Example attribute description',
         min:  0,
         max:  999_999_999,
       },
-      editable: true,
-      active:   true,
-      screens:  {
+      editable:      true,
+      active:        true,
+      screens:       {
         edit: {
           Customer: {
             shown: true,
-            null: false
+            null:  false
           },
-          view: {
+          view:     {
             '-all-' => {
               shown: true
             }

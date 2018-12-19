@@ -44,12 +44,12 @@ class Stats::TicketInProcess
     end
 
     {
-      used_for_average: in_process_precent,
+      used_for_average:  in_process_precent,
       average_per_agent: average_in_percent,
-      state: state,
-      in_process: count,
-      percent: in_process_precent,
-      total: total,
+      state:             state,
+      in_process:        count,
+      percent:           in_process_precent,
+      total:             total,
     }
   end
 

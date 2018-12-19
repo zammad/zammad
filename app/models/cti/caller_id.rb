@@ -131,11 +131,11 @@ returns
       existing_record_ids = Cti::CallerId.where(object: model.to_s, o_id: record.id).pluck(:id)
       caller_ids.uniq.each do |caller_id|
         existing_record_id = Cti::CallerId.where(
-          object: model.to_s,
-          o_id: record.id,
+          object:    model.to_s,
+          o_id:      record.id,
           caller_id: caller_id,
-          level: level,
-          user_id: user_id,
+          level:     level,
+          user_id:   user_id,
         ).pluck(:id)
         if existing_record_id[0]
           existing_record_ids.delete(existing_record_id[0])
@@ -153,10 +153,10 @@ returns
       caller_ids_to_add.each do |caller_id|
         Cti::CallerId.maybe_add(
           caller_id: caller_id,
-          level: level,
-          object: model.to_s,
-          o_id: record.id,
-          user_id: user_id,
+          level:     level,
+          object:    model.to_s,
+          o_id:      record.id,
+          user_id:   user_id,
         )
       end
       true

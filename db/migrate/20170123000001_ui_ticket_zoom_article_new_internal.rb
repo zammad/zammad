@@ -5,31 +5,31 @@ class UiTicketZoomArticleNewInternal < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Define default visibility of new a new article',
-      name: 'ui_ticket_zoom_article_new_internal',
-      area: 'UI::TicketZoom',
+      title:       'Define default visibility of new a new article',
+      name:        'ui_ticket_zoom_article_new_internal',
+      area:        'UI::TicketZoom',
       description: 'Set default visibility of new a new article.',
-      options: {
+      options:     {
         form: [
           {
-            display: '',
-            null: true,
-            name: 'ui_ticket_zoom_article_new_internal',
-            tag: 'boolean',
+            display:   '',
+            null:      true,
+            name:      'ui_ticket_zoom_article_new_internal',
+            tag:       'boolean',
             translate: true,
-            options: {
+            options:   {
               true  => 'internal',
               false => 'public',
             },
           },
         ],
       },
-      state: true,
+      state:       true,
       preferences: {
-        prio: 1,
+        prio:       1,
         permission: ['admin.ui'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 end

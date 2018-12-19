@@ -74,14 +74,14 @@ returns
       end
       state_store = StatsStore.sync(
         object: 'User',
-        o_id: user_id,
-        key: 'dashboard',
-        data: data_for_user,
+        o_id:   user_id,
+        key:    'dashboard',
+        data:   data_for_user,
       )
 
       message = {
         event: 'resetCollection',
-        data: {
+        data:  {
           state_store.class.to_app_model => [state_store],
         },
       }

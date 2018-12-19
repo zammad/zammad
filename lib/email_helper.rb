@@ -24,7 +24,7 @@ returns
   def self.available_driver
     if Setting.get('system_online_service')
       return {
-        inbound: {
+        inbound:  {
           imap: 'IMAP',
           pop3: 'POP3',
         },
@@ -34,12 +34,12 @@ returns
       }
     end
     {
-      inbound: {
+      inbound:  {
         imap: 'IMAP',
         pop3: 'POP3',
       },
       outbound: {
-        smtp: 'SMTP - configure your own outgoing SMTP settings',
+        smtp:     'SMTP - configure your own outgoing SMTP settings',
         sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup',
       },
     }
@@ -108,71 +108,71 @@ returns
     # check domain based attributes
     provider_map = {
       google_imap: {
-        domain: 'gmail|googlemail|google',
-        inbound: {
+        domain:   'gmail|googlemail|google',
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'imap.gmail.com',
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     'imap.gmail.com',
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp.gmail.com',
-            port: 25,
+            host:      'smtp.gmail.com',
+            port:      25,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
-      microsoft: {
-        domain: 'outlook.com|hotmail.com',
-        inbound: {
+      microsoft:   {
+        domain:   'outlook.com|hotmail.com',
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'imap-mail.outlook.com',
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     'imap-mail.outlook.com',
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp-mail.outlook.com',
-            port: 25,
+            host:      'smtp-mail.outlook.com',
+            port:      25,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
       google_pop3: {
-        domain: 'gmail|googlemail|google',
-        inbound: {
+        domain:   'gmail|googlemail|google',
+        inbound:  {
           adapter: 'pop3',
           options: {
-            host: 'pop.gmail.com',
-            port: 995,
-            ssl: true,
-            user: email,
+            host:     'pop.gmail.com',
+            port:     995,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp.gmail.com',
-            port: 25,
+            host:      'smtp.gmail.com',
+            port:      25,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
@@ -218,20 +218,20 @@ returns
         {
           adapter: 'imap',
           options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: user,
+            host:     domain,
+            port:     993,
+            ssl:      true,
+            user:     user,
             password: password,
           },
         },
         {
           adapter: 'imap',
           options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     domain,
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
@@ -278,100 +278,100 @@ returns
       {
         adapter: 'imap',
         options: {
-          host: "mail.#{domain}",
-          port: 993,
-          ssl: true,
-          user: user,
+          host:     "mail.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'imap',
         options: {
-          host: "mail.#{domain}",
-          port: 993,
-          ssl: true,
-          user: email,
+          host:     "mail.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'imap',
         options: {
-          host: "imap.#{domain}",
-          port: 993,
-          ssl: true,
-          user: user,
+          host:     "imap.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'imap',
         options: {
-          host: "imap.#{domain}",
-          port: 993,
-          ssl: true,
-          user: email,
+          host:     "imap.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "mail.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "mail.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "mail.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "mail.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "pop.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "pop.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop3.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "pop3.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop3.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "pop3.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
@@ -417,41 +417,41 @@ returns
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 25,
+            host:      domain,
+            port:      25,
             start_tls: true,
-            user: user,
-            password: password,
+            user:      user,
+            password:  password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 25,
+            host:      domain,
+            port:      25,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 465,
+            host:      domain,
+            port:      465,
             start_tls: true,
-            user: user,
-            password: password,
+            user:      user,
+            password:  password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 465,
+            host:      domain,
+            port:      465,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           },
         },
       ]
@@ -497,81 +497,81 @@ returns
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      25,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      25,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 465,
+          host:      "mail.#{domain}",
+          port:      465,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 465,
+          host:      "mail.#{domain}",
+          port:      465,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 25,
+          host:      "smtp.#{domain}",
+          port:      25,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 25,
+          host:      "smtp.#{domain}",
+          port:      25,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      465,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      465,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
     ]

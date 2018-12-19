@@ -17,7 +17,7 @@ class ProxyController < ApplicationController
       )
     rescue => e
       render json: {
-        result: 'failed',
+        result:  'failed',
         message: e.inspect
       }
       return
@@ -29,7 +29,7 @@ class ProxyController < ApplicationController
       return
     end
     render json: {
-      result: 'failed',
+      result:  'failed',
       message: result.body || result.error || result.code
     }
   end

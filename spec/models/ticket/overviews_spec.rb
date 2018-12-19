@@ -21,7 +21,7 @@ RSpec.describe Ticket::Overviews do
       condition = {
         'article.from' => {
           operator: 'contains',
-          value: 'blubselector.de',
+          value:    'blubselector.de',
         },
       }
       overview = create(:overview, condition: condition)

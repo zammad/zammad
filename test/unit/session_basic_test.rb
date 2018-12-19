@@ -53,14 +53,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'session-agent-1',
-      firstname: 'Session',
-      lastname: 'Agent 1',
-      email: 'session-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'session-agent-1',
+      firstname:     'Session',
+      lastname:      'Agent 1',
+      email:         'session-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -106,14 +106,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'session-collection-agent-1',
-      firstname: 'Session',
-      lastname: 'Agent 1',
-      email: 'session-collection-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'session-collection-agent-1',
+      firstname:     'Session',
+      lastname:      'Agent 1',
+      email:         'session-collection-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -158,8 +158,8 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.create!(
-      name: "SomeGroup::#{rand(999_999)}",
-      active: true,
+      name:          "SomeGroup::#{rand(999_999)}",
+      active:        true,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -206,14 +206,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'activity-stream-agent-1',
-      firstname: 'Session',
-      lastname: "activity stream #{rand(99_999)}",
-      email: 'activity-stream-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'activity-stream-agent-1',
+      firstname:     'Session',
+      lastname:      "activity stream #{rand(99_999)}",
+      email:         'activity-stream-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -221,7 +221,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     # create min. on activity record
     random_name = "Random:#{rand(9_999_999_999)}"
     Group.create_or_update(
-      name: random_name,
+      name:          random_name,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -244,11 +244,11 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     agent1.update!(email: 'activity-stream-agent11@example.com')
     ticket = Ticket.create!(
-      title: '12323',
-      group_id: 1,
-      priority_id: 1,
-      state_id: 1,
-      customer_id: 1,
+      title:         '12323',
+      group_id:      1,
+      priority_id:   1,
+      state_id:      1,
+      customer_id:   1,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -268,14 +268,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'ticket_create-agent-1',
-      firstname: 'Session',
-      lastname: "ticket_create #{rand(99_999)}",
-      email: 'ticket_create-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'ticket_create-agent-1',
+      firstname:     'Session',
+      lastname:      "ticket_create #{rand(99_999)}",
+      email:         'ticket_create-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -297,8 +297,8 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_not(result1, 'check ticket_create - recall 2')
 
     Group.create!(
-      name: "SomeTicketCreateGroup::#{rand(999_999)}",
-      active: true,
+      name:          "SomeTicketCreateGroup::#{rand(999_999)}",
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )

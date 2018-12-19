@@ -12,14 +12,14 @@ class TicketStateTest < ActiveSupport::TestCase
 
     # add new state
     state_new2 = Ticket::State.create_if_not_exists(
-      name: 'new 2',
+      name:          'new 2',
       state_type_id: Ticket::StateType.find_by(name: 'new').id,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     state_follow_up2 = Ticket::State.create_if_not_exists(
-      name: 'open 2',
+      name:          'open 2',
       state_type_id: Ticket::StateType.find_by(name: 'open').id,
       updated_by_id: 1,
       created_by_id: 1,
@@ -43,19 +43,19 @@ class TicketStateTest < ActiveSupport::TestCase
 
     # add new state
     state_new3 = Ticket::State.create_if_not_exists(
-      name: 'new 3',
-      state_type_id: Ticket::StateType.find_by(name: 'new').id,
+      name:           'new 3',
+      state_type_id:  Ticket::StateType.find_by(name: 'new').id,
       default_create: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     state_follow_up3 = Ticket::State.create_if_not_exists(
-      name: 'open 3',
-      state_type_id: Ticket::StateType.find_by(name: 'open').id,
+      name:              'open 3',
+      state_type_id:     Ticket::StateType.find_by(name: 'open').id,
       default_follow_up: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:     1,
+      created_by_id:     1,
     )
 
     # verify states

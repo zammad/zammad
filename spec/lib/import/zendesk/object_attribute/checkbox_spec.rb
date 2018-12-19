@@ -19,11 +19,11 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Checkbox do
     )
 
     expected_structure = {
-      object:      'Ticket',
-      name:        'example_field',
-      display:     'Example attribute',
-      data_type:   'boolean',
-      data_option: {
+      object:        'Ticket',
+      name:          'example_field',
+      display:       'Example attribute',
+      data_type:     'boolean',
+      data_option:   {
         null:    false,
         note:    'Example attribute description',
         default: false,
@@ -32,15 +32,15 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Checkbox do
           false => 'no'
         }
       },
-      editable: true,
-      active:   true,
-      screens:  {
+      editable:      true,
+      active:        true,
+      screens:       {
         edit: {
           Customer: {
             shown: true,
-            null: false
+            null:  false
           },
-          view: {
+          view:     {
             '-all-' => {
               shown: true
             }

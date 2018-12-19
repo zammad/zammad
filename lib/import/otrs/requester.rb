@@ -34,7 +34,7 @@ module Import
         result = request_result(
           Subaction: 'Export',
           Object:    object,
-          Limit:     opts[:limit]  || '',
+          Limit:     opts[:limit] || '',
           Offset:    opts[:offset] || '',
           Diff:      opts[:diff] ? 1 : 0
         )

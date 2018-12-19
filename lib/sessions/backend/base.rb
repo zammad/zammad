@@ -18,7 +18,7 @@ class Sessions::Backend::Base
     @asset_lookup[class_name] ||= {}
     @asset_lookup[class_name][record.id] = {
       updated_at: record.updated_at,
-      pushed_at: @time_now,
+      pushed_at:  @time_now,
     }
     record.assets(assets)
   end

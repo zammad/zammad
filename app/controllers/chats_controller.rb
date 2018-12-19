@@ -14,7 +14,7 @@ class ChatsController < ApplicationController
     assets = setting.assets(assets)
     render json: {
       chat_ids: chat_ids,
-      assets: assets,
+      assets:   assets,
     }
   end
 

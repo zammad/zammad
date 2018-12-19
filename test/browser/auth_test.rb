@@ -5,14 +5,14 @@ class AuthTest < TestCase
     @browser = browser_instance
     location(url: browser_url)
     match(
-      css: '#login',
+      css:   '#login',
       value: 'username',
     )
     click(css: '#login button')
 
     sleep 4
     match(
-      css: '#login',
+      css:   '#login',
       value: 'username',
     )
 
@@ -28,14 +28,14 @@ class AuthTest < TestCase
 
     # check if cookie is temporarily
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Overviews',
     )
 
     # verify session cookie
     cookie(
-      name: '^_zammad.+?',
-      value: '.+?',
+      name:    '^_zammad.+?',
+      value:   '.+?',
       expires: '',
     )
   end
@@ -44,7 +44,7 @@ class AuthTest < TestCase
     @browser = browser_instance
     location(url: browser_url)
     match(
-      css: '#login',
+      css:   '#login',
       value: 'username',
     )
   end
@@ -55,21 +55,21 @@ class AuthTest < TestCase
 
     # login with username/password
     login(
-      username: 'nicole.braun@zammad.org',
-      password: 'test',
+      username:    'nicole.braun@zammad.org',
+      password:    'test',
       remember_me: true,
     )
 
     # check if cookie is temporarily
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Overviews',
     )
 
     # verify session cookie
     cookie(
-      name: '^_zammad.+?',
-      value: '.+?',
+      name:    '^_zammad.+?',
+      value:   '.+?',
       expires: '\d{4}-\d{1,2}-\d{1,2}.+?',
     )
 
@@ -78,8 +78,8 @@ class AuthTest < TestCase
     # verify session cookie
     sleep 2
     cookie(
-      name: '^_zammad.+?',
-      value: '.+?',
+      name:    '^_zammad.+?',
+      value:   '.+?',
       expires: '',
     )
   end

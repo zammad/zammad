@@ -73,15 +73,15 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
 
     if local_record.preferences['delivery_retry'] > 3
       Ticket::Article.create(
-        ticket_id: local_record.ticket_id,
-        content_type: 'text/plain',
-        body: "Unable to send post: #{message}",
-        internal: true,
-        sender: Ticket::Article::Sender.find_by(name: 'System'),
-        type: Ticket::Article::Type.find_by(name: 'note'),
-        preferences: {
+        ticket_id:     local_record.ticket_id,
+        content_type:  'text/plain',
+        body:          "Unable to send post: #{message}",
+        internal:      true,
+        sender:        Ticket::Article::Sender.find_by(name: 'System'),
+        type:          Ticket::Article::Type.find_by(name: 'note'),
+        preferences:   {
           delivery_article_id_related: local_record.id,
-          delivery_message: true,
+          delivery_message:            true,
         },
         updated_by_id: 1,
         created_by_id: 1,

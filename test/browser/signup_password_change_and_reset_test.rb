@@ -10,42 +10,42 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     # signup
     set(
-      css: 'input[name="firstname"]',
+      css:   'input[name="firstname"]',
       value: 'Signup Firstname',
     )
     set(
-      css: 'input[name="lastname"]',
+      css:   'input[name="lastname"]',
       value: 'Signup Lastname',
     )
     set(
-      css: 'input[name="email"]',
+      css:   'input[name="email"]',
       value: signup_user_email,
     )
     set(
-      css: 'input[name="password"]',
+      css:   'input[name="password"]',
       value: 'some-pass',
     )
     set(
-      css: 'input[name="password_confirm"]',
+      css:   'input[name="password_confirm"]',
       value: 'some-pass',
     )
     click(css: 'button.js-submit')
 
     watch_for_disappear(
-      css: '.signup',
+      css:     '.signup',
       timeout: 10,
     )
 
     match(
-      css: '.user-menu .user a',
-      value: signup_user_email,
+      css:       '.user-menu .user a',
+      value:     signup_user_email,
       attribute: 'title',
     )
 
     # check email verify
     location(url: "#{browser_url}#email_verify/not_existing")
     watch_for(
-      css: '#content',
+      css:   '#content',
       value: 'Unable to verify email',
     )
     logout()
@@ -53,10 +53,10 @@ class SignupPasswordChangeAndResetTest < TestCase
     login(
       username: signup_user_email,
       password: 'some-pass',
-      url: "#{browser_url}#email_verify/not_existing2",
+      url:      "#{browser_url}#email_verify/not_existing2",
     )
     watch_for(
-      css: '#content',
+      css:   '#content',
       value: 'Unable to verify email',
     )
     execute(
@@ -77,7 +77,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       password: 'some-pass',
     )
     watch_for(
-      css: '#content',
+      css:   '#content',
       value: 'Your email address has been verified',
     )
     modal_disappear()
@@ -89,80 +89,80 @@ class SignupPasswordChangeAndResetTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/password"]')
     set(
-      css: 'input[name="password_old"]',
+      css:   'input[name="password_old"]',
       value: 'nonexisiting',
     )
     set(
-      css: 'input[name="password_new"]',
+      css:   'input[name="password_new"]',
       value: 'some',
     )
     set(
-      css: 'input[name="password_new_confirm"]',
+      css:   'input[name="password_new_confirm"]',
       value: 'some',
     )
     click(css: '.content .btn--primary')
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'current password is wrong',
     )
 
     set(
-      css: 'input[name="password_old"]',
+      css:   'input[name="password_old"]',
       value: 'some-pass',
     )
     set(
-      css: 'input[name="password_new_confirm"]',
+      css:   'input[name="password_new_confirm"]',
       value: 'some2',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'passwords do not match',
     )
 
     set(
-      css: 'input[name="password_new"]',
+      css:   'input[name="password_new"]',
       value: 'some',
     )
     set(
-      css: 'input[name="password_new_confirm"]',
+      css:   'input[name="password_new_confirm"]',
       value: 'some',
     )
     click(css: '.content .btn--primary')
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'it must be at least',
     )
 
     set(
-      css: 'input[name="password_new"]',
+      css:   'input[name="password_new"]',
       value: 'some-pass-new',
     )
     set(
-      css: 'input[name="password_new_confirm"]',
+      css:   'input[name="password_new_confirm"]',
       value: 'some-pass-new',
     )
     click(css: '.content .btn--primary')
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'must contain at least 1 digit',
     )
 
     set(
-      css: 'input[name="password_new"]',
+      css:   'input[name="password_new"]',
       value: 'some-pass-new2',
     )
     set(
-      css: 'input[name="password_new_confirm"]',
+      css:   'input[name="password_new_confirm"]',
       value: 'some-pass-new2',
     )
     click(css: '.content .btn--primary')
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Password changed successfully',
     )
     logout()
@@ -178,7 +178,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     location(url: browser_url + '/#password_reset_verify/not_existing_token')
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Token is invalid',
     )
 
@@ -186,14 +186,14 @@ class SignupPasswordChangeAndResetTest < TestCase
     login(
       username: signup_user_email,
       password: 'some-pass-new2',
-      url: browser_url,
+      url:      browser_url,
     )
 
     location(url: browser_url + '/#password_reset')
     sleep 1
 
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'password',
     )
     logout()
@@ -202,93 +202,93 @@ class SignupPasswordChangeAndResetTest < TestCase
     click(css: 'a[href="#password_reset"]')
 
     set(
-      css: 'input[name="username"]',
+      css:   'input[name="username"]',
       value: 'nonexisiting',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'address invalid',
     )
 
     set(
-      css: 'input[name="username"]',
+      css:   'input[name="username"]',
       value: signup_user_email,
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'sent password reset instructions',
     )
 
     # redirect to "#password_reset_verify/#{token}" url by app, because of "developer_mode"
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Choose your new password',
     )
 
     # set new password
     set(
-      css: 'input[name="password"]',
+      css:   'input[name="password"]',
       value: 'some',
     )
     set(
-      css: 'input[name="password_confirm"]',
+      css:   'input[name="password_confirm"]',
       value: 'some2',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'passwords do not match',
     )
 
     set(
-      css: 'input[name="password"]',
+      css:   'input[name="password"]',
       value: 'some',
     )
     set(
-      css: 'input[name="password_confirm"]',
+      css:   'input[name="password_confirm"]',
       value: 'some',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'it must be at least',
     )
 
     set(
-      css: 'input[name="password"]',
+      css:   'input[name="password"]',
       value: 'some-pass-new',
     )
     set(
-      css: 'input[name="password_confirm"]',
+      css:   'input[name="password_confirm"]',
       value: 'some-pass-new',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'must contain at least 1 digit',
     )
 
     set(
-      css: 'input[name="password"]',
+      css:   'input[name="password"]',
       value: 'some-pass-new2',
     )
     set(
-      css: 'input[name="password_confirm"]',
+      css:   'input[name="password_confirm"]',
       value: 'some-pass-new2',
     )
     click(css: '.content .btn--primary')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Your password has been changed',
     )
 
     # check if user is logged in
     sleep 5
     match(
-      css: '.user-menu .user a',
-      value: signup_user_email,
+      css:       '.user-menu .user a',
+      value:     signup_user_email,
       attribute: 'title',
     )
 

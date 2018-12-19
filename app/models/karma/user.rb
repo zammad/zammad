@@ -17,8 +17,8 @@ class Karma::User < ApplicationModel
     end
     Karma::User.create!(
       user_id: user.id,
-      level: level,
-      score: score,
+      level:   level,
+      score:   score,
     )
   end
 

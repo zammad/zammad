@@ -71,8 +71,8 @@ returns
   def self.event_data(type = 'app_version')
     {
       event: 'maintenance',
-      data: {
-        type: type,
+      data:  {
+        type:        type,
         app_version: get,
       }
     }

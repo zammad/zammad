@@ -16,27 +16,27 @@ class SequencerLogLevelSetting < ActiveRecord::Migration[5.1]
           unit:         :debug,
           result:       :debug,
         },
-        state: {
-          optional:                 :debug,
-          set:                      :debug,
-          get:                      :debug,
-          attribute_initialization: {
+        state:    {
+          optional:                    :debug,
+          set:                         :debug,
+          get:                         :debug,
+          attribute_initialization:    {
             start_finish: :debug,
             attributes:   :debug,
           },
-          parameter_initialization: {
+          parameter_initialization:    {
             parameters:   :debug,
             start_finish: :debug,
             unused:       :debug,
           },
           expectations_initialization: :debug,
-          cleanup: {
+          cleanup:                     {
             start_finish: :debug,
             remove:       :debug,
           }
         }
       },
-      frontend: false,
+      frontend:    false,
     )
   end
 end

@@ -9,8 +9,8 @@ class FacebookTest < ActiveSupport::TestCase
 
   # needed to check correct behavior
   group = Group.create_if_not_exists(
-    name: 'Facebook',
-    note: 'All Facebook feed posts.',
+    name:          'Facebook',
+    note:          'All Facebook feed posts.',
     updated_by_id: 1,
     created_by_id: 1
   )
@@ -42,21 +42,21 @@ class FacebookTest < ActiveSupport::TestCase
 
   provider_options = {
     adapter: 'facebook',
-    auth: {
+    auth:    {
       access_token: user_access_token
     },
-    user: {
+    user:    {
       name: user_name,
-      id: user_id,
+      id:   user_id,
     },
-    pages: [
+    pages:   [
       {
-        'id' => page_id,
-        'name' => page_name,
+        'id'           => page_id,
+        'name'         => page_name,
         'access_token' => page_access_token,
       }
     ],
-    sync: {
+    sync:    {
       pages: {
         page_id => { 'group_id' => group.id.to_s },
       }

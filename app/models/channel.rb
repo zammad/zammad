@@ -179,7 +179,7 @@ stream all accounts
         next if @@channel_stream[channel_id].present?
 
         @@channel_stream[channel_id] = {
-          options: channel.options,
+          options:    channel.options,
           started_at: Time.zone.now,
         }
 

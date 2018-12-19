@@ -75,13 +75,13 @@ push translations to online
     result = UserAgent.post(
       url,
       {
-        locale: locale,
-        translations: translations_to_push,
-        fqdn: Setting.get('fqdn'),
+        locale:         locale,
+        translations:   translations_to_push,
+        fqdn:           Setting.get('fqdn'),
         translator_key: translator_key,
       },
       {
-        json: true,
+        json:         true,
         open_timeout: 8,
         read_timeout: 24,
       }
@@ -267,7 +267,7 @@ all:
           version: version,
         },
         {
-          json: true,
+          json:         true,
           open_timeout: 8,
           read_timeout: 24,
         }

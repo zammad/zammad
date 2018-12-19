@@ -5,13 +5,13 @@ class FollowUpMerged < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Defines postmaster filter.',
-      name: '0110_postmaster_filter_follow_up_merged',
-      area: 'Postmaster::PreFilter',
+      title:       'Defines postmaster filter.',
+      name:        '0110_postmaster_filter_follow_up_merged',
+      area:        'Postmaster::PreFilter',
       description: 'Defines postmaster filter to identify follow-up ticket for merged tickets.',
-      options: {},
-      state: 'Channel::Filter::FollowUpMerged',
-      frontend: false
+      options:     {},
+      state:       'Channel::Filter::FollowUpMerged',
+      frontend:    false
     )
   end
 end

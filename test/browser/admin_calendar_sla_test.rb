@@ -6,7 +6,7 @@ class AdminCalendarSlaTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -25,8 +25,8 @@ class AdminCalendarSlaTest < TestCase
     click(css: '[href="#manage"]')
     click(css: '[href="#system/maintenance"]')
     watch_for(
-      css: '.content.active',
-      value: 'Enable or disable the maintenance mode',
+      css:     '.content.active',
+      value:   'Enable or disable the maintenance mode',
       timeout: 4,
     )
 
@@ -34,8 +34,8 @@ class AdminCalendarSlaTest < TestCase
     click(css: '[href="#manage"]')
     click(css: '[href="#manage/calendars"]')
     watch_for(
-      css: '.content.active',
-      value: calendar_name,
+      css:     '.content.active',
+      value:   calendar_name,
       timeout: 4,
     )
 
@@ -50,8 +50,8 @@ class AdminCalendarSlaTest < TestCase
     click(css: '[href="#manage"]')
     click(css: '[href="#manage/calendars"]')
     watch_for(
-      css: '.content.active',
-      value: calendar_name,
+      css:     '.content.active',
+      value:   calendar_name,
       timeout: 4,
     )
 
@@ -60,21 +60,21 @@ class AdminCalendarSlaTest < TestCase
 
     modal_ready(browser: @browser)
     watch_for(
-      css: '.content.active .modal input[name=name]',
-      value: calendar_name,
+      css:     '.content.active .modal input[name=name]',
+      value:   calendar_name,
       timeout: 4,
     )
     watch_for(
-      css: '.content.active .modal input.js-input',
-      value: timezone_verify,
+      css:     '.content.active .modal input.js-input',
+      value:   timezone_verify,
       timeout: 4,
     )
     modal_close()
 
     sla_create(
       data: {
-        name: sla_name,
-        calendar: "#{calendar_name} - #{timezone}",
+        name:                        sla_name,
+        calendar:                    "#{calendar_name} - #{timezone}",
         first_response_time_in_text: 61
       },
     )

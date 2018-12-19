@@ -38,14 +38,14 @@ class Sessions::Backend::TicketCreate < Sessions::Backend::Base
     if !@client
       return {
         event: 'ticket_create_attributes',
-        data: data,
+        data:  data,
       }
     end
 
     @client.log "push ticket_create for user #{@user.id}"
     @client.send(
       event: 'ticket_create_attributes',
-      data: data,
+      data:  data,
     )
   end
 

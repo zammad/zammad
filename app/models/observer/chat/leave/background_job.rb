@@ -23,8 +23,8 @@ class Observer::Chat::Leave::BackgroundJob
     # notify participants
     message = {
       event: 'chat_session_left',
-      data: {
-        realname: realname,
+      data:  {
+        realname:   realname,
         session_id: chat_session.session_id,
       },
     }

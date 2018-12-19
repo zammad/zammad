@@ -5,12 +5,12 @@ class AuthTest < ActiveSupport::TestCase
 
     user = User.find_by(email: 'nicole.braun@zammad.org')
     user.update!(
-      login: 'nicole.braun',
-      firstname: 'Nicole',
-      lastname: 'Braun',
-      email: 'nicole.braun@zammad.org',
-      password: 'some_pass',
-      active: true,
+      login:         'nicole.braun',
+      firstname:     'Nicole',
+      lastname:      'Braun',
+      email:         'nicole.braun@zammad.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -21,18 +21,18 @@ class AuthTest < ActiveSupport::TestCase
       {
         username: 'not_existing',
         password: 'password',
-        result: nil,
+        result:   nil,
       },
 
       # test 2
       {
         username: 'nicole.braun@zammad.org',
         password: 'some_pass',
-        result: true,
-        verify: {
+        result:   true,
+        verify:   {
           firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
+          lastname:  'Braun',
+          email:     'nicole.braun@zammad.org',
         }
       },
 
@@ -40,11 +40,11 @@ class AuthTest < ActiveSupport::TestCase
       {
         username: 'nicole.bRaUn@zammad.org',
         password: 'some_pass',
-        result: true,
-        verify: {
+        result:   true,
+        verify:   {
           firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
+          lastname:  'Braun',
+          email:     'nicole.braun@zammad.org',
         }
       },
 
@@ -52,11 +52,11 @@ class AuthTest < ActiveSupport::TestCase
       {
         username: 'nicole.bRaUn',
         password: 'some_pass',
-        result: true,
-        verify: {
+        result:   true,
+        verify:   {
           firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
+          lastname:  'Braun',
+          email:     'nicole.braun@zammad.org',
         }
       },
 

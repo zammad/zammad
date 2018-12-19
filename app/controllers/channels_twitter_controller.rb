@@ -74,10 +74,10 @@ class ChannelsTwitterController < ApplicationController
       channel_ids.push channel.id
     end
     render json: {
-      assets: assets,
-      channel_ids: channel_ids,
+      assets:                  assets,
+      channel_ids:             channel_ids,
       external_credential_ids: external_credential_ids,
-      callback_url: ExternalCredential.callback_url('twitter'),
+      callback_url:            ExternalCredential.callback_url('twitter'),
     }
   end
 

@@ -45,15 +45,15 @@ add a new online notification for this user
     exists_by_object_and_id?(data[:object], data[:o_id])
 
     record = {
-      o_id: data[:o_id],
+      o_id:             data[:o_id],
       object_lookup_id: object_id,
-      type_lookup_id: type_id,
-      seen: data[:seen],
-      user_id: data[:user_id],
-      created_by_id: data[:created_by_id],
-      updated_by_id: data[:updated_by_id] || data[:created_by_id],
-      created_at: data[:created_at] || Time.zone.now,
-      updated_at: data[:updated_at] || Time.zone.now,
+      type_lookup_id:   type_id,
+      seen:             data[:seen],
+      user_id:          data[:user_id],
+      created_by_id:    data[:created_by_id],
+      updated_by_id:    data[:updated_by_id] || data[:created_by_id],
+      created_at:       data[:created_at] || Time.zone.now,
+      updated_at:       data[:updated_at] || Time.zone.now,
     }
 
     OnlineNotification.create!(record)
@@ -87,7 +87,7 @@ remove whole online notifications of an object
     object_id = ObjectLookup.by_name(object_name)
     OnlineNotification.where(
       object_lookup_id: object_id,
-      o_id: o_id,
+      o_id:             o_id,
     ).destroy_all
   end
 
@@ -104,9 +104,9 @@ remove whole online notifications of an object by type
     type_id = TypeLookup.by_name(type_name)
     OnlineNotification.where(
       object_lookup_id: object_id,
-      type_lookup_id: type_id,
-      o_id: o_id,
-      user_id: user.id,
+      type_lookup_id:   type_id,
+      o_id:             o_id,
+      user_id:          user.id,
     ).destroy_all
   end
 
@@ -136,7 +136,7 @@ return all online notifications of an object
     object_id = ObjectLookup.by_name(object_name)
     notifications = OnlineNotification.where(
       object_lookup_id: object_id,
-      o_id: o_id,
+      o_id:             o_id,
     )
                                       .order('created_at DESC, id DESC')
                                       .limit(10_000)
@@ -155,8 +155,8 @@ mark online notification as seen by object
     object_id     = ObjectLookup.by_name(object_name)
     notifications = OnlineNotification.where(
       object_lookup_id: object_id,
-      o_id: o_id,
-      seen: false,
+      o_id:             o_id,
+      seen:             false,
     )
     notifications.each do |notification|
       notification.seen = true
@@ -170,7 +170,7 @@ mark online notification as seen by object
       user_id,
       {
         event: 'OnlineNotification::changed',
-        data: {}
+        data:  {}
       }
     )
   end
@@ -260,7 +260,7 @@ with dedicated times
         user.id,
         {
           event: 'OnlineNotification::changed',
-          data: {}
+          data:  {}
         }
       )
       sleep 2 # slow down client requests

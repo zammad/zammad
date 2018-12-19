@@ -4,69 +4,69 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
   setup do
     @group = Group.create_or_update(
-      name: 'SelectorTest',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'SelectorTest',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles = Role.where(name: 'Agent')
     @agent1 = User.create_or_update(
-      login: 'ticket-selector-agent1@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent1',
-      email: 'ticket-selector-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: [@group],
-      updated_at: '2015-02-05 16:37:00',
+      login:         'ticket-selector-agent1@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent1',
+      email:         'ticket-selector-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        [@group],
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent2 = User.create_or_update(
-      login: 'ticket-selector-agent2@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent2',
-      email: 'ticket-selector-agent2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      updated_at: '2015-02-05 16:38:00',
+      login:         'ticket-selector-agent2@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent2',
+      email:         'ticket-selector-agent2@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      updated_at:    '2015-02-05 16:38:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
     @organization1 = Organization.create_if_not_exists(
-      name: 'Selector Org',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'Selector Org',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     @customer1 = User.create_or_update(
-      login: 'ticket-selector-customer1@example.com',
-      firstname: 'Notification',
-      lastname: 'Customer1',
-      email: 'ticket-selector-customer1@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'ticket-selector-customer1@example.com',
+      firstname:       'Notification',
+      lastname:        'Customer1',
+      email:           'ticket-selector-customer1@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: @organization1.id,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: 1,
-      created_by_id: 1,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     @customer2 = User.create_or_update(
-      login: 'ticket-selector-customer2@example.com',
-      firstname: 'Notification',
-      lastname: 'Customer2',
-      email: 'ticket-selector-customer2@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'ticket-selector-customer2@example.com',
+      firstname:       'Notification',
+      lastname:        'Customer2',
+      email:           'ticket-selector-customer2@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: nil,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: 1,
-      created_by_id: 1,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   1,
+      created_by_id:   1,
     )
 
     Ticket.where(group_id: @group.id).destroy_all
@@ -77,13 +77,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     Ticket.destroy_all
 
     ticket1 = Ticket.create!(
-      title: 'some title1',
-      group: @group,
-      customer_id: @customer1.id,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title1',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       #updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -94,12 +94,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
     travel 1.second
 
     ticket2 = Ticket.create!(
-      title: 'some title2',
-      group: @group,
-      customer_id: @customer2.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title2',
+      group:         @group,
+      customer_id:   @customer2.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       #updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -110,12 +110,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
     travel 1.second
 
     ticket3 = Ticket.create!(
-      title: 'some title3',
-      group: @group,
-      customer_id: @customer2.id,
-      state: Ticket::State.lookup(name: 'open'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title3',
+      group:         @group,
+      customer_id:   @customer2.id,
+      state:         Ticket::State.lookup(name: 'open'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       #updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -130,7 +130,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.state_id' => {
         operator: 'is',
-        value: [99],
+        value:    [99],
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -149,7 +149,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.state_id' => {
         operator: 'is',
@@ -175,11 +175,11 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: [],
+        value:    [],
       },
     }
 
@@ -202,7 +202,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.state_id' => {
         operator: 'is',
@@ -228,11 +228,11 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: [Ticket::State.lookup(name: 'new').id],
+        value:    [Ticket::State.lookup(name: 'new').id],
       },
     }
 
@@ -254,11 +254,11 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.state_id' => {
         operator: 'is not',
-        value: [Ticket::State.lookup(name: 'open').id],
+        value:    [Ticket::State.lookup(name: 'open').id],
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10)
@@ -279,7 +279,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.escalation_at' => {
         operator: 'is not',
-        value: nil,
+        value:    nil,
       }
     }
     ticket_count, tickets = Ticket.selectors(condition, 10)
@@ -299,13 +299,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     # search - created_at
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'after (absolute)', # before (absolute)
-        value: '2015-02-05T16:00:00.000Z',
+        value:    '2015-02-05T16:00:00.000Z',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -321,13 +321,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'after (absolute)', # before (absolute)
-        value: '2015-02-05T18:00:00.000Z',
+        value:    '2015-02-05T18:00:00.000Z',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -343,13 +343,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'before (absolute)',
-        value: '2015-02-05T18:00:00.000Z',
+        value:    '2015-02-05T18:00:00.000Z',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -365,13 +365,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'before (absolute)',
-        value: '2015-02-05T16:00:00.000Z',
+        value:    '2015-02-05T16:00:00.000Z',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -387,14 +387,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'before (relative)',
-        range: 'day', # minute|hour|day|month|
-        value: '10',
+        range:    'day', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -410,14 +410,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'within next (relative)',
-        range: 'year', # minute|hour|day|month|
-        value: '10',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -433,14 +433,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.created_at' => {
         operator: 'within last (relative)',
-        range: 'year', # minute|hour|day|month|
-        value: '10',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -457,13 +457,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     # search - updated_at
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value: (Time.zone.now + 1.day).iso8601,
+        value:    (Time.zone.now + 1.day).iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -479,13 +479,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value: (Time.zone.now - 1.day).iso8601,
+        value:    (Time.zone.now - 1.day).iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -501,13 +501,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value: (Time.zone.now + 1.day).iso8601,
+        value:    (Time.zone.now + 1.day).iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -523,13 +523,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value: (Time.zone.now - 1.day).iso8601,
+        value:    (Time.zone.now - 1.day).iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -545,14 +545,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'before (relative)',
-        range: 'day', # minute|hour|day|month|
-        value: '10',
+        range:    'day', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -568,14 +568,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'within next (relative)',
-        range: 'year', # minute|hour|day|month|
-        value: '10',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -591,14 +591,14 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 2)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.updated_at' => {
         operator: 'within last (relative)',
-        range: 'year', # minute|hour|day|month|
-        value: '10',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -622,11 +622,11 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
-      'customer.email' => {
+      'customer.email'  => {
         operator: 'contains',
-        value: 'ticket-selector-customer1',
+        value:    'ticket-selector-customer1',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -644,11 +644,11 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
-      'customer.email' => {
+      'customer.email'  => {
         operator: 'contains not',
-        value: 'ticket-selector-customer1-not_existing',
+        value:    'ticket-selector-customer1-not_existing',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -665,13 +665,13 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     # search with organizations
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'organization.name' => {
         operator: 'contains',
-        value: 'selector',
+        value:    'selector',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -688,17 +688,17 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     # search with organizations
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'organization.name' => {
         operator: 'contains',
-        value: 'selector',
+        value:    'selector',
       },
-      'customer.email' => {
+      'customer.email'    => {
         operator: 'contains',
-        value: 'ticket-selector-customer1',
+        value:    'ticket-selector-customer1',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -714,17 +714,17 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 0)
 
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'   => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'organization.name' => {
         operator: 'contains',
-        value: 'selector',
+        value:    'selector',
       },
-      'customer.email' => {
+      'customer.email'    => {
         operator: 'contains not',
-        value: 'ticket-selector-customer1',
+        value:    'ticket-selector-customer1',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -743,12 +743,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'specific',
-        value: @agent1.id,
+        value:         @agent1.id,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -766,10 +766,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'specific',
         #value: @agent1.id, # value is not set, no result should be shown
       },
@@ -789,10 +789,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'not_set',
       },
     }
@@ -811,10 +811,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is not',
+        operator:      'is not',
         pre_condition: 'not_set',
       },
     }
@@ -834,10 +834,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.id',
       },
     }
@@ -860,10 +860,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.group_id' => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.owner_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.id',
       },
     }
@@ -884,12 +884,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = @customer1.id
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'    => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.customer_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.id',
       },
     }
@@ -910,12 +910,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = @customer2.id
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'    => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.customer_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.id',
       },
     }
@@ -936,12 +936,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = @customer1.id
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'        => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.organization_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.organization_id',
       },
     }
@@ -962,12 +962,12 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = @customer2.id
     condition = {
-      'ticket.group_id' => {
+      'ticket.group_id'        => {
         operator: 'is',
-        value: @group.id,
+        value:    @group.id,
       },
       'ticket.organization_id' => {
-        operator: 'is',
+        operator:      'is',
         pre_condition: 'current_user.organization_id',
       },
     }
@@ -990,61 +990,61 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
   test 'ticket tags filter' do
     ticket_tags_1 = Ticket.create!(
-      title: 'some title1',
-      group: @group,
-      customer_id: @customer1.id,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title1',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket_tags_2 = Ticket.create!(
-      title: 'some title1',
-      group: @group,
-      customer_id: @customer1.id,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title1',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket_tags_3 = Ticket.create!(
-      title: 'some title1',
-      group: @group,
-      customer_id: @customer1.id,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-02-05 16:37:00',
+      title:         'some title1',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket_tags_1.id,
-      item: 'contains_all_1',
+      object:        'Ticket',
+      o_id:          ticket_tags_1.id,
+      item:          'contains_all_1',
       created_by_id: 1,
     )
     Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket_tags_1.id,
-      item: 'contains_all_2',
+      object:        'Ticket',
+      o_id:          ticket_tags_1.id,
+      item:          'contains_all_2',
       created_by_id: 1,
     )
     Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket_tags_1.id,
-      item: 'contains_all_3',
+      object:        'Ticket',
+      o_id:          ticket_tags_1.id,
+      item:          'contains_all_3',
       created_by_id: 1,
     )
     Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket_tags_2.id,
-      item: 'contains_all_3',
+      object:        'Ticket',
+      o_id:          ticket_tags_2.id,
+      item:          'contains_all_3',
       created_by_id: 1,
     )
 
@@ -1052,7 +1052,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains all',
-        value: 'contains_all_1, contains_all_2, contains_all_3',
+        value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -1061,7 +1061,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains all',
-        value: 'contains_all_1, contains_all_2, contains_all_3, xxx',
+        value:    'contains_all_1, contains_all_2, contains_all_3, xxx',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -1071,7 +1071,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains one',
-        value: 'contains_all_1, contains_all_2, contains_all_3',
+        value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -1080,7 +1080,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains one',
-        value: 'contains_all_1, contains_all_2'
+        value:    'contains_all_1, contains_all_2'
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -1090,7 +1090,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains one',
-        value: 'contains_all_1, contains_all_3'
+        value:    'contains_all_1, contains_all_3'
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
@@ -1099,7 +1099,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     condition = {
       'ticket.tags' => {
         operator: 'contains one',
-        value: 'contains_all_1, contains_all_2, contains_all_3'
+        value:    'contains_all_1, contains_all_2, contains_all_3'
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)

@@ -51,18 +51,18 @@ class Integration::CtiController < ApplicationController
 
           from = row[:caller_id]
           data = {
-            action: 'dial',
+            action:    'dial',
             caller_id: from,
-            number: params[:to]
+            number:    params[:to]
           }
           break
         end
         if data.blank? && default_caller_id.present?
           from = default_caller_id
           data = {
-            action: 'dial',
+            action:    'dial',
             caller_id: default_caller_id,
-            number: params[:to]
+            number:    params[:to]
           }
         end
       end

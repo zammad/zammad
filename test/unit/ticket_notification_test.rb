@@ -3,29 +3,29 @@ require 'test_helper'
 class TicketNotificationTest < ActiveSupport::TestCase
   setup do
     Trigger.create_or_update(
-      name: 'auto reply - new ticket',
-      condition: {
-        'ticket.action' => {
+      name:                 'auto reply - new ticket',
+      condition:            {
+        'ticket.action'   => {
           'operator' => 'is',
-          'value' => 'create',
+          'value'    => 'create',
         },
         'ticket.state_id' => {
           'operator' => 'is not',
-          'value' => Ticket::State.lookup(name: 'closed').id,
+          'value'    => Ticket::State.lookup(name: 'closed').id,
         },
         'article.type_id' => {
           'operator' => 'is',
-          'value' => [
+          'value'    => [
             Ticket::Article::Type.lookup(name: 'email').id,
             Ticket::Article::Type.lookup(name: 'phone').id,
             Ticket::Article::Type.lookup(name: 'web').id,
           ],
         },
       },
-      perform: {
+      perform:              {
         'notification.email' => {
           # rubocop:disable Lint/InterpolationCheck
-          'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+          'body'      => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -33,91 +33,91 @@ class TicketNotificationTest < ActiveSupport::TestCase
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry (#{ticket.title})',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})',
           # rubocop:enable Lint/InterpolationCheck
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     # create @agent1 & @agent2
     Group.create_or_update(
-      name: 'TicketNotificationTest',
+      name:          'TicketNotificationTest',
       updated_by_id: 1,
       created_by_id: 1
     )
     groups = Group.where(name: 'TicketNotificationTest')
     roles  = Role.where(name: 'Agent')
     @agent1 = User.create_or_update(
-      login: 'ticket-notification-agent1@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent1',
-      email: 'ticket-notification-agent1@example.com',
-      password: 'agentpw',
+      login:         'ticket-notification-agent1@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent1',
+      email:         'ticket-notification-agent1@example.com',
+      password:      'agentpw',
       out_of_office: false,
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'de-de',
       },
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent2 = User.create_or_update(
-      login: 'ticket-notification-agent2@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent2',
-      email: 'ticket-notification-agent2@example.com',
-      password: 'agentpw',
+      login:         'ticket-notification-agent2@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent2',
+      email:         'ticket-notification-agent2@example.com',
+      password:      'agentpw',
       out_of_office: false,
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'en-ca',
       },
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent3 = User.create_or_update(
-      login: 'ticket-notification-agent3@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent3',
-      email: 'ticket-notification-agent3@example.com',
-      password: 'agentpw',
+      login:         'ticket-notification-agent3@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent3',
+      email:         'ticket-notification-agent3@example.com',
+      password:      'agentpw',
       out_of_office: false,
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'de-de',
       },
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent4 = User.create_or_update(
-      login: 'ticket-notification-agent4@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent4',
-      email: 'ticket-notification-agent4@example.com',
-      password: 'agentpw',
+      login:         'ticket-notification-agent4@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent4',
+      email:         'ticket-notification-agent4@example.com',
+      password:      'agentpw',
       out_of_office: false,
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'de-de',
       },
       updated_by_id: 1,
       created_by_id: 1,
     )
     Group.create_if_not_exists(
-      name: 'WithoutAccess',
-      note: 'Test for notification check.',
+      name:          'WithoutAccess',
+      note:          'Test for notification check.',
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -125,14 +125,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create @customer
     roles = Role.where(name: 'Customer')
     @customer = User.create_or_update(
-      login: 'ticket-notification-customer@example.com',
-      firstname: 'Notification',
-      lastname: 'Customer',
-      email: 'ticket-notification-customer@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'ticket-notification-customer@example.com',
+      firstname:     'Notification',
+      lastname:      'Customer',
+      email:         'ticket-notification-customer@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -143,24 +143,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket1 = Ticket.create!(
-      title: 'some notification test 1',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 1',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -177,24 +177,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'application_server'
     ticket1 = Ticket.create!(
-      title: 'some notification test 2',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 2',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -214,24 +214,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'application_server'
     ticket1 = Ticket.create!(
-      title: 'some notification test 3',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 3',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -260,13 +260,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # add article to ticket
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some person',
-      subject: 'some note',
-      body: 'some message',
-      internal: true,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'note').first,
+      ticket_id:     ticket1.id,
+      from:          'some person',
+      subject:       'some note',
+      body:          'some message',
+      internal:      true,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'note').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -284,13 +284,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.updated_by_id = @agent1.id
     ticket1.save!
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some person',
-      subject: 'some note',
-      body: 'some message',
-      internal: true,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'note').first,
+      ticket_id:     ticket1.id,
+      from:          'some person',
+      subject:       'some note',
+      body:          'some message',
+      internal:      true,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'note').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -305,25 +305,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket with @agent1 as owner
     ticket2 = Ticket.create!(
-      title: 'some notification test 4',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer_id: 2,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 4',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer_id:   2,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -367,25 +367,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket with @agent2 and @agent1 as owner
     ticket3 = Ticket.create!(
-      title: 'some notification test 5',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer_id: 2,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 5',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer_id:   2,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent2.id,
       created_by_id: @agent2.id,
     )
     article_inbound = Ticket::Article.create!(
-      ticket_id: ticket3.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket3.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: @agent2.id,
       created_by_id: @agent2.id,
     )
@@ -454,24 +454,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create!(
-      title: 'some notification test 1 - no notification',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test 1 - no notification',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -508,24 +508,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket1 = Ticket.create!(
-      title: 'some notification test - z preferences tests 1',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 1',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -553,25 +553,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket2 = Ticket.create!(
-      title: 'some notification test - z preferences tests 2',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner: @agent1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 2',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner:         @agent1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -599,25 +599,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket3 = Ticket.create!(
-      title: 'some notification test - z preferences tests 3',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner: @agent2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 3',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner:         @agent2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket3.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket3.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -664,24 +664,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket4 = Ticket.create!(
-      title: 'some notification test - z preferences tests 4',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 4',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket4.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket4.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -728,24 +728,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket5 = Ticket.create!(
-      title: 'some notification test - z preferences tests 5',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 5',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket5.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket5.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -792,25 +792,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket6 = Ticket.create!(
-      title: 'some notification test - z preferences tests 6',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner: @agent1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 6',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner:         @agent1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket6.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket6.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -869,25 +869,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket7 = Ticket.create!(
-      title: 'some notification test - z preferences tests 7',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner: @agent1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification test - z preferences tests 7',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner:         @agent1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket7.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket7.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -923,24 +923,24 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create!(
-      title: 'some notification event test 1',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification event test 1',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -983,25 +983,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create!(
-      title: 'some notification test out of office',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner_id: @agent2.id,
+      title:         'some notification test out of office',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner_id:      @agent2.id,
       #state: Ticket::State.lookup(name: 'new'),
       #priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -1026,25 +1026,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket2 = Ticket.create!(
-      title: 'some notification test out of office',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      owner_id: @agent2.id,
+      title:         'some notification test out of office',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      owner_id:      @agent2.id,
       #state: Ticket::State.lookup(name: 'new'),
       #priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -1103,38 +1103,38 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create!(
-      title: 'some notification template test 1 Bobs\'s resumé',
-      group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: @customer,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some notification template test 1 Bobs\'s resumé',
+      group:         Group.lookup(name: 'TicketNotificationTest'),
+      customer:      @customer,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     article = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\nnewline1 abc\nnewline2",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\nnewline1 abc\nnewline2",
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
     assert(ticket1, 'ticket created - ticket notification template')
 
     bg = Transaction::Notification.new(
-      ticket_id: ticket1.id,
+      ticket_id:  ticket1.id,
       article_id: article.id,
-      type: 'update',
-      changes: {
+      type:       'update',
+      changes:    {
         'priority_id'  => [1, 2],
         'pending_time' => [nil, Time.zone.parse('2015-01-11 23:33:47 UTC')],
       },
-      user_id: ticket1.updated_by_id,
+      user_id:    ticket1.updated_by_id,
     )
 
     # check changed attributes
@@ -1151,13 +1151,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # en notification
     result = NotificationFactory::Mailer.template(
-      locale: @agent2.preferences[:locale],
+      locale:   @agent2.preferences[:locale],
       template: 'ticket_update',
-      objects: {
-        ticket: ticket1,
-        article: article,
+      objects:  {
+        ticket:    ticket1,
+        article:   article,
         recipient: @agent2,
-        changes: human_changes,
+        changes:   human_changes,
       },
     )
     assert_match(/Bobs's resumé/, result[:subject])
@@ -1183,13 +1183,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # de notification
     result = NotificationFactory::Mailer.template(
-      locale: @agent1.preferences[:locale],
+      locale:   @agent1.preferences[:locale],
       template: 'ticket_update',
-      objects: {
-        ticket: ticket1,
-        article: article,
+      objects:  {
+        ticket:    ticket1,
+        article:   article,
         recipient: @agent1,
-        changes: human_changes,
+        changes:   human_changes,
       },
     )
 
@@ -1204,14 +1204,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(/i18n/, result[:body])
 
     bg = Transaction::Notification.new(
-      ticket_id: ticket1.id,
+      ticket_id:  ticket1.id,
       article_id: article.id,
-      type: 'update',
-      changes: {
-        title: ['some notification template test old 1', 'some notification template test 1 #2'],
+      type:       'update',
+      changes:    {
+        title:       ['some notification template test old 1', 'some notification template test 1 #2'],
         priority_id: [2, 3],
       },
-      user_id: @customer.id,
+      user_id:    @customer.id,
     )
 
     # check changed attributes
@@ -1228,13 +1228,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # de notification
     result = NotificationFactory::Mailer.template(
-      locale: @agent1.preferences[:locale],
+      locale:   @agent1.preferences[:locale],
       template: 'ticket_update',
-      objects: {
-        ticket: ticket1,
-        article: article,
+      objects:  {
+        ticket:    ticket1,
+        article:   article,
         recipient: @agent1,
-        changes: human_changes,
+        changes:   human_changes,
       }
     )
 
@@ -1253,13 +1253,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # en notification
     result = NotificationFactory::Mailer.template(
-      locale: @agent2.preferences[:locale],
+      locale:   @agent2.preferences[:locale],
       template: 'ticket_update',
-      objects: {
-        ticket: ticket1,
-        article: article,
+      objects:  {
+        ticket:    ticket1,
+        article:   article,
         recipient: @agent2,
-        changes: human_changes,
+        changes:   human_changes,
       }
     )
 

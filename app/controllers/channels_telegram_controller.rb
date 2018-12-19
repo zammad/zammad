@@ -12,7 +12,7 @@ class ChannelsTelegramController < ApplicationController
       channel_ids.push channel.id
     end
     render json: {
-      assets: assets,
+      assets:      assets,
       channel_ids: channel_ids
     }
   end

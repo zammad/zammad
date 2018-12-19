@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
@@ -211,10 +211,10 @@ class UsersController < ApplicationController
       token = Token.create(action: 'PasswordReset', user_id: user.id)
       NotificationFactory::Mailer.notification(
         template: 'user_invite',
-        user: user,
-        objects: {
-          token: token,
-          user: user,
+        user:     user,
+        objects:  {
+          token:        token,
+          user:         user,
           current_user: current_user,
         }
       )
@@ -225,8 +225,8 @@ class UsersController < ApplicationController
       result = User.signup_new_token(user)
       NotificationFactory::Mailer.notification(
         template: 'signup',
-        user: user,
-        objects: result,
+        user:     user,
+        objects:  result,
       )
     end
 
@@ -389,10 +389,10 @@ class UsersController < ApplicationController
 
     # build result list
     tickets = Ticket.search(
-      query: query,
-      condition: params[:condition].to_h,
-      limit: per_page,
-      offset: offset,
+      query:        query,
+      condition:    params[:condition].to_h,
+      limit:        per_page,
+      offset:       offset,
       current_user: current_user,
     )
 
@@ -402,11 +402,11 @@ class UsersController < ApplicationController
     end
 
     query_params = {
-      query: query,
-      limit: per_page,
-      offset: offset,
-      sort_by: params[:sort_by],
-      order_by: params[:order_by],
+      query:        query,
+      limit:        per_page,
+      offset:       offset,
+      sort_by:      params[:sort_by],
+      order_by:     params[:order_by],
       current_user: current_user,
     }
     %i[role_ids permissions].each do |key|
@@ -464,7 +464,7 @@ class UsersController < ApplicationController
 
       # return result
       render json: {
-        assets: assets,
+        assets:   assets,
         user_ids: user_ids.uniq,
       }
       return
@@ -577,8 +577,8 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
       user = result[:user]
       NotificationFactory::Mailer.notification(
         template: 'signup',
-        user: user,
-        objects: result
+        user:     user,
+        objects:  result
       )
 
       # only if system is in develop mode, send token back to browser for browser tests
@@ -628,8 +628,8 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
       user = result[:user]
       NotificationFactory::Mailer.notification(
         template: 'password_reset',
-        user: user,
-        objects: result
+        user:     user,
+        objects:  result
       )
 
       # only if system is in develop mode, send token back to browser for browser tests
@@ -685,9 +685,9 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
       if user
         NotificationFactory::Mailer.notification(
           template: 'password_change',
-          user: user,
-          objects: {
-            user: user,
+          user:     user,
+          objects:  {
+            user:         user,
             current_user: current_user,
           }
         )
@@ -754,9 +754,9 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     NotificationFactory::Mailer.notification(
       template: 'password_change',
-      user: user,
-      objects: {
-        user: user,
+      user:     user,
+      objects:  {
+        user:         user,
         current_user: current_user,
       }
     )
@@ -873,9 +873,9 @@ curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Conten
 
     # remove from database
     record = Authorization.where(
-      user_id: current_user.id,
+      user_id:  current_user.id,
       provider: params[:provider],
-      uid: params[:uid],
+      uid:      params[:uid],
     )
     raise Exceptions::UnprocessableEntity, 'No record found!' if !record.first
 
@@ -907,8 +907,8 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
     if file
       send_data(
         file.content,
-        filename: file.filename,
-        type: file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+        filename:    file.filename,
+        type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'],
         disposition: 'inline'
       )
       return
@@ -918,8 +918,8 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
     image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
     send_data(
       Base64.decode64(image),
-      filename: 'image.gif',
-      type: 'image/gif',
+      filename:    'image.gif',
+      type:        'image/gif',
       disposition: 'inline'
     )
   end
@@ -952,17 +952,17 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
 
     avatar = Avatar.add(
-      object: 'User',
-      o_id: current_user.id,
-      full: {
-        content: file_full[:content],
+      object:    'User',
+      o_id:      current_user.id,
+      full:      {
+        content:   file_full[:content],
         mime_type: file_full[:mime_type],
       },
-      resize: {
-        content: file_resize[:content],
+      resize:    {
+        content:   file_resize[:content],
         mime_type: file_resize[:mime_type],
       },
-      source: 'upload ' + Time.zone.now.to_s,
+      source:    'upload ' + Time.zone.now.to_s,
       deletable: true,
     )
 
@@ -1026,8 +1026,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     permission_check('admin.user')
     send_data(
       User.csv_example,
-      filename: 'user-example.csv',
-      type: 'text/csv',
+      filename:    'user-example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
   end
@@ -1050,12 +1050,12 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
 
     result = User.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
-      delete: params[:delete],
+      try:          params[:try],
+      delete:       params[:delete],
     )
     render json: result, status: :ok
   end

@@ -89,7 +89,7 @@ class Link < ApplicationModel
       data[:link_object_source_id] = linkobject.id
       touch_reference_by_params(
         object: data[:link_object_source],
-        o_id: data[:link_object_source_value],
+        o_id:   data[:link_object_source_value],
       )
       data.delete(:link_object_source)
     end
@@ -99,7 +99,7 @@ class Link < ApplicationModel
       data[:link_object_target_id] = linkobject.id
       touch_reference_by_params(
         object: data[:link_object_target],
-        o_id: data[:link_object_target_value],
+        o_id:   data[:link_object_target_value],
       )
       data.delete(:link_object_target)
     end
@@ -136,10 +136,10 @@ class Link < ApplicationModel
       data[:link_type_id] = linktype.id
     end
     Link.where(
-      link_type_id: data[:link_type_id],
-      link_object_source_id: data[:link_object_source_id],
+      link_type_id:             data[:link_type_id],
+      link_object_source_id:    data[:link_object_source_id],
       link_object_source_value: data[:link_object_source_value],
-      link_object_target_id: data[:link_object_target_id],
+      link_object_target_id:    data[:link_object_target_id],
       link_object_target_value: data[:link_object_target_value]
     ).destroy_all
 
@@ -150,10 +150,10 @@ class Link < ApplicationModel
     end
 
     Link.where(
-      link_type_id: data[:link_type_id],
-      link_object_target_id: data[:link_object_source_id],
+      link_type_id:             data[:link_type_id],
+      link_object_target_id:    data[:link_object_source_id],
       link_object_target_value: data[:link_object_source_value],
-      link_object_source_id: data[:link_object_target_id],
+      link_object_source_id:    data[:link_object_target_id],
       link_object_source_value: data[:link_object_target_value]
     ).destroy_all
   end
@@ -174,11 +174,11 @@ class Link < ApplicationModel
     end
 
     Link.where(
-      link_object_target_id: data[:link_object_id],
+      link_object_target_id:    data[:link_object_id],
       link_object_target_value: data[:link_object_value],
     ).destroy_all
     Link.where(
-      link_object_source_id: data[:link_object_id],
+      link_object_source_id:    data[:link_object_id],
       link_object_source_value: data[:link_object_value],
     ).destroy_all
 
@@ -188,11 +188,11 @@ class Link < ApplicationModel
   def touch_link_references
     Link.touch_reference_by_params(
       object: Link::Object.lookup(id: link_object_source_id).name,
-      o_id: link_object_source_value,
+      o_id:   link_object_source_value,
     )
     Link.touch_reference_by_params(
       object: Link::Object.lookup(id: link_object_target_id).name,
-      o_id: link_object_target_value,
+      o_id:   link_object_target_value,
     )
   end
 

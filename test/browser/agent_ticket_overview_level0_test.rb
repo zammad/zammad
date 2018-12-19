@@ -6,7 +6,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -16,17 +16,17 @@ class AgentTicketOverviewLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview count test #1',
-        body: 'overview count test #1',
+        group:    'Users',
+        title:    'overview count test #1',
+        body:     'overview count test #1',
       }
     )
     ticket2 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview count test #2',
-        body: 'overview count test #2',
+        group:    'Users',
+        title:    'overview count test #2',
+        body:     'overview count test #2',
       }
     )
     click(text: 'Overviews')
@@ -38,13 +38,13 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     click(text: 'Unassigned & Open')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'overview count test #2',
     )
 
     # select both via bulk action
     click(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -54,7 +54,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
     )
     click(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -67,7 +67,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select close state & submit
     select(
-      css: '.content.active .bulkAction [name="state_id"]',
+      css:   '.content.active .bulkAction [name="state_id"]',
       value: 'closed',
     )
     click(
@@ -120,15 +120,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.content.active table th:nth-child(3)',
+      css:   '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.content.active table th:nth-child(4)',
+      css:   '.content.active table th:nth-child(4)',
       value: 'Title',
     )
     match(
-      css: '.content.active table th:nth-child(7)',
+      css:   '.content.active table th:nth-child(7)',
       value: 'Article#',
     )
 
@@ -138,15 +138,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.content.active table th:nth-child(3)',
+      css:   '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.content.active table th:nth-child(4)',
+      css:   '.content.active table th:nth-child(4)',
       value: 'Title',
     )
     match(
-      css: '.content.active table th:nth-child(7)',
+      css:   '.content.active table th:nth-child(7)',
       value: 'Article#',
     )
 
@@ -166,11 +166,11 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is gone
     match_not(
-      css: '.content.active table th:nth-child(3)',
+      css:   '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.content.active table th:nth-child(3)',
+      css:   '.content.active table th:nth-child(3)',
       value: 'Title',
     )
     exists_not(
@@ -181,9 +181,9 @@ class AgentTicketOverviewLevel0Test < TestCase
     ticket3 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview count test #3',
-        body: 'overview count test #3',
+        group:    'Users',
+        title:    'overview count test #3',
+        body:     'overview count test #3',
       }
     )
     sleep 6
@@ -219,7 +219,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -229,17 +229,17 @@ class AgentTicketOverviewLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview count test #3',
-        body: 'overview count test #3',
+        group:    'Users',
+        title:    'overview count test #3',
+        body:     'overview count test #3',
       }
     )
     ticket2 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview count test #4',
-        body: 'overview count test #4',
+        group:    'Users',
+        title:    'overview count test #4',
+        body:     'overview count test #4',
       }
     )
     click(text: 'Overviews')
@@ -251,8 +251,8 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     click(text: 'Unassigned & Open')
     watch_for(
-      css: '.content.active',
-      value: 'overview count test #4',
+      css:     '.content.active',
+      value:   'overview count test #4',
       timeout: 8,
     )
 
@@ -261,7 +261,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -271,7 +271,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
     )
     click(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -284,31 +284,31 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     exists(
       displayed: false,
-      css: '.content.active .bulkAction [data-name="pending_time"]',
+      css:       '.content.active .bulkAction [data-name="pending_time"]',
     )
 
     select(
-      css: '.content.active .bulkAction [name="state_id"]',
+      css:   '.content.active .bulkAction [name="state_id"]',
       value: 'pending close',
     )
 
     exists(
       displayed: true,
-      css: '.content.active .bulkAction [data-name="pending_time"]',
+      css:       '.content.active .bulkAction [data-name="pending_time"]',
     )
 
     set(
-      css: '.content.active .bulkAction [data-item="date"]',
+      css:   '.content.active .bulkAction [data-item="date"]',
       value: '05/23/2037',
     )
 
     select(
-      css: '.content.active .bulkAction [name="group_id"]',
+      css:   '.content.active .bulkAction [name="group_id"]',
       value: 'Users',
     )
 
     select(
-      css: '.content.active .bulkAction [name="owner_id"]',
+      css:   '.content.active .bulkAction [name="owner_id"]',
       value: 'Test Master Agent',
     )
 
@@ -371,7 +371,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -381,17 +381,17 @@ class AgentTicketOverviewLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview owner change test #1',
-        body: 'overview owner change #1',
+        group:    'Users',
+        title:    'overview owner change test #1',
+        body:     'overview owner change #1',
       }
     )
     ticket2 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview owner change #2',
-        body: 'overview owner change #2',
+        group:    'Users',
+        title:    'overview owner change #2',
+        body:     'overview owner change #2',
       }
     )
 
@@ -400,8 +400,8 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     watch_for(
-      css: '.content.active',
-      value: 'overview owner change #2',
+      css:     '.content.active',
+      value:   'overview owner change #2',
       timeout: 8,
     )
 
@@ -410,7 +410,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -420,7 +420,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
     )
     click(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
@@ -432,12 +432,12 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     select(
-      css: '.content.active .bulkAction [name="owner_id"]',
+      css:   '.content.active .bulkAction [name="owner_id"]',
       value: 'Test Master Agent',
     )
 
     select(
-      css: '.content.active .bulkAction [name="state_id"]',
+      css:   '.content.active .bulkAction [name="state_id"]',
       value: 'closed',
     )
 
@@ -474,7 +474,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -487,7 +487,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     role_edit(
       data: {
-        name:                'Agent',
+        name:              'Agent',
         group_permissions: { 2 => ['full'],
                              3 => ['full'], }
       },
@@ -517,17 +517,17 @@ class AgentTicketOverviewLevel0Test < TestCase
     can_change_ticket = ticket_create(
       data: {
         customer: 'nico',
-        group: 'some group2',
-        title: 'overview test #5',
-        body: 'overview test #5',
+        group:    'some group2',
+        title:    'overview test #5',
+        body:     'overview test #5',
       }
     )
     cannot_change_ticket = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'overview test #6',
-        body: 'overview test #6',
+        group:    'Users',
+        title:    'overview test #6',
+        body:     'overview test #6',
       }
     )
 
@@ -535,7 +535,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'agent2@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -555,8 +555,8 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     watch_for(
-      css: '.content.active',
-      value: 'overview test #6',
+      css:     '.content.active',
+      value:   'overview test #6',
       timeout: 8,
     )
 
@@ -568,7 +568,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     # check that the bulk action form appears
     exists(
       displayed: true,
-      css: '.content.active .bulkAction',
+      css:       '.content.active .bulkAction',
     )
 
     # then select the ticket that we do not have change rights to
@@ -583,31 +583,31 @@ class AgentTicketOverviewLevel0Test < TestCase
     # check that the bulk action form disappears
     exists(
       displayed: false,
-      css: '.content.active .bulkAction',
+      css:       '.content.active .bulkAction',
     )
 
     # de-select the ticket that we do not have change rights to
     uncheck(
-      css: '.content.active table tr td input[value="' + cannot_change_ticket[:id] + '"]',
+      css:  '.content.active table tr td input[value="' + cannot_change_ticket[:id] + '"]',
       fast: true,
     )
 
     # check that the bulk action form appears again
     exists(
       displayed: true,
-      css: '.content.active .bulkAction',
+      css:       '.content.active .bulkAction',
     )
 
     # de-select the ticket that we have change rights to
     uncheck(
-      css: '.content.active table tr td input[value="' + can_change_ticket[:id] + '"]',
+      css:  '.content.active table tr td input[value="' + can_change_ticket[:id] + '"]',
       fast: true,
     )
 
     # check that the bulk action form disappears again
     exists(
       displayed: false,
-      css: '.content.active .bulkAction',
+      css:       '.content.active .bulkAction',
     )
 
     # cleanup
@@ -616,7 +616,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 

@@ -6,26 +6,26 @@ class AutoWizardBrowserTest < TestCase
     location(url: browser_url)
 
     watch_for(
-      css: 'body',
-      value: 'auto wizard is enabled',
+      css:     'body',
+      value:   'auto wizard is enabled',
       timeout: 10,
     )
 
     location(url: "#{browser_url}/#getting_started/auto_wizard")
 
     watch_for(
-      css: 'body',
-      value: 'auto wizard is enabled',
+      css:     'body',
+      value:   'auto wizard is enabled',
       timeout: 10,
     )
 
     location(url: "#{browser_url}/#getting_started/auto_wizard/secret_token")
 
     watch_for(
-      css: '.user-menu .user a',
+      css:       '.user-menu .user a',
       attribute: 'title',
-      value: 'hans.atila@zammad.org',
-      timeout: 20,
+      value:     'hans.atila@zammad.org',
+      timeout:   20,
     )
 
     clues_close
@@ -37,11 +37,11 @@ class AutoWizardBrowserTest < TestCase
       value: 'Demo Organization',
     )
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'Demo Organization',
     )
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'Atila',
     )
 
@@ -52,10 +52,10 @@ class AutoWizardBrowserTest < TestCase
       password: 'Z4mm4dr0ckZ!',
     )
     watch_for(
-      css: '.user-menu .user a',
+      css:       '.user-menu .user a',
       attribute: 'title',
-      value: 'hans.atila@zammad.org',
-      timeout: 8,
+      value:     'hans.atila@zammad.org',
+      timeout:   8,
     )
   end
 

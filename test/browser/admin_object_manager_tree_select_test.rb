@@ -8,27 +8,27 @@ class AdminObjectManagerTreeSelectTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     object_manager_attribute_create(
       data: {
-        name:      'browser_test_tree_select1',
-        display:   'Browser Test TreeSelect1',
-        data_type: 'Tree Select',
+        name:        'browser_test_tree_select1',
+        display:     'Browser Test TreeSelect1',
+        data_type:   'Tree Select',
         data_option: {
           options: {
-            'Incident' => {
-              'Hardware' => {
+            'Incident'        => {
+              'Hardware'        => {
                 'Monitor'  => {},
                 'Mouse'    => {},
                 'Keyboard' => {},
               },
               'Softwareproblem' => {
-                'CRM' => {},
-                'EDI' => {},
-                'SAP' => {
+                'CRM'       => {},
+                'EDI'       => {},
+                'SAP'       => {
                   'Authentication' => {},
                   'Not reachable'  => {},
                 },
@@ -45,19 +45,19 @@ class AdminObjectManagerTreeSelectTest < TestCase
               'New hardware'             => {},
               'Consulting'               => {},
             },
-            'Change request' => {},
+            'Change request'  => {},
           },
         },
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -73,11 +73,11 @@ class AdminObjectManagerTreeSelectTest < TestCase
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/object_manager"]')
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test_tree_select1',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     object_manager_attribute_delete(
@@ -86,16 +86,16 @@ class AdminObjectManagerTreeSelectTest < TestCase
       },
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test_tree_select1',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -107,11 +107,11 @@ class AdminObjectManagerTreeSelectTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test_tree_select1',
     )
   end
@@ -122,28 +122,28 @@ class AdminObjectManagerTreeSelectTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     object_manager_attribute_create(
       data: {
-        name:      'browser_test_tree_select2',
-        display:   'Browser Test TreeSelect2',
-        data_type: 'Tree Select',
+        name:        'browser_test_tree_select2',
+        display:     'Browser Test TreeSelect2',
+        data_type:   'Tree Select',
         data_option: {
           options: {
-            'Incident' => {
+            'Incident'        => {
               'Hardware' => {
-                'Monitor'  => {},
-                'Mouse'    => {},
+                'Monitor' => {},
+                'Mouse'   => {},
               },
             },
             'Service request' => {
               'New software requirement' => {},
               'New hardware'             => {},
             },
-            'Change request' => {},
+            'Change request'  => {},
           },
         },
       },
@@ -152,8 +152,8 @@ class AdminObjectManagerTreeSelectTest < TestCase
 
     # open the newly created tree_select and add some new options
     object_manager_attribute_update(
-      data: {
-        name:      'browser_test_tree_select2',
+      data:          {
+        name: 'browser_test_tree_select2',
       },
       do_not_submit: true,
     )
@@ -176,18 +176,18 @@ class AdminObjectManagerTreeSelectTest < TestCase
 
     # open the tree select again and check that the newly added options are there
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test_tree_select2',
     )
     object_manager_attribute_update(
-      data: {
-        name:      'browser_test_tree_select2',
+      data:          {
+        name: 'browser_test_tree_select2',
       },
       do_not_submit: true,
     )
     2.times do |i|
       exists(
-        css: '.modal .js-treeTable',
+        css:   '.modal .js-treeTable',
         value: "new tree option #{i}",
       )
     end
@@ -202,7 +202,7 @@ class AdminObjectManagerTreeSelectTest < TestCase
     object_manager_attribute_migrate
 
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test_tree_select2',
     )
   end

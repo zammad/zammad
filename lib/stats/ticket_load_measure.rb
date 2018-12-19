@@ -24,12 +24,12 @@ class Stats::TicketLoadMeasure
       load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
     {
-      used_for_average: load_measure_precent,
+      used_for_average:  load_measure_precent,
       average_per_agent: average,
-      percent: load_measure_precent,
-      state: state,
-      own: count,
-      total: total,
+      percent:           load_measure_precent,
+      state:             state,
+      own:               count,
+      total:             total,
     }
   end
 

@@ -13,9 +13,9 @@ class TicketOverviewsController < ApplicationController
         assets = {}
         overview = Overview.lookup(id: index[:overview][:id])
         meta = {
-          name: overview.name,
-          prio: overview.prio,
-          link: overview.link,
+          name:  overview.name,
+          prio:  overview.prio,
+          link:  overview.link,
           count: index[:count],
         }
         indexes.push meta
@@ -42,7 +42,7 @@ class TicketOverviewsController < ApplicationController
 
     render json: {
       assets: assets,
-      index: result,
+      index:  result,
     }
   end
 

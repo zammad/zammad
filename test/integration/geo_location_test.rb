@@ -61,13 +61,13 @@ class GeoLocationTest < ActiveSupport::TestCase
     end
 
     user1 = User.create(
-      login: 'some_geo_login1',
-      firstname: 'First',
-      lastname: 'Last',
-      email: 'some_geo_login1@example.com',
-      password: 'test',
-      address: 'Marienstrasse 13 10117 Berlin',
-      active: false,
+      login:         'some_geo_login1',
+      firstname:     'First',
+      lastname:      'Last',
+      email:         'some_geo_login1@example.com',
+      password:      'test',
+      address:       'Marienstrasse 13 10117 Berlin',
+      active:        false,
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -83,15 +83,15 @@ class GeoLocationTest < ActiveSupport::TestCase
     end
 
     user2 = User.create(
-      login: 'some_geo_login2',
-      firstname: 'First',
-      lastname: 'Last',
-      email: 'some_geo_login2@example.com',
-      password: 'test',
-      street: 'Marienstrasse 13',
-      city: 'Berlin',
-      zip: '10117',
-      active: false,
+      login:         'some_geo_login2',
+      firstname:     'First',
+      lastname:      'Last',
+      email:         'some_geo_login2@example.com',
+      password:      'test',
+      street:        'Marienstrasse 13',
+      city:          'Berlin',
+      zip:           '10117',
+      active:        false,
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -107,13 +107,13 @@ class GeoLocationTest < ActiveSupport::TestCase
     end
 
     user3 = User.create(
-      login: 'some_geo_login3',
-      firstname: 'First',
-      lastname: 'Last',
-      email: 'some_geo_login3@example.com',
-      password: 'test',
-      address: 'Martinsbruggstrasse 35, 9016 St. Gallen',
-      active: false,
+      login:         'some_geo_login3',
+      firstname:     'First',
+      lastname:      'Last',
+      email:         'some_geo_login3@example.com',
+      password:      'test',
+      address:       'Martinsbruggstrasse 35, 9016 St. Gallen',
+      active:        false,
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -129,15 +129,15 @@ class GeoLocationTest < ActiveSupport::TestCase
     end
 
     user4 = User.create(
-      login: 'some_geo_login4',
-      firstname: 'First',
-      lastname: 'Last',
-      email: 'some_geo_login4@example.com',
-      password: 'test',
-      street: 'Martinsbruggstrasse 35',
-      city: 'St. Gallen',
-      zip: '9016',
-      active: false,
+      login:         'some_geo_login4',
+      firstname:     'First',
+      lastname:      'Last',
+      email:         'some_geo_login4@example.com',
+      password:      'test',
+      street:        'Martinsbruggstrasse 35',
+      city:          'St. Gallen',
+      zip:           '9016',
+      active:        false,
       updated_by_id: 1,
       created_by_id: 1
     )

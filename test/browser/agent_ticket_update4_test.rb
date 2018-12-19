@@ -8,27 +8,27 @@ class AgentTicketUpdate4Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     # date object
     object_manager_attribute_create(
       data: {
-        name: 'date1',
-        display: "Date-#{rand(999_999)}",
+        name:      'date1',
+        display:   "Date-#{rand(999_999)}",
         data_type: 'Date',
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
 
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -42,7 +42,7 @@ class AgentTicketUpdate4Test < TestCase
 
     # create new ticket
     ticket = ticket_create(
-      data: {
+      data:                {
         customer: 'nico',
         group:    'Users',
         priority: '2 normal',
@@ -50,7 +50,7 @@ class AgentTicketUpdate4Test < TestCase
         title:    'ticket attribute test #1',
         body:     'ticket attribute test #1',
       },
-      custom_data_date: {
+      custom_data_date:    {
         date1: '02/28/2018',
       },
       disable_group_check: true,
@@ -58,11 +58,11 @@ class AgentTicketUpdate4Test < TestCase
 
     ticket_open_by_search(
       browser: @browser,
-      number: ticket[:number],
+      number:  ticket[:number],
     )
 
     ticket_update(
-      data: {},
+      data:             {},
       custom_data_date: {
         date1: '',
       },
@@ -70,7 +70,7 @@ class AgentTicketUpdate4Test < TestCase
     click(css: '.content.active .js-submit')
 
     match_not(
-      css: '.active .sidebar div[data-name="date1"] input[data-item="date"]',
+      css:   '.active .sidebar div[data-name="date1"] input[data-item="date"]',
       value: '02/28/2018',
     )
   end

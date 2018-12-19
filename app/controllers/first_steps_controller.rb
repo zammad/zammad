@@ -48,54 +48,54 @@ class FirstStepsController < ApplicationController
 
       result = [
         {
-          name: 'Configuration',
+          name:  'Configuration',
           items: [
             {
-              name: 'Branding',
-              checked: true,
+              name:     'Branding',
+              checked:  true,
               location: '#settings/branding',
             },
             {
-              name: 'Your Email Configuration',
-              checked: email_active,
+              name:     'Your Email Configuration',
+              checked:  email_active,
               location: '#channels/email',
             },
             {
-              name: 'Invite agents/colleagues to help working on tickets',
-              checked: invite_agents,
+              name:     'Invite agents/colleagues to help working on tickets',
+              checked:  invite_agents,
               location: '#',
-              class: 'js-inviteAgent',
+              class:    'js-inviteAgent',
             },
             {
-              name: 'Invite customers to create issues in Zammad',
-              checked: invite_customers,
+              name:     'Invite customers to create issues in Zammad',
+              checked:  invite_customers,
               location: '#',
-              class: 'js-inviteCustomer',
+              class:    'js-inviteCustomer',
             },
           ],
         },
         {
-          name: 'How to use it',
+          name:  'How to use it',
           items: [
             {
-              name: 'Intro',
-              checked: true,
+              name:     'Intro',
+              checked:  true,
               location: '#clues',
             },
             {
-              name: 'Create a Test Ticket',
-              checked: false,
+              name:     'Create a Test Ticket',
+              checked:  false,
               location: '#',
-              class: 'js-testTicket',
+              class:    'js-testTicket',
             },
             {
-              name: 'Create Text Modules',
-              checked: text_module_active,
+              name:     'Create Text Modules',
+              checked:  text_module_active,
               location: '#manage/text_modules',
             },
             {
-              name: 'Create Macros',
-              checked: macro_active,
+              name:     'Create Macros',
+              checked:  macro_active,
               location: '#manage/macros',
             },
             #{
@@ -106,26 +106,26 @@ class FirstStepsController < ApplicationController
           ],
         },
         {
-          name: 'Additional Channels',
+          name:  'Additional Channels',
           items: [
             {
-              name: 'Twitter',
-              checked: twitter_active,
+              name:     'Twitter',
+              checked:  twitter_active,
               location: '#channels/twitter',
             },
             {
-              name: 'Facebook',
-              checked: facebook_active,
+              name:     'Facebook',
+              checked:  facebook_active,
               location: '#channels/facebook',
             },
             {
-              name: 'Chat',
-              checked: chat_active,
+              name:     'Chat',
+              checked:  chat_active,
               location: '#channels/chat',
             },
             {
-              name: 'Online Forms',
-              checked: from_active,
+              name:     'Online Forms',
+              checked:  from_active,
               location: '#channels/form',
             },
           ],
@@ -140,24 +140,24 @@ class FirstStepsController < ApplicationController
 
     result = [
       {
-        name: 'How to use it',
+        name:  'How to use it',
         items: [
           {
-            name: 'Intro',
-            checked: true,
+            name:     'Intro',
+            checked:  true,
             location: '#clues',
           },
           {
-            name: 'Create a Test Ticket',
-            checked: false,
+            name:     'Create a Test Ticket',
+            checked:  false,
             location: '#',
-            class: 'js-testTicket',
+            class:    'js-testTicket',
           },
           {
-            name: 'Invite customers to create issues in Zammad',
-            checked: invite_customers,
+            name:     'Invite customers to create issues in Zammad',
+            checked:  invite_customers,
             location: '#',
-            class: 'js-inviteCustomer',
+            class:    'js-inviteCustomer',
           },
         ],
       },
@@ -177,27 +177,27 @@ class FirstStepsController < ApplicationController
     original_user_id = UserInfo.current_user_id
     result = NotificationFactory::Mailer.template(
       template: 'test_ticket',
-      locale: agent.preferences[:locale] || Setting.get('locale_default') || 'en-us',
+      locale:   agent.preferences[:locale] || Setting.get('locale_default') || 'en-us',
       objects:  {
-        agent: agent,
+        agent:    agent,
         customer: customer,
       },
-      raw: true,
+      raw:      true,
     )
     UserInfo.current_user_id = customer.id
     ticket = Ticket.create!(
-      group_id: Group.find_by(active: true, name: 'Users').id,
+      group_id:    Group.find_by(active: true, name: 'Users').id,
       customer_id: customer.id,
-      title: result[:subject],
+      title:       result[:subject],
     )
     article = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.find_by(name: 'phone').id,
-      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-      from: from,
-      body: result[:body],
+      ticket_id:    ticket.id,
+      type_id:      Ticket::Article::Type.find_by(name: 'phone').id,
+      sender_id:    Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from:         from,
+      body:         result[:body],
       content_type: 'text/html',
-      internal: false,
+      internal:     false,
     )
     UserInfo.current_user_id = original_user_id
     overview = test_overview
@@ -206,8 +206,8 @@ class FirstStepsController < ApplicationController
     assets = overview.assets(assets)
     render json: {
       overview_id: overview.id,
-      ticket_id: ticket.id,
-      assets: assets,
+      ticket_id:   ticket.id,
+      assets:      assets,
     }
   end
 

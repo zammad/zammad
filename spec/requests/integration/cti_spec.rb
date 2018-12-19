@@ -8,31 +8,31 @@ RSpec.describe 'Integration CTI', type: :request do
   let!(:customer_user1) do
     create(
       :customer_user,
-      login: 'ticket-caller_id_cti-customer1@example.com',
+      login:     'ticket-caller_id_cti-customer1@example.com',
       firstname: 'CallerId',
-      lastname: 'Customer1',
-      phone: '+49 99999 222222',
-      fax: '+49 99999 222223',
-      mobile: '+4912347114711',
-      note: 'Phone at home: +49 99999 222224',
+      lastname:  'Customer1',
+      phone:     '+49 99999 222222',
+      fax:       '+49 99999 222223',
+      mobile:    '+4912347114711',
+      note:      'Phone at home: +49 99999 222224',
     )
   end
   let!(:customer_user2) do
     create(
       :customer_user,
-      login: 'ticket-caller_id_cti-customer2@example.com',
+      login:     'ticket-caller_id_cti-customer2@example.com',
       firstname: 'CallerId',
-      lastname: 'Customer2',
-      phone: '+49 99999 222222 2',
+      lastname:  'Customer2',
+      phone:     '+49 99999 222222 2',
     )
   end
   let!(:customer_user3) do
     create(
       :customer_user,
-      login: 'ticket-caller_id_cti-customer3@example.com',
+      login:     'ticket-caller_id_cti-customer3@example.com',
       firstname: 'CallerId',
-      lastname: 'Customer3',
-      phone: '+49 99999 222222 2',
+      lastname:  'Customer3',
+      phone:     '+49 99999 222222 2',
     )
   end
 
@@ -42,26 +42,26 @@ RSpec.describe 'Integration CTI', type: :request do
     Setting.set('cti_integration', true)
     Setting.set('cti_config', {
                   outbound: {
-                    routing_table: [
+                    routing_table:     [
                       {
-                        dest: '41*',
+                        dest:      '41*',
                         caller_id: '41715880339000',
                       },
                       {
-                        dest: '491714000000',
+                        dest:      '491714000000',
                         caller_id: '41715880339000',
                       },
                     ],
                     default_caller_id: '4930777000000',
                   },
-                  inbound: {
+                  inbound:  {
                     block_caller_ids: [
                       {
                         caller_id: '491715000000',
-                        note: 'some note',
+                        note:      'some note',
                       }
                     ],
-                    notify_user_ids: {
+                    notify_user_ids:  {
                       2 => true,
                       4 => false,
                     },

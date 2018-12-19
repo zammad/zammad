@@ -12,9 +12,9 @@ class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
     end
     message = {
       event: 'chat_session_typing',
-      data: {
+      data:  {
         session_id: chat_session.session_id,
-        user_id: user_id,
+        user_id:    user_id,
       },
     }
 
@@ -24,8 +24,8 @@ class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
     # send chat_session_init to agent
     {
       event: 'chat_session_typing',
-      data: {
-        session_id: chat_session.session_id,
+      data:  {
+        session_id:   chat_session.session_id,
         self_written: true,
       },
     }

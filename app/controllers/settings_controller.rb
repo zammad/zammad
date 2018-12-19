@@ -39,7 +39,7 @@ class SettingsController < ApplicationController
 
     if !clean_params[:logo]
       render json: {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Need logo param',
       }
       return
@@ -48,7 +48,7 @@ class SettingsController < ApplicationController
     # validate image
     if !clean_params[:logo].match?(/^data:image/i)
       render json: {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Invalid payload, need data:image in logo param',
       }
       return
@@ -58,7 +58,7 @@ class SettingsController < ApplicationController
     file = StaticAssets.data_url_attributes(clean_params[:logo])
     if !file[:content] || !file[:mime_type]
       render json: {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Unable to process image upload.',
       }
       return
@@ -80,7 +80,7 @@ class SettingsController < ApplicationController
     end
 
     render json: {
-      result: 'ok',
+      result:   'ok',
       settings: [setting],
     }
   end

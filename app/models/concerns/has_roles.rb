@@ -30,7 +30,7 @@ module HasRoles
       groups:   {
         active: true
       },
-      roles: {
+      roles:    {
         active: true
       }
     )

@@ -5,60 +5,60 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
 
     roles  = Role.where( name: %w[Agent Admin] )
     admin1 = User.create_or_update(
-      login: 'admin1@example.org',
-      firstname: 'admin1',
-      lastname: 'admin1',
-      email: 'admin1@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'admin1@example.org',
+      firstname:     'admin1',
+      lastname:      'admin1',
+      email:         'admin1@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
+      roles:         roles,
     )
 
     roles = Role.where( name: %w[Customer] )
     org   = Organization.create_or_update(
-      name: 'some customer org',
+      name:          'some customer org',
       updated_by_id: admin1.id,
       created_by_id: 1,
     )
 
     user1 = User.create_or_update(
-      login: 'assets1@example.org',
-      firstname: 'assets1',
-      lastname: 'assets1',
-      email: 'assets1@example.org',
-      password: 'some_pass',
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      login:           'assets1@example.org',
+      firstname:       'assets1',
+      lastname:        'assets1',
+      email:           'assets1@example.org',
+      password:        'some_pass',
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
       organization_id: org.id,
-      roles: roles,
+      roles:           roles,
     )
 
     user2 = User.create_or_update(
-      login: 'assets2@example.org',
-      firstname: 'assets2',
-      lastname: 'assets2',
-      email: 'assets2@example.org',
-      password: 'some_pass',
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      login:           'assets2@example.org',
+      firstname:       'assets2',
+      lastname:        'assets2',
+      email:           'assets2@example.org',
+      password:        'some_pass',
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
       organization_id: org.id,
-      roles: roles,
+      roles:           roles,
     )
 
     user3 = User.create_or_update(
-      login: 'assets3@example.org',
-      firstname: 'assets3',
-      lastname: 'assets3',
-      email: 'assets3@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'assets3@example.org',
+      firstname:     'assets3',
+      lastname:      'assets3',
+      email:         'assets3@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: user1.id,
       created_by_id: user2.id,
-      roles: roles,
+      roles:         roles,
     )
 
     org = Organization.find(org.id)

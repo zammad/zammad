@@ -168,8 +168,8 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     )
     send_data(
       csv_string,
-      filename: 'text_module-example.csv',
-      type: 'text/csv',
+      filename:    'text_module-example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
 
@@ -193,12 +193,12 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
 
     result = TextModule.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
-      delete: params[:delete],
+      try:          params[:try],
+      delete:       params[:delete],
     )
     render json: result, status: :ok
   end

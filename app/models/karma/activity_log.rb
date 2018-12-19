@@ -23,10 +23,10 @@ add karma activity log of an object
     Karma::ActivityLog.transaction do
       last_activity = Karma::ActivityLog.where(user_id: user.id).order(created_at: :desc, id: :desc).lock(true).first
       latest_activity = Karma::ActivityLog.where(
-        user_id: user.id,
+        user_id:          user.id,
         object_lookup_id: object_id,
-        o_id: o_id,
-        activity_id: activity.id,
+        o_id:             o_id,
+        activity_id:      activity.id,
       ).find_by('created_at >= ?', Time.zone.now - activity.once_ttl.seconds)
       return false if !force && latest_activity
 
@@ -42,11 +42,11 @@ add karma activity log of an object
 
       Karma::ActivityLog.create(
         object_lookup_id: object_id,
-        o_id: o_id,
-        user_id: user.id,
-        activity_id: activity.id,
-        score: activity.score,
-        score_total: local_score_total,
+        o_id:             o_id,
+        user_id:          user.id,
+        activity_id:      activity.id,
+        score:            activity.score,
+        score_total:      local_score_total,
       )
     end
 
@@ -68,7 +68,7 @@ remove whole karma activity log of an object
     object_id = ObjectLookup.by_name(object_name)
     Karma::ActivityLog.where(
       object_lookup_id: object_id,
-      o_id: o_id,
+      o_id:             o_id,
     ).destroy_all
   end
 
@@ -80,22 +80,22 @@ remove whole karma activity log of an object
       if last && last[:object_id] == log.object_id && last[:o_id] == log.o_id && last[:created_at] == log.created_at
         comment = {
           description: Karma::Activity.lookup(id: log.activity_id).description,
-          score: log.score,
+          score:       log.score,
         }
         last[:comments].push comment
         last[:score_total] = score_total
         next
       end
       comment = {
-        object_id: log.object_id,
-        o_id: log.o_id,
+        object_id:   log.object_id,
+        o_id:        log.o_id,
         description: Karma::Activity.lookup(id: log.activity_id).description,
-        score: log.score,
+        score:       log.score,
       }
       data = {
-        comments: [comment],
+        comments:    [comment],
         score_total: log.score_total,
-        created_at: log.created_at,
+        created_at:  log.created_at,
       }
       result.push data
     end

@@ -6,7 +6,7 @@ class LinksController < ApplicationController
   # GET /api/v1/links
   def index
     links = Link.list(
-      link_object: params[:link_object],
+      link_object:       params[:link_object],
       link_object_value: params[:link_object_value],
     )
 
@@ -22,7 +22,7 @@ class LinksController < ApplicationController
 
     # return result
     render json: {
-      links: link_list,
+      links:  link_list,
       assets: assets,
     }
   end
@@ -37,10 +37,10 @@ class LinksController < ApplicationController
     end
 
     link = Link.add(
-      link_type: params[:link_type],
-      link_object_target: params[:link_object_target],
+      link_type:                params[:link_type],
+      link_object_target:       params[:link_object_target],
       link_object_target_value: params[:link_object_target_value],
-      link_object_source: params[:link_object_source],
+      link_object_source:       params[:link_object_source],
       link_object_source_value: object.id,
     )
 

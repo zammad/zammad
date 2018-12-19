@@ -12,14 +12,14 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
     end
     chat_message = Chat::Message.create(
       chat_session_id: chat_session.id,
-      content: @payload['data']['content'],
-      created_by_id: user_id,
+      content:         @payload['data']['content'],
+      created_by_id:   user_id,
     )
     message = {
       event: 'chat_session_message',
-      data: {
+      data:  {
         session_id: chat_session.session_id,
-        message: chat_message,
+        message:    chat_message,
       },
     }
 
@@ -29,9 +29,9 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
     # send chat_session_init to agent
     {
       event: 'chat_session_message',
-      data: {
-        session_id: chat_session.session_id,
-        message: chat_message,
+      data:  {
+        session_id:   chat_session.session_id,
+        message:      chat_message,
         self_written: true,
       },
     }

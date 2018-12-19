@@ -4,31 +4,31 @@ class SettingAddEmailFullQuoteHeader < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Email - quote header',
-      name: 'ui_ticket_zoom_article_email_full_quote_header',
-      area: 'UI::TicketZoom',
+      title:       'Email - quote header',
+      name:        'ui_ticket_zoom_article_email_full_quote_header',
+      area:        'UI::TicketZoom',
       description: 'Enable if you want a timestamped reply header to be automatically inserted in front of quoted messages.',
-      options: {
+      options:     {
         form: [
           {
-            display: '',
-            null: true,
-            name: 'ui_ticket_zoom_article_email_full_quote_header',
-            tag: 'boolean',
+            display:   '',
+            null:      true,
+            name:      'ui_ticket_zoom_article_email_full_quote_header',
+            tag:       'boolean',
             translate: true,
-            options: {
+            options:   {
               true  => 'yes',
               false => 'no',
             },
           },
         ],
       },
-      state: true,
+      state:       true,
       preferences: {
-        prio: 240,
+        prio:       240,
         permission: ['admin.ui'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 end

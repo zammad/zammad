@@ -6,7 +6,7 @@ class AdminDragDropToNewGroupTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     new_group_name = add_group
@@ -23,7 +23,7 @@ class AdminDragDropToNewGroupTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     new_group_name = add_group

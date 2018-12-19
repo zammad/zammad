@@ -54,7 +54,7 @@ RSpec.describe Channel do
           expect(Ticket.last.attributes).to include(
             'title'       => 'Wir haben unsere DMs deaktiviert. ' \
                              'Leider können wir dank der neuen Twitter API k...',
-            'preferences' => { 'channel_id' => twitter_channel.id,
+            'preferences' => { 'channel_id'          => twitter_channel.id,
                                'channel_screen_name' => twitter_channel.options[:user][:screen_name] },
             'customer_id' => User.find_by(firstname: 'Ccc', lastname: 'Event Logistics').id
           )

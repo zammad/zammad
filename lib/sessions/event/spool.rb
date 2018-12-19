@@ -23,7 +23,7 @@ To execute this manually, just paste the following into the browser console
       log 'error', "Can't send spool, session not authenticated"
       return {
         event: 'error',
-        data: {
+        data:  {
           error: 'Can\'t send spool, session not authenticated',
         },
       }
@@ -45,7 +45,7 @@ To execute this manually, just paste the following into the browser console
     log 'notice', 'send spool:sent event'
     {
       event: 'spool:sent',
-      data: {
+      data:  {
         timestamp: Time.now.utc.to_i,
       },
     }

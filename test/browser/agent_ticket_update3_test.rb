@@ -6,48 +6,48 @@ class AgentTicketUpdate3Test < TestCase
     # work on one ticket with two browsers
     browser1 = browser_instance
     login(
-      browser: browser1,
+      browser:  browser1,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(browser: browser1)
 
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(browser: browser2)
 
     # create ticket
     ticket1 = ticket_create(
       browser: browser1,
-      data: {
-        group: 'Users',
+      data:    {
+        group:    'Users',
         customer: 'nicole',
-        title: 'some level 2 <b>subject</b> 123äöü',
-        body: 'some level 2 <b>body</b> 123äöü',
+        title:    'some level 2 <b>subject</b> 123äöü',
+        body:     'some level 2 <b>body</b> 123äöü',
       }
     )
 
     # open ticket in second browser
     ticket_open_by_search(
       browser: browser2,
-      number: ticket1[:number],
+      number:  ticket1[:number],
     )
     watch_for(
       browser: browser2,
-      css: '.active div.ticket-article',
-      value: 'some level 2 <b>body</b> 123äöü',
+      css:     '.active div.ticket-article',
+      value:   'some level 2 <b>body</b> 123äöü',
     )
 
     # set body in edit area in second
     ticket_update(
-      browser: browser2,
-      data: {
+      browser:       browser2,
+      data:          {
         body: 'some level 2 <b>body</b> in instance 2',
       },
       do_not_submit: true,
@@ -55,8 +55,8 @@ class AgentTicketUpdate3Test < TestCase
 
     # set body in edit area in first
     ticket_update(
-      browser: browser1,
-      data: {
+      browser:       browser1,
+      data:          {
         body: 'some level 2 <b>body</b> in instance 1',
       },
       do_not_submit: true,
@@ -64,8 +64,8 @@ class AgentTicketUpdate3Test < TestCase
 
     # change title in second browser
     ticket_update(
-      browser: browser2,
-      data: {
+      browser:       browser2,
+      data:          {
         title: 'TTTsome level 2 <b>subject</b> 123äöü',
       },
       do_not_submit: true,
@@ -75,18 +75,18 @@ class AgentTicketUpdate3Test < TestCase
     # verify title in second and first browser
     verify_title(
       browser: browser2,
-      value: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      value:   'TTTsome level 2 <b>subject<\/b> 123äöü',
     )
     ticket_verify(
       browser: browser2,
-      data: {
+      data:    {
         title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
       },
     )
     verify_task(
       browser: browser2,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: false,
       }
     )
@@ -94,18 +94,18 @@ class AgentTicketUpdate3Test < TestCase
     sleep 4
     verify_title(
       browser: browser1,
-      value: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      value:   'TTTsome level 2 <b>subject<\/b> 123äöü',
     )
     ticket_verify(
       browser: browser1,
-      data: {
+      data:    {
         title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
       },
     )
     verify_task(
       browser: browser1,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: true,
       }
     )
@@ -113,13 +113,13 @@ class AgentTicketUpdate3Test < TestCase
     # verify text in input body, if still exists
     ticket_verify(
       browser: browser1,
-      data: {
+      data:    {
         body: 'some level 2 <b>body</b> in instance 1',
       },
     )
     ticket_verify(
       browser: browser2,
-      data: {
+      data:    {
         body: 'some level 2 <b>body</b> in instance 2',
       },
     )
@@ -127,19 +127,19 @@ class AgentTicketUpdate3Test < TestCase
     # set body in edit area in second
     ticket_update(
       browser: browser1,
-      data: {
+      data:    {
         body: 'some update 4711',
       },
     )
     watch_for(
       browser: browser1,
-      css: '.active div.ticket-article',
-      value: 'some update 4711',
+      css:     '.active div.ticket-article',
+      value:   'some update 4711',
     )
     verify_task(
       browser: browser1,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: false,
       }
     )
@@ -147,7 +147,7 @@ class AgentTicketUpdate3Test < TestCase
     # verify if text in input body is now empty
     ticket_verify(
       browser: browser1,
-      data: {
+      data:    {
         body: '',
       },
     )
@@ -155,7 +155,7 @@ class AgentTicketUpdate3Test < TestCase
     # check if body is still in second browser
     ticket_verify(
       browser: browser2,
-      data: {
+      data:    {
         body: 'some level 2 <b>body</b> in instance 2',
       },
     )
@@ -163,8 +163,8 @@ class AgentTicketUpdate3Test < TestCase
     # verify task
     verify_task(
       browser: browser2,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: true,
       }
     )
@@ -181,36 +181,36 @@ class AgentTicketUpdate3Test < TestCase
     sleep 8
     verify_title(
       browser: browser2,
-      value: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      value:   'TTTsome level 2 <b>subject<\/b> 123äöü',
     )
     ticket_verify(
       browser: browser2,
-      data: {
+      data:    {
         title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
       },
     )
     verify_task(
       browser: browser2,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: false, # modify was muted at reload ticket tab
       }
     )
 
     verify_title(
       browser: browser1,
-      value: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      value:   'TTTsome level 2 <b>subject<\/b> 123äöü',
     )
     ticket_verify(
       browser: browser1,
-      data: {
+      data:    {
         title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
       },
     )
     verify_task(
       browser: browser1,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: false,
       }
     )
@@ -218,19 +218,19 @@ class AgentTicketUpdate3Test < TestCase
     # verify if update is on ticket in each browser
     watch_for(
       browser: browser1,
-      css: '.active div.ticket-article',
-      value: 'some update 4711',
+      css:     '.active div.ticket-article',
+      value:   'some update 4711',
     )
     watch_for(
       browser: browser2,
-      css: '.active div.ticket-article',
-      value: 'some update 4711',
+      css:     '.active div.ticket-article',
+      value:   'some update 4711',
     )
 
     # verify if text in input body is now empty
     ticket_verify(
       browser: browser1,
-      data: {
+      data:    {
         body: '',
       },
     )
@@ -238,7 +238,7 @@ class AgentTicketUpdate3Test < TestCase
     # check if body is still in second browser
     ticket_verify(
       browser: browser2,
-      data: {
+      data:    {
         body: 'some level 2 <b>body</b> in instance 2',
       },
     )
@@ -246,27 +246,27 @@ class AgentTicketUpdate3Test < TestCase
     # modify ticket again and erase modified via mouse click on .active.content
     ticket_update(
       browser: browser1,
-      data: {
+      data:    {
         body: 'some update 4711/2',
       },
     )
     sleep 4
     verify_task(
       browser: browser2,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: true,
       }
     )
     click(
       browser: browser2,
-      css: '.active.content',
+      css:     '.active.content',
     )
     sleep 4
     verify_task(
       browser: browser2,
-      data: {
-        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+      data:    {
+        title:    'TTTsome level 2 <b>subject<\/b> 123äöü',
         modified: false,
       }
     )

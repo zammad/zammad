@@ -10,8 +10,8 @@ module ApplicationController::Authenticates
   def permission_check(key)
     if @_token_auth
       user = Token.check(
-        action: 'api',
-        name: @_token_auth,
+        action:     'api',
+        name:       @_token_auth,
         permission: key,
       )
       return false if user
@@ -84,15 +84,15 @@ module ApplicationController::Authenticates
       end
 
       user = Token.check(
-        action: 'api',
-        name: token_string,
+        action:        'api',
+        name:          token_string,
         inactive_user: true,
       )
       if user && auth_param[:permission]
         user = Token.check(
-          action: 'api',
-          name: token_string,
-          permission: auth_param[:permission],
+          action:        'api',
+          name:          token_string,
+          permission:    auth_param[:permission],
           inactive_user: true,
         )
         raise Exceptions::NotAuthorized, 'Not authorized (token)!' if !user

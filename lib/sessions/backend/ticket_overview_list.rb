@@ -75,9 +75,9 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       assets = {}
       overview = Overview.lookup(id: index[:overview][:id])
       meta = {
-        name: overview.name,
-        prio: overview.prio,
-        link: overview.link,
+        name:  overview.name,
+        prio:  overview.prio,
+        link:  overview.link,
         count: index[:count],
       }
       indexes.push meta
@@ -86,7 +86,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       @client.log "push overview_index for user #{@user.id}"
       @client.send(
         event: 'ticket_overview_index',
-        data: indexes,
+        data:  indexes,
       )
     end
 
@@ -117,7 +117,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       if !@client
         result = {
           event: 'ticket_overview_list',
-          data: data,
+          data:  data,
         }
         results.push result
       else
@@ -126,7 +126,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
         # send update to browser
         @client.send(
           event: 'ticket_overview_list',
-          data: data,
+          data:  data,
         )
       end
     end

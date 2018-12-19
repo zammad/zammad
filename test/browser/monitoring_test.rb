@@ -5,18 +5,18 @@ class MonitoringTest < TestCase
   def test_mode
     browser1 = browser_instance
     login(
-      browser: browser1,
+      browser:  browser1,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     click(
       browser: browser1,
-      css: 'a[href="#manage"]',
+      css:     'a[href="#manage"]',
     )
     click(
       browser: browser1,
-      css: 'a[href="#system/monitoring"]',
+      css:     'a[href="#system/monitoring"]',
     )
 
     token = browser1.find_elements(css: '.active.content .js-token')[0].attribute('value')
@@ -26,7 +26,7 @@ class MonitoringTest < TestCase
 
     click(
       browser: browser1,
-      css: '.active.content .js-resetToken',
+      css:     '.active.content .js-resetToken',
     )
     sleep 3
 

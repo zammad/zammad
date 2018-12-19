@@ -21,7 +21,7 @@ class Chat < ApplicationModel
               url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
             end
             user = {
-              name: chat_user.fullname,
+              name:   chat_user.fullname,
               avatar: url,
             }
 
@@ -29,15 +29,15 @@ class Chat < ApplicationModel
             session = Chat::Session.messages_by_session_id(session_id)
             if session
               return {
-                state: 'reconnect',
+                state:   'reconnect',
                 session: session,
-                agent: user,
+                agent:   user,
               }
             end
           end
         elsif chat_session.state == 'waiting'
           return {
-            state: 'reconnect',
+            state:    'reconnect',
             position: chat_session.position,
           }
         end
@@ -84,16 +84,16 @@ class Chat < ApplicationModel
       assets = user.assets(assets)
     end
     {
-      waiting_chat_count: waiting_chat_count,
+      waiting_chat_count:        waiting_chat_count,
       waiting_chat_session_list: waiting_chat_session_list,
-      running_chat_count: running_chat_count,
+      running_chat_count:        running_chat_count,
       running_chat_session_list: runningchat_session_list_local,
-      active_agent_count: active_agent_count,
-      active_agent_ids: active_agent_ids,
-      seads_available: seads_available,
-      seads_total: seads_total,
-      active: Chat::Agent.state(user_id),
-      assets: assets,
+      active_agent_count:        active_agent_count,
+      active_agent_ids:          active_agent_ids,
+      seads_available:           seads_available,
+      seads_total:               seads_total,
+      active:                    Chat::Agent.state(user_id),
+      assets:                    assets,
     }
   end
 
@@ -188,7 +188,7 @@ optional you can ignore it for dedecated user
 
       data = {
         event: 'chat_status_agent',
-        data: Chat.agent_state(item.updated_by_id),
+        data:  Chat.agent_state(item.updated_by_id),
       }
       Sessions.send_to(item.updated_by_id, data)
     end
@@ -210,9 +210,9 @@ broadcast new customer queue position to all waiting customers
       position += 1
       data = {
         event: 'chat_session_queue',
-        data: {
-          state: 'queue',
-          position: position,
+        data:  {
+          state:      'queue',
+          position:   position,
           session_id: local_chat_session.session_id,
         },
       }
@@ -261,9 +261,9 @@ optional you can put the max oldest chat sessions as argument
       chat_session.save
       message = {
         event: 'chat_session_closed',
-        data: {
+        data:  {
           session_id: chat_session.session_id,
-          realname: 'System',
+          realname:   'System',
         },
       }
       chat_session.send_to_recipients(message)

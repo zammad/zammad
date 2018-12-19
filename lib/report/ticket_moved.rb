@@ -71,12 +71,12 @@ returns
         local_selector.delete('ticket.group_id')
       end
       defaults = {
-        object: 'Ticket',
-        type: 'updated',
+        object:    'Ticket',
+        type:      'updated',
         attribute: 'group',
-        start: start,
-        end: stop,
-        selector: local_selector
+        start:     start,
+        end:       stop,
+        selector:  local_selector
       }
       local_params = defaults.merge(local_params)
       count = history_count(local_params)
@@ -111,7 +111,7 @@ returns
 
     if !selector
       return {
-        count: 0,
+        count:      0,
         ticket_ids: [],
       }
     end
@@ -128,12 +128,12 @@ returns
       local_selector.delete('ticket.group_id')
     end
     defaults = {
-      object: 'Ticket',
-      type: 'updated',
+      object:    'Ticket',
+      type:      'updated',
       attribute: 'group',
-      start: params[:range_start],
-      end: params[:range_end],
-      selector: local_selector
+      start:     params[:range_start],
+      end:       params[:range_end],
+      selector:  local_selector
     }
     local_params = defaults.merge(local_params)
     result = history(local_params)
@@ -154,24 +154,24 @@ returns
       if params[:params][:type] == 'in'
         return {
           id_not_from: group_id,
-          id_to: group_id,
+          id_to:       group_id,
         }
       else
         return {
-          id_from: group_id,
+          id_from:   group_id,
           id_not_to: group_id,
         }
       end
     elsif selector['operator'] == 'is not'
       if params[:params][:type] == 'in'
         return {
-          id_from: group_id,
+          id_from:   group_id,
           id_not_to: group_id,
         }
       else
         return {
           id_not_from: group_id,
-          id_to: group_id,
+          id_to:       group_id,
         }
       end
     end

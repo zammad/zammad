@@ -5,26 +5,26 @@ class ObjectManagerUserEmailOptional < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     ObjectManager::Attribute.add(
-      force: true,
-      object: 'User',
-      name: 'email',
-      display: 'Email',
-      data_type: 'input',
+      force:       true,
+      object:      'User',
+      name:        'email',
+      display:     'Email',
+      data_type:   'input',
       data_option: {
-        type: 'email',
-        maxlength: 150,
-        null: true,
+        type:       'email',
+        maxlength:  150,
+        null:       true,
         item_class: 'formGroup--halfSize',
       },
-      editable: false,
-      active: true,
-      screens: {
-        signup: {
+      editable:    false,
+      active:      true,
+      screens:     {
+        signup:          {
           '-all-' => {
             null: false,
           },
         },
-        invite_agent: {
+        invite_agent:    {
           '-all-' => {
             null: false,
           },
@@ -34,21 +34,21 @@ class ObjectManagerUserEmailOptional < ActiveRecord::Migration[4.2]
             null: false,
           },
         },
-        edit: {
+        edit:            {
           '-all-' => {
             null: true,
           },
         },
-        view: {
+        view:            {
           '-all-' => {
             shown: true,
           },
         },
       },
-      to_create: false,
-      to_migrate: false,
-      to_delete: false,
-      position: 400,
+      to_create:   false,
+      to_migrate:  false,
+      to_delete:   false,
+      position:    400,
     )
   end
 end

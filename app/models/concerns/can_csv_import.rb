@@ -62,7 +62,7 @@ returns
         errors.push "Delete is not possible for #{new.class}."
         result = {
           errors: errors,
-          try: try,
+          try:    try,
           result: 'failed',
         }
         return result
@@ -82,7 +82,7 @@ returns
         errors.push "Unable to parse empty file/string for #{new.class}."
         result = {
           errors: errors,
-          try: try,
+          try:    try,
           result: 'failed',
         }
         return result
@@ -94,7 +94,7 @@ returns
         errors.push "Unable to parse file/string without header for #{new.class}."
         result = {
           errors: errors,
-          try: try,
+          try:    try,
           result: 'failed',
         }
         return result
@@ -112,7 +112,7 @@ returns
         errors.push "No records found in file/string for #{new.class}."
         result = {
           errors: errors,
-          try: try,
+          try:    try,
           result: 'failed',
         }
         return result
@@ -123,7 +123,7 @@ returns
         errors.push "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{new.class} found."
         result = {
           errors: errors,
-          try: try,
+          try:    try,
           result: 'failed',
         }
         return result
@@ -274,11 +274,11 @@ returns
       end
 
       {
-        stats: stats,
+        stats:   stats,
         records: records,
-        errors: errors,
-        try: try,
-        result: result,
+        errors:  errors,
+        try:     try,
+        result:  result,
       }
     end
 

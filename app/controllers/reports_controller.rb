@@ -11,7 +11,7 @@ class ReportsController < ApplicationController
       return
     end
     render json: {
-      config: Report.config,
+      config:   Report.config,
       profiles: Report::Profile.list,
     }
   end
@@ -102,8 +102,8 @@ class ReportsController < ApplicationController
       content = sheet(get_params[:profile], backend[:display], result)
       send_data(
         content,
-        filename: "tickets-#{get_params[:profile].name}-#{backend[:display]}.xls",
-        type: 'application/vnd.ms-excel',
+        filename:    "tickets-#{get_params[:profile].name}-#{backend[:display]}.xls",
+        type:        'application/vnd.ms-excel',
         disposition: 'attachment'
       )
     end
@@ -163,11 +163,11 @@ class ReportsController < ApplicationController
     end
     {
       profile: profile,
-      metric: metric,
-      config: local_config,
-      start: start,
-      stop: stop,
-      range: range,
+      metric:  metric,
+      config:  local_config,
+      start:   start,
+      stop:    stop,
+      range:   range,
     }
   end
 
@@ -217,9 +217,9 @@ class ReportsController < ApplicationController
     # ObjectManager attributes
     header_column = 14
     # needs to be skipped
-    objects = ObjectManager::Attribute.where(editable: true,
-                                             active: true,
-                                             to_create: false,
+    objects = ObjectManager::Attribute.where(editable:         true,
+                                             active:           true,
+                                             to_create:        false,
                                              object_lookup_id: ObjectLookup.lookup(name: 'Ticket').id)
                                       .pluck(:name, :display, :data_type, :data_option)
                                       .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option } }

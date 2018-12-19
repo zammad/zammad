@@ -12,7 +12,7 @@ class AgentTicketCreateCcTokenizerTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 

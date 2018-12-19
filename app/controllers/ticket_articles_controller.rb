@@ -66,7 +66,7 @@ class TicketArticlesController < ApplicationController
       end
       render json: {
         record_ids: record_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
@@ -196,20 +196,20 @@ class TicketArticlesController < ApplicationController
       'Content-Type' => content_type
     }
     store = Store.add(
-      object: 'UploadCache',
-      o_id: params[:form_id],
-      data: file.read,
-      filename: file.original_filename,
+      object:      'UploadCache',
+      o_id:        params[:form_id],
+      data:        file.read,
+      filename:    file.original_filename,
       preferences: headers_store
     )
 
     # return result
     render json: {
       success: true,
-      data: {
-        id: store.id,
+      data:    {
+        id:       store.id,
         filename: file.original_filename,
-        size: store.size,
+        size:     store.size,
       }
     }
   end
@@ -257,8 +257,8 @@ class TicketArticlesController < ApplicationController
 
     send_data(
       file.content,
-      filename: file.filename,
-      type: file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
+      filename:    file.filename,
+      type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
       disposition: disposition
     )
   end
@@ -275,8 +275,8 @@ class TicketArticlesController < ApplicationController
 
     send_data(
       file.content,
-      filename: file.filename,
-      type: 'message/rfc822',
+      filename:    file.filename,
+      type:        'message/rfc822',
       disposition: 'inline'
     )
   end
@@ -296,8 +296,8 @@ class TicketArticlesController < ApplicationController
     )
     send_data(
       csv_string,
-      filename: 'example.csv',
-      type: 'text/csv',
+      filename:    'example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
 
@@ -325,11 +325,11 @@ class TicketArticlesController < ApplicationController
     raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
 
     result = Ticket::Article.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: ';',
       },
-      try: params[:try],
+      try:          params[:try],
     )
     render json: result, status: :ok
   end

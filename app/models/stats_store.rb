@@ -112,11 +112,11 @@ class StatsStore < ApplicationModel
     # create history
     record = {
       stats_store_object_id: object_id,
-      o_id: data[:o_id],
-      key: data[:key],
-      data: data[:data],
-      created_at: data[:created_at],
-      created_by_id: data[:created_by_id],
+      o_id:                  data[:o_id],
+      key:                   data[:key],
+      data:                  data[:data],
+      created_at:            data[:created_at],
+      created_by_id:         data[:created_by_id],
     }
 
     StatsStore.create(record)
@@ -141,7 +141,7 @@ class StatsStore < ApplicationModel
     # create history
     record = {
       stats_store_object_id: object_id,
-      o_id: data[:o_id],
+      o_id:                  data[:o_id],
     }
 
     StatsStore.where(record).destroy_all

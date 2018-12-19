@@ -32,13 +32,13 @@ RSpec.describe Import::OTRS::State do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: '1',
+        active:        '1',
         state_type_id: 5,
-        updated_at: '2014-04-28 10:53:18',
-        created_at: '2014-04-28 10:53:18',
-        name: 'closed successful',
-        id: '2',
-        note: 'Ticket is closed successful.'
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        name:          'closed successful',
+        id:            '2',
+        note:          'Ticket is closed successful.'
       }
     end
 

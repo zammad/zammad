@@ -59,11 +59,11 @@ class CalendarSubscriptions::Tickets
     condition = {
       'ticket.owner_id' => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: Ticket::State.where(
+        value:    Ticket::State.where(
           state_type_id: Ticket::StateType.where(
             name: %w[new open],
           ),
@@ -73,7 +73,7 @@ class CalendarSubscriptions::Tickets
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
     user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
@@ -106,11 +106,11 @@ class CalendarSubscriptions::Tickets
     condition = {
       'ticket.owner_id' => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: Ticket::State.where(
+        value:    Ticket::State.where(
           state_type_id: Ticket::StateType.where(
             name: [
               'pending reminder',
@@ -123,7 +123,7 @@ class CalendarSubscriptions::Tickets
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
     user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
@@ -168,19 +168,19 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.blank?
 
     condition = {
-      'ticket.owner_id' => {
+      'ticket.owner_id'      => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.escalation_at' => {
         operator: 'is not',
-        value: nil,
+        value:    nil,
       }
     }
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
     user_locale                  = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'

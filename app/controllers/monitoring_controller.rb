@@ -152,7 +152,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       result = {
         healthy: true,
         message: 'success',
-        token: token,
+        token:   token,
       }
       render json: result
       return
@@ -204,19 +204,19 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     end
 
     status = {
-      counts: {},
+      counts:          {},
       last_created_at: {},
-      last_login: last_login,
-      agents: User.with_permissions('ticket.agent').count,
+      last_login:      last_login,
+      agents:          User.with_permissions('ticket.agent').count,
     }
 
     map = {
-      users: User,
-      groups: Group,
-      overviews: Overview,
-      tickets: Ticket,
+      users:           User,
+      groups:          Group,
+      overviews:       Overview,
+      tickets:         Ticket,
       ticket_articles: Ticket::Article,
-      text_modules: TextModule,
+      text_modules:    TextModule,
     }
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
@@ -316,9 +316,9 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
       if row[:type] == 'gt'
         if count > params[row[:param]].to_i
           result = {
-            state: row[:notice],
+            state:   row[:notice],
             message: "The limit of #{params[row[:param]]} was exceeded with #{count} in the last #{params[:periode]}",
-            count: count,
+            count:   count,
           }
           break
         end
@@ -327,18 +327,18 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
       next if count > params[row[:param]].to_i
 
       result = {
-        state: row[:notice],
+        state:   row[:notice],
         message: "The minimum of #{params[row[:param]]} was undercut by #{count} in the last #{params[:periode]}",
-        count: count,
+        count:   count,
       }
       break
     end
 
     if result.blank?
       result = {
-        state: 'ok',
+        state:   'ok',
         message: '',
-        count: Ticket.where('created_at >= ?', created_at).count,
+        count:   Ticket.where('created_at >= ?', created_at).count,
       }
     end
 

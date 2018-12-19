@@ -114,8 +114,8 @@ module Channel::EmailBuild
         content_type = attachment.preferences['Content-Type'] || attachment.preferences['Mime-Type'] || 'application/octet-stream'
         mail.attachments[attachment.filename] = {
           content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
-          content_type: "#{content_type}; filename=\"#{encoded_filename}\"",
-          content: attachment.content
+          content_type:        "#{content_type}; filename=\"#{encoded_filename}\"",
+          content:             attachment.content
         }
       end
     end

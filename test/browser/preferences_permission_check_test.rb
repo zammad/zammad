@@ -7,28 +7,28 @@ class PreferencesPermissionCheckTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Password',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Language',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Notifications',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Calendar',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Token Access',
     )
   end
@@ -38,28 +38,28 @@ class PreferencesPermissionCheckTest < TestCase
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Password',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Language',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Notifications',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Calendar',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Token Access',
     )
   end

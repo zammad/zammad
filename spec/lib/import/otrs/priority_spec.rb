@@ -31,11 +31,11 @@ RSpec.describe Import::OTRS::Priority do
       {
         created_by_id: '1',
         updated_by_id: '1',
-        active: true,
-        updated_at: '2014-04-28 10:53:18',
-        created_at: '2014-04-28 10:53:18',
-        name: '4 high',
-        id: '4'
+        active:        true,
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        name:          '4 high',
+        id:            '4'
       }
     end
 

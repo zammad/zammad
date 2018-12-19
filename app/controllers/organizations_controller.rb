@@ -87,7 +87,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
@@ -243,11 +243,11 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       query = query.permit!.to_h
     end
     query_params = {
-      query: query,
-      limit: per_page,
-      offset: offset,
-      sort_by: params[:sort_by],
-      order_by: params[:order_by],
+      query:        query,
+      limit:        per_page,
+      offset:       offset,
+      sort_by:      params[:sort_by],
+      order_by:     params[:order_by],
       current_user: current_user,
     }
     if params[:role_ids].present?
@@ -289,7 +289,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
       # return result
       render json: {
-        assets: assets,
+        assets:           assets,
         organization_ids: organization_ids.uniq,
       }
       return
@@ -332,8 +332,8 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     permission_check('admin.organization')
     send_data(
       Organization.csv_example,
-      filename: 'organization-example.csv',
-      type: 'text/csv',
+      filename:    'organization-example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
   end
@@ -356,12 +356,12 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
 
     result = Organization.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
-      delete: params[:delete],
+      try:          params[:try],
+      delete:       params[:delete],
     )
     render json: result, status: :ok
   end

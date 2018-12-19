@@ -63,10 +63,10 @@ class Channel::Driver::Smtp
 
     mail = Channel::EmailBuild.build(attr, notification)
     smtp_params = {
-      openssl_verify_mode: options[:openssl_verify_mode],
-      address: options[:host],
-      port: options[:port],
-      domain: options[:domain],
+      openssl_verify_mode:  options[:openssl_verify_mode],
+      address:              options[:host],
+      port:                 options[:port],
+      domain:               options[:domain],
       enable_starttls_auto: options[:enable_starttls_auto],
     }
 

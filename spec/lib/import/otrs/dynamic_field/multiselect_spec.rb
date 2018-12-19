@@ -7,10 +7,10 @@ RSpec.describe Import::OTRS::DynamicField::Multiselect do
   it 'imports an OTRS Multiselect DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'multiselect_example',
-      display: 'Multiselec tExample',
-      screens: {
+      object:        'Ticket',
+      name:          'multiselect_example',
+      display:       'Multiselec tExample',
+      screens:       {
         view: {
           '-all-' => {
             shown: true
@@ -24,9 +24,9 @@ RSpec.describe Import::OTRS::DynamicField::Multiselect do
       updated_by_id: 1,
       data_type:     'select',
       data_option:   {
-        default:  '',
-        multiple: true,
-        options:  {
+        default:    '',
+        multiple:   true,
+        options:    {
           'Hamburg' => 'Hamburg',
           'München' => 'München',
           'Köln'    => 'Köln',

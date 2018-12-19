@@ -24,7 +24,7 @@ RSpec.describe Ticket do
       )
 
       links = Link.list(
-        link_object: 'Ticket',
+        link_object:       'Ticket',
         link_object_value: target_ticket.id,
       )
 
@@ -95,29 +95,29 @@ RSpec.describe Ticket do
       # get before destroy
       activities = ActivityStream.where(
         activity_stream_object_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:                      source_ticket.id,
       )
       links = Link.list(
-        link_object: 'Ticket',
+        link_object:       'Ticket',
         link_object_value: source_ticket.id
       )
       articles = Ticket::Article.where(ticket_id: source_ticket.id)
       history = History.list('Ticket', source_ticket.id, nil, true)
       karma_log = Karma::ActivityLog.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       online_notifications = OnlineNotification.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       recent_views = OnlineNotification.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       tags = Tag.tag_list(
         object: 'Ticket',
-        o_id: source_ticket.id,
+        o_id:   source_ticket.id,
       )
 
       # check before destroy
@@ -136,29 +136,29 @@ RSpec.describe Ticket do
       # get after destroy
       activities = ActivityStream.where(
         activity_stream_object_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:                      source_ticket.id,
       )
       links = Link.list(
-        link_object: 'Ticket',
+        link_object:       'Ticket',
         link_object_value: source_ticket.id
       )
       articles = Ticket::Article.where(ticket_id: source_ticket.id)
       history = History.list('Ticket', source_ticket.id, nil, true)
       karma_log = Karma::ActivityLog.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       online_notifications = OnlineNotification.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       recent_views = OnlineNotification.where(
         object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id: source_ticket.id,
+        o_id:             source_ticket.id,
       )
       tags = Tag.tag_list(
         object: 'Ticket',
-        o_id: source_ticket.id,
+        o_id:   source_ticket.id,
       )
 
       # check after destroy
@@ -195,7 +195,7 @@ RSpec.describe Ticket do
 
       changes = {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s },
-        'ticket.action' => { 'value' => 'delete' },
+        'ticket.action'   => { 'value' => 'delete' },
       }
 
       source_ticket.perform_changes(changes, 'trigger', source_ticket, User.find(1))
@@ -208,9 +208,9 @@ RSpec.describe Ticket do
       trigger = Trigger.new(
         perform: {
           'notification.email' => {
-            body: "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
+            body:      "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
             recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
-            subject: "Autoclose (\#{ticket.title})"
+            subject:   "Autoclose (\#{ticket.title})"
           }
         }
       )
@@ -239,9 +239,9 @@ RSpec.describe Ticket do
       trigger       = Trigger.new(
         perform: {
           'notification.email' => {
-            body: '',
+            body:      '',
             recipient: 'ticket_customer',
-            subject: ''
+            subject:   ''
           }
         }
       )
@@ -279,7 +279,7 @@ RSpec.describe Ticket do
       condition = {
         'article.from' => {
           operator: 'contains',
-          value: 'blubselector.de',
+          value:    'blubselector.de',
         },
       }
 

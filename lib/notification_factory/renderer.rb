@@ -52,7 +52,7 @@ examples how to use
     # escape in html mode
     if escape
       no_escape = {
-        'article.body_as_html' => true,
+        'article.body_as_html'                      => true,
         'article.body_as_text_with_quote.text2html' => true,
       }
       if no_escape[key]

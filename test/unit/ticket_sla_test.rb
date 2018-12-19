@@ -4,13 +4,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla' do
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-03-21 09:30:00 UTC',
-      updated_at: '2013-03-21 09:30:00 UTC',
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-03-21 09:30:00 UTC',
+      updated_at:    '2013-03-21 09:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -18,53 +18,53 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify')
 
     calendar1 = Calendar.create_or_update(
-      name: 'EU 1',
-      timezone: 'Europe/Berlin',
+      name:           'EU 1',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     sla = Sla.create_or_update(
-      name: 'test sla 1',
-      condition: {},
+      name:                'test sla 1',
+      condition:           {},
       first_response_time: 60,
-      update_time: 180,
-      solution_time: 240,
-      calendar_id: calendar1.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      calendar_id:         calendar1.id,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -74,14 +74,14 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_escalation_at.gmtime.to_s, '2013-03-21 13:30:00 UTC', 'ticket.close_escalation_at verify 1')
 
     sla = Sla.create_or_update(
-      name: 'test sla 1',
-      condition: {},
+      name:                'test sla 1',
+      condition:           {},
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      calendar_id: calendar1.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      calendar_id:         calendar1.id,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -93,57 +93,57 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'sla destroy 1')
 
     calendar2 = Calendar.create_or_update(
-      name: 'EU 2',
-      timezone: 'Europe/Berlin',
+      name:           'EU 2',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '18:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 2',
-      condition: {
+      name:                'test sla 2',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w[1 2 3],
+          value:    %w[1 2 3],
         },
       },
-      calendar_id: calendar2.id,
+      calendar_id:         calendar2.id,
       first_response_time: 60,
-      update_time: 120,
-      solution_time: 180,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         120,
+      solution_time:       180,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -336,15 +336,15 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
 
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:49:00 UTC',
-      updated_at: '2013-03-28 23:49:00 UTC',
+      created_at:    '2013-03-28 23:49:00 UTC',
+      updated_at:    '2013-03-28 23:49:00 UTC',
     )
     assert(ticket, 'ticket created')
 
@@ -354,19 +354,19 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create inbound article
     article_inbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:49:00 UTC',
-      updated_at: '2013-03-28 23:49:00 UTC',
+      created_at:    '2013-03-28 23:49:00 UTC',
+      updated_at:    '2013-03-28 23:49:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 1, 'ticket.article_count verify - inbound')
@@ -378,19 +378,19 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create outbound article
     article_outbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_recipient@example.com',
-      to: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id2',
-      body: 'some message 2',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_recipient@example.com',
+      to:            'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id2',
+      body:          'some message 2',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-29 07:00:03 UTC',
-      updated_at: '2013-03-29 07:00:03 UTC',
+      created_at:    '2013-03-29 07:00:03 UTC',
+      updated_at:    '2013-03-29 07:00:03 UTC',
     )
 
     ticket = Ticket.find(ticket.id)
@@ -407,15 +407,15 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
 
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:49:00 UTC',
-      updated_at: '2013-03-28 23:49:00 UTC',
+      created_at:    '2013-03-28 23:49:00 UTC',
+      updated_at:    '2013-03-28 23:49:00 UTC',
     )
     assert(ticket, 'ticket created')
 
@@ -425,18 +425,18 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create inbound article
     article_inbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:49:00 UTC',
-      updated_at: '2013-03-28 23:49:00 UTC',
+      created_at:    '2013-03-28 23:49:00 UTC',
+      updated_at:    '2013-03-28 23:49:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 1, 'ticket.article_count verify - inbound')
@@ -448,18 +448,18 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create note article
     article_note = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'note').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'note').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:52:00 UTC',
-      updated_at: '2013-03-28 23:52:00 UTC',
+      created_at:    '2013-03-28 23:52:00 UTC',
+      updated_at:    '2013-03-28 23:52:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 2, 'ticket.article_count verify - inbound')
@@ -471,18 +471,18 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create outbound article
     article_outbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-28 23:55:00 UTC',
-      updated_at: '2013-03-28 23:55:00 UTC',
+      created_at:    '2013-03-28 23:55:00 UTC',
+      updated_at:    '2013-03-28 23:55:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 3, 'ticket.article_count verify - inbound')
@@ -497,68 +497,68 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla + selector' do
     calendar1 = Calendar.create_or_update(
-      name: 'EU 1',
-      timezone: 'Europe/Berlin',
+      name:           'EU 1',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '17:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     sla = Sla.create_or_update(
-      name: 'test sla 1',
-      condition: {
+      name:                'test sla 1',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w[2],
+          value:    %w[2],
         },
       },
       first_response_time: 60,
-      update_time: 180,
-      solution_time: 240,
-      calendar_id: calendar1.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      calendar_id:         calendar1.id,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
 
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-03-21 09:30:00 UTC',
-      updated_at: '2013-03-21 09:30:00 UTC',
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-03-21 09:30:00 UTC',
+      updated_at:    '2013-03-21 09:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -601,13 +601,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla + timezone + holiday' do
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-03-21 09:30:00 UTC',
-      updated_at: '2013-03-21 09:30:00 UTC',
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-03-21 09:30:00 UTC',
+      updated_at:    '2013-03-21 09:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -616,72 +616,72 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-16:00
     calendar = Calendar.create_or_update(
-      name: 'EU 3',
-      timezone: 'Europe/Berlin',
+      name:           'EU 3',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'aaa should not match',
-      condition: {
+      name:                'aaa should not match',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is not',
-          value: %w[1 2 3],
+          value:    %w[1 2 3],
         },
       },
-      calendar_id: calendar.id,
+      calendar_id:         calendar.id,
       first_response_time: 10,
-      update_time: 20,
-      solution_time: 300,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         20,
+      solution_time:       300,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 3',
-      condition: {
+      name:                'test sla 3',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is not',
-          value: '1',
+          value:    '1',
         },
       },
-      calendar_id: calendar.id,
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -696,13 +696,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-10-21 09:30:00 UTC',
-      updated_at: '2013-10-21 09:30:00 UTC',
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-10-21 09:30:00 UTC',
+      updated_at:    '2013-10-21 09:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -711,45 +711,45 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 6:00-15:00
     calendar = Calendar.create_or_update(
-      name: 'EU 4',
-      timezone: 'Europe/Berlin',
-      business_hours: {
+      name:            'EU 4',
+      timezone:        'Europe/Berlin',
+      business_hours:  {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
       public_holidays: {
         '2015-09-22' => {
-          'active' => true,
+          'active'  => true,
           'summary' => 'test 1',
         },
         '2015-09-23' => {
-          'active' => false,
+          'active'  => false,
           'summary' => 'test 2',
         },
         '2015-09-24' => {
@@ -757,20 +757,20 @@ class TicketSlaTest < ActiveSupport::TestCase
           'summary' => 'test 3',
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:         true,
+      ical_url:        nil,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 4',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 4',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -786,13 +786,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'sla destroy')
 
     ticket = Ticket.create!(
-      title: 'some title äöüß',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-10-21 05:30:00 UTC',
-      updated_at: '2013-10-21 05:30:00 UTC',
+      title:         'some title äöüß',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-10-21 05:30:00 UTC',
+      updated_at:    '2013-10-21 05:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -801,14 +801,14 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 6:00-15:00
     sla = Sla.create_or_update(
-      name: 'test sla 5',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 5',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -818,13 +818,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_escalation_at.gmtime.to_s, '2013-10-21 10:00:00 UTC', 'ticket.close_escalation_at verify 1')
 
     ticket = Ticket.create!(
-      title: 'some title holiday test',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2015-09-21 14:30:00 UTC',
-      updated_at: '2015-09-21 14:30:00 UTC',
+      title:         'some title holiday test',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-09-21 14:30:00 UTC',
+      updated_at:    '2015-09-21 14:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -845,13 +845,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket escalation suspend close reopen bug' do
     ticket1 = Ticket.create!(
-      title: 'some title äöüß3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'open'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß3',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'open'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -859,112 +859,112 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set ticket at 09:30 to pending
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket1.id,
-      id_from: Ticket::State.lookup(name: 'open').id,
-      id_to: Ticket::State.lookup(name: 'pending reminder').id,
-      value_from: 'open',
-      value_to: 'pending reminder',
-      created_by_id: 1,
-      created_at: '2013-06-04 09:30:00 UTC',
-      updated_at: '2013-06-04 09:30:00 UTC',
+      o_id:              ticket1.id,
+      id_from:           Ticket::State.lookup(name: 'open').id,
+      id_to:             Ticket::State.lookup(name: 'pending reminder').id,
+      value_from:        'open',
+      value_to:          'pending reminder',
+      created_by_id:     1,
+      created_at:        '2013-06-04 09:30:00 UTC',
+      updated_at:        '2013-06-04 09:30:00 UTC',
     )
 
     # set ticket at 09:45 to open
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket1.id,
-      id_from: Ticket::State.lookup(name: 'pending reminder').id,
-      id_to: Ticket::State.lookup(name: 'open').id,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 09:45:00 UTC',
-      updated_at: '2013-06-04 09:45:00 UTC',
+      o_id:              ticket1.id,
+      id_from:           Ticket::State.lookup(name: 'pending reminder').id,
+      id_to:             Ticket::State.lookup(name: 'open').id,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 09:45:00 UTC',
+      updated_at:        '2013-06-04 09:45:00 UTC',
     )
 
     # set ticket at 10:00 to closed
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket1.id,
-      id_from: Ticket::State.lookup(name: 'open').id,
-      id_to: Ticket::State.lookup(name: 'closed').id,
-      value_from: 'open',
-      value_to: 'closed',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:00:00 UTC',
-      updated_at: '2013-06-04 10:00:00 UTC',
+      o_id:              ticket1.id,
+      id_from:           Ticket::State.lookup(name: 'open').id,
+      id_to:             Ticket::State.lookup(name: 'closed').id,
+      value_from:        'open',
+      value_to:          'closed',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:00:00 UTC',
+      updated_at:        '2013-06-04 10:00:00 UTC',
     )
 
     # set ticket at 10:30 to open
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket1.id,
-      id_from: Ticket::State.lookup(name: 'closed').id,
-      id_to: Ticket::State.lookup(name: 'open').id,
-      value_from: 'closed',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:30:00 UTC',
-      updated_at: '2013-06-04 10:30:00 UTC',
+      o_id:              ticket1.id,
+      id_from:           Ticket::State.lookup(name: 'closed').id,
+      id_to:             Ticket::State.lookup(name: 'open').id,
+      value_from:        'closed',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:30:00 UTC',
+      updated_at:        '2013-06-04 10:30:00 UTC',
     )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla suspend bug',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla suspend bug',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 250,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       250,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     ticket1.escalation_calculation
     ticket1 = Ticket.find(ticket1.id)
@@ -974,13 +974,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket1.first_response_diff_in_min, 'ticket1.first_response_diff_in_min verify 3')
 
     ticket2 = Ticket.create!(
-      title: 'some title äöüß4',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'open'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß4',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'open'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -988,32 +988,32 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set ticket at 10:00 to pending
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket2.id,
-      id_from: Ticket::State.lookup(name: 'open').id,
-      id_to: Ticket::State.lookup(name: 'pending reminder').id,
-      value_from: 'open',
-      value_to: 'pending reminder',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:00:00 UTC',
-      updated_at: '2013-06-04 10:00:00 UTC',
+      o_id:              ticket2.id,
+      id_from:           Ticket::State.lookup(name: 'open').id,
+      id_to:             Ticket::State.lookup(name: 'pending reminder').id,
+      value_from:        'open',
+      value_to:          'pending reminder',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:00:00 UTC',
+      updated_at:        '2013-06-04 10:00:00 UTC',
     )
 
     # set ticket at 15:00 to open
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket2.id,
-      id_from: Ticket::State.lookup(name: 'pending reminder').id,
-      id_to: Ticket::State.lookup(name: 'open').id,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 15:00:00 UTC',
-      updated_at: '2013-06-04 15:00:00 UTC',
+      o_id:              ticket2.id,
+      id_from:           Ticket::State.lookup(name: 'pending reminder').id,
+      id_to:             Ticket::State.lookup(name: 'open').id,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 15:00:00 UTC',
+      updated_at:        '2013-06-04 15:00:00 UTC',
     )
     ticket2.escalation_calculation(true)
     ticket2 = Ticket.find(ticket2.id)
@@ -1035,13 +1035,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket escalation suspend' do
     ticket = Ticket.create!(
-      title: 'some title äöüß3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß3',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1049,32 +1049,32 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set ticket at 10:00 to pending
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 3,
-      id_from: 2,
-      value_from: 'open',
-      value_to: 'pending reminder',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:00:00 UTC',
-      updated_at: '2013-06-04 10:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             3,
+      id_from:           2,
+      value_from:        'open',
+      value_to:          'pending reminder',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:00:00 UTC',
+      updated_at:        '2013-06-04 10:00:00 UTC',
     )
 
     # set ticket at 10:30 to open
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 2,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:30:00 UTC',
-      updated_at: '2013-06-04 10:30:00 UTC'
+      o_id:              ticket.id,
+      id_to:             2,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:30:00 UTC',
+      updated_at:        '2013-06-04 10:30:00 UTC'
     )
 
     # set update time
@@ -1089,17 +1089,17 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set ticket from 11:30 to closed
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 3,
-      id_from: 2,
-      value_from: 'open',
-      value_to: 'closed',
-      created_by_id: 1,
-      created_at: '2013-06-04 12:00:00 UTC',
-      updated_at: '2013-06-04 12:00:00 UTC'
+      o_id:              ticket.id,
+      id_to:             3,
+      id_from:           2,
+      value_from:        'open',
+      value_to:          'closed',
+      created_by_id:     1,
+      created_at:        '2013-06-04 12:00:00 UTC',
+      updated_at:        '2013-06-04 12:00:00 UTC'
     )
 
     ticket.update!(
@@ -1108,52 +1108,52 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 5',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 5',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 250,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       250,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1173,13 +1173,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # test Ticket created in state pending and closed without reopen or state change
     ticket = Ticket.create!(
-      title: 'some title äöüß3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'pending reminder'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß3',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'pending reminder'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1187,17 +1187,17 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set ticket from 11:30 to closed
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 4,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'closed',
-      created_by_id: 1,
-      created_at: '2013-06-04 12:00:00 UTC',
-      updated_at: '2013-06-04 12:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             4,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'closed',
+      created_by_id:     1,
+      created_at:        '2013-06-04 12:00:00 UTC',
+      updated_at:        '2013-06-04 12:00:00 UTC',
     )
     ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
@@ -1205,52 +1205,52 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.escalation_calculation(true)
 
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 5',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 5',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1271,13 +1271,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # test Ticket created in state pending, changed state to openen, back to pending and closed
     ticket = Ticket.create!(
-      title: 'some title äöüß3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'pending reminder'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß3',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'pending reminder'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1285,99 +1285,99 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # state change to open 10:30
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 2,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:30:00 UTC',
-      updated_at: '2013-06-04 10:30:00 UTC',
+      o_id:              ticket.id,
+      id_to:             2,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:30:00 UTC',
+      updated_at:        '2013-06-04 10:30:00 UTC',
     )
 
     # state change to pending 11:00
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 3,
-      id_from: 2,
-      value_from: 'open',
-      value_to: 'pending reminder',
-      created_by_id: 1,
-      created_at: '2013-06-04 11:00:00 UTC',
-      updated_at: '2013-06-04 11:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             3,
+      id_from:           2,
+      value_from:        'open',
+      value_to:          'pending reminder',
+      created_by_id:     1,
+      created_at:        '2013-06-04 11:00:00 UTC',
+      updated_at:        '2013-06-04 11:00:00 UTC',
     )
 
     # set ticket from 12:00 to closed
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 4,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'closed',
-      created_by_id: 1,
-      created_at: '2013-06-04 12:00:00 UTC',
-      updated_at: '2013-06-04 12:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             4,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'closed',
+      created_by_id:     1,
+      created_at:        '2013-06-04 12:00:00 UTC',
+      updated_at:        '2013-06-04 12:00:00 UTC',
     )
     ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
 
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 5',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 5',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1399,13 +1399,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     ### Test Ticket created in state pending, changed state to openen, back to pending and back to open then
     ### close ticket
     ticket = Ticket.create!(
-      title: 'some title äöüß3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'pending reminder'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2013-06-04 09:00:00 UTC',
-      updated_at: '2013-06-04 09:00:00 UTC',
+      title:         'some title äöüß3',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'pending reminder'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2013-06-04 09:00:00 UTC',
+      updated_at:    '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1413,114 +1413,114 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # state change to open from pending
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 2,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:30:00 UTC',
-      updated_at: '2013-06-04 10:30:00 UTC',
+      o_id:              ticket.id,
+      id_to:             2,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 10:30:00 UTC',
+      updated_at:        '2013-06-04 10:30:00 UTC',
     )
 
     # state change to pending from open 11:00
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 3,
-      id_from: 2,
-      value_from: 'open',
-      value_to: 'pending reminder',
-      created_by_id: 1,
-      created_at: '2013-06-04 11:00:00 UTC',
-      updated_at: '2013-06-04 11:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             3,
+      id_from:           2,
+      value_from:        'open',
+      value_to:          'pending reminder',
+      created_by_id:     1,
+      created_at:        '2013-06-04 11:00:00 UTC',
+      updated_at:        '2013-06-04 11:00:00 UTC',
     )
 
     # state change to open 11:30
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 2,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 11:30:00 UTC',
-      updated_at: '2013-06-04 11:30:00 UTC',
+      o_id:              ticket.id,
+      id_to:             2,
+      id_from:           3,
+      value_from:        'pending reminder',
+      value_to:          'open',
+      created_by_id:     1,
+      created_at:        '2013-06-04 11:30:00 UTC',
+      updated_at:        '2013-06-04 11:30:00 UTC',
     )
 
     # set ticket from open to closed 12:00
     History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
+      history_type:      'updated',
+      history_object:    'Ticket',
       history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 4,
-      id_from: 3,
-      value_from: 'open',
-      value_to: 'closed',
-      created_by_id: 1,
-      created_at: '2013-06-04 12:00:00 UTC',
-      updated_at: '2013-06-04 12:00:00 UTC',
+      o_id:              ticket.id,
+      id_to:             4,
+      id_from:           3,
+      value_from:        'open',
+      value_to:          'closed',
+      created_by_id:     1,
+      created_at:        '2013-06-04 12:00:00 UTC',
+      updated_at:        '2013-06-04 12:00:00 UTC',
     )
     ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
 
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 5',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 5',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 180,
-      solution_time: 240,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         180,
+      solution_time:       240,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1544,119 +1544,89 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket ticket.title and article.subject' do
     ticket = Ticket.create!(
-      title: 'some title SLATEST1 for you',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-03-21 12:30:00 UTC',
-      updated_at: '2016-03-21 12:30:00 UTC',
+      title:         'some title SLATEST1 for you',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2016-03-21 12:30:00 UTC',
+      updated_at:    '2016-03-21 12:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
     article_inbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some title SLATEST2 for you',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some title SLATEST2 for you',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-03-21 12:30:00 UTC',
-      updated_at: '2016-03-21 12:30:00 UTC',
+      created_at:    '2016-03-21 12:30:00 UTC',
+      updated_at:    '2016-03-21 12:30:00 UTC',
     )
 
     calendar = Calendar.create_or_update(
-      name: 'EU 5',
-      timezone: 'Europe/Berlin',
+      name:           'EU 5',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['09:00', '18:00'] ]
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     sla = Sla.create_or_update(
-      name: 'test sla - ticket.title & article.subject',
-      condition: {
+      name:                'test sla - ticket.title & article.subject',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w[1 2 3],
+          value:    %w[1 2 3],
         },
-        'article.subject' => {
+        'article.subject'    => {
           operator: 'contains',
-          value: 'SLATEST2',
+          value:    'SLATEST2',
         },
       },
-      calendar_id: calendar.id,
+      calendar_id:         calendar.id,
       first_response_time: 60,
-      update_time: 120,
-      solution_time: 180,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Scheduler.worker(true)
-    ticket = Ticket.find(ticket.id)
-    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.escalation_at verify 1')
-    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.first_response_escalation_at verify 1')
-    assert_nil(ticket.first_response_in_min, 'ticket.first_response_in_min verify 3')
-    assert_nil(ticket.first_response_diff_in_min, 'ticket.first_response_diff_in_min verify 3')
-    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-03-21 14:30:00 UTC', 'ticket.update_escalation_at verify 1')
-    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2016-03-21 15:30:00 UTC', 'ticket.close_escalation_at verify 1')
-    assert_nil(ticket.close_in_min, 'ticket.close_in_min verify 3')
-    assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min# verify 3')
-
-    sla = Sla.create_or_update(
-      name: 'test sla - ticket.title & article.subject',
-      condition: {
-        'ticket.priority_id' => {
-          operator: 'is',
-          value: %w[1 2 3],
-        },
-        'ticket.title' => {
-          operator: 'contains',
-          value: 'SLATEST1',
-        },
-      },
-      calendar_id: calendar.id,
-      first_response_time: 60,
-      update_time: 120,
-      solution_time: 180,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         120,
+      solution_time:       180,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1670,23 +1640,53 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min# verify 3')
 
     sla = Sla.create_or_update(
-      name: 'test sla - ticket.title & article.subject',
-      condition: {
+      name:                'test sla - ticket.title & article.subject',
+      condition:           {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w[1 2 3],
+          value:    %w[1 2 3],
         },
-        'ticket.title' => {
+        'ticket.title'       => {
           operator: 'contains',
-          value: 'SLATEST2',
+          value:    'SLATEST1',
         },
       },
-      calendar_id: calendar.id,
+      calendar_id:         calendar.id,
       first_response_time: 60,
-      update_time: 120,
-      solution_time: 180,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         120,
+      solution_time:       180,
+      updated_by_id:       1,
+      created_by_id:       1,
+    )
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_nil(ticket.first_response_in_min, 'ticket.first_response_in_min verify 3')
+    assert_nil(ticket.first_response_diff_in_min, 'ticket.first_response_diff_in_min verify 3')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-03-21 14:30:00 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2016-03-21 15:30:00 UTC', 'ticket.close_escalation_at verify 1')
+    assert_nil(ticket.close_in_min, 'ticket.close_in_min verify 3')
+    assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min# verify 3')
+
+    sla = Sla.create_or_update(
+      name:                'test sla - ticket.title & article.subject',
+      condition:           {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value:    %w[1 2 3],
+        },
+        'ticket.title'       => {
+          operator: 'contains',
+          value:    'SLATEST2',
+        },
+      },
+      calendar_id:         calendar.id,
+      first_response_time: 60,
+      update_time:         120,
+      solution_time:       180,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1710,13 +1710,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla + holiday 222' do
     ticket = Ticket.create!(
-      title: 'some title 222',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-11-01 13:56:21 UTC',
-      updated_at: '2016-11-01 13:56:21 UTC',
+      title:         'some title 222',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2016-11-01 13:56:21 UTC',
+      updated_at:    '2016-11-01 13:56:21 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1724,75 +1724,75 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify')
 
     article_customer = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'web').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'web').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-01 13:56:21 UTC',
-      updated_at: '2016-11-01 13:56:21 UTC',
+      created_at:    '2016-11-01 13:56:21 UTC',
+      updated_at:    '2016-11-01 13:56:21 UTC',
     )
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-18:00
     calendar = Calendar.create_or_update(
-      name: 'EU',
-      timezone: 'Europe/Berlin',
-      business_hours: {
+      name:            'EU',
+      timezone:        'Europe/Berlin',
+      business_hours:  {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
       public_holidays: {
         '2016-11-01' => {
-          'active' => true,
+          'active'  => true,
           'summary' => 'test 1',
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:         true,
+      ical_url:        nil,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 1',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 1',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 120,
-      update_time: 1200,
-      solution_time: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         1200,
+      solution_time:       nil,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -1807,19 +1807,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.save!
 
     article_agent = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-01 15:25:40 UTC',
-      updated_at: '2016-11-01 15:25:40 UTC',
+      created_at:    '2016-11-01 15:25:40 UTC',
+      updated_at:    '2016-11-01 15:25:40 UTC',
     )
 
     Scheduler.worker(true)
@@ -1834,19 +1834,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.save!
 
     article_customer = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-01 15:59:14 UTC',
-      updated_at: '2016-11-01 15:59:14 UTC',
+      created_at:    '2016-11-01 15:59:14 UTC',
+      updated_at:    '2016-11-01 15:59:14 UTC',
     )
 
     Scheduler.worker(true)
@@ -1873,19 +1873,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.save!
 
     article_customer = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-07 13:26:36 UTC',
-      updated_at: '2016-11-07 13:26:36 UTC',
+      created_at:    '2016-11-07 13:26:36 UTC',
+      updated_at:    '2016-11-07 13:26:36 UTC',
     )
 
     Scheduler.worker(true)
@@ -1896,19 +1896,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
     article_agent = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-07 14:26:36 UTC',
-      updated_at: '2016-11-07 14:26:36 UTC',
+      created_at:    '2016-11-07 14:26:36 UTC',
+      updated_at:    '2016-11-07 14:26:36 UTC',
     )
 
     Scheduler.worker(true)
@@ -1929,13 +1929,13 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla + observer check' do
     ticket = Ticket.create!(
-      title: 'some title observer#1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-11-01 13:56:21 UTC',
-      updated_at: '2016-11-01 13:56:21 UTC',
+      title:         'some title observer#1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2016-11-01 13:56:21 UTC',
+      updated_at:    '2016-11-01 13:56:21 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1943,75 +1943,75 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify')
 
     article_customer = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'web').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'web').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-01 13:56:21 UTC',
-      updated_at: '2016-11-01 13:56:21 UTC',
+      created_at:    '2016-11-01 13:56:21 UTC',
+      updated_at:    '2016-11-01 13:56:21 UTC',
     )
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-18:00
     calendar = Calendar.create_or_update(
-      name: 'EU',
-      timezone: 'Europe/Berlin',
-      business_hours: {
+      name:            'EU',
+      timezone:        'Europe/Berlin',
+      business_hours:  {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['08:00', '20:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
       public_holidays: {
         '2016-11-01' => {
-          'active' => true,
+          'active'  => true,
           'summary' => 'test 1',
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:         true,
+      ical_url:        nil,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     sla = Sla.create_or_update(
-      name: 'test sla 1',
-      condition: {},
-      calendar_id: calendar.id,
+      name:                'test sla 1',
+      condition:           {},
+      calendar_id:         calendar.id,
       first_response_time: 60,
-      update_time: 120,
-      solution_time: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      update_time:         120,
+      solution_time:       nil,
+      updated_by_id:       1,
+      created_by_id:       1,
     )
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
@@ -2021,19 +2021,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
     article_agent = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2016-11-07 13:26:36 UTC',
-      updated_at: '2016-11-07 13:26:36 UTC',
+      created_at:    '2016-11-07 13:26:36 UTC',
+      updated_at:    '2016-11-07 13:26:36 UTC',
     )
 
     Scheduler.worker(true)
@@ -2045,46 +2045,46 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 3:00-18:00
     calendar.update!(
-      business_hours: {
+      business_hours:  {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['04:00', '20:00'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['04:00', '20:00'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['04:00', '20:00'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['04:00', '20:00'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['04:00', '20:00'] ]
         },
         sat: {
-          active: false,
+          active:     false,
           timeframes: [ ['04:00', '13:00'] ]
         },
         sun: {
-          active: false,
+          active:     false,
           timeframes: [ ['04:00', '17:00'] ]
         },
       },
       public_holidays: {
         '2016-11-01' => {
-          'active' => true,
+          'active'  => true,
           'summary' => 'test 1',
         },
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:         true,
+      ical_url:        nil,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
 
     Scheduler.worker(true)
@@ -2108,31 +2108,31 @@ class TicketSlaTest < ActiveSupport::TestCase
     Setting.set('ticket_last_contact_behaviour', 'based_on_customer_reaction')
 
     ticket = Ticket.create!(
-      title: 'test #1 last_contact_customer_at',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2018-05-01 13:56:21 UTC',
-      updated_at: '2018-05-01 13:56:21 UTC',
+      title:         'test #1 last_contact_customer_at',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2018-05-01 13:56:21 UTC',
+      updated_at:    '2018-05-01 13:56:21 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert(ticket, 'ticket created')
 
     article1 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2018-05-01 13:56:21 UTC',
-      updated_at: '2018-05-01 13:56:21 UTC',
+      created_at:    '2018-05-01 13:56:21 UTC',
+      updated_at:    '2018-05-01 13:56:21 UTC',
     )
 
     ticket.reload
@@ -2144,18 +2144,18 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at)
 
     article2 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2018-05-01 14:56:21 UTC',
-      updated_at: '2018-05-01 14:56:21 UTC',
+      created_at:    '2018-05-01 14:56:21 UTC',
+      updated_at:    '2018-05-01 14:56:21 UTC',
     )
 
     ticket = Ticket.find(ticket.id)
@@ -2167,18 +2167,18 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at)
 
     article3 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2018-05-01 15:56:21 UTC',
-      updated_at: '2018-05-01 15:56:21 UTC',
+      created_at:    '2018-05-01 15:56:21 UTC',
+      updated_at:    '2018-05-01 15:56:21 UTC',
     )
 
     ticket.reload
@@ -2190,18 +2190,18 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at)
 
     article4 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'phone').first,
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'phone').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2018-05-01 16:56:21 UTC',
-      updated_at: '2018-05-01 16:56:21 UTC',
+      created_at:    '2018-05-01 16:56:21 UTC',
+      updated_at:    '2018-05-01 16:56:21 UTC',
     )
 
     ticket.reload

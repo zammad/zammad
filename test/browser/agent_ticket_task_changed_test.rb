@@ -8,23 +8,23 @@ class AgentTicketTaskChangedTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     ticket = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'test ticket',
+        body:     'some body 123äöü',
       },
     )
 
     object_manager_attribute_create(
       data: {
-        name: 'text_test',
-        display: 'text_test',
+        name:      'text_test',
+        display:   'text_test',
         data_type: 'Text',
       },
     )

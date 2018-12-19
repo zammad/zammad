@@ -207,11 +207,11 @@ RSpec.describe 'Form', type: :request, searchindex: true do
       token = json_response['token']
       params = {
         fingerprint: fingerprint,
-        token: token,
-        name: 'Bob Smith',
-        email: 'discard@znuny.com',
-        title: 'test',
-        body: 'hello'
+        token:       token,
+        name:        'Bob Smith',
+        email:       'discard@znuny.com',
+        title:       'test',
+        body:        'hello'
       }
 
       post '/api/v1/form_submit', params: params, as: :json

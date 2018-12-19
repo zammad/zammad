@@ -37,11 +37,11 @@ module Import
             log "Ticket #{local_article.ticket_id}, Article #{local_article.id} - Starting import for fingerprint #{sha} (#{decoded_filename})... Queue: #{@sha_queue[sha]}."
             ActiveRecord::Base.transaction do
               Store.add(
-                object:      'Ticket::Article',
-                o_id:        local_article.id,
-                filename:    decoded_filename.force_encoding('utf-8'),
-                data:        decoded_content,
-                preferences: {
+                object:        'Ticket::Article',
+                o_id:          local_article.id,
+                filename:      decoded_filename.force_encoding('utf-8'),
+                data:          decoded_content,
+                preferences:   {
                   'Mime-Type'           => attachment['ContentType'],
                   'Content-ID'          => attachment['ContentID'],
                   'content-alternative' => attachment['ContentAlternative'],

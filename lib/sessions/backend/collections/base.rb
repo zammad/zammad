@@ -68,19 +68,19 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
         collection: {
           items.first.class.to_app_model => all,
         },
-        assets: assets,
+        assets:     assets,
       }
     end
     @client.log "push assets for push_collection #{items.first.class} for user #{@user.id}"
     @client.send(
-      data: assets,
+      data:  assets,
       event: 'loadAssets',
     )
 
     @client.log "push push_collection #{items.first.class} for user #{@user.id}"
     @client.send(
       event: 'resetCollection',
-      data: {
+      data:  {
         items.first.class.to_app_model => all,
       },
     )

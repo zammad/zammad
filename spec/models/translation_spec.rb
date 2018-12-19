@@ -39,10 +39,10 @@ RSpec.describe Translation do
       expect(
         Translation.remote_translation_need_update?(
           {
-            'source' => translation.source,
-            'format' => translation.format,
-            'locale' => translation.locale,
-            'target' => translation.target,
+            'source'         => translation.source,
+            'format'         => translation.format,
+            'locale'         => translation.locale,
+            'target'         => translation.target,
             'target_initial' => translation.target_initial,
           }, translations
         )
@@ -57,10 +57,10 @@ RSpec.describe Translation do
       expect(
         Translation.remote_translation_need_update?(
           {
-            'source' => translation.source,
-            'format' => translation.format,
-            'locale' => translation.locale,
-            'target' => translation.target,
+            'source'         => translation.source,
+            'format'         => translation.format,
+            'locale'         => translation.locale,
+            'target'         => translation.target,
             'target_initial' => translation.target_initial,
           }, translations
         )
@@ -72,10 +72,10 @@ RSpec.describe Translation do
       translations = Translation.where(locale: 'de-de').pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
       (result, translation_result) = Translation.remote_translation_need_update?(
         {
-          'source' => translation.source,
-          'format' => translation.format,
-          'locale' => translation.locale,
-          'target' => 'some new translation by remote',
+          'source'         => translation.source,
+          'format'         => translation.format,
+          'locale'         => translation.locale,
+          'target'         => 'some new translation by remote',
           'target_initial' => 'some new translation by remote',
         }, translations
       )
@@ -91,10 +91,10 @@ RSpec.describe Translation do
       expect(
         Translation.remote_translation_need_update?(
           {
-            'source' => translation.source,
-            'format' => translation.format,
-            'locale' => translation.locale,
-            'target' => 'some new translation by remote',
+            'source'         => translation.source,
+            'format'         => translation.format,
+            'locale'         => translation.locale,
+            'target'         => 'some new translation by remote',
             'target_initial' => 'some new translation by remote',
           }, translations
         )

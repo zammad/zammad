@@ -15,21 +15,21 @@ FactoryBot.define do
       {
         'ticket.state_id' => {
           operator: 'is',
-          value: [ Ticket::State.lookup(name: 'new').id, Ticket::State.lookup(name: 'open').id ],
+          value:    [ Ticket::State.lookup(name: 'new').id, Ticket::State.lookup(name: 'open').id ],
         },
       }
     end
     order do
       {
-        by: 'created_at',
+        by:        'created_at',
         direction: 'DESC',
       }
     end
     view do
       {
-        d: %w[title customer state created_at],
-        s: %w[number title state created_at],
-        m: %w[number title state created_at],
+        d:                 %w[title customer state created_at],
+        s:                 %w[number title state created_at],
+        m:                 %w[number title state created_at],
         view_mode_default: 's',
       }
     end

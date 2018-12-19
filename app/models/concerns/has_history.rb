@@ -95,10 +95,10 @@ log object update history with all updated attributes, if configured - will be e
       end
       data = {
         history_attribute: attribute_name,
-        value_from: value_str[0].to_s,
-        value_to: value_str[1].to_s,
-        id_from: value_id[0],
-        id_to: value_id[1],
+        value_from:        value_str[0].to_s,
+        value_to:          value_str[1].to_s,
+        id_from:           value_id[0],
+        id_to:             value_id[1],
       }
       #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       history_log('updated', updated_by_id, data)
@@ -222,7 +222,7 @@ returns
     end
     {
       history: history[:list],
-      assets: history[:assets],
+      assets:  history[:assets],
     }
   end
 

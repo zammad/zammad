@@ -5,33 +5,33 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
   test 'base' do
 
     group1 = Group.create!(
-      name: 'Group 1',
-      active: true,
+      name:          'Group 1',
+      active:        true,
       email_address: EmailAddress.first,
       created_by_id: 1,
       updated_by_id: 1,
     )
     group2 = Group.create!(
-      name: 'Group 2',
-      active: true,
+      name:          'Group 2',
+      active:        true,
       created_by_id: 1,
       updated_by_id: 1,
     )
     group3 = Group.create!(
-      name: 'Group 3',
-      active: true,
+      name:          'Group 3',
+      active:        true,
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     agent1 = User.create!(
-      login: 'agent1@example.com',
-      firstname: 'Role',
-      lastname: 'Agent1',
-      email: 'agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent1@example.com',
+      firstname:     'Role',
+      lastname:      'Agent1',
+      email:         'agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -42,13 +42,13 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     }
 
     agent2 = User.create!(
-      login: 'agent2@example.com',
-      firstname: 'Role',
-      lastname: 'Agent2',
-      email: 'agent2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent2@example.com',
+      firstname:     'Role',
+      lastname:      'Agent2',
+      email:         'agent2@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -59,13 +59,13 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     }
 
     agent3 = User.create!(
-      login: 'agent3@example.com',
-      firstname: 'Role',
-      lastname: 'Agent3',
-      email: 'agent3@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent3@example.com',
+      firstname:     'Role',
+      lastname:      'Agent3',
+      email:         'agent3@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -75,13 +75,13 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     }
 
     agent4 = User.create!(
-      login: 'agent4@example.com',
-      firstname: 'Role',
-      lastname: 'Agent4',
-      email: 'agent4@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent4@example.com',
+      firstname:     'Role',
+      lastname:      'Agent4',
+      email:         'agent4@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -91,13 +91,13 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     }
 
     agent5 = User.create!(
-      login: 'agent5@example.com',
-      firstname: 'Role',
-      lastname: 'Agent5',
-      email: 'agent5@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent5@example.com',
+      firstname:     'Role',
+      lastname:      'Agent5',
+      email:         'agent5@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -106,13 +106,13 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     }
 
     agent6 = User.create!(
-      login: 'agent6@example.com',
-      firstname: 'Role',
-      lastname: 'Agent6',
-      email: 'agent6@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: %w[Admin Agent]),
+      login:         'agent6@example.com',
+      firstname:     'Role',
+      lastname:      'Agent6',
+      email:         'agent6@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -239,53 +239,53 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group2.id][:owner_id].include?(agent3.id))
 
     ticket1 = Ticket.create!(
-      title: 'some title 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some title 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     ticket2 = Ticket.create!(
-      title: 'some title 2',
-      group: group2,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some title 2',
+      group:         group2,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     article2 = Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket1.id,
+      ticket_id:    ticket1.id,
       current_user: agent1,
     )
 
@@ -337,7 +337,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group3.id][:owner_id].include?(agent5.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket2.id,
+      ticket_id:    ticket2.id,
       current_user: agent1,
     )
 
@@ -388,7 +388,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group3.id][:owner_id].include?(agent5.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket2.id,
+      ticket_id:    ticket2.id,
       current_user: agent1,
     )
 
@@ -439,7 +439,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group3.id][:owner_id].include?(agent5.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket1.id,
+      ticket_id:    ticket1.id,
       current_user: agent2,
     )
 
@@ -486,7 +486,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group2.id][:owner_id].include?(agent3.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket2.id,
+      ticket_id:    ticket2.id,
       current_user: agent2,
     )
 
@@ -532,7 +532,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group2.id][:owner_id].include?(agent3.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket1.id,
+      ticket_id:    ticket1.id,
       current_user: agent3,
     )
 
@@ -577,7 +577,7 @@ class TicketScreenOptionsTest < ActiveSupport::TestCase
     assert(result[:form_meta][:dependencies][:group_id][group2.id][:owner_id].include?(agent3.id))
 
     result = Ticket::ScreenOptions.attributes_to_change(
-      ticket_id: ticket2.id,
+      ticket_id:    ticket2.id,
       current_user: agent3,
     )
 

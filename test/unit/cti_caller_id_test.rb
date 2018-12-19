@@ -7,46 +7,46 @@ class CtiCallerIdTest < ActiveSupport::TestCase
     Ticket.destroy_all
     Cti::CallerId.destroy_all
     @agent1 = User.create_or_update(
-      login: 'ticket-caller_id-agent1@example.com',
-      firstname: 'CallerId',
-      lastname: 'Agent1',
-      email: 'ticket-caller_id-agent1@example.com',
-      active: true,
-      phone: '+49 1111 222222',
-      fax: '+49 1111 222223',
-      mobile: '+49 1111 222223',
-      note: 'Phone at home: +49 1111 222224',
+      login:         'ticket-caller_id-agent1@example.com',
+      firstname:     'CallerId',
+      lastname:      'Agent1',
+      email:         'ticket-caller_id-agent1@example.com',
+      active:        true,
+      phone:         '+49 1111 222222',
+      fax:           '+49 1111 222223',
+      mobile:        '+49 1111 222223',
+      note:          'Phone at home: +49 1111 222224',
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent2 = User.create_or_update(
-      login: 'ticket-caller_id-agent2@example.com',
-      firstname: 'CallerId',
-      lastname: 'Agent2',
-      email: 'ticket-caller_id-agent2@example.com',
-      phone: '+49 2222 222222',
-      note: 'Phone at home: <b>+49 2222 222224</b>',
-      active: true,
+      login:         'ticket-caller_id-agent2@example.com',
+      firstname:     'CallerId',
+      lastname:      'Agent2',
+      email:         'ticket-caller_id-agent2@example.com',
+      phone:         '+49 2222 222222',
+      note:          'Phone at home: <b>+49 2222 222224</b>',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     @agent3 = User.create_or_update(
-      login: 'ticket-caller_id-agent3@example.com',
-      firstname: 'CallerId',
-      lastname: 'Agent3',
-      email: 'ticket-caller_id-agent3@example.com',
-      phone: '+49 2222 222222',
-      active: true,
+      login:         'ticket-caller_id-agent3@example.com',
+      firstname:     'CallerId',
+      lastname:      'Agent3',
+      email:         'ticket-caller_id-agent3@example.com',
+      phone:         '+49 2222 222222',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     @customer1 = User.create_or_update(
-      login: 'ticket-caller_id-customer1@example.com',
-      firstname: 'CallerId',
-      lastname: 'Customer1',
-      email: 'ticket-caller_id-customer1@example.com',
-      active: true,
+      login:         'ticket-caller_id-customer1@example.com',
+      firstname:     'CallerId',
+      lastname:      'Customer1',
+      email:         'ticket-caller_id-customer1@example.com',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -76,26 +76,26 @@ class CtiCallerIdTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create!(
-      title: 'some caller id test 1',
-      group: Group.lookup(name: 'Users'),
-      customer: @customer1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some caller id test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer:      @customer1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
 Fon (LIN): +49 222 6112222 Mo-Di
 Mob: +49 333 8362222",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer1.id,
       created_by_id: @customer1.id,
     )
@@ -103,26 +103,26 @@ Mob: +49 333 8362222",
 
     # create ticket in group
     ticket2 = Ticket.create!(
-      title: 'some caller id test 2',
-      group: Group.lookup(name: 'Users'),
-      customer: @customer1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some caller id test 2',
+      group:         Group.lookup(name: 'Users'),
+      customer:      @customer1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     article2 = Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\nFon (GEL): +49 111 111-1111 Mi-Fr
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\nFon (GEL): +49 111 111-1111 Mi-Fr
 Fon (LIN): +49 222 1112222 Mo-Di
 Mob: +49 333 1112222",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Agent').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
@@ -162,19 +162,19 @@ Mob: +49 333 1112222",
 
     Cti::CallerId.maybe_add(
       caller_id: '4999999999',
-      level: 'maybe',
-      user_id: 2,
-      object: 'Ticket',
-      o_id: 2,
+      level:     'maybe',
+      user_id:   2,
+      object:    'Ticket',
+      o_id:      2,
     )
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
-      comment: 'Hairdresser Bob Smith, San Francisco',
-      level: 'public',
-      user_id: 2,
-      object: 'GoYello',
-      o_id: 1,
+      comment:   'Hairdresser Bob Smith, San Francisco',
+      level:     'public',
+      user_id:   2,
+      object:    'GoYello',
+      o_id:      1,
     )
 
     caller_ids = Cti::CallerId.lookup('4912345678901')
@@ -185,10 +185,10 @@ Mob: +49 333 1112222",
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
-      level: 'maybe',
-      user_id: 2,
-      object: 'Ticket',
-      o_id: 2,
+      level:     'maybe',
+      user_id:   2,
+      object:    'Ticket',
+      o_id:      2,
     )
 
     caller_ids = Cti::CallerId.lookup('4912345678901')
@@ -199,10 +199,10 @@ Mob: +49 333 1112222",
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
-      level: 'maybe',
-      user_id: 2,
-      object: 'Ticket',
-      o_id: 2,
+      level:     'maybe',
+      user_id:   2,
+      object:    'Ticket',
+      o_id:      2,
     )
 
     caller_ids = Cti::CallerId.lookup('4912345678901')
@@ -215,10 +215,10 @@ Mob: +49 333 1112222",
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
-      level: 'maybe',
-      user_id: user_id,
-      object: 'Ticket',
-      o_id: 2,
+      level:     'maybe',
+      user_id:   user_id,
+      object:    'Ticket',
+      o_id:      2,
     )
 
     caller_ids = Cti::CallerId.lookup('4912345678901')
@@ -232,10 +232,10 @@ Mob: +49 333 1112222",
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
-      level: 'known',
-      user_id: user_id,
-      object: 'User',
-      o_id: 2,
+      level:     'known',
+      user_id:   user_id,
+      object:    'User',
+      o_id:      2,
     )
 
     caller_ids = Cti::CallerId.lookup('4912345678901')
@@ -249,51 +249,51 @@ Mob: +49 333 1112222",
   test '3 process - log' do
 
     ticket1 = Ticket.create!(
-      title: 'some caller id test 1',
-      group: Group.lookup(name: 'Users'),
-      customer: @customer1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some caller id test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer:      @customer1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
 Fon (LIN): +49 222 6112222 Mo-Di
 Mob: +49 333 8362222",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer1.id,
       created_by_id: @customer1.id,
     )
     assert(ticket1)
     ticket2 = Ticket.create!(
-      title: 'some caller id test 2',
-      group: Group.lookup(name: 'Users'),
-      customer: @customer1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some caller id test 2',
+      group:         Group.lookup(name: 'Users'),
+      customer:      @customer1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @agent1.id,
       created_by_id: @agent1.id,
     )
     article2 = Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
+      ticket_id:     ticket2.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
 Fon (LIN): +49 222 6112222 Mo-Di
 Mob: +49 333 8362222",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer1.id,
       created_by_id: @customer1.id,
     )
@@ -302,12 +302,12 @@ Mob: +49 333 8362222",
     Cti::CallerId.rebuild
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491113661111',
-      'to' => '4930600000000',
-      'callId' => '4991155921769858278-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491113661111',
+      'to'        => '4930600000000',
+      'callId'    => '4991155921769858278-1',
       'direction' => 'in',
     )
 
@@ -328,12 +328,12 @@ Mob: +49 333 8362222",
     5.times do |count|
       travel 2.seconds
       Cti::Log.process(
-        'cause' => '',
-        'event' => 'newCall',
-        'user' => 'user 1',
-        'from' => '491111222222',
-        'to' => '4930600000000',
-        'callId' => "touch-loop-#{count}",
+        'cause'     => '',
+        'event'     => 'newCall',
+        'user'      => 'user 1',
+        'from'      => '491111222222',
+        'to'        => '4930600000000',
+        'callId'    => "touch-loop-#{count}",
         'direction' => 'in',
       )
     end
@@ -358,12 +358,12 @@ Mob: +49 333 8362222",
     # new call with not known number
     travel 10.minutes
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '49111122222277',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-20',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '49111122222277',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-20',
       'direction' => 'in',
     )
 
@@ -389,11 +389,11 @@ Mob: +49 333 8362222",
     last_updated_at = Cti::Log.order(updated_at: :desc).first.updated_at
     travel 30.minutes
     agent4 = User.create!(
-      login: 'ticket-caller_id-agent4@example.com',
-      firstname: 'CallerId',
-      lastname: 'Agent4',
-      email: 'ticket-caller_id-agent4@example.com',
-      active: true,
+      login:         'ticket-caller_id-agent4@example.com',
+      firstname:     'CallerId',
+      lastname:      'Agent4',
+      email:         'ticket-caller_id-agent4@example.com',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -448,24 +448,24 @@ Mob: +49 333 8362222",
     travel 30.minutes
     last_caller_id_count = Cti::CallerId.count
     ticket1 = Ticket.create!(
-      title: 'some caller id test 1',
-      group: Group.lookup(name: 'Users'),
-      customer: @customer1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some caller id test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer:      @customer1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer1.id,
       created_by_id: @customer1.id,
     )
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: "some message\n+49 1111 222222",
-      internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message\n+49 1111 222222",
+      internal:      false,
+      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
+      type:          Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: @customer1.id,
       created_by_id: @customer1.id,
     )
@@ -479,12 +479,12 @@ Mob: +49 333 8362222",
   test '5 probe if caller log need to be pushed' do
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-0',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-0',
       'direction' => 'in',
     )
     assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
@@ -492,12 +492,12 @@ Mob: +49 333 8362222",
     65.times do |count|
       travel 1.hour
       Cti::Log.process(
-        'cause' => '',
-        'event' => 'newCall',
-        'user' => 'user 1',
-        'from' => '491111222222',
-        'to' => '4930600000000',
-        'callId' => "touch-loop-1-#{count}",
+        'cause'     => '',
+        'event'     => 'newCall',
+        'user'      => 'user 1',
+        'from'      => '491111222222',
+        'to'        => '4930600000000',
+        'callId'    => "touch-loop-1-#{count}",
         'direction' => 'in',
       )
     end
@@ -507,12 +507,12 @@ Mob: +49 333 8362222",
     65.times do |count|
       travel 1.minute
       Cti::Log.process(
-        'cause' => '',
-        'event' => 'newCall',
-        'user' => 'user 1',
-        'from' => '491111222222',
-        'to' => '4930600000000',
-        'callId' => "touch-loop-2-#{count}",
+        'cause'     => '',
+        'event'     => 'newCall',
+        'user'      => 'user 1',
+        'from'      => '491111222222',
+        'to'        => '4930600000000',
+        'callId'    => "touch-loop-2-#{count}",
         'direction' => 'in',
       )
     end
@@ -521,12 +521,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-3-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-3-1',
       'direction' => 'in',
     )
     assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
@@ -548,12 +548,12 @@ Mob: +49 333 8362222",
 
   test 'order of events' do
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
 
@@ -563,12 +563,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'hangup',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'hangup',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload
@@ -577,12 +577,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'answer',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'answer',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload
@@ -594,12 +594,12 @@ Mob: +49 333 8362222",
   test 'not answered should be not marked as done' do
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
 
@@ -609,12 +609,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'hangup',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'hangup',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload
@@ -625,12 +625,12 @@ Mob: +49 333 8362222",
   test 'answered should be marked as done' do
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
 
@@ -640,12 +640,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'answer',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'answer',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last = Cti::Log.last
@@ -654,12 +654,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'hangup',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'hangup',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload
@@ -670,12 +670,12 @@ Mob: +49 333 8362222",
   test 'voicemail should not be marked as done' do
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
 
@@ -684,12 +684,12 @@ Mob: +49 333 8362222",
     assert_equal(last.done, false)
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'answer',
-      'user' => 'voicemail',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'answer',
+      'user'      => 'voicemail',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last = Cti::Log.last
@@ -698,12 +698,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'hangup',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'hangup',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload
@@ -714,12 +714,12 @@ Mob: +49 333 8362222",
   test 'forwarded should be marked as done' do
 
     Cti::Log.process(
-      'cause' => '',
-      'event' => 'newCall',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => '',
+      'event'     => 'newCall',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
 
@@ -729,12 +729,12 @@ Mob: +49 333 8362222",
 
     travel 2.seconds
     Cti::Log.process(
-      'cause' => 'forwarded',
-      'event' => 'hangup',
-      'user' => 'user 1',
-      'from' => '491111222222',
-      'to' => '4930600000000',
-      'callId' => 'touch-loop-1',
+      'cause'     => 'forwarded',
+      'event'     => 'hangup',
+      'user'      => 'user 1',
+      'from'      => '491111222222',
+      'to'        => '4930600000000',
+      'callId'    => 'touch-loop-1',
       'direction' => 'in',
     )
     last.reload

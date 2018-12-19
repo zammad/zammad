@@ -105,21 +105,21 @@ RSpec.describe Import::OTRS::Article do
       {
         created_by_id: '1',
         updated_by_id: 1,
-        ticket_id: '999',
-        id: '999',
-        body: "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
-        from: 'OTRS Feedback <feedback@otrs.org>',
-        to: 'Your OTRS System <otrs@localhost>',
-        cc: nil,
-        subject: 'Welcome to OTRS!',
-        in_reply_to: nil,
-        message_id: '<007@localhost>',
-        references: nil,
-        updated_at: '2014-06-24 09:32:14',
-        created_at: '2010-08-02 14:00:00',
-        type_id: 1,
-        internal: false,
-        sender_id: 2
+        ticket_id:     '999',
+        id:            '999',
+        body:          "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
+        from:          'OTRS Feedback <feedback@otrs.org>',
+        to:            'Your OTRS System <otrs@localhost>',
+        cc:            nil,
+        subject:       'Welcome to OTRS!',
+        in_reply_to:   nil,
+        message_id:    '<007@localhost>',
+        references:    nil,
+        updated_at:    '2014-06-24 09:32:14',
+        created_at:    '2010-08-02 14:00:00',
+        type_id:       1,
+        internal:      false,
+        sender_id:     2
       }
     end
 

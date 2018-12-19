@@ -31,12 +31,12 @@ RSpec.describe Import::OTRS::Queue do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: false,
-        updated_at: '2014-05-13 10:54:11',
-        created_at: '2014-05-13 10:54:11',
-        name: 'UnitTestQueue45699',
-        id: '11',
-        note: 'Some comment'
+        active:        false,
+        updated_at:    '2014-05-13 10:54:11',
+        created_at:    '2014-05-13 10:54:11',
+        name:          'UnitTestQueue45699',
+        id:            '11',
+        note:          'Some comment'
       }
     end
 

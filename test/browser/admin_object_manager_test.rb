@@ -8,15 +8,15 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     # already existing
     object_manager_attribute_create(
-      data: {
-        name: 'customer_id',
-        display: 'Customer Should Not Creatable',
+      data:  {
+        name:      'customer_id',
+        display:   'Customer Should Not Creatable',
         data_type: 'Text',
       },
       error: 'already exists'
@@ -24,9 +24,9 @@ class AdminObjectManagerTest < TestCase
 
     # invalid name
     object_manager_attribute_create(
-      data: {
-        name: 'some_other_id',
-        display: 'Should Not Creatable',
+      data:  {
+        name:      'some_other_id',
+        display:   'Should Not Creatable',
         data_type: 'Text',
       },
       error: 'are not allowed'
@@ -34,9 +34,9 @@ class AdminObjectManagerTest < TestCase
 
     # invalid name
     object_manager_attribute_create(
-      data: {
-        name: 'some_other_ids',
-        display: 'Should Not Creatable',
+      data:  {
+        name:      'some_other_ids',
+        display:   'Should Not Creatable',
         data_type: 'Text',
       },
       error: 'are not allowed'
@@ -44,9 +44,9 @@ class AdminObjectManagerTest < TestCase
 
     # invalid name
     object_manager_attribute_create(
-      data: {
-        name: 'some spaces',
-        display: 'Should Not Creatable',
+      data:  {
+        name:      'some spaces',
+        display:   'Should Not Creatable',
         data_type: 'Text',
       },
       error: 'are not allowed'
@@ -55,19 +55,19 @@ class AdminObjectManagerTest < TestCase
     # valid name
     object_manager_attribute_create(
       data: {
-        name: 'browser_test1',
-        display: 'Browser Test 1',
+        name:      'browser_test1',
+        display:   'Browser Test 1',
         data_type: 'Text',
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -81,7 +81,7 @@ class AdminObjectManagerTest < TestCase
 
     # create new ticket
     ticket = ticket_create(
-      data: {
+      data:                {
         customer: 'nico',
         group:    'Users',
         priority: '2 normal',
@@ -92,7 +92,7 @@ class AdminObjectManagerTest < TestCase
       #custom_data_select: {
       #  key1: 'some value',
       #},
-      custom_data_input: {
+      custom_data_input:   {
         browser_test1: 'some value öäüß',
       },
       disable_group_check: true,
@@ -100,7 +100,7 @@ class AdminObjectManagerTest < TestCase
 
     # update ticket
     ticket_update(
-      data: {},
+      data:              {},
       #custom_data_select: {
       #  key1: 'some value',
       #},
@@ -113,11 +113,11 @@ class AdminObjectManagerTest < TestCase
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/object_manager"]')
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test1',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     object_manager_attribute_delete(
@@ -126,16 +126,16 @@ class AdminObjectManagerTest < TestCase
       },
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test1',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -147,11 +147,11 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test1',
     )
   end
@@ -161,15 +161,15 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     object_manager_attribute_create(
       data: {
-        name: 'browser_test2',
-        display: 'Browser Test 2',
-        data_type: 'Select',
+        name:        'browser_test2',
+        display:     'Browser Test 2',
+        data_type:   'Select',
         data_option: {
           options: {
             'aa' => 'AA',
@@ -185,8 +185,8 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'browser_test2',
-        display: 'Browser Test 2',
+        name:      'browser_test2',
+        display:   'Browser Test 2',
         data_type: 'Text',
         #data_option: {
         #  default: 'xxx',
@@ -195,9 +195,9 @@ class AdminObjectManagerTest < TestCase
     )
     object_manager_attribute_create(
       data: {
-        name: 'browser_test3',
-        display: 'Browser Test 3',
-        data_type: 'Select',
+        name:        'browser_test3',
+        display:     'Browser Test 3',
+        data_type:   'Select',
         data_option: {
           options: {
             'aa' => 'AA',
@@ -210,8 +210,8 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'browser_test4',
-        display: 'Browser Test 4',
+        name:      'browser_test4',
+        display:   'Browser Test 4',
         data_type: 'Integer',
         #data_option: {
         #  default: 'xxx',
@@ -223,8 +223,8 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'browser_test5',
-        display: 'Browser Test 5',
+        name:      'browser_test5',
+        display:   'Browser Test 5',
         data_type: 'Datetime',
         #data_option: {
         #  future: true,
@@ -236,8 +236,8 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'browser_test6',
-        display: 'Browser Test 6',
+        name:      'browser_test6',
+        display:   'Browser Test 6',
         data_type: 'Date',
         #data_option: {
         #  future: true,
@@ -250,12 +250,12 @@ class AdminObjectManagerTest < TestCase
     # rubocop:disable Lint/BooleanSymbol
     object_manager_attribute_create(
       data: {
-        name: 'browser_test7',
-        display: 'Browser Test 7',
-        data_type: 'Boolean',
+        name:        'browser_test7',
+        display:     'Browser Test 7',
+        data_type:   'Boolean',
         data_option: {
           options: {
-            true: 'YES',
+            true:  'YES',
             false: 'NO',
           },
           #  default: true,
@@ -265,12 +265,12 @@ class AdminObjectManagerTest < TestCase
     # rubocop:enable Lint/BooleanSymbol
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -284,7 +284,7 @@ class AdminObjectManagerTest < TestCase
 
     # create new ticket
     ticket = ticket_create(
-      data: {
+      data:                {
         customer: 'nico',
         group:    'Users',
         priority: '2 normal',
@@ -292,11 +292,11 @@ class AdminObjectManagerTest < TestCase
         title:    'ticket attribute test all #1',
         body:     'ticket attribute test all #1',
       },
-      custom_data_select: {
+      custom_data_select:  {
         browser_test3: 'CC',
         browser_test7: 'NO',
       },
-      custom_data_input: {
+      custom_data_input:   {
         browser_test2: 'some value öäüß',
         browser_test4: '25',
       },
@@ -305,12 +305,12 @@ class AdminObjectManagerTest < TestCase
 
     ticket_verify(
       data: {
-        title: 'ticket attribute test all #1',
+        title:              'ticket attribute test all #1',
         custom_data_select: {
           browser_test3: 'CC',
           browser_test7: 'NO',
         },
-        custom_data_input: {
+        custom_data_input:  {
           browser_test2: 'some value öäüß',
           browser_test4: '25',
         },
@@ -351,31 +351,31 @@ class AdminObjectManagerTest < TestCase
     object_manager_attribute_migrate
 
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test2',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test3',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test4',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test5',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test6',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_test7',
     )
   end
@@ -385,26 +385,26 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     # valid name
     object_manager_attribute_create(
       data: {
-        name: 'browser_update_test1',
-        display: 'Browser Update Test 1',
+        name:      'browser_update_test1',
+        display:   'Browser Update Test 1',
         data_type: 'Text',
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -416,26 +416,26 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
 
     # valid name
     object_manager_attribute_update(
       data: {
-        name: 'browser_update_test1',
-        display: 'Browser Update Test 2',
+        name:      'browser_update_test1',
+        display:   'Browser Update Test 2',
         data_type: 'Text',
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'configuration of Zammad has changed',
     )
     click(css: '.modal .js-submit')
@@ -448,7 +448,7 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
 
@@ -458,16 +458,16 @@ class AdminObjectManagerTest < TestCase
       },
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_update_test1',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -479,11 +479,11 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'browser_update_test1',
     )
 
@@ -494,7 +494,7 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     tasks_close_all()
@@ -502,27 +502,27 @@ class AdminObjectManagerTest < TestCase
     # create two new attributes
     object_manager_attribute_create(
       data: {
-        name: 'deletable_attribute',
-        display: 'Deletable Attribute',
+        name:      'deletable_attribute',
+        display:   'Deletable Attribute',
         data_type: 'Text',
       },
     )
 
     object_manager_attribute_create(
       data: {
-        name: 'undeletable_attribute',
-        display: 'Undeletable Attribute',
+        name:      'undeletable_attribute',
+        display:   'Undeletable Attribute',
         data_type: 'Text',
       },
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -534,14 +534,14 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
 
     # create a new overview that references the undeletable_attribute
     overview_create(
       browser: instance,
-      data: {
+      data:    {
         name: 'test_overview',
         roles: ['Agent'],
         selector: {
@@ -552,13 +552,13 @@ class AdminObjectManagerTest < TestCase
       }
     )
     click(
-      browser: instance,
-      css:  'a[href="#manage"]',
+      browser:  instance,
+      css:      'a[href="#manage"]',
       mute_log: true,
     )
     click(
-      browser: instance,
-      css:  '.content.active a[href="#system/object_manager"]',
+      browser:  instance,
+      css:      '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
 
@@ -591,7 +591,7 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -601,9 +601,9 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'select_attributes_sorting_test',
-        display: 'Select Attributes Sorting Test',
-        data_type: 'Select',
+        name:        'select_attributes_sorting_test',
+        display:     'Select Attributes Sorting Test',
+        data_type:   'Select',
         data_option: { options: options_hash },
       },
     )
@@ -625,17 +625,17 @@ class AdminObjectManagerTest < TestCase
     click(css: '.modal button.js-submit')
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Database Update required',
     )
     watch_for(
-      css: '.content.active table',
+      css:   '.content.active table',
       value: 'select_attributes_sorting_test',
     )
 
     click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
-      css: '.modal',
+      css:   '.modal',
       value: 'restart',
     )
     watch_for_disappear(
@@ -649,7 +649,7 @@ class AdminObjectManagerTest < TestCase
 
     # create a new ticket and check whether the select attributes are correctly sorted or not
     click(
-      css: 'a[href="#ticket/create"]',
+      css:      'a[href="#ticket/create"]',
       mute_log: true,
     )
 
@@ -675,7 +675,7 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     options = Hash[ %w[äöü cat delete dog ß].map { |x| [x, "#{x.capitalize} Display"] } ]
@@ -686,9 +686,9 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_create(
       data: {
-        name: 'select_attributes_delete_test',
-        display: 'Select Attributes Delete Test',
-        data_type: 'Select',
+        name:        'select_attributes_delete_test',
+        display:     'Select Attributes Delete Test',
+        data_type:   'Select',
         data_option: {
           options: options,
         },
@@ -697,13 +697,13 @@ class AdminObjectManagerTest < TestCase
     object_manager_attribute_migrate
 
     ticket = ticket_create(
-      data: {
+      data:                {
         customer: 'nico',
         group:    'Users',
         title:    'select_attributes_delete_test',
         body:     'select_attributes_delete_test',
       },
-      custom_data_select: {
+      custom_data_select:  {
         select_attributes_delete_test: 'Delete Display',
       },
       disable_group_check: true,
@@ -727,7 +727,7 @@ class AdminObjectManagerTest < TestCase
 
     object_manager_attribute_update(
       data: {
-        name: 'select_attributes_delete_test',
+        name:        'select_attributes_delete_test',
         data_option: {
           options: options_no_dog_no_delete,
         },
@@ -753,7 +753,7 @@ class AdminObjectManagerTest < TestCase
 
     # create a new ticket and check that the deleted options no longer appear
     click(
-      css: 'a[href="#ticket/create"]',
+      css:      'a[href="#ticket/create"]',
       mute_log: true,
     )
 
@@ -782,20 +782,20 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     object_manager_attribute_create(
       data: {
-        object: 'Organization',
-        name: 'bool_test',
-        display: 'bool_test',
-        data_type: 'Boolean',
+        object:      'Organization',
+        name:        'bool_test',
+        display:     'bool_test',
+        data_type:   'Boolean',
         data_option: {
           options: {
             # rubocop:disable Lint/BooleanSymbol
-            true: 'YES',
+            true:  'YES',
             false: 'NO',
             # rubocop:enable Lint/BooleanSymbol
           }
@@ -804,9 +804,9 @@ class AdminObjectManagerTest < TestCase
     )
     object_manager_attribute_create(
       data: {
-        object: 'Organization',
-        name: 'text_test',
-        display: 'text_test',
+        object:    'Organization',
+        name:      'text_test',
+        display:   'text_test',
         data_type: 'Text',
       },
     )
@@ -824,28 +824,28 @@ class AdminObjectManagerTest < TestCase
     modal_disappear
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="organization"] .sidebar-content',
       value: 'bool_test',
     )
     match_not(
-      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="organization"] .sidebar-content',
       value: 'text_test',
     )
     match(
-      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="organization"] .sidebar-content',
       value: 'note',
     )
 
     object_manager_attribute_delete(
       data: {
         object: 'Organization',
-        name: 'bool_test',
+        name:   'bool_test',
       },
     )
     object_manager_attribute_delete(
       data: {
         object: 'Organization',
-        name: 'text_test',
+        name:   'text_test',
       },
     )
     object_manager_attribute_migrate
@@ -858,20 +858,20 @@ class AdminObjectManagerTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     object_manager_attribute_create(
       data: {
-        object: 'User',
-        name: 'bool_test',
-        display: 'bool_test',
-        data_type: 'Boolean',
+        object:      'User',
+        name:        'bool_test',
+        display:     'bool_test',
+        data_type:   'Boolean',
         data_option: {
           options: {
             # rubocop:disable Lint/BooleanSymbol
-            true: 'YES',
+            true:  'YES',
             false: 'NO',
             # rubocop:enable Lint/BooleanSymbol
           }
@@ -880,9 +880,9 @@ class AdminObjectManagerTest < TestCase
     )
     object_manager_attribute_create(
       data: {
-        object: 'User',
-        name: 'text_test',
-        display: 'text_test',
+        object:    'User',
+        name:      'text_test',
+        display:   'text_test',
         data_type: 'Text',
       },
     )
@@ -900,28 +900,28 @@ class AdminObjectManagerTest < TestCase
     modal_disappear
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-content',
       value: 'bool_test',
     )
     match_not(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-content',
       value: 'text_test',
     )
     match(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-content',
       value: 'note',
     )
 
     object_manager_attribute_delete(
       data: {
         object: 'User',
-        name: 'bool_test',
+        name:   'bool_test',
       },
     )
     object_manager_attribute_delete(
       data: {
         object: 'User',
-        name: 'text_test',
+        name:   'text_test',
       },
     )
     object_manager_attribute_migrate

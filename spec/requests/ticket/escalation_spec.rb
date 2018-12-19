@@ -11,56 +11,56 @@ RSpec.describe 'Ticket Escalation', type: :request do
   let!(:calendar) do
     create(
       :calendar,
-      name: 'Escalation Test',
-      timezone: 'Europe/Berlin',
+      name:           'Escalation Test',
+      timezone:       'Europe/Berlin',
       business_hours: {
         mon: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         tue: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         wed: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         thu: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         fri: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         sat: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
         sun: {
-          active: true,
+          active:     true,
           timeframes: [ ['00:00', '23:59'] ]
         },
       },
-      default: true,
-      ical_url: nil,
+      default:        true,
+      ical_url:       nil,
     )
   end
   let!(:sla) do
     create(
       :sla,
-      name: 'test sla 1',
-      condition: {
+      name:                'test sla 1',
+      condition:           {
         'ticket.title' => {
           operator: 'contains',
-          value: 'some value 123',
+          value:    'some value 123',
         },
       },
       first_response_time: 60,
-      update_time: 180,
-      solution_time: 240,
-      calendar: calendar,
+      update_time:         180,
+      solution_time:       240,
+      calendar:            calendar,
     )
   end
   let!(:mail_group) do
@@ -71,8 +71,8 @@ RSpec.describe 'Ticket Escalation', type: :request do
 
     it 'does escalate by ticket created via web' do
       params = {
-        title: 'some value 123',
-        group: mail_group.name,
+        title:   'some value 123',
+        group:   mail_group.name,
         article: {
           body: 'some test 123',
         },
@@ -121,11 +121,11 @@ Some Text"
       travel 3.hours
 
       params = {
-        title: 'some value 123 - update',
+        title:   'some value 123 - update',
         article: {
           body: 'some test 123',
           type: 'email',
-          to: 'customer@example.com',
+          to:   'customer@example.com',
         },
       }
       authenticated_as(agent_user)

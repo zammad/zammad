@@ -3,7 +3,7 @@ require 'test_helper'
 class ObjectCacheTest < ActiveSupport::TestCase
   test 'organization cache' do
     org = Organization.create_or_update(
-      name: 'some org cache member',
+      name:          'some org cache member',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -11,17 +11,17 @@ class ObjectCacheTest < ActiveSupport::TestCase
     roles  = Role.where( name: %w[Agent Admin] )
     groups = Group.all
     user1 = User.create_or_update(
-      login: 'object_cache1@example.org',
-      firstname: 'object_cache1',
-      lastname: 'object_cache1',
-      email: 'object_cache1@example.org',
-      password: 'some_pass',
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      login:           'object_cache1@example.org',
+      firstname:       'object_cache1',
+      lastname:        'object_cache1',
+      email:           'object_cache1@example.org',
+      password:        'some_pass',
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
       organization_id: org.id,
-      roles: roles,
-      groups: groups,
+      roles:           roles,
+      groups:          groups,
     )
     assets = org.assets({})
     assert_equal(org.member_ids.sort, assets[:Organization][org.id]['member_ids'].sort)
@@ -40,29 +40,29 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
     # be sure that minimum one admin is available
     User.create_or_update(
-      login: 'last_admin_check@example.org',
-      firstname: 'last_admin_check',
-      lastname: 'last_admin_check',
-      email: 'last_admin_check@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'last_admin_check@example.org',
+      firstname:     'last_admin_check',
+      lastname:      'last_admin_check',
+      email:         'last_admin_check@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
 
     user1 = User.create_or_update(
-      login: 'object_cache1@example.org',
-      firstname: 'object_cache1',
-      lastname: 'object_cache1',
-      email: 'object_cache1@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'object_cache1@example.org',
+      firstname:     'object_cache1',
+      lastname:      'object_cache1',
+      email:         'object_cache1@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
     assets = user1.assets({})
     assert_equal(user1.group_ids_access_map.sort, assets[:User][user1.id]['group_ids'].sort)
@@ -106,7 +106,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
     name = "object cache test #{rand(9_999_999)}"
     group = Group.create!(
-      name: name,
+      name:          name,
       updated_by_id: 1,
       created_by_id: 1,
     )

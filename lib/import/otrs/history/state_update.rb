@@ -20,17 +20,17 @@ module Import
             end
           end
           @history_attributes = {
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
+            id:                history['HistoryID'],
+            o_id:              history['TicketID'],
+            history_type:      'updated',
+            history_object:    'Ticket',
             history_attribute: 'state',
-            value_from: from,
-            id_from: from_id,
-            value_to: to,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
+            value_from:        from,
+            id_from:           from_id,
+            value_to:          to,
+            id_to:             to_id,
+            created_at:        history['CreateTime'],
+            created_by_id:     history['CreateBy']
           }
         end
       end

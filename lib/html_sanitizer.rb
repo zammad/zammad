@@ -448,12 +448,12 @@ reolace inline images with cid images
             filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
           end
           attachment = {
-            data: file_attributes[:content],
-            filename: filename,
+            data:        file_attributes[:content],
+            filename:    filename,
             preferences: {
-              'Content-Type' => file_attributes[:mime_type],
-              'Mime-Type' => file_attributes[:mime_type],
-              'Content-ID' => cid,
+              'Content-Type'        => file_attributes[:mime_type],
+              'Mime-Type'           => file_attributes[:mime_type],
+              'Content-ID'          => cid,
               'Content-Disposition' => 'inline',
             },
           }

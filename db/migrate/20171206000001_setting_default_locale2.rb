@@ -12,24 +12,24 @@ class SettingDefaultLocale2 < ActiveRecord::Migration[5.1]
     end
 
     Setting.create_if_not_exists(
-      title: 'Locale',
-      name: 'locale_default',
-      area: 'System::Branding',
+      title:       'Locale',
+      name:        'locale_default',
+      area:        'System::Branding',
       description: 'Defines the system default language.',
-      options: {
+      options:     {
         form: [
           {
             name: 'locale_default',
           }
         ],
       },
-      state: 'en-us',
+      state:       'en-us',
       preferences: {
-        prio: 8,
+        prio:       8,
         controller: 'SettingsAreaItemDefaultLocale',
         permission: ['admin.system'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 

@@ -10,22 +10,22 @@ class StoreConfigNameUpdateIssue428 < ActiveRecord::Migration[4.2]
     setting.options = {
       form: [
         {
-          display: '',
-          null: true,
-          name: 'storage_provider',
-          tag: 'select',
+          display:  '',
+          null:     true,
+          name:     'storage_provider',
+          tag:      'select',
           tranlate: true,
-          options: {
-            'DB' => 'Database',
+          options:  {
+            'DB'   => 'Database',
             'File' => 'Filesystem',
           },
         },
       ],
     }
     setting.preferences = {
-      controller: 'SettingsAreaStorageProvider',
+      controller:             'SettingsAreaStorageProvider',
       online_service_disable: true,
-      permission: ['admin.system'],
+      permission:             ['admin.system'],
     }
     setting.save!
   end

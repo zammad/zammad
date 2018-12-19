@@ -128,19 +128,19 @@ module Import
             type_id:  article_type_id_lookup('email'),
             internal: true
           },
-          'note-external' => {
+          'note-external'  => {
             type_id:  article_type_id_lookup('note'),
             internal: false
           },
-          'note-internal' => {
+          'note-internal'  => {
             type_id:  article_type_id_lookup('note'),
             internal: true
           },
-          'phone' => {
+          'phone'          => {
             type_id:  article_type_id_lookup('phone'),
             internal: false
           },
-          'webrequest' => {
+          'webrequest'     => {
             type_id:  article_type_id_lookup('web'),
             internal: false
           },

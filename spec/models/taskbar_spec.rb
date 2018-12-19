@@ -85,27 +85,27 @@ RSpec.describe Taskbar do
       UserInfo.current_user_id = 1
       taskbar1 = Taskbar.create(
         client_id: 123,
-        key: 'Ticket-1234',
-        callback: 'TicketZoom',
-        params: {
+        key:       'Ticket-1234',
+        callback:  'TicketZoom',
+        params:    {
           id: 1234,
         },
-        state: {},
-        prio: 1,
-        notify: false,
+        state:     {},
+        prio:      1,
+        notify:    false,
       )
 
       UserInfo.current_user_id = 2
       taskbar2 = Taskbar.create(
         client_id: 123,
-        key: 'Ticket-1234',
-        callback: 'TicketZoom',
-        params: {
+        key:       'Ticket-1234',
+        callback:  'TicketZoom',
+        params:    {
           id: 1234,
         },
-        state: {},
-        prio: 2,
-        notify: false,
+        state:     {},
+        prio:      2,
+        notify:    false,
       )
 
       taskbar1.reload
@@ -124,14 +124,14 @@ RSpec.describe Taskbar do
 
       taskbar3 = Taskbar.create(
         client_id: 123,
-        key: 'Ticket-4444',
-        callback: 'TicketZoom',
-        params: {
+        key:       'Ticket-4444',
+        callback:  'TicketZoom',
+        params:    {
           id: 4444,
         },
-        state: {},
-        prio: 2,
-        notify: false,
+        state:     {},
+        prio:      2,
+        notify:    false,
       )
 
       taskbar1.reload
@@ -158,14 +158,14 @@ RSpec.describe Taskbar do
 
       taskbar4 = Taskbar.create(
         client_id: 123,
-        key: 'Ticket-1234',
-        callback: 'TicketZoom',
-        params: {
+        key:       'Ticket-1234',
+        callback:  'TicketZoom',
+        params:    {
           id: 1234,
         },
-        state: {},
-        prio: 4,
-        notify: false,
+        state:     {},
+        prio:      4,
+        notify:    false,
       )
 
       taskbar1.reload

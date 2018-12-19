@@ -57,7 +57,7 @@ module CreatesTicketArticles
     if form_id
       article.attachments = Store.list(
         object: 'UploadCache',
-        o_id: form_id,
+        o_id:   form_id,
       )
     end
 
@@ -69,10 +69,10 @@ module CreatesTicketArticles
     # store inline attachments
     attachments_inline.each do |attachment|
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: attachment[:data],
-        filename: attachment[:filename],
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        attachment[:data],
+        filename:    attachment[:filename],
         preferences: attachment[:preferences],
       )
     end
@@ -104,10 +104,10 @@ module CreatesTicketArticles
         end
 
         Store.add(
-          object: 'Ticket::Article',
-          o_id: article.id,
-          data: attachment_data,
-          filename: attachment[:filename],
+          object:      'Ticket::Article',
+          o_id:        article.id,
+          data:        attachment_data,
+          filename:    attachment[:filename],
           preferences: preferences,
         )
       end
@@ -116,9 +116,9 @@ module CreatesTicketArticles
     # account time
     if time_unit.present?
       Ticket::TimeAccounting.create!(
-        ticket_id: article.ticket_id,
+        ticket_id:         article.ticket_id,
         ticket_article_id: article.id,
-        time_unit: time_unit
+        time_unit:         time_unit
       )
     end
 
@@ -133,7 +133,7 @@ module CreatesTicketArticles
     # remove attachments from upload cache
     Store.remove(
       object: 'UploadCache',
-      o_id: form_id,
+      o_id:   form_id,
     )
 
     article

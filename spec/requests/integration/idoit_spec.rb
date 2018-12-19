@@ -22,7 +22,7 @@ RSpec.describe 'Idoit', type: :request do
     Setting.set('idoit_integration', true)
     Setting.set('idoit_config', {
                   api_token: token,
-                  endpoint: endpoint,
+                  endpoint:  endpoint,
                   client_id: '',
                 })
   end
@@ -33,7 +33,7 @@ RSpec.describe 'Idoit', type: :request do
 
       params = {
         api_token: token,
-        endpoint: endpoint,
+        endpoint:  endpoint,
         client_id: '',
       }
       authenticated_as(agent_user)
@@ -49,7 +49,7 @@ RSpec.describe 'Idoit', type: :request do
 
       params = {
         api_token: token,
-        endpoint: endpoint,
+        endpoint:  endpoint,
         client_id: '',
       }
       authenticated_as(admin_user)
@@ -64,7 +64,7 @@ RSpec.describe 'Idoit', type: :request do
 
       params = {
         api_token: token,
-        endpoint: " #{endpoint}/",
+        endpoint:  " #{endpoint}/",
         client_id: '',
       }
       post '/api/v1/integration/idoit/verify', params: params, as: :json

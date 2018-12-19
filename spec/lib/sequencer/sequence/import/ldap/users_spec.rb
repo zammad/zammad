@@ -18,11 +18,11 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
         payload = {
           ldap_config: {
-            user_filter:    'user=filter',
-            group_role_map: {
+            user_filter:      'user=filter',
+            group_role_map:   {
               group_entry.dn => [1, 2]
             },
-            user_attributes: {
+            user_attributes:  {
               'first_name' => 'firstname',
             },
             user_uid:         'objectguid',
@@ -113,14 +113,14 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
         payload = {
           ldap_config: {
-            user_filter:    'user=filter',
-            group_role_map: {
+            user_filter:     'user=filter',
+            group_role_map:  {
               group_entry.dn => agent_admin_role_ids
             },
             user_attributes: {
               'first_name' => 'firstname',
             },
-            user_uid: 'objectguid',
+            user_uid:        'objectguid',
           }
         }
 

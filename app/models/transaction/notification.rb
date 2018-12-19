@@ -151,12 +151,12 @@ class Transaction::Notification
         end
 
         OnlineNotification.add(
-          type: @item[:type],
-          object: 'Ticket',
-          o_id: ticket.id,
-          seen: seen,
+          type:          @item[:type],
+          object:        'Ticket',
+          o_id:          ticket.id,
+          seen:          seen,
           created_by_id: created_by_id,
-          user_id: user.id,
+          user_id:       user.id,
         )
         Rails.logger.debug { "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
       end
@@ -197,18 +197,18 @@ class Transaction::Notification
         attachments = article.attachments_inline
       end
       NotificationFactory::Mailer.notification(
-        template: template,
-        user: user,
-        objects: {
-          ticket: ticket,
-          article: article,
-          recipient: user,
+        template:    template,
+        user:        user,
+        objects:     {
+          ticket:       ticket,
+          article:      article,
+          recipient:    user,
           current_user: current_user,
-          changes: changes,
-          reason: recipients_reason[user.id],
+          changes:      changes,
+          reason:       recipients_reason[user.id],
         },
-        message_id: "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
-        references: ticket.get_references,
+        message_id:  "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
+        references:  ticket.get_references,
         main_object: ticket,
         attachments: attachments,
       )
@@ -226,11 +226,11 @@ class Transaction::Notification
     end
     recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
     History.add(
-      o_id: ticket.id,
-      history_type: 'notification',
+      o_id:           ticket.id,
+      history_type:   'notification',
       history_object: 'Ticket',
-      value_to: recipient_list,
-      created_by_id: @item[:user_id] || 1
+      value_to:       recipient_list,
+      created_by_id:  @item[:user_id] || 1
     )
   end
 

@@ -134,7 +134,7 @@ class Report::Base
         ticket_ids.push history.o_id
       end
       return {
-        count: count,
+        count:      count,
         ticket_ids: ticket_ids,
       }
     end
@@ -216,7 +216,7 @@ class Report::Base
         end
       end
       return {
-        count: count,
+        count:      count,
         ticket_ids: ticket_ids,
       }
     end
@@ -288,7 +288,7 @@ class Report::Base
                 (time_min / 60).to_i
               end
     {
-      count: tickets,
+      count:      tickets,
       ticket_ids: ticket_ids,
     }
   end
@@ -327,7 +327,7 @@ class Report::Base
                 (time_max / 60).to_i
               end
     {
-      count: tickets,
+      count:      tickets,
       ticket_ids: ticket_ids,
     }
   end

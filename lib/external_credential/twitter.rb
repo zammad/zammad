@@ -50,9 +50,9 @@ class ExternalCredential::Twitter
 
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = TwitterSync.new(
-      consumer_key: external_credential.credentials[:consumer_key],
-      consumer_secret: external_credential.credentials[:consumer_secret],
-      access_token: access_token.token,
+      consumer_key:        external_credential.credentials[:consumer_key],
+      consumer_secret:     external_credential.credentials[:consumer_secret],
+      access_token:        access_token.token,
       access_token_secret: access_token.secret,
     )
     client_user = client.who_am_i
@@ -86,28 +86,28 @@ class ExternalCredential::Twitter
 
     # create channel
     channel = Channel.create!(
-      area: 'Twitter::Account',
-      options: {
+      area:          'Twitter::Account',
+      options:       {
         adapter: 'twitter',
-        user: {
-          id: client_user_id,
+        user:    {
+          id:          client_user_id,
           screen_name: client_user.screen_name,
-          name: client_user.name,
+          name:        client_user.name,
         },
-        auth: {
+        auth:    {
           external_credential_id: external_credential.id,
           oauth_token:            access_token.token,
           oauth_token_secret:     access_token.secret,
         },
-        sync: {
-          limit: 20,
-          search: [],
-          mentions: {},
+        sync:    {
+          limit:           20,
+          search:          [],
+          mentions:        {},
           direct_messages: {},
-          track_retweets: false
+          track_retweets:  false
         }
       },
-      active: true,
+      active:        true,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -138,17 +138,17 @@ class ExternalCredential::Twitter
     env_name = params[:env]
 
     client = TwitterSync.new(
-      consumer_key: params[:consumer_key],
-      consumer_secret: params[:consumer_secret],
-      access_token: params[:oauth_token],
+      consumer_key:        params[:consumer_key],
+      consumer_secret:     params[:consumer_secret],
+      access_token:        params[:oauth_token],
       access_token_secret: params[:oauth_token_secret],
     )
 
     # needed for verify callback
     Cache.write('external_credential_twitter', {
-                  consumer_key: params[:consumer_key],
-                  consumer_secret: params[:consumer_secret],
-                  access_token: params[:oauth_token],
+                  consumer_key:        params[:consumer_key],
+                  consumer_secret:     params[:consumer_secret],
+                  access_token:        params[:oauth_token],
                   access_token_secret: params[:oauth_token_secret],
                 })
 

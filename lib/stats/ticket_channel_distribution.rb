@@ -14,19 +14,19 @@ class Stats::TicketChannelDistribution
     channels = [
       {
         sender: 'email',
-        icon: 'email',
+        icon:   'email',
       },
       {
         sender: 'phone',
-        icon: 'phone',
+        icon:   'phone',
       },
       {
         sender: 'twitter',
-        icon: 'twitter',
+        icon:   'twitter',
       },
       {
         sender: 'facebook',
-        icon: 'facebook',
+        icon:   'facebook',
       },
     ]
 

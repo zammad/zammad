@@ -61,11 +61,11 @@ store attachments for this object
     article_store = []
     attachments_buffer.each do |attachment|
       article_store.push Store.add(
-        object: self.class.to_s,
-        o_id: id,
-        data: attachment.content,
-        filename: attachment.filename,
-        preferences: attachment.preferences,
+        object:        self.class.to_s,
+        o_id:          id,
+        data:          attachment.content,
+        filename:      attachment.filename,
+        preferences:   attachment.preferences,
         created_by_id: created_by_id,
       )
     end

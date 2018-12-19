@@ -17,9 +17,9 @@ class RecentView < ApplicationModel
 
     exists_by_object_and_id?(object, o_id)
 
-    RecentView.create!(o_id: o_id,
+    RecentView.create!(o_id:                  o_id,
                        recent_view_object_id: ObjectLookup.by_name(object),
-                       created_by_id: user.id)
+                       created_by_id:         user.id)
   end
 
   def self.log_destroy(requested_object, requested_object_id)
@@ -70,7 +70,7 @@ class RecentView < ApplicationModel
       created_by_id,
       {
         event: 'RecentView::changed',
-        data: {}
+        data:  {}
       }
     )
   end

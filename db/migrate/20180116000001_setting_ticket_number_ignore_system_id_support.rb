@@ -5,17 +5,17 @@ class SettingTicketNumberIgnoreSystemIdSupport < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Ticket Number ignore system_id',
-      name: 'ticket_number_ignore_system_id',
-      area: 'Ticket::Core',
+      title:       'Ticket Number ignore system_id',
+      name:        'ticket_number_ignore_system_id',
+      area:        'Ticket::Core',
       description: '-',
-      options: {
+      options:     {
         form: [
           {
             display: 'Ignore system_id',
-            null: true,
-            name: 'ticket_number_ignore_system_id',
-            tag: 'boolean',
+            null:    true,
+            name:    'ticket_number_ignore_system_id',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,14 +23,14 @@ class SettingTicketNumberIgnoreSystemIdSupport < ActiveRecord::Migration[4.2]
           },
         ],
       },
-      state: {
+      state:       {
         ticket_number_ignore_system_id: false
       },
       preferences: {
         permission: ['admin.ticket'],
-        hidden: true,
+        hidden:     true,
       },
-      frontend: false
+      frontend:    false
     )
   end
 

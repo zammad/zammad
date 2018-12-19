@@ -24,29 +24,29 @@ class OutOfOffice2 < ActiveRecord::Migration[4.2]
     role_ids = Role.with_permissions(['ticket.agent']).map(&:id)
     overview_role = Role.find_by(name: 'Agent')
     Overview.create_or_update(
-      name: 'My replacement Tickets',
-      link: 'my_replacement_tickets',
-      prio: 1080,
-      role_ids: role_ids,
+      name:          'My replacement Tickets',
+      link:          'my_replacement_tickets',
+      prio:          1080,
+      role_ids:      role_ids,
       out_of_office: true,
-      condition: {
-        'ticket.state_id' => {
+      condition:     {
+        'ticket.state_id'                     => {
           operator: 'is',
-          value: Ticket::State.by_category(:open).pluck(:id),
+          value:    Ticket::State.by_category(:open).pluck(:id),
         },
         'ticket.out_of_office_replacement_id' => {
-          operator: 'is',
+          operator:      'is',
           pre_condition: 'current_user.id',
         },
       },
-      order: {
-        by: 'created_at',
+      order:         {
+        by:        'created_at',
         direction: 'DESC',
       },
-      view: {
-        d: %w[title customer group owner escalation_at],
-        s: %w[title customer group owner escalation_at],
-        m: %w[number title customer group owner escalation_at],
+      view:          {
+        d:                 %w[title customer group owner escalation_at],
+        s:                 %w[title customer group owner escalation_at],
+        m:                 %w[number title customer group owner escalation_at],
         view_mode_default: 's',
       },
       updated_by_id: 1,

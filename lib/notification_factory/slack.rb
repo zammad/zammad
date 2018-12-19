@@ -27,10 +27,10 @@ returns
     end
 
     template = NotificationFactory.template_read(
-      locale: data[:locale] || Setting.get('locale_default') || 'en-us',
+      locale:   data[:locale] || Setting.get('locale_default') || 'en-us',
       template: data[:template],
-      format: 'md',
-      type: 'slack',
+      format:   'md',
+      type:     'slack',
     )
 
     message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
@@ -39,7 +39,7 @@ returns
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
         format: 'md',
-        type: 'slack',
+        type:   'slack',
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
@@ -47,7 +47,7 @@ returns
     end
     {
       subject: message_subject.strip!,
-      body: message_body.strip!,
+      body:    message_body.strip!,
     }
   end
 

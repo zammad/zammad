@@ -136,13 +136,13 @@ module Enrichment
 
         record = {
           direction: 'out',
-          facility: 'clearbit',
-          url: "clearbit -> #{@local_user.email}",
-          status: 200,
-          ip: nil,
-          request: { content: @local_user.email },
-          response: {},
-          method: 'GET',
+          facility:  'clearbit',
+          url:       "clearbit -> #{@local_user.email}",
+          status:    200,
+          ip:        nil,
+          request:   { content: @local_user.email },
+          response:  {},
+          method:    'GET',
         }
 
         begin

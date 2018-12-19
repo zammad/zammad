@@ -4,10 +4,10 @@ class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
 
   setup do
     EmailAddress.create_or_update(
-      channel_id: 1,
-      realname: 'My System',
-      email: 'Myzammad@system.TEST',
-      active: true,
+      channel_id:    1,
+      realname:      'My System',
+      email:         'Myzammad@system.TEST',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -95,13 +95,13 @@ Some Text"
     # create customer
     roles = Role.where(name: 'Customer')
     customer1 = User.create_or_update(
-      login: 'ticket-system-sender-customer1@example.com',
-      firstname: 'system-sender',
-      lastname: 'Customer1',
-      email: 'ticket-system-sender-customer1@example.com',
-      password: 'customerpw',
-      active: true,
-      roles: roles,
+      login:         'ticket-system-sender-customer1@example.com',
+      firstname:     'system-sender',
+      lastname:      'Customer1',
+      email:         'ticket-system-sender-customer1@example.com',
+      password:      'customerpw',
+      active:        true,
+      roles:         roles,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -110,14 +110,14 @@ Some Text"
     groups = Group.all
     roles  = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
-      login: 'ticket-system-sender-agent1@example.com',
-      firstname: 'system-sender',
-      lastname: 'Agent1',
-      email: 'ticket-system-sender-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'ticket-system-sender-agent1@example.com',
+      firstname:     'system-sender',
+      lastname:      'Agent1',
+      email:         'ticket-system-sender-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -106,15 +106,15 @@ or with filter:
     result = UserAgent.post(
       url,
       {
-        method: method,
-        params: params,
+        method:  method,
+        params:  params,
         version: '2.0',
       },
       {
-        json: true,
+        json:         true,
         open_timeout: 6,
         read_timeout: 16,
-        log: {
+        log:          {
           facility: 'idoit',
         },
       },

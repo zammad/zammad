@@ -6,10 +6,10 @@ class AaaAutoWizardBaseSetupTest < TestCase
     @browser = browser_instance
     location(url: "#{browser_url}/#getting_started/auto_wizard")
     watch_for(
-      css: '.user-menu .user a',
+      css:       '.user-menu .user a',
       attribute: 'title',
-      value: 'master@example.com',
-      timeout: 14,
+      value:     'master@example.com',
+      timeout:   14,
     )
   end
 

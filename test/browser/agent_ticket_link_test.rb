@@ -7,35 +7,35 @@ class AgentTicketLinkTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - link#1',
-        body: 'some body - link#1',
+        group:    'Users',
+        title:    'some subject - link#1',
+        body:     'some body - link#1',
       },
     )
 
     ticket2 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - link#2',
-        body: 'some body - link#2',
+        group:    'Users',
+        title:    'some subject - link#2',
+        body:     'some body - link#2',
       },
     )
 
     # verify changes in second browser
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     ticket_open_by_search(
       browser: browser2,
@@ -49,11 +49,11 @@ class AgentTicketLinkTest < TestCase
     modal_ready()
 
     set(
-      css: '.content.active .modal-body [name="ticket_number"]',
+      css:   '.content.active .modal-body [name="ticket_number"]',
       value: ticket1[:number],
     )
     select(
-      css: '.content.active .modal-body [name="link_type"]',
+      css:   '.content.active .modal-body [name="link_type"]',
       value: 'Normal',
     )
     click(
@@ -61,45 +61,45 @@ class AgentTicketLinkTest < TestCase
     )
 
     watch_for(
-      css: '.content.active .ticketLinks',
+      css:   '.content.active .ticketLinks',
       value: ticket1[:title],
     )
 
     watch_for(
       browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
+      css:     '.content.active .ticketLinks',
+      value:   ticket2[:title],
     )
 
     reload()
 
     watch_for(
-      css: '.content.active .ticketLinks',
+      css:   '.content.active .ticketLinks',
       value: ticket1[:title],
     )
     click(
       css: '.content.active .ticketLinks .js-delete'
     )
     watch_for_disappear(
-      css: '.content.active .ticketLinks',
+      css:   '.content.active .ticketLinks',
       value: ticket1[:title],
     )
     watch_for_disappear(
       browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
+      css:     '.content.active .ticketLinks',
+      value:   ticket2[:title],
     )
 
     reload()
 
     watch_for_disappear(
-      css: '.content.active .ticketLinks',
+      css:   '.content.active .ticketLinks',
       value: ticket1[:title],
     )
     watch_for_disappear(
       browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
+      css:     '.content.active .ticketLinks',
+      value:   ticket2[:title],
     )
   end
 

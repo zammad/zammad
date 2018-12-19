@@ -9,12 +9,12 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
 
     # add ticket history
     History.add(
-      o_id: record.o_id,
-      history_type: 'added',
-      history_object: 'Ticket',
+      o_id:              record.o_id,
+      history_type:      'added',
+      history_object:    'Ticket',
       history_attribute: 'tag',
-      value_to: record.tag_item.name,
-      created_by_id: record.created_by_id,
+      value_to:          record.tag_item.name,
+      created_by_id:     record.created_by_id,
     )
   end
 
@@ -25,12 +25,12 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
 
     # add ticket history
     History.add(
-      o_id: record.o_id,
-      history_type: 'removed',
-      history_object: 'Ticket',
+      o_id:              record.o_id,
+      history_type:      'removed',
+      history_object:    'Ticket',
       history_attribute: 'tag',
-      value_to: record.tag_item.name,
-      created_by_id: record.created_by_id,
+      value_to:          record.tag_item.name,
+      created_by_id:     record.created_by_id,
     )
   end
 end

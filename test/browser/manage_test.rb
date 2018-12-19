@@ -10,7 +10,7 @@ class ManageTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -18,11 +18,11 @@ class ManageTest < TestCase
 
     user_create(
       data: {
-        login: "some login#{random}",
+        login:     "some login#{random}",
         firstname: "Manage Firstname#{random}",
-        lastname: "Manage Lastname#{random}",
-        email: user_email,
-        password: 'some-pass',
+        lastname:  "Manage Lastname#{random}",
+        email:     user_email,
+        password:  'some-pass',
       }
     )
 
@@ -30,26 +30,26 @@ class ManageTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal input[name="lastname"]',
+      css:   '.modal input[name="lastname"]',
       value: "2Manage Lastname#{random}",
     )
     click(css: '.modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: "2Manage Lastname#{random}",
     )
 
     # sla
     sla_create(
       data: {
-        name: "some sla#{random}",
+        name:                        "some sla#{random}",
         first_response_time_in_text: '1:01'
       }
     )
     watch_for(
-      css: 'body',
+      css:   'body',
       value: random,
     )
     sleep 1
@@ -58,18 +58,18 @@ class ManageTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal input[name=name]',
+      css:   '.modal input[name=name]',
       value: "some sla update #{random}",
     )
     set(
-      css: '.modal input[name="first_response_time_in_text"]',
+      css:   '.modal input[name="first_response_time_in_text"]',
       value: '2:01',
     )
     click(css: '.modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: "some sla update #{random}",
     )
     sleep 4
@@ -80,7 +80,7 @@ class ManageTest < TestCase
     click(css: '.modal button.js-submit')
     sleep 4
     match_not(
-      css: 'body',
+      css:   'body',
       value: "some sla update #{random}",
     )
 
@@ -88,7 +88,7 @@ class ManageTest < TestCase
     click(css: 'a[href="#manage/slas"]')
     sleep 2
     match_not(
-      css: 'body',
+      css:   'body',
       value: "some sla update #{random}",
     )
 
@@ -99,7 +99,7 @@ class ManageTest < TestCase
     click(css: 'a[href="#manage/slas"]')
     sleep 2
     match_not(
-      css: 'body',
+      css:   'body',
       value: "some sla update #{random}",
     )
   end

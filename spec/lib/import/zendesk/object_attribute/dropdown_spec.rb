@@ -31,28 +31,28 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Dropdown do
     )
 
     expected_structure = {
-      object:      'Ticket',
-      name:        'example_field',
-      display:     'Example attribute',
-      data_type:   'select',
-      data_option: {
-        null:      false,
-        note:      'Example attribute description',
+      object:        'Ticket',
+      name:          'example_field',
+      display:       'Example attribute',
+      data_type:     'select',
+      data_option:   {
+        null:    false,
+        note:    'Example attribute description',
         default: '',
         options: {
           'Key 1' => 'Value 1',
           'Key 2' => 'Value 2'
         },
       },
-      editable: true,
-      active:   true,
-      screens:  {
+      editable:      true,
+      active:        true,
+      screens:       {
         edit: {
           Customer: {
             shown: true,
-            null: false
+            null:  false
           },
-          view: {
+          view:     {
             '-all-' => {
               shown: true
             }

@@ -10,16 +10,16 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     permission_ticket_agent = Permission.where(name: 'ticket.agent')
 
     role_agent_limit_success = Role.create!(
-      name: 'agent-limit-test-success',
-      note: 'agent-limit-test-success Role.',
+      name:        'agent-limit-test-success',
+      note:        'agent-limit-test-success Role.',
       permissions: [],
-      active: true,
+      active:      true,
     )
     role_agent_limit_fail = Role.create!(
-      name: 'agent-limit-test-fail',
-      note: 'agent-limit-test-fail Role.',
+      name:        'agent-limit-test-fail',
+      note:        'agent-limit-test-fail Role.',
       permissions: [],
-      active: true,
+      active:      true,
     )
 
     user1 = User.create!(
@@ -79,16 +79,16 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     permission_ticket_agent = Permission.where(name: 'ticket.agent')
 
     role_agent_limit_success = Role.create!(
-      name: 'agent-limit-test-success',
-      note: 'agent-limit-test-success Role.',
+      name:        'agent-limit-test-success',
+      note:        'agent-limit-test-success Role.',
       permissions: [],
-      active: true,
+      active:      true,
     )
     role_agent_limit_fail = Role.create!(
-      name: 'agent-limit-test-fail',
-      note: 'agent-limit-test-fail Role.',
+      name:        'agent-limit-test-fail',
+      note:        'agent-limit-test-fail Role.',
       permissions: [],
-      active: true,
+      active:      true,
     )
 
     user1 = User.create!(
@@ -148,16 +148,16 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     permission_ticket_agent = Permission.find_by(name: 'ticket.agent')
 
     role_agent_limit1 = Role.create!(
-      name: 'agent-limit-test1',
-      note: 'agent-limit-test1 Role.',
+      name:        'agent-limit-test1',
+      note:        'agent-limit-test1 Role.',
       permissions: [permission_ticket_agent],
-      active: true,
+      active:      true,
     )
     role_agent_limit2 = Role.create!(
-      name: 'agent-limit-test2',
-      note: 'agent-limit-test2 Role.',
+      name:        'agent-limit-test2',
+      note:        'agent-limit-test2 Role.',
       permissions: [permission_ticket_agent],
-      active: true,
+      active:      true,
     )
 
     user1 = User.create!(

@@ -59,19 +59,19 @@ add a new history entry for an object
 
     # create history
     record = {
-      id: data[:id],
-      o_id: data[:o_id],
-      history_type_id: history_type.id,
-      history_object_id: history_object.id,
-      history_attribute_id: history_attribute_id,
+      id:                        data[:id],
+      o_id:                      data[:o_id],
+      history_type_id:           history_type.id,
+      history_object_id:         history_object.id,
+      history_attribute_id:      history_attribute_id,
       related_history_object_id: related_history_object_id,
-      related_o_id: data[:related_o_id],
-      value_from: data[:value_from],
-      value_to: data[:value_to],
-      id_from: data[:id_from],
-      id_to: data[:id_to],
-      created_at: data[:created_at],
-      created_by_id: data[:created_by_id]
+      related_o_id:              data[:related_o_id],
+      value_from:                data[:value_from],
+      value_to:                  data[:value_to],
+      id_from:                   data[:id_from],
+      id_to:                     data[:id_to],
+      created_at:                data[:created_at],
+      created_by_id:             data[:created_by_id]
     }
     history_record = nil
     if data[:id]
@@ -102,7 +102,7 @@ remove whole history entries of an object
 
     History.where(
       history_object_id: history_object.id,
-      o_id: requested_object_id,
+      o_id:              requested_object_id,
     ).destroy_all
   end
 
@@ -206,7 +206,7 @@ returns
     end
     if assets
       return {
-        list: list,
+        list:   list,
         assets: asset_list,
       }
     end

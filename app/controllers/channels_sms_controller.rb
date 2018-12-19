@@ -8,10 +8,10 @@ class ChannelsSmsController < ApplicationChannelController
   def index
     assets = {}
     render json: {
-      account_channel_ids: channels_data('Sms::Account', assets),
+      account_channel_ids:      channels_data('Sms::Account', assets),
       notification_channel_ids: channels_data('Sms::Notification', assets),
-      config: channels_config,
-      assets: assets
+      config:                   channels_config,
+      assets:                   assets
     }
   end
 
@@ -37,7 +37,7 @@ class ChannelsSmsController < ApplicationChannelController
     end
     if !channel
       render(
-        json: { message: 'channel not found' },
+        json:   { message: 'channel not found' },
         status: :not_found
       )
       return

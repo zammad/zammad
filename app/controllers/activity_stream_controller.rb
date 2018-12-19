@@ -25,7 +25,7 @@ class ActivityStreamController < ApplicationController
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end

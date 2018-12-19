@@ -13,8 +13,8 @@ class Sessions::Event::ChatAgentState < Sessions::Event::ChatBase
 
     {
       event: 'chat_agent_state',
-      data: {
-        state: 'ok',
+      data:  {
+        state:  'ok',
         active: @payload['data']['active'],
       },
     }

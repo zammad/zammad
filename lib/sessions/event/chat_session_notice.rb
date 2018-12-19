@@ -10,9 +10,9 @@ class Sessions::Event::ChatSessionNotice < Sessions::Event::ChatBase
 
     message = {
       event: 'chat_session_notice',
-      data: {
+      data:  {
         session_id: chat_session.session_id,
-        message: @payload['data']['message'],
+        message:    @payload['data']['message'],
       },
     }
     chat_session.send_to_recipients(message, @client_id)

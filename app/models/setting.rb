@@ -194,7 +194,7 @@ reload config settings
     Sessions.broadcast(
       {
         event: 'config_update',
-        data: { name: name, value: value }
+        data:  { name: name, value: value }
       },
       'public'
     )

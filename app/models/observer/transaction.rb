@@ -182,11 +182,11 @@ class Observer::Transaction < ActiveRecord::Observer
     return true if Setting.get('import_mode')
 
     e = {
-      object: record.class.name,
-      type: 'create',
-      data: record,
-      id: record.id,
-      user_id: record.created_by_id,
+      object:     record.class.name,
+      type:       'create',
+      data:       record,
+      id:         record.id,
+      user_id:    record.created_by_id,
       created_at: Time.zone.now,
     }
     EventBuffer.add('transaction', e)
@@ -225,12 +225,12 @@ class Observer::Transaction < ActiveRecord::Observer
                     end
 
     e = {
-      object: record.class.name,
-      type: 'update',
-      data: record,
-      changes: real_changes,
-      id: record.id,
-      user_id: changed_by_id,
+      object:     record.class.name,
+      type:       'update',
+      data:       record,
+      changes:    real_changes,
+      id:         record.id,
+      user_id:    changed_by_id,
       created_at: Time.zone.now,
     }
     EventBuffer.add('transaction', e)

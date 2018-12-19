@@ -27,8 +27,8 @@ DbHelper.import_post
 # install locales and translations
 Locale.create_if_not_exists(
   locale: 'en-us',
-  alias: 'en',
-  name: 'English (United States)',
+  alias:  'en',
+  name:   'English (United States)',
 )
 Locale.sync
 Translation.sync

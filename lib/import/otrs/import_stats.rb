@@ -6,11 +6,11 @@ module Import
 
       def current_state
         {
-          Base: {
+          Base:   {
             done:  base_done,
             total: base_total,
           },
-          User: {
+          User:   {
             done:  user_done,
             total: user_total,
           },

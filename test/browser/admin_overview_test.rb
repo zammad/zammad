@@ -8,7 +8,7 @@ class AdminOverviewTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -45,16 +45,16 @@ class AdminOverviewTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 1 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 1 ticket',
+        body:     'some body 123äöü',
         priority: '1 low',
       },
     )
@@ -62,9 +62,9 @@ class AdminOverviewTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 2 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 2 ticket',
+        body:     'some body 123äöü',
         priority: '2 normal',
       },
     )
@@ -72,9 +72,9 @@ class AdminOverviewTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 3 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 3 ticket',
+        body:     'some body 123äöü',
         priority: '3 high',
       },
     )
@@ -102,7 +102,7 @@ class AdminOverviewTest < TestCase
     # Update overview to sort groups from low to high
     overview_update(
       data: {
-        name: name,
+        name:            name,
         group_direction: 'up',
       }
     )
@@ -131,7 +131,7 @@ class AdminOverviewTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -145,11 +145,11 @@ class AdminOverviewTest < TestCase
     click( css: first_overview_css )
     modal_ready
     watch_for(
-      css: out_of_office_css,
+      css:   out_of_office_css,
       value: 'no',
     )
     select(
-      css: out_of_office_css,
+      css:   out_of_office_css,
       value: 'yes',
     )
     click( css: '.content.active .modal .js-submit' )
@@ -159,11 +159,11 @@ class AdminOverviewTest < TestCase
     click( css: first_overview_css )
     modal_ready
     watch_for(
-      css: out_of_office_css,
+      css:   out_of_office_css,
       value: 'yes',
     )
     select(
-      css: out_of_office_css,
+      css:   out_of_office_css,
       value: 'no',
     )
     click( css: '.content.active .modal .js-submit' )
@@ -173,7 +173,7 @@ class AdminOverviewTest < TestCase
     click( css: first_overview_css )
     modal_ready
     watch_for(
-      css: out_of_office_css,
+      css:   out_of_office_css,
       value: 'no',
     )
     click( css: '.content.active .modal .js-submit' )

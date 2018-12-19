@@ -16,8 +16,8 @@ class CalendarsController < ApplicationController
     render json: {
       record_ids: record_ids,
       ical_feeds: ical_feeds,
-      timezones: timezones,
-      assets: assets,
+      timezones:  timezones,
+      assets:     assets,
     }, status: :ok
   end
 

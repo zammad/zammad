@@ -6,7 +6,7 @@ class AgentTicketTimeAccountingTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -18,21 +18,21 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active a[href="#manage/time_accounting"]',
     )
     switch(
-      css: '.content.active .js-timeAccountingSetting',
+      css:  '.content.active .js-timeAccountingSetting',
       type: 'on',
     )
 
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - time accounting#1',
-        body: 'some body - time accounting#1',
+        group:    'Users',
+        title:    'some subject - time accounting#1',
+        body:     'some body - time accounting#1',
       },
     )
 
     ticket_update(
-      data: {
+      data:          {
         body: 'some note',
       },
       do_not_submit: true,
@@ -42,7 +42,7 @@ class AgentTicketTimeAccountingTest < TestCase
     )
     modal_ready()
     set(
-      css: '.content.active .modal [name=time_unit]',
+      css:   '.content.active .modal [name=time_unit]',
       value: '4',
     )
     click(
@@ -51,21 +51,21 @@ class AgentTicketTimeAccountingTest < TestCase
     modal_disappear()
 
     watch_for(
-      css: '.content.active .js-timeUnit',
+      css:   '.content.active .js-timeUnit',
       value: '4',
     )
 
     ticket2 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - time accounting#2',
-        body: 'some body - time accounting#2',
+        group:    'Users',
+        title:    'some subject - time accounting#2',
+        body:     'some body - time accounting#2',
       },
     )
 
     ticket_update(
-      data: {
+      data:          {
         body: 'some note',
       },
       do_not_submit: true,
@@ -75,7 +75,7 @@ class AgentTicketTimeAccountingTest < TestCase
     )
     modal_ready()
     set(
-      css: '.content.active .modal [name=time_unit]',
+      css:   '.content.active .modal [name=time_unit]',
       value: '4,6',
     )
     click(
@@ -84,12 +84,12 @@ class AgentTicketTimeAccountingTest < TestCase
     modal_disappear()
 
     watch_for(
-      css: '.content.active .js-timeUnit',
+      css:   '.content.active .js-timeUnit',
       value: '4.6',
     )
 
     ticket_update(
-      data: {
+      data:          {
         body: 'some note2',
       },
       do_not_submit: true,
@@ -100,7 +100,7 @@ class AgentTicketTimeAccountingTest < TestCase
 
     modal_ready()
     set(
-      css: '.content.active .modal [name=time_unit]',
+      css:   '.content.active .modal [name=time_unit]',
       value: '4abc',
     )
     click(
@@ -110,7 +110,7 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active .modal [name=time_unit].has-error',
     )
     set(
-      css: '.content.active .modal [name=time_unit]',
+      css:   '.content.active .modal [name=time_unit]',
       value: '4 ',
     )
     click(
@@ -118,7 +118,7 @@ class AgentTicketTimeAccountingTest < TestCase
     )
     modal_disappear()
     watch_for(
-      css: '.content.active .js-timeUnit',
+      css:   '.content.active .js-timeUnit',
       value: '8.6',
     )
 
@@ -130,7 +130,7 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active a[href="#manage/time_accounting"]',
     )
     switch(
-      css: '.content.active .js-timeAccountingSetting',
+      css:  '.content.active .js-timeAccountingSetting',
       type: 'off',
     )
 
@@ -145,7 +145,7 @@ class AgentTicketTimeAccountingTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -157,21 +157,21 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active a[href="#manage/time_accounting"]',
     )
     switch(
-      css: '.content.active .js-timeAccountingSetting',
+      css:  '.content.active .js-timeAccountingSetting',
       type: 'on',
     )
 
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - time accounting#3',
-        body: 'some body - time accounting#3',
+        group:    'Users',
+        title:    'some subject - time accounting#3',
+        body:     'some body - time accounting#3',
       },
     )
 
     ticket_update(
-      data: {
+      data:          {
         body: 'some note',
       },
       do_not_submit: true,
@@ -192,7 +192,7 @@ class AgentTicketTimeAccountingTest < TestCase
     )
     modal_ready()
     set(
-      css: '.content.active .modal [name=time_unit]',
+      css:   '.content.active .modal [name=time_unit]',
       value: '4',
     )
     click(
@@ -208,7 +208,7 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active a[href="#manage/time_accounting"]',
     )
     switch(
-      css: '.content.active .js-timeAccountingSetting',
+      css:  '.content.active .js-timeAccountingSetting',
       type: 'off',
     )
 

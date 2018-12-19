@@ -10,7 +10,7 @@ class AgentTicketOverviewPendingTil < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -19,11 +19,11 @@ class AgentTicketOverviewPendingTil < TestCase
     4.times do |i|
       ticket = ticket_create(
         data: {
-          customer: 'nico',
-          group: 'Users',
-          title: "pending til ticket #{i}",
-          body: 'test ticket',
-          state: i.odd? ? 'pending close' : 'open',
+          customer:     'nico',
+          group:        'Users',
+          title:        "pending til ticket #{i}",
+          body:         'test ticket',
+          state:        i.odd? ? 'pending close' : 'open',
           pending_date: '11/24/2018',
           pending_time: '08:00',
         }
@@ -34,9 +34,9 @@ class AgentTicketOverviewPendingTil < TestCase
     # create and open new overview that has the Pending Til column
     overview_create(
       data: {
-        name: name,
-        roles: %w[Admin Agent],
-        selector: {
+        name:       name,
+        roles:      %w[Admin Agent],
+        selector:   {
           'State' => ['new', 'open', 'closed', 'merged', 'pending close', 'pending reminder'],
         },
         attributes: {
@@ -55,11 +55,11 @@ class AgentTicketOverviewPendingTil < TestCase
 
     # check if the first and second rows both correctly contain 'pending close'
     match(
-      css: '.content.active table .js-tableBody tr:nth-child(1)',
+      css:   '.content.active table .js-tableBody tr:nth-child(1)',
       value: 'pending close',
     )
     match(
-      css: '.content.active table .js-tableBody tr:nth-child(2)',
+      css:   '.content.active table .js-tableBody tr:nth-child(2)',
       value: 'pending close',
     )
   end

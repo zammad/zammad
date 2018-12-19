@@ -14,37 +14,37 @@ class EmailDeliverTest < ActiveSupport::TestCase
     server_password = ENV['MAIL_SERVER_ACCOUNT'].split(':')[1]
 
     email_address = EmailAddress.create!(
-      realname: 'me Helpdesk',
-      email: "me#{rand(999_999_999)}@example.com",
+      realname:      'me Helpdesk',
+      email:         "me#{rand(999_999_999)}@example.com",
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     group = Group.create_or_update(
-      name: 'DeliverTest',
+      name:             'DeliverTest',
       email_address_id: email_address.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:    1,
+      created_by_id:    1,
     )
 
     channel = Channel.create!(
-      area: 'Email::Account',
-      group_id: group.id,
-      options: {
-        inbound: {
+      area:          'Email::Account',
+      group_id:      group.id,
+      options:       {
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'mx1.example.com',
-            user: 'example',
+            host:     'mx1.example.com',
+            user:     'example',
             password: 'some_pw',
-            ssl: true,
+            ssl:      true,
           }
         },
         outbound: {
           adapter: 'sendmail'
         }
       },
-      active: true,
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -53,25 +53,25 @@ class EmailDeliverTest < ActiveSupport::TestCase
     email_address.save!
 
     ticket1 = Ticket.create!(
-      title: 'some delivery test',
-      group: group,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some delivery test',
+      group:         group,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert(ticket1, 'ticket created')
 
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      to: 'some_recipient@example_not_existing_what_ever.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message delivery test',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      to:            'some_recipient@example_not_existing_what_ever.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message delivery test',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -93,23 +93,23 @@ class EmailDeliverTest < ActiveSupport::TestCase
     # send with invalid smtp settings
     channel.update!(
       options: {
-        inbound: {
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'mx1.example.com',
-            user: 'example',
+            host:     'mx1.example.com',
+            user:     'example',
             password: 'some_pw',
-            ssl: true,
+            ssl:      true,
           }
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'mx1.example.com',
-            port: 25,
+            host:      'mx1.example.com',
+            port:      25,
             start_tls: true,
-            user: 'not_existing',
-            password: 'not_existing',
+            user:      'not_existing',
+            password:  'not_existing',
           },
         },
       },
@@ -127,23 +127,23 @@ class EmailDeliverTest < ActiveSupport::TestCase
     # send with correct smtp settings
     channel.update!(
       options: {
-        inbound: {
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'mx1.example.com',
-            user: 'example',
+            host:     'mx1.example.com',
+            user:     'example',
             password: 'some_pw',
-            ssl: true,
+            ssl:      true,
           }
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: ENV['MAIL_SERVER'],
-            port: 25,
+            host:      ENV['MAIL_SERVER'],
+            port:      25,
             start_tls: true,
-            user: server_login,
-            password: server_password,
+            user:      server_login,
+            password:  server_password,
           },
         },
       },
@@ -164,23 +164,23 @@ class EmailDeliverTest < ActiveSupport::TestCase
     # send with invalid smtp settings
     channel.update!(
       options: {
-        inbound: {
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'mx1.example.com',
-            user: 'example',
+            host:     'mx1.example.com',
+            user:     'example',
             password: 'some_pw',
-            ssl: true,
+            ssl:      true,
           }
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'mx1.example.com',
-            port: 25,
+            host:      'mx1.example.com',
+            port:      25,
             start_tls: true,
-            user: 'not_existing',
-            password: 'not_existing',
+            user:      'not_existing',
+            password:  'not_existing',
           },
         },
       },
@@ -190,14 +190,14 @@ class EmailDeliverTest < ActiveSupport::TestCase
     Delayed::Job.destroy_all
 
     article2 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      to: 'some_recipient@example_not_existing_what_ever.com',
-      subject: 'some subject2',
-      message_id: 'some@id',
-      body: 'some message delivery test2',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      to:            'some_recipient@example_not_existing_what_ever.com',
+      subject:       'some subject2',
+      message_id:    'some@id',
+      body:          'some message delivery test2',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )

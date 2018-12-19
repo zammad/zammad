@@ -4,22 +4,22 @@ class SettingTest < ActiveSupport::TestCase
 
   test 'basics' do
     Setting.create!(
-      title: 'ABC API Token',
-      name: 'abc_api_token',
-      area: 'Integration::ABC',
+      title:       'ABC API Token',
+      name:        'abc_api_token',
+      area:        'Integration::ABC',
       description: 'API Token for ABC to access ABC.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'abc_token',
-            tag: 'input',
+            null:    false,
+            name:    'abc_token',
+            tag:     'input',
           },
         ],
       },
-      state: 'abc',
-      frontend: false
+      state:       'abc',
+      frontend:    false
     )
     assert_equal(Setting.get('abc_api_token'), 'abc')
     assert(Setting.set('abc_api_token', 'new_abc'))
@@ -30,26 +30,26 @@ class SettingTest < ActiveSupport::TestCase
 
   test 'cache reset via preferences' do
     Setting.create!(
-      title: 'ABC API Token',
-      name: 'abc_api_token',
-      area: 'Integration::ABC',
+      title:       'ABC API Token',
+      name:        'abc_api_token',
+      area:        'Integration::ABC',
       description: 'API Token for ABC to access ABC.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'abc_token',
-            tag: 'input',
+            null:    false,
+            name:    'abc_token',
+            tag:     'input',
           },
         ],
       },
-      state: '',
+      state:       '',
       preferences: {
         permission: ['admin.integration'],
-        cache: ['abcGetVoipUsers'],
+        cache:      ['abcGetVoipUsers'],
       },
-      frontend: false
+      frontend:    false
     )
 
     Cache.write('abcGetVoipUsers', { a: 1 })

@@ -11,7 +11,7 @@ class AgentUserManageTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -20,7 +20,7 @@ class AgentUserManageTest < TestCase
     click(css: 'a[href="#ticket/create"]')
 
     watch_for(
-      css: '.content.active .newTicket',
+      css:     '.content.active .newTicket',
       timeout: 1,
     )
 
@@ -36,15 +36,15 @@ class AgentUserManageTest < TestCase
 
     modal_ready()
     set(
-      css: '.content.active .modal input[name="firstname"]',
+      css:   '.content.active .modal input[name="firstname"]',
       value: firstname,
     )
     set(
-      css: '.content.active .modal input[name="lastname"]',
+      css:   '.content.active .modal input[name="lastname"]',
       value: lastname,
     )
     set(
-      css: '.content.active .modal input[name="email"]',
+      css:   '.content.active .modal input[name="email"]',
       value: customer_user_email,
     )
 
@@ -55,24 +55,24 @@ class AgentUserManageTest < TestCase
 
     # check is used to check selected
     match(
-      css: '.content.active .newTicket input[name="customer_id"]',
-      value: '^\d+$',
+      css:      '.content.active .newTicket input[name="customer_id"]',
+      value:    '^\d+$',
       no_quote: true,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: firstname,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: lastname,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: customer_user_email,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: fullname,
     )
     sleep 4
@@ -84,20 +84,20 @@ class AgentUserManageTest < TestCase
     click(css: 'a[href="#ticket/create"]')
 
     watch_for(
-      css: '.content.active .newTicket',
+      css:     '.content.active .newTicket',
       timeout: 1,
     )
 
     match(
-      css: '.content.active .newTicket input[name="customer_id"]',
+      css:   '.content.active .newTicket input[name="customer_id"]',
       value: '',
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: '',
     )
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: customer_user_email,
     )
     sleep 3
@@ -107,24 +107,24 @@ class AgentUserManageTest < TestCase
 
     # check is used to check selected
     match(
-      css: '.content.active .newTicket input[name="customer_id"]',
-      value: '^\d+$',
+      css:      '.content.active .newTicket input[name="customer_id"]',
+      value:    '^\d+$',
       no_quote: true,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: firstname,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: lastname,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: customer_user_email,
     )
     match(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: fullname,
     )
   end
@@ -139,28 +139,28 @@ class AgentUserManageTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some changes',
-        body: 'some body',
+        group:    'Users',
+        title:    'some changes',
+        body:     'some body',
       },
     )
 
     watch_for(
-      css: '.content.active .ticketZoom-header .ticket-number',
+      css:   '.content.active .ticketZoom-header .ticket-number',
       value: '\d',
     )
 
     click(css: '.content.active .tabsSidebar-tabs .tabsSidebar-tab[data-tab="customer"]')
 
     match(
-      css: '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
+      css:   '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
       value: 'Nicole Braun',
     )
 
@@ -179,20 +179,20 @@ class AgentUserManageTest < TestCase
     click(css: '.content.active .modal .recipientList-entry.js-objectNew')
 
     watch_for(
-      css: '.content.active .modal input[name="firstname"]',
+      css:     '.content.active .modal input[name="firstname"]',
       timeout: 1,
     )
 
     set(
-      css: '.content.active .modal input[name="firstname"]',
+      css:   '.content.active .modal input[name="firstname"]',
       value: firstname,
     )
     set(
-      css: '.content.active .modal input[name="lastname"]',
+      css:   '.content.active .modal input[name="lastname"]',
       value: lastname,
     )
     set(
-      css: '.content.active .modal input[name="email"]',
+      css:   '.content.active .modal input[name="email"]',
       value: customer_user_email,
     )
 
@@ -202,24 +202,24 @@ class AgentUserManageTest < TestCase
 
     # check is used to check selected
     watch_for(
-      css: '.content.active .modal input[name="customer_id"]',
-      value: '^\d+$',
+      css:      '.content.active .modal input[name="customer_id"]',
+      value:    '^\d+$',
       no_quote: true,
     )
     match(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: firstname,
     )
     match(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: lastname,
     )
     match(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: customer_user_email,
     )
     match(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: fullname,
     )
 
@@ -227,8 +227,8 @@ class AgentUserManageTest < TestCase
     modal_disappear()
 
     watch_for(
-      css: '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
-      value: customer_user_email,
+      css:     '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
+      value:   customer_user_email,
       timeout: 4,
     )
 

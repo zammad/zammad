@@ -6,49 +6,49 @@ class UserAssetsTest < ActiveSupport::TestCase
     roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
     org1   = Organization.create_or_update(
-      name: 'some user org',
+      name:          'some user org',
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     user1 = User.create_or_update(
-      login: 'assets1@example.org',
-      firstname: 'assets1',
-      lastname: 'assets1',
-      email: 'assets1@example.org',
-      password: 'some_pass',
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      login:           'assets1@example.org',
+      firstname:       'assets1',
+      lastname:        'assets1',
+      email:           'assets1@example.org',
+      password:        'some_pass',
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
       organization_id: org1.id,
-      roles: roles,
-      groups: groups,
+      roles:           roles,
+      groups:          groups,
     )
 
     user2 = User.create_or_update(
-      login: 'assets2@example.org',
-      firstname: 'assets2',
-      lastname: 'assets2',
-      email: 'assets2@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'assets2@example.org',
+      firstname:     'assets2',
+      lastname:      'assets2',
+      email:         'assets2@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
 
     user3 = User.create_or_update(
-      login: 'assets3@example.org',
-      firstname: 'assets3',
-      lastname: 'assets3',
-      email: 'assets3@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'assets3@example.org',
+      firstname:     'assets3',
+      lastname:      'assets3',
+      email:         'assets3@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: user1.id,
       created_by_id: user2.id,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
     user3 = User.find(user3.id)
     assets = user3.assets({})

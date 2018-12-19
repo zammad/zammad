@@ -34,7 +34,7 @@ returns if user has no permissions to search
         return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
 
         {
-          prio: 2000,
+          prio:                2000,
           direct_search_index: true,
         }
       end
@@ -114,11 +114,11 @@ returns
             query_extension['bool']['must'].push access_condition
           end
 
-          items = SearchIndexBackend.search(query, 'User', limit: limit,
+          items = SearchIndexBackend.search(query, 'User', limit:           limit,
                                                            query_extension: query_extension,
-                                                           from: offset,
-                                                           sort_by: sort_by,
-                                                           order_by: order_by)
+                                                           from:            offset,
+                                                           sort_by:         sort_by,
+                                                           order_by:        order_by)
           users = []
           items.each do |item|
             user = User.lookup(id: item[:id])

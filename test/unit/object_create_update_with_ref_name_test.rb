@@ -5,33 +5,33 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
     roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
     user1 = User.create_or_update(
-      login: 'object_ref_name1@example.org',
-      firstname: 'object_ref_name1',
-      lastname: 'object_ref_name1',
-      email: 'object_ref_name1@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'object_ref_name1@example.org',
+      firstname:     'object_ref_name1',
+      lastname:      'object_ref_name1',
+      email:         'object_ref_name1@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
     user2 = User.create_or_update(
-      login: 'object_ref_name2@example.org',
-      firstname: 'object_ref_name2',
-      lastname: 'object_ref_name2',
-      email: 'object_ref_name2@example.org',
-      password: 'some_pass',
-      active: true,
+      login:         'object_ref_name2@example.org',
+      firstname:     'object_ref_name2',
+      lastname:      'object_ref_name2',
+      email:         'object_ref_name2@example.org',
+      password:      'some_pass',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: roles,
-      groups: groups,
+      roles:         roles,
+      groups:        groups,
     )
 
     org1 = Organization.create_if_not_exists_with_ref(
-      name: 'some org update_with_ref member',
-      members: ['object_ref_name1@example.org'],
+      name:          'some org update_with_ref member',
+      members:       ['object_ref_name1@example.org'],
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -40,8 +40,8 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
     assert_not(org1.member_ids.sort.include?(user2.id))
 
     org2 = Organization.create_or_update_with_ref(
-      name: 'some org update_with_ref member',
-      members: ['object_ref_name2@example.org'],
+      name:          'some org update_with_ref member',
+      members:       ['object_ref_name2@example.org'],
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -51,8 +51,8 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
     assert_equal(org1.id, org2.id)
 
     org3 = Organization.create_or_update_with_ref(
-      name: 'some org update_with_ref member2',
-      members: ['object_ref_name2@example.org'],
+      name:          'some org update_with_ref member2',
+      members:       ['object_ref_name2@example.org'],
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -63,9 +63,9 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
 
     assert_raises( ActiveRecord::AssociationTypeMismatch ) do
       Organization.create_or_update_with_ref(
-        name: 'some org update_with_ref member2',
-        members: ['object_ref_name2@example.org'],
-        member_ids: [2],
+        name:          'some org update_with_ref member2',
+        members:       ['object_ref_name2@example.org'],
+        member_ids:    [2],
         updated_by_id: 1,
         created_by_id: 1,
       )
@@ -75,35 +75,35 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
 
   test 'user' do
     org1 = Organization.create_if_not_exists_with_ref(
-      name: 'some org update_with_ref user',
+      name:          'some org update_with_ref user',
       updated_by_id: 1,
       created_by_id: 1,
     )
     user1 = User.create_or_update_with_ref(
-      login: 'object_ref_name1@example.org',
-      firstname: 'object_ref_name1',
-      lastname: 'object_ref_name1',
-      email: 'object_ref_name1@example.org',
-      password: 'some_pass',
-      active: true,
-      organization: 'some org update_with_ref user',
+      login:         'object_ref_name1@example.org',
+      firstname:     'object_ref_name1',
+      lastname:      'object_ref_name1',
+      email:         'object_ref_name1@example.org',
+      password:      'some_pass',
+      active:        true,
+      organization:  'some org update_with_ref user',
       updated_by_id: 1,
       created_by_id: 1,
-      roles: %w[Agent Admin],
-      groups: ['Users'],
+      roles:         %w[Agent Admin],
+      groups:        ['Users'],
     )
     user2 = User.create_or_update_with_ref(
-      login: 'object_ref_name2@example.org',
-      firstname: 'object_ref_name2',
-      lastname: 'object_ref_name2',
-      email: 'object_ref_name2@example.org',
-      password: 'some_pass',
+      login:           'object_ref_name2@example.org',
+      firstname:       'object_ref_name2',
+      lastname:        'object_ref_name2',
+      email:           'object_ref_name2@example.org',
+      password:        'some_pass',
       organization_id: nil,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
-      roles: ['Customer'],
-      groups: [],
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
+      roles:           ['Customer'],
+      groups:          [],
     )
     admin_role = Role.lookup(name: 'Admin')
     agent_role = Role.lookup(name: 'Agent')
@@ -127,35 +127,35 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
 
   test 'group' do
     user1 = User.create_or_update_with_ref(
-      login: 'object_ref_name1@example.org',
-      firstname: 'object_ref_name1',
-      lastname: 'object_ref_name1',
-      email: 'object_ref_name1@example.org',
-      password: 'some_pass',
-      active: true,
+      login:           'object_ref_name1@example.org',
+      firstname:       'object_ref_name1',
+      lastname:        'object_ref_name1',
+      email:           'object_ref_name1@example.org',
+      password:        'some_pass',
+      active:          true,
       organization_id: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
-      roles: %w[Agent Admin],
-      groups: [],
+      updated_by_id:   1,
+      created_by_id:   1,
+      roles:           %w[Agent Admin],
+      groups:          [],
     )
     user2 = User.create_or_update_with_ref(
-      login: 'object_ref_name2@example.org',
-      firstname: 'object_ref_name2',
-      lastname: 'object_ref_name2',
-      email: 'object_ref_name2@example.org',
-      password: 'some_pass',
+      login:           'object_ref_name2@example.org',
+      firstname:       'object_ref_name2',
+      lastname:        'object_ref_name2',
+      email:           'object_ref_name2@example.org',
+      password:        'some_pass',
       organization_id: nil,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
-      roles: ['Customer'],
-      groups: [],
+      active:          true,
+      updated_by_id:   1,
+      created_by_id:   1,
+      roles:           ['Customer'],
+      groups:          [],
     )
 
     group1 = Group.create_if_not_exists_with_ref(
-      name: 'some group update_with_ref',
-      users: ['object_ref_name1@example.org'],
+      name:          'some group update_with_ref',
+      users:         ['object_ref_name1@example.org'],
       updated_by_id: 1,
       created_by_id: 1,
     )

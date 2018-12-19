@@ -13,23 +13,23 @@ RSpec.describe 'Taskbars', type: :request do
 
     it 'does task ownership' do
       params = {
-        user_id: customer_user.id,
+        user_id:   customer_user.id,
         client_id: '123',
-        key: 'Ticket-5',
-        callback: 'TicketZoom',
-        state: {
-          ticket: {
+        key:       'Ticket-5',
+        callback:  'TicketZoom',
+        state:     {
+          ticket:  {
             owner_id: agent_user.id,
           },
           article: {},
         },
-        params: {
+        params:    {
           ticket_id: 5,
-          shown: true,
+          shown:     true,
         },
-        prio: 3,
-        notify: false,
-        active: false,
+        prio:      3,
+        notify:    false,
+        active:    false,
       }
 
       authenticated_as(agent_user)
@@ -45,7 +45,7 @@ RSpec.describe 'Taskbars', type: :request do
       params[:user_id] = customer_user.id
       params[:params] = {
         ticket_id: 5,
-        shown: false,
+        shown:     false,
       }
       put "/api/v1/taskbar/#{taskbar_id}", params: params, as: :json
       expect(response).to have_http_status(200)

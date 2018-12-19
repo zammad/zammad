@@ -6,34 +6,34 @@ class StatsTicketWaitingTimeTest < ActiveSupport::TestCase
   test 'single ticket' do
 
     group1 = Group.create!(
-      name: 'Group 1',
-      active: true,
+      name:          'Group 1',
+      active:        true,
       email_address: EmailAddress.first,
       created_by_id: 1,
       updated_by_id: 1,
     )
     roles = Role.where(name: 'Agent')
     user1 = User.create!(
-      login: 'assets_stats1@example.org',
-      firstname: 'assets_stats1',
-      lastname: 'assets_stats1',
-      email: 'assets_stats1@example.org',
-      password: 'some_pass',
-      active: true,
-      groups: [group1],
-      roles: roles,
+      login:         'assets_stats1@example.org',
+      firstname:     'assets_stats1',
+      lastname:      'assets_stats1',
+      email:         'assets_stats1@example.org',
+      password:      'some_pass',
+      active:        true,
+      groups:        [group1],
+      roles:         roles,
       created_by_id: 1,
       updated_by_id: 1,
     )
     user2 = User.create!(
-      login: 'assets_stats2@example.org',
-      firstname: 'assets_stats2',
-      lastname: 'assets_stats2',
-      email: 'assets_sla2@example.org',
-      password: 'some_pass',
-      active: true,
-      groups: [group1],
-      roles: roles,
+      login:         'assets_stats2@example.org',
+      firstname:     'assets_stats2',
+      lastname:      'assets_stats2',
+      email:         'assets_sla2@example.org',
+      password:      'some_pass',
+      active:        true,
+      groups:        [group1],
+      roles:         roles,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -45,11 +45,11 @@ class StatsTicketWaitingTimeTest < ActiveSupport::TestCase
     assert_equal(0, result[:percent])
 
     ticket1 = Ticket.create!(
-      title: 'com test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'com test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -183,11 +183,11 @@ class StatsTicketWaitingTimeTest < ActiveSupport::TestCase
     )
 
     ticket2 = Ticket.create!(
-      title: 'com test 2',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'com test 2',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -209,12 +209,12 @@ class StatsTicketWaitingTimeTest < ActiveSupport::TestCase
     assert_equal(0.0, result[:percent])
 
     ticket3 = Ticket.create!(
-      title: 'com test 3',
-      group: group1,
-      customer_id: 2,
-      owner: user1,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'com test 3',
+      group:         group1,
+      customer_id:   2,
+      owner:         user1,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )

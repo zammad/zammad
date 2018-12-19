@@ -47,8 +47,8 @@ class TwitterSync
     if auth
       user = User.find(auth.user_id)
       map = {
-        note: 'description',
-        web: 'website',
+        note:    'description',
+        web:     'website',
         address: 'location',
       }
 
@@ -76,11 +76,11 @@ class TwitterSync
 
     if user_data[:image_source]
       avatar = Avatar.add(
-        object: 'User',
-        o_id: user.id,
-        url: user_data[:image_source],
-        source: 'twitter',
-        deletable: true,
+        object:        'User',
+        o_id:          user.id,
+        url:           user_data[:image_source],
+        source:        'twitter',
+        deletable:     true,
         updated_by_id: user.id,
         created_by_id: user.id,
       )
@@ -170,7 +170,7 @@ class TwitterSync
       state:       state,
       priority:    Ticket::Priority.find_by(default_create: true),
       preferences: {
-        channel_id: channel.id,
+        channel_id:          channel.id,
         channel_screen_name: channel.options['user']['screen_name'],
       },
     )
@@ -214,13 +214,13 @@ class TwitterSync
       to = "@#{recipient_screen_name}"
       from = "@#{sender_screen_name}"
       twitter_preferences = {
-        created_at: item['created_timestamp'],
-        recipient_id: item['message_create']['target']['recipient_id'],
+        created_at:            item['created_timestamp'],
+        recipient_id:          item['message_create']['target']['recipient_id'],
         recipient_screen_name: recipient_screen_name,
-        sender_id: item['message_create']['sender_id'],
-        sender_screen_name: sender_screen_name,
-        app_id: app['app_id'],
-        app_name: app['app_name'],
+        sender_id:             item['message_create']['sender_id'],
+        sender_screen_name:    sender_screen_name,
+        app_id:                app['app_id'],
+        app_name:              app['app_name'],
       }
     elsif item['text'].present?
       message_id = item['id']
@@ -265,7 +265,7 @@ class TwitterSync
 
           attachment = {
             filename: url.sub(%r{^.*/(.+?)$}, '\1'),
-            content: result.body,
+            content:  result.body,
 
           }
           attachments.push attachment
@@ -275,16 +275,16 @@ class TwitterSync
       in_reply_to = item['in_reply_to_status_id']
 
       twitter_preferences = {
-        mention_ids: mention_ids,
-        geo: item['geo'],
-        retweeted: item['retweeted'],
-        possibly_sensitive: item['possibly_sensitive'],
+        mention_ids:         mention_ids,
+        geo:                 item['geo'],
+        retweeted:           item['retweeted'],
+        possibly_sensitive:  item['possibly_sensitive'],
         in_reply_to_user_id: item['in_reply_to_user_id'],
-        place: item['place'],
-        retweet_count: item['retweet_count'],
-        source: item['source'],
-        favorited: item['favorited'],
-        truncated: item['truncated'],
+        place:               item['place'],
+        retweet_count:       item['retweet_count'],
+        source:              item['source'],
+        favorited:           item['favorited'],
+        truncated:           item['truncated'],
       }
 
     else
@@ -302,11 +302,11 @@ class TwitterSync
 
     article_preferences = {
       twitter: self.class.preferences_cleanup(twitter_preferences),
-      links: [
+      links:   [
         {
-          url: "https://twitter.com/statuses/#{item['id']}",
+          url:    "https://twitter.com/statuses/#{item['id']}",
           target: '_blank',
-          name: 'on Twitter',
+          name:   'on Twitter',
         },
       ],
     }
@@ -326,10 +326,10 @@ class TwitterSync
 
     attachments.each do |attachment|
       Store.add(
-        object: 'Ticket::Article',
-        o_id: article.id,
-        data: attachment[:content],
-        filename: attachment[:filename],
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        attachment[:content],
+        filename:    attachment[:filename],
         preferences: {},
       )
     end
@@ -366,16 +366,16 @@ class TwitterSync
     in_reply_to = tweet.in_reply_to_status_id
 
     twitter_preferences = {
-      mention_ids: mention_ids,
-      geo: tweet.geo,
-      retweeted: tweet.retweeted?,
-      possibly_sensitive: tweet.possibly_sensitive?,
+      mention_ids:         mention_ids,
+      geo:                 tweet.geo,
+      retweeted:           tweet.retweeted?,
+      possibly_sensitive:  tweet.possibly_sensitive?,
       in_reply_to_user_id: tweet.in_reply_to_user_id,
-      place: tweet.place,
-      retweet_count: tweet.retweet_count,
-      source: tweet.source,
-      favorited: tweet.favorited?,
-      truncated: tweet.truncated?,
+      place:               tweet.place,
+      retweet_count:       tweet.retweet_count,
+      source:              tweet.source,
+      favorited:           tweet.favorited?,
+      truncated:           tweet.truncated?,
     }
 
     UserInfo.current_user_id = user.id
@@ -389,11 +389,11 @@ class TwitterSync
 
     article_preferences = {
       twitter: self.class.preferences_cleanup(twitter_preferences),
-      links: [
+      links:   [
         {
-          url: "https://twitter.com/statuses/#{tweet.id}",
+          url:    "https://twitter.com/statuses/#{tweet.id}",
           target: '_blank',
-          name: 'on Twitter',
+          name:   'on Twitter',
         },
       ],
     }
@@ -470,9 +470,9 @@ create a tweet ot direct message from an article
 
       data = {
         event: {
-          type: 'message_create',
+          type:           'message_create',
           message_create: {
-            target: {
+            target:       {
               recipient_id: authorization.uid,
             },
             message_data: {
@@ -792,8 +792,8 @@ download public media file from twitter
     if auth
       user = User.find(auth.user_id)
       map = {
-        note: 'description',
-        web: 'url',
+        note:    'description',
+        web:     'url',
         address: 'location',
       }
 
@@ -821,11 +821,11 @@ download public media file from twitter
 
     if user_data[:image_source].present?
       avatar = Avatar.add(
-        object: 'User',
-        o_id: user.id,
-        url: user_data[:image_source],
-        source: 'twitter',
-        deletable: true,
+        object:        'User',
+        o_id:          user.id,
+        url:           user_data[:image_source],
+        source:        'twitter',
+        deletable:     true,
         updated_by_id: user.id,
         created_by_id: user.id,
       )

@@ -23,16 +23,16 @@ returns
     end
 
     aggs_interval = {
-      from: params[:range_start],
-      to: params[:range_end],
+      from:     params[:range_start],
+      to:       params[:range_end],
       interval: interval_es, # year, quarter, month, week, day, hour, minute, second
-      field: params[:params][:field],
+      field:    params[:params][:field],
     }
 
     without_merged_tickets = {
       'state' => {
         'operator' => 'is not',
-        'value' => 'merged'
+        'value'    => 'merged'
       }
     }
 
@@ -141,8 +141,8 @@ returns
   def self.items(params)
 
     aggs_interval = {
-      from: params[:range_start],
-      to: params[:range_end],
+      from:  params[:range_start],
+      to:    params[:range_end],
       field: params[:params][:field],
     }
 
@@ -154,7 +154,7 @@ returns
     without_merged_tickets = {
       'state' => {
         'operator' => 'is not',
-        'value' => 'merged'
+        'value'    => 'merged'
       }
     }
 

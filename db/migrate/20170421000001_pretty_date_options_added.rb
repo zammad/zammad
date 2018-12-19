@@ -5,17 +5,17 @@ class PrettyDateOptionsAdded < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_or_update(
-      title: 'Pretty Date',
-      name: 'pretty_date_format',
-      area: 'System::Branding',
+      title:       'Pretty Date',
+      name:        'pretty_date_format',
+      area:        'System::Branding',
       description: 'Defines pretty date format.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'pretty_date_format',
-            tag: 'select',
+            null:    false,
+            name:    'pretty_date_format',
+            tag:     'select',
             options: {
               'relative': 'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
               'absolute': 'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
@@ -24,12 +24,12 @@ class PrettyDateOptionsAdded < ActiveRecord::Migration[4.2]
         ],
       },
       preferences: {
-        render: true,
-        prio: 10,
+        render:     true,
+        prio:       10,
         permission: ['admin.branding'],
       },
-      state: 'relative',
-      frontend: true
+      state:       'relative',
+      frontend:    true
     )
 
     Scheduler.create_or_update(

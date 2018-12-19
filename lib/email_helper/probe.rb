@@ -54,7 +54,7 @@ returns on fail
 
       if !user || !domain
         return {
-          result: 'invalid',
+          result:   'invalid',
           messages: {
             email: 'Invalid email.'
           },
@@ -91,9 +91,9 @@ returns on fail
           next if result_outbound[:result] != 'ok'
 
           return {
-            result: 'ok',
+            result:           'ok',
             content_messages: result_inbound[:content_messages],
-            setting: settings,
+            setting:          settings,
           }
         end
       end
@@ -105,7 +105,7 @@ returns on fail
       inbound_guess = EmailHelper.provider_inbound_guess(user, params[:email], params[:password], domain)
       inbound_map = inbound_mx + inbound_guess
       result = {
-        result: 'ok',
+        result:  'ok',
         setting: {}
       }
       success = false
@@ -213,7 +213,7 @@ returns on fail
       # validate adapter
       if !EmailHelper.available_driver[:inbound][adapter.to_sym]
         return {
-          result: 'failed',
+          result:  'failed',
           message: "Unknown adapter '#{adapter}'",
         }
       end
@@ -228,9 +228,9 @@ returns on fail
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
       rescue => e
         return {
-          result: 'invalid',
-          settings: params,
-          message: e.message,
+          result:        'invalid',
+          settings:      params,
+          message:       e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }
@@ -287,7 +287,7 @@ returns on fail
       # validate adapter
       if !EmailHelper.available_driver[:outbound][adapter.to_sym]
         return {
-          result: 'failed',
+          result:  'failed',
           message: "Unknown adapter '#{adapter}'",
         }
       end
@@ -331,7 +331,7 @@ returns on fail
         # check if sending email was ok, but mailserver rejected
         if !subject
           white_map = {
-            'Recipient address rejected' => true,
+            'Recipient address rejected'                => true,
             'Sender address rejected: Domain not found' => true,
           }
           white_map.each_key do |key|
@@ -339,16 +339,16 @@ returns on fail
             next if e.message !~ /#{Regexp.escape(key)}/i
 
             return {
-              result: 'ok',
+              result:   'ok',
               settings: params,
-              notice: e.message,
+              notice:   e.message,
             }
           end
         end
         return {
-          result: 'invalid',
-          settings: params,
-          message: e.message,
+          result:        'invalid',
+          settings:      params,
+          message:       e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }

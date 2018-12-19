@@ -6,8 +6,8 @@ module Import
           @attribute_config.merge!(
             data_type:   'boolean',
             data_option: {
-              default: dynamic_field['Config']['DefaultValue'] == '1',
-              options: {
+              default:   dynamic_field['Config']['DefaultValue'] == '1',
+              options:   {
                 true  => 'Yes',
                 false => 'No',
               },

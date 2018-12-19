@@ -13,34 +13,34 @@ class ClearbitTest < ActiveSupport::TestCase
 
     Setting.set('clearbit_integration', true)
     Setting.set('clearbit_config', {
-                  api_key: ENV['CLEARBIT_CI_API_KEY'],
+                  api_key:                 ENV['CLEARBIT_CI_API_KEY'],
                   organization_autocreate: true,
-                  organization_shared: false,
-                  user_sync: {
-                    'person.name.givenName' => 'user.firstname',
+                  organization_shared:     false,
+                  user_sync:               {
+                    'person.name.givenName'  => 'user.firstname',
                     'person.name.familyName' => 'user.lastname',
-                    'person.email' => 'user.email',
-                    'person.bio' => 'user.note',
-                    'company.url' => 'user.web',
-                    'person.site' => 'user.web',
-                    'company.location' => 'user.address',
-                    'person.location' => 'user.address',
+                    'person.email'           => 'user.email',
+                    'person.bio'             => 'user.note',
+                    'company.url'            => 'user.web',
+                    'person.site'            => 'user.web',
+                    'company.location'       => 'user.address',
+                    'person.location'        => 'user.address',
                     #'person.timeZone' => 'user.preferences[:timezone]',
                     #'person.gender' => 'user.preferences[:gender]',
                   },
-                  organization_sync: {
-                    'company.legalName' => 'organization.name',
-                    'company.name' => 'organization.name',
+                  organization_sync:       {
+                    'company.legalName'   => 'organization.name',
+                    'company.name'        => 'organization.name',
                     'company.description' => 'organization.note',
                   },
                 })
 
     # case 1 - person + company (demo data set)
     customer1 = User.create!(
-      firstname: '',
-      lastname: 'Should be still there',
-      email: 'alex@alexmaccaw.com',
-      note: '',
+      firstname:     '',
+      lastname:      'Should be still there',
+      email:         'alex@alexmaccaw.com',
+      note:          '',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -65,10 +65,10 @@ class ClearbitTest < ActiveSupport::TestCase
 
     # case 2 - person + company
     customer2 = User.create!(
-      firstname: '',
-      lastname: '',
-      email: 'me@example.com',
-      note: '',
+      firstname:     '',
+      lastname:      '',
+      email:         'me@example.com',
+      note:          '',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -94,7 +94,7 @@ class ClearbitTest < ActiveSupport::TestCase
     # update with own values (do not overwrite)
     customer2.update!(
       firstname: 'Martini',
-      note: 'changed by my self',
+      note:      'changed by my self',
     )
 
     Observer::Transaction.commit
@@ -123,7 +123,7 @@ class ClearbitTest < ActiveSupport::TestCase
     # update with own values (do not overwrite)
     customer2.update!(
       firstname: '',
-      note: 'changed by my self',
+      note:      'changed by my self',
     )
 
     customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
@@ -160,10 +160,10 @@ class ClearbitTest < ActiveSupport::TestCase
 
     # case 3 - no person
     customer3 = User.create!(
-      firstname: '',
-      lastname: '',
-      email: 'testing3@znuny.com',
-      note: '',
+      firstname:     '',
+      lastname:      '',
+      email:         'testing3@znuny.com',
+      note:          '',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -189,13 +189,13 @@ class ClearbitTest < ActiveSupport::TestCase
 
     # case 4 - person with organization but organization is already assigned (own created)
     customer4 = User.create!(
-      firstname: '',
-      lastname: '',
-      email: 'testing4@znuny.com',
-      note: '',
+      firstname:       '',
+      lastname:        '',
+      email:           'testing4@znuny.com',
+      note:            '',
       organization_id: 1,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     assert(customer4)
 
@@ -217,13 +217,13 @@ class ClearbitTest < ActiveSupport::TestCase
 
     # case 5 - person with organization but organization is already assigned (own created)
     customer5 = User.create!(
-      firstname: '',
-      lastname: '',
-      email: 'testing5@znuny.com',
-      note: '',
+      firstname:       '',
+      lastname:        '',
+      email:           'testing5@znuny.com',
+      note:            '',
       organization_id: organization3.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     assert(customer5)
 
@@ -248,10 +248,10 @@ class ClearbitTest < ActiveSupport::TestCase
 
     # case 6 - no person / real api call
     customer6 = User.create!(
-      firstname: '',
-      lastname: '',
-      email: 'testing6@clearbit.com',
-      note: '',
+      firstname:     '',
+      lastname:      '',
+      email:         'testing6@clearbit.com',
+      note:          '',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -295,32 +295,32 @@ class ClearbitTest < ActiveSupport::TestCase
 
     Setting.set('clearbit_integration', true)
     Setting.set('clearbit_config', {
-                  api_key: ENV['CLEARBIT_CI_API_KEY'],
+                  api_key:                 ENV['CLEARBIT_CI_API_KEY'],
                   organization_autocreate: true,
-                  organization_shared: true,
-                  user_sync: {
-                    'person.name.givenName' => 'user.firstname',
+                  organization_shared:     true,
+                  user_sync:               {
+                    'person.name.givenName'  => 'user.firstname',
                     'person.name.familyName' => 'user.lastname',
-                    'person.email' => 'user.email',
-                    'person.bio' => 'user.note_not_existing',
-                    'company.url' => 'user.web',
-                    'person.site' => 'user.web',
-                    'company.location' => 'user.address',
-                    'person.location' => 'user.address',
+                    'person.email'           => 'user.email',
+                    'person.bio'             => 'user.note_not_existing',
+                    'company.url'            => 'user.web',
+                    'person.site'            => 'user.web',
+                    'company.location'       => 'user.address',
+                    'person.location'        => 'user.address',
                   },
-                  organization_sync: {
-                    'company.legalName' => 'organization.name',
-                    'company.name' => 'organization.name',
+                  organization_sync:       {
+                    'company.legalName'   => 'organization.name',
+                    'company.name'        => 'organization.name',
                     'company.description' => 'organization.note_not_existing',
                   },
                 })
 
     # case 1 - person + company (demo data set)
     customer1 = User.create!(
-      firstname: '',
-      lastname: 'Should be still there',
-      email: 'testing6@znuny.com',
-      note: '',
+      firstname:     '',
+      lastname:      'Should be still there',
+      email:         'testing6@znuny.com',
+      note:          '',
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -25,9 +25,9 @@ RSpec.describe 'Integration Check MK', type: :request do
     it 'does create and close a ticket' do
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
-        service: 'some service',
+        state:    'down',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -43,9 +43,9 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'up',
-        host: 'some host',
-        service: 'some service',
+        state:    'up',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -62,9 +62,9 @@ RSpec.describe 'Integration Check MK', type: :request do
     it 'does double create and auto close' do
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
-        service: 'some service',
+        state:    'down',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -80,9 +80,9 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
-        service: 'some service',
+        state:    'down',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -97,9 +97,9 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'up',
-        host: 'some host',
-        service: 'some service',
+        state:    'up',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -116,9 +116,9 @@ RSpec.describe 'Integration Check MK', type: :request do
     it 'does ticket close which get ignored' do
       params = {
         event_id: '123',
-        state: 'up',
-        host: 'some host',
-        service: 'some service',
+        state:    'up',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -131,9 +131,9 @@ RSpec.describe 'Integration Check MK', type: :request do
       Setting.set('check_mk_auto_close', false)
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
-        service: 'some service',
+        state:    'down',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -149,9 +149,9 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
-        service: 'some service',
+        state:    'down',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -166,9 +166,9 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'up',
-        host: 'some host',
-        service: 'some service',
+        state:    'up',
+        host:     'some host',
+        service:  'some service',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -185,8 +185,8 @@ RSpec.describe 'Integration Check MK', type: :request do
     it 'does double create and auto close - host only' do
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
+        state:    'down',
+        host:     'some host',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -202,8 +202,8 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'down',
-        host: 'some host',
+        state:    'down',
+        host:     'some host',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)
@@ -218,8 +218,8 @@ RSpec.describe 'Integration Check MK', type: :request do
 
       params = {
         event_id: '123',
-        state: 'up',
-        host: 'some host',
+        state:    'up',
+        host:     'some host',
       }
       post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
       expect(response).to have_http_status(200)

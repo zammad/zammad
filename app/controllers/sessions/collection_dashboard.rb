@@ -6,8 +6,8 @@ module ExtraCollection
 
     item = StatsStore.search(
       object: 'User',
-      o_id: user.id,
-      key: 'dashboard',
+      o_id:   user.id,
+      key:    'dashboard',
     )
     return [collections, assets] if !item
 

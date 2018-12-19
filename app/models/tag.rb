@@ -41,8 +41,8 @@ add tags for certain object
     # create history
     Tag.create(
       tag_object_id: tag_object_id,
-      tag_item_id: tag_item_id,
-      o_id: data[:o_id],
+      tag_item_id:   tag_item_id,
+      o_id:          data[:o_id],
       created_by_id: data[:created_by_id],
     )
 
@@ -89,8 +89,8 @@ or by ids
     # create history
     result = Tag.where(
       tag_object_id: data[:tag_object_id],
-      tag_item_id: data[:tag_item_id],
-      o_id: data[:o_id],
+      tag_item_id:   data[:tag_item_id],
+      o_id:          data[:o_id],
     )
     result.each(&:destroy)
 
@@ -123,7 +123,7 @@ remove all tags of certain object
     # create history
     result = Tag.where(
       tag_object_id: data[:tag_object_id],
-      o_id: data[:o_id],
+      o_id:          data[:o_id],
     )
     result.each(&:destroy)
     true
@@ -150,7 +150,7 @@ returns
 
     tag_search = Tag.where(
       tag_object_id: tag_object_id_requested,
-      o_id: data[:o_id],
+      o_id:          data[:o_id],
     ).order(:id)
 
     tag_search.each_with_object([]) do |tag, result|
@@ -235,8 +235,8 @@ rename tag items
           if Tag.find_by(tag_object_id: tag.tag_object_id, o_id: tag.o_id, tag_item_id: already_existing_tag.id)
             Tag.tag_remove(
               tag_object_id: tag.tag_object_id,
-              o_id: tag.o_id,
-              tag_item_id: old_tag_item.id,
+              o_id:          tag.o_id,
+              tag_item_id:   old_tag_item.id,
             )
             next
           end
@@ -249,7 +249,7 @@ rename tag items
           # touch reference objects
           Tag.touch_reference_by_params(
             object: tag_object.name,
-            o_id: tag.o_id,
+            o_id:   tag.o_id,
           )
         end
 
@@ -269,7 +269,7 @@ rename tag items
         tag_object = Tag::Object.lookup(id: tag.tag_object_id)
         Tag.touch_reference_by_params(
           object: tag_object.name,
-          o_id: tag.o_id,
+          o_id:   tag.o_id,
         )
       end
 
@@ -292,7 +292,7 @@ remove tag item (destroy with reverences)
         tag.destroy
         Tag.touch_reference_by_params(
           object: tag_object.name,
-          o_id: tag.o_id,
+          o_id:   tag.o_id,
         )
       end
       Tag::Item.find(id).destroy

@@ -7,7 +7,7 @@ class ImportZendeskController < ApplicationController
     # validate
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Invalid URL!',
       }
       return
@@ -31,9 +31,9 @@ class ImportZendeskController < ApplicationController
         end
       end
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: message_human,
-        message: response.error.to_s,
+        message:       response.error.to_s,
       }
       return
     end
@@ -41,7 +41,7 @@ class ImportZendeskController < ApplicationController
     # since 2016-10-15 a redirect to a marketing page has been implemented
     if !response.body.match?(/#{params[:url]}/)
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: 'Hostname not found!',
       }
       return
@@ -53,7 +53,7 @@ class ImportZendeskController < ApplicationController
 
     render json: {
       result: 'ok',
-      url: params[:url],
+      url:    params[:url],
     }
   end
 
@@ -63,7 +63,7 @@ class ImportZendeskController < ApplicationController
     if !params[:username] || !params[:token]
 
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: 'Incomplete credentials',
       }
       return
@@ -80,7 +80,7 @@ class ImportZendeskController < ApplicationController
       Setting.set('import_zendesk_endpoint_key', nil)
 
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: 'Invalid credentials!',
       }
       return

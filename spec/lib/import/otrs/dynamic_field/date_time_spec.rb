@@ -13,10 +13,10 @@ RSpec.describe Import::OTRS::DynamicField::DateTime do
   it 'imports an OTRS DateTime DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'date_time_example',
-      display: 'DateTime Example',
-      screens: {
+      object:        'Ticket',
+      name:          'date_time_example',
+      display:       'DateTime Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true
@@ -31,9 +31,9 @@ RSpec.describe Import::OTRS::DynamicField::DateTime do
       data_type:     'datetime',
       data_option:   {
         future: true,
-        past: true,
-        diff: 72,
-        null: true
+        past:   true,
+        diff:   72,
+        null:   true
       }
     }
 

@@ -1,7 +1,7 @@
 Signature.create_if_not_exists(
-  id: 1,
-  name: 'default',
-  body: '
+  id:            1,
+  name:          'default',
+  body:          '
   #{user.firstname} #{user.lastname}
 
 --

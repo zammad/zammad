@@ -5,25 +5,25 @@ class SettingAddSipgateAlternativeFqdn < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'sipgate.io alternative fqdn',
-      name: 'sipgate_alternative_fqdn',
-      area: 'Integration::Sipgate::Expert',
+      title:       'sipgate.io alternative fqdn',
+      name:        'sipgate_alternative_fqdn',
+      area:        'Integration::Sipgate::Expert',
       description: 'Alternative FQDN for callbacks if you operate Zammad in internal network.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'sipgate_alternative_fqdn',
-            tag: 'input',
+            null:    false,
+            name:    'sipgate_alternative_fqdn',
+            tag:     'input',
           },
         ],
       },
-      state: '',
+      state:       '',
       preferences: {
         permission: ['admin.integration'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 

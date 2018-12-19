@@ -33,7 +33,7 @@ do also verify of written data
         adapter.add(data, sha)
         file = Store::File.create(
           provider: adapter_name,
-          sha: sha,
+          sha:      sha,
         )
 
         # verify

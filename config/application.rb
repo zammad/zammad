@@ -64,47 +64,47 @@ module Zammad
       'ticket.agent' => {
         notification_config: {
           matrix: {
-            create: {
+            create:           {
               criteria: {
-                owned_by_me: true,
+                owned_by_me:     true,
                 owned_by_nobody: true,
-                no: false,
+                no:              false,
               },
-              channel: {
-                email: true,
+              channel:  {
+                email:  true,
                 online: true,
               }
             },
-            update: {
+            update:           {
               criteria: {
-                owned_by_me: true,
+                owned_by_me:     true,
                 owned_by_nobody: true,
-                no: false,
+                no:              false,
               },
-              channel: {
-                email: true,
+              channel:  {
+                email:  true,
                 online: true,
               }
             },
             reminder_reached: {
               criteria: {
-                owned_by_me: true,
+                owned_by_me:     true,
                 owned_by_nobody: false,
-                no: false,
+                no:              false,
               },
-              channel: {
-                email: true,
+              channel:  {
+                email:  true,
                 online: true,
               }
             },
-            escalation: {
+            escalation:       {
               criteria: {
-                owned_by_me: true,
+                owned_by_me:     true,
                 owned_by_nobody: false,
-                no: false,
+                no:              false,
               },
-              channel: {
-                email: true,
+              channel:  {
+                email:  true,
                 online: true,
               }
             }

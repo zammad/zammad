@@ -29,7 +29,7 @@ returns if user has no permissions to search
         return false if Setting.get('chat') != true || !current_user.permissions?('chat.agent')
 
         {
-          prio: 900,
+          prio:                900,
           direct_search_index: true,
         }
       end

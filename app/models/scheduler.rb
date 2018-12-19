@@ -309,8 +309,8 @@ class Scheduler < ApplicationModel
 
       job.update!(
         error_message: error,
-        status: 'error',
-        active: false,
+        status:        'error',
+        active:        false,
       )
     end
 

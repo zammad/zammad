@@ -6,71 +6,71 @@ class JobTest < ActiveSupport::TestCase
     # create ticket
     group1 = Group.lookup(name: 'Users')
     group2 = Group.create_or_update(
-      name: 'JobTest2',
+      name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 3.days,
-      updated_at: Time.zone.now - 3.days,
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 3.days,
+      updated_at:    Time.zone.now - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
     )
     ticket2 = Ticket.create!(
-      title: 'job test 2',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 1.day,
+      title:         'job test 2',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 1.day,
       created_by_id: 1,
-      updated_at: Time.zone.now - 1.day,
+      updated_at:    Time.zone.now - 1.day,
       updated_by_id: 1,
     )
     ticket3 = Ticket.create!(
-      title: 'job test 3',
-      group: group2,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'open'),
-      priority: Ticket::Priority.lookup(name: '3 high'),
-      created_at: Time.zone.now - 1.day,
+      title:         'job test 3',
+      group:         group2,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'open'),
+      priority:      Ticket::Priority.lookup(name: '3 high'),
+      created_at:    Time.zone.now - 1.day,
       created_by_id: 1,
-      updated_at: Time.zone.now - 1.day,
+      updated_at:    Time.zone.now - 1.day,
       updated_by_id: 1,
     )
     ticket4 = Ticket.create!(
-      title: 'job test 4',
-      group: group2,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'closed'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 3.days,
+      title:         'job test 4',
+      group:         group2,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'closed'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 3.days,
       created_by_id: 1,
-      updated_at: Time.zone.now - 3.days,
+      updated_at:    Time.zone.now - 3.days,
       updated_by_id: 1,
     )
     ticket5 = Ticket.create!(
-      title: 'job test 5',
-      group: group2,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'open'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 3.days,
+      title:         'job test 5',
+      group:         group2,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'open'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
-      updated_at: Time.zone.now - 3.days,
+      updated_at:    Time.zone.now - 3.days,
     )
 
     # create jobs
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: false,
           Tue: false,
           Wed: false,
@@ -79,17 +79,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          0 => false,
-          1 => false,
-          2 => false,
-          3 => false,
-          4 => false,
-          5 => false,
-          6 => false,
-          7 => false,
-          8 => false,
-          9 => false,
+        hours:   {
+          0  => false,
+          1  => false,
+          2  => false,
+          3  => false,
+          4  => false,
+          5  => false,
+          6  => false,
+          7  => false,
+          8  => false,
+          9  => false,
           10 => false,
           11 => false,
           12 => false,
@@ -106,7 +106,7 @@ class JobTest < ActiveSupport::TestCase
           23 => false,
         },
         minutes: {
-          0 => false,
+          0  => false,
           10 => false,
           20 => false,
           30 => false,
@@ -114,20 +114,20 @@ class JobTest < ActiveSupport::TestCase
           50 => false,
         },
       },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+      condition:            {
+        'ticket.state_id'   => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
-      perform: {
+      perform:              {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
     assert_not(job1.next_run_at)
     assert_not(job1.executable?)
@@ -258,38 +258,38 @@ class JobTest < ActiveSupport::TestCase
     # create ticket
     group1 = Group.lookup(name: 'Users')
     group2 = Group.create_or_update(
-      name: 'JobTest2',
+      name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 3.days,
-      updated_at: Time.zone.now - 3.days,
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 3.days,
+      updated_at:    Time.zone.now - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
     )
     ticket2 = Ticket.create!(
-      title: 'job test 2',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 1.day,
+      title:         'job test 2',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 1.day,
       created_by_id: 1,
-      updated_at: Time.zone.now - 1.day,
+      updated_at:    Time.zone.now - 1.day,
       updated_by_id: 1,
     )
 
     # create jobs
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: true,
           Wed: true,
@@ -298,17 +298,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: true,
           Sun: true,
         },
-        hours: {
-          0 => true,
-          1 => true,
-          2 => true,
-          3 => true,
-          4 => true,
-          5 => true,
-          6 => true,
-          7 => true,
-          8 => true,
-          9 => true,
+        hours:   {
+          0  => true,
+          1  => true,
+          2  => true,
+          3  => true,
+          4  => true,
+          5  => true,
+          6  => true,
+          7  => true,
+          8  => true,
+          9  => true,
           10 => true,
           11 => true,
           12 => true,
@@ -325,7 +325,7 @@ class JobTest < ActiveSupport::TestCase
           23 => true,
         },
         minutes: {
-          0 => true,
+          0  => true,
           10 => true,
           20 => true,
           30 => true,
@@ -333,19 +333,19 @@ class JobTest < ActiveSupport::TestCase
           50 => true,
         },
       },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => '9999' },
+      condition:            {
+        'ticket.state_id'   => { 'operator' => 'is', 'value' => '9999' },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
-      perform: {
+      perform:              {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
       },
       disable_notification: true,
-      last_run_at: nil,
-      updated_at: Time.zone.now - 15.minutes,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      last_run_at:          nil,
+      updated_at:           Time.zone.now - 15.minutes,
+      active:               true,
+      updated_by_id:        1,
+      created_by_id:        1,
     )
     assert(job1.executable?)
     assert(job1.in_timeplan?)
@@ -365,9 +365,9 @@ class JobTest < ActiveSupport::TestCase
 
     # create jobs
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: false,
           Wed: false,
@@ -376,17 +376,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          0 => false,
-          1 => true,
-          2 => false,
-          3 => false,
-          4 => false,
-          5 => false,
-          6 => false,
-          7 => false,
-          8 => false,
-          9 => false,
+        hours:   {
+          0  => false,
+          1  => true,
+          2  => false,
+          3  => false,
+          4  => false,
+          5  => false,
+          6  => false,
+          7  => false,
+          8  => false,
+          9  => false,
           10 => true,
           11 => false,
           12 => false,
@@ -403,7 +403,7 @@ class JobTest < ActiveSupport::TestCase
           23 => false,
         },
         minutes: {
-          0 => true,
+          0  => true,
           10 => false,
           20 => false,
           30 => false,
@@ -411,20 +411,20 @@ class JobTest < ActiveSupport::TestCase
           50 => false,
         },
       },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+      condition:            {
+        'ticket.state_id'   => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
-      perform: {
+      perform:              {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
 
     time_now = Time.zone.parse('2016-03-18 09:17:13 UTC')
@@ -493,9 +493,9 @@ class JobTest < ActiveSupport::TestCase
 
     # create jobs
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: false,
           Wed: false,
@@ -504,17 +504,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          0 => true,
-          1 => false,
-          2 => false,
-          3 => false,
-          4 => false,
-          5 => false,
-          6 => false,
-          7 => false,
-          8 => false,
-          9 => false,
+        hours:   {
+          0  => true,
+          1  => false,
+          2  => false,
+          3  => false,
+          4  => false,
+          5  => false,
+          6  => false,
+          7  => false,
+          8  => false,
+          9  => false,
           10 => true,
           11 => false,
           12 => false,
@@ -531,7 +531,7 @@ class JobTest < ActiveSupport::TestCase
           23 => false,
         },
         minutes: {
-          0 => true,
+          0  => true,
           10 => false,
           20 => false,
           30 => false,
@@ -539,20 +539,20 @@ class JobTest < ActiveSupport::TestCase
           50 => false,
         },
       },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+      condition:            {
+        'ticket.state_id'   => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
-      perform: {
+      perform:              {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
 
     time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
@@ -582,9 +582,9 @@ class JobTest < ActiveSupport::TestCase
   test 'check next_run_at' do
 
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: false,
           Wed: false,
@@ -593,17 +593,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          '0' => true,
-          '1' => false,
-          '2' => false,
-          '3' => false,
-          '4' => false,
-          '5' => false,
-          '6' => false,
-          '7' => false,
-          '8' => false,
-          '9' => false,
+        hours:   {
+          '0'  => true,
+          '1'  => false,
+          '2'  => false,
+          '3'  => false,
+          '4'  => false,
+          '5'  => false,
+          '6'  => false,
+          '7'  => false,
+          '8'  => false,
+          '9'  => false,
           '10' => false,
           '11' => false,
           '12' => false,
@@ -620,7 +620,7 @@ class JobTest < ActiveSupport::TestCase
           '23' => false,
         },
         minutes: {
-          '0' => true,
+          '0'  => true,
           '10' => false,
           '20' => false,
           '30' => false,
@@ -628,20 +628,20 @@ class JobTest < ActiveSupport::TestCase
           '50' => false,
         },
       },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+      condition:            {
+        'ticket.state_id'   => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
-      perform: {
+      perform:              {
         'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
 
     time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
@@ -654,9 +654,9 @@ class JobTest < ActiveSupport::TestCase
     travel_to Time.zone.local(2017, 11, 10, 22, 0o4, 44)
 
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: false,
           Tue: false,
           Wed: false,
@@ -665,17 +665,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: true,
           Sun: false,
         },
-        hours: {
-          '0' => false,
-          '1' => false,
-          '2' => false,
-          '3' => false,
-          '4' => false,
-          '5' => false,
-          '6' => false,
-          '7' => false,
-          '8' => false,
-          '9' => false,
+        hours:   {
+          '0'  => false,
+          '1'  => false,
+          '2'  => false,
+          '3'  => false,
+          '4'  => false,
+          '5'  => false,
+          '6'  => false,
+          '7'  => false,
+          '8'  => false,
+          '9'  => false,
           '10' => false,
           '11' => false,
           '12' => false,
@@ -692,7 +692,7 @@ class JobTest < ActiveSupport::TestCase
           '23' => true,
         },
         minutes: {
-          '0' => true,
+          '0'  => true,
           '10' => false,
           '20' => false,
           '30' => false,
@@ -700,19 +700,19 @@ class JobTest < ActiveSupport::TestCase
           '50' => false,
         },
       },
-      condition: {
+      condition:            {
         'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
       },
-      perform: {
+      perform:              {
         'ticket.action' => { 'value' => 'delete' },
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
 
     assert_equal('2017-11-11 23:00:00 UTC', job1.next_run_at.to_s)
@@ -737,28 +737,28 @@ class JobTest < ActiveSupport::TestCase
 
     group1 = Group.lookup(name: 'Users')
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_by_id: 1,
       updated_by_id: 1,
     )
     ticket2 = Ticket.create!(
-      title: 'job test 2',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'job test 2',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: false,
           Tue: false,
           Wed: false,
@@ -767,17 +767,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          '0' => false,
-          '1' => false,
-          '2' => false,
-          '3' => false,
-          '4' => false,
-          '5' => false,
-          '6' => false,
-          '7' => false,
-          '8' => false,
-          '9' => false,
+        hours:   {
+          '0'  => false,
+          '1'  => false,
+          '2'  => false,
+          '3'  => false,
+          '4'  => false,
+          '5'  => false,
+          '6'  => false,
+          '7'  => false,
+          '8'  => false,
+          '9'  => false,
           '10' => false,
           '11' => false,
           '12' => false,
@@ -794,7 +794,7 @@ class JobTest < ActiveSupport::TestCase
           '23' => true,
         },
         minutes: {
-          '0' => true,
+          '0'  => true,
           '10' => false,
           '20' => false,
           '30' => false,
@@ -802,19 +802,19 @@ class JobTest < ActiveSupport::TestCase
           '50' => false,
         },
       },
-      condition: {
+      condition:            {
         'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
       },
-      perform: {
+      perform:              {
         'ticket.action' => { 'value' => 'delete' },
       },
       disable_notification: true,
-      last_run_at: nil,
-      active: true,
-      created_by_id: 1,
-      created_at: Time.zone.now,
-      updated_by_id: 1,
-      updated_at: Time.zone.now,
+      last_run_at:          nil,
+      active:               true,
+      created_by_id:        1,
+      created_at:           Time.zone.now,
+      updated_by_id:        1,
+      updated_at:           Time.zone.now,
     )
     Job.run
 
@@ -836,39 +836,39 @@ class JobTest < ActiveSupport::TestCase
     # create ticket
     group1 = Group.lookup(name: 'Users')
     group2 = Group.create_or_update(
-      name: 'JobTest2',
+      name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 3.days,
-      updated_at: Time.zone.now - 3.days,
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 3.days,
+      updated_at:    Time.zone.now - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
     )
     ticket1.tag_add('spam', 1)
     ticket1.tag_add('test1 ', 1)
     ticket2 = Ticket.create!(
-      title: 'job test 2',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: Time.zone.now - 1.day,
+      title:         'job test 2',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    Time.zone.now - 1.day,
       created_by_id: 1,
-      updated_at: Time.zone.now - 1.day,
+      updated_at:    Time.zone.now - 1.day,
       updated_by_id: 1,
     )
 
     job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
+      name:                 'Test Job1',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: true,
           Wed: true,
@@ -877,17 +877,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: true,
           Sun: true,
         },
-        hours: {
-          0 => true,
-          1 => true,
-          2 => true,
-          3 => true,
-          4 => true,
-          5 => true,
-          6 => true,
-          7 => true,
-          8 => true,
-          9 => true,
+        hours:   {
+          0  => true,
+          1  => true,
+          2  => true,
+          3  => true,
+          4  => true,
+          5  => true,
+          6  => true,
+          7  => true,
+          8  => true,
+          9  => true,
           10 => true,
           11 => true,
           12 => true,
@@ -904,7 +904,7 @@ class JobTest < ActiveSupport::TestCase
           23 => true,
         },
         minutes: {
-          0 => true,
+          0  => true,
           10 => true,
           20 => true,
           30 => true,
@@ -912,18 +912,18 @@ class JobTest < ActiveSupport::TestCase
           50 => true,
         },
       },
-      condition: {
+      condition:            {
         'ticket.tags' => { 'operator' => 'contains one', 'value' => 'spam' },
       },
-      perform: {
+      perform:              {
         'ticket.action' => { 'value' => 'delete' },
       },
       disable_notification: true,
-      last_run_at: nil,
-      updated_at: Time.zone.now - 15.minutes,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      last_run_at:          nil,
+      updated_at:           Time.zone.now - 15.minutes,
+      active:               true,
+      updated_by_id:        1,
+      created_by_id:        1,
     )
     assert(job1.executable?)
     assert(job1.in_timeplan?)
@@ -939,33 +939,33 @@ class JobTest < ActiveSupport::TestCase
     # create ticket
     group1 = Group.lookup(name: 'Users')
     group2 = Group.create_or_update(
-      name: 'JobTest2',
+      name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'closed'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'closed'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_by_id: 1,
       updated_by_id: 1,
     )
     ticket2 = Ticket.create!(
-      title: 'job test 2',
-      group: group2,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'closed'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'job test 2',
+      group:         group2,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'closed'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_by_id: 1,
       updated_by_id: 1,
     )
     travel_to Time.zone.parse('2018-08-13T23:01:01Z')
     job1 = Job.create_or_update(
-      name: 'Spam entfernen',
-      timeplan: {
-        days: {
+      name:                 'Spam entfernen',
+      timeplan:             {
+        days:    {
           Mon: true,
           Tue: false,
           Wed: true,
@@ -974,17 +974,17 @@ class JobTest < ActiveSupport::TestCase
           Sat: false,
           Sun: false,
         },
-        hours: {
-          '0' => false,
-          '1' => false,
-          '2' => false,
-          '3' => false,
-          '4' => false,
-          '5' => false,
-          '6' => false,
-          '7' => false,
-          '8' => false,
-          '9' => false,
+        hours:   {
+          '0'  => false,
+          '1'  => false,
+          '2'  => false,
+          '3'  => false,
+          '4'  => false,
+          '5'  => false,
+          '6'  => false,
+          '7'  => false,
+          '8'  => false,
+          '9'  => false,
           '10' => false,
           '11' => false,
           '12' => false,
@@ -1001,7 +1001,7 @@ class JobTest < ActiveSupport::TestCase
           '23' => true,
         },
         minutes: {
-          '0' => true,
+          '0'  => true,
           '10' => false,
           '20' => false,
           '30' => false,
@@ -1009,23 +1009,23 @@ class JobTest < ActiveSupport::TestCase
           '50' => false,
         }
       },
-      condition: {
+      condition:            {
         'ticket.group_id' => { 'operator' => 'is', 'value' => group1.id },
         'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'closed').id }
       },
-      perform: {
+      perform:              {
         'ticket.action' => { 'value' => 'delete' }
       },
       disable_notification: true,
-      last_run_at: nil,
-      next_run_at: '2018-08-13 23:00:00',
-      running: false,
-      processed: 19_393,
-      matching: 19_428,
-      updated_at: Time.zone.now - 15.minutes,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      last_run_at:          nil,
+      next_run_at:          '2018-08-13 23:00:00',
+      running:              false,
+      processed:            19_393,
+      matching:             19_428,
+      updated_at:           Time.zone.now - 15.minutes,
+      active:               true,
+      updated_by_id:        1,
+      created_by_id:        1,
     )
 
     assert(job1.executable?)
@@ -1036,11 +1036,11 @@ class JobTest < ActiveSupport::TestCase
     assert(Ticket.find_by(id: ticket2.id))
 
     ticket1 = Ticket.create!(
-      title: 'job test 1',
-      group: group1,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'closed'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'job test 1',
+      group:         group1,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'closed'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_by_id: 1,
       updated_by_id: 1,
     )

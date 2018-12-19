@@ -8,7 +8,7 @@ class ImportOtrsController < ApplicationController
     # validate
     if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Invalid URL!',
       }
       return
@@ -31,9 +31,9 @@ class ImportOtrsController < ApplicationController
         end
       end
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: message_human,
-        message: response.error.to_s,
+        message:       response.error.to_s,
       }
       return
     end
@@ -59,7 +59,7 @@ class ImportOtrsController < ApplicationController
 
           if !key_parts[1]
             render json: {
-              result: 'invalid',
+              result:        'invalid',
               message_human: 'Unable to get key from URL!'
             }
             return
@@ -78,22 +78,22 @@ class ImportOtrsController < ApplicationController
 
         result = {
           result: 'ok',
-          url: params[:url],
+          url:    params[:url],
         }
       else
         result = {
-          result: 'invalid',
+          result:        'invalid',
           message_human: migrator_response['Error']
         }
       end
     elsif response.body.match?(/(otrs\sag|otrs\.com|otrs\.org)/i)
       result = {
-        result: 'invalid',
+        result:        'invalid',
         message_human: 'Host found, but no OTRS migrator is installed!'
       }
     else
       result = {
-        result: 'invalid',
+        result:        'invalid',
         message_human: 'Host found, but it seems to be no OTRS installation!',
       }
     end
@@ -109,7 +109,7 @@ class ImportOtrsController < ApplicationController
     if !welcome
       render json: {
         message: 'Migrator can\'t read OTRS output!',
-        result: 'invalid',
+        result:  'invalid',
       }
       return
     end

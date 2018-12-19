@@ -72,10 +72,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'product_name')
       params = {
-        id: setting.id,
-        name: 'some_new_name',
+        id:          setting.id,
+        name:        'some_new_name',
         preferences: {
-          permission: ['admin.branding', 'admin.some_new_permission'],
+          permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
       }
@@ -90,10 +90,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'api_token_access')
       params = {
-        id: setting.id,
-        name: 'some_new_name',
+        id:          setting.id,
+        name:        'some_new_name',
         preferences: {
-          permission: ['admin.branding', 'admin.some_new_permission'],
+          permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
       }
@@ -148,10 +148,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'product_name')
       params = {
-        id: setting.id,
-        name: 'some_new_name',
+        id:          setting.id,
+        name:        'some_new_name',
         preferences: {
-          permission: ['admin.branding', 'admin.some_new_permission'],
+          permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
       }
@@ -162,10 +162,10 @@ RSpec.describe 'Settings', type: :request do
       # update
       setting = Setting.find_by(name: 'api_token_access')
       params = {
-        id: setting.id,
-        name: 'some_new_name',
+        id:          setting.id,
+        name:        'some_new_name',
         preferences: {
-          permission: ['admin.branding', 'admin.some_new_permission'],
+          permission:   ['admin.branding', 'admin.some_new_permission'],
           some_new_key: true,
         }
       }

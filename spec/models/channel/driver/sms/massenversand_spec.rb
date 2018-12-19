@@ -25,11 +25,11 @@ RSpec.describe Channel::Driver::Sms::Massenversand do
 
   def create_channel
     FactoryBot.create(:channel,
-                      options: {
+                      options:       {
                         adapter: 'sms/massenversand',
                         gateway: gateway,
-                        sender: sender_number,
-                        token: token
+                        sender:  sender_number,
+                        token:   token
                       },
                       created_by_id: 1,
                       updated_by_id: 1)
@@ -38,11 +38,11 @@ RSpec.describe Channel::Driver::Sms::Massenversand do
   def url_to_mock
     params = {
       authToken: token,
-      getID: 1,
-      msg: message_body,
-      msgtype: 'c',
-      receiver: receiver_number,
-      sender: sender_number
+      getID:     1,
+      msg:       message_body,
+      msgtype:   'c',
+      receiver:  receiver_number,
+      sender:    sender_number
     }
 
     gateway + '?' + URI.encode_www_form(params)

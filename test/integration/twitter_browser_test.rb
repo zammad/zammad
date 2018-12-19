@@ -5,9 +5,9 @@ class TwitterBrowserTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
-      password: 'test',
-      url: browser_url,
+      username:    'master@example.com',
+      password:    'test',
+      url:         browser_url,
       auto_wizard: true,
     )
     tasks_close_all()
@@ -17,39 +17,39 @@ class TwitterBrowserTest < TestCase
     click(css: '.content.active .js-configApp')
     sleep 2
     set(
-      css: '.content.active .modal [name=consumer_key]',
+      css:   '.content.active .modal [name=consumer_key]',
       value: 'some_key',
     )
     set(
-      css: '.content.active .modal [name=consumer_secret]',
+      css:   '.content.active .modal [name=consumer_secret]',
       value: 'some_secret',
     )
     click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '.content.active .modal .alert',
+      css:   '.content.active .modal .alert',
       value: '401 Authorization Required',
     )
 
     set(
-      css: '.content.active .modal [name=oauth_token]',
+      css:   '.content.active .modal [name=oauth_token]',
       value: 'some_oauth_token',
     )
 
     set(
-      css: '.content.active .modal [name=oauth_token_secret]',
+      css:   '.content.active .modal [name=oauth_token_secret]',
       value: 'some_oauth_token_secret',
     )
 
     set(
-      css: '.content.active .modal [name=env]',
+      css:   '.content.active .modal [name=env]',
       value: 'some_env',
     )
 
     click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '.content.active .modal .alert',
+      css:   '.content.active .modal .alert',
       value: '401 Authorization Required',
     )
 

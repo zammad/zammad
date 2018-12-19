@@ -58,7 +58,7 @@ returns
       client_id,
       {
         event: 'ws:login',
-        data: { success: true },
+        data:  { success: true },
       }
     )
   end
@@ -498,7 +498,7 @@ create spool messages
     path = "#{@path}/spool/"
     FileUtils.mkpath path
     data = {
-      msg: msg,
+      msg:       msg,
       timestamp: Time.now.utc.to_i,
     }
     file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
@@ -572,7 +572,7 @@ get spool messages
               end
 
               item = {
-                type: 'direct',
+                type:    'direct',
                 message: message,
               }
               data.push item
@@ -585,7 +585,7 @@ get spool messages
               message = message_parsed['data']
             end
             item = {
-              type: 'broadcast',
+              type:    'broadcast',
               message: message,
             }
             data.push item

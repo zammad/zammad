@@ -33,7 +33,7 @@ class Service::Image::Zammad
     Rails.logger.info "Fetched image for '#{email}', http code: #{response.code}"
     mime_type = 'image/jpeg'
     {
-      content: response.body,
+      content:   response.body,
       mime_type: mime_type,
     }
   end
@@ -67,7 +67,7 @@ class Service::Image::Zammad
     mime_type = 'image/png'
 
     {
-      content: response.body,
+      content:   response.body,
       mime_type: mime_type,
     }
   end

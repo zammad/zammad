@@ -8,7 +8,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -16,16 +16,16 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - reply test',
-        body: 'some body 123äöü - reply test',
+        group:    'Users',
+        title:    'some subject 123äöü - reply test',
+        body:     'some body 123äöü - reply test',
       },
     )
     sleep 1
 
     # fill body
     ticket_update(
-      data: {
+      data:          {
         body: 'keep me',
       },
       do_not_submit: true,
@@ -42,8 +42,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     # check body
     watch_for(
-      css: '.content.active .js-reset',
-      value: '(Discard your unsaved changes.|Verwerfen der)',
+      css:      '.content.active .js-reset',
+      value:    '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
     )
 
@@ -65,8 +65,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     # check body
     watch_for(
-      css: '.content.active .js-reset',
-      value: '(Discard your unsaved changes.|Verwerfen der)',
+      css:      '.content.active .js-reset',
+      value:    '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
     )
 
@@ -87,7 +87,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     click(css: '.content.active .js-settingContainer .js-setting')
     modal_ready()
     select(
-      css: params[:css],
+      css:   params[:css],
       value: params[:value]
     )
     click(
@@ -102,7 +102,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -115,13 +115,13 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     # enable email full quote in the ticket zoom config page
     change_quote_config(
-      css: '.modal #ui_ticket_zoom_article_email_full_quote select[name="ui_ticket_zoom_article_email_full_quote"]',
-      value: 'yes',
+      css:        '.modal #ui_ticket_zoom_article_email_full_quote select[name="ui_ticket_zoom_article_email_full_quote"]',
+      value:      'yes',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote .btn[type="submit"]',
     )
     change_quote_config(
-      css: '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
-      value: 'yes',
+      css:        '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
+      value:      'yes',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote_header .btn[type="submit"]',
     )
 
@@ -144,8 +144,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       title: 'Welcome to Zammad',
     )
     change_quote_config(
-      css: '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
-      value: 'no',
+      css:        '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
+      value:      'no',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote_header .btn[type="submit"]',
     )
 
@@ -166,8 +166,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       title: 'Welcome to Zammad',
     )
     change_quote_config(
-      css: '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
-      value: 'yes',
+      css:        '.modal #ui_ticket_zoom_article_email_full_quote_header select[name="ui_ticket_zoom_article_email_full_quote_header"]',
+      value:      'yes',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote_header .btn[type="submit"]',
     )
   end
@@ -178,7 +178,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -191,8 +191,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     # enable email full quote in the ticket zoom config page
     change_quote_config(
-      css: '.modal #ui_ticket_zoom_article_email_full_quote select[name="ui_ticket_zoom_article_email_full_quote"]',
-      value: 'yes',
+      css:        '.modal #ui_ticket_zoom_article_email_full_quote select[name="ui_ticket_zoom_article_email_full_quote"]',
+      value:      'yes',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote .btn[type="submit"]',
     )
 

@@ -195,7 +195,7 @@ returns:
   def as_raw
     list = Store.list(
       object: 'Ticket::Article::Mail',
-      o_id: id,
+      o_id:   id,
     )
     return if list.blank?
 
@@ -217,11 +217,11 @@ returns:
 
   def save_as_raw(msg)
     Store.add(
-      object: 'Ticket::Article::Mail',
-      o_id: id,
-      data: msg,
-      filename: "ticket-#{ticket.number}-#{id}.eml",
-      preferences: {},
+      object:        'Ticket::Article::Mail',
+      o_id:          id,
+      data:          msg,
+      filename:      "ticket-#{ticket.number}-#{id}.eml",
+      preferences:   {},
       created_by_id: created_by_id,
     )
   end

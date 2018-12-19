@@ -67,7 +67,7 @@ or
       adapter = params[:inbound][:adapter].downcase
       if !EmailHelper.available_driver[:inbound][adapter.to_sym]
         return {
-          result: 'failed',
+          result:  'failed',
           message: "Unknown adapter '#{adapter}'",
         }
       end
@@ -87,12 +87,12 @@ or
           fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
         rescue => e
           result = {
-            result: 'invalid',
-            source: 'inbound',
-            message: e.to_s,
+            result:        'invalid',
+            source:        'inbound',
+            message:       e.to_s,
             message_human: EmailHelper::Probe.translation(e.message),
             invalid_field: EmailHelper::Probe.invalid_field(e.message),
-            subject: subject,
+            subject:       subject,
           }
           return result
         end
@@ -104,7 +104,7 @@ or
       end
 
       {
-        result: 'invalid',
+        result:  'invalid',
         message: 'Verification Email not found in mailbox.',
         subject: subject,
       }

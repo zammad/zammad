@@ -7,24 +7,24 @@ class EmailProcessFollowUpPossibleTest < ActiveSupport::TestCase
     users_group = Group.lookup(name: 'Users')
 
     ticket = Ticket.create(
-      title: 'follow up check',
-      group: users_group,
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'follow up check',
+      group:         users_group,
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     article = Ticket::Article.create(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'follow up check',
-      message_id: '<20150830145601.30.608882@edenhofer.zammad.com>',
-      body: 'some message article',
-      internal: false,
-      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
-      type: Ticket::Article::Type.lookup(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'follow up check',
+      message_id:    '<20150830145601.30.608882@edenhofer.zammad.com>',
+      body:          'some message article',
+      internal:      false,
+      sender:        Ticket::Article::Sender.lookup(name: 'Agent'),
+      type:          Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )

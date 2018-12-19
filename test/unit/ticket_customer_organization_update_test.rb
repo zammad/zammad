@@ -6,49 +6,49 @@ class TicketCustomerOrganizationUpdateTest < ActiveSupport::TestCase
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
     @agent1 = User.create_or_update(
-      login: 'ticket-customer-organization-update-agent1@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent1',
-      email: 'ticket-customer-organization-update-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      updated_at: '2015-02-05 16:37:00',
+      login:         'ticket-customer-organization-update-agent1@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent1',
+      email:         'ticket-customer-organization-update-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
     @organization1 = Organization.create_if_not_exists(
-      name: 'Customer Organization Update',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'Customer Organization Update',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     @customer1 = User.create_or_update(
-      login: 'ticket-customer-organization-update-customer1@example.com',
-      firstname: 'Notification',
-      lastname: 'Customer1',
-      email: 'ticket-customer-organization-update-customer1@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'ticket-customer-organization-update-customer1@example.com',
+      firstname:       'Notification',
+      lastname:        'Customer1',
+      email:           'ticket-customer-organization-update-customer1@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: @organization1.id,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: 1,
-      created_by_id: 1,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   1,
+      created_by_id:   1,
     )
   end
 
   test 'create ticket, update customers organization later' do
 
     ticket = Ticket.create(
-      title: "some title1\n äöüß",
-      group: Group.lookup(name: 'Users'),
-      customer_id: @customer1.id,
-      owner_id: @agent1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         "some title1\n äöüß",
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )

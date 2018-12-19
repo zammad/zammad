@@ -6,7 +6,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -19,17 +19,17 @@ class AgentProfilePermissionsTest < TestCase
     )
 
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'note',
     )
 
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'email',
     )
 
     set(
-      css: '.content.active [data-name="note"]',
+      css:   '.content.active [data-name="note"]',
       value: 'some note 123',
     )
     empty_search()
@@ -40,23 +40,23 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     watch_for(
-      css: '.content.active .modal',
+      css:   '.content.active .modal',
       value: 'some note 123',
     )
 
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'B2',
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'some note abc',
     )
 
@@ -72,7 +72,7 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.content.active .modal button.js-submit')
@@ -90,7 +90,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -103,11 +103,11 @@ class AgentProfilePermissionsTest < TestCase
     )
 
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'note',
     )
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'email',
     )
 
@@ -123,7 +123,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -143,7 +143,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -152,7 +152,7 @@ class AgentProfilePermissionsTest < TestCase
     )
 
     watch_for(
-      css: '.content.active .tabsSidebar-holder',
+      css:   '.content.active .tabsSidebar-holder',
       value: ticket1[:title],
     )
 
@@ -167,7 +167,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -189,23 +189,23 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'B2',
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
       value: 'some note abc',
     )
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block h3[title="Name"]',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block h3[title="Name"]',
       value: 'Nicole B2',
     )
 
@@ -215,23 +215,23 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Braun',
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
       value: 'some note abc',
     )
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [title="Name"]',
+      css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block [title="Name"]',
       value: 'Nicole Braun',
     )
   end
@@ -242,7 +242,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -278,18 +278,18 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'B2',
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.content.active .profile-window',
+      css:   '.content.active .profile-window',
       value: 'some note abc',
     )
 
@@ -305,11 +305,11 @@ class AgentProfilePermissionsTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Braun',
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
@@ -328,7 +328,7 @@ class AgentProfilePermissionsTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 

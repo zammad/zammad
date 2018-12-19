@@ -8,25 +8,25 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     groups = Group.all
 
     @agent1 = User.create_or_update(
-      login: 'session-basic-ticket-agent-1',
+      login:     'session-basic-ticket-agent-1',
       firstname: 'Session',
-      lastname: 'session basic ' + rand(99_999).to_s,
-      email: 'session-basic-ticket-agent-1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      lastname:  'session basic ' + rand(99_999).to_s,
+      email:     'session-basic-ticket-agent-1@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     roles,
+      groups:    groups,
     )
 
     @agent2 = User.create_or_update(
-      login: 'session-basic-ticket-agent-2',
+      login:     'session-basic-ticket-agent-2',
       firstname: 'Session',
-      lastname: 'session basic ' + rand(99_999).to_s,
-      email: 'session-basic-ticket-agent-2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      lastname:  'session basic ' + rand(99_999).to_s,
+      email:     'session-basic-ticket-agent-2@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     roles,
+      groups:    groups,
     )
     Overview.destroy_all
     load Rails.root.join('db', 'seeds', 'overviews.rb')

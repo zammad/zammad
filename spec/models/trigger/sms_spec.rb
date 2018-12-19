@@ -13,7 +13,7 @@ RSpec.describe Trigger do
       channel = create(:channel, area: 'Sms::Notification')
       trigger = create(:trigger,
                        disable_notification: false,
-                       perform: {
+                       perform:              {
                          'notification.sms': {
                            recipient: 'ticket_agents',
                            body:      'space&nbsp;between #{ticket.title}', # rubocop:disable Lint/InterpolationCheck

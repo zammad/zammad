@@ -12,54 +12,54 @@ class TicketArticleDos < ActiveSupport::TestCase
       name: 'Zammad Foundation',
     )
     user_community = User.create_or_update(
-      login: 'article.dos@example.org',
-      firstname: 'Article',
-      lastname: 'Dos',
-      email: 'article.dos@example.org',
-      password: '',
-      active: true,
-      roles: [ Role.find_by(name: 'Customer') ],
+      login:           'article.dos@example.org',
+      firstname:       'Article',
+      lastname:        'Dos',
+      email:           'article.dos@example.org',
+      password:        '',
+      active:          true,
+      roles:           [ Role.find_by(name: 'Customer') ],
       organization_id: org_community.id,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:   1,
+      created_by_id:   1,
     )
 
     UserInfo.current_user_id = user_community.id
     ApplicationHandleInfo.current = 'test.postmaster'
 
     ticket1 = Ticket.create!(
-      group_id: Group.first.id,
-      customer_id: user_community.id,
-      title: 'DoS 1!',
+      group_id:      Group.first.id,
+      customer_id:   user_community.id,
+      title:         'DoS 1!',
       updated_by_id: 1,
       created_by_id: 1,
     )
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      type_id: Ticket::Article::Type.find_by(name: 'phone').id,
-      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-      from: 'Zammad Feedback <feedback@example.org>',
-      body: two_mio_random_chars,
-      internal: false,
+      ticket_id:     ticket1.id,
+      type_id:       Ticket::Article::Type.find_by(name: 'phone').id,
+      sender_id:     Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from:          'Zammad Feedback <feedback@example.org>',
+      body:          two_mio_random_chars,
+      internal:      false,
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert_equal(1_500_000, article1.body.length)
 
     ticket2 = Ticket.create!(
-      group_id: Group.first.id,
-      customer_id: user_community.id,
-      title: 'DoS 2!',
+      group_id:      Group.first.id,
+      customer_id:   user_community.id,
+      title:         'DoS 2!',
       updated_by_id: 1,
       created_by_id: 1,
     )
     article2 = Ticket::Article.create!(
-      ticket_id: ticket2.id,
-      type_id: Ticket::Article::Type.find_by(name: 'phone').id,
-      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-      from: 'Zammad Feedback <feedback@example.org>',
-      body: "\u0000#{two_mio_random_chars}",
-      internal: false,
+      ticket_id:     ticket2.id,
+      type_id:       Ticket::Article::Type.find_by(name: 'phone').id,
+      sender_id:     Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from:          'Zammad Feedback <feedback@example.org>',
+      body:          "\u0000#{two_mio_random_chars}",
+      internal:      false,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -68,21 +68,21 @@ class TicketArticleDos < ActiveSupport::TestCase
     ApplicationHandleInfo.current = 'web'
 
     ticket3 = Ticket.create!(
-      group_id: Group.first.id,
-      customer_id: user_community.id,
-      title: 'DoS 3!',
+      group_id:      Group.first.id,
+      customer_id:   user_community.id,
+      title:         'DoS 3!',
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     assert_raises(Exceptions::UnprocessableEntity) do
       article3 = Ticket::Article.create!(
-        ticket_id: ticket3.id,
-        type_id: Ticket::Article::Type.find_by(name: 'phone').id,
-        sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-        from: 'Zammad Feedback <feedback@example.org>',
-        body: "\u0000#{two_mio_random_chars}",
-        internal: false,
+        ticket_id:     ticket3.id,
+        type_id:       Ticket::Article::Type.find_by(name: 'phone').id,
+        sender_id:     Ticket::Article::Sender.find_by(name: 'Customer').id,
+        from:          'Zammad Feedback <feedback@example.org>',
+        body:          "\u0000#{two_mio_random_chars}",
+        internal:      false,
         updated_by_id: 1,
         created_by_id: 1,
       )

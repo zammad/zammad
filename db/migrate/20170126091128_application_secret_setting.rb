@@ -5,16 +5,16 @@ class ApplicationSecretSetting < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Application secret',
-      name: 'application_secret',
-      area: 'Core',
+      title:       'Application secret',
+      name:        'application_secret',
+      area:        'Core',
       description: 'Defines the random application secret.',
-      options: {},
-      state: SecureRandom.hex(128),
+      options:     {},
+      state:       SecureRandom.hex(128),
       preferences: {
         permission: ['admin'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 end

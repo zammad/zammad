@@ -4,26 +4,26 @@ class ModelTest < ActiveSupport::TestCase
 
   test 'create_if_not_exists test' do
     group1 = Group.create_if_not_exists(
-      name: 'model1-create_if_not_exists',
-      active: true,
-      updated_at: '2015-02-05 16:37:00',
+      name:          'model1-create_if_not_exists',
+      active:        true,
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert_raises( ActiveRecord::RecordNotUnique ) do
       Group.create_if_not_exists(
-        name: 'model1-Create_If_Not_Exists',
-        active: true,
-        updated_at: '2015-02-05 16:37:00',
+        name:          'model1-Create_If_Not_Exists',
+        active:        true,
+        updated_at:    '2015-02-05 16:37:00',
         updated_by_id: 1,
         created_by_id: 1,
       )
     end
 
     group2 = Group.create_if_not_exists(
-      name: 'model1-create_if_not_exists',
-      active: true,
-      updated_at: '2015-02-05 16:39:00',
+      name:          'model1-create_if_not_exists',
+      active:        true,
+      updated_at:    '2015-02-05 16:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -33,26 +33,26 @@ class ModelTest < ActiveSupport::TestCase
 
   test 'create_or_update test' do
     group1 = Group.create_or_update(
-      name: 'model1-create_or_update',
-      active: true,
-      updated_at: '2015-02-05 16:37:00',
+      name:          'model1-create_or_update',
+      active:        true,
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert_raises( ActiveRecord::RecordNotUnique ) do
       Group.create_or_update(
-        name: 'model1-Create_Or_Update',
-        active: true,
-        updated_at: '2015-02-05 16:37:00',
+        name:          'model1-Create_Or_Update',
+        active:        true,
+        updated_at:    '2015-02-05 16:37:00',
         updated_by_id: 1,
         created_by_id: 1,
       )
     end
 
     group2 = Group.create_or_update(
-      name: 'model1-create_or_update',
-      active: true,
-      updated_at: '2015-02-05 16:39:00',
+      name:          'model1-create_or_update',
+      active:        true,
+      updated_at:    '2015-02-05 16:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -66,82 +66,82 @@ class ModelTest < ActiveSupport::TestCase
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: %w[Agent Admin])
     agent1 = User.create_or_update(
-      login: 'model-agent1@example.com',
-      firstname: 'Model',
-      lastname: 'Agent1',
-      email: 'model-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      updated_at: '2015-02-05 16:37:00',
+      login:         'model-agent1@example.com',
+      firstname:     'Model',
+      lastname:      'Agent1',
+      email:         'model-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     agent2 = User.create_or_update(
-      login: 'model-agent2@example.com',
-      firstname: 'Model',
-      lastname: 'Agent2',
-      email: 'model-agent2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      updated_at: '2015-02-05 17:37:00',
+      login:         'model-agent2@example.com',
+      firstname:     'Model',
+      lastname:      'Agent2',
+      email:         'model-agent2@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      updated_at:    '2015-02-05 17:37:00',
       updated_by_id: agent1.id,
       created_by_id: 1,
     )
     organization1 = Organization.create_if_not_exists(
-      name: 'Model Org 1',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'Model Org 1',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     organization2 = Organization.create_if_not_exists(
-      name: 'Model Org 2',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'Model Org 2',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: agent1.id,
       created_by_id: 1,
     )
     roles     = Role.where(name: 'Customer')
     customer1 = User.create_or_update(
-      login: 'model-customer1@example.com',
-      firstname: 'Model',
-      lastname: 'Customer1',
-      email: 'model-customer1@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'model-customer1@example.com',
+      firstname:       'Model',
+      lastname:        'Customer1',
+      email:           'model-customer1@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: organization1.id,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: 1,
-      created_by_id: 1,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   1,
+      created_by_id:   1,
     )
     customer2 = User.create_or_update(
-      login: 'model-customer2@example.com',
-      firstname: 'Model',
-      lastname: 'Customer2',
-      email: 'model-customer2@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'model-customer2@example.com',
+      firstname:       'Model',
+      lastname:        'Customer2',
+      email:           'model-customer2@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: nil,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: agent1.id,
-      created_by_id: 1,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   agent1.id,
+      created_by_id:   1,
     )
     customer3 = User.create_or_update(
-      login: 'model-customer3@example.com',
-      firstname: 'Model',
-      lastname: 'Customer3',
-      email: 'model-customer3@example.com',
-      password: 'customerpw',
-      active: true,
+      login:           'model-customer3@example.com',
+      firstname:       'Model',
+      lastname:        'Customer3',
+      email:           'model-customer3@example.com',
+      password:        'customerpw',
+      active:          true,
       organization_id: nil,
-      roles: roles,
-      updated_at: '2015-02-05 16:37:00',
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      roles:           roles,
+      updated_at:      '2015-02-05 16:37:00',
+      updated_by_id:   agent1.id,
+      created_by_id:   agent1.id,
     )
 
     # user
@@ -248,15 +248,15 @@ class ModelTest < ActiveSupport::TestCase
 
   test 'param_cleanup test' do
     params = {
-      id: 123,
-      abc: true,
-      firstname: '123',
+      id:            123,
+      abc:           true,
+      firstname:     '123',
       created_by_id: 1,
-      created_at: Time.zone.now,
+      created_at:    Time.zone.now,
       updated_by_id: 1,
-      updated_at: Time.zone.now,
-      action: 'some action',
-      controller: 'some controller',
+      updated_at:    Time.zone.now,
+      action:        'some action',
+      controller:    'some controller',
     }
     result = User.param_cleanup(params, true)
     assert_not(result.key?(:id))
@@ -270,15 +270,15 @@ class ModelTest < ActiveSupport::TestCase
     assert_not(result.key?(:controller))
 
     params = {
-      id: 123,
-      abc: true,
-      firstname: '123',
+      id:            123,
+      abc:           true,
+      firstname:     '123',
       created_by_id: 1,
-      created_at: Time.zone.now,
+      created_at:    Time.zone.now,
       updated_by_id: 1,
-      updated_at: Time.zone.now,
-      action: 'some action',
-      controller: 'some controller',
+      updated_at:    Time.zone.now,
+      action:        'some action',
+      controller:    'some controller',
     }
     result = User.param_cleanup(params)
     assert_equal(123, result[:id])
@@ -294,15 +294,15 @@ class ModelTest < ActiveSupport::TestCase
     Setting.set('import_mode', true)
 
     params = {
-      id: 123,
-      abc: true,
-      firstname: '123',
+      id:            123,
+      abc:           true,
+      firstname:     '123',
       created_by_id: 1,
-      created_at: Time.zone.now,
+      created_at:    Time.zone.now,
       updated_by_id: 1,
-      updated_at: Time.zone.now,
-      action: 'some action',
-      controller: 'some controller',
+      updated_at:    Time.zone.now,
+      action:        'some action',
+      controller:    'some controller',
     }
     result = User.param_cleanup(params, true)
     assert_not(result.key?(:abc))
@@ -315,15 +315,15 @@ class ModelTest < ActiveSupport::TestCase
     assert_not(result.key?(:controller))
 
     params = {
-      id: 123,
-      abc: true,
-      firstname: '123',
+      id:            123,
+      abc:           true,
+      firstname:     '123',
       created_by_id: 1,
-      created_at: Time.zone.now,
+      created_at:    Time.zone.now,
       updated_by_id: 1,
-      updated_at: Time.zone.now,
-      action: 'some action',
-      controller: 'some controller',
+      updated_at:    Time.zone.now,
+      action:        'some action',
+      controller:    'some controller',
     }
     result = User.param_cleanup(params)
     assert_equal(123, result[:id])
@@ -338,13 +338,13 @@ class ModelTest < ActiveSupport::TestCase
 
   test 'param_preferences_merge test' do
     params = {
-      id: 123,
-      firstname: '123',
+      id:            123,
+      firstname:     '123',
       created_by_id: 1,
-      created_at: Time.zone.now,
+      created_at:    Time.zone.now,
       updated_by_id: 1,
-      updated_at: Time.zone.now,
-      preferences: {},
+      updated_at:    Time.zone.now,
+      preferences:   {},
     }
     user = User.new(params)
     assert(user.preferences.blank?)
@@ -353,7 +353,7 @@ class ModelTest < ActiveSupport::TestCase
     assert(user.preferences.present?)
 
     params = {
-      firstname: '123 ABC',
+      firstname:   '123 ABC',
       preferences: { 'B' => 3, 'C': 4 },
     }
     clean_params = User.param_cleanup(params)
@@ -368,7 +368,7 @@ class ModelTest < ActiveSupport::TestCase
     assert_equal(clean_user_params[:preferences][:C], 4)
 
     params = {
-      firstname: '123 ABCD',
+      firstname:   '123 ABCD',
       preferences: {},
     }
     clean_params = User.param_cleanup(params)

@@ -7,10 +7,10 @@ RSpec.describe Import::OTRS::DynamicField::Dropdown do
   it 'imports an OTRS Dropdown DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'dropdown_example',
-      display: 'Dropdown Example',
-      screens: {
+      object:        'Ticket',
+      name:          'dropdown_example',
+      display:       'Dropdown Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true
@@ -24,9 +24,9 @@ RSpec.describe Import::OTRS::DynamicField::Dropdown do
       updated_by_id: 1,
       data_type:     'select',
       data_option:   {
-        default:  '',
-        multiple: false,
-        options:  {
+        default:    '',
+        multiple:   false,
+        options:    {
           'Hamburg' => 'Hamburg',
           'München' => 'München',
           'Köln'    => 'Köln',

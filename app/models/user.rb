@@ -370,15 +370,15 @@ returns
     end
     begin
       data = {
-        login: hash['info']['nickname'] || hash['uid'],
-        firstname: hash['info']['name'] || hash['info']['display_name'],
-        email: hash['info']['email'],
-        image_source: hash['info']['image'],
-        web: url,
-        address: hash['info']['location'],
-        note: hash['info']['description'],
-        source: hash['provider'],
-        role_ids: Role.signup_role_ids,
+        login:         hash['info']['nickname'] || hash['uid'],
+        firstname:     hash['info']['name'] || hash['info']['display_name'],
+        email:         hash['info']['email'],
+        image_source:  hash['info']['image'],
+        web:           url,
+        address:       hash['info']['location'],
+        note:          hash['info']['description'],
+        source:        hash['provider'],
+        role_ids:      Role.signup_role_ids,
         updated_by_id: 1,
         created_by_id: 1,
       }
@@ -570,7 +570,7 @@ returns
 
     {
       token: token,
-      user: user,
+      user:  user,
     }
   end
 
@@ -662,7 +662,7 @@ returns
 
     {
       token: token,
-      user: user,
+      user:  user,
     }
   end
 
@@ -1191,10 +1191,10 @@ raise 'Minimum one user need to have admin permissions'
 
     # save/update avatar
     avatar = Avatar.auto_detection(
-      object: 'User',
-      o_id: id,
-      url: email,
-      source: 'app',
+      object:        'User',
+      o_id:          id,
+      url:           email,
+      source:        'app',
       updated_by_id: updated_by_id,
       created_by_id: updated_by_id,
     )
@@ -1220,7 +1220,7 @@ raise 'Minimum one user need to have admin permissions'
     ::Token.where(user_id: id).destroy_all
     ::StatsStore.remove(
       object: 'User',
-      o_id: id,
+      o_id:   id,
     )
     true
   end

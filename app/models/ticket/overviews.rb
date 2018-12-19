@@ -127,7 +127,7 @@ returns
 
       tickets = ticket_result.map do |ticket|
         {
-          id: ticket[0],
+          id:         ticket[0],
           updated_at: ticket[1],
         }
       end
@@ -135,13 +135,13 @@ returns
       count = Ticket.distinct.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
       item = {
         overview: {
-          name: overview.name,
-          id: overview.id,
-          view: overview.link,
+          name:       overview.name,
+          id:         overview.id,
+          view:       overview.link,
           updated_at: overview.updated_at,
         },
-        tickets: tickets,
-        count: count,
+        tickets:  tickets,
+        count:    count,
       }
 
       list.push item

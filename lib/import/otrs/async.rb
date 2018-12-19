@@ -13,7 +13,7 @@ module Import
         status_update_thread = Thread.new do
           loop do
             result = {
-              data: current_state,
+              data:   current_state,
               result: 'in_progress',
             }
             Cache.write('import:state', result, expires_in: 10.minutes)
@@ -31,7 +31,7 @@ module Import
           Rails.logger.error e
           result = {
             message: e.message,
-            result: 'error',
+            result:  'error',
           }
           Cache.write('import:state', result, expires_in: 10.hours)
           return false

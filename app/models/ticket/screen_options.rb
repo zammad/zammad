@@ -183,7 +183,7 @@ returns
     # get tickets
     tickets_open = Ticket.where(
       customer_id: data[:customer_id],
-      state_id: state_list_open
+      state_id:    state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     assets = {}
     ticket_ids_open = []
@@ -194,7 +194,7 @@ returns
 
     tickets_closed = Ticket.where(
       customer_id: data[:customer_id],
-      state_id: state_list_closed
+      state_id:    state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     ticket_ids_closed = []
     tickets_closed.each do |ticket|
@@ -203,9 +203,9 @@ returns
     end
 
     {
-      ticket_ids_open: ticket_ids_open,
+      ticket_ids_open:   ticket_ids_open,
       ticket_ids_closed: ticket_ids_closed,
-      assets: assets,
+      assets:            assets,
     }
   end
 end

@@ -10,7 +10,7 @@ class TicketPriorityTest < ActiveSupport::TestCase
 
     # add new state
     priority_new2 = Ticket::Priority.create_if_not_exists(
-      name: 'priority 2',
+      name:          'priority 2',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -28,10 +28,10 @@ class TicketPriorityTest < ActiveSupport::TestCase
 
     # add new state
     priority_new3 = Ticket::Priority.create_if_not_exists(
-      name: 'priority 3',
+      name:           'priority 3',
       default_create: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     # verify states

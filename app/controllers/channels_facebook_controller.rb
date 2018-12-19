@@ -14,8 +14,8 @@ class ChannelsFacebookController < ApplicationController
       channel_ids.push channel.id
     end
     render json: {
-      assets: assets,
-      channel_ids: channel_ids,
+      assets:       assets,
+      channel_ids:  channel_ids,
       callback_url: ExternalCredential.callback_url('facebook'),
     }
   end

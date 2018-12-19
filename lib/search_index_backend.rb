@@ -19,11 +19,11 @@ info about used search index machine
       url,
       {},
       {
-        json: true,
+        json:         true,
         open_timeout: 8,
         read_timeout: 12,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -79,11 +79,11 @@ update processors
           response = UserAgent.delete(
             url,
             {
-              json: true,
+              json:         true,
               open_timeout: 8,
               read_timeout: 12,
-              user: Setting.get('es_user'),
-              password: Setting.get('es_password'),
+              user:         Setting.get('es_user'),
+              password:     Setting.get('es_password'),
             }
           )
           Rails.logger.info "# #{response.code}"
@@ -103,11 +103,11 @@ update processors
           url,
           item,
           {
-            json: true,
+            json:         true,
             open_timeout: 8,
             read_timeout: 12,
-            user: Setting.get('es_user'),
-            password: Setting.get('es_password'),
+            user:         Setting.get('es_user'),
+            password:     Setting.get('es_password'),
           }
         )
         Rails.logger.info "# #{response.code}"
@@ -178,11 +178,11 @@ create/update/delete index
       url,
       data[:data],
       {
-        json: true,
+        json:         true,
         open_timeout: 8,
         read_timeout: 30,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -216,11 +216,11 @@ add new object to search index
       url,
       data,
       {
-        json: true,
+        json:         true,
         open_timeout: 8,
         read_timeout: 16,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -255,8 +255,8 @@ remove whole data from index
       {
         open_timeout: 8,
         read_timeout: 16,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -345,7 +345,7 @@ remove whole data from index
     # real search condition
     condition = {
       'query_string' => {
-        'query' => append_wildcard_to_simple_query(query),
+        'query'            => append_wildcard_to_simple_query(query),
         'default_operator' => 'AND',
         'analyze_wildcard' => true,
       }
@@ -360,11 +360,11 @@ remove whole data from index
       url,
       query_data,
       {
-        json: true,
+        json:         true,
         open_timeout: 5,
         read_timeout: 14,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
 
@@ -386,7 +386,7 @@ remove whole data from index
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
 
       {
-        id: item['_id'],
+        id:   item['_id'],
         type: item['_type'],
       }
     end
@@ -495,11 +495,11 @@ get count of tickets and tickets which match on selector
       url,
       data,
       {
-        json: true,
+        json:         true,
         open_timeout: 5,
         read_timeout: 14,
-        user: Setting.get('es_user'),
-        password: Setting.get('es_password'),
+        user:         Setting.get('es_user'),
+        password:     Setting.get('es_password'),
       }
     )
 
@@ -520,7 +520,7 @@ get count of tickets and tickets which match on selector
         ticket_ids.push item['_id']
       end
       return {
-        count: response.data['hits']['total'],
+        count:      response.data['hits']['total'],
         ticket_ids: ticket_ids,
       }
     end
@@ -531,10 +531,10 @@ get count of tickets and tickets which match on selector
     query_must = []
     query_must_not = []
     relative_map = {
-      day: 'd',
-      year: 'y',
-      month: 'M',
-      hour: 'h',
+      day:    'd',
+      year:   'y',
+      month:  'M',
+      hour:   'h',
       minute: 'm',
     }
     if selector.present?
@@ -622,7 +622,7 @@ get count of tickets and tickets which match on selector
     end
     data = {
       query: {},
-      size: limit,
+      size:  limit,
     }
 
     # add aggs to filter
@@ -632,7 +632,7 @@ get count of tickets and tickets which match on selector
         data[:aggs] = {
           time_buckets: {
             date_histogram: {
-              field: aggs_interval[:field],
+              field:    aggs_interval[:field],
               interval: aggs_interval[:interval],
             }
           }
@@ -642,7 +642,7 @@ get count of tickets and tickets which match on selector
       r[:range] = {}
       r[:range][aggs_interval[:field]] = {
         from: aggs_interval[:from],
-        to: aggs_interval[:to],
+        to:   aggs_interval[:to],
       }
       query_must.push r
     end

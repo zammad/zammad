@@ -245,8 +245,8 @@ RSpec.describe Ldap do
         scope = Net::LDAP::SearchScope_BaseObject
 
         additional = {
-          base:   base,
-          scope:  scope,
+          base:  base,
+          scope: scope,
         }
 
         expected = {

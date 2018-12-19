@@ -6,14 +6,14 @@ class TokenTest < ActiveSupport::TestCase
     groups = Group.all
     roles  = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
-      login: 'token-agent1@example.com',
-      firstname: 'Token',
-      lastname: 'Agent1',
-      email: 'token-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'token-agent1@example.com',
+      firstname:     'Token',
+      lastname:      'Agent1',
+      email:         'token-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -21,25 +21,25 @@ class TokenTest < ActiveSupport::TestCase
     # invalid token
     user = Token.check(
       action: 'PasswordReset',
-      name: '1NV4L1D',
+      name:   '1NV4L1D',
     )
     assert_not(user)
 
     # generate fresh token
     token = Token.create(
-      action: 'PasswordReset',
+      action:  'PasswordReset',
       user_id: agent1.id,
     )
     assert(token)
     assert_nil(token.persistent)
     user = Token.check(
       action: 'PasswordReset_NotExisting',
-      name: token.name,
+      name:   token.name,
     )
     assert_not(user)
     user = Token.check(
       action: 'PasswordReset',
-      name: token.name,
+      name:   token.name,
     )
     assert(user)
     assert_equal('Token', user.firstname)
@@ -48,27 +48,27 @@ class TokenTest < ActiveSupport::TestCase
 
     # two days but not persistent
     token = Token.create(
-      action: 'PasswordReset',
-      user_id: agent1.id,
+      action:     'PasswordReset',
+      user_id:    agent1.id,
       created_at: 2.days.ago,
       persistent: false,
     )
     user = Token.check(
       action: 'PasswordReset',
-      name: token.name,
+      name:   token.name,
     )
     assert_not(user)
 
     # two days but persistent
     token = Token.create(
-      action: 'iCal',
-      user_id: agent1.id,
+      action:     'iCal',
+      user_id:    agent1.id,
       created_at: 2.days.ago,
       persistent: true,
     )
     user = Token.check(
       action: 'iCal',
-      name: token.name,
+      name:   token.name,
     )
     assert(user)
     assert_equal('Token', user.firstname)
@@ -86,38 +86,38 @@ class TokenTest < ActiveSupport::TestCase
       }
     )
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'admin.session',
     )
     assert_not(user)
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'admin',
     )
     assert_not(user)
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'ticket',
     )
     assert_not(user)
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'ticket.agent.sub',
     )
     assert(user)
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'admin_not_extisting',
     )
     assert_not(user)
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: 'ticket.agent',
     )
     assert(user)
@@ -126,8 +126,8 @@ class TokenTest < ActiveSupport::TestCase
     assert_equal('token-agent1@example.com', user.email)
 
     user = Token.check(
-      action: 'api',
-      name: token.name,
+      action:     'api',
+      name:       token.name,
       permission: ['ticket.agent', 'not_existing'],
     )
     assert(user)

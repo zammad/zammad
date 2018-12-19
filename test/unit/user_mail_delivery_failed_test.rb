@@ -7,13 +7,13 @@ class UserMailDeliveryFailedTest < ActiveSupport::TestCase
 
     roles = Role.where(name: 'Customer')
     @customer1 = User.create_or_update(
-      login: 'user-mail-delivery-failed-customer1@example.com',
+      login:     'user-mail-delivery-failed-customer1@example.com',
       firstname: 'UserOutOfOffice',
-      lastname: 'Customer1',
-      email: 'user-mail-delivery-failed-customer1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
+      lastname:  'Customer1',
+      email:     'user-mail-delivery-failed-customer1@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     roles,
     )
 
   end

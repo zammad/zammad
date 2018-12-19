@@ -115,10 +115,10 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       Store.add(
-        object: 'User',
-        o_id: 1,
-        data: string,
-        filename: 'filename.txt',
+        object:        'User',
+        o_id:          1,
+        data:          string,
+        filename:      'filename.txt',
         created_by_id: 1,
       )
 
@@ -157,10 +157,10 @@ RSpec.describe 'Monitoring', type: :request do
 
       # save same file again
       Store.add(
-        object: 'User',
-        o_id: 1,
-        data: string,
-        filename: 'filename.txt',
+        object:        'User',
+        o_id:          1,
+        data:          string,
+        filename:      'filename.txt',
         created_by_id: 1,
       )
 
@@ -188,10 +188,10 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       Store.add(
-        object: 'User',
-        o_id: 1,
-        data: string + '123',
-        filename: 'filename2.txt',
+        object:        'User',
+        o_id:          1,
+        data:          string + '123',
+        filename:      'filename2.txt',
         created_by_id: 1,
       )
 
@@ -537,37 +537,37 @@ RSpec.describe 'Monitoring', type: :request do
 
       # parameters for updating
       params = {
-        'name': 'test4',
-        'object': 'Ticket',
-        'display': 'Test 4',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test4',
+        'object':      'Ticket',
+        'display':     'Test 4',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': 'test',
-          'type': 'text',
+          'default':   'test',
+          'type':      'text',
           'maxlength': 120
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
         },
-        'id': 'c-196'
+        'id':          'c-196'
       }
 
       # update the object

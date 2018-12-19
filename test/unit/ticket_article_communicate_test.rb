@@ -7,26 +7,26 @@ class TicketArticleCommunicateTest < ActiveSupport::TestCase
     # via application server
     ApplicationHandleInfo.current = 'application_server'
     ticket1 = Ticket.create(
-      title: 'com test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'com test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert(ticket1, 'ticket created')
 
     article_email1_1 = Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_customer_com-1@example.com',
-      to: 'some_zammad_com-1@example.com',
-      subject: 'com test 1',
-      message_id: 'some@id_com_1',
-      body: 'some message 123',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_customer_com-1@example.com',
+      to:            'some_zammad_com-1@example.com',
+      subject:       'com test 1',
+      message_id:    'some@id_com_1',
+      body:          'some message 123',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -41,15 +41,15 @@ class TicketArticleCommunicateTest < ActiveSupport::TestCase
     assert_equal(0, email_count('some_zammad_com-1@example.com'))
 
     article_email1_2 = Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_zammad_com-1@example.com',
-      to: 'some_customer_com-1@example.com',
-      subject: 'com test 1',
-      message_id: 'some@id_com_2',
-      body: 'some message 123',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_zammad_com-1@example.com',
+      to:            'some_customer_com-1@example.com',
+      subject:       'com test 1',
+      message_id:    'some@id_com_2',
+      body:          'some message 123',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -66,26 +66,26 @@ class TicketArticleCommunicateTest < ActiveSupport::TestCase
     # via scheduler (e. g. postmaster)
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket2 = Ticket.create(
-      title: 'com test 2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'com test 2',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert(ticket2, 'ticket created')
 
     article_email2_1 = Ticket::Article.create(
-      ticket_id: ticket2.id,
-      from: 'some_customer_com-2@example.com',
-      to: 'some_zammad_com-2@example.com',
-      subject: 'com test 2',
-      message_id: 'some@id_com_1',
-      body: 'some message 123',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket2.id,
+      from:          'some_customer_com-2@example.com',
+      to:            'some_zammad_com-2@example.com',
+      subject:       'com test 2',
+      message_id:    'some@id_com_1',
+      body:          'some message 123',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -101,15 +101,15 @@ class TicketArticleCommunicateTest < ActiveSupport::TestCase
 
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     article_email2_2 = Ticket::Article.create(
-      ticket_id: ticket2.id,
-      from: 'some_zammad_com-2@example.com',
-      to: 'some_customer_com-2@example.com',
-      subject: 'com test 2',
-      message_id: 'some@id_com_2',
-      body: 'some message 123',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket2.id,
+      from:          'some_zammad_com-2@example.com',
+      to:            'some_customer_com-2@example.com',
+      subject:       'com test 2',
+      message_id:    'some@id_com_2',
+      body:          'some message 123',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )

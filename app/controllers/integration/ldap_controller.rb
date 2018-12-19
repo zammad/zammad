@@ -42,9 +42,9 @@ class Integration::LdapController < ApplicationController
         user_uid:        user.uid_attribute,
 
         # the order of these calls is relevant!
-        group_filter: group.filter,
-        groups:       group.list,
-        group_uid:    group.uid_attribute,
+        group_filter:    group.filter,
+        groups:          group.list,
+        group_uid:       group.uid_attribute,
       }
     end
   end

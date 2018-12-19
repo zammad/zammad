@@ -6,14 +6,14 @@ class ActivityStreamTest < ActiveSupport::TestCase
     roles = Role.where(name: %w[Admin Agent])
     groups = Group.where(name: 'Users')
     @admin_user = User.create_or_update(
-      login: 'admin',
-      firstname: 'Bob',
-      lastname: 'Smith',
-      email: 'bob+active_stream@example.com',
-      password: 'some_pass',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'admin',
+      firstname:     'Bob',
+      lastname:      'Smith',
+      email:         'bob+active_stream@example.com',
+      password:      'some_pass',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1
     )
@@ -23,39 +23,39 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
   test 'ticket+user' do
     ticket = Ticket.create!(
-      group_id: Group.lookup(name: 'Users').id,
-      customer_id: @current_user.id,
-      owner_id: User.lookup(login: '-').id,
-      title: 'Unit Test 1 (äöüß)!',
-      state_id: Ticket::State.lookup(name: 'new').id,
-      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      group_id:      Group.lookup(name: 'Users').id,
+      customer_id:   @current_user.id,
+      owner_id:      User.lookup(login: '-').id,
+      title:         'Unit Test 1 (äöüß)!',
+      state_id:      Ticket::State.lookup(name: 'new').id,
+      priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
     )
     travel 2.seconds
 
     article = Ticket::Article.create!(
-      ticket_id: ticket.id,
+      ticket_id:     ticket.id,
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
-      type_id: Ticket::Article::Type.lookup(name: 'phone').id,
-      sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
-      from: 'Unit Test <unittest@example.com>',
-      body: 'Unit Test 123',
-      internal: false,
+      type_id:       Ticket::Article::Type.lookup(name: 'phone').id,
+      sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
+      from:          'Unit Test <unittest@example.com>',
+      body:          'Unit Test 123',
+      internal:      false,
     )
 
     travel 100.seconds
     ticket.update!(
-      title: 'Unit Test 1 (äöüß) - update!',
-      state_id: Ticket::State.lookup(name: 'open').id,
+      title:       'Unit Test 1 (äöüß) - update!',
+      state_id:    Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
     )
     updated_at = ticket.updated_at
 
     travel 1.second
     ticket.update!(
-      title: 'Unit Test 2 (äöüß) - update!',
+      title:       'Unit Test 2 (äöüß) - update!',
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
     )
 
@@ -113,7 +113,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
   test 'organization' do
     organization = Organization.create!(
-      name: 'some name',
+      name:          'some name',
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
     )
@@ -152,16 +152,16 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
   test 'user with update check false' do
     user = User.create!(
-      login: 'someemail@example.com',
-      email: 'someemail@example.com',
-      firstname: 'Bob Smith II',
+      login:         'someemail@example.com',
+      email:         'someemail@example.com',
+      firstname:     'Bob Smith II',
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
     )
     assert_equal(user.class, User)
     user.update!(
       firstname: 'Bob U',
-      lastname: 'Smith U',
+      lastname:  'Smith U',
     )
 
     # check activity_stream
@@ -184,9 +184,9 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
   test 'user with update check true' do
     user = User.create!(
-      login: 'someemail@example.com',
-      email: 'someemail@example.com',
-      firstname: 'Bob Smith II',
+      login:         'someemail@example.com',
+      email:         'someemail@example.com',
+      firstname:     'Bob Smith II',
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
     )
@@ -195,14 +195,14 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
     user.update!(
       firstname: 'Bob U',
-      lastname: 'Smith U',
+      lastname:  'Smith U',
     )
     updated_at = user.updated_at
 
     travel 10.seconds
     user.update!(
       firstname: 'Bob',
-      lastname: 'Smith',
+      lastname:  'Smith',
     )
 
     # check activity_stream

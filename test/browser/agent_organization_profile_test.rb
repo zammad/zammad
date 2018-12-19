@@ -10,7 +10,7 @@ class AgentOrganizationProfileTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -26,17 +26,17 @@ class AgentOrganizationProfileTest < TestCase
     )
 
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'note',
     )
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'member',
     )
 
     # update note
     set(
-      css: '.active .profile [data-name="note"]',
+      css:   '.active .profile [data-name="note"]',
       value: note,
     )
     empty_search()
@@ -48,23 +48,23 @@ class AgentOrganizationProfileTest < TestCase
 
     modal_ready()
     watch_for(
-      css: '.active .modal',
+      css:   '.active .modal',
       value: note,
     )
 
     set(
-      css: '.modal [name="name"]',
+      css:   '.modal [name="name"]',
       value: 'Z2',
     )
     set(
-      css: '.active .modal [data-name="note"]',
+      css:   '.active .modal [data-name="note"]',
       value: 'some note abc',
     )
     click(css: '.active .modal button.js-submit')
     modal_disappear()
 
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'some note abc',
     )
 
@@ -80,7 +80,7 @@ class AgentOrganizationProfileTest < TestCase
 
     modal_ready()
     set(
-      css: '.modal [name="name"]',
+      css:   '.modal [name="name"]',
       value: 'Zammad Foundation',
     )
     click(css: '.active .modal button.js-submit')
@@ -96,9 +96,9 @@ class AgentOrganizationProfileTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'org profile check ' + message,
-        body: 'org profile check ' + message,
+        group:    'Users',
+        title:    'org profile check ' + message,
+        body:     'org profile check ' + message,
       },
     )
 
@@ -107,7 +107,7 @@ class AgentOrganizationProfileTest < TestCase
       value: 'Zammad Foundation',
     )
     watch_for(
-      css: '.active .profile-window',
+      css:   '.active .profile-window',
       value: 'org profile check ' + message,
     )
     tasks_close_all()
@@ -120,10 +120,10 @@ class AgentOrganizationProfileTest < TestCase
 
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(
       browser: browser2,
@@ -131,18 +131,18 @@ class AgentOrganizationProfileTest < TestCase
 
     organization_open_by_search(
       browser: browser1,
-      value: 'Zammad Foundation',
+      value:   'Zammad Foundation',
     )
     organization_open_by_search(
       browser: browser2,
-      value: 'Zammad Foundation',
+      value:   'Zammad Foundation',
     )
 
     # update note
     set(
       browser: browser1,
-      css: '.active .profile [data-name="note"]',
-      value: message,
+      css:     '.active .profile [data-name="note"]',
+      value:   message,
     )
     empty_search(
       browser: browser1,
@@ -151,8 +151,8 @@ class AgentOrganizationProfileTest < TestCase
     # verify
     watch_for(
       browser: browser2,
-      css: '.active .profile-window',
-      value: message,
+      css:     '.active .profile-window',
+      value:   message,
     )
   end
 
@@ -161,7 +161,7 @@ class AgentOrganizationProfileTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -171,7 +171,7 @@ class AgentOrganizationProfileTest < TestCase
     )
 
     watch_for(
-      css: '.active .profile-window .userList-entry a.user-popover',
+      css:   '.active .profile-window .userList-entry a.user-popover',
       value: 'Nicole Braun',
     )
 
@@ -192,7 +192,7 @@ class AgentOrganizationProfileTest < TestCase
     modal_ready()
 
     select(
-      css: '.active .modal select[name="active"]',
+      css:   '.active .modal select[name="active"]',
       value: 'inactive'
     )
 
@@ -224,7 +224,7 @@ class AgentOrganizationProfileTest < TestCase
     modal_ready()
 
     select(
-      css: '.active .modal select[name="active"]',
+      css:   '.active .modal select[name="active"]',
       value: 'active'
     )
 

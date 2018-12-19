@@ -15,11 +15,11 @@ class Sequencer
 
                 def process
                   ::Store.add(
-                    object:      model_class.name,
-                    o_id:        instance.id,
-                    data:        response.body,
-                    filename:    resource.file_name,
-                    preferences: {
+                    object:        model_class.name,
+                    o_id:          instance.id,
+                    data:          response.body,
+                    filename:      resource.file_name,
+                    preferences:   {
                       'Content-Type' => resource.content_type
                     },
                     created_by_id: 1

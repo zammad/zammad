@@ -77,10 +77,10 @@ RSpec.describe Ticket::Article do
             expect(&run_bg_jobs)
               .to change { channel.reload.attributes }
               .to hash_including(
-                'status_in'   => nil,
-                'last_log_in' => nil,
-                'status_out'    => 'ok',
-                'last_log_out'  => ''
+                'status_in'    => nil,
+                'last_log_in'  => nil,
+                'status_out'   => 'ok',
+                'last_log_out' => ''
               )
           end
 

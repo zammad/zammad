@@ -184,8 +184,8 @@ returns
     type = Ticket::Article::Type.lookup(name: 'email')
     sender = Ticket::Article::Sender.lookup(name: 'Customer')
     tickets = Ticket.where(
-      created_by_id: user_id,
-      create_article_type_id: type.id,
+      created_by_id:            user_id,
+      create_article_type_id:   type.id,
       create_article_sender_id: sender.id
     ).limit(5).order(id: :desc)
     article_bodies = []
@@ -194,7 +194,7 @@ returns
       next if !article
 
       data = {
-        content: article.body,
+        content:      article.body,
         content_type: article.content_type,
       }
       article_bodies.push data

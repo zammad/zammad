@@ -13,22 +13,22 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
   recipient    = User.new(firstname: 'Recipient<b>xxx</b>', lastname: 'Customer1<b>yyy</b>')
   state        = Ticket::State.new(name: 'new')
   ticket       = Ticket.new(
-    id: 1,
-    title: '<b>Welcome to Zammad!</b>',
-    group: group,
-    owner: owner,
-    state: state,
+    id:         1,
+    title:      '<b>Welcome to Zammad!</b>',
+    group:      group,
+    owner:      owner,
+    state:      state,
     created_by: current_user,
     updated_by: current_user,
     created_at: Time.zone.parse('2016-11-12 12:00:00 UTC'),
     updated_at: Time.zone.parse('2016-11-12 14:00:00 UTC'),
   )
   article_html1 = Ticket::Article.new(
-    body: 'test <b>hello</b><br>some new line',
+    body:         'test <b>hello</b><br>some new line',
     content_type: 'text/html',
   )
   article_plain1 = Ticket::Article.new(
-    body: "test <b>hello</b>\nsome new line",
+    body:         "test <b>hello</b>\nsome new line",
     content_type: 'text/plain',
   )
   article_plain2 = Ticket::Article.new(

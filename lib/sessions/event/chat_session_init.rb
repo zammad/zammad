@@ -27,15 +27,15 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
     # create chat session
     chat_session = Chat::Session.create(
-      chat_id: @payload['data']['chat_id'],
-      name: '',
-      state: 'waiting',
+      chat_id:     @payload['data']['chat_id'],
+      name:        '',
+      state:       'waiting',
       preferences: {
-        url: @payload['data']['url'],
+        url:          @payload['data']['url'],
         participants: [@client_id],
-        remote_ip: @remote_ip,
-        geo_ip: geo_ip,
-        dns_name: dns_name,
+        remote_ip:    @remote_ip,
+        geo_ip:       geo_ip,
+        dns_name:     dns_name,
       },
     )
 
@@ -45,9 +45,9 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
     # return new session
     {
       event: 'chat_session_queue',
-      data: {
-        state: 'queue',
-        position: Chat.waiting_chat_count,
+      data:  {
+        state:      'queue',
+        position:   Chat.waiting_chat_count,
         session_id: chat_session.session_id,
       },
     }

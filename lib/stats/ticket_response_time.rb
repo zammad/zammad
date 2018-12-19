@@ -39,10 +39,10 @@ class Stats::TicketResponseTime
       own = (own / count_own).round
     end
     {
-      used_for_average: 0,
+      used_for_average:  0,
       average_per_agent: '-',
-      own: own,
-      total: total,
+      own:               own,
+      total:             total,
     }
   end
 

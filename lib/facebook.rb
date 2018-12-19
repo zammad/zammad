@@ -167,11 +167,11 @@ result
 
     if user_data[:image_source]
       avatar = Avatar.add(
-        object: 'User',
-        o_id: user.id,
-        url: user_data[:image_source],
-        source: 'facebook',
-        deletable: true,
+        object:        'User',
+        o_id:          user.id,
+        url:           user_data[:image_source],
+        source:        'facebook',
+        deletable:     true,
         updated_by_id: user.id,
         created_by_id: user.id,
       )
@@ -220,9 +220,9 @@ result
       state:       state,
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
-        channel_id: channel.id,
+        channel_id:           channel.id,
         channel_fb_object_id: page['id'],
-        facebook: {
+        facebook:             {
           permalink_url: post['permalink_url'],
         }
       },
@@ -289,21 +289,21 @@ result
         end
         links = [
           {
-            url: url,
+            url:    url,
             target: '_blank',
-            name: 'on Facebook',
+            name:   'on Facebook',
           },
         ]
       end
 
       article = {
         #to:        @account['name'],
-        ticket_id: ticket.id,
-        internal:  false,
-        sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
+        ticket_id:     ticket.id,
+        internal:      false,
+        sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
         created_by_id: 1,
         updated_by_id: 1,
-        preferences: {
+        preferences:   {
           links: links,
         },
       }.merge(article)

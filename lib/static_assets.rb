@@ -42,11 +42,11 @@ returns
   def self.store_raw(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 1)
     file = Store.add(
-      object: 'System::Logo',
-      o_id: 1,
-      data: content,
-      filename: 'logo_raw',
-      preferences: {
+      object:        'System::Logo',
+      o_id:          1,
+      data:          content,
+      filename:      'logo_raw',
+      preferences:   {
         'Content-Type' => content_type
       },
       created_by_id: 1,
@@ -90,11 +90,11 @@ returns
   def self.store(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 2)
     file = Store.add(
-      object: 'System::Logo',
-      o_id: 2,
-      data: content,
-      filename: 'logo',
-      preferences: {
+      object:        'System::Logo',
+      o_id:          2,
+      data:          content,
+      filename:      'logo',
+      preferences:   {
         'Content-Type' => content_type
       },
       created_by_id: 1,

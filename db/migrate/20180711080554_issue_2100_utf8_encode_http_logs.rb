@@ -4,7 +4,7 @@ class Issue2100Utf8EncodeHttpLogs < ActiveRecord::Migration[5.1]
            .limit(100_000)
            .order(created_at: :desc)
            .find_each do |log|
-             log.update(request: log.request.transform_values(&:utf8_encode),
+             log.update(request:  log.request.transform_values(&:utf8_encode),
                         response: log.response.transform_values(&:utf8_encode))
            end
   end

@@ -16,7 +16,7 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -30,11 +30,11 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
     # 2. Create a new user that belongs to the test organization
     user = user_create(
       data: {
-        login:     'test user',
-        firstname: 'Max',
-        lastname:  'Mustermann',
-        email:     user_email,
-        password:  'some-pass',
+        login:        'test user',
+        firstname:    'Max',
+        lastname:     'Mustermann',
+        email:        user_email,
+        password:     'some-pass',
         organization: 'äöüß & Test Organization',
       }
     )
@@ -52,8 +52,8 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
     # 4. Create an overview grouping by organization
     overview = overview_create(
       data: {
-        name: overview_name,
-        roles: %w[Agent Admin Customer],
+        name:     overview_name,
+        roles:    %w[Agent Admin Customer],
         group_by: 'Organization',
       }
     )

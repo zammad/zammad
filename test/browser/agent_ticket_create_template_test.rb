@@ -11,7 +11,7 @@ class AgentTicketCreateTemplateTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -19,21 +19,21 @@ class AgentTicketCreateTemplateTest < TestCase
       css: 'a[href="#ticket/create"]'
     )
     watch_for(
-      css: '.active .templates-welcome',
+      css:       '.active .templates-welcome',
       displayed: true
     )
 
     set(
-      css: 'input[name="title"]',
+      css:   'input[name="title"]',
       value: 'my first ticket'
     )
     click(
       css: '.active .templates-welcome .js-create'
     )
     watch_for(
-      css: '.active .templates-manage',
+      css:       '.active .templates-manage',
       displayed: true,
-      timeout: 3,
+      timeout:   3,
     )
     exists_not(
       css: '.active .templates-manage select[name="id"] > option:not([value=""])'
@@ -41,14 +41,14 @@ class AgentTicketCreateTemplateTest < TestCase
 
     # save new template
     set(
-      css: '.active .templates-manage .js-name',
+      css:   '.active .templates-manage .js-name',
       value: 'test template'
     )
     click(
       css: '.active .templates-manage .js-save'
     )
     exists(
-      css: '.active .templates-manage select[name="id"] > option:not([value=""])',
+      css:       '.active .templates-manage select[name="id"] > option:not([value=""])',
       displayed: true
     )
 
@@ -63,11 +63,11 @@ class AgentTicketCreateTemplateTest < TestCase
       css: '.navigation > .tasks > a.task'
     )
     exists(
-      css: '.active .templates-manage',
+      css:       '.active .templates-manage',
       displayed: true
     )
     exists(
-      css: '.active .templates-manage select[name="id"] > option:not([value=""])',
+      css:       '.active .templates-manage select[name="id"] > option:not([value=""])',
       displayed: true
     )
 
@@ -77,9 +77,9 @@ class AgentTicketCreateTemplateTest < TestCase
       css: 'a[href="#ticket/create"]'
     )
     watch_for(
-      css: '.active .templates-manage',
+      css:       '.active .templates-manage',
       displayed: true,
-      timeout: 3,
+      timeout:   3,
     )
     select(
       css:   '.active .templates-manage select[name="id"]',
@@ -89,7 +89,7 @@ class AgentTicketCreateTemplateTest < TestCase
       css: '.active .templates-manage .js-apply'
     )
     exists(
-      css: '.active .newTicket input[name="title"]',
+      css:   '.active .newTicket input[name="title"]',
       value: 'my first ticket'
     )
   end

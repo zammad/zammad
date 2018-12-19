@@ -9,8 +9,8 @@ RSpec.describe Tag do
 
     def tag_rename
       Tag::Item.rename(
-        id: Tag::Item.lookup(name: 'test1').id,
-        name: 'test1_renamed',
+        id:            Tag::Item.lookup(name: 'test1').id,
+        name:          'test1_renamed',
         updated_by_id: 1,
       )
     end

@@ -302,7 +302,7 @@ possible types
     # check new entry - is needed
     record = ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
-      name: data[:name],
+      name:             data[:name],
     )
     if record
 
@@ -400,7 +400,7 @@ use "force: true" to delete also not editable fields
     # check newest entry - is needed
     record = ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
-      name: data[:name],
+      name:             data[:name],
     )
     if !record
       raise "ERROR: No such field #{data[:object]}.#{data[:name]}"
@@ -448,7 +448,7 @@ get the attribute model based on object and name
 
     ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
-      name: data[:name],
+      name:             data[:name],
     )
   end
 
@@ -478,16 +478,16 @@ returns:
     # get attributes in right order
     result = ObjectManager::Attribute.where(
       object_lookup_id: object_lookup_id,
-      active: true,
-      to_create: false,
-      to_delete: false,
+      active:           true,
+      to_create:        false,
+      to_delete:        false,
     ).order('position ASC, name ASC')
     attributes = []
     result.each do |item|
       data = {
-        name: item.name,
+        name:    item.name,
         display: item.display,
-        tag: item.data_type,
+        tag:     item.data_type,
         #:null     => item.null,
       }
       if item.data_option[:permission]&.any?
@@ -683,7 +683,7 @@ to send no browser reload event, pass false
             attribute.name,
             data_type,
             limit: attribute.data_option[:maxlength],
-            null: true
+            null:  true
           )
         elsif attribute.data_type.match?(/^integer|user_autocompletion|datetime|date$/)
           ActiveRecord::Migration.change_column(
@@ -691,7 +691,7 @@ to send no browser reload event, pass false
             attribute.name,
             data_type,
             default: attribute.data_option[:default],
-            null: true
+            null:    true
           )
         elsif attribute.data_type.match?(/^boolean|active$/)
           ActiveRecord::Migration.change_column(
@@ -699,7 +699,7 @@ to send no browser reload event, pass false
             attribute.name,
             data_type,
             default: attribute.data_option[:default],
-            null: true
+            null:    true
           )
         else
           raise "Unknown attribute.data_type '#{attribute.data_type}', can't update attribute"
@@ -722,7 +722,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           limit: attribute.data_option[:maxlength],
-          null: true
+          null:  true
         )
       elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
         ActiveRecord::Migration.add_column(
@@ -730,7 +730,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           default: attribute.data_option[:default],
-          null: true
+          null:    true
         )
       elsif attribute.data_type.match?(/^boolean|active$/)
         ActiveRecord::Migration.add_column(
@@ -738,7 +738,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           default: attribute.data_option[:default],
-          null: true
+          null:    true
         )
       elsif attribute.data_type.match?(/^datetime|date$/)
         ActiveRecord::Migration.add_column(
@@ -746,7 +746,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           default: attribute.data_option[:default],
-          null: true
+          null:    true
         )
       else
         raise "Unknown attribute.data_type '#{attribute.data_type}', can't create attribute"

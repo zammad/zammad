@@ -5,7 +5,7 @@ class SlackTest < ActiveSupport::TestCase
 
   # needed to check correct behavior
   slack_group = Group.create_if_not_exists(
-    name: 'Slack',
+    name:          'Slack',
     updated_by_id: 1,
     created_by_id: 1
   )
@@ -33,11 +33,11 @@ class SlackTest < ActiveSupport::TestCase
     items = [
       {
         group_ids: [slack_group.id],
-        types: %w[create update reminder_reached],
-        webhook: webhook,
-        channel: channel,
-        username: 'zammad bot',
-        expand: false,
+        types:     %w[create update reminder_reached],
+        webhook:   webhook,
+        channel:   channel,
+        username:  'zammad bot',
+        expand:    false,
       }
     ]
     Setting.set('slack_config', { items: items })
@@ -152,11 +152,11 @@ class SlackTest < ActiveSupport::TestCase
     items = [
       {
         group_ids: slack_group.id.to_s,
-        types: 'create',
-        webhook: webhook,
-        channel: channel,
-        username: 'zammad bot',
-        expand: false,
+        types:     'create',
+        webhook:   webhook,
+        channel:   channel,
+        username:  'zammad bot',
+        expand:    false,
       }
     ]
     Setting.set('slack_config', { items: items })

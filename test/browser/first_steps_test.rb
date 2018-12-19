@@ -10,7 +10,7 @@ class FirstStepsTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -26,20 +26,20 @@ class FirstStepsTest < TestCase
     modal_ready()
 
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Bob',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
     check(css: '.modal .js-groupListItem[value=full]')
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
     )
     watch_for(
@@ -56,23 +56,23 @@ class FirstStepsTest < TestCase
     click(css: '.active.content .js-inviteCustomer')
     modal_ready()
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Client',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{customer}@example.com",
     )
     set(
-      css: '.modal [data-name="note"]',
+      css:   '.modal [data-name="note"]',
       value: 'some note',
     )
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
     )
     watch_for(
@@ -87,7 +87,7 @@ class FirstStepsTest < TestCase
 
     # test ticket
     click(
-      css: '.active.content .js-testTicket',
+      css:  '.active.content .js-testTicket',
       fast: true,
     )
     modal_ready()
@@ -96,7 +96,7 @@ class FirstStepsTest < TestCase
       value: 'A Test Ticket has been created',
     )
     click(
-      css: '.modal .modal-body',
+      css:  '.modal .modal-body',
       fast: true,
     )
     watch_for_disappear(
@@ -118,7 +118,7 @@ class FirstStepsTest < TestCase
     click(css: '.active.content a[href="#channels/form"]')
     sleep 2
     switch(
-      css: '.content.active .js-formSetting',
+      css:  '.content.active .js-formSetting',
       type: 'on',
     )
     click(css: '#navigation a[href="#dashboard"]')

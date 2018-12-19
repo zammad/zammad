@@ -13,11 +13,11 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       article1 = create(:ticket_article, ticket_id: ticket1.id)
 
       store1 = Store.add(
-        object: 'Ticket::Article',
-        o_id: article1.id,
-        data: 'some content',
-        filename: 'some_file.txt',
-        preferences: {
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'some content',
+        filename:      'some_file.txt',
+        preferences:   {
           'Content-Type' => 'text/plain',
         },
         created_by_id: 1,

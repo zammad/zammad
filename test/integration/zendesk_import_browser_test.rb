@@ -28,7 +28,7 @@ class ZendeskImportBrowserTest < TestCase
     sleep 5
 
     watch_for(
-      css: '.zendesk-url-error',
+      css:   '.zendesk-url-error',
       value: 'Hostname not found!',
     )
 
@@ -40,38 +40,38 @@ class ZendeskImportBrowserTest < TestCase
     sleep 5
 
     watch_for_disappear(
-      css: '.zendesk-url-error',
+      css:   '.zendesk-url-error',
       value: 'Hostname not found!',
     )
 
     click(css: '.js-zendesk-credentials')
 
     set(
-      css: '#zendesk-email',
+      css:   '#zendesk-email',
       value: ENV['IMPORT_BT_ZENDESK_ENDPOINT_USERNAME']
     )
 
     set(
-      css: '#zendesk-api-token',
+      css:   '#zendesk-api-token',
       value: '1nv4l1dT0K3N'
     )
 
     sleep 5
 
     watch_for(
-      css: '.zendesk-api-token-error',
+      css:   '.zendesk-api-token-error',
       value: 'Invalid credentials!',
     )
 
     set(
-      css: '#zendesk-api-token',
+      css:   '#zendesk-api-token',
       value: ENV['IMPORT_BT_ZENDESK_ENDPOINT_KEY']
     )
 
     sleep 5
 
     watch_for_disappear(
-      css: '.zendesk-url-error',
+      css:   '.zendesk-url-error',
       value: 'Invalid credentials!',
     )
 
@@ -90,14 +90,14 @@ class ZendeskImportBrowserTest < TestCase
     )
 
     watch_for(
-      css:   '.js-users .js-done',
-      value: '141',
+      css:     '.js-users .js-done',
+      value:   '141',
       timeout: 120,
     )
 
     watch_for(
-      css: 'body',
-      value: 'login',
+      css:     'body',
+      value:   'login',
       timeout: 800,
     )
   end

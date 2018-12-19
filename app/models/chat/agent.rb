@@ -23,7 +23,7 @@ class Chat::Agent < ApplicationModel
       chat_agent.save
     else
       Chat::Agent.create(
-        active: state,
+        active:        state,
         updated_by_id: user_id,
         created_by_id: user_id,
       )

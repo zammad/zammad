@@ -6,48 +6,48 @@ class EmailProcessAutoResponseTest < ActiveSupport::TestCase
 
     roles  = Role.where(name: 'Agent')
     agent1 = User.create!(
-      login: 'ticket-auto-responder-agent1@example.com',
-      firstname: 'AutoReponder',
-      lastname: 'Agent1',
-      email: 'ticket-auto-responder-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: Group.all,
+      login:         'ticket-auto-responder-agent1@example.com',
+      firstname:     'AutoReponder',
+      lastname:      'Agent1',
+      email:         'ticket-auto-responder-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        Group.all,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     Trigger.create!(
-      name: '002 auto reply',
-      condition: {
-        'ticket.action' => {
+      name:                 '002 auto reply',
+      condition:            {
+        'ticket.action'   => {
           'operator' => 'is',
-          'value' => 'create',
+          'value'    => 'create',
         },
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, auto-reply',
+          'value'    => 'aa, kk, auto-reply',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     email_raw_string = "From: me@example.com
@@ -193,31 +193,31 @@ test"
 
     # add an agent notification
     Trigger.create!(
-      name: '001 additional agent notification',
-      condition: {
+      name:                 '001 additional agent notification',
+      condition:            {
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_agents',
-          'subject' => 'New Ticket add. info (#{ticket.title})!',
+          'subject'   => 'New Ticket add. info (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, agent-notification',
+          'value'    => 'aa, kk, agent-notification',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     email_raw_string = "From: me@example.com
@@ -350,48 +350,48 @@ Some Text"
 
     roles  = Role.where(name: 'Agent')
     agent1 = User.create!(
-      login: 'ticket-auto-responder-agent1@example.com',
-      firstname: 'AutoReponder',
-      lastname: 'Agent1',
-      email: 'ticket-auto-responder-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: Group.all,
+      login:         'ticket-auto-responder-agent1@example.com',
+      firstname:     'AutoReponder',
+      lastname:      'Agent1',
+      email:         'ticket-auto-responder-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        Group.all,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     Trigger.create!(
-      name: '001 auto reply',
-      condition: {
-        'ticket.action' => {
+      name:                 '001 auto reply',
+      condition:            {
+        'ticket.action'   => {
           'operator' => 'is',
-          'value' => 'create',
+          'value'    => 'create',
         },
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, auto-reply',
+          'value'    => 'aa, kk, auto-reply',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     email_raw_string = "From: me@example.com
@@ -537,31 +537,31 @@ test"
 
     # add an agent notification
     Trigger.create!(
-      name: '002 additional agent notification',
-      condition: {
+      name:                 '002 additional agent notification',
+      condition:            {
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_agents',
-          'subject' => 'New Ticket add. info (#{ticket.title})!',
+          'subject'   => 'New Ticket add. info (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, agent-notification',
+          'value'    => 'aa, kk, agent-notification',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     email_raw_string = "From: me@example.com
@@ -694,80 +694,80 @@ Some Text"
 
     roles  = Role.where(name: 'Agent')
     agent1 = User.create!(
-      login: 'ticket-auto-responder-agent1@example.com',
-      firstname: 'AutoReponder',
-      lastname: 'Agent1',
-      email: 'ticket-auto-responder-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: Group.all,
+      login:         'ticket-auto-responder-agent1@example.com',
+      firstname:     'AutoReponder',
+      lastname:      'Agent1',
+      email:         'ticket-auto-responder-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        Group.all,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     Trigger.create!(
-      name: '001 auto reply',
-      condition: {
-        'ticket.action' => {
+      name:                 '001 auto reply',
+      condition:            {
+        'ticket.action'   => {
           'operator' => 'is',
-          'value' => 'create',
+          'value'    => 'create',
         },
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'open').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'open').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, auto-reply',
+          'value'    => 'aa, kk, auto-reply',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     # add an agent notification
     Trigger.create!(
-      name: '002 additional agent notification',
-      condition: {
+      name:                 '002 additional agent notification',
+      condition:            {
         'ticket.state_id' => {
           'operator' => 'is',
-          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         }
       },
-      perform: {
+      perform:              {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_agents',
-          'subject' => 'New Ticket add. info (#{ticket.title})!',
+          'subject'   => 'New Ticket add. info (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
         },
-        'ticket.state_id' => {
+        'ticket.state_id'    => {
           'value' => Ticket::State.lookup(name: 'open').id.to_s,
         },
-        'ticket.tags' => {
+        'ticket.tags'        => {
           'operator' => 'add',
-          'value' => 'aa, kk, agent-notification',
+          'value'    => 'aa, kk, agent-notification',
         },
       },
       disable_notification: true,
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
     )
 
     email_raw_string = "From: me@example.com

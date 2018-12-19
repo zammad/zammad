@@ -54,11 +54,11 @@ add a new activity entry for an object
 
     # check newest entry - is needed
     result = ActivityStream.where(
-      o_id: data[:o_id],
+      o_id:                      data[:o_id],
       #:activity_stream_type_id  => type_id,
-      permission_id: permission_id,
+      permission_id:             permission_id,
       activity_stream_object_id: object_id,
-      created_by_id: data[:created_by_id]
+      created_by_id:             data[:created_by_id]
     ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
@@ -69,13 +69,13 @@ add a new activity entry for an object
 
     # create history
     record = {
-      o_id: data[:o_id],
-      activity_stream_type_id: type_id,
+      o_id:                      data[:o_id],
+      activity_stream_type_id:   type_id,
       activity_stream_object_id: object_id,
-      permission_id: permission_id,
-      group_id: data[:group_id],
-      created_at: data[:created_at],
-      created_by_id: data[:created_by_id]
+      permission_id:             permission_id,
+      group_id:                  data[:group_id],
+      created_at:                data[:created_at],
+      created_by_id:             data[:created_by_id]
     }
 
     ActivityStream.create(record)
@@ -93,7 +93,7 @@ remove whole activity entries of an object
     object_id = ObjectLookup.by_name(object_name)
     ActivityStream.where(
       activity_stream_object_id: object_id,
-      o_id: o_id,
+      o_id:                      o_id,
     ).destroy_all
   end
 

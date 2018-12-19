@@ -90,20 +90,20 @@ returns
 
     if data['criteria']['owned_by_me'] && owned_by_me
       return {
-        user: user,
+        user:     user,
         channels: channels
       }
     end
     if data['criteria']['owned_by_nobody'] && owned_by_nobody
       return {
-        user: user,
+        user:     user,
         channels: channels
       }
     end
     return if !data['criteria']['no']
 
     {
-      user: user,
+      user:     user,
       channels: channels
     }
   end
@@ -136,14 +136,14 @@ returns
     channel.deliver(
       {
         # in_reply_to: in_reply_to,
-        from: sender,
-        to: data[:recipient][:email],
-        subject: data[:subject],
-        message_id: data[:message_id],
-        references: data[:references],
-        body: data[:body],
+        from:         sender,
+        to:           data[:recipient][:email],
+        subject:      data[:subject],
+        message_id:   data[:message_id],
+        references:   data[:references],
+        body:         data[:body],
         content_type: content_type,
-        attachments: data[:attachments],
+        attachments:  data[:attachments],
       },
       true
     )
@@ -170,9 +170,9 @@ returns
 
     # get subject
     result = NotificationFactory::Mailer.template(
-      template: data[:template],
-      locale: data[:user][:preferences][:locale],
-      objects: data[:objects],
+      template:   data[:template],
+      locale:     data[:user][:preferences][:locale],
+      objects:    data[:objects],
       standalone: data[:standalone],
     )
 
@@ -187,13 +187,13 @@ returns
     end
 
     NotificationFactory::Mailer.send(
-      recipient: data[:user],
-      subject: result[:subject],
-      body: result[:body],
+      recipient:    data[:user],
+      subject:      result[:subject],
+      body:         result[:body],
       content_type: 'text/html',
-      message_id: data[:message_id],
-      references: data[:references],
-      attachments: data[:attachments],
+      message_id:   data[:message_id],
+      references:   data[:references],
+      attachments:  data[:attachments],
     )
   end
 
@@ -270,10 +270,10 @@ returns
     end
 
     template = NotificationFactory.template_read(
-      locale: data[:locale] || Setting.get('locale_default') || 'en-us',
+      locale:   data[:locale] || Setting.get('locale_default') || 'en-us',
       template: data[:template],
-      format: 'html',
-      type: 'mailer',
+      format:   'html',
+      type:     'mailer',
     )
 
     message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
@@ -282,7 +282,7 @@ returns
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
         format: 'html',
-        type: 'mailer',
+        type:   'mailer',
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
@@ -290,7 +290,7 @@ returns
     end
     {
       subject: message_subject,
-      body: message_body,
+      body:    message_body,
     }
   end
 

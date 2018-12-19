@@ -7,7 +7,7 @@ class AgentTicketAttachmentTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -17,11 +17,11 @@ class AgentTicketAttachmentTest < TestCase
 
     # create new ticket with no attachment, attachment check should pop up
     ticket_create(
-      data: {
+      data:          {
         customer: 'nico',
-        group: 'Users',
-        title: 'test 6 - ticket 1',
-        body: 'test 6 - ticket 1 - with the word attachment, but not attachment atteched it should give an warning on submit',
+        group:    'Users',
+        title:    'test 6 - ticket 1',
+        body:     'test 6 - ticket 1 - with the word attachment, but not attachment atteched it should give an warning on submit',
       },
       do_not_submit: true,
     )
@@ -67,11 +67,11 @@ class AgentTicketAttachmentTest < TestCase
     sleep 2
     ticket_number = @browser.find_elements({ css: '.content.active .ticketZoom-header .ticket-number' })[0].text
     match(
-      css: '.content.active .ticket-article-item:nth-child(1) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.content.active .ticket-article-item:nth-child(1) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload1.txt',
     )
 
@@ -81,7 +81,7 @@ class AgentTicketAttachmentTest < TestCase
 
     # update ticket with no attachment, attachment check should pop up
     ticket_update(
-      data: {
+      data:          {
         body: 'test 6 - ticket 1-1 - with the word attachment, but not attachment atteched it should give an warning on submit',
       },
       do_not_submit: true,
@@ -118,8 +118,8 @@ class AgentTicketAttachmentTest < TestCase
 
     # discard changes should gone away
     watch_for_disappear(
-      css: '.content.active .js-reset',
-      value: '(Discard your unsaved changes.|Verwerfen der)',
+      css:      '.content.active .js-reset',
+      value:    '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
     )
     ticket_verify(
@@ -130,15 +130,15 @@ class AgentTicketAttachmentTest < TestCase
 
     # check content and edit screen in instance 1
     watch_for(
-      css: '.content.active div.ticket-article',
+      css:   '.content.active div.ticket-article',
       value: 'test 6 - ticket 1-1',
     )
     match_not(
-      css: '.content.active .ticket-article-item:nth-child(3) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.content.active .ticket-article-item:nth-child(3) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload1.txt',
     )
 
@@ -165,14 +165,14 @@ class AgentTicketAttachmentTest < TestCase
     # check warning
     modal_ready()
     match(
-      css: '.content.active .modal',
+      css:   '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
     modal_disappear()
 
     ticket_update(
-      data: {
+      data:          {
         body: 'now submit should work',
       },
       do_not_submit: true,
@@ -184,8 +184,8 @@ class AgentTicketAttachmentTest < TestCase
 
     # discard changes should gone away
     watch_for_disappear(
-      css: '.content.active .js-reset',
-      value: '(Discard your unsaved changes.|Verwerfen der)',
+      css:      '.content.active .js-reset',
+      value:    '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
     )
     ticket_verify(
@@ -194,11 +194,11 @@ class AgentTicketAttachmentTest < TestCase
       },
     )
     match(
-      css: '.content.active .ticket-article-item:nth-child(4) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.content.active .ticket-article-item:nth-child(4) .attachments',
+      css:   '.content.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload1.txt',
     )
     #
@@ -210,10 +210,10 @@ class AgentTicketAttachmentTest < TestCase
 
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(
       browser: browser2,
@@ -222,22 +222,22 @@ class AgentTicketAttachmentTest < TestCase
     user_email = random + '@example.com'
     user_create(
       browser: browser2,
-      data: {
+      data:    {
         firstname: 'Action6 Firstname' + random,
-        lastname: 'Action6 Lastname' + random,
-        email: user_email,
-        password: 'some-pass',
+        lastname:  'Action6 Lastname' + random,
+        email:     user_email,
+        password:  'some-pass',
       },
     )
 
     # update customer, check if new customer is shown in side bar
     ticket_open_by_search(
       browser: browser2,
-      number: ticket_number,
+      number:  ticket_number,
     )
     ticket_update(
-      browser: browser2,
-      data: {
+      browser:       browser2,
+      data:          {
         customer: user_email,
       },
       do_not_submit: true,
@@ -247,8 +247,8 @@ class AgentTicketAttachmentTest < TestCase
     click(browser: browser1, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser1,
-      css: '.content.active .tabsSidebar',
-      value: user_email,
+      css:     '.content.active .tabsSidebar',
+      value:   user_email,
     )
 
     #
@@ -267,8 +267,8 @@ class AgentTicketAttachmentTest < TestCase
     click(browser: browser2, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser2,
-      css: '.content.active .sidebar[data-tab="customer"]',
-      value: 'some new address',
+      css:     '.content.active .sidebar[data-tab="customer"]',
+      value:   'some new address',
     )
 
     #
@@ -291,8 +291,8 @@ class AgentTicketAttachmentTest < TestCase
     click(browser: browser2, css: '.content.active .tabsSidebar-tab[data-tab="organization"]')
     watch_for(
       browser: browser2,
-      css: '.content.active .sidebar[data-tab="organization"]',
-      value: 'Zammad Foundation',
+      css:     '.content.active .sidebar[data-tab="organization"]',
+      value:   'Zammad Foundation',
     )
 
     #
@@ -311,24 +311,24 @@ class AgentTicketAttachmentTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     ticket1 = ticket_create(
-      data: {
+      data:          {
         customer: 'Nico',
-        group: 'Users',
-        title: 'Ticket 1',
-        body: 'some body',
+        group:    'Users',
+        title:    'Ticket 1',
+        body:     'some body',
       },
       do_not_submit: true,
     )
 
     # First test the attachment uploading for new tickets
     file_upload(
-      css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [large_file],
+      css:      '.content.active .attachmentPlaceholder-inputHolder input',
+      files:    [large_file],
       no_sleep: true,
     )
     exists(
@@ -348,14 +348,14 @@ class AgentTicketAttachmentTest < TestCase
 
     # Next test the attachment uploading for new articles
     ticket_update(
-      data: {
+      data:          {
         body: 'added attachment',
       },
       do_not_submit: true,
     )
     file_upload(
-      css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [large_file],
+      css:      '.content.active .attachmentPlaceholder-inputHolder input',
+      files:    [large_file],
       no_sleep: true,
     )
     exists(

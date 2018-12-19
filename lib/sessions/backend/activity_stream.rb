@@ -42,7 +42,7 @@ class Sessions::Backend::ActivityStream
 
     {
       record_ids: item_ids,
-      assets: assets,
+      assets:     assets,
     }
   end
 
@@ -65,17 +65,17 @@ class Sessions::Backend::ActivityStream
 
     if !@client
       return {
-        event: 'activity_stream_rebuild',
+        event:      'activity_stream_rebuild',
         collection: 'activity_stream',
-        data: data,
+        data:       data,
       }
     end
 
     @client.log "push activity_stream #{data.first.class} for user #{@user.id}"
     @client.send(
-      event: 'activity_stream_rebuild',
+      event:      'activity_stream_rebuild',
       collection: 'activity_stream',
-      data: data,
+      data:       data,
     )
   end
 

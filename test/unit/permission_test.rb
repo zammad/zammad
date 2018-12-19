@@ -12,37 +12,37 @@ class PermissionTest < ActiveSupport::TestCase
   test 'user permission' do
 
     permission1 = Permission.create_or_update(
-      name: 'admin.permission1',
-      note: 'Admin Interface',
+      name:        'admin.permission1',
+      note:        'Admin Interface',
       preferences: {},
-      active: true,
+      active:      true,
     )
     permission2 = Permission.create_or_update(
-      name: 'admin.permission2',
-      note: 'Admin Interface',
+      name:        'admin.permission2',
+      note:        'Admin Interface',
       preferences: {},
-      active: true,
+      active:      true,
     )
     role_permission1 = Role.create_or_update(
-      name: 'AdminPermission1',
-      note: 'To configure your permission1.',
-      preferences: {
+      name:              'AdminPermission1',
+      note:              'To configure your permission1.',
+      preferences:       {
         not: ['Customer'],
       },
       default_at_signup: false,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:     1,
+      created_by_id:     1,
     )
     role_permission1.permission_revoke('admin')
     role_permission1.permission_grant('admin.permission1')
     user_with_permission1 = User.create_or_update(
-      login: 'setting-permission1',
-      firstname: 'Setting',
-      lastname: 'Admin Permission1',
-      email: 'setting-admin-permission1@example.com',
-      password: 'some_pw',
-      active: true,
-      roles: [role_permission1],
+      login:         'setting-permission1',
+      firstname:     'Setting',
+      lastname:      'Admin Permission1',
+      email:         'setting-admin-permission1@example.com',
+      password:      'some_pw',
+      active:        true,
+      roles:         [role_permission1],
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -77,31 +77,31 @@ class PermissionTest < ActiveSupport::TestCase
   test 'user permission with invalid role' do
 
     permission3 = Permission.create_or_update(
-      name: 'admin.permission3',
-      note: 'Admin Interface',
+      name:        'admin.permission3',
+      note:        'Admin Interface',
       preferences: {},
-      active: true,
+      active:      true,
     )
     role_permission3 = Role.create_or_update(
-      name: 'AdminPermission2',
-      note: 'To configure your permission3.',
-      preferences: {
+      name:              'AdminPermission2',
+      note:              'To configure your permission3.',
+      preferences:       {
         not: ['Customer'],
       },
       default_at_signup: false,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
+      active:            true,
+      updated_by_id:     1,
+      created_by_id:     1,
     )
     role_permission3.permission_grant('admin.permission3')
     user_with_permission3 = User.create_or_update(
-      login: 'setting-permission3',
-      firstname: 'Setting',
-      lastname: 'Admin Permission2',
-      email: 'setting-admin-permission3@example.com',
-      password: 'some_pw',
-      active: true,
-      roles: [role_permission3],
+      login:         'setting-permission3',
+      firstname:     'Setting',
+      lastname:      'Admin Permission2',
+      email:         'setting-admin-permission3@example.com',
+      password:      'some_pw',
+      active:        true,
+      roles:         [role_permission3],
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -125,36 +125,36 @@ class PermissionTest < ActiveSupport::TestCase
   test 'user permission with childs' do
 
     permission1 = Permission.create_or_update(
-      name: 'admin.permission_child1',
-      note: 'Admin Interface',
+      name:        'admin.permission_child1',
+      note:        'Admin Interface',
       preferences: {},
-      active: true,
+      active:      true,
     )
     permission2 = Permission.create_or_update(
-      name: 'admin.permission_child2',
-      note: 'Admin Interface',
+      name:        'admin.permission_child2',
+      note:        'Admin Interface',
       preferences: {},
-      active: false,
+      active:      false,
     )
     role_permission1 = Role.create_or_update(
-      name: 'AdminPermissionChild1',
-      note: 'To configure your permission child1.',
-      preferences: {
+      name:              'AdminPermissionChild1',
+      note:              'To configure your permission child1.',
+      preferences:       {
         not: ['Customer'],
       },
       default_at_signup: false,
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:     1,
+      created_by_id:     1,
     )
     role_permission1.permission_grant('admin')
     user_with_permission1 = User.create_or_update(
-      login: 'setting-permission-child1',
-      firstname: 'Setting',
-      lastname: 'Admin Permission Child1',
-      email: 'setting-admin-permission-child1@example.com',
-      password: 'some_pw',
-      active: true,
-      roles: [role_permission1],
+      login:         'setting-permission-child1',
+      firstname:     'Setting',
+      lastname:      'Admin Permission Child1',
+      email:         'setting-admin-permission-child1@example.com',
+      password:      'some_pw',
+      active:        true,
+      roles:         [role_permission1],
       updated_by_id: 1,
       created_by_id: 1,
     )

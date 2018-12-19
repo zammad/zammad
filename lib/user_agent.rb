@@ -66,9 +66,9 @@ returns
     rescue => e
       log(url, request, nil, options)
       return Result.new(
-        error: e.inspect,
+        error:   e.inspect,
         success: false,
-        code: 0,
+        code:    0,
       )
     end
   end
@@ -119,9 +119,9 @@ returns
     rescue => e
       log(url, request, nil, options)
       return Result.new(
-        error: e.inspect,
+        error:   e.inspect,
         success: false,
-        code: 0,
+        code:    0,
       )
     end
   end
@@ -171,9 +171,9 @@ returns
     rescue => e
       log(url, request, nil, options)
       return Result.new(
-        error: e.inspect,
+        error:   e.inspect,
         success: false,
-        code: 0,
+        code:    0,
       )
     end
   end
@@ -216,9 +216,9 @@ returns
     rescue => e
       log(url, request, nil, options)
       return Result.new(
-        error: e.inspect,
+        error:   e.inspect,
         success: false,
-        code: 0,
+        code:    0,
       )
     end
   end
@@ -328,10 +328,10 @@ returns
 
     # request
     request_data = {
-      content: '',
-      content_type: request['Content-Type'],
+      content:          '',
+      content_type:     request['Content-Type'],
       content_encoding: request['Content-Encoding'],
-      source: request['User-Agent'] || request['Server'],
+      source:           request['User-Agent'] || request['Server'],
     }
     request.each_header do |key, value|
       request_data[:content] += "#{key}: #{value}\n"
@@ -344,11 +344,11 @@ returns
 
     # response
     response_data = {
-      code: 0,
-      content: '',
-      content_type: nil,
+      code:             0,
+      content:          '',
+      content_type:     nil,
       content_encoding: nil,
-      source: nil,
+      source:           nil,
     }
     if response
       response_data[:code] = response.code
@@ -367,13 +367,13 @@ returns
 
     record = {
       direction: 'out',
-      facility: options[:log][:facility],
-      url: url,
-      status: response_data[:code],
-      ip: nil,
-      request: request_data,
-      response: response_data,
-      method: request.method,
+      facility:  options[:log][:facility],
+      url:       url,
+      status:    response_data[:code],
+      ip:        nil,
+      request:   request_data,
+      response:  response_data,
+      method:    request.method,
     }
     HttpLog.create(record)
   end
@@ -383,31 +383,31 @@ returns
 
     if !response
       return Result.new(
-        error: "Can't connect to #{uri}, got no response!",
+        error:   "Can't connect to #{uri}, got no response!",
         success: false,
-        code: 0,
+        code:    0,
       )
     end
 
     case response
     when Net::HTTPNotFound
       return Result.new(
-        error: "No such file #{uri}, 404!",
+        error:   "No such file #{uri}, 404!",
         success: false,
-        code: response.code,
+        code:    response.code,
       )
     when Net::HTTPClientError
       return Result.new(
-        error: "Client Error: #{response.inspect}!",
+        error:   "Client Error: #{response.inspect}!",
         success: false,
-        code: response.code,
-        body: response.body
+        code:    response.code,
+        body:    response.body
       )
     when Net::HTTPInternalServerError
       return Result.new(
-        error: "Server Error: #{response.inspect}!",
+        error:   "Server Error: #{response.inspect}!",
         success: false,
-        code: response.code,
+        code:    response.code,
       )
     when Net::HTTPRedirection
       raise 'Too many redirections for the original URL, halting.' if count <= 0
@@ -420,11 +420,11 @@ returns
         data = JSON.parse(response.body)
       end
       return Result.new(
-        data: data,
-        body: response.body,
+        data:         data,
+        body:         response.body,
         content_type: response['Content-Type'],
-        success: true,
-        code: response.code,
+        success:      true,
+        code:         response.code,
       )
     when Net::HTTPCreated
       data = nil
@@ -432,11 +432,11 @@ returns
         data = JSON.parse(response.body)
       end
       return Result.new(
-        data: data,
-        body: response.body,
+        data:         data,
+        body:         response.body,
         content_type: response['Content-Type'],
-        success: true,
-        code: response.code,
+        success:      true,
+        code:         response.code,
       )
     end
 
@@ -465,26 +465,26 @@ returns
           ftp.getbinaryfile(filename, temp_file)
         rescue => e
           return Result.new(
-            error: e.inspect,
+            error:   e.inspect,
             success: false,
-            code: '550',
+            code:    '550',
           )
         end
       end
     rescue => e
       return Result.new(
-        error: e.inspect,
+        error:   e.inspect,
         success: false,
-        code: 0,
+        code:    0,
       )
     end
 
     contents = temp_file.read
     temp_file.close
     Result.new(
-      body: contents,
+      body:    contents,
       success: true,
-      code: '200',
+      code:    '200',
     )
   end
 

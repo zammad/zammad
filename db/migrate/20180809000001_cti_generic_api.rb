@@ -5,17 +5,17 @@ class CtiGenericApi < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'cti integration',
-      name: 'cti_integration',
-      area: 'Integration::Switch',
+      title:       'cti integration',
+      name:        'cti_integration',
+      area:        'Integration::Switch',
       description: 'Defines if generic CTI is enabled or not.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'cti_integration',
-            tag: 'boolean',
+            null:    true,
+            name:    'cti_integration',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,48 +23,48 @@ class CtiGenericApi < ActiveRecord::Migration[5.1]
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
-        prio: 1,
-        trigger: ['menu:render', 'cti:reload'],
+        prio:           1,
+        trigger:        ['menu:render', 'cti:reload'],
         authentication: true,
-        permission: ['admin.integration'],
+        permission:     ['admin.integration'],
       },
-      frontend: true
+      frontend:    true
     )
     Setting.create_if_not_exists(
-      title: 'cti config',
-      name: 'cti_config',
-      area: 'Integration::Cti',
+      title:       'cti config',
+      name:        'cti_config',
+      area:        'Integration::Cti',
       description: 'Defines the cti config.',
-      options: {},
-      state: { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
+      options:     {},
+      state:       { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
       preferences: {
-        prio: 2,
+        prio:       2,
         permission: ['admin.integration'],
       },
-      frontend: false,
+      frontend:    false,
     )
     Setting.create_if_not_exists(
-      title: 'CTI Token',
-      name: 'cti_token',
-      area: 'Integration::Cti',
+      title:       'CTI Token',
+      name:        'cti_token',
+      area:        'Integration::Cti',
       description: 'Token for cti.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'cti_token',
-            tag: 'input',
+            null:    false,
+            name:    'cti_token',
+            tag:     'input',
           },
         ],
       },
-      state: SecureRandom.urlsafe_base64(20),
+      state:       SecureRandom.urlsafe_base64(20),
       preferences: {
         permission: ['admin.integration'],
       },
-      frontend: false
+      frontend:    false
     )
 
     add_column :cti_logs, :queue, :string, limit: 250, null: true          if !column_exists?(:cti_logs, :queue)

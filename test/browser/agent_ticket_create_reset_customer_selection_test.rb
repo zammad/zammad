@@ -6,7 +6,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -14,7 +14,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     click(css: 'a[href="#ticket/create"]')
 
     watch_for(
-      css: '.content.active .newTicket',
+      css:     '.content.active .newTicket',
       timeout: 3,
     )
 
@@ -31,12 +31,12 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     @browser.execute_script( "$('.content.active .newTicket .js-recipientDropdown').addClass('open')" )
 
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: 'nicole',
     )
     watch_for(
-      css: '.content.active .newTicket .js-recipientDropdown .recipientList.is-shown',
-      value: 'Nicole',
+      css:     '.content.active .newTicket .js-recipientDropdown .recipientList.is-shown',
+      value:   'Nicole',
       timeout: 3,
     )
     sendkey(value: :enter)
@@ -50,7 +50,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
 
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: '',
     )
     sendkey(value: :backspace)
@@ -64,15 +64,15 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     exists_not(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
 
     set(
-      css: '.content.active .newTicket input[name="title"]',
+      css:   '.content.active .newTicket input[name="title"]',
       value: 'some title',
     )
     set(
-      css: '.content.active .newTicket div[data-name="body"]',
+      css:   '.content.active .newTicket div[data-name="body"]',
       value: 'some body',
     )
     select(
-      css: '.content.active .newTicket select[name="group_id"]',
+      css:   '.content.active .newTicket select[name="group_id"]',
       value: 'Users',
     )
     click(css: '.content.active .newTicket .js-submit')
@@ -90,7 +90,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -111,12 +111,12 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     @browser.execute_script( "$('.content.active .newTicket .js-recipientDropdown').addClass('open')" )
 
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: 'nicole',
     )
     watch_for(
-      css: '.content.active .newTicket .js-recipientDropdown .recipientList.is-shown',
-      value: 'Nicole',
+      css:     '.content.active .newTicket .js-recipientDropdown .recipientList.is-shown',
+      value:   'Nicole',
       timeout: 3,
     )
     sendkey(value: :enter)
@@ -130,7 +130,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
 
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: '',
     )
     sendkey(value: :backspace)
@@ -144,32 +144,32 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     exists_not(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
 
     set(
-      css: '.content.active .newTicket input[name="customer_id_completion"]',
+      css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: 'somecustomer_not_existing_right_now@example.com',
     )
     set(
-      css: '.content.active .newTicket input[name="title"]',
+      css:   '.content.active .newTicket input[name="title"]',
       value: 'some title',
     )
     set(
-      css: '.content.active .newTicket div[data-name="body"]',
+      css:   '.content.active .newTicket div[data-name="body"]',
       value: 'some body',
     )
     select(
-      css: '.content.active .newTicket select[name="group_id"]',
+      css:   '.content.active .newTicket select[name="group_id"]',
       value: 'Users',
     )
     click(css: '.content.active .newTicket .js-submit')
 
     watch_for(
-      css: '.content.active .ticketZoom-header .ticket-number',
+      css:   '.content.active .ticketZoom-header .ticket-number',
       value: '\d',
     )
 
     click(css: '.content.active .tabsSidebar-tabs .tabsSidebar-tab[data-tab="customer"]')
 
     match(
-      css: '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
+      css:   '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
       value: 'somecustomer_not_existing_right_now@example.com',
     )
 
@@ -189,7 +189,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     )
 
     set(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: 'master',
     )
     click(css: '.content.active .modal .js-submit')
@@ -199,19 +199,19 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     )
 
     set(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: 'master',
     )
     watch_for(
-      css: '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
-      value: 'Master',
+      css:     '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
+      value:   'Master',
       timeout: 3,
     )
     sendkey(value: :enter)
     sleep 1
 
     set(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: '',
     )
     sendkey(value: :backspace)
@@ -224,12 +224,12 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     )
 
     set(
-      css: '.content.active .modal input[name="customer_id_completion"]',
+      css:   '.content.active .modal input[name="customer_id_completion"]',
       value: 'master',
     )
     watch_for(
-      css: '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
-      value: 'Master',
+      css:     '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
+      value:   'Master',
       timeout: 3,
     )
     sendkey(value: :enter)
@@ -239,7 +239,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     #click(css: '.content.active .tabsSidebar-tabs .tabsSidebar-tab[data-tab="customer"]')
 
     watch_for(
-      css: '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
+      css:   '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
       value: 'master@example.com',
     )
 

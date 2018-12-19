@@ -67,7 +67,7 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end

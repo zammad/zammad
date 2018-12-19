@@ -101,8 +101,8 @@ class Ldap
     # @return [Boolean] The valid state of the username and password combination.
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
-        base: @ldap.base_dn,
-        filter: "(#{login_attribute}=#{username})",
+        base:     @ldap.base_dn,
+        filter:   "(#{login_attribute}=#{username})",
         password: password
       )
 

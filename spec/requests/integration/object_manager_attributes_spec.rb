@@ -15,37 +15,37 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # token based on headers
       params = {
-        'name': 'test1',
-        'object': 'Ticket',
-        'display': 'Test 1',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test1',
+        'object':      'Ticket',
+        'display':     'Test 1',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': 'test',
-          'type': 'text',
+          'default':   'test',
+          'type':      'text',
           'maxlength': 120
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
         },
-        'id': 'c-196'
+        'id':          'c-196'
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
@@ -63,36 +63,36 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # token based on headers
       params = {
-        'name': 'test2',
-        'object': 'Ticket',
-        'display': 'Test 2',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test2',
+        'object':      'Ticket',
+        'display':     'Test 2',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'type': 'text',
+          'type':      'text',
           'maxlength': 120
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
         },
-        'id': 'c-196'
+        'id':          'c-196'
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
@@ -117,37 +117,37 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # parameters for updating
       params = {
-        'name': 'test4',
-        'object': 'Ticket',
-        'display': 'Test 4',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test4',
+        'object':      'Ticket',
+        'display':     'Test 4',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': 'test',
-          'type': 'text',
+          'default':   'test',
+          'type':      'text',
           'maxlength': 120
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
         },
-        'id': 'c-196'
+        'id':          'c-196'
       }
 
       # update the object
@@ -166,31 +166,31 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # token based on headers
       params = {
-        'active': true,
+        'active':      true,
         'data_option': {
           'options': {
             'false': 'no',
-            'true': 'yes'
+            'true':  'yes'
           }
         },
-        'data_type': 'boolean',
-        'display': 'Boolean 2',
-        'id': 'c-200',
-        'name': 'bool2',
-        'object': 'Ticket',
-        'screens': {
+        'data_type':   'boolean',
+        'display':     'Boolean 2',
+        'id':          'c-200',
+        'name':        'bool2',
+        'object':      'Ticket',
+        'screens':     {
           'create_middle': {
-            'ticket.agent' => {
+            'ticket.agent'    => {
               'item_class': 'column',
-              'shown': true
+              'shown':      true
             },
             'ticket.customer' => {
               'item_class': 'column',
-              'shown': true
+              'shown':      true
             }
           },
-          'edit': {
-            'ticket.agent' => {
+          'edit':          {
+            'ticket.agent'    => {
               'shown': true
             },
             'ticket.customer' => {
@@ -215,42 +215,42 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # token based on headers
       params = {
-        'active': true,
+        'active':      true,
         'data_option': {
           'options': {
             'key1': 'foo'
           }
         },
-        'data_type': 'select',
-        'display': 'Test 5',
-        'id': 'c-204',
-        'name': 'test5',
-        'object': 'User',
-        'screens': {
+        'data_type':   'select',
+        'display':     'Test 5',
+        'id':          'c-204',
+        'name':        'test5',
+        'object':      'User',
+        'screens':     {
           'create': {
-            'admin.user' => {
+            'admin.user'      => {
               'shown': true
             },
-            'ticket.agent' => {
+            'ticket.agent'    => {
               'shown': true
             },
             'ticket.customer' => {
               'shown': true
             }
           },
-          'edit': {
-            'admin.user' => {
+          'edit':   {
+            'admin.user'   => {
               'shown': true
             },
             'ticket.agent' => {
               'shown': true
             }
           },
-          'view': {
-            'admin.user' => {
+          'view':   {
+            'admin.user'      => {
               'shown': true
             },
-            'ticket.agent' => {
+            'ticket.agent'    => {
               'shown': true
             },
             'ticket.customer' => {
@@ -281,43 +281,43 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # parameters for updating
       params = {
-        active: true,
+        active:      true,
         data_option: {
           options: {
             key1: 'foo',
             key2: 'bar'
           }
         },
-        data_type: 'select',
-        display: 'Test 7',
-        id: 'c-204',
-        name: 'test7',
-        object: 'User',
-        screens: {
+        data_type:   'select',
+        display:     'Test 7',
+        id:          'c-204',
+        name:        'test7',
+        object:      'User',
+        screens:     {
           create: {
-            'admin.user' => {
+            'admin.user'      => {
               shown: true
             },
-            'ticket.agent' => {
+            'ticket.agent'    => {
               shown: true
             },
             'ticket.customer' => {
               shown: true
             }
           },
-          edit: {
-            'admin.user' => {
+          edit:   {
+            'admin.user'   => {
               shown: true
             },
             'ticket.agent' => {
               shown: true
             }
           },
-          view: {
-            'admin.user' => {
+          view:   {
+            'admin.user'      => {
               shown: true
             },
-            'ticket.agent' => {
+            'ticket.agent'    => {
               shown: true
             },
             'ticket.customer' => {
@@ -339,39 +339,39 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
     it 'does converts string to boolean for default value for boolean data type with true (01)', db_strategy: :reset do
       params = {
-        'name': "customerdescription#{rand(999_999_999)}",
-        'object': 'Ticket',
-        'display': "custom description#{rand(999_999_999)}",
-        'active': true,
-        'data_type': 'boolean',
+        'name':        "customerdescription#{rand(999_999_999)}",
+        'object':      'Ticket',
+        'display':     "custom description#{rand(999_999_999)}",
+        'active':      true,
+        'data_type':   'boolean',
         'data_option': {
           'options': {
-            'true': '',
+            'true':  '',
             'false': '',
           },
           'default': 'true',
           'screens': {
             'create_middle': {
               'ticket.customer': {
-                'shown': true,
+                'shown':      true,
                 'item_class': 'column'
               },
-              'ticket.agent': {
-                'shown': true,
+              'ticket.agent':    {
+                'shown':      true,
                 'item_class': 'column'
               }
             },
-            'edit': {
+            'edit':          {
               'ticket.customer': {
                 'shown': true
               },
-              'ticket.agent': {
+              'ticket.agent':    {
                 'shown': true
               }
             }
           }
         },
-        'id': 'c-201'
+        'id':          'c-201'
       }
 
       authenticated_as(admin_user)
@@ -390,33 +390,33 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
     it 'does converts string to boolean for default value for boolean data type with false (02)', db_strategy: :reset do
       params = {
-        'name': "customerdescription_#{rand(999_999_999)}",
-        'object': 'Ticket',
-        'display': "custom description #{rand(999_999_999)}",
-        'active': true,
-        'data_type': 'boolean',
+        'name':        "customerdescription_#{rand(999_999_999)}",
+        'object':      'Ticket',
+        'display':     "custom description #{rand(999_999_999)}",
+        'active':      true,
+        'data_type':   'boolean',
         'data_option': {
           'options': {
-            'true': '',
+            'true':  '',
             'false': '',
           },
           'default': 'false',
           'screens': {
             'create_middle': {
               'ticket.customer': {
-                'shown': true,
+                'shown':      true,
                 'item_class': 'column'
               },
-              'ticket.agent': {
-                'shown': true,
+              'ticket.agent':    {
+                'shown':      true,
                 'item_class': 'column'
               }
             },
-            'edit': {
+            'edit':          {
               'ticket.customer': {
                 'shown': true
               },
-              'ticket.agent': {
+              'ticket.agent':    {
                 'shown': true
               }
             }
@@ -444,35 +444,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
 
       params = {
-        'name': 'test_attribute_referenced_by_an_overview',
-        'object': 'Ticket',
-        'display': 'Test Attribute',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test_attribute_referenced_by_an_overview',
+        'object':      'Ticket',
+        'display':     'Test Attribute',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': '',
-          'type': 'text',
+          'default':   '',
+          'type':      'text',
           'maxlength': 120,
-          'null': true,
-          'options': {},
-          'relation': ''
+          'null':      true,
+          'options':   {},
+          'relation':  ''
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
@@ -487,29 +487,29 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # 2. create an overview that uses the attribute
       params = {
-        name: 'test_overview',
-        roles: Role.where(name: 'Agent').pluck(:name),
+        name:      'test_overview',
+        roles:     Role.where(name: 'Agent').pluck(:name),
         condition: {
-          'ticket.state_id': {
+          'ticket.state_id':                                 {
             'operator': 'is',
-            'value': Ticket::State.all.pluck(:id),
+            'value':    Ticket::State.all.pluck(:id),
           },
           'ticket.test_attribute_referenced_by_an_overview': {
             'operator': 'contains',
-            'value': 'DUMMY'
+            'value':    'DUMMY'
           },
         },
-        order: {
-          by: 'created_at',
+        order:     {
+          by:        'created_at',
           direction: 'DESC',
         },
-        view: {
-          d: %w[title customer state created_at],
-          s: %w[number title customer state created_at],
-          m: %w[number title customer state created_at],
+        view:      {
+          d:                 %w[title customer state created_at],
+          s:                 %w[number title customer state created_at],
+          m:                 %w[number title customer state created_at],
           view_mode_default: 's',
         },
-        user_ids: [ '1' ],
+        user_ids:  [ '1' ],
       }
 
       if Overview.where('name like ?', '%test%').empty?
@@ -539,35 +539,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
 
       params = {
-        'name': 'test_attribute_referenced_by_a_trigger',
-        'object': 'Ticket',
-        'display': 'Test Attribute',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test_attribute_referenced_by_a_trigger',
+        'object':      'Ticket',
+        'display':     'Test Attribute',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': '',
-          'type': 'text',
+          'default':   '',
+          'type':      'text',
           'maxlength': 120,
-          'null': true,
-          'options': {},
-          'relation': ''
+          'null':      true,
+          'options':   {},
+          'relation':  ''
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
@@ -582,11 +582,11 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # 2. create an trigger that uses the attribute
       params = {
-        name: 'test_trigger',
+        name:      'test_trigger',
         condition: {
           'ticket.test_attribute_referenced_by_a_trigger': {
             'operator': 'contains',
-            'value': 'DUMMY'
+            'value':    'DUMMY'
           }
         },
         'perform': {
@@ -594,8 +594,8 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
             'value': '2'
           }
         },
-        'active': true,
-        'id': 'c-3'
+        'active':  true,
+        'id':      'c-3'
       }
 
       if Trigger.where('name like ?', '%test%').empty?
@@ -625,35 +625,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
 
       params = {
-        'name': 'test_attribute_referenced_by_a_scheduler',
-        'object': 'Ticket',
-        'display': 'Test Attribute',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test_attribute_referenced_by_a_scheduler',
+        'object':      'Ticket',
+        'display':     'Test Attribute',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': '',
-          'type': 'text',
+          'default':   '',
+          'type':      'text',
           'maxlength': 120,
-          'null': true,
-          'options': {},
-          'relation': ''
+          'null':      true,
+          'options':   {},
+          'relation':  ''
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
@@ -668,9 +668,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # 2. create a scheduler that uses the attribute
       params = {
-        name: 'test_scheduler',
-        'timeplan': {
-          'days': {
+        name:                   'test_scheduler',
+        'timeplan':             {
+          'days':    {
             'Mon': true,
             'Tue': false,
             'Wed': false,
@@ -679,17 +679,17 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
             'Sat': false,
             'Sun': false
           },
-          'hours': {
-            '0': true,
-            '1': false,
-            '2': false,
-            '3': false,
-            '4': false,
-            '5': false,
-            '6': false,
-            '7': false,
-            '8': false,
-            '9': false,
+          'hours':   {
+            '0':  true,
+            '1':  false,
+            '2':  false,
+            '3':  false,
+            '4':  false,
+            '5':  false,
+            '6':  false,
+            '7':  false,
+            '8':  false,
+            '9':  false,
             '10': false,
             '11': false,
             '12': false,
@@ -706,7 +706,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
             '23': false
           },
           'minutes': {
-            '0': true,
+            '0':  true,
             '10': false,
             '20': false,
             '30': false,
@@ -714,21 +714,21 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
             '50': false
           }
         },
-        'condition': {
+        'condition':            {
           'ticket.test_attribute_referenced_by_a_scheduler': {
             'operator': 'contains',
-            'value': 'DUMMY'
+            'value':    'DUMMY'
           }
         },
-        'perform': {
+        'perform':              {
           'ticket.state_id': {
             'value': '2'
           }
         },
         'disable_notification': true,
-        'note': '',
-        'active': true,
-        'id': 'c-0'
+        'note':                 '',
+        'active':               true,
+        'id':                   'c-0'
       }
 
       if Job.where('name like ?', '%test%').empty?
@@ -758,35 +758,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
 
       params = {
-        'name': 'test_attribute_referenced_by_an_overview',
-        'object': 'Ticket',
-        'display': 'Test Attribute',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test_attribute_referenced_by_an_overview',
+        'object':      'Ticket',
+        'display':     'Test Attribute',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': '',
-          'type': 'text',
+          'default':   '',
+          'type':      'text',
           'maxlength': 120,
-          'null': true,
-          'options': {},
-          'relation': ''
+          'null':      true,
+          'options':   {},
+          'relation':  ''
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
@@ -797,35 +797,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       params = {
-        'name': 'test_attribute_referenced_by_an_overview',
-        'object': 'User',
-        'display': 'Test Attribute',
-        'active': true,
-        'data_type': 'input',
+        'name':        'test_attribute_referenced_by_an_overview',
+        'object':      'User',
+        'display':     'Test Attribute',
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': '',
-          'type': 'text',
+          'default':   '',
+          'type':      'text',
           'maxlength': 120,
-          'null': true,
-          'options': {},
-          'relation': ''
+          'null':      true,
+          'options':   {},
+          'relation':  ''
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           }
@@ -839,29 +839,29 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # 2. create an overview that uses the attribute
       params = {
-        name: 'test_overview',
-        roles: Role.where(name: 'Agent').pluck(:name),
+        name:      'test_overview',
+        roles:     Role.where(name: 'Agent').pluck(:name),
         condition: {
-          'ticket.state_id': {
+          'ticket.state_id':                                 {
             'operator': 'is',
-            'value': Ticket::State.all.pluck(:id),
+            'value':    Ticket::State.all.pluck(:id),
           },
           'ticket.test_attribute_referenced_by_an_overview': {
             'operator': 'contains',
-            'value': 'DUMMY'
+            'value':    'DUMMY'
           },
         },
-        order: {
-          by: 'created_at',
+        order:     {
+          by:        'created_at',
           direction: 'DESC',
         },
-        view: {
-          d: %w[title customer state created_at],
-          s: %w[number title customer state created_at],
-          m: %w[number title customer state created_at],
+        view:      {
+          d:                 %w[title customer state created_at],
+          s:                 %w[number title customer state created_at],
+          m:                 %w[number title customer state created_at],
           view_mode_default: 's',
         },
-        user_ids: [ '1' ],
+        user_ids:  [ '1' ],
       }
 
       if Overview.where('name like ?', '%test%').empty?
@@ -900,33 +900,33 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does verify if attribute type can not be changed (07)', db_strategy: :reset do
 
       params = {
-        'name': "customerdescription_#{rand(999_999_999)}",
-        'object': 'Ticket',
-        'display': "custom description #{rand(999_999_999)}",
-        'active': true,
-        'data_type': 'boolean',
+        'name':        "customerdescription_#{rand(999_999_999)}",
+        'object':      'Ticket',
+        'display':     "custom description #{rand(999_999_999)}",
+        'active':      true,
+        'data_type':   'boolean',
         'data_option': {
           'options': {
-            'true': '',
+            'true':  '',
             'false': '',
           },
           'default': 'false',
           'screens': {
             'create_middle': {
               'ticket.customer': {
-                'shown': true,
+                'shown':      true,
                 'item_class': 'column'
               },
-              'ticket.agent': {
-                'shown': true,
+              'ticket.agent':    {
+                'shown':      true,
                 'item_class': 'column'
               }
             },
-            'edit': {
+            'edit':          {
               'ticket.customer': {
                 'shown': true
               },
-              'ticket.agent': {
+              'ticket.agent':    {
                 'shown': true
               }
             }
@@ -949,8 +949,8 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       params['data_type'] = 'input'
       params['data_option'] = {
-        'default': 'test',
-        'type': 'text',
+        'default':   'test',
+        'type':      'text',
         'maxlength': 120
       }
 
@@ -964,32 +964,32 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does verify if attribute type can be changed (08)', db_strategy: :reset do
 
       params = {
-        'name': "customerdescription_#{rand(999_999_999)}",
-        'object': 'Ticket',
-        'display': "custom description #{rand(999_999_999)}",
-        'active': true,
-        'data_type': 'input',
+        'name':        "customerdescription_#{rand(999_999_999)}",
+        'object':      'Ticket',
+        'display':     "custom description #{rand(999_999_999)}",
+        'active':      true,
+        'data_type':   'input',
         'data_option': {
-          'default': 'test',
-          'type': 'text',
+          'default':   'test',
+          'type':      'text',
           'maxlength': 120,
         },
-        'screens': {
+        'screens':     {
           'create_middle': {
             'ticket.customer': {
-              'shown': true,
+              'shown':      true,
               'item_class': 'column'
             },
-            'ticket.agent': {
-              'shown': true,
+            'ticket.agent':    {
+              'shown':      true,
               'item_class': 'column'
             }
           },
-          'edit': {
+          'edit':          {
             'ticket.customer': {
               'shown': true
             },
-            'ticket.agent': {
+            'ticket.agent':    {
               'shown': true
             }
           },

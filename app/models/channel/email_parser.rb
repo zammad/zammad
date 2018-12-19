@@ -3,7 +3,7 @@
 # encoding: utf-8
 
 class Channel::EmailParser
-  EMAIL_REGEX = /.+@.+/
+  EMAIL_REGEX = /.+@.+/.freeze
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
   EXCESSIVE_LINKS_MSG = 'This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
@@ -234,8 +234,8 @@ returns
           title = '-'
         end
         ticket = Ticket.new(
-          group_id: group.id,
-          title: title,
+          group_id:    group.id,
+          title:       title,
           preferences: preferences,
         )
         set_attributes_by_x_headers(ticket, 'ticket', mail)
@@ -255,18 +255,18 @@ returns
       # set attributes
       ticket.with_lock do
         article = Ticket::Article.new(
-          ticket_id: ticket.id,
-          type_id: Ticket::Article::Type.find_by(name: 'email').id,
-          sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+          ticket_id:    ticket.id,
+          type_id:      Ticket::Article::Type.find_by(name: 'email').id,
+          sender_id:    Ticket::Article::Sender.find_by(name: 'Customer').id,
           content_type: mail[:content_type],
-          body: mail[:body],
-          from: mail[:from],
-          reply_to: mail[:"reply-to"],
-          to: mail[:to],
-          cc: mail[:cc],
-          subject: mail[:subject],
-          message_id: mail[:message_id],
-          internal: false,
+          body:         mail[:body],
+          from:         mail[:from],
+          reply_to:     mail[:"reply-to"],
+          to:           mail[:to],
+          cc:           mail[:cc],
+          subject:      mail[:subject],
+          message_id:   mail[:message_id],
+          internal:     false,
         )
 
         # x-headers lookup
@@ -285,10 +285,10 @@ returns
             filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
           end
           Store.add(
-            object: 'Ticket::Article',
-            o_id: article.id,
-            data: attachment[:data],
-            filename: filename,
+            object:      'Ticket::Article',
+            o_id:        article.id,
+            data:        attachment[:data],
+            filename:    filename,
             preferences: attachment[:preferences]
           )
         end
@@ -699,13 +699,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       if filename.blank?
         map = {
           'message/delivery-status': ['txt', 'delivery-status'],
-          'text/plain': %w[txt document],
-          'text/html': %w[html document],
-          'video/quicktime': %w[mov video],
-          'image/jpeg': %w[jpg image],
-          'image/jpg': %w[jpg image],
-          'image/png': %w[png image],
-          'image/gif': %w[gif image],
+          'text/plain':              %w[txt document],
+          'text/html':               %w[html document],
+          'video/quicktime':         %w[mov video],
+          'image/jpeg':              %w[jpg image],
+          'image/jpg':               %w[jpg image],
+          'image/png':               %w[png image],
+          'image/gif':               %w[gif image],
         }
         map.each do |type, ext|
           next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
@@ -766,8 +766,8 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     filename = Mail::Encodings.value_decode(filename)
 
     attach = {
-      data: file.body.to_s,
-      filename: filename,
+      data:        file.body.to_s,
+      filename:    filename,
       preferences: headers_store,
     }
 

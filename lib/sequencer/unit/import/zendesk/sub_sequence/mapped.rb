@@ -62,7 +62,7 @@ class Sequencer
                                   parameters: default_params.merge(
                                     resource: resource
                                   ),
-                                  expecting: [expecting])
+                                  expecting:  [expecting])
             end
 
             def mapping_value(expected_value)

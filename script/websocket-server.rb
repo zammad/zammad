@@ -188,13 +188,13 @@ EventMachine.run do
       if data['event']
         log 'debug', "execute event '#{data['event']}'", client_id
         message = Sessions::Event.run(
-          event: data['event'],
-          payload: data,
-          session: @clients[client_id][:session],
+          event:     data['event'],
+          payload:   data,
+          session:   @clients[client_id][:session],
           remote_ip: @clients[client_id][:remote_ip],
           client_id: client_id,
-          clients: @clients,
-          options: @options,
+          clients:   @clients,
+          options:   @options,
         )
         if message
           websocket_send(client_id, message)

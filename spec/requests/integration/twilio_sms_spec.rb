@@ -17,13 +17,13 @@ RSpec.describe 'Twilio SMS', type: :request do
       UserInfo.current_user_id = 1
       channel = create(
         :channel,
-        area: 'Sms::Account',
-        options: {
-          adapter: 'sms/twilio',
+        area:     'Sms::Account',
+        options:  {
+          adapter:       'sms/twilio',
           webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
-          account_id: '111',
-          token: '223',
-          sender: '333',
+          account_id:    '111',
+          token:         '223',
+          sender:        '333',
         },
         group_id: nil,
       )
@@ -129,8 +129,8 @@ RSpec.describe 'Twilio SMS', type: :request do
       # reply by agent
       params = {
         ticket_id: ticket.id,
-        body: 'some test',
-        type: 'sms',
+        body:      'some test',
+        type:      'sms',
       }
       authenticated_as(agent_user)
       post '/api/v1/ticket_articles', params: params, as: :json
@@ -144,16 +144,16 @@ RSpec.describe 'Twilio SMS', type: :request do
 
       stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/111/Messages.json')
         .with(
-          body: {
+          body:    {
             'Body' => 'some test',
             'From' => '333',
-            'To' => nil,
+            'To'   => nil,
           },
           headers: {
-            'Accept' => 'application/json',
+            'Accept'         => 'application/json',
             'Accept-Charset' => 'utf-8',
-            'Authorization' => 'Basic MTExOjIyMw==',
-            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization'  => 'Basic MTExOjIyMw==',
+            'Content-Type'   => 'application/x-www-form-urlencoded',
           }
         ).to_return(status: 200, body: '', headers: {})
 
@@ -173,7 +173,7 @@ RSpec.describe 'Twilio SMS', type: :request do
 
       customer = create(
         :customer_user,
-        email: 'me@example.com',
+        email:  'me@example.com',
         mobile: '01710000000',
       )
       Observer::Transaction.commit
@@ -185,13 +185,13 @@ RSpec.describe 'Twilio SMS', type: :request do
       UserInfo.current_user_id = 1
       channel = create(
         :channel,
-        area: 'Sms::Account',
+        area:    'Sms::Account',
         options: {
-          adapter: 'sms/twilio',
+          adapter:       'sms/twilio',
           webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
-          account_id: '111',
-          token: '223',
-          sender: '333',
+          account_id:    '111',
+          token:         '223',
+          sender:        '333',
         },
       )
 

@@ -4,12 +4,12 @@ module Import
       class NewTicket < Import::OTRS::History
         def init_callback(history)
           @history_attributes = {
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'created',
+            id:             history['HistoryID'],
+            o_id:           history['TicketID'],
+            history_type:   'created',
             history_object: 'Ticket',
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
+            created_at:     history['CreateTime'],
+            created_by_id:  history['CreateBy']
           }
         end
       end

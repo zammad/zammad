@@ -4,25 +4,25 @@ class EmailForwardPrefixSettingIssue1730 < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Ticket Subject Forward',
-      name: 'ticket_subject_fwd',
-      area: 'Email::Base',
+      title:       'Ticket Subject Forward',
+      name:        'ticket_subject_fwd',
+      area:        'Email::Base',
       description: 'The text at the beginning of the subject in an email forward, e. g. FWD.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'ticket_subject_fwd',
-            tag: 'input',
+            null:    true,
+            name:    'ticket_subject_fwd',
+            tag:     'input',
           },
         ],
       },
-      state: 'FWD',
+      state:       'FWD',
       preferences: {
         permission: ['admin.channel_email'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 end

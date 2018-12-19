@@ -75,18 +75,18 @@ RSpec.describe Import::OTRS::User do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: true,
-        source: 'OTRS Import',
-        role_ids: [2, 1],
-        group_ids: ['1'],
-        password: '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
-        updated_at: '2014-04-28 10:53:18',
-        created_at: '2014-04-28 10:53:18',
-        id: '1',
-        email: 'root@localhost',
-        firstname: 'Admin',
-        lastname: 'OTRS',
-        login: 'root@localhost'
+        active:        true,
+        source:        'OTRS Import',
+        role_ids:      [2, 1],
+        group_ids:     ['1'],
+        password:      '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        id:            '1',
+        email:         'root@localhost',
+        firstname:     'Admin',
+        lastname:      'OTRS',
+        login:         'root@localhost'
       }
     end
 
@@ -108,18 +108,18 @@ RSpec.describe Import::OTRS::User do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: true,
-        source: 'OTRS Import',
-        role_ids: [2, 1],
-        group_ids: [],
-        password: '{sha2}9edb001ad7900daea0622d89225c9ca729749fd12ae5ea044f072d1b7c56c8cc',
-        updated_at: '2014-11-14 00:53:20',
-        created_at: '2014-11-14 00:53:20',
-        id: '6',
-        email: 'agent-2-for-role-2@example.com',
-        firstname: 'agent-2-for-role-2',
-        lastname: 'agent-2-for-role-2',
-        login: 'agent-2-for-role-2'
+        active:        true,
+        source:        'OTRS Import',
+        role_ids:      [2, 1],
+        group_ids:     [],
+        password:      '{sha2}9edb001ad7900daea0622d89225c9ca729749fd12ae5ea044f072d1b7c56c8cc',
+        updated_at:    '2014-11-14 00:53:20',
+        created_at:    '2014-11-14 00:53:20',
+        id:            '6',
+        email:         'agent-2-for-role-2@example.com',
+        firstname:     'agent-2-for-role-2',
+        lastname:      'agent-2-for-role-2',
+        login:         'agent-2-for-role-2'
       }
     end
 
@@ -141,18 +141,18 @@ RSpec.describe Import::OTRS::User do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: true,
-        source: 'OTRS Import',
-        role_ids: [2, 1],
-        group_ids: ['1'],
-        password: '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
-        updated_at: '2014-04-28 10:53:18',
-        created_at: '2014-04-28 10:53:18',
-        id: '1',
-        email: 'root@localhost',
-        firstname: 'Admin',
-        lastname: 'OTRS',
-        login: 'root@localhost'
+        active:        true,
+        source:        'OTRS Import',
+        role_ids:      [2, 1],
+        group_ids:     ['1'],
+        password:      '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        id:            '1',
+        email:         'root@localhost',
+        firstname:     'Admin',
+        lastname:      'OTRS',
+        login:         'root@localhost'
       }
     end
 
@@ -174,18 +174,18 @@ RSpec.describe Import::OTRS::User do
       {
         created_by_id: 1,
         updated_by_id: 1,
-        active: true,
-        source: 'OTRS Import',
-        role_ids: [2, 1],
-        group_ids: ['1'],
-        password: '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
-        updated_at: '2014-04-28 10:53:18',
-        created_at: '2014-04-28 10:53:18',
-        id: '1',
-        email: 'root@localhost',
-        firstname: 'Admin',
-        lastname: 'OTRS',
-        login: 'root@localhost'
+        active:        true,
+        source:        'OTRS Import',
+        role_ids:      [2, 1],
+        group_ids:     ['1'],
+        password:      '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        id:            '1',
+        email:         'root@localhost',
+        firstname:     'Admin',
+        lastname:      'OTRS',
+        login:         'root@localhost'
       }
     end
 

@@ -7,10 +7,10 @@ RSpec.describe Import::OTRS::DynamicField::TextArea do
   it 'imports an OTRS TextArea DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'text_area_example',
-      display: 'TextArea Example',
-      screens: {
+      object:        'Ticket',
+      name:          'text_area_example',
+      display:       'TextArea Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true

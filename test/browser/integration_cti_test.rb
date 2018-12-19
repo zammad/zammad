@@ -16,7 +16,7 @@ class IntegrationCtiTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -24,12 +24,12 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#system/integration/cti"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'on'
     )
 
     watch_for(
-      css: 'a[href="#cti"]',
+      css:     'a[href="#cti"]',
       timeout: 4,
     )
 
@@ -42,24 +42,24 @@ class IntegrationCtiTest < TestCase
     url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
     params = {
       direction: 'in',
-      from: '491715000002',
-      to: '4930600000000',
-      callId: "4991155921769858278-#{id}",
-      cause: 'busy'
+      from:      '491715000002',
+      to:        '4930600000000',
+      callId:    "4991155921769858278-#{id}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
 
     watch_for(
-      css: '.js-phoneMenuItem .counter',
-      value: (call_counter + 1).to_s,
+      css:     '.js-phoneMenuItem .counter',
+      value:   (call_counter + 1).to_s,
       timeout: 4,
     )
 
     check(css: '.content.active .table-checkbox input')
 
     watch_for_disappear(
-      css: '.js-phoneMenuItem .counter',
+      css:     '.js-phoneMenuItem .counter',
       timeout: 6,
     )
 
@@ -68,7 +68,7 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#system/integration/cti"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'off'
     )
   end
@@ -81,7 +81,7 @@ class IntegrationCtiTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -89,7 +89,7 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#system/integration/cti"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'on'
     )
 
@@ -105,10 +105,10 @@ class IntegrationCtiTest < TestCase
     # ...for private network number
     params = {
       direction: 'in',
-      from: '007',
-      to: '008',
-      callId: "4991155921769858278-#{id}",
-      cause: 'busy'
+      from:      '007',
+      to:        '008',
+      callId:    "4991155921769858278-#{id}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
@@ -116,10 +116,10 @@ class IntegrationCtiTest < TestCase
     # ...for e164 number
     params = {
       direction: 'in',
-      from: '4930609854180',
-      to: '4930609811111',
-      callId: "4991155921769858278-#{id.next}",
-      cause: 'busy'
+      from:      '4930609854180',
+      to:        '4930609811111',
+      callId:    "4991155921769858278-#{id.next}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
@@ -129,24 +129,24 @@ class IntegrationCtiTest < TestCase
 
     # assertion: private network numbers appear verbatim
     watch_for(
-      css: '.content.active .js-callerLog',
-      value: '007',
+      css:     '.content.active .js-callerLog',
+      value:   '007',
       timeout: 3,
     )
 
     match(
-      css: '.content.active .js-callerLog',
+      css:   '.content.active .js-callerLog',
       value: '008',
     )
 
     # assertion: E164 numbers appear prettified
     match(
-      css: '.content.active .js-callerLog',
+      css:   '.content.active .js-callerLog',
       value: '+49 30 609854180',
     )
 
     match(
-      css: '.content.active .js-callerLog',
+      css:   '.content.active .js-callerLog',
       value: '+49 30 609811111',
     )
   end
@@ -159,7 +159,7 @@ class IntegrationCtiTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # create inactive user with phone number (via API)
@@ -179,7 +179,7 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#system/integration/cti"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'on'
     )
 
@@ -193,10 +193,10 @@ class IntegrationCtiTest < TestCase
     url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
     params = {
       direction: 'in',
-      from: '1234567890',
-      to: '1234567890',
-      callId: "4991155921769858278-#{id}",
-      cause: 'busy'
+      from:      '1234567890',
+      to:        '1234567890',
+      callId:    "4991155921769858278-#{id}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
@@ -206,7 +206,7 @@ class IntegrationCtiTest < TestCase
 
     # assertion: names appear in strikethrough
     match(
-      css: 'span.is-inactive',
+      css:   'span.is-inactive',
       value: 'John Doe',
     )
   end
@@ -219,7 +219,7 @@ class IntegrationCtiTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # create user with organization (via API)
@@ -239,7 +239,7 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#system/integration/cti"]')
 
     switch(
-      css: '.content.active .js-switch',
+      css:  '.content.active .js-switch',
       type: 'on'
     )
 
@@ -254,20 +254,20 @@ class IntegrationCtiTest < TestCase
     url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
     params = {
       direction: 'out',
-      from: '1234567890',
-      to: '1234567890',
-      callId: "4991155921769858278-#{id}",
-      cause: 'busy'
+      from:      '1234567890',
+      to:        '1234567890',
+      callId:    "4991155921769858278-#{id}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
 
     params = {
       direction: 'in',
-      from: '1234567890',
-      to: '1234567890',
-      callId: "4991155921769858278-#{id.next}",
-      cause: 'busy'
+      from:      '1234567890',
+      to:        '1234567890',
+      callId:    "4991155921769858278-#{id.next}",
+      cause:     'busy'
     }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
@@ -278,12 +278,12 @@ class IntegrationCtiTest < TestCase
 
     # assertions: Caller ID includes user organization
     match(
-      css: '.js-callerLog tr:first-of-type span.user-popover',
+      css:   '.js-callerLog tr:first-of-type span.user-popover',
       value: 'John Doe (Zammad Foundation)',
     )
 
     match(
-      css: '.js-callerLog tr:last-of-type span.user-popover',
+      css:   '.js-callerLog tr:last-of-type span.user-popover',
       value: 'John Doe (Zammad Foundation)',
     )
   end

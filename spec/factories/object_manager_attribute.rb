@@ -26,7 +26,7 @@ FactoryBot.define do
             'null' => false
           }
         },
-        'edit' => {}
+        'edit'       => {}
       }
     end
     add_attribute(:to_create) { true }
@@ -57,9 +57,9 @@ FactoryBot.define do
     data_type   'integer'
     data_option do
       {
-        'default'   => 0,
-        'min'       => 0,
-        'max'       => 9999,
+        'default' => 0,
+        'min'     => 0,
+        'max'     => 9999,
       }
     end
   end
@@ -70,9 +70,9 @@ FactoryBot.define do
     data_option do
       {
         'future' => true,
-        'past' => true,
-        'diff' => 24,
-        'null' => true,
+        'past'   => true,
+        'diff'   => 24,
+        'null'   => true,
       }
     end
   end
@@ -83,9 +83,9 @@ FactoryBot.define do
     data_option do
       {
         'future' => true,
-        'past' => true,
-        'diff' => 24,
-        'null' => true,
+        'past'   => true,
+        'diff'   => 24,
+        'null'   => true,
       }
     end
   end
@@ -94,13 +94,13 @@ FactoryBot.define do
     data_type   'select'
     data_option do
       {
-        'default' => '',
-        'options' => {
+        'default'    => '',
+        'options'    => {
           'key_1' => 'value_1',
           'key_2' => 'value_2',
           'key_3' => 'value_3',
         },
-        'relation' => '',
+        'relation'   => '',
         'nulloption' => true,
         'multiple'   => false,
         'null'       => true,
@@ -114,7 +114,7 @@ FactoryBot.define do
     data_type 'tree_select'
     data_option do
       {
-        'options' => [
+        'options'    => [
           {
             'name'     => 'Incident',
             'value'    => 'Incident',
@@ -146,7 +146,7 @@ FactoryBot.define do
                     'value' => 'Incident::Softwareproblem::CRM'
                   },
                   {
-                    'name' => 'EDI',
+                    'name'  => 'EDI',
                     'value' => 'Incident::Softwareproblem::EDI'
                   },
                   {

@@ -41,9 +41,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # return result
     render json: {
-      setup_done: setup_done,
-      import_mode: Setting.get('import_mode'),
-      import_backend: Setting.get('import_backend'),
+      setup_done:            setup_done,
+      import_mode:           Setting.get('import_mode'),
+      import_backend:        Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
     }
   end
@@ -65,9 +65,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     auto_wizard_data = AutoWizard.data
     if auto_wizard_data.blank?
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
-        message: 'Invalid auto wizard file.',
+        message:             'Invalid auto wizard file.',
       }
       return
     end
@@ -75,7 +75,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # verify auto wizard token
     if auto_wizard_data['Token'] && auto_wizard_data['Token'] != params[:token]
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
       }
       return
@@ -85,9 +85,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     auto_wizard_admin = AutoWizard.setup
     if !auto_wizard_admin
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
-        message: 'Error during execution of auto wizard.',
+        message:             'Error during execution of auto wizard.',
       }
       return
     end
@@ -99,7 +99,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     Setting.set('system_init_done', true)
 
     render json: {
-      auto_wizard: true,
+      auto_wizard:         true,
       auto_wizard_success: true,
     }
   end
@@ -150,7 +150,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     if messages.present?
       render json: {
-        result: 'invalid',
+        result:   'invalid',
         messages: messages,
       }
       return
@@ -181,7 +181,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     render json: {
-      result: 'ok',
+      result:   'ok',
       settings: settings,
     }
   end
@@ -214,14 +214,14 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     addresses = EmailAddress.where(active: true)
 
     render json: {
-      setup_done: true,
-      import_mode: Setting.get('import_mode'),
-      import_backend: Setting.get('import_backend'),
+      setup_done:            true,
+      import_mode:           Setting.get('import_mode'),
+      import_backend:        Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
-      addresses: addresses,
-      groups: groups,
-      config: config_to_update,
-      channel_driver: {
+      addresses:             addresses,
+      groups:                groups,
+      config:                config_to_update,
+      channel_driver:        {
         email: EmailHelper.available_driver,
       },
     }

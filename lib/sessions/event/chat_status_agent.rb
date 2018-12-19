@@ -16,7 +16,7 @@ class Sessions::Event::ChatStatusAgent < Sessions::Event::ChatBase
     end
     {
       event: 'chat_status_agent',
-      data: Chat.agent_state_with_sessions(@session['id']),
+      data:  Chat.agent_state_with_sessions(@session['id']),
     }
   end
 

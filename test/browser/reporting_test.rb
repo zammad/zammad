@@ -7,19 +7,19 @@ class ReportingTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     report_profile_create(
       data: {
-        name: 'active_report_profile',
+        name:   'active_report_profile',
         active: true,
       }
     )
     report_profile_create(
       data: {
-        name: 'inactive_report_profile',
+        name:   'inactive_report_profile',
         active: false,
       }
     )

@@ -17,7 +17,7 @@ delete object link list, will be executed automatically
 
   def links_destroy
     Link.remove_all(
-      link_object: self.class.to_s,
+      link_object:       self.class.to_s,
       link_object_value: id,
     )
     true

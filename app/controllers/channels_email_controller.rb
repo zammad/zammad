@@ -37,16 +37,16 @@ class ChannelsEmailController < ApplicationController
       end
     end
     render json: {
-      accounts_fixed: accounts_fixed,
-      assets: assets,
-      account_channel_ids: account_channel_ids,
-      notification_channel_ids: notification_channel_ids,
-      email_address_ids: email_address_ids,
+      accounts_fixed:             accounts_fixed,
+      assets:                     assets,
+      account_channel_ids:        account_channel_ids,
+      notification_channel_ids:   notification_channel_ids,
+      email_address_ids:          email_address_ids,
       not_used_email_address_ids: not_used_email_address_ids,
-      channel_driver: {
+      channel_driver:             {
         email: EmailHelper.available_driver,
       },
-      config: {
+      config:                     {
         notification_sender: Setting.get('notification_sender'),
       }
     }
@@ -56,9 +56,9 @@ class ChannelsEmailController < ApplicationController
 
     # probe settings based on email and password
     result = EmailHelper::Probe.full(
-      email: params[:email],
+      email:    params[:email],
       password: params[:password],
-      folder: params[:folder],
+      folder:   params[:folder],
     )
 
     # verify if user+host already exists
@@ -107,9 +107,9 @@ class ChannelsEmailController < ApplicationController
     # check delivery for 30 sek.
     result = EmailHelper::Verify.email(
       outbound: params[:outbound].to_h,
-      inbound: params[:inbound].to_h,
-      sender: email,
-      subject: params[:subject],
+      inbound:  params[:inbound].to_h,
+      sender:   email,
+      subject:  params[:subject],
     )
 
     if result[:result] != 'ok'
@@ -126,15 +126,15 @@ class ChannelsEmailController < ApplicationController
     if channel_id
       channel = Channel.find(channel_id)
       channel.update!(
-        options: {
-          inbound: params[:inbound].to_h,
+        options:      {
+          inbound:  params[:inbound].to_h,
           outbound: params[:outbound].to_h,
         },
-        group_id: params[:group_id],
-        last_log_in: nil,
+        group_id:     params[:group_id],
+        last_log_in:  nil,
         last_log_out: nil,
-        status_in: 'ok',
-        status_out: 'ok',
+        status_in:    'ok',
+        status_out:   'ok',
       )
       render json: result
       return
@@ -142,17 +142,17 @@ class ChannelsEmailController < ApplicationController
 
     # create new account
     channel = Channel.create(
-      area: 'Email::Account',
-      options: {
-        inbound: params[:inbound].to_h,
+      area:         'Email::Account',
+      options:      {
+        inbound:  params[:inbound].to_h,
         outbound: params[:outbound].to_h,
       },
-      group_id: params[:group_id],
-      last_log_in: nil,
+      group_id:     params[:group_id],
+      last_log_in:  nil,
       last_log_out: nil,
-      status_in: 'ok',
-      status_out: 'ok',
-      active: true,
+      status_in:    'ok',
+      status_out:   'ok',
+      active:       true,
     )
 
     # remember address && set channel for email address
@@ -165,16 +165,16 @@ class ChannelsEmailController < ApplicationController
 
     if address
       address.update!(
-        realname: params[:meta][:realname],
-        email: email,
-        active: true,
+        realname:   params[:meta][:realname],
+        email:      email,
+        active:     true,
         channel_id: channel.id,
       )
     else
       address = EmailAddress.create(
-        realname: params[:meta][:realname],
-        email: email,
-        active: true,
+        realname:   params[:meta][:realname],
+        email:      email,
+        active:     true,
         channel_id: channel.id,
       )
     end
@@ -259,7 +259,7 @@ class ChannelsEmailController < ApplicationController
       next if channel.id.to_s == channel_id.to_s
 
       render json: {
-        result: 'duplicate',
+        result:  'duplicate',
         message: 'Account already exists!',
       }
       return true

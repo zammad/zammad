@@ -17,9 +17,9 @@ add an tag to model
 
   def tag_add(name, current_user_id = nil)
     Tag.tag_add(
-      object: self.class.to_s,
-      o_id: id,
-      item: name,
+      object:        self.class.to_s,
+      o_id:          id,
+      item:          name,
       created_by_id: current_user_id,
     )
   end
@@ -35,9 +35,9 @@ remove an tag of model
 
   def tag_remove(name, current_user_id = nil)
     Tag.tag_remove(
-      object: self.class.to_s,
-      o_id: id,
-      item: name,
+      object:        self.class.to_s,
+      o_id:          id,
+      item:          name,
       created_by_id: current_user_id,
     )
   end
@@ -54,7 +54,7 @@ tag list of model
   def tag_list
     Tag.tag_list(
       object: self.class.to_s,
-      o_id: id,
+      o_id:   id,
     )
   end
 
@@ -69,8 +69,8 @@ destroy all tags of an object
 
   def tag_destroy(current_user_id = nil)
     Tag.tag_destroy(
-      object: self.class.to_s,
-      o_id: id,
+      object:        self.class.to_s,
+      o_id:          id,
       created_by_id: current_user_id,
     )
     true

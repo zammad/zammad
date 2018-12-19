@@ -63,11 +63,11 @@ class TicketNumberTest < ActiveSupport::TestCase
     Setting.set('system_id', 1)
 
     ticket = Ticket.create!(
-      title: 'test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -139,11 +139,11 @@ class TicketNumberTest < ActiveSupport::TestCase
     Setting.set('system_id', 1)
 
     ticket = Ticket.create!(
-      title: 'test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -15,7 +15,7 @@ class Channel::Driver::Sms::Twilio
       if Setting.get('developer_mode') != true
         result = api(options).messages.create(
           from: options[:sender],
-          to: attr[:recipient],
+          to:   attr[:recipient],
           body: attr[:message],
         )
 
@@ -50,7 +50,7 @@ class Channel::Driver::Sms::Twilio
     if !user
       user = User.create!(
         firstname: attr[:From],
-        mobile: attr[:From],
+        mobile:    attr[:From],
       )
     end
 
@@ -81,17 +81,17 @@ class Channel::Driver::Sms::Twilio
         title = "#{title[0, 40]}..."
       end
       ticket = Ticket.new(
-        group_id: channel.group_id,
-        title: title,
-        state_id: Ticket::State.find_by(default_create: true).id,
+        group_id:    channel.group_id,
+        title:       title,
+        state_id:    Ticket::State.find_by(default_create: true).id,
         priority_id: Ticket::Priority.find_by(default_create: true).id,
         customer_id: user.id,
         preferences: {
           channel_id: channel.id,
-          sms: {
+          sms:        {
             AccountSid: attr['AccountSid'],
-            From: attr['From'],
-            To: attr['To'],
+            From:       attr['From'],
+            To:         attr['To'],
           }
         }
       )
@@ -99,20 +99,20 @@ class Channel::Driver::Sms::Twilio
     end
 
     Ticket::Article.create!(
-      ticket_id: ticket.id,
-      type: article_type_sms,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      body: attr[:Body],
-      from: attr[:From],
-      to: attr[:To],
-      message_id: attr[:SmsMessageSid],
+      ticket_id:    ticket.id,
+      type:         article_type_sms,
+      sender:       Ticket::Article::Sender.find_by(name: 'Customer'),
+      body:         attr[:Body],
+      from:         attr[:From],
+      to:           attr[:To],
+      message_id:   attr[:SmsMessageSid],
       content_type: 'text/plain',
-      preferences: {
+      preferences:  {
         channel_id: channel.id,
-        sms: {
+        sms:        {
           AccountSid: attr['AccountSid'],
-          From: attr['From'],
-          To: attr['To'],
+          From:       attr['From'],
+          To:         attr['To'],
         }
       }
     )
@@ -122,9 +122,9 @@ class Channel::Driver::Sms::Twilio
 
   def self.definition
     {
-      name: 'twilio',
-      adapter: 'sms/twilio',
-      account: [
+      name:         'twilio',
+      adapter:      'sms/twilio',
+      account:      [
         { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(rand(999_999_999_999).to_s), disabled: true, readonly: true },
         { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
         { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },

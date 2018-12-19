@@ -15,7 +15,7 @@ FactoryBot.define do
 
       preferences do
         {
-          channel_id: channel.id,
+          channel_id:          channel.id,
           channel_screen_name: channel.options[:user][:screen_name]
         }
       end

@@ -40,20 +40,20 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
         custom_options: {
           auth: {
             external_credential_id: external_credential.id,
-            oauth_token: 'AAA',
-            oauth_token_secret: 'BBB',
-            consumer_key: 'CCC',
-            consumer_secret: 'DDD',
+            oauth_token:            'AAA',
+            oauth_token_secret:     'BBB',
+            consumer_key:           'CCC',
+            consumer_secret:        'DDD',
           },
           user: {
-            id: 123,
-            name: 'Zammad HQ',
+            id:          123,
+            name:        'Zammad HQ',
             screen_name: 'zammadhq',
           },
           sync: {
-            limit: 20,
-            track_retweets:  false,
-            search: [
+            limit:          20,
+            track_retweets: false,
+            search:         [
               {
                 term: '#zammad', group_id: Group.first.id.to_s
               },

@@ -9,7 +9,7 @@ class AgentTicketActionLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -17,9 +17,9 @@ class AgentTicketActionLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: '-NONE-',
-        title: 'some subject 123äöü - one group 1',
-        body: 'some body 123äöü - one group 1',
+        group:    '-NONE-',
+        title:    'some subject 123äöü - one group 1',
+        body:     'some body 123äöü - one group 1',
       },
     )
     sleep 1
@@ -29,7 +29,7 @@ class AgentTicketActionLevel0Test < TestCase
       data: {
         state: 'closed',
         group: '-NONE-',
-        body: 'some body 1234 äöüß - one group 1 - update',
+        body:  'some body 1234 äöüß - one group 1 - update',
       },
     )
 
@@ -45,26 +45,26 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: '.active.content .js-inviteAgent')
     modal_ready()
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Bob',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
     exists(
       displayed: false,
-      css: '.modal .js-groupList',
+      css:       '.modal .js-groupList',
     )
     exists(
       css: '.modal .js-groupListItem[value=full]:checked',
     )
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
     )
     watch_for(
@@ -85,15 +85,15 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: '.active.content .js-inviteAgent')
     modal_ready()
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Bob2',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith2',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{agent}2@example.com",
     )
 
@@ -104,7 +104,7 @@ class AgentTicketActionLevel0Test < TestCase
 
     exists(
       displayed: false,
-      css: '.modal .js-groupList',
+      css:       '.modal .js-groupList',
     )
     exists_not(
       css: '.modal .js-groupListItem[value=full]:checked',
@@ -117,14 +117,14 @@ class AgentTicketActionLevel0Test < TestCase
 
     exists(
       displayed: false,
-      css: '.modal .js-groupList',
+      css:       '.modal .js-groupList',
     )
     exists(
       css: '.modal .js-groupListItem[value=full]:checked',
     )
 
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
     )
     watch_for(
@@ -146,7 +146,7 @@ class AgentTicketActionLevel0Test < TestCase
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # customer ticket create
@@ -154,17 +154,17 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: 'a[href="#customer_ticket_new"]')
 
     watch_for(
-      css: '.newTicket',
+      css:   '.newTicket',
       value: 'New Ticket',
     )
     exists_not(css: '.newTicket select[name="group_id"]')
 
     set(
-      css: '.newTicket input[name="title"]',
+      css:   '.newTicket input[name="title"]',
       value: 'one group',
     )
     set(
-      css: '.newTicket [data-name="body"]',
+      css:   '.newTicket [data-name="body"]',
       value: 'one group body',
     )
     click(css: '.newTicket button.js-submit', wait: 5)
@@ -173,15 +173,15 @@ class AgentTicketActionLevel0Test < TestCase
     location_check(url: '#ticket/zoom/')
 
     match(
-      css: '.active div.ticket-article',
-      value: 'one group body',
+      css:      '.active div.ticket-article',
+      value:    'one group body',
       no_quote: true,
     )
 
     # update ticket
     set(
-      css: '.active [data-name="body"]',
-      value: 'one group - some body 1234 äöüß',
+      css:      '.active [data-name="body"]',
+      value:    'one group - some body 1234 äöüß',
       no_click: true,
     )
 
@@ -192,7 +192,7 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: '.active .js-submit')
 
     watch_for(
-      css: '.active div.ticket-article',
+      css:   '.active div.ticket-article',
       value: 'one group - some body 1234 äöüß',
     )
 
@@ -206,7 +206,7 @@ class AgentTicketActionLevel0Test < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -215,11 +215,11 @@ class AgentTicketActionLevel0Test < TestCase
         name:   "some group #{rand(999_999_999)}",
         member: [
           {
-            login: 'master@example.com',
+            login:  'master@example.com',
             access: 'full',
           },
           {
-            login: 'agent1@example.com',
+            login:  'agent1@example.com',
             access: 'full',
           },
         ],
@@ -233,9 +233,9 @@ class AgentTicketActionLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - one group 2',
-        body: 'some body 123äöü - one group 2',
+        group:    'Users',
+        title:    'some subject 123äöü - one group 2',
+        body:     'some body 123äöü - one group 2',
       },
     )
     sleep 1
@@ -243,7 +243,7 @@ class AgentTicketActionLevel0Test < TestCase
     # update ticket
     ticket_update(
       data: {
-        body: 'some body 1234 äöüß - one group 2 - update',
+        body:  'some body 1234 äöüß - one group 2 - update',
         group: 'Users',
       },
     )

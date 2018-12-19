@@ -8,25 +8,25 @@ class UserDeviceTest < ActiveSupport::TestCase
     groups = Group.all
     roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
-      login: 'user-device-agent@example.com',
+      login:     'user-device-agent@example.com',
       firstname: 'UserDevice',
-      lastname: 'Agent',
-      email: 'user-device-agent@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      lastname:  'Agent',
+      email:     'user-device-agent@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     roles,
+      groups:    groups,
     )
 
     roles = Role.where(name: 'Customer')
     @customer = User.create_or_update(
-      login: 'user-device-customer@example.com',
+      login:     'user-device-customer@example.com',
       firstname: 'UserDevice',
-      lastname: 'Customer',
-      email: 'user-device-customer@example.com',
-      password: 'customerpw',
-      active: true,
-      roles: roles,
+      lastname:  'Customer',
+      email:     'user-device-customer@example.com',
+      password:  'customerpw',
+      active:    true,
+      roles:     roles,
     )
   end
 

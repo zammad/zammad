@@ -5,30 +5,30 @@ class SettingTableGroupByShowCount < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Open ticket indicator',
-      name: 'ui_table_group_by_show_count',
-      area: 'UI::Base',
+      title:       'Open ticket indicator',
+      name:        'ui_table_group_by_show_count',
+      area:        'UI::Base',
       description: 'Total display of the number of objects in a grouping.',
-      options: {
+      options:     {
         form: [
           {
-            display: '',
-            null: true,
-            name: 'ui_table_group_by_show_count',
-            tag: 'boolean',
+            display:   '',
+            null:      true,
+            name:      'ui_table_group_by_show_count',
+            tag:       'boolean',
             translate: true,
-            options: {
+            options:   {
               true  => 'yes',
               false => 'no',
             },
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
         permission: ['admin.ui'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 end

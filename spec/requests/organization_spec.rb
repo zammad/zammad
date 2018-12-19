@@ -14,24 +14,24 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
   let!(:organization) do
     create(
       :organization,
-      name: 'Rest Org #1',
-      note: 'Rest Org #1',
+      name:       'Rest Org #1',
+      note:       'Rest Org #1',
       created_at: '2017-09-05 10:00:00',
     )
   end
   let!(:organization2) do
     create(
       :organization,
-      name: 'Rest Org #2',
-      note: 'Rest Org #2',
+      name:       'Rest Org #2',
+      note:       'Rest Org #2',
       created_at: '2017-09-05 11:00:00',
     )
   end
   let!(:organization3) do
     create(
       :organization,
-      name: 'Rest Org #3',
-      note: 'Rest Org #3',
+      name:       'Rest Org #3',
+      note:       'Rest Org #3',
       created_at: '2017-09-05 12:00:00',
     )
   end
@@ -219,8 +219,8 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
     it 'does organization show and response format' do
       organization = create(
         :organization,
-        name: 'Rest Org NEW',
-        members: [customer_user],
+        name:          'Rest Org NEW',
+        members:       [customer_user],
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -283,8 +283,8 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
     it 'does organization index and response format' do
       organization = create(
         :organization,
-        name: 'Rest Org NEW',
-        members: [customer_user],
+        name:          'Rest Org NEW',
+        members:       [customer_user],
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -352,7 +352,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
 
     it 'does ticket create and response format' do
       params = {
-        name: 'Rest Org NEW',
+        name:    'Rest Org NEW',
         members: [customer_user.login],
       }
 
@@ -399,8 +399,8 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
     it 'does ticket update and response formats' do
       organization = create(
         :organization,
-        name: 'Rest Org NEW',
-        members: [customer_user],
+        name:          'Rest Org NEW',
+        members:       [customer_user],
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -482,21 +482,21 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       UserInfo.current_user_id = 1
       customer1 = create(
         :customer_user,
-        login: 'customer1-members@example.com',
+        login:     'customer1-members@example.com',
         firstname: 'Member',
-        lastname: 'Customer',
-        email: 'customer1-members@example.com',
-        password: 'customerpw',
-        active: true,
+        lastname:  'Customer',
+        email:     'customer1-members@example.com',
+        password:  'customerpw',
+        active:    true,
       )
       customer2 = create(
         :customer_user,
-        login: 'customer2-members@example.com',
+        login:     'customer2-members@example.com',
         firstname: 'Member',
-        lastname: 'Customer',
-        email: 'customer2-members@example.com',
-        password: 'customerpw',
-        active: true,
+        lastname:  'Customer',
+        email:     'customer2-members@example.com',
+        password:  'customerpw',
+        active:    true,
       )
       UserInfo.current_user_id = nil
 

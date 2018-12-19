@@ -11,38 +11,38 @@ class AddCountryAttributeToUsers < ActiveRecord::Migration[5.1]
     return if current_country_attribute.present?
 
     ObjectManager::Attribute.add(
-      force: true,
-      object: 'User',
-      name: 'country',
-      display: 'Country',
-      data_type: 'input',
-      data_option: {
-        type: 'text',
-        maxlength: 100,
-        null: true,
+      force:         true,
+      object:        'User',
+      name:          'country',
+      display:       'Country',
+      data_type:     'input',
+      data_option:   {
+        type:       'text',
+        maxlength:  100,
+        null:       true,
         item_class: 'formGroup--halfSize',
       },
-      editable: true,
-      active: false,
-      screens: {
-        signup: {},
-        invite_agent: {},
+      editable:      true,
+      active:        false,
+      screens:       {
+        signup:          {},
+        invite_agent:    {},
         invite_customer: {},
-        edit: {
+        edit:            {
           '-all-' => {
             null: true,
           },
         },
-        view: {
+        view:            {
           '-all-' => {
             shown: true,
           },
         },
       },
-      to_create: false,
-      to_migrate: false,
-      to_delete: false,
-      position: 1325,
+      to_create:     false,
+      to_migrate:    false,
+      to_delete:     false,
+      position:      1325,
       created_by_id: 1,
       updated_by_id: 1,
     )

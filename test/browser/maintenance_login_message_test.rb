@@ -5,31 +5,31 @@ class MaintenanceLoginMessageTest < TestCase
   def test_login_message
     browser1 = browser_instance
     login(
-      browser: browser1,
+      browser:  browser1,
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(
       browser: browser1,
-      css: 'a[href="#manage"]',
+      css:     'a[href="#manage"]',
     )
     click(
       browser: browser1,
-      css: 'a[href="#system/maintenance"]',
+      css:     'a[href="#system/maintenance"]',
     )
 
     string  = rand(99_999_999_999_999_999).to_s
     message = "test <b>#{string}</b>"
     set(
       browser: browser1,
-      css: '.content.active .js-loginPreview [data-name="message"]',
-      value: message,
+      css:     '.content.active .js-loginPreview [data-name="message"]',
+      value:   message,
     )
     click(
       browser: browser1,
-      css: '#global-search',
+      css:     '#global-search',
     )
 
     browser2 = browser_instance
@@ -39,30 +39,30 @@ class MaintenanceLoginMessageTest < TestCase
     )
     exists_not(
       browser: browser2,
-      css: '.js-maintenanceLogin',
+      css:     '.js-maintenanceLogin',
     )
 
     switch(
       browser: browser1,
-      css:  '.content.active .js-loginSetting',
-      type: 'on',
+      css:     '.content.active .js-loginSetting',
+      type:    'on',
     )
 
     watch_for(
       browser: browser2,
-      css: '.js-maintenanceLogin',
-      value: message
+      css:     '.js-maintenanceLogin',
+      value:   message
     )
 
     switch(
       browser: browser1,
-      css:  '.content.active .js-loginSetting',
-      type: 'off',
+      css:     '.content.active .js-loginSetting',
+      type:    'off',
     )
 
     watch_for_disappear(
       browser: browser2,
-      css: '.js-maintenanceLogin',
+      css:     '.js-maintenanceLogin',
       timeout: 30,
     )
   end

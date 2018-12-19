@@ -12,11 +12,11 @@ class FixedTypos622 < ActiveRecord::Migration[4.2]
     setting.save!
 
     setting_map = {
-      'password_min_size' => 'Password needs to have at least minimal size of characters.',
+      'password_min_size'                       => 'Password needs to have at least minimal size of characters.',
       'password_min_2_lower_2_upper_characters' => 'Password needs to contain 2 lower and 2 upper characters.',
-      'password_need_digit' => 'Password needs to have at least one digit.',
-      'ticket_subject_size' => 'Max size of the subject in an email reply.',
-      'postmaster_follow_up_search_in' => 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
+      'password_need_digit'                     => 'Password needs to have at least one digit.',
+      'ticket_subject_size'                     => 'Max size of the subject in an email reply.',
+      'postmaster_follow_up_search_in'          => 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
     }
 
     setting_map.each do |key, description|

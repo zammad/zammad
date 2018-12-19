@@ -24,11 +24,11 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
   test 'empty payload' do
     csv_string = ''
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: true,
+      try:          true,
     )
     assert_equal(true, result[:try])
     assert_nil(result[:records])
@@ -37,11 +37,11 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
 
     csv_string = 'name;keywords;content;note;active;'
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: true,
+      try:          true,
     )
     assert_equal(true, result[:try])
     assert(result[:records].blank?)
@@ -52,11 +52,11 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
   test 'verify required lookup headers' do
     csv_string = "firstname;lastname;active;\nfirstname-simple-import1;lastname-simple-import1;;true\nfirstname-simple-import2;lastname-simple-import2;false\n"
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: true,
+      try:          true,
     )
     assert_equal(true, result[:try])
     assert_equal('failed', result[:result])
@@ -65,20 +65,20 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
 
   test 'simple import' do
     TextModule.create!(
-      name: 'nsome name1',
-      content: 'nsome name1',
-      active: true,
+      name:          'nsome name1',
+      content:       'nsome name1',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     csv_string = "name;keywords;content;note;active;\nsome name1;keyword1;\"some\ncontent1\";-;\nsome name2;keyword2;some content<br>test123\n"
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: true,
+      try:          true,
     )
 
     assert_equal(true, result[:try])
@@ -89,11 +89,11 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert_nil(TextModule.find_by(name: 'some name2'))
 
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: false,
+      try:          false,
     )
 
     assert_equal(false, result[:try])
@@ -121,28 +121,28 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert_equal(0, TextModule.count)
 
     TextModule.create!(
-      name: 'some name1',
-      content: 'some name1',
-      active: true,
+      name:          'some name1',
+      content:       'some name1',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     TextModule.create!(
-      name: 'name should be deleted 2',
-      content: 'name should be deleted 1',
-      active: true,
+      name:          'name should be deleted 2',
+      content:       'name should be deleted 1',
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     csv_string = "name;keywords;content;note;active;\nsome name1;keyword1;\"some\ncontent1\";-;\nsome name2;keyword2;some content<br>test123\n"
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: true,
-      delete: true,
+      try:          true,
+      delete:       true,
     )
 
     assert_equal(true, result[:try])
@@ -158,12 +158,12 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert_nil(TextModule.find_by(name: 'some name2'))
 
     result = TextModule.csv_import(
-      string: csv_string,
+      string:       csv_string,
       parse_params: {
         col_sep: ';',
       },
-      try: false,
-      delete: true,
+      try:          false,
+      delete:       true,
     )
 
     assert_equal(false, result[:try])

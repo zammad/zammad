@@ -24,8 +24,8 @@ class Channel::Driver::Sms::Massenversand
 
   def self.definition
     {
-      name: 'Massenversand',
-      adapter: 'sms/massenversand',
+      name:         'Massenversand',
+      adapter:      'sms/massenversand',
       notification: [
         { name: 'options::gateway', display: 'Gateway', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'https://gate1.goyyamobile.com/sms/sendsms.asp', default: 'https://gate1.goyyamobile.com/sms/sendsms.asp' },
         { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' },
@@ -39,11 +39,11 @@ class Channel::Driver::Sms::Massenversand
   def build_url(options, attr)
     params = {
       authToken: options[:token],
-      getID: 1,
-      msg: attr[:message],
-      msgtype: 'c',
-      receiver: attr[:recipient],
-      sender: options[:sender]
+      getID:     1,
+      msg:       attr[:message],
+      msgtype:   'c',
+      receiver:  attr[:recipient],
+      sender:    options[:sender]
     }
 
     options[:gateway] + '?' + URI.encode_www_form(params)

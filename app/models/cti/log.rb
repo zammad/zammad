@@ -292,7 +292,7 @@ returns
                    .each.with_object({}) { |user, a| user.assets(a) }
 
       {
-        list: list,
+        list:   list,
         assets: assets,
       }
     end
@@ -364,18 +364,18 @@ Cti::Log.process(
         raise "call_id #{call_id} already exists!" if log
 
         create(
-          direction: params['direction'],
-          from: params['from'],
-          from_comment: from_comment,
-          to: params['to'],
-          to_comment: to_comment,
-          call_id: call_id,
-          comment: cause,
-          queue: queue,
-          state: event,
+          direction:      params['direction'],
+          from:           params['from'],
+          from_comment:   from_comment,
+          to:             params['to'],
+          to_comment:     to_comment,
+          call_id:        call_id,
+          comment:        cause,
+          queue:          queue,
+          state:          event,
           initialized_at: Time.zone.now,
-          preferences: preferences,
-          done: done,
+          preferences:    preferences,
+          done:           done,
         )
       when 'answer'
         raise "No such call_id #{call_id}" if !log
@@ -431,7 +431,7 @@ Cti::Log.process(
           user.id,
           {
             event: 'cti_event',
-            data: self,
+            data:  self,
           },
         )
       end
@@ -483,7 +483,7 @@ optional you can put the max oldest chat entries as argument
     def attributes
       virtual_attributes = {
         'from_pretty' => from_pretty,
-        'to_pretty' => to_pretty,
+        'to_pretty'   => to_pretty,
       }
 
       super.merge(virtual_attributes)

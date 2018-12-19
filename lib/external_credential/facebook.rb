@@ -75,20 +75,20 @@ class ExternalCredential::Facebook
 
     # create channel
     Channel.create!(
-      area: 'Facebook::Account',
-      options: {
+      area:          'Facebook::Account',
+      options:       {
         adapter: 'facebook',
-        auth: {
+        auth:    {
           access_token: access_token
         },
-        user: user,
-        pages: pages,
-        sync: {
-          wall: {},
+        user:    user,
+        pages:   pages,
+        sync:    {
+          wall:  {},
           pages: [],
         }
       },
-      active: true,
+      active:        true,
       created_by_id: 1,
       updated_by_id: 1,
     )

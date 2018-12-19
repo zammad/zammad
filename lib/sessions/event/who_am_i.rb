@@ -16,7 +16,7 @@ To execute this manually, just paste the following into the browser console
     if !@session || !@session['id']
       return {
         event: 'who_am_i',
-        data: {
+        data:  {
           message: 'session not authenticated',
         },
       }
@@ -27,7 +27,7 @@ To execute this manually, just paste the following into the browser console
     if !user
       return {
         event: 'who_am_i',
-        data: {
+        data:  {
           message: "No such user with id #{@session['id']}",
         },
       }
@@ -36,9 +36,9 @@ To execute this manually, just paste the following into the browser console
     attributes.delete('password')
     {
       event: 'who_am_i',
-      data: {
+      data:  {
         message: 'session authenticated',
-        user: attributes,
+        user:    attributes,
       },
     }
   end

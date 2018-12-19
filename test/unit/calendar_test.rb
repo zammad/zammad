@@ -4,8 +4,8 @@ class CalendarTest < ActiveSupport::TestCase
   test 'default test' do
     Calendar.destroy_all
     calendar1 = Calendar.create_or_update(
-      name: 'US 1',
-      timezone: 'America/Los_Angeles',
+      name:           'US 1',
+      timezone:       'America/Los_Angeles',
       business_hours: {
         mon: { '09:00' => '17:00' },
         tue: { '09:00' => '17:00' },
@@ -13,15 +13,15 @@ class CalendarTest < ActiveSupport::TestCase
         thu: { '09:00' => '17:00' },
         fri: { '09:00' => '17:00' }
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
     travel 1.second
     calendar2 = Calendar.create_or_update(
-      name: 'US 2',
-      timezone: 'America/Los_Angeles',
+      name:           'US 2',
+      timezone:       'America/Los_Angeles',
       business_hours: {
         mon: { '09:00' => '17:00' },
         tue: { '09:00' => '17:00' },
@@ -29,15 +29,15 @@ class CalendarTest < ActiveSupport::TestCase
         thu: { '09:00' => '17:00' },
         fri: { '09:00' => '17:00' }
       },
-      default: false,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        false,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     calendar3 = Calendar.create_or_update(
-      name: 'US 3',
-      timezone: 'America/Los_Angeles',
+      name:           'US 3',
+      timezone:       'America/Los_Angeles',
       business_hours: {
         mon: { '09:00' => '17:00' },
         tue: { '09:00' => '17:00' },
@@ -45,10 +45,10 @@ class CalendarTest < ActiveSupport::TestCase
         thu: { '09:00' => '17:00' },
         fri: { '09:00' => '17:00' }
       },
-      default: true,
-      ical_url: nil,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       nil,
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     calendar1 = Calendar.find_by(name: 'US 1')
@@ -100,8 +100,8 @@ class CalendarTest < ActiveSupport::TestCase
     travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
 
     calendar1 = Calendar.create_or_update(
-      name: 'Sync 1',
-      timezone: 'America/Los_Angeles',
+      name:           'Sync 1',
+      timezone:       'America/Los_Angeles',
       business_hours: {
         mon: { '09:00' => '17:00' },
         tue: { '09:00' => '17:00' },
@@ -109,10 +109,10 @@ class CalendarTest < ActiveSupport::TestCase
         thu: { '09:00' => '17:00' },
         fri: { '09:00' => '17:00' }
       },
-      default: true,
-      ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'),
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'),
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     assert_equal(true, calendar1.public_holidays['2016-12-24']['active'])
@@ -202,8 +202,8 @@ class CalendarTest < ActiveSupport::TestCase
     Calendar.destroy_all
 
     calendar1 = Calendar.create_or_update(
-      name: 'Sync 2',
-      timezone: 'America/Los_Angeles',
+      name:           'Sync 2',
+      timezone:       'America/Los_Angeles',
       business_hours: {
         mon: { '09:00' => '17:00' },
         tue: { '09:00' => '17:00' },
@@ -211,10 +211,10 @@ class CalendarTest < ActiveSupport::TestCase
         thu: { '09:00' => '17:00' },
         fri: { '09:00' => '17:00' }
       },
-      default: true,
-      ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar3.ics'),
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:        true,
+      ical_url:       Rails.root.join('test', 'data', 'calendar', 'calendar3.ics'),
+      updated_by_id:  1,
+      created_by_id:  1,
     )
 
     assert_equal(true, calendar1.public_holidays['2016-12-24']['active'])

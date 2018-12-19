@@ -101,7 +101,7 @@ returns
       end
       disconnect
       return {
-        result: 'ok',
+        result:           'ok',
         content_messages: content_messages,
       }
     end
@@ -164,9 +164,9 @@ returns
     end
     Rails.logger.info 'done'
     {
-      result: 'ok',
+      result:  'ok',
       fetched: count_fetched,
-      notice: notice,
+      notice:  notice,
     }
   end
 

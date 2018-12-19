@@ -85,13 +85,13 @@ push text_modules to online
     result = UserAgent.post(
       url,
       {
-        locale: locale,
-        text_modules: text_modules_to_push,
-        fqdn: Setting.get('fqdn'),
+        locale:         locale,
+        text_modules:   text_modules_to_push,
+        fqdn:           Setting.get('fqdn'),
         translator_key: translator_key,
       },
       {
-        json: true,
+        json:         true,
         open_timeout: 6,
         read_timeout: 16,
       }

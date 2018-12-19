@@ -14,22 +14,22 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # create simple attribute
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'test1',
-      display: 'Test 1',
-      data_type: 'input',
-      data_option: {
+      object:        'Ticket',
+      name:          'test1',
+      display:       'Test 1',
+      data_type:     'input',
+      data_option:   {
         maxlength: 200,
-        type: 'text',
-        null: false,
+        type:      'text',
+        null:      false,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
-      editable: false,
-      to_migrate: false,
+      editable:      false,
+      to_migrate:    false,
     )
     assert(attribute1)
     assert_equal('test1', attribute1.name)
@@ -41,7 +41,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     attribute1 = ObjectManager::Attribute.get(
       object: 'Ticket',
-      name: 'test1',
+      name:   'test1',
     )
     assert(attribute1)
     assert_equal('test1', attribute1.name)
@@ -54,12 +54,12 @@ class ObjectManagerTest < ActiveSupport::TestCase
     # delete attribute without execute migrations
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'test1',
+      name:   'test1',
     )
 
     attribute1 = ObjectManager::Attribute.get(
       object: 'Ticket',
-      name: 'test1',
+      name:   'test1',
     )
     assert_not(attribute1)
 
@@ -68,81 +68,81 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     attribute1 = ObjectManager::Attribute.get(
       object: 'Ticket',
-      name: 'test1',
+      name:   'test1',
     )
     assert_not(attribute1)
 
     # create invalid attributes
     assert_raises(RuntimeError) do
       attribute2 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test2_id',
-        display: 'Test 2 with id',
-        data_type: 'input',
-        data_option: {
+        object:        'Ticket',
+        name:          'test2_id',
+        display:       'Test 2 with id',
+        data_type:     'input',
+        data_option:   {
           maxlength: 200,
-          type: 'text',
-          null: false,
+          type:      'text',
+          null:      false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
     assert_raises(RuntimeError) do
       attribute3 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test3_ids',
-        display: 'Test 3 with id',
-        data_type: 'input',
-        data_option: {
+        object:        'Ticket',
+        name:          'test3_ids',
+        display:       'Test 3 with id',
+        data_type:     'input',
+        data_option:   {
           maxlength: 200,
-          type: 'text',
-          null: false,
+          type:      'text',
+          null:      false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute4 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test4',
-        display: 'Test 4 with missing data_option[:type]',
-        data_type: 'input',
-        data_option: {
+        object:        'Ticket',
+        name:          'test4',
+        display:       'Test 4 with missing data_option[:type]',
+        data_type:     'input',
+        data_option:   {
           maxlength: 200,
-          null: false,
+          null:      false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
 
     attribute5 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'test5',
-      display: 'Test 5',
-      data_type: 'boolean',
-      data_option: {
+      object:        'Ticket',
+      name:          'test5',
+      display:       'Test 5',
+      data_type:     'boolean',
+      data_option:   {
         default: true,
         options: {
-          true: 'Yes',
+          true:  'Yes',
           false: 'No',
         },
-        null: false,
+        null:    false,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -150,46 +150,46 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('test5', attribute5.name)
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'test5',
+      name:   'test5',
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute6 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test6',
-        display: 'Test 6',
-        data_type: 'boolean',
-        data_option: {
+        object:        'Ticket',
+        name:          'test6',
+        display:       'Test 6',
+        data_type:     'boolean',
+        data_option:   {
           options: {
-            true: 'Yes',
+            true:  'Yes',
             false: 'No',
           },
-          null: false,
+          null:    false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
 
     attribute7 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'test7',
-      display: 'Test 7',
-      data_type: 'select',
-      data_option: {
+      object:        'Ticket',
+      name:          'test7',
+      display:       'Test 7',
+      data_type:     'select',
+      data_option:   {
         default: 1,
         options: {
           '1' => 'aa',
           '2' => 'bb',
         },
-        null: false,
+        null:    false,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -197,41 +197,41 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('test7', attribute7.name)
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'test7',
+      name:   'test7',
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute8 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test8',
-        display: 'Test 8',
-        data_type: 'select',
-        data_option: {
+        object:        'Ticket',
+        name:          'test8',
+        display:       'Test 8',
+        data_type:     'select',
+        data_option:   {
           default: 1,
-          null: false,
+          null:    false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
 
     attribute9 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'test9',
-      display: 'Test 9',
-      data_type: 'datetime',
-      data_option: {
+      object:        'Ticket',
+      name:          'test9',
+      display:       'Test 9',
+      data_type:     'datetime',
+      data_option:   {
         future: true,
-        past: false,
-        diff: 24,
-        null: true,
+        past:   false,
+        diff:   24,
+        null:   true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -239,42 +239,42 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('test9', attribute9.name)
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'test9',
+      name:   'test9',
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute10 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test10',
-        display: 'Test 10',
-        data_type: 'datetime',
-        data_option: {
+        object:        'Ticket',
+        name:          'test10',
+        display:       'Test 10',
+        data_type:     'datetime',
+        data_option:   {
           past: false,
           diff: 24,
           null: true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
 
     attribute11 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'test11',
-      display: 'Test 11',
-      data_type: 'date',
-      data_option: {
+      object:        'Ticket',
+      name:          'test11',
+      display:       'Test 11',
+      data_type:     'date',
+      data_option:   {
         future: true,
-        past: false,
-        diff: 24,
-        null: true,
+        past:   false,
+        diff:   24,
+        null:   true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -282,23 +282,23 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('test11', attribute11.name)
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'test11',
+      name:   'test11',
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute12 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test12',
-        display: 'Test 12',
-        data_type: 'date',
-        data_option: {
+        object:        'Ticket',
+        name:          'test12',
+        display:       'Test 12',
+        data_type:     'date',
+        data_option:   {
           past: false,
           diff: 24,
           null: true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -307,19 +307,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(RuntimeError) do
       attribute13 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test13|',
-        display: 'Test 13',
-        data_type: 'date',
-        data_option: {
+        object:        'Ticket',
+        name:          'test13|',
+        display:       'Test 13',
+        data_type:     'date',
+        data_option:   {
           future: true,
-          past: false,
-          diff: 24,
-          null: true,
+          past:   false,
+          diff:   24,
+          null:   true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -328,19 +328,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(RuntimeError) do
       attribute14 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test14!',
-        display: 'Test 14',
-        data_type: 'date',
-        data_option: {
+        object:        'Ticket',
+        name:          'test14!',
+        display:       'Test 14',
+        data_type:     'date',
+        data_option:   {
           future: true,
-          past: false,
-          diff: 24,
-          null: true,
+          past:   false,
+          diff:   24,
+          null:   true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -349,19 +349,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(RuntimeError) do
       attribute15 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test15ä',
-        display: 'Test 15',
-        data_type: 'date',
-        data_option: {
+        object:        'Ticket',
+        name:          'test15ä',
+        display:       'Test 15',
+        data_type:     'date',
+        data_option:   {
           future: true,
-          past: false,
-          diff: 24,
-          null: true,
+          past:   false,
+          diff:   24,
+          null:   true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -372,17 +372,17 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(ActiveRecord::RecordInvalid) do
       attribute17 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test17',
-        display: 'Test 17',
-        data_type: 'integer',
-        data_option: {
+        object:        'Ticket',
+        name:          'test17',
+        display:       'Test 17',
+        data_type:     'integer',
+        data_option:   {
           default: 2,
-          min: 1,
+          min:     1,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -391,18 +391,18 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(RuntimeError) do
       attribute18 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'delete',
-        display: 'Test 18',
-        data_type: 'input',
-        data_option: {
+        object:        'Ticket',
+        name:          'delete',
+        display:       'Test 18',
+        data_type:     'input',
+        data_option:   {
           maxlength: 200,
-          type: 'text',
-          null: false,
+          type:      'text',
+          null:      false,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -412,19 +412,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
     attribute_count = ObjectManager::Attribute.count
     assert_raises(RuntimeError) do
       attribute19 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'updated_at',
-        display: 'Update Time',
-        data_type: 'datetime',
-        data_option: {
+        object:        'Ticket',
+        name:          'updated_at',
+        display:       'Update Time',
+        data_type:     'datetime',
+        data_option:   {
           future: true,
-          past: true,
-          diff: 24,
-          null: true,
+          past:   true,
+          diff:   24,
+          null:   true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -434,19 +434,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(RuntimeError) do
       attribute20 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'updated_AT',
-        display: 'Update Time',
-        data_type: 'datetime',
-        data_option: {
+        object:        'Ticket',
+        name:          'updated_AT',
+        display:       'Update Time',
+        data_type:     'datetime',
+        data_option:   {
           future: true,
-          past: true,
-          diff: 24,
-          null: true,
+          past:   true,
+          diff:   24,
+          null:   true,
         },
-        active: true,
-        screens: {},
-        position: 20,
+        active:        true,
+        screens:       {},
+        position:      20,
         created_by_id: 1,
         updated_by_id: 1,
       )
@@ -464,18 +464,18 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(0, ObjectManager::Attribute.migrations.count)
 
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute1',
-      display: 'Attribute 1',
-      data_type: 'input',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute1',
+      display:       'Attribute 1',
+      data_type:     'input',
+      data_option:   {
         maxlength: 200,
-        type: 'text',
-        null: true,
+        type:      'text',
+        null:      true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -494,12 +494,12 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # create example ticket
     ticket1 = Ticket.create(
-      title: 'some attribute test1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      attribute1: 'some attribute text',
+      title:         'some attribute test1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      attribute1:    'some attribute text',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -512,55 +512,55 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # add additional attributes
     attribute2 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute2',
-      display: 'Attribute 2',
-      data_type: 'select',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute2',
+      display:       'Attribute 2',
+      data_type:     'select',
+      data_option:   {
         default: '2',
         options: {
           '1' => 'aa',
           '2' => 'bb',
         },
-        null: true,
+        null:    true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
     attribute3 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute3',
-      display: 'Attribute 3',
-      data_type: 'datetime',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute3',
+      display:       'Attribute 3',
+      data_type:     'datetime',
+      data_option:   {
         future: true,
-        past: false,
-        diff: 24,
-        null: true,
+        past:   false,
+        diff:   24,
+        null:   true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
     attribute4 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute4',
-      display: 'Attribute 4',
-      data_type: 'datetime',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute4',
+      display:       'Attribute 4',
+      data_type:     'datetime',
+      data_option:   {
         future: true,
-        past: false,
-        diff: 24,
-        null: true,
+        past:   false,
+        diff:   24,
+        null:   true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -572,15 +572,15 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # create example ticket
     ticket2 = Ticket.create(
-      title: 'some attribute test2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      attribute1: 'some attribute text',
-      attribute2: '1',
-      attribute3: Time.zone.parse('2016-05-12 00:59:59 UTC'),
-      attribute4: Date.parse('2016-05-11'),
+      title:         'some attribute test2',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      attribute1:    'some attribute text',
+      attribute2:    '1',
+      attribute3:    Time.zone.parse('2016-05-12 00:59:59 UTC'),
+      attribute4:    Date.parse('2016-05-11'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -596,18 +596,18 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # update data_option null -> to_config
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute1',
-      display: 'Attribute 1',
-      data_type: 'input',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute1',
+      display:       'Attribute 1',
+      data_type:     'input',
+      data_option:   {
         maxlength: 200,
-        type: 'text',
-        null: false,
+        type:      'text',
+        null:      false,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -628,18 +628,18 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # update data_option maxlength -> to_config && to_migrate
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'attribute1',
-      display: 'Attribute 1',
-      data_type: 'input',
-      data_option: {
+      object:        'Ticket',
+      name:          'attribute1',
+      display:       'Attribute 1',
+      data_type:     'input',
+      data_option:   {
         maxlength: 250,
-        type: 'text',
-        null: false,
+        type:      'text',
+        null:      false,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -661,19 +661,19 @@ class ObjectManagerTest < ActiveSupport::TestCase
     # remove attribute
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'attribute1',
+      name:   'attribute1',
     )
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'attribute2',
+      name:   'attribute2',
     )
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'attribute3',
+      name:   'attribute3',
     )
     ObjectManager::Attribute.remove(
       object: 'Ticket',
-      name: 'attribute4',
+      name:   'attribute4',
     )
     assert(ObjectManager::Attribute.migration_execute)
 
@@ -697,18 +697,18 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(0, ObjectManager::Attribute.migrations.count)
 
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: '1_a_anfrage_status',
-      display: '1_a_anfrage_status',
-      data_type: 'input',
-      data_option: {
+      object:        'Ticket',
+      name:          '1_a_anfrage_status',
+      display:       '1_a_anfrage_status',
+      data_type:     'input',
+      data_option:   {
         maxlength: 200,
-        type: 'text',
-        null: true,
+        type:      'text',
+        null:      true,
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -727,14 +727,14 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # create example ticket
     ticket1 = Ticket.create!(
-      title: 'some attribute test3',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:                'some attribute test3',
+      group:                Group.lookup(name: 'Users'),
+      customer_id:          2,
+      state:                Ticket::State.lookup(name: 'new'),
+      priority:             Ticket::Priority.lookup(name: '2 normal'),
       '1_a_anfrage_status': 'some attribute text',
-      updated_by_id: 1,
-      created_by_id: 1,
+      updated_by_id:        1,
+      created_by_id:        1,
     )
     assert('ticket1 created', ticket1)
 
@@ -746,7 +746,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     condition = {
       'ticket.title' => {
         operator: 'is',
-        value: 'some attribute test3',
+        value:    'some attribute test3',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10)
@@ -756,7 +756,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     condition = {
       'ticket.1_a_anfrage_status' => {
         operator: 'is',
-        value: 'some attribute text',
+        value:    'some attribute text',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10)
@@ -764,40 +764,40 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(tickets[0].id, ticket1.id)
 
     agent1 = User.create_or_update(
-      login: 'agent1@example.com',
-      firstname: 'Notification',
-      lastname: 'Agent1',
-      email: 'agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: Role.where(name: 'Agent'),
-      groups: Group.all,
+      login:         'agent1@example.com',
+      firstname:     'Notification',
+      lastname:      'Agent1',
+      email:         'agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         Role.where(name: 'Agent'),
+      groups:        Group.all,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     overview1 = Overview.create!(
-      name: 'Overview1',
-      link: 'my_overview',
-      roles: Role.all,
-      condition: {
+      name:          'Overview1',
+      link:          'my_overview',
+      roles:         Role.all,
+      condition:     {
         'ticket.1_a_anfrage_status' => {
           operator: 'is',
-          value: 'some attribute text',
+          value:    'some attribute text',
         },
       },
-      order: {
-        by: '1_a_anfrage_status',
+      order:         {
+        by:        '1_a_anfrage_status',
         direction: 'DESC',
       },
-      group_by: '1_a_anfrage_status',
-      view: {
-        d: %w[title customer state created_at],
-        s: %w[number title customer state created_at],
-        m: %w[number title customer state created_at],
+      group_by:      '1_a_anfrage_status',
+      view:          {
+        d:                 %w[title customer state created_at],
+        s:                 %w[number title customer state created_at],
+        m:                 %w[number title customer state created_at],
         view_mode_default: 's',
       },
-      prio: 1,
+      prio:          1,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -821,20 +821,20 @@ class ObjectManagerTest < ActiveSupport::TestCase
   test 'd object manager attribute - update attribute type' do
 
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'example_1',
-      display: 'example_1',
-      data_type: 'input',
-      data_option: {
-        default: '',
+      object:        'Ticket',
+      name:          'example_1',
+      display:       'example_1',
+      data_type:     'input',
+      data_option:   {
+        default:   '',
         maxlength: 200,
-        type: 'text',
-        null: true,
-        options: {},
+        type:      'text',
+        null:      true,
+        options:   {},
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -846,44 +846,44 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'example_1',
-        display: 'example_1',
-        data_type: 'boolean',
-        data_option: {
+        object:        'Ticket',
+        name:          'example_1',
+        display:       'example_1',
+        data_type:     'boolean',
+        data_option:   {
           default: true,
           options: {
-            true: 'Yes',
+            true:  'Yes',
             false: 'No',
           },
-          null: false,
+          null:    false,
         },
-        active: true,
-        screens: {},
-        position: 200,
+        active:        true,
+        screens:       {},
+        position:      200,
         created_by_id: 1,
         updated_by_id: 1,
       )
     end
 
     attribute2 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'example_1',
-      display: 'example_1',
-      data_type: 'select',
-      data_option: {
-        default: '',
+      object:        'Ticket',
+      name:          'example_1',
+      display:       'example_1',
+      data_type:     'select',
+      data_option:   {
+        default:   '',
         maxlength: 200,
-        type: 'text',
-        null: true,
-        options: {
+        type:      'text',
+        null:      true,
+        options:   {
           aa: 'aa',
           bb: 'bb',
         },
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -899,45 +899,45 @@ class ObjectManagerTest < ActiveSupport::TestCase
   test 'overview any owner / no owner is set' do
 
     group = Group.create!(
-      name: 'OverviewTest',
-      updated_at: '2015-02-05 16:37:00',
+      name:          'OverviewTest',
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles = Role.where(name: 'Agent')
     agent1 = User.create!(
-      login: 'ticket-overview-agent1@example.com',
-      firstname: 'Overview',
-      lastname: 'Agent1',
-      email: 'ticket-overview-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: [group],
-      updated_at: '2015-02-05 16:37:00',
+      login:         'ticket-overview-agent1@example.com',
+      firstname:     'Overview',
+      lastname:      'Agent1',
+      email:         'ticket-overview-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        [group],
+      updated_at:    '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     attribute1 = ObjectManager::Attribute.add(
-      object: 'Ticket',
-      name: 'watcher',
-      display: 'watcher',
-      data_type: 'select',
-      data_option: {
-        default: '',
+      object:        'Ticket',
+      name:          'watcher',
+      display:       'watcher',
+      data_type:     'select',
+      data_option:   {
+        default:   '',
         maxlength: 200,
-        type: 'text',
-        null: true,
-        options: {
+        type:      'text',
+        null:      true,
+        options:   {
           aa: 'agent a',
           bb: 'agent b',
           cc: 'agent c',
         },
       },
-      active: true,
-      screens: {},
-      position: 20,
+      active:        true,
+      screens:       {},
+      position:      20,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -953,211 +953,211 @@ class ObjectManagerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = 1
     overview_role = Role.find_by(name: 'Agent')
     overview1 = Overview.create!(
-      name: 'not watched',
-      prio: 1000,
-      role_ids: [overview_role.id],
+      name:      'not watched',
+      prio:      1000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is',
-          value: '',
+          value:    '',
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview2 = Overview.create!(
-      name: 'not watched by somebody',
-      prio: 2000,
-      role_ids: [overview_role.id],
+      name:      'not watched by somebody',
+      prio:      2000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is not',
-          value: '',
+          value:    '',
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview3 = Overview.create!(
-      name: 'not watched as array',
-      prio: 3000,
-      role_ids: [overview_role.id],
+      name:      'not watched as array',
+      prio:      3000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is',
-          value: [''],
+          value:    [''],
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview4 = Overview.create!(
-      name: 'not watched by somebody as array',
-      prio: 4000,
-      role_ids: [overview_role.id],
+      name:      'not watched by somebody as array',
+      prio:      4000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is not',
-          value: [''],
+          value:    [''],
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview5 = Overview.create!(
-      name: 'watched by aa',
-      prio: 5000,
-      role_ids: [overview_role.id],
+      name:      'watched by aa',
+      prio:      5000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is',
-          value: 'aa',
+          value:    'aa',
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview6 = Overview.create!(
-      name: 'not watched by aa',
-      prio: 6000,
-      role_ids: [overview_role.id],
+      name:      'not watched by aa',
+      prio:      6000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is not',
-          value: 'aa',
+          value:    'aa',
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview7 = Overview.create!(
-      name: 'watched by aa array',
-      prio: 7000,
-      role_ids: [overview_role.id],
+      name:      'watched by aa array',
+      prio:      7000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is',
-          value: ['aa'],
+          value:    ['aa'],
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     overview8 = Overview.create!(
-      name: 'not watched by aa array',
-      prio: 8000,
-      role_ids: [overview_role.id],
+      name:      'not watched by aa array',
+      prio:      8000,
+      role_ids:  [overview_role.id],
       condition: {
         'ticket.watcher' => {
           operator: 'is not',
-          value: ['aa'],
+          value:    ['aa'],
         },
       },
-      order: {
-        by: 'created_at',
+      order:     {
+        by:        'created_at',
         direction: 'ASC',
       },
-      view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+      view:      {
+        d:                 %w[title customer group created_at],
+        s:                 %w[title customer group created_at],
+        m:                 %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
 
     ticket1 = Ticket.create!(
-      title: 'overview test 1',
-      group: Group.lookup(name: 'OverviewTest'),
+      title:       'overview test 1',
+      group:       Group.lookup(name: 'OverviewTest'),
       customer_id: 2,
-      owner_id: 1,
-      watcher: '',
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      owner_id:    1,
+      watcher:     '',
+      state:       Ticket::State.lookup(name: 'new'),
+      priority:    Ticket::Priority.lookup(name: '2 normal'),
     )
 
     travel 2.seconds
     ticket2 = Ticket.create!(
-      title: 'overview test 2',
-      group: Group.lookup(name: 'OverviewTest'),
+      title:       'overview test 2',
+      group:       Group.lookup(name: 'OverviewTest'),
       customer_id: 2,
-      owner_id: nil,
-      watcher: nil,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      owner_id:    nil,
+      watcher:     nil,
+      state:       Ticket::State.lookup(name: 'new'),
+      priority:    Ticket::Priority.lookup(name: '2 normal'),
     )
 
     travel 2.seconds
     ticket3 = Ticket.create!(
-      title: 'overview test 3',
-      group: Group.lookup(name: 'OverviewTest'),
+      title:       'overview test 3',
+      group:       Group.lookup(name: 'OverviewTest'),
       customer_id: 2,
-      owner_id: agent1.id,
-      watcher: 'aa',
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      owner_id:    agent1.id,
+      watcher:     'aa',
+      state:       Ticket::State.lookup(name: 'new'),
+      priority:    Ticket::Priority.lookup(name: '2 normal'),
     )
 
     result = Ticket::Overviews.index(agent1)

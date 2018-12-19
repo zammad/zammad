@@ -7,7 +7,7 @@ class TranslationTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -15,13 +15,13 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Language',
     )
 
@@ -29,7 +29,7 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 
@@ -37,12 +37,12 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
 
@@ -51,7 +51,7 @@ class TranslationTest < TestCase
 
     notify_close(optional: true) # to be not in click area
     set(
-      css: '.content.active input.js-Item[data-source="Translations"]',
+      css:   '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
     sleep 5 # wait until nofify is gone
@@ -65,11 +65,11 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     match(
-      css: '.content.active .sidebar',
+      css:   '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match(
-      css: '.content.active input.js-Item[data-source="Translations"]',
+      css:   '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
 
@@ -79,11 +79,11 @@ class TranslationTest < TestCase
     sleep 5
 
     match(
-      css: '.content.active .sidebar',
+      css:   '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '.content.active input.js-Item[data-source="Translations"]',
+      css:   '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
 
@@ -95,15 +95,15 @@ class TranslationTest < TestCase
     sleep 2
 
     match_not(
-      css: '.content.active .sidebar',
+      css:   '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '.content.active input.js-Item[data-source="Translations"]',
+      css:   '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '.content.active .sidebar',
+      css:   '.content.active .sidebar',
       value: 'Übersetzung2',
     )
 
@@ -115,11 +115,11 @@ class TranslationTest < TestCase
             .perform
 
     watch_for(
-      css: 'span.translation[title="Overviews"]',
+      css:   'span.translation[title="Overviews"]',
       value: 'Übersichten',
     )
     set(
-      css: 'span.translation[title="Overviews"]',
+      css:   'span.translation[title="Overviews"]',
       value: 'Übersichten123',
     )
     sleep 1
@@ -138,7 +138,7 @@ class TranslationTest < TestCase
       css: 'span.translation[title="Overviews"]',
     )
     match(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersichten123',
     )
 
@@ -147,7 +147,7 @@ class TranslationTest < TestCase
       css: 'span.translation[title="Overviews"]',
     )
     match(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersichten123',
     )
 
@@ -156,7 +156,7 @@ class TranslationTest < TestCase
     sleep 4
 
     match(
-      css: '.content.active input.js-Item[data-source="Overviews"]',
+      css:   '.content.active input.js-Item[data-source="Overviews"]',
       value: 'Übersichten123',
     )
 
@@ -169,11 +169,11 @@ class TranslationTest < TestCase
     sleep 5
 
     match_not(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersichten123',
     )
     match(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersichten',
     )
 
@@ -181,13 +181,13 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Language',
     )
     sleep 5
@@ -200,11 +200,11 @@ class TranslationTest < TestCase
             .perform
 
     watch_for(
-      css: 'span.translation[title="Overviews"]',
+      css:   'span.translation[title="Overviews"]',
       value: 'Overviews',
     )
     set(
-      css: 'span.translation[title="Overviews"]',
+      css:   'span.translation[title="Overviews"]',
       value: 'Overviews123',
     )
     sleep 1
@@ -223,7 +223,7 @@ class TranslationTest < TestCase
       css: 'span.translation[title="Overviews"]',
     )
     match(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Overviews123',
     )
 
@@ -232,11 +232,11 @@ class TranslationTest < TestCase
     sleep 4
 
     match(
-      css: '.content.active input.js-Item[data-source="Overviews"]',
+      css:   '.content.active input.js-Item[data-source="Overviews"]',
       value: 'Overviews123',
     )
     match_not(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 
@@ -245,7 +245,7 @@ class TranslationTest < TestCase
     )
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 
@@ -256,7 +256,7 @@ class TranslationTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -264,12 +264,12 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
 
@@ -277,7 +277,7 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Inline Übersetzung',
     )
 
@@ -285,7 +285,7 @@ class TranslationTest < TestCase
 
     modal_ready()
     watch_for(
-      css: '.content.active .modal',
+      css:   '.content.active .modal',
       value: 'Letzte Übersetzung laden',
     )
     modal_disappear(
@@ -296,12 +296,12 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Language',
     )
 
@@ -323,7 +323,7 @@ class TranslationTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
@@ -331,12 +331,12 @@ class TranslationTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
 
@@ -350,7 +350,7 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Inline Übersetzung',
     )
 
@@ -362,8 +362,8 @@ class TranslationTest < TestCase
     click(css: 'a[href="#manage"]')
 
     watch_for(
-      css: %(td[title="#{new_ui_phrase}"]),
-      value: new_ui_phrase,
+      css:     %(td[title="#{new_ui_phrase}"]),
+      value:   new_ui_phrase,
       timeout: 3
     )
 

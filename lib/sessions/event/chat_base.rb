@@ -8,7 +8,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
 
     {
       event: 'chat_error',
-      data: {
+      data:  {
         state: 'chat_disabled',
       },
     }
@@ -22,7 +22,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
     if !@payload['data'] || !@payload['data']['session_id']
       error = {
         event: 'chat_error',
-        data: {
+        data:  {
           state: 'Need session_id.',
         },
       }
@@ -33,7 +33,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
 
     error = {
       event: 'chat_error',
-      data: {
+      data:  {
         state: "No such session id #{@payload['data']['session_id']}",
       },
     }
@@ -51,7 +51,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
 
     error = {
       event: 'chat_error',
-      data: {
+      data:  {
         state: 'no_such_chat',
       },
     }

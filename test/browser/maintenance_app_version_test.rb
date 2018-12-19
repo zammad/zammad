@@ -7,7 +7,7 @@ class MaintenanceAppVersionTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     sleep 8
@@ -18,7 +18,7 @@ class MaintenanceAppVersionTest < TestCase
     sleep 8
 
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'new version',
     )
 
@@ -28,7 +28,7 @@ class MaintenanceAppVersionTest < TestCase
     sleep 5
 
     match(
-      css: 'body',
+      css:   'body',
       value: 'new version',
     )
   end

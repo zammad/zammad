@@ -38,7 +38,7 @@ class Sessions::Event::Base
     if !@session
       error = {
         event: 'error',
-        data: {
+        data:  {
           state: 'no_session',
         },
       }
@@ -48,7 +48,7 @@ class Sessions::Event::Base
     if !@session['id']
       error = {
         event: 'error',
-        data: {
+        data:  {
           state: 'no_session_user_id',
         },
       }
@@ -62,7 +62,7 @@ class Sessions::Event::Base
     if !@session
       error = {
         event: "#{event}_error",
-        data: {
+        data:  {
           state: 'no_session',
         },
       }
@@ -72,7 +72,7 @@ class Sessions::Event::Base
     if @session['id'].blank?
       error = {
         event: "#{event}_error",
-        data: {
+        data:  {
           state: 'no_session_user_id',
         },
       }
@@ -90,7 +90,7 @@ class Sessions::Event::Base
     if !user
       error = {
         event: "#{event}_error",
-        data: {
+        data:  {
           state: 'no_such_user',
         },
       }
@@ -107,7 +107,7 @@ class Sessions::Event::Base
     if !user.permissions?(key)
       error = {
         event: "#{event}_error",
-        data: {
+        data:  {
           state: 'no_permission',
         },
       }

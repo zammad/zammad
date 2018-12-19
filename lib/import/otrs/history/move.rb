@@ -14,17 +14,17 @@ module Import
             to_id   = $4
           end
           @history_attributes = {
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
+            id:                history['HistoryID'],
+            o_id:              history['TicketID'],
+            history_type:      'updated',
+            history_object:    'Ticket',
             history_attribute: 'group',
-            value_from: from,
-            value_to: to,
-            id_from: from_id,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
+            value_from:        from,
+            value_to:          to,
+            id_from:           from_id,
+            id_to:             to_id,
+            created_at:        history['CreateTime'],
+            created_by_id:     history['CreateBy']
           }
         end
       end

@@ -5,41 +5,41 @@ RSpec.describe 'User', type: :request, searchindex: true do
   let!(:admin_user) do
     create(
       :admin_user,
-      groups: Group.all,
-      login: 'rest-admin',
+      groups:    Group.all,
+      login:     'rest-admin',
       firstname: 'Rest',
-      lastname: 'Agent',
-      email: 'rest-admin@example.com',
+      lastname:  'Agent',
+      email:     'rest-admin@example.com',
     )
   end
   let!(:admin_user_pw) do
     create(
       :admin_user,
-      groups: Group.all,
-      login: 'rest-admin-pw',
+      groups:    Group.all,
+      login:     'rest-admin-pw',
       firstname: 'Rest',
-      lastname: 'Agent',
-      email: 'rest-admin-pw@example.com',
-      password: 'adminpw',
+      lastname:  'Agent',
+      email:     'rest-admin-pw@example.com',
+      password:  'adminpw',
     )
   end
   let!(:agent_user) do
     create(
       :agent_user,
-      groups: Group.all,
-      login: 'rest-agent@example.com',
+      groups:    Group.all,
+      login:     'rest-agent@example.com',
       firstname: 'Rest',
-      lastname: 'Agent',
-      email: 'rest-agent@example.com',
+      lastname:  'Agent',
+      email:     'rest-agent@example.com',
     )
   end
   let!(:customer_user) do
     create(
       :customer_user,
-      login: 'rest-customer1@example.com',
+      login:     'rest-customer1@example.com',
       firstname: 'Rest',
-      lastname: 'Customer1',
-      email: 'rest-customer1@example.com',
+      lastname:  'Customer1',
+      email:     'rest-customer1@example.com',
     )
   end
   let!(:organization) do
@@ -55,10 +55,10 @@ RSpec.describe 'User', type: :request, searchindex: true do
     create(
       :customer_user,
       organization: organization,
-      login: 'rest-customer2@example.com',
-      firstname: 'Rest',
-      lastname: 'Customer2',
-      email: 'rest-customer2@example.com',
+      login:        'rest-customer2@example.com',
+      firstname:    'Rest',
+      lastname:     'Customer2',
+      email:        'rest-customer2@example.com',
     )
   end
 
@@ -552,13 +552,13 @@ RSpec.describe 'User', type: :request, searchindex: true do
     it 'does users show and response format (04.01)' do
       user = create(
         :customer_user,
-        login: 'rest-customer3@example.com',
-        firstname: 'Rest',
-        lastname: 'Customer3',
-        email: 'rest-customer3@example.com',
-        password: 'customer3pw',
-        active: true,
-        organization: organization,
+        login:         'rest-customer3@example.com',
+        firstname:     'Rest',
+        lastname:      'Customer3',
+        email:         'rest-customer3@example.com',
+        password:      'customer3pw',
+        active:        true,
+        organization:  organization,
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -629,13 +629,13 @@ RSpec.describe 'User', type: :request, searchindex: true do
     it 'does user index and response format (04.02)' do
       user = create(
         :customer_user,
-        login: 'rest-customer3@example.com',
-        firstname: 'Rest',
-        lastname: 'Customer3',
-        email: 'rest-customer3@example.com',
-        password: 'customer3pw',
-        active: true,
-        organization: organization,
+        login:         'rest-customer3@example.com',
+        firstname:     'Rest',
+        lastname:      'Customer3',
+        email:         'rest-customer3@example.com',
+        password:      'customer3pw',
+        active:        true,
+        organization:  organization,
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -711,8 +711,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
     it 'does ticket create and response format (04.03)' do
       organization = Organization.first
       params = {
-        firstname: 'newfirstname123',
-        note: 'some note',
+        firstname:    'newfirstname123',
+        note:         'some note',
         organization: organization.name,
       }
 
@@ -765,13 +765,13 @@ RSpec.describe 'User', type: :request, searchindex: true do
     it 'does ticket update and response formats (04.04)' do
       user = create(
         :customer_user,
-        login: 'rest-customer3@example.com',
-        firstname: 'Rest',
-        lastname: 'Customer3',
-        email: 'rest-customer3@example.com',
-        password: 'customer3pw',
-        active: true,
-        organization: organization,
+        login:         'rest-customer3@example.com',
+        firstname:     'Rest',
+        lastname:      'Customer3',
+        email:         'rest-customer3@example.com',
+        password:      'customer3pw',
+        active:        true,
+        organization:  organization,
         updated_by_id: admin_user.id,
         created_by_id: admin_user.id,
       )
@@ -924,30 +924,30 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       user1 = create(
         :customer_user,
-        login: 'rest-user_search_sortableA@example.com',
-        firstname: "#{firstname} A",
-        lastname: 'user_search_sortableA',
-        email: 'rest-user_search_sortableA@example.com',
-        password: 'user_search_sortableA',
-        active: true,
+        login:           'rest-user_search_sortableA@example.com',
+        firstname:       "#{firstname} A",
+        lastname:        'user_search_sortableA',
+        email:           'rest-user_search_sortableA@example.com',
+        password:        'user_search_sortableA',
+        active:          true,
         organization_id: organization.id,
-        out_of_office: false,
-        created_at: '2016-02-05 17:42:00',
+        out_of_office:   false,
+        created_at:      '2016-02-05 17:42:00',
       )
       user2 = create(
         :customer_user,
-        login: 'rest-user_search_sortableB@example.com',
-        firstname: "#{firstname} B",
-        lastname: 'user_search_sortableB',
-        email: 'rest-user_search_sortableB@example.com',
-        password: 'user_search_sortableB',
-        active: true,
-        organization_id: organization.id,
-        out_of_office_start_at: '2016-02-06 19:42:00',
-        out_of_office_end_at: '2016-02-07 19:42:00',
+        login:                        'rest-user_search_sortableB@example.com',
+        firstname:                    "#{firstname} B",
+        lastname:                     'user_search_sortableB',
+        email:                        'rest-user_search_sortableB@example.com',
+        password:                     'user_search_sortableB',
+        active:                       true,
+        organization_id:              organization.id,
+        out_of_office_start_at:       '2016-02-06 19:42:00',
+        out_of_office_end_at:         '2016-02-07 19:42:00',
         out_of_office_replacement_id: 1,
-        out_of_office: true,
-        created_at: '2016-02-05 19:42:00',
+        out_of_office:                true,
+        created_at:                   '2016-02-05 19:42:00',
       )
       Scheduler.worker(true)
       sleep 2 # let es time to come ready

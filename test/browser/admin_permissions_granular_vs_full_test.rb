@@ -7,7 +7,7 @@ class AdminPermissionsGranularVsFullTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 

@@ -6,26 +6,26 @@ class EmailProcessCustomerSelectionBasedOnSenderRecipient < ActiveSupport::TestC
     groups = Group.all
     roles = Role.where(name: 'Agent')
     @agent1 = User.create_or_update(
-      login: 'user-customer-selection-agent1@example.com',
-      firstname: 'UserOutOfOffice',
-      lastname: 'Agent1',
-      email: 'user-customer-selection-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'user-customer-selection-agent1@example.com',
+      firstname:     'UserOutOfOffice',
+      lastname:      'Agent1',
+      email:         'user-customer-selection-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
     @customer1 = User.create_or_update(
-      login: 'user-customer-selection-customer1@example.com',
-      firstname: 'UserOutOfOffice',
-      lastname: 'customer1',
-      email: 'user-customer-selection-customer1@example.com',
-      password: 'customerpw',
-      active: true,
-      roles: roles,
+      login:         'user-customer-selection-customer1@example.com',
+      firstname:     'UserOutOfOffice',
+      lastname:      'customer1',
+      email:         'user-customer-selection-customer1@example.com',
+      password:      'customerpw',
+      active:        true,
+      roles:         roles,
       updated_by_id: 1,
       created_by_id: 1,
     )

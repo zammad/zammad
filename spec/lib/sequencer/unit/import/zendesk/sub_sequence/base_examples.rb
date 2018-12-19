@@ -7,13 +7,13 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
 
     let(:params) do
       {
-        dry_run: false,
-        import_job: instance_double(ImportJob),
-        client: double('ZendeskAPI'),
-        group_map: {},         # required by Tickets
+        dry_run:          false,
+        import_job:       instance_double(ImportJob),
+        client:           double('ZendeskAPI'),
+        group_map:        {},         # required by Tickets
         organization_map: {},  # required by Tickets
         ticket_field_map: {},  # required by Tickets
-        user_map: {},          # required by Tickets
+        user_map:         {},          # required by Tickets
       }
     end
 

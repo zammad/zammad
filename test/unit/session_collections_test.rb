@@ -11,15 +11,15 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'session-collections-agent-1',
-      firstname: 'Session',
-      lastname: 'collections 1',
-      email: 'session-collections-agent-1@example.com',
-      password: 'agentpw',
+      login:           'session-collections-agent-1',
+      firstname:       'Session',
+      lastname:        'collections 1',
+      email:           'session-collections-agent-1@example.com',
+      password:        'agentpw',
       organization_id: nil,
-      active: true,
-      roles: roles,
-      groups: groups,
+      active:          true,
+      roles:           roles,
+      groups:          groups,
     )
     agent1.save!
 
@@ -27,28 +27,28 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent2 = User.create_or_update(
-      login: 'session-collections-agent-2',
-      firstname: 'Session',
-      lastname: 'collections 2',
-      email: 'session-collections-agent-2@example.com',
-      password: 'agentpw',
+      login:           'session-collections-agent-2',
+      firstname:       'Session',
+      lastname:        'collections 2',
+      email:           'session-collections-agent-2@example.com',
+      password:        'agentpw',
       organization_id: nil,
-      active: true,
-      roles: roles,
-      groups: groups,
+      active:          true,
+      roles:           roles,
+      groups:          groups,
     )
     agent2.save!
 
     roles = Role.where(name: ['Customer'])
     customer1 = User.create_or_update(
-      login: 'session-collections-customer-1',
-      firstname: 'Session',
-      lastname: 'collections 2',
-      email: 'session-collections-customer-1@example.com',
-      password: 'customerpw',
+      login:           'session-collections-customer-1',
+      firstname:       'Session',
+      lastname:        'collections 2',
+      email:           'session-collections-customer-1@example.com',
+      password:        'customerpw',
       organization_id: nil,
-      active: true,
-      roles: roles,
+      active:          true,
+      roles:           roles,
     )
     customer1.save!
     collection_client1 = Sessions::Backend::Collections.new(agent1, {}, nil, 'aaa-1', 2)
@@ -175,14 +175,14 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
-      login: "sessions-assets-1-#{rand(99_999)}",
+      login:     "sessions-assets-1-#{rand(99_999)}",
       firstname: 'Session',
-      lastname: "sessions assets #{rand(99_999)}",
-      email: 'sessions-assets1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      lastname:  "sessions assets #{rand(99_999)}",
+      email:     'sessions-assets1@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     roles,
+      groups:    groups,
     )
     assert(agent1.save!, 'create/update agent1')
 

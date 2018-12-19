@@ -5,11 +5,11 @@ module TicketStats
 
   def ticket_ids_and_assets(condition, current_user, limit, assets)
     tickets = Ticket.search(
-      limit: limit,
-      condition: condition,
+      limit:        limit,
+      condition:    condition,
       current_user: current_user,
-      sort_by: 'created_at',
-      order_by: 'desc',
+      sort_by:      'created_at',
+      order_by:     'desc',
     )
     assets_of_tickets(tickets, assets)
   end
@@ -36,11 +36,11 @@ module TicketStats
                      .count
 
       data = {
-        month: date_to_check.month,
-        year: date_to_check.year,
-        text: Date::MONTHNAMES[date_to_check.month],
+        month:   date_to_check.month,
+        year:    date_to_check.year,
+        text:    Date::MONTHNAMES[date_to_check.month],
         created: created,
-        closed: closed,
+        closed:  closed,
       }
       volume_by_year.push data
     end

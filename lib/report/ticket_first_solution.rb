@@ -125,9 +125,9 @@ returns
       assets = ticket_full.assets(assets)
     end
     {
-      count: count,
+      count:      count,
       ticket_ids: ticket_ids,
-      assets: assets,
+      assets:     assets,
     }
   end
 

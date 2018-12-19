@@ -184,12 +184,12 @@ class Integration::PlacetelController < ApplicationController
         api_key: config_integration[:api_token],
       },
       {
-        log: {
+        log:           {
           facility: 'placetel',
         },
-        json: true,
-        open_timeout: 4,
-        read_timeout: 6,
+        json:          true,
+        open_timeout:  4,
+        read_timeout:  6,
         total_timeout: 6,
       },
     )

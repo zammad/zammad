@@ -7,17 +7,17 @@ class PreferencesLanguageTest < TestCase
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
     # start ticket create
     ticket_create(
-      data: {
+      data:          {
         customer: 'nicole',
-        group: 'Users',
-        title: 'preferences lang check #1',
-        body: 'preferences lang check #1',
+        group:    'Users',
+        title:    'preferences lang check #1',
+        body:     'preferences lang check #1',
       },
       do_not_submit: true,
     )
@@ -26,9 +26,9 @@ class PreferencesLanguageTest < TestCase
     ticket_create(
       data: {
         customer: 'nicole',
-        group: 'Users',
-        title: 'preferences lang check #2',
-        body: 'preferences lang check #2',
+        group:    'Users',
+        title:    'preferences lang check #2',
+        body:     'preferences lang check #2',
       },
     )
 
@@ -46,32 +46,32 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
 
     # check language in navbar
     watch_for(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersicht'
     )
 
     # check language in dashboard
     click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
     click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Meine'
     )
     verify_title(
@@ -95,15 +95,15 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'kunde'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'priorität'
     )
     watch_for(
-      css: '.content.active [data-name="body"]',
+      css:   '.content.active [data-name="body"]',
       value: 'preferences lang check #1'
     )
     verify_title(
@@ -117,11 +117,11 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'erstellt'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'priorität'
     )
 
@@ -132,15 +132,15 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'notiz'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'e-mail'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'aktion'
     )
 
@@ -151,7 +151,7 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'notiz'
     )
 
@@ -159,33 +159,33 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Language',
     )
 
     # check language in navbar
     watch_for(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Overview'
     )
 
     # check language in dashboard
     click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'My Stats'
     )
 
     # check language in overview
     click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'My'
     )
     verify_title(
@@ -209,15 +209,15 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'customer'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'priority'
     )
     watch_for(
-      css: '.content.active [data-name="body"]',
+      css:   '.content.active [data-name="body"]',
       value: 'preferences lang check #1'
     )
     verify_title(
@@ -231,11 +231,11 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'create'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'priority'
     )
 
@@ -246,11 +246,11 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'note'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'email'
     )
 
@@ -261,11 +261,11 @@ class PreferencesLanguageTest < TestCase
       }
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'note'
     )
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'action'
     )
 
@@ -275,13 +275,13 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile/language"]')
     sleep 4
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
     sleep 4
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
     sleep 6
@@ -291,27 +291,27 @@ class PreferencesLanguageTest < TestCase
     sleep 2
 
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Sprache',
     )
 
     # check language in navbar
     watch_for(
-      css: '.js-menu',
+      css:   '.js-menu',
       value: 'Übersicht'
     )
 
     # check language in dashboard
     click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
     click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
-      css: '.content.active',
+      css:   '.content.active',
       value: 'Meine'
     )
 
@@ -320,13 +320,13 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css: '.language_item [name="locale"]',
+      css:   '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
-      css: 'body',
+      css:   'body',
       value: 'Language',
     )
 

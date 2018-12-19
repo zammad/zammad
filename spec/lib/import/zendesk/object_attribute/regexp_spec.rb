@@ -24,26 +24,26 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Regexp do
     )
 
     expected_structure = {
-      object:      'Ticket',
-      name:        'example_field',
-      display:     'Example attribute',
-      data_type:   'input',
-      data_option: {
+      object:        'Ticket',
+      name:          'example_field',
+      display:       'Example attribute',
+      data_type:     'input',
+      data_option:   {
         null:      false,
         note:      'Example attribute description',
         type:      'text',
         maxlength: 255,
         regex:     regex,
       },
-      editable: true,
-      active:   true,
-      screens:  {
+      editable:      true,
+      active:        true,
+      screens:       {
         edit: {
           Customer: {
             shown: true,
-            null: false
+            null:  false
           },
-          view: {
+          view:     {
             '-all-' => {
               shown: true
             }
