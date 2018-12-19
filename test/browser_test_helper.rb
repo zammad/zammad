@@ -1778,6 +1778,20 @@ wait untill text in selector disabppears
       end
     end
 
+    data[:attributes]&.each do |key, value|
+      if value
+        check(
+          browser: instance,
+          css:     ".modal .checkbox input[value=\"#{key}\"]",
+        )
+      else
+        uncheck(
+          browser: instance,
+          css:     ".modal .checkbox input[value=\"#{key}\"]",
+        )
+      end
+    end
+
     data[:selector]&.each do |key, value|
       select(
         browser:  instance,
@@ -1793,6 +1807,15 @@ wait untill text in selector disabppears
           value:    value,
           mute_log: true,
         )
+      elsif value.instance_of? Array
+        value.each do |item|
+          select(
+            browser:  instance,
+            css:      '.modal .ticket_selector .js-value select',
+            value:    item,
+            mute_log: true,
+          )
+        end
       else
         select(
           browser:      instance,
@@ -2008,6 +2031,19 @@ wait untill text in selector disabppears
     disable_group_check: true,
   )
 
+  ticket = ticket_create(
+    browser: browser1,
+    data: {
+      customer: 'nico',
+      priority: '2 normal',
+      state:    'pending close',
+      pending_date: '11/24/2018',
+      pending_time: '08:00',
+      title:    'overview #1',
+      body:     'overview #1',
+    },
+    do_not_submit: true,
+  )
 =end
 
   def ticket_create(params)
@@ -2098,6 +2134,24 @@ wait untill text in selector disabppears
         value:    data[:state],
         mute_log: true,
       )
+      if ['pending close', 'pending reminder'].include?(data[:state]) &&
+         data[:pending_date] &&
+         data[:pending_time]
+        set(
+          browser:  instance,
+          css:      '.content.active .newTicket input.js-datepicker',
+          value:    data[:pending_date],
+          clear:    true,
+          mute_log: true,
+        )
+        set(
+          browser:  instance,
+          css:      '.content.active .newTicket input.js-timepicker',
+          value:    data[:pending_time],
+          clear:    true,
+          mute_log: true,
+        )
+      end
     end
     if data[:title]
       set(

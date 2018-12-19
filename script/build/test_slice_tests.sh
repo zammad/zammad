@@ -41,6 +41,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_overview_group_by_organization_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_task_changed_test.rb
@@ -121,6 +122,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_ticket_overview_group_by_organization_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_task_changed_test.rb
@@ -201,6 +203,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_ticket_overview_group_by_organization_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   # test/browser/agent_ticket_tag_test.rb
   # test/browser/agent_ticket_task_changed_test.rb
@@ -281,6 +284,7 @@ elif [ "$LEVEL" == '4' ]; then
   # test/browser/agent_ticket_overview_group_by_organization_test.rb
   # test/browser/agent_ticket_overview_level0_test.rb
   # test/browser/agent_ticket_overview_level1_test.rb
+  # test/browser/agent_ticket_overview_pending_til_test.rb
   # test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_task_changed_test.rb
@@ -360,6 +364,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_overview_group_by_organization_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_task_changed_test.rb
@@ -442,6 +447,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_overview_group_by_organization_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_task_changed_test.rb

@@ -677,11 +677,22 @@ class App.ControllerTable extends App.Controller
     @lastOrderDirection = orderDirection
     @lastOrderBy = orderBy
 
+    # Underscore's sortBy cannot deal with null values, so we replace null values with a place holder string
+    sortBy = (list, iteratee) ->
+      _.sortBy(
+        list
+        (item) ->
+          res = iteratee(item)
+          return res if res
+          # null values are considered lexicographically "last"
+          '\uFFFF'
+      )
+
     localObjects is undefined
     if orderBy
       for header in @headers
         if header.name is orderBy || "#{header.name}_id" is orderBy || header.name is "#{orderBy}_id"
-          localObjects = _.sortBy(
+          localObjects = sortBy(
             @objects
             (item) ->
 
