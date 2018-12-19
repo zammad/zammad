@@ -6,6 +6,7 @@ class Channel::EmailParser
   EMAIL_REGEX = /.+@.+/
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
+  EXCESSIVE_LINKS_MSG = 'This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
 
 =begin
 
@@ -542,9 +543,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     body_text = body_text.utf8_encode(from: message.charset, fallback: :read_as_sanitized_binary)
     body_text = Mail::Utilities.to_lf(body_text)
 
-    return body_text.html2html_strict if options[:strict_html]
+    # plaintext body requires no processing
+    return body_text if !options[:strict_html]
 
-    body_text
+    # Issue #2390 - emails with >5k HTML links should be rejected
+    return EXCESSIVE_LINKS_MSG if body_text.scan(/<a[[:space:]]/i).count >= 5_000
+
+    body_text.html2html_strict
   end
 
   def collect_attachments(mail)

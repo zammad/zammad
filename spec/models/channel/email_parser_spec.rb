@@ -138,5 +138,30 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    context 'mail with links' do
+
+      def mock_mail(number_of_links)
+        link = '<a href="https://zammad.com/">Dummy Link</a> '
+
+        mail = Mail.new
+        mail.html_part = "<html><body>#{link * number_of_links}</body></html>"
+        mail
+      end
+
+      let(:mail_10) { mock_mail(10).to_s   }
+      let(:mail_5k) { mock_mail(5001).to_s }
+
+      # regression test for issue 2390 - Add a postmaster filter to not show emails with potential issue
+      it '(>5k links) are replaced by a warning message' do
+        expect( described_class.new.parse(mail_5k)[:body] )
+          .to eql( Channel::EmailParser::EXCESSIVE_LINKS_MSG )
+      end
+
+      it '(10 links) are not touched' do
+        expect( described_class.new.parse(mail_10)[:body] )
+          .to start_with( '<a href="https://zammad.com/"' )
+      end
+    end
   end
 end
