@@ -257,13 +257,20 @@ class Scheduler < ApplicationModel
       else
         _start_job(job)
       end
-      job.pid = ''
-      job.save
-      logger.info " ...stopped thread for '#{job.method}'"
-      ActiveRecord::Base.connection.close
 
-      # release thread lock and remove thread handle
-      @@jobs_started.delete(job.id)
+      if job.present?
+        job.pid = ''
+        job.save
+
+        logger.info " ...stopped thread for '#{job.method}'"
+
+        # release thread lock and remove thread handle
+        @@jobs_started.delete(job.id)
+      else
+        logger.warn ' ...Job got deleted while running'
+      end
+
+      ActiveRecord::Base.connection.close
     end
   end
 

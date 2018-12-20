@@ -24,6 +24,7 @@ variables:
     when: on_failure
     paths:
     - tmp/screenshot*
+    - tmp/screenshots/*
     - log/*.log
 
 # Workaround to enable usage of mixed SSH and Docker GitLab CI runners
@@ -67,6 +68,7 @@ stages:
 pre:rubocop:
   <<: *pre_stage
   script:
+    - bundle install -j $(nproc)
     - bundle exec rubocop
 
 pre:coffeelint:
@@ -98,7 +100,7 @@ pre:github:
     RAILS_ENV: "test"
   script:
     - rake zammad:db:init
-    - bundle exec rspec
+    - bundle exec rspec -t ~type:system
 
 test:rspec:mysql:
   stage: test
@@ -320,6 +322,67 @@ browser:build:
     - public/assets/application-*
     - public/assets/print-*
 
+.services_browser_postgresql_template: &services_browser_postgresql_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
+    - name: docker.io/elgalu/selenium:latest
+      alias: selenium
+    - name: registry.znuny.com/docker/docker-imap-devel:latest
+      alias: mail
+
+.services_browser_mysql_template: &services_browser_mysql_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
+    - name: docker.io/elgalu/selenium:latest
+      alias: selenium
+    - name: registry.znuny.com/docker/docker-imap-devel:latest
+      alias: mail
+
+## Capybara
+
+.test_capybara_template: &test_capybara_definition
+  <<: *base_env
+  stage: browser-core
+  script:
+    - rake zammad:ci:test:prepare[with_elasticsearch]
+    - bundle exec rspec --fail-fast -t type:system
+
+.variables_capybara_chrome_template: &variables_capybara_chrome_definition
+  <<: *test_capybara_definition
+  variables:
+    RAILS_ENV: "test"
+    NO_RESET_BEFORE_SUITE: "true"
+    BROWSER: "chrome"
+
+.variables_capybara_ff_template: &variables_capybara_ff_definition
+  <<: *test_capybara_definition
+  variables:
+    RAILS_ENV: "test"
+    NO_RESET_BEFORE_SUITE: "true"
+    BROWSER: "firefox"
+
+test:browser:core:capybara_chrome_postgresql:
+  <<: *variables_capybara_chrome_definition
+  <<: *services_browser_postgresql_definition
+
+test:browser:core:capybara_chrome_mysql:
+  <<: *variables_capybara_chrome_definition
+  <<: *services_browser_mysql_definition
+
+test:browser:core:capybara_ff_postgresql:
+  <<: *variables_capybara_ff_definition
+  <<: *services_browser_postgresql_definition
+
+test:browser:core:capybara_ff_mysql:
+  <<: *variables_capybara_ff_definition
+  <<: *services_browser_mysql_definition
+
 ## Browser core tests
 
 .variables_browser_template: &variables_browser_definition
@@ -387,28 +450,12 @@ test:browser:integration:api_client_php:
 .test_browser_core_postgresql_template: &test_browser_core_postgresql_definition
   <<: *test_browser_core_definition
   <<: *script_browser_slice_definition
-  services:
-    - name: registry.znuny.com/docker/zammad-postgresql:latest
-      alias: postgresql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
-      alias: elasticsearch
-    - name: docker.io/elgalu/selenium:latest
-      alias: selenium
-    - name: registry.znuny.com/docker/docker-imap-devel:latest
-      alias: mail
+  <<: *services_browser_postgresql_definition
 
 .test_browser_core_mysql_template: &test_browser_core_mysql_definition
   <<: *test_browser_core_definition
   <<: *script_browser_slice_definition
-  services:
-    - name: registry.znuny.com/docker/zammad-mysql:latest
-      alias: mysql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
-      alias: elasticsearch
-    - name: docker.io/elgalu/selenium:latest
-      alias: selenium
-    - name: registry.znuny.com/docker/docker-imap-devel:latest
-      alias: mail
+  <<: *services_browser_mysql_definition
 
 #### Firefox
 

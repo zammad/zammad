@@ -4,21 +4,19 @@ namespace :zammad do
 
     namespace :test do
 
-      desc 'Stop of all Zammad services and cleans up the database(s)'
-      task :stop, [:no_app] do |_task, args|
+      desc 'Prepares Zammad system for CI env'
+      task :prepare, [:elasticsearch] do |_task, args|
         ENV['RAILS_ENV'] ||= 'production'
         ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = 'true'
-
         # we have to enforce the env
         # otherwise it will fallback to default (develop)
         Rails.env = ENV['RAILS_ENV']
 
-        Rake::Task['zammad:ci:app:stop'].invoke if args[:no_app].blank?
-        Rake::Task['db:drop:all'].invoke
+        Rake::Task['zammad:flush:cache'].invoke
 
-        next if !SearchIndexBackend.enabled?
+        Rake::Task['zammad:db:init'].invoke
 
-        Rake::Task['searchindex:drop'].invoke
+        Rake::Task['zammad:ci:settings'].invoke(args[:elasticsearch])
       end
     end
   end
