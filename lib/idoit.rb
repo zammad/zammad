@@ -109,6 +109,10 @@ or with filter:
         method: method,
         params: params,
         version: '2.0',
+        # the id attribute is required by the JSON-RPC standard
+        # but i-doit doesn't actually use it so we send a hard coded id
+        # see issue #2412 and community topic for further information
+        id: 42,
       },
       {
         json: true,

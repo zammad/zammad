@@ -75,7 +75,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (user)!', result['error'])
 
     stub_request(:post, "#{@endpoint}src/jsonrpc.php")
-      .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{@token}\"},\"version\":\"2.0\"}")
+      .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{@token}\"},\"version\":\"2.0\",\"id\":42}")
       .to_return(status: 200, body: read_messaage('object_types_response'), headers: {})
 
     admin_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('idoit-admin@example.com', 'adminpw')
@@ -114,7 +114,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
   test 'list all object types' do
 
     stub_request(:post, "#{@endpoint}src/jsonrpc.php")
-      .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{@token}\"},\"version\":\"2.0\"}")
+      .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{@token}\"},\"version\":\"2.0\",\"id\":42}")
       .to_return(status: 200, body: read_messaage('object_types_response'), headers: {})
 
     agent_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('idoit-agent@example.com', 'agentpw')
@@ -156,7 +156,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
   test 'query objects' do
 
     stub_request(:post, "#{@endpoint}src/jsonrpc.php")
-      .with(body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{@token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\"}")
+      .with(body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{@token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\",\"id\":42}")
       .to_return(status: 200, body: read_messaage('object_types_filter_response'), headers: {})
 
     agent_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('idoit-agent@example.com', 'agentpw')
