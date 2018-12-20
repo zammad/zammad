@@ -44,7 +44,7 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response['error']).to eq('Not authorized (user)!')
 
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
-        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\"}")
+        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
         .to_return(status: 200, body: read_message('object_types_response'), headers: {})
 
       params = {
@@ -81,7 +81,7 @@ RSpec.describe 'Idoit', type: :request do
     it 'does list all object types' do
 
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
-        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\"}")
+        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
         .to_return(status: 200, body: read_message('object_types_response'), headers: {})
 
       params = {
@@ -121,7 +121,7 @@ RSpec.describe 'Idoit', type: :request do
     it 'does query objects' do
 
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
-        .with(body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\"}")
+        .with(body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\",\"id\":42}")
         .to_return(status: 200, body: read_message('object_types_filter_response'), headers: {})
 
       params = {
