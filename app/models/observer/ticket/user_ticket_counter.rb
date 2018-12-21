@@ -17,11 +17,9 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
     return true if !record.customer_id
 
     # send background job
-    Delayed::Job.enqueue(
-      Observer::Ticket::UserTicketCounter::BackgroundJob.new(
-        record.customer_id,
-        UserInfo.current_user_id || record.updated_by_id,
-      )
+    TicketUserTicketCounterJob.perform_later(
+      record.customer_id,
+      UserInfo.current_user_id || record.updated_by_id,
     )
   end
 
