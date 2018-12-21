@@ -357,19 +357,10 @@ returns
 
 =begin
 
-check if online notifcation should be shown in general as already seen with current state
+check if online notification should be shown in general as already seen with current state
 
   ticket = Ticket.find(1)
   seen = ticket.online_notification_seen_state(user_id_check)
-
-returns
-
-  result = true # or false
-
-check if online notifcation should be shown for this user as already seen with current state
-
-  ticket = Ticket.find(1)
-  seen = ticket.online_notification_seen_state(check_user_id)
 
 returns
 
