@@ -22,7 +22,7 @@ addons:
       - libgmp-dev
       - libmysqlclient-dev
       - libncurses5-dev
-      - libreadline6-dev
+      - libreadline-dev
       - libsqlite3-dev
       - libssl-dev
       - libtool
@@ -30,9 +30,9 @@ addons:
       - libxslt1-dev
       - libyaml-0-2
       - libyaml-dev
-      - mysql-client-5.6
-      - mysql-client-core-5.6
-      - mysql-server-5.6
+      - mysql-client-5.7
+      - mysql-client-core-5.7
+      - mysql-server-5.7
       - patch
       - pkg-config
       - postfix
