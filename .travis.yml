@@ -62,7 +62,7 @@ script:
   - rake db:create
   - rake db:migrate
   - rake db:seed
-  - bundle exec rspec
+  - bundle exec rspec -t ~type:system
   - bundle exec rake db:environment:set RAILS_ENV=test
   - rake db:reset
   - rake test:units
