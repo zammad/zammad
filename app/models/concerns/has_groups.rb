@@ -38,7 +38,7 @@ module HasGroups
       # @return [ActiveRecord::AssociationRelation<[<Group]>] List of Groups with :through attributes
       def access(*access)
         table_name = proxy_association.owner.class.group_through.table_name
-        query      = select("groups.*, #{table_name}.*")
+        query      = select("#{ActiveRecord::Base.connection.quote_table_name('groups')}.*, #{ActiveRecord::Base.connection.quote_table_name(table_name)}.*")
         return query if access.blank?
 
         access.push('full') if !access.include?('full')
