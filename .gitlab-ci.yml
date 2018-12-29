@@ -67,6 +67,7 @@ stages:
 pre:rubocop:
   <<: *pre_stage
   script:
+    - bundle install -j $(nproc)
     - bundle exec rubocop
 
 pre:coffeelint:
