@@ -919,6 +919,25 @@ RSpec.describe 'User', type: :request, searchindex: true do
       user2.destroy!
     end
 
+    it 'does user history' do
+      user1 = create(
+        :customer_user,
+        login:     'history@example.com',
+        firstname: 'History',
+        lastname:  'Customer1',
+        email:     'history@example.com',
+      )
+
+      authenticated_as(agent_user)
+      get "/api/v1/users/history/#{user1.id}", params: {}, as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['history'].class).to eq(Array)
+      expect(json_response['assets'].class).to eq(Hash)
+      expect(json_response['assets']['Ticket']).to be_nil
+      expect(json_response['assets']['User'][user1.id.to_s]).not_to be_nil
+    end
+
     it 'does user search sortable' do
       firstname = "user_search_sortable #{rand(999_999_999)}"
 

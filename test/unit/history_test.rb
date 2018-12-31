@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class HistoryTest < ActiveSupport::TestCase
-  current_user = User.lookup(email: 'nicole.braun@zammad.org')
 
   test 'ticket' do
+    current_user = User.lookup(email: 'nicole.braun@zammad.org')
     tests = [
 
       # test 1
@@ -188,6 +188,7 @@ class HistoryTest < ActiveSupport::TestCase
   end
 
   test 'user' do
+    current_user = User.lookup(email: 'nicole.braun@zammad.org')
     name = rand(999_999)
     tests = [
 
@@ -275,6 +276,7 @@ class HistoryTest < ActiveSupport::TestCase
   end
 
   test 'organization' do
+    current_user = User.lookup(email: 'nicole.braun@zammad.org')
     tests = [
 
       # test 1
@@ -335,6 +337,57 @@ class HistoryTest < ActiveSupport::TestCase
 
     # delete user
     organizations.each(&:destroy!)
+  end
+
+  test 'ticket assets' do
+    UserInfo.current_user_id = 1
+    agent1 = User.create!(
+      login:     'agent1@example.com',
+      firstname: 'agent',
+      lastname:  '1',
+      email:     'agent1@example.com',
+      password:  'agentpw',
+      active:    true,
+      roles:     Role.where(name: %w[Agent Admin]),
+      groups:    Group.all,
+    )
+    current_user = User.lookup(email: 'nicole.braun@zammad.org')
+    UserInfo.current_user_id = current_user.id
+
+    ticket = Ticket.create!(
+      title:       'test 1',
+      group:       Group.first,
+      customer_id: current_user.id,
+      state:       Ticket::State.lookup(name: 'new'),
+      priority:    Ticket::Priority.lookup(name: '2 normal'),
+    )
+    article = Ticket::Article.create!(
+      ticket_id:  ticket.id,
+      from:       'some_customer_com-1@example.com',
+      to:         'some_zammad_com-1@example.com',
+      subject:    'com test 1',
+      message_id: 'some@id_com_1',
+      body:       'some message 123',
+      internal:   false,
+      sender:     Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:       Ticket::Article::Type.find_by(name: 'email'),
+    )
+
+    # verify if user of history record is in assets
+    UserInfo.current_user_id = agent1.id
+    ticket.state = Ticket::State.find_by(name: 'closed')
+    ticket.save!
+
+    # update updated_by (to not include agent1 in assets by ticket)
+    UserInfo.current_user_id = current_user.id
+    ticket.priority = Ticket::Priority.find_by(name: '3 high')
+    ticket.save!
+
+    history = ticket.history_get(true)
+    assert(history[:assets][:User][current_user.id])
+    assert(history[:assets][:User][agent1.id])
+    assert(history[:assets][:Ticket][ticket.id])
+    assert(history[:assets][:TicketArticle][article.id])
   end
 
   def history_check(history_list, history_check)

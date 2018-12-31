@@ -314,10 +314,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     organization = Organization.find(params[:id])
 
     # get history of organization
-    history = organization.history_get(true)
-
-    # return result
-    render json: history
+    render json: organization.history_get(true)
   end
 
   # @path    [GET] /organizations/import_example

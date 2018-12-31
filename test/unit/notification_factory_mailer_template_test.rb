@@ -8,7 +8,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'notification-template-agent1@example.com',
       firstname:     'Notification<b>xxx</b>',
       lastname:      'Agent1<b>yyy</b>',
@@ -24,7 +24,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    agent_current_user = User.create_or_update(
+    agent_current_user = User.create!(
       login:         'notification-template-current_user@example.com',
       firstname:     'Notification Current',
       lastname:      'User',

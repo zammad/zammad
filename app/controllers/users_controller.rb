@@ -502,10 +502,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     # get history of user
-    history = user.history_get(true)
-
-    # return result
-    render json: history
+    render json: user.history_get(true)
   end
 
 =begin
