@@ -2078,6 +2078,30 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
+
+    it 'does ticket history ' do
+      ticket1 = create(
+        :ticket,
+        title:       'some title',
+        group:       ticket_group,
+        customer_id: customer_user.id,
+      )
+      create(
+        :ticket_article,
+        type:      Ticket::Article::Type.lookup(name: 'note'),
+        sender:    Ticket::Article::Sender.lookup(name: 'Customer'),
+        ticket_id: ticket1.id,
+      )
+
+      authenticated_as(agent_user)
+      get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['history'].class).to eq(Array)
+      expect(json_response['assets'].class).to eq(Hash)
+      expect(json_response['assets']['User'][customer_user.id.to_s]).not_to be_nil
+      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).not_to be_nil
+    end
   end
 
   describe 'stats' do

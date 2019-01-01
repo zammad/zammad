@@ -83,34 +83,34 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     groups = Group.all
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
-      login: 'notification-settings-agent1@example.com',
-      firstname: 'Notification<b>xxx</b>',
-      lastname: 'Agent1',
-      email: 'notification-settings-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+    agent1 = User.create!(
+      login:         'notification-settings-agent1@example.com',
+      firstname:     'Notification<b>xxx</b>',
+      lastname:      'Agent1',
+      email:         'notification-settings-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
-    agent2 = User.create_or_update(
-      login: 'notification-settings-agent2@example.com',
-      firstname: 'Notification<b>xxx</b>',
-      lastname: 'Agent2',
-      email: 'notification-settings-agent2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+    agent2 = User.create!(
+      login:         'notification-settings-agent2@example.com',
+      firstname:     'Notification<b>xxx</b>',
+      lastname:      'Agent2',
+      email:         'notification-settings-agent2@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
-    group_notification_setting = Group.create_or_update(
-      name: 'NotificationSetting',
+    group_notification_setting = Group.create!(
+      name:          'NotificationSetting',
       updated_by_id: 1,
       created_by_id: 1,
     )

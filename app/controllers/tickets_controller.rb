@@ -294,10 +294,7 @@ class TicketsController < ApplicationController
     access!(ticket, 'read')
 
     # get history of ticket
-    history = ticket.history_get(true)
-
-    # return result
-    render json: history
+    render json: ticket.history_get(true)
   end
 
   # GET /api/v1/ticket_related/1

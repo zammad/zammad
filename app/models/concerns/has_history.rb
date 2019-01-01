@@ -204,12 +204,14 @@ returns
 =end
 
   def history_get(fulldata = false)
+    relation_object = self.class.instance_variable_get(:@history_relation_object) || nil
+
     if !fulldata
-      return History.list(self.class.name, self['id'])
+      return History.list(self.class.name, self['id'], relation_object)
     end
 
     # get related objects
-    history = History.list(self.class.name, self['id'], nil, true)
+    history = History.list(self.class.name, self['id'], relation_object, true)
     history[:list].each do |item|
       record = Kernel.const_get(item['object']).find(item['o_id'])
 
@@ -242,5 +244,21 @@ end
     def history_attributes_ignored(*attributes)
       @history_attributes_ignored = attributes
     end
+
+=begin
+
+serve methode to ignore model attributes in historization
+
+class Model < ApplicationModel
+  include HasHistory
+  history_relation_object 'Some::Relation::Object'
+end
+
+=end
+
+    def history_relation_object(attribute)
+      @history_relation_object = attribute
+    end
+
   end
 end

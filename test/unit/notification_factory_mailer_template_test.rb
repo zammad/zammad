@@ -8,32 +8,32 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
-      login: 'notification-template-agent1@example.com',
-      firstname: 'Notification<b>xxx</b>',
-      lastname: 'Agent1<b>yyy</b>',
-      email: 'notification-template-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+    agent1 = User.create!(
+      login:         'notification-template-agent1@example.com',
+      firstname:     'Notification<b>xxx</b>',
+      lastname:      'Agent1<b>yyy</b>',
+      email:         'notification-template-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'de-de',
       },
       updated_by_id: 1,
       created_by_id: 1,
     )
 
-    agent_current_user = User.create_or_update(
-      login: 'notification-template-current_user@example.com',
-      firstname: 'Notification Current',
-      lastname: 'User',
-      email: 'notification-template-current_user@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      preferences: {
+    agent_current_user = User.create!(
+      login:         'notification-template-current_user@example.com',
+      firstname:     'Notification Current',
+      lastname:      'User',
+      email:         'notification-template-current_user@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      preferences:   {
         locale: 'de-de',
       },
       updated_by_id: 1,

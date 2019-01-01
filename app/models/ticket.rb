@@ -53,6 +53,8 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
+  history_relation_object 'Ticket::Article'
+
   belongs_to    :group
   belongs_to    :organization
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
@@ -888,7 +890,7 @@ perform changes on ticket
         next if value['value'].blank?
         next if value['value'] != 'delete'
 
-        logger.debug { "Deleted ticket from #{perform_origin} #{perform.inspect} Ticket.find(#{id})" }
+        logger.info { "Deleted ticket from #{perform_origin} #{perform.inspect} Ticket.find(#{id})" }
         destroy!
         next
       end
@@ -1166,27 +1168,6 @@ result
 
   def articles
     Ticket::Article.where(ticket_id: id).order(:created_at, :id)
-  end
-
-  def history_get(fulldata = false)
-    list = History.list(self.class.name, self['id'], 'Ticket::Article')
-    return list if !fulldata
-
-    # get related objects
-    assets = {}
-    list.each do |item|
-      record = Kernel.const_get(item['object']).find(item['o_id'])
-      assets = record.assets(assets)
-
-      if item['related_object']
-        record = Kernel.const_get(item['related_object']).find( item['related_o_id'])
-        assets = record.assets(assets)
-      end
-    end
-    {
-      history: list,
-      assets: assets,
-    }
   end
 
   private

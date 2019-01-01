@@ -210,7 +210,7 @@ retunes
 =end
 
   def self.already_sent?(ticket, recipient, type)
-    result = ticket.history_get()
+    result = ticket.history_get
     count  = 0
     result.each do |item|
       next if item['type'] != 'notification'

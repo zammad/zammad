@@ -452,6 +452,22 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
 
     end
 
+    it 'does organization history' do
+      organization1 = create(
+        :organization,
+        name: 'some org',
+      )
+
+      authenticated_as(agent_user)
+      get "/api/v1/organizations/history/#{organization1.id}", params: {}, as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['history'].class).to eq(Array)
+      expect(json_response['assets'].class).to eq(Hash)
+      expect(json_response['assets']['Ticket']).to be_nil
+      expect(json_response['assets']['Organization'][organization1.id.to_s]).not_to be_nil
+    end
+
     it 'does csv example - customer no access' do
       authenticated_as(customer_user)
       get '/api/v1/organizations/import_example', params: {}, as: :json
