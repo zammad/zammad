@@ -1,7 +1,6 @@
 module Import
   module OTRS
     module Diff
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def diff_worker

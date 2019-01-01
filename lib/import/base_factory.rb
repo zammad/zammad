@@ -1,7 +1,5 @@
 module Import
   module BaseFactory
-
-    # rubocop:disable Style/ModuleFunction
     extend self
 
     def import_action(records, *args)

@@ -10,6 +10,7 @@ AllCops:
     - 'bin/rake'
     - 'bin/spring'
     - 'db/schema.rb'
+    - 'vendor/**/*'
 
 Rails:
   Enabled: true

@@ -5,8 +5,6 @@ module Import
     #   @return [Number] the sleep time between the request retries
     module Requester
       extend Import::Helper
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       attr_accessor :retry_sleep

@@ -1,7 +1,6 @@
 module Import
   module OTRS
     module ImportStats
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def current_state

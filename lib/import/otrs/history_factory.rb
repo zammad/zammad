@@ -2,8 +2,6 @@ module Import
   module OTRS
     module HistoryFactory
       extend Import::Factory
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def skip?(record, *_args)

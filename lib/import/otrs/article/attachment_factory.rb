@@ -3,8 +3,6 @@ module Import
     class Article
       module AttachmentFactory
         extend Import::Helper
-
-        # rubocop:disable Style/ModuleFunction
         extend self
 
         def import(args)

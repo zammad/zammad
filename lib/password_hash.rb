@@ -3,7 +3,7 @@
 module PasswordHash
   include ApplicationLib
 
-  extend self # rubocop:disable Style/ModuleFunction
+  extend self
 
   def crypt(password)
     argon2.create(password)

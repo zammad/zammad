@@ -1,8 +1,6 @@
 module Import
   module OTRS
     module SysConfigFactory
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def import(settings, *_args)

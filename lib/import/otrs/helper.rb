@@ -1,7 +1,6 @@
 module Import
   module OTRS
     module Helper
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       private

@@ -3,8 +3,6 @@ module Import
     module DynamicFieldFactory
       extend Import::Factory
       extend Import::Helper
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def skip?(record, *_args)
