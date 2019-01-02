@@ -62,5 +62,9 @@ Daemons.run_proc('scheduler', daemon_options) do
     Rails.logger.info 'Scheduler stopped.'
   end
 
-  Scheduler.threads
+  begin
+    Scheduler.threads
+  rescue Interrupt
+    nil
+  end
 end
