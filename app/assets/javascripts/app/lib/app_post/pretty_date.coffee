@@ -36,7 +36,7 @@ class App.PrettyDate
     if type is 'timestamp'
       string = App.i18n.translateTimestamp(time)
       if escalation
-        string = "<span #{style}>#{string}</b>"
+        string = "<span #{style}>#{string}</span>"
       return string
 
     if type is 'absolute' && (direction is 'past' || direction is 'future')
@@ -59,7 +59,7 @@ class App.PrettyDate
       else
         string = "#{App.i18n.translateInline(weekday)} #{App.i18n.translateTimestamp(time)}"
       if escalation
-        string = "<span #{style}>#{string}</b>"
+        string = "<span #{style}>#{string}</span>"
       return string
 
     if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 7 )
@@ -86,7 +86,7 @@ class App.PrettyDate
         else
           string = App.i18n.translateInline('in %s', string)
         if escalation
-          string = "<span #{style}>#{string}</b>"
+          string = "<span #{style}>#{string}</span>"
         return string
 
     # hours
@@ -110,7 +110,7 @@ class App.PrettyDate
         else
           string = App.i18n.translateInline('in %s', string)
         if escalation
-          string = "<span #{style}>#{string}</b>"
+          string = "<span #{style}>#{string}</span>"
         return string
 
     # minutes
@@ -130,7 +130,7 @@ class App.PrettyDate
     else
       string = App.i18n.translateInline('in %s', string)
     if escalation
-      string = "<span #{style}>#{string}</b>"
+      string = "<span #{style}>#{string}</span>"
     return string
 
   @s: (num, digits) ->
