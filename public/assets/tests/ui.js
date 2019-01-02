@@ -348,9 +348,9 @@ test("check pretty date", function() {
     if (diff < (60 * 60 * 24 * 6))
       string = weekday + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0':'') + date.getMinutes()
     else if (current.getYear() == date.getYear())
-       string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + (H < 10 ? '0':'') + H + ":" + (M < 10 ? '0':'') + M
+       string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + H + ":" + (M < 10 ? '0':'') + M
     else
-       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + (H < 10 ? '0':'') + H + ":" + (M < 10 ? '0':'') + M
+       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + H + ":" + (M < 10 ? '0':'') + M
     return string;
   }
 
