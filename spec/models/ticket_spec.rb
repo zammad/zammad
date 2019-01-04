@@ -65,6 +65,13 @@ RSpec.describe Ticket do
 
   end
 
+  describe '.create' do
+    it 'handles NULL byte in title' do
+      expect(create(:ticket, title: "some title \u0000 123"))
+        .to be_persisted
+    end
+  end
+
   describe '#destroy' do
 
     it 'deletes all related objects before destroy' do

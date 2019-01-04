@@ -5,6 +5,7 @@ FactoryBot.define do
       sender_name 'Customer'
     end
 
+    ticket
     from 'factory-customer-1@example.com'
     to 'factory-customer-1@example.com'
     subject 'factory article'

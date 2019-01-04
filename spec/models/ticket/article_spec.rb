@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Ticket::Article do
+  describe '.create' do
+    it 'handles NULL byte in subject or body' do
+      expect(create(:ticket_article, subject: "com test 1\u0000", body: "some\u0000message 123"))
+        .to be_persisted
+    end
+  end
+
   describe 'hooks on creation' do
     context 'of outgoing article' do
       context 'over Twitter' do
