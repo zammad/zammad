@@ -220,4 +220,52 @@ FactoryBot.define do
       }
     end
   end
+
+  factory :required_screen, class: Hash do
+    create_middle do
+      {
+        'ticket.customer'    => {
+          shown:      true,
+          required:   true,
+          item_class: 'column'
+        },
+        'ticket.agent'       => {
+          shown:      true,
+          required:   true,
+          item_class: 'column'
+        },
+        'admin.organization' => {
+          shown:    true,
+          required: true,
+        },
+        'admin.group'        => {
+          shown:      true,
+          required:   true,
+          item_class: 'column'
+        },
+      }
+    end
+
+    edit          do
+      {
+        'ticket.customer'    => {
+          shown:    true,
+          required: true
+        },
+        'ticket.agent'       => {
+          shown:    true,
+          required: true
+        },
+        'admin.organization' => {
+          shown:    true,
+          required: true,
+        },
+        'admin.group'        => {
+          shown:      true,
+          required:   true,
+          item_class: 'column'
+        },
+      }
+    end
+  end
 end

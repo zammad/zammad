@@ -807,7 +807,13 @@ class App.TicketZoom extends App.Controller
     # stop autosave
     @autosaveStop()
 
-    # validate ticket
+    # validate ticket form using HTML5 validity check
+    if !@$('.edit').parent().get(0).reportValidity()
+      @submitEnable(e)
+      @autosaveStart()
+      return
+
+    # validate ticket by model
     errors = ticket.validate(
       screen: 'edit'
     )

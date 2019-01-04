@@ -125,6 +125,35 @@ module CommonActions
   def expect_current_route(route, **options)
     expect(page).to have_current_route(route, **options)
   end
+
+  # Create and migrate an object manager attribute and verify that it exists. Returns the newly attribute.
+  #
+  # Create a select attribute:
+  # @example
+  #  attribute = setup_attribute :object_manager_attribute_select
+  #
+  # Create a required text attribute:
+  # @example
+  #  attribute = setup_attribute :object_manager_attribute_text,
+  #                               screens: attributes_for(:required_screen)
+  #
+  # Create a date attribute with custom parameters:
+  # @example
+  #  attribute = setup_attribute :object_manager_attribute_date,
+  #                              data_option: {
+  #                                'future' => true,
+  #                                'past'   => false,
+  #                                'diff'   => 24,
+  #                                'null'   => true,
+  #                              }
+  #
+  # return [attribute]
+  def create_attribute(attribute_name, attribute_parameters = {})
+    attribute = create(attribute_name, attribute_parameters)
+    ObjectManager::Attribute.migration_execute
+    page.driver.browser.navigate.refresh
+    attribute
+  end
 end
 
 RSpec.configure do |config|
