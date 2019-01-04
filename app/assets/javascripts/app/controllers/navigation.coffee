@@ -16,6 +16,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     'submit form.search-holder': 'preventDefault'
     'dblclick form.search-holder .icon-magnifier': 'openExtendedSearch'
     'focus #global-search': 'searchFocus'
+    'blur #global-search': 'searchBlur'
     'keyup #global-search': 'listNavigate'
     'click .js-global-search-result': 'emptyAndCloseDelayed'
     'click .js-details-link': 'openExtendedSearch'
@@ -207,6 +208,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.addClass('focused')
     @selectAll(e)
 
+  searchBlur: (e) =>
+
+    # delay to be able to "click/execute" x if query is ''
+    update = =>
+      if @searchInput.val().trim() is ''
+        @emptyAndClose()
+    @delay(update, 100, 'removeFocused')
+
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
       @emptyAndClose()
@@ -285,7 +294,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.removeClass('focused filled open no-match loading')
     @globalSearch.close()
     @delayedRemoveAnyPopover()
-    @searchInput.blur()
 
   search: =>
     query = @searchInput.val().trim()
