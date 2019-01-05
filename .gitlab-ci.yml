@@ -1,4 +1,4 @@
-image: registry.znuny.com/docker/zammad-application:latest
+image: registry.znuny.com/docker/zammad-ruby:2.4.4
 
 # Global variables added to the ENV of each job
 variables:
@@ -47,11 +47,18 @@ variables:
     - name: registry.znuny.com/docker/zammad-postgresql:latest
       alias: postgresql
 
-# Initialize env
-before_script:
-  - test ${CI_JOB_STAGE} != 'pre' && bundle install -j $(nproc)
-  - test ${CI_JOB_STAGE} != 'pre' && ruby script/build/database_config.rb
+# Cache gems in between jobs and pipelines
+cache:
+  key: "ruby24"
+  paths:
+    - vendor/ruby
 
+# Initialize application env
+before_script:
+  - bundle install -j $(nproc) --path vendor
+  - bundle exec ruby script/build/database_config.rb
+
+# Stages
 stages:
   - pre
   - test
@@ -64,11 +71,13 @@ stages:
 .pre_stage_template: &pre_stage
   <<: *docker_env
   stage: pre
+  before_script:
+    - '' # disable before_script for pre "non-application" env
 
 pre:rubocop:
   <<: *pre_stage
   script:
-    - bundle install -j $(nproc)
+    - bundle install -j $(nproc) --path vendor
     - bundle exec rubocop
 
 pre:coffeelint:
@@ -99,7 +108,7 @@ pre:github:
   variables:
     RAILS_ENV: "test"
   script:
-    - rake zammad:db:init
+    - bundle exec rake zammad:db:init
     - bundle exec rspec -t ~type:system
 
 test:rspec:mysql:
@@ -119,10 +128,10 @@ test:rspec:postgresql:
   variables:
     RAILS_ENV: "test"
   script:
-    - rake zammad:db:init
-    - rake test:units
-    - ruby -I test/ test/integration/object_manager_test.rb
-    - ruby -I test/ test/integration/package_test.rb
+    - bundle exec rake zammad:db:init
+    - bundle exec rake test:units
+    - bundle exec ruby -I test/ test/integration/object_manager_test.rb
+    - bundle exec ruby -I test/ test/integration/package_test.rb
 
 test:unit:mysql:
   stage: test
@@ -146,48 +155,48 @@ test:unit:postgresql:
 test:integration:email_helper_deliver:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/email_helper_test.rb
-    - ruby -I test/ test/integration/email_deliver_test.rb
-    - ruby -I test/ test/integration/email_keep_on_server_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/email_helper_test.rb
+    - bundle exec ruby -I test/ test/integration/email_deliver_test.rb
+    - bundle exec ruby -I test/ test/integration/email_keep_on_server_test.rb
 
 test:integration:facebook:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:init
-    - ruby -I test/ test/integration/facebook_test.rb
+    - bundle exec rake zammad:db:init
+    - bundle exec ruby -I test/ test/integration/facebook_test.rb
   allow_failure: true
 
 test:integration:geo:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/geo_calendar_test.rb
-    - ruby -I test/ test/integration/geo_location_test.rb
-    - ruby -I test/ test/integration/geo_ip_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/geo_calendar_test.rb
+    - bundle exec ruby -I test/ test/integration/geo_location_test.rb
+    - bundle exec ruby -I test/ test/integration/geo_ip_test.rb
 
 test:integration:user_agent:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/user_agent_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/user_agent_test.rb
     - export ZAMMAD_PROXY_TEST=true
-    - ruby -I test/ test/integration/user_agent_test.rb
+    - bundle exec ruby -I test/ test/integration/user_agent_test.rb
   allow_failure: true
 
 test:integration:slack:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:unseeded
+    - bundle exec rake zammad:db:unseeded
     - echo "gem 'slack-api'" >> Gemfile.local
     - bundle install -j $(nproc)
-    - ruby -I test test/integration/slack_test.rb
+    - bundle exec ruby -I test test/integration/slack_test.rb
 
 test:integration:clearbit:
   <<: *test_integration_definition
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test test/integration/clearbit_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test test/integration/clearbit_test.rb
   allow_failure: true
 
 ### Elasticsearch
@@ -200,10 +209,10 @@ test:integration:clearbit:
     ES_INDEX_RAND: "true"
     ES_URL: "http://elasticsearch:9200"
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/elasticsearch_active_test.rb
-    - ruby -I test/ test/integration/elasticsearch_test.rb
-    - ruby -I test/ test/integration/report_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/elasticsearch_active_test.rb
+    - bundle exec ruby -I test/ test/integration/elasticsearch_test.rb
+    - bundle exec ruby -I test/ test/integration/report_test.rb
     - bundle exec rspec --tag searchindex
 
 test:integration:es_mysql:
@@ -231,8 +240,8 @@ test:integration:es_postgresql:
   variables:
     RAILS_ENV: "test"
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/zendesk_import_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/zendesk_import_test.rb
   allow_failure: true
 
 test:integration:zendesk_mysql:
@@ -249,8 +258,8 @@ test:integration:zendesk_postgresql:
   <<: *base_env
   stage: test
   script:
-    - rake zammad:db:unseeded
-    - ruby -I test/ test/integration/otrs_import_test.rb
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec ruby -I test/ test/integration/otrs_import_test.rb
 
 .variables_integration_otrs_6_template: &variables_integration_otrs_6_definition
   variables:
@@ -313,8 +322,8 @@ browser:build:
   variables:
     RAILS_ENV: "production"
   script:
-    - rake zammad:db:unseeded
-    - rake assets:precompile
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec rake assets:precompile
   artifacts:
     expire_in: 1 week
     paths:
@@ -350,7 +359,7 @@ browser:build:
   <<: *base_env
   stage: browser-core
   script:
-    - rake zammad:ci:test:prepare[with_elasticsearch]
+    - bundle exec rake zammad:ci:test:prepare[with_elasticsearch]
     - bundle exec rspec --fail-fast -t type:system
 
 .variables_capybara_chrome_template: &variables_capybara_chrome_definition
@@ -387,7 +396,7 @@ test:browser:core:capybara_ff_mysql:
 
 .variables_browser_template: &variables_browser_definition
   RAILS_ENV: "production"
-  APP_RESTART_CMD: "rake zammad:ci:app:restart"
+  APP_RESTART_CMD: "bundle exec rake zammad:ci:app:restart"
 
 .test_browser_core_template: &test_browser_core_definition
   <<: *base_env
@@ -403,9 +412,9 @@ test:browser:integration:api_client_ruby:
   variables:
     <<: *variables_browser_definition
   script:
-    - RAILS_ENV=test rake db:create
+    - RAILS_ENV=test bundle exec rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
-    - rake zammad:ci:test:start
+    - bundle exec rake zammad:ci:test:start
     - git clone https://github.com/zammad/zammad-api-client-ruby.git
     - cd zammad-api-client-ruby
     - bundle install -j $(nproc)
@@ -420,8 +429,8 @@ test:browser:integration:api_client_php:
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "master@example.com"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
   script:
-    - RAILS_ENV=test rake db:create
-    - rake zammad:ci:test:start zammad:setup:auto_wizard
+    - RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
     - git clone https://github.com/zammad/zammad-api-client-php.git
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin
@@ -443,9 +452,9 @@ test:browser:integration:api_client_php:
     - if [[ $CI_JOB_NAME != test:browser:core:ff_3_* ]]; then unset MAILBOX_MANUAL2 ; fi
     - env
     - script/build/test_slice_tests.sh $TEST_SLICE
-    - RAILS_ENV=test rake db:create
-    - rake zammad:ci:test:start[with_elasticsearch]
-    - rake test:browser
+    - RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake zammad:ci:test:start[with_elasticsearch]
+    - bundle exec rake test:browser
 
 .test_browser_core_postgresql_template: &test_browser_core_postgresql_definition
   <<: *test_browser_core_definition
@@ -647,10 +656,10 @@ test:browser:core:chrome_6_postgresql:
 
 .script_integration_auto_wizard_template: &script_integration_auto_wizard_definition
   script:
-    - RAILS_ENV=test rake db:create
+    - RAILS_ENV=test bundle exec rake db:create
     - cp $AUTO_WIZARD_FILE auto_wizard.json
-    - rake zammad:ci:test:start
-    - ruby -I test/ $TEST_FILE
+    - bundle exec rake zammad:ci:test:start
+    - bundle exec ruby -I test/ $TEST_FILE
 
 .browser_core_auto_wizard_template: &browser_core_auto_wizard_definition
   <<: *test_browser_core_definition
@@ -729,9 +738,9 @@ test:browser:integration:idoit_chrome:
 .browser_integration_import_template: &browser_integration_import_definition
   <<: *test_browser_integration_definition
   script:
-    - RAILS_ENV=test rake db:create
-    - rake zammad:ci:test:start
-    - ruby -I test/ $TEST_FILE
+    - RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake zammad:ci:test:start
+    - bundle exec ruby -I test/ $TEST_FILE
 
 test:browser:integration:otrs_chrome:
   <<: *browser_integration_import_definition
