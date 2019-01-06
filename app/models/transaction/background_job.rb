@@ -27,8 +27,7 @@ class Transaction::BackgroundJob
       backend = Setting.get(setting.name)
       next if @params[:disable]&.include?(backend)
 
-      backend = Kernel.const_get(backend)
-      Observer::Transaction.execute_singel_backend(backend, @item, @params)
+      Observer::Transaction.execute_singel_backend(backend.constantize, @item, @params)
     end
   end
 

@@ -213,12 +213,12 @@ returns
     # get related objects
     history = History.list(self.class.name, self['id'], relation_object, true)
     history[:list].each do |item|
-      record = Kernel.const_get(item['object']).find(item['o_id'])
+      record = item['object'].constantize.find(item['o_id'])
 
       history[:assets] = record.assets(history[:assets])
 
       if item['related_object']
-        record = Kernel.const_get(item['related_object']).find(item['related_o_id'])
+        record = item['related_object'].constantize.find(item['related_o_id'])
         history[:assets] = record.assets(history[:assets])
       end
     end

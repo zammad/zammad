@@ -302,7 +302,7 @@ returns
     # run postmaster post filter
     filters = {}
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
-      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
+      filters[setting.name] = Setting.get(setting.name).constantize
     end
     filters.each_value do |backend|
       Rails.logger.debug { "run postmaster post filter #{backend}" }
@@ -338,7 +338,7 @@ returns
     key_short = attribute[ attribute.length - 3, attribute.length ]
     return true if key_short != '_id'
 
-    class_object = Object.const_get(class_name.to_classname)
+    class_object = class_name.to_classname.constantize
     return if !class_object
 
     class_instance = class_object.new

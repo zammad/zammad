@@ -17,9 +17,7 @@ touch references by params
 =end
 
     def touch_reference_by_params(data)
-
-      object_class = Kernel.const_get(data[:object])
-      object = object_class.lookup(id: data[:o_id])
+      object = data[:object].constantize.lookup(id: data[:o_id])
       return if !object
 
       object.touch # rubocop:disable Rails/SkipsModelValidations

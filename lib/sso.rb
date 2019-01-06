@@ -36,11 +36,7 @@ returns
     config.each do |config_item|
       next if !config_item[:adapter]
 
-      # load backend
-      backend = load_adapter( config_item[:adapter] )
-      next if !backend
-
-      user_auth = backend.check( params, config_item )
+      user_auth = config_item[:adapter].constantize.check( params, config_item )
 
       # auth not ok
       next if !user_auth

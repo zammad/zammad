@@ -223,7 +223,7 @@ returns on fail
       begin
         require_dependency "channel/driver/#{adapter.to_filename}"
 
-        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
       rescue => e
@@ -321,7 +321,7 @@ returns on fail
       begin
         require_dependency "channel/driver/#{adapter.to_filename}"
 
-        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         driver_instance.send(
           params[:options],

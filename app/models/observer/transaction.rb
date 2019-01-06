@@ -35,7 +35,7 @@ class Observer::Transaction < ActiveRecord::Observer
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 
-      sync_backends.push Kernel.const_get(backend)
+      sync_backends.push backend.constantize
     end
 
     # get uniq objects
@@ -132,7 +132,7 @@ class Observer::Transaction < ActiveRecord::Observer
       end
 
       # get current state of objects
-      object = Kernel.const_get(event[:object]).find_by(id: event[:id])
+      object = event[:object].constantize.find_by(id: event[:id])
 
       # next if object is already deleted
       next if !object

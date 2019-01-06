@@ -107,11 +107,7 @@ returns
   def self.backend_validates?(config:, user:, password:)
     return false if !config[:adapter]
 
-    # load backend
-    backend = load_adapter(config[:adapter])
-    return false if !backend
-
-    instance = backend.new(config)
+    instance = config[:adapter].constantize.new(config)
 
     instance.valid?(user, password)
   end

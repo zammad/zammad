@@ -67,7 +67,7 @@ class SearchController < ApplicationController
         items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit)
         items.each do |item|
           require_dependency item[:type].to_filename
-          local_class = Kernel.const_get(item[:type])
+          local_class = item[:type].constantize
           record = local_class.lookup(id: item[:id])
           next if !record
 

@@ -629,7 +629,7 @@ to send no browser reload event, pass false
     execute_db_count = 0
     execute_config_count = 0
     migrations.each do |attribute|
-      model = Kernel.const_get(attribute.object_lookup.name)
+      model = attribute.object_lookup.name.constantize
 
       # remove field
       if attribute.to_delete

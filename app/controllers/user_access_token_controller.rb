@@ -38,7 +38,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
     local_permissions = current_user.permissions
     local_permissions_new = {}
     local_permissions.each_key do |key|
-      keys = Object.const_get('Permission').with_parents(key)
+      keys = ::Permission.with_parents(key)
       keys.each do |local_key|
         next if local_permissions_new.key?([local_key])
 

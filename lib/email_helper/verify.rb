@@ -82,7 +82,7 @@ or
         begin
           require_dependency "channel/driver/#{adapter.to_filename}"
 
-          driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+          driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
           driver_instance = driver_class.new
           fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
         rescue => e

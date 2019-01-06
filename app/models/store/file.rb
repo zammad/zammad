@@ -29,7 +29,7 @@ do also verify of written data
           raise 'Missing storage_provider setting option'
         end
 
-        adapter = load_adapter("Store::Provider::#{adapter_name}")
+        adapter = "Store::Provider::#{adapter_name}".constantize
         adapter.add(data, sha)
         file = Store::File.create(
           provider: adapter_name,
@@ -59,8 +59,7 @@ read content of a file
 =end
 
     def content
-      adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      adapter.get(sha)
+      "Store::Provider::#{provider}".constantize.get(sha)
     end
 
 =begin
@@ -117,8 +116,8 @@ nice move to keep system responsive
 =end
 
     def self.move(source, target, delay = nil)
-      adapter_source = load_adapter("Store::Provider::#{source}")
-      adapter_target = load_adapter("Store::Provider::#{target}")
+      adapter_source = "Store::Provider::#{source}".constantize
+      adapter_target = "Store::Provider::#{target}".constantize
 
       file_ids = Store::File.all.pluck(:id)
       file_ids.each do |item_id|
@@ -146,8 +145,7 @@ nice move to keep system responsive
     private
 
     def destroy_provider
-      adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      adapter.delete(sha)
+      "Store::Provider::#{provider}".constantize.delete(sha)
     end
   end
 end

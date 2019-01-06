@@ -38,8 +38,7 @@ returns
 
         entry.gsub!(dir, '')
         entry = entry.to_classname
-        model_class = load_adapter(entry)
-        next if !model_class
+        model_class = entry.constantize
         next if !model_class.respond_to? :new
         next if !model_class.respond_to? :table_name
 
@@ -118,8 +117,7 @@ returns
     object_name = object_name.to_s
 
     # check if model exists
-    object_model = load_adapter(object_name)
-    object_model.find(object_id)
+    object_name.constantize.find(object_id)
 
     list       = all
     references = {}
@@ -248,7 +246,7 @@ returns
     # update references
     references = references(object_name, object_id_to_merge)
     references.each do |model, attributes|
-      model_object = Object.const_get(model)
+      model_object = model.constantize
 
       # collect items and attributes to update
       items_to_update = {}

@@ -6,9 +6,7 @@ module StatsStore::SearchIndex
     return if !attributes
 
     begin
-      return if !Kernel.const_get(attributes['stats_store_object'])
-
-      record = Kernel.const_get(attributes['stats_store_object']).lookup(id: o_id)
+      record = attributes['stats_store_object'].constantize.lookup(id: o_id)
       return if !record
 
       attributes['stats_store_object_ref'] = record.search_index_attribute_lookup

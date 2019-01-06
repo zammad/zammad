@@ -321,7 +321,7 @@ load channel driver and return class
     # http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
     require_dependency "channel/driver/#{adapter.to_filename}"
 
-    Object.const_get("::Channel::Driver::#{adapter.to_classname}")
+    "::Channel::Driver::#{adapter.to_classname}".constantize
   end
 
 =begin
