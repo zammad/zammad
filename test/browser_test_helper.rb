@@ -2238,10 +2238,8 @@ wait untill text in selector disabppears
       css:      '.content.active .newTicket button.js-submit',
       mute_log: true,
     )
-    screenshot(browser: instance, comment: 'ticket_create_after_submit_1')
 
     sleep 1
-    screenshot(browser: instance, comment: 'ticket_create_after_submit_2')
     9.times do
       if instance.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
         assert(true, 'ticket created')
