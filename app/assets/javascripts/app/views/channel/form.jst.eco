@@ -117,12 +117,14 @@
 
   <label class="formGroup-label"><%- @T('Preview') %></label>
 
-  <div class="browser form-demo js-browser">
-    <div class="browser-body js-browserBody">
-      <div class="browser-website centered vertical fit">
-        <div class="btn js-formBtn"><%- @T('Feedback') %></div>
-        <div class="js-formInline" style="width: 300px;"></div>
-        <script id="zammad_form_script" src="/assets/form/form.js"></script>
+  <div class="browser js-browser">
+    <div class="browser-ratio">
+      <div class="browser-body js-browserBody">
+        <div class="browser-website centered vertical fit">
+          <div class="btn js-formBtn"><%- @T('Feedback') %></div>
+          <div class="js-formInline" style="width: 300px;"></div>
+          <script id="zammad_form_script" src="/assets/form/form.js"></script>
+        </div>
       </div>
     </div>
   </div>

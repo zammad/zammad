@@ -5,7 +5,7 @@ class App.ChannelChat extends App.ControllerSubContent
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
     'submit .js-demo-head': 'onUrlSubmit'
-    'click .js-selectBrowserWidth': 'selectBrowserWidth'
+    'click .js-selectBrowserSize': 'selectBrowserSize'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
     'change .js-chatSetting input': 'toggleChatSetting'
@@ -104,8 +104,7 @@ class App.ChannelChat extends App.ControllerSubContent
   ]
 
   isOpen: true
-  browserWidth: 1280
-  browserWidthMax: 1280
+  browserSize: 'desktop'
   previewUrl: ''
   previewScale: 1
 
@@ -167,45 +166,33 @@ class App.ChannelChat extends App.ControllerSubContent
     $(window).off 'resize.chat-designer'
     @website.off('click.eyedropper')
 
-  selectBrowserWidth: (event) =>
-    tab = $(event.target).closest('[data-value]')
+  selectBrowserSize: (event) =>
+    tab = $(event.target).closest('[data-size]')
 
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
-    @browserWidth = tab.attr('data-value')
+    @browserSize = tab.attr('data-size')
     @updatePreview()
 
   updatePreview: (animate =  true) =>
-    width = parseInt @browserWidth, 10
-
     # reset zoom
     @chat
       .removeClass('is-fullscreen')
       .toggleClass('no-transition', !animate)
       .css 'transform', "translateY(#{ @getChatOffset() }px)"
-    @browser.css('width', '')
-    @website.css
-      transform: ''
-      width: ''
-      height: ''
+    @browser.attr('data-size', @browserSize)
     @previewScale = 1
 
-    return if @browserWidth is 'fit'
-
-    if width < @el.width() && width == 375
-      @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
-      @browser.css('width', "#{ width }px")
-    else
-      if @el.width() > width && width == @browserWidthMax
-        @previewScale = 1
-      else
-        @previewScale = @el.width()/width
-
-      @chat.css 'transform', "translateY(#{ @getChatOffset() * @previewScale }px) scale(#{ @previewScale })"
-      @website.css
-        transform: "scale(#{ @previewScale })"
-        width: @el.width() / @previewScale
-        height: @browserBody.height() / @previewScale
+    switch @browserSize
+      when 'mobile'
+        @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
+      when '1:1'
+        @previewScale = Math.max(1, 1280/@el.width())
+        @website.css 'transform', "scale(#{ @previewScale })"
+      when 'desktop'
+        scale = Math.min(1, @el.width()/1280) # don't use it for the previewScale (used for the color picker)
+        @website.css 'transform', ''
+        @chat.css 'transform', "translateY(#{ @getChatOffset() * scale }px) scale(#{ scale })"
 
   getChatOffset: (fullscreen) ->
     return 0 if @isOpen
@@ -296,8 +283,11 @@ class App.ChannelChat extends App.ControllerSubContent
       @eyedropper.addClass('is-active')
 
   onColorPicked: (event) =>
-    x = event.pageX - @website.offset().left
-    y = event.pageY - @website.offset().top
+    website_x = @website.position().left
+    website_y = @website.position().top
+
+    relative_x = event.pageX - @browserBody.offset().left
+    relative_y = event.pageY - @browserBody.offset().top
 
     image = new Image()
     image.src = @_screenshotSource
@@ -305,11 +295,11 @@ class App.ChannelChat extends App.ControllerSubContent
     canvas = document.createElement('canvas')
     ctx = canvas.getContext('2d')
 
-    canvas.width = image.width
-    canvas.height = image.height
+    canvas.width = @browserBody.width()
+    canvas.height = @browserBody.height()
 
-    ctx.drawImage(image, 0, 0, @previewScale * canvas.width, @previewScale * canvas.height)
-    pixels = ctx.getImageData(x, y, 1, 1).data
+    ctx.drawImage(image, website_x, website_y, @website.width() * @previewScale, @website.width() * @previewScale)
+    pixels = ctx.getImageData(relative_x, relative_y, 1, 1).data
 
     @colorField.val("rgb(#{pixels.slice(0,3).join(',')})").trigger('change')
 

@@ -10040,32 +10040,82 @@ output {
 
 .browser {
   margin: 0 0 20px;
-  border: 1px solid hsl(0,0%,90%);
-  border-radius: 5px;
   position: relative;
-  transition: 500ms;
-  width: 100%;
+  
+  &[data-size] {
+    padding-bottom: 65%; // 16:10 aspect ratio;
+    
+    .browser-ratio {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: 500ms;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .browser-body {
+      padding: 0;
+    }
+  }
+    
+  &[data-size="mobile"] .browser-ratio {
+    width: 375px;
+  }
+  
+  &-ratio {
+    border: 1px solid hsl(0,0%,90%);
+    border-radius: 5px;
+  }
+}
+
+@media screen and (min-width: #{1280 + $sidebarWidth + $navigationWidth}) {
+  // hide 1:1 button when it gets inrelevant
+  [data-size="1:1"] {
+    display: none;
+  }
+
+  .browser[data-size="mobile"] .browser-ratio {
+    width: 500px;
+  }
 }
 
 .browser-body {
+  flex: 1;
   position: relative;
   overflow: hidden;
-  height: 450px;
-  width: 100%;
+  padding: 20px;
+
+  &-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 
   .browser-website {
     position: relative;
     height: 100%;
-    transform-origin: left top;
+    transform-origin: right bottom;
+    transition: 500ms;
     overflow: hidden;
 
     &.is-picking {
       cursor: image_url("/assets/images/eyedropper.gif") 0 15, auto;
     }
-  }
 
-  img {
-    vertical-align: bottom;
+    &-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left top;
+    }
   }
 }
 
