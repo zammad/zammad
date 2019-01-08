@@ -2667,18 +2667,9 @@ wait untill text in selector disabppears
     element.send_keys(params[:number])
     sleep 3
 
-    empty_search(browser: instance)
-
-    # search by number again
-    element = instance.find_elements(css: '#global-search')[0]
-    element.click
-    element.clear
-    element.send_keys(params[:number])
-    sleep 1
-
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
-    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-name\").first().click()")
     watch_for(
       browser: instance,
       css: '.content.active .ticketZoom-header .ticket-number'
@@ -2715,7 +2706,7 @@ wait untill text in selector disabppears
 
     # open ticket
     #instance.find_element(partial_link_text: params[:title] } ).click
-    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-name\").first().click()")
     sleep 1
     title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text
     if !title.match?(/#{params[:title]}/)
@@ -2802,7 +2793,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
-    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-name\").first().click()")
     watch_for(
       browser: instance,
       css: '.content.active h1'
@@ -2838,7 +2829,7 @@ wait untill text in selector disabppears
     sleep 3
 
     #instance.find_element(partial_link_text: params[:value]).click
-    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-name\").first().click()")
     watch_for(
       browser: instance,
       css: '.content.active h1'

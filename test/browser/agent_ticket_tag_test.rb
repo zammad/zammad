@@ -103,6 +103,9 @@ class AgentTicketTagTest < TestCase
       browser: browser2,
       number:  ticket3[:number],
     )
+    empty_search(
+      browser: browser2,
+    )
 
     # set tag #1
     click(
@@ -271,6 +274,9 @@ class AgentTicketTagTest < TestCase
     ticket_open_by_search(
       browser: browser2,
       number:  ticket3[:number],
+    )
+    empty_search(
+      browser: browser2,
     )
 
     # verify tags
