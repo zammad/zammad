@@ -23,17 +23,26 @@ class App.TicketMerge extends App.ControllerModal
         @render()
     )
 
+  onShown: (e) =>
+    super
+    later = =>
+      if @tableCustomerTickets
+        @tableCustomerTickets.show()
+      if @tableRecentViewedTickets
+        @tableRecentViewedTickets.show()
+    @delay(later, 300)
+
   content: =>
     content = $( App.view('agent_ticket_merge')() )
 
-    new App.TicketList(
+    @tableCustomerTickets = new App.TicketList(
       tableId:    'ticket-merge-customer-tickets'
       el:         content.find('#ticket-merge-customer-tickets')
       ticket_ids: @ticket_ids_by_customer
       radio:      true
     )
 
-    new App.TicketList(
+    @tableRecentViewedTickets = new App.TicketList(
       tableId:    'ticket-merge-recent-tickets'
       el:         content.find('#ticket-merge-recent-tickets')
       ticket_ids: @ticket_ids_recent_viewed
