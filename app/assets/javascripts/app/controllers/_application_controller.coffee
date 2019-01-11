@@ -74,9 +74,18 @@ class App.Controller extends Spine.Controller
     App.Event.unbindLevel(@controllerId)
     App.Delay.clearLevel(@controllerId)
     App.Interval.clearLevel(@controllerId)
-    if @ajaxCalls
-      for callId in @ajaxCalls
-        App.Ajax.abort(callId)
+    @abortAjaxCalls()
+
+  abortAjaxCalls: =>
+    if !@ajaxCalls
+      return
+
+    idsToCancel = @ajaxCalls
+
+    @ajaxCalls = []
+
+    for callId in idsToCancel
+      App.Ajax.abort(callId)
 
   release: ->
     # release custom bindings after it got removed from dom
