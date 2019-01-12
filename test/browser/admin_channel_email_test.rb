@@ -72,6 +72,7 @@ class AdminChannelEmailTest < TestCase
 
       click(css: '.content.active .js-channelDelete')
       sleep 2
+      # flanky
       click(css: '.modal .js-submit')
       sleep 2
     end
