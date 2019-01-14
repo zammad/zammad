@@ -145,11 +145,12 @@ example
         end
 
         # check how many content messages we have, for notice used
-        header = message_meta['RFC822.HEADER']
-        if header && header !~ /x-zammad-ignore/i
-          content_messages += 1
-          break if content_max_check < content_messages
-        end
+        headers = parse_headers(message_meta['RFC822.HEADER'])
+        next if messages_is_verify_message?(headers)
+        next if messages_is_ignore_message?(headers)
+
+        content_messages += 1
+        break if content_max_check < content_messages
       end
       if content_messages >= content_max_check
         content_messages = message_ids.count
@@ -207,8 +208,11 @@ example
 
       message_meta = nil
       timeout(1.minute) do
-        message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
+        message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
       end
+
+      # ignore verify messages
+      next if !messages_is_too_old_verify?(message_meta, count, count_all)
 
       # ignore to big messages
       info = too_big?(message_meta, count, count_all)
@@ -282,6 +286,50 @@ returns
   end
 
   private
+
+  def messages_is_too_old_verify?(message_meta, count, count_all)
+    headers = parse_headers(message_meta.attr['RFC822.HEADER'])
+    return true if !messages_is_verify_message?(headers)
+    return true if headers['X-Zammad-Verify-Time'].blank?
+
+    begin
+      verify_time = Time.zone.parse(headers['X-Zammad-Verify-Time'])
+    rescue => e
+      Rails.logger.error e
+      return true
+    end
+    return true if verify_time < Time.zone.now - 30.minutes
+
+    Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has a verify message"
+
+    false
+  end
+
+  def messages_is_verify_message?(headers)
+    return true if headers['X-Zammad-Verify'] == 'true'
+
+    false
+  end
+
+  def messages_is_ignore_message?(headers)
+    return true if headers['X-Zammad-Ignore'] == 'true'
+
+    false
+  end
+
+  def parse_headers(string)
+    return {} if string.blank?
+
+    headers = {}
+    headers_pairs = string.split("\r\n")
+    headers_pairs.each do |pair|
+      key_value = pair.split(': ')
+      next if key_value[0].blank?
+
+      headers[key_value[0]] = key_value[1]
+    end
+    headers
+  end
 
   # rubocop:disable Metrics/ParameterLists
   def already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)

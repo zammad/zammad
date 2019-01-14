@@ -91,7 +91,7 @@ returns
         next if !mail
 
         # check how many content messages we have, for notice used
-        if !mail.match?(/x-zammad-ignore/i)
+        if !mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/)
           content_messages += 1
           break if content_max_check < content_messages
         end
@@ -112,7 +112,7 @@ returns
       mails.reverse!
 
       # check for verify message
-      mails.each do |m|
+      mails.first(2000).each do |m|
         mail = m.pop
         next if !mail
 
@@ -137,11 +137,27 @@ returns
     count         = 0
     count_fetched = 0
     notice        = ''
-    mails.each do |m|
+    mails.first(2000).each do |m|
       count += 1
       Rails.logger.info " - message #{count}/#{count_all}"
       mail = m.pop
       next if !mail
+
+      # ignore verify messages
+      if mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/)
+        if mail =~ /X-Zammad-Verify-Time:\s(.+?)\s/
+          begin
+            verify_time = Time.zone.parse($1)
+            if verify_time > Time.zone.now - 30.minutes
+              info = "  - ignore message #{count}/#{count_all} - because it's a verify message"
+              Rails.logger.info info
+              next
+            end
+          rescue => e
+            Rails.logger.error e
+          end
+        end
+      end
 
       # ignore to big messages
       max_message_size = Setting.get('postmaster_max_size').to_f
