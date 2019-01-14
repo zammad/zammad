@@ -8,11 +8,11 @@ RSpec.describe 'Authentication', type: :system do
       password: 'test',
     )
 
-    have_current_route 'dashboard'
+    expect_current_route 'dashboard'
   end
 
   scenario 'Logout' do
     logout
-    have_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 2
   end
 end

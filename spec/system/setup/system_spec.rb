@@ -54,12 +54,12 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
 
     # configure Email Notification
     expect(page).to have_css('.js-outbound h2', text: 'Email Notification')
-    have_current_route 'getting_started/email_notification'
+    expect_current_route 'getting_started/email_notification'
     click_on('Continue')
 
     # create email account
     expect(page).to have_css('.js-channel h2', text: 'Connect Channels')
-    have_current_route 'getting_started/channel'
+    expect_current_route 'getting_started/channel'
     click('.js-channel .btn.email')
 
     within('.js-intro') do
@@ -75,7 +75,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
 
     # wait for verification process to finish
     expect(page).to have_css('.js-agent h2', text: 'Invite Colleagues', wait: 2.minutes)
-    have_current_route 'getting_started/agents'
+    expect_current_route 'getting_started/agents'
 
     # invite agent1
     within('.js-agent') do
@@ -88,14 +88,14 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
     expect(page).to have_css('body', text: 'Invitation sent!')
 
     # expect to still be on the same page
-    have_current_route 'getting_started/agents'
+    expect_current_route 'getting_started/agents'
     within('.js-agent') do
       click_on('Continue')
     end
 
     # expect Dashboard of a fresh system
     expect(page).to have_css('body', text: 'My Stats')
-    have_current_route 'clues'
+    expect_current_route 'clues'
     find(:clues_close, wait: 4).in_fixed_postion.click
 
     # verify organization and fqdn

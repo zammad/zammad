@@ -13,7 +13,7 @@ RSpec.describe 'Mail accounts', type: :system do
     # wait for verification process to finish
     expect(page).to have_css('.js-agent h2', text: 'Invite Colleagues', wait: 4.minutes)
 
-    have_current_route 'getting_started/agents'
+    expect_current_route 'getting_started/agents'
   end
 
   def fill_in_credentials(account)
