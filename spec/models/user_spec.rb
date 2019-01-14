@@ -111,11 +111,9 @@ RSpec.describe User do
         before { user } # create user
 
         it 'replaces CallerId record' do
-          # rubocop:disable Layout/MultilineMethodCallIndentation
           expect { user.update(phone: new_number) }
             .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(-1)
             .and change { Cti::CallerId.where(caller_id: new_number).count }.by(1)
-          # rubocop:enable Layout/MultilineMethodCallIndentation
         end
       end
     end

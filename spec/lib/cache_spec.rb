@@ -77,11 +77,9 @@ RSpec.describe Cache do
       Cache.write('123', 'some value')
       Cache.write('456', 'some value')
 
-      # rubocop:disable Layout/MultilineMethodCallIndentation
       expect { Cache.clear }
         .to change { Cache.get('123') }.to(nil)
         .and change { Cache.get('456') }.to(nil)
-      # rubocop:enable Layout/MultilineMethodCallIndentation
     end
 
     it 'is idempotent' do

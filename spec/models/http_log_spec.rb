@@ -9,11 +9,9 @@ RSpec.describe HttpLog do
       subject.request[:content]  = 'foo'.force_encoding('ascii-8bit')
       subject.response[:content] = 'bar'.force_encoding('ascii-8bit')
 
-      # rubocop:disable Layout/MultilineMethodCallIndentation
       expect { subject.save }
         .to change { subject.request[:content].encoding.name }.from('ASCII-8BIT').to('UTF-8')
         .and change { subject.response[:content].encoding.name }.from('ASCII-8BIT').to('UTF-8')
-      # rubocop:enable Layout/MultilineMethodCallIndentation
     end
   end
 end
