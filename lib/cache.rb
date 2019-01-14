@@ -25,18 +25,14 @@ write a cache
 =end
 
   def self.write(key, data, params = {})
-    if !params[:expires_in]
-      params[:expires_in] = 7.days
-    end
+    params[:expires_in] ||= 7.days
 
     # in certain cases, caches are deleted by other thread at same
     # time, just log it
-    begin
-      Rails.cache.write(key.to_s, data, params)
-    rescue => e
-      Rails.logger.error "Can't write cache #{key}: #{e.inspect}"
-      Rails.logger.error e
-    end
+    Rails.cache.write(key.to_s, data, params)
+  rescue => e
+    Rails.logger.error "Can't write cache #{key}: #{e.inspect}"
+    Rails.logger.error e
   end
 
 =begin
@@ -60,9 +56,6 @@ clear whole cache store
 =end
 
   def self.clear
-    # workaround, set test cache before clear whole cache, Rails.cache.clear complains about not existing cache dir
-    Cache.write('test', 1)
-
     Rails.cache.clear
   end
 end
