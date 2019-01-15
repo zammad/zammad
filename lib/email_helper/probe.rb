@@ -308,10 +308,13 @@ returns on fail
                  body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
                }
              end
-      if subject
+      if subject.present?
         mail['X-Zammad-Test-Message'] = subject
       end
       mail['X-Zammad-Ignore']          = 'true'
+      mail['X-Zammad-Fqdn']            = Setting.get('fqdn')
+      mail['X-Zammad-Verify']          = 'true'
+      mail['X-Zammad-Verify-Time']     = Time.zone.now.iso8601
       mail['X-Loop']                   = 'yes'
       mail['Precedence']               = 'bulk'
       mail['Auto-Submitted']           = 'auto-generated'

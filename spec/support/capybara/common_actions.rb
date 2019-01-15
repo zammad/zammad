@@ -109,16 +109,17 @@ module CommonActions
       route = Regexp.new(Regexp.quote("/##{route}"))
     end
 
-    options.reverse_merge!(wait: 0, url: true)
+    # wait 1 sec by default because Firefox is slow
+    options.reverse_merge!(wait: 1, url: true)
 
-    have_current_path("/##{route}", **options)
+    have_current_path(route, **options)
   end
 
   # This is a convenient wrapper method around #have_current_route
   # which requires no previous `expect(page).to ` call.
   #
   # @example
-  #  expect_current_routes('login')
+  #  expect_current_route('login')
   # => checks for SPA route '/#login'
   #
   def expect_current_route(route, **options)
