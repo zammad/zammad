@@ -46,7 +46,9 @@
       <div class="action-block action-block--flex">
         <div class="horizontal">
           <h3><%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %></h3>
-          <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% if channel.preferences.editable isnt false: %>
+            <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% end %>
         </div>
         <table class="key-value">
           <tr>
@@ -89,7 +91,9 @@
       <div class="action-block action-block--flex">
         <div class="horizontal">
           <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
-          <div class="js-editOutbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% if channel.preferences.editable isnt false: %>
+            <div class="js-editOutbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% end %>
         </div>
         <table class="key-value">
         <% if channel.options.outbound && channel.options.outbound.options: %>
