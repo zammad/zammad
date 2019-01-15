@@ -9,7 +9,7 @@ class FailingTestJob < ApplicationJob
   end
 end
 
-RSpec.describe ApplicationJob, type: :job do
+RSpec.describe ApplicationJob do
 
   it 'syncs ActiveJob#executions to Delayed::Job#attempts' do
     FailingTestJob.perform_later
