@@ -86,7 +86,15 @@ RSpec.describe Cache do
       Cache.write('123', 'some value')
       Cache.clear
 
-      expect { Cache.delete('123') }.not_to raise_error
+      expect { Cache.clear }.not_to raise_error
+    end
+
+    context 'when cache directory is not present on disk' do
+      before { FileUtils.rm_rf(Rails.cache.cache_path) }
+
+      it 'does not raise an error' do
+        expect { Cache.clear }.not_to raise_error
+      end
     end
   end
 end
