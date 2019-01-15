@@ -9,12 +9,16 @@ class Role < ApplicationModel
   include Role::Assets
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
-  has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_update: :cache_update, after_update: :cache_update, before_add: :validate_agent_limit_by_permission, before_remove: :last_admin_check_by_permission
+  has_and_belongs_to_many :permissions,
+                          before_add:    %i[validate_agent_limit_by_permission validate_permissions],
+                          after_add:     :cache_update,
+                          before_remove: :last_admin_check_by_permission,
+                          after_remove:  :cache_update
   validates               :name,  presence: true
   store                   :preferences
 
-  before_create  :validate_permissions, :check_default_at_signup_permissions
-  before_update  :validate_permissions, :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
+  before_create  :check_default_at_signup_permissions
+  before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
   # ignore Users because this will lead to huge
   # results for e.g. the Customer role
@@ -150,23 +154,17 @@ returns
 
   private
 
-  def validate_permissions
-    Rails.logger.debug { "self permission: #{self.permission_ids}" }
-    return true if !self.permission_ids
+  def validate_permissions(permission)
+    Rails.logger.debug { "self permission: #{permission.id}" }
 
-    permission_ids.each do |permission_id|
-      permission = Permission.lookup(id: permission_id)
-      raise "Unable to find permission for id #{permission_id}" if !permission
-      raise "Permission #{permission.name} is disabled" if permission.preferences[:disabled] == true
-      next if !permission.preferences[:not]
+    raise "Permission #{permission.name} is disabled" if permission.preferences[:disabled]
 
-      permission.preferences[:not].each do |local_permission_name|
-        local_permission = Permission.lookup(name: local_permission_name)
-        next if !local_permission
-        raise "Permission #{permission.name} conflicts with #{local_permission.name}" if permission_ids.include?(local_permission.id)
-      end
-    end
-    true
+    permission.preferences[:not]
+              &.find { |name| name.in?(permissions.map(&:name)) }
+              &.tap { |conflict| raise "Permission #{permission} conflicts with #{conflict}" }
+
+    permissions.find { |p| p.preferences[:not]&.include?(permission.name) }
+               &.tap { |conflict| raise "Permission #{permission} conflicts with #{conflict}" }
   end
 
   def last_admin_check_by_attribute

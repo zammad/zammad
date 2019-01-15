@@ -31,4 +31,8 @@ returns
     names
   end
 
+  def to_s
+    name
+  end
+
 end
