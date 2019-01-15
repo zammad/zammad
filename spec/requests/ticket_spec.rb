@@ -2120,7 +2120,7 @@ RSpec.describe 'Ticket', type: :request do
       travel 2.minutes
       ticket3
       travel 2.minutes
-      ticket2.touch # rubocop:disable Rails/SkipsModelValidations
+      ticket2.touch
     end
 
     # https://github.com/zammad/zammad/issues/2296
