@@ -219,7 +219,7 @@ RSpec.describe Cti::CallerId do
     let(:attributes) { attributes_for(:caller_id) }
 
     it 'wraps .find_or_initialize_by (passing only five defining attributes)' do
-      expect(described_class)
+      expect(Cti::CallerId)
         .to receive(:find_or_initialize_by)
         .with(attributes.slice(:caller_id, :level, :object, :o_id, :user_id))
         .and_call_original

@@ -46,6 +46,7 @@ class CtiCallerIdTest < ActiveSupport::TestCase
       firstname:     'CallerId',
       lastname:      'Customer1',
       email:         'ticket-caller_id-customer1@example.com',
+      phone:         '+49 123 456',
       active:        true,
       updated_by_id: 1,
       created_by_id: 1,
@@ -53,84 +54,6 @@ class CtiCallerIdTest < ActiveSupport::TestCase
 
     Observer::Transaction.commit
     Scheduler.worker(true)
-  end
-
-  test '3 process - log' do
-
-    ticket1 = Ticket.create!(
-      title:         'some caller id test 1',
-      group:         Group.lookup(name: 'Users'),
-      customer:      @customer1,
-      state:         Ticket::State.lookup(name: 'new'),
-      priority:      Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: @agent1.id,
-      created_by_id: @agent1.id,
-    )
-    article1 = Ticket::Article.create!(
-      ticket_id:     ticket1.id,
-      from:          'some_sender@example.com',
-      to:            'some_recipient@example.com',
-      subject:       'some subject',
-      message_id:    'some@id',
-      body:          "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
-Fon (LIN): +49 222 6112222 Mo-Di
-Mob: +49 333 8362222",
-      internal:      false,
-      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-      type:          Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: @customer1.id,
-      created_by_id: @customer1.id,
-    )
-    assert(ticket1)
-    ticket2 = Ticket.create!(
-      title:         'some caller id test 2',
-      group:         Group.lookup(name: 'Users'),
-      customer:      @customer1,
-      state:         Ticket::State.lookup(name: 'new'),
-      priority:      Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: @agent1.id,
-      created_by_id: @agent1.id,
-    )
-    article2 = Ticket::Article.create!(
-      ticket_id:     ticket2.id,
-      from:          'some_sender@example.com',
-      to:            'some_recipient@example.com',
-      subject:       'some subject',
-      message_id:    'some@id',
-      body:          "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
-Fon (LIN): +49 222 6112222 Mo-Di
-Mob: +49 333 8362222",
-      internal:      false,
-      sender:        Ticket::Article::Sender.where(name: 'Customer').first,
-      type:          Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: @customer1.id,
-      created_by_id: @customer1.id,
-    )
-    assert(ticket2)
-
-    Cti::CallerId.rebuild
-
-    Cti::Log.process(
-      'cause'     => '',
-      'event'     => 'newCall',
-      'user'      => 'user 1',
-      'from'      => '491113661111',
-      'to'        => '4930600000000',
-      'callId'    => '4991155921769858278-1',
-      'direction' => 'in',
-    )
-
-    log = Cti::Log.log
-    assert(log[:list])
-    assert(log[:assets])
-    assert(log[:list][0])
-    assert_not(log[:list][1])
-    assert(log[:list][0].preferences)
-    assert(log[:list][0].preferences[:from])
-    assert_equal(1, log[:list][0].preferences[:from].count)
-    assert_equal(@customer1.id, log[:list][0].preferences[:from][0][:user_id])
-    assert_equal('maybe', log[:list][0].preferences[:from][0][:level])
-
   end
 
   test '4 touch caller log / don\'t touch caller log' do
