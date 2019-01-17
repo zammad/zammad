@@ -3,57 +3,52 @@ require 'rails_helper'
 RSpec.describe Cti::CallerId do
   describe '.extract_numbers' do
     context 'for strings containing arbitrary numbers (<6 digits long)' do
-      let(:input) { <<~INPUT }
-        some text
-        test 123
-      INPUT
-
       it 'returns an empty array' do
-        expect(described_class.extract_numbers(input)).to be_empty
+        expect(described_class.extract_numbers(<<~INPUT.chomp)).to be_empty
+          some text
+          test 123
+        INPUT
       end
     end
 
     context 'for strings containing a phone number with "(0)" after country code' do
-      let(:input) { <<~INPUT }
-        Lorem ipsum dolor sit amet, consectetuer +49 (0) 30 60 00 00 00-0 adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel.
-      INPUT
-
       it 'returns the number in an array, without the leading "(0)"' do
-        expect(described_class.extract_numbers(input)).to eq(['4930600000000'])
+        expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(['4930600000000'])
+          Lorem ipsum dolor sit amet, consectetuer +49 (0) 30 60 00 00 00-0
+          adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+          Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+          ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+          pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+          justo, fringilla vel.
+        INPUT
       end
     end
 
     context 'for strings containing a phone number with leading 0 (no country code)' do
-      let(:input) { <<~INPUT }
-        GS Oberalteich
-        Telefon  09422 1000
-        E-Mail:
-      INPUT
-
       it 'returns the number in an array, using default country code (49)' do
-        expect(described_class.extract_numbers(input)).to eq(['4994221000'])
+        expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(['4994221000'])
+          GS Oberalteich
+          Telefon  09422 1000
+          E-Mail:
+        INPUT
       end
     end
 
     context 'for strings containing multiple phone numbers' do
-      let(:input) { <<~INPUT }
-        Tel +41 81 288 63 93 / +41 76 346 72 14 ...
-      INPUT
-
       it 'returns all numbers in an array' do
-        expect(described_class.extract_numbers(input)).to eq(%w[41812886393 41763467214])
+        expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(%w[41812886393 41763467214])
+          Tel +41 81 288 63 93 / +41 76 346 72 14 ...
+        INPUT
       end
     end
 
     context 'for strings containing US-formatted numbers' do
-      let(:input) { <<~INPUT }
-        P: +1 (949) 431 0000
-        F: +1 (949) 431 0001
-        W: http://znuny
-      INPUT
-
       it 'returns the numbers in an array correctly' do
-        expect(described_class.extract_numbers(input)).to eq(%w[19494310000 19494310001])
+        expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(%w[19494310000 19494310001])
+          P: +1 (949) 431 0000
+          F: +1 (949) 431 0001
+          W: http://znuny
+        INPUT
       end
     end
   end
@@ -96,6 +91,106 @@ RSpec.describe Cti::CallerId do
       expect(described_class.normalize_number('(09)1234321')).to eq('4991234321')
       expect(described_class.normalize_number('+49 (0) 30 60 00 00 00-0')).to eq('4930600000000')
       expect(described_class.normalize_number('0043 (0) 30 60 00 00 00-0')).to eq('4330600000000')
+    end
+  end
+
+  describe '.lookup' do
+    context 'when given an unrecognized number' do
+      it 'returns an empty array' do
+        expect(Cti::CallerId.lookup('1')).to eq([])
+      end
+    end
+
+    context 'when given a recognized number' do
+      subject!(:caller_id) { create(:caller_id) }
+
+      it 'returns an array with the corresponding CallerId' do
+        expect(Cti::CallerId.lookup(caller_id.caller_id))
+          .to match_array([caller_id])
+      end
+
+      context 'shared by multiple CallerIds' do
+        subject!(:caller_ids) do
+          User.last(2).map { |u| create(:caller_id, caller_id: '1234567890', user: u) }
+        end
+
+        # NOTE: this only works if the CallerId records are for distinct Users.
+        # Not sure if that's necessary to the spec, though.
+        it 'returns all CallerId records with that number' do
+          expect(Cti::CallerId.lookup('1234567890')).to match_array(caller_ids)
+        end
+      end
+    end
+  end
+
+  describe '.rebuild' do
+    context 'when a User record contains a valid phone number' do
+      let!(:user) { create(:agent_user, phone: '+49 123 456') }
+
+      context 'and no corresponding CallerId exists' do
+        it 'generates a CallerId record (with #level "known")' do
+          Cti::CallerId.destroy_all  # CallerId already generated in User callback
+
+          expect { Cti::CallerId.rebuild }
+            .to change { Cti::CallerId.exists?(user_id: user.id, caller_id: '49123456', level: 'known') }
+            .to(true)
+        end
+      end
+
+      it 'does not create duplicate CallerId records' do
+        expect { Cti::CallerId.rebuild }.not_to change { Cti::CallerId.count }
+      end
+    end
+
+    context 'when no User exists for a given CallerId record' do
+      subject!(:caller_id) { create(:caller_id) }
+
+      it 'deletes the CallerId record' do
+        expect { Cti::CallerId.rebuild }
+          .to change { Cti::CallerId.exists?(caller_id.id) }.to(false)
+      end
+    end
+
+    context 'when two User records contains the same valid phone number' do
+      let!(:users) { create_list(:agent_user, 2, phone: '+49 123 456') }
+
+      it 'generates two corresponding CallerId records (with #level "known")' do
+        Cti::CallerId.destroy_all  # CallerId already generated in User callback
+
+        expect { Cti::CallerId.rebuild }
+          .to change { Cti::CallerId.exists?(user_id: users.first.id, caller_id: '49123456', level: 'known') }
+          .to(true)
+          .and change { Cti::CallerId.exists?(user_id: users.last.id, caller_id: '49123456', level: 'known') }
+          .to(true)
+      end
+    end
+
+    context 'when an Article record contains a valid phone number in its body' do
+      let!(:article) { create(:ticket_article, body: <<~BODY, sender_name: sender_name) }
+        some message
+        Fon (GEL): +49 123-456 Mi-Fr
+      BODY
+
+      context 'and comes from a customer' do
+        let(:sender_name) { 'Customer' }
+
+        it 'generates a CallerId record (with #level "maybe")' do
+          Cti::CallerId.destroy_all  # CallerId already generated in Article observer job
+
+          expect { Cti::CallerId.rebuild }
+            .to change { Cti::CallerId.exists?(user_id: article.created_by_id, caller_id: '49123456', level: 'maybe') }
+            .to(true)
+        end
+      end
+
+      context 'and comes from an Agent' do
+        let(:sender_name) { 'Agent' }
+
+        it 'does not generate a CallerId record' do
+          expect { Cti::CallerId.rebuild }
+            .not_to change { Cti::CallerId.exists?(caller_id: '49123456') }
+        end
+      end
     end
   end
 
