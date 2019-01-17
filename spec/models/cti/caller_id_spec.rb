@@ -102,22 +102,43 @@ RSpec.describe Cti::CallerId do
     end
 
     context 'when given a recognized number' do
-      subject!(:caller_id) { create(:caller_id) }
+      subject!(:caller_id) { create(:caller_id, caller_id: number) }
+      let(:number) { '1234567890' }
 
       it 'returns an array with the corresponding CallerId' do
-        expect(Cti::CallerId.lookup(caller_id.caller_id))
-          .to match_array([caller_id])
+        expect(Cti::CallerId.lookup(number)).to match_array([caller_id])
       end
 
       context 'shared by multiple CallerIds' do
-        subject!(:caller_ids) do
-          User.last(2).map { |u| create(:caller_id, caller_id: '1234567890', user: u) }
+        context '(for different users)' do
+          subject!(:caller_ids) do
+            [create(:caller_id, caller_id: number, user: User.last),
+             create(:caller_id, caller_id: number, user: User.offset(1).last)]
+          end
+
+          it 'returns all corresponding CallerId records' do
+            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids)
+          end
         end
 
-        # NOTE: this only works if the CallerId records are for distinct Users.
-        # Not sure if that's necessary to the spec, though.
-        it 'returns all CallerId records with that number' do
-          expect(Cti::CallerId.lookup('1234567890')).to match_array(caller_ids)
+        context '(for the same user)' do
+          subject!(:caller_ids) { create_list(:caller_id, 2, caller_id: number) }
+
+          it 'returns one corresponding CallerId record by MAX(id)' do
+            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids.last(1))
+          end
+        end
+
+        context '(some for the same user, some for another)' do
+          subject!(:caller_ids) do
+            [create(:caller_id, caller_id: number, user: User.last),
+             create(:caller_id, caller_id: number, user: User.last),
+             create(:caller_id, caller_id: number, user: User.offset(1).last)]
+          end
+
+          it 'returns one CallerId record per unique #user_id, by MAX(id)' do
+            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids.last(2))
+          end
         end
       end
     end
@@ -190,6 +211,40 @@ RSpec.describe Cti::CallerId do
           expect { Cti::CallerId.rebuild }
             .not_to change { Cti::CallerId.exists?(caller_id: '49123456') }
         end
+      end
+    end
+  end
+
+  describe '.maybe_add' do
+    let(:attributes) { attributes_for(:caller_id) }
+
+    it 'wraps .find_or_initialize_by (passing only five defining attributes)' do
+      expect(described_class)
+        .to receive(:find_or_initialize_by)
+        .with(attributes.slice(:caller_id, :level, :object, :o_id, :user_id))
+        .and_call_original
+
+      Cti::CallerId.maybe_add(attributes)
+    end
+
+    context 'if no matching record found' do
+      it 'adds given #comment attribute' do
+        expect { Cti::CallerId.maybe_add(attributes.merge(comment: 'foo')) }
+          .to change { Cti::CallerId.count }.by(1)
+
+        expect(Cti::CallerId.last.comment).to eq('foo')
+      end
+    end
+
+    context 'if matching record found' do
+      let(:attributes) { caller_id.attributes.symbolize_keys }
+      let(:caller_id) { create(:caller_id) }
+
+      it 'ignores given #comment attribute' do
+        expect(Cti::CallerId.maybe_add(attributes.merge(comment: 'foo')))
+          .to eq(caller_id)
+
+        expect(caller_id.comment).to be_blank
       end
     end
   end
