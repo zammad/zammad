@@ -72,6 +72,70 @@ RSpec.describe Cti::Log do
     end
   end
 
+  describe 'Callbacks -' do
+    describe 'Updating agent sessions:' do
+      before { allow(Sessions).to receive(:send_to).with(any_args) }
+
+      context 'on creation' do
+        it 'pushes "cti_list_push" event' do
+          User.with_permissions('cti.agent').each do |u|
+            expect(Sessions).to receive(:send_to).with(u.id, { event: 'cti_list_push' })
+          end
+
+          create(:cti_log)
+        end
+
+        context 'with over 60 existing Log records' do
+          before { create_list(:cti_log, 60) }
+
+          it '(always) pushes "cti_list_push" event' do
+            User.with_permissions('cti.agent').each do |u|
+              expect(Sessions).to receive(:send_to).with(u.id, { event: 'cti_list_push' })
+            end
+
+            create(:cti_log)
+          end
+        end
+      end
+
+      context 'on update' do
+        subject!(:log) { create(:cti_log) }
+
+        it 'pushes "cti_list_push" event' do
+          User.with_permissions('cti.agent').each do |u|
+            expect(Sessions).to receive(:send_to).with(u.id, { event: 'cti_list_push' })
+          end
+
+          log.touch
+        end
+
+        context 'when among the latest 60 Log records' do
+          before { create_list(:cti_log, 59) }
+
+          it 'pushes "cti_list_push" event' do
+            User.with_permissions('cti.agent').each do |u|
+              expect(Sessions).to receive(:send_to).with(u.id, { event: 'cti_list_push' })
+            end
+
+            log.touch
+          end
+        end
+
+        context 'when not among the latest 60 Log records' do
+          before { create_list(:cti_log, 60) }
+
+          it 'does NOT push "cti_list_push" event' do
+            User.with_permissions('cti.agent').each do |u|
+              expect(Sessions).not_to receive(:send_to).with(u.id, { event: 'cti_list_push' })
+            end
+
+            log.touch
+          end
+        end
+      end
+    end
+  end
+
   describe '#from_pretty' do
     context 'with complete, E164 international numbers' do
       subject(:log) { create(:cti_log, from: '4930609854180') }
