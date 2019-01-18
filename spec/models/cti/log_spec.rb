@@ -28,45 +28,102 @@ RSpec.describe Cti::Log do
   end
 
   describe '.process' do
+    let(:attributes) do
+      {
+        'cause'     => '',
+        'event'     => event,
+        'user'      => 'user 1',
+        'from'      => '49123456',
+        'to'        => '49123457',
+        'call_id'   => '1',
+        'direction' => 'in',
+      }
+    end
+
     context 'for event "newCall"' do
-      let(:attributes) do
-        {
-          'cause'     => '',
-          'event'     => 'newCall',
-          'user'      => 'user 1',
-          'from'      => '49123456',
-          'to'        => '49123457',
-          'callId'    => '1',
-          'direction' => 'in',
-        }
-      end
+      let(:event) { 'newCall' }
 
-      it 'creates a new Log record' do
-        expect { Cti::Log.process(attributes) }
-          .to change { Cti::Log.count }.by(1)
-      end
+      context 'with unrecognized "call_id"' do
+        it 'creates a new Log record (#state: "newCall", #done: false)' do
+          expect { Cti::Log.process(attributes) }
+            .to change { Cti::Log.count }.by(1)
 
-      context 'for direction "in", with a CallerId record matching the "from" number' do
-        let!(:caller_id) { create(:caller_id, caller_id: '49123456') }
-        before { attributes.merge!('direction' => 'in') }
+          expect(Cti::Log.last.attributes)
+            .to include('state' => 'newCall', 'done' => false)
+        end
 
-        it 'saves that CallerId’s attributes in the new Log’s #preferences[:from] attribute' do
-          Cti::Log.process(attributes)
+        context 'for direction "in", with a CallerId record matching the "from" number' do
+          let!(:caller_id) { create(:caller_id, caller_id: '49123456') }
+          before { attributes.merge!('direction' => 'in') }
 
-          expect(Cti::Log.last.preferences[:from].first)
-            .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
+          it 'saves that CallerId’s attributes in the new Log’s #preferences[:from] attribute' do
+            Cti::Log.process(attributes)
+
+            expect(Cti::Log.last.preferences[:from].first)
+              .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
+          end
+        end
+
+        context 'for direction "out", with a CallerId record matching the "to" number' do
+          let!(:caller_id) { create(:caller_id, caller_id: '49123457') }
+          before { attributes.merge!('direction' => 'out') }
+
+          it 'saves that CallerId’s attributes in the new Log’s #preferences[:to] attribute' do
+            Cti::Log.process(attributes)
+
+            expect(Cti::Log.last.preferences[:to].first)
+              .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
+          end
         end
       end
 
-      context 'for direction "out", with a CallerId record matching the "to" number' do
-        let!(:caller_id) { create(:caller_id, caller_id: '49123457') }
-        before { attributes.merge!('direction' => 'out') }
+      context 'with recognized "call_id"' do
+        before { create(:'cti/log', call_id: '1') }
 
-        it 'saves that CallerId’s attributes in the new Log’s #preferences[:to] attribute' do
-          Cti::Log.process(attributes)
+        it 'raises an error' do
+          expect { Cti::Log.process(attributes) }.to raise_error(/call_id \S+ already exists!/)
+        end
+      end
+    end
 
-          expect(Cti::Log.last.preferences[:to].first)
-            .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
+    context 'for event "answer"' do
+      let(:event) { 'answer' }
+
+      context 'with unrecognized "call_id"' do
+        it 'raises an error' do
+          expect { Cti::Log.process(attributes) }.to raise_error(/No such call_id/)
+        end
+      end
+
+      context 'with recognized "call_id"' do
+        context 'for Log with #state "hangup"' do
+          let(:log) { create(:'cti/log', call_id: 1, state: 'hangup', done: false) }
+
+          it 'returns early with no changes' do
+            expect { Cti::Log.process(attributes) }
+              .not_to change { log.reload }
+          end
+        end
+      end
+    end
+
+    context 'for event "hangup"' do
+      let(:event) { 'hangup' }
+
+      context 'with unrecognized "call_id"' do
+        it 'raises an error' do
+          expect { Cti::Log.process(attributes) }.to raise_error(/No such call_id/)
+        end
+      end
+
+      context 'with recognized "call_id"' do
+        context 'for Log with #state "newCall"' do
+          let(:log) { create(:'cti/log', call_id: 1, done: true) }
+
+          it 'sets attributes #state: "hangup", #done: false' do
+            expect { Cti::Log.process(attributes) }
+              .to change { log.reload.state }.to('hangup').and change { log.reload.done }.to(false)
+          end
         end
       end
     end

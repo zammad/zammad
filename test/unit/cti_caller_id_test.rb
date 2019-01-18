@@ -56,51 +56,6 @@ class CtiCallerIdTest < ActiveSupport::TestCase
     Scheduler.worker(true)
   end
 
-  test 'order of events' do
-    Cti::Log.process(
-      'cause'     => '',
-      'event'     => 'newCall',
-      'user'      => 'user 1',
-      'from'      => '491111222222',
-      'to'        => '4930600000000',
-      'callId'    => 'touch-loop-1',
-      'direction' => 'in',
-    )
-
-    last = Cti::Log.last
-    assert_equal(last.state, 'newCall')
-    assert_equal(last.done, false)
-
-    travel 2.seconds
-    Cti::Log.process(
-      'cause'     => '',
-      'event'     => 'hangup',
-      'user'      => 'user 1',
-      'from'      => '491111222222',
-      'to'        => '4930600000000',
-      'callId'    => 'touch-loop-1',
-      'direction' => 'in',
-    )
-    last.reload
-    assert_equal(last.state, 'hangup')
-    assert_equal(last.done, false)
-
-    travel 2.seconds
-    Cti::Log.process(
-      'cause'     => '',
-      'event'     => 'answer',
-      'user'      => 'user 1',
-      'from'      => '491111222222',
-      'to'        => '4930600000000',
-      'callId'    => 'touch-loop-1',
-      'direction' => 'in',
-    )
-    last.reload
-    assert_equal(last.state, 'hangup')
-    assert_equal(last.done, false)
-
-  end
-
   test 'not answered should be not marked as done' do
 
     Cti::Log.process(
