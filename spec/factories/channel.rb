@@ -8,6 +8,20 @@ FactoryBot.define do
     updated_by_id 1
     created_by_id 1
 
+    factory :email_channel do
+      area 'Email::Account'
+      options do
+        {
+          inbound:  {
+            adapter: 'null', options: {}
+          },
+          outbound: {
+            adapter: 'sendmail'
+          }
+        }
+      end
+    end
+
     factory :twitter_channel do
       transient do
         custom_options { {} }

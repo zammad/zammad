@@ -234,14 +234,22 @@ Style/NumericPredicate:
 
 Lint/AmbiguousBlockAssociation:
   Description: >-
-                 Checks for ambiguous block association with method when param passed without
-                 parentheses.
+                 Checks for ambiguous block association with method when param
+                 passed without parentheses.
   StyleGuide: '#syntax'
   Enabled: true
   Exclude:
     - "spec/support/*.rb"
     - "**/*_spec.rb"
     - "**/*_examples.rb"
+
+Layout/MultilineMethodCallIndentation:
+  Description: >-
+                 Checks the indentation of the method name part in method calls
+                 that span more than one line.
+  EnforcedStyle: indented
+  Include:
+    - "**/*_spec.rb"
 
 # Special exceptions
 
