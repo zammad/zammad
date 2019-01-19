@@ -63,7 +63,7 @@ App.Ajax.request({
 // ajax parallel
 App.Ajax.request({
   type:  'GET',
-  url:   '/tests/wait/2',
+  url:   '/tests/wait/3',
   success: function (data) {
     test( "ajax - parallel - ajax get 200 1/2", function() {
 

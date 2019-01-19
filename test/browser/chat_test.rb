@@ -591,6 +591,78 @@ class ChatTest < TestCase
     )
   end
 
+  def test_open_chat_by_button
+    chat_url = "#{browser_url}/assets/chat/znuny_open_by_button.html?port=#{ENV['WS_PORT']}"
+    agent = browser_instance
+    login(
+      browser:  agent,
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all(
+      browser: agent,
+    )
+    click(
+      browser: agent,
+      css:     'a[href="#customer_chat"]',
+    )
+    agent.find_elements(css: '.active .chat-window .js-disconnect:not(.is-hidden)').each(&:click)
+    agent.find_elements(css: '.active .chat-window .js-close').each(&:click)
+
+    customer = browser_instance
+    location(
+      browser: customer,
+      url:     chat_url,
+    )
+    watch_for(
+      browser: customer,
+      css:     '.zammad-chat',
+      timeout: 5,
+    )
+    exists_not(
+      browser: customer,
+      css:     '.zammad-chat-is-shown',
+    )
+    exists_not(
+      browser: customer,
+      css:     '.zammad-chat-is-open',
+    )
+    click(
+      browser: customer,
+      css:     '.open-zammad-chat',
+    )
+    watch_for(
+      browser: customer,
+      css:     '.zammad-chat-is-shown',
+      timeout: 4,
+    )
+    watch_for(
+      browser: customer,
+      css:     '.zammad-chat-is-open',
+      timeout: 4,
+    )
+    watch_for(
+      browser: customer,
+      css:     '.zammad-chat',
+      value:   '(waiting|warte)',
+    )
+    click(
+      browser: customer,
+      css:     '.zammad-chat-header-icon-close',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css:     '.zammad-chat-is-shown',
+      timeout: 4,
+    )
+    watch_for_disappear(
+      browser: customer,
+      css:     '.zammad-chat-is-open',
+      timeout: 4,
+    )
+  end
+
   def test_timeouts
     chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
@@ -760,6 +832,33 @@ class ChatTest < TestCase
       value:   'my name is me',
     )
 
+  end
+
+  def disable_chat
+    login(
+      browser:  agent,
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all(
+      browser: agent,
+    )
+
+    # disable chat
+    click(
+      browser: agent,
+      css:     'a[href="#manage"]',
+    )
+    click(
+      browser: agent,
+      css:     '.content.active a[href="#channels/chat"]',
+    )
+    switch(
+      browser: agent,
+      css:     '.content.active .js-chatSetting',
+      type:    'off',
+    )
   end
 
 end

@@ -43,6 +43,7 @@ class IntegrationSipgateTest < TestCase
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
 
+    # flanky
     watch_for(
       css:     '.js-phoneMenuItem .counter',
       value:   (call_counter + 1).to_s,

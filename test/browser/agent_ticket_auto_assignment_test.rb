@@ -113,6 +113,7 @@ class AgentTicketAutoAssignmentTest < TestCase
 
     # define auto assignment exception
     click(css: 'a[href="#manage"]')
+    # flanky
     click(css: '.content.active a[href="#settings/ticket"]')
     click(css: '.content.active a[href="#auto_assignment"]')
     click(css: '.content.active .js-select.js-option[title="master@example.com"]')

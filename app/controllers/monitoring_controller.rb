@@ -99,11 +99,26 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       issues.push "#{count_failed_jobs} failing background jobs"
     end
 
-    listed_failed_jobs = failed_jobs.select(:handler, :attempts).limit(10)
-    sorted_failed_jobs = listed_failed_jobs.group_by(&:name).sort_by { |_handler, entries| entries.length }.reverse.to_h
-    sorted_failed_jobs.each_with_index do |(name, jobs), index|
-      attempts = jobs.map(&:attempts).sum
-      issues.push "Failed to run background job ##{index += 1} '#{name}' #{jobs.count} time(s) with #{attempts} attempt(s)."
+    handler_attempts_map = {}
+    failed_jobs.order(:created_at).limit(10).each do |job|
+
+      job_name = if job.name == 'ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper'.freeze
+                   job.payload_object.job_data['job_class']
+                 else
+                   job.name
+                 end
+
+      handler_attempts_map[job_name] ||= {
+        count:    0,
+        attempts: 0,
+      }
+
+      handler_attempts_map[job_name][:count]    += 1
+      handler_attempts_map[job_name][:attempts] += job.attempts
+    end
+
+    Hash[handler_attempts_map.sort].each_with_index do |(job_name, job_data), index|
+      issues.push "Failed to run background job ##{index + 1} '#{job_name}' #{job_data[:count]} time(s) with #{job_data[:attempts]} attempt(s)."
     end
 
     # job count check

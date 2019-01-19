@@ -1,5 +1,7 @@
 class HtmlSanitizer
   LINKABLE_URL_SCHEMES = URI.scheme_list.keys.map(&:downcase) - ['mailto'] + ['tel']
+  PROCESSING_TIMEOUT = 10
+  UNPROCESSABLE_HTML_MSG = 'This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
 
 =begin
 
@@ -9,198 +11,202 @@ satinize html string based on whiltelist
 
 =end
 
-  def self.strict(string, external = false)
-    @fqdn = Setting.get('fqdn')
+  def self.strict(string, external = false, timeout: true)
+    Timeout.timeout(timeout ? PROCESSING_TIMEOUT : nil) do
+      @fqdn = Setting.get('fqdn')
 
-    # config
-    tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
-    tags_quote_content = Rails.configuration.html_sanitizer_tags_quote_content
-    tags_whitelist = Rails.configuration.html_sanitizer_tags_whitelist
-    attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
-    css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
-    css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
+      # config
+      tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
+      tags_quote_content = Rails.configuration.html_sanitizer_tags_quote_content
+      tags_whitelist = Rails.configuration.html_sanitizer_tags_whitelist
+      attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
+      css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
+      css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
 
-    # We whitelist yahoo_quoted because Yahoo Mail marks quoted email content using
-    # <div class='yahoo_quoted'> and we rely on this class to identify quoted messages
-    classes_whitelist = ['js-signatureMarker', 'yahoo_quoted']
-    attributes_2_css = %w[width height]
+      # We whitelist yahoo_quoted because Yahoo Mail marks quoted email content using
+      # <div class='yahoo_quoted'> and we rely on this class to identify quoted messages
+      classes_whitelist = ['js-signatureMarker', 'yahoo_quoted']
+      attributes_2_css = %w[width height]
 
-    # remove html comments
-    string.gsub!(/<!--.+?-->/m, '')
+      # remove html comments
+      string.gsub!(/<!--.+?-->/m, '')
 
-    scrubber_link = Loofah::Scrubber.new do |node|
+      scrubber_link = Loofah::Scrubber.new do |node|
 
-      # wrap plain-text URLs in <a> tags
-      if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
-        urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
-                  .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
-                  .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
+        # wrap plain-text URLs in <a> tags
+        if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
+          urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
+                    .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
+                    .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
 
-        next if urls.blank?
+          next if urls.blank?
 
-        add_link(node.content, urls, node)
-      end
+          add_link(node.content, urls, node)
+        end
 
-      # prepare links
-      if node['href']
-        href                = cleanup_target(node['href'], keep_spaces: true)
-        href_without_spaces = href.gsub(/[[:space:]]/, '')
-        if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
-          node['href']        = "http://#{node['href']}"
-          href                = node['href']
+        # prepare links
+        if node['href']
+          href                = cleanup_target(node['href'], keep_spaces: true)
           href_without_spaces = href.gsub(/[[:space:]]/, '')
+          if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
+            node['href']        = "http://#{node['href']}"
+            href                = node['href']
+            href_without_spaces = href.gsub(/[[:space:]]/, '')
+          end
+
+          next if !href_without_spaces.downcase.start_with?('http', 'ftp', '//')
+
+          node.set_attribute('href', href)
+          node.set_attribute('rel', 'nofollow noreferrer noopener')
+          node.set_attribute('target', '_blank')
         end
 
-        next if !href_without_spaces.downcase.start_with?('http', 'ftp', '//')
+        if node.name == 'a' && node['href'].blank?
+          node.replace node.children.to_s
+          Loofah::Scrubber::STOP
+        end
 
-        node.set_attribute('href', href)
-        node.set_attribute('rel', 'nofollow noreferrer noopener')
-        node.set_attribute('target', '_blank')
-      end
-
-      if node.name == 'a' && node['href'].blank?
-        node.replace node.children.to_s
-        Loofah::Scrubber::STOP
-      end
-
-      # check if href is different to text
-      if node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['title'].blank?
-          node['title'] = node['href']
+        # check if href is different to text
+        if node.name == 'a' && !url_same?(node['href'], node.text)
+          if node['title'].blank?
+            node['title'] = node['href']
+          end
         end
       end
-    end
 
-    scrubber_wipe = Loofah::Scrubber.new do |node|
+      scrubber_wipe = Loofah::Scrubber.new do |node|
 
-      # remove tags with subtree
-      if tags_remove_content.include?(node.name)
-        node.remove
-        Loofah::Scrubber::STOP
-      end
-
-      # remove tag, insert quoted content
-      if tags_quote_content.include?(node.name)
-        string = html_decode(node.content)
-        text = Nokogiri::XML::Text.new(string, node.document)
-        node.add_next_sibling(text)
-        node.remove
-        Loofah::Scrubber::STOP
-      end
-
-      # replace tags, keep subtree
-      if !tags_whitelist.include?(node.name)
-        node.replace node.children.to_s
-        Loofah::Scrubber::STOP
-      end
-
-      # prepare src attribute
-      if node['src']
-        src = cleanup_target(node['src'])
-        if src =~ /(javascript|livescript|vbscript):/i || src.downcase.start_with?('http', 'ftp', '//')
+        # remove tags with subtree
+        if tags_remove_content.include?(node.name)
           node.remove
           Loofah::Scrubber::STOP
         end
-      end
 
-      # clean class / only use allowed classes
-      if node['class']
-        classes = node['class'].gsub(/\t|\n|\r/, '').split(' ')
-        class_new = ''
-        classes.each do |local_class|
-          next if !classes_whitelist.include?(local_class.to_s.strip)
-
-          if class_new != ''
-            class_new += ' '
-          end
-          class_new += local_class
-        end
-        if class_new != ''
-          node['class'] = class_new
-        else
-          node.delete('class')
-        end
-      end
-
-      # move style attributes to css attributes
-      attributes_2_css.each do |key|
-        next if !node[key]
-
-        if node['style'].blank?
-          node['style'] = ''
-        else
-          node['style'] += ';'
-        end
-        value = node[key]
-        node.delete(key)
-        next if value.blank?
-
-        value += 'px' if !value.match?(/%|px|em/i)
-        node['style'] += "#{key}:#{value}"
-      end
-
-      # clean style / only use allowed style properties
-      if node['style']
-        pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
-        style = ''
-        pears.each do |local_pear|
-          prop = local_pear.split(':')
-          next if !prop[0]
-
-          key = prop[0].strip
-          next if !css_properties_whitelist.include?(node.name)
-          next if !css_properties_whitelist[node.name].include?(key)
-          next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
-
-          style += "#{local_pear};"
-        end
-        node['style'] = style
-        if style == ''
-          node.delete('style')
-        end
-      end
-
-      # scan for invalid link content
-      %w[href style].each do |attribute_name|
-        next if !node[attribute_name]
-
-        href = cleanup_target(node[attribute_name])
-        next if href !~ /(javascript|livescript|vbscript):/i
-
-        node.delete(attribute_name)
-      end
-
-      # remove attributes if not whitelisted
-      node.each do |attribute, _value|
-        attribute_name = attribute.downcase
-        next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
-
-        node.delete(attribute)
-      end
-
-      # remove mailto links
-      if node['href']
-        href = cleanup_target(node['href'])
-        if href =~ /mailto:(.*)$/i
-          text = Nokogiri::XML::Text.new($1, node.document)
+        # remove tag, insert quoted content
+        if tags_quote_content.include?(node.name)
+          string = html_decode(node.content)
+          text = Nokogiri::XML::Text.new(string, node.document)
           node.add_next_sibling(text)
           node.remove
           Loofah::Scrubber::STOP
         end
-      end
-    end
 
-    new_string = ''
-    done = true
-    while done
-      new_string = Loofah.fragment(string).scrub!(scrubber_wipe).to_s
-      if string == new_string
-        done = false
-      end
-      string = new_string
-    end
+        # replace tags, keep subtree
+        if !tags_whitelist.include?(node.name)
+          node.replace node.children.to_s
+          Loofah::Scrubber::STOP
+        end
 
-    Loofah.fragment(string).scrub!(scrubber_link).to_s
+        # prepare src attribute
+        if node['src']
+          src = cleanup_target(node['src'])
+          if src =~ /(javascript|livescript|vbscript):/i || src.downcase.start_with?('http', 'ftp', '//')
+            node.remove
+            Loofah::Scrubber::STOP
+          end
+        end
+
+        # clean class / only use allowed classes
+        if node['class']
+          classes = node['class'].gsub(/\t|\n|\r/, '').split(' ')
+          class_new = ''
+          classes.each do |local_class|
+            next if !classes_whitelist.include?(local_class.to_s.strip)
+
+            if class_new != ''
+              class_new += ' '
+            end
+            class_new += local_class
+          end
+          if class_new != ''
+            node['class'] = class_new
+          else
+            node.delete('class')
+          end
+        end
+
+        # move style attributes to css attributes
+        attributes_2_css.each do |key|
+          next if !node[key]
+
+          if node['style'].blank?
+            node['style'] = ''
+          else
+            node['style'] += ';'
+          end
+          value = node[key]
+          node.delete(key)
+          next if value.blank?
+
+          value += 'px' if !value.match?(/%|px|em/i)
+          node['style'] += "#{key}:#{value}"
+        end
+
+        # clean style / only use allowed style properties
+        if node['style']
+          pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
+          style = ''
+          pears.each do |local_pear|
+            prop = local_pear.split(':')
+            next if !prop[0]
+
+            key = prop[0].strip
+            next if !css_properties_whitelist.include?(node.name)
+            next if !css_properties_whitelist[node.name].include?(key)
+            next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
+
+            style += "#{local_pear};"
+          end
+          node['style'] = style
+          if style == ''
+            node.delete('style')
+          end
+        end
+
+        # scan for invalid link content
+        %w[href style].each do |attribute_name|
+          next if !node[attribute_name]
+
+          href = cleanup_target(node[attribute_name])
+          next if href !~ /(javascript|livescript|vbscript):/i
+
+          node.delete(attribute_name)
+        end
+
+        # remove attributes if not whitelisted
+        node.each do |attribute, _value|
+          attribute_name = attribute.downcase
+          next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
+
+          node.delete(attribute)
+        end
+
+        # remove mailto links
+        if node['href']
+          href = cleanup_target(node['href'])
+          if href =~ /mailto:(.*)$/i
+            text = Nokogiri::XML::Text.new($1, node.document)
+            node.add_next_sibling(text)
+            node.remove
+            Loofah::Scrubber::STOP
+          end
+        end
+      end
+
+      new_string = ''
+      done = true
+      while done
+        new_string = Loofah.fragment(string).scrub!(scrubber_wipe).to_s
+        if string == new_string
+          done = false
+        end
+        string = new_string
+      end
+
+      Loofah.fragment(string).scrub!(scrubber_link).to_s
+    end
+  rescue Timeout::Error => e
+    UNPROCESSABLE_HTML_MSG
   end
 
 =begin
@@ -214,21 +220,25 @@ cleanup html string:
 
 =end
 
-  def self.cleanup(string)
-    string.gsub!(/<[A-z]:[A-z]>/, '')
-    string.gsub!(%r{</[A-z]:[A-z]>}, '')
-    string.delete!("\t")
+  def self.cleanup(string, timeout: true)
+    Timeout.timeout(timeout ? PROCESSING_TIMEOUT : nil) do
+      string.gsub!(/<[A-z]:[A-z]>/, '')
+      string.gsub!(%r{</[A-z]:[A-z]>}, '')
+      string.delete!("\t")
 
-    # remove all new lines
-    string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, "\n")
+      # remove all new lines
+      string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, "\n")
 
-    # remove double multiple empty lines
-    string.gsub!(/\n\n\n+/, "\n\n")
+      # remove double multiple empty lines
+      string.gsub!(/\n\n\n+/, "\n\n")
 
-    string = cleanup_structure(string, 'pre')
-    string = cleanup_replace_tags(string)
-    string = cleanup_structure(string)
-    string
+      string = cleanup_structure(string, 'pre')
+      string = cleanup_replace_tags(string)
+      string = cleanup_structure(string)
+      string
+    end
+  rescue Timeout::Error => e
+    UNPROCESSABLE_HTML_MSG
   end
 
   def self.cleanup_replace_tags(string)

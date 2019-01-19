@@ -175,6 +175,8 @@ Rails/SkipsModelValidations:
   Enabled: true
   Exclude:
     - test/**/*
+    - "**/*_spec.rb"
+    - "**/*_examples.rb"
 
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'

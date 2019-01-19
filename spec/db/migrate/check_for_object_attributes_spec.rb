@@ -102,11 +102,8 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
           type:      'text',  #    to trigger a #save in the migration.
           maxlength: 255,
         }
-
-        # rubocop:disable Rails/SkipsModelValidations
         create(:object_manager_attribute_text)
           .update_columns(data_option: wrong)
-        # rubocop:enable Rails/SkipsModelValidations
 
         expect { migrate }.not_to raise_error
       end
@@ -117,7 +114,7 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
   context 'for interger attributes' do
     it 'missing :min and :max' do
       attribute = create(:object_manager_attribute_integer)
-      attribute.update_columns(data_option: {}) # rubocop:disable Rails/SkipsModelValidations
+      attribute.update_columns(data_option: {})
 
       expect { migrate }.not_to raise_error
 

@@ -366,14 +366,12 @@ browser:build:
   <<: *test_capybara_definition
   variables:
     RAILS_ENV: "test"
-    NO_RESET_BEFORE_SUITE: "true"
     BROWSER: "chrome"
 
 .variables_capybara_ff_template: &variables_capybara_ff_definition
   <<: *test_capybara_definition
   variables:
     RAILS_ENV: "test"
-    NO_RESET_BEFORE_SUITE: "true"
     BROWSER: "firefox"
 
 test:browser:core:capybara_chrome_postgresql:

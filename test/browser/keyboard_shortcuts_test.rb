@@ -203,6 +203,7 @@ class KeyboardShortcutsTest < TestCase
     )
     sleep 5
     shortcut(key: 'a')
+    # flanky
     watch_for(
       css:     '.js-notificationsContainer',
       value:   'Test Ticket for Shortcuts II',

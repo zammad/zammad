@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-class BackgroundJobSearchIndex
-  def initialize(object, o_id)
+class SearchIndexJob < ApplicationJob
+
+  retry_on StandardError, attempts: 20
+
+  def perform(object, o_id)
     @object = object
     @o_id   = o_id
-  end
 
-  def perform
     record = @object.constantize.lookup(id: @o_id)
     return if !exists?(record)
 
@@ -20,9 +20,4 @@ class BackgroundJobSearchIndex
     Rails.logger.info "Can't index #{@object}.lookup(id: #{@o_id}), no such record found"
     false
   end
-
-  def max_attempts
-    20
-  end
-
 end

@@ -24,7 +24,7 @@ update search index, if configured - will be executed automatically
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
 
-    Delayed::Job.enqueue(BackgroundJobSearchIndex.new(self.class.to_s, id))
+    SearchIndexJob.perform_later(self.class.to_s, id)
     true
   end
 

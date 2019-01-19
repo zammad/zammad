@@ -11,6 +11,9 @@ class ApplicationJob < ActiveJob::Base
   # until we resolve this dependency.
   around_enqueue do |job, block|
     block.call.tap do |delayed_job|
+      # skip test adapter
+      break if delayed_job.is_a?(Array)
+
       delayed_job.update!(attempts: job.executions)
     end
   end

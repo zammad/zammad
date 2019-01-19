@@ -183,4 +183,27 @@ RSpec.describe HtmlSanitizer do
       end
     end
   end
+
+  # Issue #2416 - html_sanitizer goes into loop for specific content
+  describe '.strict' do
+    context 'with strings that take a long time (>10s) to parse' do
+      before { allow(Timeout).to receive(:timeout).and_raise(Timeout::Error) }
+
+      it 'returns a timeout error message for the user' do
+        expect(HtmlSanitizer.strict(+'<img src="/some_one.png">', true))
+          .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
+      end
+    end
+  end
+
+  describe '.cleanup' do
+    context 'with strings that take a long time (>10s) to parse' do
+      before { allow(Timeout).to receive(:timeout).and_raise(Timeout::Error) }
+
+      it 'returns a timeout error message for the user' do
+        expect(HtmlSanitizer.cleanup(+'<img src="/some_one.png">'))
+          .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
+      end
+    end
+  end
 end
