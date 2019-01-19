@@ -1,9 +1,13 @@
 do($ = window.jQuery, window) ->
 
   scripts = document.getElementsByTagName('script')
+
+  # search for script to get protocol and hostname for ws connection
   myScript = scripts[scripts.length - 1]
-  scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
-  scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1]
+  scriptProtocol = window.location.protocol.replace(':', '') # set default protocol
+  if myScript && myScript.src
+    scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
+    scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1]
 
   # Define the plugin class
   class Base
@@ -875,6 +879,7 @@ do($ = window.jQuery, window) ->
 
       @isOpen = true
       @log.debug 'open widget'
+      @show()
 
       if !@sessionId
         @showLoader()
