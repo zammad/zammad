@@ -31,6 +31,11 @@ variables:
   tags:
     - docker
 
+# Workaround for blocked port 25 access on cloud provider infrastructure
+.requires_mail_port_access_template: &requires_mail_port_access
+  tags:
+    - mail
+
 .base_env_template: &base_env
   <<: *docker_env
   <<: *artifacts_error
@@ -147,6 +152,7 @@ test:unit:postgresql:
 
 test:integration:email_helper_deliver:
   <<: *test_integration_definition
+  <<: *requires_mail_port_access
   script:
     - rake zammad:db:unseeded
     - ruby -I test/ test/integration/email_helper_test.rb
@@ -456,6 +462,7 @@ test:browser:core:ff_2_mysql:
 
 test:browser:core:ff_3_mysql:
   <<: *test_browser_core_mysql_definition
+  <<: *requires_mail_port_access
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
@@ -498,6 +505,7 @@ test:browser:core:ff_2_postgresql:
 
 test:browser:core:ff_3_postgresql:
   <<: *test_browser_core_postgresql_definition
+  <<: *requires_mail_port_access
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
