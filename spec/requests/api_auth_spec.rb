@@ -2,6 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'Api Auth', type: :request do
 
+  around(:each) do |example|
+    orig = ActionController::Base.allow_forgery_protection
+
+    begin
+      ActionController::Base.allow_forgery_protection = true
+      example.run
+    ensure
+      ActionController::Base.allow_forgery_protection = orig
+    end
+  end
+
   let(:admin_user) do
     create(:admin_user)
   end
@@ -369,7 +380,10 @@ RSpec.describe 'Api Auth', type: :request do
     it 'does session auth - admin' do
       create(:admin_user, login: 'api-admin@example.com', password: 'adminpw')
 
-      post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }
+      get '/'
+      token = response.headers['CSRF-TOKEN']
+
+      post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }, headers: { 'X-CSRF-Token' => token }
       expect(response.header.key?('Access-Control-Allow-Origin')).to be_falsey
       expect(response).to have_http_status(201)
 
