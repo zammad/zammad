@@ -324,11 +324,12 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlersConfig: handlers
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      params:         params
-      noFieldset:     true
-      taskKey:        @taskKey
+      filter:                  @formMeta.filter
+      formMeta:                @formMeta
+      params:                  params
+      noFieldset:              true
+      taskKey:                 @taskKey
+      rejectNonExistentValues: true
     )
     new App.ControllerForm(
       el:             @$('.ticket-form-bottom')

@@ -1,12 +1,15 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.select extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params) ->
+  @render: (attribute, params, form = {}) ->
 
     # set multiple option
     if attribute.multiple
       attribute.multiple = 'multiple'
     else
       attribute.multiple = ''
+
+    if form.rejectNonExistentValues
+      attribute.rejectNonExistentValues = true
 
     # add deleted historical options if required
     @addDeletedOptions(attribute, params)
@@ -39,6 +42,7 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
   # 2. If attribute.value is not among current and historical options, then add the value itself as an option
   @addDeletedOptions: (attribute) ->
     return if !_.isEmpty(attribute.relation) # do not apply for attributes with relation, relations will fill options automatically
+    return if attribute.rejectNonExistentValues
     value = attribute.value
     return if !value
     return if _.isArray(value)

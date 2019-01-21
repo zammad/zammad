@@ -119,7 +119,7 @@ class App.UiElement.ApplicationUiElement
               list.push record
 
         # check if current value need to be added
-        if params[ attribute.name ]
+        if params[ attribute.name ] && !attribute.rejectNonExistentValues
           hit = false
           for value in list
             if value['id'].toString() is params[ attribute.name ].toString()

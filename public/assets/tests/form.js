@@ -1339,6 +1339,70 @@ test("object manager form 3", function() {
 
 });
 
+test("check if select value is not existing but is shown", function() {
+
+  $('#forms').append('<hr><h1>check if select value is not existing but is shown</h1><form id="form17"></form>')
+  var el = $('#form17')
+  var defaults = {
+    select1: 'NOT EXISTING',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, default: 'XY', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
+      ],
+    },
+    params: defaults,
+  });
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    select1: 'NOT EXISTING',
+  }
+  deepEqual(params, test_params)
+
+  equal('AA', el.find('[name=select1] option')[0].text)
+  equal('äöü', el.find('[name=select1] option')[1].text)
+  equal('b', el.find('[name=select1] option')[2].text)
+  equal('B', el.find('[name=select1] option')[3].text)
+  equal('NOT EXISTING', el.find('[name=select1] option')[4].text)
+  equal('XX', el.find('[name=select1] option')[5].text)
+
+});
+
+test("check if select value is not existing and is not shown", function() {
+
+  $('#forms').append('<hr><h1>check if select value is not existing and is not shown</h1><form id="form18"></form>')
+  var el = $('#form18')
+  var defaults = {
+    select1: 'NOT EXISTING',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, default: 'XY', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
+      ],
+    },
+    params: defaults,
+    rejectNonExistentValues: true,
+  });
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    select1: 'XY',
+  }
+  deepEqual(params, test_params)
+
+  equal('AA', el.find('[name=select1] option')[0].text)
+  equal('äöü', el.find('[name=select1] option')[1].text)
+  equal('b', el.find('[name=select1] option')[2].text)
+  equal('B', el.find('[name=select1] option')[3].text)
+  equal('XX', el.find('[name=select1] option')[4].text)
+
+});
+
 test("time range form 1", function() {
 
   $('#forms').append('<hr><h1>time range form 1</h1><form id="form14"></form>')
