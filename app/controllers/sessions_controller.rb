@@ -2,7 +2,7 @@
 
 class SessionsController < ApplicationController
   prepend_before_action :authentication_check, only: %i[switch_to_user list delete]
-  skip_before_action :verify_csrf_token, only: %i[create show destroy create_omniauth failure_omniauth create_sso]
+  skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth create_sso]
 
   # "Create" a login, aka "log the user in"
   def create
