@@ -664,8 +664,8 @@ RSpec.describe 'Monitoring', type: :request do
       expect(response).to have_http_status(200)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['state']).to eq('ok')
-      expect(json_response['message']).to eq('')
+      expect(json_response.key?('state')).to eq(false)
+      expect(json_response.key?('message')).to eq(false)
       expect(json_response['count']).to eq(0)
 
       Ticket.destroy_all
@@ -695,7 +695,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response['message']).to eq('')
+      expect(json_response.key?('message')).to eq(false)
       expect(json_response['count']).to eq(6)
 
       (1..6).each do |i|
@@ -724,22 +724,38 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to eq('The limit of 20 was exceeded with 22 in the last 1h')
       expect(json_response['count']).to eq(22)
 
-      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
+      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=30", params: {}, as: :json
       expect(response).to have_http_status(200)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response['message']).to eq('')
+      expect(json_response.key?('message')).to eq(false)
+      expect(json_response['count']).to eq(22)
+
+      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response.key?('state')).to eq(false)
+      expect(json_response.key?('message')).to eq(false)
       expect(json_response['count']).to eq(22)
 
       travel 2.hours
 
-      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
+      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=30", params: {}, as: :json
       expect(response).to have_http_status(200)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response['message']).to eq('')
+      expect(json_response.key?('message')).to eq(false)
+      expect(json_response['count']).to eq(0)
+
+      get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
+      expect(response).to have_http_status(200)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response.key?('state')).to eq(false)
+      expect(json_response.key?('message')).to eq(false)
       expect(json_response['count']).to eq(0)
     end
   end

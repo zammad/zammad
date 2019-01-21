@@ -322,9 +322,12 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
       { param: :min_warning, notice: 'warning', type: 'lt' },
     ]
     result = {}
+    state_param = false
     map.each do |row|
       next if params[row[:param]].blank?
       raise Exceptions::UnprocessableEntity, "#{row[:param]} need to be an integer!" if params[row[:param]].to_i.zero?
+
+      state_param = true
 
       count = Ticket.where('created_at >= ?', created_at).count
 
@@ -351,10 +354,13 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
 
     if result.blank?
       result = {
-        state:   'ok',
-        message: '',
-        count:   Ticket.where('created_at >= ?', created_at).count,
+        state: 'ok',
+        count: Ticket.where('created_at >= ?', created_at).count,
       }
+    end
+
+    if state_param == false
+      result.delete(:state)
     end
 
     render json: result
