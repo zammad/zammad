@@ -121,6 +121,72 @@ RSpec.describe User do
     end
   end
 
+  describe 'associations' do
+    describe '#organization' do
+      describe 'email domain-based assignment' do
+        subject(:user) { build(:user) }
+
+        context 'when not set on creation' do
+          before { user.assign_attributes(organization: nil) }
+
+          context 'and #email domain matches an existing Organization#domain' do
+            before { user.assign_attributes(email: 'user@example.com') }
+            let(:organization) { create(:organization, domain: 'example.com') }
+
+            context 'and Organization#domain_assignment is false (default)' do
+              before { organization.update(domain_assignment: false) }
+
+              it 'remains nil' do
+                expect { user.save }.not_to change { user.organization }
+              end
+            end
+
+            context 'and Organization#domain_assignment is true' do
+              before { organization.update(domain_assignment: true) }
+
+              it 'is automatically set to matching Organization' do
+                expect { user.save }
+                  .to change { user.organization }.to(organization)
+              end
+            end
+          end
+
+          context 'and #email domain doesn’t match any Organization#domain' do
+            before { user.assign_attributes(email: 'user@example.net') }
+            let(:organization) { create(:organization, domain: 'example.com') }
+
+            context 'and Organization#domain_assignment is true' do
+              before { organization.update(domain_assignment: true) }
+
+              it 'remains nil' do
+                expect { user.save }.not_to change { user.organization }
+              end
+            end
+          end
+        end
+
+        context 'when set on creation' do
+          before { user.assign_attributes(organization: specified_organization) }
+          let(:specified_organization) { create(:organization, domain: 'example.net') }
+
+          context 'and #email domain matches a DIFFERENT Organization#domain' do
+            before { user.assign_attributes(email: 'user@example.com') }
+            let!(:matching_organization) { create(:organization, domain: 'example.com') }
+
+            context 'and Organization#domain_assignment is true' do
+              before { matching_organization.update(domain_assignment: true) }
+
+              it 'is NOT automatically set to matching Organization' do
+                expect { user.save }
+                  .not_to change { user.organization }.from(specified_organization)
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
   describe '#max_login_failed?' do
     it { is_expected.to respond_to(:max_login_failed?) }
 
