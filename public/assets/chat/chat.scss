@@ -19,6 +19,10 @@
     border-radius: 0 !important;
     font-size: 16px;
   }
+
+  &--animate {
+    transition: transform 500ms;
+  }
 }
 .zammad-chat.zammad-chat-is-loaded {
   display: flex;
@@ -50,6 +54,7 @@
   background: hsl(203,67%,53%);
   color: white;
   line-height: 2.5em;
+  height: 2.5em;
   box-shadow:
     0 -1px rgba(0,0,0,.1),
     0 1px rgba(255,255,255,.3) inset,
@@ -231,6 +236,7 @@
   flex: 1;
   display: none;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 
   @media only screen and (max-width: 768px) {
     height: auto;

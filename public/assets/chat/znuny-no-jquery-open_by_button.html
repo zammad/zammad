@@ -87,31 +87,25 @@
 <img class="mockup" width="100%" src="znuny.png">
 <img class="mockup" width="100%" src="znuny.png">
 
-<div class="settings">
+<form class="settings" onsubmit="return false">
   <table>
     <tr>
       <td><h2>Settings</h2>
       <td>
     <tr>
       <td>
-        <input id="flat" type="checkbox" data-option="flat">
+        <input id="flat" type="checkbox" onchange="updateStyle(this.form)">
       <td>
         <label for="flat">Flat Design</label>
     <tr>
       <td>
-        <input type="color" id="color" value="#AE99D6" data-option="color">
+        <input type="color" id="color" value="#AE99D6" oninput="updateStyle(this.form)">
       <td>
         <label for="color">Color</label>
     <tr>
       <td>
-        <input type="range" id="borderRadius" value="5" min="0" max="20" data-option="borderRadius">
-        <input type="number" value="5" min="5" max="20" data-option="borderRadius">px
-      <td>
-        <label for="borderRadius">Border Radius</label>
-    <tr>
-      <td>
-        <input type="range" id="fontSize" value="12" min="11" max="18" data-option="fontSize">
-        <input type="number" value="12" min="11" max="18" data-option="fontSize">px
+        <input type="range" id="fontSize" value="12" min="11" max="18" name="fontSize" oninput="updateStyle(this.form)">
+        <output for="fontSize" id="fontSizeOutput" style="width: 20px; display: inline-block">12</output>px
       <td>
         <label for="fontSize">Font Size</label>
     <tr>
@@ -123,10 +117,9 @@
     <tr>
       <td colspan="2" class="log js-chatLogDisplay">
   </table>
-</div>
+</form>
 
-<script src="jquery-2.1.4.min.js"></script>
-<script src="chat.js"></script>
+<script src="chat-no-jquery.js"></script>
 <script>
   function getSearchParameters() {
         var prmstr = window.location.search.substr(1);
@@ -157,6 +150,7 @@
     debug: true,
     background: '#494d52',
     flat: true,
+    show: false,
     idleTimeout: 1,
     idleTimeoutIntervallCheck: 0.5,
     inactiveTimeout: 2,
@@ -165,37 +159,16 @@
     waitingListTimeoutIntervallCheck: 0.5,
   });
 
-  $('.settings :input').on({
-    change: function(){
-      switch($(this).attr('data-option')){
-        case "flat":
-          $('.zammad-chat').toggleClass('zammad-chat--flat', this.checked);
-          break;
-        case "color":
-          setScssVariable('themeColor', this.value);
-          updateStyle();
-          break;
-        case "borderRadius":
-          setScssVariable('borderRadius', this.value + "px");
-          updateStyle();
-          break;
-      }
-    },
-    input: function(){
-      switch($(this).attr('data-option')){
-        case "borderRadius":
-          $('[data-option="borderRadius"]').val(this.value);
-          setScssVariable('borderRadius', this.value + "px");
-          updateStyle();
-          break;
-        case "fontSize":
-          $('[data-option="fontSize"]').val(this.value);
-          setScssVariable('fontSize', this.value + "px");
-          updateStyle();
-          break;
-      }
+  function updateStyle(form){
+    chat.el.classList.toggle('zammad-chat--flat', form.flat.checked);
+    var surfaces = document.querySelectorAll('.zammad-chat-header, .zammad-chat-message--customer .zammad-chat-message-body, .zammad-chat-button');
+    for(var i=0; i<surfaces.length; i++){
+      surfaces[i].style.background = form.color.value;
     }
-  });
+    chat.options.background = form.color.value;
+    chat.el.style.fontSize = form.fontSize.value +'px';
+    form.fontSizeOutput.textContent = form.fontSize.value;
+  }
 </script>
 </body>
 </html>

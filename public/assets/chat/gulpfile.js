@@ -37,6 +37,23 @@ gulp.task('js', function(){
     .pipe(gulp.dest('./'));
 });
 
+
+gulp.task('no-jquery', function(){
+  var templates = gulp.src('views/*.eco')
+    .pipe(eco({namespace: 'zammadChatTemplates'}));
+
+  var js = gulp.src('chat-no-jquery.coffee')
+    .pipe(plumber())
+    .pipe(coffee({bare: true}).on('error', gutil.log));
+
+  return merge(templates, js)
+    .pipe(concat('chat-no-jquery.js'))
+    .pipe(gulp.dest('./'))
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest('./'));
+});
+
 gulp.task('default', function(){
   var cssWatcher = gulp.watch(['chat.scss'], ['css']);
   cssWatcher.on('change', function(event) {
@@ -45,6 +62,11 @@ gulp.task('default', function(){
 
   var jsWatcher = gulp.watch(['chat.coffee', 'views/*.eco'], ['js']);
   jsWatcher.on('change', function(event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });
+
+  var js2Watcher = gulp.watch(['chat-no-jquery.coffee'], ['no-jquery']);
+  js2Watcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });

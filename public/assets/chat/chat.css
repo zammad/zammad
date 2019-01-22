@@ -10,7 +10,6 @@
   border-radius: 5px 5px 0 0;
   will-change: bottom;
   display: none;
-  -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   z-index: 999; }
@@ -20,9 +19,10 @@
       width: 100%;
       border-radius: 0 !important;
       font-size: 16px; } }
+  .zammad-chat--animate {
+    transition: transform 500ms; }
 
 .zammad-chat.zammad-chat-is-loaded {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   opacity: 0; }
@@ -49,6 +49,7 @@
   background: #379ad7;
   color: white;
   line-height: 2.5em;
+  height: 2.5em;
   box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   position: relative;
   border-radius: 5px 5px 0 0;
@@ -134,28 +135,15 @@
   background: #52c782; }
 
 .zammad-chat-agent-status[data-status="connecting"]:before {
-  -webkit-animation: linear connect-fade 600ms infinite alternate;
   animation: linear connect-fade 600ms infinite alternate;
   background: #faab00; }
-
-@-webkit-keyframes connect-fade {
-  from {
-    opacity: .5;
-    -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
-  to {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1); } }
 
 @keyframes connect-fade {
   from {
     opacity: .5;
-    -webkit-transform: scale(0.6);
     transform: scale(0.6); }
   to {
     opacity: 1;
-    -webkit-transform: scale(1);
     transform: scale(1); } }
 
 .zammad-chat-modal {
@@ -169,13 +157,10 @@
   background: white;
   z-index: 1;
   padding: 20px;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center; }
   .zammad-chat-modal:empty {
@@ -196,10 +181,8 @@
 
 .zammad-scroll-hint {
   background: #f9fafa;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   border-bottom: 1px solid #e8e8e8;
@@ -217,15 +200,14 @@
   padding: 0.5em 1em;
   overflow: auto;
   background: white;
-  -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   display: none;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain; }
   @media only screen and (max-width: 768px) {
     .zammad-chat-body {
       height: auto;
-      -webkit-flex: 1;
       -ms-flex: 1;
       flex: 1; } }
 
@@ -289,41 +271,25 @@
   height: 0.55em;
   width: 0.55em;
   display: inline-block;
-  -webkit-animation: ease-in-out load-fade 600ms infinite alternate;
   animation: ease-in-out load-fade 600ms infinite alternate; }
 
 .zammad-chat-loading-circle + .zammad-chat-loading-circle {
-  -webkit-animation-delay: .13s;
   animation-delay: .13s; }
 
 .zammad-chat-loading-circle + .zammad-chat-loading-circle + .zammad-chat-loading-circle {
-  -webkit-animation-delay: .26s;
   animation-delay: .26s; }
-
-@-webkit-keyframes load-fade {
-  from {
-    opacity: .5;
-    -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
-  67% {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1); } }
 
 @keyframes load-fade {
   from {
     opacity: .5;
-    -webkit-transform: scale(0.6);
     transform: scale(0.6); }
   67% {
     opacity: 1;
-    -webkit-transform: scale(1);
     transform: scale(1); } }
 
 .zammad-chat-controls {
   overflow: hidden;
   display: none;
-  -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
   border-top: 1px solid #ededed;
@@ -335,7 +301,6 @@
   background: white; }
 
 .zammad-chat-is-open .zammad-chat-controls {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
 
@@ -356,7 +321,6 @@
   box-shadow: none;
   box-sizing: content-box;
   outline: none;
-  -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   overflow: auto; }
