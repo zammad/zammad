@@ -1,7 +1,9 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 require 'models/concerns/can_lookup_examples'
 
-RSpec.describe Ticket do
+RSpec.describe Ticket, type: :model do
+  include_examples 'ApplicationModel'
   include_examples 'CanLookup'
 
   describe '#merge_to' do

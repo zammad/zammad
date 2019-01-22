@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 
 RSpec.describe Ticket::Priority, type: :model do
+  include_examples 'ApplicationModel'
+
   describe 'Default state' do
     describe 'of whole table:' do
       it 'has exactly one default record' do

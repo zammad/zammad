@@ -1,8 +1,11 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 require 'models/concerns/has_groups_examples'
 
 RSpec.describe Role do
+  include_examples 'ApplicationModel'
   include_examples 'HasGroups', group_access_factory: :role
+
   subject(:role) { create(:role) }
 
   describe 'Default state' do

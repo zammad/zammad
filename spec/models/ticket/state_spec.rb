@@ -1,18 +1,21 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 
-RSpec.describe Ticket::State do
+RSpec.describe Ticket::State, type: :model do
+  include_examples 'ApplicationModel'
 
-  context '.by_category' do
-
+  describe '.by_category' do
     it 'looks up states by category' do
-      result = described_class.by_category(:open)
-      expect(result).to be_an(ActiveRecord::Relation)
-      expect(result).to_not be_empty
-      expect(result.first).to be_a(Ticket::State)
+      expect(described_class.by_category(:open))
+        .to be_an(ActiveRecord::Relation)
+        .and include(instance_of(Ticket::State))
     end
 
-    it 'raises RuntimeError for invalid category' do
-      expect { described_class.by_category(:invalidcategoryname) }.to raise_error(RuntimeError)
+    context 'with invalid category name' do
+      it 'raises RuntimeError' do
+        expect { described_class.by_category(:invalidcategoryname) }
+          .to raise_error(RuntimeError)
+      end
     end
   end
 end

@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 
-RSpec.describe Ticket::Article do
+RSpec.describe Ticket::Article, type: :model do
+  include_examples 'ApplicationModel'
+
   describe '.create' do
     it 'handles NULL byte in subject or body' do
       expect(create(:ticket_article, subject: "com test 1\u0000", body: "some\u0000message 123"))

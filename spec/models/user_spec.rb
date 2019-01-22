@@ -1,10 +1,12 @@
 require 'rails_helper'
+require 'models/application_model_examples'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User do
+  include_examples 'ApplicationModel'
   include_examples 'HasGroups', group_access_factory: :agent_user
   include_examples 'HasRoles', group_access_factory: :agent_user
   include_examples 'HasGroups and Permissions', group_access_no_permission_factory: :user

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :ticket_article, class: Ticket::Article do
+  factory :'ticket/article', aliases: %i[ticket_article] do
     transient do
       type_name 'email'
       sender_name 'Customer'
