@@ -6,11 +6,11 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User do
-  include_examples 'ApplicationModel'
-  include_examples 'HasGroups', group_access_factory: :agent_user
-  include_examples 'HasRoles', group_access_factory: :agent_user
-  include_examples 'HasGroups and Permissions', group_access_no_permission_factory: :user
-  include_examples 'CanLookup'
+  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'HasGroups', group_access_factory: :agent_user
+  it_behaves_like 'HasRoles', group_access_factory: :agent_user
+  it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
+  it_behaves_like 'CanLookup'
 
   subject(:user) { create(:user) }
 

@@ -5,7 +5,7 @@ RSpec.describe RoleGroup do
 
   let!(:group_relation_instance) { create(:role) }
 
-  include_examples 'HasGroupRelationDefinition'
+  it_behaves_like 'HasGroupRelationDefinition'
 
   it 'prevents roles from beeing in Group assets' do
 

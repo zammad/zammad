@@ -5,5 +5,5 @@ RSpec.describe UserGroup do
 
   let!(:group_relation_instance) { create(:agent_user) }
 
-  include_examples 'HasGroupRelationDefinition'
+  it_behaves_like 'HasGroupRelationDefinition'
 end

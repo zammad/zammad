@@ -3,8 +3,8 @@ require 'models/application_model_examples'
 require 'models/concerns/can_lookup_examples'
 
 RSpec.describe Ticket, type: :model do
-  include_examples 'ApplicationModel'
-  include_examples 'CanLookup'
+  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'CanLookup'
 
   describe '#merge_to' do
 

@@ -3,8 +3,8 @@ require 'models/concerns/can_lookup_examples'
 require 'models/concerns/has_search_index_backend_examples'
 
 RSpec.describe Organization, type: :model do
-  include_examples 'CanLookup'
-  include_examples 'HasSearchIndexBackend', indexed_factory: :organization
+  it_behaves_like 'CanLookup'
+  it_behaves_like 'HasSearchIndexBackend', indexed_factory: :organization
 
   describe '.where_or_cis' do
     it 'finds instance by querying multiple attributes case insensitive' do

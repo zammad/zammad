@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'models/application_model_examples'
 
 RSpec.describe Ticket::Article, type: :model do
-  include_examples 'ApplicationModel'
+  it_behaves_like 'ApplicationModel'
 
   describe '.create' do
     it 'handles NULL byte in subject or body' do
