@@ -359,11 +359,22 @@ browser:build:
     - name: registry.znuny.com/docker/docker-imap-devel:latest
       alias: mail
 
+## Browser core tests
+
+.variables_browser_template: &variables_browser_definition
+  RAILS_ENV: "production"
+  APP_RESTART_CMD: "bundle exec rake zammad:ci:app:restart"
+
+.test_browser_core_template: &test_browser_core_definition
+  <<: *base_env
+  stage: browser-core
+  dependencies:
+    - browser:build
+
 ## Capybara
 
 .test_capybara_template: &test_capybara_definition
-  <<: *base_env
-  stage: browser-core
+  <<: *test_browser_core_definition
   script:
     - bundle exec rake zammad:ci:test:prepare[with_elasticsearch]
     - bundle exec rspec --fail-fast -t type:system
@@ -396,17 +407,6 @@ test:browser:core:capybara_ff_mysql:
   <<: *variables_capybara_ff_definition
   <<: *services_browser_mysql_definition
 
-## Browser core tests
-
-.variables_browser_template: &variables_browser_definition
-  RAILS_ENV: "production"
-  APP_RESTART_CMD: "bundle exec rake zammad:ci:app:restart"
-
-.test_browser_core_template: &test_browser_core_definition
-  <<: *base_env
-  stage: browser-core
-  dependencies:
-    - browser:build
 
 ### API clients
 
