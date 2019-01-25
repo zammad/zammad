@@ -309,6 +309,24 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.initialQueueDelay = 10000;
 
     ZammadChat.prototype.translations = {
+      'da': {
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> med os!',
+        'Scroll down to see new messages': 'Scroll ned for at se nye beskeder',
+        'Online': 'Online',
+        'Offline': 'Offline',
+        'Connecting': 'Forbinder',
+        'Connection re-established': 'Forbindelse genoprettet',
+        'Today': 'I dag',
+        'Send': 'Send',
+        'Chat closed by %s': 'Chat lukket af %s',
+        'Compose your message...': 'Skriv en besked...',
+        'All colleagues are busy.': 'Alle kollegaer er optaget.',
+        'You are on waiting list position <strong>%s</strong>.': 'Du er i venteliste som nummer <strong>%s</strong>.',
+        'Start new conversation': 'Start en ny samtale',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da du ikke har svaret i de sidste %s minutter er din samtale med <strong>%s</strong> blevet lukket.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da du ikke har svaret i de sidste %s minutter er din samtale blevet lukket.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi beklager, det tager længere end forventet at få en ledig plads. Prøv venligst igen senere eller send os en e-mail. På forhånd tak!'
+      },
       'de': {
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!',
         'Scroll down to see new messages': 'Scrolle nach unten um neue Nachrichten zu sehen',
