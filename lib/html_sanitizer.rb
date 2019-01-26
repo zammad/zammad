@@ -401,7 +401,6 @@ cleanup html string:
                                    .delete("\t\n\r\u0000")
                                    .gsub(%r{/\*.*?\*/}, '')
                                    .gsub(/<!--.*?-->/, '')
-                                   .gsub(/\[.+?\]/, '')
 
     sanitize_attachment_disposition(cleaned_string)
   end

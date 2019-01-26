@@ -194,6 +194,13 @@ RSpec.describe HtmlSanitizer do
           .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
       end
     end
+
+    context 'with href links that contain square brackets' do
+      it 'correctly URL encodes them' do
+        expect(HtmlSanitizer.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))
+          .to eq('<a href="https://example.com/?foo=bar&amp;baz%5Bx%5D=y" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?foo=bar&amp;baz[x]=y">example</a>')
+      end
+    end
   end
 
   describe '.cleanup' do
