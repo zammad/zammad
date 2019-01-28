@@ -1,9 +1,11 @@
 require 'rails_helper'
 require 'models/application_model_examples'
+require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_groups_examples'
 
 RSpec.describe Role do
   it_behaves_like 'ApplicationModel'
+  it_behaves_like 'CanBeImported'
   it_behaves_like 'HasGroups', group_access_factory: :role
 
   subject(:role) { create(:role) }

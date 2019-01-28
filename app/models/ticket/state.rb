@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
+  include CanBeImported
   include ChecksLatestChangeObserved
 
   belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states

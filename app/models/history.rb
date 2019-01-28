@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class History < ApplicationModel
+  include CanBeImported
   include History::Assets
 
   self.table_name = 'histories'

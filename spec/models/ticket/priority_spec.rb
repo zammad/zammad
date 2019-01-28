@@ -1,8 +1,10 @@
 require 'rails_helper'
 require 'models/application_model_examples'
+require 'models/concerns/can_be_imported_examples'
 
 RSpec.describe Ticket::Priority, type: :model do
   it_behaves_like 'ApplicationModel'
+  it_behaves_like 'CanBeImported'
 
   describe 'Default state' do
     describe 'of whole table:' do

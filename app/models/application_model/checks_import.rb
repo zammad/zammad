@@ -6,13 +6,17 @@ module ApplicationModel::ChecksImport
     before_create :check_attributes_protected
   end
 
+  class_methods do
+    # Use `include CanBeImported` in a class to override this method
+    def importable?
+      false
+    end
+  end
+
   def check_attributes_protected
-
-    import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::StateType', 'Ticket::Priority', 'Group', 'User', 'Role' ]
-
     # do noting, use id as it is
     return if !Setting.get('system_init_done')
-    return if Setting.get('import_mode') && import_class_list.include?(self.class.to_s)
+    return if Setting.get('import_mode') && self.class.importable?
     return if !has_attribute?(:id)
 
     self[:id] = nil
