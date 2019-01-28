@@ -22,6 +22,7 @@ class Sequencer
                 'pending' => 'pending reminder',
                 'solved'  => 'closed',
                 'deleted' => 'removed',
+                'hold'    => 'open'
               }.freeze
             end
           end
