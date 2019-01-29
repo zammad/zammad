@@ -16,8 +16,10 @@ returns
   def self.rebuild_all
     state_list_open = Ticket::State.by_category(:open)
 
-    ticket_ids = Ticket.where(state_id: state_list_open).pluck(:id)
+    ticket_ids = Ticket.where(state_id: state_list_open).limit(20_000).pluck(:id)
     ticket_ids.each do |ticket_id|
+      next if !Ticket.exists?(ticket_id)
+
       Ticket.find(ticket_id).escalation_calculation(true)
     end
   end
