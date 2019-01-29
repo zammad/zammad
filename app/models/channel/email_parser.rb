@@ -3,6 +3,7 @@
 # encoding: utf-8
 
 class Channel::EmailParser
+  PROZESS_TIME_MAX = 180
   EMAIL_REGEX = /.+@.+/.freeze
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
@@ -106,7 +107,9 @@ returns
 
   def process(channel, msg, exception = true)
 
-    _process(channel, msg)
+    Timeout.timeout(PROZESS_TIME_MAX) do
+      _process(channel, msg)
+    end
   rescue => e
     # store unprocessable email for bug reporting
     path = Rails.root.join('tmp', 'unprocessable_mail')
