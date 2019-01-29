@@ -142,7 +142,7 @@ class App.UiElement.postmaster_match
     selector = @buildAttributeSelector(groups, attribute)
 
     # scaffold of match elements
-    item = $( App.view('generic/postmaster_match')( attribute: attribute ) )
+    item = $( App.view('generic/postmaster_match')(attribute: attribute) )
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
@@ -163,7 +163,6 @@ class App.UiElement.postmaster_match
     item.find('.js-attributeSelector select').bind('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
-
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
       @rebuildOperater(item, elementRow, key, groups, undefined, attribute)
       @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
@@ -178,8 +177,9 @@ class App.UiElement.postmaster_match
     )
 
     # build inital params
-    if !_.isEmpty(params[attribute.name])
-
+    if _.isEmpty(params[attribute.name])
+      item.find('.js-filterElement .js-attributeSelector select').trigger('change')
+    else
       selectorExists = false
       for key, meta of params[attribute.name]
         selectorExists = true
@@ -196,6 +196,8 @@ class App.UiElement.postmaster_match
         @rebuildOperater(item, elementClone, key, groups, operator, attribute)
         @buildValue(item, elementClone, key, groups, value, operator, attribute)
         elementLast.after(elementClone)
+
+      item.find('.js-attributeSelector select').trigger('change')
 
       # remove first dummy row
       if selectorExists

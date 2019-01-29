@@ -115,7 +115,7 @@ class App.UiElement.postmaster_set
     [elements, groups]
 
   @placeholder: (elementFull, attribute, params = {}, groups) ->
-    item = $( App.view('generic/postmaster_set_row')( attribute: attribute ) )
+    item = $( App.view('generic/postmaster_set_row')(attribute: attribute) )
     selector = @buildAttributeSelector(elementFull, groups, attribute, item)
     item.find('.js-attributeSelector').prepend(selector)
     item
@@ -125,7 +125,7 @@ class App.UiElement.postmaster_set
     [elements, groups] = @defaults()
 
     # scaffold of match elements
-    item = $( App.view('generic/postmaster_set')( attribute: attribute ) )
+    item = $( App.view('generic/postmaster_set')(attribute: attribute) )
 
     # add filter
     item.on('click', '.js-add', (e) =>
@@ -147,29 +147,37 @@ class App.UiElement.postmaster_set
 
     # change attribute selector
     item.on('change', '.js-attributeSelector select', (e) =>
-      key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      @rebuildAttributeSelectors(item, elementRow, key, attribute)
+      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, attribute)
       @buildOperator(item, elementRow, groupAndAttribute, elements, {},  attribute)
-      @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
+      @buildValue(item, elementRow, groupAndAttribute, groups, undefined, undefined, attribute)
     )
 
     # build inital params
     if _.isEmpty(params[attribute.name])
-      item.append(@placeholder(item, attribute, params, groups))
+      element = @placeholder(item, attribute, params, groups)
+      item.append(element)
+      groupAndAttribute = element.find('.js-attributeSelector option:selected').attr('value')
+      @rebuildAttributeSelectors(item, element, groupAndAttribute, attribute)
+      @buildOperator(item, element, groupAndAttribute, elements, {},  attribute)
+      @buildValue(item, element, groupAndAttribute, groups, undefined, undefined, attribute)
       return item
 
-    for key, meta of params[attribute.name]
-      operator = meta.operator
-      value = meta.value
+    else
+      for key, meta of params[attribute.name]
+        operator = meta.operator
+        value = meta.value
 
-      # build and append
-      element = @placeholder(item, attribute, params, groups)
-      @rebuildAttributeSelectors(item, element, key, attribute)
-      @buildValue(item, element, key, groups, value, operator, attribute)
+        # build and append
+        element = @placeholder(item, attribute, params, groups)
+        groupAndAttribute = element.find('.js-attributeSelector option:selected').attr('value')
+        @rebuildAttributeSelectors(item, element, key, attribute)
+        @buildOperator(item, element, key, elements, {},  attribute)
+        @buildValue(item, element, key, groups, value, operator, attribute)
 
-      item.append(element)
+        item.append(element)
+      item.find('.js-attributeSelector select').trigger('change')
 
     item
 

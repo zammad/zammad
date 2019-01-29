@@ -14,12 +14,13 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item = $(App.view('object_manager/attribute')(attribute: attribute))
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
-      localItem = localForm.closest('.js-data')
+      return if !localParams.data_type
       element = $(App.view("object_manager/attribute/#{localParams.data_type}")(
         attribute: attribute
         params: params
       ))
       @[localParams.data_type](element, localParams, params, attribute)
+      localItem = localForm.closest('.js-data')
       localItem.find('.js-dataMap').html(element)
       localItem.find('.js-dataScreens').html(@dataScreens(attribute, localParams, params))
 
@@ -42,6 +43,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
     ]
     dataType = new App.ControllerForm(
+      el: item.find('.js-dataType')
       model:
         configure_attributes: configureAttributes
       noFieldset: true
@@ -50,8 +52,8 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       ]
       params: params
     )
-    item.find('.js-dataType').html(dataType.form)
     item.find('.js-boolean').data('field-type', 'boolean')
+    item.find('.js-dataType [name="data_type"]').trigger('change')
     item
 
   @dataScreens: (attribute, localParams, params) ->
