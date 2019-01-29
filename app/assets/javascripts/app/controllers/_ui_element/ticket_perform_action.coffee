@@ -24,7 +24,7 @@ class App.UiElement.ticket_perform_action
           elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
           elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
         else if groupKey is 'article'
-          elements["#{groupKey}.note"] = { name: 'note', display: 'Notiz' }
+          elements["#{groupKey}.note"] = { name: 'note', display: 'Note' }
       else
 
         for row in App[groupMeta.model].configure_attributes
