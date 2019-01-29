@@ -7,6 +7,9 @@ class App.UiElement.ticket_perform_action
       ticket:
         name: 'Ticket'
         model: 'Ticket'
+      article:
+        name: 'Article'
+        model: 'Article'
 
     if attribute.notification
       groups.notification =
@@ -17,8 +20,11 @@ class App.UiElement.ticket_perform_action
     elements = {}
     for groupKey, groupMeta of groups
       if !groupMeta.model || !App[groupMeta.model]
-        elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
-        elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
+        if groupKey is 'notification'
+          elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
+          elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
+        else if groupKey is 'article'
+          elements["#{groupKey}.note"] = { name: 'note', display: 'Notiz' }
       else
 
         for row in App[groupMeta.model].configure_attributes
@@ -163,19 +169,26 @@ class App.UiElement.ticket_perform_action
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
     notificationTypeMatch = groupAndAttribute.match(/^notification.([\w]+)$/)
+    articleTypeMatch = groupAndAttribute.match(/^article.([\w]+)$/)
 
     if _.isArray(notificationTypeMatch) && notificationType = notificationTypeMatch[1]
-      elementRow.find('.js-setAttribute').html('')
-      @buildRecipientList(notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      elementRow.find('.js-setAttribute').html('').addClass('hide')
+      elementRow.find('.js-setArticle').html('').addClass('hide')
+      @buildNotificationArea(notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    else if _.isArray(articleTypeMatch) && articleType = articleTypeMatch[1]
+      elementRow.find('.js-setAttribute').html('').addClass('hide')
+      elementRow.find('.js-setNotification').html('').addClass('hide')
+      @buildArticleArea(articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     else
-      elementRow.find('.js-setNotification').html('')
+      elementRow.find('.js-setNotification').html('').addClass('hide')
+      elementRow.find('.js-setArticle').html('').addClass('hide')
       if !elementRow.find('.js-setAttribute div').get(0)
         attributeSelectorElement = $( App.view('generic/ticket_perform_action/attribute_selector')(
           attribute: attribute
           name: name
           meta: meta || {}
         ))
-        elementRow.find('.js-setAttribute').html(attributeSelectorElement)
+        elementRow.find('.js-setAttribute').html(attributeSelectorElement).removeClass('hide')
       @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
@@ -307,7 +320,7 @@ class App.UiElement.ticket_perform_action
 
     elementRow.find('.js-value').removeClass('hide').html(item)
 
-  @buildRecipientList: (notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildNotificationArea: (notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
     return if elementRow.find(".js-setNotification .js-body-#{notificationType}").get(0)
 
@@ -344,7 +357,7 @@ class App.UiElement.ticket_perform_action
 
     selection = column_select.element()
 
-    notificationElement = $( App.view('generic/ticket_perform_action/notification_email')(
+    notificationElement = $( App.view('generic/ticket_perform_action/notification')(
       attribute: attribute
       name: name
       notificationType: notificationType
@@ -377,7 +390,59 @@ class App.UiElement.ticket_perform_action
       ]
     )
 
-    elementRow.find('.js-setNotification').html(notificationElement)
+    elementRow.find('.js-setNotification').html(notificationElement).removeClass('hide')
+
+  @buildArticleArea: (articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+
+    return if elementRow.find(".js-setArticle .js-body-#{articleType}").get(0)
+
+    elementRow.find('.js-setArticle').empty()
+
+    name = "#{attribute.name}::article.#{articleType}"
+    console.log('meta', meta)
+    selection = App.UiElement.select.render(
+      name: "#{name}::internal"
+      multiple: false
+      null: false
+      options: { true: 'internal', false: 'public' }
+      value: meta.internal
+      class: 'form-control--small'
+      translate: true
+    )
+    articleElement = $( App.view('generic/ticket_perform_action/article')(
+      attribute: attribute
+      name: name
+      articleType: articleType
+      meta: meta || {}
+    ))
+    articleElement.find('.js-internal').html(selection)
+    articleElement.find('.js-body div[contenteditable="true"]').ce(
+      mode: 'richtext'
+      placeholder: 'message'
+      maxlength: 200000
+    )
+    new App.WidgetPlaceholder(
+      el: articleElement.find('.js-body div[contenteditable="true"]').parent()
+      objects: [
+        {
+          prefix: 'ticket'
+          object: 'Ticket'
+          display: 'Ticket'
+        },
+        {
+          prefix: 'article'
+          object: 'TicketArticle'
+          display: 'Article'
+        },
+        {
+          prefix: 'user'
+          object: 'User'
+          display: 'Current User'
+        },
+      ]
+    )
+
+    elementRow.find('.js-setArticle').html(articleElement).removeClass('hide')
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')

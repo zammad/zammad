@@ -180,7 +180,7 @@ class ArticleViewItem extends App.ObserverController
         links:       links
       )
       return
-    if article.sender.name is 'System'
+    if article.sender.name is 'System' && article.type.name isnt 'note'
     #if article.sender.name is 'System' && article.preferences.perform_origin is 'trigger'
       @html App.view('ticket_zoom/article_view_system')(
         ticket:      @ticket

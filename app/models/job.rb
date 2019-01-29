@@ -3,6 +3,7 @@
 class Job < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
+  include ChecksPerformValidation
 
   include Job::Assets
 

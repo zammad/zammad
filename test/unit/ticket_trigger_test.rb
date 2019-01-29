@@ -7,7 +7,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '1 basic' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa loop check',
       condition:            {
         'article.subject' => {
@@ -32,7 +32,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create_or_update(
+    trigger2 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -64,7 +64,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger3 = Trigger.create_or_update(
+    trigger3 = Trigger.create!(
       name:                 'auto tag 1',
       condition:            {
         'ticket.action'   => {
@@ -91,7 +91,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger4 = Trigger.create_or_update(
+    trigger4 = Trigger.create!(
       name:                 'auto tag 2',
       condition:            {
         'ticket.state_id' => {
@@ -111,7 +111,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger5 = Trigger.create_or_update(
+    trigger5 = Trigger.create!(
       name:                 'not matching',
       condition:            {
         'ticket.state_id' => {
@@ -130,7 +130,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger6 = Trigger.create_or_update(
+    trigger6 = Trigger.create!(
       name:                 'zzz last',
       condition:            {
         'article.subject' => {
@@ -411,7 +411,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 actions - create' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -504,7 +504,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 actions - update' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -592,7 +592,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '3 auto replys' do
     roles = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login:         'postmaster@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -604,7 +604,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer2 = User.create_or_update(
+    customer2 = User.create!(
       login:           'ticket-auto-reply-customer2@example.com',
       firstname:       'Trigger',
       lastname:        'Customer2',
@@ -618,7 +618,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id:   1,
     )
 
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply - new ticket',
       condition:            {
         'ticket.action'   => {
@@ -657,7 +657,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create_or_update(
+    trigger2 = Trigger.create!(
       name:          'auto reply (on follow up of tickets)',
       condition:     {
         'ticket.action'     => {
@@ -695,7 +695,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    trigger3 = Trigger.create_or_update(
+    trigger3 = Trigger.create!(
       name:                 'not matching',
       condition:            {
         'ticket.action'   => {
@@ -881,7 +881,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '4 has changed' do
     roles = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login:         'postmaster@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -893,7 +893,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer2 = User.create_or_update(
+    customer2 = User.create!(
       login:           'ticket-has-changed-customer2@example.com',
       firstname:       'Trigger',
       lastname:        'Customer2',
@@ -908,7 +908,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'agent-has-changed@example.com',
       firstname:     'Has Changed',
       lastname:      'Agent1',
@@ -921,7 +921,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'owner update - to customer',
       condition:            {
         'ticket.owner_id' => {
@@ -1197,7 +1197,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '5 notify owner' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa notify mail',
       condition:            {
         'ticket.state_id' => {
@@ -1223,7 +1223,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -1287,7 +1287,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     assert_equal(3, ticket1.articles.count)
 
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa notify mail 2',
       condition:            {
         'ticket.state_id' => {
@@ -1332,7 +1332,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6 owner auto assignment' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id' => {
@@ -1360,7 +1360,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -1446,7 +1446,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6.1 owner auto assignment based on organization' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.organization_id' => {
@@ -1474,7 +1474,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     roles = Role.where(name: 'Agent')
     groups = Group.where(name: 'Users')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -1487,7 +1487,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    customer = User.create!(
       login:         'customer@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -1559,7 +1559,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6.2 owner auto assignment based on organization' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.organization_id' => {
@@ -1587,7 +1587,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -1600,7 +1600,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    customer = User.create!(
       login:         'customer@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -1643,7 +1643,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    ticket1.update!(customer: customer )
+    ticket1.update!(customer: customer)
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
@@ -1672,7 +1672,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '7 owner auto assignment' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id'   => {
@@ -1704,7 +1704,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -1716,11 +1716,11 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create_or_update(
-      login:         'agent@example.com',
+    agent2 = User.create!(
+      login:         'agent2@example.com',
       firstname:     'Trigger',
       lastname:      'Agent2',
-      email:         'agent@example.com',
+      email:         'agent2@example.com',
       password:      'agentpw',
       active:        true,
       roles:         roles,
@@ -1857,7 +1857,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal(agent1.id, ticket1.owner_id, 'ticket1.owner_id verify')
+    assert_equal(agent2.id, ticket1.owner_id, 'ticket1.owner_id verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(4, ticket1.articles.count, 'ticket1.articles verify')
@@ -1865,7 +1865,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '8 owner auto assignment' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id'    => {
@@ -1899,7 +1899,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -2015,7 +2015,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '9 vip priority set' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa vip priority',
       condition:            {
         'customer.vip' => {
@@ -2035,7 +2035,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -2048,7 +2048,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    customer = User.create!(
       login:         'customer@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -2153,7 +2153,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '10 owner auto assignment notify to customer' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id' => {
@@ -2177,7 +2177,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'agent1@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -2189,7 +2189,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create_or_update(
+    agent2 = User.create!(
       login:         'agent2@example.com',
       firstname:     'Trigger',
       lastname:      'Agent2',
@@ -2280,7 +2280,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '11 notify to customer on public note' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa notify to customer on public note',
       condition:            {
         'article.internal'  => {
@@ -2312,7 +2312,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -2325,7 +2325,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    customer = User.create!(
       login:         'customer@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -2490,7 +2490,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '12 notify on owner change' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa notify to customer on public note',
       condition:            {
         'ticket.owner_id' => {
@@ -2512,7 +2512,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id:        1,
       updated_by_id:        1,
     )
-    Trigger.create_or_update(
+    Trigger.create!(
       name:          'auto reply (on new tickets)',
       condition:     {
         'ticket.action'     => {
@@ -2555,7 +2555,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    Trigger.create_or_update(
+    Trigger.create!(
       name:          'auto reply (on follow up of tickets)',
       condition:     {
         'ticket.action'     => {
@@ -2597,7 +2597,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
-    agent = User.create_or_update(
+    agent = User.create!(
       login:         'agent@example.com',
       firstname:     'Trigger',
       lastname:      'Agent1',
@@ -2610,7 +2610,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    customer = User.create!(
       login:         'customer@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -2719,7 +2719,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '1 empty condition should not create errors' do
     assert_raises(Exception) do
-      trigger_empty = Trigger.create_or_update(
+      trigger_empty = Trigger.create!(
         name:                 'aaa loop check',
         condition:            {
           'ticket.number' => {
@@ -2743,7 +2743,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> reply_to' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2800,7 +2800,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> from' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2856,7 +2856,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> origin_by_id' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2881,7 +2881,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
     roles = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login:         'customer+origin_by_id@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -2925,7 +2925,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> created_by_id' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2950,7 +2950,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
     roles = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login:         'customer+created_by_id@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -2993,7 +2993,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'multiple recipients owner_id, article_last_sender(reply_to) trigger' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3017,7 +3017,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id:        1,
       updated_by_id:        1,
     )
-    admin = User.create_or_update(
+    admin = User.create!(
       login:         'admin+owner_recipient@example.com',
       firstname:     'Role',
       lastname:      "Admin#{name}",
@@ -3064,7 +3064,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> invalid reply_to' do
-    trigger = Trigger.create_or_update(
+    trigger = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3118,7 +3118,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 loop check' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa loop check',
       condition:            {
         'ticket.state_id'   => {
@@ -3417,7 +3417,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '3 invalid condition' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'aaa loop check',
       condition:            {
         'ticket.action' => {
@@ -3448,7 +3448,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
                            })
     assert_equal('invalid invalid 4', trigger1.condition['ticket.first_response_at']['value'])
 
-    trigger2 = Trigger.create_or_update(
+    trigger2 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3529,7 +3529,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '4 tag based auto response' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 '100 add tag if sender 1',
       condition:            {
         'ticket.action' => {
@@ -3553,7 +3553,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create_or_update(
+    trigger2 = Trigger.create!(
       name:                 '200 add tag if sender 2',
       condition:            {
         'ticket.action' => {
@@ -3577,7 +3577,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger3 = Trigger.create_or_update(
+    trigger3 = Trigger.create!(
       name:                 '300 auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3725,7 +3725,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article.body' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3962,7 +3962,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   test 'change owner' do
     roles = Role.where(name: 'Agent')
     groups = Group.where(name: 'Users')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'agent-has-changed@example.com',
       firstname:     'Has Changed',
       lastname:      'Agent1',
@@ -3976,7 +3976,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    agent2 = User.create_or_update(
+    agent2 = User.create!(
       login:         'agent-has-changed2@example.com',
       firstname:     'Has Changed',
       lastname:      'Agent2',
@@ -3991,7 +3991,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # multi tag trigger with changed owner
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'change owner',
       condition:            {
         'ticket.owner_id' => {
@@ -4160,7 +4160,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger auto reply with umlaut in form' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4234,7 +4234,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger auto reply with 2 sender addresses in form' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4275,7 +4275,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'make sure attachments should be attached with content id' do
-    trigger1 = Trigger.create_or_update(
+    trigger1 = Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4324,7 +4324,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    Trigger.create_or_update(
+    Trigger.create!(
       name:          'auto reply (condition: organization-is-not)',
       condition:     {
         'ticket.organization_id' => {
@@ -4367,8 +4367,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('text/html', autoreply.content_type)
   end
 
-  test 'trigger when there is an article body contains matched values' do
-    trigger1 = Trigger.create_or_update(
+  test 'trigger tags and auto responder when there is an article body contains matched values' do
+    trigger1 = Trigger.create!(
       name:                 'detect message body',
       condition:            {
         'article.body' => {
@@ -4436,4 +4436,164 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_match("some message <b>note</b>\nnew line", article1.body)
     assert_equal('text/plain', article1.content_type)
   end
+
+  test 'trigger note and auto responder (correct order) when there is an article body contains matched values' do
+    trigger1 = Trigger.create!(
+      name:                 'detect message body',
+      condition:            {
+        'article.body' => {
+          'operator' => 'contains',
+          'value'    => 'some message',
+        },
+      },
+      perform:              {
+        'article.note'       => {
+          'body'     => 'some note',
+          'subject'  => 'some subject!',
+          'internal' => 'true',
+        },
+        'notification.email' => {
+          'body'      => 'some lala',
+          'recipient' => 'ticket_customer',
+          'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
+    )
+    ticket1 = Ticket.create!(
+      title:         "some <b>title</b>\n äöüß",
+      group:         Group.lookup(name: 'Users'),
+      customer:      User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article1 = Ticket::Article.create!(
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          "some message <b>note</b>\nnew line",
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    assert_match('- ', article1.from)
+    assert_match('some_recipient@example.com', article1.to)
+    assert_match('some subject', article1.subject)
+    assert_match("some message <b>note</b>\nnew line", article1.body)
+    assert_equal('text/plain', article1.content_type)
+
+    article_note1 = ticket1.articles[1]
+    assert_match('- ', article_note1.from)
+    assert_nil(article_note1.to)
+    assert_match('some subject!', article_note1.subject)
+    assert_match('some note', article_note1.body)
+    assert_equal('text/html', article_note1.content_type)
+    assert_equal(true, article_note1.internal)
+
+    article_auto_responder1 = ticket1.articles[2]
+    assert_match('Zammad <zammad@localhost>', article_auto_responder1.from)
+    assert_match('nicole.braun@zammad.org', article_auto_responder1.to)
+    assert_match('Thanks for your inquiry - loop check (some <b>title</b>  äöüß)!', article_auto_responder1.subject)
+    assert_match('some lala', article_auto_responder1.body)
+    assert_equal('text/html', article_auto_responder1.content_type)
+  end
+
+  test 'validates perform with article.note - should fail because of missing body' do
+    assert_raises(Exception) do
+      Trigger.create!(
+        name:                 'some trigger',
+        condition:            {
+          'article.body' => {
+            'operator' => 'contains',
+            'value'    => 'some message',
+          },
+        },
+        perform:              {
+          'article.note' => {
+            'subject'  => 'some subject!',
+            'internal' => 'true',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        created_by_id:        1,
+        updated_by_id:        1,
+      )
+    end
+  end
+
+  test 'validates perform with notification.email - should fail because of missing recipient' do
+    assert_raises(Exception) do
+      Trigger.create!(
+        name:                 'some trigger',
+        condition:            {
+          'article.body' => {
+            'operator' => 'contains',
+            'value'    => 'some message',
+          },
+        },
+        perform:              {
+          'notification.email' => {
+            'body'      => 'some lala',
+            'recipient' => '',
+            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        created_by_id:        1,
+        updated_by_id:        1,
+      )
+    end
+  end
+
+  test 'validates perform with notification.sms - should fail because of missing recipient' do
+    assert_raises(Exception) do
+      Trigger.create!(
+        name:                 'some trigger',
+        condition:            {
+          'article.body' => {
+            'operator' => 'contains',
+            'value'    => 'some message',
+          },
+        },
+        perform:              {
+          'notification.sms' => {
+            'body'      => 'some lala',
+            'recipient' => '',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        created_by_id:        1,
+        updated_by_id:        1,
+      )
+    end
+  end
+
 end

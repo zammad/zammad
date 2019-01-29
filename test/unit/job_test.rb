@@ -1064,6 +1064,103 @@ class JobTest < ActiveSupport::TestCase
 
     assert_not(Ticket.find_by(id: ticket1.id))
     assert(Ticket.find_by(id: ticket2.id))
-
   end
+
+  test 'validates perform with article.note - should fail because of missing body' do
+    assert_raises(Exception) do
+      Job.create!(
+        name:                 'some job',
+        timeplan:             {
+          days:    {
+            Mon: true,
+          },
+          hours:   {
+            '0' => false,
+          },
+          minutes: {
+            '0' => true,
+          }
+        },
+        condition:            {
+          'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'closed').id }
+        },
+        perform:              {
+          'article.note' => {
+            'subject'  => 'some subject!',
+            'internal' => 'true',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        updated_by_id:        1,
+        created_by_id:        1,
+      )
+    end
+  end
+
+  test 'validates perform with notification.email - should fail because of missing recipient' do
+    assert_raises(Exception) do
+      Job.create!(
+        name:                 'some job',
+        timeplan:             {
+          days:    {
+            Mon: true,
+          },
+          hours:   {
+            '0' => false,
+          },
+          minutes: {
+            '0' => true,
+          }
+        },
+        condition:            {
+          'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'closed').id }
+        },
+        perform:              {
+          'notification.email' => {
+            'body'      => 'some lala',
+            'recipient' => '',
+            'subject'   => 'Thanks for your inquiry!',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        updated_by_id:        1,
+        created_by_id:        1,
+      )
+    end
+  end
+
+  test 'validates perform with notification.sms - should fail because of missing recipient' do
+    assert_raises(Exception) do
+      Job.create!(
+        name:                 'some job',
+        timeplan:             {
+          days:    {
+            Mon: true,
+          },
+          hours:   {
+            '0' => false,
+          },
+          minutes: {
+            '0' => true,
+          }
+        },
+        condition:            {
+          'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'closed').id }
+        },
+        perform:              {
+          'notification.sms' => {
+            'body'      => 'some lala',
+            'recipient' => '',
+          },
+        },
+        disable_notification: true,
+        active:               true,
+        updated_by_id:        1,
+        created_by_id:        1,
+      )
+    end
+  end
+
 end

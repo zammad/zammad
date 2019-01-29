@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Issue2019FixDoubleDomainLinksInTriggerEmails, type: :db_migration do
-  subject { create(:trigger, perform: { 'notification.email' => { 'body' => faulty_link } }) }
+  subject { create(:trigger, perform: { 'notification.email' => { 'body' => faulty_link, 'recipient' => 'customer', 'subject' => 'some subject' } }) }
 
   let(:faulty_link) do
     '<a href="https://example.com/#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">' \

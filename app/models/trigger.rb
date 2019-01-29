@@ -2,6 +2,7 @@
 
 class Trigger < ApplicationModel
   include ChecksConditionValidation
+  include ChecksPerformValidation
   include CanSeed
 
   include Trigger::Assets

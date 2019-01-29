@@ -846,12 +846,17 @@ perform changes on ticket
     end
 
     perform_notification = {}
+    perform_article = {}
     changed = false
     perform.each do |key, value|
       (object_name, attribute) = key.split('.', 2)
-      raise "Unable to update object #{object_name}.#{attribute}, only can update tickets and send notifications!" if object_name != 'ticket' && object_name != 'notification'
+      raise "Unable to update object #{object_name}.#{attribute}, only can update tickets, send notifications and create articles!" if object_name != 'ticket' && object_name != 'article' && object_name != 'notification'
 
-      # send notification (after changes are done)
+      # send notification/create article (after changes are done)
+      if object_name == 'article'
+        perform_article[key] = value
+        next
+      end
       if object_name == 'notification'
         perform_notification[key] = value
         next
@@ -908,6 +913,25 @@ perform changes on ticket
 
     if changed
       save!
+    end
+
+    perform_article.each do |key, value|
+      raise 'Unable to create article, we only support article.note' if key != 'article.note'
+
+      Ticket::Article.create!(
+        ticket_id:     id,
+        subject:       value[:subject],
+        content_type:  'text/html',
+        body:          value[:body],
+        internal:      value[:internal],
+        sender:        Ticket::Article::Sender.find_by(name: 'System'),
+        type:          Ticket::Article::Type.find_by(name: 'note'),
+        preferences:   {
+          perform_origin: perform_origin,
+        },
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
     end
 
     perform_notification.each do |key, value|
