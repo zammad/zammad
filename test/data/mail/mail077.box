@@ -5,7 +5,7 @@ Delivered-To: box@samba.example.com
 Received: from me.home (1-2-1-1.adsl.highway.example.com [1.2.1.1])
   by samba.example.com (Postfix) with ESMTPSA id C96F8500D3D
   for <info@example.com>; Thu,  3 May 2012 12:04:28 +0100 (BST)
-Subject: =?UTF-8?Q?Personal=C3=A4nderung?=
+Subject: =?UTF-8?Q? Personal=C3=A4nderung?=
 From: <John.Smith@example.com>
 Content-Type: text/plain;
   charset=iso-8859-1

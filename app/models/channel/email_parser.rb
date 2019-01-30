@@ -508,7 +508,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
       h['x-any-recipient'] = h.values.select(&:present?).join(', ')
       h['message_id']      = imported_fields['message-id']
-      h['subject']         = Mail::Encodings.value_decode(imported_fields['subject'])
+      h['subject']         = imported_fields['subject']
       begin
         h['date'] = Time.zone.parse(mail.date.to_s) || imported_fields['date']
       rescue

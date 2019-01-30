@@ -170,7 +170,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       it 'decode utf-8 encoded strings' do
-        expect( Mail::Encodings.value_decode('=?UTF-8?Q?Personal=C3=A4nderung?=') ).to eql( 'Personaländerung' )
+        expect( Mail::Encodings.value_decode('=?UTF-8?Q? Personal=C3=A4nderung?=') ).to eql( ' Personaländerung' )
       end
     end
   end
