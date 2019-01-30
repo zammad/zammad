@@ -602,6 +602,16 @@ class App.ControllerModal extends App.Controller
       return @formParam(@container.find('.modal form'))
     return @formParam(@$('.modal form'))
 
+  showAlert: (message, suffix = 'danger') ->
+    alert = $('<div>')
+      .addClass("alert alert--#{suffix}")
+      .text(message)
+
+    @$('.modal-alerts-container').html(alert)
+
+  clearAlerts: ->
+    @$('.modal-alerts-container').empty()
+
   localOnShow: (e) =>
     @onShow(e)
 
@@ -650,6 +660,7 @@ class App.ControllerModal extends App.Controller
   submit: (e) =>
     e.stopPropagation()
     e.preventDefault()
+    @clearAlerts()
     @onSubmit(e)
 
 class App.SessionMessage extends App.ControllerModal

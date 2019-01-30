@@ -11,6 +11,7 @@
         <h1 class="modal-title"><% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><%- @T(@head) %></h1>
   <% end %>
       </div>
+      <div class="modal-alerts-container"></div>
       <div class="modal-body">
       <%- @content %>
       </div>
