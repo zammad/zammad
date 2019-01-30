@@ -508,7 +508,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
       h['x-any-recipient'] = h.values.select(&:present?).join(', ')
       h['message_id']      = imported_fields['message-id']
-      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\s*\?=\s*$/, '\1')
+      h['subject']         = Mail::Encodings.value_decode(imported_fields['subject'])
       begin
         h['date'] = Time.zone.parse(mail.date.to_s) || imported_fields['date']
       rescue
@@ -791,42 +791,6 @@ module Mail
       return value if value.blank?
 
       value.sub(/^.+?:(\s|)/, '')
-    end
-  end
-
-  # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
-  module Encodings
-    def self.value_decode(str)
-      # Optimization: If there's no encoded-words in the string, just return it
-      return str if !str.index('=?')
-
-      str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
-
-      # Split on white-space boundaries with capture, so we capture the white-space as well
-      str.split(/([ \t])/).map do |text|
-        if text.index('=?') .nil?
-          text
-        else
-          # Join QP encoded-words that are adjacent to avoid decoding partial chars
-          #          text.gsub!(/\?\=\=\?.+?\?[Qq]\?/m, '') if text =~ /\?==\?/
-
-          # Search for occurences of quoted strings or plain strings
-          text.scan(/(                                  # Group around entire regex to include it in matches
-          \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
-          |                                # or
-          .+?(?=\=\?|$)                    # Plain String
-          )/xmi).map do |matches|
-            string, method = *matches
-            if    method == 'b' || method == 'B' # rubocop:disable Style/MultipleComparison
-              b_value_decode(string)
-            elsif method == 'q' || method == 'Q' # rubocop:disable Style/MultipleComparison
-              q_value_decode(string)
-            else
-              string
-            end
-          end
-        end
-      end.join('')
     end
   end
 

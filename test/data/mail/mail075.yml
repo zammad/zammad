@@ -1,7 +1,7 @@
 --- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
-from: '"Hans BÄKOSchönland" <me@bogen.net>'
+from: '"Hans BÄKO Schönland" <me@bogen.net>'
 from_email: me@bogen.net
-from_display_name: Hans BÄKOSchönland
+from_display_name: Hans BÄKO Schönland
 to: Namedyński (hans@example.com)
 subject: test email
 body: |-

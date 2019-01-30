@@ -163,5 +163,15 @@ RSpec.describe Channel::EmailParser, type: :model do
           .to start_with( '<a href="https://zammad.com/"' )
       end
     end
+
+    context 'Mail::Encodings.value_decode' do
+      it 'decode us-ascii encoded strings' do
+        expect( Mail::Encodings.value_decode('=?us-ascii?Q?Test?=') ).to eql( 'Test' )
+      end
+
+      it 'decode utf-8 encoded strings' do
+        expect( Mail::Encodings.value_decode('=?UTF-8?Q?Personal=C3=A4nderung?=') ).to eql( 'Personaländerung' )
+      end
+    end
   end
 end
