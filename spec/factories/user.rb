@@ -1,21 +1,14 @@
 FactoryBot.define do
-  sequence :email do |n|
-    "nicole.braun#{n}@zammad.org"
-  end
-end
-
-FactoryBot.define do
-
   factory :user do
-    login         'nicole.braun'
-    firstname     'Nicole'
-    lastname      'Braun'
-    email         { generate(:email) }
-    password      nil
-    active        true
-    login_failed  0
-    updated_by_id 1
-    created_by_id 1
+    login            { 'nicole.braun' }
+    firstname        { 'Nicole' }
+    lastname         { 'Braun' }
+    sequence(:email) { |n| "nicole.braun#{n}@zammad.org" }
+    password         { nil }
+    active           { true }
+    login_failed     { 0 }
+    updated_by_id    { 1 }
+    created_by_id    { 1 }
 
     factory :customer_user, aliases: %i[customer] do
       role_ids { Role.signup_role_ids.sort }
