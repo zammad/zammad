@@ -30,22 +30,18 @@ addons:
       - libxslt1-dev
       - libyaml-0-2
       - libyaml-dev
-      - mysql-client-5.7
-      - mysql-client-core-5.7
-      - mysql-server-5.7
       - patch
       - pkg-config
       - postfix
       - sqlite3
       - zlib1g-dev
 services:
-  - postgresql
   - mysql
+  - postgresql
 language: ruby
 rvm:
   - 2.4.4
 before_install:
-  - export DEBIAN_FRONTEND=noninteractive
   - gem update --system # Due to: https://github.com/travis-ci/travis-ci/issues/8978
   - git fetch --unshallow
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
