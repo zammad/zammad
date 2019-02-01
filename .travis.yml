@@ -6,6 +6,7 @@ notifications:
 env:
   - DB=mysql
   - DB=postgresql
+  - DEBIAN_FRONTEND=noninteractive
 addons:
   postgresql: "9.4"
   apt:
