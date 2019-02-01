@@ -6,7 +6,6 @@ notifications:
 env:
   - DB=mysql
   - DB=postgresql
-  - DEBIAN_FRONTEND=noninteractive
 addons:
   postgresql: "9.4"
   apt:
@@ -46,6 +45,7 @@ language: ruby
 rvm:
   - 2.4.4
 before_install:
+  - export DEBIAN_FRONTEND=noninteractive
   - gem update --system # Due to: https://github.com/travis-ci/travis-ci/issues/8978
   - git fetch --unshallow
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
