@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Search', type: :request, searchindex: true do
 
+  let(:group) { create(:group) }
   let!(:admin_user) do
-    create(:admin_user, groups: Group.all)
+    create(:admin_user, groups: [Group.lookup(name: 'Users'), group])
   end
   let!(:agent_user) do
-    create(:agent_user, firstname: 'Search 1234', groups: Group.all)
+    create(:agent_user, firstname: 'Search 1234', groups: [Group.lookup(name: 'Users'), group])
   end
   let!(:customer_user) do
     create(:customer_user)
@@ -33,13 +34,13 @@ RSpec.describe 'Search', type: :request, searchindex: true do
     create(:customer_user, organization: organization1)
   end
   let!(:ticket1) do
-    create(:ticket, title: 'test 1234-1', customer: customer_user)
+    create(:ticket, title: 'test 1234-1', customer: customer_user, group: group)
   end
   let!(:ticket2) do
-    create(:ticket, title: 'test 1234-2', customer: customer_user2)
+    create(:ticket, title: 'test 1234-2', customer: customer_user2, group: group)
   end
   let!(:ticket3) do
-    create(:ticket, title: 'test 1234-2', customer: customer_user3)
+    create(:ticket, title: 'test 1234-2', customer: customer_user3, group: group)
   end
   let!(:article1) do
     create(:ticket_article, ticket_id: ticket1.id)

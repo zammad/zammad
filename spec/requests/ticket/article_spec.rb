@@ -5,8 +5,10 @@ RSpec.describe 'Ticket Article', type: :request do
   let(:admin_user) do
     create(:admin_user)
   end
+  let(:group) { create(:group) }
+
   let(:agent_user) do
-    create(:agent_user, groups: Group.all)
+    create(:agent_user, groups: [Group.lookup(name: 'Users'), group])
   end
   let(:customer_user) do
     create(:customer_user)
@@ -307,7 +309,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
 
     it 'does ticket split with html - check attachments' do
-      ticket = create(:ticket)
+      ticket = create(:ticket, group: group)
       article = create(
         :ticket_article,
         ticket_id:    ticket.id,
@@ -401,6 +403,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     it 'does ticket split with plain - check attachments' do
       ticket = create(
         :ticket,
+        group:         group,
         updated_by_id: agent_user.id,
         created_by_id: agent_user.id,
       )

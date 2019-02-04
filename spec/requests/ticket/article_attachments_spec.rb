@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Ticket Article Attachments', type: :request do
 
+  let(:group) { create(:group) }
+
   let(:agent_user) do
-    create(:agent_user, groups: Group.all)
+    create(:agent_user, groups: [Group.lookup(name: 'Users'), group])
   end
 
   describe 'request handling' do
 
     it 'does test attachment urls' do
-      ticket1  = create(:ticket)
+      ticket1  = create(:ticket, group: group)
       article1 = create(:ticket_article, ticket_id: ticket1.id)
 
       store1 = Store.add(
@@ -34,7 +36,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       expect(response).to have_http_status(401)
       expect(@response.body).to match(/401: Unauthorized/)
 
-      ticket2 = create(:ticket)
+      ticket2 = create(:ticket, group: group)
       ticket1.merge_to(
         ticket_id: ticket2.id,
         user_id:   1,

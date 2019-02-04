@@ -2105,9 +2105,9 @@ RSpec.describe 'Ticket', type: :request do
   end
 
   describe 'stats' do
-    let(:ticket1) { create(:ticket, customer: customer, organization: organization) }
-    let(:ticket2) { create(:ticket, customer: customer, organization: organization) }
-    let(:ticket3) { create(:ticket, customer: customer, organization: organization) }
+    let(:ticket1) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
+    let(:ticket2) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
+    let(:ticket3) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
     let(:customer) { create(:customer_user, organization: organization) }
     let(:organization) { create(:organization, shared: false) }
 

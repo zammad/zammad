@@ -16,17 +16,17 @@ FactoryBot.define do
     login_failed  0
     updated_by_id 1
     created_by_id 1
-  end
 
-  factory :customer_user, parent: :user do
-    role_ids { Role.signup_role_ids.sort }
-  end
+    factory :customer_user, aliases: %i[customer] do
+      role_ids { Role.signup_role_ids.sort }
+    end
 
-  factory :agent_user, parent: :user do
-    roles { Role.where(name: 'Agent') }
-  end
+    factory :agent_user, aliases: %i[agent] do
+      roles { Role.where(name: 'Agent') }
+    end
 
-  factory :admin_user, parent: :user do
-    roles { Role.where(name: %w[Admin Agent]) }
+    factory :admin_user, aliases: %i[admin] do
+      roles { Role.where(name: %w[Admin Agent]) }
+    end
   end
 end

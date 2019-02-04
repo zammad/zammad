@@ -5,7 +5,6 @@ RSpec.describe Trigger do
   describe 'sms' do
 
     it 'sends interpolated, html-free SMS' do
-      customer = create(:customer_user)
       agent = create(:agent_user)
       another_agent = create(:admin_user, mobile: '+37061010000')
       Group.lookup(id: 1).users << another_agent
@@ -20,7 +19,7 @@ RSpec.describe Trigger do
                          }
                        })
 
-      ticket = create(:ticket, customer: customer, created_by_id: agent.id)
+      ticket = create(:ticket, group: Group.lookup(id: 1), created_by_id: agent.id)
       Observer::Transaction.commit
 
       triggered_article = Ticket::Article.last
