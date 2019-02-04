@@ -5,10 +5,10 @@ RSpec.describe 'Ticket Article', type: :request do
   let(:admin_user) do
     create(:admin_user)
   end
-  let(:group) { create(:group) }
+  let!(:group) { create(:group) }
 
   let(:agent_user) do
-    create(:agent_user, groups: [Group.lookup(name: 'Users'), group])
+    create(:agent_user, groups: Group.all)
   end
   let(:customer_user) do
     create(:customer_user)
