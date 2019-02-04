@@ -282,7 +282,9 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['title']).to eq('a new ticket #1')
 
-      article = Ticket::Article.find_by(ticket_id: json_response['id'])
+      expect(Ticket::Article.where(ticket_id: json_response['id']).count).to eq(2) # original + auto responder
+
+      article = Ticket::Article.where(ticket_id: json_response['id']).first
       expect(article.origin_by_id).to eq(customer_user.id)
       expect(article.from).to eq("#{customer_user.firstname} #{customer_user.lastname} <#{customer_user.email}>")
     end
@@ -304,7 +306,9 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(response).to have_http_status(201)
       expect(json_response).to be_a_kind_of(Hash)
 
-      article = Ticket::Article.find_by(ticket_id: json_response['id'])
+      expect(Ticket::Article.where(ticket_id: json_response['id']).count).to eq(1) # ony original
+
+      article = Ticket::Article.where(ticket_id: json_response['id']).first
       expect(article.origin_by_id).to eq(customer_user.id)
     end
 
