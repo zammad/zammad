@@ -434,7 +434,7 @@ test:browser:integration:api_client_php:
       alias: postgresql
     - name: registry.znuny.com/docker/zammad-elasticsearch:latest
       alias: elasticsearch
-    - name: docker.io/elgalu/selenium:latest
+    - name: docker.io/elgalu/selenium:3.141.59-p8
       alias: selenium
     - name: registry.znuny.com/docker/docker-imap-devel:latest
       alias: mail
@@ -447,7 +447,7 @@ test:browser:integration:api_client_php:
       alias: mysql
     - name: registry.znuny.com/docker/zammad-elasticsearch:latest
       alias: elasticsearch
-    - name: docker.io/elgalu/selenium:latest
+    - name: docker.io/elgalu/selenium:3.141.59-p8
       alias: selenium
     - name: registry.znuny.com/docker/docker-imap-devel:latest
       alias: mail
@@ -632,7 +632,7 @@ test:browser:core:chrome_6_postgresql:
   services:
     - name: registry.znuny.com/docker/zammad-postgresql:latest
       alias: postgresql
-    - name: docker.io/elgalu/selenium:latest
+    - name: docker.io/elgalu/selenium:3.141.59-p8
       alias: selenium
 
 .test_browser_integration_template: &test_browser_integration_definition
