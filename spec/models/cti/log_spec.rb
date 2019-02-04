@@ -30,7 +30,7 @@ RSpec.describe Cti::Log do
   describe '.process' do
     let(:attributes) do
       {
-        'cause'     => '',
+        'cause'     => cause,
         'event'     => event,
         'user'      => 'user 1',
         'from'      => '49123456',
@@ -39,6 +39,8 @@ RSpec.describe Cti::Log do
         'direction' => 'in',
       }
     end
+
+    let(:cause) { '' }
 
     context 'for event "newCall"' do
       let(:event) { 'newCall' }
@@ -96,6 +98,16 @@ RSpec.describe Cti::Log do
       end
 
       context 'with recognized "call_id"' do
+        context 'for Log with #state "newCall"' do
+          let(:log) { create(:'cti/log', call_id: 1, state: 'newCall', done: false) }
+
+          it 'returns early with no changes' do
+            expect { Cti::Log.process(attributes) }
+              .to change { log.reload.state }.to('answer')
+              .and change { log.reload.done }.to(true)
+          end
+        end
+
         context 'for Log with #state "hangup"' do
           let(:log) { create(:'cti/log', call_id: 1, state: 'hangup', done: false) }
 
@@ -118,11 +130,42 @@ RSpec.describe Cti::Log do
 
       context 'with recognized "call_id"' do
         context 'for Log with #state "newCall"' do
-          let(:log) { create(:'cti/log', call_id: 1, done: true) }
+          let(:log) { create(:'cti/log', call_id: 1, state: 'newCall', done: false) }
 
           it 'sets attributes #state: "hangup", #done: false' do
             expect { Cti::Log.process(attributes) }
-              .to change { log.reload.state }.to('hangup').and change { log.reload.done }.to(false)
+              .to change { log.reload.state }.to('hangup')
+              .and not_change { log.reload.done }
+          end
+
+          context 'when call is forwarded' do
+            let(:cause) { 'forwarded' }
+
+            it 'sets attributes #state: "hangup", #done: true' do
+              expect { Cti::Log.process(attributes) }
+                .to change { log.reload.state }.to('hangup')
+                .and change { log.reload.done }.to(true)
+            end
+          end
+        end
+
+        context 'for Log with #state "answer"' do
+          let(:log) { create(:'cti/log', call_id: 1, state: 'answer', done: true) }
+
+          it 'sets attributes #state: "hangup"' do
+            expect { Cti::Log.process(attributes) }
+              .to change { log.reload.state }.to('hangup')
+              .and not_change { log.reload.done }
+          end
+
+          context 'when call is sent to voicemail' do
+            before { log.update(to_comment: 'voicemail') }
+
+            it 'sets attributes #state: "hangup", #done: false' do
+              expect { Cti::Log.process(attributes) }
+                .to change { log.reload.state }.to('hangup')
+                .and change { log.reload.done }.to(false)
+            end
           end
         end
       end
