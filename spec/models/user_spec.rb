@@ -631,6 +631,7 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
     describe 'Cti::CallerId syncing:' do
       context 'with a #phone attribute' do
         subject(:user) { build(:user, phone: '1234567890') }

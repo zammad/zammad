@@ -56,19 +56,6 @@ class CtiCallerIdTest < ActiveSupport::TestCase
     Scheduler.worker(true)
   end
 
-  test 'user delete with caller log rebuild' do
-    assert_equal(2, Cti::CallerId.where(user_id: @agent2.id).count)
-
-    @agent2.destroy!
-
-    assert_equal(0, Cti::CallerId.where(user_id: @agent2.id).count)
-
-    Observer::Transaction.commit
-    Scheduler.worker(true)
-
-    assert_equal(0, Cti::CallerId.where(user_id: @agent2.id).count)
-  end
-
   test 'order of events' do
     Cti::Log.process(
       'cause'     => '',
