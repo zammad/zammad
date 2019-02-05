@@ -28,13 +28,52 @@ RSpec.describe User do
 
     describe '#password' do
       context 'when set to plaintext password' do
+        let(:password) { 'password' }
         it 'hashes password before saving to DB' do
-          user.password = 'password'
+          user.password = password
 
           expect { user.save }
-            .to change { user.password }.to(PasswordHash.crypt('password'))
+            .to change { PasswordHash.hashed_argon2?(user.password) }.to(0)
+            .and change { PasswordHash.verified?(user.password, password) }.to(true)
         end
       end
+
+      # see https://github.com/zammad/zammad/issues/2462
+      context 'when changed to empty string' do
+        before { user.update(password: 'password') }
+        it 'sets password to nil (#2462)' do
+          user.password = ''
+
+          expect { user.save }
+            .to change { user.password }.to(nil)
+          puts(user.inspect)
+        end
+      end
+
+      context 'when changed to nil' do
+        before { user.update(password: 'password') }
+        it 'sets password to nil' do
+          user.password = nil
+
+          expect { user.save }
+            .not_to change { user.password }
+        end
+      end
+
+      context 'when a user is created with an empty string as password' do
+        let(:another_user) { create(:user, password: '') }
+        it 'sets password to nil' do
+          expect(another_user.password).to eq(nil)
+        end
+      end
+
+      context 'when a user is created with nil as password' do
+        let(:another_user) { create(:user, password: nil) }
+        it 'sets password to nil' do
+          expect(another_user.password).to eq(nil)
+        end
+      end
+
 
       context 'when set to SHA2 digest (to facilitate OTRS imports)' do
         it 'does not re-hash before saving' do
@@ -49,6 +88,16 @@ RSpec.describe User do
           user.password = PasswordHash.crypt('password')
 
           expect { user.save }.not_to change { user.password }
+        end
+      end
+
+      # see https://github.com/zammad/zammad/issues/2462
+      context 'when creating two users with the same password (#2462)' do
+        before { user.update(password: 'password') }
+        let(:another_user) { create(:user, password: 'password') }
+
+        it 'does not generate the same password hash' do
+          expect(user.password).not_to eq(another_user.password)
         end
       end
     end

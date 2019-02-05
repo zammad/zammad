@@ -1227,24 +1227,20 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def ensure_password
-    return true if password_empty?
-    return true if PasswordHash.crypted?(password)
+    # don't accidentally hash the empty string
+    # see https://github.com/zammad/zammad/issues/2462
+    if password == ''
+      self.password = nil
+    end
 
-    self.password = PasswordHash.crypt(password)
-    true
-  end
-
-  def password_empty?
-    # set old password again if not given
-    return if password.present?
-
-    # skip if it's not desired to set a password (yet)
+    # don't attempt to hash nil
     return true if !password
 
-    # get current record
-    return if !id
+    # don't re-hash an already hashed passsword
+    return true if PasswordHash.crypted?(password)
 
-    self.password = password_was
+    # hash a plaintext password
+    self.password = PasswordHash.crypt(password)
     true
   end
 
