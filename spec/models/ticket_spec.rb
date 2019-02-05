@@ -291,6 +291,19 @@ RSpec.describe Ticket, type: :model do
       end
     end
 
+    describe 'Cti::CallerId syncing:' do
+      subject(:ticket) { build(:ticket) }
+      before { allow(Cti::CallerId).to receive(:build) }
+
+      it 'adds numbers in article bodies (via Cti::CallerId.build)' do
+        expect(Cti::CallerId).to receive(:build).with(ticket)
+
+        ticket.save
+        Observer::Transaction.commit
+        Scheduler.worker(true)
+      end
+    end
+
     describe 'Association & attachment management:' do
       it 'deletes all related ActivityStreams on destroy' do
         create_list(:activity_stream, 3, o: ticket)

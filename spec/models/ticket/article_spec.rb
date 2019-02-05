@@ -8,14 +8,37 @@ RSpec.describe Ticket::Article, type: :model do
 
   describe 'Callbacks, Observers, & Async Transactions' do
     describe 'NULL byte handling (via ChecksAttributeValuesAndLength concern):' do
-      it 'removes them from subject on creation, if necessary (postgres doesn’t like them)' do
+      it 'removes them from #subject on creation, if necessary (postgres doesn’t like them)' do
         expect(create(:ticket_article, subject: "com test 1\u0000"))
           .to be_persisted
       end
 
-      it 'removes them from body on creation, if necessary (postgres doesn’t like them)' do
+      it 'removes them from #body on creation, if necessary (postgres doesn’t like them)' do
         expect(create(:ticket_article, body: "some\u0000message 123"))
           .to be_persisted
+      end
+    end
+
+    describe 'Cti::Log syncing:' do
+      context 'with existing Log records' do
+        context 'for an incoming call from an unknown number' do
+          let!(:log) { create(:'cti/log', :with_preferences, from: '491111222222', direction: 'in') }
+
+          context 'with that number in #body' do
+            subject(:article) { build(:ticket_article, body: <<~BODY) }
+              some message
+              +49 1111 222222
+            BODY
+
+            it 'does not modify any Log records (because CallerIds from article bodies have #level "maybe")' do
+              expect do
+                article.save
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.not_to change { log.reload.attributes }
+            end
+          end
+        end
       end
     end
 

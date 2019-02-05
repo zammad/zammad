@@ -475,7 +475,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Callbacks & Observers -' do
+  describe 'Callbacks, Observers, & Async Transactions -' do
     describe 'System-wide agent limit checks:' do
       let(:agent_role) { Role.lookup(name: 'Agent') }
       let(:admin_role) { Role.lookup(name: 'Admin') }
@@ -626,6 +626,140 @@ RSpec.describe User, type: :model do
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
                 .and change { current_agents.count }.by(0)
+            end
+          end
+        end
+      end
+    end
+    describe 'Cti::CallerId syncing:' do
+      context 'with a #phone attribute' do
+        subject(:user) { build(:user, phone: '1234567890') }
+
+        it 'adds CallerId record on creation (via Cti::CallerId.build)' do
+          expect(Cti::CallerId).to receive(:build).with(user)
+
+          user.save
+        end
+
+        it 'updates CallerId record on touch/update (via Cti::CallerId.build)' do
+          user.save
+
+          expect(Cti::CallerId).to receive(:build).with(user)
+
+          user.touch
+        end
+
+        it 'destroys CallerId record on deletion' do
+          user.save
+
+          expect { user.destroy }
+            .to change { Cti::CallerId.count }.by(-1)
+        end
+      end
+    end
+
+    describe 'Cti::Log syncing:' do
+      context 'with existing Log records' do
+        context 'for incoming calls from an unknown number' do
+          let!(:log) { create(:'cti/log', :with_preferences, from: '1234567890', direction: 'in') }
+
+          context 'when creating a new user with that number' do
+            subject(:user) { build(:user, phone: log.from) }
+
+            it 'populates #preferences[:from] hash in all associated Log records (in a bg job)' do
+              expect do
+                user.save
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.to change { log.reload.preferences[:from]&.first }
+                .to(hash_including('caller_id' => user.phone))
+            end
+          end
+
+          context 'when updating a user with that number' do
+            subject(:user) { create(:user) }
+
+            it 'populates #preferences[:from] hash in all associated Log records (in a bg job)' do
+              expect do
+                user.update(phone: log.from)
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.to change { log.reload.preferences[:from]&.first }
+                .to(hash_including('object' => 'User', 'o_id' => user.id))
+            end
+          end
+
+          context 'when creating a new user with an empty number' do
+            subject(:user) { build(:user, phone: '') }
+
+            it 'does not modify any Log records' do
+              expect do
+                user.save
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.not_to change { log.reload.attributes }
+            end
+          end
+
+          context 'when creating a new user with no number' do
+            subject(:user) { build(:user, phone: nil) }
+
+            it 'does not modify any Log records' do
+              expect do
+                user.save
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.not_to change { log.reload.attributes }
+            end
+          end
+        end
+
+        context 'for incoming calls from the given user' do
+          subject(:user) { create(:user, phone: '1234567890') }
+          let!(:logs) { create_list(:'cti/log', 5, :with_preferences, from: user.phone, direction: 'in') }
+
+          context 'when updating #phone attribute' do
+            context 'to another number' do
+              it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
+                expect do
+                  user.update(phone: '0123456789')
+                  Observer::Transaction.commit
+                  Scheduler.worker(true)
+                end.to change { logs.map(&:reload).map(&:preferences) }
+                  .to(Array.new(5) { {} })
+              end
+            end
+
+            context 'to an empty string' do
+              it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
+                expect do
+                  user.update(phone: '')
+                  Observer::Transaction.commit
+                  Scheduler.worker(true)
+                end.to change { logs.map(&:reload).map(&:preferences) }
+                  .to(Array.new(5) { {} })
+              end
+            end
+
+            context 'to nil' do
+              it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
+                expect do
+                  user.update(phone: nil)
+                  Observer::Transaction.commit
+                  Scheduler.worker(true)
+                end.to change { logs.map(&:reload).map(&:preferences) }
+                  .to(Array.new(5) { {} })
+              end
+            end
+          end
+
+          context 'when updating attributes other than #phone' do
+            it 'does not modify any Log records' do
+              expect do
+                user.update(mobile: '2345678901')
+                Observer::Transaction.commit
+                Scheduler.worker(true)
+              end.not_to change { logs.map(&:reload).map(&:attributes) }
             end
           end
         end
