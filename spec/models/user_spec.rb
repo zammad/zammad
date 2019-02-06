@@ -46,7 +46,6 @@ RSpec.describe User do
 
           expect { user.save }
             .to change { user.password }.to(nil)
-          puts(user.inspect)
         end
       end
 
