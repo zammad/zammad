@@ -37,8 +37,9 @@ module PasswordHash
     # (#2462), we'll use this opportunity to replace the old argon2i hashes
     # (which might have duplicate salts) with new argon2id hashes.
     return true if hashed_argon2i?(pw_hash) &&
-        Argon2::Password.verify_password(password, pw_hash, secret)
-    return false
+                   Argon2::Password.verify_password(password, pw_hash, secret)
+
+    false
   end
 
   def hashed_sha2?(pw_hash)
@@ -46,7 +47,7 @@ module PasswordHash
   end
 
   def hashed_argon2?(pw_hash)
-    return Argon2::Password::valid_hash?(pw_hash)
+    Argon2::Password.valid_hash?(pw_hash)
   end
 
   def hashed_argon2i?(pw_hash)

@@ -73,7 +73,6 @@ RSpec.describe User do
         end
       end
 
-
       context 'when set to SHA2 digest (to facilitate OTRS imports)' do
         it 'does not re-hash before saving' do
           user.password = "{sha2}#{Digest::SHA2.hexdigest('password')}"
