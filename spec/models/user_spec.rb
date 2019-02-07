@@ -307,11 +307,13 @@ RSpec.describe User do
 
     context 'with valid user and invalid password' do
       it 'increments failed login count' do
+        expect(described_class).to receive(:sleep).with(1)
         expect { described_class.authenticate(user.login, password.next) }
           .to change { user.reload.login_failed }.by(1)
       end
 
       it 'returns nil' do
+        expect(described_class).to receive(:sleep).with(1)
         expect(described_class.authenticate(user.login, password.next)).to be(nil)
       end
     end
@@ -339,6 +341,31 @@ RSpec.describe User do
     context 'with empty password string' do
       it 'returns nil' do
         expect(described_class.authenticate(user.login, '')).to be(nil)
+      end
+    end
+
+    context 'with empty password string when the stored password is an empty string' do
+      before { user.update(password: '') }
+
+      it 'returns nil' do
+        expect(described_class.authenticate(user.login, '')).to be(nil)
+      end
+      it 'returns nil' do
+        expect(described_class.authenticate(user.login, nil)).to be(nil)
+      end
+    end
+
+    # In the past, Zammad accidentally stored empty passwords as a hash (#2462).
+    # It no longer does, but this spec ensures that even in that case
+    # authentication isn't possible.
+    context 'with empty password string when the stored hash represents an empty string' do
+      before { user.update(password: PasswordHash.crypt('')) }
+
+      it 'returns nil' do
+        expect(described_class.authenticate(user.login, '')).to be(nil)
+      end
+      it 'returns nil' do
+        expect(described_class.authenticate(user.login, nil)).to be(nil)
       end
     end
   end
