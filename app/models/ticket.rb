@@ -1543,10 +1543,13 @@ result
     end
 
     objects = build_notification_template_objects(article)
-    body = NotificationFactory::Renderer.new(objects, 'en-en', value['body'], false)
-                                        .render
-                                        .html2text
-                                        .tr(' ', ' ') # convert non-breaking space to simple space
+    body = NotificationFactory::Renderer.new(
+      objects:  objects,
+      locale:   'en-en',
+      timezone: Setting.get('timezone_default'),
+      template: value['body'],
+      escape:   false
+    ).render.html2text.tr(' ', ' ') # convert non-breaking space to simple space
 
     # attributes content_type is not needed for SMS
     article = Ticket::Article.create(

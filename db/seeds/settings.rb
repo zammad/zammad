@@ -176,6 +176,26 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+Setting.create_if_not_exists(
+  title:       'Timezone',
+  name:        'timezone_default',
+  area:        'System::Branding',
+  description: 'Defines the system default timezone.',
+  options:     {
+    form: [
+      {
+        name: 'timezone_default',
+      }
+    ],
+  },
+  state:       '',
+  preferences: {
+    prio:       9,
+    controller: 'SettingsAreaItemDefaultTimezone',
+    permission: ['admin.system'],
+  },
+  frontend:    true
+)
 Setting.create_or_update(
   title:       'Pretty Date',
   name:        'pretty_date_format',

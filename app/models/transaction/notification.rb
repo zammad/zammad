@@ -242,7 +242,7 @@ class Transaction::Notification
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
-    #puts "AL #{attribute_list.inspect}"
+
     user_related_changes = {}
     @item[:changes].each do |key, value|
 

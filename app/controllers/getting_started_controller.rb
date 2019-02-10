@@ -148,6 +148,11 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       settings[:locale_default] = params[:locale_default]
     end
 
+    # add timezone_default
+    if params[:timezone_default].present?
+      settings[:timezone_default] = params[:timezone_default]
+    end
+
     if messages.present?
       render json: {
         result:   'invalid',

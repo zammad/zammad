@@ -5,6 +5,7 @@ class NotificationFactory::Slack
   result = NotificationFactory::Slack.template(
     template: 'ticket_update',
     locale: 'en-us',
+    timezone: 'Europe/Berlin',
     objects:  {
       recipient: User.find(2),
       ticket: Ticket.find(1)
@@ -23,7 +24,12 @@ returns
   def self.template(data)
 
     if data[:templateInline]
-      return NotificationFactory::Renderer.new(data[:objects], data[:locale], data[:templateInline]).render
+      return NotificationFactory::Renderer.new(
+        objects:  data[:objects],
+        locale:   data[:locale],
+        timezone: data[:timezone],
+        template: data[:templateInline]
+      ).render
     end
 
     template = NotificationFactory.template_read(
@@ -33,8 +39,20 @@ returns
       type:     'slack',
     )
 
-    message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
-    message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:body], false).render
+    message_subject = NotificationFactory::Renderer.new(
+      objects:  data[:objects],
+      locale:   data[:locale],
+      timezone: data[:timezone],
+      template: template[:subject],
+      escape:   false
+    ).render
+    message_body = NotificationFactory::Renderer.new(
+      objects:  data[:objects],
+      locale:   data[:locale],
+      timezone: data[:timezone],
+      template: template[:body],
+      escape:   false
+    ).render
 
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
@@ -43,7 +61,13 @@ returns
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
-      message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], application_template, false).render
+      message_body = NotificationFactory::Renderer.new(
+        objects:  data[:objects],
+        locale:   data[:locale],
+        timezone: data[:timezone],
+        template: application_template,
+        escape:   false
+      ).render
     end
     {
       subject: message_subject.strip!,

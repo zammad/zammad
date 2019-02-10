@@ -103,6 +103,17 @@ class App.i18n
 
     window.navigator.userLanguage || window.navigator.language || 'en-us'
 
+  @detectBrowserTimezone: ->
+    return if !window.Intl
+    return if !window.Intl.DateTimeFormat
+    DateTimeFormat = Intl.DateTimeFormat()
+    return if !DateTimeFormat
+    return if !DateTimeFormat.resolvedOptions
+    resolvedOptions = DateTimeFormat.resolvedOptions()
+    return if !resolvedOptions
+    return if !resolvedOptions.timeZone
+    resolvedOptions.timeZone
+
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 

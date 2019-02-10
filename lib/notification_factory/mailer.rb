@@ -228,6 +228,7 @@ retunes
   result = NotificationFactory::Mailer.template(
     template: 'password_reset',
     locale: 'en-us',
+    timezone: 'America/Santiago',
     objects:  {
       recipient: User.find(2),
     },
@@ -236,6 +237,7 @@ retunes
   result = NotificationFactory::Mailer.template(
     templateInline: "Invitation to \#{config.product_name} at \#{config.fqdn}",
     locale: 'en-us',
+    timezone: 'America/Santiago',
     objects:  {
       recipient: User.find(2),
     },
@@ -247,6 +249,7 @@ only raw subject/body
   result = NotificationFactory::Mailer.template(
     template: 'password_reset',
     locale: 'en-us',
+    timezone: 'America/Santiago',
     objects:  {
       recipient: User.find(2),
     },
@@ -266,7 +269,13 @@ returns
   def self.template(data)
 
     if data[:templateInline]
-      return NotificationFactory::Renderer.new(data[:objects], data[:locale], data[:templateInline], data[:quote]).render
+      return NotificationFactory::Renderer.new(
+        objects:  data[:objects],
+        locale:   data[:locale],
+        timezone: data[:timezone],
+        template: data[:templateInline],
+        escape:   data[:quote]
+      ).render
     end
 
     template = NotificationFactory.template_read(
@@ -276,8 +285,19 @@ returns
       type:     'mailer',
     )
 
-    message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
-    message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:body]).render
+    message_subject = NotificationFactory::Renderer.new(
+      objects:  data[:objects],
+      locale:   data[:locale],
+      timezone: data[:timezone],
+      template: template[:subject],
+      escape:   false
+    ).render
+    message_body = NotificationFactory::Renderer.new(
+      objects:  data[:objects],
+      locale:   data[:locale],
+      timezone: data[:timezone],
+      template: template[:body]
+    ).render
 
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
@@ -286,7 +306,12 @@ returns
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
-      message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], application_template).render
+      message_body = NotificationFactory::Renderer.new(
+        objects:  data[:objects],
+        locale:   data[:locale],
+        timezone: data[:timezone],
+        template: application_template
+      ).render
     end
     {
       subject: message_subject,

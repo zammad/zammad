@@ -7,7 +7,7 @@ RSpec.describe Translation do
     Translation.sync('de-de')
   end
 
-  context 'default translations' do
+  context 'default string translations' do
 
     it 'en with existing word' do
       expect(Translation.translate('en', 'New')).to eq('New')
@@ -27,6 +27,82 @@ RSpec.describe Translation do
 
     it 'de-de with existing word' do
       expect(Translation.translate('de-de', 'Some Not Existing Word')).to eq('Some Not Existing Word')
+    end
+
+  end
+
+  context 'default timestamp translations' do
+
+    it 'de-de with array' do
+      expect(Translation.timestamp('de-de', 'Europe/Berlin', ['some value'])).to eq('["some value"]')
+    end
+
+    it 'not_existing with timestamp as string' do
+      expect(Translation.timestamp('not_existing', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('2018-10-10 10:00:00 UTC')
+    end
+
+    it 'not_existing with time object' do
+      expect(Translation.timestamp('not_existing', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('2018-10-10 10:00:00 UTC')
+    end
+
+    it 'not_existing with invalid timestamp string' do
+      expect(Translation.timestamp('not_existing', 'Europe/Berlin', 'something')).to eq('something')
+    end
+
+    it 'en-us with invalid time zone' do
+      expect(Translation.timestamp('en-us', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('10/10/2018 12:00 (Europe/Berlin)')
+    end
+
+    it 'en-us with timestamp as string' do
+      expect(Translation.timestamp('en-us', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('10/10/2018 12:00 (Europe/Berlin)')
+    end
+
+    it 'en-us with time object' do
+      expect(Translation.timestamp('en-us', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('10/10/2018 12:00 (Europe/Berlin)')
+    end
+
+    it 'de-de with timestamp as string' do
+      expect(Translation.timestamp('de-de', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('10.10.2018 12:00 (Europe/Berlin)')
+    end
+
+    it 'de-de with time object' do
+      expect(Translation.timestamp('de-de', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('10.10.2018 12:00 (Europe/Berlin)')
+    end
+
+  end
+
+  context 'default date translations' do
+
+    it 'de-de with array' do
+      expect(Translation.date('de-de', ['some value'])).to eq('["some value"]')
+    end
+
+    it 'not_existing with date as string' do
+      expect(Translation.date('not_existing', '2018-10-10')).to eq('2018-10-10')
+    end
+
+    it 'not_existing with date object' do
+      expect(Translation.date('not_existing', Date.parse('2018-10-10'))).to eq('2018-10-10')
+    end
+
+    it 'not_existing with invalid data as string' do
+      expect(Translation.date('not_existing', 'something')).to eq('something')
+    end
+
+    it 'en-us with date as string' do
+      expect(Translation.date('en-us', '2018-10-10')).to eq('10/10/2018')
+    end
+
+    it 'en-us with date object' do
+      expect(Translation.date('en-us', Date.parse('2018-10-10'))).to eq('10/10/2018')
+    end
+
+    it 'de-de with date as string' do
+      expect(Translation.date('de-de', '2018-10-10')).to eq('10.10.2018')
+    end
+
+    it 'de-de with date object' do
+      expect(Translation.date('de-de', Date.parse('2018-10-10'))).to eq('10.10.2018')
     end
 
   end

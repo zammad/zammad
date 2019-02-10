@@ -20,6 +20,12 @@ RSpec.describe 'Calendars', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
+
+      get '/api/v1/calendars/timezones', as: :json
+      expect(response).to have_http_status(401)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to eq('authentication failed')
     end
 
     it 'does calendar index with admin' do
@@ -58,6 +64,13 @@ RSpec.describe 'Calendars', type: :request do
       expect(json_response['timezones']['America/Sitka']).to be_between(-9, -8)
       expect(json_response['timezones']['Europe/Berlin']).to be_between(1, 2)
       expect(json_response['assets']).to be_truthy
+
+      # timezones
+      get '/api/v1/calendars/timezones', as: :json
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['timezones']).to be_a_kind_of(Hash)
+      expect(json_response['timezones']['America/New_York']).to be_truthy
     end
   end
 

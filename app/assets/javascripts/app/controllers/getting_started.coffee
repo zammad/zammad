@@ -340,6 +340,7 @@ class Base extends App.WizardFullScreen
     @params = @formParam(e.target)
     @params.logo = @logoPreview.attr('src')
     @params.locale_default = App.i18n.detectBrowserLocale()
+    @params.timezone_default = App.i18n.detectBrowserTimezone()
 
     store = (logoResizeDataUrl) =>
       @params.logo_resize = logoResizeDataUrl

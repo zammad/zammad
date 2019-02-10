@@ -2,6 +2,7 @@ require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
   setup do
+    Setting.set('timezone_default', 'Europe/Berlin')
     Trigger.create_or_update(
       name:                 'auto reply - new ticket',
       condition:            {
@@ -78,7 +79,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       roles:         roles,
       groups:        groups,
       preferences:   {
-        locale: 'en-ca',
+        locale:   'en-us',
+        timezone: 'America/St_Lucia',
       },
       updated_by_id: 1,
       created_by_id: 1,
@@ -1152,6 +1154,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # en notification
     result = NotificationFactory::Mailer.template(
       locale:   @agent2.preferences[:locale],
+      timezone: @agent2.preferences[:timezone],
       template: 'ticket_update',
       objects:  {
         ticket:    ticket1,
@@ -1165,7 +1168,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(/1 low/, result[:body])
     assert_match(/2 normal/, result[:body])
     assert_match(/Pending till/, result[:body])
-    assert_match(/2015-01-11 23:33:47 UTC/, result[:body])
+    assert_match('01/11/2015 19:33 (America/St_Lucia)', result[:body])
     assert_match(/update/, result[:body])
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
@@ -1181,9 +1184,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not(human_changes['pending_time'])
     assert_not(human_changes['pending_till'])
 
-    # de notification
+    # de & Europe/Berlin notification
     result = NotificationFactory::Mailer.template(
       locale:   @agent1.preferences[:locale],
+      timezone: @agent1.preferences[:timezone],
       template: 'ticket_update',
       objects:  {
         ticket:    ticket1,
@@ -1198,7 +1202,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(/1 niedrig/, result[:body])
     assert_match(/2 normal/, result[:body])
     assert_match(/Warten/, result[:body])
-    assert_match(/2015-01-11 23:33:47 UTC/, result[:body])
+    assert_match('12.01.2015 00:33 (Europe/Berlin)', result[:body])
     assert_match(/aktualis/, result[:body])
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
@@ -1229,6 +1233,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # de notification
     result = NotificationFactory::Mailer.template(
       locale:   @agent1.preferences[:locale],
+      timezone: @agent1.preferences[:timezone],
       template: 'ticket_update',
       objects:  {
         ticket:    ticket1,
@@ -1254,6 +1259,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # en notification
     result = NotificationFactory::Mailer.template(
       locale:   @agent2.preferences[:locale],
+      timezone: @agent2.preferences[:timezone],
       template: 'ticket_update',
       objects:  {
         ticket:    ticket1,
@@ -1275,6 +1281,22 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(/update/, result[:body])
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
+
+    # en notification
+    ticket1.escalation_at = Time.zone.parse('2019-04-01T10:00:00Z')
+    result = NotificationFactory::Mailer.template(
+      locale:   @agent2.preferences[:locale],
+      timezone: @agent2.preferences[:timezone],
+      template: 'ticket_escalation',
+      objects:  {
+        ticket:    ticket1,
+        article:   article,
+        recipient: @agent2,
+      }
+    )
+
+    assert_match('Ticket is escalated (some notification template test 1 Bobs\'s resumé', result[:subject])
+    assert_match('is escalated since "04/01/2019 06:00 (America/St_Lucia)"!', result[:body])
 
   end
 

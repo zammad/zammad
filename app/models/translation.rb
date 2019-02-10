@@ -215,6 +215,90 @@ translate strings in ruby context, e. g. for notifications
 
 =begin
 
+translate timestampes in ruby context, e. g. for notifications
+
+  translated = Translation.timestamp('de-de', 'Europe/Berlin', '2018-10-10T10:00:00Z0')
+
+or
+
+  translated = Translation.timestamp('de-de', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))
+
+=end
+
+  def self.timestamp(locale, timezone, timestamp)
+
+    if timestamp.class == String
+      begin
+        timestamp_parsed = Time.zone.parse(timestamp)
+        return timestamp.to_s if !timestamp_parsed
+
+        timestamp = timestamp_parsed
+      rescue
+        return timestamp.to_s
+      end
+    end
+
+    record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pluck(:target).first
+    return timestamp.to_s if !record
+
+    begin
+      timestamp = timestamp.in_time_zone(timezone)
+    rescue
+      return timestamp.to_s
+    end
+    record.sub!('dd', format('%02d', timestamp.day))
+    record.sub!('d', timestamp.day.to_s)
+    record.sub!('mm', format('%02d', timestamp.month))
+    record.sub!('m', timestamp.month.to_s)
+    record.sub!('yyyy', timestamp.year.to_s)
+    record.sub!('yy', timestamp.year.to_s.last(2))
+    record.sub!('SS', format('%02d', timestamp.sec.to_s))
+    record.sub!('MM', format('%02d', timestamp.min.to_s))
+    record.sub!('HH', format('%02d', timestamp.hour.to_s))
+    "#{record} (#{timezone})"
+  end
+
+=begin
+
+translate date in ruby context, e. g. for notifications
+
+  translated = Translation.date('de-de', '2018-10-10')
+
+or
+
+  translated = Translation.date('de-de', Date.parse('2018-10-10'))
+
+=end
+
+  def self.date(locale, date)
+
+    if date.class == String
+      begin
+        date_parsed = Date.parse(date)
+        return date.to_s if !date_parsed
+
+        date = date_parsed
+      rescue
+        return date.to_s
+      end
+    end
+
+    return date.to_s if date.class != Date
+
+    record = Translation.where(locale: locale, source: 'date', format: 'time').pluck(:target).first
+    return date.to_s if !record
+
+    record.sub!('dd', format('%02d', date.day))
+    record.sub!('d', date.day.to_s)
+    record.sub!('mm', format('%02d', date.month))
+    record.sub!('m', date.month.to_s)
+    record.sub!('yyyy', date.year.to_s)
+    record.sub!('yy', date.year.to_s.last(2))
+    record
+  end
+
+=begin
+
 load translations from local
 
 all:

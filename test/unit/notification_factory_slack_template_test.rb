@@ -66,7 +66,8 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
     changes = {}
     result = NotificationFactory::Slack.template(
       template: 'ticket_create',
-      locale:   'es-us',
+      locale:   'en-us',
+      timezone: 'Europe/Berlin',
       objects:  {
         ticket:       ticket,
         article:      article,
@@ -97,12 +98,14 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     changes = {
-      state: %w[aaa bbb],
-      group: %w[xxx yyy],
+      state:        %w[aaa bbb],
+      group:        %w[xxx yyy],
+      pending_time: [Time.zone.parse('2019-04-01T10:00:00Z0'), Time.zone.parse('2019-04-01T23:00:00Z0')],
     }
     result = NotificationFactory::Slack.template(
       template: 'ticket_update',
-      locale:   'es-us',
+      locale:   'en-us',
+      timezone: 'Europe/Berlin',
       objects:  {
         ticket:       ticket,
         article:      article,
@@ -111,14 +114,31 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
+
     assert_match('# Welcome to Zammad!', result[:subject])
     assert_match('User<b>xxx</b>', result[:body])
     assert_match('state: aaa -> bbb', result[:body])
     assert_match('group: xxx -> yyy', result[:body])
+    assert_match('pending_time: 04/01/2019 12:00 (Europe/Berlin) -> 04/02/2019 01:00 (Europe/Berlin)', result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
 
+    # en notification
+    ticket.escalation_at = Time.zone.parse('2019-04-01T10:00:00Z')
+    result = NotificationFactory::Slack.template(
+      template: 'ticket_escalation',
+      locale:   'en-us',
+      timezone: 'Europe/Berlin',
+      objects:  {
+        ticket:    ticket,
+        article:   article,
+        recipient: agent1,
+      }
+    )
+
+    assert_match('# Welcome to Zammad!', result[:subject])
+    assert_match('is escalated since "04/01/2019 12:00 (Europe/Berlin)"!', result[:body])
   end
 
 end

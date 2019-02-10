@@ -5,6 +5,6 @@ FactoryBot.define do
     template ''
     escape true
 
-    initialize_with { new(objects, locale, template, escape) }
+    initialize_with { new(objects: objects, locale: locale, template: template, escape: escape) }
   end
 end
