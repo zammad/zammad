@@ -4596,4 +4596,91 @@ class TicketTriggerTest < ActiveSupport::TestCase
     end
   end
 
+  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  test 'make sure auto reply using #{article.body_as_html} copies all articles image attachments as well' do
+    # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
+    trigger1 = Trigger.create!(
+      name:                 'auto reply with HTML quote',
+      condition:            {
+        'ticket.action'   => {
+          'operator' => 'is',
+          'value'    => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+        'ticket.title'    => {
+          'operator' => 'contains',
+          'value'    => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+        },
+      },
+      perform:              {
+        'notification.email' => {
+          'body'      => '#{article.body_as_html}',
+          'recipient' => 'article_last_sender',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
+    )
+
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail048.box')))
+
+    assert_equal('AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]', ticket1.title, 'ticket1.title verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(2, ticket1.articles.first.attachments.count)
+
+    article1 = ticket1.articles.last
+    assert_match('Thanks for your inquiry (AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545])!', article1.subject)
+    assert_equal(1, article1.attachments.count)
+    assert_equal('50606', article1.attachments[0].size)
+    assert_equal('CPG-Reklamationsmitteilung bezügl.01234567895 an Voda-28.03.2017.jpg', article1.attachments[0].filename)
+  end
+
+  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  test 'make sure auto reply using #{article.body_as_html} does not copy any non-image attachments' do
+    # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
+    trigger1 = Trigger.create!(
+      name:                 'auto reply with HTML quote',
+      condition:            {
+        'ticket.action'   => {
+          'operator' => 'is',
+          'value'    => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value'    => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+        'ticket.title'    => {
+          'operator' => 'contains',
+          'value'    => 'Online-apotheke. Günstigster Preis. Ohne Rezepte',
+        },
+      },
+      perform:              {
+        'notification.email' => {
+          'body'      => '#{article.body_as_html}',
+          'recipient' => 'article_last_sender',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active:               true,
+      created_by_id:        1,
+      updated_by_id:        1,
+    )
+
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail069.box')))
+
+    assert_equal('Online-apotheke. Günstigster Preis. Ohne Rezepte', ticket1.title, 'ticket1.title verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(1, ticket1.articles.first.attachments.count)
+
+    article1 = ticket1.articles.last
+    assert_match('Thanks for your inquiry (Online-apotheke. Günstigster Preis. Ohne Rezepte)!', article1.subject)
+    assert_equal(0, article1.attachments.count)
+  end
 end

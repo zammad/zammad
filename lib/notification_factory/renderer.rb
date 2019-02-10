@@ -126,6 +126,11 @@ examples how to use
       begin
         previous_object_refs = object_refs
         object_refs = object_refs.send(method.to_sym, *arguments)
+
+        # body_as_html should trigger the cloning of all inline attachments from the parent article (issue #2399)
+        if method.to_sym == :body_as_html && previous_object_refs.respond_to?(:should_clone_inline_attachments)
+          previous_object_refs.should_clone_inline_attachments = true
+        end
       rescue => e
         value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
         break

@@ -1486,6 +1486,12 @@ result
         preferences: attachment[:preferences],
       )
     end
+
+    original_article = objects[:article]
+    if original_article&.should_clone_inline_attachments? # rubocop:disable Style/GuardClause
+      original_article.clone_attachments('Ticket::Article', message.id, only_inline_attachments: true)
+      original_article.should_clone_inline_attachments = false # cancel the temporary flag after cloning
+    end
   end
 
   def sms_recipients_by_type(recipient_type, article)

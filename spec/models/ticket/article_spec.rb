@@ -124,4 +124,95 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
   end
+
+  describe 'clone attachments' do
+    context 'of forwarded article' do
+      context 'via email' do
+
+        it 'only need to clone attached attachments' do
+          article_parent = create(:ticket_article,
+                                  type:         Ticket::Article::Type.find_by(name: 'email'),
+                                  content_type: 'text/html',
+                                  body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
+          Store.add(
+            object:        'Ticket::Article',
+            o_id:          article_parent.id,
+            data:          'content_file1_normally_should_be_an_image',
+            filename:      'some_file1.jpg',
+            preferences:   {
+              'Content-Type'        => 'image/jpeg',
+              'Mime-Type'           => 'image/jpeg',
+              'Content-ID'          => '15.274327094.140938@zammad.example.com',
+              'Content-Disposition' => 'inline',
+            },
+            created_by_id: 1,
+          )
+          Store.add(
+            object:        'Ticket::Article',
+            o_id:          article_parent.id,
+            data:          'content_file2_normally_should_be_an_image',
+            filename:      'some_file2.jpg',
+            preferences:   {
+              'Content-Type'        => 'image/jpeg',
+              'Mime-Type'           => 'image/jpeg',
+              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+              'Content-Disposition' => 'inline',
+            },
+            created_by_id: 1,
+          )
+          article_new = create(:ticket_article)
+          UserInfo.current_user_id = 1
+
+          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_attached_attachments: true)
+
+          expect(attachments.count).to eq(1)
+          expect(attachments[0].filename).to eq('some_file2.jpg')
+        end
+      end
+    end
+
+    context 'of trigger' do
+      context 'via email notifications' do
+        it 'only need to clone inline attachments used in body' do
+          article_parent = create(:ticket_article,
+                                  type:         Ticket::Article::Type.find_by(name: 'email'),
+                                  content_type: 'text/html',
+                                  body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
+          Store.add(
+            object:        'Ticket::Article',
+            o_id:          article_parent.id,
+            data:          'content_file1_normally_should_be_an_image',
+            filename:      'some_file1.jpg',
+            preferences:   {
+              'Content-Type'        => 'image/jpeg',
+              'Mime-Type'           => 'image/jpeg',
+              'Content-ID'          => '15.274327094.140938@zammad.example.com',
+              'Content-Disposition' => 'inline',
+            },
+            created_by_id: 1,
+          )
+          Store.add(
+            object:        'Ticket::Article',
+            o_id:          article_parent.id,
+            data:          'content_file2_normally_should_be_an_image',
+            filename:      'some_file2.jpg',
+            preferences:   {
+              'Content-Type'        => 'image/jpeg',
+              'Mime-Type'           => 'image/jpeg',
+              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+              'Content-Disposition' => 'inline',
+            },
+            created_by_id: 1,
+          )
+          article_new = create(:ticket_article)
+          UserInfo.current_user_id = 1
+
+          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true )
+
+          expect(attachments.count).to eq(1)
+          expect(attachments[0].filename).to eq('some_file1.jpg')
+        end
+      end
+    end
+  end
 end
