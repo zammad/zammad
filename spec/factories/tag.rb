@@ -1,7 +1,15 @@
 FactoryBot.define do
   factory :tag do
-    tag_object_id { Tag::Object.lookup_by_name_and_create('Ticket').id }
-    tag_item_id { Tag::Item.lookup_by_name_and_create('blub').id }
-    created_by_id 1
+    transient do
+      o { Ticket.first }
+    end
+
+    tag_item_id   { Tag::Item.lookup_by_name_and_create('blub').id }
+    o_id          { o.id }
+    created_by_id { 1 }
+
+    tag_object_id do
+      Tag::Object.lookup(name: o.class.name)&.id || create(:'tag/object', name: o.class.name).id
+    end
   end
 end

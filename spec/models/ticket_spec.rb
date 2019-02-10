@@ -8,394 +8,373 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanLookup'
 
-  describe '#merge_to' do
-
-    it 'reassigns all links to the target ticket after merge' do
-      source_ticket     = create(:ticket)
-      target_ticket     = create(:ticket)
-
-      important_ticket1 = create(:ticket)
-      important_ticket2 = create(:ticket)
-      important_ticket3 = create(:ticket)
-
-      create(:link, link_object_source_value: source_ticket.id, link_object_target_value: important_ticket1.id)
-      create(:link, link_object_source_value: source_ticket.id, link_object_target_value: important_ticket2.id)
-      create(:link, link_object_source_value: source_ticket.id, link_object_target_value: important_ticket3.id)
-
-      source_ticket.merge_to(
-        ticket_id: target_ticket.id,
-        user_id:   1,
-      )
-
-      links = Link.list(
-        link_object:       'Ticket',
-        link_object_value: target_ticket.id,
-      )
-
-      expected_ticket_ids = [source_ticket.id, important_ticket1.id, important_ticket2.id, important_ticket3.id ]
-      check_ticket_ids    = links.collect { |link| link['link_object_value'] }
-
-      expect(check_ticket_ids).to match_array(expected_ticket_ids)
-    end
-
-    it 'prevents cross merging tickets' do
-      source_ticket     = create(:ticket)
-      target_ticket     = create(:ticket)
-
-      result = source_ticket.merge_to(
-        ticket_id: target_ticket.id,
-        user_id:   1,
-      )
-      expect(result).to be(true)
-
-      expect do
-        result = target_ticket.merge_to(
-          ticket_id: source_ticket.id,
-          user_id:   1,
-        )
-      end.to raise_error('ticket already merged, no merge into merged ticket possible')
-    end
-
-    it 'prevents merging ticket in it self' do
-      source_ticket = create(:ticket)
-
-      expect do
-        result = source_ticket.merge_to(
-          ticket_id: source_ticket.id,
-          user_id:   1,
-        )
-      end.to raise_error('Can\'t merge ticket with it self!')
-    end
-
-  end
-
-  describe '.create' do
-    it 'handles NULL byte in title' do
-      expect(create(:ticket, title: "some title \u0000 123"))
-        .to be_persisted
-    end
-  end
-
-  describe '#destroy' do
-
-    it 'deletes all related objects before destroy' do
-      ApplicationHandleInfo.current = 'application_server'
-
-      source_ticket = create(:ticket)
-
-      # create some links
-      important_ticket1 = create(:ticket)
-      important_ticket2 = create(:ticket)
-      important_ticket3 = create(:ticket)
-
-      # create some articles
-      create(:ticket_article, ticket_id: source_ticket.id)
-      create(:ticket_article, ticket_id: source_ticket.id)
-      create(:ticket_article, ticket_id: source_ticket.id)
-
-      create(:link, link_object_source_value: source_ticket.id, link_object_target_value: important_ticket1.id)
-      create(:link, link_object_source_value: important_ticket2.id, link_object_target_value: source_ticket.id)
-      create(:link, link_object_source_value: source_ticket.id, link_object_target_value: important_ticket3.id)
-
-      create(:online_notification, o_id: source_ticket.id)
-      create(:tag, o_id: source_ticket.id)
-
-      Observer::Transaction.commit
-      Scheduler.worker(true)
-
-      # get before destroy
-      activities = ActivityStream.where(
-        activity_stream_object_id: ObjectLookup.by_name('Ticket'),
-        o_id:                      source_ticket.id,
-      )
-      links = Link.list(
-        link_object:       'Ticket',
-        link_object_value: source_ticket.id
-      )
-      articles = Ticket::Article.where(ticket_id: source_ticket.id)
-      history = History.list('Ticket', source_ticket.id, nil, true)
-      karma_log = Karma::ActivityLog.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      online_notifications = OnlineNotification.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      recent_views = OnlineNotification.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      tags = Tag.tag_list(
-        object: 'Ticket',
-        o_id:   source_ticket.id,
-      )
-
-      # check before destroy
-      expect(activities.count).to be >= 0
-      expect(links.count).to be >= 0
-      expect(articles.count).to be >= 0
-      expect(history[:list].count).to be >= 0
-      expect(karma_log.count).to be >= 0
-      expect(online_notifications.count).to be >= 0
-      expect(recent_views.count).to be >= 0
-      expect(tags.count).to be >= 0
-
-      # destroy ticket
-      source_ticket.destroy
-
-      # get after destroy
-      activities = ActivityStream.where(
-        activity_stream_object_id: ObjectLookup.by_name('Ticket'),
-        o_id:                      source_ticket.id,
-      )
-      links = Link.list(
-        link_object:       'Ticket',
-        link_object_value: source_ticket.id
-      )
-      articles = Ticket::Article.where(ticket_id: source_ticket.id)
-      history = History.list('Ticket', source_ticket.id, nil, true)
-      karma_log = Karma::ActivityLog.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      online_notifications = OnlineNotification.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      recent_views = OnlineNotification.where(
-        object_lookup_id: ObjectLookup.by_name('Ticket'),
-        o_id:             source_ticket.id,
-      )
-      tags = Tag.tag_list(
-        object: 'Ticket',
-        o_id:   source_ticket.id,
-      )
-
-      # check after destroy
-      expect(activities.count).to be == 0
-      expect(links.count).to be == 0
-      expect(articles.count).to be == 0
-      expect(history[:list].count).to be == 0
-      expect(karma_log.count).to be == 0
-      expect(online_notifications.count).to be == 0
-      expect(recent_views.count).to be == 0
-      expect(tags.count).to be == 0
-
-    end
-
-  end
-
-  describe '#perform_changes' do
-
-    it 'performs a ticket state change on a ticket' do
-      source_ticket = create(:ticket)
-
-      changes = {
-        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s },
-      }
-
-      source_ticket.perform_changes(changes, 'trigger', source_ticket, User.find(1))
-      source_ticket.reload
-
-      expect(source_ticket.state.name).to eq('closed')
-    end
-
-    it 'performs a ticket deletion on a ticket' do
-      source_ticket = create(:ticket)
-
-      changes = {
-        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s },
-        'ticket.action'   => { 'value' => 'delete' },
-      }
-
-      source_ticket.perform_changes(changes, 'trigger', source_ticket, User.find(1))
-      ticket_with_source_ids = Ticket.where(id: source_ticket.id)
-      expect(ticket_with_source_ids).to match_array([])
-    end
-
-    # Regression test for https://github.com/zammad/zammad/issues/2001
-    it 'does not modify its arguments' do
-      trigger = Trigger.new(
-        perform: {
-          'notification.email' => {
-            body:      "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
-            recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
-            subject:   "Autoclose (\#{ticket.title})"
-          }
-        }
-      )
-
-      expect { Ticket.first.perform_changes(trigger.perform, 'trigger', {}, 1) }
-        .to not_change { trigger.perform['notification.email'][:body] }
-        .and not_change { trigger.perform['notification.email'][:subject] }
-    end
-
-    # Regression test for https://github.com/zammad/zammad/issues/1543
-    #
-    # If a new article fires an email notification trigger,
-    # and then another article is added to the same ticket
-    # before that trigger is performed,
-    # the email template's 'article' var should refer to the originating article,
-    # not the newest one.
-    #
-    # (This occurs whenever one action fires multiple email notification triggers.)
-    it 'passes the correct article to NotificationFactory::Mailer' do
-      # required by Ticket#perform_changes for email notifications
-      Group.first.update(email_address: create(:email_address))
-
-      ticket        = Ticket.first
-      orig_article  = Ticket::Article.where(ticket_id: ticket.id).first
-      newer_article = create(:ticket_article, ticket_id: ticket.id)
-      trigger       = Trigger.new(
-        perform: {
-          'notification.email' => {
-            body:      '',
-            recipient: 'ticket_customer',
-            subject:   ''
-          }
-        }
-      )
-
-      allow(NotificationFactory::Mailer).to receive(:template).and_return('')
-
-      ticket.perform_changes(trigger.perform, 'trigger', { article_id: orig_article.id }, 1)
-
-      expect(NotificationFactory::Mailer)
-        .to have_received(:template)
-        .with(hash_including(objects: { ticket: ticket, article: orig_article }))
-        .at_least(:once)
-
-      expect(NotificationFactory::Mailer)
-        .not_to have_received(:template)
-        .with(hash_including(objects: { ticket: ticket, article: newer_article }))
-    end
-  end
-
-  describe '#selectors' do
-
-    # https://github.com/zammad/zammad/issues/1769
-    it 'does not return multiple results for a single ticket' do
-      source_ticket = create(:ticket)
-      source_ticket2 = create(:ticket)
-
-      # create some articles
-      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf1@blubselector.de')
-      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf2@blubselector.de')
-      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf3@blubselector.de')
-      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf4@blubselector.de')
-      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf5@blubselector.de')
-      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf6@blubselector.de')
-
-      condition = {
-        'article.from' => {
-          operator: 'contains',
-          value:    'blubselector.de',
-        },
-      }
-
-      ticket_count, tickets = Ticket.selectors(condition, 100, nil, 'full')
-
-      expect(ticket_count).to be == 2
-      expect(tickets.count).to be == 2
-    end
-  end
-
-  context 'callbacks' do
-
-    describe '#reset_pending_time' do
-
-      it 'resets the pending time on state change' do
-        ticket = create(:ticket,
-                        state:        Ticket::State.lookup(name: 'pending reminder'),
-                        pending_time: Time.zone.now + 2.days)
-        expect(ticket.pending_time).not_to be nil
-
-        ticket.update!(state: Ticket::State.lookup(name: 'open'))
-        expect(ticket.pending_time).to be nil
-      end
-
-      it 'lets handle ActiveRecord nil as new value' do
-        ticket = create(:ticket)
-        expect do
-          ticket.update!(state: nil)
-        end.to raise_error(ActiveRecord::StatementInvalid)
-      end
-
-    end
-  end
-
-  describe '#access?' do
-
-    context 'agent' do
-
-      it 'allows owner access' do
-
-        owner  = create(:agent_user)
-        ticket = create(:ticket, owner: owner)
-
-        expect( ticket.access?(owner, 'full') ).to be(true)
-      end
-
-      it 'allows group access' do
-
-        agent  = create(:agent_user)
-        group  = create(:group)
-        ticket = create(:ticket, group: group)
-
-        agent.group_names_access_map = {
-          group.name => 'full',
-        }
-
-        expect( ticket.access?(agent, 'full') ).to be(true)
-      end
-
-      it 'prevents unauthorized access' do
-        agent  = create(:agent_user)
-        ticket = create(:ticket)
-
-        expect( ticket.access?(agent, 'read') ).to be(false)
-      end
-    end
-
-    context 'customer' do
-
-      it 'allows assigned access' do
-
-        customer = create(:customer_user)
-        ticket   = create(:ticket, customer: customer)
-
-        expect( ticket.access?(customer, 'full') ).to be(true)
-      end
-
-      context 'organization' do
-
-        it 'allows access for shared' do
-
-          organization = create(:organization)
-          assigned     = create(:customer_user, organization: organization)
-          collegue     = create(:customer_user, organization: organization)
-          ticket       = create(:ticket, customer: assigned)
-
-          expect( ticket.access?(collegue, 'full') ).to be(true)
+  subject(:ticket) { create(:ticket) }
+
+  describe 'Class methods:' do
+    describe '.selectors' do
+      # https://github.com/zammad/zammad/issues/1769
+      context 'when matching multiple tickets, each with multiple articles' do
+        let(:tickets) { create_list(:ticket, 2) }
+
+        before do
+          create(:ticket_article, ticket: tickets.first, from: 'asdf1@blubselector.de')
+          create(:ticket_article, ticket: tickets.first, from: 'asdf2@blubselector.de')
+          create(:ticket_article, ticket: tickets.first, from: 'asdf3@blubselector.de')
+          create(:ticket_article, ticket: tickets.last, from: 'asdf4@blubselector.de')
+          create(:ticket_article, ticket: tickets.last, from: 'asdf5@blubselector.de')
+          create(:ticket_article, ticket: tickets.last, from: 'asdf6@blubselector.de')
         end
 
-        it 'prevents unshared access' do
+        let(:condition) do
+          {
+            'article.from' => {
+              operator: 'contains',
+              value:    'blubselector.de',
+            },
+          }
+        end
 
-          organization = create(:organization, shared: false)
-          assigned     = create(:customer_user, organization: organization)
-          collegue     = create(:customer_user, organization: organization)
-          ticket       = create(:ticket, customer: assigned)
+        it 'returns a list of unique tickets (i.e., no duplicates)' do
+          expect(Ticket.selectors(condition, 100, nil, 'full'))
+            .to match_array([2, tickets])
+        end
+      end
+    end
+  end
 
-          expect( ticket.access?(collegue, 'full') ).to be(false)
+  describe 'Instance methods:' do
+    describe '#merge_to' do
+      let(:target_ticket) { create(:ticket) }
+
+      context 'when source ticket has Links' do
+        let(:linked_tickets) { create_list(:ticket, 3) }
+        let(:links) { linked_tickets.map { |l| create(:link, from: ticket, to: l) } }
+
+        it 'reassigns all links to the target ticket after merge' do
+          expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
+            .to change { links.each(&:reload).map(&:link_object_source_value) }
+            .to(Array.new(3) { target_ticket.id })
         end
       end
 
-      it 'prevents unauthorized access' do
-        customer = create(:customer_user)
-        ticket   = create(:ticket)
+      context 'when attempting to cross-merge (i.e., to merge B → A after merging A → B)' do
+        before { target_ticket.merge_to(ticket_id: ticket.id, user_id: 1) }
 
-        expect( ticket.access?(customer, 'read') ).to be(false)
+        it 'raises an error' do
+          expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
+            .to raise_error('ticket already merged, no merge into merged ticket possible')
+        end
+      end
+
+      context 'when attempting to self-merge (i.e., to merge A → A)' do
+        it 'raises an error' do
+          expect { ticket.merge_to(ticket_id: ticket.id, user_id: 1) }
+            .to raise_error("Can't merge ticket with it self!")
+        end
+      end
+    end
+
+    describe '#perform_changes' do
+      # Regression test for https://github.com/zammad/zammad/issues/2001
+      describe 'argument handling' do
+        let(:perform) do
+          {
+            'notification.email' => {
+              body:      "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
+              recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
+              subject:   "Autoclose (\#{ticket.title})"
+            }
+          }
+        end
+
+        it 'does not mutate contents of "perform" hash' do
+          expect { ticket.perform_changes(perform, 'trigger', {}, 1) }
+            .not_to change { perform }
+        end
+      end
+
+      context 'with "ticket.state_id" key in "perform" hash' do
+        let(:perform) do
+          {
+            'ticket.state_id' => {
+              'value' => Ticket::State.lookup(name: 'closed').id
+            }
+          }
+        end
+
+        it 'changes #state to specified value' do
+          expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+            .to change { ticket.reload.state.name }.to('closed')
+        end
+      end
+
+      context 'with "ticket.action" => { "value" => "delete" } in "perform" hash' do
+        let(:perform) do
+          {
+            'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s },
+            'ticket.action'   => { 'value' => 'delete' },
+          }
+        end
+
+        it 'performs a ticket deletion on a ticket' do
+          expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+            .to change { ticket.destroyed? }.to(true)
+        end
+      end
+
+      context 'with a "notification.email" trigger' do
+        # Regression test for https://github.com/zammad/zammad/issues/1543
+        #
+        # If a new article fires an email notification trigger,
+        # and then another article is added to the same ticket
+        # before that trigger is performed,
+        # the email template's 'article' var should refer to the originating article,
+        # not the newest one.
+        #
+        # (This occurs whenever one action fires multiple email notification triggers.)
+        context 'when two articles are created before the trigger fires once (race condition)' do
+          let!(:article) { create(:ticket_article, ticket: ticket) }
+          let!(:new_article) { create(:ticket_article, ticket: ticket) }
+
+          let(:trigger) do
+            build(:trigger,
+                  perform: {
+                    'notification.email' => {
+                      body:      '',
+                      recipient: 'ticket_customer',
+                      subject:   ''
+                    }
+                  })
+          end
+
+          # required by Ticket#perform_changes for email notifications
+          before { article.ticket.group.update(email_address: create(:email_address)) }
+
+          it 'passes the first article to NotificationFactory::Mailer' do
+            expect(NotificationFactory::Mailer)
+              .to receive(:template)
+              .with(hash_including(objects: { ticket: ticket, article: article }))
+              .at_least(:once)
+              .and_call_original
+
+            expect(NotificationFactory::Mailer)
+              .not_to receive(:template)
+              .with(hash_including(objects: { ticket: ticket, article: new_article }))
+
+            ticket.perform_changes(trigger.perform, 'trigger', { article_id: article.id }, 1)
+          end
+        end
+      end
+    end
+
+    describe '#access?' do
+      context 'when given ticket’s owner' do
+        it 'returns true for both "read" and "full" privileges' do
+          expect(ticket.access?(ticket.owner, 'read')).to be(true)
+          expect(ticket.access?(ticket.owner, 'full')).to be(true)
+        end
+      end
+
+      context 'when given the ticket’s customer' do
+        it 'returns true for both "read" and "full" privileges' do
+          expect(ticket.access?(ticket.customer, 'read')).to be(true)
+          expect(ticket.access?(ticket.customer, 'full')).to be(true)
+        end
+      end
+
+      context 'when given a user that is neither owner nor customer' do
+        let(:user) { create(:agent_user) }
+
+        it 'returns false for both "read" and "full" privileges' do
+          expect(ticket.access?(user, 'read')).to be(false)
+          expect(ticket.access?(user, 'full')).to be(false)
+        end
+
+        context 'but the user is an agent with full access to ticket’s group' do
+          before { user.group_names_access_map = { ticket.group.name => 'full' } }
+
+          it 'returns true for both "read" and "full" privileges' do
+            expect(ticket.access?(user, 'read')).to be(true)
+            expect(ticket.access?(user, 'full')).to be(true)
+          end
+        end
+
+        context 'but the user is a customer from the same organization as ticket’s customer' do
+          subject(:ticket) { create(:ticket, customer: customer) }
+          let(:customer) { create(:customer_user, organization: create(:organization)) }
+          let(:colleague) { create(:customer_user, organization: customer.organization) }
+
+          context 'and organization.shared is true (default)' do
+            it 'returns true for both "read" and "full" privileges' do
+              expect(ticket.access?(colleague, 'read')).to be(true)
+              expect(ticket.access?(colleague, 'full')).to be(true)
+            end
+          end
+
+          context 'but organization.shared is false' do
+            before { customer.organization.update(shared: false) }
+
+            it 'returns false for both "read" and "full" privileges' do
+              expect(ticket.access?(colleague, 'read')).to be(false)
+              expect(ticket.access?(colleague, 'full')).to be(false)
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe 'Attributes:' do
+    describe '#pending_time' do
+      subject(:ticket) { create(:ticket, pending_time: Time.zone.now + 2.days) }
+
+      context 'when #state is updated to any non-"pending" value' do
+        it 'is reset to nil' do
+          expect { ticket.update!(state: Ticket::State.lookup(name: 'open')) }
+            .to change { ticket.pending_time }.to(nil)
+        end
+      end
+
+      # Regression test for commit 92f227786f298bad1ccaf92d4478a7062ea6a49f
+      context 'when #state is updated to nil (violating DB NOT NULL constraint)' do
+        it 'does not prematurely raise within the callback (#reset_pending_time)' do
+          expect { ticket.update!(state: nil) }
+            .to raise_error(ActiveRecord::StatementInvalid)
+        end
+      end
+    end
+  end
+
+  describe 'Callbacks & Observers -' do
+    describe 'NULL byte handling (via ChecksAttributeValuesAndLength concern):' do
+      it 'removes them from title on creation, if necessary (postgres doesn’t like them)' do
+        expect { create(:ticket, title: "some title \u0000 123") }
+          .not_to raise_error
+      end
+    end
+
+    describe 'Association & attachment management:' do
+      it 'deletes all related ActivityStreams on destroy' do
+        create_list(:activity_stream, 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { ActivityStream.exists?(activity_stream_object_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
+          .to(false)
+      end
+
+      it 'deletes all related Links on destroy' do
+        create(:link, from: ticket, to: create(:ticket))
+        create(:link, from: create(:ticket), to: ticket)
+        create(:link, from: ticket, to: create(:ticket))
+
+        expect { ticket.destroy }
+          .to change { Link.where('link_object_source_value = :id OR link_object_target_value = :id', id: ticket.id).any? }
+          .to(false)
+      end
+
+      it 'deletes all related Articles on destroy' do
+        create_list(:ticket_article, 3, ticket: ticket)
+
+        expect { ticket.destroy }
+          .to change { Ticket::Article.exists?(ticket: ticket) }
+          .to(false)
+      end
+
+      it 'deletes all related OnlineNotifications on destroy' do
+        create_list(:online_notification, 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { OnlineNotification.where(object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id).any? }
+          .to(false)
+      end
+
+      it 'deletes all related Tags on destroy' do
+        create_list(:tag, 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { Tag.exists?(tag_object_id: Tag::Object.lookup(name: 'Ticket').id, o_id: ticket.id) }
+          .to(false)
+      end
+
+      it 'deletes all related Histories on destroy' do
+        create_list(:history, 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { History.exists?(history_object_id: History::Object.lookup(name: 'Ticket').id, o_id: ticket.id) }
+          .to(false)
+      end
+
+      it 'deletes all related Karma::ActivityLogs on destroy' do
+        create_list(:'karma/activity_log', 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { Karma::ActivityLog.exists?(object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
+          .to(false)
+      end
+
+      it 'deletes all related RecentViews on destroy' do
+        create_list(:recent_view, 3, o: ticket)
+
+        expect { ticket.destroy }
+          .to change { RecentView.exists?(recent_view_object_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
+          .to(false)
+      end
+
+      context 'when ticket is generated from email (with attachments)' do
+        subject(:ticket) { Channel::EmailParser.new.process({}, raw_email).first }
+        let(:raw_email) { File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box')) }
+
+        it 'adds attachments to the Store{::File,::Provider::DB} tables' do
+          expect { ticket }
+            .to change { Store.count }.by(2)
+            .and change { Store::File.count }.by(2)
+            .and change { Store::Provider::DB.count }.by(2)
+        end
+
+        context 'and subsequently destroyed' do
+          it 'deletes all related attachments' do
+            ticket  # create ticket
+
+            expect { ticket.destroy }
+              .to change { Store.count }.by(-2)
+              .and change { Store::File.count }.by(-2)
+              .and change { Store::Provider::DB.count }.by(-2)
+          end
+        end
+
+        context 'and a duplicate ticket is generated from the same email' do
+          before { ticket }  # create ticket
+          let(:duplicate) { Channel::EmailParser.new.process({}, raw_email).first }
+
+          it 'adds duplicate attachments to the Store table only' do
+            expect { duplicate }
+              .to change { Store.count }.by(2)
+              .and change { Store::File.count }.by(0)
+              .and change { Store::Provider::DB.count }.by(0)
+          end
+
+          context 'when only the duplicate ticket is destroyed' do
+            it 'deletes only the duplicate attachments' do
+              duplicate  # create ticket
+
+              expect { duplicate.destroy }
+                .to change { Store.count }.by(-2)
+                .and change { Store::File.count }.by(0)
+                .and change { Store::Provider::DB.count }.by(0)
+            end
+          end
+
+          context 'when only the duplicate ticket is destroyed' do
+            it 'deletes all related attachments' do
+              duplicate.destroy
+
+              expect { ticket.destroy }
+                .to change { Store.count }.by(-2)
+                .and change { Store::File.count }.by(-2)
+                .and change { Store::Provider::DB.count }.by(-2)
+            end
+          end
+        end
       end
     end
   end
