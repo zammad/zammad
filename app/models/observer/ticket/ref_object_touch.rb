@@ -29,7 +29,7 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch new/current customer
-    record.customer&.touch
+    record.customer&.touch # rubocop:disable Rails/SkipsModelValidations
 
     # touch old organization if changed
     organization_id_changed = record.saved_changes['organization_id']

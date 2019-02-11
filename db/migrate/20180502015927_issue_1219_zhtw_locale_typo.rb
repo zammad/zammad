@@ -12,7 +12,7 @@ class Issue1219ZhtwLocaleTypo < ActiveRecord::Migration[5.1]
       Locale.find_by(locale: 'zj-tw')&.update(locale: 'zh-tw')
     end
 
-    Translation.where(locale: 'zj-tw')&.update_all(locale: 'zh-tw')
+    Translation.where(locale: 'zj-tw')&.update_all(locale: 'zh-tw') # rubocop:disable Rails/SkipsModelValidations
     User.where('preferences LIKE ?', "%\nlocale: zj-tw\n%").each do |u|
       u.preferences[:locale] = 'zh-tw'
       u.save
@@ -29,7 +29,7 @@ class Issue1219ZhtwLocaleTypo < ActiveRecord::Migration[5.1]
       Locale.find_by(locale: 'zh-tw')&.update(locale: 'zj-tw')
     end
 
-    Translation.where(locale: 'zh-tw')&.update_all(locale: 'zj-tw')
+    Translation.where(locale: 'zh-tw')&.update_all(locale: 'zj-tw') # rubocop:disable Rails/SkipsModelValidations
     User.where('preferences LIKE ?', "%\nlocale: zh-tw\n%").each do |u|
       u.preferences[:locale] = 'zj-tw'
       u.save
