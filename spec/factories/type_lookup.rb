@@ -11,7 +11,7 @@ FactoryBot.define do
                  .dig([:base, []])
                  .merge(TypeLookup.pluck(:name))
 
-      Faker::Verb.unique.base
+      Faker::Verb.unique.past_participle
     end
   end
 end
