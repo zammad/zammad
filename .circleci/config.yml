@@ -1,0 +1,67 @@
+version: 2.1
+jobs:
+  lint-scripts:
+    docker:
+      - image: koalaman/shellcheck-alpine
+    steps:
+      - checkout
+      - run:
+          name: lint-scripts
+          command: .circleci/lint-scripts.sh
+
+  install-mysql:
+    docker:
+      - image: circleci/ruby:2.4.4
+      - image: circleci/mysql:5.7-ram
+        command: --max_allowed_packet=64MB
+        environment:
+          MYSQL_DATABASE: zammad_test
+          MYSQL_USER: zammad_test
+          MYSQL_PASSWORD: zammad_test
+    environment:
+      RAILS_ENV: test
+    steps:
+      - checkout
+      - run:
+          name: install-mysql
+          command: .circleci/install.sh
+
+  install-postgresql:
+    docker:
+      - image: circleci/ruby:2.4.4
+      - image: circleci/postgres:11-ram
+        environment:
+          POSTGRES_DB: zammad_test
+          POSTGRES_USER: zammad_test
+          POSTGRES_PASSWORD: zammad_test
+    environment:
+      RAILS_ENV: test
+    steps:
+      - checkout
+      - run:
+          name: install-postgresql
+          command: .circleci/install.sh
+
+  docker-image-build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: docker-image-build
+          command: .circleci/docker-image-build.sh
+
+workflows:
+  version: 2
+  install_unittest_dockerbuild:
+    jobs:
+      - lint-scripts
+      - install-mysql:
+          requires:
+            - lint-scripts
+      - install-postgresql:
+          requires:
+            - lint-scripts
+      - docker-image-build:
+          requires:
+            - install-mysql
+            - install-postgresql
