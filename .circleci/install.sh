@@ -3,8 +3,6 @@
 # install & unit test zammad
 #
 
-exit 0
-
 set -o errexit
 set -o pipefail
 
