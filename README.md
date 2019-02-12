@@ -2,8 +2,8 @@
 
 Zammad is a web based open source helpdesk/customer support system with many
 features to manage customer communication via several channels like telephone,
-facebook, twitter, chat and e-mails. It is distributed under the GNU AFFERO
-General Public License (AGPL).
+facebook, twitter, chat and e-mails. It is distributed under version 3 of the
+GNU AFFERO General Public License (GNU AGPLv3).
 
 Do you receive many e-mails and want to answer them with a team of agents?
 
@@ -11,7 +11,7 @@ You're going to love Zammad!
 
 ## Status
 
-- Build: [![Build Status](https://travis-ci.org/zammad/zammad.svg?branch=develop)](https://travis-ci.org/zammad/zammad)
+- Build: [![Build Status](https://circleci.com/gh/zammad/zammad.svg?style=svg)](https://circleci.com/gh/zammad/zammad)
 - Code: [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Coverage Status](https://coveralls.io/repos/github/zammad/zammad/badge.svg)](https://coveralls.io/github/zammad/zammad)
 - Docs: [![Documentation Status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
 - Issues: [![Percentage of issues still open](http://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")
@@ -44,4 +44,3 @@ https://zammad.org/participate
 Thanks! ❤️ ❤️ ❤️
 
  Your Zammad Team
-
