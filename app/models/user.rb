@@ -6,6 +6,7 @@ class User < ApplicationModel
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport
+  include ChecksHtmlSanitized
   include HasGroups
   include HasRoles
 
@@ -65,6 +66,8 @@ class User < ApplicationModel
                          :organizations,
                          :groups,
                          :user_groups
+
+  sanitized_html :note
 
   def ignore_search_indexing?(_action)
     # ignore internal user

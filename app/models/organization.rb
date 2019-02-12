@@ -7,6 +7,7 @@ class Organization < ApplicationModel
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport
+  include ChecksHtmlSanitized
 
   include Organization::ChecksAccess
   include Organization::Assets
@@ -21,6 +22,8 @@ class Organization < ApplicationModel
   validates :name, presence: true
 
   activity_stream_permission 'admin.role'
+
+  sanitized_html :note
 
   private
 
