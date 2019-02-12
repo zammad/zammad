@@ -33,7 +33,9 @@ returns
     end
     if !data[ app_model_ticket ][ ticket_id ]
       ticket = Ticket.lookup(id: ticket_id)
-      data = ticket.assets(data)
+      if ticket
+        data = ticket.assets(data)
+      end
     end
 
     if !data[ app_model_article ]

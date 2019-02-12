@@ -61,6 +61,8 @@ returns
           next if data[:Role] && data[:Role][role_id]
 
           role = Role.lookup(id: role_id)
+          next if !role
+
           data = role.assets(data)
         end
 
