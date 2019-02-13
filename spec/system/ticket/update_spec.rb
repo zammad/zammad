@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Ticket Create', type: :system do
+RSpec.describe 'Ticket Update', type: :system do
 
   let(:group) { Group.find_by(name: 'Users') }
 
@@ -20,6 +20,32 @@ RSpec.describe 'Ticket Create', type: :system do
 
       # the update should have failed and thus the ticket is still in the new state
       expect(ticket.reload.state.name).to eq('new')
+    end
+  end
+
+  # Issue #2469 - Add information "Ticket merged" to History
+  context 'when merging tickets' do
+    scenario 'tickets history of both tickets should show the merge event' do
+      user = create :user
+      origin_ticket = create :ticket, group: group
+      target_ticket = create :ticket, group: group
+      origin_ticket.merge_to(ticket_id: target_ticket.id, user_id: user.id)
+
+      visit "#ticket/zoom/#{origin_ticket.id}"
+      click '.content.active .js-actions .dropdown-toggle'
+      click '.content.active .js-actions .dropdown-menu [data-type="ticket-history"]'
+
+      modal = find('.content.active .modal')
+      expect(modal).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
+      expect(modal).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
+
+      visit "#ticket/zoom/#{target_ticket.id}"
+      click '.content.active .js-actions .dropdown-toggle'
+      click '.content.active .js-actions .dropdown-menu [data-type="ticket-history"]'
+
+      modal = find('.content.active .modal')
+      expect(modal).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
+      expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
     end
   end
 end

@@ -74,6 +74,35 @@ RSpec.describe Ticket, type: :model do
             .to raise_error("Can't merge ticket with it self!")
         end
       end
+
+      # Issue #2469 - Add information "Ticket merged" to History
+      context 'when merging' do
+        let(:merge_user) { create(:user) }
+
+        it 'creates history entries in both the origin ticket and the target ticket' do
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+
+          expect(target_ticket.history_get.size).to eq 2
+
+          target_history = target_ticket.history_get.last
+          expect(target_history['object']).to eq 'Ticket'
+          expect(target_history['type']).to eq 'received_merge'
+          expect(target_history['created_by_id']).to eq merge_user.id
+          expect(target_history['o_id']).to eq target_ticket.id
+          expect(target_history['id_to']).to eq target_ticket.id
+          expect(target_history['id_from']).to eq ticket.id
+
+          expect(ticket.history_get.size).to eq 4
+
+          origin_history = ticket.reload.history_get[1]
+          expect(origin_history['object']).to eq 'Ticket'
+          expect(origin_history['type']).to eq 'merged_into'
+          expect(origin_history['created_by_id']).to eq merge_user.id
+          expect(origin_history['o_id']).to eq ticket.id
+          expect(origin_history['id_to']).to eq target_ticket.id
+          expect(origin_history['id_from']).to eq ticket.id
+        end
+      end
     end
 
     describe '#perform_changes' do

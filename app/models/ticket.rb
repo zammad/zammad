@@ -310,7 +310,19 @@ returns
       # quiet update of reassign of articles
       Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]]) # rubocop:disable Rails/SkipsModelValidations
 
-      # update history
+      # add merge event to both ticket's history (Issue #2469 - Add information "Ticket merged" to History)
+      target_ticket.history_log(
+        'received_merge',
+        data[:user_id],
+        id_to:   target_ticket.id,
+        id_from: id,
+      )
+      history_log(
+        'merged_into',
+        data[:user_id],
+        id_to:   target_ticket.id,
+        id_from: id,
+      )
 
       # create new merge article
       Ticket::Article.create(
@@ -322,8 +334,6 @@ returns
         created_by_id: data[:user_id],
         updated_by_id: data[:user_id],
       )
-
-      # add history to both
 
       # reassign links to the new ticket
       # rubocop:disable Rails/SkipsModelValidations
