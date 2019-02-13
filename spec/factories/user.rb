@@ -19,6 +19,10 @@ FactoryBot.define do
 
     factory :customer_user, aliases: %i[customer] do
       role_ids { Role.signup_role_ids.sort }
+
+      trait :with_org do
+        organization
+      end
     end
 
     factory :agent_user, aliases: %i[agent] do
