@@ -16,7 +16,7 @@ if [ "${CIRCLE_BRANCH}" == 'develop' ]; then
   export DOCKER_REPOSITORY
   GITHUB_REPOSITORY="zammad-docker"
 elif [ "${CIRCLE_BRANCH}" == 'stable' ]; then
-  BUILD_SCRIPT="hooks/build.sh"
+  BUILD_SCRIPT="hooks/build"
   DOCKER_REPOSITORY="zammad-docker-compose"
   export DOCKER_REPOSITORY
   GITHUB_REPOSITORY="zammad-docker-compose"
