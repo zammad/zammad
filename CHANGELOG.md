@@ -1,5 +1,24 @@
 # Change Log
 
+## [2.8.1](https://github.com/zammad/zammad/tree/2.8.1) (2019-02-14)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.8.0...2.8.1)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+- Increased timeout for big attachments [2440](https://github.com/zammad/zammad/pull/2440)
+- Zammad Icon (Bird) on page top left disappears and does not come back [2419](https://github.com/zammad/zammad/issues/2419) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Unable to show ticket history [2420](https://github.com/zammad/zammad/issues/2420) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Missing table name quoting causes MySQL 8 incompatibility [2418](https://github.com/zammad/zammad/issues/2418) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- i-doit version >= 1.12 integration requests fail with 'Can’t fetch objects from...' [2412](https://github.com/zammad/zammad/issues/2412) [[bug](https://github.com/zammad/zammad/labels/bug)] [[integration](https://github.com/zammad/zammad/labels/integration)]
+- Unable to load Zammad in web browser, because of online notification of ticket which was already deleted in the meantime [2405](https://github.com/zammad/zammad/issues/2405) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Missing custom object in database causes error on export in time_accounting [2398](https://github.com/zammad/zammad/issues/2398) [[bug](https://github.com/zammad/zammad/labels/bug)] [[time accounting](https://github.com/zammad/zammad/labels/time accounting)]
+- Unable to process emails without From (but with Sender) header. [2397](https://github.com/zammad/zammad/issues/2397) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Search term is deleted after I opened a object/ticket [2395](https://github.com/zammad/zammad/issues/2395) [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Jump to bottom after article has been created to show that the article has been saved. [2394](https://github.com/zammad/zammad/issues/2394)
+- Missing translation for Full-Quote-Text "on xy wrote" [2344](https://github.com/zammad/zammad/issues/2344) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[translation](https://github.com/zammad/zammad/labels/translation)]
+
+
 ## [2.8.0](https://github.com/zammad/zammad/tree/2.8.0) (2018-12-03)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.7.0...2.8.0)
 
