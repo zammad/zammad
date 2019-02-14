@@ -151,4 +151,124 @@ class StoreTest < ActiveSupport::TestCase
       assert_not(attachments[0])
     end
   end
+
+  test 'test resizable' do
+
+    # not possible
+    store = Store.add(
+      object:        'SomeObject1',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'text/plain',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_not(store.preferences.key?(:resizable))
+    assert_not(store.preferences.key?(:content_inline))
+    assert_not(store.preferences.key?(:content_preview))
+    assert_raises(RuntimeError) do
+      store.content_inline
+    end
+    assert_raises(RuntimeError) do
+      store.content_preview
+    end
+
+    # not possible
+    store = Store.add(
+      object:        'SomeObject2',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'image/jpg',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_equal(store.preferences[:resizable], false)
+    assert_not(store.preferences.key?(:content_inline))
+    assert_not(store.preferences.key?(:content_preview))
+    assert_raises(RuntimeError) do
+      store.content_inline
+    end
+    assert_raises(RuntimeError) do
+      store.content_preview
+    end
+
+    # possible (preview and inline)
+    store = Store.add(
+      object:        'SomeObject3',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload2.jpg')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'image/jpg',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_equal(store.preferences[:resizable], true)
+    assert_equal(store.preferences[:content_inline], true)
+    assert_equal(store.preferences[:content_preview], true)
+
+    temp_file = ::Tempfile.new.path
+    File.binwrite(temp_file, store.content_inline)
+    image = Rszr::Image.load(temp_file)
+    assert_equal(image.width, 1800)
+
+    temp_file = ::Tempfile.new.path
+    File.binwrite(temp_file, store.content_preview)
+    image = Rszr::Image.load(temp_file)
+    assert_equal(image.width, 200)
+
+    # possible (preview only)
+    store = Store.add(
+      object:        'SomeObject4',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'image', '1000x1000.png')),
+      filename:      'test1.png',
+      preferences:   {
+        content_type: 'image/png',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_equal(store.preferences[:resizable], true)
+    assert_nil(store.preferences[:content_inline])
+    assert_equal(store.preferences[:content_preview], true)
+    assert_raises(RuntimeError) do
+      store.content_inline
+    end
+
+    temp_file = ::Tempfile.new.path
+    File.binwrite(temp_file, store.content_preview)
+    image = Rszr::Image.load(temp_file)
+    assert_equal(image.width, 200)
+
+    # possible (now preview or inline needed)
+    store = Store.add(
+      object:        'SomeObject5',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'image', '1x1.png')),
+      filename:      'test1.png',
+      preferences:   {
+        content_type: 'image/png',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_equal(store.preferences[:resizable], true)
+    assert_nil(store.preferences[:content_inline])
+    assert_nil(store.preferences[:content_preview])
+    assert_raises(RuntimeError) do
+      store.content_inline
+    end
+    assert_raises(RuntimeError) do
+      store.content_preview
+    end
+
+  end
 end

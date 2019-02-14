@@ -501,7 +501,7 @@ do(window) ->
     stopPropagation: (event) ->
       event.stopPropagation()
 
-    onPaste: (e) =>
+    onDrop: (e) =>
       e.stopPropagation()
       e.preventDefault()
 

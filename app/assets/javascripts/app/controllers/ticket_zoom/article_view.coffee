@@ -421,4 +421,4 @@ class ArticleViewItem extends App.ObserverController
   imageView: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)
+    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML, parentElement: $(e.currentTarget))

@@ -10,7 +10,7 @@ DB_CONFIG="test:\n  adapter: postgresql\n  database: zammad_test\n  host: 127.0.
 
 # install build dependencies
 sudo apt-get update
-sudo apt-get install -y --no-install-recommends autoconf automake autotools-dev bison build-essential curl git-core libffi-dev libgdbm-dev libgmp-dev libmariadbclient-dev-compat libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libtool libxml2-dev libxslt1-dev libyaml-0-2 libyaml-dev patch pkg-config postfix sqlite3 zlib1g-dev
+sudo apt-get install -y --no-install-recommends autoconf automake autotools-dev bison build-essential curl git-core libffi-dev libgdbm-dev libgmp-dev libmariadbclient-dev-compat libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libtool libxml2-dev libxslt1-dev libyaml-0-2 libyaml-dev patch pkg-config postfix sqlite3 zlib1g-dev libimlib2 libimlib2-dev
 
 if [ "${CIRCLE_JOB}" == "install-mysql" ]; then
   DB_ADAPTER="mysql2"
