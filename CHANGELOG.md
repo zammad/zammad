@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.7.2](https://github.com/zammad/zammad/tree/2.7.2) (2019-02-14)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.7.1...2.7.2)
+
+**Fixed bugs:**
+- Improved header handling.
+
+
 ## [2.7.1](https://github.com/zammad/zammad/tree/2.7.1) (2018-12-03)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.7.0...2.7.1)
 
