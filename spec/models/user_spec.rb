@@ -3,6 +3,7 @@ require 'models/application_model_examples'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
+require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_lookup_examples'
 
@@ -10,6 +11,7 @@ RSpec.describe User do
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'HasGroups', group_access_factory: :agent_user
   it_behaves_like 'HasRoles', group_access_factory: :agent_user
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanLookup'
@@ -831,4 +833,5 @@ RSpec.describe User do
       end
     end
   end
+
 end

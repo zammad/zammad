@@ -808,7 +808,8 @@ class App.TicketZoom extends App.Controller
     @autosaveStop()
 
     # validate ticket form using HTML5 validity check
-    if !@$('.edit').parent().get(0).reportValidity()
+    element = @$('.edit').parent().get(0)
+    if element && element.reportValidity && !element.reportValidity()
       @submitEnable(e)
       @autosaveStart()
       return

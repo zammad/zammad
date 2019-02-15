@@ -255,8 +255,21 @@ class TicketArticlesController < ApplicationController
 
     disposition = sanitized_disposition
 
+    content = nil
+    if params[:view].present? && file.preferences[:resizable] == true
+      if file.preferences[:content_inline] == true && params[:view] == 'inline'
+        content = file.content_inline
+      elsif file.preferences[:content_preview] == true && params[:view] == 'preview'
+        content = file.content_preview
+      end
+    end
+
+    if content.blank?
+      content = file.content
+    end
+
     send_data(
-      file.content,
+      content,
       filename:    file.filename,
       type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
       disposition: disposition

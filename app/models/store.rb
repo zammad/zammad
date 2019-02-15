@@ -34,7 +34,7 @@ returns
 =end
 
   def self.add(data)
-    data = data.stringify_keys
+    data.deep_stringify_keys!
 
     # lookup store_object.id
     store_object = Store::Object.create_if_not_exists(name: data['object'])
@@ -50,8 +50,33 @@ returns
     data.delete('data')
     data.delete('object')
 
+    data['preferences'] ||= {}
+    ['Mime-Type', 'Content-Type', 'mime_type', 'content_type'].each do |key|
+      next if data['preferences'][key].blank?
+      next if !data['preferences'][key].match(%r{image/(jpeg|jpg|png)}i)
+
+      data['preferences']['resizable'] = true
+      break
+    end
+
     # store meta data
     store = Store.create!(data)
+
+    begin
+      if store.preferences[:resizable] == true
+        if store.content_preview(silence: true)
+          store.preferences[:content_preview] = true
+        end
+        if store.content_inline(silence: true)
+          store.preferences[:content_inline] = true
+        end
+        store.save!
+      end
+    rescue => e
+      logger.error e
+      store.preferences[:resizable] = false
+      store.save!
+    end
 
     store
   end
@@ -165,6 +190,52 @@ returns
 
 =begin
 
+get content of file in preview size
+
+  store = Store.find(store_id)
+  content_as_string = store.content_preview
+
+returns
+
+  content_as_string
+
+=end
+
+  def content_preview(options = {})
+    file = Store::File.find_by(id: store_file_id)
+    if !file
+      raise "No such file #{store_file_id}!"
+    end
+    raise 'Unable to generate preview' if options[:silence] != true && preferences[:content_preview] != true
+
+    image_resize(file.content, 200)
+  end
+
+=begin
+
+get content of file in inline size
+
+  store = Store.find(store_id)
+  content_as_string = store.content_inline
+
+returns
+
+  content_as_string
+
+=end
+
+  def content_inline(options = {})
+    file = Store::File.find_by(id: store_file_id)
+    if !file
+      raise "No such file #{store_file_id}!"
+    end
+    raise 'Unable to generate inline' if options[:silence] != true && preferences[:content_inline] != true
+
+    image_resize(file.content, 1800)
+  end
+
+=begin
+
 get content of file
 
   store = Store.find(store_id)
@@ -204,4 +275,32 @@ returns
 
     file.provider
   end
+
+  private
+
+  def image_resize(content, width)
+    local_sha = Digest::SHA256.hexdigest(content)
+
+    cache_key = "image-resize-#{local_sha}_#{width}"
+    all = nil
+    image = Cache.get(cache_key)
+    return image if image
+
+    temp_file = ::Tempfile.new
+    temp_file.binmode
+    temp_file.write(content)
+    temp_file.close
+    image = Rszr::Image.load(temp_file.path)
+    return if image.width < width
+
+    image.resize!(width, :auto)
+    temp_file_resize = ::Tempfile.new.path
+    image.save(temp_file_resize)
+    image_resized = ::File.binread(temp_file_resize)
+
+    Cache.write(cache_key, image_resized, { expires_in: 6.months })
+
+    image_resized
+  end
+
 end

@@ -6,6 +6,7 @@ class Ticket < ApplicationModel
   include ChecksClientNotification
   include ChecksLatestChangeObserved
   include CanCsvImport
+  include ChecksHtmlSanitized
   include HasHistory
   include HasTags
   include HasSearchIndexBackend
@@ -55,6 +56,8 @@ class Ticket < ApplicationModel
                              :preferences
 
   history_relation_object 'Ticket::Article'
+
+  sanitized_html :note
 
   belongs_to    :group
   belongs_to    :organization
