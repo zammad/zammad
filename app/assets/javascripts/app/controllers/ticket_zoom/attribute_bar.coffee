@@ -5,7 +5,7 @@ class App.TicketZoomAttributeBar extends App.Controller
 
   events:
     'mousedown .js-openDropdownMacro':    'toggleMacroMenu'
-    'click .js-openDropdownMacro':        'preventDefaultAndstopPropagation'
+    'click .js-openDropdownMacro':        'preventDefaultAndStopPropagation'
     'mouseup .js-dropdownActionMacro':    'performTicketMacro'
     'mouseenter .js-dropdownActionMacro': 'onActionMacroMouseEnter'
     'mouseleave .js-dropdownActionMacro': 'onActionMacroMouseLeave'

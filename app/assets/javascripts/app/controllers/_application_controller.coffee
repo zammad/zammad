@@ -339,7 +339,7 @@ class App.Controller extends Spine.Controller
   stopPropagation: (e) ->
     e.stopPropagation()
 
-  preventDefaultAndstopPropagation: (e) ->
+  preventDefaultAndStopPropagation: (e) ->
     e.preventDefault()
     e.stopPropagation()
 
