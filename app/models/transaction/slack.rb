@@ -37,7 +37,9 @@ class Transaction::Slack
     return if !config
     return if !config['items']
 
-    ticket = Ticket.find(@item[:object_id])
+    ticket = Ticket.find_by(id: @item[:object_id])
+    return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
 
