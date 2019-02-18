@@ -55,7 +55,7 @@ class ClearbitTest < ActiveSupport::TestCase
 
     assert_equal('Should', customer1.firstname)
     assert_equal('be still there', customer1.lastname)
-    assert_equal('O\'Reilly author, software engineer & traveller. Founder of https://clearbit.com', customer1.note)
+    assert_equal('O\'Reilly author, software engineer &amp; traveller. Founder of <a href="https://clearbit.com" rel="nofollow noreferrer noopener" target="_blank">https://clearbit.com</a>', customer1.note)
     assert_equal('1455 Market Street, San Francisco, CA 94103, USA', customer1.address)
 
     organization1 = Organization.find_by(name: 'Uber, Inc.')
