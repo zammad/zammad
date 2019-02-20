@@ -173,5 +173,24 @@ RSpec.describe Channel::EmailParser, type: :model do
         expect( Mail::Encodings.value_decode('=?UTF-8?Q? Personal=C3=A4nderung?=') ).to eql( ' Personaländerung' )
       end
     end
+
+    context 'when handling Content-Transfer-Encoding of attachments' do
+
+      context 'with x-uuencode' do
+
+        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail078-content_transfer_encoding_x_uuencode.box') }
+
+        it 'does not raise RuntimeError' do
+          expect { described_class.new.process({}, raw_mail) }
+            .not_to raise_error
+        end
+
+        it 'parses the content correctly' do
+          _ticket, article, _user, _mail = described_class.new.process({}, raw_mail)
+          expect(article.attachments.first.filename).to eq('PGP_Cmts_on_12-14-01_Pkg.txt')
+          expect(article.attachments.first.content).to eq('Hello Zammad')
+        end
+      end
+    end
   end
 end

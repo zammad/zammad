@@ -1,0 +1,80 @@
+Received: from nahou-mscnx06p.corp.example.com ([192.168.110.237]) by napdx-msmbx01v.corp.example.com with Microsoft SMTPSVC(5.0.2195.2966);
+	 Thu, 10 Jan 2002 14:12:53 -0800
+Received: from NAHOU-MSMSW06P.corp.example.com ([192.168.110.228]) by nahou-mscnx06p.corp.example.com with Microsoft SMTPSVC(5.0.2195.2966);
+	 Thu, 10 Jan 2002 16:12:52 -0600
+Received: from mailman.example.com (unverified) by NAHOU-MSMSW06P.corp.example.com
+ (Content Technologies SMTPRS 4.2.5) with ESMTP id <T585d94ff81c0a86ee487c@NAHOU-MSMSW06P.corp.example.com>;
+ Thu, 10 Jan 2002 16:12:47 -0600
+Received: from tblexch01.transmission.example.com (int.transmission.example.com [127.0.0.3] (may be forged))
+	by mailman.example.com (8.11.4/8.11.4/corp-1.06) with ESMTP id g0AMCB920856;
+	Thu, 10 Jan 2002 16:12:11 -0600 (CST)
+Received: from TBLLIST1 ([127.0.0.4]) by tblexch01.transmission.example.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2650.21)
+	id CRWWC3K1; Thu, 10 Jan 2002 14:11:55 -0800
+Received: from LIST.TRANSMISSION.example.com by LIST.TRANSMISSION.example.com
+          (LISTSERV-TCP/IP release 1.8c) with spool id 2458 for
+          RRGA-L@LIST.TRANSMISSION.example.com; Thu, 10 Jan 2002 14:13:50 -0800
+Received: from [127.0.0.1] (ip136.r2.d.pdx.example.com [127.0.0.2])
+          by comet.example.com (8.11.2/8.11.1) with ESMTP id g0ALxLX06696;
+          Thu, 10 Jan 2002 13:59:21 -0800 (PST)
+Mime-Version: 1.0
+X-Sender: lpeters@mail.example.com
+References: <1168BAF252B7D41194810001028D743108913C@SERVER>
+Content-Type: multipart/mixed;
+              boundary="============_-1201422494==_============"
+Message-ID:  <p05100307b863befdfb67@[127.0.0.1]>
+Date:         Thu, 10 Jan 2002 13:59:53 -0800
+Sender: RTO West Regional Representatives Group <RRGA-L@LIST.example.com>
+From: "Lon L. Peters" <lpeters@example.com>
+Subject:      PGP Comments on RTO West Release of Dec. 14
+Comments: cc: ltopaz@example.com, gary.zarker@ci.example.com,
+          dgodard@example.com, wdobbins@example.com, drobinson@example.com,
+          bgeddes@example.com, "Culbertson, Tim" <tculber@example.com>,
+          kknitte@example.com, paula.green@ci.example.com,
+          jim.harding@ci.example.com, ghuhta@example.com,
+          dosborn@example.com, jscheel@example.com, jim.todd@ci.example.com,
+          CWAGERS@example.com, ali.rodol@ci.example.com,
+          kevin.clark@ci.example.com, bessex@example.com,
+          Cindy.Wright@ci.example.com, "Juj, Hardev" 
+          <Hardev.Juj@ci.example.com>,
+          "Conger, Kurt" <kconger@example.com>,
+          "Kindley, Ray" <rkindley@example.com>
+To: RRGA-L@LIST.example.com
+In-Reply-To:  <1168BAF252B7D41194810001028D743108913C@SERVER>
+Return-Path: owner-rrga-l@list.example.com
+
+--============_-1201422494==_============
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+
+Attached are the comments of the Public Generating Pool.
+--
+_________________________________
+Lon L. Peters
+Example Economic Research, Inc.
+6765 S.W. Preslynn Drive
+Portland, Oregon 11111-2222
+503-000-0000 (voice)
+503-000-0000 (fax)
+503-000-0000 (mobile)
+lpeters@example.com
+
+NOTICE:  This communication and its attachments, if any, may contain
+sensitive, privileged, or other confidential information.  If you are
+not the intended recipient or believe that you have received this
+communication in error, please notify the sender of this
+communication and delete the copy you received from all storage
+devices.  In addition, please do not print, copy, retransmit,
+forward, disseminate, or otherwise use this communication or its
+attachments, if any.  Thank you.
+
+--============_-1201422494==_============
+Content-Id: <p05100307b863befdfb67@[127.0.0.1].0.0>
+Content-Type: application/msword; name="PGP_Cmts_on_12-14-01_Pkg.txt"
+ ; x-mac-type="5738424E"
+ ; x-mac-creator="4D535744"
+Content-Disposition: attachment; filename="PGP_Cmts_on_12-14-01_Pkg.txt"
+ ; modification-date="Thu, 10 Jan 2002 13:58:10 -0800"
+Content-Transfer-Encoding: x-uuencode
+
+,2&5L;&\@6F%M;6%D
+`
+--============_-1201422494==_============--
