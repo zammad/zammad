@@ -640,7 +640,6 @@ class App.ControllerForm extends App.Controller
 
     if lookupForm && type is 'form'
       if lookupForm.is('button, input, select, textarea, div, span')
-        console.log(2)
         App.Log.debug 'ControllerForm', 'disable item...', lookupForm
         lookupForm.prop('readonly', true)
         lookupForm.prop('disabled', true)
