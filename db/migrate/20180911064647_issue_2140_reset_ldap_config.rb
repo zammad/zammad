@@ -1,3 +1,6 @@
+# ATTENTION: This migration is most likely not required anymore
+# because the encoding error was fixed by using a newer version of the psych gem (3.1.0).
+# However, we'll keep it as a regression test.
 class Issue2140ResetLdapConfig < ActiveRecord::Migration[5.1]
   def up
     # return if it's a new setup
