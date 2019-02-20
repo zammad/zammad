@@ -1,10 +1,11 @@
-class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
-  def initialize(id)
-    @article_id = id
-  end
+class TicketArticleCommunicateEmailJob < ApplicationJob
 
-  def perform
-    record = Ticket::Article.find(@article_id)
+  retry_on StandardError, attempts: 4, wait: lambda { |executions|
+    executions * 25.seconds
+  }
+
+  def perform(article_id)
+    record = Ticket::Article.find(article_id)
 
     # build subject
     ticket = Ticket.lookup(id: record.ticket_id)
@@ -162,17 +163,5 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     end
 
     raise message
-  end
-
-  def max_attempts
-    4
-  end
-
-  def reschedule_at(current_time, attempts)
-    if Rails.env.production?
-      return current_time + attempts * 25.seconds
-    end
-
-    current_time + 5.seconds
   end
 end
