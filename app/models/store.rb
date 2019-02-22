@@ -51,11 +51,12 @@ returns
     data.delete('object')
 
     data['preferences'] ||= {}
+    resizable = false
     ['Mime-Type', 'Content-Type', 'mime_type', 'content_type'].each do |key|
       next if data['preferences'][key].blank?
       next if !data['preferences'][key].match(%r{image/(jpeg|jpg|png)}i)
 
-      data['preferences']['resizable'] = true
+      resizable = true
       break
     end
 
@@ -63,14 +64,18 @@ returns
     store = Store.create!(data)
 
     begin
-      if store.preferences[:resizable] == true
+      if resizable
         if store.content_preview(silence: true)
+          store.preferences[:resizable] = true
           store.preferences[:content_preview] = true
         end
         if store.content_inline(silence: true)
+          store.preferences[:resizable] = true
           store.preferences[:content_inline] = true
         end
-        store.save!
+        if store.preferences[:resizable]
+          store.save!
+        end
       end
     rescue => e
       logger.error e
@@ -291,7 +296,14 @@ returns
     temp_file.write(content)
     temp_file.close
     image = Rszr::Image.load(temp_file.path)
-    return if image.width < width
+
+    # do not resize image if image is smaller or already same size
+    return if image.width <= width
+
+    # do not resize image if new height is smaller then 7px (images
+    # with small height are usally usefull to resize)
+    ratio = image.width / width
+    return if image.height / ratio <= 6
 
     image.resize!(width, :auto)
     temp_file_resize = ::Tempfile.new.path
