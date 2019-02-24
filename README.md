@@ -11,7 +11,7 @@ You're going to love Zammad!
 
 ## Status
 
-- Build: [![Build Status](https://circleci.com/gh/zammad/zammad.svg?style=svg)](https://circleci.com/gh/zammad/zammad)
+- Build: [![Build Status](https://circleci.com/gh/zammad/zammad/tree/stable.svg?style=svg)](https://circleci.com/gh/zammad/zammad/tree/stable)
 - Code: [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Coverage Status](https://coveralls.io/repos/github/zammad/zammad/badge.svg)](https://coveralls.io/github/zammad/zammad)
 - Docs: [![Documentation Status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
 - Issues: [![Percentage of issues still open](http://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")

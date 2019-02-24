@@ -173,5 +173,20 @@ RSpec.describe Channel::EmailParser, type: :model do
         expect( Mail::Encodings.value_decode('=?UTF-8?Q? Personal=C3=A4nderung?=') ).to eql( ' Personaländerung' )
       end
     end
+
+    context 'when mail contains image(s)' do
+      # see https://github.com/zammad/zammad/issues/2486
+      context 'when image is large but not resizable' do
+        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail079.box') }
+
+        it "doesn't set resizable preference" do
+          _ticket, article = described_class.new.process({}, raw_mail)
+          attachment       = article.attachments.last
+
+          expect(attachment.filename).to eq('a.jpg')
+          expect(attachment.preferences).not_to include('resizable' => true)
+        end
+      end
+    end
   end
 end
