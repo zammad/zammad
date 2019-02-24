@@ -56,7 +56,9 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
+      - libimlib2-dev
     build_dependencies:
+      - libimlib2
       - libimlib2-dev
   sles-12:
     dependencies:
