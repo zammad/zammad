@@ -661,7 +661,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-    filename ||= file.header[:content_location].to_s
+    filename ||= file.header[:content_location].to_s.force_encoding('utf-8')
 
     # generate file name based on content-id
     if filename.blank? && headers_store['Content-ID'].present?
@@ -671,69 +671,78 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # generate file name based on content type
-    if filename.blank? && headers_store['Content-Type'].present?
-      if headers_store['Content-Type'].match?(%r{^message/rfc822}i)
-        begin
-          parser = Channel::EmailParser.new
-          mail_local = parser.parse(file.body.to_s)
-          filename = if mail_local[:subject].present?
-                       "#{mail_local[:subject]}.eml"
-                     elsif headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
-                     else
-                       'Mail.eml'
-                     end
-        rescue
-          filename = 'Mail.eml'
-        end
+    if filename.blank? && headers_store['Content-Type'].present? && headers_store['Content-Type'].match?(%r{^message/rfc822}i)
+      begin
+        parser = Channel::EmailParser.new
+        mail_local = parser.parse(file.body.to_s)
+        filename = if mail_local[:subject].present?
+                     "#{mail_local[:subject]}.eml"
+                   elsif headers_store['Content-Description'].present?
+                     "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
+                   else
+                     'Mail.eml'
+                   end
+      rescue
+        filename = 'Mail.eml'
       end
+    end
 
-      # e. g. Content-Type: video/quicktime; name="Video.MOV";
-      if filename.blank?
-        ['(filename|name)(\*{0,1})="(.+?)"(;|$)', '(filename|name)(\*{0,1})=\'(.+?)\'(;|$)', '(filename|name)(\*{0,1})=(.+?)(;|$)'].each do |regexp|
-          if headers_store['Content-Type'] =~ /#{regexp}/i
-            filename = $3
-            break
-          end
-        end
-      end
-
-      # e. g. Content-Type: video/quicktime
-      if filename.blank?
-        map = {
-          'message/delivery-status': ['txt', 'delivery-status'],
-          'text/plain':              %w[txt document],
-          'text/html':               %w[html document],
-          'video/quicktime':         %w[mov video],
-          'image/jpeg':              %w[jpg image],
-          'image/jpg':               %w[jpg image],
-          'image/png':               %w[png image],
-          'image/gif':               %w[gif image],
-        }
-        map.each do |type, ext|
-          next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
-
-          filename = if headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
-                     else
-                       "#{ext[1]}.#{ext[0]}"
-                     end
+    # e. g. Content-Type: video/quicktime; name="Video.MOV";
+    if filename.blank?
+      ['(filename|name)(\*{0,1})="(.+?)"(;|$)', '(filename|name)(\*{0,1})=\'(.+?)\'(;|$)', '(filename|name)(\*{0,1})=(.+?)(;|$)'].each do |regexp|
+        if headers_store['Content-Type'] =~ /#{regexp}/i
+          filename = $3
           break
         end
       end
     end
 
+    # workaround for mail gem - decode filenames
+    # https://github.com/zammad/zammad/issues/928
+    if filename.present?
+      filename = Mail::Encodings.value_decode(filename)
+    end
+
+    if !filename.force_encoding('UTF-8').valid_encoding?
+      filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
+    end
+
+    # e. g. Content-Type: video/quicktime
+    if filename.blank?
+      map = {
+        'message/delivery-status': ['txt', 'delivery-status'],
+        'text/plain':              %w[txt document],
+        'text/html':               %w[html document],
+        'video/quicktime':         %w[mov video],
+        'image/jpeg':              %w[jpg image],
+        'image/jpg':               %w[jpg image],
+        'image/png':               %w[png image],
+        'image/gif':               %w[gif image],
+      }
+      map.each do |type, ext|
+        next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+
+        filename = if headers_store['Content-Description'].present?
+                     "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
+                   else
+                     "#{ext[1]}.#{ext[0]}"
+                   end
+        break
+      end
+    end
+
+    # set fallback filename
     if filename.blank?
       filename = 'file'
     end
 
+    # create uniq filename
     local_filename = ''
     local_extention = ''
     if filename =~ /^(.*?)\.(.+?)$/
       local_filename = $1
       local_extention = $2
     end
-
     1.upto(1000) do |i|
       filename_exists = false
       attachments.each do |attachment|
@@ -763,10 +772,6 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # remove not needed header
     headers_store.delete('Content-Transfer-Encoding')
     headers_store.delete('Content-Disposition')
-
-    # workaround for mail gem
-    # https://github.com/zammad/zammad/issues/928
-    filename = Mail::Encodings.value_decode(filename)
 
     attach = {
       data:        file.body.to_s,
