@@ -445,6 +445,24 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Puesto que usted no respondió en los últimos %s minutos su conversación se ha cerrado.',
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Lo sentimos, se tarda más tiempo de lo esperado para ser atendido por un agente. Inténtelo de nuevo más tarde o envíenos un correo electrónico. ¡Gracias!'
       },
+      'fi': {
+        '<strong>Chat</strong> with us!': '<strong>Keskustele</strong> kanssamme!',
+        'Scroll down to see new messages': 'Rullaa alas nähdäksesi uudet viestit',
+        'Online': 'Paikalla',
+        'Offline': 'Poissa',
+        'Connecting': 'Yhdistetään',
+        'Connection re-established': 'Yhteys muodostettu uudelleen',
+        'Today': 'Tänään',
+        'Send': 'Lähetä',
+        'Chat closed by %s': '%s sulki keskustelun',
+        'Compose your message...': 'Luo viestisi...',
+        'All colleagues are busy.': 'Kaikki kollegat ovat varattuja.',
+        'You are on waiting list position <strong>%s</strong>.': 'Olet odotuslistalla sijalla <strong>%s</strong>.',
+        'Start new conversation': 'Aloita uusi keskustelu',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Koska et vastannut viimeiseen %s minuuttiin, keskustelusi <strong>%s</strong> kanssa suljettiin.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Koska et vastannut viimeiseen %s minuuttiin, keskustelusi suljettiin.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Olemme pahoillamme, tyhjän paikan vapautumisessa kestää odotettua pidempään. Ole hyvä ja yritä myöhemmin uudestaan tai lähetä meille sähköpostia. Kiitos!'
+      },
       'fr': {
         '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!',
         'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages',
@@ -658,7 +676,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       this.send = bind(this.send, this);
       this.onKeydown = bind(this.onKeydown, this);
       this.onPaste = bind(this.onPaste, this);
-      this.onPaste = bind(this.onPaste, this);
+      this.onDrop = bind(this.onDrop, this);
       this.render = bind(this.render, this);
       this.view = bind(this.view, this);
       this.T = bind(this.T, this);
@@ -778,7 +796,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return event.stopPropagation();
     };
 
-    ZammadChat.prototype.onPaste = function(e) {
+    ZammadChat.prototype.onDrop = function(e) {
       var dataTransfer, file, reader, x, y;
       e.stopPropagation();
       e.preventDefault();
