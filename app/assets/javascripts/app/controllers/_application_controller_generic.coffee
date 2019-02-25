@@ -260,11 +260,14 @@ class App.ControllerModalLoading extends App.Controller
 
     @render()
 
-    @el.modal
+    @el.modal(
       keyboard:  false
       show:      true
       backdrop:  'static'
       container: @container
+    ).on(
+      'hidden.bs.modal': @localOnClosed
+    )
 
   render: ->
     @html App.view('generic/modal_loader')(
@@ -283,9 +286,12 @@ class App.ControllerModalLoading extends App.Controller
   showIcon: =>
     @$('.js-loadingIcon').removeClass('hide')
 
+  localOnClosed: =>
+    @el.remove()
+
   hide: (delay) =>
     remove = =>
-      @el.remove()
+      @el.modal('hide')
     if !delay
       remove()
       return
