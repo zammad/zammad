@@ -6,9 +6,34 @@ require 'json'
 require 'net/http'
 require 'uri'
 
-class TestCase < Test::Unit::TestCase
+# This is a workaround for running the browser test suite
+# in an alphabetical order
+# because `test/browser/aaa_*` tests are required to run first
+require 'minitest'
+module Minitest
+  def self.__run(reporter, options)
+    Runnable.runnables
+            .reject { |s| s.runnable_methods.empty? }
+            .map { |suite| suite.run reporter, options }
+  end
+end
+
+class TestCase < ActiveSupport::TestCase
 
   DEBUG = true
+
+  setup do
+    # print current test case to STDOUT
+    # for status reasoning and debugging purposes
+    source_location  = self.class.instance_method(method_name).source_location
+    test_file_path   = source_location[0].remove("#{Rails.root}/") # rubocop:disable Rails/FilePath
+    test_method_line = source_location[1]
+    puts <<~HTML
+
+      Performing test #{self.class.name}##{method_name} (#{test_file_path}:#{test_method_line}):
+
+    HTML
+  end
 
   def browser
     ENV['BROWSER'] || 'firefox'
