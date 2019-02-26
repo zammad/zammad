@@ -178,19 +178,19 @@ job.run(true)
       end
 
       min = day_to_check.min
-      if min < 9
-        min = 0
-      elsif min < 20
-        min = 10
-      elsif min < 30
-        min = 20
-      elsif min < 40
-        min = 30
-      elsif min < 50
-        min = 40
-      elsif min < 60
-        min = 50
-      end
+      min = if min < 10
+              0
+            elsif min < 20
+              10
+            elsif min < 30
+              20
+            elsif min < 40
+              30
+            elsif min < 50
+              40
+            else
+              50
+            end
 
       # move to [0-5]0:00 time stamps
       day_to_check = day_to_check - day_to_check.min.minutes + min.minutes

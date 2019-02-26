@@ -4,8 +4,9 @@ class JobTest < ActiveSupport::TestCase
   test 'case 1' do
 
     # create ticket
+    time = Time.zone.now
     group1 = Group.lookup(name: 'Users')
-    group2 = Group.create_or_update(
+    group2 = Group.create!(
       name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
@@ -16,8 +17,8 @@ class JobTest < ActiveSupport::TestCase
       customer_id:   2,
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
-      created_at:    Time.zone.now - 3.days,
-      updated_at:    Time.zone.now - 3.days,
+      created_at:    time - 3.days,
+      updated_at:    time - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
     )
@@ -27,9 +28,9 @@ class JobTest < ActiveSupport::TestCase
       customer_id:   2,
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
-      created_at:    Time.zone.now - 1.day,
+      created_at:    time - 1.day,
       created_by_id: 1,
-      updated_at:    Time.zone.now - 1.day,
+      updated_at:    time - 1.day,
       updated_by_id: 1,
     )
     ticket3 = Ticket.create!(
@@ -38,9 +39,9 @@ class JobTest < ActiveSupport::TestCase
       customer_id:   2,
       state:         Ticket::State.lookup(name: 'open'),
       priority:      Ticket::Priority.lookup(name: '3 high'),
-      created_at:    Time.zone.now - 1.day,
+      created_at:    time - 1.day,
       created_by_id: 1,
-      updated_at:    Time.zone.now - 1.day,
+      updated_at:    time - 1.day,
       updated_by_id: 1,
     )
     ticket4 = Ticket.create!(
@@ -49,9 +50,9 @@ class JobTest < ActiveSupport::TestCase
       customer_id:   2,
       state:         Ticket::State.lookup(name: 'closed'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
-      created_at:    Time.zone.now - 3.days,
+      created_at:    time - 3.days,
       created_by_id: 1,
-      updated_at:    Time.zone.now - 3.days,
+      updated_at:    time - 3.days,
       updated_by_id: 1,
     )
     ticket5 = Ticket.create!(
@@ -60,14 +61,14 @@ class JobTest < ActiveSupport::TestCase
       customer_id:   2,
       state:         Ticket::State.lookup(name: 'open'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
-      created_at:    Time.zone.now - 3.days,
+      created_at:    time - 3.days,
       created_by_id: 1,
       updated_by_id: 1,
-      updated_at:    Time.zone.now - 3.days,
+      updated_at:    time - 3.days,
     )
 
     # create jobs
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -125,18 +126,18 @@ class JobTest < ActiveSupport::TestCase
       last_run_at:          nil,
       active:               true,
       created_by_id:        1,
-      created_at:           Time.zone.now,
+      created_at:           time,
       updated_by_id:        1,
-      updated_at:           Time.zone.now,
+      updated_at:           time,
     )
     assert_not(job1.next_run_at)
     assert_not(job1.executable?)
 
-    job1.last_run_at = Time.zone.now - 15.minutes
+    job1.last_run_at = time - 15.minutes
     job1.save!
     assert_not(job1.executable?)
 
-    job1.updated_at = Time.zone.now - 15.minutes
+    job1.updated_at = time - 15.minutes
     job1.save!
     assert(job1.executable?)
 
@@ -150,7 +151,6 @@ class JobTest < ActiveSupport::TestCase
 
     assert_not(job1.in_timeplan?)
 
-    time = Time.zone.now
     # "freeze" time to avoid timing issues
     travel_to(time)
 
@@ -170,7 +170,7 @@ class JobTest < ActiveSupport::TestCase
     job1.save!
     assert_not(job1.in_timeplan?(time))
     min = time.min
-    if min < 9
+    if min < 10
       min = 0
     elsif min < 20
       min = 10
@@ -185,7 +185,7 @@ class JobTest < ActiveSupport::TestCase
     end
     job1.timeplan['minutes'][min.to_s] = true
     job1.save!
-    # flanky
+
     assert(job1.in_timeplan?(time))
 
     job1.timeplan['hours'][time.hour] = true
@@ -196,7 +196,7 @@ class JobTest < ActiveSupport::TestCase
     assert(job1.in_timeplan?(time))
 
     # execute jobs
-    job1.updated_at = Time.zone.now - 15.minutes
+    job1.updated_at = time - 15.minutes
     job1.save!
     Job.run
 
@@ -226,7 +226,7 @@ class JobTest < ActiveSupport::TestCase
     assert_not_equal(ticket5.updated_at.to_s, ticket5_later.updated_at.to_s)
 
     # execute jobs again
-    job1.updated_at = Time.zone.now - 15.minutes
+    job1.updated_at = time - 15.minutes
     job1.save!
     Job.run
 
@@ -257,7 +257,7 @@ class JobTest < ActiveSupport::TestCase
 
     # create ticket
     group1 = Group.lookup(name: 'Users')
-    group2 = Group.create_or_update(
+    group2 = Group.create!(
       name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
@@ -286,7 +286,7 @@ class JobTest < ActiveSupport::TestCase
     )
 
     # create jobs
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -364,7 +364,7 @@ class JobTest < ActiveSupport::TestCase
   test 'case 3' do
 
     # create jobs
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -469,11 +469,11 @@ class JobTest < ActiveSupport::TestCase
 
     time_now = Time.zone.parse('2016-03-25 01:09:01 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
-    assert_equal('2016-03-25 01:40:00 UTC', next_run_at.to_s)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
 
     time_now = Time.zone.parse('2016-03-25 01:09:59 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
-    assert_equal('2016-03-25 01:40:00 UTC', next_run_at.to_s)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
 
     job1.last_run_at = Time.zone.parse('2016-03-18 10:00:01 UTC')
     job1.save!
@@ -492,7 +492,7 @@ class JobTest < ActiveSupport::TestCase
   test 'case 4' do
 
     # create jobs
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -569,7 +569,7 @@ class JobTest < ActiveSupport::TestCase
     job1.save!
     time_now = Time.zone.parse('2016-03-17 23:59:23 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
-    assert_equal('2016-03-18 00:40:00 UTC', next_run_at.to_s)
+    assert_equal('2016-03-18 00:00:00 UTC', next_run_at.to_s)
 
     time_now = Time.zone.parse('2016-03-17 23:59:23 UTC')
     assert_not(job1.in_timeplan?(time_now))
@@ -581,7 +581,7 @@ class JobTest < ActiveSupport::TestCase
 
   test 'check next_run_at' do
 
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -653,7 +653,7 @@ class JobTest < ActiveSupport::TestCase
 
     travel_to Time.zone.local(2017, 11, 10, 22, 0o4, 44)
 
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -755,7 +755,7 @@ class JobTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -835,7 +835,7 @@ class JobTest < ActiveSupport::TestCase
 
     # create ticket
     group1 = Group.lookup(name: 'Users')
-    group2 = Group.create_or_update(
+    group2 = Group.create!(
       name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
@@ -865,7 +865,7 @@ class JobTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Test Job1',
       timeplan:             {
         days:    {
@@ -938,7 +938,7 @@ class JobTest < ActiveSupport::TestCase
 
     # create ticket
     group1 = Group.lookup(name: 'Users')
-    group2 = Group.create_or_update(
+    group2 = Group.create!(
       name:          'JobTest2',
       updated_by_id: 1,
       created_by_id: 1,
@@ -962,7 +962,7 @@ class JobTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
     travel_to Time.zone.parse('2018-08-13T23:01:01Z')
-    job1 = Job.create_or_update(
+    job1 = Job.create!(
       name:                 'Spam entfernen',
       timeplan:             {
         days:    {
