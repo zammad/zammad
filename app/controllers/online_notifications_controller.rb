@@ -185,11 +185,9 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
 
   def access?
     notification = OnlineNotification.find(params[:id])
-    if notification.user_id != current_user.id
-      response_access_deny
-      return false
-    end
-    true
+    return true if notification.user_id == current_user.id
+
+    raise Exceptions::NotAuthorized
   end
 
 end

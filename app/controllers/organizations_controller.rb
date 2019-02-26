@@ -224,10 +224,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
   # GET /api/v1/organizations/search
   def search
-
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      raise Exceptions::NotAuthorized
-    end
+    raise Exceptions::NotAuthorized if !current_user.permissions?(['admin.organization', 'ticket.agent'])
 
     per_page = params[:per_page] || params[:limit] || 100
     per_page = per_page.to_i
@@ -304,11 +301,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
   # GET /api/v1/organizations/history/1
   def history
-
-    # permission check
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      raise Exceptions::NotAuthorized
-    end
+    raise Exceptions::NotAuthorized if !current_user.permissions?(['admin.organization', 'ticket.agent'])
 
     # get organization data
     organization = Organization.find(params[:id])

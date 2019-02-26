@@ -3,10 +3,6 @@ module ApplicationController::Authenticates
 
   private
 
-  def response_access_deny
-    raise Exceptions::NotAuthorized
-  end
-
   def permission_check(key)
     if @_token_auth
       user = Token.check(
@@ -121,9 +117,7 @@ module ApplicationController::Authenticates
       logger.debug { "oauth2 token auth check '#{token}'" }
       access_token = Doorkeeper::AccessToken.by_token(token)
 
-      if !access_token
-        raise Exceptions::NotAuthorized, 'Invalid token!'
-      end
+      raise Exceptions::NotAuthorized, 'Invalid token!' if !access_token
 
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
@@ -146,9 +140,7 @@ module ApplicationController::Authenticates
       raise Exceptions::NotAuthorized, 'Maintenance mode enabled!'
     end
 
-    if user.active == false
-      raise Exceptions::NotAuthorized, 'User is inactive!'
-    end
+    raise Exceptions::NotAuthorized, 'User is inactive!' if !user.active
 
     # check scopes / permission check
     if auth_param[:permission] && !user.permissions?(auth_param[:permission])

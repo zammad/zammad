@@ -9,10 +9,7 @@ class SearchController < ApplicationController
   def search_generic
 
     # enable search only for users with valid session
-    if !current_user
-      response_access_deny
-      return true
-    end
+    raise Exceptions::NotAuthorized if !current_user
 
     # get params
     query = params[:query]

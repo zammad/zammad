@@ -159,44 +159,37 @@ class FormController < ApplicationController
   def token_valid?(token, fingerprint)
     if token.blank?
       Rails.logger.info 'No token for form!'
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     begin
       crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
       result = crypt.decrypt_and_verify(Base64.decode64(token))
     rescue
       Rails.logger.info 'Invalid token for form!'
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     if result.blank?
       Rails.logger.info 'Invalid token for form!'
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     parts = result.split(/:/)
     if parts.count != 3
       Rails.logger.info "Invalid token for form (need to have 3 parts, only #{parts.count} found)!"
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     fqdn_local = Base64.decode64(parts[0])
     if fqdn_local != Setting.get('fqdn')
       Rails.logger.info "Invalid token for form (invalid fqdn found #{fqdn_local} != #{Setting.get('fqdn')})!"
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     fingerprint_local = Base64.decode64(parts[2])
     if fingerprint_local != fingerprint
       Rails.logger.info "Invalid token for form (invalid fingerprint found #{fingerprint_local} != #{fingerprint})!"
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     if parts[1].to_i < (Time.zone.now.to_i - 60 * 60 * 24)
       Rails.logger.info 'Invalid token for form (token expired})!'
-      response_access_deny
-      return false
+      raise Exceptions::NotAuthorized
     end
     true
   end
@@ -206,24 +199,15 @@ class FormController < ApplicationController
 
     form_limit_by_ip_per_hour = Setting.get('form_ticket_create_by_ip_per_hour') || 20
     result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1h", 'Ticket', limit: form_limit_by_ip_per_hour)
-    if result.count >= form_limit_by_ip_per_hour.to_i
-      response_access_deny
-      return true
-    end
+    raise Exceptions::NotAuthorized if result.count >= form_limit_by_ip_per_hour.to_i
 
     form_limit_by_ip_per_day = Setting.get('form_ticket_create_by_ip_per_day') || 240
     result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1d", 'Ticket', limit: form_limit_by_ip_per_day)
-    if result.count >= form_limit_by_ip_per_day.to_i
-      response_access_deny
-      return true
-    end
+    raise Exceptions::NotAuthorized if result.count >= form_limit_by_ip_per_day.to_i
 
     form_limit_per_day = Setting.get('form_ticket_create_per_day') || 5000
     result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', 'Ticket', limit: form_limit_per_day)
-    if result.count >= form_limit_per_day.to_i
-      response_access_deny
-      return true
-    end
+    raise Exceptions::NotAuthorized if result.count >= form_limit_per_day.to_i
 
     false
   end
@@ -232,16 +216,14 @@ class FormController < ApplicationController
     return true if params[:fingerprint].present? && params[:fingerprint].length > 30
 
     Rails.logger.info 'No fingerprint given!'
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
     return true if Setting.get('form_ticket_create')
 
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
 end

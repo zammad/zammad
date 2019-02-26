@@ -367,11 +367,7 @@ class UsersController < ApplicationController
   # @response_message 200 [Array<User>] A list of User records matching the search term.
   # @response_message 401               Invalid session.
   def search
-
-    if !current_user.permissions?(['ticket.agent', 'admin.user'])
-      response_access_deny
-      return
-    end
+    raise Exceptions::NotAuthorized if !current_user.permissions?(['ticket.agent', 'admin.user'])
 
     per_page = params[:per_page] || params[:limit] || 100
     per_page = per_page.to_i
@@ -491,12 +487,7 @@ class UsersController < ApplicationController
   # @response_message 200 [History] The History records of the requested User record.
   # @response_message 401           Invalid session.
   def history
-
-    # permission check
-    if !current_user.permissions?(['admin.user', 'ticket.agent'])
-      response_access_deny
-      return
-    end
+    raise Exceptions::NotAuthorized if !current_user.permissions?(['admin.user', 'ticket.agent'])
 
     # get user data
     user = User.find(params[:id])

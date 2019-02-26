@@ -242,10 +242,7 @@ class SessionsController < ApplicationController
   def switch_back_to_user
 
     # check if it's a swich back
-    if !session[:switched_from_user_id]
-      response_access_deny
-      return false
-    end
+    raise Exceptions::NotAuthorized if !session[:switched_from_user_id]
 
     user = User.lookup(id: session[:switched_from_user_id])
     if !user
