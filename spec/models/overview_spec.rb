@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Overview do
+RSpec.describe Overview, type: :model do
+  it_behaves_like 'ApplicationModel', can_assets: { associations: :users, selectors: :condition }
 
   context 'link generation' do
 

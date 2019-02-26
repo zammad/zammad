@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :sla do
-    sequence(:name)     { |n| "SLA #{n}" }
-    first_response_time nil
-    update_time         nil
-    solution_time       nil
-    calendar            { create(:calendar) }
-    condition           do
+    calendar
+    sequence(:name) { |n| "SLA #{n}" }
+    created_by_id   { 1 }
+    updated_by_id   { 1 }
+
+    condition do
       {
         'ticket.state_id' => {
           operator: 'is',
@@ -13,7 +13,5 @@ FactoryBot.define do
         },
       }
     end
-    created_by_id 1
-    updated_by_id 1
   end
 end

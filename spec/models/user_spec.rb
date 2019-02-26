@@ -8,7 +8,7 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User, type: :model do
-  it_behaves_like 'ApplicationModel'
+  it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
   it_behaves_like 'HasGroups', group_access_factory: :agent_user
   it_behaves_like 'HasRoles', group_access_factory: :agent_user
   it_behaves_like 'HasXssSanitizedNote', model_factory: :user
