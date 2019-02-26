@@ -1,5 +1,6 @@
 class App.Controller extends Spine.Controller
   @include App.LogInclude
+  @include App.RenderScreen
 
   constructor: (params) ->
 
@@ -357,22 +358,6 @@ class App.Controller extends Spine.Controller
   stopLoading: =>
     return if !@initLoadingDoneDelay
     @clearDelay(@initLoadingDoneDelay)
-
-  renderScreenSuccess: (data) ->
-    App.TaskManager.touch(@taskKey) if @taskKey
-    (data.el || @).html App.view('generic/error/success')(data)
-
-  renderScreenError: (data) ->
-    App.TaskManager.touch(@taskKey) if @taskKey
-    (data.el || @).html App.view('generic/error/generic')(data)
-
-  renderScreenNotFound: (data) ->
-    App.TaskManager.touch(@taskKey) if @taskKey
-    (data.el || @).html App.view('generic/error/not_found')(data)
-
-  renderScreenUnauthorized: (data) ->
-    App.TaskManager.touch(@taskKey) if @taskKey
-    (data.el || @).html App.view('generic/error/unauthorized')(data)
 
   locationVerify: (e) =>
     newLocation = $(e.currentTarget).attr 'href'
