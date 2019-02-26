@@ -634,7 +634,10 @@ returns
 =end
 
   def update_last_login
-    self.last_login = Time.zone.now
+    # reduce DB/ES load by updating last_login every 10 minutes only
+    if !last_login || last_login < 10.minutes.ago
+      self.last_login = Time.zone.now
+    end
 
     # reset login failed
     self.login_failed = 0

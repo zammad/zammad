@@ -40,6 +40,33 @@ RSpec.describe User, type: :model do
               .to be(nil)
           end
         end
+
+        it "updates user's updates last_login and updated_at attributes" do
+          expect { described_class.authenticate(user.login, password) }
+            .to change { user.reload.last_login }
+            .and change { user.reload.updated_at }
+        end
+
+        context 'when authenticated multiple after another' do
+
+          before { described_class.authenticate(user.login, password) }
+
+          it "doesn't update last_login and updated_at when last login was less than 10 minutes ago" do
+            travel 9.minutes
+
+            expect { described_class.authenticate(user.login, password) }
+              .to not_change { user.reload.last_login }
+              .and not_change { user.reload.updated_at }
+          end
+
+          it 'updates last_login and updated_at when last login was more than 10 minutes ago' do
+            travel 11.minutes
+
+            expect { described_class.authenticate(user.login, password) }
+              .to change { user.reload.last_login }
+              .and change { user.reload.updated_at }
+          end
+        end
       end
 
       context 'with valid user and invalid password' do
