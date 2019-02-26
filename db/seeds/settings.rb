@@ -2393,6 +2393,7 @@ Setting.create_if_not_exists(
         options: {
           SystemAddressName:          'System Address Display Name',
           AgentNameSystemAddressName: 'Agent Name + FromSeparator + System Address Display Name',
+          AgentName: 'Agent Name',
         },
       },
     ],
