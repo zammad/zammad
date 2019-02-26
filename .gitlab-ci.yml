@@ -135,8 +135,8 @@ test:rspec:postgresql:
   script:
     - bundle exec rake zammad:db:init
     - bundle exec rake test:units
-    - bundle exec ruby -I test/ test/integration/object_manager_test.rb
-    - bundle exec ruby -I test/ test/integration/package_test.rb
+    - bundle exec rails test test/integration/object_manager_test.rb
+    - bundle exec rails test test/integration/package_test.rb
 
 test:unit:mysql:
   stage: test
@@ -162,32 +162,32 @@ test:integration:email_helper_deliver:
   <<: *requires_mail_port_access
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/email_helper_test.rb
-    - bundle exec ruby -I test/ test/integration/email_deliver_test.rb
-    - bundle exec ruby -I test/ test/integration/email_keep_on_server_test.rb
+    - bundle exec rails test test/integration/email_helper_test.rb
+    - bundle exec rails test test/integration/email_deliver_test.rb
+    - bundle exec rails test test/integration/email_keep_on_server_test.rb
 
 test:integration:facebook:
   <<: *test_integration_definition
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec ruby -I test/ test/integration/facebook_test.rb
+    - bundle exec rails test test/integration/facebook_test.rb
   allow_failure: true
 
 test:integration:geo:
   <<: *test_integration_definition
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/geo_calendar_test.rb
-    - bundle exec ruby -I test/ test/integration/geo_location_test.rb
-    - bundle exec ruby -I test/ test/integration/geo_ip_test.rb
+    - bundle exec rails test test/integration/geo_calendar_test.rb
+    - bundle exec rails test test/integration/geo_location_test.rb
+    - bundle exec rails test test/integration/geo_ip_test.rb
 
 test:integration:user_agent:
   <<: *test_integration_definition
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/user_agent_test.rb
+    - bundle exec rails test test/integration/user_agent_test.rb
     - export ZAMMAD_PROXY_TEST=true
-    - bundle exec ruby -I test/ test/integration/user_agent_test.rb
+    - bundle exec rails test test/integration/user_agent_test.rb
   allow_failure: true
 
 test:integration:slack:
@@ -196,13 +196,13 @@ test:integration:slack:
     - bundle exec rake zammad:db:unseeded
     - echo "gem 'slack-api'" >> Gemfile.local
     - bundle install -j $(nproc)
-    - bundle exec ruby -I test test/integration/slack_test.rb
+    - bundle exec rails test test/integration/slack_test.rb
 
 test:integration:clearbit:
   <<: *test_integration_definition
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test test/integration/clearbit_test.rb
+    - bundle exec rails test test/integration/clearbit_test.rb
   allow_failure: true
 
 ### Elasticsearch
@@ -216,9 +216,9 @@ test:integration:clearbit:
     ES_URL: "http://elasticsearch:9200"
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/elasticsearch_active_test.rb
-    - bundle exec ruby -I test/ test/integration/elasticsearch_test.rb
-    - bundle exec ruby -I test/ test/integration/report_test.rb
+    - bundle exec rails test test/integration/elasticsearch_active_test.rb
+    - bundle exec rails test test/integration/elasticsearch_test.rb
+    - bundle exec rails test test/integration/report_test.rb
     - bundle exec rspec --tag searchindex
 
 test:integration:es_mysql:
@@ -247,7 +247,7 @@ test:integration:es_postgresql:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/zendesk_import_test.rb
+    - bundle exec rails test test/integration/zendesk_import_test.rb
   allow_failure: true
 
 test:integration:zendesk_mysql:
@@ -265,7 +265,7 @@ test:integration:zendesk_postgresql:
   stage: test
   script:
     - bundle exec rake zammad:db:unseeded
-    - bundle exec ruby -I test/ test/integration/otrs_import_test.rb
+    - bundle exec rails test test/integration/otrs_import_test.rb
 
 .variables_integration_otrs_6_template: &variables_integration_otrs_6_definition
   variables:
@@ -458,7 +458,7 @@ test:browser:integration:api_client_php:
     - script/build/test_slice_tests.sh $TEST_SLICE
     - RAILS_ENV=test bundle exec rake db:create
     - bundle exec rake zammad:ci:test:start[with_elasticsearch]
-    - bundle exec rake test:browser
+    - time bundle exec rails test --fail-fast test/browser
 
 .test_browser_core_postgresql_template: &test_browser_core_postgresql_definition
   <<: *test_browser_core_definition
@@ -665,7 +665,7 @@ test:browser:core:chrome_6_postgresql:
     - RAILS_ENV=test bundle exec rake db:create
     - cp $AUTO_WIZARD_FILE auto_wizard.json
     - bundle exec rake zammad:ci:test:start
-    - bundle exec ruby -I test/ $TEST_FILE
+    - bundle exec rails test $TEST_FILE
 
 .browser_core_auto_wizard_template: &browser_core_auto_wizard_definition
   <<: *test_browser_core_definition
@@ -746,7 +746,7 @@ test:browser:integration:idoit_chrome:
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - bundle exec rake zammad:ci:test:start
-    - bundle exec ruby -I test/ $TEST_FILE
+    - bundle exec rails test $TEST_FILE
 
 test:browser:integration:otrs_chrome:
   <<: *browser_integration_import_definition
