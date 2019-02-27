@@ -444,7 +444,9 @@ If you\'re reading this message in your email, click the ticket number link that
           count: 1,
           1 => {
             preferences: {
-              'Content-Type' => 'image/jpeg'
+              'Content-Type'    => 'image/jpeg',
+              'resizable'       => true,
+              'content_preview' => true
             },
             filename:    '1a3496b9-53d9-494d-bbb0-e1d2e22074f8.jpeg',
           },
@@ -456,7 +458,9 @@ If you\'re reading this message in your email, click the ticket number link that
           count: 1,
           1 => {
             preferences: {
-              'Content-Type' => 'image/jpeg'
+              'Content-Type'    => 'image/jpeg',
+              'resizable'       => true,
+              'content_preview' => true
             },
             filename:    'paris.jpg',
           },
