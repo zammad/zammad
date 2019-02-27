@@ -952,6 +952,34 @@ class App.Utils
     path = if window.svgPolyfill then '' else 'assets/images/icons.svg'
     "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
 
+  @fontIcon: (name, font) ->
+    @loadIconFont(font)
+    "<i class=\"icon\" data-font=\"#{font}\">#{String.fromCharCode('0x'+ name)}</i>"
+
+  @loadIconFont: (font) ->
+    el = $("[data-icon-font=\"#{font}\"]")
+    return if el.length # already loaded
+
+    el = $("<style data-icon-font=\"#{font}\">").appendTo('head')
+    woffUrl = "assets/icon-fonts/#{font}.woff"
+    css = """
+          @font-face {
+            font-family: '#{font}';
+            src: url('#{woffUrl}');
+            font-weight: normal;
+            font-style: normal;
+          }
+
+          [data-font="#{font}"] {
+            font-family: '#{font}';
+          }
+          """
+
+    el.text css
+
+  @loadIconFontInfo: (font, callback) ->
+    $.getJSON "assets/icon-fonts/#{font}.json", (data) -> callback(data.icons)
+
   @getScrollBarWidth: ->
     $outer = $('<div>').css(
       visibility: 'hidden'

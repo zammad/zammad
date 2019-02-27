@@ -3151,6 +3151,59 @@ test("htmlImage2DataUrl", function() {
 
 });
 
+test('App.Utils.icon()', function() {
+  // When given no arguments,
+  //   expect @icon() to return null
+  equal(App.Utils.icon(), null, 'with no arguments')
+
+  // On a modern browser and when given a single argument,
+  //   expect @icon(name) to return an <svg> tag
+  window.svgPolyfill = false
+  svgTag = '<svg class="icon icon-foo "><use xlink:href="assets/images/icons.svg#icon-foo" /></svg>'
+  equal(App.Utils.icon('foo'), svgTag, 'with one arg / no SVG polyfill')
+
+  // On a modern browser and when given two arguments,
+  //   expect @icon(name) to return an <svg> tag
+  //   with second arg as add'l class name
+  window.svgPolyfill = false
+  svgTag = '<svg class="icon icon-foo bar"><use xlink:href="assets/images/icons.svg#icon-foo" /></svg>'
+  equal(App.Utils.icon('foo', 'bar'), svgTag, 'with two args / no SVG polyfill')
+
+  // On a browser requiring SVG polyfill and when given a single argument,
+  //   expect @icon(name, class) to return an <svg> tag
+  //   with pathless xlink:href attr
+  window.svgPolyfill = true
+  svgTag = '<svg class="icon icon-foo "><use xlink:href="#icon-foo" /></svg>'
+  equal(App.Utils.icon('foo'), svgTag, 'with one arg / SVG polyfill')
+
+  // On a browser requiring SVG polyfill and when given two arguments,
+  //   expect @icon(name, class) to return an <svg> tag
+  //   with pathless xlink:href attr and second arg as add'l class name
+  window.svgPolyfill = true
+  svgTag = '<svg class="icon icon-foo bar"><use xlink:href="#icon-foo" /></svg>'
+  equal(App.Utils.icon('foo', 'bar'), svgTag, 'with two args / SVG polyfill')
+
+  // For a left-to-right browser language and when given an argument containing '{start}' or '{end}',
+  //   expect @icon(name) to return an <svg> tag
+  //   replacing '{start}' with 'left' and '{end}' with 'right'
+  window.svgPolyfill = false
+  App.i18n.dir = function() { return 'ltr' }
+  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="assets/images/icons.svg#icon-arrow-left" /></svg>'
+  equal(App.Utils.icon('arrow-{start}'), svgTag, 'for ltr locale / name includes "{start}"')
+  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="assets/images/icons.svg#icon-arrow-right" /></svg>'
+  equal(App.Utils.icon('arrow-{end}'), svgTag, 'for ltr locale / name includes "{end}"')
+
+  // For a right-to-left browser language and when given an argument containing '{start}' or '{end}',
+  //   expect @icon(name) to return an <svg> tag
+  //   replacing '{start}' with 'left' and '{end}' with 'right'
+  window.svgPolyFill = false
+  App.i18n.dir = function() { return 'rtl' }
+  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="assets/images/icons.svg#icon-arrow-right" /></svg>'
+  equal(App.Utils.icon('arrow-{start}'), svgTag, 'for rtl locale / name includes "{start}"')
+  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="assets/images/icons.svg#icon-arrow-left" /></svg>'
+  equal(App.Utils.icon('arrow-{end}'), svgTag, 'for rtl locale / name includes "{end}"')
+});
+
 source = '<img src="/assets/images/avatar-bg.png">some test'
 $('#image2text').html(source)
 var htmlImage2DataUrlTest = function() {
