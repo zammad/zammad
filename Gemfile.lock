@@ -244,7 +244,7 @@ GEM
     jaro_winkler (1.5.2)
     json (2.1.0)
     jwt (2.1.0)
-    kgio (2.11.0)
+    kgio (2.11.2)
     koala (3.0.0)
       addressable
       faraday
@@ -354,7 +354,7 @@ GEM
       pry (>= 0.9.11)
     psych (3.1.0)
     public_suffix (3.0.1)
-    puma (3.11.0)
+    puma (3.12.0)
     rack (2.0.6)
     rack-livereload (0.3.16)
       rack
@@ -495,7 +495,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode-display_width (1.4.1)
-    unicorn (5.3.1)
+    unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     valid_email2 (2.1.0)
