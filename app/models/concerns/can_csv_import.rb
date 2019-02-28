@@ -214,8 +214,7 @@ returns
         end
 
         # create object
-        BulkImportInfo.enable
-        Transaction.execute(disable_notification: true, reset_user_id: true) do
+        Transaction.execute(disable_notification: true, reset_user_id: true, bulk: true) do
           UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
           if !record || delete == true
             stats[:created] += 1
@@ -263,7 +262,6 @@ returns
             end
           end
         end
-        BulkImportInfo.disable
 
         records.push record
       end

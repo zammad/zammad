@@ -18,12 +18,19 @@ class Sequencer
               return if dry_run
               return if instance.blank?
 
+              save!
+            end
+
+            def save!
+              BulkImportInfo.enable
               instance.save!
             rescue => e
               handle_failure(e)
 
               # unset instance if something went wrong
               state.provide(:instance, nil)
+            ensure
+              BulkImportInfo.disable
             end
           end
         end

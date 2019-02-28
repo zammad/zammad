@@ -44,4 +44,17 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Save, sequencer: :unit do
       expect(user).not_to have_received(:save!)
     end
   end
+
+  context 'for BulkImportInfo flag' do
+
+    it 'enables BulkImportInfo' do
+      expect(BulkImportInfo).to receive(:enable)
+      process(action: :created, instance: user, dry_run: false)
+    end
+
+    it 'ensures BulkImportInfo is disabled' do
+      expect(BulkImportInfo).to receive(:disable)
+      process(action: :created, instance: user, dry_run: false)
+    end
+  end
 end

@@ -6,11 +6,8 @@ module Cti
 
     # adopt/orphan matching Cti::Log records
     # (see https://github.com/zammad/zammad/issues/2057)
-    after_commit :update_cti_logs, on: :destroy
-    after_commit :update_cti_logs_with_fg_optimization, on: :create
-
-    skip_callback :commit, :after, :update_cti_logs, if: -> { BulkImportInfo.enabled? }
-    skip_callback :commit, :after, :update_cti_logs_with_fg_optimization, if: -> { BulkImportInfo.enabled? }
+    after_commit :update_cti_logs, on: :destroy, unless: -> { BulkImportInfo.enabled? }
+    after_commit :update_cti_logs_with_fg_optimization, on: :create, unless: -> { BulkImportInfo.enabled? }
 
 =begin
 

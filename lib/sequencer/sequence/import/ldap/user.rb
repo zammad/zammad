@@ -29,7 +29,7 @@ class Sequencer
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
               'Import::Common::Model::Associations::Assign',
-              'Import::Ldap::User::Model::Save',
+              'Import::Common::Model::Save',
               'Import::Common::Model::ExternalSync::Integrity',
               'Import::Ldap::User::HttpLog',
               'Import::Ldap::User::Statistics::Diff',

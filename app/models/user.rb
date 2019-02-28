@@ -25,13 +25,10 @@ class User < ApplicationModel
   before_validation :check_mail_delivery_failed, on: :update
   before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
   before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
-  after_create      :avatar_for_email_check
-  after_update      :avatar_for_email_check
+  after_create      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
+  after_update      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
   after_commit      :update_caller_id
   before_destroy    :destroy_longer_required_objects
-
-  skip_callback :create, :after, :avatar_for_email_check, if: -> { BulkImportInfo.enabled? }
-  skip_callback :update, :after, :avatar_for_email_check, if: -> { BulkImportInfo.enabled? }
 
   store :preferences
 
