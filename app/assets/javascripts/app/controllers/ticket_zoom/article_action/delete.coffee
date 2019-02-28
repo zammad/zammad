@@ -3,16 +3,13 @@ class Delete
     return actions if ui.permissionCheck('ticket.customer')
 
     if article.type.name is 'note'
-      user = undefined
-      if App.Session.get('id') == article.created_by_id
-        user = App.User.find(App.Session.get('id'))
-        if user.permission('ticket.agent')
-          actions.push {
-            name: 'delete'
-            type: 'delete'
-            icon: 'trash'
-            href: '#'
-          }
+      if App.User.current()?.id == article.created_by_id && ui.permissionCheck('ticket.agent')
+        actions.push {
+          name: 'delete'
+          type: 'delete'
+          icon: 'trash'
+          href: '#'
+        }
 
     actions
 

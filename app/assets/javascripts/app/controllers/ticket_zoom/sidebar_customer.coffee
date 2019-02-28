@@ -15,10 +15,11 @@ class SidebarCustomer extends App.Controller
       ]
     }
     return @item if @ticket && @ticket.customer_id == 1
-    currentUser = App.User.find(App.Session.get('id'))
+
+    # prevent exceptions if customer model is no available
     if @ticket.customer_id && App.User.exists(@ticket.customer_id)
       customer = App.User.find(@ticket.customer_id)
-      if customer.isAccessibleBy(currentUser, 'change')
+      if customer?.isAccessibleBy(App.User.current(), 'change')
         @item.sidebarActions.push {
           title:    'Edit Customer'
           name:     'customer-edit'

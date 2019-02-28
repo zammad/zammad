@@ -312,7 +312,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.addClass('open')
     @globalSearch.search(query: @query)
 
-  filterNavbar: (values, user, parent = null) ->
+  filterNavbar: (values, parent = null) ->
     return _.filter values, (item) =>
       if typeof item.callback is 'function'
         data = item.callback() || {}
@@ -320,16 +320,16 @@ class App.Navigation extends App.ControllerWidgetPermanent
           item[key] = value
 
       if !parent? && !item.parent || item.parent is parent
-        return @filterNavbarPermissionOk(item, user) &&
+        return @filterNavbarPermissionOk(item) &&
           @filterNavbarSettingOk(item)
       else
         return false
 
-  filterNavbarPermissionOk: (item, user) ->
+  filterNavbarPermissionOk: (item) ->
     return true unless item.permission
 
-    return _.any item.permission, (permissionName) ->
-      return user && user.permission(permissionName)
+    return _.any item.permission, (permissionName) =>
+      return @permissionCheck(permissionName)
 
   filterNavbarSettingOk: (item) ->
     return true unless item.setting
@@ -343,15 +343,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
     level1 = []
     dropdown = {}
 
-    user = undefined
-    if App.Session.get('id')
-      user = App.User.find(App.Session.get('id'))
-
-    level1 = @filterNavbar(navbar, user)
+    level1 = @filterNavbar(navbar)
 
     for item in navbar
       if item.parent && !dropdown[ item.parent ]
-        dropdown[ item.parent ] = @filterNavbar(navbar, user, item.parent)
+        dropdown[ item.parent ] = @filterNavbar(navbar, item.parent)
 
         for itemLevel1 in level1
           if itemLevel1.target is item.parent

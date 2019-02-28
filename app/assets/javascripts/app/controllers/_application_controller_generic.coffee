@@ -439,8 +439,6 @@ class App.ControllerNavSidbar extends App.Controller
     if @authenticateRequired
       @authenticateCheckRedirect()
 
-    @user = App.User.find(App.Session.get('id'))
-
     @render(true)
 
     @bind('ui:rerender',
@@ -501,7 +499,7 @@ class App.ControllerNavSidbar extends App.Controller
         else
           match = false
           for permissionName in item.permission
-            if !match && @user.permission(permissionName)
+            if !match && @permissionCheck(permissionName)
               match = true
               groupsUnsorted.push item
     _.sortBy(groupsUnsorted, (item) -> return item.prio)
@@ -520,7 +518,7 @@ class App.ControllerNavSidbar extends App.Controller
             else
               match = false
               for permissionName in item.permission
-                if !match && @user && @user.permission(permissionName)
+                if !match && @permissionCheck(permissionName)
                   match = true
                   itemsUnsorted.push item
 

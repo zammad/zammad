@@ -12,9 +12,8 @@ class Widget extends App.Controller
       @verifyLater(user.id)
       'user_signup_verify'
     )
-    currentUserId = App.Session.get('id')
-    return if !currentUserId
-    @verifyLater(currentUserId)
+    user = App.User.current()
+    @verifyLater(user.id) if user?
 
   verifyLater: (userId) =>
     delay = =>

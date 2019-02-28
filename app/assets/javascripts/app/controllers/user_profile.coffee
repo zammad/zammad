@@ -107,8 +107,6 @@ class ActionRow extends App.ObserverActionRow
     @navigate("ticket/create/customer/#{user.id}")
 
   actions: (user) =>
-    currentUser = App.User.find(App.Session.get('id'))
-
     actions = [
       {
         name:     'history'
@@ -122,7 +120,7 @@ class ActionRow extends App.ObserverActionRow
       }
     ]
 
-    if user.isAccessibleBy(currentUser, 'change')
+    if user.isAccessibleBy(App.User.current(), 'change')
       actions.unshift {
         name:     'edit'
         title:    'Edit'

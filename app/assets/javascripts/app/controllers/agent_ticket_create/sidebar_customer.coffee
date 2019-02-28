@@ -11,8 +11,7 @@ class SidebarCustomer extends App.Controller
     }
     if App.User.exists(@params.customer_id)
       customer = App.User.find(@params.customer_id)
-      currentUser = App.User.find(App.Session.get('id'))
-      if customer.isAccessibleBy(currentUser, 'change')
+      if customer.isAccessibleBy(App.User.current(), 'change')
         @item.sidebarActions.push {
           title:    'Edit Customer'
           name:     'customer-edit'

@@ -249,11 +249,7 @@ class App.Controller extends Spine.Controller
     false
 
   permissionCheck: (key) ->
-    userId = App.Session.get('id')
-    return false if !userId
-    user = App.User.findNative(userId)
-    return false if !user
-    user.permission(key)
+    App.User.current()?.permission(key)
 
   authenticateCheckRedirect: ->
     return true if @authenticateCheck()

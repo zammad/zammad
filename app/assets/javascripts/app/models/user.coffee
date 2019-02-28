@@ -346,3 +346,7 @@ class App.User extends App.Model
     return false if @organization_id is null
     return false if requester.organization_id is null
     @organization_id == requester.organization_id
+
+  # Do NOT modify the return value of this method!
+  # It is a direct reference to a value in the App.User.irecords object.
+  @current: App.Session.get
