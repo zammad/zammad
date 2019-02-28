@@ -141,7 +141,7 @@ window.onload = function() {
       "id": 8
   };
 
-  var sessionData = {
+  App.User.refresh([{
     "login": "hh@zammad.com",
     "firstname": "Harald",
     "lastname": "Habebe",
@@ -175,7 +175,9 @@ window.onload = function() {
     "anrede": "",
     "asdf": "",
     "id": 6
-  };
+  }]);
+
+  var sessionData = App.User.find(6);
 
   /*
    * ------------------------------------------------------------------------
@@ -232,7 +234,7 @@ window.onload = function() {
   };
 
   var testPreConditionUser = function (key, specificValue, ticket, session) {
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     setting = {
       "condition": {
@@ -324,7 +326,7 @@ window.onload = function() {
   };
 
   var testPreConditionOrganization = function (key, specificValue, ticket, session) {
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     setting = {
       "condition": {
@@ -416,7 +418,7 @@ window.onload = function() {
   };
 
   var testPreConditionTags = function (key, ticket) {
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     setting = {
       "condition": {
@@ -701,7 +703,7 @@ window.onload = function() {
     ticket = new App.Ticket();
     ticket.load(ticketData);
 
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     testPreConditionUser('ticket.customer_id', '6', ticket, sessionData);
   });
@@ -724,7 +726,7 @@ window.onload = function() {
     ticket = new App.Ticket();
     ticket.load(ticketData);
 
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     testPreConditionUser('ticket.owner_id', '6', ticket, sessionData);
   });
@@ -889,7 +891,7 @@ window.onload = function() {
     ticket = new App.Ticket();
     ticket.load(ticketData);
 
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     testPreConditionUser('ticket.created_by_id', '6', ticket, sessionData);
   });
@@ -912,7 +914,7 @@ window.onload = function() {
     ticket = new App.Ticket();
     ticket.load(ticketData);
 
-    App.Session.set(sessionData);
+    App.Session.set(6);
 
     testPreConditionUser('ticket.updated_by_id', '6', ticket, sessionData);
   });

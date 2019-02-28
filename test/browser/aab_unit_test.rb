@@ -18,7 +18,20 @@ class AAbUnitTest < TestCase
 
   def test_ui
     @browser = browser_instance
+    location(url: browser_url + '/tests_session')
+    sleep 5
+    watch_for(
+      css:     '.result',
+      value:   'Tests completed',
+      timeout: 8,
+    )
+    match(
+      css:   '.result .failed',
+      value: '0',
+    )
+
     location(url: browser_url + '/tests_ui')
+    sleep 5
     watch_for(
       css:     '.result',
       value:   'Tests completed',
