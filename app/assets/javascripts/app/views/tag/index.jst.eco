@@ -8,7 +8,7 @@
   <div class="settings-entry">
     <div class="page-header-title">
       <div class="zammad-switch zammad-switch--small js-newTagSetting">
-         <input name="chat" type="checkbox" id="tag-new" <% if @C('tag_new'): %>checked<% end %>>
+         <input name="tag-new" type="checkbox" id="tag-new" <% if @C('tag_new'): %>checked<% end %>>
          <label for="tag-new"></label>
       </div>
       <h2><%- @T('New Tags') %></h2>
