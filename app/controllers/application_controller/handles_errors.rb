@@ -7,6 +7,7 @@ module ApplicationController::HandlesErrors
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+    rescue_from ActiveRecord::DeleteRestrictionError, with: :unprocessable_entity
     rescue_from ArgumentError, with: :unprocessable_entity
     rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
     rescue_from Exceptions::NotAuthorized, with: :unauthorized
