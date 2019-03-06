@@ -162,7 +162,7 @@ class AdminChannelEmailTest < TestCase
     )
 
     # now clone filter that we just created
-    click(css: '.content.active .table #tableActions')
+    click(css: '.content.active .table .dropdown .btn--table')
     click(css: '.content.active .table .dropdown .js-clone')
 
     modal_ready()
