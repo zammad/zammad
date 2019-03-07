@@ -143,4 +143,52 @@ RSpec.describe Calendar, type: :model do
       end
     end
   end
+
+  describe '#validate_hours' do
+    context 'when business_hours are invalid' do
+
+      it 'fails for hours ending at 00:00' do
+        expect do
+          create(:calendar,
+                 business_hours: {
+                   mon: {
+                     active:     true,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   tue: {
+                     active:     true,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   wed: {
+                     active:     true,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   thu: {
+                     active:     true,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   fri: {
+                     active:     true,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   sat: {
+                     active:     false,
+                     timeframes: [['09:00', '00:00']]
+                   },
+                   sun: {
+                     active:     false,
+                     timeframes: [['09:00', '00:00']]
+                   }
+                 })
+        end.to raise_error(Exceptions::UnprocessableEntity, 'nonsensical hours provided')
+      end
+
+      it 'fails for blank structure' do
+        expect do
+          create(:calendar,
+                 business_hours: {})
+        end.to raise_error(Exceptions::UnprocessableEntity, 'No configured business hours found!')
+      end
+    end
+  end
 end
