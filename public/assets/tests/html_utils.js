@@ -3167,3 +3167,59 @@ var htmlImage2DataUrlTest = function() {
 $('#image2text img').one('load', htmlImage2DataUrlTest)
 
 }
+
+test('App.Utils.baseUrl()', function() {
+  // When FQDN is undefined or null,
+  //   expect @baseUrl() to return window.location.origin
+  App.Config.get = function(key) { return undefined }
+  equal(App.Utils.baseUrl(), window.location.origin, 'with undefined FQDN')
+  App.Config.get = function(key) { return null }
+  equal(App.Utils.baseUrl(), window.location.origin, 'with null FQDN')
+
+  // When FQDN is zammad.example.com,
+  //   expect @baseUrl() to return window.location.origin
+  App.Config.get = function(key) {
+    if (key === 'fqdn') {
+      return 'zammad.example.com'
+    }
+  }
+  equal(App.Utils.baseUrl(), window.location.origin, 'with FQDN zammad.example.com')
+
+  // Otherwise,
+  //   expect @baseUrl() to return FQDN with current HTTP(S) scheme
+  App.Config.get = function(key) {
+    if (key === 'fqdn') {
+      return 'foo.zammad.com'
+    } else if (key === 'http_type') {
+      return 'https'
+    }
+  }
+  equal(App.Utils.baseUrl(), 'https://foo.zammad.com', 'with any other FQDN (and https scheme)')
+
+  App.Config.get = function(key) {
+    if (key === 'fqdn') {
+      return 'bar.zammad.com'
+    } else if (key === 'http_type') {
+      return 'http'
+    }
+  }
+  equal(App.Utils.baseUrl(), 'http://bar.zammad.com', 'with any other FQDN (and http scheme)')
+});
+
+test('App.Utils.joinUrlComponents()', function() {
+  // When given a list of strings,
+  //   expect @joinUrlComponents() to join them with slashes
+  equal(App.Utils.joinUrlComponents('foo', 'bar', 'baz'), 'foo/bar/baz', 'with a destructured list of strings')
+
+  // When given an array of strings,
+  //   expect @joinUrlComponents() to join them with slashes
+  equal(App.Utils.joinUrlComponents(['foo', 'bar', 'baz']), 'foo/bar/baz', 'with an array of strings')
+
+  // When given a list of many types,
+  //   expect @joinUrlComponents() to join their string representations with slashes
+  equal(App.Utils.joinUrlComponents(0, 1, 'two', true, false, { foo: 'bar' }), '0/1/two/true/false/[object Object]', 'with a list of many types')
+
+  // When given a list including null or undefined,
+  //   expect @joinUrlComponents() to filter them out of the results before joining the rest with slashes
+  equal(App.Utils.joinUrlComponents('foo', undefined, 'bar', null, 'baz'), 'foo/bar/baz', 'with a list including null or undefined')
+});

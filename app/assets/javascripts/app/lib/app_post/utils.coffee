@@ -1184,3 +1184,20 @@ class App.Utils
     ctx = canvas.getContext('2d')
     ctx.drawImage(img, 0, 0)
     canvas.toDataURL('image/png')
+
+  @baseUrl: ->
+    fqdn      = App.Config.get('fqdn')
+    http_type = App.Config.get('http_type')
+    if !fqdn || fqdn is 'zammad.example.com'
+      url = window.location.origin
+    else
+      url = "#{http_type}://#{fqdn}"
+
+  @joinUrlComponents: (array...) ->
+    if Array.isArray(array[0])
+      array = array[0]
+
+    array
+      .filter (elem) ->
+        elem?
+      .join '/'
