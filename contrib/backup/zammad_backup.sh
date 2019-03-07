@@ -6,6 +6,9 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
+# chdir to run as Cron
+cd $BACKUP_SCRIPT_PATH;
+
 if [ -f "${BACKUP_SCRIPT_PATH}/config" ]; then
   # import config
   . ${BACKUP_SCRIPT_PATH}/config
