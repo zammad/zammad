@@ -34,7 +34,7 @@ returns if user has no permissions to search
         return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.organization')
 
         {
-          prio:                1000,
+          prio:                1500,
           direct_search_index: true,
         }
       end
