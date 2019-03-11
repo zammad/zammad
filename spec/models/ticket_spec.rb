@@ -256,6 +256,18 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe 'Attributes:' do
+    describe '#state' do
+      context 'for brand new tickets' do
+        context 'when a non-customer article is added' do
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'switches to "open"' do
+            expect { article }.to change { ticket.state.name }.from('new').to('open')
+          end
+        end
+      end
+    end
+
     describe '#pending_time' do
       subject(:ticket) { create(:ticket, pending_time: Time.zone.now + 2.days) }
 

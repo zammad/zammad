@@ -1,10 +1,15 @@
 FactoryBot.define do
   factory :ticket do
+    transient do
+      state_name 'new'
+      priority_name '2 normal'
+    end
+
     title         { 'Test Ticket' }
     group
     customer
-    state         { Ticket::State.lookup(name: 'new') }
-    priority      { Ticket::Priority.lookup(name: '2 normal') }
+    state         { Ticket::State.lookup(name: state_name) }
+    priority      { Ticket::Priority.lookup(name: priority_name) }
     updated_by_id { 1 }
     created_by_id { 1 }
 
