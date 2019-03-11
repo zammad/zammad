@@ -7,8 +7,8 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
-  before_create  :validate_public_holidays, :fetch_ical
-  before_update  :validate_public_holidays, :fetch_ical
+  before_create  :validate_public_holidays, :validate_hours, :fetch_ical
+  before_update  :validate_public_holidays, :validate_hours, :fetch_ical
   after_create   :sync_default, :min_one_check
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
@@ -265,6 +265,67 @@ returns
     [day, comment]
   end
 
+=begin
+
+  calendar = Calendar.find(123)
+  calendar.business_hours_to_hash
+
+returns
+
+  {
+    mon: {'09:00' => '18:00'},
+    tue: {'09:00' => '18:00'},
+    wed: {'09:00' => '18:00'},
+    thu: {'09:00' => '18:00'},
+    sat: {'09:00' => '18:00'}
+  }
+
+=end
+
+  def business_hours_to_hash
+    hours = {}
+    business_hours.each do |day, meta|
+      next if !meta[:active]
+      next if !meta[:timeframes]
+
+      hours[day.to_sym] = {}
+      meta[:timeframes].each do |frame|
+        next if !frame[0]
+        next if !frame[1]
+
+        hours[day.to_sym][frame[0]] = frame[1]
+      end
+    end
+    hours
+  end
+
+=begin
+
+  calendar = Calendar.find(123)
+  calendar.public_holidays_to_array
+
+returns
+
+  [
+    Thu, 08 Mar 2020,
+    Sun, 25 Mar 2020,
+    Thu, 29 Mar 2020,
+  ]
+
+=end
+
+  def public_holidays_to_array
+    holidays = []
+    public_holidays&.each do |day, meta|
+      next if !meta
+      next if !meta['active']
+      next if meta['removed']
+
+      holidays.push Date.parse(day)
+    end
+    holidays
+  end
+
   private
 
   # if changed calendar is default, set all others default to false
@@ -330,4 +391,25 @@ returns
     end
     true
   end
+
+  # validate business hours
+  def validate_hours
+
+    # get business hours
+    hours = business_hours_to_hash
+    raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+
+    # validate if business hours are usable by execute a try calculation
+    begin
+      Biz.configure do |config|
+        config.hours = hours
+      end
+      Biz.time(10, :minutes).after(Time.zone.parse('Tue, 05 Feb 2019 21:40:28 UTC +00:00'))
+    rescue => e
+      raise Exceptions::UnprocessableEntity, e.message
+    end
+
+    true
+  end
+
 end

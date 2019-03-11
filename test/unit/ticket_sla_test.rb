@@ -1017,8 +1017,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
     ticket2.escalation_calculation(true)
     ticket2 = Ticket.find(ticket2.id)
-    assert_equal(ticket2.escalation_at.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.escalation_at verify 1')
-    assert_equal(ticket2.first_response_escalation_at.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.first_response_escalation_at verify 1')
+    assert_equal(ticket2.escalation_at.gmtime.to_s, '2013-06-05 07:00:00 UTC', 'ticket2.escalation_at verify 1')
+    assert_equal(ticket2.first_response_escalation_at.gmtime.to_s, '2013-06-05 07:00:00 UTC', 'ticket2.first_response_escalation_at verify 1')
     assert_nil(ticket2.first_response_in_min, 'ticket2.first_response_in_min verify 3')
     assert_nil(ticket2.first_response_diff_in_min, 'ticket2.first_response_diff_in_min verify 3')
 
@@ -1259,7 +1259,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.first_response_in_min, 'ticket.first_response_in_min verify 3')
     assert_nil(ticket.first_response_diff_in_min, 'ticket.first_response_diff_in_min verify 3')
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2013-06-04 15:00:00 UTC', 'ticket.update_escalation_at verify 1')
-    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket.close_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2013-06-05 07:00:00 UTC', 'ticket.close_escalation_at verify 1')
     assert_equal(ticket.close_in_min, 0, 'ticket.close_in_min verify 3')
     assert_equal(ticket.close_diff_in_min, 240, 'ticket.close_diff_in_min# verify 3')
 

@@ -157,34 +157,13 @@ returns
     biz = Biz::Schedule.new do |config|
 
       # get business hours
-      hours = {}
-      calendar.business_hours.each do |day, meta|
-        next if !meta[:active]
-        next if !meta[:timeframes]
+      hours = calendar.business_hours_to_hash
+      raise "No configured hours found in calendar #{calendar.inspect}" if hours.blank?
 
-        hours[day.to_sym] = {}
-        meta[:timeframes].each do |frame|
-          next if !frame[0]
-          next if !frame[1]
-
-          hours[day.to_sym][frame[0]] = frame[1]
-        end
-      end
       config.hours = hours
-      if hours.blank?
-        raise "No configured hours found in calendar #{calendar.inspect}"
-      end
 
       # get holidays
-      holidays = []
-      calendar.public_holidays&.each do |day, meta|
-        next if !meta
-        next if !meta['active']
-        next if meta['removed']
-
-        holidays.push Date.parse(day)
-      end
-      config.holidays = holidays
+      config.holidays = calendar.public_holidays_to_array
       config.time_zone = calendar.timezone
     end
 

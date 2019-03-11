@@ -29,11 +29,26 @@ class SlaAssetsTest < ActiveSupport::TestCase
       name:           'US 1',
       timezone:       'America/Los_Angeles',
       business_hours: {
-        mon: { '09:00' => '17:00' },
-        tue: { '09:00' => '17:00' },
-        wed: { '09:00' => '17:00' },
-        thu: { '09:00' => '17:00' },
-        fri: { '09:00' => '17:00' }
+        mon: {
+          active:     true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        tue: {
+          active:     true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        wed: {
+          active:     true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        thu: {
+          active:     true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        fri: {
+          active:     true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
       },
       default:        true,
       ical_url:       nil,
