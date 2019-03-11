@@ -118,7 +118,8 @@ returns
 
       # look for attachment
       attachments.each do |file|
-        next if !file.preferences['Content-ID'] || (file.preferences['Content-ID'] != cid && file.preferences['Content-ID'] != "<#{cid}>" )
+        content_id = file.preferences['Content-ID'] || file.preferences['content_id']
+        next if content_id.blank? || (content_id != cid && content_id != "<#{cid}>" )
 
         inline_attachments[file.id] = true
         break
@@ -167,10 +168,10 @@ returns
 
       # only_attached_attachments mode is used by apply attached attachments to forwared article
       if options[:only_attached_attachments] == true
-        if is_html_content
-          next if new_attachment.preferences['content_disposition'].present? && new_attachment.preferences['content_disposition'] =~ /inline/
-          next if new_attachment.preferences['Content-ID'].blank?
-          next if body.present? && body.match?(/#{Regexp.quote(new_attachment.preferences['Content-ID'])}/i)
+        if is_html_content == true
+
+          content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
+          next if content_id.present? && body.present? && body.match?(/#{Regexp.quote(content_id)}/i)
         end
       end
 
@@ -178,8 +179,13 @@ returns
       if options[:only_inline_attachments] == true
         next if is_html_content == false
         next if body.blank?
-        next if new_attachment.preferences['content_disposition'].present? && new_attachment.preferences['content_disposition'] !~ /inline/
-        next if new_attachment.preferences['Content-ID'].present? && !body.match?(/#{Regexp.quote(new_attachment.preferences['Content-ID'])}/i)
+
+        content_disposition = new_attachment.preferences['Content-Disposition'] || new_attachment.preferences['content_disposition']
+        next if content_disposition.present? && content_disposition !~ /inline/
+
+        content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
+        next if content_id.blank?
+        next if !body.match?(/#{Regexp.quote(content_id)}/i)
       end
 
       already_added = false
