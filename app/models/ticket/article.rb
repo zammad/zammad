@@ -6,6 +6,7 @@ class Ticket::Article < ApplicationModel
   include HasHistory
   include ChecksHtmlSanitized
   include CanCsvImport
+  include HasObjectManagerAttributesValidation
 
   include Ticket::Article::ChecksAccess
   include Ticket::Article::Assets

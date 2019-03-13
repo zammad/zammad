@@ -6,6 +6,7 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_lookup_examples'
+require 'models/concerns/has_object_manager_attributes_validation_examples'
 
 RSpec.describe User, type: :model do
   it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
@@ -15,6 +16,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanLookup'
+  it_behaves_like 'HasObjectManagerAttributesValidation'
 
   subject(:user) { create(:user) }
   let(:admin)    { create(:admin_user) }

@@ -6,6 +6,7 @@ class Group < ApplicationModel
   include ChecksClientNotification
   include ChecksLatestChangeObserved
   include HasHistory
+  include HasObjectManagerAttributesValidation
 
   belongs_to :email_address
   belongs_to :signature

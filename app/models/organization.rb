@@ -8,6 +8,7 @@ class Organization < ApplicationModel
   include HasSearchIndexBackend
   include CanCsvImport
   include ChecksHtmlSanitized
+  include HasObjectManagerAttributesValidation
 
   include Organization::ChecksAccess
   include Organization::Assets

@@ -25,4 +25,13 @@ end
 
 RSpec.configure do |config|
   config.include ZammadSpecSupportUserInfo
+
+  config.around(:each, :current_user_id) do |example|
+    UserInfo.current_user_id = example.metadata[:current_user_id]
+    begin
+      example.run
+    ensure
+      UserInfo.current_user_id = nil
+    end
+  end
 end
