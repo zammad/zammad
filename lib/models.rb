@@ -35,6 +35,7 @@ returns
         next if entry.match?(%r{observer/}i)
         next if entry.match?(%r{store/provider/}i)
         next if entry.match?(%r{models/concerns/}i)
+        next if entry.match?(%r{models/object_manager/attribute/validation/}i)
 
         entry.gsub!(dir, '')
         entry = entry.to_classname
