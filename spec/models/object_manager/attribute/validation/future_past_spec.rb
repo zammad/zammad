@@ -1,10 +1,10 @@
 require 'rails_helper'
 require 'models/object_manager/attribute/validation/backend_examples'
 
-RSpec.describe ::ObjectManager::Attribute::Validation::Date do
+RSpec.describe ::ObjectManager::Attribute::Validation::FuturePast do
 
   let(:record) { build(:user) }
-  let(:attribute) { build(:object_manager_attribute_date) }
+  let(:attribute) { build(:object_manager_attribute_datetime) }
   subject do
     described_class.new(
       record:    record,

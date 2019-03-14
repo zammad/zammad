@@ -284,25 +284,6 @@ class ObjectManagerTest < ActiveSupport::TestCase
       object: 'Ticket',
       name:   'test11',
     )
-
-    assert_raises(ActiveRecord::RecordInvalid) do
-      attribute12 = ObjectManager::Attribute.add(
-        object:        'Ticket',
-        name:          'test12',
-        display:       'Test 12',
-        data_type:     'date',
-        data_option:   {
-          past: false,
-          diff: 24,
-          null: true,
-        },
-        active:        true,
-        screens:       {},
-        position:      20,
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     assert_raises(RuntimeError) do

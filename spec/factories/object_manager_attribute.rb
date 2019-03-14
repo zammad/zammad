@@ -69,10 +69,8 @@ FactoryBot.define do
     data_type   'date'
     data_option do
       {
-        'future' => true,
-        'past'   => true,
-        'diff'   => 24,
-        'null'   => true,
+        'diff' => 24,
+        'null' => true,
       }
     end
   end

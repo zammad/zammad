@@ -232,24 +232,6 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @date: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::future', display: 'Allow future', tag: 'boolean', null: false, default: true },
-    ]
-    dateFuture = new App.ControllerForm(
-      model:
-        configure_attributes: configureAttributes
-      noFieldset: true
-      params: params
-    )
-    configureAttributes = [
-      { name: 'data_option::past', display: 'Allow past', tag: 'boolean', null: false, default: true },
-    ]
-    datePast = new App.ControllerForm(
-      model:
-        configure_attributes: configureAttributes
-      noFieldset: true
-      params: params
-    )
-    configureAttributes = [
       { name: 'data_option::diff', display: 'Default time Diff (hours)', tag: 'integer', null: false, default: 24 },
     ]
     dateDiff = new App.ControllerForm(
@@ -258,8 +240,6 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       noFieldset: true
       params: params
     )
-    item.find('.js-dateFuture').html(dateFuture.form)
-    item.find('.js-datePast').html(datePast.form)
     item.find('.js-dateDiff').html(dateDiff.form)
 
   @integer: (item, localParams, params) ->

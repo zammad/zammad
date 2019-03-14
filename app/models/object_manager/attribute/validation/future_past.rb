@@ -1,4 +1,4 @@
-class ObjectManager::Attribute::Validation::Date < ObjectManager::Attribute::Validation::Backend
+class ObjectManager::Attribute::Validation::FuturePast < ObjectManager::Attribute::Validation::Backend
 
   def validate
     return if value.blank?
@@ -11,7 +11,7 @@ class ObjectManager::Attribute::Validation::Date < ObjectManager::Attribute::Val
   private
 
   def irrelevant_attribute?
-    %w[date datetime].exclude?(attribute.data_type)
+    attribute.data_type != 'datetime'.freeze
   end
 
   def validate_past
