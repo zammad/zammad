@@ -18,55 +18,9 @@ returns
 =end
 
     def create_if_not_exists(data)
-      if data[:id]
-        record = find_by(id: data[:id])
-        return record if record
-      elsif data[:name]
+      identifier = [:id, :name, :login, :email, %i[source locale]].map { |a| data.slice(*a) }.find(&:any?) || {}
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(name) = LOWER(?)', data[:name])
-                  else
-                    where(name: data[:name])
-                  end
-        records.each do |loop_record|
-          return loop_record if loop_record.name == data[:name]
-        end
-      elsif data[:login]
-
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(login) = LOWER(?)', data[:login])
-                  else
-                    where(login: data[:login])
-                  end
-        records.each do |loop_record|
-          return loop_record if loop_record.login == data[:login]
-        end
-      elsif data[:email]
-
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(email) = LOWER(?)', data[:email])
-                  else
-                    where(email: data[:email])
-                  end
-        records.each do |loop_record|
-          return loop_record if loop_record.email == data[:email]
-        end
-      elsif data[:locale] && data[:source]
-
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(locale) = LOWER(?) AND LOWER(source) = LOWER(?)', data[:locale], data[:source])
-                  else
-                    where(locale: data[:locale], source: data[:source])
-                  end
-        records.each do |loop_record|
-          return loop_record if loop_record.source == data[:source]
-        end
-      end
-      create(data)
+      case_sensitive_find_by(**identifier) || create(data)
     end
 
 =begin
@@ -116,86 +70,23 @@ returns
 =end
 
     def create_or_update(data)
-      if data[:id]
-        record = find_by(id: data[:id])
-        if record
-          record.update!(data)
-          return record
-        end
-        record = new(data)
-        record.save!
-        record
-      elsif data[:name]
+      attr = (data.keys & %i[id name login email locale]).first
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(name) = LOWER(?)', data[:name])
-                  else
-                    where(name: data[:name])
-                  end
-        records.each do |loop_record|
-          if loop_record.name == data[:name]
-            loop_record.update!(data)
-            return loop_record
-          end
-        end
-        record = new(data)
-        record.save!
-        record
-      elsif data[:login]
+      raise ArgumentError, 'Need name, login, email or locale for create_or_update()' if attr.nil?
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(login) = LOWER(?)', data[:login])
-                  else
-                    where(login: data[:login])
-                  end
-        records.each do |loop_record|
-          if loop_record.login.casecmp(data[:login]).zero?
-            loop_record.update!(data)
-            return loop_record
-          end
-        end
-        record = new(data)
-        record.save!
-        record
-      elsif data[:email]
-
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(email) = LOWER(?)', data[:email])
-                  else
-                    where(email: data[:email])
-                  end
-        records.each do |loop_record|
-          if loop_record.email.casecmp(data[:email]).zero?
-            loop_record.update!(data)
-            return loop_record
-          end
-        end
-        record = new(data)
-        record.save!
-        record
-      elsif data[:locale]
-
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(locale) = LOWER(?)', data[:locale])
-                  else
-                    where(locale: data[:locale])
-                  end
-        records.each do |loop_record|
-          if loop_record.locale.casecmp(data[:locale]).zero?
-            loop_record.update!(data)
-            return loop_record
-          end
-        end
-        record = new(data)
-        record.save!
-        record
-      else
-        raise ArgumentError, 'Need name, login, email or locale for create_or_update()'
-      end
+      record = case_sensitive_find_by(data.slice(attr))
+      record.nil? ? create(data) : record.tap { |r| r.update(data) }
     end
+
+    def case_sensitive_find_by(**attrs)
+      return nil if attrs.empty?
+      return find_by(**attrs) if Rails.application.config.db_case_sensitive || attrs.values.none? { |v| v.is_a?(String) }
+
+      where(**attrs).find { |record| record[attrs.keys.first] == attrs.values.first }
+    end
+  end
+
+  included do
+    private_class_method :case_sensitive_find_by
   end
 end
