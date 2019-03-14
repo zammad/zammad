@@ -55,6 +55,36 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'auto-updating existing users' do
+      context 'with a previous email with no real name in the From: header' do
+        let!(:customer) { Channel::EmailParser.new.process({}, previous_email).first.customer }
+
+        let(:previous_email) { <<~RAW.chomp }
+          From: customer@example.com
+          To: myzammad@example.com
+          Subject: test sender name update 1
+
+          Some Text
+        RAW
+
+        context 'and a new email with a real name in the From: header' do
+          let(:new_email) { <<~RAW.chomp }
+            From: Max Smith <customer@example.com>
+            To: myzammad@example.com
+            Subject: test sender name update 2
+
+            Some Text
+          RAW
+
+          it 'updates the customer’s #firstname and #lastname' do
+            expect { Channel::EmailParser.new.process({}, new_email) }
+              .to change { customer.reload.firstname }.from('').to('Max')
+              .and change { customer.reload.lastname }.from('').to('Smith')
+          end
+        end
+      end
+    end
+
     describe 'associating emails to tickets' do
       let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail001.box') }
       let(:ticket_ref) { Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number }
