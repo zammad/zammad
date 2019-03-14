@@ -25,7 +25,7 @@ returns
 
 =begin
 
-Model.create_or_update with ref lookups
+create or update model (check exists based on id, name, login, email or locale)
 
   result = Model.create_or_update(attributes)
 
@@ -35,9 +35,13 @@ returns
 
 =end
 
-    def create_or_update_with_ref(data)
-      data = association_name_to_id_convert(data)
-      create_or_update(data)
+    def create_or_update(data)
+      attr = (data.keys & %i[id name login email locale]).first
+
+      raise ArgumentError, 'Need name, login, email or locale for create_or_update()' if attr.nil?
+
+      record = case_sensitive_find_by(data.slice(attr))
+      record.nil? ? create(data) : record.tap { |r| r.update(data) }
     end
 
 =begin
@@ -59,7 +63,7 @@ returns
 
 =begin
 
-create or update model (check exists based on id, name, login, email or locale)
+Model.create_or_update with ref lookups
 
   result = Model.create_or_update(attributes)
 
@@ -69,13 +73,9 @@ returns
 
 =end
 
-    def create_or_update(data)
-      attr = (data.keys & %i[id name login email locale]).first
-
-      raise ArgumentError, 'Need name, login, email or locale for create_or_update()' if attr.nil?
-
-      record = case_sensitive_find_by(data.slice(attr))
-      record.nil? ? create(data) : record.tap { |r| r.update(data) }
+    def create_or_update_with_ref(data)
+      data = association_name_to_id_convert(data)
+      create_or_update(data)
     end
 
     def case_sensitive_find_by(**attrs)
