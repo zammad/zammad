@@ -301,7 +301,15 @@ class Camera extends App.ControllerModal
     # start to update the preview once its playing
     @video.on 'playing', @updatePreview
 
-    @video.attr 'src', window.URL.createObjectURL(stream)
+    # start stream
+    # Apparently this functionality (of creating a URL from a MediaStream) is now deprecated
+    # and has been removed from current versions of Chrome and Firefox as of mid/late 2018.
+    # See https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL for details.
+    # Apparently the new recommended approach is to set the srcObject property to the localStream directly:
+    try
+      @video.get(0).srcObject = stream
+    catch err
+      @video.attr 'src', window.URL.createObjectURL(stream)
 
     # start the stream
     @video.get(0).play()
