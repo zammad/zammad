@@ -518,8 +518,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
 
       # invalid file
       authenticated_as(admin_user)
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple_col_not_existing.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/organization/simple_col_not_existing.csv', 'text/csv')
       post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
@@ -532,8 +531,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'name2' for Organization.")
 
       # valid file try
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/organization/simple.csv', 'text/csv')
       post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
@@ -546,8 +544,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(Organization.find_by(name: 'organization-member-import2')).to be_nil
 
       # valid file
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/organization/simple.csv', 'text/csv')
       post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)

@@ -861,8 +861,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     it 'does csv import - admin access (05.03)' do
 
       # invalid file
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple_col_not_existing.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/user/simple_col_not_existing.csv', 'text/csv')
       authenticated_as(admin_user)
       post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
@@ -876,8 +875,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'firstname2' for User.")
 
       # valid file try
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/user/simple.csv', 'text/csv')
       post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
@@ -890,8 +888,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(User.find_by(login: 'user-simple-import2')).to be_nil
 
       # valid file
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/user/simple.csv', 'text/csv')
       post '/api/v1/users/import', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)

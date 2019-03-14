@@ -47,8 +47,7 @@ RSpec.describe 'Text Module', type: :request do
     it 'does csv import - admin access' do
 
       # invalid file
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple_col_not_existing.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/text_module/simple_col_not_existing.csv', 'text/csv')
 
       authenticated_as(admin_user)
       post '/api/v1/text_modules/import', params: { try: true, file: csv_file, col_sep: ';' }
@@ -63,8 +62,7 @@ RSpec.describe 'Text Module', type: :request do
       expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'keywords2' for TextModule.")
 
       # valid file try
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
@@ -77,8 +75,7 @@ RSpec.describe 'Text Module', type: :request do
       expect(TextModule.find_by(name: 'some name2')).to be_nil
 
       # valid file
-      csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
-      csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+      csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)
