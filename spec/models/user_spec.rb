@@ -436,6 +436,29 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#preferences' do
+      describe '"mail_delivery_failed{,_data}" keys' do
+        before do
+          user.update(
+            preferences: {
+              mail_delivery_failed:      true,
+              mail_delivery_failed_data: Time.current
+            }
+          )
+        end
+
+        it 'deletes "mail_delivery_failed"' do
+          expect { user.update(email: Faker::Internet.email) }
+            .to change { user.preferences.key?(:mail_delivery_failed) }.to(false)
+        end
+
+        it 'leaves "mail_delivery_failed_data" untouched' do
+          expect { user.update(email: Faker::Internet.email) }
+            .to not_change { user.preferences[:mail_delivery_failed_data] }
+        end
+      end
+    end
   end
 
   describe 'Associations:' do
