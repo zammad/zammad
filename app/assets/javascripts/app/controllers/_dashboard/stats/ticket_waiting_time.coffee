@@ -28,14 +28,18 @@ class Stats extends App.Controller
       @renderWidgetClockFace(data.StatsTicketWaitingTime.handling_time, data.StatsTicketWaitingTime.state, data.StatsTicketWaitingTime.percent)
 
   renderWidgetClockFace: (time, state, percent) =>
+    dpr = window.devicePixelRatio || 1
     canvas = @el.find 'canvas'
     ctx    = canvas.get(0).getContext '2d'
     radius = 26
 
     @el.find('.time.stat-widget .stat-amount').text time
 
-    canvas.attr 'width', 2 * radius
-    canvas.attr 'height', 2 * radius
+    canvas.attr 'width', 2 * radius * dpr
+    canvas.attr 'height', 2 * radius * dpr
+
+    # scale canvas to dpr (2x on retina)
+    ctx.scale dpr, dpr
 
     handlingTimeColors = {}
     handlingTimeColors['supergood'] = '#38AE6A' # supergood
