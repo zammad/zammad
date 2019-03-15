@@ -13,11 +13,11 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     # create cache and cache key
     @searchResultCache = @searchResultCache || {}
 
-    @cacheKey = "#{objectString}+#{@query}"
+    cacheKey = "#{objectString}+#{@query}"
 
     # use cache for search result
-    if @searchResultCache[@cacheKey]
-      return @onAjaxResponse( @searchResultCache[@cacheKey] )
+    if @searchResultCache[cacheKey]
+      return @renderResponse( @searchResultCache[cacheKey] )
 
     # add timeout for loader icon
     clearTimeout @loaderTimeoutId
@@ -32,17 +32,17 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
         query: @query
         limit: @options.attribute.limit
       processData: true
-      success:     @onAjaxResponse
+      success:     (data, status, xhr) =>
+        # cache search result
+        @searchResultCache[cacheKey] = data
+
+        @renderResponse(data)
     )
 
-  onAjaxResponse: (data, status, xhr) =>
-
+  renderResponse: (data) =>
     # clear timout and remove loader icon
     clearTimeout @loaderTimeoutId
     @el.removeClass('is-loading')
-
-    # cache search result
-    @searchResultCache[@cacheKey] = data
 
     # load assets
     App.Collection.loadAssets(data.assets)
