@@ -1556,7 +1556,7 @@ class CalendarSubscriptionsRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/calendar_subscriptions')
+    @html App.view('layout_ref/calendar_subscriptions')()
 
   selectAll: (e) ->
     e.currentTarget.focus()
