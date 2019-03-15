@@ -226,12 +226,13 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     }
 
     map = {
-      users:           User,
-      groups:          Group,
-      overviews:       Overview,
-      tickets:         Ticket,
-      ticket_articles: Ticket::Article,
-      text_modules:    TextModule,
+      users:                     User,
+      groups:                    Group,
+      overviews:                 Overview,
+      tickets:                   Ticket,
+      ticket_articles:           Ticket::Article,
+      text_modules:              TextModule,
+      object_manager_attributes: ObjectManager::Attribute,
     }
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
