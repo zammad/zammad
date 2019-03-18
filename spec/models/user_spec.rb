@@ -62,30 +62,39 @@ RSpec.describe User, type: :model do
           end
         end
 
-        it "updates user's updates last_login and updated_at attributes" do
-          expect { described_class.authenticate(user.login, password) }
-            .to change { user.reload.last_login }
-            .and change { user.reload.updated_at }
-        end
-
-        context 'when authenticated multiple after another' do
-
-          before { described_class.authenticate(user.login, password) }
-
-          it "doesn't update last_login and updated_at when last login was less than 10 minutes ago" do
-            travel 9.minutes
-
-            expect { described_class.authenticate(user.login, password) }
-              .to not_change { user.reload.last_login }
-              .and not_change { user.reload.updated_at }
+        context 'when previous login was' do
+          context 'never' do
+            it 'updates #last_login and #updated_at' do
+              expect { described_class.authenticate(user.login, password) }
+                .to change { user.reload.last_login }
+                .and change { user.reload.updated_at }
+            end
           end
 
-          it 'updates last_login and updated_at when last login was more than 10 minutes ago' do
-            travel 11.minutes
+          context 'less than 10 minutes ago' do
+            before do
+              described_class.authenticate(user.login, password)
+              travel 9.minutes
+            end
 
-            expect { described_class.authenticate(user.login, password) }
-              .to change { user.reload.last_login }
-              .and change { user.reload.updated_at }
+            it 'does not update #last_login and #updated_at' do
+              expect { described_class.authenticate(user.login, password) }
+                .to not_change { user.reload.last_login }
+                .and not_change { user.reload.updated_at }
+            end
+          end
+
+          context 'more than 10 minutes ago' do
+            before do
+              described_class.authenticate(user.login, password)
+              travel 11.minutes
+            end
+
+            it 'updates #last_login and #updated_at' do
+              expect { described_class.authenticate(user.login, password) }
+                .to change { user.reload.last_login }
+                .and change { user.reload.updated_at }
+            end
           end
         end
       end
