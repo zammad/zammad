@@ -259,12 +259,24 @@ RSpec.describe Ticket, type: :model do
 
   describe 'Attributes:' do
     describe '#state' do
-      context 'for brand new tickets' do
-        context 'when a non-customer article is added' do
+      context 'when originally "new"' do
+        context 'and a non-customer article is added' do
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'switches to "open"' do
             expect { article }.to change { ticket.state.name }.from('new').to('open')
+          end
+        end
+      end
+
+      context 'when originally "closed"' do
+        before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+
+        context 'when a non-customer article is added' do
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'stays "closed"' do
+            expect { article }.not_to change { ticket.state.name }
           end
         end
       end
@@ -472,5 +484,4 @@ RSpec.describe Ticket, type: :model do
       end
     end
   end
-
 end
