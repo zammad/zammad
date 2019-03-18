@@ -29,9 +29,28 @@ RSpec.describe User, type: :model do
       let(:password) { Faker::Internet.password }
 
       context 'with valid credentials' do
-        it 'returns the matching user' do
-          expect(described_class.authenticate(user.login, password))
-            .to eq(user)
+        context 'using #login' do
+          it 'returns the matching user' do
+            expect(described_class.authenticate(user.login, password))
+              .to eq(user)
+          end
+
+          it 'is not case-sensitive' do
+            expect(described_class.authenticate(user.login.upcase, password))
+              .to eq(user)
+          end
+        end
+
+        context 'using #email' do
+          it 'returns the matching user' do
+            expect(described_class.authenticate(user.email, password))
+              .to eq(user)
+          end
+
+          it 'is not case-sensitive' do
+            expect(described_class.authenticate(user.email.upcase, password))
+              .to eq(user)
+          end
         end
 
         context 'but exceeding failed login limit' do
