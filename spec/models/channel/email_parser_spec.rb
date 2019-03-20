@@ -316,6 +316,53 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'signature detection' do
+      let(:raw_mail) { header + File.read(message_file) }
+
+      let(:header) { <<~HEADER }
+        From: Bob.Smith@music.com
+        To: test@zammad.org
+        Subject: test
+
+      HEADER
+
+      context 'for emails from an unrecognized email address' do
+        let(:message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_1.txt') }
+
+        it 'does not detect signatures' do
+          described_class.new.process({}, raw_mail)
+
+          expect { Scheduler.worker(true) }
+            .to not_change { Ticket.last.customer.preferences[:signature_detection] }.from(nil)
+            .and not_change { Ticket.last.articles.first.preferences[:signature_detection] }.from(nil)
+        end
+      end
+
+      context 'for emails from a previously processed sender' do
+        before do
+          described_class.new.process({}, header + File.read(previous_message_file))
+        end
+
+        let(:previous_message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_1.txt') }
+
+        let(:message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_2.txt') }
+
+        it 'sets detected signature on user (in a background job)' do
+          described_class.new.process({}, raw_mail)
+
+          expect { Scheduler.worker(true) }
+            .to change { Ticket.last.customer.preferences[:signature_detection] }
+        end
+
+        it 'sets line of detected signature on article (in a background job)' do
+          described_class.new.process({}, raw_mail)
+
+          expect { Scheduler.worker(true) }
+            .to change { Ticket.last.articles.first.preferences[:signature_detection] }.to(20)
+        end
+      end
+    end
+
     describe 'charset handling' do
       # see https://github.com/zammad/zammad/issues/2224
       context 'when header specifies Windows-1258 charset (#2224)' do

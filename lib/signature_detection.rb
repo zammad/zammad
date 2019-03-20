@@ -21,14 +21,10 @@ returns
 
   def self.find_signature(messages)
 
-    string_list = []
-    messages.each do |message|
-      if message[:content_type].match?(%r{text/html}i)
-        string_list.push message[:content].html2text(true)
-        next
-      end
-      string_list.push message[:content]
-    end
+    string_list = messages.map { |m| m[:content] }
+                          .map do |c|
+                            c.match?(%r{text/html}i) ? c.html2text(true) : c
+                          end
 
     # hash with possible signature and count of matches in string list
     possible_signatures = {}
