@@ -145,6 +145,49 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#out_of_office?' do
+      context 'without any out_of_office_* attributes set' do
+        it 'returns false' do
+          expect(agent.out_of_office?).to be(false)
+        end
+      end
+
+      context 'with valid #out_of_office_* attributes' do
+        before do
+          agent.update(
+            out_of_office_start_at:       Time.current.yesterday,
+            out_of_office_end_at:         Time.current.tomorrow,
+            out_of_office_replacement_id: 1
+          )
+        end
+
+        context 'but #out_of_office: false' do
+          before { agent.update(out_of_office: false) }
+
+          it 'returns false' do
+            expect(agent.out_of_office?).to be(false)
+          end
+        end
+
+        context 'and #out_of_office: true' do
+          before { agent.update(out_of_office: true) }
+
+          it 'returns true' do
+            expect(agent.out_of_office?).to be(true)
+          end
+
+          context 'after the #out_of_office_end_at time has passed' do
+            before { travel 2.days  }
+
+            it 'returns false (even though #out_of_office has not changed)' do
+              expect(agent.out_of_office).to be(true)
+              expect(agent.out_of_office?).to be(false)
+            end
+          end
+        end
+      end
+    end
+
     describe '#out_of_office_agent' do
       it { is_expected.to respond_to(:out_of_office_agent) }
 
@@ -154,18 +197,72 @@ RSpec.describe User, type: :model do
         end
       end
 
-      context 'when user has designated substitute, and is out of office' do
+      context 'when user has designated substitute' do
         let(:substitute) { create(:user) }
+
         subject(:user) do
           create(:user,
-                 out_of_office:                true,
+                 out_of_office:                out_of_office,
                  out_of_office_start_at:       Time.zone.yesterday,
                  out_of_office_end_at:         Time.zone.tomorrow,
                  out_of_office_replacement_id: substitute.id,)
         end
 
-        it 'returns the designated substitute' do
-          expect(user.out_of_office_agent).to eq(substitute)
+        context 'but is not out of office' do
+          let(:out_of_office) { false }
+
+          it 'returns nil' do
+            expect(user.out_of_office_agent).to be(nil)
+          end
+        end
+
+        context 'and is out of office' do
+          let(:out_of_office) { true }
+
+          it 'returns the designated substitute' do
+            expect(user.out_of_office_agent).to eq(substitute)
+          end
+        end
+      end
+    end
+
+    describe '#out_of_office_agent_of' do
+      context 'when no other agents are out-of-office' do
+        it 'returns an empty ActiveRecord::Relation' do
+          expect(agent.out_of_office_agent_of)
+            .to be_an(ActiveRecord::Relation)
+            .and be_empty
+        end
+      end
+
+      context 'when designated as the substitute' do
+        let!(:agent_on_holiday) do
+          create(
+            :agent_user,
+            out_of_office_start_at:       Time.current.yesterday,
+            out_of_office_end_at:         Time.current.tomorrow,
+            out_of_office_replacement_id: agent.id,
+            out_of_office:                out_of_office
+          )
+        end
+
+        context 'of an in-office agent' do
+          let(:out_of_office) { false }
+
+          it 'returns an empty ActiveRecord::Relation' do
+            expect(agent.out_of_office_agent_of)
+              .to be_an(ActiveRecord::Relation)
+              .and be_empty
+          end
+        end
+
+        context 'of an out-of-office agent' do
+          let(:out_of_office) { true }
+
+          it 'returns an ActiveRecord::Relation including that agent' do
+            expect(agent.out_of_office_agent_of)
+              .to match_array([agent_on_holiday])
+          end
         end
       end
     end
@@ -332,6 +429,65 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Attributes:' do
+    describe '#out_of_office' do
+      context 'with #out_of_office_start_at: nil' do
+        before { agent.update(out_of_office_start_at: nil, out_of_office_end_at: Time.current) }
+
+        it 'cannot be set to true' do
+          expect { agent.update(out_of_office: true) }
+            .to raise_error(Exceptions::UnprocessableEntity)
+        end
+      end
+
+      context 'with #out_of_office_end_at: nil' do
+        before { agent.update(out_of_office_start_at: Time.current, out_of_office_end_at: nil) }
+
+        it 'cannot be set to true' do
+          expect { agent.update(out_of_office: true) }
+            .to raise_error(Exceptions::UnprocessableEntity)
+        end
+      end
+
+      context 'when #out_of_office_start_at is AFTER #out_of_office_end_at' do
+        before { agent.update(out_of_office_start_at: Time.current.tomorrow, out_of_office_end_at: Time.current.next_month) }
+
+        it 'cannot be set to true' do
+          expect { agent.update(out_of_office: true) }
+            .to raise_error(Exceptions::UnprocessableEntity)
+        end
+      end
+
+      context 'when #out_of_office_start_at is AFTER Time.current' do
+        before { agent.update(out_of_office_start_at: Time.current.tomorrow, out_of_office_end_at: Time.current.yesterday) }
+
+        it 'cannot be set to true' do
+          expect { agent.update(out_of_office: true) }
+            .to raise_error(Exceptions::UnprocessableEntity)
+        end
+      end
+
+      context 'when #out_of_office_end_at is BEFORE Time.current' do
+        before { agent.update(out_of_office_start_at: Time.current.last_month, out_of_office_end_at: Time.current.yesterday) }
+
+        it 'cannot be set to true' do
+          expect { agent.update(out_of_office: true) }
+            .to raise_error(Exceptions::UnprocessableEntity)
+        end
+      end
+    end
+
+    describe '#out_of_office_replacement_id' do
+      it 'cannot be set to invalid user ID' do
+        expect { agent.update(out_of_office_replacement_id: User.pluck(:id).max.next) }
+          .to raise_error(ActiveRecord::InvalidForeignKey)
+      end
+
+      it 'can be set to a valid user ID' do
+        expect { agent.update(out_of_office_replacement_id: 1) }
+          .not_to raise_error
+      end
+    end
+
     describe '#login_failed' do
       before { user.update(login_failed: 1) }
 
