@@ -454,6 +454,147 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#permissions?' do
+      subject(:user) { create(:user, roles: [role]) }
+      let(:role) { create(:role, permissions: [permission]) }
+      let(:permission) { create(:permission, name: permission_name) }
+
+      context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do
+        let(:permission_name) { 'foo' }
+
+        context 'when given that exact permission' do
+          it 'returns true' do
+            expect(user.permissions?('foo')).to be(true)
+          end
+        end
+
+        context 'when given a sub-permission (i.e., child permission)' do
+          let(:subpermission) { create(:permission, name: 'foo.bar') }
+
+          context 'that exists' do
+            before { subpermission }
+
+            it 'returns true' do
+              expect(user.permissions?('foo.bar')).to be(true)
+            end
+          end
+
+          context 'that is inactive' do
+            before { subpermission.update(active: false) }
+
+            it 'returns false' do
+              expect(user.permissions?('foo.bar')).to be(false)
+            end
+          end
+
+          context 'that does not exist' do
+            it 'returns true' do
+              expect(user.permissions?('foo.bar')).to be(true)
+            end
+          end
+        end
+
+        context 'when given a glob' do
+          context 'matching that permission' do
+            it 'returns true' do
+              expect(user.permissions?('foo.*')).to be(true)
+            end
+          end
+
+          context 'NOT matching that permission' do
+            it 'returns false' do
+              expect(user.permissions?('bar.*')).to be(false)
+            end
+          end
+        end
+      end
+
+      context 'with privileges for a sub-permission (e.g., "foo.bar", not "foo")' do
+        let(:permission_name) { 'foo.bar' }
+
+        context 'when given that exact sub-permission' do
+          it 'returns true' do
+            expect(user.permissions?('foo.bar')).to be(true)
+          end
+
+          context 'but the permission is inactive' do
+            before { permission.update(active: false) }
+
+            it 'returns false' do
+              expect(user.permissions?('foo.bar')).to be(false)
+            end
+          end
+        end
+
+        context 'when given a sibling sub-permission' do
+          let(:sibling_permission) { create(:permission, name: 'foo.baz') }
+
+          context 'that exists' do
+            before { sibling_permission }
+
+            it 'returns false' do
+              expect(user.permissions?('foo.baz')).to be(false)
+            end
+          end
+
+          context 'that does not exist' do
+            it 'returns false' do
+              expect(user.permissions?('foo.baz')).to be(false)
+            end
+          end
+        end
+
+        context 'when given the parent permission' do
+          it 'returns false' do
+            expect(user.permissions?('foo')).to be(false)
+          end
+        end
+
+        context 'when given a glob' do
+          context 'matching that sub-permission' do
+            it 'returns true' do
+              expect(user.permissions?('foo.*')).to be(true)
+            end
+
+            context 'but the permission is inactive' do
+              before { permission.update(active: false) }
+
+              it 'returns false' do
+                expect(user.permissions?('foo.bar')).to be(false)
+              end
+            end
+          end
+
+          context 'NOT matching that sub-permission' do
+            it 'returns false' do
+              expect(user.permissions?('bar.*')).to be(false)
+            end
+          end
+        end
+      end
+    end
+
+    describe '#permissions_with_child_ids' do
+      context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do
+        subject(:user) { create(:user, roles: [role]) }
+        let(:role) { create(:role, permissions: [permission]) }
+        let!(:permission) { create(:permission, name: 'foo') }
+        let!(:child_permission) { create(:permission, name: 'foo.bar') }
+        let!(:inactive_child_permission) { create(:permission, name: 'foo.baz', active: false) }
+
+        it 'includes the IDs of user’s explicit permissions' do
+          expect(user.permissions_with_child_ids)
+            .to include(permission.id)
+        end
+
+        it 'includes the IDs of user’s active sub-permissions' do
+          expect(user.permissions_with_child_ids)
+            .to include(child_permission.id)
+            .and not_include(inactive_child_permission.id)
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do
