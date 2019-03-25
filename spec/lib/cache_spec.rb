@@ -42,17 +42,26 @@ RSpec.describe Cache do
         .to change { Cache.get('123') }.to({ key: 'some valueöäüß' })
     end
 
-    it 'defaults to expires_in: 7.days' do
-      Cache.write('123', 'some value')
+    context 'when expiring' do
 
-      expect { travel 7.days }.not_to change { Cache.get('123') }
-      expect { travel 1.second }.to change { Cache.get('123') }.to(nil)
-    end
+      # we need to travel to a fixed point in time
+      # to prevent influences of timezone / DST
+      before do
+        travel_to '1995-12-21 13:37 +0100'
+      end
 
-    it 'accepts a custom :expires_in option' do
-      Cache.write('123', 'some value', expires_in: 3.seconds)
+      it 'defaults to expires_in: 7.days' do
+        Cache.write('123', 'some value')
 
-      expect { travel 4.seconds }.to change { Cache.get('123') }.to(nil)
+        expect { travel 7.days - 1.second }.not_to change { Cache.get('123') }
+        expect { travel 2.seconds }.to change { Cache.get('123') }.to(nil)
+      end
+
+      it 'accepts a custom :expires_in option' do
+        Cache.write('123', 'some value', expires_in: 3.seconds)
+
+        expect { travel 4.seconds }.to change { Cache.get('123') }.to(nil)
+      end
     end
   end
 
