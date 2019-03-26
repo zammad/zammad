@@ -41,7 +41,7 @@ variables:
   <<: *docker_env
   <<: *artifacts_error
 
-# General required Docker services for different DB envs
+# General required Docker services for different/random DB envs
 .services_mysql_template: &services_mysql
   services:
     - name: registry.znuny.com/docker/zammad-mysql:latest
@@ -49,6 +49,13 @@ variables:
 
 .services_postgresql_template: &services_postgresql
   services:
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+
+.services_random_db_template: &services_random_db
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
     - name: registry.znuny.com/docker/zammad-postgresql:latest
       alias: postgresql
 
@@ -152,7 +159,7 @@ test:unit:postgresql:
 
 .test_integration_template: &test_integration_definition
   <<: *base_env
-  <<: *services_postgresql
+  <<: *services_random_db
   stage: test
   variables:
     RAILS_ENV: "test"
@@ -207,9 +214,16 @@ test:integration:clearbit:
 
 ### Elasticsearch
 
-.script_elasticsearch_template: &script_elasticsearch_definition
+test:integration:es:
   <<: *base_env
   stage: test
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
+      alias: elasticsearch
   variables:
     RAILS_ENV: "test"
     ES_INDEX_RAND: "true"
@@ -221,27 +235,11 @@ test:integration:clearbit:
     - bundle exec rails test test/integration/report_test.rb
     - bundle exec rspec --tag searchindex
 
-test:integration:es_mysql:
-  <<: *script_elasticsearch_definition
-  services:
-    - name: registry.znuny.com/docker/zammad-mysql:latest
-      alias: mysql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
-      alias: elasticsearch
-
-test:integration:es_postgresql:
-  <<: *script_elasticsearch_definition
-  services:
-    - name: registry.znuny.com/docker/zammad-postgresql:latest
-      alias: postgresql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
-      alias: elasticsearch
-
 ### Zendesk
 
-.script_integration_zendesk_template: &script_integration_zendesk_definition
+test:integration:zendesk:
   <<: *base_env
-  <<: *services_postgresql
+  <<: *services_random_db
   stage: test
   variables:
     RAILS_ENV: "test"
@@ -250,72 +248,51 @@ test:integration:es_postgresql:
     - bundle exec rails test test/integration/zendesk_import_test.rb
   allow_failure: true
 
-test:integration:zendesk_mysql:
-  <<: *services_mysql
-  <<: *script_integration_zendesk_definition
-
-test:integration:zendesk_postgresql:
-  <<: *services_postgresql
-  <<: *script_integration_zendesk_definition
-
 ### OTRS
 
 .script_integration_otrs_template: &script_integration_otrs_definition
   <<: *base_env
+  <<: *services_random_db
   stage: test
   script:
     - bundle exec rake zammad:db:unseeded
     - bundle exec rails test test/integration/otrs_import_test.rb
 
-.variables_integration_otrs_6_template: &variables_integration_otrs_6_definition
+test:integration:otrs_6:
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "https://vz1185.test.znuny.com/otrs/public.pl?Action=ZammadMigrator"
 
-test:integration:otrs_6_mysql:
-  <<: *services_mysql
-  <<: *script_integration_otrs_definition
-  <<: *variables_integration_otrs_6_definition
-
-test:integration:otrs_6_postgresql:
-  <<: *services_postgresql
-  <<: *script_integration_otrs_definition
-  <<: *variables_integration_otrs_6_definition
-
 test:integration:otrs_5:
-  <<: *services_postgresql
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-  <<: *script_integration_otrs_definition
 
 test:integration:otrs_4:
-  <<: *services_postgresql
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-  <<: *script_integration_otrs_definition
 
 test:integration:otrs_33:
-  <<: *services_postgresql
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-  <<: *script_integration_otrs_definition
 
 test:integration:otrs_32:
-  <<: *services_postgresql
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-  <<: *script_integration_otrs_definition
 
 test:integration:otrs_31:
-  <<: *services_postgresql
+  <<: *script_integration_otrs_definition
   variables:
     RAILS_ENV: "test"
     IMPORT_OTRS_ENDPOINT: "http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-  <<: *script_integration_otrs_definition
 
 # Browser tests
 
@@ -394,7 +371,7 @@ test:browser:core:capybara_ff:
 
 test:browser:integration:api_client_ruby:
   <<: *test_browser_core_definition
-  <<: *services_postgresql
+  <<: *services_random_db
   variables:
     <<: *variables_browser_definition
   script:
@@ -408,7 +385,7 @@ test:browser:integration:api_client_ruby:
 
 test:browser:integration:api_client_php:
   <<: *test_browser_core_definition
-  <<: *services_postgresql
+  <<: *services_random_db
   variables:
     <<: *variables_browser_definition
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
