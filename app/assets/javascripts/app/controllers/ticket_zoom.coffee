@@ -958,8 +958,7 @@ class App.TicketZoom extends App.Controller
     # reset/delete uploaded attachments
     App.Ajax.request(
       type:  'DELETE'
-      url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-      data:  JSON.stringify(form_id: @form_id)
+      url:   "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
       processData: false
     )
 

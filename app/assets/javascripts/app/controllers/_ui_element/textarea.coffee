@@ -22,11 +22,10 @@ class App.UiElement.textarea
 
         # only add upload item if html element exists
         if $('#' + fileUploaderId )[0]
+          form_id = item.closest('form').find('[name=form_id]').val()
           $('#' + fileUploaderId ).fineUploader(
             request:
-              endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
-              params:
-                form_id: item.closest('form').find('[name=form_id]').val()
+              endpoint: "#{App.Config.get('api_path')}/upload_caches/#{form_id}"
             text:
               uploadButton: App.Utils.icon('paperclip')
             template: '<div class="qq-uploader">' +

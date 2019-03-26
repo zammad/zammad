@@ -54,7 +54,7 @@ class Taskbar < ApplicationModel
   def attachments
     return [] if persisted_form_id.blank?
 
-    Store.list(object: 'UploadCache', o_id: persisted_form_id)
+    UploadCache.new(persisted_form_id).attachments
   end
 
   def add_attachments_to_attributes(attributes)

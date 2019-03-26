@@ -154,66 +154,6 @@ class TicketArticlesController < ApplicationController
     raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!'
   end
 
-  # DELETE /ticket_attachment_upload
-  def ticket_attachment_upload_delete
-
-    if params[:id].present?
-      Store.remove_item(params[:id])
-      render json: {
-        success: true,
-      }
-      return
-    end
-
-    if params[:form_id].present?
-      Store.remove(
-        object: 'UploadCache',
-        o_id:   params[:form_id],
-      )
-      render json: {
-        success: true,
-      }
-      return
-    end
-
-    render json: { message: 'No such id or form_id!' }, status: :unprocessable_entity
-  end
-
-  # POST /ticket_attachment_upload
-  def ticket_attachment_upload_add
-
-    # store file
-    file = params[:File]
-    content_type = file.content_type
-    if !content_type || content_type == 'application/octet-stream'
-      content_type = if MIME::Types.type_for(file.original_filename).first
-                       MIME::Types.type_for(file.original_filename).first.content_type
-                     else
-                       'application/octet-stream'
-                     end
-    end
-    headers_store = {
-      'Content-Type' => content_type
-    }
-    store = Store.add(
-      object:      'UploadCache',
-      o_id:        params[:form_id],
-      data:        file.read,
-      filename:    file.original_filename,
-      preferences: headers_store
-    )
-
-    # return result
-    render json: {
-      success: true,
-      data:    {
-        id:       store.id,
-        filename: file.original_filename,
-        size:     store.size,
-      }
-    }
-  end
-
   # POST /ticket_attachment_upload_clone_by_article
   def ticket_attachment_upload_clone_by_article
     article = Ticket::Article.find(params[:article_id])

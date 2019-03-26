@@ -38,8 +38,7 @@ class App.UiElement.richtext
         # delete attachment from storage
         App.Ajax.request(
           type:        'DELETE'
-          url:         "#{App.Config.get('api_path')}/ticket_attachment_upload"
-          data:        JSON.stringify(id: id),
+          url:         "#{App.Config.get('api_path')}/upload_caches/#{@form_id}/items/#{id}"
           processData: false
         )
 
@@ -57,59 +56,58 @@ class App.UiElement.richtext
       @attachmentsHolder     = item.find('.attachments')
       @cancelContainer       = item.find('.js-cancel')
 
-      u = => html5Upload.initialize(
-        uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload'
-        dropContainer:          item.closest('form').get(0)
-        cancelContainer:        @cancelContainer
-        inputField:             item.find('input').get(0)
-        maxSimultaneousUploads: 1,
-        key:                    'File'
-        data:
-          form_id: item.closest('form').find('[name=form_id]').val()
-        onFileAdded: (file) =>
+      upload_initialize_callback = =>
+        form_id = item.closest('form').find('[name=form_id]').val()
+        html5Upload.initialize(
+          uploadUrl:              "#{App.Config.get('api_path')}/upload_caches/#{form_id}"
+          dropContainer:          item.closest('form').get(0)
+          cancelContainer:        @cancelContainer
+          inputField:             item.find('input').get(0)
+          maxSimultaneousUploads: 1,
+          key:                    'File'
+          onFileAdded: (file) =>
 
-          file.on(
-            onStart: =>
-              @attachmentPlaceholder.addClass('hide')
-              @attachmentUpload.removeClass('hide')
-              @cancelContainer.removeClass('hide')
-              item.find('[contenteditable]').trigger('fileUploadStart')
-              App.Log.debug 'UiElement.richtext', 'upload start'
+            file.on(
+              onStart: =>
+                @attachmentPlaceholder.addClass('hide')
+                @attachmentUpload.removeClass('hide')
+                @cancelContainer.removeClass('hide')
+                item.find('[contenteditable]').trigger('fileUploadStart')
+                App.Log.debug 'UiElement.richtext', 'upload start'
 
-            onAborted: =>
-              @attachmentPlaceholder.removeClass('hide')
-              @attachmentUpload.addClass('hide')
-              item.find('input').val('')
-              item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
+              onAborted: =>
+                @attachmentPlaceholder.removeClass('hide')
+                @attachmentUpload.addClass('hide')
+                item.find('input').val('')
+                item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
 
-            # Called after received response from the server
-            onCompleted: (response) =>
-              response = JSON.parse(response)
+              # Called after received response from the server
+              onCompleted: (response) =>
+                response = JSON.parse(response)
 
-              @attachmentPlaceholder.removeClass('hide')
-              @attachmentUpload.addClass('hide')
+                @attachmentPlaceholder.removeClass('hide')
+                @attachmentUpload.addClass('hide')
 
-              # reset progress bar
-              @progressBar.width(parseInt(0) + '%')
-              @progressText.text('')
+                # reset progress bar
+                @progressBar.width(parseInt(0) + '%')
+                @progressText.text('')
 
-              renderFile(response.data)
-              item.find('input').val('')
-              item.find('[contenteditable]').trigger('fileUploadStop', ['completed'])
-              App.Log.debug 'UiElement.richtext', 'upload complete', response.data
+                renderFile(response.data)
+                item.find('input').val('')
+                item.find('[contenteditable]').trigger('fileUploadStop', ['completed'])
+                App.Log.debug 'UiElement.richtext', 'upload complete', response.data
 
-            # Called during upload progress, first parameter
-            # is decimal value from 0 to 100.
-            onProgress: (progress, fileSize, uploadedBytes) =>
-              @progressBar.width(parseInt(progress) + '%')
-              @progressText.text(parseInt(progress))
-              # hide cancel on 90%
-              if parseInt(progress) >= 90
-                @cancelContainer.addClass('hide')
-              App.Log.debug 'UiElement.richtext', 'uploadProgress ', parseInt(progress)
-
-          )
-      )
-      App.Delay.set(u, 100, undefined, 'form_upload')
+              # Called during upload progress, first parameter
+              # is decimal value from 0 to 100.
+              onProgress: (progress, fileSize, uploadedBytes) =>
+                @progressBar.width(parseInt(progress) + '%')
+                @progressText.text(parseInt(progress))
+                # hide cancel on 90%
+                if parseInt(progress) >= 90
+                  @cancelContainer.addClass('hide')
+                App.Log.debug 'UiElement.richtext', 'uploadProgress ', parseInt(progress)
+            )
+        )
+      App.Delay.set(upload_initialize_callback, 100, undefined, 'form_upload')
 
     item

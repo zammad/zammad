@@ -172,13 +172,11 @@ class App.TicketZoomArticleNew extends App.Controller
     })
 
     html5Upload.initialize(
-      uploadUrl:       App.Config.get('api_path') + '/ticket_attachment_upload'
+      uploadUrl:       "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
       dropContainer:   @$('.article-add').get(0)
       cancelContainer: @cancelContainer
       inputField:      @$('.article-attachment input').get(0)
       key:             'File'
-      data:
-        form_id: @form_id
       maxSimultaneousUploads: 1
       onFileAdded:            (file) =>
 
@@ -599,9 +597,8 @@ class App.TicketZoomArticleNew extends App.Controller
 
       # delete attachment from storage
       App.Ajax.request(
-        type:  'DELETE'
-        url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-        data:  JSON.stringify(id: id)
+        type:        'DELETE'
+        url:         "#{App.Config.get('api_path')}/upload_caches/#{@form_id}/items/#{id}"
         processData: false
       )
 

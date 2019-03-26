@@ -55,10 +55,7 @@ module CreatesTicketArticles
 
     # find attachments in upload cache
     if form_id
-      article.attachments = Store.list(
-        object: 'UploadCache',
-        o_id:   form_id,
-      )
+      article.attachments = UploadCache.new(form_id).attachments
     end
 
     # set subtype of present
@@ -130,11 +127,8 @@ module CreatesTicketArticles
       .first { |taskbar| taskbar.persisted_form_id == form_id }
       &.update!(state: {})
 
-    # remove attachments from upload cache
-    Store.remove(
-      object: 'UploadCache',
-      o_id:   form_id,
-    )
+    # remove temporary attachment cache
+    UploadCache.new(form_id).destroy
 
     article
   end
