@@ -186,7 +186,7 @@ class Graph extends App.ControllerContent
         xaxis.push [minute, '']
     else if @params.timeRange is 'day'
       for hour in [0..23]
-        xaxis.push [hour, hour+1]
+        xaxis.push [hour, hour]
     else if @params.timeRange is 'month'
       for day in [0..30]
         xaxis.push [day, day+1]

@@ -87,7 +87,7 @@ returns
     ticket_attributes = Ticket.new.attributes
     list = []
     overviews.each do |overview|
-      query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
+      query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, current_user: user)
       direction = overview.order[:direction]
       order_by = overview.order[:by]
 

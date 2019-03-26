@@ -291,8 +291,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # first solution
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -312,8 +312,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {}, # ticket selector to get only a collection of tickets
     )
     assert(result)
@@ -324,8 +324,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - with selector #1
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.priority_id' => {
@@ -350,8 +350,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.priority_id' => {
           'operator' => 'is',
@@ -365,8 +365,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - with merged tickets selector
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket_state.name' => {
@@ -391,8 +391,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket_state.name' => {
           'operator' => 'is not',
@@ -406,8 +406,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - with selector #2
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.priority_id' => {
@@ -432,8 +432,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.priority_id' => {
           'operator' => 'is not',
@@ -448,8 +448,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # week
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-10-26T00:00:00Z',
-      range_end:   '2015-10-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-26T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-10-31T23:59:59Z'),
       interval:    'week', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -464,8 +464,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[7])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-10-26T00:00:00Z',
-      range_end:   '2015-11-01T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-26T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-11-01T23:59:59Z'),
       interval:    'week', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -477,8 +477,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # day
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-10-01T00:00:00Z',
-      range_end:   '2015-11-01T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-11-01T23:59:59Z'),
       interval:    'day', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -517,8 +517,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[31])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-10-01T00:00:00Z',
-      range_end:   '2015-10-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-10-31T23:59:59Z'),
       interval:    'day', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -529,8 +529,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # hour
     result = Report::TicketFirstSolution.aggs(
-      range_start: '2015-10-28T00:00:00Z',
-      range_end:   '2015-10-28T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-28T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-10-28T23:59:59Z'),
       interval:    'hour', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -562,8 +562,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[24])
 
     result = Report::TicketFirstSolution.items(
-      range_start: '2015-10-28T00:00:00Z',
-      range_end:   '2015-10-28T23:59:59Z',
+      range_start: Time.zone.parse('2015-10-28T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-10-28T23:59:59Z'),
       interval:    'hour', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -573,8 +573,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # reopen
     result = Report::TicketReopened.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
     )
@@ -594,8 +594,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketReopened.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {}, # ticket selector to get only a collection of tickets
     )
     assert(result)
@@ -604,8 +604,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - with selector #1
     result = Report::TicketReopened.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.priority_id' => {
@@ -630,8 +630,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketReopened.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.priority_id' => {
           'operator' => 'is',
@@ -645,8 +645,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - with selector #2
     result = Report::TicketReopened.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.priority_id' => {
@@ -671,8 +671,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketReopened.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.priority_id' => {
           'operator' => 'is not',
@@ -685,8 +685,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # month - reopened with merge selector
     result = Report::TicketReopened.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket_state.name' => {
@@ -711,8 +711,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketReopened.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket_state.name' => {
           'operator' => 'is not',
@@ -726,8 +726,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # move in/out without merged status
     result = Report::TicketMoved.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket_state.name' => {
@@ -755,8 +755,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketMoved.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.group_id' => {
           'operator' => 'is',
@@ -773,8 +773,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # move in/out
     result = Report::TicketMoved.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.group_id' => {
@@ -802,8 +802,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketMoved.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.group_id' => {
           'operator' => 'is',
@@ -820,8 +820,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # out without merged tickets
     result = Report::TicketMoved.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket_state.name' => {
@@ -849,8 +849,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketMoved.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket_state.name' => {
           'operator' => 'is not',
@@ -866,8 +866,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # out
     result = Report::TicketMoved.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'ticket.group_id' => {
@@ -895,8 +895,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketMoved.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'ticket.group_id' => {
           'operator' => 'is',
@@ -913,8 +913,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # create at
     result = Report::TicketGenericTime.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {}, # ticket selector to get only a collection of tickets
       params:      { field: 'created_at' },
@@ -935,8 +935,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {}, # ticket selector to get only a collection of tickets
       params:      { field: 'created_at' },
     )
@@ -952,8 +952,8 @@ class ReportTest < ActiveSupport::TestCase
 
     # create at - selector with merge
     result = Report::TicketGenericTime.aggs(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       interval:    'month', # year, quarter, month, week, day, hour, minute, second
       selector:    {
         'state' => {
@@ -979,8 +979,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[12])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'state' => {
           'operator' => 'is not',
@@ -1001,8 +1001,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][7])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'before (absolute)',
@@ -1021,8 +1021,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][5])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'after (absolute)',
@@ -1038,8 +1038,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][2])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'before (relative)',
@@ -1051,8 +1051,8 @@ class ReportTest < ActiveSupport::TestCase
     )
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'after (relative)',
@@ -1067,8 +1067,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][0])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'before (relative)',
@@ -1083,8 +1083,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][0])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'after (relative)',
@@ -1100,8 +1100,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][1])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'before (relative)',
@@ -1116,8 +1116,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][0])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'after (relative)',
@@ -1133,8 +1133,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][1])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'before (relative)',
@@ -1149,8 +1149,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][0])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2037-01-01T00:00:00Z',
-      range_end:   '2037-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2037-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2037-12-31T23:59:59Z'),
       selector:    {
         'created_at' => {
           'operator' => 'after (relative)',
@@ -1166,8 +1166,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][1])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains all',
@@ -1182,8 +1182,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][1])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains all not',
@@ -1203,8 +1203,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][6])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains all',
@@ -1221,8 +1221,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][2])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains all not',
@@ -1241,8 +1241,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][5])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains one not',
@@ -1262,8 +1262,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][5])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains one not',
@@ -1281,8 +1281,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][4])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains one',
@@ -1299,8 +1299,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][2])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'tags' => {
           'operator' => 'contains one',
@@ -1317,8 +1317,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][3])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'title' => {
           'operator' => 'contains',
@@ -1339,8 +1339,8 @@ class ReportTest < ActiveSupport::TestCase
     assert_nil(result[:ticket_ids][7])
 
     result = Report::TicketGenericTime.items(
-      range_start: '2015-01-01T00:00:00Z',
-      range_end:   '2015-12-31T23:59:59Z',
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {
         'title' => {
           'operator' => 'contains not',
