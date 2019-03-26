@@ -337,21 +337,12 @@ browser:build:
     - public/assets/application-*
     - public/assets/print-*
 
-.services_browser_postgresql_template: &services_browser_postgresql_definition
-  services:
-    - name: registry.znuny.com/docker/zammad-postgresql:latest
-      alias: postgresql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:latest
-      alias: elasticsearch
-    - name: docker.io/elgalu/selenium:3.14.0-p17
-      alias: selenium
-    - name: registry.znuny.com/docker/docker-imap-devel:latest
-      alias: mail
-
-.services_browser_mysql_template: &services_browser_mysql_definition
+.services_browser_template: &services_browser_definition
   services:
     - name: registry.znuny.com/docker/zammad-mysql:latest
       alias: mysql
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
     - name: registry.znuny.com/docker/zammad-elasticsearch:latest
       alias: elasticsearch
     - name: docker.io/elgalu/selenium:3.14.0-p17
@@ -391,22 +382,13 @@ browser:build:
     RAILS_ENV: "test"
     BROWSER: "firefox"
 
-test:browser:core:capybara_chrome_postgresql:
+test:browser:core:capybara_chrome:
   <<: *variables_capybara_chrome_definition
-  <<: *services_browser_postgresql_definition
+  <<: *services_browser_definition
 
-test:browser:core:capybara_chrome_mysql:
-  <<: *variables_capybara_chrome_definition
-  <<: *services_browser_mysql_definition
-
-test:browser:core:capybara_ff_postgresql:
+test:browser:core:capybara_ff:
   <<: *variables_capybara_ff_definition
-  <<: *services_browser_postgresql_definition
-
-test:browser:core:capybara_ff_mysql:
-  <<: *variables_capybara_ff_definition
-  <<: *services_browser_mysql_definition
-
+  <<: *services_browser_definition
 
 ### API clients
 
@@ -460,99 +442,51 @@ test:browser:integration:api_client_php:
     - bundle exec rake zammad:ci:test:start[with_elasticsearch]
     - time bundle exec rails test --fail-fast test/browser
 
-.test_browser_core_postgresql_template: &test_browser_core_postgresql_definition
+.test_browser_core_base_template: &test_browser_core_base_definition
   <<: *test_browser_core_definition
   <<: *script_browser_slice_definition
-  <<: *services_browser_postgresql_definition
-
-.test_browser_core_mysql_template: &test_browser_core_mysql_definition
-  <<: *test_browser_core_definition
-  <<: *script_browser_slice_definition
-  <<: *services_browser_mysql_definition
+  <<: *services_browser_definition
 
 #### Firefox
 
-test:browser:core:ff_1_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:ff_1:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
     TEST_SLICE: "1"
 
-test:browser:core:ff_2_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:ff_2:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
     TEST_SLICE: "2"
 
-test:browser:core:ff_3_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:ff_3:
+  <<: *test_browser_core_base_definition
   <<: *requires_mail_port_access
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
     TEST_SLICE: "3"
 
-test:browser:core:ff_4_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:ff_4:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
     TEST_SLICE: "4"
 
-test:browser:core:ff_5_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:ff_5:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
     TEST_SLICE: "5"
 
-test:browser:core:ff_6_mysql:
-  <<: *test_browser_core_mysql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "6"
-
-test:browser:core:ff_1_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "1"
-
-test:browser:core:ff_2_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "2"
-
-test:browser:core:ff_3_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  <<: *requires_mail_port_access
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "3"
-
-test:browser:core:ff_4_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "4"
-
-test:browser:core:ff_5_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    TEST_SLICE: "5"
-
-test:browser:core:ff_6_postgresql:
-  <<: *test_browser_core_postgresql_definition
+test:browser:core:ff_6:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "firefox"
@@ -560,85 +494,43 @@ test:browser:core:ff_6_postgresql:
 
 ### Chrome
 
-test:browser:core:chrome_1_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:chrome_1:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
     TEST_SLICE: "1"
 
-test:browser:core:chrome_2_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:chrome_2:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
     TEST_SLICE: "2"
 
-test:browser:core:chrome_3_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:chrome_3:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
     TEST_SLICE: "3"
 
-test:browser:core:chrome_4_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:chrome_4:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
     TEST_SLICE: "4"
 
-test:browser:core:chrome_5_mysql:
-  <<: *test_browser_core_mysql_definition
+test:browser:core:chrome_5:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
     TEST_SLICE: "5"
 
-test:browser:core:chrome_6_mysql:
-  <<: *test_browser_core_mysql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "6"
-
-test:browser:core:chrome_1_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "1"
-
-test:browser:core:chrome_2_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "2"
-
-test:browser:core:chrome_3_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "3"
-
-test:browser:core:chrome_4_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "4"
-
-test:browser:core:chrome_5_postgresql:
-  <<: *test_browser_core_postgresql_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    TEST_SLICE: "5"
-
-test:browser:core:chrome_6_postgresql:
-  <<: *test_browser_core_postgresql_definition
+test:browser:core:chrome_6:
+  <<: *test_browser_core_base_definition
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
