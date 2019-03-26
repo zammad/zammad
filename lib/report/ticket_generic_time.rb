@@ -85,9 +85,6 @@ returns
         elsif params[:interval] == 'day' || params[:interval] == 'week'
           replace = '\d\d:\d\d:\d\dZ$'
         end
-        Rails.logger.error '-----'
-        Rails.logger.error item
-        Rails.logger.error params[:range_start].iso8601.sub(/#{replace}/, '')
 
         next if key_as_string.iso8601.sub(/#{replace}/, '') != params[:range_start].iso8601.sub(/#{replace}/, '')
         next if match
