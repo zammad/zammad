@@ -383,15 +383,6 @@ class UsersController < ApplicationController
       query = query.permit!.to_h
     end
 
-    # build result list
-    tickets = Ticket.search(
-      query:        query,
-      condition:    params[:condition].to_h,
-      limit:        per_page,
-      offset:       offset,
-      current_user: current_user,
-    )
-
     query = params[:query] || params[:term]
     if query.respond_to?(:permit!)
       query = query.permit!.to_h
