@@ -40,6 +40,12 @@ class SearchController < ApplicationController
       objects_in_order.push objects_in_order_hash[prio]
     end
 
+    generic_search_params = {
+      query:        query,
+      limit:        limit,
+      current_user: current_user,
+    }
+
     # try search index backend
     assets = {}
     result = []
@@ -76,7 +82,7 @@ class SearchController < ApplicationController
 
       # e. g. do ticket query by Ticket class to handle ticket permissions
       objects_without_direct_search_index.each do |object|
-        object_result = search_generic_backend(object.constantize, query, limit, current_user, assets)
+        object_result = search_generic_backend(object.constantize, assets, generic_search_params)
         if object_result.present?
           result = result.concat(object_result)
         end
@@ -98,7 +104,7 @@ class SearchController < ApplicationController
 
       # do query
       objects_in_order.each do |object|
-        object_result = search_generic_backend(object, query, limit, current_user, assets)
+        object_result = search_generic_backend(object, assets, generic_search_params)
         if object_result.present?
           result = result.concat(object_result)
         end
@@ -113,12 +119,22 @@ class SearchController < ApplicationController
 
   private
 
-  def search_generic_backend(object, query, limit, current_user, assets)
-    found_objects = object.search(
-      query:        query,
-      limit:        limit,
-      current_user: current_user,
-    )
+=begin
+
+search generic backend
+
+  SearchController#search_generic_backend(
+    Ticket, # object
+    {}, # assets
+    query:        "search query",
+    limit:        10,
+    current_user: user,
+  )
+
+=end
+
+  def search_generic_backend(object, assets, params)
+    found_objects = object.search(params)
     result = []
     found_objects.each do |found_object|
       item = {

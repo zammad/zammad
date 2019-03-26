@@ -72,7 +72,7 @@ job.run(true)
     end
 
     # find tickets to change
-    ticket_count, tickets = Ticket.selectors(condition, 2_000)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 2_000)
 
     logger.debug { "Job #{name} with #{ticket_count} tickets" }
 
@@ -135,7 +135,7 @@ job.run(true)
   end
 
   def matching_count
-    ticket_count, tickets = Ticket.selectors(condition, 1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 1)
     ticket_count || 0
   end
 

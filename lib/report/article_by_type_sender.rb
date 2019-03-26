@@ -3,8 +3,8 @@ class Report::ArticleByTypeSender < Report::Base
 =begin
 
   result = Report::ArticleByTypeSender.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
     params: {
@@ -19,7 +19,8 @@ returns
 
 =end
 
-  def self.aggs(params)
+  def self.aggs(params_origin)
+    params = params_origin.dup
 
     interval = params[:interval]
     if params[:interval] == 'week'
@@ -28,32 +29,27 @@ returns
 
     result = []
     if params[:interval] == 'month'
-      start = Date.parse(params[:range_start])
       stop_interval = 12
     elsif params[:interval] == 'week'
-      start = Date.parse(params[:range_start])
       stop_interval = 7
     elsif params[:interval] == 'day'
-      start = Date.parse(params[:range_start])
       stop_interval = 31
     elsif params[:interval] == 'hour'
-      start = Time.zone.parse(params[:range_start])
       stop_interval = 24
     elsif params[:interval] == 'minute'
-      start = Time.zone.parse(params[:range_start])
       stop_interval = 60
     end
     (1..stop_interval).each do |_counter|
       if params[:interval] == 'month'
-        stop = start.next_month
+        params[:range_end] = params[:range_start].next_month
       elsif params[:interval] == 'week'
-        stop = start.next_day
+        params[:range_end] = params[:range_start].next_day
       elsif params[:interval] == 'day'
-        stop = start.next_day
+        params[:range_end] = params[:range_start].next_day
       elsif params[:interval] == 'hour'
-        stop = start + 1.hour
+        params[:range_end] = params[:range_start] + 1.hour
       elsif params[:interval] == 'minute'
-        stop = start + 1.minute
+        params[:range_end] = params[:range_start] + 1.minute
       end
       query, bind_params, tables = Ticket.selector2sql(params[:selector])
       sender = Ticket::Article::Sender.lookup(name: params[:params][:sender])
@@ -62,13 +58,13 @@ returns
                              .where(query, *bind_params).joins(tables)
                              .where(
                                'ticket_articles.created_at >= ? AND ticket_articles.created_at <= ? AND ticket_articles.type_id = ? AND ticket_articles.sender_id = ?',
-                               start,
-                               stop,
+                               params[:range_start],
+                               params[:range_end],
                                type.id,
                                sender.id,
                              ).count
       result.push count
-      start = stop
+      params[:range_start] = params[:range_end]
     end
     result
   end
@@ -76,8 +72,8 @@ returns
 =begin
 
   result = Report::ArticleByTypeSender.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
     selector:    selector, # ticket selector to get only a collection of tickets
     params: {

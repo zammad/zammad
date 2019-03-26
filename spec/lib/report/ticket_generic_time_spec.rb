@@ -29,8 +29,8 @@ returns
 
       expect do
         described_class.items(
-          range_start: '2015-01-01T00:00:00Z',
-          range_end:   '2015-12-31T23:59:59Z',
+          range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+          range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
           selector:    {}, # ticket selector to get only a collection of tickets
           params:      { field: 'created_at' },
         )
