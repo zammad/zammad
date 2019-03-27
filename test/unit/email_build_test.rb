@@ -56,13 +56,25 @@ class EmailBuildTest < ActiveSupport::TestCase
     )
 
     text_should = <<~MSG_TEXT.chomp
-      > Welcome!
-      >
-      > Thank you for installing Zammad. äöüß
-      >
+      > Welcome!\r
+      >\r
+      > Thank you for installing Zammad. äöüß\r
+      >\r
     MSG_TEXT
     assert_equal(text_should, mail.text_part.body.to_s)
-    assert_equal(html, mail.html_part.body.to_s)
+
+    html_should = <<~MSG_HTML.chomp
+      <!DOCTYPE html>\r
+      <html>\r
+        <head>\r
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>\r
+        </head>\r
+        <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">\r
+          <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>\r
+        </body>\r
+      </html>
+    MSG_HTML
+    assert_equal(html_should, mail.html_part.body.to_s)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
@@ -113,7 +125,13 @@ class EmailBuildTest < ActiveSupport::TestCase
       ],
     )
 
-    assert_equal(text, mail.text_part.body.to_s)
+    text_should = <<~MSG_TEXT.chomp
+      > Welcome!\r
+      >\r
+      > Thank you for installing Zammad. äöüß\r
+      >\r
+    MSG_TEXT
+    assert_equal(text_should, mail.text_part.body.to_s)
     assert_nil(mail.html_part)
     assert_equal('image/png; filename=somename.png', mail.attachments[0].content_type)
 
@@ -193,7 +211,13 @@ class EmailBuildTest < ActiveSupport::TestCase
       ],
     )
 
-    assert_equal(text, mail.text_part.body.to_s)
+    text_should = <<~MSG_TEXT.chomp
+      > Welcome!\r
+      >\r
+      > Thank you for installing Zammad. äöüß\r
+      >\r
+    MSG_TEXT
+    assert_equal(text_should, mail.text_part.body.to_s)
     assert_nil(mail.html_part)
     assert_equal('text/calendar; filename=schedule.ics', mail.attachments[0].content_type)
 
@@ -232,7 +256,13 @@ class EmailBuildTest < ActiveSupport::TestCase
       body: text,
     )
 
-    assert_equal(text, mail.body.to_s)
+    text_should = <<~MSG_TEXT.chomp
+      > Welcome!\r
+      >\r
+      > Thank you for installing Zammad. äöüß\r
+      >\r
+    MSG_TEXT
+    assert_equal(text_should, mail.body.to_s)
     assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new
@@ -309,4 +339,62 @@ text
 
   end
 
+  # #2362 - Attached text files get prepended on e-mail reply instead of appended
+  test 'plain email + text attachment' do
+    ticket1 = Ticket.create!(
+      title:         'some article text attachment test',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket created')
+
+    article1 = Ticket::Article.create!(
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      content_type:  'text/html',
+      body:          'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    text = <<~MSG_TEXT.chomp
+      > Welcome!
+      >
+      > Email Content
+    MSG_TEXT
+
+    store1 = Store.add(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'Text Content',
+      filename:      'text_file.txt',
+      preferences:   {
+        'Mime-Type' => 'text/plain'
+      },
+      created_by_id: 1,
+    )
+
+    mail = Channel::EmailBuild.build(
+      from:        'sender@example.com',
+      to:          'recipient@example.com',
+      body:        text,
+      attachments: [
+        store1
+      ],
+    )
+    File.write('append_test.eml', mail.to_s)
+
+    # Email Content should appear before the Text Content within the raw email
+    assert_match(/Email Content[\s\S]*Text Content/, mail.to_s)
+  end
 end

@@ -72,7 +72,11 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    mail = Mail.new(msg.force_encoding('binary'))
+    msg = msg.force_encoding('binary')
+    # mail 2.6 and earlier accepted non-conforming mails that lacked the correct CRLF seperators,
+    # mail 2.7 and above require CRLF so we force it on using binary_unsafe_to_crlf
+    msg = Mail::Utilities.binary_unsafe_to_crlf(msg)
+    mail = Mail.new(msg)
 
     headers = message_header_hash(mail)
     body = message_body_hash(mail)
@@ -492,10 +496,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       begin
         value = f.to_utf8
         if value.blank?
-          value = f.raw_value.to_utf8
+          value = f.decoded.to_utf8
         end
+      # fields that cannot be cleanly parsed fallback to the empty string
+      rescue Mail::Field::IncompleteParseError
+        value = ''
       rescue
-        value = f.raw_value.to_utf8(fallback: :read_as_sanitized_binary)
+        value = f.decoded.to_utf8(fallback: :read_as_sanitized_binary)
       end
       [f.name.downcase, value]
     end.to_h

@@ -78,7 +78,7 @@ gem 'twitter', git: 'https://github.com/sferik/twitter.git'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-6-stable-878-844'
+gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'

@@ -3,7 +3,7 @@ from: postmaster@example.com
 from_email: postmaster@example.com
 from_display_name: ''
 to: sales@znuny.org
-subject: Benachrichtung zum +ANw-bermittlungsstatus (Fehlgeschlagen)
+subject: "Benachrichtung  \tzum  \t+ANw-bermittlungsstatus  \t(Fehlgeschlagen)"
 body: |+
   Dies ist eine automatisch erstellte Benachrichtigung +APw-ber den Zustellstatus.
 

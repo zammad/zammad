@@ -32,11 +32,11 @@ GIT
 
 GIT
   remote: https://github.com/zammad-deps/mail
-  revision: 33a8a94028937e8664a7499d3486ffed59b898e6
-  branch: 2-6-stable-878-844
+  revision: 9265cf75bbe376f595944bd10d2dd953f863e765
+  branch: 2-7-stable
   specs:
-    mail (2.6.7.pre)
-      mime-types (>= 1.16, < 4)
+    mail (2.7.2.edge)
+      mini_mime (>= 0.1.1)
 
 GIT
   remote: https://github.com/zammad-deps/tcr
