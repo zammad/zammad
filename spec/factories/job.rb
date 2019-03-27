@@ -1,13 +1,19 @@
 FactoryBot.define do
   factory :job do
     sequence(:name) { |n| "Test job #{n}"  }
-    condition     { { 'ticket.state_id' => { 'operator' => 'is not', 'value' => 4 } } }
-    perform       { { 'ticket.state_id' => { 'value' => 4 } } }
-    active        true
-    created_by_id 1
-    updated_by_id 1
-    timeplan      do
-      { 'days'    => { 'Mon' => true, 'Tue' => false, 'Wed' => false, 'Thu' => false, 'Fri' => false, 'Sat' => false, 'Sun' => false },
+    condition       { { 'ticket.state_id' => { 'operator' => 'is not', 'value' => 4 } } }
+    perform         { { 'ticket.state_id' => { 'value' => 4 } } }
+    active          { true }
+    created_by_id   { 1 }
+    updated_by_id   { 1 }
+    timeplan do
+      { 'days'    => { 'Mon' => true,
+                       'Tue' => false,
+                       'Wed' => false,
+                       'Thu' => false,
+                       'Fri' => false,
+                       'Sat' => false,
+                       'Sun' => false },
         'hours'   =>
                      { '0'  => true,
                        '1'  => false,
@@ -33,7 +39,12 @@ FactoryBot.define do
                        '21' => false,
                        '22' => false,
                        '23' => false },
-        'minutes' => { '0' => true, '10' => false, '20' => false, '30' => false, '40' => false, '50' => false } }
+        'minutes' => { '0'  => true,
+                       '10' => false,
+                       '20' => false,
+                       '30' => false,
+                       '40' => false,
+                       '50' => false } }
     end
   end
 end

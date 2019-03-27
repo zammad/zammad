@@ -5,7 +5,7 @@ FactoryBot.define do
       sender_name { 'Customer' }
     end
 
-    ticket
+    association :ticket, strategy: :create  # or else build(:ticket_article).save fails
     from          { 'factory-customer-1@example.com' }
     to            { 'factory-customer-1@example.com' }
     subject       { 'factory article' }

@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :calendar do
     sequence(:name) { |n| "Escalation Test #{n}" }
-    timezone        'Europe/Berlin'
-    default         true
-    ical_url        nil
-    business_hours  do
+    timezone        { 'Europe/Berlin' }
+    default         { true }
+    ical_url        { nil }
+    business_hours do
       {
         mon: {
           active:     true,
@@ -36,7 +36,7 @@ FactoryBot.define do
         }
       }
     end
-    created_by_id 1
-    updated_by_id 1
+    created_by_id { 1 }
+    updated_by_id { 1 }
   end
 end

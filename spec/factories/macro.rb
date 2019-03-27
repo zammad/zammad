@@ -1,9 +1,7 @@
 FactoryBot.define do
   factory :macro do
     sequence(:name) { |n| "Macro #{n}" }
-    perform do
-      {}
-    end
+    perform         { {} }
     ux_flow_next_up { 'next_task' }
     note            { '' }
     active          { true }

@@ -1,25 +1,19 @@
 FactoryBot.define do
-  sequence :object_manager_attribute_name do |n|
-    "internal_name#{n}"
-  end
-
-  sequence :object_manager_attribute_display do |n|
-    "Display Name #{n}"
-  end
-end
-
-FactoryBot.define do
   factory :object_manager_attribute, class: ObjectManager::Attribute do
-
-    object_lookup_id { ObjectLookup.by_name('Ticket') }
-    name    { generate(:object_manager_attribute_name) }
-    display { generate(:object_manager_attribute_display) }
-    data_option_new do
-      {}
-    end
-    editable true
-    active   true
-    screens  do
+    object_lookup_id          { ObjectLookup.by_name('Ticket') }
+    sequence(:name)           { |n| "internal_name#{n}" }
+    sequence(:display)        { |n| "Display Name #{n}" }
+    data_option_new           { {} }
+    editable                  { true }
+    active                    { true }
+    add_attribute(:to_create) { true }
+    to_migrate                { true }
+    to_delete                 { false }
+    to_config                 { false }
+    position                  { 15 }
+    updated_by_id             { 1 }
+    created_by_id             { 1 }
+    screens do
       {
         'create_top' => {
           '-all-' => {
@@ -29,17 +23,10 @@ FactoryBot.define do
         'edit'       => {}
       }
     end
-    add_attribute(:to_create) { true }
-    to_migrate    true
-    to_delete     false
-    to_config     false
-    position      15
-    updated_by_id 1
-    created_by_id 1
   end
 
   factory :object_manager_attribute_text, parent: :object_manager_attribute do
-    data_type   'input'
+    data_type { 'input' }
     data_option do
       {
         'type'      => 'text',
@@ -54,7 +41,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_integer, parent: :object_manager_attribute do
-    data_type   'integer'
+    data_type { 'integer' }
     data_option do
       {
         'default' => 0,
@@ -65,8 +52,8 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_date, parent: :object_manager_attribute do
-    name        'date_attribute'
-    data_type   'date'
+    name      { 'date_attribute' }
+    data_type { 'date' }
     data_option do
       {
         'diff' => 24,
@@ -76,8 +63,8 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_datetime, parent: :object_manager_attribute do
-    name        'datetime_attribute'
-    data_type   'datetime'
+    name      { 'datetime_attribute' }
+    data_type { 'datetime' }
     data_option do
       {
         'future' => true,
@@ -89,7 +76,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_select, parent: :object_manager_attribute do
-    data_type   'select'
+    data_type { 'select' }
     data_option do
       {
         'default'    => '',
@@ -109,7 +96,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_tree_select, parent: :object_manager_attribute do
-    data_type 'tree_select'
+    data_type { 'tree_select' }
     data_option do
       {
         'options'    => [
@@ -244,7 +231,7 @@ FactoryBot.define do
       }
     end
 
-    edit          do
+    edit do
       {
         'ticket.customer'    => {
           shown:    true,

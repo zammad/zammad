@@ -1,15 +1,15 @@
 FactoryBot.define do
   factory :channel do
-    area         'Email::Dummy'
-    group        { ::Group.find(1) }
-    active       true
-    options      {}
-    preferences  {}
-    updated_by_id 1
-    created_by_id 1
+    area          { 'Email::Dummy' }
+    group         { ::Group.find(1) }
+    active        { true }
+    options       {}
+    preferences   {}
+    updated_by_id { 1 }
+    created_by_id { 1 }
 
     factory :email_channel do
-      area 'Email::Account'
+      area { 'Email::Account' }
       options do
         {
           inbound:  {
@@ -27,7 +27,7 @@ FactoryBot.define do
         custom_options { {} }
       end
 
-      area 'Twitter::Account'
+      area { 'Twitter::Account' }
       options do
         {
           adapter: 'twitter',

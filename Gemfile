@@ -17,8 +17,8 @@ gem 'unicorn', group: :unicorn
 
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
-gem 'mysql2', group: :mysql
-gem 'pg', group: :postgres
+gem 'mysql2', '0.4.10', group: :mysql
+gem 'pg', '0.21.0', group: :postgres
 
 # core - asynchrous task execution
 gem 'daemons'
@@ -29,7 +29,7 @@ gem 'em-websocket'
 gem 'eventmachine'
 
 # core - password security
-gem 'argon2'
+gem 'argon2', '1.1.5'
 
 # performance - Memcached
 gem 'dalli'
@@ -53,7 +53,7 @@ gem 'autoprefixer-rails'
 # asset handling - javascript execution for e.g. linux
 gem 'execjs'
 gem 'libv8'
-gem 'therubyracer'
+gem 'mini_racer'
 
 # authentication - provider
 gem 'doorkeeper'
@@ -117,7 +117,7 @@ gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm'
 gem 'viewpoint'
 
 # image processing
-gem 'rszr'
+gem 'rszr', '0.4.0'
 
 # Gems used only for develop/test and not required
 # in production environments by default.
