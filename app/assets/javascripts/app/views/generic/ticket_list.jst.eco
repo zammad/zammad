@@ -1,0 +1,22 @@
+<ol class="tasks tasks--standalone">
+  <% for ticket in @tickets: %>
+  <li class="task">
+    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
+      <%- @Icon('task-state', ticket.iconClass()) %>
+    </div>
+    <div class="task-text">
+      <a class="name ticket-popover" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">
+        <% if @show_id: %>
+          <span class="task-id">#<%= ticket.number %></span>
+        <% end %>
+        <%= ticket.title || '-' %>
+      </a>
+      <%- @humanTime(ticket.created_at, false, 'time') %>
+    </div>
+    <% if @object: %>
+    <a class="list-item-delete js-delete" data-object="<%= @object %>" data-object-id="<%= ticket.id %>" data-link-type="<%= @linkType || 'normal' %>" data-type="remove">
+      <%- @Icon('diagonal-cross') %>
+    </a>
+    <% end %>
+  <% end %>
+</ol>

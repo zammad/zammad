@@ -33,6 +33,10 @@ class UserTicket extends App.PopoverProvider
     tickets = ticket_ids.map (ticketId) -> App.Ticket.fullLocal(ticketId)
 
     # insert data
-    @buildHtmlContent(tickets: tickets)
-
+    @buildHtmlContent(
+      ticketList: App.view('generic/ticket_list')(
+        tickets: tickets
+        show_id: true
+      )
+    )
 App.PopoverProvider.registerProvider('UserTicket', UserTicket)

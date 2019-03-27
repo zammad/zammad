@@ -3232,6 +3232,10 @@ footer {
       min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
     }
 
+    .tasks--standalone .task-id {
+      &:after { content: " - "; }
+    }
+
     .tasks--standalone .name {
       @extend .u-highlight, .u-textTruncate;
       display: block;
