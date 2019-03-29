@@ -5,6 +5,7 @@ class App.SearchableSelect extends Spine.Controller
     'blur .js-input':        'onBlur'
     'focus .js-input':       'onFocus'
     'focus .js-shadow':      'onShadowFocus'
+    'change .js-shadow':     'onShadowChange'
     'click .js-option':      'selectItem'
     'click .js-enter':       'navigateIn'
     'click .js-back':        'navigateOut'
@@ -35,15 +36,7 @@ class App.SearchableSelect extends Spine.Controller
     @render()
 
   render: ->
-    firstSelected = _.find @attribute.options, (option) -> option.selected
-
-    if firstSelected
-      @attribute.valueName = firstSelected.name
-      @attribute.value = firstSelected.value
-    else if @attribute.unknown && @attribute.value
-      @attribute.valueName = @attribute.value
-    else if @hasSubmenu @attribute.options
-      @attribute.valueName = @getName @attribute.value, @attribute.options
+    @updateAttributeValueName()
 
     @html App.view('generic/searchable_select')
       attribute: @attribute
@@ -67,6 +60,17 @@ class App.SearchableSelect extends Spine.Controller
           if @hasSubmenu(option.children)
             html += @renderSubmenus option.children
     html
+
+  updateAttributeValueName: ->
+    firstSelected = _.find @attribute.options, (option) -> option.selected
+
+    if firstSelected
+      @attribute.valueName = firstSelected.name
+      @attribute.value = firstSelected.value
+    else if @attribute.unknown && @attribute.value
+      @attribute.valueName = @attribute.value
+    else if @hasSubmenu @attribute.options
+      @attribute.valueName = @getName @attribute.value, @attribute.options
 
   hasSubmenu: (options) ->
     return false if !options
@@ -121,6 +125,10 @@ class App.SearchableSelect extends Spine.Controller
     @unhighlightCurrentItem()
     $(document).off 'keydown.searchable_select'
     @isOpen = false
+
+    if !@input.val()
+      @updateAttributeValueName()
+      @input.val @attribute.valueName
 
   onKeyUp: =>
     return if @input.val().trim() isnt ''
@@ -360,6 +368,12 @@ class App.SearchableSelect extends Spine.Controller
   # propergate focus to our visible input
   onShadowFocus: ->
     @input.focus()
+
+  onShadowChange: ->
+    value = @shadowInput.val()
+
+    for option in @attribute.options
+      option.selected = (option.value + '') == value # makes sure option value is always a string
 
   onInput: (event) =>
     @toggle() if not @isOpen
