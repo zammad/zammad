@@ -659,6 +659,7 @@ class TicketsController < ApplicationController
   def follow_up_possible_check
     ticket = Ticket.find(params[:id])
 
+    return true if current_user.permissions?('ticket.agent') # agents can always reopen tickets, regardless of group configuration
     return true if ticket.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
     return true if ticket.state.name != 'closed' # check if the ticket state is already closed
 
