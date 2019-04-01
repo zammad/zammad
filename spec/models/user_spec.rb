@@ -595,6 +595,27 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#locale' do
+      subject(:user) { create(:user, preferences: preferences) }
+
+      context 'with no #preferences[:locale]' do
+        let(:preferences) { {} }
+        before { Setting.set('locale_default', 'foo') }
+
+        it 'returns the system-wide default locale' do
+          expect(user.locale).to eq('foo')
+        end
+      end
+
+      context 'with a #preferences[:locale]' do
+        let(:preferences) { { locale: 'bar' } }
+
+        it 'returns the user’s configured locale' do
+          expect(user.locale).to eq('bar')
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do
