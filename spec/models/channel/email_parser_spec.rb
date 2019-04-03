@@ -91,11 +91,61 @@ RSpec.describe Channel::EmailParser, type: :model do
       let(:ticket) { create(:ticket) }
 
       context 'when email subject contains ticket reference' do
-        let(:raw_mail)   { File.read(mail_file).sub(/(?<=^Subject: ).*$/, ticket_ref) }
+        let(:raw_mail) { File.read(mail_file).sub(/(?<=^Subject: ).*$/, ticket_ref) }
 
         it 'adds message to ticket' do
           expect { described_class.new.process({}, raw_mail) }
             .to change { ticket.articles.length }
+        end
+
+        context 'and ticket is closed' do
+          before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+
+          it 'adds message to ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to change { ticket.articles.length }
+          end
+        end
+
+        context 'but ticket group’s #follow_up_possible attribute is "new_ticket"' do
+          before { ticket.group.update(follow_up_possible: 'new_ticket') }
+
+          context 'and ticket is open' do
+            it 'still adds message to ticket' do
+              expect { described_class.new.process({}, raw_mail) }
+                .to change { ticket.articles.length }
+            end
+          end
+
+          context 'and ticket is closed' do
+            before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+
+            it 'creates a new ticket' do
+              expect { described_class.new.process({}, raw_mail) }
+                .to change { Ticket.count }.by(1)
+                .and not_change { ticket.articles.length }
+            end
+          end
+
+          context 'and ticket is merged' do
+            before { ticket.update(state: Ticket::State.find_by(name: 'merged')) }
+
+            it 'creates a new ticket' do
+              expect { described_class.new.process({}, raw_mail) }
+                .to change { Ticket.count }.by(1)
+                .and not_change { ticket.articles.length }
+            end
+          end
+
+          context 'and ticket is removed' do
+            before { ticket.update(state: Ticket::State.find_by(name: 'removed')) }
+
+            it 'creates a new ticket' do
+              expect { described_class.new.process({}, raw_mail) }
+                .to change { Ticket.count }.by(1)
+                .and not_change { ticket.articles.length }
+            end
+          end
         end
       end
 
