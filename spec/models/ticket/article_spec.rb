@@ -8,7 +8,9 @@ RSpec.describe Ticket::Article, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasObjectManagerAttributesValidation'
 
-  describe 'Callbacks, Observers, & Async Transactions' do
+  subject(:article) { create(:ticket_article) }
+
+  describe 'Callbacks, Observers, & Async Transactions -' do
     describe 'NULL byte handling (via ChecksAttributeValuesAndLength concern):' do
       it 'removes them from #subject on creation, if necessary (postgres doesn’t like them)' do
         expect(create(:ticket_article, subject: "com test 1\u0000"))
@@ -18,6 +20,40 @@ RSpec.describe Ticket::Article, type: :model do
       it 'removes them from #body on creation, if necessary (postgres doesn’t like them)' do
         expect(create(:ticket_article, body: "some\u0000message 123"))
           .to be_persisted
+      end
+    end
+
+    describe 'Setting of ticket.create_article_{sender,type}' do
+      let!(:ticket) { create(:ticket) }
+
+      context 'on creation' do
+        context 'of first article on a ticket' do
+          subject(:article) do
+            create(:ticket_article, ticket: ticket, sender_name: 'Agent', type_name: 'email')
+          end
+
+          it 'sets ticket sender/type attributes based on article sender/type' do
+            expect { article }
+              .to change { ticket.reload.create_article_sender&.name }.to('Agent')
+              .and change { ticket.reload.create_article_type&.name }.to('email')
+          end
+        end
+
+        context 'of subsequent articles on a ticket' do
+          let!(:first_article) do
+            create(:ticket_article, ticket: ticket, sender_name: 'Agent', type_name: 'email')
+          end
+
+          subject(:article) do
+            create(:ticket_article, ticket: ticket, sender_name: 'Customer', type_name: 'twitter status')
+          end
+
+          it 'does not modify ticket’s sender/type attributes' do
+            expect { article }
+              .to not_change { ticket.reload.create_article_sender.name }
+              .and not_change { ticket.reload.create_article_type.name }
+          end
+        end
       end
     end
 
@@ -44,7 +80,7 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
-    describe 'Auto-setting of outgoing Twitter article attributes (via bj jobs):' do
+    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):' do
       subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
       let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
 

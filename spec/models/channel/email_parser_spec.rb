@@ -85,7 +85,65 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
-    describe 'associating emails to tickets' do
+    describe 'creating new tickets' do
+      context 'when subject contains no ticket reference' do
+        let(:raw_mail) { <<~RAW.chomp }
+          From: foo@bar.com
+          To: baz@qux.net
+          Subject: Foo
+
+          Lorem ipsum dolor
+        RAW
+
+        it 'creates a ticket and article' do
+          expect { Channel::EmailParser.new.process({}, raw_mail) }
+            .to change { Ticket.count }.by(1)
+            .and change { Ticket::Article.count }.by_at_least(1)  # triggers may cause additional articles to be created
+        end
+
+        it 'sets #title to email subject' do
+          Channel::EmailParser.new.process({}, raw_mail)
+
+          expect(Ticket.last.title).to eq('Foo')
+        end
+
+        it 'sets #state to "new"' do
+          Channel::EmailParser.new.process({}, raw_mail)
+
+          expect(Ticket.last.state.name).to eq('new')
+        end
+
+        context 'when from address matches an existing agent' do
+          let!(:agent) { create(:agent_user, email: 'foo@bar.com') }
+
+          it 'sets article.sender to "Agent"' do
+            Channel::EmailParser.new.process({}, raw_mail)
+
+            expect(Ticket::Article.last.sender.name).to eq('Agent')
+          end
+        end
+
+        context 'when from address matches an existing customer' do
+          let!(:customer) { create(:customer_user, email: 'foo@bar.com') }
+
+          it 'sets article.sender to "Customer"' do
+            Channel::EmailParser.new.process({}, raw_mail)
+
+            expect(Ticket.last.articles.first.sender.name).to eq('Customer')
+          end
+        end
+
+        context 'when from address is unrecognized' do
+          it 'sets article.sender to "Customer"' do
+            Channel::EmailParser.new.process({}, raw_mail)
+
+            expect(Ticket.last.articles.first.sender.name).to eq('Customer')
+          end
+        end
+      end
+    end
+
+    describe 'associating emails to existing tickets' do
       let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail001.box') }
       let(:ticket_ref) { Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number }
       let(:ticket) { create(:ticket) }
@@ -183,7 +241,40 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
-    describe 'sender/recipient address formatting' do
+    describe 'assigning ticket.customer' do
+      let(:agent) { create(:agent_user) }
+      let(:customer) { create(:customer_user) }
+
+      let(:raw_mail) { <<~RAW.chomp }
+        From: #{agent.email}
+        To: #{customer.email}
+        Subject: Foo
+
+        Lorem ipsum dolor
+      RAW
+
+      context 'when "postmaster_sender_is_agent_search_for_customer" setting is true (default)' do
+        it 'sets ticket.customer to user with To: email' do
+          expect { Channel::EmailParser.new.process({}, raw_mail) }
+            .to change { Ticket.count }.by(1)
+
+          expect(Ticket.last.customer).to eq(customer)
+        end
+      end
+
+      context 'when "postmaster_sender_is_agent_search_for_customer" setting is false' do
+        before { Setting.set('postmaster_sender_is_agent_search_for_customer', false) }
+
+        it 'sets ticket.customer to user with To: email' do
+          expect { Channel::EmailParser.new.process({}, raw_mail) }
+            .to change { Ticket.count }.by(1)
+
+          expect(Ticket.last.customer).to eq(agent)
+        end
+      end
+    end
+
+    describe 'formatting to/from addresses' do
       # see https://github.com/zammad/zammad/issues/2198
       context 'when sender address contains spaces (#2198)' do
         let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail071.box') }
