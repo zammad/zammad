@@ -258,6 +258,86 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe 'Attributes:' do
+    describe '#owner' do
+      let(:original_owner) { create(:agent_user, groups: [ticket.group]) }
+      before { ticket.update(owner: original_owner) }
+
+      context 'when assigned directly' do
+        context 'to an active agent belonging to ticket.group' do
+          let(:agent) { create(:agent_user, groups: [ticket.group]) }
+
+          it 'can be set' do
+            expect { ticket.update(owner: agent) }
+              .to change { ticket.reload.owner }.to(agent)
+          end
+        end
+
+        context 'to an agent not belonging to ticket.group' do
+          let(:agent) { create(:agent_user, groups: [other_group]) }
+          let(:other_group) { create(:group) }
+
+          it 'resets to default user (id: 1) instead' do
+            expect { ticket.update(owner: agent) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+
+        context 'to an inactive agent' do
+          let(:agent) { create(:agent_user, groups: [ticket.group], active: false) }
+
+          it 'resets to default user (id: 1) instead' do
+            expect { ticket.update(owner: agent) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+
+        context 'to a non-agent' do
+          let(:agent) { create(:customer_user, groups: [ticket.group]) }
+
+          it 'resets to default user (id: 1) instead' do
+            expect { ticket.update(owner: agent) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+      end
+
+      context 'when the ticket is updated for any other reason' do
+        context 'if original owner is still an active agent belonging to ticket.group' do
+          it 'does not change' do
+            expect { create(:ticket_article, ticket: ticket) }
+              .not_to change { ticket.reload.owner }
+          end
+        end
+
+        context 'if original owner has left ticket.group' do
+          before { original_owner.groups = [] }
+
+          it 'resets to default user (id: 1)' do
+            expect { create(:ticket_article, ticket: ticket) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+
+        context 'if original owner has become inactive' do
+          before { original_owner.update(active: false) }
+
+          it 'resets to default user (id: 1)' do
+            expect { create(:ticket_article, ticket: ticket) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+
+        context 'if original owner has lost agent status' do
+          before { original_owner.roles = [create(:role)] }
+
+          it 'resets to default user (id: 1)' do
+            expect { create(:ticket_article, ticket: ticket) }
+              .to change { ticket.reload.owner }.to(User.first)
+          end
+        end
+      end
+    end
+
     describe '#state' do
       context 'when originally "new"' do
         context 'and a non-customer article is added' do
