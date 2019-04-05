@@ -3,11 +3,13 @@ class App.PopoverProvider
   @templateName = null # needs to be overrided
   @permission = 'ticket.agent'
 
-  @providers = {}
-
   @providersConfigKey = 'PopoverProviders'
 
   @registerProvider: (key, klass) ->
+    # create hash on the fly to avoid issues with class inheritance
+    if !@providers
+      @providers = {}
+
     @providers[key] = klass
     App.Config.set(key, klass, @providersConfigKey)
 
