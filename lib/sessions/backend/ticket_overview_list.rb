@@ -103,6 +103,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
       assets = {}
       overview = Overview.lookup(id: data[:overview][:id])
+      next if !overview
+
       if asset_needed?(overview)
         assets = asset_push(overview, assets)
       end
