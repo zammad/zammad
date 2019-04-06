@@ -46,10 +46,6 @@ class ObjectManager::Attribute::Validation < ActiveModel::Validator
     end
   end
 
-  def validations
-    @validations ||= backend.map { backend.new }
-  end
-
   def sanitize_memory_cache
     @model_attributes = nil
 
