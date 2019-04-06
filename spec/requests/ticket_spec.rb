@@ -1872,63 +1872,6 @@ RSpec.describe 'Ticket', type: :request do
 
     end
 
-    it 'does ticket with follow up possible set to new_ticket (06.01)' do
-      group = create(
-        :group,
-        follow_up_possible: 'new_ticket' # disable follow up possible
-      )
-
-      ticket = create(
-        :ticket,
-        title:       'ticket with wrong ticket id',
-        group_id:    group.id,
-        customer_id: customer_user.id,
-        state:       Ticket::State.lookup(name: 'closed'), # set the ticket to closed
-      )
-
-      state = Ticket::State.find_by(name: 'open') # try to open a ticket from a closed state
-
-      # customer
-      params = {
-        state_id: state.id, # set the state id
-      }
-
-      authenticated_as(customer_user)
-      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(422)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Cannot follow up on a closed ticket. Please create a new ticket.')
-
-      ticket = create(
-        :ticket,
-        title:       'ticket with wrong ticket id',
-        group_id:    group.id,
-        customer_id: customer_user.id,
-        state:       Ticket::State.lookup(name: 'closed'), # set the ticket to closed
-      )
-
-      authenticated_as(admin_user)
-      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(422)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Cannot follow up on a closed ticket. Please create a new ticket.')
-
-      ticket = create(
-        :ticket,
-        title:       'ticket with wrong ticket id',
-        group_id:    group.id,
-        customer_id: customer_user.id,
-        state:       Ticket::State.lookup(name: 'closed'), # set the ticket to closed
-      )
-
-      # agent
-      authenticated_as(agent_user)
-      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(422)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Cannot follow up on a closed ticket. Please create a new ticket.')
-    end
-
     it 'does ticket merge (07.01)' do
       group_no_permission = create(:group)
       ticket1 = create(
@@ -2134,6 +2077,63 @@ RSpec.describe 'Ticket', type: :request do
         .and include('organization' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
     end
 
+  end
+
+  describe '/api/v1/tickets' do
+    context 'follow_up_possible' do
+      let(:ticket) do
+        create(
+          :ticket,
+          group_id:    ticket_group.id,
+          customer_id: customer_user.id,
+          state:       Ticket::State.lookup(name: 'closed')
+        )
+      end
+
+      def attempt_to_reopen_ticket(user, should_succeed)
+        authenticated_as(user)
+        state_open = Ticket::State.lookup(name: 'open')
+        put "/api/v1/tickets/#{ticket.id}", params: { state_id: state_open.id }, as: :json
+
+        if should_succeed
+          expect(response).to have_http_status(200)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['state_id']).to eq(state_open.id)
+        else
+          expect(response).to have_http_status(422)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['error']).to eq('Cannot follow up on a closed ticket. Please create a new ticket.')
+        end
+      end
+
+      context 'when follow_up_possible = yes' do
+        let(:ticket_group) do
+          create(
+            :group,
+            email_address:      create(:email_address),
+            follow_up_possible: 'yes'
+          )
+        end
+
+        it 'allows admins to reopen tickets'    do attempt_to_reopen_ticket(admin_user, true) end
+        it 'allows agents to reopen tickets'    do attempt_to_reopen_ticket(agent_user, true) end
+        it 'allows customers to reopen tickets' do attempt_to_reopen_ticket(customer_user, true) end
+      end
+
+      context 'when follow_up_possible = new_ticket' do
+        let(:ticket_group) do
+          create(
+            :group,
+            email_address:      create(:email_address),
+            follow_up_possible: 'new_ticket'
+          )
+        end
+
+        it 'allows admins to reopen tickets'            do attempt_to_reopen_ticket(admin_user, true) end
+        it 'allows agents to reopen tickets'            do attempt_to_reopen_ticket(agent_user, true) end
+        it 'does not allow customers to reopen tickets' do attempt_to_reopen_ticket(customer_user, false) end
+      end
+    end
   end
 
 end
