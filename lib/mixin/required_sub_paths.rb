@@ -32,7 +32,7 @@ module Mixin
           sub_paths.push(sub_path)
         elsif sub_path =~ /\A(.*)\.rb\z/
           require_path = $1
-          require(require_path)
+          require_dependency(require_path)
         end
       end
 
