@@ -164,6 +164,7 @@ group :development, :test do
   gem 'coffeelint'
   gem 'pre-commit'
   gem 'rubocop'
+  gem 'rubocop-performance'
 
   # changelog generation
   gem 'github_changelog_generator'

@@ -331,8 +331,8 @@ GEM
     omniauth-weibo-oauth2 (0.5.2)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
-    parallel (1.15.0)
-    parser (2.6.2.0)
+    parallel (1.17.0)
+    parser (2.6.2.1)
       ast (~> 2.4.0)
     pg (0.21.0)
     pluginator (1.5.0)
@@ -416,7 +416,7 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     rszr (0.4.0)
-    rubocop (0.66.0)
+    rubocop (0.67.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -424,6 +424,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.6)
+    rubocop-performance (1.0.0)
+      rubocop (>= 0.58.0)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
@@ -592,6 +594,7 @@ DEPENDENCIES
   rspec-rails
   rszr (= 0.4.0)
   rubocop
+  rubocop-performance
   rubyntlm!
   sassc-rails
   selenium-webdriver

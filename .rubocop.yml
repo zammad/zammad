@@ -1,6 +1,8 @@
 # Default enabled cops
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
+require: rubocop-performance
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
