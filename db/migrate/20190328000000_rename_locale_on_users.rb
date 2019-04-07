@@ -4,13 +4,29 @@ class RenameLocaleOnUsers < ActiveRecord::Migration[5.1]
     return if ActiveRecord::Base.connection.columns('users').map(&:name).exclude?('locale')
 
     ActiveRecord::Migration.rename_column(:users, :locale, :_locale)
-    ObjectManager::Attribute.find_by(name: 'locale').update(name: '_locale')
+    User.reset_column_information
+
+    attribute = ObjectManager::Attribute.get(
+      object: 'User',
+      name:   'locale',
+    )
+    return if !attribute
+
+    attribute.update(name: '_locale')
   end
 
   def down
     return if ActiveRecord::Base.connection.columns('users').map(&:name).exclude?('_locale')
 
     ActiveRecord::Migration.rename_column(:users, :_locale, :locale)
-    ObjectManager::Attribute.find_by(name: '_locale').update(name: 'locale')
+    User.reset_column_information
+
+    attribute = ObjectManager::Attribute.get(
+      object: 'User',
+      name:   '_locale',
+    )
+    return if !attribute
+
+    attribute.update(name: 'locale')
   end
 end
