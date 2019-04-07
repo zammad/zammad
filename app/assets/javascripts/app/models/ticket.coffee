@@ -30,8 +30,8 @@ class App.Ticket extends App.Model
     "#ticket/zoom/#{@id}"
 
   getState: ->
-    type = App.TicketState.find(@state_id)
-    stateType = App.TicketStateType.find(type.state_type_id)
+    type = App.TicketState.findNative(@state_id)
+    stateType = App.TicketStateType.findNative(type.state_type_id)
     state = 'closed'
     if stateType.name is 'new' || stateType.name is 'open'
       state = 'open'
@@ -56,8 +56,8 @@ class App.Ticket extends App.Model
     @getState()
 
   iconTitle: ->
-    type = App.TicketState.find(@state_id)
-    stateType = App.TicketStateType.find(type.state_type_id)
+    type = App.TicketState.findNative(@state_id)
+    stateType = App.TicketStateType.findNative(type.state_type_id)
     if stateType.name is 'pending reminder' && @pending_time && new Date( Date.parse(@pending_time) ) < new Date
       return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('reached')}"
     if @escalation_at && new Date( Date.parse(@escalation_at) ) < new Date

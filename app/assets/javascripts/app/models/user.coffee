@@ -279,7 +279,7 @@ class App.User extends App.Model
     if user_role_ids
       for role_id in user_role_ids
         if App.Role.exists(role_id)
-          role = App.Role.find(role_id)
+          role = App.Role.findNative(role_id)
           if role.group_ids
             for local_group_id, local_permission of role.group_ids
               if _.include(local_permission, permission) || _.include(local_permission, 'full')

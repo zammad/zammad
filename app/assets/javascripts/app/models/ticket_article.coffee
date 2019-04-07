@@ -28,14 +28,14 @@ class App.TicketArticle extends App.Model
     if @subject
       return @subject
     if App.Ticket.exists(@ticket_id)
-      ticket = App.Ticket.find(@ticket_id)
+      ticket = App.Ticket.findNative(@ticket_id)
     if ticket
       return ticket.title
     '???'
 
   iconActivity: (user) ->
     return if !user
-    ticket = App.Ticket.find(@ticket_id)
+    ticket = App.Ticket.findNative(@ticket_id)
     if ticket.owner_id == user.id
       return 'important'
     ''
