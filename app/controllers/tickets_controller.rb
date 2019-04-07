@@ -24,7 +24,7 @@ class TicketsController < ApplicationController
     end
 
     access_condition = Ticket.access_condition(current_user, 'read')
-    tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
+    tickets = Ticket.where(access_condition).order(id: :asc).offset(offset).limit(per_page)
 
     if response_expand?
       list = []
@@ -309,11 +309,11 @@ class TicketsController < ApplicationController
     ticket_lists = Ticket
                    .where(
                      customer_id: ticket.customer_id,
-                     state_id:    Ticket::State.by_category(:open)
+                     state_id:    Ticket::State.by_category(:open).pluck(:id),
                    )
                    .where(access_condition)
                    .where('id != ?', [ ticket.id ])
-                   .order('created_at DESC')
+                   .order(created_at: :desc)
                    .limit(6)
 
     # if we do not have open related tickets, search for any tickets
@@ -322,11 +322,11 @@ class TicketsController < ApplicationController
                      .where(
                        customer_id: ticket.customer_id,
                      ).where.not(
-                       state_id: Ticket::State.by_category(:merged)
+                       state_id: Ticket::State.by_category(:merged).pluck(:id),
                      )
                      .where(access_condition)
                      .where('id != ?', [ ticket.id ])
-                     .order('created_at DESC')
+                     .order(created_at: :desc)
                      .limit(6)
     end
 

@@ -63,10 +63,10 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
     organizations = []
     if !current_user.permissions?(['admin.organization', 'ticket.agent'])
       if current_user.organization_id
-        organizations = Organization.where(id: current_user.organization_id).order(id: 'ASC').offset(offset).limit(per_page)
+        organizations = Organization.where(id: current_user.organization_id).order(id: :asc).offset(offset).limit(per_page)
       end
     else
-      organizations = Organization.all.order(id: 'ASC').offset(offset).limit(per_page)
+      organizations = Organization.all.order(id: :asc).offset(offset).limit(per_page)
     end
 
     if response_expand?

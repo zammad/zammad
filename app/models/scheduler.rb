@@ -37,7 +37,7 @@ class Scheduler < ApplicationModel
       end
 
       # read/load jobs and check if it is alredy started
-      jobs = Scheduler.where('active = ?', true).order('prio ASC')
+      jobs = Scheduler.where('active = ?', true).order(prio: :asc)
       jobs.each do |job|
 
         # ignore job is still running

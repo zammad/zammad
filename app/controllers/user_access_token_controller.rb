@@ -27,7 +27,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
 =end
 
   def index
-    tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order('updated_at DESC, label ASC')
+    tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order(updated_at: :desc, label: :asc)
     token_list = []
     tokens.each do |token|
       attributes = token.attributes

@@ -9,7 +9,12 @@ RSpec.describe Cti::Log do
     end
 
     context 'when over 60 Log records exist' do
-      subject!(:cti_logs) { create_list(:'cti/log', 61) }
+      subject!(:cti_logs) do
+        61.times.map do |_i| # rubocop:disable Performance/TimesMap
+          travel 1.second
+          create(:'cti/log')
+        end
+      end
 
       it 'returns the 60 latest ones in the :list key' do
         expect(Cti::Log.log[:list]).to match_array(cti_logs.last(60))

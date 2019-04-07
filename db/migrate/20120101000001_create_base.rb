@@ -355,6 +355,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :activity_streams, [:o_id]
     add_index :activity_streams, [:created_by_id]
     add_index :activity_streams, [:permission_id]
+    add_index :activity_streams, %i[permission_id group_id]
+    add_index :activity_streams, %i[permission_id group_id created_at], name: 'index_activity_streams_on_permission_id_group_id_created_at'
     add_index :activity_streams, [:group_id]
     add_index :activity_streams, [:created_at]
     add_index :activity_streams, [:activity_stream_object_id]
@@ -458,6 +460,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :stores, %i[store_object_id o_id]
+    add_index :stores, %i[store_file_id]
     add_foreign_key :stores, :store_objects
     add_foreign_key :stores, :store_files
     add_foreign_key :stores, :users, column: :created_by_id
@@ -675,6 +678,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :cti_caller_ids, %i[caller_id level]
     add_index :cti_caller_ids, %i[caller_id user_id]
     add_index :cti_caller_ids, %i[object o_id]
+    add_index :cti_caller_ids, %i[object o_id level user_id caller_id], name: 'index_cti_caller_ids_on_object_o_id_level_user_id_caller_id'
     add_foreign_key :cti_caller_ids, :users
 
     create_table :stats_stores do |t|

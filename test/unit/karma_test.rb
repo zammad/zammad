@@ -6,7 +6,7 @@ class KarmaTest < ActiveSupport::TestCase
 
     groups = Group.all
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    agent1 = User.create!(
       login:         'karma-agent1@example.com',
       firstname:     'Karma',
       lastname:      'Agent1',
@@ -18,7 +18,7 @@ class KarmaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create_or_update(
+    agent2 = User.create!(
       login:         'karma-agent2@example.com',
       firstname:     'Karma',
       lastname:      'Agent2',
@@ -30,7 +30,7 @@ class KarmaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login:         'karma-customer1@example.com',
       firstname:     'Karma',
       lastname:      'Customer1',
@@ -42,7 +42,7 @@ class KarmaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title:         'karma test 1',
       group:         Group.lookup(name: 'Users'),
       customer:      customer1,
@@ -53,7 +53,7 @@ class KarmaTest < ActiveSupport::TestCase
       updated_at:    Time.zone.now - 10.hours,
       created_at:    Time.zone.now - 10.hours,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -139,7 +139,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -178,7 +178,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -202,7 +202,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -226,7 +226,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -250,7 +250,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -274,7 +274,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -298,7 +298,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -345,7 +345,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10 + 4, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title:         'karma test 1',
       group:         Group.lookup(name: 'Users'),
       customer:      customer1,
@@ -357,7 +357,7 @@ class KarmaTest < ActiveSupport::TestCase
       updated_at:    Time.zone.now - 10.hours,
       created_at:    Time.zone.now - 10.hours,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id:     ticket2.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -408,7 +408,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10 + 4, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    calendar1 = Calendar.create_or_update(
+    calendar1 = Calendar.create!(
       name:           'EU 1 - karma test',
       timezone:       'Europe/Berlin',
       business_hours: {
@@ -447,7 +447,7 @@ class KarmaTest < ActiveSupport::TestCase
       created_by_id:  1,
     )
 
-    sla1 = Sla.create_or_update(
+    sla1 = Sla.create!(
       name:                'test sla 1',
       condition:           {},
       first_response_time: 20,

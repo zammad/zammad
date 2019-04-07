@@ -153,7 +153,7 @@ returns
       history_object = object_lookup(requested_object)
       history = History.where(history_object_id: history_object.id)
                        .where(o_id: requested_object_id)
-                       .order('created_at ASC, id ASC')
+                       .order(created_at: :asc)
     else
       history_object_requested = object_lookup(requested_object)
       history_object_related   = object_lookup(related_history_object)
@@ -164,7 +164,7 @@ returns
         history_object_related.id,
         requested_object_id,
       )
-                       .order('created_at ASC, id ASC')
+                       .order(created_at: :asc)
     end
     asset_list = {}
     list = []

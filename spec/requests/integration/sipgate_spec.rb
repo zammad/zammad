@@ -217,6 +217,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
 
+      travel 1.second
+
       # outbound - I - hangup by agent
       params = 'event=hangup&direction=out&callId=1234567890-1&cause=cancel'
       post '/api/v1/sipgate/out', params: params
@@ -231,6 +233,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to eq('cancel')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
+
+      travel 1.second
 
       # outbound - II - new call
       params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-2&user%5B%5D=user+1'
@@ -247,6 +251,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
 
+      travel 1.second
+
       # outbound - II - answer by customer
       params = 'event=answer&direction=out&callId=1234567890-2&from=4930600000000&to=4912347114711'
       post '/api/v1/sipgate/out', params: params
@@ -261,6 +267,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
+
+      travel 1.second
 
       # outbound - II - hangup by customer
       params = 'event=hangup&direction=out&callId=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
@@ -277,6 +285,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
 
+      travel 1.second
+
       # inbound - I - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-3&user%5B%5D=user+1'
       post '/api/v1/sipgate/in', params: params
@@ -291,6 +301,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
+
+      travel 1.second
 
       # inbound - I - answer by customer
       params = 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711'
@@ -307,6 +319,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
 
+      travel 1.second
+
       # inbound - I - hangup by customer
       params = 'event=hangup&direction=in&callId=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
       post '/api/v1/sipgate/in', params: params
@@ -321,6 +335,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
+
+      travel 1.second
 
       # inbound - II - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-4&user%5B%5D=user+1,user+2'
@@ -337,6 +353,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
 
+      travel 1.second
+
       # inbound - II - answer by voicemail
       params = 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
       post '/api/v1/sipgate/in', params: params
@@ -351,6 +369,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
+
+      travel 1.second
 
       # inbound - II - hangup by customer
       params = 'event=hangup&direction=in&callId=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -367,6 +387,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
 
+      travel 1.second
+
       # inbound - III - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-5&user%5B%5D=user+1,user+2'
       post '/api/v1/sipgate/in', params: params
@@ -382,6 +404,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
 
+      travel 1.second
+
       # inbound - III - hangup by customer
       params = 'event=hangup&direction=in&callId=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
       post '/api/v1/sipgate/in', params: params
@@ -396,6 +420,8 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
+
+      travel 1.second
 
       # inbound - IV - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&callId=1234567890-6&user%5B%5D=user+1,user+2'

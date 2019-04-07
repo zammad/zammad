@@ -308,7 +308,7 @@ returns
 =end
 
     def self.log_records
-      Cti::Log.order('created_at DESC, id DESC').limit(60)
+      Cti::Log.order(created_at: :desc).limit(60)
     end
 
 =begin

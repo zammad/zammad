@@ -87,9 +87,11 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, [:group_id]
     add_index :tickets, [:owner_id]
     add_index :tickets, [:customer_id]
+    add_index :tickets, %i[customer_id state_id created_at]
     add_index :tickets, [:number], unique: true
     add_index :tickets, [:title]
     add_index :tickets, [:created_at]
+    add_index :tickets, [:updated_at]
     add_index :tickets, [:first_response_at]
     add_index :tickets, [:first_response_escalation_at]
     add_index :tickets, [:first_response_in_min]
@@ -113,6 +115,12 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, [:time_unit]
     add_index :tickets, %i[group_id state_id]
     add_index :tickets, %i[group_id state_id owner_id]
+    add_index :tickets, %i[group_id state_id updated_at]
+    add_index :tickets, %i[group_id state_id owner_id updated_at], name: 'index_tickets_on_group_id_state_id_owner_id_updated_at'
+    add_index :tickets, %i[group_id state_id created_at]
+    add_index :tickets, %i[group_id state_id owner_id created_at], name: 'index_tickets_on_group_id_state_id_owner_id_created_at'
+    add_index :tickets, %i[group_id state_id close_at]
+    add_index :tickets, %i[group_id state_id owner_id close_at], name: 'index_tickets_on_group_id_state_id_owner_id_close_at'
     add_foreign_key :tickets, :groups
     add_foreign_key :tickets, :users, column: :owner_id
     add_foreign_key :tickets, :users, column: :customer_id

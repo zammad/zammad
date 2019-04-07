@@ -5,7 +5,7 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_search?term=abc
   def search
-    list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order('name ASC').limit(params[:limit] || 10)
+    list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order(name: :asc).limit(params[:limit] || 10)
     results = []
     list.each do |item|
       result = {
@@ -61,7 +61,7 @@ class TagsController < ApplicationController
   # GET /api/v1/tag_list
   def admin_list
     permission_check('admin.tag')
-    list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
+    list = Tag::Item.order(name: :asc).limit(params[:limit] || 1000)
     results = []
     list.each do |item|
       result = {

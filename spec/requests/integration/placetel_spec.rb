@@ -198,6 +198,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # outbound - I - hangup by agent
       params = 'event=HungUp&call_id=1234567890-1&type=missed'
       post "/api/v1/placetel/#{token}", params: params
@@ -217,6 +219,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # outbound - II - new call
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2'
@@ -238,6 +242,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # outbound - II - answer by customer
       params = 'event=CallAccepted&call_id=1234567890-2&from=030600000000&to=01114100300'
       post "/api/v1/placetel/#{token}", params: params
@@ -257,6 +263,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # outbound - II - hangup by customer
       params = 'event=HungUp&call_id=1234567890-2&type=accepted&from=030600000000&to=01114100300'
@@ -278,6 +286,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
 
+      travel 1.second
+
       # inbound - I - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-3'
       post "/api/v1/placetel/#{token}", params: params
@@ -297,6 +307,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - I - answer by customer
       params = 'event=CallAccepted&call_id=1234567890-3&to=030600000000&from=01114100300'
@@ -318,6 +330,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - I - hangup by customer
       params = 'event=HungUp&call_id=1234567890-3&type=accepted&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
@@ -337,6 +351,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
+
+      travel 1.second
 
       # inbound - II - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-4'
@@ -358,6 +374,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - II - answer by voicemail
       params = 'event=CallAccepted&call_id=1234567890-4&to=030600000000&from=01114100300&user=voicemail'
       post "/api/v1/placetel/#{token}", params: params
@@ -377,6 +395,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - II - hangup by customer
       params = 'event=HungUp&call_id=1234567890-4&type=accepted&to=030600000000&from=01114100300'
@@ -398,6 +418,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
 
+      travel 1.second
+
       # inbound - III - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-5'
       post "/api/v1/placetel/#{token}", params: params
@@ -418,6 +440,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - III - hangup by customer
       params = 'event=HungUp&call_id=1234567890-5&type=accepted&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
@@ -437,6 +461,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - IV - new call
       params = 'event=IncomingCall&to=030600000000&from=49999992222222&call_id=1234567890-6'
@@ -459,6 +485,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - IV - new call
       params = 'event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-7'

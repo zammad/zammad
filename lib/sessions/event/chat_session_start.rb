@@ -5,7 +5,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     return if !permission_check('chat.agent', 'chat')
 
     # find first in waiting list
-    chat_session = Chat::Session.where(state: 'waiting').order('created_at ASC').first
+    chat_session = Chat::Session.where(state: 'waiting').order(created_at: :asc).first
     if !chat_session
       return {
         event: 'chat_session_start',

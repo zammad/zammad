@@ -206,7 +206,7 @@ broadcast new customer queue position to all waiting customers
 
     # send position update to other waiting sessions
     position = 0
-    Chat::Session.where(state: 'waiting').order('created_at ASC').each do |local_chat_session|
+    Chat::Session.where(state: 'waiting').order(created_at: :asc).each do |local_chat_session|
       position += 1
       data = {
         event: 'chat_session_queue',

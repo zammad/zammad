@@ -40,7 +40,7 @@ module SessionHelper
   end
 
   def self.list(limit = 10_000)
-    ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(limit)
+    ActiveRecord::SessionStore::Session.order(updated_at: :desc).limit(limit)
   end
 
   def self.destroy(id)

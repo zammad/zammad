@@ -252,6 +252,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_between(2, 3)
       expect(log.duration_talking_time).to be_between(2, 3)
 
+      travel 1.second
+
       # inbound - I - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-3&user%5B%5D=user+1'
       post "/api/v1/cti/#{token}", params: params
@@ -272,6 +274,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - I - answer by customer
       params = 'event=answer&direction=in&call_id=1234567890-3&to=4930600000000&from=4912347114711'
@@ -294,6 +298,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - I - hangup by customer
       params = 'event=hangup&direction=in&call_id=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
       post "/api/v1/cti/#{token}", params: params
@@ -314,6 +320,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
+
+      travel 1.second
 
       # inbound - II - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-4&user%5B%5D=user+1,user+2'
@@ -336,6 +344,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - II - answer by voicemail
       params = 'event=answer&direction=in&call_id=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
       post "/api/v1/cti/#{token}", params: params
@@ -356,6 +366,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - II - hangup by customer
       params = 'event=hangup&direction=in&call_id=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -378,6 +390,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
 
+      travel 1.second
+
       # inbound - III - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-5&user%5B%5D=user+1,user+2'
       post "/api/v1/cti/#{token}", params: params
@@ -399,6 +413,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
       # inbound - III - hangup by customer
       params = 'event=hangup&direction=in&call_id=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
       post "/api/v1/cti/#{token}", params: params
@@ -419,6 +435,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - IV - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&call_id=1234567890-6&user%5B%5D=user+1,user+2'
@@ -442,6 +460,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_nil
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
 
       # inbound - IV - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-7&user%5B%5D=user+1,user+2&queue=some_queue_name'

@@ -349,7 +349,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       # see https://github.com/zammad/zammad/issues/2486
       context 'when image is large but not resizable' do
         let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail079.box') }
-        let(:attachment) { article.attachments.last }
+        let(:attachment) { article.attachments.to_a.find { |i| i.filename == 'a.jpg' } }
         let(:article) { described_class.new.process({}, raw_mail).second }
 
         it "doesn't set resizable preference" do

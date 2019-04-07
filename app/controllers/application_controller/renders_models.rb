@@ -113,9 +113,9 @@ module ApplicationController::RendersModels
     end
 
     generic_objects = if offset.positive?
-                        object.limit(params[:per_page]).order(id: 'ASC').offset(offset).limit(limit)
+                        object.limit(params[:per_page]).order(id: :asc).offset(offset).limit(limit)
                       else
-                        object.all.order(id: 'ASC').offset(offset).limit(limit)
+                        object.all.order(id: :asc).offset(offset).limit(limit)
                       end
 
     if response_expand?

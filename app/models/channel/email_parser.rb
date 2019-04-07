@@ -231,7 +231,7 @@ returns
           group = Group.lookup(id: channel[:group_id])
         end
         if group.blank? || group.active == false
-          group = Group.where(active: true).order('id ASC').first
+          group = Group.where(active: true).order(id: :asc).first
         end
         if group.blank?
           group = Group.first
