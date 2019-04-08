@@ -380,6 +380,165 @@ RSpec.describe Ticket, type: :model do
         end
       end
     end
+
+    describe '#escalation_at' do
+      before { travel_to(Time.current) }  # freeze time
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:calendar) { create(:calendar, :'24/7') }
+
+      context 'with no SLAs in the system' do
+        it 'defaults to nil' do
+          expect(ticket.escalation_at).to be(nil)
+        end
+      end
+
+      context 'with an SLA in the system' do
+        before { sla }  # create sla
+
+        it 'is set based on SLA’s #first_response_time' do
+          expect(ticket.escalation_at.to_i)
+            .to eq(1.hour.from_now.to_i)
+        end
+
+        context 'after first agent’s response' do
+          before { ticket }  # create ticket
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'is updated based on the SLA’s #update_time' do
+            travel(1.minute)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+            expect { article }
+              .to change { ticket.reload.escalation_at.to_i }
+              .to eq(3.hours.from_now.to_i)
+          end
+
+          context 'when new #update_time is later than original #solution_time' do
+            it 'is updated based on the original #solution_time' do
+              travel(2.hours)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+              expect { article }
+                .to change { ticket.reload.escalation_at.to_i }
+                .to eq(4.hours.after(ticket.created_at).to_i)
+            end
+          end
+        end
+      end
+
+      context 'when updated after an SLA has been added to the system' do
+        before { ticket }  # create ticket
+        before { sla }  # create sla
+
+        it 'is updated based on the new SLA’s #first_response_time' do
+          expect { ticket.save! }
+            .to change { ticket.escalation_at.to_i }.from(0).to(1.hour.from_now.to_i)
+        end
+      end
+
+      context 'when updated after all SLAs have been removed from the system' do
+        before { sla }  # create sla
+        before { ticket }  # create ticket
+        before { sla.destroy }
+
+        it 'is set to nil' do
+          expect { ticket.save! }
+            .to change { ticket.escalation_at }.to(nil)
+        end
+      end
+    end
+
+    describe '#first_response_escalation_at' do
+      before { travel_to(Time.current) }  # freeze time
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:calendar) { create(:calendar, :'24/7') }
+
+      context 'with no SLAs in the system' do
+        it 'defaults to nil' do
+          expect(ticket.first_response_escalation_at).to be(nil)
+        end
+      end
+
+      context 'with an SLA in the system' do
+        before { sla }  # create sla
+
+        it 'is set based on SLA’s #first_response_time' do
+          expect(ticket.first_response_escalation_at.to_i)
+            .to eq(1.hour.from_now.to_i)
+        end
+
+        context 'after first agent’s response' do
+          before { ticket }  # create ticket
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'does not change' do
+            expect { article }.not_to change { ticket.first_response_escalation_at }
+          end
+        end
+      end
+    end
+
+    describe '#update_escalation_at' do
+      before { travel_to(Time.current) }  # freeze time
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:calendar) { create(:calendar, :'24/7') }
+
+      context 'with no SLAs in the system' do
+        it 'defaults to nil' do
+          expect(ticket.update_escalation_at).to be(nil)
+        end
+      end
+
+      context 'with an SLA in the system' do
+        before { sla }  # create sla
+
+        it 'is set based on SLA’s #update_time' do
+          expect(ticket.update_escalation_at.to_i)
+            .to eq(3.hours.from_now.to_i)
+        end
+
+        context 'after first agent’s response' do
+          before { ticket }  # create ticket
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'is updated based on the SLA’s #update_time' do
+            travel(1.minute)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+            expect { article }
+              .to change { ticket.reload.update_escalation_at.to_i }
+              .to(3.hours.from_now.to_i)
+          end
+        end
+      end
+    end
+
+    describe '#close_escalation_at' do
+      before { travel_to(Time.current) }  # freeze time
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:calendar) { create(:calendar, :'24/7') }
+
+      context 'with no SLAs in the system' do
+        it 'defaults to nil' do
+          expect(ticket.close_escalation_at).to be(nil)
+        end
+      end
+
+      context 'with an SLA in the system' do
+        before { sla }  # create sla
+
+        it 'is set based on SLA’s #solution_time' do
+          expect(ticket.close_escalation_at.to_i)
+            .to eq(4.hours.from_now.to_i)
+        end
+
+        context 'after first agent’s response' do
+          before { ticket }  # create ticket
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
+
+          it 'does not change' do
+            expect { article }.not_to change { ticket.close_escalation_at }
+          end
+        end
+      end
+    end
   end
 
   describe 'Associations:' do
