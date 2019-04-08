@@ -1030,6 +1030,30 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe 'Touching associations on update:' do
+      subject(:user) { create(:customer_user, organization: organization) }
+      let(:organization) { create(:organization) }
+      let(:other_customer) { create(:customer_user) }
+
+      context 'when basic attributes are updated' do
+        it 'touches its organization' do
+          expect { user.update(firstname: 'foo') }
+            .to change { organization.reload.updated_at }
+        end
+      end
+
+      context 'when organization has 100+ other members' do
+        let!(:other_members) { create_list(:user, 100, organization: organization) }
+
+        context 'and basic attributes are updated' do
+          it 'does not touch its organization' do
+            expect { user.update(firstname: 'foo') }
+              .to not_change { organization.reload.updated_at }
+          end
+        end
+      end
+    end
+
     describe 'Cti::CallerId syncing:' do
       context 'with a #phone attribute' do
         subject(:user) { build(:user, phone: '1234567890') }

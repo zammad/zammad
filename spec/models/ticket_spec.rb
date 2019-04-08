@@ -439,6 +439,56 @@ RSpec.describe Ticket, type: :model do
       end
     end
 
+    describe 'Touching associations on update:' do
+      subject(:ticket) { create(:ticket, customer: customer) }
+      let(:customer) { create(:customer_user, organization: organization) }
+      let(:organization) { create(:organization) }
+      let(:other_customer) { create(:customer_user, organization: other_organization) }
+      let(:other_organization) { create(:organization) }
+
+      context 'on creation' do
+        it 'touches its customer and his organization' do
+          expect { ticket }
+            .to change { customer.reload.updated_at }
+            .and change { organization.reload.updated_at }
+        end
+      end
+
+      context 'on destruction' do
+        before { ticket }
+
+        it 'touches its customer and his organization' do
+          expect { ticket.destroy }
+            .to change { customer.reload.updated_at }
+            .and change { organization.reload.updated_at }
+        end
+      end
+
+      context 'when customer association is changed' do
+        it 'touches both old and new customer, and their organizations' do
+          expect { ticket.update(customer: other_customer) }
+            .to change { customer.reload.updated_at }
+            .and change { organization.reload.updated_at }
+            .and change { other_customer.reload.updated_at }
+            .and change { other_organization.reload.updated_at }
+        end
+      end
+
+      context 'when organization has 100+ members' do
+        let!(:other_members) { create_list(:user, 100, organization: organization) }
+
+        context 'and customer association is changed' do
+          it 'touches both old and new customer, and their organizations' do
+            expect { ticket.update(customer: other_customer) }
+              .to change { customer.reload.updated_at }
+              .and change { organization.reload.updated_at }
+              .and change { other_customer.reload.updated_at }
+              .and change { other_organization.reload.updated_at }
+          end
+        end
+      end
+    end
+
     describe 'Association & attachment management:' do
       it 'deletes all related ActivityStreams on destroy' do
         create_list(:activity_stream, 3, o: ticket)
