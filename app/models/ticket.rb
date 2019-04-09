@@ -413,14 +413,17 @@ returns
 
 get count of tickets and tickets which match on selector
 
-  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user, 'full')
+  ticket_count, tickets = Ticket.selectors(params[:condition], limit: limit, current_user: current_user, access: 'full')
 
 =end
 
-  def self.selectors(selectors, limit = 10, current_user = nil, access = 'full')
+  def self.selectors(selectors, options)
+    limit = options[:limit] || 10
+    current_user = options[:current_user]
+    access = options[:access] || 'full'
     raise 'no selectors given' if !selectors
 
-    query, bind_params, tables = selector2sql(selectors, current_user)
+    query, bind_params, tables = selector2sql(selectors, current_user: current_user)
     return [] if !query
 
     ActiveRecord::Base.transaction(requires_new: true) do
@@ -448,7 +451,7 @@ get count of tickets and tickets which match on selector
 
 generate condition query to search for tickets based on condition
 
-  query_condition, bind_condition, tables = selector2sql(params[:condition], current_user)
+  query_condition, bind_condition, tables = selector2sql(params[:condition], current_user: current_user)
 
 condition example
 
@@ -491,7 +494,8 @@ condition example
 
 =end
 
-  def self.selector2sql(selectors, current_user = nil)
+  def self.selector2sql(selectors, options = {})
+    current_user = options[:current_user]
     current_user_id = UserInfo.current_user_id
     if current_user
       current_user_id = current_user.id
@@ -1091,7 +1095,7 @@ perform active triggers on ticket
         end
 
         # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(condition, 1)
+        ticket_count, tickets = Ticket.selectors(condition, limit: 1)
 
         next if ticket_count.blank?
         next if ticket_count.zero?

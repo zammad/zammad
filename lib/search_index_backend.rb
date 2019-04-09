@@ -442,7 +442,12 @@ get count of tickets and tickets which match on selector
     field: 'created_at',
   }
 
-  result = SearchIndexBackend.selectors(index, params[:condition], limit, current_user, aggs_interval)
+  options = {
+    limit: 123,
+    current_user: User.find(123),
+  }
+
+  result = SearchIndexBackend.selectors(index, selector, options, aggs_interval)
 
   # for aggregations
   result = {
@@ -470,7 +475,7 @@ get count of tickets and tickets which match on selector
 
 =end
 
-  def self.selectors(index = nil, selectors = nil, limit = 10, current_user = nil, aggs_interval = nil)
+  def self.selectors(index = nil, selectors = nil, options = {}, aggs_interval = nil)
     raise 'no selectors given' if !selectors
 
     url = build_url
@@ -486,7 +491,7 @@ get count of tickets and tickets which match on selector
              '/_search'
            end
 
-    data = selector2query(selectors, current_user, aggs_interval, limit)
+    data = selector2query(selectors, options, aggs_interval)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
     Rails.logger.debug { " -d'#{data.to_json}'" }
@@ -527,7 +532,13 @@ get count of tickets and tickets which match on selector
     response.data
   end
 
-  def self.selector2query(selector, _current_user, aggs_interval, limit)
+  DEFAULT_SELECTOR_OPTIONS = {
+    limit: 10
+  }.freeze
+
+  def self.selector2query(selector, options, aggs_interval)
+    options = DEFAULT_QUERY_OPTIONS.merge(options.deep_symbolize_keys)
+
     query_must = []
     query_must_not = []
     relative_map = {
@@ -622,9 +633,8 @@ get count of tickets and tickets which match on selector
     end
     data = {
       query: {},
-      size:  limit,
+      size:  options[:limit],
     }
-
     # add aggs to filter
     if aggs_interval.present?
       if aggs_interval[:interval].present?
@@ -637,6 +647,9 @@ get count of tickets and tickets which match on selector
             }
           }
         }
+        if aggs_interval[:timezone].present?
+          data[:aggs][:time_buckets][:date_histogram][:time_zone] = aggs_interval[:timezone]
+        end
       end
       r = {}
       r[:range] = {}

@@ -133,16 +133,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    [99],
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
     # search matching with empty value / missing key
@@ -156,19 +156,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_nil(ticket_count)
 
     # search matching with empty value []
@@ -183,19 +183,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_nil(ticket_count)
 
     # search matching with empty value ''
@@ -209,19 +209,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_nil(ticket_count)
 
     # search matching
@@ -236,19 +236,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 1)
 
     condition = {
@@ -261,19 +261,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    [Ticket::State.lookup(name: 'open').id],
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 1)
 
     condition = {
@@ -282,19 +282,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    nil,
       }
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 1)
 
     # search - created_at
@@ -308,16 +308,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '2015-02-05T16:00:00.000Z',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -330,16 +330,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '2015-02-05T18:00:00.000Z',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -352,16 +352,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '2015-02-05T18:00:00.000Z',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -374,16 +374,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '2015-02-05T16:00:00.000Z',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -397,16 +397,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -420,16 +420,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -443,16 +443,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     # search - updated_at
@@ -466,16 +466,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    (Time.zone.now + 1.day).iso8601,
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -488,16 +488,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    (Time.zone.now - 1.day).iso8601,
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -510,16 +510,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    (Time.zone.now + 1.day).iso8601,
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -532,16 +532,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    (Time.zone.now - 1.day).iso8601,
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -555,16 +555,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -578,16 +578,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -601,21 +601,21 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    '10',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     # invalid conditions
     assert_raise RuntimeError do
-      ticket_count, tickets = Ticket.selectors(nil, 10)
+      ticket_count, tickets = Ticket.selectors(nil, limit: 10)
     end
 
     # search with customers
@@ -629,16 +629,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'ticket-selector-customer1',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -651,16 +651,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'ticket-selector-customer1-not_existing',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 3)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     # search with organizations
@@ -674,16 +674,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'selector',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     # search with organizations
@@ -701,16 +701,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'ticket-selector-customer1',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -727,16 +727,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'ticket-selector-customer1',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     # with owner/customer/org
@@ -751,16 +751,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:         @agent1.id,
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     condition = {
@@ -774,16 +774,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         #value: @agent1.id, # value is not set, no result should be shown
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_nil(ticket_count)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_nil(ticket_count)
 
     condition = {
@@ -796,16 +796,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'not_set',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     condition = {
@@ -818,16 +818,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'not_set',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     UserInfo.current_user_id = @agent1.id
@@ -841,19 +841,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     UserInfo.current_user_id = @agent2.id
@@ -867,19 +867,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     UserInfo.current_user_id = @customer1.id
@@ -893,19 +893,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
     UserInfo.current_user_id = @customer2.id
@@ -919,19 +919,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 2)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 2)
 
     UserInfo.current_user_id = @customer1.id
@@ -945,19 +945,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.organization_id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
     UserInfo.current_user_id = @customer2.id
@@ -971,19 +971,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
         pre_condition: 'current_user.organization_id',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
     assert_equal(ticket_count, 1)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10, @customer2)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
 
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 0)
     travel_back
   end
@@ -1055,7 +1055,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(1, ticket_count)
 
     condition = {
@@ -1064,7 +1064,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3, xxx',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(0, ticket_count)
 
     # search all with contains one
@@ -1074,7 +1074,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
 
     condition = {
@@ -1083,7 +1083,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(1, ticket_count)
 
     # search all with contains one not
@@ -1093,7 +1093,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_3'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
 
     condition = {
@@ -1102,7 +1102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10, @agent1)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
   end
 
