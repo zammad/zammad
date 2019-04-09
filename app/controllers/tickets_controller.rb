@@ -482,7 +482,7 @@ class TicketsController < ApplicationController
   def selector
     permission_check('admin.*')
 
-    ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+    ticket_count, tickets = Ticket.selectors(params[:condition], limit: 6)
 
     assets = {}
     ticket_ids = []

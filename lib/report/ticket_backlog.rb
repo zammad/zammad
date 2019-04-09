@@ -3,10 +3,11 @@ class Report::TicketBacklog < Report::Base
 =begin
 
   result = Report::TicketBacklog.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -15,7 +16,8 @@ returns
 
 =end
 
-  def self.aggs(params)
+  def self.aggs(params_origin)
+    params = params_origin.dup
 
     local_params = params.clone
     local_params[:params] = {}
@@ -37,8 +39,8 @@ returns
 =begin
 
   result = Report::TicketBacklog.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
   )
 

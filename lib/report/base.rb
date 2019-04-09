@@ -16,7 +16,7 @@ class Report::Base
 
     # created
     if params[:type] == 'created'
-      history_type = History::Type.lookup( name: 'created' )
+      history_type = History::Type.lookup(name: 'created')
       return History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
                     .where(
                       'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ?', params[:start], params[:end], history_object.id, history_type.id
@@ -26,8 +26,8 @@ class Report::Base
 
     # updated
     if params[:type] == 'updated'
-      history_type      = History::Type.lookup( name: 'updated' )
-      history_attribute = History::Attribute.lookup( name: params[:attribute] )
+      history_type      = History::Type.lookup(name: 'updated')
+      history_attribute = History::Attribute.lookup(name: params[:attribute])
 
       result = nil
       if !history_attribute || !history_type
@@ -114,7 +114,7 @@ class Report::Base
   # :condition
   def self.history(data)
 
-    history_object = History::Object.lookup( name: data[:object] )
+    history_object = History::Object.lookup(name: data[:object])
 
     query, bind_params, tables = Ticket.selector2sql(data[:selector])
 
@@ -123,7 +123,7 @@ class Report::Base
 
     # created
     if data[:type] == 'created'
-      history_type = History::Type.lookup( name: 'created' )
+      history_type = History::Type.lookup(name: 'created')
       histories = History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
                          .where(
                            'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ?', data[:start], data[:end], history_object.id, history_type.id
@@ -141,8 +141,8 @@ class Report::Base
 
     # updated
     if data[:type] == 'updated'
-      history_type      = History::Type.lookup( name: 'updated' )
-      history_attribute = History::Attribute.lookup( name: data[:attribute] )
+      history_type      = History::Type.lookup(name: 'updated')
+      history_attribute = History::Attribute.lookup(name: data[:attribute])
       if !history_attribute || !history_type
         count = 0
       else
@@ -229,7 +229,7 @@ class Report::Base
   # :condition
   def self.time_average(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where( 'tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end] )
+    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
                         .where(query, *bind_params).joins(tables)
     tickets = 0
     time_total = 0
@@ -261,7 +261,7 @@ class Report::Base
   # :condition
   def self.time_min(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where( 'tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end] )
+    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
                         .where(query, *bind_params).joins(tables)
     tickets = 0
     time_min = 0
@@ -299,7 +299,7 @@ class Report::Base
   # :condition
   def self.time_max(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where( 'tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end] )
+    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
                         .where(query, *bind_params).joins(tables)
     tickets = 0
     time_max = 0

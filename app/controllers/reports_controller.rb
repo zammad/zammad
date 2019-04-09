@@ -32,28 +32,15 @@ class ReportsController < ApplicationController
       next if !backend[:adapter]
 
       result[backend[:name]] = backend[:adapter].aggs(
-        range_start: get_params[:start],
-        range_end:   get_params[:stop],
-        interval:    get_params[:range],
-        selector:    backend[:condition],
-        params:      backend[:params],
+        range_start:     get_params[:start],
+        range_end:       get_params[:stop],
+        interval:        get_params[:range],
+        selector:        backend[:condition],
+        params:          backend[:params],
+        timezone:        get_params[:timezone],
+        timezone_offset: get_params[:timezone_offset],
       )
     end
-
-    #created = aggs(start, stop, range, 'created_at', profile.condition)
-    #closed = aggs(start, stop, range, 'close_at', profile.condition)
-    #first_solution =
-    #reopend = backend(start, stop, range, Report::TicketReopened, profile.condition)
-
-    # add backlog
-    #backlogs = []
-    #position = -1
-    #created.each {|_not_used|
-    # position += 1
-    #  diff = created[position][1] - closed[position][1]
-    #  backlog = [position+1, diff]
-    #  backlogs.push backlog
-    #}
 
     render json: {
       data: result
@@ -86,12 +73,14 @@ class ReportsController < ApplicationController
       next if !backend[:adapter]
 
       result = backend[:adapter].items(
-        range_start: get_params[:start],
-        range_end:   get_params[:stop],
-        interval:    get_params[:range],
-        selector:    backend[:condition],
-        params:      backend[:params],
-        sheet:       params[:sheet],
+        range_start:     get_params[:start],
+        range_end:       get_params[:stop],
+        interval:        get_params[:range],
+        selector:        backend[:condition],
+        params:          backend[:params],
+        sheet:           params[:sheet],
+        timezone:        get_params[:timezone],
+        timezone_offset: get_params[:timezone_offset],
       )
 
       result = { count: 0, ticket_ids: [] } if result.nil?
@@ -138,36 +127,46 @@ class ReportsController < ApplicationController
 
     metric = local_config[:metric][params[:metric].to_sym]
 
-    #{"metric"=>"count", "year"=>2015, "month"=>10, "week"=>43, "day"=>20, "timeSlot"=>"year", "report"=>{"metric"=>"count", "year"=>2015, "month"=>10, "week"=>43, "day"=>20, "timeSlot"=>"year"}}
     if params[:timeRange] == 'realtime'
-      start = (Time.zone.now - 60.minutes).iso8601
-      stop = Time.zone.now.iso8601
+      start_at = (Time.zone.now - 60.minutes)
+      stop_at = Time.zone.now
       range = 'minute'
     elsif params[:timeRange] == 'day'
       date = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_s
-      start = "#{date}T00:00:00Z"
-      stop = "#{date}T23:59:59Z"
+      start_at = Time.zone.parse("#{date}T00:00:00Z")
+      stop_at = Time.zone.parse("#{date}T23:59:59Z")
       range = 'hour'
     elsif params[:timeRange] == 'week'
-      start = Date.commercial(params[:year].to_i, params[:week].to_i).iso8601
-      stop = Date.parse(start).end_of_week.iso8601
+      start_week_at = Date.commercial(params[:year].to_i, params[:week].to_i)
+      stop_week_at = start_week_at.end_of_week
+      start_at = Time.zone.parse("#{start_week_at.year}-#{start_week_at.month}-#{start_week_at.day}T00:00:00Z")
+      stop_at = Time.zone.parse("#{stop_week_at.year}-#{stop_week_at.month}-#{stop_week_at.day}T23:59:59Z")
       range = 'week'
     elsif params[:timeRange] == 'month'
-      start = Date.parse("#{params[:year]}-#{params[:month]}-01}").iso8601
-      stop = Date.parse(start).end_of_month.iso8601
+      start_at = Time.zone.parse("#{params[:year]}-#{params[:month]}-01T00:00:00Z")
+      stop_at = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{start_at.end_of_month.day}T23:59:59Z")
       range = 'day'
     else
-      start = "#{params[:year]}-01-01"
-      stop = Date.parse("#{params[:year]}-12-31").iso8601
+      start_at = Time.zone.parse("#{params[:year]}-01-01T00:00:00Z")
+      stop_at = Time.zone.parse("#{params[:year]}-12-31T23:59:59Z")
       range = 'month'
     end
+    params[:timezone] ||= Setting.get('timezone_default')
+    if params[:timezone].present? && params[:timeRange] != 'realtime'
+      offset = stop_at.in_time_zone(params[:timezone]).utc_offset
+      start_at -= offset
+      stop_at -= offset
+    end
+
     {
-      profile: profile,
-      metric:  metric,
-      config:  local_config,
-      start:   start,
-      stop:    stop,
-      range:   range,
+      profile:         profile,
+      metric:          metric,
+      config:          local_config,
+      start:           start_at,
+      stop:            stop_at,
+      range:           range,
+      timezone:        params[:timezone],
+      timezone_offset: offset,
     }
   end
 

@@ -749,7 +749,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         value:    'some attribute test3',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
     assert_equal(tickets[0].id, ticket1.id)
 
@@ -759,7 +759,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         value:    'some attribute text',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, 10)
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10)
     assert_equal(ticket_count, 1)
     assert_equal(tickets[0].id, ticket1.id)
 
