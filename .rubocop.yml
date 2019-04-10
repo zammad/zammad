@@ -1,9 +1,13 @@
 # Default enabled cops
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
-require: rubocop-performance
+require:
+  - rubocop-performance
+  - rubocop-rspec
 
-inherit_from: .rubocop_todo.yml
+inherit_from:
+  - .rubocop_todo.yml
+  - .rubocop_todo.rspec.yml
 
 AllCops:
   DisplayCopNames: true
@@ -13,6 +17,10 @@ AllCops:
     - 'bin/spring'
     - 'db/schema.rb'
     - 'vendor/**/*'
+  RSpec:
+    Patterns:
+      - '_spec.rb$'
+      - '_examples.rb$'
 
 Rails:
   Enabled: true

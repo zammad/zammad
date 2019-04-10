@@ -165,6 +165,7 @@ group :development, :test do
   gem 'pre-commit'
   gem 'rubocop'
   gem 'rubocop-performance'
+  gem 'rubocop-rspec'
 
   # changelog generation
   gem 'github_changelog_generator'
