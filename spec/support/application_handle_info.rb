@@ -1,11 +1,7 @@
 RSpec.configure do |config|
-
   config.around(:each, :application_handle) do |example|
-    ApplicationHandleInfo.current = example.metadata[:application_handle]
-    begin
+    ApplicationHandleInfo.use(example.metadata[:application_handle]) do
       example.run
-    ensure
-      ApplicationHandleInfo.current = nil
     end
   end
 end
