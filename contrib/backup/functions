@@ -155,6 +155,8 @@ function stop_zammad () {
 function restore_zammad () {
   echo "# Restoring Files"
   tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  echo "# Ensuring correct file rights ..."
+  chown -R zammad:zammad ${ZAMMAD_DIR}
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "# Restoring PostgrSQL DB"
