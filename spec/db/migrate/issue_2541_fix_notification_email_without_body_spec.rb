@@ -1,61 +1,57 @@
 require 'rails_helper'
 
 RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
+  describe '"body" attribute management' do
+    # We use #update_columns to bypass callbacks
+    # that would prevent the record from being saved with an empty body
+    before { subject.update_columns(perform: perform) }
 
-  context 'when migrating Triggers' do
-
-    before(:all) { Trigger.skip_callback(:create, :before, :validate_perform) }
-
-    it "updates empty perform['notification.email']['body'] attribute" do
-      trigger = create(:trigger,
-                       perform: {
-                         'notification.email' => {
-                           'body'      => '',
-                           'recipient' => 'article_last_sender',
-                           'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
-                         },
-                       })
-
-      expect { migrate }.to change { trigger.reload.perform['notification.email']['body'] }.from('').to('-')
+    let(:perform) do
+      {
+        type => {
+          'body'      => '',
+          'recipient' => 'article_last_sender',
+          'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+        },
+      }
     end
 
-    it "updates empty perform['notification.sms']['body'] attribute" do
-      trigger = create(:trigger,
-                       perform: {
-                         'notification.sms' => {
-                           'body'      => '',
-                           'recipient' => 'article_last_sender',
-                         },
-                       })
+    context 'when migrating Triggers' do
+      subject(:trigger) { create(:trigger) }
 
-      expect { migrate }.to change { trigger.reload.perform['notification.sms']['body'] }.from('').to('-')
+      context 'for email' do
+        let(:type) { 'notification.email' }
+
+        it "updates empty perform['notification.email']['body'] attribute" do
+          expect { migrate }.to change { trigger.reload.perform['notification.email']['body'] }.from('').to('-')
+        end
+      end
+
+      context 'for SMS' do
+        let(:type) { 'notification.sms' }
+
+        it "updates empty perform['notification.sms']['body'] attribute" do
+          expect { migrate }.to change { trigger.reload.perform['notification.sms']['body'] }.from('').to('-')
+        end
+      end
     end
-  end
 
-  context 'when migrating Jobs' do
+    context 'when migrating Jobs' do
+      subject(:job) { create(:job) }
+      let(:type) { 'notification.email' }
 
-    before(:all) { Job.skip_callback(:create, :before, :validate_perform) }
-
-    it "updates empty perform['notification.email']['body'] attribute" do
-
-      job = create(:job,
-                   perform: {
-                     'notification.email' => {
-                       'body'      => '',
-                       'recipient' => 'article_last_sender',
-                       'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
-                     },
-                   },)
-
-      expect { migrate }.to change { job.reload.perform['notification.email']['body'] }.from('').to('-')
+      it "updates empty perform['notification.email']['body'] attribute" do
+        expect { migrate }.to change { job.reload.perform['notification.email']['body'] }.from('').to('-')
+      end
     end
   end
 
-  it "re-enables 'Job.run' Scheduler" do
-    scheduler = Scheduler.find_by(method: 'Job.run')
-    scheduler.update!(active: false)
+  describe 'scheduler management' do
+    let(:scheduler) { Scheduler.find_by(method: 'Job.run') }
+    before { scheduler.update!(active: false) }
 
-    expect { migrate }.to change { scheduler.reload.active }.to(true)
+    it "re-enables 'Job.run' Scheduler" do
+      expect { migrate }.to change { scheduler.reload.active }.to(true)
+    end
   end
-
 end
