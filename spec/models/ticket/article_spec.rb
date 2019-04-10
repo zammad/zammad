@@ -57,6 +57,37 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
+    describe 'DoS protection:' do
+      context 'when #body exceeds 1.5MB' do
+        subject(:article) { create(:ticket_article, body: body) }
+        let(:body) { 'a' * 2_000_000 }
+
+        context 'for "web" thread', application_handle: 'web' do
+          it 'raises an Unprocessable Entity error' do
+            expect { article }.to raise_error(Exceptions::UnprocessableEntity)
+          end
+        end
+
+        context 'for "test.postmaster" thread', application_handle: 'test.postmaster' do
+          it 'truncates body to 1.5 million chars' do
+            expect(article.body.length).to eq(1_500_000)
+          end
+
+          context 'with NULL bytes' do
+            let(:body) { "\u0000" + 'a' * 2_000_000 }
+
+            it 'still removes them, if necessary (postgres doesn’t like them)' do
+              expect(article).to be_persisted
+            end
+
+            it 'still truncates body' do
+              expect(article.body.length).to eq(1_500_000)
+            end
+          end
+        end
+      end
+    end
+
     describe 'Cti::Log syncing:' do
       context 'with existing Log records' do
         context 'for an incoming call from an unknown number' do
