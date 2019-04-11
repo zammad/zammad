@@ -9,6 +9,9 @@ $task-state-pending-color: hsl(206,7%,28%);
 $task-state-open-color: $ok-color;
 $task-state-escalating-color: $superbad-color;
 
+$high-priority-color: hsl(360,71%,60%);
+$low-priority-color: hsl(200,68%,73%);
+
 $minWidth: 1024px;
 $sidebarWidth: 280px;
 $navigationWidth: 260px;
@@ -242,6 +245,14 @@ ol, ul {
 }
 .zIndex-10 {
   z-index: 1000;
+}
+
+.u-high-priority-color {
+  fill: $high-priority-color;
+}
+
+.u-low-priority-color {
+  fill: $low-priority-color;
 }
 
 .clickCatcher {
@@ -1004,10 +1015,16 @@ th.align-right {
 .table > tbody > tr > td {
   padding: 10px 10px 8px;
   border-color: hsl(0,0%,95%);
+  
+  &.no-side-padding {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
 }
 
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr.is-hover > td {
+.table-hover > tbody > tr:hover,
+.table-hover > tbody > tr.is-hover {
   background: white;
 }
 
@@ -1057,11 +1074,11 @@ th.align-right {
   }
 }
 
-.table .icon {
+td .icon {
   vertical-align: middle;
 }
 
-.table .icon-draggable {
+td .icon-draggable {
   fill: hsl(240,1%,77%);
 }
 
@@ -1078,6 +1095,32 @@ th.align-right {
   @include bidi-style(margin-left, 3px, margin-right, 0);
   margin-top: -2px;
   vertical-align: middle;
+}
+
+.item {
+  &--high-priority {
+    a {
+      color: $high-priority-color;
+    }
+  }
+
+  &--low-priority {
+    a {
+      color: $low-priority-color;
+    }
+  }
+}
+
+.checkbox-list {
+  list-style: none;
+  margin-bottom: 15px;
+  padding: 3px 12px;
+  font-size: 14px;
+  line-height: 25px;
+  color: hsl(60,1%,34%);
+  background: white;
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 3px;
 }
 
 .checkbox-replacement,
@@ -3373,11 +3416,6 @@ footer {
     .nav-tab-close:hover svg {
       opacity: 1;
     }
-
-.icon-task-state {
-  margin-top: 1px;
-  display: block;
-}
 
 .nav-tab-icon .icon-task-state {
   margin: 0;

@@ -34,6 +34,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     create_table :ticket_priorities do |t|
       t.column :name,                 :string, limit: 250, null: false
       t.column :default_create,       :boolean,            null: false, default: false
+      t.column :ui_icon,              :string, limit: 100, null: true
+      t.column :ui_color,             :string, limit: 100, null: true
       t.column :note,                 :string, limit: 250, null: true
       t.column :active,               :boolean,            null: false, default: true
       t.column :updated_by_id,        :integer,            null: false

@@ -1086,12 +1086,15 @@ class Table extends App.Controller
           show:       true
         )
         @navigate ticket.uiUrl()
+
       callbackTicketTitleAdd = (value, object, attribute, attributes) ->
         attribute.title = object.title
         value
+
       callbackLinkToTicket = (value, object, attribute, attributes) ->
         attribute.link = object.uiUrl()
         value
+
       callbackUserPopover = (value, object, attribute, attributes) ->
         return value if !object
         refObjectId = undefined
@@ -1104,6 +1107,7 @@ class Table extends App.Controller
         attribute.data =
           id: refObjectId
         value
+
       callbackOrganizationPopover = (value, object, attribute, attributes) ->
         return value if !object
         return value if !object.organization_id
@@ -1111,6 +1115,7 @@ class Table extends App.Controller
         attribute.data =
           id: object.organization_id
         value
+
       callbackCheckbox = (id, checked, e) =>
         if @shouldShowBulkForm()
           @bulkForm.render()
@@ -1136,6 +1141,7 @@ class Table extends App.Controller
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
         @lastChecked = e.currentTarget
+
       callbackIconHeader = (headers) ->
         attribute =
           name:         'icon'
@@ -1147,12 +1153,59 @@ class Table extends App.Controller
         headers.unshift(0)
         headers[0] = attribute
         headers
+
       callbackIcon = (value, object, attribute, header) ->
         value = ' '
-        attribute.class  = object.iconClass()
-        attribute.link   = ''
-        attribute.title  = object.iconTitle()
+        attribute.class = object.iconClass()
+        attribute.link  = ''
+        attribute.title = object.iconTitle()
         value
+
+      callbackPriority = (value, object, attribute, header) ->
+        value = ' '
+
+        if object.priority
+          attribute.title = object.priority()
+        else
+          attribute.title = App.i18n.translateInline(App.TicketPriority.findNative(@priority_id)?.displayName())
+        value = object.priorityIcon()
+
+      callbackIconPriorityHeader = (headers) ->
+        attribute =
+          name:         'icon_priority'
+          display:      ''
+          translation:  false
+          width:        '24px'
+          displayWidth: 24
+          unresizable:  true
+        headers.unshift(0)
+        headers[0] = attribute
+        headers
+
+      callbackIconPriority = (value, object, attribute, header) ->
+        value = ' '
+        priority = App.TicketPriority.findNative(object.priority_id)
+        attribute.title = App.i18n.translateInline(priority?.name)
+        value = object.priorityIcon()
+
+      callbackHeader = [ callbackIconHeader ]
+      callbackAttributes =
+        icon:
+          [ callbackIcon ]
+        customer_id:
+          [ callbackUserPopover ]
+        organization_id:
+          [ callbackOrganizationPopover ]
+        owner_id:
+          [ callbackUserPopover ]
+        title:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        number:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+
+      if App.Config.get('ui_ticket_overview_priority_icon') == true
+        callbackHeader = [ callbackIconHeader, callbackIconPriorityHeader ]
+        callbackAttributes.icon_priority = [ callbackIconPriority ]
 
       tableArguments =
         tableId:        "ticket_overview_#{@overview.id}"
@@ -1173,20 +1226,8 @@ class Table extends App.Controller
         #  customer_id:
         #    events:
         #      'mouseover': popOver
-        callbackHeader: [ callbackIconHeader ]
-        callbackAttributes:
-          icon:
-            [ callbackIcon ]
-          customer_id:
-            [ callbackUserPopover ]
-          organization_id:
-            [ callbackOrganizationPopover ]
-          owner_id:
-            [ callbackUserPopover ]
-          title:
-            [ callbackLinkToTicket, callbackTicketTitleAdd ]
-          number:
-            [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        callbackHeader: callbackHeader
+        callbackAttributes: callbackAttributes
         bindCheckbox:
           events:
             'click': callbackCheckbox

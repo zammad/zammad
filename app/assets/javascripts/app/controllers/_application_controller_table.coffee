@@ -90,11 +90,11 @@
 
 ###
 class App.ControllerTable extends App.Controller
-  minColWidth: 40
+  minColWidth: 30
   baseColWidth: 130
   minTableWidth: 612
 
-  checkBoxColWidth: 40
+  checkBoxColWidth: 30
   radioColWidth: 22
   sortableColWidth: 36
   destroyColWidth: 70

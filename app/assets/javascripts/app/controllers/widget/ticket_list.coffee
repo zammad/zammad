@@ -19,12 +19,15 @@ class App.TicketList extends App.Controller
     openTicket = (id,e) =>
       ticket = App.Ticket.findNative(id)
       @navigate ticket.uiUrl()
+
     callbackTicketTitleAdd = (value, object, attribute, attributes) ->
       attribute.title = object.title
       value
+
     callbackLinkToTicket = (value, object, attribute, attributes) ->
       attribute.link = object.uiUrl()
       value
+
     callbackUserPopover = (value, object, attribute, attributes) ->
       return value if !object
       refObjectId = undefined
@@ -37,6 +40,7 @@ class App.TicketList extends App.Controller
       attribute.data =
         id: refObjectId
       value
+
     callbackOrganizationPopover = (value, object, attribute, attributes) ->
       return value if !object
       return value if !object.organization_id
@@ -64,6 +68,43 @@ class App.TicketList extends App.Controller
       attribute.title  = object.iconTitle()
       value
 
+    callbackIconPriorityHeader = (headers) ->
+      attribute =
+        name:         'icon_priority'
+        display:      ''
+        translation:  false
+        width:        '22px'
+        displayWidth: 22
+        unresizable:  true
+      headers.unshift(0)
+      headers[0] = attribute
+      headers
+
+    callbackIconPriority = (value, object, attribute, header) ->
+      value = ' '
+      priority = App.TicketPriority.findNative(object.priority_id)
+      attribute.title = App.i18n.translateInline(priority?.name)
+      value = object.priorityIcon()
+
+    callbackHeader = [ callbackIconHeader ]
+    callbackAttributes =
+      icon:
+        [ callbackIcon ]
+      customer_id:
+        [ callbackUserPopover ]
+      organization_id:
+        [ callbackOrganizationPopover ]
+      owner_id:
+        [ callbackUserPopover ]
+      title:
+        [ callbackLinkToTicket, callbackTicketTitleAdd ]
+      number:
+        [ callbackLinkToTicket, callbackTicketTitleAdd ]
+
+    if App.Config.get('ui_ticket_overview_priority_icon') == true
+      callbackHeader = [ callbackIconHeader, callbackIconPriorityHeader ]
+      callbackAttributes.icon_priority = [ callbackIconPriority ]
+
     list = []
     for ticket_id in @ticket_ids
       ticketItem = App.Ticket.fullLocal(ticket_id)
@@ -78,20 +119,8 @@ class App.TicketList extends App.Controller
       #bindRow:
       #  events:
       #    'click': openTicket
-      callbackHeader: [ callbackIconHeader ]
-      callbackAttributes:
-        icon:
-          [ callbackIcon ]
-        customer_id:
-          [ callbackUserPopover ]
-        organization_id:
-          [ callbackOrganizationPopover ]
-        owner_id:
-          [ callbackUserPopover ]
-        title:
-          [ callbackLinkToTicket, callbackTicketTitleAdd ]
-        number:
-          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+      callbackHeader: callbackHeader
+      callbackAttributes: callbackAttributes
       radio: @radio
     )
 

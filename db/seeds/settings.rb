@@ -954,6 +954,34 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       'Priority Icons in Overviews',
+  name:        'ui_ticket_overview_priority_icon',
+  area:        'UI::TicketOverview::PriorityIcons',
+  description: 'Enables priority icons in ticket overviews.',
+  options:     {
+    form: [
+      {
+        display:   '',
+        null:      true,
+        name:      'ui_ticket_overview_priority_icon',
+        tag:       'boolean',
+        translate: true,
+        options:   {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       500,
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       'New User Accounts',
   name:        'user_create_account',
   area:        'Security::Base',
