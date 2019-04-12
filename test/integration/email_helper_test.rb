@@ -168,10 +168,11 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('Hostname not found!', result[:message_human])
     assert_equal('not_existsing_host', result[:settings][:options][:host])
 
+    # try to access imap on host with blocked port to force a "Connection refused!" error
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host:     'www.znuny.com',
+        host:     'no-imap-host.test.zammad.org',
         port:     993,
         ssl:      true,
         user:     'some@example.com',
@@ -180,7 +181,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('www.znuny.com', result[:settings][:options][:host])
+    assert_equal('no-imap-host.test.zammad.org', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
@@ -306,11 +307,12 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('Hostname not found!', result[:message_human])
     assert_equal('not_existsing_host', result[:settings][:options][:host])
 
+    # try to access SMTP on host with blocked port to force a "Connection refused!" error
     result = EmailHelper::Probe.outbound(
       {
         adapter: 'smtp',
         options: {
-          host:      'www.znuny.com',
+          host:      'no-imap-host.test.zammad.org',
           port:      26,
           start_tls: true,
           user:      'some@example.com',
@@ -321,7 +323,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('www.znuny.com', result[:settings][:options][:host])
+    assert_equal('no-imap-host.test.zammad.org', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.outbound(
       {
