@@ -101,7 +101,7 @@ GEM
       ffi (~> 1.9)
       ffi-compiler (~> 0.1)
     ast (2.4.0)
-    autoprefixer-rails (9.5.0)
+    autoprefixer-rails (9.5.1)
       execjs
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
