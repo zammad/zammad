@@ -9,7 +9,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
     create(:agent_user, login: 'user-device-agent', password: 'agentpw', groups: Group.all)
   end
 
-  before(:each) do
+  before do
     ENV['TEST_REMOTE_IP'] = '5.9.62.170' # de
     ENV['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0'
     ENV['SWITCHED_FROM_USER_ID'] = nil
@@ -22,7 +22,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
     it 'does index with nobody (01)' do
 
       get '/api/v1/signshow'
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect('no valid session').to eq(json_response['error'])
       expect(json_response['config']).to be_truthy
@@ -35,7 +35,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { without_fingerprint: 'none', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Need fingerprint param!')
@@ -62,7 +62,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
     it 'does login index with admin with fingerprint - I (03)' do
       params = { fingerprint: 'my_finger_print', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['config']).to be_truthy
@@ -88,7 +88,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
 
@@ -112,7 +112,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { fingerprint: 'my_finger_print' }
       get '/api/v1/signshow', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['session']).to be_truthy
       expect('user-device-admin').to eq(json_response['session']['login'])
@@ -139,7 +139,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
 
@@ -159,7 +159,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       expect(UserDevice.where(user_id: admin_user.id).count).to eq(1)
       user_device_last = UserDevice.last
-      expect(user_device_last.updated_at.to_s).to_not eq(user_device_first.updated_at.to_s)
+      expect(user_device_last.updated_at.to_s).not_to eq(user_device_first.updated_at.to_s)
       ENV['USER_DEVICE_UPDATED_AT'] = nil
 
       ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
@@ -168,7 +168,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -201,7 +201,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       check_notification do
 
@@ -224,7 +224,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       expect(controller.session[:user_device_fingerprint]).to be_truthy
 
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
 
       check_notification do
@@ -245,7 +245,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { fingerprint: 'my_finger_print_II' }
       get '/api/v1/signshow', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['session']).to be_truthy
       expect('user-device-admin').to eq(json_response['session']['login'])
@@ -271,7 +271,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -307,7 +307,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       check_notification do
 
@@ -346,7 +346,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       params = {}
       authenticated_as(admin_user, password: 'adminpw')
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -369,7 +369,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -396,7 +396,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -436,7 +436,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       params = {}
       authenticated_as(admin_user, password: 'adminpw')
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -463,7 +463,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       params = {}
       authenticated_as(agent_user, password: 'agentpw')
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -500,7 +500,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       params = {}
       authenticated_as(agent_user, password: 'agentpw')
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -528,7 +528,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       params = { fingerprint: 'my_finger_print_II', username: 'user-device-agent', password: 'agentpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       check_notification do
 
@@ -568,7 +568,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
 
       check_notification do
@@ -591,7 +591,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
       params = {}
       get '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       check_notification do
 
@@ -616,7 +616,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
     it 'does login with invalid fingerprint (11)' do
       params = { fingerprint: 'to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('fingerprint is 198 chars but can only be 160 chars!')
@@ -643,7 +643,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
     it 'does login with integer as fingerprint (12)' do
       params = { fingerprint: 123_456_789, username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(controller.session[:user_device_fingerprint]).to be_truthy
 
       check_notification do
@@ -673,7 +673,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       }
       authenticated_as(admin_user, password: 'adminpw')
       post '/api/v1/form_config', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey

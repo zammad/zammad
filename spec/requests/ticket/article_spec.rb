@@ -27,7 +27,7 @@ RSpec.describe 'Ticket Article', type: :request do
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       params = {
         ticket_id:    json_response['id'],
@@ -36,7 +36,7 @@ RSpec.describe 'Ticket Article', type: :request do
         type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
@@ -58,10 +58,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
-      expect(json_response['body']).to_not match(/some body <img src="cid:.+?/)
+      expect(json_response['body']).not_to match(/some body <img src="cid:.+?/)
       expect(json_response['body']).to match(%r{some body <img src="/api/v1/ticket_attachment/.+?" alt="Red dot"})
       expect(json_response['content_type']).to eq('text/html')
       expect(json_response['updated_by_id']).to eq(agent_user.id)
@@ -90,7 +90,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         ],
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
@@ -105,7 +105,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[3].attachments.count).to eq(1)
 
       get "/api/v1/ticket_articles/#{json_response['id']}?expand=true", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments'].count).to eq(1)
       expect(json_response['attachments'][0]['id']).to be_truthy
@@ -123,7 +123,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         },
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
@@ -140,7 +140,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         },
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body 2')
@@ -162,7 +162,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       params = {
         ticket_id:    json_response['id'],
@@ -171,7 +171,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
@@ -193,7 +193,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         type:         'note',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
@@ -218,7 +218,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         internal:     true,
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body 2')
@@ -254,12 +254,12 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[4].attachments.count).to eq(0)
 
       get "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       put "/api/v1/ticket_articles/#{article.id}", params: { internal: false }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
@@ -278,7 +278,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['title']).to eq('a new ticket #1')
 
@@ -303,7 +303,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
 
       expect(Ticket::Article.where(ticket_id: json_response['id']).count).to eq(1) # ony original
@@ -392,13 +392,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(agent_user)
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(3)
 
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(0)
@@ -467,13 +467,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(agent_user)
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(3)
 
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(0)

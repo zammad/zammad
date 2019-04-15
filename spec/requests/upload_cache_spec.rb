@@ -21,7 +21,7 @@ RSpec.describe 'UploadCache', type: :request do
         }
         post "/api/v1/upload_caches/#{form_id}", params: params
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it 'detects Content-Type for binary uploads' do
@@ -51,7 +51,7 @@ RSpec.describe 'UploadCache', type: :request do
       it 'removes all form_id UploadCache items' do
         expect do
           delete "/api/v1/upload_caches/#{form_id}", as: :json
-        end.to change { upload_cache.attachments }.to([])
+        end.to change(upload_cache, :attachments).to([])
       end
     end
   end

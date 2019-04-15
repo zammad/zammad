@@ -97,16 +97,17 @@ RSpec.describe Cti::CallerId do
   describe '.lookup' do
     context 'when given an unrecognized number' do
       it 'returns an empty array' do
-        expect(Cti::CallerId.lookup('1')).to eq([])
+        expect(described_class.lookup('1')).to eq([])
       end
     end
 
     context 'when given a recognized number' do
       subject!(:caller_id) { create(:caller_id, caller_id: number) }
+
       let(:number) { '1234567890' }
 
       it 'returns an array with the corresponding CallerId' do
-        expect(Cti::CallerId.lookup(number)).to match_array([caller_id])
+        expect(described_class.lookup(number)).to match_array([caller_id])
       end
 
       context 'shared by multiple CallerIds' do
@@ -117,7 +118,7 @@ RSpec.describe Cti::CallerId do
           end
 
           it 'returns all corresponding CallerId records' do
-            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids)
+            expect(described_class.lookup(number)).to match_array(caller_ids)
           end
         end
 
@@ -125,7 +126,7 @@ RSpec.describe Cti::CallerId do
           subject!(:caller_ids) { create_list(:caller_id, 2, caller_id: number) }
 
           it 'returns one corresponding CallerId record by MAX(id)' do
-            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids.last(1))
+            expect(described_class.lookup(number)).to match_array(caller_ids.last(1))
           end
         end
 
@@ -137,7 +138,7 @@ RSpec.describe Cti::CallerId do
           end
 
           it 'returns one CallerId record per unique #user_id, by MAX(id)' do
-            expect(Cti::CallerId.lookup(number)).to match_array(caller_ids.last(2))
+            expect(described_class.lookup(number)).to match_array(caller_ids.last(2))
           end
         end
       end
@@ -150,16 +151,16 @@ RSpec.describe Cti::CallerId do
 
       context 'and no corresponding CallerId exists' do
         it 'generates a CallerId record (with #level "known")' do
-          Cti::CallerId.destroy_all  # CallerId already generated in User callback
+          described_class.destroy_all  # CallerId already generated in User callback
 
-          expect { Cti::CallerId.rebuild }
-            .to change { Cti::CallerId.exists?(user_id: user.id, caller_id: '49123456', level: 'known') }
+          expect { described_class.rebuild }
+            .to change { described_class.exists?(user_id: user.id, caller_id: '49123456', level: 'known') }
             .to(true)
         end
       end
 
       it 'does not create duplicate CallerId records' do
-        expect { Cti::CallerId.rebuild }.not_to change { Cti::CallerId.count }
+        expect { described_class.rebuild }.not_to change(described_class, :count)
       end
     end
 
@@ -167,8 +168,8 @@ RSpec.describe Cti::CallerId do
       subject!(:caller_id) { create(:caller_id) }
 
       it 'deletes the CallerId record' do
-        expect { Cti::CallerId.rebuild }
-          .to change { Cti::CallerId.exists?(caller_id.id) }.to(false)
+        expect { described_class.rebuild }
+          .to change { described_class.exists?(caller_id.id) }.to(false)
       end
     end
 
@@ -176,12 +177,12 @@ RSpec.describe Cti::CallerId do
       let!(:users) { create_list(:agent_user, 2, phone: '+49 123 456') }
 
       it 'generates two corresponding CallerId records (with #level "known")' do
-        Cti::CallerId.destroy_all  # CallerId already generated in User callback
+        described_class.destroy_all  # CallerId already generated in User callback
 
-        expect { Cti::CallerId.rebuild }
-          .to change { Cti::CallerId.exists?(user_id: users.first.id, caller_id: '49123456', level: 'known') }
+        expect { described_class.rebuild }
+          .to change { described_class.exists?(user_id: users.first.id, caller_id: '49123456', level: 'known') }
           .to(true)
-          .and change { Cti::CallerId.exists?(user_id: users.last.id, caller_id: '49123456', level: 'known') }
+          .and change { described_class.exists?(user_id: users.last.id, caller_id: '49123456', level: 'known') }
           .to(true)
       end
     end
@@ -196,10 +197,10 @@ RSpec.describe Cti::CallerId do
         let(:sender_name) { 'Customer' }
 
         it 'generates a CallerId record (with #level "maybe")' do
-          Cti::CallerId.destroy_all  # CallerId already generated in Article observer job
+          described_class.destroy_all  # CallerId already generated in Article observer job
 
-          expect { Cti::CallerId.rebuild }
-            .to change { Cti::CallerId.exists?(user_id: article.created_by_id, caller_id: '49123456', level: 'maybe') }
+          expect { described_class.rebuild }
+            .to change { described_class.exists?(user_id: article.created_by_id, caller_id: '49123456', level: 'maybe') }
             .to(true)
         end
       end
@@ -208,8 +209,8 @@ RSpec.describe Cti::CallerId do
         let(:sender_name) { 'Agent' }
 
         it 'does not generate a CallerId record' do
-          expect { Cti::CallerId.rebuild }
-            .not_to change { Cti::CallerId.exists?(caller_id: '49123456') }
+          expect { described_class.rebuild }
+            .not_to change { described_class.exists?(caller_id: '49123456') }
         end
       end
     end
@@ -219,20 +220,20 @@ RSpec.describe Cti::CallerId do
     let(:attributes) { attributes_for(:caller_id) }
 
     it 'wraps .find_or_initialize_by (passing only five defining attributes)' do
-      expect(Cti::CallerId)
+      expect(described_class)
         .to receive(:find_or_initialize_by)
         .with(attributes.slice(:caller_id, :level, :object, :o_id, :user_id))
         .and_call_original
 
-      Cti::CallerId.maybe_add(attributes)
+      described_class.maybe_add(attributes)
     end
 
     context 'if no matching record found' do
       it 'adds given #comment attribute' do
-        expect { Cti::CallerId.maybe_add(attributes.merge(comment: 'foo')) }
-          .to change { Cti::CallerId.count }.by(1)
+        expect { described_class.maybe_add(attributes.merge(comment: 'foo')) }
+          .to change(described_class, :count).by(1)
 
-        expect(Cti::CallerId.last.comment).to eq('foo')
+        expect(described_class.last.comment).to eq('foo')
       end
     end
 
@@ -241,7 +242,7 @@ RSpec.describe Cti::CallerId do
       let(:caller_id) { create(:caller_id) }
 
       it 'ignores given #comment attribute' do
-        expect(Cti::CallerId.maybe_add(attributes.merge(comment: 'foo')))
+        expect(described_class.maybe_add(attributes.merge(comment: 'foo')))
           .to eq(caller_id)
 
         expect(caller_id.comment).to be_blank
@@ -251,6 +252,7 @@ RSpec.describe Cti::CallerId do
 
   describe 'callbacks' do
     subject!(:caller_id) { build(:cti_caller_id, caller_id: phone) }
+
     let(:phone) { '1234567890' }
 
     describe 'on creation' do

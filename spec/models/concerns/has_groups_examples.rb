@@ -1,6 +1,7 @@
 RSpec.shared_examples 'HasGroups' do |group_access_factory:|
   context 'group' do
     subject { create(group_access_factory) }
+
     let(:group_full) { create(:group) }
     let(:group_read) { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
@@ -45,7 +46,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
         context 'result' do
 
-          before(:each) do
+          before do
             subject.group_names_access_map = {
               group_full.name     => 'full',
               group_read.name     => 'read',
@@ -78,14 +79,14 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     context '#group_access?' do
 
-      it 'responds to group_access?' do
-        expect(subject).to respond_to(:group_access?)
-      end
-
-      before(:each) do
+      before do
         subject.group_names_access_map = {
           group_read.name => 'read',
         }
+      end
+
+      it 'responds to group_access?' do
+        expect(subject).to respond_to(:group_access?)
       end
 
       context 'Group ID parameter' do
@@ -121,14 +122,14 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     context '#group_ids_access' do
 
-      it 'responds to group_ids_access' do
-        expect(subject).to respond_to(:group_ids_access)
-      end
-
-      before(:each) do
+      before do
         subject.group_names_access_map = {
           group_read.name => 'read',
         }
+      end
+
+      it 'responds to group_ids_access' do
+        expect(subject).to respond_to(:group_ids_access)
       end
 
       it 'lists only active Group IDs' do
@@ -531,14 +532,14 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     context '.group_access' do
 
-      it 'responds to group_access' do
-        expect(described_class).to respond_to(:group_access)
-      end
-
-      before(:each) do
+      before do
         subject.group_names_access_map = {
           group_read.name => 'read',
         }
+      end
+
+      it 'responds to group_access' do
+        expect(described_class).to respond_to(:group_access)
       end
 
       it 'lists only active instances' do

@@ -25,8 +25,8 @@ RSpec.describe String do
       end
 
       it 'does not break on non-unicode strings' do
-        expect(String.new("\xC2\xA92011 Z ", encoding: 'ASCII-8BIT').strip)
-          .to eq(String.new("\xC2\xA92011 Z", encoding: 'ASCII-8BIT'))
+        expect(described_class.new("\xC2\xA92011 Z ", encoding: 'ASCII-8BIT').strip)
+          .to eq(described_class.new("\xC2\xA92011 Z", encoding: 'ASCII-8BIT'))
       end
     end
   end
@@ -56,9 +56,9 @@ RSpec.describe String do
       end
 
       it 'does not break on invalid-unicode strings (in place)' do
-        str = String.new("\xC2\xA92011 Z ", encoding: 'ASCII-8BIT')
+        str = described_class.new("\xC2\xA92011 Z ", encoding: 'ASCII-8BIT')
         expect(str.strip!)
-          .to be(str).and eq(String.new("\xC2\xA92011 Z", encoding: 'ASCII-8BIT'))
+          .to be(str).and eq(described_class.new("\xC2\xA92011 Z", encoding: 'ASCII-8BIT'))
       end
     end
   end
@@ -1844,7 +1844,7 @@ RSpec.describe String do
       end
 
       context 'which are incorrectly set to other, technically valid encodings' do
-        let(:subject) { String.new('ö', encoding: 'tis-620') }
+        let(:subject) { described_class.new('ö', encoding: 'tis-620') }
 
         it 'sets input encoding to UTF-8 instead of attempting conversion' do
           expect(subject.utf8_encode).to eq(subject.dup.force_encoding('utf-8'))

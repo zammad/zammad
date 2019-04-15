@@ -24,8 +24,8 @@ RSpec.describe Trigger do
 
       triggered_article = Ticket::Article.last
 
-      expect(triggered_article.body.match?(/space between/)).to be_truthy
-      expect(triggered_article.body.match?(ticket.title)).to be_truthy
+      expect(triggered_article.body).to match(/space between/)
+      expect(triggered_article.body).to match(ticket.title)
     end
   end
 end

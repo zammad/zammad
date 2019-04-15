@@ -16,7 +16,7 @@ RSpec.describe 'Packages', type: :request do
 
     it 'does packages index with nobody' do
       get '/api/v1/packages', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
@@ -27,7 +27,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(admin_user)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_truthy
     end
@@ -36,7 +36,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(admin_user, password: 'wrongadminpw')
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
     end
@@ -47,7 +47,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(admin_user)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
     end
@@ -56,7 +56,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(agent_user)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
@@ -66,7 +66,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(customer_user)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')

@@ -35,7 +35,7 @@ RSpec.describe 'Overviews', type: :request do
 
       authenticated_as(agent_user)
       post '/api/v1/overviews', params: params, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
     end
@@ -65,13 +65,13 @@ RSpec.describe 'Overviews', type: :request do
 
       authenticated_as(admin_user)
       post '/api/v1/overviews', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview')
 
       post '/api/v1/overviews', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview_1')
@@ -136,7 +136,7 @@ RSpec.describe 'Overviews', type: :request do
       }
       authenticated_as(admin_user)
       post '/api/v1/overviews_prio', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['success']).to eq(true)
 
@@ -175,7 +175,7 @@ RSpec.describe 'Overviews', type: :request do
 
       authenticated_as(admin_user)
       post '/api/v1/overviews', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview')

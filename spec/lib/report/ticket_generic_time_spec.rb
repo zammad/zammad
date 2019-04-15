@@ -34,7 +34,7 @@ returns
           selector:    {}, # ticket selector to get only a collection of tickets
           params:      { field: 'created_at' },
         )
-      end.to_not raise_error
+      end.not_to raise_error
     end
   end
 end

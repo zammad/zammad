@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Richtext', type: :system do
 
-  before(:each) do
+  before do
     click(:href, '#current_user')
     click(:href, '#layout_ref')
     click(:href, '#layout_ref/richtext')
@@ -10,7 +10,7 @@ RSpec.describe 'Richtext', type: :system do
 
   context 'Richtext' do
 
-    scenario 'Single line mode' do
+    it 'Single line mode' do
 
       element = find('#content .text-1')
 
@@ -23,7 +23,7 @@ RSpec.describe 'Richtext', type: :system do
       expect(element).to have_content('some test for browser and some other for browser')
     end
 
-    scenario 'Multi line mode' do
+    it 'Multi line mode' do
 
       element = find('#content .text-5')
 
@@ -39,7 +39,7 @@ RSpec.describe 'Richtext', type: :system do
 
   context 'Regular text' do
 
-    scenario 'Multi line mode' do
+    it 'Multi line mode' do
 
       element = find('#content .text-3')
 

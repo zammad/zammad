@@ -10,19 +10,19 @@ RSpec.describe 'Calendars', type: :request do
 
     it 'does calendar index with nobody' do
       get '/api/v1/calendars', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
 
       get '/api/v1/calendars_init', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
 
       get '/api/v1/calendars/timezones', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
@@ -31,19 +31,19 @@ RSpec.describe 'Calendars', type: :request do
     it 'does calendar index with admin' do
       authenticated_as(admin_user)
       get '/api/v1/calendars', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(1)
 
       get '/api/v1/calendars?expand=true', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(1)
 
       get '/api/v1/calendars?full=true', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
       expect(json_response['record_ids']).to be_truthy
@@ -53,7 +53,7 @@ RSpec.describe 'Calendars', type: :request do
 
       # index
       get '/api/v1/calendars_init', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['record_ids']).to be_truthy
       expect(json_response['ical_feeds']).to be_truthy
@@ -67,7 +67,7 @@ RSpec.describe 'Calendars', type: :request do
 
       # timezones
       get '/api/v1/calendars/timezones', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['timezones']).to be_a_kind_of(Hash)
       expect(json_response['timezones']['America/New_York']).to be_truthy

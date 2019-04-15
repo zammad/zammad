@@ -40,12 +40,12 @@ RSpec.describe Ticket::Article, type: :model do
         end
 
         context 'of subsequent articles on a ticket' do
-          let!(:first_article) do
-            create(:ticket_article, ticket: ticket, sender_name: 'Agent', type_name: 'email')
-          end
-
           subject(:article) do
             create(:ticket_article, ticket: ticket, sender_name: 'Customer', type_name: 'twitter status')
+          end
+
+          let!(:first_article) do
+            create(:ticket_article, ticket: ticket, sender_name: 'Agent', type_name: 'email')
           end
 
           it 'does not modify ticket’s sender/type attributes' do
@@ -243,6 +243,7 @@ RSpec.describe Ticket::Article, type: :model do
     describe 'DoS protection:' do
       context 'when #body exceeds 1.5MB' do
         subject(:article) { create(:ticket_article, body: body) }
+
         let(:body) { 'a' * 2_000_000 }
 
         context 'for "web" thread', application_handle: 'web' do
@@ -296,6 +297,7 @@ RSpec.describe Ticket::Article, type: :model do
 
     describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):' do
       subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
+
       let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
 
       let(:run_bg_jobs) do

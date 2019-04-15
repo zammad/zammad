@@ -20,7 +20,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::Users::Lost::Deactivate, sequencer
 
     it 'enforces created_by_id => 1 in newly created History logs' do
       expect { process(lost_ids: lost_users.pluck(:id), dry_run: false) }
-        .to change { History.count }.by(sample_length)
+        .to change(History, :count).by(sample_length)
 
       expect(History.last(sample_length).pluck(:created_by_id))
         .to eq(Array.new(sample_length, 1))

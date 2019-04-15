@@ -1,3 +1,5 @@
+# rubocop:disable RSpec/DescribeClass
+
 require 'spec_helper'
 require 'support/script_helper'
 require 'timeout'
@@ -40,3 +42,5 @@ describe 'websocket-server', type: :script do
     end
   end
 end
+
+# rubocop:enable RSpec/DescribeClass

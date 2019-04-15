@@ -1,9 +1,10 @@
 RSpec.shared_examples 'HasGroups and Permissions' do |group_access_no_permission_factory:|
   context 'group' do
     subject { build(group_access_no_permission_factory) }
+
     let(:group_read) { create(:group) }
 
-    before(:each) do
+    before do
       subject.group_names_access_map = {
         group_read.name => 'read',
       }

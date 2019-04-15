@@ -3,13 +3,13 @@ RSpec.shared_examples 'HasSearchIndexBackend' do |indexed_factory:|
   context '#search_index_update', performs_jobs: true do
     subject { create(indexed_factory) }
 
-    before(:each) do
+    before do
       allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
     end
 
     context 'record indexing' do
 
-      before(:each) do
+      before do
         expect(subject).to be_present
       end
 

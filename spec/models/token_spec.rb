@@ -37,7 +37,7 @@ RSpec.describe Token, type: :model do
             token  # create token
 
             expect { Token.check(action: token.action, name: token.name) }
-              .not_to change { Token.count }
+              .not_to change(Token, :count)
           end
         end
       end
@@ -56,7 +56,7 @@ RSpec.describe Token, type: :model do
             token  # create token
 
             expect { Token.check(action: token.action, name: token.name) }
-              .not_to change { Token.count }
+              .not_to change(Token, :count)
           end
         end
 
@@ -71,7 +71,7 @@ RSpec.describe Token, type: :model do
             token  # create token
 
             expect { Token.check(action: token.action, name: token.name) }
-              .to change { Token.count }.by(-1)
+              .to change(Token, :count).by(-1)
           end
         end
       end
@@ -79,6 +79,7 @@ RSpec.describe Token, type: :model do
 
     describe 'permission matching' do
       subject(:token) { create(:api_token, user: agent, preferences: preferences) }
+
       let(:agent) { create(:agent_user) }
       let(:preferences) { { permission: %w[admin ticket.agent] } } # agent has no access to admin.*
 

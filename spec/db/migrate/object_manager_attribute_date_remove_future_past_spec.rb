@@ -19,7 +19,7 @@ RSpec.describe ObjectManagerAttributeDateRemoveFuturePast, type: :db_migration d
 
       migrate
 
-      expect(subject.data_option).to_not include(:past, :future)
+      expect(subject.data_option).not_to include(:past, :future)
     end
 
     context 'when incomplete data_option is given' do

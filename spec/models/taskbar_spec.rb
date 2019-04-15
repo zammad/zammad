@@ -6,7 +6,7 @@ RSpec.describe Taskbar do
 
     let(:taskbar) do
 
-      Taskbar.destroy_all
+      described_class.destroy_all
       UserInfo.current_user_id = 1
 
       create(:taskbar, params: {
@@ -81,9 +81,9 @@ RSpec.describe Taskbar do
 
     it 'create tasks' do
 
-      Taskbar.destroy_all
+      described_class.destroy_all
       UserInfo.current_user_id = 1
-      taskbar1 = Taskbar.create(
+      taskbar1 = described_class.create(
         client_id: 123,
         key:       'Ticket-1234',
         callback:  'TicketZoom',
@@ -96,7 +96,7 @@ RSpec.describe Taskbar do
       )
 
       UserInfo.current_user_id = 2
-      taskbar2 = Taskbar.create(
+      taskbar2 = described_class.create(
         client_id: 123,
         key:       'Ticket-1234',
         callback:  'TicketZoom',
@@ -122,7 +122,7 @@ RSpec.describe Taskbar do
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
       expect(taskbar2.preferences[:tasks][1][:changed]).to eq(false)
 
-      taskbar3 = Taskbar.create(
+      taskbar3 = described_class.create(
         client_id: 123,
         key:       'Ticket-4444',
         callback:  'TicketZoom',
@@ -156,7 +156,7 @@ RSpec.describe Taskbar do
       agent_user_id = create(:agent_user).id
       UserInfo.current_user_id = agent_user_id
 
-      taskbar4 = Taskbar.create(
+      taskbar4 = described_class.create(
         client_id: 123,
         key:       'Ticket-1234',
         callback:  'TicketZoom',

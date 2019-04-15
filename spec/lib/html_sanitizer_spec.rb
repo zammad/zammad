@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe HtmlSanitizer do
   describe '.replace_inline_images' do
-    let(:body) { HtmlSanitizer.replace_inline_images(html).first }
-    let(:inline_attachments) { HtmlSanitizer.replace_inline_images(html).last }
+    let(:body) { described_class.replace_inline_images(html).first }
+    let(:inline_attachments) { described_class.replace_inline_images(html).last }
 
     context 'for image at absolute path' do
       let(:html) { '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">' }
@@ -142,7 +142,7 @@ RSpec.describe HtmlSanitizer do
     context 'for image at absolute path' do
       context 'with src attr last' do
         it 'add max-width: 100% rule to style attr' do
-          expect(HtmlSanitizer.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
+          expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
             <img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">
           HTML
             <img style="max-width:100%;width: 181px;max-height: 125px;" src="data:image.+?">
@@ -152,7 +152,7 @@ RSpec.describe HtmlSanitizer do
 
       context 'with src attr first' do
         it 'add max-width: 100% rule to style attr' do
-          expect(HtmlSanitizer.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
+          expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
             <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">
           HTML
             <img src="data:image.+?" style="max-width:100%;width: 181px;max-height: 125px;" alt="abc">
@@ -164,7 +164,7 @@ RSpec.describe HtmlSanitizer do
     context 'for base64-encoded inline images' do
       context 'with src attr last' do
         it 'add max-width: 100% rule to style attr' do
-          expect(HtmlSanitizer.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
+          expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
             <img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">
           HTML
             <img src="/some_one.png" style="max-width:100%;width: 181px;max-height: 125px;" alt="abc">
@@ -174,7 +174,7 @@ RSpec.describe HtmlSanitizer do
 
       context 'with src attr first' do
         it 'add max-width: 100% rule to style attr' do
-          expect(HtmlSanitizer.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
+          expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
             <img src="/some_one.png" alt="abc">
           HTML
             <img src="/some_one.png" alt="abc" style="max-width:100%;">
@@ -190,14 +190,14 @@ RSpec.describe HtmlSanitizer do
       before { allow(Timeout).to receive(:timeout).and_raise(Timeout::Error) }
 
       it 'returns a timeout error message for the user' do
-        expect(HtmlSanitizer.strict(+'<img src="/some_one.png">', true))
+        expect(described_class.strict(+'<img src="/some_one.png">', true))
           .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
       end
     end
 
     context 'with href links that contain square brackets' do
       it 'correctly URL encodes them' do
-        expect(HtmlSanitizer.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))
+        expect(described_class.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))
           .to eq('<a href="https://example.com/?foo=bar&amp;baz%5Bx%5D=y" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?foo=bar&amp;baz[x]=y">example</a>')
       end
     end
@@ -208,7 +208,7 @@ RSpec.describe HtmlSanitizer do
       before { allow(Timeout).to receive(:timeout).and_raise(Timeout::Error) }
 
       it 'returns a timeout error message for the user' do
-        expect(HtmlSanitizer.cleanup(+'<img src="/some_one.png">'))
+        expect(described_class.cleanup(+'<img src="/some_one.png">'))
           .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
       end
     end

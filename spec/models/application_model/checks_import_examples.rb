@@ -19,7 +19,7 @@ RSpec.shared_examples 'ApplicationModel::ChecksImport' do
       before { Setting.set('system_init_done', false) }
 
       it 'allows explicit setting of #id attribute' do
-        expect { subject.save }.not_to change { subject.id }
+        expect { subject.save }.not_to change(subject, :id)
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.shared_examples 'ApplicationModel::ChecksImport' do
         before { Setting.set('import_mode', false) }
 
         it 'prevents explicit setting of #id attribute' do
-          expect { subject.save }.to change { subject.id }
+          expect { subject.save }.to change(subject, :id)
         end
       end
 
@@ -39,13 +39,13 @@ RSpec.shared_examples 'ApplicationModel::ChecksImport' do
 
         shared_examples 'importable classes' do
           it 'allows explicit setting of #id attribute' do
-            expect { subject.save }.not_to change { subject.id }
+            expect { subject.save }.not_to change(subject, :id)
           end
         end
 
         shared_examples 'non-importable classes' do
           it 'prevents explicit setting of #id attribute' do
-            expect { subject.save }.to change { subject.id }
+            expect { subject.save }.to change(subject, :id)
           end
         end
 

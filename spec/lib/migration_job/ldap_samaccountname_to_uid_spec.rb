@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe MigrationJob::LdapSamaccountnameToUid do
 
   it 'performs no changes if no LDAP config present' do
-    expect(Setting).to_not receive(:set)
+    expect(Setting).not_to receive(:set)
     expect(Import::Ldap).to receive(:config).and_return(nil)
 
     described_class.new.perform
   end
 
   it 'performs no changes if uid attributes equals' do
-    expect(Setting).to_not receive(:set)
+    expect(Setting).not_to receive(:set)
 
     ldap_config = {
       'user_uid' => 'samaccountname'

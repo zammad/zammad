@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Tag do
 
   context 'rename' do
-    before(:each) do
+    before do
       Tag::Item.lookup_by_name_and_create('test1')
     end
 

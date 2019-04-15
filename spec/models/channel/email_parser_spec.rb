@@ -40,7 +40,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'auto-creating new users' do
       context 'with one unrecognized email address' do
         it 'creates one new user' do
-          expect { Channel::EmailParser.new.process({}, <<~RAW) }.to change { User.count }.by(1)
+          expect { Channel::EmailParser.new.process({}, <<~RAW) }.to change(User, :count).by(1)
             From: #{Faker::Internet.unique.email}
           RAW
         end
@@ -48,7 +48,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
       context 'with a large number of unrecognized recipient addresses' do
         it 'never creates more than 40 users' do
-          expect { Channel::EmailParser.new.process({}, <<~RAW) }.to change { User.count }.by(40)
+          expect { Channel::EmailParser.new.process({}, <<~RAW) }.to change(User, :count).by(40)
             From: nicole.braun@zammad.org
             To: #{Array.new(20) { Faker::Internet.unique.email }.join(', ')}
             Cc: #{Array.new(21) { Faker::Internet.unique.email }.join(', ')}
@@ -99,8 +99,8 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         it 'creates a ticket and article' do
           expect { Channel::EmailParser.new.process({}, raw_mail) }
-            .to change { Ticket.count }.by(1)
-            .and change { Ticket::Article.count }.by_at_least(1)
+            .to change(Ticket, :count).by(1)
+            .and change(Ticket::Article, :count).by_at_least(1)
         end
 
         it 'sets #title to email subject' do
@@ -260,7 +260,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         shared_examples 'creates a new ticket' do
           it 'creates a new ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { Ticket.count }.by(1)
+              .to change(Ticket, :count).by(1)
               .and not_change { ticket.articles.length }
           end
         end
@@ -656,7 +656,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'when "postmaster_sender_is_agent_search_for_customer" setting is true (default)' do
         it 'sets ticket.customer to user with To: email' do
           expect { Channel::EmailParser.new.process({}, raw_mail) }
-            .to change { Ticket.count }.by(1)
+            .to change(Ticket, :count).by(1)
 
           expect(Ticket.last.customer).to eq(customer)
         end
@@ -667,7 +667,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         it 'sets ticket.customer to user with To: email' do
           expect { Channel::EmailParser.new.process({}, raw_mail) }
-            .to change { Ticket.count }.by(1)
+            .to change(Ticket, :count).by(1)
 
           expect(Ticket.last.customer).to eq(agent)
         end
@@ -959,7 +959,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           it 're-opens a closed ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to not_change { Ticket.count }
+              .to not_change(Ticket, :count)
               .and change { ticket.reload.state.name }.to('open')
           end
         end
@@ -972,7 +972,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
           it 'does not re-open a closed ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to not_change { Ticket.count }
+              .to not_change(Ticket, :count)
               .and not_change { ticket.reload.state.name }
           end
         end

@@ -9,6 +9,12 @@ require 'models/concerns/can_lookup_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 
 RSpec.describe User, type: :model do
+  subject(:user) { create(:user) }
+
+  let(:customer) { create(:customer_user) }
+  let(:agent)    { create(:agent_user) }
+  let(:admin)    { create(:admin_user) }
+
   it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
   it_behaves_like 'HasGroups', group_access_factory: :agent_user
   it_behaves_like 'HasRoles', group_access_factory: :agent_user
@@ -18,14 +24,10 @@ RSpec.describe User, type: :model do
   it_behaves_like 'CanLookup'
   it_behaves_like 'HasObjectManagerAttributesValidation'
 
-  subject(:user) { create(:user) }
-  let(:admin)    { create(:admin_user) }
-  let(:agent)    { create(:agent_user) }
-  let(:customer) { create(:customer_user) }
-
   describe 'Class methods:' do
     describe '.authenticate' do
       subject(:user) { create(:user, password: password) }
+
       let(:password) { Faker::Internet.password }
 
       context 'with valid credentials' do
@@ -153,22 +155,26 @@ RSpec.describe User, type: :model do
       it { is_expected.to respond_to(:max_login_failed?) }
 
       context 'with "password_max_login_failed" setting' do
-        before { Setting.set('password_max_login_failed', 5) }
-        before { user.update(login_failed: 5) }
+        before do
+          Setting.set('password_max_login_failed', 5)
+          user.update(login_failed: 5)
+        end
 
         it 'returns true once user’s #login_failed count exceeds the setting' do
           expect { user.update(login_failed: 6) }
-            .to change { user.max_login_failed? }.to(true)
+            .to change(user, :max_login_failed?).to(true)
         end
       end
 
       context 'without password_max_login_failed setting' do
-        before { Setting.set('password_max_login_failed', nil) }
-        before { user.update(login_failed: 0) }
+        before do
+          Setting.set('password_max_login_failed', nil)
+          user.update(login_failed: 0)
+        end
 
         it 'defaults to 0' do
           expect { user.update(login_failed: 1) }
-            .to change { user.max_login_failed? }.to(true)
+            .to change(user, :max_login_failed?).to(true)
         end
       end
     end
@@ -226,8 +232,6 @@ RSpec.describe User, type: :model do
       end
 
       context 'when user has designated substitute' do
-        let(:substitute) { create(:user) }
-
         subject(:user) do
           create(:user,
                  out_of_office:                out_of_office,
@@ -235,6 +239,8 @@ RSpec.describe User, type: :model do
                  out_of_office_end_at:         Time.zone.tomorrow,
                  out_of_office_replacement_id: substitute.id,)
         end
+
+        let(:substitute) { create(:user) }
 
         context 'but is not out of office' do
           let(:out_of_office) { false }
@@ -296,8 +302,9 @@ RSpec.describe User, type: :model do
     end
 
     describe '#by_reset_token' do
-      let(:token) { create(:token_password_reset) }
       subject(:user) { token.user }
+
+      let(:token) { create(:token_password_reset) }
 
       context 'with a valid token' do
         it 'returns the matching user' do
@@ -313,13 +320,14 @@ RSpec.describe User, type: :model do
     end
 
     describe '#password_reset_via_token' do
-      let!(:token) { create(:token_password_reset) }
       subject(:user) { token.user }
+
+      let!(:token) { create(:token_password_reset) }
 
       it 'changes the password of the token user and destroys the token' do
         expect { described_class.password_reset_via_token(token.name, Faker::Internet.password) }
           .to change { user.reload.password }
-          .and change { Token.count }.by(-1)
+          .and change(Token, :count).by(-1)
       end
     end
 
@@ -419,6 +427,7 @@ RSpec.describe User, type: :model do
 
       context 'when a customer' do
         subject(:user) { create(:customer_user, :with_org) }
+
         let(:colleague) { create(:customer_user, organization: user.organization) }
 
         context 'wants to read' do
@@ -457,6 +466,7 @@ RSpec.describe User, type: :model do
 
     describe '#permissions?' do
       subject(:user) { create(:user, roles: [role]) }
+
       let(:role) { create(:role, permissions: [permission]) }
       let(:permission) { create(:permission, name: permission_name) }
 
@@ -578,6 +588,7 @@ RSpec.describe User, type: :model do
     describe '#permissions_with_child_ids' do
       context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do
         subject(:user) { create(:user, roles: [role]) }
+
         let(:role) { create(:role, permissions: [permission]) }
         let!(:permission) { create(:permission, name: 'foo') }
         let!(:child_permission) { create(:permission, name: 'foo.bar') }
@@ -601,6 +612,7 @@ RSpec.describe User, type: :model do
 
       context 'with no #preferences[:locale]' do
         let(:preferences) { {} }
+
         before { Setting.set('locale_default', 'foo') }
 
         it 'returns the system-wide default locale' do
@@ -683,7 +695,7 @@ RSpec.describe User, type: :model do
 
       it 'is reset to 0 when password is updated' do
         expect { user.update(password: Faker::Internet.password) }
-          .to change { user.login_failed }.to(0)
+          .to change(user, :login_failed).to(0)
       end
     end
 
@@ -693,7 +705,7 @@ RSpec.describe User, type: :model do
           user.password = 'password'
 
           expect { user.save }
-            .to change { user.password }.to(PasswordHash.crypt('password'))
+            .to change(user, :password).to(PasswordHash.crypt('password'))
         end
       end
 
@@ -701,7 +713,7 @@ RSpec.describe User, type: :model do
         it 'does not re-hash before saving' do
           user.password = "{sha2}#{Digest::SHA2.hexdigest('password')}"
 
-          expect { user.save }.not_to change { user.password }
+          expect { user.save }.not_to change(user, :password)
         end
       end
 
@@ -709,7 +721,7 @@ RSpec.describe User, type: :model do
         it 'does not re-hash before saving' do
           user.password = PasswordHash.crypt('password')
 
-          expect { user.save }.not_to change { user.password }
+          expect { user.save }.not_to change(user, :password)
         end
       end
     end
@@ -817,13 +829,14 @@ RSpec.describe User, type: :model do
 
           context 'and #email domain matches an existing Organization#domain' do
             before { user.assign_attributes(email: 'user@example.com') }
+
             let(:organization) { create(:organization, domain: 'example.com') }
 
             context 'and Organization#domain_assignment is false (default)' do
               before { organization.update(domain_assignment: false) }
 
               it 'remains nil' do
-                expect { user.save }.not_to change { user.organization }
+                expect { user.save }.not_to change(user, :organization)
               end
             end
 
@@ -832,20 +845,21 @@ RSpec.describe User, type: :model do
 
               it 'is automatically set to matching Organization' do
                 expect { user.save }
-                  .to change { user.organization }.to(organization)
+                  .to change(user, :organization).to(organization)
               end
             end
           end
 
           context 'and #email domain doesn’t match any Organization#domain' do
             before { user.assign_attributes(email: 'user@example.net') }
+
             let(:organization) { create(:organization, domain: 'example.com') }
 
             context 'and Organization#domain_assignment is true' do
               before { organization.update(domain_assignment: true) }
 
               it 'remains nil' do
-                expect { user.save }.not_to change { user.organization }
+                expect { user.save }.not_to change(user, :organization)
               end
             end
           end
@@ -853,10 +867,12 @@ RSpec.describe User, type: :model do
 
         context 'when set on creation' do
           before { user.assign_attributes(organization: specified_organization) }
+
           let(:specified_organization) { create(:organization, domain: 'example.net') }
 
           context 'and #email domain matches a DIFFERENT Organization#domain' do
             before { user.assign_attributes(email: 'user@example.com') }
+
             let!(:matching_organization) { create(:organization, domain: 'example.com') }
 
             context 'and Organization#domain_assignment is true' do
@@ -864,7 +880,7 @@ RSpec.describe User, type: :model do
 
               it 'is NOT automatically set to matching Organization' do
                 expect { user.save }
-                  .not_to change { user.organization }.from(specified_organization)
+                  .not_to change(user, :organization).from(specified_organization)
               end
             end
           end
@@ -886,14 +902,14 @@ RSpec.describe User, type: :model do
 
             it 'grants agent creation' do
               expect { create(:agent_user) }
-                .to change { current_agents.count }.by(1)
+                .to change(current_agents, :count).by(1)
             end
 
             it 'grants role change' do
               future_agent = create(:customer_user)
 
               expect { future_agent.roles = [agent_role] }
-                .to change { current_agents.count }.by(1)
+                .to change(current_agents, :count).by(1)
             end
 
             describe 'role updates' do
@@ -924,7 +940,7 @@ RSpec.describe User, type: :model do
 
               expect { create(:agent_user) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
 
             it 'prevents role change' do
@@ -934,7 +950,7 @@ RSpec.describe User, type: :model do
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
           end
         end
@@ -945,14 +961,14 @@ RSpec.describe User, type: :model do
 
             it 'grants agent creation' do
               expect { create(:agent_user) }
-                .to change { current_agents.count }.by(1)
+                .to change(current_agents, :count).by(1)
             end
 
             it 'grants role change' do
               future_agent = create(:customer_user)
 
               expect { future_agent.roles = [agent_role] }
-                .to change { current_agents.count }.by(1)
+                .to change(current_agents, :count).by(1)
             end
 
             describe 'role updates' do
@@ -983,7 +999,7 @@ RSpec.describe User, type: :model do
 
               expect { create(:agent_user) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
 
             it 'prevents role change' do
@@ -993,7 +1009,7 @@ RSpec.describe User, type: :model do
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
           end
         end
@@ -1009,7 +1025,7 @@ RSpec.describe User, type: :model do
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
           end
         end
@@ -1023,7 +1039,7 @@ RSpec.describe User, type: :model do
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { current_agents.count }.by(0)
+                .and change(current_agents, :count).by(0)
             end
           end
         end
@@ -1032,6 +1048,7 @@ RSpec.describe User, type: :model do
 
     describe 'Touching associations on update:' do
       subject(:user) { create(:customer_user, organization: organization) }
+
       let(:organization) { create(:organization) }
       let(:other_customer) { create(:customer_user) }
 
@@ -1139,6 +1156,7 @@ RSpec.describe User, type: :model do
 
         context 'for incoming calls from the given user' do
           subject(:user) { create(:user, phone: '1234567890') }
+
           let!(:logs) { create_list(:'cti/log', 5, :with_preferences, from: user.phone, direction: 'in') }
 
           context 'when updating #phone attribute' do

@@ -3,30 +3,30 @@ require 'rails_helper'
 RSpec.describe ApplicationHandleInfo do
   describe '.use' do
     it 'requires a block' do
-      expect { ApplicationHandleInfo.use('foo') }
+      expect { described_class.use('foo') }
         .to raise_error(ArgumentError)
     end
 
     context 'for a given starting ApplicationHandleInfo' do
-      before { ApplicationHandleInfo.current = 'foo' }
+      before { described_class.current = 'foo' }
 
       it 'runs the block using the given ApplicationHandleInfo' do
-        ApplicationHandleInfo.use('bar') do
-          expect(ApplicationHandleInfo.current).to eq('bar')
+        described_class.use('bar') do
+          expect(described_class.current).to eq('bar')
         end
       end
 
       it 'resets ApplicationHandleInfo to its original value' do
-        ApplicationHandleInfo.use('bar') {}
+        described_class.use('bar') {}
 
-        expect(ApplicationHandleInfo.current).to eq('foo')
+        expect(described_class.current).to eq('foo')
       end
 
       context 'when an error is raised in the given block' do
         it 'does not rescue the error, and still resets ApplicationHandleInfo' do
-          expect { ApplicationHandleInfo.use('bar') { raise } }
+          expect { described_class.use('bar') { raise } }
             .to raise_error(StandardError)
-            .and not_change { ApplicationHandleInfo.current }
+            .and not_change { described_class.current }
         end
       end
     end

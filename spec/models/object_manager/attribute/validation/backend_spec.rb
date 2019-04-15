@@ -11,15 +11,15 @@ RSpec.describe ObjectManager::Attribute::Validation::Backend do
 
   describe 'backend interface' do
 
-    let(:record) { build(:user) }
-    let(:attribute) { ::ObjectManager::Attribute.find_by(name: 'firstname') }
-
     subject do
       described_class.new(
         record:    record,
         attribute: attribute
       )
     end
+
+    let(:record) { build(:user) }
+    let(:attribute) { ::ObjectManager::Attribute.find_by(name: 'firstname') }
 
     it 'has attr_accessor for record' do
       expect(subject.record).to eq(record)

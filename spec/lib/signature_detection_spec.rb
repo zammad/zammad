@@ -21,7 +21,7 @@ RSpec.describe SignatureDetection do
         end
 
         it 'returns the first 5–10-line substring they share in common' do
-          expect(SignatureDetection.find_signature(messages)).to eq(<<~SIG.chomp)
+          expect(described_class.find_signature(messages)).to eq(<<~SIG.chomp)
 
             Mit freundlichen Grüßen
 
@@ -48,7 +48,7 @@ RSpec.describe SignatureDetection do
         end
 
         it 'returns the first 5–10-line substring they share in common' do
-          expect(SignatureDetection.find_signature(messages)).to eq(<<~SIG.chomp)
+          expect(described_class.find_signature(messages)).to eq(<<~SIG.chomp)
 
             Freundliche Grüße
 
@@ -75,7 +75,7 @@ RSpec.describe SignatureDetection do
         end
 
         it 'converts messages (via #html2text) then returns the first 5–10-line substring they share in common' do
-          expect(SignatureDetection.find_signature(messages)).to eq(<<~SIG.chomp)
+          expect(described_class.find_signature(messages)).to eq(<<~SIG.chomp)
 
             ChristianSmith
             Technik
@@ -112,7 +112,7 @@ RSpec.describe SignatureDetection do
         SIG
 
         it 'returns the line of the message where the signature begins' do
-          expect(SignatureDetection.find_signature_line(signature, content, content_type)).to eq(10)
+          expect(described_class.find_signature_line(signature, content, content_type)).to eq(10)
         end
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe SignatureDetection do
         SIG
 
         it 'converts messages (via #html2text) then returns the line of the message where the signature begins' do
-          expect(SignatureDetection.find_signature_line(signature, content, content_type)).to eq(11)
+          expect(described_class.find_signature_line(signature, content, content_type)).to eq(11)
         end
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe SignatureDetection do
         end
 
         it 'updates the signature-line data of all articles' do
-          expect { SignatureDetection.rebuild_all_articles }
+          expect { described_class.rebuild_all_articles }
             .to change { articles.first.reload.preferences[:signature_detection] }.to(3)
             .and change { articles.second.reload.preferences[:signature_detection] }.to(2)
         end

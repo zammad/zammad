@@ -18,7 +18,7 @@ RSpec.describe 'Text Module', type: :request do
     it 'does csv example - customer no access' do
       authenticated_as(customer_user)
       get '/api/v1/text_modules/import_example', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
 
@@ -27,7 +27,7 @@ RSpec.describe 'Text Module', type: :request do
 
       authenticated_as(admin_user)
       get '/api/v1/text_modules/import_example', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       rows = CSV.parse(@response.body)
       header = rows.shift
 
@@ -37,11 +37,11 @@ RSpec.describe 'Text Module', type: :request do
       expect(header[3]).to eq('content')
       expect(header[4]).to eq('note')
       expect(header[5]).to eq('active')
-      expect(header).to_not include('organization')
-      expect(header).to_not include('priority')
-      expect(header).to_not include('state')
-      expect(header).to_not include('owner')
-      expect(header).to_not include('customer')
+      expect(header).not_to include('organization')
+      expect(header).not_to include('priority')
+      expect(header).not_to include('state')
+      expect(header).not_to include('owner')
+      expect(header).not_to include('customer')
     end
 
     it 'does csv import - admin access' do
@@ -51,7 +51,7 @@ RSpec.describe 'Text Module', type: :request do
 
       authenticated_as(admin_user)
       post '/api/v1/text_modules/import', params: { try: true, file: csv_file, col_sep: ';' }
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       expect(json_response['try']).to be_truthy
@@ -64,7 +64,7 @@ RSpec.describe 'Text Module', type: :request do
       # valid file try
       csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       expect(json_response['try']).to be_truthy
@@ -77,7 +77,7 @@ RSpec.describe 'Text Module', type: :request do
       # valid file
       csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       expect(json_response['try']).to eq(false)

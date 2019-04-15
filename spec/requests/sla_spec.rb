@@ -10,7 +10,7 @@ RSpec.describe 'SLAs', type: :request do
 
     it 'does index sla with nobody' do
       get '/api/v1/slas', as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('authentication failed')
@@ -19,19 +19,19 @@ RSpec.describe 'SLAs', type: :request do
     it 'does index sla with admin' do
       authenticated_as(admin_user)
       get '/api/v1/slas', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(0)
 
       get '/api/v1/slas?expand=true', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(0)
 
       get '/api/v1/slas?full=true', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
       expect(json_response['record_ids']).to be_truthy

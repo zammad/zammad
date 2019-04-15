@@ -10,7 +10,7 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
       context 'when destroyed' do
         it 'destroys self' do
           expect { time_accounting.ticket_article.destroy }
-            .to change { time_accounting.persisted? }.to(false)
+            .to change(time_accounting, :persisted?).to(false)
             .and change { Ticket::TimeAccounting.count }.by(-1)
         end
 

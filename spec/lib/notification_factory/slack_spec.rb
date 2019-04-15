@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotificationFactory::Slack do
   describe '.template' do
     subject(:template) do
-      NotificationFactory::Slack.template(
+      described_class.template(
         template: action,
         locale:   'en-us',
         timezone: 'Europe/Berlin',
@@ -64,11 +64,8 @@ RSpec.describe NotificationFactory::Slack do
     end
 
     context 'for "ticket_escalate"' do
-      before { ticket.escalation_at = escalation_time }
-      let(:escalation_time) { Time.zone.parse('2019-04-01T10:00:00Z') }
-
       subject(:template) do
-        NotificationFactory::Slack.template(
+        described_class.template(
           template: 'ticket_escalation',
           locale:   'en-us',
           timezone: 'Europe/Berlin',
@@ -79,6 +76,10 @@ RSpec.describe NotificationFactory::Slack do
           }
         )
       end
+
+      before { ticket.escalation_at = escalation_time }
+
+      let(:escalation_time) { Time.zone.parse('2019-04-01T10:00:00Z') }
 
       it 'returns a hash with subject: <ticket title> (as Markdown heading)' do
         expect(template).to include(subject: "# #{ticket.title}")

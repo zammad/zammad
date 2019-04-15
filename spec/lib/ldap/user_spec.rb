@@ -6,6 +6,8 @@ require 'tcr/net/ldap'
 
 RSpec.describe Ldap::User do
 
+  let(:mocked_ldap) { double() }
+
   context '.uid_attribute' do
 
     it 'responds to .uid_attribute' do
@@ -32,13 +34,12 @@ RSpec.describe Ldap::User do
   # required as 'let' to perform test based
   # expectations and reuse it in 'let' instance
   # as additional parameter
-  let(:mocked_ldap) { double() }
 
   context 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       expect(Ldap).not_to receive(:new)
-      instance = described_class.new(ldap: mocked_ldap)
+      described_class.new(ldap: mocked_ldap)
     end
 
     it 'takes optional filter' do
@@ -67,7 +68,8 @@ RSpec.describe Ldap::User do
 
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
-      expect(described_class.new())
+
+      described_class.new()
     end
   end
 

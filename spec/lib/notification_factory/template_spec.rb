@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NotificationFactory::Template do
   subject(:template) do
-    NotificationFactory::Template.new(template_string, escape)
+    described_class.new(template_string, escape)
   end
 
   describe '#to_s' do

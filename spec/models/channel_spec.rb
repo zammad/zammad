@@ -49,7 +49,7 @@ RSpec.describe Channel do
 
         it 'adds tickets as appropriate' do
           expect { twitter_channel.fetch(true) }
-            .to change { Ticket.count }.by(26)
+            .to change(Ticket, :count).by(26)
 
           expect(Ticket.last.attributes).to include(
             'title'       => 'Wir haben unsere DMs deaktiviert. ' \

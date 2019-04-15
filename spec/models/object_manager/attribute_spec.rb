@@ -77,7 +77,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       ObjectManager::Attribute.add attribute
       expect do
         ObjectManager::Attribute.add attribute
-      end.to_not raise_error
+      end.not_to raise_error
     end
 
     it 'accepts duplicate attribute name on compatible types (editing the type of an existing attribute)' do
@@ -87,13 +87,13 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       attribute[:data_option_new] = { default: '', options: { 'a' => 'a' } }
       expect do
         ObjectManager::Attribute.add attribute
-      end.to_not raise_error
+      end.not_to raise_error
     end
 
     it 'accepts valid attribute names' do
       expect do
         ObjectManager::Attribute.add attributes_for :object_manager_attribute_text
-      end.to_not raise_error
+      end.not_to raise_error
     end
   end
 end

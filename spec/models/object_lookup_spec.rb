@@ -16,7 +16,7 @@ RSpec.describe ObjectLookup, type: :model do
 
       it 'creates a new one with that name' do
         expect { ObjectLookup.by_name(name) }
-          .to change { ObjectLookup.count }.by(1)
+          .to change(ObjectLookup, :count).by(1)
 
         expect(ObjectLookup.last.name).to eq(name)
       end

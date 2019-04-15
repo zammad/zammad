@@ -6,7 +6,7 @@ RSpec.describe 'OAuth', type: :request do
 
     it 'does o365 - start' do
       get '/auth/microsoft_office365'
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
       expect(response.body).to include('https://login.microsoftonline.com/common/oauth2/v2.0/authorize')
       expect(response.body).to include('redirect_uri=http%3A%2F%2Fzammad.example.com%2Fauth%2Fmicrosoft_office365%2Fcallback')
       expect(response.body).to include('scope=openid+email+profile')
@@ -15,13 +15,13 @@ RSpec.describe 'OAuth', type: :request do
 
     it 'does o365 - callback' do
       get '/auth/microsoft_office365/callback?code=1234&state=1234'
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
       expect(response.body).to include('302 Moved')
     end
 
     it 'does auth failure' do
       get '/auth/failure?message=123&strategy=some_provider'
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('<title>422: Unprocessable Entity</title>')
       expect(response.body).to include('<h1>422: The change you wanted was rejected.</h1>')
       expect(response.body).to include('<div>Message from some_provider: 123</div>')

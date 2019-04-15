@@ -36,7 +36,7 @@ RSpec.describe 'Integration Placetel', type: :request do
     )
   end
 
-  before(:each) do
+  before do
     Cti::Log.destroy_all
 
     Setting.set('placetel_integration', true)
@@ -76,7 +76,7 @@ RSpec.describe 'Integration Placetel', type: :request do
     it 'does token check' do
       params = 'event=IncomingCall&from=01114100300&to=030600000000&call_id=4991155921769858278-1'
       post '/api/v1/placetel/not_existing_token', params: params
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       error = nil
       local_response = REXML::Document.new(response.body)
@@ -92,7 +92,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - I
       params = 'event=IncomingCall&from=01114100300&to=030600000000&call_id=4991155921769858278-1'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       local_response = REXML::Document.new(response.body)
       expect(local_response.elements.count).to eq(1)
@@ -101,7 +101,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - II - block caller
       params = 'event=IncomingCall&from=491715000000&to=030600000000&call_id=4991155921769858278-2'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       local_response = REXML::Document.new(response.body)
       reason = nil
@@ -113,7 +113,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - I - set default_caller_id
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=8621106404543334274-3'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       caller_id = nil
       number_to_dail = nil
@@ -130,7 +130,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - II - set caller_id based on routing_table by explicite number
       params = 'event=newCall&direction=out&from=030600000000&to=491714000000&call_id=8621106404543334274-4'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       caller_id = nil
       number_to_dail = nil
@@ -147,7 +147,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - III - set caller_id based on routing_table by 41*
       params = 'event=newCall&direction=out&from=030600000000&to=4147110000000&call_id=8621106404543334274-5'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       caller_id = nil
       number_to_dail = nil
@@ -165,7 +165,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       Setting.set('placetel_config', {})
       params = 'event=IncomingCall&from=01114100300&to=030600000000&call_id=4991155921769858278-6'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
 
       error = nil
       local_response = REXML::Document.new(response.body)
@@ -181,7 +181,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - I - new call
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-1'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -203,7 +203,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - I - hangup by agent
       params = 'event=HungUp&call_id=1234567890-1&type=missed'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -225,7 +225,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - II - new call
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -247,7 +247,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - II - answer by customer
       params = 'event=CallAccepted&call_id=1234567890-2&from=030600000000&to=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -269,7 +269,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - II - hangup by customer
       params = 'event=HungUp&call_id=1234567890-2&type=accepted&from=030600000000&to=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -291,7 +291,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - I - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-3'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -313,7 +313,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - I - answer by customer
       params = 'event=CallAccepted&call_id=1234567890-3&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -335,7 +335,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - I - hangup by customer
       params = 'event=HungUp&call_id=1234567890-3&type=accepted&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -357,7 +357,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - II - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-4'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -379,7 +379,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - II - answer by voicemail
       params = 'event=CallAccepted&call_id=1234567890-4&to=030600000000&from=01114100300&user=voicemail'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -401,7 +401,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - II - hangup by customer
       params = 'event=HungUp&call_id=1234567890-4&type=accepted&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -423,7 +423,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - III - new call
       params = 'event=IncomingCall&to=030600000000&from=01114100300&call_id=1234567890-5'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-5')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -445,7 +445,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - III - hangup by customer
       params = 'event=HungUp&call_id=1234567890-5&type=accepted&to=030600000000&from=01114100300'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-5')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -467,7 +467,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - IV - new call
       params = 'event=IncomingCall&to=030600000000&from=49999992222222&call_id=1234567890-6'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-6')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -491,7 +491,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # inbound - IV - new call
       params = 'event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-7'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-7')
       expect(log).to be_truthy
       expect(log.to).to eq('030600000000')
@@ -512,11 +512,11 @@ RSpec.describe 'Integration Placetel', type: :request do
 
       # get caller list
       get '/api/v1/cti/log'
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       authenticated_as(agent_user)
       get '/api/v1/cti/log', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['list']).to be_a_kind_of(Array)
       expect(json_response['list'].count).to eq(7)
       expect(json_response['assets']).to be_truthy
@@ -545,7 +545,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       # outbound - I - new call
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-1&peer=something@example.com'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')
@@ -571,7 +571,7 @@ RSpec.describe 'Integration Placetel', type: :request do
 
       params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2&peer=777008478072@example.com'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
       expect(log.from).to eq('4930777000000')

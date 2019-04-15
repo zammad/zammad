@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SearchIndexBackend do
   describe '.build_query' do
-    subject(:query) { SearchIndexBackend.build_query('', query_extension: params) }
+    subject(:query) { described_class.build_query('', query_extension: params) }
+
     let(:params) { { 'bool' => { 'filter' => { 'term' => { 'a' => 'b' } } } } }
 
     it 'coerces :query_extension hash keys to symbols' do
@@ -11,7 +12,7 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.search' do
-    subject(:search) { SearchIndexBackend.search(query, index, limit: 3000) }
+    subject(:search) { described_class.search(query, index, limit: 3000) }
 
     context 'for query with no results' do
       let(:query) { 'preferences.notification_sound.enabled:*' }
@@ -51,7 +52,7 @@ RSpec.describe SearchIndexBackend do
       QUERIES
 
       it 'appends a * to the original query' do
-        expect(queries.map(&SearchIndexBackend.method(:append_wildcard_to_simple_query)))
+        expect(queries.map(&described_class.method(:append_wildcard_to_simple_query)))
           .to eq(queries.map { |q| "#{q}*" })
       end
     end
@@ -93,7 +94,7 @@ RSpec.describe SearchIndexBackend do
       QUERIES
 
       it 'returns the original query verbatim' do
-        expect(queries.map(&SearchIndexBackend.method(:append_wildcard_to_simple_query)))
+        expect(queries.map(&described_class.method(:append_wildcard_to_simple_query)))
           .to eq(queries)
       end
     end

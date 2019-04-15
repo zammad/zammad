@@ -3,14 +3,15 @@ require 'models/object_manager/attribute/validation/backend_examples'
 
 RSpec.describe ::ObjectManager::Attribute::Validation::Required do
 
-  let(:record) { build(:user) }
-  let(:attribute) { build(:object_manager_attribute_date) }
   subject do
     described_class.new(
       record:    record,
       attribute: attribute
     )
   end
+
+  let(:record) { build(:user) }
+  let(:attribute) { build(:object_manager_attribute_date) }
 
   before do
     allow(subject).to receive(:value).and_return(value)

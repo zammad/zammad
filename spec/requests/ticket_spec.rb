@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
+RSpec.describe 'Ticket', type: :request do
 
   let!(:ticket_group) do
     create(:group, email_address: create(:email_address) )
@@ -35,7 +35,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error_human']).to eq('Group can\'t be blank')
     end
@@ -53,7 +53,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "not_existing"')
     end
@@ -69,7 +69,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
     end
@@ -87,7 +87,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
@@ -109,7 +109,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
@@ -132,7 +132,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 0')
     end
@@ -151,7 +151,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #5')
@@ -174,7 +174,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 99999')
     end
@@ -193,7 +193,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #7')
@@ -215,7 +215,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #9')
@@ -235,7 +235,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #10')
@@ -259,7 +259,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11')
@@ -284,7 +284,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.1')
@@ -318,7 +318,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.2')
@@ -353,7 +353,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.3')
@@ -387,7 +387,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.4')
@@ -415,7 +415,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
     end
@@ -437,7 +437,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #13')
@@ -479,7 +479,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #14')
@@ -514,7 +514,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
@@ -536,7 +536,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
@@ -558,7 +558,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response['title']).to eq('a new ticket #15b')
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -584,7 +584,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response['title']).to eq('a new ticket #15c')
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -609,7 +609,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Attachment needs \'mime-type\' param for attachment with index \'0\'')
     end
@@ -629,7 +629,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #17')
@@ -673,7 +673,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #18')
@@ -716,7 +716,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #1')
@@ -741,7 +741,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(agent_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
@@ -749,12 +749,12 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         title: 'ticket with wrong ticket id - 2',
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
     end
@@ -772,7 +772,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(agent_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(title)
@@ -789,7 +789,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         },
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
@@ -805,7 +805,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         body:      'some body',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       article_json_response = json_response
       expect(article_json_response).to be_a_kind_of(Hash)
       expect(article_json_response['ticket_id']).to eq(ticket.id)
@@ -820,7 +820,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       Scheduler.worker(true)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
@@ -834,13 +834,13 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         },
       }
       post '/api/v1/tickets/search', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
       delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       params = {
         from:      'something which should not be changed on server side',
@@ -851,7 +851,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         internal:  true,
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Agent via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
@@ -867,7 +867,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         subject: 'new subject',
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Agent via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
@@ -880,12 +880,12 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
     end
@@ -899,7 +899,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(admin_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq('ticket with corret ticket id')
@@ -912,7 +912,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         customer_id: agent_user.id,
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq('ticket with corret ticket id - 2')
@@ -927,7 +927,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         body:      'some body',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Admin')
@@ -944,7 +944,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         internal: true,
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Admin')
@@ -957,7 +957,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       params = {
         ticket_id: ticket.id,
@@ -966,7 +966,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         type:      'email',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Admin via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
@@ -979,10 +979,10 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'does ticket pagination (02.05)' do
@@ -1007,35 +1007,35 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][19]).to eq(tickets[0].id)
       expect(json_response['tickets_count']).to eq(20)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=10", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][9]).to eq(tickets[10].id)
       expect(json_response['tickets_count']).to eq(10)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=1&per_page=5", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][4]).to eq(tickets[15].id)
       expect(json_response['tickets_count']).to eq(5)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=2&per_page=5", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[14].id)
       expect(json_response['tickets'][4]).to eq(tickets[10].id)
       expect(json_response['tickets_count']).to eq(5)
 
       get '/api/v1/tickets?limit=40&page=1&per_page=5', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       tickets = Ticket.order(:id).limit(5)
       expect(json_response[0]['id']).to eq(tickets[0].id)
@@ -1043,7 +1043,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response.count).to eq(5)
 
       get '/api/v1/tickets?limit=40&page=2&per_page=5', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       tickets = Ticket.order(:id).limit(10)
       expect(json_response[0]['id']).to eq(tickets[5].id)
@@ -1064,7 +1064,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c1')
@@ -1088,7 +1088,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
@@ -1116,7 +1116,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
@@ -1134,7 +1134,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(customer_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
@@ -1142,12 +1142,12 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         title: 'ticket with wrong ticket id - 2',
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
     end
@@ -1162,7 +1162,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(customer_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(title)
@@ -1175,7 +1175,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         customer_id: agent_user.id,
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
@@ -1189,7 +1189,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         body:      'some body',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       article_json_response = json_response
       expect(article_json_response).to be_a_kind_of(Hash)
       expect(article_json_response['ticket_id']).to eq(ticket.id)
@@ -1203,7 +1203,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       Scheduler.worker(true)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
@@ -1217,13 +1217,13 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         },
       }
       post '/api/v1/tickets/search', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
       delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
 
@@ -1235,7 +1235,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         sender:    'Agent',
       }
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Customer1')
@@ -1247,7 +1247,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
 
@@ -1262,7 +1262,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
 
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Customer1 <tickets-customer1@example.com>')
@@ -1278,12 +1278,12 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         subject: 'new subject',
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (ticket.agent or admin permission required)!')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
     end
@@ -1305,7 +1305,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
 
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6')
@@ -1340,7 +1340,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
 
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6.1')
@@ -1369,7 +1369,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(agent_user)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
@@ -1381,7 +1381,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['created_by_id']).to eq(agent_user.id)
 
       get "/api/v1/tickets/#{ticket.id}?expand=true", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
@@ -1393,7 +1393,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['created_by_id']).to eq(agent_user.id)
 
       get "/api/v1/tickets/#{ticket.id}?expand=false", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
@@ -1405,7 +1405,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['created_by_id']).to eq(agent_user.id)
 
       get "/api/v1/tickets/#{ticket.id}?full=true", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
@@ -1429,7 +1429,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
 
       get "/api/v1/tickets/#{ticket.id}?full=false", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
@@ -1453,7 +1453,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       )
       authenticated_as(agent_user)
       get '/api/v1/tickets', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]).to be_a_kind_of(Hash)
@@ -1468,7 +1468,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response[1]['created_by_id']).to eq(agent_user.id)
 
       get '/api/v1/tickets?expand=true', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]).to be_a_kind_of(Hash)
       expect(json_response[0]['id']).to eq(1)
@@ -1482,7 +1482,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response[1]['created_by_id']).to eq(agent_user.id)
 
       get '/api/v1/tickets?expand=false', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]).to be_a_kind_of(Hash)
       expect(json_response[0]['id']).to eq(1)
@@ -1496,7 +1496,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response[1]['created_by_id']).to eq(agent_user.id)
 
       get '/api/v1/tickets?full=true', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['record_ids'].class).to eq(Array)
@@ -1522,7 +1522,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
 
       get '/api/v1/tickets?full=false', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]).to be_a_kind_of(Hash)
       expect(json_response[0]['id']).to eq(1)
@@ -1550,7 +1550,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1566,7 +1566,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['created_by_id']).to eq(agent_user.id)
 
       post '/api/v1/tickets?expand=true', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1582,7 +1582,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['created_by_id']).to eq(agent_user.id)
 
       post '/api/v1/tickets?full=true', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1623,7 +1623,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       }
       authenticated_as(agent_user)
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1642,7 +1642,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         title: 'a update ticket #2',
       }
       put "/api/v1/tickets/#{ticket.id}?expand=true", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1661,7 +1661,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
         title: 'a update ticket #3',
       }
       put "/api/v1/tickets/#{ticket.id}?full=true", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
       ticket = Ticket.find(json_response['id'])
@@ -1770,7 +1770,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
@@ -1780,7 +1780,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['attachments'].count).to eq(3)
 
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
@@ -1851,7 +1851,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
@@ -1861,7 +1861,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
       expect(json_response['attachments'].count).to eq(3)
 
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
@@ -1895,25 +1895,25 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('failed')
       expect(json_response['message']).to eq('No such master ticket number!')
 
       get "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
       expect(json_response['error_human']).to eq('Not authorized')
 
       get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket3.number}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
       expect(json_response['error_human']).to eq('Not authorized')
 
       get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
       expect(json_response['master_ticket']['id']).to eq(ticket2.id)
@@ -1943,7 +1943,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
       expect(json_response['master_ticket']['id']).to eq(ticket2.id)
@@ -1987,37 +1987,37 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'asc' }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'desc' }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[asc asc] }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin_user)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc]  }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
@@ -2038,7 +2038,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['history'].class).to eq(Array)
       expect(json_response['assets'].class).to eq(Hash)
@@ -2070,7 +2070,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
     it 'orders tickets by created_at desc (#2296)' do
       get '/api/v1/ticket_stats', params: { organization_id: organization.id, user_id: customer.id }, as: :json
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response)
         .to be_a_kind_of(Hash)
         .and include('user' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
@@ -2081,6 +2081,7 @@ RSpec.describe 'Ticket', type: :request do # rubocop:disable Metrics/BlockLength
 
   describe '/api/v1/tickets' do
     subject(:ticket) { create(:ticket, state_name: 'closed') }
+
     let(:admin) { create(:admin_user, groups: [ticket.group]) }
     let(:agent) { create(:agent_user, groups: [ticket.group]) }
     let(:customer) { ticket.customer }

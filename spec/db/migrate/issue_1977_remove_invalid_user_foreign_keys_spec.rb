@@ -16,9 +16,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
 
         expect do
           migrate
-        end.to change {
-          OnlineNotification.count
-        }.by(-1)
+        end.to change(OnlineNotification, :count).by(-1)
       end
 
       it 'cleans up RecentView#created_by_id', db_strategy: :reset do
@@ -30,9 +28,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
 
         expect do
           migrate
-        end.to change {
-          RecentView.count
-        }.by(-1)
+        end.to change(RecentView, :count).by(-1)
       end
 
       it 'cleans up Avatar#o_id', db_strategy: :reset do
@@ -44,9 +40,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
 
         expect do
           migrate
-        end.to change {
-          Avatar.count
-        }.by(-1)
+        end.to change(Avatar, :count).by(-1)
       end
 
     end

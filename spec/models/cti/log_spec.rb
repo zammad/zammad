@@ -5,7 +5,7 @@ RSpec.describe Cti::Log do
 
   describe '.log' do
     it 'returns a hash with :list and :assets keys' do
-      expect(Cti::Log.log).to be_a(Hash).and include(:list, :assets)
+      expect(described_class.log).to be_a(Hash).and include(:list, :assets)
     end
 
     context 'when over 60 Log records exist' do
@@ -17,17 +17,18 @@ RSpec.describe Cti::Log do
       end
 
       it 'returns the 60 latest ones in the :list key' do
-        expect(Cti::Log.log[:list]).to match_array(cti_logs.last(60))
+        expect(described_class.log[:list]).to match_array(cti_logs.last(60))
       end
     end
 
     context 'when Log records have arrays of CallerId attributes in #preferences[:to] / #preferences[:from]' do
       subject!(:cti_log) { create(:'cti/log', preferences: { from: [caller_id] }) }
+
       let(:caller_id) { create(:caller_id) }
       let(:user) { User.find_by(id: caller_id.user_id) }
 
       it 'returns a hash of the CallerId Users and their assets in the :assets key' do
-        expect(Cti::Log.log[:assets]).to eq(user.assets({}))
+        expect(described_class.log[:assets]).to eq(user.assets({}))
       end
     end
   end
@@ -52,33 +53,35 @@ RSpec.describe Cti::Log do
 
       context 'with unrecognized "call_id"' do
         it 'creates a new Log record (#state: "newCall", #done: false)' do
-          expect { Cti::Log.process(attributes) }
-            .to change { Cti::Log.count }.by(1)
+          expect { described_class.process(attributes) }
+            .to change(described_class, :count).by(1)
 
-          expect(Cti::Log.last.attributes)
+          expect(described_class.last.attributes)
             .to include('state' => 'newCall', 'done' => false)
         end
 
         context 'for direction "in", with a CallerId record matching the "from" number' do
           let!(:caller_id) { create(:caller_id, caller_id: '49123456') }
+
           before { attributes.merge!('direction' => 'in') }
 
           it 'saves that CallerId’s attributes in the new Log’s #preferences[:from] attribute' do
-            Cti::Log.process(attributes)
+            described_class.process(attributes)
 
-            expect(Cti::Log.last.preferences[:from].first)
+            expect(described_class.last.preferences[:from].first)
               .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
           end
         end
 
         context 'for direction "out", with a CallerId record matching the "to" number' do
           let!(:caller_id) { create(:caller_id, caller_id: '49123457') }
+
           before { attributes.merge!('direction' => 'out') }
 
           it 'saves that CallerId’s attributes in the new Log’s #preferences[:to] attribute' do
-            Cti::Log.process(attributes)
+            described_class.process(attributes)
 
-            expect(Cti::Log.last.preferences[:to].first)
+            expect(described_class.last.preferences[:to].first)
               .to include(caller_id.attributes.except('created_at'))  # Checking equality of Time objects is error-prone
           end
         end
@@ -88,7 +91,7 @@ RSpec.describe Cti::Log do
         before { create(:'cti/log', call_id: '1') }
 
         it 'raises an error' do
-          expect { Cti::Log.process(attributes) }.to raise_error(/call_id \S+ already exists!/)
+          expect { described_class.process(attributes) }.to raise_error(/call_id \S+ already exists!/)
         end
       end
     end
@@ -98,7 +101,7 @@ RSpec.describe Cti::Log do
 
       context 'with unrecognized "call_id"' do
         it 'raises an error' do
-          expect { Cti::Log.process(attributes) }.to raise_error(/No such call_id/)
+          expect { described_class.process(attributes) }.to raise_error(/No such call_id/)
         end
       end
 
@@ -107,7 +110,7 @@ RSpec.describe Cti::Log do
           let(:log) { create(:'cti/log', call_id: 1, state: 'newCall', done: false) }
 
           it 'returns early with no changes' do
-            expect { Cti::Log.process(attributes) }
+            expect { described_class.process(attributes) }
               .to change { log.reload.state }.to('answer')
               .and change { log.reload.done }.to(true)
           end
@@ -117,8 +120,8 @@ RSpec.describe Cti::Log do
           let(:log) { create(:'cti/log', call_id: 1, state: 'hangup', done: false) }
 
           it 'returns early with no changes' do
-            expect { Cti::Log.process(attributes) }
-              .not_to change { log.reload }
+            expect { described_class.process(attributes) }
+              .not_to change(log, :reload)
           end
         end
       end
@@ -129,7 +132,7 @@ RSpec.describe Cti::Log do
 
       context 'with unrecognized "call_id"' do
         it 'raises an error' do
-          expect { Cti::Log.process(attributes) }.to raise_error(/No such call_id/)
+          expect { described_class.process(attributes) }.to raise_error(/No such call_id/)
         end
       end
 
@@ -138,7 +141,7 @@ RSpec.describe Cti::Log do
           let(:log) { create(:'cti/log', call_id: 1, state: 'newCall', done: false) }
 
           it 'sets attributes #state: "hangup", #done: false' do
-            expect { Cti::Log.process(attributes) }
+            expect { described_class.process(attributes) }
               .to change { log.reload.state }.to('hangup')
               .and not_change { log.reload.done }
           end
@@ -147,7 +150,7 @@ RSpec.describe Cti::Log do
             let(:cause) { 'forwarded' }
 
             it 'sets attributes #state: "hangup", #done: true' do
-              expect { Cti::Log.process(attributes) }
+              expect { described_class.process(attributes) }
                 .to change { log.reload.state }.to('hangup')
                 .and change { log.reload.done }.to(true)
             end
@@ -158,7 +161,7 @@ RSpec.describe Cti::Log do
           let(:log) { create(:'cti/log', call_id: 1, state: 'answer', done: true) }
 
           it 'sets attributes #state: "hangup"' do
-            expect { Cti::Log.process(attributes) }
+            expect { described_class.process(attributes) }
               .to change { log.reload.state }.to('hangup')
               .and not_change { log.reload.done }
           end
@@ -167,7 +170,7 @@ RSpec.describe Cti::Log do
             before { log.update(to_comment: 'voicemail') }
 
             it 'sets attributes #state: "hangup", #done: false' do
-              expect { Cti::Log.process(attributes) }
+              expect { described_class.process(attributes) }
                 .to change { log.reload.state }.to('hangup')
                 .and change { log.reload.done }.to(false)
             end

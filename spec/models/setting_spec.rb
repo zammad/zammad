@@ -22,6 +22,7 @@ RSpec.describe Setting, type: :model do
 
     context 'when #preferences hash includes a :cache key' do
       subject(:setting) { create(:setting, preferences: { cache: ['foo'] }) }
+
       before { Cache.write('foo', 'bar') }
 
       it 'resets the cache key' do
@@ -49,7 +50,7 @@ RSpec.describe Setting, type: :model do
 
       it 'is set on creation, based on #state' do
         expect { setting.save }
-          .to change { setting.state_initial }.from({}).to({ value: 'foo' })
+          .to change(setting, :state_initial).from({}).to({ value: 'foo' })
       end
     end
   end

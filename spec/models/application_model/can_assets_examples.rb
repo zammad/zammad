@@ -1,5 +1,6 @@
 RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], selectors: [], own_attributes: true|
   subject { create(described_class.name.underscore, updated_by_id: admin.id) }
+
   let(:admin) { create(:admin_user) }
 
   describe '#assets (for supplying model data to front-end framework)' do
@@ -37,6 +38,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
 
         shared_examples 'single association' do
           subject { create(described_class.name.underscore, association => single) }
+
           let(:single) { create(reflection.class_name.underscore) }
 
           it 'returns a hash with its asset attributes' do
@@ -56,6 +58,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
 
         shared_examples 'collection association' do
           subject { create(described_class.name.underscore, association => collection) }
+
           let(:collection) { create_list(reflection.class_name.underscore, 5) }
           let(:collection_assets) { collection.reduce({}) { |assets_hash, single| single.assets(assets_hash) } }
 
@@ -84,6 +87,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
 
     Array(selectors).each do |s|
       subject { create(described_class.name.underscore, s => selector) }
+
       let(:selector) { { 'ticket.priority_id' => { operator: 'is', value: [1, 2] } } }
       let(:priorities_assets) { Ticket::Priority.first(2).reduce({}) { |asset_hash, priority| priority.assets(asset_hash) } }
 

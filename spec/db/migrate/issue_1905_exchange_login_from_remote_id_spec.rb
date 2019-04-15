@@ -44,6 +44,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
     context 'blank config' do
       let(:config) { nil }
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -53,6 +54,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           some: 'config'
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -64,6 +66,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           }
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -76,6 +79,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           }
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
   end

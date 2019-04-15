@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Channel::Filter::Match::EmailRegex do
   describe '.match' do
-    subject(:match) { Channel::Filter::Match::EmailRegex.match(value: from, match_rule: sender, check_mode: check_mode) }
+    subject(:match) { described_class.match(value: from, match_rule: sender, check_mode: check_mode) }
+
     let(:from) { 'foobar@foo.bar' }
 
     context 'in normal (error-suppressing) mode (default)' do

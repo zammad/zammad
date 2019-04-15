@@ -52,9 +52,7 @@ RSpec.describe 'User endpoint', type: :request do
 
             expect do
               post api_v1_users_path, params: payload
-            end.to change {
-              User.count
-            }.by(1)
+            end.to change(User, :count).by(1)
 
             expect(response).to have_http_status(:success)
             expect(User.last.send(map_method_id)).to eq(send(map_method_id))
@@ -78,9 +76,7 @@ RSpec.describe 'User endpoint', type: :request do
 
             expect do
               post api_v1_users_path, params: payload
-            end.to change {
-              User.count
-            }.by(1)
+            end.to change(User, :count).by(1)
 
             expect(response).to have_http_status(:success)
             expect(User.last.send(map_method_id)).to be_blank
@@ -129,9 +125,7 @@ RSpec.describe 'User endpoint', type: :request do
 
             expect do
               post api_v1_users_path, params: payload
-            end.to change {
-              User.count
-            }.by(1)
+            end.to change(User, :count).by(1)
 
             expect(response).to have_http_status(:success)
             expect(User.last.roles).to eq(privileged)
@@ -155,9 +149,7 @@ RSpec.describe 'User endpoint', type: :request do
 
             expect do
               post api_v1_users_path, params: payload
-            end.to change {
-              User.count
-            }.by(1)
+            end.to change(User, :count).by(1)
 
             expect(response).to have_http_status(:success)
             expect(User.last.roles).to eq(Role.signup_roles)

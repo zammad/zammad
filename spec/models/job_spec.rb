@@ -515,7 +515,7 @@ RSpec.describe Job, type: :model do
       it 'is set automatically on save (cannot be set manually)' do
         job.next_run_at = 1.day.from_now
 
-        expect { job.save }.to change { job.next_run_at }
+        expect { job.save }.to change(job, :next_run_at)
       end
 
       context 'for an inactive Job' do
@@ -523,7 +523,7 @@ RSpec.describe Job, type: :model do
 
         it 'is nil' do
           expect { job.save }
-            .not_to change { job.next_run_at }.from(nil)
+            .not_to change(job, :next_run_at).from(nil)
         end
       end
 
@@ -532,12 +532,13 @@ RSpec.describe Job, type: :model do
 
         it 'is nil' do
           expect { job.save }
-            .not_to change { job.next_run_at }.from(nil)
+            .not_to change(job, :next_run_at).from(nil)
         end
       end
 
       context 'when #timeplan contains at least one true value for :day, :hour, and :minute' do
         subject(:job) { build(:job, :never_on) }
+
         let(:base_time) { Time.current.beginning_of_week }
 
         # Tuesday & Thursday @ 12:00a, 12:30a, 6:00p, and 6:30p

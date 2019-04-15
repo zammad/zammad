@@ -47,6 +47,7 @@ RSpec.describe NotificationFactory do
 
       context 'if no locale given in arguments, but default locale is set' do
         before { Setting.set('locale_default', 'de-de') }
+
         let(:rendered_locale) { 'de' }
 
         it 'tries template for default locale' do
@@ -56,6 +57,7 @@ RSpec.describe NotificationFactory do
 
         context 'and no such template exists' do
           before { Setting.set('locale_default', 'xx') }
+
           let(:rendered_locale) { 'en' }
 
           it 'falls back to en template' do

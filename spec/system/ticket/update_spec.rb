@@ -6,7 +6,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
   # Regression test for issue #2242 - mandatory fields can be empty (or "-") on ticket update
   context 'when updating a ticket without its required select attributes' do
-    scenario 'frontend checks reject the update', db_strategy: :reset do
+    it 'frontend checks reject the update', db_strategy: :reset do
       # setup and migrate a required select attribute
       attribute = create_attribute :object_manager_attribute_select,
                                    screens:     attributes_for(:required_screen),
@@ -48,7 +48,7 @@ RSpec.describe 'Ticket Update', type: :system do
       expect(ticket.state.name).to eq('closed')
     end
 
-    scenario 'with macro and required tree_select field', db_strategy: :reset do
+    it 'with macro and required tree_select field', db_strategy: :reset do
       # setup and migrate a required select attribute
       attribute = create_attribute :object_manager_attribute_tree_select,
                                    screens:     attributes_for(:required_screen),
@@ -106,7 +106,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
   # Issue #2469 - Add information "Ticket merged" to History
   context 'when merging tickets' do
-    scenario 'tickets history of both tickets should show the merge event' do
+    it 'tickets history of both tickets should show the merge event' do
       user = create :user
       origin_ticket = create :ticket, group: group
       target_ticket = create :ticket, group: group

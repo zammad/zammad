@@ -43,6 +43,7 @@ RSpec.describe EmailAddress, type: :model do
 
     describe '#channel' do
       subject(:email_addresses) { create_list(:email_address, 2, channel: channel) }
+
       let(:channel) { create(:channel) }
 
       context 'when a Channel is destroyed' do

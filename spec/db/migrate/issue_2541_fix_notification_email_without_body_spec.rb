@@ -38,6 +38,7 @@ RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
 
     context 'when migrating Jobs' do
       subject(:job) { create(:job) }
+
       let(:type) { 'notification.email' }
 
       it "updates empty perform['notification.email']['body'] attribute" do
@@ -48,6 +49,7 @@ RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
 
   describe 'scheduler management' do
     let(:scheduler) { Scheduler.find_by(method: 'Job.run') }
+
     before { scheduler.update!(active: false) }
 
     it "re-enables 'Job.run' Scheduler" do

@@ -6,41 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 36
-# Cop supports --auto-correct.
-# Configuration parameters: EnabledMethods.
-Capybara/FeatureMethods:
-  Exclude:
-    - 'spec/system/basic/authentication_spec.rb'
-    - 'spec/system/basic/redirects_spec.rb'
-    - 'spec/system/basic/richtext_spec.rb'
-    - 'spec/system/js/q_unit_spec.rb'
-    - 'spec/system/setup/auto_wizard_spec.rb'
-    - 'spec/system/setup/mail_accounts_spec.rb'
-    - 'spec/system/setup/system_spec.rb'
-    - 'spec/system/ticket/create_spec.rb'
-    - 'spec/system/ticket/update_spec.rb'
-
-# Offense count: 39
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'spec/factories/job.rb'
-    - 'spec/factories/postmaster_filter.rb'
-    - 'spec/factories/ticket.rb'
-    - 'spec/factories/ticket/article.rb'
-    - 'spec/lib/sequencer/unit/import/zendesk/sub_sequence/base_examples.rb'
-    - 'spec/models/calendar_spec.rb'
-    - 'spec/models/channel/email_parser_spec.rb'
-    - 'spec/models/cti/caller_id_spec.rb'
-    - 'spec/models/job_spec.rb'
-    - 'spec/models/recent_view_spec.rb'
-    - 'spec/models/role_spec.rb'
-    - 'spec/models/ticket_spec.rb'
-    - 'spec/models/trigger_spec.rb'
-    - 'spec/requests/ticket_spec.rb'
-
 # Offense count: 43
 Lint/UselessAssignment:
   Enabled: false
@@ -53,7 +18,7 @@ Lint/UselessAssignment:
 # Configuration parameters: CountComments, ExcludedMethods.
 # ExcludedMethods: refine
 Metrics/BlockLength:
-  Max: 1969
+  Max: 1987
 
 # Offense count: 16
 RSpec/AnyInstance:
@@ -84,48 +49,6 @@ RSpec/BeforeAfterAll:
 RSpec/ContextWording:
   Enabled: false
 
-# Offense count: 1
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/scripts/websocket_server_spec.rb'
-
-# Offense count: 207
-# Cop supports --auto-correct.
-# Configuration parameters: SkipBlocks, EnforcedStyle.
-# SupportedStyles: described_class, explicit
-RSpec/DescribedClass:
-  Enabled: false
-
-# Offense count: 15
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterFinalLet:
-  Exclude:
-    - 'spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb'
-    - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
-    - 'spec/lib/import/zendesk/object_attribute/base_examples.rb'
-    - 'spec/models/cti/log_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/future_past_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/required_spec.rb'
-    - 'spec/models/ticket_spec.rb'
-    - 'spec/models/user_spec.rb'
-    - 'spec/requests/integration/twitter_webhook_spec.rb'
-
-# Offense count: 25
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterHook:
-  Exclude:
-    - 'spec/lib/notification_factory/slack_spec.rb'
-    - 'spec/lib/notification_factory_spec.rb'
-    - 'spec/models/role_spec.rb'
-    - 'spec/models/ticket_spec.rb'
-    - 'spec/models/trigger_spec.rb'
-    - 'spec/models/user_spec.rb'
-
-# Offense count: 34
-# Cop supports --auto-correct.
-RSpec/EmptyLineAfterSubject:
-  Enabled: false
-
 # Offense count: 540
 # Configuration parameters: Max.
 RSpec/ExampleLength:
@@ -143,13 +66,6 @@ RSpec/ExpectActual:
     - 'spec/requests/ticket/article_attachments_spec.rb'
     - 'spec/requests/user/organization_spec.rb'
     - 'spec/requests/user_spec.rb'
-
-# Offense count: 99
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: method_call, block
-RSpec/ExpectChange:
-  Enabled: false
 
 # Offense count: 3
 RSpec/ExpectInHook:
@@ -175,20 +91,6 @@ RSpec/FilePath:
     - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
 
-# Offense count: 30
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, each, example
-RSpec/HookArgument:
-  Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-RSpec/HooksBeforeExamples:
-  Exclude:
-    - 'spec/models/concerns/has_groups_examples.rb'
-    - 'spec/models/trigger_spec.rb'
-
 # Offense count: 60
 # Configuration parameters: AssignmentOnly.
 RSpec/InstanceVariable:
@@ -204,36 +106,6 @@ RSpec/InstanceVariable:
     - 'spec/requests/text_module_spec.rb'
     - 'spec/requests/ticket/article_attachments_spec.rb'
     - 'spec/requests/user_spec.rb'
-
-# Offense count: 2
-RSpec/IteratedExpectation:
-  Exclude:
-    - 'spec/jobs/update_cti_logs_by_caller_job_spec.rb'
-
-# Offense count: 10
-# Cop supports --auto-correct.
-RSpec/LeadingSubject:
-  Exclude:
-    - 'spec/lib/notification_factory/slack_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/backend_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/future_past_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/required_spec.rb'
-    - 'spec/models/role_spec.rb'
-    - 'spec/models/ticket/article_spec.rb'
-    - 'spec/models/trigger_spec.rb'
-    - 'spec/models/user_spec.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-RSpec/LetBeforeExamples:
-  Exclude:
-    - 'spec/lib/import/otrs/article/attachment_factory_spec.rb'
-    - 'spec/lib/import/otrs/dynamic_field_factory_spec.rb'
-    - 'spec/lib/import/otrs/dynamic_field_spec.rb'
-    - 'spec/lib/ldap/group_spec.rb'
-    - 'spec/lib/ldap/user_spec.rb'
-    - 'spec/lib/ldap_spec.rb'
-    - 'spec/models/user_spec.rb'
 
 # Offense count: 34
 RSpec/LetSetup:
@@ -274,51 +146,12 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Max: 8
 
-# Offense count: 28
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, to_not
-RSpec/NotToNot:
-  Exclude:
-    - 'spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb'
-    - 'spec/lib/import/otrs/user_factory_spec.rb'
-    - 'spec/lib/migration_job/ldap_samaccountname_to_uid_spec.rb'
-    - 'spec/lib/report/ticket_generic_time_spec.rb'
-    - 'spec/lib/stats_spec.rb'
-    - 'spec/models/object_manager/attribute/validation_spec.rb'
-    - 'spec/models/object_manager/attribute_spec.rb'
-    - 'spec/requests/integration/idoit_spec.rb'
-    - 'spec/requests/integration/twilio_sms_spec.rb'
-    - 'spec/requests/integration/user_device_spec.rb'
-    - 'spec/requests/search_spec.rb'
-    - 'spec/requests/text_module_spec.rb'
-    - 'spec/requests/ticket/article_spec.rb'
-
-# Offense count: 81
-# Cop supports --auto-correct.
-# Configuration parameters: Strict, EnforcedStyle.
-# SupportedStyles: inflected, explicit
-RSpec/PredicateMatcher:
-  Exclude:
-    - 'spec/lib/password_hash_spec.rb'
-    - 'spec/models/trigger/sms_spec.rb'
-    - 'spec/requests/api_auth_on_behalf_of_spec.rb'
-    - 'spec/requests/api_auth_spec.rb'
-    - 'spec/requests/integration/monitoring_spec.rb'
-    - 'spec/requests/organization_spec.rb'
-    - 'spec/requests/user_spec.rb'
-
 # Offense count: 12
 RSpec/RepeatedDescription:
   Exclude:
     - 'spec/models/translation_spec.rb'
     - 'spec/requests/form_spec.rb'
     - 'spec/requests/ticket_spec.rb'
-
-# Offense count: 2
-RSpec/RepeatedExample:
-  Exclude:
-    - 'spec/models/translation_spec.rb'
 
 # Offense count: 3
 RSpec/ScatteredLet:
@@ -346,17 +179,4 @@ RSpec/SubjectStub:
 # Offense count: 25
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
-  Enabled: false
-
-# Offense count: 2
-RSpec/VoidExpect:
-  Exclude:
-    - 'spec/lib/ldap/group_spec.rb'
-    - 'spec/lib/ldap/user_spec.rb'
-
-# Offense count: 741
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-Rails/HttpStatus:
   Enabled: false

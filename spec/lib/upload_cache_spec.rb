@@ -27,7 +27,7 @@ RSpec.describe UploadCache do
             'Content-Disposition' => 'attached',
           },
         )
-      end.to change { Store.count }.by(1)
+      end.to change(Store, :count).by(1)
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe UploadCache do
     end
 
     it 'removes all added Store items' do
-      expect { subject.destroy }.to change { Store.count }.by(-2)
+      expect { subject.destroy }.to change(Store, :count).by(-2)
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe UploadCache do
     end
 
     it 'removes the Store item matching the given ID' do
-      expect { subject.remove_item(Store.last.id) }.to change { Store.count }.by(-1)
+      expect { subject.remove_item(Store.last.id) }.to change(Store, :count).by(-1)
     end
 
     it 'prevents removage of non UploadCache Store items' do

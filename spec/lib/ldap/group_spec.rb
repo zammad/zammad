@@ -5,6 +5,11 @@ require 'ldap/group'
 
 RSpec.describe Ldap::Group do
 
+  # required as 'let' to perform test based
+  # expectations and reuse it in 'let' instance
+  # as additional parameter
+  let(:mocked_ldap) { double() }
+
   context '.uid_attribute' do
 
     it 'responds to .uid_attribute' do
@@ -16,17 +21,12 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  # required as 'let' to perform test based
-  # expectations and reuse it in 'let' instance
-  # as additional parameter
-  let(:mocked_ldap) { double() }
-
   context 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       config = {}
       expect(Ldap).not_to receive(:new).with(config)
-      instance = described_class.new(config, ldap: mocked_ldap)
+      described_class.new(config, ldap: mocked_ldap)
     end
 
     it 'takes optional filter' do
@@ -55,7 +55,8 @@ RSpec.describe Ldap::Group do
 
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
-      expect(described_class.new())
+
+      described_class.new
     end
   end
 

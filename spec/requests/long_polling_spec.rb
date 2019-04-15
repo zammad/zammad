@@ -6,7 +6,7 @@ RSpec.describe 'LongPolling', type: :request do
     create(:agent_user)
   end
 
-  before(:each) do
+  before do
     Sessions.sessions.each do |client_id|
       Sessions.destroy(client_id)
     end
@@ -17,25 +17,25 @@ RSpec.describe 'LongPolling', type: :request do
 
     it 'receive without client_id - no user login' do
       get '/api/v1/message_receive', params: { data: {} }, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid client_id receive!')
     end
 
     it 'send without client_id - no user login' do
       get '/api/v1/message_send', params: { data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
 
       client_id = json_response['client_id']
       get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'spool' } }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid client_id receive!')
     end
@@ -43,7 +43,7 @@ RSpec.describe 'LongPolling', type: :request do
     it 'receive without client_id' do
       authenticated_as(agent_user)
       get '/api/v1/message_receive', params: { data: {} }, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid client_id receive!')
     end
@@ -51,7 +51,7 @@ RSpec.describe 'LongPolling', type: :request do
     it 'receive without wrong client_id' do
       authenticated_as(agent_user)
       get '/api/v1/message_receive', params: { client_id: 'not existing', data: {} }, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid client_id receive!')
     end
@@ -59,7 +59,7 @@ RSpec.describe 'LongPolling', type: :request do
     it 'send without client_id' do
       authenticated_as(agent_user)
       get '/api/v1/message_send', params: { data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
     end
@@ -68,7 +68,7 @@ RSpec.describe 'LongPolling', type: :request do
       Sessions.create('123456', {}, { type: 'ajax' })
       authenticated_as(agent_user)
       get '/api/v1/message_send', params: { client_id: '123456', data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to eq({})
     end
@@ -79,22 +79,22 @@ RSpec.describe 'LongPolling', type: :request do
       # will update the user by every request and return a different result for the test
       authenticated_as(agent_user, token: create(:token, action: 'api', user_id: agent_user.id) )
       get '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
       client_id = json_response['client_id']
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to eq([{ 'data' => { 'success' => true }, 'event' => 'ws:login' }])
 
       get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'spool' } }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to eq({})
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]['event']).to eq('spool:sent')
       expect(json_response[0]['event']).to eq('spool:sent')
@@ -104,12 +104,12 @@ RSpec.describe 'LongPolling', type: :request do
       expect(spool_list).to eq([])
 
       get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'broadcast', spool: true, recipient: { user_id: [agent_user.id] }, data: { taskbar_id: 9_391_633 } } }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to eq({})
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to eq({ 'event' => 'pong' })
 

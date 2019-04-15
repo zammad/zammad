@@ -20,25 +20,25 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
     end
   end
 
-  scenario 'Core' do
+  it 'Core' do
     async_q_unit_tests('core')
   end
 
   context 'UI' do
 
-    scenario 'Base' do
+    it 'Base' do
       q_unit_tests('ui')
     end
 
-    scenario 'Model' do
+    it 'Model' do
       async_q_unit_tests('model')
     end
 
-    scenario 'Model binding' do
+    it 'Model binding' do
       q_unit_tests('model_binding')
     end
 
-    scenario 'Model UI' do
+    it 'Model UI' do
 
       if !ENV['CI']
         skip("Can't run locally because of dependence of special Timezone")
@@ -47,65 +47,65 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
       q_unit_tests('model_ui')
     end
 
-    scenario 'Ticket selector' do
+    it 'Ticket selector' do
       q_unit_tests('ticket_selector')
     end
   end
 
   context 'Form' do
 
-    scenario 'Base' do
+    it 'Base' do
       async_q_unit_tests('form')
     end
 
-    scenario 'Trim' do
+    it 'Trim' do
       q_unit_tests('form_trim')
     end
 
-    scenario 'Find' do
+    it 'Find' do
       q_unit_tests('form_find')
     end
 
-    scenario 'Timer' do
+    it 'Timer' do
       q_unit_tests('form_timer')
     end
 
-    scenario 'Extended' do
+    it 'Extended' do
       q_unit_tests('form_extended')
     end
 
-    scenario 'Searchable select' do
+    it 'Searchable select' do
       q_unit_tests('form_searchable_select')
     end
 
-    scenario 'Tree select' do
+    it 'Tree select' do
       q_unit_tests('form_tree_select')
     end
 
-    scenario 'Column select' do
+    it 'Column select' do
       q_unit_tests('form_column_select')
     end
 
-    scenario 'Validation' do
+    it 'Validation' do
       q_unit_tests('form_validation')
     end
   end
 
   context 'Table' do
 
-    scenario 'Base' do
+    it 'Base' do
       q_unit_tests('table')
     end
 
-    scenario 'Extended' do
+    it 'Extended' do
       q_unit_tests('table_extended')
     end
 
-    scenario 'HTML utils' do
+    it 'HTML utils' do
       q_unit_tests('html_utils')
     end
 
-    scenario 'Taskbar' do
+    it 'Taskbar' do
       q_unit_tests('taskbar')
     end
   end

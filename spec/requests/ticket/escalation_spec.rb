@@ -80,7 +80,7 @@ RSpec.describe 'Ticket Escalation', type: :request do
 
       authenticated_as(customer_user)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
@@ -131,7 +131,7 @@ Some Text"
       authenticated_as(agent_user)
       put "/api/v1/tickets/#{ticket_p.id}", params: params, as: :json
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'open').id)
       expect(json_response['title']).to eq('some value 123 - update')

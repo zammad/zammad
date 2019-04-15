@@ -233,12 +233,12 @@ RSpec.describe Ldap do
 
     context '#search' do
 
+      let(:base) { 'DC=domain,DC=tld' }
+      let(:filter) { '(objectClass=user)' }
+
       it 'responds to #search' do
         expect(instance).to respond_to(:search)
       end
-
-      let(:filter) { '(objectClass=user)' }
-      let(:base) { 'DC=domain,DC=tld' }
 
       it 'performs search for a filter, base and scope and yields of returned entries' do
 
@@ -309,11 +309,11 @@ RSpec.describe Ldap do
 
     context '#entries?' do
 
+      let(:filter) { '(objectClass=user)' }
+
       it 'responds to #entries?' do
         expect(instance).to respond_to(:entries?)
       end
-
-      let(:filter) { '(objectClass=user)' }
 
       it 'returns true if entries are present' do
 

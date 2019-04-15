@@ -13,27 +13,27 @@ RSpec.describe Role do
   describe 'Default state' do
     describe 'of whole table:' do
       it 'has three records ("Admin", "Agent", and "Customer")' do
-        expect(Role.pluck(:name)).to match_array(%w[Admin Agent Customer])
+        expect(described_class.pluck(:name)).to match_array(%w[Admin Agent Customer])
       end
     end
 
     describe 'of "Admin" role:' do
       it 'has default admin permissions' do
-        expect(Role.find_by(name: 'Admin').permissions.pluck(:name))
+        expect(described_class.find_by(name: 'Admin').permissions.pluck(:name))
           .to match_array(%w[admin user_preferences report])
       end
     end
 
     describe 'of "Agent" role:' do
       it 'has default agent permissions' do
-        expect(Role.find_by(name: 'Agent').permissions.pluck(:name))
+        expect(described_class.find_by(name: 'Agent').permissions.pluck(:name))
           .to match_array(%w[ticket.agent chat.agent cti.agent user_preferences])
       end
     end
 
     describe 'of "Customer" role:' do
       it 'has default customer permissions' do
-        expect(Role.find_by(name: 'Customer').permissions.pluck(:name))
+        expect(described_class.find_by(name: 'Customer').permissions.pluck(:name))
           .to match_array(
             %w[
               user_preferences.password
@@ -54,7 +54,7 @@ RSpec.describe Role do
 
         it 'can be created' do
           expect { create(:role, permissions: [permission]) }
-            .to change { Role.count }.by(1)
+            .to change(described_class, :count).by(1)
         end
 
         it 'can be added' do
@@ -69,7 +69,7 @@ RSpec.describe Role do
         it 'cannot be created' do
           expect { create(:role, permissions: [permission]) }
             .to raise_error(/is disabled/)
-            .and change { Role.count }.by(0)
+            .and change(described_class, :count).by(0)
         end
 
         it 'cannot be added' do
@@ -85,7 +85,7 @@ RSpec.describe Role do
         it 'cannot be created' do
           expect { create(:role, permissions: [Permission.first, permission]) }
             .to raise_error(/conflicts with/)
-            .and change { Role.count }.by(0)
+            .and change(described_class, :count).by(0)
         end
 
         it 'cannot be added' do
@@ -102,7 +102,7 @@ RSpec.describe Role do
 
         it 'can be created' do
           expect { create(:role, permissions: [Permission.first, permission]) }
-            .to change { Role.count }.by(1)
+            .to change(described_class, :count).by(1)
         end
 
         it 'can be added' do
@@ -119,8 +119,9 @@ RSpec.describe Role do
 
       describe '#validate_agent_limit_by_attributes' do
         context 'when reactivating a role adds new agents' do
-          before { create(:user, roles: [role])  }
           subject(:role) { create(:agent_role, active: false) }
+
+          before { create(:user, roles: [role])  }
 
           context 'exceeding the system limit' do
             before { Setting.set('system_agent_limit', agents.count) }
@@ -128,7 +129,7 @@ RSpec.describe Role do
             it 'fails and raises an error' do
               expect { role.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change { agents.count }.by(0)
+                .and change(agents, :count).by(0)
             end
           end
         end
@@ -156,6 +157,7 @@ RSpec.describe Role do
 
       context 'for roles with permissions that are children of "admin"' do
         subject(:role) { build(:role, permissions: [permission]) }
+
         let(:permission) { create(:permission, name: 'admin.foo') }
 
         it 'cannot be set to true on creation' do
@@ -199,40 +201,40 @@ RSpec.describe Role do
       let(:result) { [] }
 
       it 'returns an empty array' do
-        expect(Role.with_permissions(permission)).to match_array(result)
+        expect(described_class.with_permissions(permission)).to match_array(result)
       end
     end
 
     context 'when given the name of a top-level permission' do
       let(:permission) { 'user_preferences' }
-      let(:result) { Role.where(name: %w[Admin Agent]) }
+      let(:result) { described_class.where(name: %w[Admin Agent]) }
 
       it 'returns an array of roles with that permission' do
-        expect(Role.with_permissions(permission)).to match_array(result)
+        expect(described_class.with_permissions(permission)).to match_array(result)
       end
     end
 
     context 'when given the name of a child permission' do
       let(:permission) { 'user_preferences.language' }
-      let(:result) { Role.all }
+      let(:result) { described_class.all }
 
       it 'returns an array of roles with either that permission or an ancestor' do
-        expect(Role.with_permissions(permission)).to match_array(result)
+        expect(described_class.with_permissions(permission)).to match_array(result)
       end
     end
 
     context 'when given the names of multiple permissions' do
       let(:permissions) { %w[ticket.agent ticket.customer] }
-      let(:result) { Role.where(name: %w[Agent Customer]) }
+      let(:result) { described_class.where(name: %w[Agent Customer]) }
 
       it 'returns an array of roles matching ANY given permission' do
-        expect(Role.with_permissions(permissions)).to match_array(result)
+        expect(described_class.with_permissions(permissions)).to match_array(result)
       end
     end
   end
 
   describe '#with_permission?' do
-    subject(:role) { Role.find_by(name: 'Admin') }
+    subject(:role) { described_class.find_by(name: 'Admin') }
 
     context 'when given the name of a permission it has' do
       it 'returns true' do

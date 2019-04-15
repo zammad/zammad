@@ -14,7 +14,7 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
     it 'updates Cti::Logs from that number with "preferences" => {}' do
       described_class.perform_now(phone)
 
-      log_prefs.each { |p| expect(p).to be_empty }
+      expect(log_prefs).to all(be_empty)
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
     it 'updates Cti::Logs from that number with valid "preferences" hash' do
       described_class.perform_now(phone)
 
-      log_prefs.each { |p| expect(p).to include('from' => a_kind_of(Array)) }
+      expect(log_prefs).to all(include('from' => a_kind_of(Array)))
     end
   end
 end

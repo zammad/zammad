@@ -27,7 +27,7 @@ RSpec.describe 'Mail accounts', type: :system do
     end
   end
 
-  scenario 'Auto detectable configurations' do
+  it 'Auto detectable configurations' do
 
     skip('NOTICE: This test is currently disabled because of collisions with other non Capybara browser tests')
 
@@ -54,7 +54,7 @@ RSpec.describe 'Mail accounts', type: :system do
     end
   end
 
-  scenario 'Manual configurations' do
+  it 'Manual configurations' do
 
     accounts = (1..10).each_with_object([]) do |count, result|
       next if !ENV["MAILBOX_MANUAL#{count}"]

@@ -54,9 +54,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
             ldap_connection: connection,
             import_job:      import_job,
           )
-        end.to change {
-          User.count
-        }.by(1)
+        end.to change(User, :count).by(1)
 
         imported_user = User.last
 
@@ -87,9 +85,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
             ldap_connection: connection,
             import_job:      import_job,
           )
-        end.not_to change {
-          User.count
-        }
+        end.not_to change(User, :count)
 
         imported_user.reload
 
@@ -148,9 +144,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
             ldap_connection: connection,
             import_job:      import_job,
           )
-        end.to change {
-          User.count
-        }.by(1)
+        end.to change(User, :count).by(1)
 
         imported_user = User.last
 
@@ -181,9 +175,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
             ldap_connection: connection,
             import_job:      import_job,
           )
-        end.not_to change {
-          User.count
-        }
+        end.not_to change(User, :count)
 
         imported_user.reload
 

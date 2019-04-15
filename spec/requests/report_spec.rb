@@ -42,7 +42,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
     }
   end
 
-  before(:each) do
+  before do
     configure_elasticsearch do
 
       travel 1.minute
@@ -75,7 +75,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       authenticated_as(admin_user)
       get "/api/v1/reports/sets?sheet=true;metric=count;year=#{year};month=#{month};week=#{week};day=#{day};timeRange=year;profile_id=1;downloadBackendSelected=count::created", params: {}, as: :json
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       assert(@response['Content-Disposition'])
       expect(@response['Content-Disposition']).to eq('attachment; filename="tickets--all--Created.xls"')
       expect(@response['Content-Type']).to eq('application/vnd.ms-excel')
@@ -99,28 +99,28 @@ RSpec.describe 'Report', type: :request, searchindex: true do
         backends:  backends
       }
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1])
 
       Setting.set('timezone_default', 'Europe/Berlin')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1])
 
       Setting.set('timezone_default', 'America/Chicago')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0])
 
       Setting.set('timezone_default', 'Australia/Melbourne')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -139,21 +139,21 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       }
 
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
 
       Setting.set('timezone_default', 'Europe/Berlin')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       Setting.set('timezone_default', 'America/Chicago')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
@@ -178,7 +178,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       }
 
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
@@ -191,7 +191,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
 
       Setting.set('timezone_default', 'America/Chicago')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2])
@@ -216,7 +216,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       }
 
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -229,7 +229,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
 
       Setting.set('timezone_default', 'America/Chicago')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -252,28 +252,28 @@ RSpec.describe 'Report', type: :request, searchindex: true do
         backends:  backends
       }
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 1, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 1, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0])
 
       Setting.set('timezone_default', 'Europe/Berlin')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 8, 2, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0])
 
       Setting.set('timezone_default', 'America/Chicago')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
       Setting.set('timezone_default', 'Australia/Melbourne')
       post '/api/v1/reports/generate', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response['data']['count::created']).to eq([0, 0, 8, 2, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0])

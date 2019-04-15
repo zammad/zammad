@@ -7,6 +7,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
   describe '#webhook_verify (for Twitter to confirm Zammad’s credentials)' do
     context 'with only cached credentials' do
       let!(:external_credential) { nil }
+
       before { Cache.write('external_credential_twitter', credentials) }
 
       it 'returns an HMAC signature for cached credentials plus params[:crc_token]' do
@@ -15,7 +16,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
             headers: { 'x-twitter-webhooks-signature' => 'something' },
             as:      :json
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(json_response).to include('response_token' => 'sha256=VE19eUk6krbdSqWPdvH71xtFhApBAU81uPW3UT65vOs=')
       end
     end
@@ -27,7 +28,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
             headers: { 'x-twitter-webhooks-signature' => 'something' },
             as:      :json
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(json_response).to include('response_token' => 'sha256=VE19eUk6krbdSqWPdvH71xtFhApBAU81uPW3UT65vOs=')
       end
     end
@@ -74,7 +75,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
                headers: { 'x-twitter-webhooks-signature' => 'sha256=JjEmBe1lVKT8XldrYUKibF+D5ehp8f0jDk3PXZSHEWI=' },
                as:      :json
 
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
         end
       end
 
@@ -82,7 +83,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
         it 'returns 422 with error message' do
           post '/api/v1/channels_twitter_webhook', as: :json
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response).to include('error' => "Missing 'x-twitter-webhooks-signature' header")
         end
       end
@@ -96,7 +97,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
                headers: { 'x-twitter-webhooks-signature' => 'something' },
                as:      :json
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response).to include('error' => "No such external_credential 'twitter'!")
         end
       end
@@ -107,7 +108,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
                headers: { 'x-twitter-webhooks-signature' => 'something' },
                as:      :json
 
-          expect(response).to have_http_status(401)
+          expect(response).to have_http_status(:unauthorized)
           expect(json_response).to include('error' => 'Not authorized')
         end
       end
@@ -119,7 +120,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
                headers: { 'x-twitter-webhooks-signature' => 'sha256=EERHBy/k17v+SuT+K0OXuwhJtKnPtxi0n/Y4Wye4kVU=' },
                as:      :json
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response).to include('error' => "Missing 'for_user_id' in payload!")
         end
       end
@@ -131,7 +132,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
                headers: { 'x-twitter-webhooks-signature' => 'sha256=QaJiQl/4WRp/GF37b+eAdF6kPgptjDCLOgAIIbB1s0I=' },
                as:      :json
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response).to include('error' => "No such channel for user id 'not_existing'!")
         end
       end
@@ -149,12 +150,12 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'returns 200' do
             post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'creates closed ticket' do
             expect { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
-              .to change { Ticket.count }.by(1)
+              .to change(Ticket, :count).by(1)
 
             expect(Ticket.last.attributes)
               .to include(
@@ -194,12 +195,12 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'returns 200' do
             post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'creates new ticket' do
             expect { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
-              .to change { Ticket.count }.by(1)
+              .to change(Ticket, :count).by(1)
 
             expect(Ticket.last.attributes)
               .to include(
@@ -243,12 +244,12 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'returns 200' do
             post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'does not create new ticket' do
             expect { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
-              .not_to change { Ticket.count }
+              .not_to change(Ticket, :count)
           end
 
           it 'adds new article to existing, open ticket' do
@@ -280,7 +281,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
         it 'still returns 200' do
           2.times { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
 
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
         end
 
         it 'does not create duplicate articles' do
@@ -305,12 +306,12 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'returns 200' do
             post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'creates a closed ticket' do
             expect { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
-              .to change { Ticket.count }.by(1)
+              .to change(Ticket, :count).by(1)
 
             expect(Ticket.last.attributes)
               .to include(
@@ -353,12 +354,12 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'returns 200' do
             post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'creates a new ticket' do
             expect { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
-              .to change { Ticket.count }.by(1)
+              .to change(Ticket, :count).by(1)
 
             expect(Ticket.last.attributes)
               .to include(
@@ -397,7 +398,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           it 'still returns 200' do
             2.times { post '/api/v1/channels_twitter_webhook', **webhook_payload, as: :json }
 
-            expect(response).to have_http_status(200)
+            expect(response).to have_http_status(:ok)
           end
 
           it 'does not create duplicate articles' do

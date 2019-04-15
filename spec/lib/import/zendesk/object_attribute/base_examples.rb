@@ -19,6 +19,7 @@ RSpec.shared_examples Import::Zendesk::ObjectAttribute::Base do
 
   describe 'exception handling' do
     let(:error_text) { Faker::Lorem.sentence }
+
     it 'extends ObjectManager Attribute exception message' do
       expect(ObjectManager::Attribute).to receive(:add).and_raise(RuntimeError, error_text)
 

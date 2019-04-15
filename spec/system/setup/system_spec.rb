@@ -9,7 +9,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
     raise "Unable to get fqdn based on #{app_host}"
   end
 
-  scenario 'Setting up a new system', authenticated: false do
+  it 'Setting up a new system', authenticated: false do
 
     if !ENV['MAILBOX_INIT']
       skip("NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'")

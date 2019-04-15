@@ -72,24 +72,24 @@ RSpec.describe 'Telegram', type: :request do
 
       # start communication #1
       post '/api/v1/channels/telegram_webhook', params: read_message('personal1_message_start'), as: :json
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
 
       post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('personal1_message_start'), as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to eq('bot param missing')
 
       callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
       post callback_url, params: read_message('personal1_message_start'), as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to eq('invalid callback token')
 
       callback_url = "/api/v1/channels_telegram_webhook/#{channel.options[:callback_token]}?bid=#{channel.options[:bot][:id]}"
       post callback_url, params: read_message('personal1_message_start'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       # send message1
       post callback_url, params: read_message('personal1_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(1)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
@@ -100,7 +100,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send channel message1
       post callback_url, params: read_message('channel1_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(1)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
@@ -111,7 +111,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # edit channel message1
       post callback_url, params: read_message('channel2_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(1)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
@@ -122,7 +122,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send same message again, ignore it
       post callback_url, params: read_message('personal1_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
       expect(ticket.state.name).to eq('new')
@@ -132,7 +132,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send message2
       post callback_url, params: read_message('personal1_message_content2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
       expect(ticket.state.name).to eq('new')
@@ -142,7 +142,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send end message
       post callback_url, params: read_message('personal1_message_end'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')
       expect(ticket.state.name).to eq('closed')
@@ -152,11 +152,11 @@ RSpec.describe 'Telegram', type: :request do
 
       # start communication #2
       post callback_url, params: read_message('personal2_message_start'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       # send message1
       post callback_url, params: read_message('personal2_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(2)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -167,7 +167,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send message2
       post callback_url, params: read_message('personal2_message_content2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(2)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -178,11 +178,11 @@ RSpec.describe 'Telegram', type: :request do
 
       # start communication #3
       post callback_url, params: read_message('personal3_message_start'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       # send message1
       post callback_url, params: read_message('personal3_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -199,7 +199,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: 'ABC1', headers: {})
 
       post callback_url, params: read_message('personal3_message_content2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -210,7 +210,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send channel message 3
       post callback_url, params: read_message('channel1_message_content3'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -230,7 +230,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAgADDgAD7x6ZSC_-1LMkOEmoAg","file_path":"abc123"}}', headers: {})
 
       post callback_url, params: read_message('personal3_message_content3'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -242,7 +242,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # isend channel message 2
       post callback_url, params: read_message('channel1_message_content2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -254,7 +254,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # update message1
       post callback_url, params: read_message('personal3_message_content4'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -273,7 +273,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AwADAgADVQADCEIYSZwyOmSZK9iZAg","file_path":"abc123"}}', headers: {})
 
       post callback_url, params: read_message('personal3_message_content5'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -284,7 +284,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send channel message 4 with voice
       post callback_url, params: read_message('channel1_message_content4'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
       ticket = Ticket.last
       expect(ticket.title).to eq('Can you help me with my feature?')
@@ -302,7 +302,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C","file_path":"abc123"}}', headers: {})
 
       post callback_url, params: read_message('personal4_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(4)
       ticket = Ticket.last
       if Rails.application.config.db_4bytes_utf8
@@ -318,7 +318,7 @@ RSpec.describe 'Telegram', type: :request do
 
       # send channel message #5 with sticker
       post callback_url, params: read_message('channel1_message_content5'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(4)
       ticket = Ticket.last
       if Rails.application.config.db_4bytes_utf8
@@ -338,7 +338,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC","file_path":"abc123"}}', headers: {})
 
       post callback_url, params: read_message('personal5_message_content1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(5)
       ticket = Ticket.last
       expect(ticket.title).to eq('-')
@@ -349,7 +349,7 @@ RSpec.describe 'Telegram', type: :request do
       expect(ticket.articles.last.attachments.count).to eq(0)
 
       post callback_url, params: read_message('personal5_message_content2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(5)
       ticket = Ticket.last
       expect(ticket.title).to eq('Hello, I need your Help')

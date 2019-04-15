@@ -159,7 +159,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'performs a ticket deletion on a ticket' do
           expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
-            .to change { ticket.destroyed? }.to(true)
+            .to change(ticket, :destroyed?).to(true)
         end
       end
 
@@ -242,6 +242,7 @@ RSpec.describe Ticket, type: :model do
 
         context 'but the user is a customer from the same organization as ticket’s customer' do
           subject(:ticket) { create(:ticket, customer: customer) }
+
           let(:customer) { create(:customer_user, organization: create(:organization)) }
           let(:colleague) { create(:customer_user, organization: customer.organization) }
 
@@ -469,7 +470,7 @@ RSpec.describe Ticket, type: :model do
       context 'when #state is updated to any non-"pending" value' do
         it 'is reset to nil' do
           expect { ticket.update!(state: Ticket::State.lookup(name: 'open')) }
-            .to change { ticket.pending_time }.to(nil)
+            .to change(ticket, :pending_time).to(nil)
         end
       end
 
@@ -484,6 +485,7 @@ RSpec.describe Ticket, type: :model do
 
     describe '#escalation_at' do
       before { travel_to(Time.current) }  # freeze time
+
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
@@ -503,6 +505,7 @@ RSpec.describe Ticket, type: :model do
 
         context 'after first agent’s response' do
           before { ticket }  # create ticket
+
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'is updated based on the SLA’s #update_time' do
@@ -526,8 +529,10 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'when updated after an SLA has been added to the system' do
-        before { ticket }  # create ticket
-        before { sla }  # create sla
+        before do
+          ticket  # create ticket
+          sla     # create sla
+        end
 
         it 'is updated based on the new SLA’s #first_response_time' do
           expect { ticket.save! }
@@ -536,19 +541,22 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'when updated after all SLAs have been removed from the system' do
-        before { sla }  # create sla
-        before { ticket }  # create ticket
-        before { sla.destroy }
+        before do
+          sla     # create sla
+          ticket  # create ticket
+          sla.destroy
+        end
 
         it 'is set to nil' do
           expect { ticket.save! }
-            .to change { ticket.escalation_at }.to(nil)
+            .to change(ticket, :escalation_at).to(nil)
         end
       end
     end
 
     describe '#first_response_escalation_at' do
       before { travel_to(Time.current) }  # freeze time
+
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
@@ -568,10 +576,11 @@ RSpec.describe Ticket, type: :model do
 
         context 'after first agent’s response' do
           before { ticket }  # create ticket
+
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'does not change' do
-            expect { article }.not_to change { ticket.first_response_escalation_at }
+            expect { article }.not_to change(ticket, :first_response_escalation_at)
           end
         end
       end
@@ -579,6 +588,7 @@ RSpec.describe Ticket, type: :model do
 
     describe '#update_escalation_at' do
       before { travel_to(Time.current) }  # freeze time
+
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
@@ -598,6 +608,7 @@ RSpec.describe Ticket, type: :model do
 
         context 'after first agent’s response' do
           before { ticket }  # create ticket
+
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'is updated based on the SLA’s #update_time' do
@@ -613,6 +624,7 @@ RSpec.describe Ticket, type: :model do
 
     describe '#close_escalation_at' do
       before { travel_to(Time.current) }  # freeze time
+
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
@@ -632,10 +644,11 @@ RSpec.describe Ticket, type: :model do
 
         context 'after first agent’s response' do
           before { ticket }  # create ticket
+
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'does not change' do
-            expect { article }.not_to change { ticket.close_escalation_at }
+            expect { article }.not_to change(ticket, :close_escalation_at)
           end
         end
       end
@@ -645,12 +658,13 @@ RSpec.describe Ticket, type: :model do
   describe 'Associations:' do
     describe '#organization' do
       subject(:ticket) { build(:ticket, customer: customer, organization: nil) }
+
       let(:customer) { create(:customer, :with_org) }
 
       context 'on creation' do
         it 'automatically adopts the organization of its #customer' do
           expect { ticket.save }
-            .to change { ticket.organization }.to(customer.organization)
+            .to change(ticket, :organization).to(customer.organization)
         end
       end
 
@@ -698,6 +712,7 @@ RSpec.describe Ticket, type: :model do
 
     describe 'Cti::CallerId syncing:' do
       subject(:ticket) { build(:ticket) }
+
       before { allow(Cti::CallerId).to receive(:build) }
 
       it 'adds numbers in article bodies (via Cti::CallerId.build)' do
@@ -711,6 +726,7 @@ RSpec.describe Ticket, type: :model do
 
     describe 'Touching associations on update:' do
       subject(:ticket) { create(:ticket, customer: customer) }
+
       let(:customer) { create(:customer_user, organization: organization) }
       let(:organization) { create(:organization) }
       let(:other_customer) { create(:customer_user, organization: other_organization) }
@@ -828,11 +844,12 @@ RSpec.describe Ticket, type: :model do
 
       context 'when ticket is generated from email (with attachments)' do
         subject(:ticket) { Channel::EmailParser.new.process({}, raw_email).first }
+
         let(:raw_email) { File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box')) }
 
         it 'adds attachments to the Store{::File,::Provider::DB} tables' do
           expect { ticket }
-            .to change { Store.count }.by(2)
+            .to change(Store, :count).by(2)
             .and change { Store::File.count }.by(2)
             .and change { Store::Provider::DB.count }.by(2)
         end
@@ -842,7 +859,7 @@ RSpec.describe Ticket, type: :model do
             ticket  # create ticket
 
             expect { ticket.destroy }
-              .to change { Store.count }.by(-2)
+              .to change(Store, :count).by(-2)
               .and change { Store::File.count }.by(-2)
               .and change { Store::Provider::DB.count }.by(-2)
           end
@@ -850,11 +867,12 @@ RSpec.describe Ticket, type: :model do
 
         context 'and a duplicate ticket is generated from the same email' do
           before { ticket }  # create ticket
+
           let(:duplicate) { Channel::EmailParser.new.process({}, raw_email).first }
 
           it 'adds duplicate attachments to the Store table only' do
             expect { duplicate }
-              .to change { Store.count }.by(2)
+              .to change(Store, :count).by(2)
               .and change { Store::File.count }.by(0)
               .and change { Store::Provider::DB.count }.by(0)
           end
@@ -864,7 +882,7 @@ RSpec.describe Ticket, type: :model do
               duplicate  # create ticket
 
               expect { duplicate.destroy }
-                .to change { Store.count }.by(-2)
+                .to change(Store, :count).by(-2)
                 .and change { Store::File.count }.by(0)
                 .and change { Store::Provider::DB.count }.by(0)
             end
@@ -875,7 +893,7 @@ RSpec.describe Ticket, type: :model do
               duplicate.destroy
 
               expect { ticket.destroy }
-                .to change { Store.count }.by(-2)
+                .to change(Store, :count).by(-2)
                 .and change { Store::File.count }.by(-2)
                 .and change { Store::Provider::DB.count }.by(-2)
             end

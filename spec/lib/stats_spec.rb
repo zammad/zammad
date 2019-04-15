@@ -10,19 +10,19 @@ RSpec.describe Stats do
     end
 
     it 'generates stats' do
-      expect { Stats.generate }.to_not raise_error
+      expect { described_class.generate }.not_to raise_error
     end
 
     context 'when backend registration is invalid' do
 
       it 'fails for empty registration' do
         Setting.set('Stats::TicketWaitingTime', nil)
-        expect { Stats.generate }.to raise_error(RuntimeError)
+        expect { described_class.generate }.to raise_error(RuntimeError)
       end
 
       it 'fails for unknown backend' do
         Setting.set('Stats::TicketWaitingTime', 'Stats::UNKNOWN')
-        expect { Stats.generate }.to raise_error(LoadError)
+        expect { described_class.generate }.to raise_error(LoadError)
       end
     end
   end

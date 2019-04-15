@@ -11,6 +11,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
   describe '#validate' do
 
     subject { described_class.new }
+
     let(:record) { build(:user) }
     let(:backend) { spy }
 
@@ -63,13 +64,13 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
 
       it 'is skipped because of irrelevant ApplicationHandleInfo', application_handle: 'non_application_server' do
         subject.validate(record)
-        expect(backend).to_not have_received(:validate)
+        expect(backend).not_to have_received(:validate)
       end
 
       it 'is skipped because of import_mode is active' do
         expect(Setting).to receive(:get).with('import_mode').and_return(true)
         subject.validate(record)
-        expect(backend).to_not have_received(:validate)
+        expect(backend).not_to have_received(:validate)
       end
 
       it 'is skipped because of unchanged attributes' do

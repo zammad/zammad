@@ -30,20 +30,20 @@ RSpec.describe 'Twilio SMS', type: :request do
 
       # process inbound sms
       post '/api/v1/sms_webhook', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
 
       post '/api/v1/sms_webhook/not_existing', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
 
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>').to eq(json_response['error'])
 
       channel.group_id = Group.first.id
       channel.save!
 
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
 
@@ -66,7 +66,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(article.type.name).to eq('sms')
 
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
 
@@ -86,7 +86,7 @@ RSpec.describe 'Twilio SMS', type: :request do
 
       # check duplicate callbacks
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
 
@@ -100,13 +100,13 @@ RSpec.describe 'Twilio SMS', type: :request do
       ticket.save!
 
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms3'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
 
       ticket.reload
       expect(ticket.articles.count).to eq(2)
-      expect(ticket.id).to_not eq(Ticket.last.id)
+      expect(ticket.id).not_to eq(Ticket.last.id)
       expect(ticket.state.name).to eq('closed')
 
       ticket = Ticket.last
@@ -134,7 +134,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       }
       authenticated_as(agent_user)
       post '/api/v1/ticket_articles', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some test')
@@ -196,7 +196,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       )
 
       post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
 

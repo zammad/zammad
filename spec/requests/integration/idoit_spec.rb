@@ -18,7 +18,7 @@ RSpec.describe 'Idoit', type: :request do
     'https://idoit.example.com/i-doit/'
   end
 
-  before(:each) do
+  before do
     Setting.set('idoit_integration', true)
     Setting.set('idoit_config', {
                   api_token: token,
@@ -38,9 +38,9 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(agent_user)
       post '/api/v1/integration/idoit/verify', params: params, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Not authorized (user)!')
 
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
@@ -54,9 +54,9 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(admin_user)
       post '/api/v1/integration/idoit/verify', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to be_truthy
       expect(json_response['response']['jsonrpc']).to eq('2.0')
@@ -68,9 +68,9 @@ RSpec.describe 'Idoit', type: :request do
         client_id: '',
       }
       post '/api/v1/integration/idoit/verify', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to be_truthy
       expect(json_response['response']['jsonrpc']).to eq('2.0')
@@ -89,10 +89,10 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(agent_user)
       post '/api/v1/integration/idoit', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to be_truthy
       expect(json_response['response']['jsonrpc']).to eq('2.0')
@@ -105,10 +105,10 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(admin_user)
       post '/api/v1/integration/idoit', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to be_truthy
       expect(json_response['response']['jsonrpc']).to eq('2.0')
@@ -132,10 +132,10 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(agent_user)
       post '/api/v1/integration/idoit', params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response).to_not be_blank
+      expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to be_truthy
       expect(json_response['response']['jsonrpc']).to eq('2.0')

@@ -15,7 +15,7 @@ RSpec.describe 'Monitoring', type: :request do
     SecureRandom.urlsafe_base64(64)
   end
 
-  before(:each) do
+  before do
     Setting.set('monitoring_token', token)
 
     # channel cleanup
@@ -48,7 +48,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -56,7 +56,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -67,7 +67,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -79,7 +79,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get '/api/v1/monitoring/health_check?token=abc', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -87,7 +87,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status?token=abc', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -98,7 +98,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: 'abc' }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -124,7 +124,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
@@ -133,22 +133,22 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response.key?('agents')).to be_truthy
-      expect(json_response.key?('last_login')).to be_truthy
-      expect(json_response.key?('counts')).to be_truthy
-      expect(json_response.key?('last_created_at')).to be_truthy
+      expect(json_response).to be_key('agents')
+      expect(json_response).to be_key('last_login')
+      expect(json_response).to be_key('counts')
+      expect(json_response).to be_key('last_created_at')
 
       first_json_response_kb = 0
       if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
-        expect(json_response['storage'].key?('kB')).to be_truthy
+        expect(json_response['storage']).to be_key('kB')
         expect(json_response['storage']['kB']).to be > 0
-        expect(json_response['storage'].key?('MB')).to be_truthy
-        expect(json_response['storage'].key?('GB')).to be_truthy
+        expect(json_response['storage']).to be_key('MB')
+        expect(json_response['storage']).to be_key('GB')
 
         first_json_response_kb = json_response['storage']['kB']
       else
@@ -166,23 +166,23 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response.key?('agents')).to be_truthy
-      expect(json_response.key?('last_login')).to be_truthy
-      expect(json_response.key?('counts')).to be_truthy
-      expect(json_response.key?('last_created_at')).to be_truthy
+      expect(json_response).to be_key('agents')
+      expect(json_response).to be_key('last_login')
+      expect(json_response).to be_key('counts')
+      expect(json_response).to be_key('last_created_at')
 
       if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
-        expect(json_response['storage'].key?('kB')).to be_truthy
+        expect(json_response['storage']).to be_key('kB')
 
         # check if the stores got summarized. value should be the same because the file has the same fingerprint
         expect(json_response['storage']['kB']).to eq(first_json_response_kb)
-        expect(json_response['storage'].key?('MB')).to be_truthy
-        expect(json_response['storage'].key?('GB')).to be_truthy
+        expect(json_response['storage']).to be_key('MB')
+        expect(json_response['storage']).to be_key('GB')
       else
         expect(json_response['storage']).to be_falsey
       end
@@ -197,30 +197,30 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response.key?('agents')).to be_truthy
-      expect(json_response.key?('last_login')).to be_truthy
-      expect(json_response.key?('counts')).to be_truthy
-      expect(json_response.key?('last_created_at')).to be_truthy
+      expect(json_response).to be_key('agents')
+      expect(json_response).to be_key('last_login')
+      expect(json_response).to be_key('counts')
+      expect(json_response).to be_key('last_created_at')
 
       if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
-        expect(json_response['storage'].key?('kB')).to be_truthy
+        expect(json_response['storage']).to be_key('kB')
 
         # check if the stores got summarized. value should be greather than the size of just one file (saved 2 times)
         expect(json_response['storage']['kB']).to be > first_json_response_kb
-        expect(json_response['storage'].key?('MB')).to be_truthy
-        expect(json_response['storage'].key?('GB')).to be_truthy
+        expect(json_response['storage']).to be_key('MB')
+        expect(json_response['storage']).to be_key('GB')
       else
         expect(json_response['storage']).to be_falsey
       end
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -233,7 +233,7 @@ RSpec.describe 'Monitoring', type: :request do
       # health_check
       authenticated_as(admin_user)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
@@ -242,18 +242,18 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response.key?('agents')).to be_truthy
-      expect(json_response.key?('last_login')).to be_truthy
-      expect(json_response.key?('counts')).to be_truthy
-      expect(json_response.key?('last_created_at')).to be_truthy
+      expect(json_response).to be_key('agents')
+      expect(json_response).to be_key('last_login')
+      expect(json_response).to be_key('counts')
+      expect(json_response).to be_key('last_created_at')
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_truthy
@@ -267,7 +267,7 @@ RSpec.describe 'Monitoring', type: :request do
       # health_check
       authenticated_as(agent_user)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -275,7 +275,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -286,7 +286,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -303,7 +303,7 @@ RSpec.describe 'Monitoring', type: :request do
       # health_check
       authenticated_as(admin_user)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -311,7 +311,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -322,7 +322,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -340,7 +340,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
@@ -349,18 +349,18 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response.key?('agents')).to be_truthy
-      expect(json_response.key?('last_login')).to be_truthy
-      expect(json_response.key?('counts')).to be_truthy
-      expect(json_response.key?('last_created_at')).to be_truthy
+      expect(json_response).to be_key('agents')
+      expect(json_response).to be_key('last_login')
+      expect(json_response).to be_key('counts')
+      expect(json_response).to be_key('last_created_at')
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -381,7 +381,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check - channel
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -396,7 +396,7 @@ RSpec.describe 'Monitoring', type: :request do
       scheduler.save!
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -411,7 +411,7 @@ RSpec.describe 'Monitoring', type: :request do
       scheduler.save!
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -431,7 +431,7 @@ RSpec.describe 'Monitoring', type: :request do
       total_jobs = Delayed::Job.count
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -446,7 +446,7 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -463,7 +463,7 @@ RSpec.describe 'Monitoring', type: :request do
       FileUtils.touch("#{dir}/test.eml")
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -483,7 +483,7 @@ RSpec.describe 'Monitoring', type: :request do
       )
 
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -501,7 +501,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -515,7 +515,7 @@ RSpec.describe 'Monitoring', type: :request do
     it 'does check restart_failed_jobs' do
       authenticated_as(admin_user)
       post '/api/v1/monitoring/restart_failed_jobs', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'does check failed delayed job', db_strategy: :reset do
@@ -574,7 +574,7 @@ RSpec.describe 'Monitoring', type: :request do
       migration = ObjectManager::Attribute.migration_execute
       expect(true).to eq(migration)
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect('test4').to eq(json_response['name'])
@@ -590,7 +590,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -604,7 +604,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -625,7 +625,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -644,7 +644,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
@@ -661,7 +661,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # amount_check - ok
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response.key?('state')).to eq(false)
@@ -675,7 +675,7 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&min_warning=10&min_critical=8", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('critical')
@@ -683,7 +683,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['count']).to eq(6)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&min_warning=7&min_critical=2", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('warning')
@@ -691,7 +691,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['count']).to eq(6)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=10&max_critical=20", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
@@ -704,7 +704,7 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=10&max_critical=20", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('warning')
@@ -717,7 +717,7 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=10&max_critical=20", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('critical')
@@ -725,7 +725,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['count']).to eq(22)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=30", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
@@ -733,7 +733,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['count']).to eq(22)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response.key?('state')).to eq(false)
@@ -743,7 +743,7 @@ RSpec.describe 'Monitoring', type: :request do
       travel 2.hours
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h&max_warning=30", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
@@ -751,7 +751,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['count']).to eq(0)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response.key?('state')).to eq(false)

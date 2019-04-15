@@ -24,7 +24,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
     create(:customer_user, organization: organization)
   end
 
-  before(:each) do
+  before do
     configure_elasticsearch do
 
       travel 1.minute
@@ -43,13 +43,13 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
     it 'does organization index with agent' do
       authenticated_as(agent_user)
       get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response[0]['member_ids']).to be_a_kind_of(Array)
       expect(json_response.length >= 3).to be_truthy
 
       get '/api/v1/organizations?limit=40&page=1&per_page=2', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
       organizations = Organization.order(:id).limit(2)
       expect(json_response[0]['id']).to eq(organizations[0].id)
@@ -59,7 +59,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
       expect(json_response.count).to eq(2)
 
       get '/api/v1/organizations?limit=40&page=2&per_page=2', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
       organizations = Organization.order(:id).limit(4)
       expect(json_response[0]['id']).to eq(organizations[2].id)
@@ -71,14 +71,14 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
 
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['member_ids']).to be_a_kind_of(Array)
       expect(json_response['members']).to be_falsey
       expect('Rest Org').to eq(json_response['name'])
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['member_ids']).to be_a_kind_of(Array)
       expect(json_response['members']).to be_falsey
@@ -87,21 +87,21 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
       # search as agent
       Scheduler.worker(true)
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
       expect(json_response[0]['name']).to eq('Zammad Foundation')
       expect(json_response[0]['member_ids']).to be_truthy
       expect(json_response[0]['members']).to be_falsey
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
       expect(json_response[0]['name']).to eq('Zammad Foundation')
       expect(json_response[0]['member_ids']).to be_truthy
       expect(json_response[0]['members']).to be_truthy
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&label=true", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
       expect(json_response[0]['label']).to eq('Zammad Foundation')
       expect(json_response[0]['value']).to eq('Zammad Foundation')
@@ -112,49 +112,49 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
     it 'does organization index with customer1' do
       authenticated_as(customer_user)
       get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response.length).to eq(0)
 
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to be_nil
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to be_nil
 
       # search
       Scheduler.worker(true)
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'does organization index with customer2' do
       authenticated_as(customer_user2)
       get '/api/v1/organizations', params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect('Rest Org').to eq(json_response['name'])
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to be_nil
 
       # search
       Scheduler.worker(true)
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

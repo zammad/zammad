@@ -1,6 +1,7 @@
 RSpec.shared_examples 'HasRoles' do |group_access_factory:|
   context 'role' do
     subject { create(group_access_factory) }
+
     let(:role) { create(:role) }
     let(:group_instance) { create(:group) }
     let(:group_role) { create(:group) }
@@ -13,7 +14,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
       end
 
       context 'active Role' do
-        before(:each) do
+        before do
           role.group_names_access_map = {
             group_role.name => 'read',
           }
@@ -58,7 +59,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
 
     context '.role_access_ids' do
 
-      before(:each) do
+      before do
         role.group_names_access_map = {
           group_role.name => 'read',
         }
@@ -101,7 +102,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
 
     context 'group' do
 
-      before(:each) do
+      before do
         role.group_names_access_map = {
           group_role.name => 'read',
         }
@@ -129,7 +130,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
 
       context '#group_ids_access' do
 
-        before(:each) do
+        before do
           role.group_names_access_map = {
             group_role.name => 'read',
           }

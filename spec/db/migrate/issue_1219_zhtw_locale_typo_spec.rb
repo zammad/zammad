@@ -5,7 +5,7 @@ RSpec.describe Issue1219ZhtwLocaleTypo, type: :db_migration do
   let(:translation) { create(:translation, locale: premigrate_locale) }
   let(:user)        { create(:user, preferences: { locale: premigrate_locale }) }
 
-  before(:each) do
+  before do
     Locale.find_by(name: 'Chinese (Tradi.) (正體中文)')&.destroy
     stub_const("#{described_class}::CURRENT_VERSION", version)
   end

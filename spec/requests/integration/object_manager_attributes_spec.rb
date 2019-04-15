@@ -49,7 +49,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect(json_response['data_option']['null']).to eq(true)
@@ -96,7 +96,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect(json_response['data_option']['null']).to eq(true)
@@ -152,7 +152,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # update the object
       put "/api/v1/object_manager_attributes/#{object.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect(json_response['name']).to eq('test4')
@@ -201,7 +201,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect(json_response['data_option']['null']).to eq(true)
@@ -261,7 +261,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
       expect(json_response['data_option']['null']).to eq(true)
@@ -330,7 +330,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       # update the object
       authenticated_as(admin_user)
       put "/api/v1/object_manager_attributes/#{object.id}", params: params, as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['options']).to be_truthy
       expect(json_response['name']).to eq('test7')
@@ -380,7 +380,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
       expect(migration).to eq(true)
 
-      expect(response).to have_http_status(201) # created
+      expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_truthy
@@ -430,7 +430,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
       expect(migration).to eq(true)
 
-      expect(response).to have_http_status(201) # created
+      expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
@@ -514,20 +514,20 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       if Overview.where('name like ?', '%test%').empty?
         post '/api/v1/overviews', params: params, as: :json
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
         expect('test_overview').to eq(json_response['name'])
       end
 
       # 3. attempt to delete the ticket attribute
       get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'Ticket' }
       expect(target_attribute.size).to eq(1)
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('Overview')
       expect(response.body).to include('test_overview')
       expect(response.body).to include('cannot be deleted!')
@@ -600,20 +600,20 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       if Trigger.where('name like ?', '%test%').empty?
         post '/api/v1/triggers', params: params, as: :json
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
         expect('test_trigger').to eq(json_response['name'])
       end
 
       # 3. attempt to delete the ticket attribute
       get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_a_trigger' && x['object'] == 'Ticket' }
       expect(target_attribute.size).to eq(1)
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('Trigger')
       expect(response.body).to include('test_trigger')
       expect(response.body).to include('cannot be deleted!')
@@ -733,20 +733,20 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       if Job.where('name like ?', '%test%').empty?
         post '/api/v1/jobs', params: params, as: :json
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
         expect('test_scheduler').to eq(json_response['name'])
       end
 
       # 3. attempt to delete the ticket attribute
       get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       target_attribute = json_response.select { |x| x['name'] == 'test_attribute_referenced_by_a_scheduler' && x['object'] == 'Ticket' }
       expect(target_attribute.size).to eq(1)
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('Job')
       expect(response.body).to include('test_scheduler')
       expect(response.body).to include('cannot be deleted!')
@@ -866,14 +866,14 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       if Overview.where('name like ?', '%test%').empty?
         post '/api/v1/overviews', params: params, as: :json
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(:created)
         expect(Hash).to eq(json_response.class)
         expect('test_overview').to eq(json_response['name'])
       end
 
       # 3. attempt to delete the ticket attribute
       get '/api/v1/object_manager_attributes', as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       all_json_response = json_response
 
       target_attribute = all_json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'User' }
@@ -881,14 +881,14 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       target_attribute = all_json_response.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' && x['object'] == 'Ticket' }
       expect(target_attribute.size).to eq(1)
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('Overview')
       expect(response.body).to include('test_overview')
       expect(response.body).to include('cannot be deleted!')
@@ -937,7 +937,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
-      expect(response).to have_http_status(201) # created
+      expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
@@ -955,7 +955,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       put "/api/v1/object_manager_attributes/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_truthy
       expect(json_response['error']).to be_truthy
 
@@ -999,7 +999,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
-      expect(response).to have_http_status(201) # created
+      expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to eq('test')
@@ -1019,7 +1019,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       put "/api/v1/object_manager_attributes/#{json_response['id']}", params: params, as: :json
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to eq('test')
       expect(json_response['data_option_new']['default']).to eq('fuu')

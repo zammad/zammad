@@ -11,17 +11,18 @@ RSpec.describe Calendar, type: :model do
         subject(:calendar) { build(:calendar, default: true) }
 
         it 'stays true and sets all other calendars to default: false' do
-          expect { calendar.tap(&:save).reload }.not_to change { calendar.default }
+          expect { calendar.tap(&:save).reload }.not_to change(calendar, :default)
           expect(Calendar.where(default: true) - [calendar]).to be_empty
         end
       end
 
       context 'when set to true on update' do
         subject(:calendar) { create(:calendar, default: false) }
+
         before { calendar.default = true }
 
         it 'stays true and sets all other calendars to default: false' do
-          expect { calendar.tap(&:save).reload }.not_to change { calendar.default }
+          expect { calendar.tap(&:save).reload }.not_to change(calendar, :default)
           expect(Calendar.where(default: true) - [calendar]).to be_empty
         end
       end
@@ -103,7 +104,7 @@ RSpec.describe Calendar, type: :model do
       context 'and neither current date nor iCal URL have changed' do
         it 'is idempotent' do
           expect { calendar.sync }
-            .not_to change { calendar.public_holidays }
+            .not_to change(calendar, :public_holidays)
         end
         it 'does not create a background job for escalation rebuild' do
           calendar  # create and sync (1 inital background job is created)
@@ -120,7 +121,7 @@ RSpec.describe Calendar, type: :model do
 
         it 'is idempotent' do
           expect { calendar.sync }
-            .not_to change { calendar.public_holidays }
+            .not_to change(calendar, :public_holidays)
         end
         it 'does not create a background job for escalation rebuild' do
           expect { calendar.sync }
@@ -135,7 +136,7 @@ RSpec.describe Calendar, type: :model do
         end
 
         it 'appends newly computed event data to #public_holidays' do
-          expect { calendar.sync }.to change { calendar.public_holidays }.to(
+          expect { calendar.sync }.to change(calendar, :public_holidays).to(
             '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
             '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
             '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
@@ -154,7 +155,7 @@ RSpec.describe Calendar, type: :model do
 
         it 'replaces #public_holidays with event data computed from new iCal URL' do
           expect { calendar.save }
-            .to change { calendar.public_holidays }.to(
+            .to change(calendar, :public_holidays).to(
               '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2016-12-25' => { 'active' => true, 'summary' => 'Christmas2', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
               '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },

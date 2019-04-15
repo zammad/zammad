@@ -7,19 +7,19 @@ RSpec.describe Stats::TicketWaitingTime do
 
     context 'when given an agent with no tickets' do
       it 'returns a hash with 1-day average ticket wait time for user (in minutes)' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(handling_time: 0)
+        expect(described_class.generate(user)).to include(handling_time: 0)
       end
 
       it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(average_per_agent: 0)
+        expect(described_class.generate(user)).to include(average_per_agent: 0)
       end
 
       it 'returns a hash with verbal grade for average ticket wait time' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(state: 'supergood')
+        expect(described_class.generate(user)).to include(state: 'supergood')
       end
 
       it 'returns a hash with decimal score (0–1) of user’s risk of falling to a lower grade' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(percent: 0.0)
+        expect(described_class.generate(user)).to include(percent: 0.0)
       end
 
       context 'and who belongs to a group with other tickets' do
@@ -31,7 +31,7 @@ RSpec.describe Stats::TicketWaitingTime do
         end
 
         it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
-          expect(Stats::TicketWaitingTime.generate(user)).to include(average_per_agent: 60)
+          expect(described_class.generate(user)).to include(average_per_agent: 60)
         end
       end
     end
@@ -45,19 +45,19 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'returns a hash with 1-day average ticket wait time for user (in minutes)' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(handling_time: 60)
+        expect(described_class.generate(user)).to include(handling_time: 60)
       end
 
       it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(average_per_agent: 60)
+        expect(described_class.generate(user)).to include(average_per_agent: 60)
       end
 
       it 'returns a hash with verbal grade for average ticket wait time' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(state: 'supergood')
+        expect(described_class.generate(user)).to include(state: 'supergood')
       end
 
       it 'returns a hash with decimal score (0–1) of user’s risk of falling to a lower grade' do
-        expect(Stats::TicketWaitingTime.generate(user)).to include(percent: 1.0)
+        expect(described_class.generate(user)).to include(percent: 1.0)
       end
 
       context 'and who belongs to a group with other tickets' do
@@ -69,7 +69,7 @@ RSpec.describe Stats::TicketWaitingTime do
         end
 
         it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
-          expect(Stats::TicketWaitingTime.generate(user)).to include(average_per_agent: 90)
+          expect(described_class.generate(user)).to include(average_per_agent: 90)
         end
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe Stats::TicketWaitingTime do
 
     context 'with empty tickets (no articles)' do
       it 'returns 0' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(0)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(0)
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'returns 0' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(0)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(0)
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'returns elapsed time' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(1.minute)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(1.minute)
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'ignores them (and measures time to actual response)' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(2.minutes)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(2.minutes)
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'returns average of elapsed times' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(3.minutes)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(3.minutes)
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe Stats::TicketWaitingTime do
       end
 
       it 'ignores all edge cases and returns only specified average response time' do
-        expect(Stats::TicketWaitingTime.calculate_average(ticket.id, start_time)).to eq(3.minutes)
+        expect(described_class.calculate_average(ticket.id, start_time)).to eq(3.minutes)
       end
     end
   end

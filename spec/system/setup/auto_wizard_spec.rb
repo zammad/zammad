@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Auto wizard', type: :system, set_up: false do
 
-  scenario 'Automatic setup and login' do
+  it 'Automatic setup and login' do
 
     FileUtils.ln(
       Rails.root.join('contrib', 'auto_wizard_test.json'),
