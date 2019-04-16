@@ -405,12 +405,6 @@ class UsersController < ApplicationController
     # do query
     user_all = User.search(query_params)
 
-    # do pagination if needed
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      user_all = user_all[offset, params[:per_page].to_i] || []
-    end
-
     if response_expand?
       list = []
       user_all.each do |user|

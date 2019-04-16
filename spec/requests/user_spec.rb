@@ -444,6 +444,17 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response[0]['role_ids']).to be_falsey
       expect(json_response[0]['roles']).to be_falsey
 
+      # Regression test for issue #2539 - search pagination broken in users_controller.rb
+      # Get the total number of users N, then search with one result per page, so there should N pages with one result each
+      get '/api/v1/users/search', params: { query: '*' }, as: :json
+      total_user_number = json_response.count
+      (1..total_user_number).each do |i|
+        get '/api/v1/users/search', params: { query: '*', per_page: 1, page: i }, as: :json
+        expect(response).to have_http_status(200)
+        expect(json_response).to be_a_kind_of(Array)
+        expect(json_response.count).to eq(1), "Page #{i}/#{total_user_number} of the user search pagination test have the wrong result!"
+      end
+
       role = Role.find_by(name: 'Agent')
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&role_ids=#{role.id}&label=true", params: {}, as: :json
       expect(response).to have_http_status(200)
