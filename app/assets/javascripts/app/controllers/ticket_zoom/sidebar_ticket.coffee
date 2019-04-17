@@ -115,7 +115,7 @@ class SidebarTicket extends App.Controller
         object:      @ticket
         tags:        @tags
       )
-      @linkWidget = new App.WidgetLink(
+      @linkWidget = new App.WidgetLink.Ticket(
         el:          localEl.filter('.links')
         object_type: 'Ticket'
         object:      @ticket
