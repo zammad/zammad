@@ -406,6 +406,38 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'XSS protection' do
+      let(:article) { described_class.new.process({}, raw_mail).second }
+
+      let(:raw_mail) { <<~RAW.chomp }
+        From: ME Bob <me@example.com>
+        To: customer@example.com
+        Subject: some subject
+        Content-Type: #{content_type}
+        MIME-Version: 1.0
+
+        no HTML <script type="text/javascript">alert(\'XSS\')</script>
+      RAW
+
+      context 'for Content-Type: text/html' do
+        let(:content_type) { 'text/html' }
+
+        it 'removes injected <script> tags from body' do
+          expect(article.body).to eq("no HTML alert('XSS')")
+        end
+      end
+
+      context 'for Content-Type: text/plain' do
+        let(:content_type) { 'text/plain' }
+
+        it 'leaves body as-is' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            no HTML <script type="text/javascript">alert(\'XSS\')</script>
+          SANITIZED
+        end
+      end
+    end
+
     context 'for “delivery failed” notifications (a.k.a. bounce messages)' do
       let(:ticket) { article.ticket }
       let(:article) { create(:ticket_article, sender_name: 'Agent', message_id: message_id) }

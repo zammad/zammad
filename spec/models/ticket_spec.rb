@@ -585,6 +585,16 @@ RSpec.describe Ticket, type: :model do
       end
     end
 
+    describe 'XSS protection:' do
+      subject(:ticket) { create(:ticket, title: title) }
+
+      let(:title) { 'test 123 <script type="text/javascript">alert("XSS!");</script>' }
+
+      it 'does not sanitize title' do
+        expect(ticket.title).to eq(title)
+      end
+    end
+
     describe 'Cti::CallerId syncing:' do
       subject(:ticket) { build(:ticket) }
       before { allow(Cti::CallerId).to receive(:build) }

@@ -57,6 +57,189 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
+    describe 'XSS protection:' do
+      subject(:article) { create(:ticket_article, body: body, content_type: 'text/html') }
+
+      context 'when body contains only injected JS' do
+        let(:body) { <<~RAW.chomp }
+          <script type="text/javascript">alert("XSS!");</script>
+        RAW
+
+        it 'removes <script> tags' do
+          expect(article.body).to eq('alert("XSS!");')
+        end
+      end
+
+      context 'when body contains injected JS amidst other text' do
+        let(:body) { <<~RAW.chomp }
+          please tell me this doesn't work: <script type="text/javascript">alert("XSS!");</script>
+        RAW
+
+        it 'removes <script> tags' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            please tell me this doesn't work: alert("XSS!");
+          SANITIZED
+        end
+      end
+
+      context 'when body contains invalid HTML tags' do
+        let(:body) { '<some_not_existing>ABC</some_not_existing>' }
+
+        it 'removes invalid tags' do
+          expect(article.body).to eq('ABC')
+        end
+      end
+
+      context 'when body contains restricted HTML attributes' do
+        let(:body) { '<div class="adasd" id="123" data-abc="123"></div>' }
+
+        it 'removes restricted attributes' do
+          expect(article.body).to eq('<div></div>')
+        end
+      end
+
+      context 'when body contains JS injected into href attribute' do
+        let(:body) { '<a href="javascript:someFunction()">LINK</a>' }
+
+        it 'removes <a> tags' do
+          expect(article.body).to eq('LINK')
+        end
+      end
+
+      context 'when body contains an unclosed <div> element' do
+        let(:body) { '<div>foo' }
+
+        it 'closes it' do
+          expect(article.body).to eq('<div>foo</div>')
+        end
+      end
+
+      context 'when body contains a plain link (<a> element)' do
+        let(:body) { '<a href="https://example.com">foo</a>' }
+
+        it 'adds sanitization attributes' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            <a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com">foo</a>
+          SANITIZED
+        end
+      end
+
+      context 'for all cases above, combined' do
+        let(:body) { <<~RAW.chomp }
+          please tell me this doesn't work: <table>ada<tr></tr></table>
+          <div class="adasd" id="123" data-abc="123"></div>
+          <div>
+          <a href="javascript:someFunction()">LINK</a>
+          <a href="http://lalal.de">aa</a>
+          <some_not_existing>ABC</some_not_existing>
+        RAW
+
+        it 'performs all sanitizations' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            please tell me this doesn't work: <table>ada<tr></tr>
+            </table>
+            <div></div>
+            <div>
+            LINK
+            <a href="http://lalal.de" rel="nofollow noreferrer noopener" target="_blank" title="http://lalal.de">aa</a>
+            ABC</div>
+          SANITIZED
+        end
+      end
+
+      context 'for content_type: "text/plain"' do
+        subject(:article) { create(:ticket_article, body: body, content_type: 'text/plain') }
+
+        let(:body) { <<~RAW.chomp }
+          please tell me this doesn't work: <table>ada<tr></tr></table>
+          <div class="adasd" id="123" data-abc="123"></div>
+          <div>
+          <a href="javascript:someFunction()">LINK</a>
+          <a href="http://lalal.de">aa</a>
+          <some_not_existing>ABC</some_not_existing>
+        RAW
+
+        it 'performs no sanitizations' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            please tell me this doesn't work: <table>ada<tr></tr></table>
+            <div class="adasd" id="123" data-abc="123"></div>
+            <div>
+            <a href="javascript:someFunction()">LINK</a>
+            <a href="http://lalal.de">aa</a>
+            <some_not_existing>ABC</some_not_existing>
+          SANITIZED
+        end
+      end
+
+      context 'when body contains <video> element' do
+        let(:body) { <<~RAW.chomp }
+          please tell me this doesn't work: <video>some video</video><foo>alal</foo>
+        RAW
+
+        it 'leaves it as-is' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            please tell me this doesn't work: <video>some video</video>alal
+          SANITIZED
+        end
+      end
+
+      context 'when body contains CSS in style attribute' do
+        context 'for cid-style email attachment' do
+          let(:body) { <<~RAW.chomp }
+            <img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">
+            asdasd
+            <img src="cid:15.274327094.140939@zammad.example.com">
+          RAW
+
+          it 'adds terminal semicolons to style rules' do
+            expect(article.body).to eq(<<~SANITIZED.chomp)
+              <img style="width: 85.5px; height: 49.5px;" src="cid:15.274327094.140938@zammad.example.com">
+              asdasd
+              <img src="cid:15.274327094.140939@zammad.example.com">
+            SANITIZED
+          end
+        end
+
+        context 'for relative-path-style email attachment' do
+          let(:body) { <<~RAW.chomp }
+            <img style="width: 85.5px; height: 49.5px" src="api/v1/ticket_attachment/123/123/123">
+            asdasd
+            <img src="api/v1/ticket_attachment/123/123/123">
+          RAW
+
+          it 'adds terminal semicolons to style rules' do
+            expect(article.body).to eq(<<~SANITIZED.chomp)
+              <img style="width: 85.5px; height: 49.5px;" src="api/v1/ticket_attachment/123/123/123">
+              asdasd
+              <img src="api/v1/ticket_attachment/123/123/123">
+            SANITIZED
+          end
+        end
+      end
+
+      context 'when body contains <body> elements' do
+        let(:body) { '<body>123</body>' }
+
+        it 'removes <body> tags' do
+          expect(article.body).to eq('123')
+        end
+      end
+
+      context 'when body contains onclick attributes in <a> elements' do
+        let(:body) { <<~RAW.chomp }
+          <a href="#" onclick="some_function();">abc</a>
+          <a href="https://example.com" oNclIck="some_function();">123</a>
+        RAW
+
+        it 'removes onclick attributes' do
+          expect(article.body).to eq(<<~SANITIZED.chomp)
+            <a href="#">abc</a>
+            <a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com">123</a>
+          SANITIZED
+        end
+      end
+    end
+
     describe 'DoS protection:' do
       context 'when #body exceeds 1.5MB' do
         subject(:article) { create(:ticket_article, body: body) }
