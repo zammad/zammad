@@ -1,9 +1,35 @@
-require 'test_helper'
+require 'integration_test_helper'
 
 class ReportTest < ActiveSupport::TestCase
   include SearchindexHelper
 
   setup do
+
+    # create attribute
+    attribute1 = ObjectManager::Attribute.add(
+      object:        'Ticket',
+      name:          'test_category',
+      display:       'Test 1',
+      data_type:     'tree_select',
+      data_option:   {
+        maxlength: 200,
+        null:      false,
+        default:   '',
+        options:   [
+          { 'name' => 'aa', 'value' => 'aa', 'children' => [{ 'name' => 'aa', 'value' => 'aa::aa' }, { 'name' => 'bb', 'value' => 'aa::bb' }, { 'name' => 'cc', 'value' => 'aa::cc' }] },
+          { 'name' => 'bb', 'value' => 'bb', 'children' => [{ 'name' => 'aa', 'value' => 'bb::aa' }, { 'name' => 'bb', 'value' => 'bb::bb' }, { 'name' => 'cc', 'value' => 'bb::cc' }] },
+          { 'name' => 'cc', 'value' => 'cc', 'children' => [{ 'name' => 'aa', 'value' => 'cc::aa' }, { 'name' => 'bb', 'value' => 'cc::bb' }, { 'name' => 'cc', 'value' => 'cc::cc' }] },
+        ]
+      },
+      active:        true,
+      screens:       {},
+      position:      20,
+      created_by_id: 1,
+      updated_by_id: 1,
+      editable:      false,
+      to_migrate:    false,
+    )
+    ObjectManager::Attribute.migration_execute
 
     configure_elasticsearch(required: true)
 
@@ -26,6 +52,7 @@ class ReportTest < ActiveSupport::TestCase
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-10-28 09:30:00 UTC',
       updated_at:    '2015-10-28 09:30:00 UTC',
+      test_category: 'cc::bb',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1353,6 +1380,22 @@ class ReportTest < ActiveSupport::TestCase
     assert(result)
     assert_nil(result[:ticket_ids][0])
 
+    # search for test_category.raw to find values with :: in query
+    result = Report::TicketGenericTime.items(
+      range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+      range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+      selector:    {
+        'test_category' => {
+          'operator' => 'is',
+          'value'    => 'cc::bb'
+        },
+      }, # ticket selector to get only a collection of tickets
+      params:      { field: 'created_at' },
+    )
+
+    assert(result)
+    assert_equal(@ticket1.id, result[:ticket_ids][0].to_i)
+    assert_nil(result[:ticket_ids][1])
   end
 
 end

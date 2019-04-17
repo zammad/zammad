@@ -333,7 +333,7 @@ remove whole data from index
     return if url.blank?
 
     url += if index
-             if index.class == Array
+             if index.is_a?(Array)
                "/#{index.join(',')}/_search"
              else
                "/#{index}/_search"
@@ -399,6 +399,7 @@ remove whole data from index
       next if value.blank?
       next if order_by&.at(index).blank?
 
+      # for sorting values use .raw values (no analyzer is used - plain values)
       if value !~ /\./ && value !~ /_(time|date|till|id|ids|at)$/
         value += '.raw'
       end
@@ -435,6 +436,24 @@ remove whole data from index
 
 get count of tickets and tickets which match on selector
 
+  result = SearchIndexBackend.selectors(index, selector)
+
+example with a simple search:
+
+  result = SearchIndexBackend.selectors('Ticket', { category: { operator: 'is', value: 'aa::ab' } })
+
+  result = [
+    { id: 1, type: 'Ticket' },
+    { id: 2, type: 'Ticket' },
+    { id: 3, type: 'Ticket' },
+  ]
+
+you also can get aggregations
+
+  result = SearchIndexBackend.selectors(index, selector, options, aggs_interval)
+
+example for aggregations within one year
+
   aggs_interval = {
     from: '2015-01-01',
     to: '2015-12-31',
@@ -447,9 +466,8 @@ get count of tickets and tickets which match on selector
     current_user: User.find(123),
   }
 
-  result = SearchIndexBackend.selectors(index, selector, options, aggs_interval)
+  result = SearchIndexBackend.selectors('Ticket', { category: { operator: 'is', value: 'aa::ab' } }, options, aggs_interval)
 
-  # for aggregations
   result = {
     hits:{
       total:4819,
@@ -482,7 +500,7 @@ get count of tickets and tickets which match on selector
     return if url.blank?
 
     url += if index
-             if index.class == Array
+             if index.is_a?(Array)
                "/#{index.join(',')}/_search"
              else
                "/#{index}/_search"
@@ -553,9 +571,23 @@ get count of tickets and tickets which match on selector
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
 
+        # use .raw in cases where query contains ::
+        if data['value'].is_a?(Array)
+          data['value'].each do |value|
+            if value.is_a?(String) && value =~ /::/
+              key_tmp += '.raw'
+              break
+            end
+          end
+        elsif data['value'].is_a?(String)
+          if /::/.match?(data['value'])
+            key_tmp += '.raw'
+          end
+        end
+
         # is/is not/contains/contains not
         if data['operator'] == 'is' || data['operator'] == 'is not' || data['operator'] == 'contains' || data['operator'] == 'contains not'
-          if data['value'].class == Array
+          if data['value'].is_a?(Array)
             t[:terms] = {}
             t[:terms][key_tmp] = data['value']
           else
