@@ -270,7 +270,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_raises(RuntimeError) do
       Scheduler.worker(true)
     end
-    assert(Delayed::Job.where(attempts: 4).exists?)
+    assert(Delayed::Job.none?)
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
