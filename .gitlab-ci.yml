@@ -218,8 +218,8 @@ test:integration:clearbit:
     - bundle exec rake zammad:db:unseeded
     - bundle exec rails test test/integration/elasticsearch_active_test.rb
     - bundle exec rails test test/integration/elasticsearch_test.rb
-    - bundle exec rails test test/integration/report_test.rb
     - bundle exec rspec --tag searchindex
+    - bundle exec rails test test/integration/report_test.rb
 
 test:integration:es_mysql:
   <<: *script_elasticsearch_definition
