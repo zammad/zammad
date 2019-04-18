@@ -23,9 +23,7 @@ class SettingTicketNumberIgnoreSystemIdSupport < ActiveRecord::Migration[4.2]
           },
         ],
       },
-      state:       {
-        ticket_number_ignore_system_id: false
-      },
+      state:       false,
       preferences: {
         permission: ['admin.ticket'],
         hidden:     true,
