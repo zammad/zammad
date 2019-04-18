@@ -6,6 +6,11 @@ RSpec.describe Ticket::Number::Increment do
     let(:system_id) { Setting.get('system_id') }
     let(:ticket_count) { Ticket::Counter.find_by(generator: 'Increment').content }
 
+    it 'updates the "Increment" Ticket::Counter' do
+      expect { number }
+        .to change { Ticket::Counter.find_by(generator: 'Increment').content }
+    end
+
     context 'with a "ticket_number_increment" setting with...' do
       context 'min_size: 5' do
         before { Setting.set('ticket_number_increment', { min_size: 5 }) }

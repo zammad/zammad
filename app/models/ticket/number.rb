@@ -16,13 +16,11 @@ returns
 =end
 
   def self.generate
-
-    # generate number
     49_999.times do
       number = adapter.generate
-      ticket = Ticket.find_by(number: number)
-      return number if !ticket
+      return number if !Ticket.exists?(number: number)
     end
+
     raise "Can't generate new ticket number!"
   end
 
@@ -42,12 +40,9 @@ returns
     adapter.check(string)
   end
 
+  # load backend based on config
   def self.adapter
-
-    # load backend based on config
-    adapter_name = Setting.get('ticket_number')
-    raise 'Missing ticket_number setting option' if !adapter_name
-
-    adapter_name.constantize
+    Setting.get('ticket_number')&.constantize ||
+      raise('Missing ticket_number setting option')
   end
 end

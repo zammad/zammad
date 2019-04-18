@@ -6,6 +6,11 @@ RSpec.describe Ticket::Number::Date do
 
     before { travel_to(Time.zone.parse('1955-11-05')) }
 
+    it 'updates the "Date" Ticket::Counter' do
+      expect { number }
+        .to change { Ticket::Counter.find_by(generator: 'Date')&.content }
+    end
+
     context 'with a "ticket_number_date" setting with checksum: false (default)' do
       context 'and a single-digit system_id' do
         before { Setting.set('system_id', 1) }
