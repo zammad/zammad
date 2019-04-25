@@ -42,16 +42,25 @@
 
   <!-- If so, explain. -->
 
-### Other Considerations  <!-- Optional -->
+### Performance Impact  <!-- Optional -->
 
 <!--
-Does your MR need one of the following labels?
+Does your MR optimize (or degrade) performance?
+If so, apply the label and explain here.
 
-* Performance Impact
-  (Keep in mind that some instances process 2,000+ tickets per day.)
+Consider that some of OTRS’s customers had
+HUNDREDS of agents, overviews, and groups,
+over 2,000 tickets a day,
+and over 20,000,000 (!) tickets in all.
+How do your performance changes scale on a system of this size?
 
-* Follow-up Required
-  (e.g., Do we need to coordinate with the documentation/support teams?)
+(Remember, these are not edge cases we can ignore;
+they are really big customers, and we want to keep their business!)
+-->
 
-If so, apply it and explain here.
+### Follow-up Required  <!-- Optional -->
+
+<!--
+Does your MR require coordination with the documentation/support teams?
+If so, apply the label and explain here.
 -->
