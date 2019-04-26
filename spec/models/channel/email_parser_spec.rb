@@ -540,5 +540,55 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    context 'for “out-of-office” notifications (a.k.a. auto-response messages)' do
+      let(:raw_mail) { <<~RAW.chomp }
+        From: me@example.com
+        To: customer@example.com
+        Subject: #{subject_line}
+
+        Some Text
+      RAW
+      let(:subject_line) { 'Lorem ipsum dolor' }
+
+      it 'applies the OutOfOfficeCheck filter to given message' do
+        expect(Channel::Filter::OutOfOfficeCheck)
+          .to receive(:run)
+          .with(kind_of(Hash), hash_including(subject: subject_line))
+
+        described_class.new.process({}, raw_mail)
+      end
+
+      context 'on an existing, closed ticket' do
+        let(:ticket) { create(:ticket, state_name: 'closed') }
+        let(:subject_line) { ticket.subject_build('Lorem ipsum dolor') }
+
+        context 'when OutOfOfficeCheck filter applies x-zammad-out-of-office: false' do
+          before do
+            allow(Channel::Filter::OutOfOfficeCheck)
+              .to receive(:run) { |_, mail_hash| mail_hash[:'x-zammad-out-of-office'] = false }
+          end
+
+          it 're-opens a closed ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to not_change { Ticket.count }
+              .and change { ticket.reload.state.name }.to('open')
+          end
+        end
+
+        context 'when OutOfOfficeCheck filter applies x-zammad-out-of-office: true' do
+          before do
+            allow(Channel::Filter::OutOfOfficeCheck)
+              .to receive(:run) { |_, mail_hash| mail_hash[:'x-zammad-out-of-office'] = true }
+          end
+
+          it 'does not re-open a closed ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to not_change { Ticket.count }
+              .and not_change { ticket.reload.state.name }
+          end
+        end
+      end
+    end
   end
 end
