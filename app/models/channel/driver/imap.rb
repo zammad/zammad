@@ -198,12 +198,20 @@ example
     end
 
     # fetch regular messages
-    count_all     = message_ids.count
-    count         = 0
-    count_fetched = 0
-    notice        = ''
+    count_all             = message_ids.count
+    count                 = 0
+    count_fetched         = 0
+    count_max             = 5000
+    active_check_interval = 20
+    notice                = ''
     message_ids.each do |message_id|
       count += 1
+
+      if (count % active_check_interval).zero?
+        break if channel_has_changed?(channel)
+      end
+      break if max_process_count_has_reached?(channel, count, count_max)
+
       Rails.logger.info " - message #{count}/#{count_all}"
 
       message_meta = nil
@@ -331,6 +339,18 @@ returns
     headers
   end
 
+=begin
+
+check if email is already impoted
+
+  Channel::Driver::IMAP.already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
+
+returns
+
+  true|false
+
+=end
+
   # rubocop:disable Metrics/ParameterLists
   def already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
     # rubocop:enable Metrics/ParameterLists
@@ -358,12 +378,36 @@ returns
     true
   end
 
+=begin
+
+check if email is already marked as deleted
+
+  Channel::Driver::IMAP.deleted?(message_meta, count, count_all)
+
+returns
+
+  true|false
+
+=end
+
   def deleted?(message_meta, count, count_all)
     return false if !message_meta.attr['FLAGS'].include?(:Deleted)
 
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has already delete flag"
     true
   end
+
+=begin
+
+check if email is to big
+
+  Channel::Driver::IMAP.too_big?(message_meta, count, count_all)
+
+returns
+
+  true|false
+
+=end
 
   def too_big?(message_meta, count, count_all)
     max_message_size = Setting.get('postmaster_max_size').to_f
@@ -374,6 +418,50 @@ returns
       return info
     end
     false
+  end
+
+=begin
+
+check if channel config has changed
+
+  Channel::Driver::IMAP.channel_has_changed?(channel)
+
+returns
+
+  true|false
+
+=end
+
+  def channel_has_changed?(channel)
+    Rails.logger.info "CC #{channel.id} CHECK."
+    current_channel = Channel.find_by(id: channel.id)
+    if !current_channel
+      Rails.logger.info "Channel with id #{channel.id} is deleted in the meantime. Stop fetching."
+      return true
+    end
+    return false if channel.updated_at == current_channel.updated_at
+
+    Rails.logger.info "Channel with id #{channel.id} has changed. Stop fetching."
+    true
+  end
+
+=begin
+
+check if maximal fetching email count has reached
+
+  Channel::Driver::IMAP.max_process_count_has_reached?(channel, count, count_max)
+
+returns
+
+  true|false
+
+=end
+
+  def max_process_count_has_reached?(channel, count, count_max)
+    return false if count < count_max
+
+    Rails.logger.info "Maximal fetched emails (#{count_max}) reached for this interval for Channel with id #{channel.id}."
+    true
   end
 
   def timeout(seconds)

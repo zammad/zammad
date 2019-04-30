@@ -133,12 +133,18 @@ returns
     end
 
     # fetch regular messages
-    count_all     = mails.size
-    count         = 0
-    count_fetched = 0
-    notice        = ''
+    count_all             = mails.size
+    count                 = 0
+    count_fetched         = 0
+    active_check_interval = 20
+    notice                = ''
     mails.first(2000).each do |m|
       count += 1
+
+      if (count % active_check_interval).zero?
+        break if channel_has_changed?(channel)
+      end
+
       Rails.logger.info " - message #{count}/#{count_all}"
       mail = m.pop
       next if !mail
@@ -209,6 +215,30 @@ returns
 
   def self.streamable?
     false
+  end
+
+=begin
+
+check if channel config has changed
+
+  Channel::Driver::IMAP.channel_has_changed?(channel)
+
+returns
+
+  true|false
+
+=end
+
+  def channel_has_changed?(channel)
+    current_channel = Channel.find_by(id: channel.id)
+    if !current_channel
+      Rails.logger.info "Channel with id #{channel.id} is deleted in the meantime. Stop fetching."
+      return true
+    end
+    return false if channel.updated_at == current_channel.updated_at
+
+    Rails.logger.info "Channel with id #{channel.id} has changed. Stop fetching."
+    true
   end
 
   def disconnect
