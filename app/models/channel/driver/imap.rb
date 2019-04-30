@@ -3,6 +3,10 @@ require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
 
+  FETCH_METADATA_TIMEOUT = 2.minutes
+  FETCH_MSG_TIMEOUT = 4.minutes
+  EXPUNGE_TIMEOUT = 16.minutes
+
   def fetchable?(_channel)
     true
   end
@@ -171,7 +175,7 @@ example
       message_ids.each do |message_id|
 
         message_meta = nil
-        timeout(1.minute) do
+        timeout(FETCH_METADATA_TIMEOUT) do
           message_meta = @imap.fetch(message_id, ['ENVELOPE'])[0].attr
         end
 
@@ -215,7 +219,7 @@ example
       Rails.logger.info " - message #{count}/#{count_all}"
 
       message_meta = nil
-      timeout(1.minute) do
+      timeout(FETCH_METADATA_TIMEOUT) do
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
       end
 
@@ -237,26 +241,41 @@ example
 
       # delete email from server after article was created
       msg = nil
-      timeout(1.minute) do
-        msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
+      begin
+        timeout(FETCH_MSG_TIMEOUT) do
+          msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
+        end
+      rescue Timeout::Error => e
+        Rails.logger.error "Unable to fetch email from #{count}/#{count_all} from server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
+        raise e
       end
       next if !msg
 
       process(channel, msg, false)
 
-      timeout(1.minute) do
-        if !keep_on_server
-          @imap.store(message_id, '+FLAGS', [:Deleted])
-        else
-          @imap.store(message_id, '+FLAGS', [:Seen])
+      begin
+        timeout(FETCH_MSG_TIMEOUT) do
+          if !keep_on_server
+            @imap.store(message_id, '+FLAGS', [:Deleted])
+          else
+            @imap.store(message_id, '+FLAGS', [:Seen])
+          end
         end
+      rescue Timeout::Error => e
+        Rails.logger.error "Unable to set +FLAGS for email #{count}/#{count_all} on server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
+        raise e
       end
       count_fetched += 1
     end
 
     if !keep_on_server
-      timeout(10.minutes) do
-        @imap.expunge()
+      begin
+        timeout(EXPUNGE_TIMEOUT) do
+          @imap.expunge()
+        end
+      rescue Timeout::Error => e
+        Rails.logger.error "Unable to expunge server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
+        raise e
       end
     end
     disconnect
