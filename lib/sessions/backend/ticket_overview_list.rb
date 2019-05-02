@@ -74,6 +74,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     index_and_lists.each do |index|
       assets = {}
       overview = Overview.lookup(id: index[:overview][:id])
+      next if !overview
+
       meta = {
         name:  overview.name,
         prio:  overview.prio,
