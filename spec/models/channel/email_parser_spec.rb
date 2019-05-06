@@ -121,6 +121,12 @@ RSpec.describe Channel::EmailParser, type: :model do
 
             expect(Ticket::Article.last.sender.name).to eq('Agent')
           end
+
+          it 'sets ticket.state to "new"' do
+            Channel::EmailParser.new.process({}, raw_mail)
+
+            expect(Ticket.last.state.name).to eq('new')
+          end
         end
 
         context 'when from address matches an existing customer' do
@@ -130,6 +136,12 @@ RSpec.describe Channel::EmailParser, type: :model do
             Channel::EmailParser.new.process({}, raw_mail)
 
             expect(Ticket.last.articles.first.sender.name).to eq('Customer')
+          end
+
+          it 'sets ticket.state to "new"' do
+            Channel::EmailParser.new.process({}, raw_mail)
+
+            expect(Ticket.last.state.name).to eq('new')
           end
         end
 

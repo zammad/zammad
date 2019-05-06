@@ -339,12 +339,22 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#state' do
-      context 'when originally "new"' do
+      context 'when originally "new" (default)' do
+        context 'and a customer article is added' do
+          let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Customer') }
+
+          it 'stays "new"' do
+            expect { article }
+              .not_to change { ticket.state.name }.from('new')
+          end
+        end
+
         context 'and a non-customer article is added' do
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'switches to "open"' do
-            expect { article }.to change { ticket.state.name }.from('new').to('open')
+            expect { article }
+              .to change { ticket.state.name }.from('new').to('open')
           end
         end
       end
