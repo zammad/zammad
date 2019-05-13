@@ -35,6 +35,8 @@ RSpec.describe Channel::EmailParser, type: :model do
   describe '#process' do
     let(:raw_mail)  { File.read(mail_file) }
 
+    before { Trigger.destroy_all }  # triggers may cause additional articles to be created
+
     describe 'auto-creating new users' do
       context 'with one unrecognized email address' do
         it 'creates one new user' do
@@ -98,7 +100,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         it 'creates a ticket and article' do
           expect { Channel::EmailParser.new.process({}, raw_mail) }
             .to change { Ticket.count }.by(1)
-            .and change { Ticket::Article.count }.by_at_least(1)  # triggers may cause additional articles to be created
+            .and change { Ticket::Article.count }.by_at_least(1)
         end
 
         it 'sets #title to email subject' do
@@ -156,99 +158,485 @@ RSpec.describe Channel::EmailParser, type: :model do
     end
 
     describe 'associating emails to existing tickets' do
-      let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail001.box') }
+      let!(:ticket) { create(:ticket) }
       let(:ticket_ref) { Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number }
-      let(:ticket) { create(:ticket) }
 
-      context 'when email subject contains ticket reference' do
-        let(:raw_mail) { File.read(mail_file).sub(/(?<=^Subject: ).*$/, ticket_ref) }
+      describe 'based on where a ticket reference appears in the message' do
+        shared_context 'ticket reference in subject' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            To: customer@example.com
+            Subject: #{ticket_ref}
 
-        it 'adds message to ticket' do
-          expect { described_class.new.process({}, raw_mail) }
-            .to change { ticket.articles.length }
+            Lorem ipsum dolor
+          RAW
         end
 
-        context 'and ticket is closed' do
-          before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+        shared_context 'ticket reference in body' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            To: customer@example.com
+            Subject: no reference
 
+            Lorem ipsum dolor #{ticket_ref}
+          RAW
+        end
+
+        shared_context 'ticket reference in body (text/html)' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            To: customer@example.com
+            Subject: no reference
+            Content-Transfer-Encoding: 7bit
+            Content-Type: text/html;
+
+            <b>Lorem ipsum dolor #{ticket_ref}</b>
+          RAW
+        end
+
+        shared_context 'ticket reference in attachment' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
+            Subject: no reference
+            Date: Sun, 30 Aug 2015 23:20:54 +0200
+            To: Martin Edenhofer <me@znuny.com>
+            Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+            X-Mailer: Apple Mail (2.2104)
+
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Transfer-Encoding: 7bit
+            Content-Type: text/plain;
+              charset=us-ascii
+
+            no reference
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Disposition: attachment;
+              filename=test1.txt
+            Content-Type: text/plain;
+              name="test.txt"
+            Content-Transfer-Encoding: 7bit
+
+            Some Text #{ticket_ref}
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2--
+          RAW
+        end
+
+        shared_context 'ticket reference in In-Reply-To header' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            To: customer@example.com
+            Subject: no reference
+            In-Reply-To: #{article.message_id}
+
+            Lorem ipsum dolor
+          RAW
+
+          let!(:article) { create(:ticket_article, ticket: ticket, message_id: '<20150830145601.30.608882@edenhofer.zammad.com>') }
+        end
+
+        shared_context 'ticket reference in References header' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            To: customer@example.com
+            Subject: no reference
+            References: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@znuny.com> #{article.message_id} <DA918CD1-BE9A-4262-ACF6-5001E59291XX@znuny.com>
+
+            Lorem ipsum dolor
+          RAW
+
+          let!(:article) { create(:ticket_article, ticket: ticket, message_id: '<20150830145601.30.608882@edenhofer.zammad.com>') }
+        end
+
+        shared_examples 'adds message to ticket' do
           it 'adds message to ticket' do
             expect { described_class.new.process({}, raw_mail) }
-              .to change { ticket.articles.length }
+              .to change { ticket.articles.length }.by(1)
           end
         end
 
-        context 'but ticket group’s #follow_up_possible attribute is "new_ticket"' do
-          before { ticket.group.update(follow_up_possible: 'new_ticket') }
+        shared_examples 'creates a new ticket' do
+          it 'creates a new ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to change { Ticket.count }.by(1)
+              .and not_change { ticket.articles.length }
+          end
+        end
 
-          context 'and ticket is open' do
-            it 'still adds message to ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .to change { ticket.articles.length }
+        context 'when not explicitly configured to search anywhere' do
+          before { Setting.set('postmaster_follow_up_search_in', nil) }
+
+          context 'when subject contains ticket reference' do
+            include_context 'ticket reference in subject'
+            include_examples 'adds message to ticket'
+
+            context 'alongside other, invalid ticket references' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: [#{Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + Ticket::Number.generate}] #{ticket_ref}
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+
+            context 'and ticket is closed' do
+              before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+
+              include_examples 'adds message to ticket'
+            end
+
+            context 'but ticket group’s #follow_up_possible attribute is "new_ticket"' do
+              before { ticket.group.update(follow_up_possible: 'new_ticket') }
+
+              context 'and ticket is open' do
+                include_examples 'adds message to ticket'
+              end
+
+              context 'and ticket is closed' do
+                before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+
+                include_examples 'creates a new ticket'
+              end
+
+              context 'and ticket is merged' do
+                before { ticket.update(state: Ticket::State.find_by(name: 'merged')) }
+
+                include_examples 'creates a new ticket'
+              end
+
+              context 'and ticket is removed' do
+                before { ticket.update(state: Ticket::State.find_by(name: 'removed')) }
+
+                include_examples 'creates a new ticket'
+              end
+            end
+
+            context 'and "ticket_hook" setting is non-default value' do
+              before { Setting.set('ticket_hook', 'VD-Ticket#') }
+
+              include_examples 'adds message to ticket'
             end
           end
 
-          context 'and ticket is closed' do
-            before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
+          context 'when body contains ticket reference' do
+            include_context 'ticket reference in body'
+            include_examples 'creates a new ticket'
+          end
 
-            it 'creates a new ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .to change { Ticket.count }.by(1)
-                .and not_change { ticket.articles.length }
+          context 'when attachment contains ticket reference' do
+            include_context 'ticket reference in attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when In-Reply-To header contains article message-id' do
+            include_context 'ticket reference in In-Reply-To header'
+            include_examples 'creates a new ticket'
+
+            context 'and subject matches article subject' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: customer@example.com
+                To: me@example.com
+                Subject: AW: RE: #{article.subject}
+                In-Reply-To: #{article.message_id}
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+
+            context 'and "ticket_hook_position" setting is "none"' do
+              before { Setting.set('ticket_hook_position', 'none') }
+
+              let(:raw_mail) { <<~RAW.chomp }
+                From: customer@example.com
+                To: me@example.com
+                Subject: RE: Foo bar
+                In-Reply-To: #{article.message_id}
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
             end
           end
 
-          context 'and ticket is merged' do
-            before { ticket.update(state: Ticket::State.find_by(name: 'merged')) }
+          context 'when References header contains article message-id' do
+            include_context 'ticket reference in References header'
+            include_examples 'creates a new ticket'
 
-            it 'creates a new ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .to change { Ticket.count }.by(1)
-                .and not_change { ticket.articles.length }
+            context 'and Auto-Submitted header reads "auto-replied"' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+                References: #{article.message_id}
+                Auto-Submitted: auto-replied
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+
+            context 'and subject matches article subject' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: customer@example.com
+                To: me@example.com
+                Subject: AW: RE: #{article.subject}
+                References: #{article.message_id}
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+
+            context 'and "ticket_hook_position" setting is "none"' do
+              before { Setting.set('ticket_hook_position', 'none') }
+
+              let(:raw_mail) { <<~RAW.chomp }
+                From: customer@example.com
+                To: me@example.com
+                Subject: RE: Foo bar
+                References: #{article.message_id}
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+          end
+        end
+
+        context 'when configured to search body' do
+          before { Setting.set('postmaster_follow_up_search_in', 'body') }
+
+          context 'when subject contains ticket reference' do
+            include_context 'ticket reference in subject'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when body contains ticket reference' do
+            context 'in visible text' do
+              include_context 'ticket reference in body'
+              include_examples 'adds message to ticket'
+            end
+
+            context 'as part of a larger word' do
+              let(:ticket_ref) { "Foo#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{ticket.number}bar" }
+
+              include_context 'ticket reference in body'
+              include_examples 'creates a new ticket'
+            end
+
+            context 'between html tags' do
+              include_context 'ticket reference in body (text/html)'
+              include_examples 'adds message to ticket'
+            end
+
+            context 'in html attributes' do
+              let(:ticket_ref) { %(<table bgcolor="#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{ticket.number}"> </table>) }
+
+              include_context 'ticket reference in body (text/html)'
+              include_examples 'creates a new ticket'
             end
           end
 
-          context 'and ticket is removed' do
-            before { ticket.update(state: Ticket::State.find_by(name: 'removed')) }
+          context 'when attachment contains ticket reference' do
+            include_context 'ticket reference in attachment'
+            include_examples 'creates a new ticket'
+          end
 
-            it 'creates a new ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .to change { Ticket.count }.by(1)
-                .and not_change { ticket.articles.length }
+          context 'when In-Reply-To header contains article message-id' do
+            include_context 'ticket reference in In-Reply-To header'
+            include_examples 'creates a new ticket'
+
+            context 'and Auto-Submitted header reads "auto-replied"' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+                References: #{article.message_id}
+                Auto-Submitted: auto-replied
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+          end
+
+          context 'when References header contains article message-id' do
+            include_context 'ticket reference in References header'
+            include_examples 'creates a new ticket'
+          end
+        end
+
+        context 'when configured to search attachments' do
+          before { Setting.set('postmaster_follow_up_search_in', 'attachment') }
+
+          context 'when subject contains ticket reference' do
+            include_context 'ticket reference in subject'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when body contains ticket reference' do
+            include_context 'ticket reference in body'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when attachment contains ticket reference' do
+            include_context 'ticket reference in attachment'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when In-Reply-To header contains article message-id' do
+            include_context 'ticket reference in In-Reply-To header'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when References header contains article message-id' do
+            include_context 'ticket reference in References header'
+            include_examples 'creates a new ticket'
+
+            context 'and Auto-Submitted header reads "auto-replied"' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+                References: #{article.message_id}
+                Auto-Submitted: auto-replied
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+          end
+        end
+
+        context 'when configured to search headers' do
+          before { Setting.set('postmaster_follow_up_search_in', 'references') }
+
+          context 'when subject contains ticket reference' do
+            include_context 'ticket reference in subject'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when body contains ticket reference' do
+            include_context 'ticket reference in body'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when attachment contains ticket reference' do
+            include_context 'ticket reference in attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when In-Reply-To header contains article message-id' do
+            include_context 'ticket reference in In-Reply-To header'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when References header contains article message-id' do
+            include_context 'ticket reference in References header'
+            include_examples 'adds message to ticket'
+
+            context 'that matches two separate tickets' do
+              let!(:newer_ticket) { create(:ticket) }
+              let!(:newer_article) { create(:ticket_article, ticket: newer_ticket, message_id: article.message_id) }
+
+              it 'returns more recently created ticket' do
+                expect(described_class.new.process({}, raw_mail).first).to eq(newer_ticket)
+              end
+
+              it 'adds message to more recently created ticket' do
+                expect { described_class.new.process({}, raw_mail) }
+                  .to change { newer_ticket.articles.count }.by(1)
+                  .and not_change { ticket.articles.count }
+              end
+            end
+
+            context 'and Auto-Submitted header reads "auto-replied"' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+                References: #{article.message_id}
+                Auto-Submitted: auto-replied
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+          end
+        end
+
+        context 'when configured to search everything' do
+          before { Setting.set('postmaster_follow_up_search_in', %w[body attachment references]) }
+
+          context 'when subject contains ticket reference' do
+            include_context 'ticket reference in subject'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when body contains ticket reference' do
+            include_context 'ticket reference in body'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when attachment contains ticket reference' do
+            include_context 'ticket reference in attachment'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when In-Reply-To header contains article message-id' do
+            include_context 'ticket reference in In-Reply-To header'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when References header contains article message-id' do
+            include_context 'ticket reference in References header'
+            include_examples 'adds message to ticket'
+
+            context 'and Auto-Submitted header reads "auto-replied"' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+                References: #{article.message_id}
+                Auto-Submitted: auto-replied
+
+                Lorem ipsum dolor
+              RAW
+
+              include_examples 'adds message to ticket'
             end
           end
         end
       end
 
-      context 'when configured to search body' do
-        before { Setting.set('postmaster_follow_up_search_in', 'body') }
+      context 'for a closed ticket' do
+        let(:ticket) { create(:ticket, state_name: 'closed') }
 
-        context 'when body contains ticket reference' do
-          context 'in visible text' do
-            let(:raw_mail) { File.read(mail_file).sub(/Hallo =\nMartin,(?=<o:p>)/, ticket_ref) }
+        let(:raw_mail) { <<~RAW.chomp }
+          From: me@example.com
+          To: customer@example.com
+          Subject: #{ticket_ref}
 
-            it 'adds message to ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .to change { ticket.articles.length }
-            end
-          end
+          Lorem ipsum dolor
+        RAW
 
-          context 'as part of a larger word' do
-            let(:raw_mail) { File.read(mail_file).sub(/(?<=Hallo) =\n(?=Martin,<o:p>)/, ticket_ref) }
-
-            it 'creates a separate ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .not_to change { ticket.articles.length }
-            end
-          end
-
-          context 'in html attributes' do
-            let(:raw_mail) { File.read(mail_file).sub(%r{<a href.*?/a>}m, %(<table bgcolor="#{ticket_ref}"> </table>)) }
-
-            it 'creates a separate ticket' do
-              expect { described_class.new.process({}, raw_mail) }
-                .not_to change { ticket.articles.length }
-            end
-          end
+        it 'reopens it' do
+          expect { described_class.new.process({}, raw_mail) }
+            .to change { ticket.reload.state.name }.to('open')
         end
       end
     end

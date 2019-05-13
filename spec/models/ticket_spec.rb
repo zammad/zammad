@@ -255,11 +255,94 @@ RSpec.describe Ticket, type: :model do
         end
       end
     end
+
+    describe '#subject_build' do
+      context 'with default "ticket_hook_position" setting ("right")' do
+        it 'returns the given string followed by a ticket reference (of the form "[Ticket#123]")' do
+          expect(ticket.subject_build('foo'))
+            .to eq("foo [Ticket##{ticket.number}]")
+        end
+
+        context 'and a non-default value for the "ticket_hook" setting' do
+          before { Setting.set('ticket_hook', 'bar baz') }
+
+          it 'replaces "Ticket#" with the new ticket hook' do
+            expect(ticket.subject_build('foo'))
+              .to eq("foo [bar baz#{ticket.number}]")
+          end
+        end
+
+        context 'and a non-default value for the "ticket_hook_divider" setting' do
+          before { Setting.set('ticket_hook_divider', ': ') }
+
+          it 'inserts the new ticket hook divider between "Ticket#" and the ticket number' do
+            expect(ticket.subject_build('foo'))
+              .to eq("foo [Ticket#: #{ticket.number}]")
+          end
+        end
+
+        context 'when the given string already contains a ticket reference, but in the wrong place' do
+          it 'moves the ticket reference to the end' do
+            expect(ticket.subject_build("[Ticket##{ticket.number}] foo"))
+              .to eq("foo [Ticket##{ticket.number}]")
+          end
+        end
+
+        context 'when the given string already contains an alternately formatted ticket reference' do
+          it 'reformats the ticket reference' do
+            expect(ticket.subject_build("foo [Ticket#: #{ticket.number}]"))
+              .to eq("foo [Ticket##{ticket.number}]")
+          end
+        end
+      end
+
+      context 'with alternate "ticket_hook_position" setting ("left")' do
+        before { Setting.set('ticket_hook_position', 'left') }
+
+        it 'returns a ticket reference (of the form "[Ticket#123]") followed by the given string' do
+          expect(ticket.subject_build('foo'))
+            .to eq("[Ticket##{ticket.number}] foo")
+        end
+
+        context 'and a non-default value for the "ticket_hook" setting' do
+          before { Setting.set('ticket_hook', 'bar baz') }
+
+          it 'replaces "Ticket#" with the new ticket hook' do
+            expect(ticket.subject_build('foo'))
+              .to eq("[bar baz#{ticket.number}] foo")
+          end
+        end
+
+        context 'and a non-default value for the "ticket_hook_divider" setting' do
+          before { Setting.set('ticket_hook_divider', ': ') }
+
+          it 'inserts the new ticket hook divider between "Ticket#" and the ticket number' do
+            expect(ticket.subject_build('foo'))
+              .to eq("[Ticket#: #{ticket.number}] foo")
+          end
+        end
+
+        context 'when the given string already contains a ticket reference, but in the wrong place' do
+          it 'moves the ticket reference to the start' do
+            expect(ticket.subject_build("foo [Ticket##{ticket.number}]"))
+              .to eq("[Ticket##{ticket.number}] foo")
+          end
+        end
+
+        context 'when the given string already contains an alternately formatted ticket reference' do
+          it 'reformats the ticket reference' do
+            expect(ticket.subject_build("[Ticket#: #{ticket.number}] foo"))
+              .to eq("[Ticket##{ticket.number}] foo")
+          end
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do
     describe '#owner' do
       let(:original_owner) { create(:agent_user, groups: [ticket.group]) }
+
       before { ticket.update(owner: original_owner) }
 
       context 'when assigned directly' do

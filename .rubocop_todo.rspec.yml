@@ -272,7 +272,7 @@ RSpec/NamedSubject:
 
 # Offense count: 545
 RSpec/NestedGroups:
-  Max: 7
+  Max: 8
 
 # Offense count: 28
 # Cop supports --auto-correct.
