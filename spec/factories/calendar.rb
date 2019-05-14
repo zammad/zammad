@@ -46,31 +46,31 @@ FactoryBot.define do
         {
           mon: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           tue: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           wed: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           thu: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           fri: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           sat: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
           sun: {
             active:     true,
-            timeframes: [ ['00:00', '23:59'] ]
+            timeframes: [ ['00:00', '24:00'] ]
           },
         }
       end
