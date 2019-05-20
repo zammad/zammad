@@ -4,6 +4,8 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
   observe 'sla', 'calendar'
 
   def after_commit(record)
+    return if _check(record)
+
     _rebuild(record)
   end
 
@@ -37,7 +39,7 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
     end
     return true if !changed
 
-    _rebuild(record)
+    false
   end
 
 end

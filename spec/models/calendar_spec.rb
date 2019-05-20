@@ -86,7 +86,7 @@ RSpec.describe Calendar, type: :model do
 
   describe '#sync' do
     subject(:calendar) do
-      create(:calendar, ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'))
+      create(:calendar, ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'), default: false)
     end
 
     before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
@@ -105,6 +105,27 @@ RSpec.describe Calendar, type: :model do
           expect { calendar.sync }
             .not_to change { calendar.public_holidays }
         end
+        it 'does not create a background job for escalation rebuild' do
+          calendar  # create and sync (1 inital background job is created)
+          expect { calendar.sync } # a second sync right after calendar create
+            .to not_change { Delayed::Job.count }
+        end
+      end
+
+      context 'and current date has changed but neither public_holidays nor iCal URL have changed (past cache expiry)' do
+        before do
+          calendar  # create and sync
+          travel 2.days
+        end
+
+        it 'is idempotent' do
+          expect { calendar.sync }
+            .not_to change { calendar.public_holidays }
+        end
+        it 'does not create a background job for escalation rebuild' do
+          expect { calendar.sync }
+            .not_to change { Delayed::Job.count }
+        end
       end
 
       context 'and current date has changed (past cache expiry)' do
@@ -121,6 +142,10 @@ RSpec.describe Calendar, type: :model do
             '2019-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
             '2020-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => Digest::MD5.hexdigest(calendar.ical_url) },
           )
+        end
+
+        it 'does create a background job for escalation rebuild' do
+          expect { calendar.sync }.to change { Delayed::Job.count }.by(1)
         end
       end
 
