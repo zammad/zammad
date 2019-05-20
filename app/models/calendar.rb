@@ -166,9 +166,7 @@ returns
       end
 
       # sync with public_holidays
-      if !public_holidays
-        self.public_holidays = {}
-      end
+      self.public_holidays ||= {}
 
       # remove old ical entries if feed has changed
       public_holidays.each do |day, meta|
@@ -180,12 +178,13 @@ returns
 
       # sync new ical feed dates
       events.each do |day, summary|
-        if !public_holidays[day]
-          public_holidays[day] = {}
-        end
+        public_holidays[day] ||= {}
 
         # ignore if already added or changed
         next if public_holidays[day].key?('active')
+
+        # entry already exists
+        next if summary == public_holidays[day][:summary]
 
         # create new entry
         public_holidays[day] = {
