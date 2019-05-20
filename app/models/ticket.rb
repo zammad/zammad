@@ -311,6 +311,12 @@ returns
       # quiet update of reassign of articles
       Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]]) # rubocop:disable Rails/SkipsModelValidations
 
+      # mark target ticket as updated
+      # otherwise the "received_merge" history entry
+      # will be the same as the last updated_at
+      # which might be a long time ago
+      target_ticket.updated_at = Time.zone.now
+
       # add merge event to both ticket's history (Issue #2469 - Add information "Ticket merged" to History)
       target_ticket.history_log(
         'received_merge',

@@ -81,6 +81,14 @@ RSpec.describe Ticket, type: :model do
       context 'when merging' do
         let(:merge_user) { create(:user) }
 
+        before do
+          # create target ticket early
+          # to avoid a race condition
+          # when creating the history entries
+          target_ticket
+          travel 5.minutes
+        end
+
         it 'creates history entries in both the origin ticket and the target ticket' do
           ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
 
