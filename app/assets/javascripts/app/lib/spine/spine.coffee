@@ -60,6 +60,12 @@ Events =
         for ev in events
           for idx in [listeningTo.length-1..0]
             lt = listeningTo[idx]
+            # 2019-05-20 (me): check if listeningTo has content
+            # in certain cases (e. g. http://localhost:3000/#knowledge_base/1/locale/en-us/edit just
+            # change the title and submit) a `Uncaught TypeError: Cannot read property 'obj' of undefined`
+            # is raised. The reason is that listeningToOnce is an empty array.
+            continue if !lt
+            # /2019-05-20 (me)
             continue unless lt.obj is obj
             continue if callback and lt.callback isnt callback
             if (not ev) or (ev is lt.ev)
