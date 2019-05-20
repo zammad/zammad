@@ -38,7 +38,9 @@ returns calendar object
 
     # call for calendar suggestion
     calendar_details = Service::GeoCalendar.location(ip)
-    return if !calendar_details
+    return if calendar_details.blank?
+    return if calendar_details['name'].blank?
+    return if calendar_details['business_hours'].blank?
 
     calendar_details['name'] = Calendar.generate_uniq_name(calendar_details['name'])
     calendar_details['default'] = true
