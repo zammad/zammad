@@ -12,6 +12,8 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
     # return if we run import mode
     return true if Setting.get('import_mode')
 
+    return true if BulkImportInfo.enabled?
+
     return true if record.destroyed?
 
     return true if !record.customer_id
