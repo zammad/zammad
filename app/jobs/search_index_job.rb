@@ -1,6 +1,8 @@
 class SearchIndexJob < ApplicationJob
 
-  retry_on StandardError, attempts: 20
+  retry_on StandardError, attempts: 20, wait: lambda { |executions|
+    executions * 10.seconds
+  }
 
   def perform(object, o_id)
     @object = object
