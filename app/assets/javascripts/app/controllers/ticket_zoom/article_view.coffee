@@ -291,7 +291,7 @@ class ArticleViewItem extends App.ObserverController
   toggleMetaWithDelay: (e) =>
     # allow double click select
     # by adding a delay to the toggle
-    delay = 120
+    delay = 300
 
     if @lastClick and +new Date - @lastClick < delay
       clearTimeout(@toggleMetaTimeout)
