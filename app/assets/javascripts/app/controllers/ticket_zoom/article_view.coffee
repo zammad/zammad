@@ -348,6 +348,11 @@ class ArticleViewItem extends App.ObserverController
     # by adding a delay to the toggle
     delay = 300
 
+    article = $(e.target).closest('.ticket-article-item')
+    if @elementContainsSelection(article.get(0))
+      @stopPropagation(e)
+      return false
+
     if @lastClick and +new Date - @lastClick < delay
       clearTimeout(@toggleMetaTimeout)
     else
