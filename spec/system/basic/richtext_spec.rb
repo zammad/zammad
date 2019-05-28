@@ -33,7 +33,7 @@ RSpec.describe 'Richtext', type: :system do
         'and some other for browser'
       )
 
-      expect(element).to have_content("some test for browser \nand some other for browser")
+      expect(element).to have_content(/some test for browser\s?\nand some other for browser/)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe 'Richtext', type: :system do
         'and some other for browser'
       )
 
-      expect(element).to have_content("some test for browser \nand some other for browser")
+      expect(element).to have_content(/some test for browser\s?\nand some other for browser/)
     end
   end
 end
