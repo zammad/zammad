@@ -32,11 +32,11 @@ class App.ControllerForm extends App.Controller
     @form.prepend('<div class="alert alert--danger js-danger js-alert hide" role="alert"></div>')
     @form.prepend('<div class="alert alert--success js-success hide" role="alert"></div>')
 
-    if @handlers
-      params = App.ControllerForm.params(@form)
-      for attribute in @attributes
-        for handler in @handlers
-          handler(params, attribute, @attributes, @idPrefix, @form, @)
+    # Fix for Issue #2510 - Zammad Customers shown as Agents in IE
+    # Previously the handlers are called directly, before the DOM elements are ready, thereby causing a race condition under IE11.
+    # Now we only dispatch the handlers after the DOM is ready.
+    if @handlers.length
+      $(@dispatch_handlers)
 
     # if element is given, prepend form to it
     if @el
@@ -51,6 +51,12 @@ class App.ControllerForm extends App.Controller
 
     @finishForm = true
     @form
+
+  dispatch_handlers: =>
+    params = App.ControllerForm.params(@form)
+    for attribute in @attributes
+      for handler in @handlers
+        handler(params, attribute, @attributes, @idPrefix, @form, @)
 
   showAlert: (message) =>
     @form.find('.alert--danger').first().removeClass('hide').html(App.i18n.translateInline(message))
@@ -428,6 +434,7 @@ class App.ControllerForm extends App.Controller
     # get contenteditable
     for element in lookupForm.find('[contenteditable]')
       name = $(element).data('name')
+
       if name
         param[name] = $(element).ceg()
 
