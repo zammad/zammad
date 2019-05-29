@@ -64,6 +64,40 @@ class Ldap
       groups
     end
 
+    # Ensures users in multiple groups do not get mapped to conflicting roles.
+    #
+    # @param user_roles_mapping [Array<Number>] The group DN to local role mapping.
+    #
+    # @example
+    #  user_roles_mapping = [1,2,3]
+    #  ldap_group.resolve_role_conflicts(user_roles_mapping)
+    #  #=> [2,1]
+    #
+    # @return [Array<Number>] The user DN to local role IDs mapping.
+    def resolve_role_conflicts(user_roles_mapping)
+
+      #Do not attempt to resolve conflicts for empty or single item arrays
+      return user_roles_mapping if user_roles_mapping.length <= 1
+
+      #Reverse sort to give preference to highest privlege roles.
+      result = user_roles_mapping.sort { |a, b| b <=> a }
+
+      result.each do |role|
+
+        role_object = Role.lookup(id: role)
+        next if role_object.preferences[:not].blank?
+
+        role_object.preferences[:not].each do |local_role_name|
+          local_role = Role.lookup(name: local_role_name)
+          next if !local_role
+          next if result.exclude?(local_role.id)
+
+          result.delete(role_object.id)
+        end
+      end
+      result
+    end
+
     # Creates a mapping for user DN and local role IDs based on a given group DN to local role ID mapping.
     #
     # @param mapping [Hash{String=>String}] The group DN to local role mapping.
@@ -99,9 +133,9 @@ class Ldap
 
             result[user_dn_key].push(role)
           end
+          result[user_dn_key] = resolve_role_conflicts(result[user_dn_key])
         end
       end
-
       result
     end
 
