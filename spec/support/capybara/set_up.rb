@@ -1,11 +1,6 @@
 RSpec.configure do |config|
   config.before(:each, type: :system) do |example|
 
-    # make sure system is in a fresh state
-    Cache.clear
-    Setting.reload
-    BulkImportInfo.disable
-
     # check if system is already set up
     next if Setting.get('system_init_done')
 

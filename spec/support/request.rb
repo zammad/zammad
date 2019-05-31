@@ -143,6 +143,12 @@ RSpec.configure do |config|
   #     let(:user) { create(:customer_user) }
   #
   config.before(:each, :authenticated_as) do |example|
-    authenticated_as(send(example.metadata[:authenticated_as]))
+    @current_user = if example.metadata[:authenticated_as].is_a? Proc
+                      instance_exec(&example.metadata[:authenticated_as])
+                    else
+                      create(*Array(example.metadata[:authenticated_as]))
+                    end
+
+    authenticated_as @current_user unless @current_user.nil?
   end
 end

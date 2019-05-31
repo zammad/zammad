@@ -2089,7 +2089,6 @@ RSpec.describe 'Ticket', type: :request do
     describe 'reopening a ticket' do
       shared_examples 'successfully reopen a ticket' do
         it 'succeeds' do
-          authenticated_as(user)
           put "/api/v1/tickets/#{ticket.id}",
               params: { state_id: Ticket::State.find_by(name: 'open').id },
               as:     :json
@@ -2101,7 +2100,6 @@ RSpec.describe 'Ticket', type: :request do
 
       shared_examples 'fail to reopen a ticket' do
         it 'fails' do
-          authenticated_as(user)
           put "/api/v1/tickets/#{ticket.id}",
               params: { state_id: Ticket::State.find_by(name: 'open').id },
               as:     :json
@@ -2114,44 +2112,32 @@ RSpec.describe 'Ticket', type: :request do
       context 'when ticket.group.follow_up_possible = "yes"' do
         before { ticket.group.update(follow_up_possible: 'yes') }
 
-        context 'as admin' do
-          include_examples 'successfully reopen a ticket' do
-            let(:user) { admin }
-          end
+        context 'as admin', authenticated_as: -> { admin } do
+          include_examples 'successfully reopen a ticket'
         end
 
-        context 'as agent' do
-          include_examples 'successfully reopen a ticket' do
-            let(:user) { agent }
-          end
+        context 'as agent', authenticated_as: -> { agent } do
+          include_examples 'successfully reopen a ticket'
         end
 
-        context 'as customer' do
-          include_examples 'successfully reopen a ticket' do
-            let(:user) { customer }
-          end
+        context 'as customer', authenticated_as: -> { customer } do
+          include_examples 'successfully reopen a ticket'
         end
       end
 
       context 'when ticket.group.follow_up_possible = "new_ticket"' do
         before { ticket.group.update(follow_up_possible: 'new_ticket') }
 
-        context 'as admin' do
-          include_examples 'successfully reopen a ticket' do
-            let(:user) { admin }
-          end
+        context 'as admin', authenticated_as: -> { admin } do
+          include_examples 'successfully reopen a ticket'
         end
 
-        context 'as agent' do
-          include_examples 'successfully reopen a ticket' do
-            let(:user) { agent }
-          end
+        context 'as agent', authenticated_as: -> { agent } do
+          include_examples 'successfully reopen a ticket'
         end
 
-        context 'as customer' do
-          include_examples 'fail to reopen a ticket' do
-            let(:user) { customer }
-          end
+        context 'as customer', authenticated_as: -> { customer } do
+          include_examples 'fail to reopen a ticket'
         end
       end
     end
