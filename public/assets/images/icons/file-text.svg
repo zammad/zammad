@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="31px" viewBox="0 0 24 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>file-text</title>
+    <desc>Created with Sketch.</desc>
+    <g id="file-text" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="file-background" fill="#DFE5E8" fill-rule="nonzero">
+            <path d="M2,1 C1.44771525,1 1,1.44771525 1,2 L1,29 C1,29.5522847 1.44771525,30 2,30 L22,30 C22.5522847,30 23,29.5522847 23,29 L23,2 C23,1.44771525 22.5522847,1 22,1 L2,1 Z M2,0 L22,0 C23.1045695,0 24,0.8954305 24,2 L24,29 C24,30.1045695 23.1045695,31 22,31 L2,31 C0.8954305,31 0,30.1045695 0,29 L0,2 C0,0.8954305 0.8954305,0 2,0 Z" id="border"></path>
+        </g>
+        <path d="M4,11 L20,11 L20,13 L4,13 L4,11 Z M4,15 L20,15 L20,17 L4,17 L4,15 Z M4,19 L13,19 L13,21 L4,21 L4,19 Z" id="Combined-Shape" fill="#DFE5E8"></path>
+    </g>
+</svg>

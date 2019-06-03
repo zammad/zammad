@@ -201,6 +201,14 @@
             <path d="M13 9a6 6 0 0 1 6 6h-6V9z"/>
         </g>
     </g>
+</symbol><symbol id="icon-file-text" viewBox="0 0 24 31">
+    <title>
+        file-text
+    </title>
+    <g fill="#DFE5E8" fill-rule="evenodd">
+        <path d="M2 1a1 1 0 0 0-1 1v27a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2zm0-1h20a2 2 0 0 1 2 2v27a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" fill-rule="nonzero"/>
+        <path d="M4 11h16v2H4v-2zm0 4h16v2H4v-2zm0 4h9v2H4v-2z"/>
+    </g>
 </symbol><symbol id="icon-file-unknown" viewBox="0 0 24 31">
     <title>
         file-unknown
