@@ -21,6 +21,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     'click .js-global-search-result': 'emptyAndCloseDelayed'
     'click .js-details-link': 'openExtendedSearch'
     'change .js-menu .js-switch input': 'switch'
+    'click .js-onclick': 'click'
 
   constructor: ->
     super
@@ -97,6 +98,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
             item.switch = worker.switch()
           if worker.active && worker.active()
             activeTab[item.target] = true
+          if worker.onclick
+            item.onclick = worker.onclick()
+          if worker.accessoryIcon
+            item.accessoryIcon = worker.accessoryIcon()
           if worker.featureActive
             if worker.featureActive()
               shown = true
@@ -119,6 +124,13 @@ class App.Navigation extends App.ControllerWidgetPermanent
       openTab:   openTab
       activeTab: activeTab
     )
+
+  click: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    key    = $(e.currentTarget).data('key')
+    worker = App.TaskManager.worker(key)
+    worker.clicked(e)
 
   #  on switch changes and execute it on controller
   switch: (e) ->

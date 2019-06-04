@@ -51,6 +51,16 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     return if value of attribute.options
     return if value in (temp for own prop, temp of attribute.options)
 
+    if _.isArray(attribute.options)
+      # Array of Strings (value)
+      return if value of attribute.options
+
+      # Array of Objects (for ordering purposes)
+      return if attribute.options.filter((elem) -> elem.value == value) isnt null
+    else
+      # regular Object
+      return if value in (temp for own prop, temp of attribute.options)
+
     if attribute.historical_options && value of attribute.historical_options
       attribute.options[value] = attribute.historical_options[value]
     else

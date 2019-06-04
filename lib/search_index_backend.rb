@@ -351,7 +351,17 @@ remove whole data from index
       }
     }
 
+    if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
+      condition['query_string']['fields'] = fields
+    end
+
     query_data = build_query(condition, options)
+
+    if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
+      fields_for_highlight = fields.each_with_object({}) { |elem, memo| memo[elem] = {} }
+
+      query_data[:highlight] = { fields: fields_for_highlight }
+    end
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
     Rails.logger.debug { " -d'#{query_data.to_json}'" }
@@ -385,10 +395,16 @@ remove whole data from index
     data.map do |item|
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
 
-      {
-        id:   item['_id'],
+      output = {
+        id:   item['_id'].to_i,
         type: item['_type'],
       }
+
+      if options.dig(:highlight_fields_by_indexes, index.to_sym)
+        output[:highlight] = item['highlight']
+      end
+
+      output
     end
   end
 

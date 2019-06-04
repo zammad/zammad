@@ -1,0 +1,10 @@
+<a href="<%- @item.url %>">
+  <span class="section-inner">
+  	<% if @item.iconFont: %>
+    <%- @fontIcon(@item.icon, @iconset) %>
+  	<% else: %>
+  	<%- @Icon(@item.icon) %>
+    <% end %>
+    <span><%= @item.title  %></span>
+  </span>
+</a>

@@ -85,9 +85,9 @@ class App.Search extends App.Controller
 
     @tabs = []
     for model in App.Config.get('models_searchable')
-      model = model.replace(/::/, '')
+      model = model.replace(/::/g, '')
       tab =
-        name: model
+        name: App[model]?.display_name || model
         model: model
         count: 0
         active: false

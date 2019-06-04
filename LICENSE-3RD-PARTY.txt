@@ -163,3 +163,28 @@ Source: https://gist.github.com/sbrin/6801034
 Copyright: 2015, sbrin - https://github.com/sbrin
 License: MIT license
 -----------------------------------------------------------------------------
+ant-design icon font
+Source: https://github.com/ant-design/ant-design
+Copyright: 2015-present Alipay.com, https://www.alipay.com/
+License: MIT license
+-----------------------------------------------------------------------------
+Font Awesome icon font
+Source: http://fontawesome.io/
+Copyright: Font Awesome by Dave Gandy - http://fontawesome.io
+License: SIL OFL 1.1
+-----------------------------------------------------------------------------
+Simple line icons font
+Source: https://github.com/thesabbir/simple-line-icons
+Copyright: 2016 Sabbir Ahmed & All Contributors
+License: MIT license
+-----------------------------------------------------------------------------
+Ionicons icon font
+Source: https://github.com/ionic-team/ionicons
+Copyright: 2016 Drifty (http://drifty.com/)
+License: MIT license
+-----------------------------------------------------------------------------
+Material icon font
+Source: https://github.com/google/material-design-icons
+Copyright: Google
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------

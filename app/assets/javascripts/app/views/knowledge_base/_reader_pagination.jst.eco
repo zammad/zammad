@@ -1,0 +1,13 @@
+<% if @previousAnswer: %>
+  <a href="<%- @previousAnswer.url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--prev">
+    <%- @Icon('arrow-left') %>
+    <span class="knowledge-base-article-nav-link-title"><%= @previousAnswer.title %></span>
+  </a>
+<% end %>
+
+<% if @nextAnswer: %>
+  <a href="<%- @nextAnswer.url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--next">
+    <span class="knowledge-base-article-nav-link-title"><%= @nextAnswer.title %></span>
+    <%- @Icon('arrow-right') %>
+  </a>
+<% end %>

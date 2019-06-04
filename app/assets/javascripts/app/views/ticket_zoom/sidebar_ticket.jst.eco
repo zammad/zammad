@@ -3,4 +3,5 @@
 </form>
 <div class="tags"></div>
 <div class="links"></div>
+<div class="link_kb_answers"></div>
 <div class="js-timeUnit"></div>

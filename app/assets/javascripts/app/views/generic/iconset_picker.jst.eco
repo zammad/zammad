@@ -1,0 +1,15 @@
+<input type="text" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
+<div class="icon-sets">
+	<% for family, set of @sets: %>
+	<div class="icon-set js-set<%= if @attribute.value is family then ' is-active' %>" data-family="<%= family %>">
+		<div class="icon-set-preview js-preview">
+			<div class="loading icon small"></div>
+		</div>
+		<div class="icon-set-meta">
+			<span class="icon-set-name"><%= set.name %></span>
+			<span class="icon-set-version"><%= set.version %></span>
+			<a href="<%= set.website %>" target="_blank" class="icon-set-website"><%- @T('Website') %></a>
+		</div>
+	</div>
+	<% end %>
+</div>

@@ -1,21 +1,33 @@
 <fieldset>
-  <%- @T('Link') %>
-  <%- @T(@link_object) %>
+  <% if @link_types.length > 1: %>
+    <%- @T('Link') %>
+    <%- @T(@link_object) %>
+  <% end %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
-  <%- @T('as') %>
-  <select name="link_type" class="span2" required>
-    <option value="normal"><%- @T('Normal') %></option>
-    <option value="child"><%- @T('Child') %></option>
-    <option value="parent"><%- @T('Parent') %></option>
-  </select>
-  <%- @T('of') %>
-  Ticket#
-  <%= @object.number %>.
 
-  <hr>
-  <h4><%- @T('Recent Customer Tickets') %></h4>
-  <div id="ticket-merge-customer-tickets"></div>
-  <hr>
-  <h4><%- @T('Recent viewed Tickets') %></h4>
-  <div id="ticket-merge-recent-tickets"></div>
+  <% if @link_types.length > 1: %>
+    <%- @T('as') %>
+    <select name="link_type" class="span2" required>
+      <% for link_type in @link_types: %>
+        <option value="<%= link_type[0] %>"><%- @T(link_type[1]) %></option>
+      <% end %>
+    </select>
+    <%- @T('of') %>
+    Ticket#
+    <%= @object.number %>.
+  <% else: %>
+    <input type="hidden" name="link_type" value="<%= @link_types[0][0] %>"/>
+  <% end %>
+
+  <% if @hasByCustomer: %>
+    <hr>
+    <h4><%- @T('Recent Customer Tickets') %></h4>
+    <div id="ticket-merge-customer-tickets"></div>
+  <% end %>
+
+  <% if @hasRecentViewed: %>
+    <hr>
+    <h4><%- @T('Recent viewed Tickets') %></h4>
+    <div id="ticket-merge-recent-tickets"></div>
+  <% end %>
 </fieldset>

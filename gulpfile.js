@@ -22,6 +22,8 @@ gulp.task('svgstore', function () {
           // remove green-screen color
           $('[fill="#50E3C2"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
           $('[fill="#BD0FE1"]').attr('fill', 'currentColor').parents('[fill="none"]').removeAttr('fill');
+          // color in Sketch changed slightly BD0FE1 -> BD10E0
+          $('[fill="#BD10E0"]').attr('fill', 'currentColor').parents('[fill="none"]').removeAttr('fill');
       },
       parserOptions: { xmlMode: true }
     }))

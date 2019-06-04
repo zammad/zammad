@@ -1,0 +1,10 @@
+<%= @T(@answer.can_be_published_state()) %>
+
+<% if user = @answer.can_be_published_by(): %>
+  <%= @T('by') %>
+  <%= user.displayName() %>
+<% end %>
+
+<% if date = @answer.can_be_published_at(): %>
+  <%- @humanTime(date) %>
+<% end %>

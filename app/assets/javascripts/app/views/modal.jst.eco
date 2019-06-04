@@ -1,5 +1,7 @@
 <div class="modal-dialog">
-  <form autocomplete="off">
+  <% if @includeForm: %>
+    <form autocomplete="off">
+  <% end %>
     <div class="modal-content">
       <div class="modal-header">
   <% if @buttonClose: %>
@@ -39,5 +41,7 @@
   <% end %>
       </div>
     </div>
-  </form>
+  <% if @includeForm: %>
+    </form>
+  <% end %>
 </div>

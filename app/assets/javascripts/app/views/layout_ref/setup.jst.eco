@@ -74,7 +74,7 @@
     <div class="wizard-slide hide" data-slide="channels">
       <h2>Connect Channels</h2>
       <div class="wizard-body vertical center">
-        <p class="help-block help-block--center">Setup the communication channels you want to sync with your Zammad inbox</p>
+        <p class="text-center">Setup the communication channels you want to sync with your Zammad inbox</p>
         <div class="wizard-buttonList vertical">
           <div class="btn auth_provider auth_provider--wide email" data-target="emailStart">
             <div class="email provider_icon"></div>

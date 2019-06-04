@@ -22,7 +22,7 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
     # Builds a case insenstive OR SQL grouping. This comes in handy for join queries.
     # For direct WHERE queries prefer .where_or_cis scope.
     #
-    # @param [Array] attributes the attributes that should get queried case insensitive.
+    # @param [Array] attributes the attributes that should get queried case insensitive. Strings or Arel attributes
     # @param [String] query the SQL query that should be used for each given attribute.
     #
     # @example
@@ -32,9 +32,13 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
     def or_cis(attributes, query)
       # use Arel to create an Array of case insenstive
       # LIKE queries based on the current DB adapter
-      cis_matches = attributes.map do |attribute|
-        arel_table[attribute].matches(query)
-      end
+      cis_matches = attributes
+                    .map do |attribute|
+                      next attribute if attribute.is_a? Arel::Attributes::Attribute
+
+                      arel_table[attribute]
+
+                    end.map { |attribute| attribute.matches(query) }
 
       # return the by OR joined Arel queries
       cis_matches.inject(:or)

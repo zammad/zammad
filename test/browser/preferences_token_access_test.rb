@@ -66,7 +66,7 @@ class PreferencesTokenAccessTest < TestCase
       value: 'Some App#2'
     )
 
-    click(css: '.content.active .js-tokenList a')
+    click(css: '.content.active .js-tokenList .js-delete')
 
     modal_ready()
     watch_for(

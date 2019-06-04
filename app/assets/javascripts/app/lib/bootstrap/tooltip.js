@@ -33,12 +33,14 @@
     animation: true,
     placement: 'top',
     selector: false,
+    backdrop: false,
     template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
     trigger: 'hover focus',
     title: '',
     delay: 0,
     html: false,
     container: false,
+    theme: 'light',
     viewport: {
       selector: 'body',
       padding: 0
@@ -161,8 +163,11 @@
       var tipId = this.getUID(this.type)
 
       this.setContent()
-      $tip.attr('id', tipId)
+      $tip.attr('id', tipId).attr('data-theme', this.options.theme)
       this.$element.attr('aria-describedby', tipId)
+
+      if(this.options.backdrop)
+        this.$tip.on('click.bs.tooltip.stopPropagation', function(event){ event.stopPropagation() })
 
       if (this.options.animation) $tip.addClass('fade')
 
@@ -210,6 +215,8 @@
         var prevHoverState = that.hoverState
         that.$element.trigger('shown.bs.' + that.type)
         that.hoverState = null
+        if(that.options.backdrop)
+          $(document).one('click.bs.tooltip', function(){ that.hide() })
 
         if (prevHoverState == 'out') that.leave(that)
       }
@@ -436,6 +443,9 @@
     clearTimeout(this.timeout)
     this.hide(function () {
       that.$element.off('.' + that.type).removeData('bs.' + that.type)
+
+      if(that.options.backdrop)
+        that.$tip.off('click.bs.tooltip.stopPropagation')
     })
   }
 

@@ -49,8 +49,9 @@ class Index extends App.ControllerSubContent
   delete: (e) =>
     e.preventDefault()
 
+    id = $(e.currentTarget).data('token-id')
+
     callback = =>
-      id = $(e.target).closest('a').data('token-id')
       @ajax(
         id:          'user_access_token_delete'
         type:        'DELETE'

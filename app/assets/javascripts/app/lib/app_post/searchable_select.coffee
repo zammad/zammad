@@ -115,7 +115,6 @@ class App.SearchableSelect extends Spine.Controller
   onDropdownShown: =>
     @input.on 'click', @stopPropagation
     @highlightFirst()
-    $(document).on 'keydown.searchable_select', @navigate
     if @level > 0
       @showSubmenu(@currentMenu)
     @isOpen = true
@@ -123,7 +122,6 @@ class App.SearchableSelect extends Spine.Controller
   onDropdownHidden: =>
     @input.off 'click', @stopPropagation
     @unhighlightCurrentItem()
-    $(document).off 'keydown.searchable_select'
     @isOpen = false
 
     if !@input.val()
@@ -359,8 +357,10 @@ class App.SearchableSelect extends Spine.Controller
 
   onBlur: ->
     @clearAutocomplete()
+    @input.off 'keydown.searchable_select'
 
   onFocus: ->
+    @input.on 'keydown.searchable_select', @navigate
     textEnd = @input.val().length
     @input.prop('selectionStart', textEnd)
     @input.prop('selectionEnd', textEnd)
@@ -372,8 +372,9 @@ class App.SearchableSelect extends Spine.Controller
   onShadowChange: ->
     value = @shadowInput.val()
 
-    for option in @attribute.options
-      option.selected = (option.value + '') == value # makes sure option value is always a string
+    if Array.isArray(@attribute.options)
+      for option in @attribute.options
+        option.selected = (option.value + '') == value # makes sure option value is always a string
 
   onInput: (event) =>
     @toggle() if not @isOpen

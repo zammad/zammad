@@ -99,6 +99,10 @@ get assets and record_ids of selector
     assets
   end
 
+  def assets_added_to?(data)
+    data.dig(self.class.to_app_model, id).present?
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
@@ -159,6 +163,33 @@ get assets of object list
         end
       end
       assets
+    end
+  end
+
+=begin
+
+Compiles an assets hash for given items
+
+@param items  [Array<CanAssets>] list of items responding to @see #assets
+@param data   [Hash] given collection. Empty {} or assets collection in progress
+@param suffix [String] try to use non-default assets method
+@return [Hash] collection including assets of items
+
+@example
+  list = Ticket.all
+  ApplicationModel::CanAssets.reduce(list, {})
+
+=end
+
+  def self.reduce(items, data = {}, suffix = nil)
+    items.reduce(data) do |memo, elem|
+      method_name = if suffix.present? && elem.respond_to?("assets_#{suffix}")
+                      "assets_#{suffix}"
+                    else
+                      :assets
+                    end
+
+      elem.send method_name, memo
     end
   end
 end

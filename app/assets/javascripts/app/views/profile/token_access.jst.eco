@@ -34,9 +34,7 @@
         <td><%- @Tdate(token.expires_at) %></td>
         <td><%- @humanTime(token.last_used_at) %></td>
         <td class="settings-list-controls">
-          <div>
-            <a class="settings-list-control js-delete" href="#" data-token-id="<%- token.id %>" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
-          </div>
+          <div class="settings-list-control js-delete" data-token-id="<%- token.id %>" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></div>
       </tr>
     <% end %>
   <% end %>

@@ -97,11 +97,15 @@
                     }
                 };
                 showDropZone = function(dropContainer) {
+                  $(dropContainer).trigger('html5Upload.dropZone.show')
+
                   if ( !$(dropContainer).find('.article-content, .richtext').hasClass('is-dropTarget') ) {
                     $(dropContainer).find('.article-content, .richtext').addClass('is-dropTarget')
                   }
                 }
                 hideDropZone = function(dropContainer) {
+                  $(dropContainer).trigger('html5Upload.dropZone.hide')
+
                   if ( $(dropContainer).find('.article-content, .richtext').hasClass('is-dropTarget') ) {
                     $(dropContainer).find('.article-content, .richtext').removeClass('is-dropTarget')
                   }

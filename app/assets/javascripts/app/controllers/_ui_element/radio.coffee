@@ -1,5 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.radio extends App.UiElement.ApplicationUiElement
+  @template_name: 'radio'
+
   @render: (attribute, params) ->
 
     # build options list based on config
@@ -23,4 +25,4 @@ class App.UiElement.radio extends App.UiElement.ApplicationUiElement
     # filter attributes
     @filterOption(attribute, params)
 
-    $( App.view('generic/radio')( attribute: attribute ) )
+    $( App.view("generic/#{@template_name}")( attribute: attribute ) )

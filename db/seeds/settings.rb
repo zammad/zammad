@@ -4363,3 +4363,44 @@ Setting.create_if_not_exists(
   },
   frontend:    false
 )
+
+Setting.create_if_not_exists(
+  title:       'Kb multi-lingual support',
+  name:        'kb_multi_lingual_support',
+  area:        'Kb::Core',
+  description: 'Support of multi-lingual Knowledge Base.',
+  options:     {},
+  state:       true,
+  preferences: { online_service_disable: true },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       'Kb active',
+  name:        'kb_active',
+  area:        'Kb::Core',
+  description: 'Defines if KB navbar button is enabled',
+  state:       true,
+  preferences: {
+    prio:           1,
+    trigger:        ['menu:render'],
+    authentication: true,
+    permission:     ['admin.knowledge_base'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       'Kb active publicly',
+  name:        'kb_active_publicly',
+  area:        'Kb::Core',
+  description: 'Defines if KB navbar button is enabled for users without KB permission',
+  state:       false,
+  preferences: {
+    prio:           1,
+    trigger:        ['menu:render'],
+    authentication: true,
+    permission:     [],
+  },
+  frontend:    true
+)

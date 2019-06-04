@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+
+  # Rails thinks the singularized version of knowledge_bases is knowledge_basis?!
+  # see: KnowledgeBase.table_name.singularize
+  inflect.singular(/(knowledge_base)s$/i, '\1')
+end

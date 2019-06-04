@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>external</title>
+    <desc>Created with Sketch.</desc>
+    <g id="external" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M14,10 L14,14 L2,14 L2,2 L6,2 L6,4 L4,4 L4,12 L12,12 L12,10 L14,10 Z M14,7 L12,7 L12,4 L9,4 L9,2 L14,2 L14,7 Z" id="border" fill="#50E3C2" fill-rule="nonzero"></path>
+        <rect id="arrow-line" fill="#50E3C2" transform="translate(9.826194, 6.181981) rotate(45.000000) translate(-9.826194, -6.181981) " x="8.82619408" y="2.68198052" width="2" height="7"></rect>
+    </g>
+</svg>

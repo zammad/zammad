@@ -3,6 +3,7 @@ $good-color:      hsl(62,45%,46%);
 $ok-color:        hsl(41,100%,49%);
 $bad-color:       hsl(30,93%,50%);
 $superbad-color:  hsl(19,90%,51%);
+$ghost-color:     hsl(0,0%,80%);
 
 $task-state-closed-color: $supergood-color;
 $task-state-pending-color: hsl(206,7%,28%);
@@ -151,7 +152,7 @@ a {
   &.is-disabled,
   &[disabled] {
     pointer-events: none;
-    cursor: not-allowed;
+    cursor: not-allowed !important;
     opacity: .33;
   }
 }
@@ -386,12 +387,25 @@ pre code.hljs {
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
+  text-decoration: none;
   @extend %clickable;
 
   .icon {
     vertical-align: middle;
-    margin-top: -3px;
+    margin: -2px 5px 0 -2px;
     fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &--only-icon .icon {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   &--icon--last .icon {
@@ -418,31 +432,6 @@ pre code.hljs {
     justify-content: center;
   }
 
-  &--table {
-    padding: 4px 9px;
-    border: none;
-    margin: 5px 6px 0;
-    vertical-align: baseline; /* calendar_subscriptions.jst.eco */
-
-    .icon {
-      vertical-align: middle;
-      @include bidi-style(margin-right, 5px, margin-left, 0);
-      
-      &:only-child {
-        @include bidi-style(margin-right, 5px, margin-left, 0);
-      }
-    }
-
-    .btn-label {
-      margin-left: 0;
-    }
-
-    &.btn--text {
-      padding: 4px 9px;
-      margin: 5px 6px 0;
-    }
-  }
-
   &.is-disabled,
   &[disabled],
   &:disabled {
@@ -456,6 +445,10 @@ pre code.hljs {
     background: hsl(0,0%,98%);
   }
 
+  &--capitalized {
+    text-transform: capitalize;
+  }
+
   &--action {
     text-transform: uppercase;
     color: hsl(0,0%,60%);
@@ -465,6 +458,7 @@ pre code.hljs {
     padding: 0 11px !important;
     display: inline-flex;
     align-items: center;
+    min-width: 0;
 
     .icon {
       margin: -2px 5px 0 -2px;
@@ -496,7 +490,16 @@ pre code.hljs {
     }
   }
 
-  // used in .recipientList-controls and in breadcrumbs
+  &--active {
+    background: hsla(0,0%,0%,.5);
+    color: white;
+    
+    &:active {
+      background: hsla(0,0%,0%,.55);
+    }
+  }
+
+  // used in .recipientList-controls
   &--onDark {
     background: hsla(200,100%,97%,0.15);
     border-color: hsl(250,7%,16%);
@@ -504,6 +507,15 @@ pre code.hljs {
     
     .icon {
       opacity: 1;
+    }
+  }
+
+  // used in the sidebar
+  &--onWhite {
+    background: hsl(0,0%,98%);
+    
+    &:active {
+      background: hsl(0,0%,96%);
     }
   }
 
@@ -566,6 +578,8 @@ pre code.hljs {
   }
 
   &--text {
+    display: inline-flex;
+    align-items: center;
     font-size: inherit;
     margin: -10px;
     padding: 10px;
@@ -574,9 +588,18 @@ pre code.hljs {
     background: none;
     vertical-align: baseline;
     text-align: start;
+    
+    .table & {
+      margin: 0;
+      min-height: 38px;
+    }
 
     .icon {
       opacity: 1;
+      margin-right: 6px;
+      width: 16px;
+      max-height: 16px;
+      object-fit: contain;
     }
 
     &:active {
@@ -689,6 +712,11 @@ pre code.hljs {
 .vertical > .btn:not(.hidden) + .btn {
   @include bidi-style(margin-left, 0, margin-right, 0);
   margin-top: 10px;
+  
+  &--text {
+    @include bidi-style(margin-left, -10px, margin-right, -10px);
+    margin-top: 0;
+  }
 }
 
 .btn--download .icon-download {
@@ -703,6 +731,18 @@ pre code.hljs {
 
 .btn-label {
   @include bidi-style(margin-left, 7px, margin-right, 0);
+}
+
+.btn-show-all {
+  &[aria-expanded="false"] [data-show="collapsed"],
+  &[aria-expanded="true"] [data-show="open"] {
+    display: none;
+  }
+
+  .icon {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .visibility-change {
@@ -800,6 +840,36 @@ pre code.hljs {
   .btn--text {
     padding-left: 13px;
     padding-right: 13px;
+  }
+
+  .dropdown-menu-accessories {
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+
+      .dropdown-menu {
+        display: block;
+      }
+
+      .btn--split--last {
+        box-shadow: 0 0 0 3px hsl(201,62%,90%);
+        pointer-events: initial;
+      }
+    }
+
+    .btn--split--last {
+      pointer-events: none;
+
+      &:focus {
+        box-shadow: none;
+        pointer-events: none;
+      }
+
+      &:active {
+        background-color: #429ed7;
+      }
+    }
   }
 }
 
@@ -952,6 +1022,24 @@ table {
   small {
     color: inherit;
   }
+
+  &-icon {
+    max-width: 20px;
+    max-height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
+    fill: hsla(0,0%,0%,.3);
+  }
+
+  &-buttons {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+  }
 }
 
 .table--light {
@@ -1028,6 +1116,10 @@ th.align-right {
   background: white;
 }
 
+.table-hover-in-modal > tbody > tr:hover > td {
+  background-color: #f8f9fa;
+}
+
 .table-hover > tbody > tr:hover > th {
   background: rgba(0,8,14,.015);
 }
@@ -1078,8 +1170,10 @@ td .icon {
   vertical-align: middle;
 }
 
-td .icon-draggable {
-  fill: hsl(240,1%,77%);
+td .icon-draggable,
+td .icon-trash {
+  vertical-align: middle;
+  //fill: hsl(240,1%,77%);
 }
 
 .table-checkbox,
@@ -1131,7 +1225,13 @@ td .icon-draggable {
   align-items: center;
   justify-content: center;
   position: relative;
-  @extend %clickable;
+  @extend .u-clickable;
+  
+  > .icon {
+    vertical-align: middle;
+    margin-top: -2px;
+    fill: white;
+  }
 
   .icon-checked {
     color: black;
@@ -1165,7 +1265,8 @@ td .icon-draggable {
     @include bidi-style(margin-right, 3px, margin-left, 0);
   }
 
-  input {
+  input[type="checkbox"],
+  input[type="radio"] {
     pointer-events: none;
     position: absolute;
     opacity: 0;
@@ -1209,6 +1310,10 @@ td .icon-draggable {
   input:focus ~ .icon-checked,
   input:focus ~ .icon-unchecked {
     border-radius: 100%;
+  }
+  
+  > .icon {
+    margin-top: -3px;
   }
 }
 
@@ -1358,6 +1463,7 @@ h5 {
 }
 
 label,
+.checkbox.form-group label,
 .label {
   text-transform: uppercase;
   color: hsl(198,19%,72%);
@@ -1369,14 +1475,23 @@ label,
   text-align: start;
   padding: 0;
   /* user-select: none; disabled because of chrome51 https://github.com/martini/zammad/issues/183 */
+  
+  h2 & {
+    color: inherit !important;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: 0;
+    margin-bottom: 0;
+    padding: 0 !important;
+    text-transform: inherit;
+  }
 }
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
 .inline-label,
 .label-success,
 .label-warning,
-.label-danger,
-.fileUpload label {
+.label-danger {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -1402,6 +1517,7 @@ table {
 
 .label-text {
   @include bidi-style(margin-left, 3px, margin-right, 0);
+  @extend %clickable;
 }
 
 .label-success,
@@ -1430,7 +1546,8 @@ fieldset {
   margin: 0 -4px;
   @extend .clearfix;
 
-  h2 {
+  h2,
+  .help-text {
     margin-left: 4px;
     margin-right: 4px;
   }
@@ -1582,6 +1699,11 @@ fieldset > .form-group {
   position: relative;
   display: flex;
   align-items: center;
+  
+  h2 & {
+    padding: 0;
+    margin: 0;
+  }
 
   label {
     margin: 0;
@@ -1660,9 +1782,22 @@ fieldset > .form-group {
   position: relative;
 }
 
+.controls--datetime {
+  position: relative;
+  display: flex;
+}
+
+.controls--date {
+  position: relative;
+}
+
 .controls-label {
   margin: 11px 10px 0;
   flex-shrink: 0;
+  
+  .form-control--small + & {
+    margin-top: 7px;
+  }
 }
 
 /* do not show safari auto fill icon - see issue #962 */
@@ -1706,11 +1841,11 @@ textarea,
 
   &.form-control--small {
     padding: 5px 8px 4px;
-    height: 31px;
+    height: 30px;
     line-height: 20px;
 
     &.form-control--multiline {
-      min-height: 31px;
+      min-height: 30px;
     }
   }
 
@@ -1772,7 +1907,9 @@ input.time {
   flex-shrink: 0;
 
   &.form-control--small {
-    line-height: 31px;
+    line-height: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
@@ -1811,8 +1948,19 @@ input.time.time--12 {
   line-height: 1;
 }
 
+.richtext-controls {
+  display: flex;
+  margin: 0 -5px 10px;
+  padding: 3px 5px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+}
+
 textarea.form-control {
   height: 118px;
+  
+  &[rows] {
+    height: auto;
+  }
 }
 
 select.form-control:not([multiple]) {
@@ -1966,13 +2114,26 @@ input.has-error {
   position: relative;
   margin-bottom: 20px;
 
-  .icon {
+  .icon-magnifier,
+  .search-loader {
     @include bidi-style(left, 15px, right, auto);
     top: 12px;
     width: 17px;
     height: 17px;
     position: absolute;
     fill: hsl(60,1%,61%);
+    transition: .1s 0s;
+    pointer-events: none;
+  }
+
+  .search-loader {
+    z-index: 2;
+    opacity: 0;
+
+    .icon {
+      width: 17px;
+      height: 17px;
+    }
   }
 
   input[type=search] {
@@ -1982,8 +2143,21 @@ input.has-error {
     @include rtl(padding, 0 42px 0 17px);
     will-change: transform;
 
-    &.is-empty + .empty-search {
+    &.is-empty ~ .empty-search,
+    &:placeholder-shown ~ .empty-search {
       visibility: hidden;
+    }
+
+    &.loading {
+      ~ .search-loader {
+        opacity: 1;
+        transition: .2s .5s;
+      }
+
+      ~ .icon-magnifier {
+        opacity: 0;
+        transition: .2s .5s;
+      }
     }
   }
 
@@ -1993,12 +2167,14 @@ input.has-error {
   }
 
   .empty-search {
-    height: 41px;
+    height: 100%;
     width: 50px;
     visibility: visible;
 
     .icon {
-      position: static;
+      width: 13px;
+      height: 13px;
+      fill: hsl(60,1%,61%);
       opacity: 0.5;
     }
   }
@@ -2022,14 +2198,40 @@ input.has-error {
   align-items: center;
   justify-content: center;
   flex: 1;
-
-  svg,
+  
   .icon {
     @include bidi-style(margin-right, 14px, margin-left, 0);
   }
 
+  .icon-error {
+    margin-top: -2px;
+    width: 19px;
+    height: 19px;
+  }
+
+  .icon-checkmark {
+    width: 21px;
+    height: 18px;
+    margin-right: 11px;
+    margin-top: -2px;
+  }
+
   h2 {
     margin: 0;
+  }
+}
+
+.fullscreenMessage--placeholder {
+  flex-direction: column;
+  
+  .icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  h2 {
+    margin: 15px;
+    color: hsl(0,0%,60%);
   }
 }
 
@@ -2124,6 +2326,40 @@ input.has-error {
   }
 }
 
+.knowledge-base-content-can-be-published-dialog-current {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.knowledge-base-content-can-be-published-dialog {
+  display: flex;
+
+  .side-panel {
+    flex-grow: 1;
+    width: 300px;
+  }
+
+  .call-to-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+
+    }
+  }
+}
+
+.kb-sidebar-block-content {
+  & .kb-item--invisible {
+    opacity: .5;
+  }
+
+  & .kb-item--missing-translation, & .kb-item--missing-translation:active, & .kb-item--missing-translation:focus {
+    color: hsl(45,98%,63%);
+  }
+}
+
 kbd {
   background: hsl(200,8%,90%);
   border-radius: 3px;
@@ -2198,6 +2434,7 @@ kbd {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .page-header--center {
@@ -2216,6 +2453,12 @@ kbd {
   h2 {
     margin-top: 9px;
     margin-bottom: 7px;
+  }
+
+  .suffix {
+    margin-left: 5px;
+    margin-top: 6px;
+    display: inline-block;
   }
 }
 
@@ -2287,6 +2530,7 @@ kbd {
 
 .page-loading {
   min-height: 500px;
+  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2509,20 +2753,47 @@ ol.tabs li {
     color: inherit;
     height: 35px;
     padding: 8px 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    flex: 1 1 auto;
+    min-width: 0;
+    flex-grow: 1;
     @extend .u-clickable;
-    white-space: nowrap;
 
     &.active {
       color: white;
       background: #444a4f;
       box-shadow: none;
+      flex-shrink: 0;
 
       .tab-badge {
-        color: hsl(204,3%,65%);
+        background: hsl(207,8%,24%);
       }
+    }
+
+    &-name {
+      min-width: 20px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-badge {
+      flex-shrink: 0;
+      @include bidi-style(margin-left, 6px, margin-right, 0);
+      font-size: 13px;
+      margin-right: -7px;
+      background: hsl(0,0%,94%);
+      min-width: 21px;
+      padding: 0 7px;
+      height: 21px;
+      line-height: 21px;
+      white-space: nowrap;
+      text-align: center;
+      display: inline-block;
+      border-radius: 999px;
     }
   }
 
@@ -2566,11 +2837,6 @@ ol.tabs li {
   .tab:only-child {
     border-radius: 3px;
     @include bidi-style(border-right-width, 0, border-right-width, 1px);
-  }
-
-  .tab-badge {
-    @include bidi-style(margin-left, 3px, margin-right, 0);
-    font-size: 0.95em;
   }
 
   .tabs.tabs--inline {
@@ -2728,12 +2994,37 @@ ol.tabs li {
 
 */
 
+[data-font] {
+  font-style: normal;
+  text-rendering: auto;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+[data-font="FontAwesome"] {
+  font-size: 14px;
+}
+
+[data-font="material"] {
+  font-size: 18px;
+}
+
+[data-font="ionicons"] {
+  font-size: 18px;
+}
+
 .icon-arrow-down,
 .icon-arrow-up,
 .icon-arrow-left,
 .icon-arrow-right {
   fill: black;
   opacity: 0.39;
+  
+  .btn--action & {
+    opacity: 1;
+  }
 }
 
 .icon-arrow-left,
@@ -2762,6 +3053,22 @@ ol.tabs li {
 
 .icon-error {
   fill: $superbad-color;
+}
+
+.icon-danger {
+  color: hsl(41,100%,49%);
+}
+
+.icon-draggable {
+  opacity: .3;
+  
+  .table-draggable & {
+    vertical-align: middle;
+  }
+}
+
+.icon-knowledge-base {
+  fill: hsl(208,8%,29%);
 }
 
 .loading.icon {
@@ -2873,19 +3180,60 @@ ol.tabs li {
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
  */
-form {
+.form {
   margin: 0;
 
-  &.form--flexibleWidth .controls {
+  &--flexibleWidth .controls {
     display: table;
   }
 
-  &.form--grid {
+  &--horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    
+    .alert {
+      flex-basis: 100%;
+    }
+
+    fieldset {
+      flex: 1 1 auto;
+      margin-right: 6px;
+    }
+    
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-buttons {
+      margin: 10px 10px 0 auto;
+    }
+
+    .controls {
+      min-width: 250px;
+    }
+  }
+
+  &--grid {
     display: flex;
     flex-wrap: wrap;
     width: calc(100% + 20px);
     margin-left: -10px;
     margin-right: -10px;
+    
+    fieldset {
+      flex-basis: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .alert {
+      width: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      margin-top: 0;
+    }
 
     .form-group {
       display: block;
@@ -2912,6 +3260,10 @@ form {
   .btn + .btn:not(.align-right) {
     @include bidi-style(margin-left, 20px, margin-right, 10px);
   }
+}
+
+.form-buttons {
+  display: flex;
 }
 
 form a.standalone {
@@ -3202,6 +3554,10 @@ footer {
     align-items: center;
     @extend %clickable;
 
+    .accessory-icon {
+      fill: hsl(208,8%,29%);
+    }
+
     &:hover {
       background: hsl(230,10%,13%);
       border-bottom-color: rgba(240, 250, 255, .08);
@@ -3268,6 +3624,13 @@ footer {
       padding: 0;
       margin-bottom: 9px;
       display: flex;
+      
+      .icon-holder .icon {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        @include bidi-style(margin-right, 4px, margin-left, 0);
+      }
     }
 
     .tasks--standalone .task-text {
@@ -3288,8 +3651,8 @@ footer {
       color: hsl(198,19%,72%);
     }
 
-    .tasks--standalone .icon-task-state {
-      @include bidi-style(margin-right, 4px, margin-left, 0);
+    .tasks--standalone .btn-show-all {
+      margin-bottom: 9px;
     }
 
   .nav-tab {
@@ -3417,6 +3780,11 @@ footer {
       opacity: 1;
     }
 
+.icon-task-state {
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
 .nav-tab-icon .icon-task-state {
   margin: 0;
 }
@@ -3451,6 +3819,20 @@ footer {
   fill: $task-state-escalating-color;
 }
 
+// TODO: rename to knowledgebase icon when it's available
+
+.icon-task-state.archived {
+  fill: $superbad-color;
+}
+
+.icon-task-state.published {
+  fill: $supergood-color;
+}
+
+.icon-task-state.draft {
+  fill: $ghost-color;
+}
+
 // pending: stays blue
 // .nav-tab.task-state-pending.is-active {
 //   background-color: $task-state-pending-color;
@@ -3468,10 +3850,7 @@ footer {
   align-items: center;
   
   .icon-task-state {
-    margin-right: 2px;
-    margin-top: 0;
-    display: inline;
-    vertical-align: middle;
+    @include bidi-style(margin-right, 2px, margin-left, 0);
   }
 }
 
@@ -3542,7 +3921,6 @@ footer {
     left: 10px;
     z-index: 2;
     opacity: 0;
-    transition: 0s;
     transition: .1s 0s;
     pointer-events: none;
 
@@ -3565,7 +3943,6 @@ footer {
     z-index: 2;
     opacity: .5;
     fill: white;
-    transition: 0s;
     transition: .1s 0s;
   }
 
@@ -4019,9 +4396,26 @@ footer {
   &:first-child {
     margin-top: 0;
   }
-}
-.sidebar-block [contenteditable=true] {
-  white-space: normal; // do no u-textTruncate, we want to edit it inline
+
+  &-actions {
+    margin-bottom: 7px;
+  }
+
+  &-header {
+    margin-bottom: 7px;
+    
+    h2 {
+      margin: 0;
+    }
+  }
+
+  [contenteditable=true] {
+    white-space: normal; // do no u-textTruncate, we want to edit it inline
+  }
+
+  .btn-list {
+    margin-bottom: 5px;
+  }
 }
 
 .main + .sidebar {
@@ -4048,7 +4442,8 @@ footer {
 
   .nav-pills > li > a,
   .nav-pills > li > a:focus,
-  .nav-pills > li > a:active {
+  .nav-pills > li > a:active,
+  .nav-pills .nav-pills-placeholder {
     color: #0f94d6;
     border-radius: 0;
     background: transparent; /* a:focus, a:active with bg: transparent fixes gray focus bg in IE 10 */
@@ -4058,11 +4453,19 @@ footer {
 
   .nav-pills.nav-stacked > li > a,
   .nav-pills.nav-stacked > li > a:focus,
-  .nav-pills.nav-stacked > li > a:active {
+  .nav-pills.nav-stacked > li > a:active,
+  .nav-pills.nav-stacked .nav-pills-placeholder {
     padding: 0;
     height: 40px;
     line-height: 39px;
     border-top: 1px solid #f2f2f3;
+  }
+
+  .nav-pills.nav-stacked .nav-pills-placeholder {
+    display: block;
+    border-top: none;
+    @extend .label-subtle;
+    @extend .u-textTruncate;
   }
 
   .nav-pills > li:hover > a {
@@ -4103,7 +4506,12 @@ footer {
     margin-top: -2px;
 
     &:first-child {
-      @include bidi-style(margin-right, 5px, margin-right, 0);
+      @include bidi-style(margin-right, 5px, margin-left, 0);
+    
+      &[data-font] {
+        @include bidi-style(margin-right, 10px, margin-left, 0);
+        @include bidi-style(margin-left, 5px, margin-right, 0);
+      }
     }
   }
 
@@ -4157,6 +4565,10 @@ footer {
   @include rtl(text-align, right);
 }
 
+.popover--has-horizontal-form {
+  width: auto;
+}
+
   .popover-body {
     overflow: auto;
   }
@@ -4170,6 +4582,11 @@ footer {
   .popover-content {
     padding: 0 17px;
     margin-bottom: 21px;
+    
+    .popover--has-horizontal-form & {
+      padding: 10px 5px 15px 15px;
+      margin-bottom: 0;
+    }
   }
 
   .popover.right {
@@ -5124,10 +5541,16 @@ footer {
       font-size: 13px;
       color: hsl(60,1%,34%);
       font-weight: 500;
+      text-transform: uppercase;
       padding: 0 7px;
+      
+      .badge {
+        margin: -1px 0 0 5px;
+      }
     }
 
-    .attachments .icon-paperclip {
+    .attachments .icon-paperclip,
+    .attachments .icon-overviews {
       position: absolute;
       left: 33px;
       top: 27px;
@@ -5206,10 +5629,21 @@ footer {
     margin: 5px;
     display: none;
     @extend .fit;
+    
+    &--small {
+      margin: 0;
+      font-size: inherit;
+      border-width: 3px;
+      min-height: 38px;
+    }
   }
 
   .is-dropTarget .dropArea {
     display: block;
+  }
+
+  .dropContainer {
+    position: relative;
   }
 
   .dropArea-inner {
@@ -5551,7 +5985,7 @@ footer {
         display: none;
         white-space: nowrap;
         @include bidi-style(margin-left, auto, margin-right, 0);
-        @extend %clickable;
+        @extend .u-clickable;
       }
 
       .attachment:hover .attachment--preview .attachment-delete {
@@ -5569,6 +6003,10 @@ footer {
           height: 9px;
           @include bidi-style(margin-right, 5px, margin-left, 0);
         }
+
+      .attachment:hover {
+        background: hsl(200,20%,97%);
+      }
 
       .attachment--row .attachment-name {
         @include bidi-style(margin-right, 5px, margin-left, 0);
@@ -5640,6 +6078,31 @@ footer {
       left: 0;
       bottom: 0;
     }
+      
+    .attachmentUpload--standalone {
+      position: relative;
+      margin-bottom: 7px;
+      padding-bottom: 2px;
+      box-shadow: 0 -4px hsl(0,0%,90%) inset;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        fill: #d1d1d1;
+      }
+
+      .attachmentUpload-cancel {
+        padding: 0 2px 0 7px;
+      }
+    }
+
+.attachmentUploadContainer {
+  .attachmentUpload-progressBar {
+    position: inherit;
+  }
+}
 
 .tabsSidebar-tabsSpacer {
   @include bidi-style(padding-right, 62px !important, padding-left, 0);
@@ -5952,26 +6415,31 @@ footer {
     fill: currentColor;
   }
 
-  &.alert--info {
+  &--info {
     background: hsl(203,65%,55%);
   }
 
-  &.alert--success {
+  &--success {
     background: hsl(145,51%,45%);
   }
 
-  &.alert--warning {
+  &--warning {
     color: hsl(45,98%,17%);
     background: hsl(45,98%,63%);
   }
 
-  &.alert--danger {
+  &--danger {
     background: hsl(11,85%,48%);
+  }
+
+  &--square {
+    border-radius: 0;
   }
 }
 
 .tags,
-.links {
+.links,
+.link_kb_answers {
   margin: 20px 0;
 }
 
@@ -6055,6 +6523,10 @@ footer {
 
   &--border {
     border-top: 1px solid hsl(0,0%,94%);
+  }
+
+  &--spacer-after {
+    margin-right: auto;
   }
 }
 
@@ -6226,11 +6698,12 @@ footer {
   line-height: 42px;
   padding: 0 12px 0 12px;
   list-style: none;
+  align-items: flex-start;
 }
 
 .type-tabs .tab-icon {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   fill: #ccc;
   vertical-align: top;
   @include bidi-style(margin-right, 9px, margin-left, 0);
@@ -6437,7 +6910,6 @@ footer {
 }
 
 .table.user-list {
-
   tr:hover .switchView {
     visibility: visible;
   }
@@ -6453,10 +6925,8 @@ footer {
     overflow: hidden;
   }
 
-  // lame hardcoded width of this "View from users' perspective" button td
-  // i can't find another way to do it. It's not flexible. It sucks
-  .actionCell {
-    width: 250px;
+  .btn {
+    margin: 3px 5px 0;
   }
 }
 
@@ -6587,6 +7057,7 @@ footer {
   display: block;
   padding: 0 40px;
   @extend .zIndex-9;
+  @include bidi-style(padding-left, 40px, padding-right, 0);
 
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);
@@ -6714,6 +7185,10 @@ footer {
     background: hsl(145,51%,45%);
   }
 
+  .dropdown-menu > li[disabled] {
+    opacity: 0.33;
+  }
+
   .dropdown-menu > li > a {
     color: inherit;
     padding: 0 15px;
@@ -6833,6 +7308,19 @@ footer {
 
   .dropdown-detail {
     opacity: 0.5;
+  }
+
+  .dropdown {
+    .dropdown-menu-full-height {
+      li {
+        padding: 0;
+      }
+
+      a {
+        padding: 11px 18px;
+        margin: 0;
+      }
+    }
   }
 
 .recipientList,
@@ -6975,6 +7463,7 @@ footer {
     flex-direction: column;
     align-items: flex-start;
     border: none;
+    background: none;
   }
 
   .checkbox-replacement {
@@ -7008,6 +7497,61 @@ footer {
         opacity: .33;
       }
     }
+    
+    &.additional-radio-controls {
+      margin-top: 0;
+      
+      .controls {
+        display: inline-flex;
+        margin-left: 5px;
+      }
+    }
+  }
+  
+  &-child {
+    padding-left: 20px;
+  }
+
+  .help-text {
+    display: table;
+    color: hsl(0,0%,60%);
+    font-size: .92em;
+    margin: 2px 0 3px 18px;
+  }
+}
+
+.checkbox.form-group .checkbox--list,
+.radio.form-group .radio--list {
+  margin-top: 0;
+  margin-bottom: 15px;
+  height: auto;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.checkbox,
+.radio {
+  &.form-group .controls label {
+    padding: 2px 0;
+    font: inherit;
+    margin-bottom: 0;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: 0;
+    line-height: 1.2;
+    
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &.is-disabled {
+      cursor: default;
+      touch-action: default;
+      
+      span {
+        opacity: .33;
+      }
+    }
   }
   
   &-child {
@@ -7020,6 +7564,81 @@ footer {
     margin-left: 18px;
     font-size: .92em;
     margin-bottom: 3px;
+  }
+}
+
+.radio_graphic .selections-container {
+  display: grid;
+  grid-gap: 10px;
+  // fit as many as possible in one line, they must at least be 112px wide
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+
+  label {
+    margin-top: 0;
+    position: relative;
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  .icon-checked {
+    display: none;
+  }
+
+  .label-box {
+    display: block;
+    background: white;
+    border: 1px solid hsl(0,0%,90%);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .label-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+  }
+
+  .label-text {
+    display: block;
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .radio-illustration {
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      object-fit: cover;
+    }
+  }
+
+  input {
+    &:checked {
+      ~ .label-box {
+        border-color: hsl(200,71%,59%);
+        box-shadow: 0 0 0 3px hsl(201,62%,90%);
+        
+        .icon-checked {
+          display: inline;
+        }
+
+        .icon-unchecked {
+          display: none;
+        }
+      }
+    }
   }
 }
 
@@ -7506,6 +8125,19 @@ label + .wizard-buttonList {
 .fileUpload {
   position: relative;
   overflow: hidden;
+  
+  &.btn input:focus + label {
+    text-decoration: none;
+  }
+}
+
+.fileUpload label {
+  font-size: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  display: inline;
+  margin: 0;
 }
 
 .fileUpload input {
@@ -8026,7 +8658,6 @@ output {
 .settings-list {
   border-collapse: separate;
   color: hsl(60,1%,34%);
-  background: white;
   table-layout: auto;
   margin-bottom: 20px;
   word-break: break-word;
@@ -8049,6 +8680,10 @@ output {
 
   &:not(:last-child) {
     margin-bottom: 34px;
+  }
+
+  .form-group & {
+    margin-bottom: 0;
   }
 
   &.settings-list--toggleRow {
@@ -8074,10 +8709,19 @@ output {
     }
   }
 
+  .settings-list--deleted {
+    background-color: #eee;
+
+    td {
+      text-decoration: line-through;
+    }
+  }
+
   th, td {
     vertical-align: top;
     padding: 10px;
     border: 1px solid hsl(198,18%,86%);
+    background: white;
   }
 
   th {
@@ -8110,19 +8754,28 @@ output {
     color: inherit;
   }
 
-  .btn--table {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
   th:not(:last-child),
   td:not(:last-child) {
     @include bidi-style(border-right-width, 0, border-left-width, 1px);
   }
 
+  .ui-sortable-placeholder {
+    visibility: visible !important;
+    
+    td {
+      background: none;
+      border-left-width: 0;
+      border-right-width: 0;
+    }
+  }
+
+  .ui-sortable-helper td {
+    border-bottom-width: 1px !important;
+  }
+
   tr:not(:last-child) td,
   & > tbody:not(:last-child) tr td {
-    border-bottom: none;
+    border-bottom-width: 0;
   }
 
   tr.is-inactive td {
@@ -8176,7 +8829,8 @@ output {
   .settings-list-controls {
     padding: 0;
 
-    & > div {
+    & > div,
+    & > a {
       display: flex;
       min-height: 40px;
     }
@@ -8186,15 +8840,25 @@ output {
       align-items: center;
       justify-content: center;
       padding: 0 10px;
+      @extend %clickable;
     }
   }
 
   .settings-list-control-cell {
     padding: 5px;
+    
+    .btn--text {
+      margin: -5px;
+    }
 
     & ~ .settings-list-row-control {
       padding-bottom: 7px;
     }
+  }
+
+  .settings-list-checkbox-cell {
+    vertical-align: middle;
+    padding-left: 8px;
   }
 }
 
@@ -8281,7 +8945,7 @@ output {
     line-height: 19px;
 
     &.form-control--small ~ .searchableSelect-autocomplete {
-      top: 7px;
+      top: 6px;
       left: 9px;
     }
   }
@@ -9227,6 +9891,15 @@ output {
     }
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    &:first-child {
+      margin-top: 6px;
+    }
+  }
+
   table,
   pre,
   blockquote {
@@ -9557,11 +10230,417 @@ output {
   }
 }
 
+
+/*
+
+  -------------
+   breadcrumbs
+  -------------
+
+*/
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  
+  &-menu {
+    display: flex;
+    margin-left: auto;
+    padding-left: 20px;
+  }
+}
+
+.breadcrumb {
+  position: relative;
+  padding: 11px 13px 8px;
+  padding-right: 21px;
+  color: inherit;
+  cursor: pointer;
+  @extend .u-textTruncate;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 50%;
+    background: currentColor;
+    opacity: .33;
+    right: 0;
+    top: 0;
+    transform-origin: bottom;
+    transform: rotate(-37deg);
+  }
+
+  &:after {
+    top: 50%;
+    transform-origin: top;
+    transform: rotate(37deg);
+  }
+
+  &:last-child {
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  .icon {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    margin-right: 3px;
+    vertical-align: middle;
+    line-height: 1;
+  }
+}
+
+
+/*
+
+  ---------------------
+   iconfont icon picker
+  ---------------------
+
+*/
+
+.icon_picker {
+  .dropdown-menu {
+    max-height: 500px;
+    width: 420px;
+    min-width: 0;
+    overflow-y: auto;
+  }
+
+  .controls {
+    position: relative;
+  }
+
+  &-shadow {
+    display: none;
+  }
+
+  .dropdown-grid {
+    &:empty {
+      padding: 0;
+
+      & + .dropdown-filter-placeholder {
+        display: block;
+      }
+    }
+
+    li:hover:not(.is-active) {
+      background: none;
+    }
+
+    .icon {
+      width: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+  }
+
+  .dropdown-filter-placeholder {
+    display: none;
+    padding: 10px;
+    text-align: center;
+    text-rendering: auto;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: letter-spacing 200ms;
+    cursor: default;
+    line-height: 40px;
+    
+    &:hover {
+      letter-spacing: -2px;
+    }
+
+    span {
+      display: none;
+      
+      &.is-active {
+        display: block;
+      }
+    }
+  }
+
+  .dropdown-filter {
+    background: none;
+    width: 100%;
+    background: hsl(234,8%,26%);
+    border: none;
+    padding: 13px 20px 11px;
+    outline: none;
+    
+    &::placeholder {
+      color: hsl(234,2%,50%);
+    }
+    
+    &:focus,
+    &:hover {
+      background: hsl(234,8%,30%);
+    }
+  }
+
+  .dropdown-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 0;
+    
+    li {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 2px;
+      
+      &:hover,
+      &.is-active {
+        background: $highlight-color;
+      }
+    }
+  }
+
+}
+
+/*
+
+  --------------
+   color picker
+  --------------
+
+*/
+
+.color {
+  .controls {
+    position: relative;
+  }
+
+  .controls-button {
+    align-self: stretch;
+  }
+
+  .controls-button-inner {
+    padding: 4px;
+  }
+
+  .color-shadow {
+    display: none;
+  }
+
+  .color-field {
+    width: 31px;
+    height: 100%;
+    position: relative;
+    
+    // unparsable color
+    &[style=""]:before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      top: 10%;
+      width: 80%;
+      height: 80%;
+      background: hsl(197,20%,93%);
+      animation: rotateplane 1.2s infinite ease-in-out;
+    }
+  }
+}
+
+.colorpicker {
+  &.dropdown-menu {
+    box-sizing: content-box;
+    width: 380px;
+    min-width: 0;
+  }
+  
+  .open > & {
+    display: flex;
+  }
+
+  &-hue-saturation {
+    flex-grow: 1;
+    width: 200px;
+    height: 150px;
+    margin: 14px;
+    margin-right: 0;
+    $i: 0;
+    $rainbow: ();
+    @while $i <= 360 {
+      $rainbow: append($rainbow, unquote('hsl(#{$i},100%,50%)'), comma);
+      $i: $i + 60;
+    }
+    background: linear-gradient(to right, $rainbow);
+    position: relative;
+    overflow: hidden;
+    cursor: image_url("/assets/images/colorcircle.gif") 8 8, auto;
+    user-select: none;
+  }
+    
+  &-lightness-plane,
+  &-saturation-gradient {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+    
+  &-circle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid black;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 100%;
+  }
+
+  &-lightness {
+    height: 150px;
+    margin: 14px;
+    position: relative;
+    user-select: none;
+  }
+
+  &-hue-plane {
+    height: 100%;
+    width: 20px;
+    background: red;
+  }
+    
+  &-hue-gradient {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(white, transparent, black);
+  }
+
+  &-slider {
+    position: absolute;
+    top: 0;
+    left: -7px;
+    right: -7px;
+    
+    &-arrow {
+      position: absolute;
+      top: 0;
+      margin-top: -4px;
+      border: 4px solid transparent;
+      border-left: 7px solid hsl(240,8%,100%);
+      border-right: 7px solid hsl(240,8%,100%);
+      
+      &--left  {
+        left: 0;
+        border-right: none;
+      }
+      
+      &--right {
+        right: 0;
+        border-left: none;
+      }
+    }
+  }
+}
+
+
 /*
 
   ----------------
-   layout classes
+   iconset picker
   ----------------
+
+*/
+
+.iconset_picker {
+  .controls input {
+    display: none;
+  }
+}
+
+.icon-sets {
+  margin: 0 -10px;
+}
+
+.icon-set {
+  margin: 10px;
+  display: flex;
+  border: 1px solid hsl(197,10%,90%);
+  border-radius: 3px;
+  
+  &.is-active {
+    border-color: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px #d6eaf5;
+  }
+  
+  &-preview {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    height: 250px;
+    border-radius: 0 3px 3px 0;
+    border-left: 1px solid hsl(197,10%,90%);
+    background: hsl(210,17%,98%);
+    color: hsl(210,7%,60%);
+    position: relative;
+  }
+
+  &-meta {
+    flex-basis: 197px;
+    order: -1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 10px;
+    background: white;
+    border-radius: 3px 0 0 3px;
+  }
+
+  &-version {
+    color: hsl(60,1%,74%);
+  }
+
+  &-website {
+    margin-top: auto;
+    display: block;
+  }
+  
+  .icon {
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+    
+    &:not(.loading).do-flash {
+      animation: iconset-flash 0.7s ease-out;
+    }
+  }
+}
+
+@keyframes iconset-flash {
+  from { 
+    background: hsl(210,15%,94%);
+    color: hsl(210,10%,30%);
+  }
+  to { 
+    background: transparent;
+    color: inherit;
+  }
+}
+
+/*
+
+  -----------------------------
+   generic flex layout classes
+  -----------------------------
 
 */
 
@@ -9580,6 +10659,10 @@ output {
   flex-direction: row;
 }
 
+.horizontal.multiline {
+  flex-wrap: wrap;
+}
+
 .horizontal.reverse {
   flex-direction: row-reverse;
 }
@@ -9595,6 +10678,10 @@ output {
 .vertical.stretch > *,
 .horizontal.stretch > * {
   flex: 1;
+}
+
+.stretch {
+  align-self: stretch;
 }
 
 .relative {
@@ -9619,6 +10706,10 @@ body.fit {
 
 .flex {
   flex: 1;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px;
 }
 
 /*
@@ -9679,7 +10770,6 @@ body.fit {
 .justify-between {
   justify-content: space-between;
 }
-
 
 .start {
   align-items: flex-start;
@@ -9749,6 +10839,14 @@ body.fit {
   margin-right: auto;
 }
 
+.flex-space-after {
+  @include bidi-style(margin-right, auto, margin-left, 0);
+}
+
+.flex-space-before {
+  @include bidi-style(margin-left, auto, margin-right, 0);
+}
+
 .half-spacer {
   width: 5px;
   height: 5px;
@@ -9771,4 +10869,478 @@ body.fit {
 span.is-disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.inline-label + .scheduled-widget {
+  margin-left: 18px;
+}
+
+.scheduled-widget {
+  display: flex;
+  align-items: center;
+  padding: 5px 5px 5px 10px;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 4px;
+  
+  &[data-state="published"] {
+    color: $supergood-color;
+    border-color: transparentize($supergood-color, .65);
+    
+    .btn {
+      border-color: transparentize($supergood-color, .65);
+    }
+  }
+  
+  &[data-state="archived"] {
+    color: $superbad-color;
+    border-color: transparentize($superbad-color, .65);
+    
+    .btn {
+      border-color: transparentize($superbad-color, .65);
+    }
+  }
+  
+  &[data-state="internal"] {
+    color: $highlight-color;
+    border-color: transparentize($highlight-color, .65);
+    
+    .btn {
+      border-color: transparentize($highlight-color, .65);
+    }
+  }
+  
+  .help-text & {
+    margin-top: 4px;
+  }
+  
+  .icon {
+    color: inherit;
+    fill: currentColor;
+    vertical-align: middle;
+  }
+
+  &-label {
+    margin: 0 10px 0 6px;
+  }
+
+  .icon-diagonal-cross {
+    width: 10px;
+    height: 10px;
+  }
+
+  .btn {
+    color: inherit;
+  }
+}
+
+.knowledge-base {
+  &-navigation {
+    display: flex;
+    align-items: center;
+    color: hsl(210,7%,62%);
+    background: hsl(210,14%,94%);
+    border-bottom: 1px solid hsl(0,0%,90%);
+    padding: 7px;
+    
+    .breadcrumb:not(:first-child) .icon {
+      width: 16px;
+      height: 16px;
+    }  
+  }
+
+  &-body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  &-sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    overflow: auto;
+    transition: transform 500ms;
+    @include bidi-style(border-left, 1px solid #e6e6e6, border-right, none);
+    
+    @include desktop {
+      width: 28%;
+    }
+    
+    &.hidden {
+      display: block !important;
+      visibility: visible !important;
+      transform: translateX(100%);
+      
+      + .knowledge-base-main {
+        margin-right: 0;
+      }
+    }
+
+    h2 {
+      font-size: 17px;
+      line-height: 1;
+    }
+  }
+    
+  &-main {
+    transition: margin-right 500ms;
+    margin-right: 280px;
+    
+    @include desktop {
+      margin-right: 28%;
+    }
+  }
+
+  form {
+    flex-shrink: 0;
+  }
+
+  .page-header {
+    margin: 1px 0 3px;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    // width: 100%;
+    // margin-bottom: 6px;
+    // font-size: 16px;
+  }
+}
+
+.modal-manage-attachments {
+  input:focus + label {
+    text-decoration: none;
+  }
+}
+
+.modal-knowledge-base-server-snippet {
+  label.radio-replacement:first-child {
+    padding-left: 0
+  }
+}
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.sections {
+  list-style: none;
+  padding: 0;
+  margin: 0 -10px;
+  
+  &:not(:empty) + &:not(:empty) {
+    border-top: 1px solid hsl(0,0%,90%);
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  &--grid {
+    display: flex;
+    flex-wrap: wrap;
+
+    .section {
+      a {
+        padding-bottom: 72%;
+        position: relative;
+        line-height: 1.3;
+      }
+
+      [data-font] {
+        font-size: 60px;
+        margin: 10px 0 20px;
+      }
+
+      &--subsection {
+        display: none;
+      }
+
+      &-inner {
+        position: absolute;
+        padding: 10px;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    
+    &[data-size="medium"] {
+      .section {
+        width: 25%;
+        
+        a {
+          font-size: 14px;
+        }
+
+        [data-font] {
+          font-size: 42px;
+        }
+      }
+    }
+    
+    &[data-size="large"] {
+      .section {
+        width: 33.33%;
+        
+        a {
+          font-size: 15px;
+        }
+
+        [data-font] {
+          font-size: 60px;
+        }
+      }
+    }
+  }
+}
+
+.section {
+  &.kb-item--invisible {
+    opacity: .5;
+  }
+
+  &.kb-item--missing-translation, &.kb-item--missing-translation:active, &.kb-item--missing-translation:focus {
+    color: hsl(45,98%,63%);
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.section-inner {
+  position: relative;
+  display: flex;
+  padding: 10px 14px;
+  margin: 10px;
+  background: white;
+  border-radius: 3px;
+  border: 1px solid hsl(0,0%,90%);
+  box-shadow: 0 1px 5px hsla(205,30%,30%,.1);
+
+  @include phone {
+    margin: 5px;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &-title {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  &-date {
+    display: inline;
+    color: hsl(0,0%,75%);
+    
+    &:after {
+      content: " — ";
+      color: hsl(60,1%,34%);
+    }
+  }
+
+  &-detail {
+    display: block;
+    margin-top: 5px;
+  }
+
+  [data-font],
+  .icon {
+    flex-shrink: 0;
+  }
+
+  [data-font] {
+    font-size: 16px;
+    line-height: 1;
+    margin-right: 12px;
+  }
+
+  .icon {
+    fill: currentColor;
+    color: $highlight-color;
+    margin: 1px 10px 0 2px;
+  }
+  
+  svg.icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  em {
+    font-style: normal;
+    background: transparentize($highlight-color, .75);
+  }
+}
+
+.knowledge-base-article {  
+  &-header {
+    text-align: center;
+  }
+
+  &-meta {
+    display: block;
+    text-align: center;
+  }
+  
+  &-body {
+    margin-top: 20px;
+    background: white;
+    border-radius: 2px;
+    padding: 50px 50px 10px;
+    border: 1px solid hsl(239,4%,95%);
+  }
+
+  &-content {
+    margin-bottom: 40px;
+  }
+
+  &-attachments,
+  &-linked-tickets {
+    margin: 0 -30px;
+  }
+
+  &-nav {
+    display: flex;
+    
+    &-link {
+      padding: 15px;
+      max-width: 50%;
+      display: flex;
+    
+      .icon {
+        flex-shrink: 0;
+        fill: currentColor;
+        opacity: 1;
+        margin: 2px 5px 0 0;
+        vertical-align: top;
+      }
+
+      &--next {
+        margin-left: auto;
+               
+        .icon {
+          margin-right: 0;
+          margin-left: 5px;
+        }
+      }
+
+      &-title {
+        @extend .u-textTruncate;
+      }
+    }
+  }
+}
+
+.miller-columns {
+  display: flex;
+  font-size: 12px;
+  border: 1px solid hsl(0,0%,85%);
+  border-radius: 3px;
+  
+  .column {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1 1 33%;
+    height: 300px;
+    overflow: auto;
+    border-right: 1px solid hsl(0,0%,85%);
+    
+    &:last-child {
+      border-right-width: 0;
+    }
+    
+    &-item {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      cursor: default;
+      
+      &:hover {
+        background: hsl(0,0%,95%);
+      }
+
+      &.is-selected {
+        background: hsl(0,0%,90%);
+      }
+      
+      &--has-children {
+        @extend %clickable;
+        cursor: pointer;
+      }
+      
+      span {
+        @extend .u-textTruncate;
+        margin-right: 10px;
+      }
+      
+      > .icon:first-child,
+      [data-font] {
+        fill: currentColor;
+        margin-right: 8px;
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+
+      .icon-arrow-right {
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+
+      .btn {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+[data-theme="dark"] {
+  background: hsl(232,11%,19%);
+  
+  label {
+    color: white;
+  }
+
+  &.left > .arrow:after {
+    border-left-color: hsl(232,11%,19%);
+  }
+
+  &.right > .arrow:after {
+    border-right-color: hsl(232,11%,19%);
+  }
+
+  &.top > .arrow:after {
+    border-top-color: hsl(232,11%,19%);
+  }
+
+  &.bottom > .arrow:after {
+    border-bottom-color: hsl(232,11%,19%);
+  }
+
+  .form-control:focus {
+    border-color: hsl(232,11%,19%);
+    box-shadow: 0 0 0 3px $highlight-color;
+  }
+
+  .btn--subtle {
+    color: hsl(0,0%,45%);
+  }
+}
+
+.highlight-emulator {
+  background-color: highlight;
 }

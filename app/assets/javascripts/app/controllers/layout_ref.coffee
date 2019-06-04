@@ -2239,4 +2239,137 @@ class ChatToTicketRef extends App.ControllerContent
       y2: y1 + @attachments.outerHeight()
 
 App.Config.set('layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes')
+
+class KnowledgeBaseAgentReaderRef extends App.ControllerContent
+  className: 'flex knowledge-base vertical'
+
+  elements:
+    '.js-search': 'searchInput'
+
+  events:
+    'click [data-target]':   'onTargetClicked'
+    'click .js-open-search': 'toggleSearch'
+
+  constructor: ->
+    super
+    App.Utils.loadIconFont('anticon')
+    @render()
+    @level(1)
+
+  render: ->
+    @html App.view('layout_ref/kb_agent_reader_ref')()
+
+  toggleSearch: (event) ->
+    active = $(event.currentTarget).toggleClass('btn--primary')
+    if $(event.currentTarget).is('.btn--primary')
+      @el.find('.main[data-level]').addClass('hidden')
+      @el.find('[data-level~="search"]').removeClass('hidden')
+      @searchInput.focus()
+    else
+      @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
+      @el.find('[data-level~="search"]').addClass('hidden')
+
+  onTargetClicked: (event) ->
+    event.preventDefault()
+    @level(event.currentTarget.dataset.target)
+
+  level: (level) ->
+    @currentLevel = level
+    @el.find('[data-level]').addClass('hidden')
+    @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
+
+App.Config.set('layout_ref/kb_agent_reader', KnowledgeBaseAgentReaderRef, 'Routes')
+
+class KnowledgeBaseLinkTicketToAnswerRef extends App.ControllerContent
+  constructor: ->
+    super
+    App.Utils.loadIconFont('anticon')
+    @render()
+
+  render: =>
+    new App.ControllerModal
+      head: 'Link Answer'
+      buttonSubmit: false
+      container: @el
+      content: App.view('layout_ref/kb_link_ticket_to_answer_ref')
+
+App.Config.set('layout_ref/kb_link_ticket_to_answer', KnowledgeBaseLinkTicketToAnswerRef, 'Routes')
+
+class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerContent
+  elements:
+    '.js-form': 'form'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/kb_link_answer_to_answer_ref')()
+
+    new App.ControllerForm(
+      grid: true
+      params:
+        category_id: 2
+        translation_ids: [
+          1
+          2
+        ]
+        archived_at: null
+        internal_at: null
+        published_at: '2018-10-22T13:58:08.730Z'
+        attachments: []
+        id: 1
+        translation:
+          title: 'Lithium en-us'
+          content:
+            body:
+              text: 'Lithium (from Greek: λίθος, translit. lithos, lit. "stone") is a chemical element with symbol Li and atomic number 3. It is a soft, silvery-white alkali metal. Under standard conditions, it is the lightest metal and the lightest solid element. Like all alkali metals, lithium is highly reactive and flammable, and is stored in mineral oil.'
+              attachments: []
+            id: 1
+          answer_id: 1
+          id: 1
+      screen: 'agent'
+      autofocus: true
+      el: @form
+      model:
+        configure_attributes: [
+          {
+            name: 'translation::title'
+            model: 'translation'
+            display: 'Title'
+            tag: 'input'
+            grid_width: '1/2'
+          }
+          {
+            name: 'category_id'
+            model: 'answer'
+            display: 'Category'
+            tag: 'select'
+            null: true
+            options: [
+              {
+                value: 1
+                name: 'Metal'
+              }
+              {
+                value: 2
+                name: 'Alkali metal'
+              }
+            ]
+            grid_width: '1/2'
+          }
+          {
+            name: 'translation::content::body'
+            model: 'translation'
+            display: 'Content'
+            tag: 'richtext'
+            buttons: [
+              'link'
+              'link_answer'
+            ]
+          }
+        ]
+    )
+
+App.Config.set('layout_ref/kb_link_answer_to_answer', KnowledgeBaseLinkAnswerToAnswerRef, 'Routes')
 App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ] }, 'NavBarRight')

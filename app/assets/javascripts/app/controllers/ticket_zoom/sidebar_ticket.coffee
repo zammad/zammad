@@ -54,6 +54,19 @@ class Edit extends App.ObserverController
     )
 
 class SidebarTicket extends App.Controller
+  constructor: ->
+    super
+    @bind 'config_update_local', (data) => @configUpdated(data)
+
+  configUpdated: (data) ->
+    if data.name != 'kb_active'
+      return
+
+    if data.value
+      return
+
+    @editTicket(@el)
+
   sidebarItem: =>
     @item = {
       name: 'ticket'
@@ -96,6 +109,9 @@ class SidebarTicket extends App.Controller
     if @linkWidget && args.links
       @linkWidget.reload(args.links)
 
+    if @linkKbAnswerWidget && args.links
+      @linkKbAnswerWidget.reload(args.links)
+
   editTicket: (el) =>
     @el = el
     localEl = $(App.view('ticket_zoom/sidebar_ticket')())
@@ -121,6 +137,15 @@ class SidebarTicket extends App.Controller
         object:      @ticket
         links:       @links
       )
+
+      if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
+        @linkKbAnswerWidget = new App.WidgetLinkKbAnswer(
+          el:          localEl.filter('.link_kb_answers')
+          object_type: 'Ticket'
+          object:      @ticket
+          links:       @links
+        )
+
       @timeUnitWidget = new App.TicketZoomTimeUnit(
         el:        localEl.filter('.js-timeUnit')
         object_id: @ticket.id

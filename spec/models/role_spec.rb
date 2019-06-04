@@ -20,14 +20,14 @@ RSpec.describe Role do
     describe 'of "Admin" role:' do
       it 'has default admin permissions' do
         expect(described_class.find_by(name: 'Admin').permissions.pluck(:name))
-          .to match_array(%w[admin user_preferences report])
+          .to match_array(%w[admin user_preferences report knowledge_base.editor])
       end
     end
 
     describe 'of "Agent" role:' do
       it 'has default agent permissions' do
         expect(described_class.find_by(name: 'Agent').permissions.pluck(:name))
-          .to match_array(%w[ticket.agent chat.agent cti.agent user_preferences])
+          .to match_array(%w[ticket.agent chat.agent cti.agent user_preferences knowledge_base.reader])
       end
     end
 

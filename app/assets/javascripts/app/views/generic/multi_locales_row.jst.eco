@@ -1,0 +1,14 @@
+<td class="settings-list-control-cell">
+  <div class="js-selectorContainer"></div>
+<td class="u-positionOrigin">
+  <span class="js-primary radio-replacement radio-replacement--fullscreen">
+    <input type="radio" value="<%= @kb_locale?.systemLocale()?.id %>" name="<%= @attribute.name %>_primary_locale_id">
+    <%- @Icon('radio', 'icon-unchecked') %>
+    <%- @Icon('radio-checked', 'icon-checked') %>
+  </span>
+<td class="u-positionOrigin">
+  <span class="checkbox-replacement checkbox-replacement--fullscreen js-remove">
+    <input type="checkbox" name="showTitle" value="true">
+    <%- @Icon('checkbox', 'icon-unchecked') %>
+    <%- @Icon('checkbox-checked', 'icon-checked') %>
+  </span>

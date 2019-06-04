@@ -1568,3 +1568,31 @@ test("form elements with sort check", function() {
   equal('A', el.find('[name=radio1]')[4].value)
 
 });
+
+test("form deep nesting", function() {
+  $('#forms').append('<hr><h1>form selector</h1><div><form id="form19"></form></div>')
+  var el = $('#form19')
+  var defaults = {
+    a: {
+      input1: 'a'
+    },
+    b: {
+      c: {
+        input2: 'b'
+      }
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'a::input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
+        { name: 'b::c::input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
+      ],
+    },
+    params: defaults,
+  });
+
+  params = App.ControllerForm.params(el)
+  deepEqual(params, defaults, 'nested params')
+});

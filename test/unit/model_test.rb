@@ -243,7 +243,8 @@ class ModelTest < ActiveSupport::TestCase
     assert(searchable.include?(User))
     assert(searchable.include?(Organization))
     assert(searchable.include?(Chat::Session))
-    assert_equal(4, searchable.count)
+    assert(searchable.include?(KnowledgeBase::Answer::Translation))
+    assert_equal(5, searchable.count)
   end
 
   test 'param_cleanup test' do

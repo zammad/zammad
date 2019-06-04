@@ -28,7 +28,7 @@ class App.Track
 class _trackSingleton
   constructor: ->
     @trackId = "track-#{new Date().getTime()}-#{Math.floor(Math.random() * 99999)}"
-    @browser = App.Browser.detection()
+    @browser = App.Browser.detection() if App.Browser
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
     @url      = 'https://log.zammad.com/api/v1/ui'

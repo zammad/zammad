@@ -7,8 +7,8 @@
   </thead>
   <tbody>
     <tr>
-      <td>
-        <label class="checkbox-replacement dont-grey-out">
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
           <input type="checkbox" class="js-activateRow" id="first_response_time">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
@@ -21,8 +21,8 @@
         <input type="text" value="<%= @first_response_time_in_text %>" class="form-control--small timeframe js-timeConvertFrom"  placeholder="hh:mm" name="first_response_time_in_text">
 
     <tr>
-      <td>
-        <label class="checkbox-replacement dont-grey-out">
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
           <input type="checkbox" class="js-activateRow" id="update_time">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
@@ -35,8 +35,8 @@
         <input type="text" value="<%= @update_time_in_text %>" class="form-control--small timeframe js-timeConvertFrom" placeholder="hh:mm" name="update_time_in_text">
 
     <tr>
-      <td>
-        <label class="checkbox-replacement dont-grey-out">
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
           <input type="checkbox" id="solution_time" class="js-activateRow">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>

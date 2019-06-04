@@ -212,6 +212,38 @@ class Link < ApplicationModel
     linkobject
   end
 
+=begin
+
+  Update assets according to given references list
+
+  @param assets [Hash] hash with assets
+  @param link_references [Array<Hash>] @see #list
+  @return [Hash] assets including linked items
+
+  @example Link.reduce_assets(assets, link_references)
+
+=end
+
+  def self.reduce_assets(assets, link_references)
+    link_items = link_references
+                 .map { |elem| lookup_linked_object(elem) }
+                 .compact
+
+    ApplicationModel::CanAssets.reduce(link_items, assets)
+  end
+
+  def self.lookup_linked_object(elem)
+    klass = elem['link_object'].safe_constantize
+    id    = elem['link_object_value']
+
+    case klass.to_s
+    when KnowledgeBase::Answer::Translation.to_s
+      Setting.get('kb_active') ? klass.lookup(id: id) : nil
+    else
+      klass&.lookup(id: id)
+    end
+  end
+
 end
 
 class Link::Type < ApplicationModel

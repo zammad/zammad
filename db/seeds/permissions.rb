@@ -364,16 +364,51 @@ Permission.create_if_not_exists(
   },
 )
 
+Permission.create_if_not_exists(
+  name:        'admin.knowledge_base',
+  note:        'Create and setup %s',
+  preferences: {
+    translations: ['Knowledge Base']
+  }
+)
+
+Permission.create_if_not_exists(
+  name:        'knowledge_base',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Knowledge Base'],
+    disabled:     true,
+  }
+)
+
+Permission.create_if_not_exists(
+  name:        'knowledge_base.editor',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Knowledge Base Editor']
+  }
+)
+
+Permission.create_if_not_exists(
+  name:        'knowledge_base.reader',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Knowledge Base Reader']
+  }
+)
+
 admin = Role.find_by(name: 'Admin')
 admin.permission_grant('user_preferences')
 admin.permission_grant('admin')
 admin.permission_grant('report')
+admin.permission_grant('knowledge_base.editor')
 
 agent = Role.find_by(name: 'Agent')
 agent.permission_grant('user_preferences')
 agent.permission_grant('ticket.agent')
 agent.permission_grant('chat.agent')
 agent.permission_grant('cti.agent')
+agent.permission_grant('knowledge_base.reader')
 
 customer = Role.find_by(name: 'Customer')
 customer.permission_grant('user_preferences.password')

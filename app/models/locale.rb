@@ -2,6 +2,9 @@
 
 class Locale < ApplicationModel
 
+  has_many :knowledge_base_locales, inverse_of: :system_locale, dependent: :restrict_with_error,
+                                    class_name: 'KnowledgeBase::Locale', foreign_key: :system_locale_id
+
 =begin
 
 get locals to sync

@@ -61,8 +61,8 @@ class Index extends App.ControllerSubContent
         display:      'Action'
         className:    'actionCell'
         translation:  true
-        width:        '200px'
-        displayWidth: 200
+        width:        '250px'
+        displayWidth: 250
         unresizable:  true
       header.push attribute
       header
@@ -70,7 +70,7 @@ class Index extends App.ControllerSubContent
     callbackAttributes = (value, object, attribute, header) ->
       text                  = App.i18n.translateInline('View from user\'s perspective')
       value                 = ' '
-      attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '">' + App.Utils.icon('switchView') + text + '</span>'
+      attribute.raw         = ' <span class="btn btn--primary btn--small btn--slim switchView" title="' + text + '">' + App.Utils.icon('switchView') + '<span>' + text + '</span></span>'
       attribute.class       = ''
       attribute.parentClass = 'actionCell no-padding'
       attribute.link        = ''

@@ -356,6 +356,18 @@ class TicketsController < ApplicationController
     }
   end
 
+  # GET /api/v1/ticket_recent
+  def ticket_recent
+    ticket_ids = RecentView.list(current_user, 10, Ticket.name).map(&:o_id)
+    tickets    = ticket_ids.map { |elem| Ticket.lookup(id: elem) }
+    assets     = ApplicationModel::CanAssets.reduce(tickets)
+
+    render json: {
+      assets:                   assets,
+      ticket_ids_recent_viewed: ticket_ids
+    }
+  end
+
   # GET /api/v1/ticket_merge/1/1
   def ticket_merge
 
@@ -694,14 +706,8 @@ class TicketsController < ApplicationController
       link_object:       'Ticket',
       link_object_value: ticket.id,
     )
-    link_list = []
-    links.each do |item|
-      link_list.push item
-      if item['link_object'] == 'Ticket'
-        linked_ticket = Ticket.lookup(id: item['link_object_value'])
-        assets = linked_ticket.assets(assets)
-      end
-    end
+
+    assets = Link.reduce_assets(assets, links)
 
     # get tags
     tags = ticket.tag_list
@@ -711,7 +717,7 @@ class TicketsController < ApplicationController
       ticket_id:          ticket.id,
       ticket_article_ids: article_ids,
       assets:             assets,
-      links:              link_list,
+      links:              links,
       tags:               tags,
       form_meta:          attributes_to_change[:form_meta],
     }

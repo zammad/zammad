@@ -31,6 +31,9 @@ gem 'eventmachine'
 # core - password security
 gem 'argon2', '1.1.5'
 
+# core - state machine
+gem 'aasm'
+
 # performance - Memcached
 gem 'dalli'
 
@@ -105,6 +108,9 @@ gem 'telephone_number'
 # feature - SMS
 gem 'twilio-ruby'
 
+# feature - ordering
+gem 'acts_as_list'
+
 # integrations
 gem 'clearbit'
 gem 'net-ldap'
@@ -136,7 +142,9 @@ group :development, :test do
   gem 'pry-stack_explorer'
 
   # test frameworks
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'test-unit'
 
   # test DB

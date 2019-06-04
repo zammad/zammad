@@ -1213,6 +1213,37 @@ class App.Utils
     ctx.drawImage(img, 0, 0)
     canvas.toDataURL('image/png')
 
+  # works asynchronously to make sure images are loaded before converting to base64
+  # output is passed to callback
+  @htmlImage2DataUrlAsync: (html, callback) ->
+    output = @_checkTypeOf("<div>#{html}</div>")
+
+    # coffeelint: disable=indentation
+    elems = output
+             .find('img')
+             .toArray()
+             .filter (elem) -> !elem.src.match(/^(data|cid):/i)
+    # coffeelint: enable=indentation
+
+    cacheOrDone = ->
+      if (nextElem = elems.pop())
+        App.Utils._htmlImage2DataUrlAsync(nextElem, (data) ->
+          $(nextElem).attr('src', data)
+          cacheOrDone()
+        )
+      else
+        callback(output[0].innerHTML)
+
+    cacheOrDone()
+
+  @_htmlImage2DataUrlAsync: (originalImage, callback) ->
+    imageCache = new Image()
+    imageCache.onload = ->
+      data = App.Utils._htmlImage2DataUrl(originalImage)
+      callback(data)
+
+    imageCache.src = originalImage.src
+
   @baseUrl: ->
     fqdn      = App.Config.get('fqdn')
     http_type = App.Config.get('http_type')

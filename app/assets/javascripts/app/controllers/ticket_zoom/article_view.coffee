@@ -131,6 +131,9 @@ class ArticleViewItem extends App.ObserverController
     attachments = App.TicketArticle.contentAttachments(article)
     if article.attachments
       for attachment in article.attachments
+        attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
+        attachment.preview_url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=preview"
+        
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
@@ -192,7 +195,7 @@ class ArticleViewItem extends App.ObserverController
     @html App.view('ticket_zoom/article_view')(
       ticket:      @ticket
       article:     article
-      attachments: attachments
+      attachments: App.view('generic/attachments')(attachments: attachments)
       links:       links
     )
 

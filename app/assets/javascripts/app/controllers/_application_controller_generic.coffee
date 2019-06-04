@@ -403,6 +403,8 @@ class App.ControllerTabs extends App.Controller
       subHeader: @subHeader
       tabs: @tabs
       addTab: @addTab
+      headerSwitchName: @headerSwitchName
+      headerSwitchChecked: @headerSwitchChecked
     )
 
     # insert content

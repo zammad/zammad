@@ -10,27 +10,26 @@ class LinksController < ApplicationController
       link_object_value: params[:link_object_value],
     )
 
-    assets = {}
-    link_list = []
-    links.each do |item|
-      link_list.push item
-      if item['link_object'] == 'Ticket'
-        ticket = Ticket.lookup(id: item['link_object_value'])
-        assets = ticket.assets(assets)
-      end
-    end
+    linked_objects = links
+                     .map { |elem| elem['link_object']&.safe_constantize&.lookup(id: elem['link_object_value']) }
+                     .compact
 
     # return result
     render json: {
-      links:  link_list,
-      assets: assets,
+      links:  links,
+      assets: ApplicationModel::CanAssets.reduce(linked_objects),
     }
   end
 
   # POST /api/v1/links/add
   def add
+    object = case params[:link_object_source]
+             when 'Ticket'
+               Ticket.find_by(number: params[:link_object_source_number])
+             when 'KnowledgeBase::Answer::Translation'
+               KnowledgeBase::Answer::Translation.find_by(id: params[:link_object_source_number])
+             end
 
-    object = Ticket.find_by(number: params[:link_object_source_number])
     if !object
       render json: { error: 'No such object!' }, status: :unprocessable_entity
       return

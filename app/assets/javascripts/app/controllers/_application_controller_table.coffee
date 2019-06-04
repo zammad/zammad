@@ -116,6 +116,7 @@ class App.ControllerTable extends App.Controller
   shownPage: 0
 
   destroy: false
+  customActions: []
 
   columnsLength: undefined
   headers: undefined
@@ -544,7 +545,7 @@ class App.ControllerTable extends App.Controller
 
     # get header data
     @headers = []
-    @actions = []
+    @actions = [].concat @customActions
     availableWidth = @availableWidth
     for item in @overviewAttributes
       headerFound = false

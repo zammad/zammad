@@ -1,0 +1,15 @@
+<div class="server-snippet">
+  <p><%- @T('Configuration for %s', @address_type) %> <strong><%= @address %></strong>:</p>
+  <ul class="nav nav-tabs" role="tablist">
+  <% for tab in @servers: %>
+    <li<%- ' class="active"' if tab.active %>><a href="#<%= tab.id %>" role="tab" data-toggle="tab"><%= tab.name %></a>
+  <% end %>
+  </ul>
+  <div class="tab-content">
+    <% for tab in @servers: %>
+    <div class="tab-pane<%= ' active' if tab.active %>" role="tabpanel" id="<%= tab.id %>">
+      <textarea class="form-control" rows="11" readonly><%= tab.snippet %></textarea>
+    </div>
+    <% end %>
+  </div>
+</div>

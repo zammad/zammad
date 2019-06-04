@@ -21,7 +21,7 @@ returns
 
 =end
 
-    def param_cleanup(params, new_object = false)
+    def param_cleanup(params, new_object = false, inside_nested = false)
 
       if params.respond_to?(:permit!)
         params = params.permit!.to_h
@@ -29,6 +29,11 @@ returns
 
       if params.nil?
         raise ArgumentError, "No params for #{self}!"
+      end
+
+      # cleanup each member of array
+      if params.is_a? Array
+        return params.map { |elem| param_cleanup(elem, new_object, inside_nested) }
       end
 
       data = {}
@@ -59,6 +64,33 @@ returns
           raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
         end
         clean_params[attribute] = data[attribute]
+      end
+
+      clean_params['form_id'] = data['form_id'] if data.key?('form_id') && new.respond_to?('form_id')
+
+      if inside_nested
+        clean_params['id'] = params[:id] if params[:id].present?
+        clean_params['_destroy'] = data['_destroy'] if data['_destroy'].present?
+      end
+
+      nested_attributes_options.each_key do |nested|
+        nested_key = "#{nested}_attributes"
+        target_klass = reflect_on_association(nested).klass
+
+        next if data[nested_key].blank?
+
+        nested_data = data[nested_key]
+
+        if data.key? 'form_id'
+          case nested_data
+          when Array
+            nested_data.each { |item| item['form_id'] = data['form_id'] }
+          else
+            nested_data['form_id'] = data['form_id']
+          end
+        end
+
+        clean_params[nested_key] = target_klass.param_cleanup(nested_data, new_object, true)
       end
 
       # we do want to set this via database

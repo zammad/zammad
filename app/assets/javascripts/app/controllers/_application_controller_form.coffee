@@ -1,4 +1,9 @@
 class App.ControllerForm extends App.Controller
+  fullFormSubmitLabel: 'Submit'
+  fullFormSubmitAdditionalClasses: ''
+  fullFormButtonsContainerClass: ''
+  fullFormAdditionalButtons: [] # [{className: 'js-class', text: 'Label'}]
+
   constructor: (params) ->
     super
     for key, value of params
@@ -71,7 +76,9 @@ class App.ControllerForm extends App.Controller
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
     # check if own fieldset should be generated
-    if @noFieldset
+    # forced when the form is a grid form because flex-wrap doesn't work on fieldsets
+    # source: https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
+    if @noFieldset || @grid
       fieldset = @el
     else
       fieldset = $('<fieldset></fieldset>')
@@ -127,7 +134,24 @@ class App.ControllerForm extends App.Controller
     if @fullForm
       if !@formClass
         @formClass = ''
-      fieldset = $('<form class="' + @formClass + '" autocomplete="off"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend(fieldset)
+
+      fieldset = $("<form class='form #{@formClass}' autocomplete='off'>").prepend(fieldset)
+      container = $("<div class='form-buttons #{@fullFormButtonsContainerClass}'>")
+
+      for buttonConfig in @fullFormAdditionalButtons
+        btn = $("<button class='btn #{buttonConfig.className}'>").text(buttonConfig.text)
+        if buttonConfig.disabled
+          btn.prop('disabled', true)
+        container.append(btn)
+
+      $("<button type=submit class='btn #{@fullFormSubmitAdditionalClasses}\' value=\"#{@fullFormSubmitLabel}\"></button>")
+        .text(App.i18n.translateContent(@fullFormSubmitLabel))
+        .appendTo(container)
+
+      container.appendTo(fieldset)
+
+      #fieldset = $("<form class=\"#{@formClass}\" autocomplete=\"off\"><div class='horizontal #{@fullFormButtonsContainerClass}'><input type=submit class=\"btn #{@fullFormSubmitAdditionalClasses}\" value=\"#{label}\"></div></form>").prepend(fieldset)
+      #fieldset = $("<form class=\"#{@formClass}\" autocomplete=\"off\"><input type=submit class=\"btn #{@fullFormSubmitAdditionalClasses}\" value=\"#{label}\"></form>").prepend(fieldset)
 
     # bind form events
     if @events
@@ -258,11 +282,15 @@ class App.ControllerForm extends App.Controller
     # set params value
     if @params
 
-      # check if we have a references
       parts = attribute.name.split '::'
-      if parts[0] && parts[1]
-        if @params[ parts[0] ] && parts[1] of @params[ parts[0] ]
-          attribute.value = @params[ parts[0] ][ parts[1] ]
+
+      if parts.length > 1
+        deepValue = parts.reduce((memo, elem) ->
+          memo?[elem]
+        , @params)
+
+        if deepValue isnt undefined
+          attribute.value = deepValue
 
       # set params value to default
       if attribute.name of @params
@@ -426,10 +454,15 @@ class App.ControllerForm extends App.Controller
     )
 
   # get all params of the form
-  @params: (form) ->
+  # set clearAccessories to true to remove inline image resizing handles
+  @params: (form, clearAccessories = false) ->
     param = {}
 
     lookupForm = @findForm(form)
+
+    if clearAccessories
+      # remove inline image resizing handles
+      lookupForm.find('.richtext.form-control').trigger('click')
 
     # get contenteditable
     for element in lookupForm.find('[contenteditable]')
@@ -656,6 +689,9 @@ class App.ControllerForm extends App.Controller
       # set forms to read only during communication with backend
       lookupForm.find('button, input, select, textarea').prop('readonly', true)
 
+      # disable radio and checbkox buttons
+      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', true)
+
       # disable additionals submits
       lookupForm.find('button').prop('disabled', true)
     else
@@ -677,6 +713,9 @@ class App.ControllerForm extends App.Controller
 
       # enable fields again
       lookupForm.find('button, input, select, textarea').prop('readonly', false)
+
+      # enable radio and checbkox buttons
+      lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', false)
 
       # enable submits again
       lookupForm.find('button').prop('disabled', false)

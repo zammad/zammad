@@ -88,8 +88,10 @@ class App.Controller extends Spine.Controller
     for callId in idsToCancel
       App.Ajax.abort(callId)
 
+  # release Spine's event handling
   release: ->
-    # release custom bindings after it got removed from dom
+    @off()
+    @stopListening()
 
   # add @title methode to set title
   title: (name, translate = false) ->
@@ -452,6 +454,7 @@ class App.ControllerModal extends App.Controller
   buttonCancel: false
   buttonCancelClass: 'btn--text btn--subtle'
   buttonSubmit: true
+  includeForm: true
   headPrefix: ''
   shown: true
   closeOnAnyClick: false
@@ -516,6 +519,7 @@ class App.ControllerModal extends App.Controller
       buttonClass:       @buttonClass
       centerButtons:     @centerButtons
       leftButtons:       @leftButtons
+      includeForm:       @includeForm
     ))
     modal.find('.modal-body').html(content)
     if !@initRenderingDone
@@ -554,18 +558,19 @@ class App.ControllerModal extends App.Controller
     if @small
       @el.addClass('modal--small')
 
-    @el.modal(
-      keyboard:  @keyboard
-      show:      true
-      backdrop:  @backdrop
-      container: @container
-    ).on(
-      'show.bs.modal':   @localOnShow
-      'shown.bs.modal':  @localOnShown
-      'hide.bs.modal':   @localOnClose
-      'hidden.bs.modal': @localOnClosed
-      'dismiss.bs.modal': @localOnCancel
-    )
+    @el
+      .on(
+        'show.bs.modal':   @localOnShow
+        'shown.bs.modal':  @localOnShown
+        'hide.bs.modal':   @localOnClose
+        'hidden.bs.modal': @localOnClosed
+        'dismiss.bs.modal': @localOnCancel
+      ).modal(
+        keyboard:  @keyboard
+        show:      true
+        backdrop:  @backdrop
+        container: @container
+      )
 
     if @closeOnAnyClick
       @el.on('click', =>
@@ -604,7 +609,7 @@ class App.ControllerModal extends App.Controller
 
   onShown: (e) =>
     if @autoFocusOnFirstInput
-      @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
+      @$('input:not([disabled]):not([type="hidden"]):not(".btn"):not([type="radio"]:not(:checked)), textarea').first().focus()
     @initalFormParams = @formParams()
 
   localOnClose: (e) =>

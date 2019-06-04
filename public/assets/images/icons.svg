@@ -25,6 +25,14 @@
         bold
     </title>
     <path d="M7.406 5.703c1.143.217 2.286.753 2.286 2.417 0 2.2-1.75 2.88-4.182 2.88H2.5V1h2.62c2.575 0 4.138.724 4.138 2.547 0 1.245-.897 1.954-1.852 2.156zm-2.102-3.3h-.897V5.11H5.58c1.042 0 1.722-.463 1.722-1.404 0-1.013-.694-1.302-1.997-1.302zm.22 7.164c1.26 0 2.171-.26 2.171-1.52 0-1.2-.853-1.606-1.968-1.606H4.41v3.126h1.115z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-chain" viewBox="0 0 16 16">
+    <title>
+        chain
+    </title>
+    <g transform="rotate(-45 5.615 2.326)" fill-rule="evenodd">
+        <path d="M2 0h2.575a2 2 0 0 1 2 2v3.452a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 8.548h2.575a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-3.452a2 2 0 0 1 2-2zm.534-6.795a1 1 0 0 0-1 1V4.7a1 1 0 0 0 1 1h1.507a1 1 0 0 0 1-1V2.753a1 1 0 0 0-1-1H2.534zm0 8.548a1 1 0 0 0-1 1v1.946a1 1 0 0 0 1 1h1.507a1 1 0 0 0 1-1V11.3a1 1 0 0 0-1-1H2.534z"/>
+        <rect x="2.411" y="4.384" width="1.753" height="7.233" rx=".877"/>
+    </g>
 </symbol><symbol id="icon-chat" viewBox="0 0 24 24">
     <title>
         chat
@@ -71,8 +79,8 @@
         clock
     </title>
     <g fill-rule="evenodd">
-        <path d="M7.5 14a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zm0-.929a5.571 5.571 0 1 0 0-11.142 5.571 5.571 0 0 0 0 11.142z"/>
-        <path stroke="#50E3C2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.516v4.022l3.01 2.967"/>
+        <path d="M7.5 14a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zm0-.929a5.571 5.571 0 1 0 0-11.142 5.571 5.571 0 0 0 0 11.142z"/>
+        <path d="M8 7.329V3.516a.5.5 0 1 0-1 0v4.022a.5.5 0 0 0 .149.356l3.01 2.967a.5.5 0 0 0 .701-.712L8 7.329z" fill-rule="nonzero"/>
     </g>
 </symbol><symbol id="icon-cloud" viewBox="0 0 16 16">
     <title>
@@ -89,6 +97,11 @@
         crown
     </title>
     <path d="M59.01 5.211V27h-56V5.213h-.003a2.172 2.172 0 1 1 1.134-.319l12.87 10.18L29.879 4.895A2.17 2.17 0 0 1 31.01.87a2.172 2.172 0 0 1 1.132 4.026l12.868 10.18L57.838 4.927a2.171 2.171 0 1 1 1.173.283z" fill="#FFD22E" fill-rule="evenodd"/>
+</symbol><symbol id="icon-danger" viewBox="0 0 16 16">
+    <title>
+        danger
+    </title>
+    <path d="M9.743 2.099l5.58 9.92A2 2 0 0 1 13.58 15H2.42a2 2 0 0 1-1.743-2.98l5.58-9.921a2 2 0 0 1 3.486 0zM7.976 4a.954.954 0 0 0-.96.99l.155 4.02c.02.546.487.99 1.03.99h-.403c.548 0 1.01-.451 1.031-.99l.155-4.02a.954.954 0 0 0-.96-.99h-.048zM8 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" fill-rule="evenodd"/>
 </symbol><symbol id="icon-dashboard" viewBox="0 0 24 24">
     <title>
         dashboard
@@ -99,6 +112,11 @@
         diagonal-cross
     </title>
     <path d="M12.666.289a.994.994 0 0 1 .005 1.405L7.882 6.517l4.784 4.783a.994.994 0 0 1-1.406 1.406L6.482 7.927l-4.743 4.776a.994.994 0 0 1-1.41-1.4l4.747-4.781L.251 1.697A.994.994 0 0 1 1.657.29l4.82 4.82L11.26.294a.994.994 0 0 1 1.405-.005z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-document" viewBox="0 0 16 16">
+    <title>
+        document
+    </title>
+    <path d="M2 1.638A.63.63 0 0 1 2.628 1h10.744c.343 0 .628.286.628.638v12.724a.63.63 0 0 1-.628.638H2.628A.635.635 0 0 1 2 14.362V1.638zM4.665 3C4.298 3 4 3.222 4 3.5c0 .276.298.5.665.5h4.67c.367 0 .665-.222.665-.5 0-.276-.298-.5-.665-.5h-4.67zm-.05 3C4.274 6 4 6.222 4 6.5c0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614zm0 3C4.274 9 4 9.222 4 9.5c0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614zm0 3c-.34 0-.615.222-.615.5 0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614z" fill-rule="evenodd"/>
 </symbol><symbol id="icon-download" viewBox="0 0 14 13">
     <title>
         download
@@ -126,6 +144,19 @@
         email
     </title>
     <path d="M17 3.34L8.489 8.797 0 3.34V3h17v.34zm0 1.443V14H0V4.784l8.497 5.598L17 4.783z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-external" viewBox="0 0 16 16">
+    <title>
+        external
+    </title>
+    <g fill-rule="evenodd">
+        <path d="M14 10v4H2V2h4v2H4v8h8v-2h2zm0-3h-2V4H9V2h5v5z" fill-rule="nonzero"/>
+        <path d="M11.594 3l1.414 1.414-4.95 4.95L6.644 7.95z"/>
+    </g>
+</symbol><symbol id="icon-eye" viewBox="0 0 16 16">
+    <title>
+        eye
+    </title>
+    <path d="M8 4.21c3.557 0 7 3.788 7 3.788s-3.557 3.788-7 3.788c-3.557 0-7-3.788-7-3.788S4.557 4.21 8 4.21zm0 6.428c1.492 0 2.754-1.148 2.64-2.64 0-1.492-1.148-2.64-2.64-2.64-1.492 0-2.64 1.148-2.64 2.64 0 1.492 1.148 2.64 2.64 2.64zM8 6.62c.803 0 1.377.69 1.262 1.263 0 .689-.573 1.263-1.262 1.263a1.274 1.274 0 0 1-1.262-1.263c0-.689.573-1.263 1.262-1.263z" fill-rule="evenodd"/>
 </symbol><symbol id="icon-eyedropper" viewBox="0 0 17 17">
     <title>
         eyedropper
@@ -348,6 +379,16 @@
         <path d="M6.667 1H8.5L5.333 11H3.5z"/>
         <path d="M5 1h5v1H5zM2 10h5v1H2z"/>
     </g>
+</symbol><symbol id="icon-knowledge-base-answer" viewBox="0 0 16 16">
+    <title>
+        knowledge-base-answer
+    </title>
+    <path d="M8.045 1l-.027 2.982a2 2 0 0 0 2 2.018H13v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h4.045zM9 1l4 4h-3a1 1 0 0 1-1-1V1z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-knowledge-base" viewBox="0 0 24 24">
+    <title>
+        knowledge-base
+    </title>
+    <path d="M3 20.02V2.991C3 1.89 3.893 1 4.992 1h11.016C17.108 1 18 1.898 18 2.99v16.02c0 1.099-.893 1.99-1.992 1.99H4.266c.344.596.988 1 1.726 1h11.016A1.992 1.992 0 0 0 19 20.01V3.99c0-.29-.063-.565-.176-.815A1.997 1.997 0 0 1 20 4.991v16.018c0 1.1-.893 1.991-1.992 1.991h-12c-.557 0-1.356-.29-1.753-.665 0 0-1.244-.827-1.255-2.315zM5 6.505v.99c0 .291.224.505.501.505H15.5A.506.506 0 0 0 16 7.495v-.99A.496.496 0 0 0 15.499 6H5.5A.506.506 0 0 0 5 6.505zm0 4v.99c0 .291.224.505.501.505H15.5a.506.506 0 0 0 .501-.505v-.99a.496.496 0 0 0-.501-.505H5.5a.506.506 0 0 0-.501.505z" fill-rule="evenodd"/>
 </symbol><symbol id="icon-line-left-arrow" viewBox="0 0 34 7">
     <title>
         line-left-arrow
@@ -589,7 +630,7 @@
     </title>
     <g fill-rule="evenodd">
         <circle fill="#000" cx="5.5" cy="5.5" r="2.5"/>
-        <path d="M5.5 11a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0-1a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z" fill="currentColor"/>
+        <path d="M5.5 11a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0-1a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z" fill="currentColor"/>
     </g>
 </symbol><symbol id="icon-radio" viewBox="0 0 11 11">
     <title>
@@ -598,6 +639,13 @@
     <g fill-rule="evenodd">
         <path d="M5.5 0a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" fill="currentColor"/>
         <path d="M1 5.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z" fill="#FFF"/>
+    </g>
+</symbol><symbol id="icon-rearange" viewBox="0 0 16 16">
+    <title>
+        rearange
+    </title>
+    <g fill-rule="evenodd">
+        <path d="M3.98 5H2.5l2.48-4L7.5 5H5.98v8h-2zM9.98 11V3h2v8h1.52l-2.52 4-2.48-4z"/>
     </g>
 </symbol><symbol id="icon-received-calls" viewBox="0 0 17 17">
     <title>

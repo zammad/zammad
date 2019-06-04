@@ -47,6 +47,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.0.0)
+      concurrent-ruby (~> 1.0)
     actioncable (5.1.7)
       actionpack (= 5.1.7)
       nio4r (~> 2.0)
@@ -94,6 +96,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_list (0.9.16)
+      activerecord (>= 3.0)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
@@ -374,6 +378,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.1.7)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.4)
+      actionpack (>= 5.0.1.x)
+      actionview (>= 5.0.1.x)
+      activesupport (>= 5.0.1.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -450,6 +458,8 @@ GEM
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
     shellany (0.0.1)
+    shoulda-matchers (4.0.1)
+      activesupport (>= 4.2.0)
     simple_oauth (0.3.1)
     simplecov (0.16.1)
       docile (~> 1.1)
@@ -530,9 +540,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   activerecord-import
   activerecord-nulldb-adapter
   activerecord-session_store
+  acts_as_list
   argon2 (= 1.1.5)
   autodiscover!
   autoprefixer-rails
@@ -592,6 +604,7 @@ DEPENDENCIES
   puma
   rack-livereload
   rails (= 5.1.7)
+  rails-controller-testing
   rails-observers
   rb-fsevent
   rchardet (>= 1.8.0)
@@ -603,6 +616,7 @@ DEPENDENCIES
   rubyntlm!
   sassc-rails
   selenium-webdriver
+  shoulda-matchers
   simplecov
   simplecov-rcov
   slack-notifier

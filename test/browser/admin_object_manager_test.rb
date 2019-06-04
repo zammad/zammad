@@ -735,6 +735,8 @@ class AdminObjectManagerTest < TestCase
     )
     object_manager_attribute_migrate
 
+    screenshot(comment: 'deleted_select_attributes_before_click')
+
     # open the previously created ticket and verify its attribute selection
     click(
       xpath:   '//a/div[contains(text(),"select_attributes_delete_test")]',

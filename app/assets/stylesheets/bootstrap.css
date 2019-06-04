@@ -3058,24 +3058,6 @@ fieldset[disabled] .navbar-inverse .btn-link:hover,
 fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444;
 }
-.breadcrumb {
-  padding: 8px 15px;
-  margin-bottom: 20px;
-  list-style: none;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-.breadcrumb > li {
-  display: inline-block;
-}
-.breadcrumb > li + li:before {
-  padding: 0 5px;
-  color: #ccc;
-  content: "/\00a0";
-}
-.breadcrumb > .active {
-  color: #777;
-}
 .pagination {
   display: inline-block;
   padding: 0;
@@ -4314,6 +4296,7 @@ button.close {
 .popover > .arrow:after {
   content: "";
   border-width: 10px;
+  border-color: #fff;
 }
 .popover.top > .arrow {
   bottom: -11px;
@@ -4327,8 +4310,9 @@ button.close {
   bottom: 1px;
   margin-left: -10px;
   content: " ";
-  border-top-color: #fff;
   border-bottom-width: 0;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
 }
 .popover.right > .arrow {
   top: 50%;
@@ -4342,8 +4326,9 @@ button.close {
   bottom: -10px;
   left: 1px;
   content: " ";
-  border-right-color: #fff;
   border-left-width: 0;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
 }
 .popover.bottom > .arrow {
   top: -11px;
@@ -4358,7 +4343,8 @@ button.close {
   margin-left: -10px;
   content: " ";
   border-top-width: 0;
-  border-bottom-color: #fff;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
 }
 .popover.left > .arrow {
   top: 50%;
@@ -4373,7 +4359,8 @@ button.close {
   bottom: -10px;
   content: " ";
   border-right-width: 0;
-  border-left-color: #fff;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
 }
 .carousel {
   position: relative;
