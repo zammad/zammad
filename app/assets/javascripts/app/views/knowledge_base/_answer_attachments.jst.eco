@@ -1,6 +1,6 @@
 <% if @attachments: %>
 <div class="knowledge-base-article-attachments">
-	<h2><%= @Ti('Attachments') %></h2>
+	<h2><%- @Ti('Attachments') %></h2>
 	<ul class="knowledge-base-article-attachments-list">
 	<% for attachment in @attachments: %>
 	<li>

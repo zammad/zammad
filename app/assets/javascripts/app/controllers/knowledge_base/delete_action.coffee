@@ -6,7 +6,7 @@ class App.KnowledgeBaseDeleteAction
     if @object instanceof App.KnowledgeBaseCategory and !@object.isEmpty()
       @showCannotDelete(
         'Cannot delete category',
-        'Please delete all children categories and answers first.'
+        'Delete all child categories and answers, then try again.'
       )
 
       return
@@ -19,7 +19,7 @@ class App.KnowledgeBaseDeleteAction
 
     @dialog = new App.ControllerConfirm(
       head:      'Delete'
-      message:   "Are you sure to delete \"#{translation?.title}\"?"
+      message:   "Are you sure you want to delete \"#{translation?.title}\"?"
       callback:  @doDelete
       container: @parentController.el
       onSubmit: ->

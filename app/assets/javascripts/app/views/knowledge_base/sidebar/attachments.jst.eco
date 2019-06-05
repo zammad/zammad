@@ -1,5 +1,5 @@
 <div class="sidebar-block-header">
-  <h2><%= @T('Attachments') %></h2>
+  <h2><%- @T('Attachments') %></h2>
 </div>
 
 <div class="dropContainer">
@@ -38,7 +38,7 @@
     <% uid =  _.uniqueId('fileUpload_') %>
     <input multiple="multiple" type="file" name="file" id="<%- uid %>">
     <label class="attachmentPlaceholder-label" for="<%- uid %>">
-      <span><%= @T('Add') %></span>
+      <span><%- @T('Add') %></span>
     </label>
   </div>
 

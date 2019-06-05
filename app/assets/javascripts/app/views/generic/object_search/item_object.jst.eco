@@ -13,6 +13,6 @@
     <% end %>
   </div>
   <% if @object.active is false: %>
-    <div class="recipientList-status"><%= @Ti('inactive') %></div>
+    <div class="recipientList-status"><%- @Ti('inactive') %></div>
   <% end %>
 </li>

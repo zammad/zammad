@@ -20,7 +20,7 @@
           <td>Create a book in Pages</td>
           <td class="table-buttons">
             <div class="btn btn--action btn--primary btn--small js-link">
-              <%- @Icon('plus-small') %> <span><%= @T('link') %></span>
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
             </div>
           </td>
         </tr>
@@ -29,7 +29,7 @@
           <td>Publish your book with Pages</td>
           <td class="table-buttons">
             <div class="btn btn--action btn--primary btn--small js-link">
-              <%- @Icon('plus-small') %> <span><%= @T('link') %></span>
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
             </div>
           </td>
         </tr>
@@ -38,7 +38,7 @@
           <td>Record audio in Pages, Numbers, and Keynote for iOS and Mac</td>
           <td class="table-buttons">
             <div class="btn btn--action btn--primary btn--small is-disabled">
-              <%= @T('already linked') %>
+              <%- @T('already linked') %>
             </div>
           </td>
         </tr>
@@ -47,7 +47,7 @@
           <td>Use advanced book creation options in Pages</td>
           <td class="table-buttons">
             <div class="btn btn--action btn--primary btn--small js-link">
-              <%- @Icon('plus-small') %> <span><%= @T('link') %></span>
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
             </div>
           </td>
         </tr>

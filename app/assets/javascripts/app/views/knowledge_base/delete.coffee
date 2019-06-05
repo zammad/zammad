@@ -10,7 +10,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
     formController = @formControllers[0]
 
     if !@isTitleMatching()
-      formController.showAlert(App.i18n.translateInline('Please enter title to confirm'))
+      formController.showAlert(App.i18n.translateInline('Confirmation failed.'))
       return
 
     formController.hideAlert()
@@ -46,8 +46,8 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
             model:   'translation'
             style:   'block'
             null:    true
-            display: 'Delete this Knowledge Base'
-            help:    "This action cannot be undone. This will permanently delete \"#{@object().guaranteedTitle()}\". Please type in the name \"#{@object().guaranteedTitle()}\" of the Knowledge Base to confirm."
+            display: 'Permanently Delete Knowledge Base'
+            help:    "Deleting your knowledge base requires an additional verification step. To proceed, enter its name below (\"#{@object().guaranteedTitle()}\"). THIS ACTION CANNOT BE UNDONE."
             tag:     'input'
           }
         ]

@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th width="85%"><%- @T('Language') %>
-      <th width="5%"><%- @T('Primary') %>
+      <th width="5%"><%- @T('Default') %>
       <th width="10%"><%- @T('Delete') %>
   </thead>
   <tbody>

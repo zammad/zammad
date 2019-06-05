@@ -11,7 +11,7 @@
     <span class="recipientList-detail">- <%= @objectCount %> <%- @T(@objectSingels) %></span>
   </div>
   <% if @organization.active is false: %>
-    <div class="recipientList-status"><%= @Ti('inactive') %></div>
+    <div class="recipientList-status"><%- @Ti('inactive') %></div>
   <% end %>
   <%- @Icon('arrow-right', 'recipientList-arrow') %>
 </li>

@@ -1,7 +1,7 @@
-<%= @T(@answer.can_be_published_state()) %>
+<%- @T(@answer.can_be_published_state()) %>
 
 <% if user = @answer.can_be_published_by(): %>
-  <%= @T('by') %>
+  <%- @T('by') %>
   <%= user.displayName() %>
 <% end %>
 

@@ -32,7 +32,7 @@
       class="btn btn--action js-edit <% if @edit.enabled: %>btn--active<% end %>"
       <% if @search.enabled: %>disabled<% end %>
       >
-      <%= @T('Edit') %>
+      <%- @T('Edit') %>
     </a>
   <% end %>
   <div class="btn btn--action btn--split--first js-pickedLanguage"><%= @kbLocales.selected?.systemLocale().locale %></div>

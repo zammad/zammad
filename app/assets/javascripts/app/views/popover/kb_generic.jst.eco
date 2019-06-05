@@ -3,7 +3,7 @@
   <div class="state-badge">
     <%- @Icon('task-state', @object.parent().can_be_published_state()) %>
     <span class="<%= @object.parent().can_be_published_state_css() %>">
-      <%= @T(@object.parent().can_be_published_state()) %>
+      <%- @T(@object.parent().can_be_published_state()) %>
     </span>
   </div>
 

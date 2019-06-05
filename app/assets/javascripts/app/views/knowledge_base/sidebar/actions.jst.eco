@@ -7,7 +7,7 @@
           <%- @T(name) %>
         <% end %>
       <% else: %>
-        <%= @T(button.name) %>
+        <%- @T(button.name) %>
       <% end %>
     </a>
   <% end %>

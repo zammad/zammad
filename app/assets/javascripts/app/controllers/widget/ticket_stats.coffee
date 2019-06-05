@@ -161,7 +161,6 @@ class App.TicketStatsList extends App.Controller
       ticket_ids_show = @ticket_ids
 
     tickets = (App.Ticket.fullLocal(id) for id in ticket_ids_show)
-    console.log tickets
 
     @html App.view('widget/ticket_stats_list')(
       user:            @user

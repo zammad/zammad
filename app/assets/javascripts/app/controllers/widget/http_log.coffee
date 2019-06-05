@@ -51,7 +51,6 @@ class Show extends App.ControllerModal
     super
 
   content: ->
-    console.log('cont')
     App.view('widget/http_log_show')(
       record: @record
     )

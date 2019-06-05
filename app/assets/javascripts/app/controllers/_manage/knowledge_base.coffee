@@ -32,7 +32,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     @ajax(
       id:          'knowledge_bases_init_admin'
       type:        'GET'
-      url:         @apiPath + '/knowledge_bases/manage/init'
+      url:         "#{@apiPath}/knowledge_bases/manage/init"
       processData: true
       success:     (data, status, xhr) =>
         App.Collection.loadAssets(data)
@@ -93,7 +93,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
     @tabs = [
       {
-        name:       'Style'
+        name:       'Theme'
         target:     'style'
         controller: App.KnowledgeBaseForm
         params:     _.extend({}, params, { screen: 'style', split: true })
@@ -117,7 +117,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
     if !App.Config.get('system_online_service')
       @tabs.splice(-1, 0, {
-        name:       'Custom Address'
+        name:       'Custom URL'
         target:     'custom_address'
         controller: App.KnowledgeBaseCustomAddressForm,
         params:     _.extend({}, params, { screen: 'custom_address' })

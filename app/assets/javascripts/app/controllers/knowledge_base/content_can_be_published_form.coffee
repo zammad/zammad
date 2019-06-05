@@ -93,7 +93,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
   model:
     configure_attributes: [
         name:    'visibility'
-        display: 'Visibility'
+        display: 'Permissions'
         tag:     'radio'
         default: false
         options: [
@@ -103,7 +103,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
           ,
             value: 'internal'
             name:  'Internal'
-            note:  'Only visible to agents & editors'
+            note:  'Visible to agents & editors'
           ,
             value: 'published'
             name:  'Public'
@@ -119,7 +119,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
         default: 'now'
         options: [
             value: 'now'
-            name:  'Now'
+            name:  'now'
           ,
             value: 'scheduled'
             name:  'Schedule for'

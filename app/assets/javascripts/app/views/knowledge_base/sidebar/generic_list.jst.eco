@@ -1,13 +1,13 @@
 <div class="sidebar-block-header">
-  <h2><%= @T(@title) %></h2>
+  <h2><%- @T(@title) %></h2>
 </div>
 
 <div class="btn-list horizontal">
   <a href="#" class="btn btn--action btn--small btn--create js-add" <% if !@enabled: %>disabled<% end %> >
-    <%- @Icon('plus-small') %> <span><%= @T('Add') %></span>
+    <%- @Icon('plus-small') %> <span><%- @T('Add') %></span>
   </a>
   <a href="#" class="js-reorder btn btn--action btn--small" <% if !@enabled: %>disabled<% end %>>
-    <%- @Icon('rearange') %> <span><%= @T('Change order') %></span>
+    <%- @Icon('rearange') %> <span><%- @T('Change order') %></span>
   </a>
 </div>
 
@@ -33,7 +33,7 @@
     <% end %>
   <% else: %>
     <li>
-      <span class="nav-pills-placeholder"><%= @T(@emptyNote) %></span>
+      <span class="nav-pills-placeholder"><%- @T(@emptyNote) %></span>
     </li>
   <% end %>
 </ul>

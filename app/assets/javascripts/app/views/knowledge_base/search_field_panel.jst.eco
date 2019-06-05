@@ -2,7 +2,7 @@
 
 <div class="js-placeholderEmpty help-block help-block--center hide">
   <%- @Icon('mood-ok') %>
-  <div class='help-block--inner'><%= @T('empty') %></div>
+  <div class='help-block--inner'><%- @T('Empty') %></div>
 </div>
 
 <div class="js-placeholderError help-block help-block--center hide">

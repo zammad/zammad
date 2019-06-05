@@ -128,11 +128,10 @@ class App.KnowledgeBase extends App.Model
           shown: true
     }, {
       name: 'color_highlight'
-      display: 'Highlight Color'
+      display: 'Icon & Link Color'
       tag: 'color'
       style: 'block'
       null: false
-      help: 'The highlight color is used to make elements of the interface stand out. For example the links and icons.'
       screen:
         admin_style_color_highlight:
           display:    false
@@ -199,7 +198,7 @@ class App.KnowledgeBase extends App.Model
       display: 'Icon Set'
       tag:     'iconset_picker'
       style:   'block'
-      help:    "Pick an iconset that fits your style. The icons from this set can be assigned to categories. Choose wisely because the icon sets don't match with each other. If you change it later on you'll have to reset every icon."
+      help:    'Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware-you can\'t mix and match different icons from different sets. Choose carefully!'
       null:    false
       screen:
         admin_style_iconset:
@@ -210,7 +209,7 @@ class App.KnowledgeBase extends App.Model
       tag: 'multi_locales'
       style: 'block'
       null: false
-      help: 'Set up the languages for the Knowledge Base. Zammad detects the prefered language of the visitor. When its not available it will fall back to the primary language.'
+      help: 'You can provide different versions of your knowledge base for different locales. Add a language below, then select it in the Knowledge Base Editor to add your translations.'
       screen:
         admin_languages:
           shown: true
@@ -218,11 +217,11 @@ class App.KnowledgeBase extends App.Model
           shown: true
     }, {
       name:    'custom_address'
-      display: 'Custom Address'
+      display: 'Custom URL'
       tag:     'input'
       style:   'block'
       null:    true
-      help:    'Fill in full domain (e.g. example.com or example.com/help) or path (e.g. /support) to use custom address. See Apache or Nginx for further instructions'
+      help:    'The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., "/support", "example.com", or "example.com/support"). Then, follow the directions under "Web Server Configuration" to complete the process.'
       screen:
         admin_custom_address:
           shown: true
