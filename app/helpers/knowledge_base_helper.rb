@@ -203,8 +203,8 @@ module KnowledgeBaseHelper
       case node['data-target-type']
       when 'knowledge-base-answer'
         if (translation = KnowledgeBase::Answer::Translation.find_by(id: node['data-target-id']))
-          path = help_answer_path(translation.answer.category.translation,
-                                  translation.answer.translation,
+          path = help_answer_path(translation.answer.category.translation_preferred(translation.kb_locale),
+                                  translation,
                                   locale: translation.kb_locale.system_locale.locale)
 
           node['href'] = custom_path_if_needed path

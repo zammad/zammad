@@ -32,6 +32,14 @@ module HasTranslations
     translations.find_by(kb_locale_id: kb_locale_or_id)
   end
 
+  def translation_preferred(kb_locale_or_id)
+    translation_to(kb_locale_or_id) || translation_primary || translations.first
+  end
+
+  def translation_primary
+    translations.joins(:kb_locale).find_by(knowledge_base_locales: { primary: true })
+  end
+
   class_methods do
     def translation_class_name
       "#{name}::Translation"
