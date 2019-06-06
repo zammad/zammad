@@ -110,7 +110,6 @@ h1 {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
-  hyphens: auto;
   
   &:first-child {
     margin-top: 0;
@@ -623,7 +622,6 @@ b {
     margin: 15px 0;
     padding: 10px 15px;
     display: flex;
-    align-items: center;
   
     span {
       display: block;
@@ -632,6 +630,7 @@ b {
 
   .not-published-note {
     margin-left: .5em;
+    margin-top: .5em;
   }
 }
 
@@ -788,8 +787,9 @@ b {
   .section-inner & {
     color: $highlight-color;
     fill: currentColor;
-    margin: 0 9px 0 3px;
+    margin: 4px 9px 0 3px;
     line-height: inherit; 
+    flex-shrink: 0;
   }
 }
 
