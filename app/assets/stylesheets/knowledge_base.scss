@@ -316,6 +316,7 @@ b {
       
       &::placeholder {
         color: $subtle-color;
+        text-overflow: ellipsis;
       }
     }
 
