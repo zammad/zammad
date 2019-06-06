@@ -88,6 +88,10 @@ html {
   font-size: 16px;
   line-height: 1.5;
   color: $light-color;
+  
+  @include phone {
+    font-size: 17px;
+  }
 }
 
 body {
@@ -103,29 +107,45 @@ h1 {
   line-height: 1.12;
   margin: .8em 0 .6em;
   font-weight: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
   
   &:first-child {
     margin-top: 0;
   }
   
   @include phone {
-    font-size: 2em;
+    font-size: 28px;
+    margin: 1em 0 .8em;
   }
 }
 
 h2 {
-  font-size: 2em;
-  font-weight: normal;
+  font-size: 1.8em;
+  font-weight: 500;
   line-height: 1.1;
   margin: 1em 0 .4em;
+  
+  @include phone {
+    font-size: 24px;
+    margin: 1.2em 0 .5em;
+  }
 }
 
 h3 {
-  font-size: 1.5em;
-  font-weight: normal;
+  font-size: 1.4em;
+  font-weight: 500;
   line-height: 1.2;
   margin: 1.33em 0 .55em;
   letter-spacing: .015em;
+  
+  @include phone {
+    font-size: 19px;
+    line-height: 1.3;
+    margin: 1.2em 0 .75em;
+  }
 }
 
 h4 {
@@ -149,6 +169,11 @@ ol {
 ul,
 ol {
   padding-left: 1.5em;
+}
+
+strong,
+b {
+  font-weight: 500;
 }
 
 .topbar {
@@ -782,6 +807,7 @@ ol {
     
     @include phone {
       font-size: 35px;
+      margin: 10px 0 13px;
     }
   }
 }
