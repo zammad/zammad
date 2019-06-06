@@ -99,10 +99,14 @@ body {
 }
 
 h1 {
-  font-weight: 500;
-  font-size: 2.625em;
-  line-height: 1;
-  margin: 1em 0 .75em;
+  font-size: 2.5em;
+  line-height: 1.12;
+  margin: .8em 0 .6em;
+  font-weight: normal;
+  
+  &:first-child {
+    margin-top: 0;
+  }
   
   @include phone {
     font-size: 2em;
@@ -110,17 +114,26 @@ h1 {
 }
 
 h2 {
-  font-weight: bold;
-  font-size: 2.125em;
-  line-height: 1.2;
-  margin: 1em 0 .5em;
+  font-size: 2em;
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 1em 0 .4em;
 }
 
 h3 {
-  font-size: 1.375em;
+  font-size: 1.5em;
   font-weight: normal;
-  line-height: 1.3;
-  margin: 0 0 .25em;
+  line-height: 1.2;
+  margin: 1.33em 0 .55em;
+  letter-spacing: .015em;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1.25;
+  margin: 1.33em 0 .5em;
+  letter-spacing: .015em;
 }
 
 p,
@@ -350,6 +363,8 @@ ol {
   &-title {
     font-size: inherit;
     font-weight: 500;
+    color: hsl(206,8%,38%);
+    margin: 0 0 .25em;
   }
   
   &-category {
@@ -363,6 +378,10 @@ ol {
   &-category,
   &-preview {
     font-size: 14px;
+  }
+
+  &-preview {
+    color: hsl(207,12%,50%);
   }
 }
 
@@ -382,6 +401,11 @@ ol {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin: 30px 0 40px;
+  
+  .header + & {
+    margin-top: 0;
+  }
   
   .container {
     flex: 1;
@@ -391,8 +415,6 @@ ol {
 }
 
 .main--categories {
-  padding-bottom: 42px;
-
   h1 {
     color: $dark-color;
   }
@@ -544,8 +566,10 @@ ol {
     margin-top: 30px;
   }
 
-  & + & {
-    margin-top: 22px;
+  & + hr {
+    border: none;
+    border-top: 1px solid hsl(219,13%,95%);
+    margin: 28px 0 13px;
   }
 }
 
@@ -769,30 +793,6 @@ ol {
 
 .article-content {
   display: block;
-  margin: 0 0 20px;
-  
-  h1, h2, h3, h4, h5, h6 {
-    margin: 1.8rem 0 1.2rem;
-    line-height: 1.3;
-    font-weight: bold;
-    
-    &:first-child {
-      margin-top: 0.5rem;
-    }
-  }
-
-  h1 {
-    font-size: 2em;
-    text-align: left;
-  }
-
-  h2 {
-    font-size: 1.5em;
-  }
-
-  h3 {
-    font-size: 1.25em;
-  }
 
   p,
   ol,
@@ -888,10 +888,10 @@ ol {
   }
 
   hr {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    border: 0;
-    border-top: 1px solid #dfdfdf;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    border: none;
+    border-top: 1px solid hsl(210,14%,91%);
   }
 }
 

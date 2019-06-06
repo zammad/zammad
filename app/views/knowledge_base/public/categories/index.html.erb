@@ -26,6 +26,10 @@
         </ul>
       <% end %>
 
+      <% if @categories&.present? && @answers&.present? %>
+      <hr>
+      <% end %>
+
       <% if @answers&.present? %>
         <ul class="sections sections--list" data-less-than-four="<%= @answers.length < 4 %>">
           <% @answers.each do |translation| %>
