@@ -29,6 +29,7 @@ Zammad::Application.routes.draw do
   match '/tests_ticket_macro',                to: 'tests#ticket_macro',               via: :get
   match '/tests_ticket_selector',             to: 'tests#ticket_selector',            via: :get
   match '/tests_taskbar',                     to: 'tests#taskbar',                    via: :get
+  match '/tests_image_service',               to: 'tests#image_service',              via: :get
   match '/tests_text_module',                 to: 'tests#text_module',                via: :get
   match '/tests_color_object',                to: 'tests#color_object',               via: :get
   match '/tests_kb_video_embeding',           to: 'tests#kb_video_embeding',          via: :get

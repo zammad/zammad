@@ -39,8 +39,8 @@ class App.ImageService
         y = imageHeight / factor
 
       if x is 'auto'# && (y * factor) >= imageWidth
-        factor = imageWidth / y
-        x = imageHeight / factor
+        factor = imageHeight / y
+        x = imageWidth / factor
 
       canvas = document.createElement('canvas')
 

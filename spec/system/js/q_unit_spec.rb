@@ -62,6 +62,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
     it 'Ticket selector' do
       q_unit_tests('ticket_selector')
     end
+
+    it 'Image Service' do
+      q_unit_tests('image_service')
+    end
   end
 
   context 'Form' do
