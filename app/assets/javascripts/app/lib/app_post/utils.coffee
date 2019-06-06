@@ -952,9 +952,9 @@ class App.Utils
     path = if window.svgPolyfill then '' else 'assets/images/icons.svg'
     "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
 
-  @fontIcon: (name, font) ->
+  @fontIcon: (name, font, className = '') ->
     @loadIconFont(font)
-    "<i class=\"icon\" data-font=\"#{font}\">#{String.fromCharCode('0x'+ name)}</i>"
+    "<i class=\"icon #{className}\" data-font=\"#{font}\">#{String.fromCharCode('0x'+ name)}</i>"
 
   @loadIconFont: (font) ->
     el = $("[data-icon-font=\"#{font}\"]")

@@ -40,8 +40,11 @@ InstanceMethods =
       else
         attrs.editorOnly = false
 
+      attrs.state      = @visibilityState(kb_locale)
+
     if @ instanceof App.KnowledgeBaseAnswer
-      attrs.icon = 'knowledge-base-answer'
+      attrs.icon  = 'knowledge-base-answer'
+      attrs.state = @can_be_published_state()
 
       if options.isEditor
         attrs.editorOnly = !@is_internally_published(kb_locale)
@@ -52,9 +55,6 @@ InstanceMethods =
     #                     'kb-item--missing-translation'
     #                   else if attrs.editorOnly
     #                     'kb-item--invisible'
-
-    attrs.className = if attrs.editorOnly
-                        'kb-item--invisible'
 
     attrs.icons = {}
 

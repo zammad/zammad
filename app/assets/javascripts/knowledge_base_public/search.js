@@ -78,7 +78,7 @@
       this.setSubtitle(data.subtitle)
       this.setPreview(data.body)
       this.setURL(data.url)
-      this.setIcon(data.iconName, data.type)
+      this.setIcon(data.icon, data.type)
     }
 
     this.setTitle = function(text) {

@@ -1,3 +1,4 @@
+.icon-archived-modifier { width: 9px; height: 9px; }
 .icon-arrow-down { width: 13px; height: 7px; }
 .icon-arrow-left { width: 7px; height: 13px; }
 .icon-arrow-right { width: 7px; height: 13px; }
@@ -19,6 +20,7 @@
 .icon-diagonal-cross { width: 13px; height: 13px; }
 .icon-document { width: 16px; height: 16px; }
 .icon-download { width: 14px; height: 13px; }
+.icon-draft-modifier { width: 9px; height: 9px; }
 .icon-draggable { width: 16px; height: 16px; }
 .icon-dropdown-list { width: 19px; height: 14px; }
 .icon-email-button { width: 29px; height: 24px; }
@@ -51,6 +53,7 @@
 .icon-inactive-organization { width: 16px; height: 16px; }
 .icon-inactive-user { width: 16px; height: 16px; }
 .icon-info { width: 5px; height: 11px; }
+.icon-internal-modifier { width: 9px; height: 9px; }
 .icon-italic { width: 12px; height: 12px; }
 .icon-knowledge-base-answer { width: 16px; height: 16px; }
 .icon-knowledge-base { width: 24px; height: 24px; }

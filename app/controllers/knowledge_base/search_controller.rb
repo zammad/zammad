@@ -87,7 +87,7 @@ class KnowledgeBase::SearchController < ApplicationController
     {
       id:       object.id,
       type:     object.class.name,
-      iconName: 'knowledge-base-answer',
+      icon:     'knowledge-base-answer',
       date:     object.updated_at,
       url:      url,
       title:    meta.dig(:highlight, 'title')&.first || object.title,
@@ -113,7 +113,7 @@ class KnowledgeBase::SearchController < ApplicationController
       fontName: object.category.knowledge_base.iconset,
       date:     object.updated_at,
       url:      url,
-      iconName: object.category.category_icon,
+      icon:     object.category.category_icon,
       subtitle: strip_tags(parent_category_translation&.title.presence),
       title:    meta.dig(:highlight, 'title')&.first || strip_tags(object.title)
     }
@@ -130,12 +130,12 @@ class KnowledgeBase::SearchController < ApplicationController
           end
 
     {
-      id:       object.id,
-      type:     object.class.name,
-      iconName: 'knowledge-base',
-      date:     object.updated_at,
-      url:      url,
-      title:    meta.dig(:highlight, 'title')&.first || strip_tags(object.title)
+      id:    object.id,
+      type:  object.class.name,
+      icon:  'knowledge-base',
+      date:  object.updated_at,
+      url:   url,
+      title: meta.dig(:highlight, 'title')&.first || strip_tags(object.title)
     }
   end
 

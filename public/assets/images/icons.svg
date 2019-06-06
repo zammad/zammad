@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs>
         <path d="M10 0v1h2V0h12v31H0V0h10z" id="a"/>
-    </defs><symbol id="icon-arrow-down" viewBox="0 0 13 7">
+    </defs><symbol id="icon-archived-modifier" viewBox="0 0 9 9">
+    <title>
+        archived-modifier
+    </title>
+    <g fill-rule="evenodd">
+        <path d="M9 2H1v7h8z"/>
+        <path d="M2.25 3h6.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-6.5A.25.25 0 0 1 2 3.75v-.5A.25.25 0 0 1 2.25 3zm0 1.5h6.5V9h-6.5V4.5zM5.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" fill="currentColor"/>
+    </g>
+</symbol><symbol id="icon-arrow-down" viewBox="0 0 13 7">
     <title>
         arrow-down
     </title>
@@ -122,6 +130,14 @@
         download
     </title>
     <path d="M4 0v6h6V0H4zm10 6H0l7 7 7-7z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-draft-modifier" viewBox="0 0 9 9">
+    <title>
+        draft-modifier
+    </title>
+    <g fill-rule="evenodd">
+        <path d="M5.325 0L2 5.975l.014 3.009H5.5L9 2.979V0z"/>
+        <path d="M6.978 1.058c-.206-.142-.477-.074-.606.152l-.322.56 1.56 1.073.322-.56a.509.509 0 0 0-.138-.664l-.816-.561zM4.834 7.685l2.543-4.434-1.561-1.074-2.543 4.435 1.561 1.073zM3 8.984l.815-.472.756-.438-1.505-1.036-.032.938L3 8.984z" fill="currentColor"/>
+    </g>
 </symbol><symbol id="icon-draggable" viewBox="0 0 16 16">
     <title>
         draggable
@@ -371,6 +387,14 @@
         info
     </title>
     <path d="M2.321 4h1.17c.281 0 .45.127.45.408 0 .226-.028.465-.07.69l-.465 2.55c-.056.282-.113.563-.14.845-.015.14 0 .282.041.408.043.184.183.282.367.254.155-.014.295-.07.45-.127.113-.042.226-.127.338-.169.17-.07.324.056.268.226a.584.584 0 0 1-.17.281c-.436.437-.957.704-1.577.704-.295 0-.577 0-.873-.042-.479-.07-1.084-.662-1-1.282.057-.436.127-.859.197-1.281.127-.747.254-1.493.395-2.24.014-.042.014-.098.014-.14 0-.31-.099-.423-.409-.465-.126-.014-.267-.028-.394-.07-.155-.057-.225-.17-.211-.296.014-.127.098-.212.267-.24C1.054 4 1.152 4 1.237 4h1.084zm1.874-1.989c0 .662-.535 1.197-1.183 1.197-.662 0-1.198-.549-1.198-1.21C1.814 1.334 2.35.8 3.012.8c.662 0 1.183.535 1.183 1.211z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-internal-modifier" viewBox="0 0 9 9">
+    <title>
+        internal-modifier
+    </title>
+    <g fill-rule="evenodd">
+        <path d="M6 1H4a2 2 0 0 0-2 2v1h-.019A1 1 0 0 0 1 5v4h8V5a1 1 0 0 0-1-1V3a2 2 0 0 0-2-2z"/>
+        <path d="M2.543 5c-.3 0-.543.227-.543.499V8.5c0 .276.243.499.543.499h4.914c.3 0 .543-.227.543-.499V5.5C8 5.223 7.757 5 7.457 5H2.543zm1.261-.857l-.003-.053v-.017a1.44 1.44 0 0 1 .094-.616c.154-.378.477-.6 1.105-.6s.95.222 1.104.6c.084.206.108.433.096.617l-.001.016-.003.053V5h.797v-.857l-.003.053.005-.064c.02-.309-.017-.666-.16-1.018C6.553 2.42 5.94 2 5 2c-.942 0-1.553.42-1.835 1.114a2.318 2.318 0 0 0-.155 1.082l-.003-.053V5h.797v-.857z" fill="currentColor"/>
+    </g>
 </symbol><symbol id="icon-italic" viewBox="0 0 12 12">
     <title>
         italic

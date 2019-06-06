@@ -16,6 +16,7 @@
     <% for elem in @items: %>
       <li>
         <a href="<%= elem.url %>" class="<%= elem.className %>">
+          <%- @iconWithModifier(elem, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
           <span class="u-textTruncate"><%= elem.title %></span>
 
           <% if elem.icons: %>

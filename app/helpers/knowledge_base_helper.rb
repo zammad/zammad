@@ -150,7 +150,7 @@ module KnowledgeBaseHelper
     when :published
       'green'
     when :archived
-      'red'
+      'grey'
     end
   end
 

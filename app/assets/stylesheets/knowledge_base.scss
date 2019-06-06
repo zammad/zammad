@@ -163,6 +163,11 @@ ol {
     background: hsl(19,90%,51%);
   }
 
+  &[data-color="grey"] {
+    color: hsl(45,98%,17%);
+    background: hsl(0,0%,80%);
+  }
+
   &-tag {
     font-weight: bold;
     margin-right: 17px;

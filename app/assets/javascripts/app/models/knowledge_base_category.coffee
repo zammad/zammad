@@ -141,6 +141,14 @@ class App.KnowledgeBaseCategory extends App.Model
       record.findDeepAnswer(callback)
     )
 
+  visibilityState: (kb_locale) ->
+    if @visiblePublicly(kb_locale)
+      'published'
+    else if @visibleInternally(kb_locale)
+      'internal'
+    else
+      'draft'
+
   visibleInternally: (kb_locale) =>
     @findDeepAnswer( (record) ->
       record.is_internally_published(kb_locale)

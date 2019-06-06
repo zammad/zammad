@@ -29,13 +29,7 @@ InstanceMethods =
     @["#{state}_at"]
 
   can_be_published_state_css: ->
-    switch @can_be_published_state()
-      when 'archived'
-        'label-danger'
-      when 'published'
-        'label-success'
-      when 'draft'
-        'label-subtle'
+    "state-#{@can_be_published_state()}"
 
   can_be_published_quick_actions: ->
     switch @can_be_published_state()

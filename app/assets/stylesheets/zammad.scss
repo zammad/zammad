@@ -1530,6 +1530,10 @@ table {
   color: $supergood-color;
 }
 
+.label-highlight {
+  color: $highlight-color;
+}
+
 .label-warning {
   color: $ok-color;
 }
@@ -1540,6 +1544,19 @@ table {
 
 .label-subtle {
   color: hsl(0,0%,80%);
+}
+
+.state-archived,
+.state-draft {
+  color: hsl(0,0%,68%);
+}
+
+.state-published {
+  color: $supergood-color;
+}
+
+.state-internal {
+  color: $highlight-color;
 }
 
 fieldset {
@@ -2357,6 +2374,41 @@ input.has-error {
 
   & .kb-item--missing-translation, & .kb-item--missing-translation:active, & .kb-item--missing-translation:focus {
     color: hsl(45,98%,63%);
+  }
+}
+
+.modified-icon {
+  position: relative;
+  line-height: 1;
+  display: block;
+  
+  .nav-pills > li > a & {
+    align-self: center;
+  }
+  
+  .icon {
+    fill: currentColor;
+  }
+  
+  .modified-icon-modifier {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+    fill: white;
+    margin: 0 -2px -1px 0;
+      
+    .nav-pills > li:hover > a & {
+      fill: #f2f2f3;
+    }
+  }
+
+  .icon-knowledge-base-answer + .modified-icon-modifier {
+    margin: 0 -1px 2px 0;
+  }
+
+  .icon-published-modifier {
+    display: none;
   }
 }
 
@@ -10286,14 +10338,22 @@ output {
     }
   }
 
-  .icon {
+  .modified-icon {
+    margin-right: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  &-icon {
     fill: currentColor;
     width: 20px;
     height: 20px;
     object-fit: contain;
-    margin-right: 3px;
-    vertical-align: middle;
-    line-height: 1;
+  }
+
+  .modified-icon-modifier {
+    fill: hsl(210,14%,94%);
   }
 }
 
@@ -10892,11 +10952,10 @@ span.is-disabled {
   }
   
   &[data-state="archived"] {
-    color: $superbad-color;
-    border-color: transparentize($superbad-color, .65);
+    border-color: hsl(0,0%,80%);
     
     .btn {
-      border-color: transparentize($superbad-color, .65);
+      border-color: hsl(0,0%,80%);
     }
   }
   
@@ -10942,7 +11001,7 @@ span.is-disabled {
     border-bottom: 1px solid hsl(0,0%,90%);
     padding: 7px;
     
-    .breadcrumb:not(:first-child) .icon {
+    .breadcrumb:not(:first-child) .breadcrumb-icon {
       width: 16px;
       height: 16px;
     }  
@@ -11050,6 +11109,9 @@ span.is-disabled {
 
       [data-font] {
         font-size: 60px;
+      }
+
+      .modified-icon {
         margin: 10px 0 20px;
       }
 
@@ -11082,6 +11144,12 @@ span.is-disabled {
         [data-font] {
           font-size: 42px;
         }
+
+        .modified-icon-modifier {
+          width: 18px;
+          height: 18px;
+          margin: 0 -6px -2px 0;
+        }
       }
     }
     
@@ -11095,6 +11163,12 @@ span.is-disabled {
 
         [data-font] {
           font-size: 60px;
+        }
+
+        .modified-icon-modifier {
+          width: 22.5px;
+          height: 22.5px;
+          margin: 0 -8px -5px 0;
         }
       }
     }
@@ -11120,6 +11194,7 @@ span.is-disabled {
 .section-inner {
   position: relative;
   display: flex;
+  align-items: flex-start;
   padding: 10px 14px;
   margin: 10px;
   background: white;
@@ -11149,6 +11224,10 @@ span.is-disabled {
       content: " — ";
       color: hsl(60,1%,34%);
     }
+
+    &:only-child:after {
+      content: "";
+    }
   }
 
   &-detail {
@@ -11156,28 +11235,30 @@ span.is-disabled {
     margin-top: 5px;
   }
 
-  [data-font],
-  .icon {
+  &-icon {
     flex-shrink: 0;
-  }
+    
+    &-holder {
+      margin-right: 11px;
+      margin-top: 1px;
+      
+      .nav-pills & {
+        margin-right: 7px;
+      }
+    }
 
-  [data-font] {
-    font-size: 16px;
-    line-height: 1;
-    margin-right: 12px;
-  }
+    &[data-font] {
+      font-size: 16px;
+      line-height: 1;
+    }
 
-  .icon {
-    fill: currentColor;
-    color: $highlight-color;
-    margin: 1px 10px 0 2px;
-  }
-  
-  svg.icon {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    object-position: center top;
+    &.icon {
+      fill: currentColor;
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      object-position: center top;
+    }
   }
 
   em {

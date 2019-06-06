@@ -142,8 +142,8 @@ App.ViewHelpers =
   Icon: (name, className = '') ->
     App.Utils.icon(name, className)
 
-  fontIcon: (name, font) ->
-    App.Utils.fontIcon(name, font)
+  fontIcon: (name, font, className = '') ->
+    App.Utils.fontIcon(name, font, className)
 
   # define richtext helper
   RichText: (string) ->
@@ -199,3 +199,18 @@ App.ViewHelpers =
     return false if _.isEmpty(contentType)
     return true if contentType.match(/image\/(png|jpg|jpeg|gif)/i)
     false
+
+  # icon with modifier based on visibility state
+  # params: className, iconset, addStateClass
+  iconWithModifier: (item, params) ->
+    if !params.className
+      params.className = ''
+
+    if params.addStateClass
+      params.className += " state-#{item.state}"
+
+    App.view('knowledge_base/_icon_with_modifier')(
+      item:      item
+      className: params.className
+      iconset:   params.iconset
+    )

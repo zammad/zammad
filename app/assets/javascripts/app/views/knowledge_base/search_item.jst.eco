@@ -1,14 +1,10 @@
 <a href="<%= @data.url %>">
   <span class="section-inner">
-    <% if @data.fontName: %>
-      <%- @fontIcon(@data.iconName, @data.fontName) %>
-    <% else: %>
-      <%- @Icon(@data.iconName) %>
-    <% end %>
+    <%- @iconWithModifier(@data, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
     <span class="section-inner-text">
       <span class="section-inner-title"><%- @data.title %></span>
       <span class="section-inner-detail">
-        <span class="section-inner-date"><%- @humanTime(@data.date) %></span> <%- @data.body %>
+        <span class="section-inner-date"><%- @humanTime(@data.date) %></span> <% if @data.body: %><span class="section-inner-body"><%- @data.body %></span><% end %>
       </span>
     </span>
   </span>

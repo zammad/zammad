@@ -1,12 +1,8 @@
 <nav class="breadcrumbs">
   <% for item in @crumbs: %>
     <a class="breadcrumb" <% if item.url: %>href="<%= item.url %><% end %>">
-      <% if icon = item.icon: %>
-        <% if item.iconFont: %>
-          <%- @fontIcon(icon, @iconset) %>
-        <% else: %>
-          <%- @Icon(icon) %>
-        <% end %>
+      <% if item.icon: %>
+        <%- @iconWithModifier(item, iconset: @iconset) %>
       <% end %>
 
       <%= item.title %>

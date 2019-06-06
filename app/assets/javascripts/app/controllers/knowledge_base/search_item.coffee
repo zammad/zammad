@@ -12,7 +12,8 @@ class App.KnowledgeBaseSearchItem extends App.Controller
 
   data: ->
     output = @details || {}
-    output['url'] = @object?.uiUrl("search-return/#{@pathSuffix}") || '#'
+    output['url']   = @object?.uiUrl("search-return/#{@pathSuffix}") || '#'
+    output['state'] = @object.parent().attributesForRendering(App.KnowledgeBaseLocale.localeFor(@object)).state
     output
 
   render: ->
