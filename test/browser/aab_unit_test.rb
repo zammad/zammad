@@ -157,6 +157,17 @@ class AAbUnitTest < TestCase
       value: '0',
     )
 
+    location(url: browser_url + '/tests_form_ticket_perform_action')
+    watch_for(
+      css:     '.result',
+      value:   'Tests completed',
+      timeout: 8,
+    )
+    match(
+      css:   '.result .failed',
+      value: '0',
+    )
+
     location(url: browser_url + '/tests_form_tree_select')
     watch_for(
       css:     '.result',

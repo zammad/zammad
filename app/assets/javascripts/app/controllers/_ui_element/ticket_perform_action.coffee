@@ -66,7 +66,7 @@ class App.UiElement.ticket_perform_action
     item = $( App.view('generic/ticket_perform_action/index')( attribute: attribute ) )
 
     # add filter
-    item.on('click', '.js-add', (e) =>
+    item.on('click', '.js-rowActions .js-add', (e) =>
       element = $(e.target).closest('.js-filterElement')
       placeholder = @placeholder(item, attribute, params, groups, elements)
       if element.get(0)
@@ -78,7 +78,7 @@ class App.UiElement.ticket_perform_action
     )
 
     # remove filter
-    item.on('click', '.js-remove', (e) =>
+    item.on('click', '.js-rowActions .js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @updateAttributeSelectors(item)
