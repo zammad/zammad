@@ -86,6 +86,10 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
       q_unit_tests('form_column_select')
     end
 
+    it 'Ticket perform action' do
+      q_unit_tests('form_ticket_perform_action')
+    end
+
     it 'Validation' do
       q_unit_tests('form_validation')
     end
