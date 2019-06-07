@@ -17,11 +17,6 @@ class DefaultRouter extends App.Controller
       @navigate '#getting_started', true
       return
 
-    # check role
-    if @permissionCheck('ticket.customer')
-      @navigate '#ticket/view/my_tickets', true
-      return
-
     if @Config.get('default_controller')
       @navigate @Config.get('default_controller'), true
       return

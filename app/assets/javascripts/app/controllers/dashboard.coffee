@@ -69,8 +69,14 @@ class App.Dashboard extends App.Controller
 
   show: (params) =>
 
-    if @permissionCheck('ticket.customer')
-      @navigate '#', true
+    # incase of being only customer, redirect to default router
+    if @permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent')
+      @navigate '#ticket/view', true
+      return
+
+    # incase of being only admin, redirect to admin interface (show no empty white content page)
+    if !@permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent') && @permissionCheck('admin')
+      @navigate '#manage', true
       return
 
     # set title
