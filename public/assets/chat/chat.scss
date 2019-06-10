@@ -54,7 +54,7 @@
   background: hsl(203,67%,53%);
   color: white;
   line-height: 2.5em;
-  height: 2.5em;
+  height: 3.5em;
   box-shadow:
     0 -1px rgba(0,0,0,.1),
     0 1px rgba(255,255,255,.3) inset,
@@ -87,7 +87,7 @@
   text-align: center;
   line-height: 3.4em;
   cursor: pointer;
-  
+
   &:before { // force the icon to align to center
     content: "";
     display: inline-block;
