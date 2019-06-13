@@ -313,7 +313,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
       .map (model) ->
         newIds = Object.keys data[model]
         oldIds = App[model].all().map (elem) -> elem.id
-        diff   = oldIds.filter (elem) -> !newIds.includes(String(elem))
+        diff   = oldIds.filter (elem) -> !_.includes(newIds, String(elem))
 
         {modelName: model, ids: diff}
       , {}
