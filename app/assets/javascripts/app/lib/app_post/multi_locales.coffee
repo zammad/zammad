@@ -46,7 +46,7 @@ class App.MultiLocales extends App.Controller
       .filter (elem) -> elem && elem != self_value
 
     App.Locale.all().filter (elem) ->
-      !takenCodes.includes(String(elem.id))
+      !_.includes(takenCodes, String(elem.id))
 
   remove: (e) ->
     domRow = $(e.currentTarget).closest('tr')[0]
