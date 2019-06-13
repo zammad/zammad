@@ -233,6 +233,8 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       ticket_articles:           Ticket::Article,
       text_modules:              TextModule,
       object_manager_attributes: ObjectManager::Attribute,
+      knowledge_base_categories: KnowledgeBase::Category,
+      knowledge_base_answers:    KnowledgeBase::Answer,
     }
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
