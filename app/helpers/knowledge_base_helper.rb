@@ -155,13 +155,15 @@ module KnowledgeBaseHelper
   end
 
   def build_kb_link(object)
+    locale = params.fetch(:locale, object.translation.kb_locale)
+
     path = case object
            when KnowledgeBase::Answer
-             "knowledge_base/#{object.category.knowledge_base.id}/answer/#{object.id}"
+             "knowledge_base/#{object.category.knowledge_base.id}/locale/#{locale}/answer/#{object.id}/edit"
            when KnowledgeBase::Category
-             "knowledge_base/#{object.knowledge_base.id}/category/#{object.id}"
+             "knowledge_base/#{object.knowledge_base.id}/locale/#{locale}/category/#{object.id}/edit"
            when KnowledgeBase
-             "knowledge_base/#{object.id}"
+             "knowledge_base/#{object.id}/locale/#{locale}/edit"
            end
 
     build_zammad_link path
