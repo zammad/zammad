@@ -6,7 +6,7 @@ class Issue2541FixNotificationEmailWithoutBody < ActiveRecord::Migration[5.1]
 
     # update jobs and triggers
     [::Job, ::Trigger].each do |model|
-      model.all.each do |record|
+      model.where(active: true).each do |record|
         next if record.perform.blank?
 
         %w[notification.email notification.sms].each do |action|
