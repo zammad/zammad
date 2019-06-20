@@ -3,12 +3,21 @@ require 'rubygems'
 
 namespace :searchindex do
   task :drop, [:opts] => :environment do |_t, _args|
+    print 'drop indexes...'
 
     # drop indexes
-    print 'drop indexes...'
-    SearchIndexBackend.index(
-      action: 'delete',
-    )
+    if es_multi_index?
+      Models.indexable.each do |local_object|
+        SearchIndexBackend.index(
+          action: 'delete',
+          name:   local_object.name,
+        )
+      end
+    else
+      SearchIndexBackend.index(
+        action: 'delete',
+      )
+    end
     puts 'done'
 
     Rake::Task['searchindex:drop_pipeline'].execute
@@ -17,32 +26,40 @@ namespace :searchindex do
   task :create, [:opts] => :environment do |_t, _args|
     print 'create indexes...'
 
-    # es with mapper-attachments plugin
-    info = SearchIndexBackend.info
-    number = nil
-    if info.present?
-      number = info['version']['number'].to_s
+    if es_multi_index?
+      Setting.set('es_multi_index', true)
+    else
+      Setting.set('es_multi_index', false)
     end
 
     settings = {
       'index.mapping.total_fields.limit': 2000,
     }
-    mapping = {}
-    Models.indexable.each do |local_object|
-      mapping.merge!(get_mapping_properties_object(local_object))
-    end
 
     # create indexes
-    SearchIndexBackend.index(
-      action: 'create',
-      data:   {
-        mappings: mapping,
-        settings: settings,
-      }
-    )
-
-    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
-      Setting.set('es_pipeline', '')
+    if es_multi_index?
+      Models.indexable.each do |local_object|
+        SearchIndexBackend.index(
+          action: 'create',
+          name:   local_object.name,
+          data:   {
+            mappings: get_mapping_properties_object(local_object),
+            settings: settings,
+          }
+        )
+      end
+    else
+      mapping = {}
+      Models.indexable.each do |local_object|
+        mapping.merge!(get_mapping_properties_object(local_object))
+      end
+      SearchIndexBackend.index(
+        action: 'create',
+        data:   {
+          mappings: mapping,
+          settings: settings,
+        }
+      )
     end
 
     puts 'done'
@@ -51,14 +68,10 @@ namespace :searchindex do
   end
 
   task :create_pipeline, [:opts] => :environment do |_t, _args|
-
-    # es with mapper-attachments plugin
-    info = SearchIndexBackend.info
-    number = nil
-    if info.present?
-      number = info['version']['number'].to_s
+    if !es_pipeline?
+      Setting.set('es_pipeline', '')
+      next
     end
-    next if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
 
     # update processors
     pipeline = Setting.get('es_pipeline')
@@ -103,14 +116,7 @@ namespace :searchindex do
   end
 
   task :drop_pipeline, [:opts] => :environment do |_t, _args|
-
-    # es with mapper-attachments plugin
-    info = SearchIndexBackend.info
-    number = nil
-    if info.present?
-      number = info['version']['number'].to_s
-    end
-    next if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
+    next if !es_pipeline?
 
     # update processors
     pipeline = Setting.get('es_pipeline')
@@ -142,11 +148,9 @@ namespace :searchindex do
   end
 
   task :rebuild, [:opts] => :environment do |_t, _args|
-
     Rake::Task['searchindex:drop'].execute
     Rake::Task['searchindex:create'].execute
     Rake::Task['searchindex:reload'].execute
-
   end
 end
 
@@ -172,74 +176,87 @@ mapping = {
 =end
 
 def get_mapping_properties_object(object)
+
+  name = object.name
+  if es_multi_index?
+    name = '_doc'
+  end
   result = {
-    object.name => {
+    name => {
       properties: {}
     }
   }
 
   store_columns = %w[preferences data]
 
+  # for elasticsearch 6.x and later
+  string_type = 'text'
+  string_raw  = { 'type': 'keyword' }
+  boolean_raw = { 'type': 'boolean' }
+
+  # for elasticsearch 5.6 and lower
+  if !es_multi_index?
+    string_type = 'string'
+    string_raw  = { 'type': 'string', 'index': 'not_analyzed' }
+    boolean_raw = { 'type': 'boolean', 'index': 'not_analyzed' }
+  end
+
   object.columns_hash.each do |key, value|
     if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
-      result[object.name][:properties][key] = {
-        type:   'string',
+      result[name][:properties][key] = {
+        type:   string_type,
         fields: {
-          raw: { 'type': 'string', 'index': 'not_analyzed' }
+          raw: string_raw,
         }
       }
     elsif value.type == :integer
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'integer',
       }
     elsif value.type == :datetime
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'date',
       }
     elsif value.type == :boolean
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type:   'boolean',
         fields: {
-          raw: { 'type': 'boolean', 'index': 'not_analyzed' }
+          raw: boolean_raw,
         }
       }
     elsif value.type == :binary
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'binary',
       }
     elsif value.type == :bigint
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'long',
       }
     elsif value.type == :decimal
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'float',
       }
     elsif value.type == :date
-      result[object.name][:properties][key] = {
+      result[name][:properties][key] = {
         type: 'date',
       }
     end
   end
 
   # es with mapper-attachments plugin
-  info = SearchIndexBackend.info
-  number = nil
-  if info.present?
-    number = info['version']['number'].to_s
-  end
-
   if object.name == 'Ticket'
 
-    result[object.name][:_source] = {
+    # do not server attachments if document is requested
+    result[name][:_source] = {
       excludes: ['article.attachment']
     }
 
-    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
-      result[object.name][:_source] = {
+    # for elasticsearch 5.5 and lower
+    if !es_pipeline?
+      result[name][:_source] = {
         excludes: ['article.attachment']
       }
-      result[object.name][:properties][:article] = {
+      result[name][:properties][:article] = {
         type:              'nested',
         include_in_parent: true,
         properties:        {
@@ -251,5 +268,45 @@ def get_mapping_properties_object(object)
     end
   end
 
-  result
+  return result if es_type_in_mapping?
+
+  result[name]
+end
+
+# get es version
+def es_version
+  info = SearchIndexBackend.info
+  number = nil
+  if info.present?
+    number = info['version']['number'].to_s
+  end
+  number
+end
+
+# no es_pipeline for elasticsearch 5.5 and lower
+def es_pipeline?
+  number = es_version
+  return false if number.blank?
+  return false if number =~ /^[2-4]\./
+  return false if number =~ /^5\.[0-5]\./
+
+  true
+end
+
+# no mulit index for elasticsearch 5.6 and lower
+def es_multi_index?
+  number = es_version
+  return false if number.blank?
+  return false if number =~ /^[2-5]\./
+
+  true
+end
+
+# no type in mapping
+def es_type_in_mapping?
+  number = es_version
+  return true if number.blank?
+  return true if number =~ /^[2-6]\./
+
+  false
 end

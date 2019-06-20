@@ -72,11 +72,11 @@ returns
         offset = params[:offset] || 0
         current_user = params[:current_user]
 
-        # check sort
-        sort_by = search_get_sort_by(params, 'updated_at')
+        # check sort - positions related to order by
+        sort_by = search_get_sort_by(params, %w[active updated_at])
 
-        # check order
-        order_by = search_get_order_by(params, 'desc')
+        # check order - positions related to sort by
+        order_by = search_get_order_by(params, %w[desc desc])
 
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)

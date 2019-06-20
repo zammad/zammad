@@ -31,8 +31,11 @@ info about used search index machine
       installed_version = response.data.dig('version', 'number')
       raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
 
-      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('5.7')
-      raise "Version #{installed_version} of configured elasticsearch is not supported" if !version_supported
+      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('8')
+      raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
+
+      version_supported = Gem::Version.new(installed_version) > Gem::Version.new('2.3')
+      raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
       return response.data
     end
@@ -130,6 +133,7 @@ create/update/delete index
 
   SearchIndexBackend.index(
     :action => 'create',  # create/update/delete
+    :name   => 'Ticket',
     :data   => {
       :mappings => {
         :Ticket => {
@@ -148,17 +152,14 @@ create/update/delete index
 
   SearchIndexBackend.index(
     :action => 'delete',  # create/update/delete
-    :name   => 'Ticket',    # optional
+    :name   => 'Ticket',
   )
 
-  SearchIndexBackend.index(
-    :action => 'delete',  # create/update/delete
-  )
 =end
 
   def self.index(data)
 
-    url = build_url(data[:name])
+    url = build_url(data[:name], nil, false, false)
     return if url.blank?
 
     if data[:action] && data[:action] == 'delete'
@@ -245,7 +246,7 @@ remove whole data from index
 =end
 
   def self.remove(type, o_id = nil)
-    url = build_url(type, o_id)
+    url = build_url(type, o_id, false, false)
     return if url.blank?
 
     Rails.logger.info "# curl -X DELETE \"#{url}\""
@@ -275,7 +276,7 @@ remove whole data from index
 =begin
 
 @param query   [String]  search query
-@param index   [String, Array<String>, nil] indexes to search in (see search_by_index)
+@param index   [String, Array<String>] indexes to search in (see search_by_index)
 @param options [Hash] search options (see build_query)
 
 @return search result
@@ -305,7 +306,7 @@ remove whole data from index
 
 =end
 
-  def self.search(query, index = nil, options = {})
+  def self.search(query, index, options = {})
     if !index.is_a? Array
       return search_by_index(query, index, options)
     end
@@ -318,29 +319,21 @@ remove whole data from index
 
 =begin
 
-@param query   [String]  search query
-@param index   [String, Array<String>, nil] index name or list of index names. If index is nil or not present will, search will be performed globally
+@param query   [String] search query
+@param index   [String] index name
 @param options [Hash] search options (see build_query)
 
 @return search result
 
 =end
 
-  def self.search_by_index(query, index = nil, options = {})
+  def self.search_by_index(query, index, options = {})
     return [] if query.blank?
 
     url = build_url
     return if url.blank?
 
-    url += if index
-             if index.is_a?(Array)
-               "/#{index.join(',')}/_search"
-             else
-               "/#{index}/_search"
-             end
-           else
-             '/_search'
-           end
+    url += build_search_url(index)
 
     # real search condition
     condition = {
@@ -396,8 +389,8 @@ remove whole data from index
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
 
       output = {
-        id:   item['_id'].to_i,
-        type: item['_type'],
+        id:   item['_id'],
+        type: index,
       }
 
       if options.dig(:highlight_fields_by_indexes, index.to_sym)
@@ -434,15 +427,6 @@ remove whole data from index
       )
     end
 
-    # add sorting by active if active is not part of the query
-    if result.flat_map(&:keys).exclude?(:active)
-      result.unshift(
-        active: {
-          order: 'desc',
-        },
-      )
-    end
-
     result.push('_score')
 
     result
@@ -456,7 +440,7 @@ get count of tickets and tickets which match on selector
 
 example with a simple search:
 
-  result = SearchIndexBackend.selectors('Ticket', { category: { operator: 'is', value: 'aa::ab' } })
+  result = SearchIndexBackend.selectors('Ticket', { 'category' => { 'operator' => 'is', 'value' => 'aa::ab' } })
 
   result = [
     { id: 1, type: 'Ticket' },
@@ -482,7 +466,7 @@ example for aggregations within one year
     current_user: User.find(123),
   }
 
-  result = SearchIndexBackend.selectors('Ticket', { category: { operator: 'is', value: 'aa::ab' } }, options, aggs_interval)
+  result = SearchIndexBackend.selectors('Ticket', { 'category' => { 'operator' => 'is', 'value' => 'aa::ab' } }, options, aggs_interval)
 
   result = {
     hits:{
@@ -509,21 +493,13 @@ example for aggregations within one year
 
 =end
 
-  def self.selectors(index = nil, selectors = nil, options = {}, aggs_interval = nil)
+  def self.selectors(index, selectors = nil, options = {}, aggs_interval = nil)
     raise 'no selectors given' if !selectors
 
-    url = build_url
+    url = build_url(nil, nil, false, false)
     return if url.blank?
 
-    url += if index
-             if index.is_a?(Array)
-               "/#{index.join(',')}/_search"
-             else
-               "/#{index}/_search"
-             end
-           else
-             '/_search'
-           end
+    url += build_search_url(index)
 
     data = selector2query(selectors, options, aggs_interval)
 
@@ -669,9 +645,9 @@ example for aggregations within one year
           t[:range] = {}
           t[:range][key_tmp] = {}
           if data['operator'] == 'before (absolute)'
-            t[:range][key_tmp][:lt] = (data['value']).to_s
+            t[:range][key_tmp][:lt] = (data['value'])
           else
-            t[:range][key_tmp][:gt] = (data['value']).to_s
+            t[:range][key_tmp][:gt] = (data['value'])
           end
           query_must.push t
         else
@@ -745,25 +721,71 @@ return true if backend is configured
     true
   end
 
-  def self.build_url(type = nil, o_id = nil)
+  def self.build_index_name(index)
+    local_index = "#{Setting.get('es_index')}_#{Rails.env}"
+
+    "#{local_index}_#{index.underscore.tr('/', '_')}"
+  end
+
+  def self.build_url(type = nil, o_id = nil, pipeline = true, with_type = true)
     return if !SearchIndexBackend.enabled?
 
+    # for elasticsearch 5.6 and lower
     index = "#{Setting.get('es_index')}_#{Rails.env}"
-    url   = Setting.get('es_url')
-    url = if type
-            url_pipline = Setting.get('es_pipeline')
-            if url_pipline.present?
-              url_pipline = "?pipeline=#{url_pipline}"
-            end
-            if o_id
-              "#{url}/#{index}/#{type}/#{o_id}#{url_pipline}"
+    if Setting.get('es_multi_index') == false
+      url = Setting.get('es_url')
+      url = if type
+              url_pipline = Setting.get('es_pipeline')
+              if url_pipline.present?
+                url_pipline = "?pipeline=#{url_pipline}"
+              end
+              if o_id
+                "#{url}/#{index}/#{type}/#{o_id}#{url_pipline}"
+              else
+                "#{url}/#{index}/#{type}#{url_pipline}"
+              end
             else
-              "#{url}/#{index}/#{type}#{url_pipline}"
+              "#{url}/#{index}"
             end
-          else
-            "#{url}/#{index}"
-          end
-    url
+      return url
+    end
+
+    # for elasticsearch 6.x and higher
+    url = Setting.get('es_url')
+    if pipeline == true
+      url_pipline = Setting.get('es_pipeline')
+      if url_pipline.present?
+        url_pipline = "?pipeline=#{url_pipline}"
+      end
+    end
+    if type
+      index = build_index_name(type)
+      if with_type == false
+        return "#{url}/#{index}"
+      end
+
+      if o_id
+        return "#{url}/#{index}/_doc/#{o_id}#{url_pipline}"
+      end
+
+      return "#{url}/#{index}/_doc#{url_pipline}"
+    end
+    "#{url}/"
+  end
+
+  def self.build_search_url(index)
+
+    # for elasticsearch 5.6 and lower
+    if Setting.get('es_multi_index') == false
+      if index
+        return "/#{index}/_search"
+      end
+
+      return '/_search'
+    end
+
+    # for elasticsearch 6.x and higher
+    "#{build_index_name(index)}/_doc/_search"
   end
 
   def self.humanized_error(verb:, url:, payload: nil, response:)
@@ -833,4 +855,5 @@ return true if backend is configured
 
     data
   end
+
 end

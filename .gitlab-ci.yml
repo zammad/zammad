@@ -214,16 +214,9 @@ test:integration:clearbit:
 
 ### Elasticsearch
 
-test:integration:es:
+.script_integration_es_template: &script_integration_es_definition
   <<: *base_env
   stage: test
-  services:
-    - name: registry.znuny.com/docker/zammad-mysql:latest
-      alias: mysql
-    - name: registry.znuny.com/docker/zammad-postgresql:latest
-      alias: postgresql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:5.6
-      alias: elasticsearch
   variables:
     RAILS_ENV: "test"
     ES_INDEX_RAND: "true"
@@ -234,6 +227,36 @@ test:integration:es:
     - bundle exec rails test test/integration/elasticsearch_test.rb
     - bundle exec rspec --tag searchindex
     - bundle exec rails test test/integration/report_test.rb
+
+test:integration:es:5.6:
+  <<: *script_integration_es_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:5.6
+      alias: elasticsearch
+
+test:integration:es:6:
+  <<: *script_integration_es_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:6
+      alias: elasticsearch
+
+test:integration:es:7:
+  <<: *script_integration_es_definition
+  services:
+    - name: registry.znuny.com/docker/zammad-mysql:latest
+      alias: mysql
+    - name: registry.znuny.com/docker/zammad-postgresql:latest
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-elasticsearch:7
+      alias: elasticsearch
 
 ### Zendesk
 
@@ -320,7 +343,7 @@ browser:build:
       alias: mysql
     - name: registry.znuny.com/docker/zammad-postgresql:latest
       alias: postgresql
-    - name: registry.znuny.com/docker/zammad-elasticsearch:5.6
+    - name: registry.znuny.com/docker/zammad-elasticsearch:stable
       alias: elasticsearch
     - name: docker.io/elgalu/selenium:3.14.0-p17
       alias: selenium

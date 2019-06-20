@@ -39,7 +39,11 @@ returns
       end
 
       if sort_by.blank?
-        sort_by.push(default)
+        if default.is_a?(Array)
+          sort_by = default
+        else
+          sort_by.push(default)
+        end
       end
 
       sort_by
@@ -77,7 +81,11 @@ returns
       end
 
       if order_by.blank?
-        order_by.push(default)
+        if default.is_a?(Array)
+          order_by = default
+        else
+          order_by.push(default)
+        end
       end
 
       order_by

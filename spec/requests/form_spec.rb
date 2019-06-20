@@ -151,18 +151,14 @@ RSpec.describe 'Form', type: :request, searchindex: true do
       token = json_response['token']
 
       (1..20).each do |count|
-        travel 10.seconds
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test#{count}", body: 'hello' }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response).to be_a_kind_of(Hash)
 
         expect(json_response['errors']).to be_falsey
-        expect(json_response['errors']).to be_falsey
         expect(json_response['ticket']).to be_truthy
         expect(json_response['ticket']['id']).to be_truthy
-        expect(json_response['ticket']['number']).to be_truthy
         Scheduler.worker(true)
-        sleep 1 # wait until elasticsearch is index
       end
 
       sleep 10 # wait until elasticsearch is index
@@ -175,7 +171,6 @@ RSpec.describe 'Form', type: :request, searchindex: true do
       @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json', 'REMOTE_ADDR' => '1.2.3.5' }
 
       (1..20).each do |count|
-        travel 10.seconds
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test-2-#{count}", body: 'hello' }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response).to be_a_kind_of(Hash)
@@ -183,9 +178,27 @@ RSpec.describe 'Form', type: :request, searchindex: true do
         expect(json_response['errors']).to be_falsey
         expect(json_response['ticket']).to be_truthy
         expect(json_response['ticket']['id']).to be_truthy
-        expect(json_response['ticket']['number']).to be_truthy
         Scheduler.worker(true)
-        sleep 1 # wait until elasticsearch is index
+      end
+
+      sleep 10 # wait until elasticsearch is index
+
+      post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-2-last', body: 'hello' }, as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to be_truthy
+
+      @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json', 'REMOTE_ADDR' => '::1' }
+
+      (1..20).each do |count|
+        post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test-2-#{count}", body: 'hello' }, as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to be_a_kind_of(Hash)
+
+        expect(json_response['errors']).to be_falsey
+        expect(json_response['ticket']).to be_truthy
+        expect(json_response['ticket']['id']).to be_truthy
+        Scheduler.worker(true)
       end
 
       sleep 10 # wait until elasticsearch is index
