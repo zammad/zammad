@@ -12,61 +12,63 @@
 <%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base %>
 
-<%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if editor? %>
+<div class="wrapper js-wrapper">
+  <%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if editor? %>
 
-<header class="header js-header">
-  <div class="container">
-    <h1 class="logo">
-      <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale])) do %>
-        <img src="/assets/images/<%= Setting.get('product_logo') %>">
-      <% end %>
-    </h1>
-    <nav class="menu">
-      <% menu_items.each do |menu_item| %>
-        <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
-      <% end %>
-    </nav>
-  </div>
-  <div class="container">
-    <div class="search">
-      <div class="search-field">
-        <%= icon 'magnifier' %>
-        <input class="js-search-input" type="search" placeholder="<%= zt('How can we help you? Search for an answer or a topic...') %>">
-      </div>
-      <ul class="search-results js-search-results" data-empty-placeholder="<%= zt('No results were found.') %>"></ul>
+  <header class="header js-header">
+    <div class="container">
+      <h1 class="logo">
+        <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale])) do %>
+          <img src="/assets/images/<%= Setting.get('product_logo') %>">
+        <% end %>
+      </h1>
+      <nav class="menu">
+        <% menu_items.each do |menu_item| %>
+          <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
+        <% end %>
+      </nav>
     </div>
-  </div>
-</header>
-
-<%= render_breadcrumb_if_needed %>
-
-<%= yield %>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-menu">
-      <div class="copyright">
-        <%= @knowledge_base.translation.footer_note %>
-      </div>
-      <div class="language-picker">
-        <a class="btn btn--action" href="#" data-toggle="dropdown" aria-expanded="false">
-          <%= system_locale_via_uri.name %>
-          <%= icon 'arrow-down' %>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right dropdown-menu-up" role="menu">
-          <% @object_locales&.each do |locale| %>
-            <li class="<%= 'is-selected' if locale.name == system_locale_via_uri.name %>">
-              <%= link_to custom_path_if_needed(url_for(locale: locale.locale)), hreflang: locale.locale do %>
-                <%= icon 'checkmark' %>
-                <%= locale.name %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+    <div class="container">
+      <div class="search">
+        <div class="search-field">
+          <%= icon 'magnifier' %>
+          <input class="js-search-input" type="search" placeholder="<%= zt('How can we help you? Search for an answer or a topic...') %>">
+        </div>
+        <ul class="search-results js-search-results" data-empty-placeholder="<%= zt('No results were found.') %>"></ul>
       </div>
     </div>
-  </div>
-</footer>
+  </header>
+
+  <%= render_breadcrumb_if_needed %>
+
+  <%= yield %>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-menu">
+        <div class="copyright">
+          <%= @knowledge_base.translation.footer_note %>
+        </div>
+        <div class="language-picker">
+          <a class="btn btn--action" href="#" data-toggle="dropdown" aria-expanded="false">
+            <%= system_locale_via_uri.name %>
+            <%= icon 'arrow-down' %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right dropdown-menu-up" role="menu">
+            <% @object_locales&.each do |locale| %>
+              <li class="<%= 'is-selected' if locale.name == system_locale_via_uri.name %>">
+                <%= link_to custom_path_if_needed(url_for(locale: locale.locale)), hreflang: locale.locale do %>
+                  <%= icon 'checkmark' %>
+                  <%= locale.name %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
 
 <script type='text/javascript'>
   if(window.fetch === undefined || window.Promise === undefined || Element.prototype.prepend === undefined){
