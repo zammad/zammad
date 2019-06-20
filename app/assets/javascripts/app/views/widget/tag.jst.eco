@@ -9,6 +9,6 @@
   <% end %>
 </ul>
 <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
-<form>
+<form class="ui-front">
   <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
 </form>

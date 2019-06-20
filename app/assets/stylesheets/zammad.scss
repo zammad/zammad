@@ -6855,6 +6855,8 @@ footer {
 .ui-autocomplete.ui-widget-content {
   @extend .zIndex-8;
   position: absolute;
+  max-height: 380px;
+  overflow: auto;
 }
 
 .ui-menu {
