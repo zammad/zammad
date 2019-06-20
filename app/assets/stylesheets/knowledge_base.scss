@@ -99,7 +99,6 @@ body {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 h1 {
@@ -240,11 +239,18 @@ b {
   }
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .header {
   background: $light-bg;
   border-bottom: 1px solid $dark-border;
   position: relative;
   padding: .3em 0 .9em;
+  flex-shrink: 0;
 
   .container {
     display: flex;
@@ -422,7 +428,6 @@ b {
 }
 
 .main {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -433,7 +438,7 @@ b {
   }
   
   .container {
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
   }
@@ -681,6 +686,7 @@ b {
   
       span {
         display: block;
+        max-width: 100%;
       }
     }
 
@@ -985,6 +991,7 @@ b {
 }
 
 .footer {
+  margin-top: auto;
   border-top: 1px solid $dark-border;
   background: $light-bg;
   color: hsl(210,8%,50%);

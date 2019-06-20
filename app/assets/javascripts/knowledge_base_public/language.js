@@ -98,7 +98,7 @@
 
   LanguageDetector.show = function(lang) {
     var elem = new LanguageBannerElement(lang)
-    document.body.prepend(elem.el)
+    document.querySelector('.js-wrapper').prepend(elem.el)
   }
 
   LanguageDetector.checkIfBetterLanguageAvailable()
