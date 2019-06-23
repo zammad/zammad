@@ -5,12 +5,21 @@ test( "searchable_select check", function() {
   var el = $('#form1')
   var defaults = {
     searchable_select2: 'bbb',
+    searchable_select4: 'ccc',
   }
   var options = {
     'aaa': 'aaa display',
     'bbb': 'bbb display',
     'ccc': 'ccc display',
   }
+  var options_4_tree = [
+    { value: 'aaa', name: 'aaa display' },
+    { value: 'bbb', name: 'bbb display' },
+    { value: 'ccc', name: 'ccc display', children: [
+      { value: 'ccc::aaa', name: 'aaa display' },
+      { value: 'ccc::bbb', name: 'bbb display' },
+    ] },
+  ]
   new App.ControllerForm({
     el:        el,
     model:     {
@@ -40,6 +49,15 @@ test( "searchable_select check", function() {
           null:    true,
           unknown: true
         },
+        {
+          name:    'searchable_select4',
+          display: 'SearchableSelect4',
+          tag:     'searchable_select',
+          options: options_4_tree,
+          default: defaults['searchable_select4'],
+          null:    true,
+          unknown: true
+        },
       ]
     },
     autofocus: true
@@ -50,6 +68,7 @@ test( "searchable_select check", function() {
     searchable_select1: '',
     searchable_select2: 'bbb',
     searchable_select3: '',
+    searchable_select4: 'ccc',
   }
   deepEqual(params, test_params, 'form param check')
 
@@ -67,6 +86,7 @@ test( "searchable_select check", function() {
     searchable_select1: 'ccc',
     searchable_select2: 'bbb',
     searchable_select3: '',
+    searchable_select4: 'ccc',
   }
   deepEqual(params, test_params, 'form param check')
 
@@ -84,6 +104,7 @@ test( "searchable_select check", function() {
     searchable_select1: 'ccc',
     searchable_select2: 'ccc',
     searchable_select3: '',
+    searchable_select4: 'ccc',
   }
   deepEqual(params, test_params, 'form param check')
 
@@ -110,7 +131,57 @@ test( "searchable_select check", function() {
     searchable_select1: 'ccc',
     searchable_select2: 'ccc',
     searchable_select3: 'unknown value',
+    searchable_select4: 'ccc',
   }
   deepEqual(params, test_params, 'form param check')
+
+  $('#forms').append('<hr><h1>searchable_select check for .js-input field values</h1><form id="form2"></form>')
+  var el = $('#form2')
+  var defaults = {
+    searchable_select1: 'ccc::aaa',
+    searchable_select2: 'ccc::ccc',
+  }
+  var options = [
+    { value: 'aaa', name: 'aaa display' },
+    { value: 'bbb', name: 'bbb display' },
+    { value: 'ccc', name: 'ccc display', children: [
+      { value: 'ccc::aaa', name: 'aaa display L2' },
+      { value: 'ccc::bbb', name: 'bbb display L2' },
+      { value: 'ccc::ccc', name: 'ccc display L2' },
+    ] },
+  ]
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'searchable_select1',
+          display: 'SearchableSelect1',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select1'],
+          null:    true,
+        },
+        {
+          name:    'searchable_select2',
+          display: 'SearchableSelect2',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select2'],
+          null:    true,
+        },
+      ]
+    },
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    searchable_select1: 'ccc::aaa',
+    searchable_select2: 'ccc::ccc',
+  }
+  deepEqual(params, test_params, 'form param check')
+  equal(el.find('[name="searchable_select1"].js-shadow + .js-input').val(), 'aaa display L2', 'verify shown input')
+  equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display L2', 'verify shown input')
+
 
 });
