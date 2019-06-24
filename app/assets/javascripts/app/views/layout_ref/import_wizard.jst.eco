@@ -4,7 +4,7 @@
       <h2>Import Tickets</h2>
       <div class="wizard-body vertical justified">
         <div class="import-source centered" data-source="otrs" data-target="otrs-prepare-plugin">
-          <img class="logo" src="<%= @C('image_path') + '/' + 'otrs-logo.png' %>" alt="OTRS" height="37">
+          <h2>OTRS</h2>
         </div>
       </div>
     </div>
