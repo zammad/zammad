@@ -1,4 +1,4 @@
-class TicketZoomFormHanderDependencies
+class TicketZoomFormHandlerDependencies
 
   # central method, is getting called on every ticket form change
   @run: (params, attribute, attributes, classname, form, ui) ->
@@ -29,5 +29,5 @@ class TicketZoomFormHanderDependencies
         if newElement
           form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith(newElement)
 
-App.Config.set('100-ticketFormChanges', TicketZoomFormHanderDependencies, 'TicketZoomFormHandler')
-App.Config.set('100-ticketFormChanges', TicketZoomFormHanderDependencies, 'TicketCreateFormHandler')
+App.Config.set('100-ticketFormChanges', TicketZoomFormHandlerDependencies, 'TicketZoomFormHandler')
+App.Config.set('100-ticketFormChanges', TicketZoomFormHandlerDependencies, 'TicketCreateFormHandler')
