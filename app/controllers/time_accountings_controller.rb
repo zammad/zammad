@@ -96,15 +96,15 @@ class TimeAccountingsController < ApplicationController
         },
         {
           name:  'Created at',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Closed at',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Close Escalation At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Close In Min',
@@ -116,11 +116,11 @@ class TimeAccountingsController < ApplicationController
         },
         {
           name:  'First Response At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'First Response Escalation At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'First Response In Min',
@@ -132,7 +132,7 @@ class TimeAccountingsController < ApplicationController
         },
         {
           name:  'Update Escalation At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Update In Min',
@@ -144,15 +144,15 @@ class TimeAccountingsController < ApplicationController
         },
         {
           name:  'Last Contact At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Last Contact Agent At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Last Contact Customer At',
-          width: 10,
+          width: 18,
         },
         {
           name:  'Article Count',
@@ -160,7 +160,7 @@ class TimeAccountingsController < ApplicationController
         },
         {
           name:  'Escalation At',
-          width: 10,
+          width: 18,
         },
       ]
       objects = ObjectManager::Attribute.where(editable:         true,
@@ -170,18 +170,11 @@ class TimeAccountingsController < ApplicationController
                                         .pluck(:name, :display, :data_type, :data_option)
                                         .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option } }
       objects.each do |object|
-        header.push({ name: object[:display], width: 10 })
+        header.push({ name: object[:display], width: 18 })
       end
 
       result = []
       results.each do |row|
-        row[:ticket].each_key do |field|
-          next if row[:ticket][field].blank?
-          next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
-
-          row[:ticket][field] = row[:ticket][field].iso8601
-        end
-
         result_row = [
           row[:ticket]['number'],
           row[:ticket]['title'],
@@ -209,19 +202,17 @@ class TimeAccountingsController < ApplicationController
           row[:ticket]['escalation_at'],
         ]
 
-        # needed to get human values for boolean/select rather than true/false values
-        ticket = Ticket.lookup(id: row[:ticket]['id'])
-
         # Object Manager attributes
         # We already queried ObjectManager::Attributes, so we just use objects
         objects.each do |object|
           key = object[:name]
           case object[:data_type]
           when 'boolean', 'select'
-            value = object[:data_option]['options'][ticket.send(key.to_sym)]
+            value = row[:ticket][key]
+            if object[:data_option] && object[:data_option]['options'] && object[:data_option]['options'][row[:ticket][key]]
+              value = object[:data_option]['options'][row[:ticket][key]]
+            end
             value.present? ? result_row.push(value) : result_row.push('')
-          when 'datetime', 'date'
-            row[:ticket][key].present? ? result_row.push(row[:ticket][key].to_time.iso8601) : result_row.push('')
           else
             # for text, integer and tree select
             row[:ticket][key].present? ? result_row.push(row[:ticket][key]) : result_row.push('')
@@ -400,6 +391,8 @@ class TimeAccountingsController < ApplicationController
 
   def sheet(title, header, result)
 
+    params[:timezone] ||= Setting.get('timezone_default')
+
     # Create a new Excel workbook
     temp_file = Tempfile.new('time_tracking.xls')
     workbook = WriteExcel.new(temp_file)
@@ -412,7 +405,16 @@ class TimeAccountingsController < ApplicationController
     format.set_bold
     format.set_size(14)
     format.set_color('black')
-    worksheet.set_row(0, 0, header.count)
+
+    format_time = workbook.add_format(num_format: 'yyyy-mm-dd hh:mm:ss')
+    format_date = workbook.add_format(num_format: 'yyyy-mm-dd')
+
+    format_footer = workbook.add_format
+    format_footer.set_italic
+    format_footer.set_color('gray')
+    format_footer.set_size(8)
+
+    worksheet.set_row(0, 18, header.count)
 
     # Write a formatted and unformatted string, row and column notation.
     worksheet.write_string(0, 0, title, format)
@@ -435,14 +437,21 @@ class TimeAccountingsController < ApplicationController
       row_count += 1
       row_item_count = 0
       row.each do |item|
-        if item.acts_like?(:date)
-          worksheet.write_date_time(row_count, row_item_count, item.to_time.iso8601)
+        if item.acts_like?(:time)
+          worksheet.write_date_time(row_count, row_item_count, time_in_localtime_for_excel(item, params[:timezone]), format_time) if item.present?
+        elsif item.acts_like?(:date)
+          worksheet.write_date_time(row_count, row_item_count, item.to_s, format_date) if item.present?
+        elsif item.is_a?(Integer) || item.is_a?(Float)
+          worksheet.write_number(row_count, row_item_count, item)
         else
-          worksheet.write_string(row_count, row_item_count, item)
+          worksheet.write_string(row_count, row_item_count, item.to_s)
         end
         row_item_count += 1
       end
     end
+
+    row_count += 2
+    worksheet.write_string(row_count, 0, "#{Translation.translate(current_user.locale, 'Timezone')}: #{params[:timezone]}", format_footer)
 
     workbook.close
 
@@ -453,4 +462,13 @@ class TimeAccountingsController < ApplicationController
     contents
   end
 
+  def time_in_localtime_for_excel(time, timezone)
+    return if time.blank?
+
+    if timezone.present?
+      offset = time.in_time_zone(timezone).utc_offset
+      time -= offset
+    end
+    time.utc.iso8601.to_s.sub(/Z$/, '')
+  end
 end
