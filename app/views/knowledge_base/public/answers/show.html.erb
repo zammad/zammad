@@ -14,7 +14,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
       <% if (attachments = @object.attachments_sorted) && attachments.present? %>
         <div class="attachments">
           <%= icon 'paperclip' %>
-          <div class="attachments-title"><%= zt('Attached files') %></div>
+          <div class="attachments-title"><%= zt('Attached Files') %></div>
           <% attachments.each do |attachment| %>
             <%= link_to custom_path_if_needed(attachment_path(attachment)), class: 'attachment', download: true do %>
               <span class="attachment-name u-highlight"><%= attachment.filename %></span>
