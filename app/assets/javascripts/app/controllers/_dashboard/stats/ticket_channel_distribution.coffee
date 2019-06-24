@@ -30,6 +30,8 @@ class Stats extends App.Controller
             inbound_in_percent: 0
             outbound_in_percent: 0
 
+    data.StatsTicketChannelDistribution.description =  'How many of your tickets are coming from email, phone, Twitter, or Facebook? (Shows percentages for both inbound and outbound tickets.)'
+
     content = App.view('dashboard/stats/ticket_channel_distribution')(data)
 
     if @$('.ticket_channel_distribution').length > 0

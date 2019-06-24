@@ -22,6 +22,9 @@ class App.DashboardStats extends App.Controller
             new widget.controller(
               el:  el
             )
+            @$('.js-stat-help').tooltip()
           catch e
-            @log 'error', "statsWidgets #{key}:", e
+            @log 'error', "statsWidgets #{widget}:", e
+
+
     App.Event.trigger(event + ':ready')

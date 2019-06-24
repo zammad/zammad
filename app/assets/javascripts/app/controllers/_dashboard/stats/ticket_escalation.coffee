@@ -17,6 +17,8 @@ class Stats extends App.Controller
         own: 0
         total: 0
 
+    data.StatsTicketEscalation.description = 'How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you have too many…)'
+
     content = App.view('dashboard/stats/ticket_escalation')(data)
 
     if @$('.ticket_escalation').length > 0

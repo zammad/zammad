@@ -4893,6 +4893,21 @@ footer {
       color: #444a4f;
       text-transform: uppercase;
       font-weight: normal;
+      position: relative;
+      padding: 0 24px;
+      
+      .tooltip {
+        text-transform: none;
+        width: 200px;
+      }
+    }
+
+    .stat-icon-help {
+      position: absolute;
+      right: 3px;
+      top: 1px;
+      opacity: .2;
+      cursor: help;
     }
 
     .stat-widget .stat-label {

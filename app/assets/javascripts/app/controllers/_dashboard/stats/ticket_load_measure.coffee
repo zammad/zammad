@@ -19,6 +19,8 @@ class Stats extends App.Controller
         total: 0
         average_per_agent: 0
 
+    data.StatsTicketLoadMeasure.description = 'Out of all open tickets (company-wide), how many are assigned to you?'
+
     content = App.view('dashboard/stats/ticket_load_measure')(data)
 
     if @$('.ticket_load_measure').length > 0

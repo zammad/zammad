@@ -17,6 +17,8 @@ class Stats extends App.Controller
         percent: 0
         average_per_agent: 0
 
+    data.StatsTicketReopen.description = 'How many of your tickets have been re-opened after being marked “closed”?'
+
     content = App.view('dashboard/stats/ticket_reopen')(data)
     if @$('.ticket_reopen').length > 0
       @$('.ticket_reopen').html(content)

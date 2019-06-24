@@ -17,6 +17,8 @@ class Stats extends App.Controller
         percent: 0
         average_per_agent: 0
 
+    data.StatsTicketInProcess.description = 'What percentage of your tickets have you responded to, updated, or modified in some way today?'
+
     content = App.view('dashboard/stats/ticket_in_process')(data)
 
     if @$('.ticket_in_process').length > 0

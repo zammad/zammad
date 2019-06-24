@@ -1,6 +1,11 @@
 <div class="column ticket_reopen">
   <div class="stat-widget vertical">
-    <div class="stat-title"><%- @T('Reopening rate') %></div>
+    <div class="stat-title">
+      <%- @T('Reopening rate') %>
+      <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketReopen.description) %>" data-placement="left">
+        <%- @Icon('help') %>
+      </div>
+    </div>
     <div class="stat-graphic">
       <%- @Icon('reopening', "reopening-icon #{@StatsTicketReopen.state}-color") %>
     </div>

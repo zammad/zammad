@@ -1,6 +1,11 @@
 <div class="column ticket_in_process">
   <div class="stat-widget vertical">
-    <div class="stat-title"><%- @T('Your tickets in process') %></div>
+    <div class="stat-title">
+      <%- @T('Your tickets in process') %>
+      <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketInProcess.description) %>" data-placement="bottom">
+        <%- @Icon('help') %>
+      </div>
+    </div>
     <div class="stat-graphic">
       <%- @Icon('in-process', "in-process-icon #{@StatsTicketInProcess.state}-color") %>
     </div>
