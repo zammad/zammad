@@ -68,7 +68,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => 'ticket_hook',
         'title'       => nil,
-        'description' => 'The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
+        'description' => 'The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
       },
       {
         'name'        => 'ticket_hook_divider',
@@ -101,7 +101,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => 'ticket_subject_re',
         'title'       => nil,
-        'description' => 'The text at the beginning of the subject in an email reply, e. g. RE, AW, or AS.',
+        'description' => 'The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS.',
       },
       {
         'name'        => 'ticket_define_email_from',

@@ -123,7 +123,7 @@ class Create extends App.ControllerModal
     ui = @
     new App.ControllerModal(
       head: 'Your New Personal Access Token'
-      buttonSubmit: 'OK, I\'ve copied my token'
+      buttonSubmit: "OK, I've copied my token"
       content: ->
         App.view('profile/token_access_created')(
           name: ui.newToken.name

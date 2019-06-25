@@ -1793,7 +1793,7 @@ Setting.create_if_not_exists(
   title:       'Ticket Hook',
   name:        'ticket_hook',
   area:        'Ticket::Base',
-  description: 'The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
+  description: 'The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
   options:     {
     form: [
       {
@@ -2364,7 +2364,7 @@ Setting.create_if_not_exists(
   title:       'Ticket Subject Reply',
   name:        'ticket_subject_re',
   area:        'Email::Base',
-  description: 'The text at the beginning of the subject in an email reply, e. g. RE, AW, or AS.',
+  description: 'The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS.',
   options:     {
     form: [
       {
