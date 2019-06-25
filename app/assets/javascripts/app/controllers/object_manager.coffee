@@ -7,7 +7,7 @@ treeParams = (e, params) ->
   $(e.target).closest('.modal').find('.js-treeTable .js-key').each( ->
     $element = $(@)
     level = parseInt($element.attr('level'))
-    name = $element.val()
+    name = $element.val().trim()
     item =
       name: name
 

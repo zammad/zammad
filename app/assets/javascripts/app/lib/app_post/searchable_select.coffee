@@ -40,29 +40,29 @@ class App.SearchableSelect extends Spine.Controller
 
     @html App.view('generic/searchable_select')
       attribute: @attribute
-      options: @renderAllOptions '', @attribute.options, 0
-      submenus: @renderSubmenus @attribute.options
+      options: @renderAllOptions('', @attribute.options, 0)
+      submenus: @renderSubmenus(@attribute.options)
 
     # initial data
-    @currentMenu = @findMenuContainingValue @attribute.value
-    @level = @getIndex @currentMenu
+    @currentMenu = @findMenuContainingValue(@attribute.value)
+    @level = @getIndex(@currentMenu)
 
   renderSubmenus: (options) ->
     html = ''
     if options
       for option in options
         if option.children
-          html += App.view('generic/searchable_select_submenu')
+          html += App.view('generic/searchable_select_submenu')(
             options: @renderOptions(option.children)
             parentValue: option.value
             title: option.name
-
+          )
           if @hasSubmenu(option.children)
-            html += @renderSubmenus option.children
+            html += @renderSubmenus(option.children)
     html
 
   updateAttributeValueName: ->
-    firstSelected = _.find @attribute.options, (option) -> option.selected
+    firstSelected = _.find(@attribute.options, (option) -> option.selected)
 
     if firstSelected
       @attribute.valueName = firstSelected.name
@@ -70,7 +70,7 @@ class App.SearchableSelect extends Spine.Controller
     else if @attribute.unknown && @attribute.value
       @attribute.valueName = @attribute.value
     else if @hasSubmenu @attribute.options
-      @attribute.valueName = @getName @attribute.value, @attribute.options
+      @attribute.valueName = @getName(@attribute.value, @attribute.options)
 
   hasSubmenu: (options) ->
     return false if !options
@@ -83,7 +83,7 @@ class App.SearchableSelect extends Spine.Controller
       if option.value is value
         return option.name
       if option.children
-        name = @getName value, option.children
+        name = @getName(value, option.children)
         return name if name isnt undefined
     undefined
 
@@ -103,30 +103,31 @@ class App.SearchableSelect extends Spine.Controller
         if level && level > 0
           className += ' is-hidden is-child'
 
-        html += App.view('generic/searchable_select_option')
+        html += App.view('generic/searchable_select_option')(
           option: option
           class: className
           detail: parentName
+        )
 
         if option.children
-          html += @renderAllOptions "#{parentName} — #{option.name}", option.children, level+1
+          html += @renderAllOptions("#{parentName} — #{option.name}", option.children, level+1)
     html
 
   onDropdownShown: =>
-    @input.on 'click', @stopPropagation
+    @input.on('click', @stopPropagation)
     @highlightFirst()
     if @level > 0
       @showSubmenu(@currentMenu)
     @isOpen = true
 
   onDropdownHidden: =>
-    @input.off 'click', @stopPropagation
+    @input.off('click', @stopPropagation)
     @unhighlightCurrentItem()
     @isOpen = false
 
     if !@input.val()
       @updateAttributeValueName()
-      @input.val @attribute.valueName
+      @input.val(@attribute.valueName)
 
   onKeyUp: =>
     return if @input.val().trim() isnt ''
@@ -141,13 +142,13 @@ class App.SearchableSelect extends Spine.Controller
 
   navigate: (event) =>
     switch event.keyCode
-      when 40 then @nudge event, 1 # down
-      when 38 then @nudge event, -1 # up
-      when 39 then @autocompleteOrNavigateIn event # right
-      when 37 then @autocompleteOrNavigateOut event # left
-      when 13 then @onEnter event
-      when 27 then @onEscape event
-      when 9 then @onTab event
+      when 40 then @nudge(event, 1) # down
+      when 38 then @nudge(event, -1) # up
+      when 39 then @autocompleteOrNavigateIn(event) # right
+      when 37 then @autocompleteOrNavigateOut(event) # left
+      when 13 then @onEnter(event)
+      when 27 then @onEscape(event)
+      when 9 then @onTab(event)
 
   onEscape: ->
     if @isOpen
@@ -204,8 +205,8 @@ class App.SearchableSelect extends Spine.Controller
       # current position
       caretPosition = @invisiblePart.text().length + 1
 
-    @input.val @suggestion
-    @shadowInput.val @suggestionValue
+    @input.val(@suggestion)
+    @shadowInput.val(@suggestionValue)
     @clearAutocomplete()
     @toggle()
 
@@ -250,7 +251,7 @@ class App.SearchableSelect extends Spine.Controller
       target = @currentItem.attr('data-value')
       target_menu = @optionsSubmenu.filter("[data-parent-value=\"#{target}\"]")
     else
-      target_menu = @findMenuContainingValue @currentMenu.attr('data-parent-value')
+      target_menu = @findMenuContainingValue(@currentMenu.attr('data-parent-value'))
 
     @animateToSubmenu(target_menu, dir)
 
