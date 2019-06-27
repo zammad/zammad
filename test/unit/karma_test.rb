@@ -506,7 +506,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal('Master', Karma::User.level_by_score(9000))
     assert_equal('Master', Karma::User.level_by_score(18_999))
     assert_equal('Evangelist', Karma::User.level_by_score(19_000))
-    assert_equal('Evangelist', Karma::User.level_by_score(45_999))
+    assert_equal('Evangelist', Karma::User.level_by_score(49_999))
     assert_equal('Hero', Karma::User.level_by_score(50_000))
 
     # cleanup

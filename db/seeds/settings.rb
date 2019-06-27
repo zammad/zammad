@@ -4247,7 +4247,7 @@ Setting.create_if_not_exists(
     {
       name:  'Evangelist',
       start: 19_000,
-      end:   45_999,
+      end:   49_999,
     },
     {
       name:  'Hero',
