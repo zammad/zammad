@@ -1236,25 +1236,22 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def ensure_password
-    return true if password_empty?
-    return true if PasswordHash.crypted?(password)
-
-    self.password = PasswordHash.crypt(password)
+    self.password = ensured_password
     true
   end
 
-  def password_empty?
-    # set old password again if not given
-    return if password.present?
+  def ensured_password
+    # ensure unset password for blank values of new users
+    return nil if new_record? && password.blank?
 
-    # skip if it's not desired to set a password (yet)
-    return true if !password
+    # don't permit empty password update for existing users
+    return password_was if password.blank?
 
-    # get current record
-    return if !id
+    # don't re-hash an already hashed passsword
+    return password if PasswordHash.crypted?(password)
 
-    self.password = password_was
-    true
+    # hash the plaintext password
+    PasswordHash.crypt(password)
   end
 
   # reset login_failed if password is changed

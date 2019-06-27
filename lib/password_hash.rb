@@ -6,7 +6,8 @@ module PasswordHash
   extend self
 
   def crypt(password)
-    argon2.create(password)
+    # take a fresh Argon2::Password instances to ensure randomized salt
+    Argon2::Password.new(secret: secret).create(password)
   end
 
   def verified?(pw_hash, password)
@@ -27,7 +28,10 @@ module PasswordHash
     return false if pw_hash.blank?
     return false if !password
 
-    sha2?(pw_hash, password)
+    return true if sha2?(pw_hash, password)
+    return true if hashed_argon2i?(pw_hash, password)
+
+    false
   end
 
   def hashed_sha2?(pw_hash)
@@ -35,8 +39,15 @@ module PasswordHash
   end
 
   def hashed_argon2?(pw_hash)
+    Argon2::Password.valid_hash?(pw_hash)
+  end
+
+  def hashed_argon2i?(pw_hash, password)
     # taken from: https://github.com/technion/ruby-argon2/blob/7e1f4a2634316e370ab84150e4f5fd91d9263713/lib/argon2.rb#L33
-    pw_hash =~ /^\$argon2i\$.{,112}/
+    return false if !pw_hash.match?(/^\$argon2i\$.{,112}/)
+
+    # Argon2::Password.verify_password verifies argon2i hashes, too
+    verified?(pw_hash, password)
   end
 
   def sha2(password)
@@ -50,10 +61,6 @@ module PasswordHash
     return false if !hashed_sha2?(pw_hash)
 
     pw_hash == sha2(password)
-  end
-
-  def argon2
-    @argon2 ||= Argon2::Password.new(secret: secret)
   end
 
   def secret

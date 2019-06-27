@@ -29,7 +29,7 @@ gem 'em-websocket'
 gem 'eventmachine'
 
 # core - password security
-gem 'argon2', '1.1.5'
+gem 'argon2'
 
 # core - state machine
 gem 'aasm'

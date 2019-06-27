@@ -103,11 +103,13 @@ RSpec.describe User, type: :model do
 
       context 'with valid user and invalid password' do
         it 'increments failed login count' do
+          expect(described_class).to receive(:sleep).with(1)
           expect { described_class.authenticate(user.login, password.next) }
             .to change { user.reload.login_failed }.by(1)
         end
 
         it 'returns nil' do
+          expect(described_class).to receive(:sleep).with(1)
           expect(described_class.authenticate(user.login, password.next)).to be(nil)
         end
       end
@@ -135,6 +137,38 @@ RSpec.describe User, type: :model do
       context 'with empty password string' do
         it 'returns nil' do
           expect(described_class.authenticate(user.login, '')).to be(nil)
+        end
+      end
+
+      context 'with empty password string when the stored password is an empty string' do
+        before { user.update_column(:password, '') }
+
+        context 'when password is an empty string' do
+          it 'returns nil' do
+            expect(described_class.authenticate(user.login, '')).to be(nil)
+          end
+        end
+
+        context 'when password is nil' do
+          it 'returns nil' do
+            expect(described_class.authenticate(user.login, nil)).to be(nil)
+          end
+        end
+      end
+
+      context 'with empty password string when the stored hash represents an empty string' do
+        before { user.update(password: PasswordHash.crypt('')) }
+
+        context 'when password is an empty string' do
+          it 'returns nil' do
+            expect(described_class.authenticate(user.login, '')).to be(nil)
+          end
+        end
+
+        context 'when password is nil' do
+          it 'returns nil' do
+            expect(described_class.authenticate(user.login, nil)).to be(nil)
+          end
         end
       end
     end
@@ -700,18 +734,59 @@ RSpec.describe User, type: :model do
     end
 
     describe '#password' do
+      let(:password) { Faker::Internet.password }
+
       context 'when set to plaintext password' do
         it 'hashes password before saving to DB' do
-          user.password = 'password'
+          user.password = password
 
           expect { user.save }
-            .to change(user, :password).to(PasswordHash.crypt('password'))
+            .to change { PasswordHash.crypted?(user.password) }
+        end
+      end
+
+      context 'for existing user records' do
+        context 'when changed to empty string' do
+          before { user.update(password: password) }
+
+          it 'keeps previous password' do
+
+            expect { user.update!(password: '') }
+              .not_to change(user, :password)
+          end
+        end
+
+        context 'when changed to nil' do
+          before { user.update(password: password) }
+
+          it 'keeps previous password' do
+            expect { user.update!(password: nil) }
+              .not_to change(user, :password)
+          end
+        end
+      end
+
+      context 'for new user records' do
+        context 'when passed as an empty string' do
+          let(:another_user) { create(:user, password: '') }
+
+          it 'sets password to nil' do
+            expect(another_user.password).to eq(nil)
+          end
+        end
+
+        context 'when passed as nil' do
+          let(:another_user) { create(:user, password: nil) }
+
+          it 'sets password to nil' do
+            expect(another_user.password).to eq(nil)
+          end
         end
       end
 
       context 'when set to SHA2 digest (to facilitate OTRS imports)' do
         it 'does not re-hash before saving' do
-          user.password = "{sha2}#{Digest::SHA2.hexdigest('password')}"
+          user.password = "{sha2}#{Digest::SHA2.hexdigest(password)}"
 
           expect { user.save }.not_to change(user, :password)
         end
@@ -719,9 +794,19 @@ RSpec.describe User, type: :model do
 
       context 'when set to Argon2 digest' do
         it 'does not re-hash before saving' do
-          user.password = PasswordHash.crypt('password')
+          user.password = PasswordHash.crypt(password)
 
           expect { user.save }.not_to change(user, :password)
+        end
+      end
+
+      context 'when creating two users with the same password' do
+        before { user.update(password: password) }
+
+        let(:another_user) { create(:user, password: password) }
+
+        it 'does not generate the same password hash' do
+          expect(user.password).not_to eq(another_user.password)
         end
       end
     end
