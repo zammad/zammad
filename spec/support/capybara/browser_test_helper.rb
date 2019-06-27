@@ -38,10 +38,10 @@ module BrowserTestHelper
     #
     def until_exists
       self.until do
-        begin
-          yield
-        rescue Capybara::ElementNotFound # rubocop:disable Lint/HandleExceptions
-        end
+
+        yield
+      rescue Capybara::ElementNotFound # rubocop:disable Lint/HandleExceptions
+
       end
     rescue Selenium::WebDriver::Error::TimeOutError => e
       # cleanup backtrace

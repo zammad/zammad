@@ -10,14 +10,13 @@ namespace :zammad do
       # there is no way in rake to achive that
       %w[db:drop:_unsafe db:create db:schema:load db:seed].each do |task|
 
-        begin
-          $stdout = StringIO.new if task == 'db:schema:load'.freeze
+        $stdout = StringIO.new if task == 'db:schema:load'.freeze
 
-          Rake::Task[task].reenable
-          Rake::Task[task].invoke
-        ensure
-          $stdout = STDOUT
-        end
+        Rake::Task[task].reenable
+        Rake::Task[task].invoke
+      ensure
+        $stdout = STDOUT
+
       end
 
       ActiveRecord::Base.connection.reconnect!

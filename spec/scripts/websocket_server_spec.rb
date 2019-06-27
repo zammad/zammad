@@ -27,18 +27,18 @@ describe 'websocket-server', type: :script do
     end
 
     it 'starts up successfully' do
-      begin
-        system("RAILS_ENV=test #{ws_server} start -db #{ipv6_addr} -p #{port} >/dev/null 2>&1")
 
-        # Wait for daemon to start
-        Timeout.timeout(20, Timeout::Error, 'WebSocket Server startup timed out') do
-          loop { break if File.size(output_log) + File.size(error_log) > 0 }
-        end
+      system("RAILS_ENV=test #{ws_server} start -db #{ipv6_addr} -p #{port} >/dev/null 2>&1")
 
-        expect(File.read(error_log)).not_to include(error_msg)
-      ensure
-        system("#{ws_server} stop >/dev/null 2>&1") if File.exist?(pidfile)
+      # Wait for daemon to start
+      Timeout.timeout(20, Timeout::Error, 'WebSocket Server startup timed out') do
+        loop { break if File.size(output_log) + File.size(error_log) > 0 }
       end
+
+      expect(File.read(error_log)).not_to include(error_msg)
+    ensure
+      system("#{ws_server} stop >/dev/null 2>&1") if File.exist?(pidfile)
+
     end
   end
 end

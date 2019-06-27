@@ -24,13 +24,13 @@ class Issue1977RemoveInvalidUserForeignKeys < ActiveRecord::Migration[5.1]
     ]
 
     foreign_keys.each do |args|
-      begin
-        add_foreign_key(*args)
-      rescue ActiveRecord::StatementInvalid => e
-        Rails.logger.info "Can't add foreign_keys '#{args.inspect}'"
-        Rails.logger.info e
-        ActiveRecord::Base.connection.reconnect!
-      end
+
+      add_foreign_key(*args)
+    rescue ActiveRecord::StatementInvalid => e
+      Rails.logger.info "Can't add foreign_keys '#{args.inspect}'"
+      Rails.logger.info e
+      ActiveRecord::Base.connection.reconnect!
+
     end
   end
 end

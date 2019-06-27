@@ -11,7 +11,7 @@ jobs:
 
   install-mysql:
     docker:
-      - image: circleci/ruby:2.4.4
+      - image: circleci/ruby:2.5.5
       - image: circleci/mysql:5.7-ram
         command: --max_allowed_packet=64MB
         environment:
@@ -28,7 +28,7 @@ jobs:
 
   install-postgresql:
     docker:
-      - image: circleci/ruby:2.4.4
+      - image: circleci/ruby:2.5.5
       - image: circleci/postgres:11-ram
         environment:
           POSTGRES_DB: zammad_test

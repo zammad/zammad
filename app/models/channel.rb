@@ -188,29 +188,29 @@ stream all accounts
 
         # start threads for each channel
         @@channel_stream[channel_id][:thread] = Thread.new do
-          begin
-            logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
-            channel.status_in = 'ok'
-            channel.last_log_in = ''
-            channel.save!
-            @@channel_stream_started_till_at[channel_id] = Time.zone.now
-            @@channel_stream[channel_id] ||= {}
-            @@channel_stream[channel_id][:stream_instance] = channel.stream_instance
-            @@channel_stream[channel_id][:stream_instance].stream
-            @@channel_stream[channel_id][:stream_instance].disconnect
-            @@channel_stream.delete(channel_id)
-            @@channel_stream_started_till_at[channel_id] = Time.zone.now
-            logger.info " ...stopped stream thread for '#{channel.id}'"
-          rescue => e
-            error = "Can't use stream for channel (#{channel.id}): #{e.inspect}"
-            logger.error error
-            logger.error e
-            channel.status_in = 'error'
-            channel.last_log_in = error
-            channel.save!
-            @@channel_stream.delete(channel_id)
-            @@channel_stream_started_till_at[channel_id] = Time.zone.now
-          end
+
+          logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
+          channel.status_in = 'ok'
+          channel.last_log_in = ''
+          channel.save!
+          @@channel_stream_started_till_at[channel_id] = Time.zone.now
+          @@channel_stream[channel_id] ||= {}
+          @@channel_stream[channel_id][:stream_instance] = channel.stream_instance
+          @@channel_stream[channel_id][:stream_instance].stream
+          @@channel_stream[channel_id][:stream_instance].disconnect
+          @@channel_stream.delete(channel_id)
+          @@channel_stream_started_till_at[channel_id] = Time.zone.now
+          logger.info " ...stopped stream thread for '#{channel.id}'"
+        rescue => e
+          error = "Can't use stream for channel (#{channel.id}): #{e.inspect}"
+          logger.error error
+          logger.error e
+          channel.status_in = 'error'
+          channel.last_log_in = error
+          channel.save!
+          @@channel_stream.delete(channel_id)
+          @@channel_stream_started_till_at[channel_id] = Time.zone.now
+
         end
       end
 

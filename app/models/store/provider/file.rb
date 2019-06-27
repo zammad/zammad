@@ -69,6 +69,7 @@ class Store::Provider::File
       local_location = locations[0, count].join('/')
       break if local_location.match?(%r{storage/fs/{0,4}$})
       break if Dir["#{local_location}/*"].present?
+      next if !Dir.exist?(local_location)
 
       FileUtils.rmdir(local_location)
     end

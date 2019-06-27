@@ -220,11 +220,11 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
 
     foreign_keys.each do |foreign_key|
       ActiveRecord::Base.transaction do
-        begin
-          add_foreign_key(*foreign_key)
-        rescue => e
-          Rails.logger.error "Inconsistent data status detected while adding foreign key '#{foreign_key.inspect}': #{e.message}"
-        end
+
+        add_foreign_key(*foreign_key)
+      rescue => e
+        Rails.logger.error "Inconsistent data status detected while adding foreign key '#{foreign_key.inspect}': #{e.message}"
+
       end
     end
   end

@@ -444,14 +444,14 @@ class String
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each_value do |regexp|
-      begin
-        string.sub!(/#{regexp}/) do |placeholder|
-          placeholder = "#{marker}#{placeholder}"
-        end
-      rescue
-        # regexp was not possible because of some string encoding issue, use next
-        Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
+
+      string.sub!(/#{regexp}/) do |placeholder|
+        placeholder = "#{marker}#{placeholder}"
       end
+    rescue
+      # regexp was not possible because of some string encoding issue, use next
+      Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
+
     end
 
     string
@@ -494,11 +494,11 @@ class String
 
     # try to find valid encodings of string
     viable_encodings.each do |enc|
-      begin
-        return encode!('utf-8', enc)
-      rescue EncodingError => e
-        Rails.logger.error { e.inspect }
-      end
+
+      return encode!('utf-8', enc)
+    rescue EncodingError => e
+      Rails.logger.error { e.inspect }
+
     end
 
     case options[:fallback]

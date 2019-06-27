@@ -250,52 +250,52 @@ class ReportsController < ApplicationController
 
     row = 2
     result[:ticket_ids].each do |ticket_id|
-      begin
-        ticket = Ticket.lookup(id: ticket_id)
-        row += 1
-        worksheet.write_string(row, 0, ticket.number)
-        worksheet.write_string(row, 1, ticket.title)
-        worksheet.write_string(row, 2, ticket.state.name)
-        worksheet.write_string(row, 3, ticket.priority.name)
-        worksheet.write_string(row, 4, ticket.group.name)
-        worksheet.write_string(row, 5, ticket.owner.fullname)
-        worksheet.write_string(row, 6, ticket.customer.fullname)
-        worksheet.write_string(row, 7, ticket.try(:organization).try(:name))
-        worksheet.write_string(row, 8, ticket.create_article_type.name)
-        worksheet.write_string(row, 9, ticket.create_article_sender.name)
-        worksheet.write_string(row, 10, ticket.tag_list.join(','))
 
-        worksheet.write_date_time(row, 11, time_in_localtime_for_excel(ticket.created_at, params[:timezone]), format_time)
-        worksheet.write_date_time(row, 12, time_in_localtime_for_excel(ticket.updated_at, params[:timezone]), format_time)
-        worksheet.write_date_time(row, 13, time_in_localtime_for_excel(ticket.close_at, params[:timezone]), format_time) if ticket.close_at.present?
+      ticket = Ticket.lookup(id: ticket_id)
+      row += 1
+      worksheet.write_string(row, 0, ticket.number)
+      worksheet.write_string(row, 1, ticket.title)
+      worksheet.write_string(row, 2, ticket.state.name)
+      worksheet.write_string(row, 3, ticket.priority.name)
+      worksheet.write_string(row, 4, ticket.group.name)
+      worksheet.write_string(row, 5, ticket.owner.fullname)
+      worksheet.write_string(row, 6, ticket.customer.fullname)
+      worksheet.write_string(row, 7, ticket.try(:organization).try(:name))
+      worksheet.write_string(row, 8, ticket.create_article_type.name)
+      worksheet.write_string(row, 9, ticket.create_article_sender.name)
+      worksheet.write_string(row, 10, ticket.tag_list.join(','))
 
-        # Object Manager attributes
-        column = 14
-        # We already queried ObjectManager::Attributes, so we just use objects
-        objects.each do |object|
-          key = object[:name]
-          case object[:data_type]
-          when 'boolean', 'select'
-            value = ticket.send(key.to_sym)
-            if object[:data_option] && object[:data_option]['options'] && object[:data_option]['options'][ticket.send(key.to_sym)]
-              value = object[:data_option]['options'][ticket.send(key.to_sym)]
-            end
-            worksheet.write_string(row, column, value)
-          when 'datetime'
-            worksheet.write_date_time(row, column, time_in_localtime_for_excel(ticket.send(key.to_sym), params[:timezone]), format_time) if ticket.send(key.to_sym).present?
-          when 'date'
-            worksheet.write_date_time(row, column, ticket.send(key.to_sym).to_s, format_date) if ticket.send(key.to_sym).present?
-          when 'integer'
-            worksheet.write_number(row, column, ticket.send(key.to_sym))
-          else
-            # for text, integer and tree select
-            worksheet.write_string(row, column, ticket.send(key.to_sym).to_s)
+      worksheet.write_date_time(row, 11, time_in_localtime_for_excel(ticket.created_at, params[:timezone]), format_time)
+      worksheet.write_date_time(row, 12, time_in_localtime_for_excel(ticket.updated_at, params[:timezone]), format_time)
+      worksheet.write_date_time(row, 13, time_in_localtime_for_excel(ticket.close_at, params[:timezone]), format_time) if ticket.close_at.present?
+
+      # Object Manager attributes
+      column = 14
+      # We already queried ObjectManager::Attributes, so we just use objects
+      objects.each do |object|
+        key = object[:name]
+        case object[:data_type]
+        when 'boolean', 'select'
+          value = ticket.send(key.to_sym)
+          if object[:data_option] && object[:data_option]['options'] && object[:data_option]['options'][ticket.send(key.to_sym)]
+            value = object[:data_option]['options'][ticket.send(key.to_sym)]
           end
-          column += 1
+          worksheet.write_string(row, column, value)
+        when 'datetime'
+          worksheet.write_date_time(row, column, time_in_localtime_for_excel(ticket.send(key.to_sym), params[:timezone]), format_time) if ticket.send(key.to_sym).present?
+        when 'date'
+          worksheet.write_date_time(row, column, ticket.send(key.to_sym).to_s, format_date) if ticket.send(key.to_sym).present?
+        when 'integer'
+          worksheet.write_number(row, column, ticket.send(key.to_sym))
+        else
+          # for text, integer and tree select
+          worksheet.write_string(row, column, ticket.send(key.to_sym).to_s)
         end
-      rescue => e
-        Rails.logger.error "SKIP: #{e.message}"
+        column += 1
       end
+    rescue => e
+      Rails.logger.error "SKIP: #{e.message}"
+
     end
 
     row += 2

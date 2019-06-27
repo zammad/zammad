@@ -10,19 +10,19 @@ class Integration::LdapController < ApplicationController
 
   def discover
     answer_with do
-      begin
-        ldap = ::Ldap.new(params)
 
-        {
-          attributes: ldap.preferences
-        }
-      rescue => e
-        # workaround for issue #1114
-        raise if !e.message.end_with?(', 48, Inappropriate Authentication')
+      ldap = ::Ldap.new(params)
 
-        # return empty result
-        {}
-      end
+      {
+        attributes: ldap.preferences
+      }
+    rescue => e
+      # workaround for issue #1114
+      raise if !e.message.end_with?(', 48, Inappropriate Authentication')
+
+      # return empty result
+      {}
+
     end
   end
 

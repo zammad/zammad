@@ -25,14 +25,14 @@ RSpec.describe NotificationFactory do
         let(:template_path) { Rails.root.to_s + "/app/views/mailer/signup/#{rendered_locale}.html.erb.custom" }
 
         it 'uses that file' do
-          begin
-            File.write(template_path, "Subject\nBody\nbody\n")
 
-            expect(described_class.template_read(read_params))
-              .to eq({ subject: "Subject\n", body: "Body\nbody\n" })
-          ensure
-            File.delete(template_path)
-          end
+          File.write(template_path, "Subject\nBody\nbody\n")
+
+          expect(described_class.template_read(read_params))
+            .to eq({ subject: "Subject\n", body: "Body\nbody\n" })
+        ensure
+          File.delete(template_path)
+
         end
       end
 

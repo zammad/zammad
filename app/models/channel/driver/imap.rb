@@ -127,11 +127,11 @@ example
 
     message_ids = nil
     timeout(6.minutes) do
-      begin
-        message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
-      rescue
-        message_ids = @imap.search(filter)
-      end
+
+      message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
+    rescue
+      message_ids = @imap.search(filter)
+
     end
 
     # check mode only

@@ -7,11 +7,11 @@ class FixedStoreUpgradeRor45 < ActiveRecord::Migration[5.0]
     Cache.clear
     [Macro, Taskbar, Calendar, Trigger, Channel, Job, PostmasterFilter, Report::Profile, Setting, Sla, Template].each do |class_name|
       class_name.all.each do |record|
-        begin
-          record.save!
-        rescue => e
-          Rails.logger.error "Unable to save/update #{class_name}.find(#{record.id}): #{e.message}"
-        end
+
+        record.save!
+      rescue => e
+        Rails.logger.error "Unable to save/update #{class_name}.find(#{record.id}): #{e.message}"
+
       end
     end
 

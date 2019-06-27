@@ -294,17 +294,17 @@ returns
     end
     if title == '-'
       %i[sticker photo document voice].each do |area|
-        begin
-          next if !params[:message]
-          next if !params[:message][area]
-          next if !params[:message][area][:emoji]
 
-          title = params[:message][area][:emoji]
-          break
-        rescue
-          # just go ahead
-          title
-        end
+        next if !params[:message]
+        next if !params[:message][area]
+        next if !params[:message][area][:emoji]
+
+        title = params[:message][area][:emoji]
+        break
+      rescue
+        # just go ahead
+        title
+
       end
     end
     if title.length > 60

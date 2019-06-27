@@ -105,14 +105,14 @@ class TestCase < ActiveSupport::TestCase
 
     # avoid "Cannot read property 'get_Current' of undefined" issues
     (1..5).each do |count|
-      begin
-        local_browser = browser_instance_remote
-        break
-      rescue => e
-        wait_until_ready = rand(5..13)
-        log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready, exception: e })
-        sleep wait_until_ready
-      end
+
+      local_browser = browser_instance_remote
+      break
+    rescue => e
+      wait_until_ready = rand(5..13)
+      log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready, exception: e })
+      sleep wait_until_ready
+
     end
 
     local_browser
@@ -1579,25 +1579,25 @@ wait untill text in selector disabppears
 
     99.times do
       #sleep 0.5
-      begin
-        if instance.find_elements(css: '#navigation .tasks .task:first-child')[0]
-          instance.action.move_to(instance.find_elements(css: '#navigation .tasks .task:first-child')[0]).release.perform
-          click_element = instance.find_elements(css: '#navigation .tasks .task:first-child .js-close')[0]
-          if click_element
-            click_element.click
 
-            # accept task close warning
-            if instance.find_elements(css: '.modal button.js-submit')[0]
-              sleep 0.4
-              instance.find_elements(css: '.modal button.js-submit')[0].click
-            end
+      if instance.find_elements(css: '#navigation .tasks .task:first-child')[0]
+        instance.action.move_to(instance.find_elements(css: '#navigation .tasks .task:first-child')[0]).release.perform
+        click_element = instance.find_elements(css: '#navigation .tasks .task:first-child .js-close')[0]
+        if click_element
+          click_element.click
+
+          # accept task close warning
+          if instance.find_elements(css: '.modal button.js-submit')[0]
+            sleep 0.4
+            instance.find_elements(css: '.modal button.js-submit')[0].click
           end
-        else
-          break
         end
-      rescue
-        # try again
+      else
+        break
       end
+    rescue
+      # try again
+
     end
     assert(true, 'all tasks closed')
   end
@@ -1790,13 +1790,13 @@ wait untill text in selector disabppears
 
     if data[:roles]
       99.times do
-        begin
-          element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
-          break if !element
 
-          element.click
-          sleep 0.1
-        end
+        element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
+        break if !element
+
+        element.click
+        sleep 0.1
+
       end
       data[:roles].each do |role|
         instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")
@@ -1945,13 +1945,13 @@ wait untill text in selector disabppears
     end
     if data[:roles]
       99.times do
-        begin
-          element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
-          break if !element
 
-          element.click
-          sleep 0.1
-        end
+        element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
+        break if !element
+
+        element.click
+        sleep 0.1
+
       end
       data[:roles].each do |role|
         instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")

@@ -12,32 +12,32 @@ module Channel::Filter::Database
       all_matches_ok = true
       min_one_rule_exists = false
       filter[:match].each do |key, meta|
-        begin
-          next if meta.blank? || meta['value'].blank?
 
-          value = mail[ key.downcase.to_sym ]
-          match_rule = meta['value']
-          min_one_rule_exists = true
-          if meta[:operator] == 'contains not'
-            if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
-              all_matches_ok = false
-              Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
-            end
-          elsif meta[:operator] == 'contains'
-            if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
-              all_matches_ok = false
-              Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
-            end
-          else
+        next if meta.blank? || meta['value'].blank?
+
+        value = mail[ key.downcase.to_sym ]
+        match_rule = meta['value']
+        min_one_rule_exists = true
+        if meta[:operator] == 'contains not'
+          if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
             all_matches_ok = false
-            Rails.logger.info "  Invalid operator in match #{meta.inspect}"
+            Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
           end
-          break if !all_matches_ok
-        rescue => e
+        elsif meta[:operator] == 'contains'
+          if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
+            all_matches_ok = false
+            Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
+          end
+        else
           all_matches_ok = false
-          Rails.logger.error "can't use match rule #{match_rule} on #{value}"
-          Rails.logger.error e.inspect
+          Rails.logger.info "  Invalid operator in match #{meta.inspect}"
         end
+        break if !all_matches_ok
+      rescue => e
+        all_matches_ok = false
+        Rails.logger.error "can't use match rule #{match_rule} on #{value}"
+        Rails.logger.error e.inspect
+
       end
 
       next if !min_one_rule_exists

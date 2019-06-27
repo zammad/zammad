@@ -586,14 +586,14 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     mail.parts.each do |part|
-      begin
-        new_attachments = get_attachments(part, attachments, mail).flatten.compact
-        attachments.push(*new_attachments)
-      rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
-        raise e if (fail_count ||= 0).positive?
 
-        (fail_count += 1) && retry
-      end
+      new_attachments = get_attachments(part, attachments, mail).flatten.compact
+      attachments.push(*new_attachments)
+    rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
+      raise e if (fail_count ||= 0).positive?
+
+      (fail_count += 1) && retry
+
     end
 
     attachments
@@ -608,15 +608,15 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     file.header.fields.each do |field|
 
       # full line, encode, ready for storage
-      begin
-        value = field.to_utf8
-        if value.blank?
-          value = field.raw_value
-        end
-        headers_store[field.name.to_s] = value
-      rescue => e
-        headers_store[field.name.to_s] = field.raw_value
+
+      value = field.to_utf8
+      if value.blank?
+        value = field.raw_value
       end
+      headers_store[field.name.to_s] = value
+    rescue => e
+      headers_store[field.name.to_s] = field.raw_value
+
     end
 
     # cleanup content id, <> will be added automatically later

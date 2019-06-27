@@ -1,4 +1,4 @@
-image: registry.znuny.com/docker/zammad-ruby:2.4.4
+image: registry.znuny.com/docker/zammad-ruby:2.5.5
 
 # Global variables added to the ENV of each job
 variables:
@@ -61,7 +61,7 @@ variables:
 
 # Cache gems in between jobs and pipelines
 cache:
-  key: "ruby24"
+  key: "ruby25"
   paths:
     - vendor/ruby
 
