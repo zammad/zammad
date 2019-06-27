@@ -9,7 +9,7 @@ module ApplicationModel::CanLatestChange
 
   get latest updated_at object timestamp
 
-  latest_change = Ticket.latest_change
+  latest_change = object.latest_change
 
 returns
 
@@ -18,13 +18,13 @@ returns
 =end
 
     def latest_change
-      key        = "#{new.class.name}_latest_change"
+      key        = "#{name}_latest_change"
       updated_at = Cache.get(key)
 
       return updated_at if updated_at
 
       # if we do not have it cached, do lookup
-      updated_at = Ticket.order(updated_at: :desc).limit(1).pluck(:updated_at).first
+      updated_at = order(updated_at: :desc).limit(1).pluck(:updated_at).first
 
       return if !updated_at
 
@@ -33,7 +33,7 @@ returns
     end
 
     def latest_change_set(updated_at)
-      key        = "#{new.class.name}_latest_change"
+      key        = "#{name}_latest_change"
       expires_in = 86_400 # 1 day
 
       if updated_at.nil?
