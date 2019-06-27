@@ -281,10 +281,6 @@ returns
     file.provider
   end
 
-  def self.semaphore
-    @semaphore ||= Mutex.new
-  end
-
   private
 
   def image_resize(content, width)
@@ -299,25 +295,19 @@ returns
     temp_file.binmode
     temp_file.write(content)
     temp_file.close
+    image = Rszr::Image.load(temp_file.path)
 
-    temp_file_resize = nil
-    self.class.semaphore.synchronize do
-      image = Rszr::Image.load(temp_file.path)
+    # do not resize image if image is smaller or already same size
+    return if image.width <= width
 
-      # do not resize image if image is smaller or already same size
-      return if image.width <= width
+    # do not resize image if new height is smaller then 7px (images
+    # with small height are usally usefull to resize)
+    ratio = image.width / width
+    return if image.height / ratio <= 6
 
-      # do not resize image if new height is smaller then 7px (images
-      # with small height are usally usefull to resize)
-      ratio = image.width / width
-      return if image.height / ratio <= 6
-
-      image.resize!(width, :auto)
-      temp_file_resize = ::Tempfile.new.path
-      image.save(temp_file_resize)
-      image.send(:handle).finalize!
-    end
-
+    image.resize!(width, :auto)
+    temp_file_resize = ::Tempfile.new.path
+    image.save(temp_file_resize)
     image_resized = ::File.binread(temp_file_resize)
 
     Cache.write(cache_key, image_resized, { expires_in: 6.months })

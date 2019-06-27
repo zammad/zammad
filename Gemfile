@@ -123,7 +123,7 @@ gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm'
 gem 'viewpoint'
 
 # image processing
-gem 'rszr', '0.4.0'
+gem 'rszr', '0.5.2'
 
 # Gems used only for develop/test and not required
 # in production environments by default.

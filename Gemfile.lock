@@ -425,7 +425,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rszr (0.4.0)
+    rszr (0.5.2)
     rubocop (0.67.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -609,7 +609,7 @@ DEPENDENCIES
   rb-fsevent
   rchardet (>= 1.8.0)
   rspec-rails
-  rszr (= 0.4.0)
+  rszr (= 0.5.2)
   rubocop
   rubocop-performance
   rubocop-rspec
