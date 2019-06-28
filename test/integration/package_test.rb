@@ -358,9 +358,9 @@ class PackageTest < ActiveSupport::TestCase
           file.close
         end
         begin
-          success = Package.auto_install()
+          Package.auto_install()
         rescue
-          success = false
+          false
         end
         if test[:zpm]
           File.delete(location )

@@ -92,7 +92,6 @@ class ZendeskImportTest < ActiveSupport::TestCase
     role_agent    = Role.find_by(name: 'Agent')
     role_customer = Role.find_by(name: 'Customer')
 
-    group_users            = Group.find_by(name: 'Users')
     group_support          = Group.find_by(name: 'Support')
     group_additional_group = Group.find_by(name: 'Additional Group')
 

@@ -315,7 +315,7 @@ class AgentTicketAttachmentTest < TestCase
     )
     tasks_close_all()
 
-    ticket1 = ticket_create(
+    ticket_create(
       data:          {
         customer: 'Nico',
         group:    'Users',

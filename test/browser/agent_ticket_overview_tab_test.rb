@@ -21,7 +21,7 @@ class AgentTicketOverviewTabTest < TestCase
         body:     "overview tab test #1 - #{title}",
       }
     )
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -29,7 +29,7 @@ class AgentTicketOverviewTabTest < TestCase
         body:     "overview tab test #2 - #{title}",
       }
     )
-    ticket3 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

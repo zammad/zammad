@@ -15,7 +15,7 @@ module Import
           properties  = @resource.get_all_properties!
           result      = normalize(properties)
           flattened   = flatten(result)
-          booleanized = booleanize_values(flattened)
+          booleanize_values(flattened)
         end
       end
 

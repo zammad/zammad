@@ -768,7 +768,7 @@ class TestCase < ActiveSupport::TestCase
           instance.action.send_keys(key).perform
         end
       end
-    rescue => e
+    rescue
       sleep 0.5
 
       # just try again
@@ -4265,7 +4265,7 @@ wait untill text in selector disabppears
     )
     sleep 4
 
-    r = instance.execute_script("$(\".content.active #c-#{data[:object]} td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
+    instance.execute_script("$(\".content.active #c-#{data[:object]} td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
   end
 
 =begin

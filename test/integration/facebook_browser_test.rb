@@ -34,8 +34,6 @@ class FacebookBrowserTest < TestCase
       raise "ERROR: Need FACEBOOK_BT_CUSTOMER - hint FACEBOOK_BT_CUSTOMER='name:1234:access_token'"
     end
 
-    customer_name = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[0]
-    customer_id = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[1]
     customer_access_token = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[2]
 
     @browser = browser_instance
@@ -201,7 +199,7 @@ class FacebookBrowserTest < TestCase
     hash = "##{rand(999_999)}"
     customer_client = Koala::Facebook::API.new(customer_access_token)
     message         = "I need some help for your product #{hash}"
-    post            = customer_client.put_wall_post(message, {}, page_id)
+    customer_client.put_wall_post(message, {}, page_id)
 
     watch_for(
       css:     '.content.active',

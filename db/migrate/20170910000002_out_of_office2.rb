@@ -22,7 +22,6 @@ class OutOfOffice2 < ActiveRecord::Migration[4.2]
     end
 
     role_ids = Role.with_permissions(['ticket.agent']).map(&:id)
-    overview_role = Role.find_by(name: 'Agent')
     Overview.create_or_update(
       name:          'My replacement Tickets',
       link:          'my_replacement_tickets',

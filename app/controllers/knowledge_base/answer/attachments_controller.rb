@@ -9,7 +9,7 @@ class KnowledgeBase::Answer::AttachmentsController < ApplicationController
   def create
     file = params[:file]
 
-    store = Store.add(
+    Store.add(
       object:      @answer.class.name,
       o_id:        @answer.id,
       data:        file.read,

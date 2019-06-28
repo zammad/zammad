@@ -11,7 +11,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does add new ticket text object' do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # token based on headers
       params = {
@@ -59,7 +58,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does add new ticket text object - no default' do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # token based on headers
       params = {
@@ -113,7 +111,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       authenticated_as(admin_user)
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # parameters for updating
       params = {
@@ -162,7 +159,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does add new ticket boolean object' do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # token based on headers
       params = {
@@ -211,7 +207,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does add new user select object' do
       authenticated_as(admin_user)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # token based on headers
       params = {
@@ -277,7 +272,6 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(migration).to eq(true)
 
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
-      token = response.headers['CSRF-TOKEN']
 
       # parameters for updating
       params = {
@@ -441,7 +435,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does ticket attributes cannot be removed when it is referenced by an overview (03)', db_strategy: :reset do
 
       # 1. create a new ticket attribute and execute migration
-      migration = ObjectManager::Attribute.migration_execute
+      ObjectManager::Attribute.migration_execute
 
       params = {
         'name':        'test_attribute_referenced_by_an_overview',
@@ -536,7 +530,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does ticket attributes cannot be removed when it is referenced by a trigger (04)', db_strategy: :reset do
 
       # 1. create a new ticket attribute and execute migration
-      migration = ObjectManager::Attribute.migration_execute
+      ObjectManager::Attribute.migration_execute
 
       params = {
         'name':        'test_attribute_referenced_by_a_trigger',
@@ -622,7 +616,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does ticket attributes cannot be removed when it is referenced by a scheduler (05)', db_strategy: :reset do
 
       # 1. create a new ticket attribute and execute migration
-      migration = ObjectManager::Attribute.migration_execute
+      ObjectManager::Attribute.migration_execute
 
       params = {
         'name':        'test_attribute_referenced_by_a_scheduler',
@@ -755,7 +749,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does ticket attributes can be removed when it is referenced by an overview but by user object (06)', db_strategy: :reset do
 
       # 1. create a new ticket attribute and execute migration
-      migration = ObjectManager::Attribute.migration_execute
+      ObjectManager::Attribute.migration_execute
 
       params = {
         'name':        'test_attribute_referenced_by_an_overview',

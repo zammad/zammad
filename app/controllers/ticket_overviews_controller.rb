@@ -10,7 +10,6 @@ class TicketOverviewsController < ApplicationController
       index_and_lists = Ticket::Overviews.index(current_user)
       indexes = []
       index_and_lists.each do |index|
-        assets = {}
         overview = Overview.lookup(id: index[:overview][:id])
         meta = {
           name:  overview.name,

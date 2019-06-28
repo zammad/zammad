@@ -11,7 +11,6 @@ RSpec.describe 'Twilio SMS', type: :request do
     it 'does basic call' do
 
       # configure twilio channel
-      bot_id = 123_456_789
       group_id = Group.find_by(name: 'Users').id
 
       UserInfo.current_user_id = 1
@@ -179,11 +178,8 @@ RSpec.describe 'Twilio SMS', type: :request do
       Observer::Transaction.commit
       Scheduler.worker(true)
 
-      # configure twilio channel
-      bot_id = 123_456_789
-
       UserInfo.current_user_id = 1
-      channel = create(
+      create(
         :channel,
         area:    'Sms::Account',
         options: {

@@ -41,7 +41,7 @@ class ApplicationChannelController < ApplicationController
   end
 
   def channel_params
-    params = params.permit!.to_s
+    params.permit!.to_s
   end
 
 end

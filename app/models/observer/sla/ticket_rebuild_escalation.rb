@@ -25,7 +25,6 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
 
     # check if condition has changed
     changed = false
-    fields_to_check = nil
     fields_to_check = if record.class == Sla
                         %w[condition calendar_id first_response_time update_time solution_time]
                       else

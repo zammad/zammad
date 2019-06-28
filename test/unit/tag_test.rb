@@ -150,7 +150,6 @@ class TagTest < ActiveSupport::TestCase
 
     # delete tags
     tests.each do |test|
-      tags = nil
       tags = test[:tag_add] || test[:tag_remove]
       success = Tag.tag_remove(tags)
       assert(success, 'Tag.tag_remove successful')

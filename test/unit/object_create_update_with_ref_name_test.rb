@@ -74,7 +74,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
   end
 
   test 'user' do
-    org1 = Organization.create_if_not_exists_with_ref(
+    Organization.create_if_not_exists_with_ref(
       name:          'some org update_with_ref user',
       updated_by_id: 1,
       created_by_id: 1,

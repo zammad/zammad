@@ -9,7 +9,6 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
 
     # build subject
     ticket = Ticket.lookup(id: record.ticket_id)
-    article_count = Ticket::Article.where(ticket_id: ticket.id).count
 
     subject_prefix_mode = record.preferences[:subtype]
 

@@ -13,7 +13,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     tasks_close_all()
 
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -98,7 +98,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
   end
 
   def test_full_quote
-    @browser = instance = browser_instance
+    @browser = browser_instance
     login(
       username: 'master@example.com',
       password: 'test',
@@ -174,7 +174,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
   # Regression test for issue #2344 - Missing translation for Full-Quote-Text "on xy wrote"
   def test_full_quote_german_locale
-    @browser = instance = browser_instance
+    @browser = browser_instance
     login(
       username: 'master@example.com',
       password: 'test',

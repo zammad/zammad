@@ -257,7 +257,6 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_truthy
-      token = json_response['token']
       expect(json_response['error']).to be_falsey
 
     end

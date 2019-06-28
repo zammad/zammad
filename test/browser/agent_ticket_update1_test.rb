@@ -29,7 +29,7 @@ class AgentTicketUpdate1Test < TestCase
     sleep 1
 
     # confirm on zoom
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

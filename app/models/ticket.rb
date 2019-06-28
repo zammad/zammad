@@ -197,7 +197,7 @@ returns
     tickets.each do |ticket|
 
       # get sla
-      sla = ticket.escalation_calculation_get_sla
+      ticket.escalation_calculation_get_sla
 
       article_id = nil
       article = Ticket::Article.last_customer_agent_article(ticket.id)
@@ -1129,10 +1129,8 @@ perform active triggers on ticket
           return [true, message]
         end
 
-        local_send_notification = true
         if article && send_notification == false && trigger.perform['notification.email'] && trigger.perform['notification.email']['recipient']
           recipient = trigger.perform['notification.email']['recipient']
-          local_send_notification = false
           local_options[:send_notification] = false
           if recipient.include?('ticket_customer') || recipient.include?('article_last_sender')
             logger.info { "Skip trigger (#{trigger.name}/#{trigger.id}) because sender do not want to get auto responder for object (Ticket/#{ticket.id}/Article/#{article.id})" }
@@ -1576,7 +1574,7 @@ result
     ).render.html2text.tr(' ', ' ') # convert non-breaking space to simple space
 
     # attributes content_type is not needed for SMS
-    article = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     id,
       subject:       'SMS notification',
       to:            sms_recipients_to,

@@ -80,7 +80,7 @@ class AdminObjectManagerTest < TestCase
     )
 
     # create new ticket
-    ticket = ticket_create(
+    ticket_create(
       data:                {
         customer: 'nico',
         group:    'Users',
@@ -283,7 +283,7 @@ class AdminObjectManagerTest < TestCase
     )
 
     # create new ticket
-    ticket = ticket_create(
+    ticket_create(
       data:                {
         customer: 'nico',
         group:    'Users',
@@ -696,7 +696,7 @@ class AdminObjectManagerTest < TestCase
     )
     object_manager_attribute_migrate
 
-    ticket = ticket_create(
+    ticket_create(
       data:                {
         customer: 'nico',
         group:    'Users',

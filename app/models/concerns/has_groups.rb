@@ -248,7 +248,7 @@ module HasGroups
     return if group_access_buffer.nil?
 
     yield
-    group_access_buffer = nil
+    self.group_access_buffer = nil
     cache_delete
   end
 

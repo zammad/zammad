@@ -49,7 +49,7 @@ class KnowledgeBase::Answer < ApplicationModel
     end
 
     data = ApplicationModel::CanAssets.reduce(siblings, data)
-    data = ApplicationModel::CanAssets.reduce(translations, data)
+    ApplicationModel::CanAssets.reduce(translations, data)
   end
 
   attachments_cleanup!

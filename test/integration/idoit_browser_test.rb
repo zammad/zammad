@@ -20,7 +20,6 @@ class IntegrationIdoitTest < TestCase
 
     api_category = ENV['IDOIT_API_CATEGORY']
 
-    id = rand(99_999_999)
     @browser = browser_instance
     login(
       username:    'master@example.com',
@@ -55,7 +54,7 @@ class IntegrationIdoitTest < TestCase
     )
 
     # new create a new ticket with an i-doit object
-    ticket = ticket_create(
+    ticket_create(
       data:          {
         customer: 'nico',
         group:    'Users',
@@ -115,7 +114,7 @@ class IntegrationIdoitTest < TestCase
     tasks_close_all()
 
     # new create a new ticket with an i-doit object
-    ticket = ticket_create(
+    ticket_create(
       data:          {
         customer: 'nico',
         group:    'Users',

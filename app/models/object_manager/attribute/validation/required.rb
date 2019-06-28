@@ -22,7 +22,7 @@ class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute:
   end
 
   def user_id
-    user_id ||= UserInfo.current_user_id
+    @user_id ||= UserInfo.current_user_id
   end
 
   def user

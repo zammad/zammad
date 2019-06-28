@@ -287,7 +287,6 @@ returns
     local_sha = Digest::SHA256.hexdigest(content)
 
     cache_key = "image-resize-#{local_sha}_#{width}"
-    all = nil
     image = Cache.get(cache_key)
     return image if image
 

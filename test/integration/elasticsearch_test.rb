@@ -23,7 +23,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    group_without_access = Group.create_if_not_exists(
+    Group.create_if_not_exists(
       name:          'WithoutAccess',
       note:          'Test for not access check.',
       updated_by_id: 1,
@@ -253,7 +253,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article2 = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket2.id,
       from:          'some_sender@example.org',
       to:            'some_recipient@example.org',
@@ -279,7 +279,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article3 = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket3.id,
       from:          'some_sender@example.org',
       to:            'some_recipient@example.org',

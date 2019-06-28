@@ -13,7 +13,7 @@ class AgentTicketOnlineNotificationTest < TestCase
     tasks_close_all()
 
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -66,7 +66,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       no_quote: true,
     )
 
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -92,7 +92,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       css:     '.js-mark.hide',
     )
 
-    ticket3 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -138,7 +138,7 @@ class AgentTicketOnlineNotificationTest < TestCase
     items = browser2.find_elements(css: '.js-notificationsContainer .js-item.is-inactive')
     assert_equal(1, items.count)
 
-    ticket4 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -179,7 +179,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       no_quote: true,
     )
 
-    ticket5 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -260,7 +260,7 @@ class AgentTicketOnlineNotificationTest < TestCase
     )
     online_notitifcation_close_all(browser: browser2)
 
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -268,7 +268,7 @@ class AgentTicketOnlineNotificationTest < TestCase
         body:     'online notification render #1',
       },
     )
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -301,7 +301,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       css:     '.js-notificationsContainer .js-items .js-item:nth-child(2) .activity-text',
       value:   'render test 1',
     )
-    ticket3 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

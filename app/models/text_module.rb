@@ -100,7 +100,7 @@ push text_modules to online
 
     # set new translator_key if given
     if result.data['translator_key']
-      translator_key = Setting.set('translator_key', result.data['translator_key'])
+      Setting.set('translator_key', result.data['translator_key'])
     end
 
     true

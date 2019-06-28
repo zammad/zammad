@@ -1951,7 +1951,6 @@ RSpec.describe 'Ticket', type: :request do
 
     it 'does ticket search sorted (08.01)' do
       title = "ticket pagination #{rand(999_999_999)}"
-      tickets = []
 
       ticket1 = create(
         :ticket,

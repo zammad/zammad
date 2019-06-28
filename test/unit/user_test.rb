@@ -1026,8 +1026,8 @@ class UserTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    roles = Role.where(name: 'Agent')
+    User.create_or_update(
       login:         "agent-default-vaild_agent_group_permission-1#{name}@example.com",
       firstname:     'vaild_agent_group_permission-1',
       lastname:      "Agent#{name}",

@@ -505,8 +505,6 @@ execute all pending package migrations at once
 
       return true if !File.exist?(location)
 
-      migrations_done = Package::Migration.where(name: package.underscore)
-
       # get existing migrations
       migrations_existing = []
       Dir.foreach(location) do |entry|

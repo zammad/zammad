@@ -16,7 +16,6 @@ class ActiveSupport::TestCase
                                                                    SimpleCov::Formatter::RcovFormatter,
                                                                    Coveralls::SimpleCov::Formatter
                                                                  ])
-  merge_timeout = 3600
   SimpleCov.start
   fixtures :all
 end

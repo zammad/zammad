@@ -34,7 +34,7 @@ Your faithful employee,
 Monit
 "
 
-    ticket_0, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_0, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_0.state.name)
     assert(ticket_0.preferences)
     assert(ticket_0.preferences['monit'])
@@ -64,7 +64,7 @@ Action done Service php-fpm
 Your faithful employee,
 Monit"
 
-    ticket_0_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_0_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('closed', ticket_0_1.state.name)
     assert(ticket_0_1.preferences)
     assert(ticket_0_1.preferences['monit'])
@@ -97,7 +97,7 @@ P] -- HTTP: Error receiving data -- Resource temporarily unavailable
 Your faithful employee,
 Monit"
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['monit'])
@@ -127,7 +127,7 @@ Connection succeeded Service host.example=20
 Your faithful employee,
 Monit"
 
-    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('closed', ticket_1_1.state.name)
     assert(ticket_1_1.preferences)
     assert(ticket_1_1.preferences['monit'])
@@ -160,7 +160,7 @@ Resource limit matched Service web5.example.net=20
 Your faithful employee,
 Monit"
 
-    ticket_2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_2.state.name)
     assert(ticket_2.preferences)
     assert(ticket_2.preferences['monit'])
@@ -190,7 +190,7 @@ Resource limit succeeded Service web5.example.net=20
 Your faithful employee,
 Monit"
 
-    ticket_2_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_2_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('closed', ticket_2_1.state.name)
     assert(ticket_2_1.preferences)
     assert(ticket_2_1.preferences['monit'])

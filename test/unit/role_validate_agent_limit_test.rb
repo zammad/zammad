@@ -178,7 +178,7 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     user1.role_ids = [Role.find_by(name: 'Agent').id, role_agent_limit1.id, role_agent_limit2.id]
 
     assert_raises(Exceptions::UnprocessableEntity) do
-      user2 = User.create!(
+      User.create!(
         firstname: 'Firstname2',
         lastname:  'Lastname2',
         email:     'some-agentlimit-role-2@example.com',
@@ -193,7 +193,7 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     current_agent_max = User.with_permissions('ticket.agent').count + 1
     Setting.set('system_agent_limit', current_agent_max)
 
-    user3 = User.create!(
+    User.create!(
       firstname: 'Firstname',
       lastname:  'Lastname',
       email:     'some-agentlimit-role-3@example.com',

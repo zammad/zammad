@@ -8,8 +8,6 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::ResetPrimaryKeySequence, 
 
     expect(DbHelper).to receive(:import_post).with(model_class.table_name)
 
-    provided = process(
-      model_class: model_class,
-    )
+    process(model_class: model_class)
   end
 end

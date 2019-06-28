@@ -25,8 +25,7 @@ returns
       attr.transform_keys!(&:to_sym).slice!(*lookup_keys)
       raise ArgumentError, "Valid lookup attribute required (#{lookup_keys.join(', ')})" if attr.empty?
 
-      record   = cache_get(attr.values.first)
-      record ||= find_and_save_to_cache_by(attr)
+      cache_get(attr.values.first) || find_and_save_to_cache_by(attr)
     end
 
 =begin

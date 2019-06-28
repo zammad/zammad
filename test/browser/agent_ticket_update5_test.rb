@@ -12,7 +12,7 @@ class AgentTicketUpdate5Test < TestCase
 
     # create ticket
 
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'Nico',
         group:    'Users',

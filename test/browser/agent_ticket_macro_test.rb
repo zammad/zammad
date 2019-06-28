@@ -101,7 +101,7 @@ class AgentTicketMacroTest < TestCase
       ux_flow_next_up: ux_flow_next_up,
     )
 
-    ticket = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

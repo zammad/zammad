@@ -6,10 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 43
-Lint/UselessAssignment:
-  Enabled: false
-
 # # Offense count: 17 (Competes with same override in .rubocop_todo.yml)
 # Metrics/AbcSize:
 #   Max: 24

@@ -20,11 +20,6 @@ returns
     params = params_origin.dup
     ticket_state_ids = ticket_ids
 
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
-
     result = []
     if params[:interval] == 'month'
       stop_interval = 12

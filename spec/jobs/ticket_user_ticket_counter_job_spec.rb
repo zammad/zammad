@@ -4,13 +4,15 @@ RSpec.describe TicketUserTicketCounterJob, type: :job do
 
   let!(:customer) { create(:user) }
 
-  let!(:tickets) do
-    ticket_states = {
+  let!(:ticket_states) do
+    {
       open:   Ticket::State.by_category(:open).first,
       closed: Ticket::State.by_category(:closed).first,
     }
+  end
 
-    tickets = {
+  let!(:tickets) do
+    {
       open:   [
         create(:ticket, state_id: ticket_states[:open].id, customer_id: customer.id),
         create(:ticket, state_id: ticket_states[:open].id, customer_id: customer.id),

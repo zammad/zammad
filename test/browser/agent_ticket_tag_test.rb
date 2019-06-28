@@ -11,7 +11,7 @@ class AgentTicketTagTest < TestCase
     tasks_close_all()
 
     # set tag (by tab)
-    ticket1 = ticket_create(
+    ticket_create(
       data:          {
         customer: 'nico',
         group:    'Users',
@@ -51,7 +51,7 @@ class AgentTicketTagTest < TestCase
     )
 
     # set tag (by blur)
-    ticket2 = ticket_create(
+    ticket_create(
       data:          {
         customer: 'nico',
         group:    'Users',
@@ -398,7 +398,7 @@ class AgentTicketTagTest < TestCase
     click(css: '.content.active .js-create .js-submit')
 
     # set tag (by tab)
-    ticket1 = ticket_create(
+    ticket_create(
       data:          {
         customer: 'nico',
         group:    'Users',
@@ -456,7 +456,7 @@ class AgentTicketTagTest < TestCase
     )
 
     # new ticket with tags in zoom
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

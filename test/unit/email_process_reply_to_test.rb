@@ -12,7 +12,7 @@ Reply-To: replay_to_customer_process1@example.com
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email)
     assert_equal('Customer', article_p.sender.name)
     assert_equal('email', article_p.type.name)
     assert_equal('Bob Smith <marketing_tool@example.com>', article_p.from)
@@ -38,7 +38,7 @@ Reply-To: replay_to_customer_process2@example.com
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email)
     assert_equal('replay_to_customer_process2@example.com', article_p.from)
     assert_equal('replay_to_customer_process2@example.com', article_p.reply_to)
     assert_equal('replay_to_customer_process2@example.com', ticket_p.customer.email)
@@ -52,7 +52,7 @@ Reply-To: Some Name <replay_to_customer_process2-1@example.com>
 
 Some Text"
 
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email)
     assert_equal('Customer', article_p.sender.name)
     assert_equal('email', article_p.type.name)
     assert_equal('Some Name <replay_to_customer_process2-1@example.com>', article_p.from)
@@ -78,7 +78,7 @@ Reply-To: replay_to_customer_process3@example.com
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email)
     assert_equal('replay_to_customer_process3@example.com', article_p.from)
     assert_equal('replay_to_customer_process3@example.com', article_p.reply_to)
     assert_equal('replay_to_customer_process3@example.com', ticket_p.customer.email)
@@ -98,7 +98,7 @@ Reply-To: Some Name <replay_to_customer_process3-1@example.com>
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email)
     assert_equal('Customer', article_p.sender.name)
     assert_equal('email', article_p.type.name)
     assert_equal('Some Name <replay_to_customer_process3-1@example.com>', article_p.from)
@@ -133,7 +133,7 @@ Reply-To: replay_to_customer_process2@example.com
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+    ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email)
     assert_equal('Customer', article_p.sender.name)
     assert_equal('email', article_p.type.name)
     assert_equal('replay_to_customer_process2@example.com', article_p.from)

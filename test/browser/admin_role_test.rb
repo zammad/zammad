@@ -2,8 +2,6 @@ require 'browser_test_helper'
 
 class AdminRoleTest < TestCase
   def test_role_device
-    name = "some role #{rand(99_999_999)}"
-
     @browser = browser_instance
     login(
       username: 'master@example.com',

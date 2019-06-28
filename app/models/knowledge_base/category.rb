@@ -50,7 +50,7 @@ class KnowledgeBase::Category < ApplicationModel
     data = ApplicationModel::CanAssets.reduce(translations, data)
 
     # include parent category or KB for root to have full path
-    data = (parent || knowledge_base).assets(data)
+    (parent || knowledge_base).assets(data)
   end
 
   def self_parent?(candidate)

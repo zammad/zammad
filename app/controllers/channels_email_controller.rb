@@ -171,7 +171,7 @@ class ChannelsEmailController < ApplicationController
         channel_id: channel.id,
       )
     else
-      address = EmailAddress.create(
+      EmailAddress.create(
         realname:   params[:meta][:realname],
         email:      email,
         active:     true,

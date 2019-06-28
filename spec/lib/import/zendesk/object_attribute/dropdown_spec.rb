@@ -67,6 +67,6 @@ RSpec.describe Import::Zendesk::ObjectAttribute::Dropdown do
     expect(ObjectManager::Attribute).to receive(:add).with(expected_structure)
     expect(ObjectManager::Attribute).to receive(:migration_execute)
 
-    created_instance = described_class.new('Ticket', 'example_field', attribute)
+    described_class.new('Ticket', 'example_field', attribute)
   end
 end

@@ -20,7 +20,7 @@ namespace :zammad do
             port
           ]
 
-          stdout, stderr, status = Open3.capture3(*command)
+          _stdout, stderr, status = Open3.capture3(*command)
 
           next if status.success?
 

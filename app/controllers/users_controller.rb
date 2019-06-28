@@ -380,7 +380,7 @@ class UsersController < ApplicationController
 
     query = params[:query]
     if query.respond_to?(:permit!)
-      query = query.permit!.to_h
+      query.permit!.to_h
     end
 
     query = params[:query] || params[:term]
@@ -543,7 +543,7 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
     #  return
     #end
 
-    token = Token.create(action: 'Signup', user_id: user.id)
+    Token.create(action: 'Signup', user_id: user.id)
 
     result = User.signup_new_token(user)
     if result && result[:token]

@@ -110,7 +110,7 @@ Subject: some value 123
 
 Some Text"
 
-      ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
+      ticket_p, _article_p, user_p, _mail = Channel::EmailParser.new.process({}, email)
       ticket_p.reload
       expect(ticket_p.escalation_at).to be_truthy
       expect(ticket_p.first_response_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)

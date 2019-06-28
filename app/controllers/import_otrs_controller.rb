@@ -123,7 +123,7 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_check
-    statistic = Import::OTRS::Requester.list
+    Import::OTRS::Requester.list
     issues = []
 
     # check count of dynamic fields

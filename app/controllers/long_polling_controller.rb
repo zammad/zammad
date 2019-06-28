@@ -89,7 +89,7 @@ class LongPollingController < ApplicationController
           return
         end
       end
-    rescue => e
+    rescue
       raise Exceptions::UnprocessableEntity, 'Invalid client_id in receive loop!'
     end
   end

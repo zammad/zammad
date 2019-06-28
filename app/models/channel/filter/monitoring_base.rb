@@ -80,9 +80,6 @@ class Channel::Filter::MonitoringBase
                         end
     end
 
-    # check if ticket with host is open
-    customer = User.lookup(id: session_user_id)
-
     # follow up detection by meta data
     open_states = Ticket::State.by_category(:open)
     ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)

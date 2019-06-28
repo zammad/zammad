@@ -90,7 +90,7 @@ push translations to online
 
     # set new translator_key if given
     if result.data['translator_key']
-      translator_key = Setting.set('translator_key', result.data['translator_key'])
+      Setting.set('translator_key', result.data['translator_key'])
     end
 
     true
@@ -147,7 +147,6 @@ get list of translations
                      Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
                    end
     translations.each do |item|
-      translation_item = []
       translation_item = if admin
                            [
                              item.id,
@@ -405,7 +404,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
       col_sep: ',',
     }
     rows = ::CSV.parse(content, params)
-    header = rows.shift
+    rows.shift  # remove header
 
     translation_raw = []
     rows.each do |row|

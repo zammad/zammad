@@ -35,7 +35,7 @@ class Sequencer
           # per request
           def update_ticket_count
             update_import_job
-            previous_page = next_page
+            next_page
           end
 
           attr_accessor :previous_page

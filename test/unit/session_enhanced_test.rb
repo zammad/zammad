@@ -150,7 +150,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     travel 10.seconds
-    client_ids = Sessions.destroy_idle_sessions(2)
+    Sessions.destroy_idle_sessions(2)
     travel 2.seconds
 
     # check client sessions
@@ -303,7 +303,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     travel 10.seconds
-    client_ids = Sessions.destroy_idle_sessions(2)
+    Sessions.destroy_idle_sessions(2)
     travel 2.seconds
 
     # check client sessions

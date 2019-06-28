@@ -193,7 +193,6 @@ satinize html string based on whiltelist
         end
       end
 
-      new_string = ''
       done = true
       while done
         new_string = Loofah.fragment(string).scrub!(scrubber_wipe).to_s
@@ -205,7 +204,7 @@ satinize html string based on whiltelist
 
       Loofah.fragment(string).scrub!(scrubber_link).to_s
     end
-  rescue Timeout::Error => e
+  rescue Timeout::Error
     UNPROCESSABLE_HTML_MSG
   end
 
@@ -237,7 +236,7 @@ cleanup html string:
       string = cleanup_structure(string)
       string
     end
-  rescue Timeout::Error => e
+  rescue Timeout::Error
     UNPROCESSABLE_HTML_MSG
   end
 
@@ -302,7 +301,6 @@ cleanup html string:
       end
     end
 
-    new_string = ''
     done = true
     while done
       new_string = Loofah.fragment(string).scrub!(scrubber_structure).to_s

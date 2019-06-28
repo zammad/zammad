@@ -20,7 +20,6 @@ class Stats::TicketEscalation
     ).count
 
     average = '-'
-    state = 'supergood'
     state = if own_escalated.zero?
               'supergood'
             elsif own_escalated <= 1

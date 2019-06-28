@@ -52,7 +52,6 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
       # calendars
       assets = {}
-      calendar_ids = []
       Calendar.all.each do |calendar|
         assets = calendar.assets(assets)
       end

@@ -5,7 +5,7 @@ module Import
 
       def initialize(article)
         import(article)
-      rescue Exceptions::UnprocessableEntity => e
+      rescue Exceptions::UnprocessableEntity
         log "ERROR: Can't extract customer from Article #{article[:id]}"
       end
 

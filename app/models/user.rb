@@ -441,7 +441,6 @@ returns
 
   def permissions?(key)
     keys = key
-    names = []
     if key.class == String
       keys = [key]
     end
@@ -715,8 +714,14 @@ returns
 
   def merge(user_id_of_duplicate_user)
 
-    # find email addresses and move them to primary user
-    duplicate_user = User.find(user_id_of_duplicate_user)
+    # Raise an exception if the user is not found (?)
+    #
+    # (This line used to contain a useless variable assignment,
+    # and was changed to satisfy the linter.
+    # We're not certain of its original intention,
+    # so the User.find call has been kept
+    # to prevent any unexpected regressions.)
+    User.find(user_id_of_duplicate_user)
 
     # merge missing attibutes
     Models.merge('User', id, user_id_of_duplicate_user)

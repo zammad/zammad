@@ -267,7 +267,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article1 = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',

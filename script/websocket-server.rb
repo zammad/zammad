@@ -64,7 +64,6 @@ before_fork
   i: "#{dir}/tmp/pids/websocket.pid"
 }
 
-tls_options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: websocket-server.rb start|stop [options]'
 

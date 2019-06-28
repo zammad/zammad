@@ -72,7 +72,6 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     # push overview index
     indexes = []
     index_and_lists.each do |index|
-      assets = {}
       overview = Overview.lookup(id: index[:overview][:id])
       next if !overview
 

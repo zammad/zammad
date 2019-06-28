@@ -155,7 +155,7 @@ class ExternalCredential::Twitter
     # verify if webhook is already registered
     begin
       webhooks = client.webhooks_by_env_name(env_name)
-    rescue => e
+    rescue
       begin
         webhooks = client.webhooks
         raise "Unable to get list of webooks. You use the wrong 'Dev environment label', only #{webhooks.inspect} available."

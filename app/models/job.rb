@@ -135,7 +135,7 @@ job.run(true)
   end
 
   def matching_count
-    ticket_count, tickets = Ticket.selectors(condition, limit: 1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 1)
     ticket_count || 0
   end
 

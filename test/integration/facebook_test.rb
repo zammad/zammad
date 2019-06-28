@@ -37,7 +37,6 @@ class FacebookTest < ActiveSupport::TestCase
   end
 
   customer_name = ENV['FACEBOOK_CUSTOMER'].split(':')[0]
-  customer_id = ENV['FACEBOOK_CUSTOMER'].split(':')[1]
   customer_access_token = ENV['FACEBOOK_CUSTOMER'].split(':')[2]
 
   provider_options = {

@@ -217,7 +217,6 @@ class Observer::Transaction < ActiveRecord::Observer
     # do not send anything if nothing has changed
     return true if real_changes.blank?
 
-    changed_by_id = nil
     changed_by_id = if record.respond_to?('updated_by_id')
                       record.updated_by_id
                     else

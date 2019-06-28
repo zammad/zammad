@@ -23,7 +23,7 @@ class Service::GeoLocation::Gmaps
 
     lat = result['results'].first['geometry']['location']['lat']
     lng = result['results'].first['geometry']['location']['lng']
-    latlng = [lat, lng]
+    [lat, lng]
   end
 
   def self.reverse_geocode(lat, lng)

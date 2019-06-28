@@ -37,7 +37,7 @@ class Sequencer
                 def mandatory_missing?
                   values = attribute_value.fetch_values(*mandatory)
                   values.none?(&:present?)
-                rescue KeyError => e
+                rescue KeyError
                   false
                 end
               end

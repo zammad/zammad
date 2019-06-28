@@ -345,10 +345,6 @@ class TwitterSync
 
     # import tweet
     to = nil
-    from = nil
-    article_type = nil
-    in_reply_to = nil
-    twitter_preferences = {}
     raise "Unknown tweet type '#{tweet.class}'" if tweet.class != Twitter::Tweet
 
     article_type = 'twitter status'
@@ -504,7 +500,6 @@ create a tweet ot direct message from an article
 
   def get_state(channel, tweet, ticket = nil)
 
-    user_id = nil
     user_id = if tweet.is_a?(Hash)
                 if tweet['user'] && tweet['user']['id']
                   tweet['user']['id']

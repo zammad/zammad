@@ -40,7 +40,7 @@ class Channel::Driver::Sms::Twilio
     # find sender
     user = User.where(mobile: attr[:From]).order(:updated_at).first
     if !user
-      from_comment, preferences = Cti::CallerId.get_comment_preferences(attr[:From], 'from')
+      _from_comment, preferences = Cti::CallerId.get_comment_preferences(attr[:From], 'from')
       if preferences && preferences['from'] && preferences['from'][0]
         if preferences['from'][0]['level'] == 'known' && preferences['from'][0]['object'] == 'User'
           user = User.find_by(id: preferences['from'][0]['o_id'])

@@ -11,7 +11,7 @@ class UserSwitchCache < TestCase
       url:      browser_url,
     )
     tasks_close_all()
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

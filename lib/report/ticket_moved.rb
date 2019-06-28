@@ -26,11 +26,6 @@ returns
       return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     end
 
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
-
     result = []
     if params[:interval] == 'month'
       stop_interval = 12
@@ -113,7 +108,6 @@ returns
       }
     end
     local_params = group_attributes(selector, params)
-    local_selector = params[:selector].clone
     without_merged_tickets = {
       'ticket_state.name' => {
         'operator' => 'is not',

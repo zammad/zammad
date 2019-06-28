@@ -12,7 +12,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
         without_foreign_key(:online_notifications, column: :user_id)
 
         create(:online_notification, user_id: 1337)
-        valid = create(:online_notification, user_id: existing_user_id)
+        create(:online_notification, user_id: existing_user_id)
 
         expect do
           migrate
@@ -24,7 +24,7 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
         without_foreign_key(:recent_views, column: :created_by_id)
 
         create(:recent_view, created_by_id: 1337)
-        valid = create(:recent_view, created_by_id: existing_user_id)
+        create(:recent_view, created_by_id: existing_user_id)
 
         expect do
           migrate
@@ -35,8 +35,8 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
         without_foreign_key(:online_notifications, column: :user_id)
 
         create(:avatar, object_lookup_id: ObjectLookup.by_name('User'), o_id: 1337)
-        valid_ticket = create(:avatar, object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: 1337)
-        valid_user   = create(:avatar, object_lookup_id: ObjectLookup.by_name('User'), o_id: existing_user_id)
+        create(:avatar, object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: 1337)
+        create(:avatar, object_lookup_id: ObjectLookup.by_name('User'), o_id: existing_user_id)
 
         expect do
           migrate

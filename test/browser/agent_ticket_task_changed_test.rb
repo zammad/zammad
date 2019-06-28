@@ -12,7 +12,7 @@ class AgentTicketTaskChangedTest < TestCase
     )
     tasks_close_all()
 
-    ticket = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

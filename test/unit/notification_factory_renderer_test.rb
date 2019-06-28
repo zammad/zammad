@@ -10,7 +10,6 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
   group        = Group.new(name: 'Users')
   owner        = User.new(firstname: 'Owner<b>xxx</b>', lastname: 'Agent1<b>yyy</b>')
   current_user = User.new(firstname: 'CurrentUser<b>xxx</b>', lastname: 'Agent2<b>yyy</b>')
-  recipient    = User.new(firstname: 'Recipient<b>xxx</b>', lastname: 'Customer1<b>yyy</b>')
   state        = Ticket::State.new(name: 'new')
   ticket       = Ticket.new(
     id:         1,

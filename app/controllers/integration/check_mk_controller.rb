@@ -55,7 +55,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
 
-        article = Ticket::Article.create!(
+        Ticket::Article.create!(
           ticket_id: ticket_id,
           type_id:   Ticket::Article::Type.find_by(name: 'web').id,
           sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
@@ -81,7 +81,6 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
         }
         return
       end
-      state = Ticket::State.lookup(id: auto_close_state_id)
       ticket_ids_found.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
@@ -107,7 +106,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
         },
       }
     )
-    article = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id: ticket.id,
       type_id:   Ticket::Article::Type.find_by(name: 'web').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,

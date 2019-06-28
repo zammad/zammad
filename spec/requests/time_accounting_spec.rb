@@ -24,7 +24,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
     context 'when requesting a log report download' do
       it 'responds with an Excel spreadsheet' do
-        group   = create(:group)
+        create(:group)
         ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer )
         article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note') )
 
@@ -46,7 +46,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
       it 'responds with an Excel spreadsheet' do
         ObjectManager::Attribute.add attributes_for :object_manager_attribute_select
 
-        group   = create(:group)
+        create(:group)
         ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer )
         article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note') )
 

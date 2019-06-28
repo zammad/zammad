@@ -56,7 +56,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_by_id:  1,
     )
 
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla 1',
       condition:           {},
       first_response_time: 60,
@@ -130,7 +130,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id:  1,
       created_by_id:  1,
     )
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla 2',
       condition:           {
         'ticket.priority_id' => {
@@ -447,7 +447,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
 
     # create note article
-    article_note = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       subject:       'some subject',
@@ -535,7 +535,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_by_id:  1,
     )
 
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla 1',
       condition:           {
         'ticket.priority_id' => {
@@ -653,7 +653,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id:  1,
       created_by_id:  1,
     )
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'aaa should not match',
       condition:           {
         'ticket.priority_id' => {
@@ -1554,7 +1554,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article_inbound = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1609,7 +1609,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_by_id:  1,
     )
 
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla - ticket.title & article.subject',
       condition:           {
         'ticket.priority_id' => {
@@ -1639,7 +1639,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_in_min, 'ticket.close_in_min verify 3')
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min# verify 3')
 
-    sla = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla - ticket.title & article.subject',
       condition:           {
         'ticket.priority_id' => {
@@ -1723,7 +1723,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(ticket, 'ticket created')
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify')
 
-    article_customer = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1806,7 +1806,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.updated_at = '2016-11-01 15:25:40 UTC'
     ticket.save!
 
-    article_agent = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1833,7 +1833,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.updated_at = '2016-11-01 15:59:14 UTC'
     ticket.save!
 
-    article_customer = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1872,7 +1872,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.updated_at = '2016-11-07 13:26:36 UTC'
     ticket.save!
 
-    article_customer = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1895,7 +1895,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-09 09:26:36 UTC', 'ticket.update_escalation_at verify 1')
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
-    article_agent = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -1942,7 +1942,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(ticket, 'ticket created')
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify')
 
-    article_customer = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -2020,7 +2020,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-02 09:00:00 UTC', 'ticket.update_escalation_at verify 1')
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
-    article_agent = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',

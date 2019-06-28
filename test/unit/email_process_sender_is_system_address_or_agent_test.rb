@@ -21,7 +21,7 @@ Subject: #{subject}
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal(subject, ticket.title)
@@ -40,7 +40,7 @@ Message-ID: <123456789-1@linuxhotel.de>
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
 
@@ -63,9 +63,8 @@ References: <123456789-1@linuxhotel.de>
 
 Some Text"
 
-    ticket_p2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket2 = Ticket.find(ticket_p2.id)
-    article = Ticket::Article.find(article_p.id)
     assert_equal(subject, ticket2.title)
     assert_equal(ticket.id, ticket2.id)
 
@@ -79,9 +78,8 @@ References: <123456789-1@linuxhotel.de>
 
 Some Text"
 
-    ticket_p2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket2 = Ticket.find(ticket_p2.id)
-    article = Ticket::Article.find(article_p.id)
     assert_not_equal(ticket.id, ticket2.id)
     assert_equal(subject, ticket2.title)
     assert_equal('new', ticket2.state.name)
@@ -129,7 +127,7 @@ Subject: some subject #1
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #1', ticket.title)
@@ -147,7 +145,7 @@ Subject: some subject #2
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #2', ticket.title)
@@ -164,7 +162,7 @@ Subject: some subject #3
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #3', ticket.title)
@@ -181,7 +179,7 @@ Subject: some subject #4
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #4', ticket.title)
@@ -198,7 +196,7 @@ Subject: some subject #5
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #5', ticket.title)
@@ -215,7 +213,7 @@ Subject: some subject #6
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
     assert_equal('some subject #6', ticket.title)

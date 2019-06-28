@@ -6,7 +6,7 @@ class ReportTest < ActiveSupport::TestCase
   setup do
 
     # create attribute
-    attribute1 = ObjectManager::Attribute.add(
+    ObjectManager::Attribute.add(
       object:        'Ticket',
       name:          'test_category',
       display:       'Test 1',
@@ -1064,7 +1064,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(@ticket6.id, result[:ticket_ids][1].to_i)
     assert_nil(result[:ticket_ids][2])
 
-    result = Report::TicketGenericTime.items(
+    Report::TicketGenericTime.items(
       range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
       range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
       selector:    {

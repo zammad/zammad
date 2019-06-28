@@ -32,7 +32,7 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'correctly renders simple select attributes' do
-      attribute = create :object_manager_attribute_select, name: 'select'
+      create :object_manager_attribute_select, name: 'select'
       ObjectManager::Attribute.migration_execute
 
       ticket = create :ticket, customer: @user, select: 'key_1'
@@ -52,9 +52,9 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'correctly renders select attributes on chained user object' do
-      attribute = create :object_manager_attribute_select,
-                         object_lookup_id: ObjectLookup.by_name('User'),
-                         name:             'select'
+      create :object_manager_attribute_select,
+             object_lookup_id: ObjectLookup.by_name('User'),
+             name:             'select'
       ObjectManager::Attribute.migration_execute
 
       user = User.where(firstname: 'Nicole').first
@@ -77,9 +77,9 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'correctly renders select attributes on chained group object' do
-      attribute = create :object_manager_attribute_select,
-                         object_lookup_id: ObjectLookup.by_name('Group'),
-                         name:             'select'
+      create :object_manager_attribute_select,
+             object_lookup_id: ObjectLookup.by_name('Group'),
+             name:             'select'
       ObjectManager::Attribute.migration_execute
 
       ticket = create :ticket, customer: @user
@@ -102,9 +102,9 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'correctly renders select attributes on chained organization object' do
-      attribute = create :object_manager_attribute_select,
-                         object_lookup_id: ObjectLookup.by_name('Organization'),
-                         name:             'select'
+      create :object_manager_attribute_select,
+             object_lookup_id: ObjectLookup.by_name('Organization'),
+             name:             'select'
       ObjectManager::Attribute.migration_execute
 
       @user.organization.select = 'key_2'
@@ -126,7 +126,7 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'correctly renders tree select attributes' do
-      attribute = create :object_manager_attribute_tree_select, name: 'tree_select'
+      create :object_manager_attribute_tree_select, name: 'tree_select'
       ObjectManager::Attribute.migration_execute
 
       ticket = create :ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop'

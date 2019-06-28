@@ -243,7 +243,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_not(result1, 'check as agent1 - recall 2')
 
     agent1.update!(email: 'activity-stream-agent11@example.com')
-    ticket = Ticket.create!(
+    Ticket.create!(
       title:         '12323',
       group_id:      1,
       priority_id:   1,

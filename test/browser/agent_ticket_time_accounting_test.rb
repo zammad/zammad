@@ -22,7 +22,7 @@ class AgentTicketTimeAccountingTest < TestCase
       type: 'on',
     )
 
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -55,7 +55,7 @@ class AgentTicketTimeAccountingTest < TestCase
       value: '4',
     )
 
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
@@ -161,7 +161,7 @@ class AgentTicketTimeAccountingTest < TestCase
       type: 'on',
     )
 
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

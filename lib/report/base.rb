@@ -263,7 +263,6 @@ class Report::Base
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
     ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
                         .where(query, *bind_params).joins(tables)
-    tickets = 0
     time_min = 0
     ticket_ids = []
     ticket_list.each do |ticket|
@@ -301,7 +300,6 @@ class Report::Base
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
     ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
                         .where(query, *bind_params).joins(tables)
-    tickets = 0
     time_max = 0
     ticket_ids = []
     ticket_list.each do |ticket|
@@ -334,7 +332,6 @@ class Report::Base
 
   def self.ticket_condition(ticket_id, condition)
     ticket = Ticket.lookup( id: ticket_id )
-    match = true
     condition.each do |key, value|
       if ticket[key.to_sym] != value
         return false

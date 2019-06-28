@@ -96,7 +96,7 @@ RSpec.describe Ldap::User do
         connection = double()
         expect(mocked_ldap).to receive(:connection).and_return(connection)
 
-        ldap_entry = build(:ldap_entry)
+        build(:ldap_entry)
 
         expect(mocked_ldap).to receive(:base_dn)
         expect(connection).to receive(:bind_as).and_return(true)
@@ -108,7 +108,7 @@ RSpec.describe Ldap::User do
         connection = double()
         expect(mocked_ldap).to receive(:connection).and_return(connection)
 
-        ldap_entry = build(:ldap_entry)
+        build(:ldap_entry)
 
         expect(mocked_ldap).to receive(:base_dn)
         expect(connection).to receive(:bind_as).and_return(false)

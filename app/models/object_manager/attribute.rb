@@ -54,7 +54,6 @@ list of all attributes
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
     references = ObjectManager::Attribute.attribute_to_references_hash
     attributes = []
-    assets = {}
     result.each do |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
@@ -908,7 +907,7 @@ is certain attribute used by triggers, overviews or schedulers
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
     begin
       ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
-    rescue  ActiveRecord::DangerousAttributeError => e
+    rescue  ActiveRecord::DangerousAttributeError
       raise "#{name} is a reserved word, please choose a different one"
     end
 

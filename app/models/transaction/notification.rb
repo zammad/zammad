@@ -88,7 +88,6 @@ class Transaction::Notification
     end
 
     # send notifications
-    recipient_list = ''
     recipients_and_channels.each do |item|
       user = item[:user]
       channels = item[:channels]

@@ -1011,7 +1011,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket_tags_3 = Ticket.create!(
+    Ticket.create!(
       title:         'some title1',
       group:         @group,
       customer_id:   @customer1.id,
@@ -1055,7 +1055,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(1, ticket_count)
 
     condition = {
@@ -1064,7 +1064,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3, xxx',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(0, ticket_count)
 
     # search all with contains one
@@ -1074,7 +1074,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
 
     condition = {
@@ -1083,7 +1083,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(1, ticket_count)
 
     # search all with contains one not
@@ -1093,7 +1093,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_3'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
 
     condition = {
@@ -1102,7 +1102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    'contains_all_1, contains_all_2, contains_all_3'
       },
     }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(2, ticket_count)
   end
 

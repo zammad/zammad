@@ -14,7 +14,7 @@ class AgentTicketActionLevel0Test < TestCase
     tasks_close_all()
 
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    '-NONE-',
@@ -230,7 +230,7 @@ class AgentTicketActionLevel0Test < TestCase
     sleep 12
 
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',

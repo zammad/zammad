@@ -171,7 +171,7 @@ class SearchKnowledgeBaseBackend
       }
     end
 
-    if (scope = @params.fetch(:scope, nil))
+    if @params.fetch(:scope, nil)
       scope = { terms: { scope_id: @cached_scope_ids } }
 
       output[:query_extension][:bool][:must].push scope

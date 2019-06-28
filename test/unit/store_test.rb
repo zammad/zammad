@@ -15,7 +15,7 @@ class StoreTest < ActiveSupport::TestCase
     assert(result)
     exists = File.exist?(location)
     assert(exists)
-    result = Store::Provider::File.delete(sha)
+    Store::Provider::File.delete(sha)
     exists = File.exist?(location)
     assert_not(exists)
     exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70', '02b4'))

@@ -7,7 +7,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '1 basic' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa loop check',
       condition:            {
         'article.subject' => {
@@ -32,7 +32,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -64,7 +64,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger3 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto tag 1',
       condition:            {
         'ticket.action'   => {
@@ -91,7 +91,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger4 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto tag 2',
       condition:            {
         'ticket.state_id' => {
@@ -111,7 +111,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger5 = Trigger.create!(
+    Trigger.create!(
       name:                 'not matching',
       condition:            {
         'ticket.state_id' => {
@@ -130,7 +130,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger6 = Trigger.create!(
+    Trigger.create!(
       name:                 'zzz last',
       condition:            {
         'article.subject' => {
@@ -411,7 +411,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 actions - create' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -504,7 +504,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 actions - update' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -592,7 +592,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '3 auto replys' do
     roles = Role.where(name: 'Customer')
-    customer1 = User.create!(
+    User.create!(
       login:         'postmaster@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -604,7 +604,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer2 = User.create!(
+    User.create!(
       login:           'ticket-auto-reply-customer2@example.com',
       firstname:       'Trigger',
       lastname:        'Customer2',
@@ -618,7 +618,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id:   1,
     )
 
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply - new ticket',
       condition:            {
         'ticket.action'   => {
@@ -657,7 +657,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create!(
+    Trigger.create!(
       name:          'auto reply (on follow up of tickets)',
       condition:     {
         'ticket.action'     => {
@@ -695,7 +695,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    trigger3 = Trigger.create!(
+    Trigger.create!(
       name:                 'not matching',
       condition:            {
         'ticket.action'   => {
@@ -722,7 +722,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
     assert_equal('Users', ticket_p.group.name)
@@ -746,7 +746,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    article_p = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket_p.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -766,7 +766,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(3, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    article_p = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket_p.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -786,7 +786,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(4, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    article_p = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket_p.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -817,7 +817,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket_p.state = Ticket::State.lookup(name: 'open')
     ticket_p.save!
-    article_p = Ticket::Article.create!(
+    Ticket::Article.create!(
       ticket_id:     ticket_p.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -848,7 +848,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p1, article_p1, user_p1, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p1, _article_p1, _user_p1, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
     assert_equal('new', ticket_p1.state.name)
@@ -856,7 +856,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail with Precedence header (no auto response)
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail2.box'))
-    ticket_p2, article_p2, user_p2, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p2, _article_p2, _user_p2, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
     assert_not_equal(ticket_p.id, ticket_p2.id)
@@ -866,7 +866,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail with abuse@ (no auto response)
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail3.box'))
-    ticket_p3, article_p3, user_p3, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p3, _article_p3, _user_p3, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
     assert_not_equal(ticket_p.id, ticket_p2.id)
@@ -881,7 +881,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '4 has changed' do
     roles = Role.where(name: 'Customer')
-    customer1 = User.create!(
+    User.create!(
       login:         'postmaster@example.com',
       firstname:     'Trigger',
       lastname:      'Customer1',
@@ -893,7 +893,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer2 = User.create!(
+    User.create!(
       login:           'ticket-has-changed-customer2@example.com',
       firstname:       'Trigger',
       lastname:        'Customer2',
@@ -921,7 +921,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'owner update - to customer',
       condition:            {
         'ticket.owner_id' => {
@@ -952,13 +952,13 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
     assert_equal('Users', ticket_p.group.name)
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
-    article_p = ticket_p.articles.last
+    ticket_p.articles.last
 
     Observer::Transaction.commit
 
@@ -982,7 +982,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_match(ticket_p.number, article_p.body)
     assert_equal('text/html', article_p.content_type)
 
-    trigger1 = Trigger.create_or_update(
+    Trigger.create_or_update(
       name:                 'owner update - to customer',
       condition:            {
         'ticket.owner_id'    => {
@@ -1017,13 +1017,12 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
     assert_equal('Users', ticket_p.group.name)
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
-    article_p = ticket_p.articles.last
 
     Observer::Transaction.commit
     assert_equal(1, ticket_p.articles.count)
@@ -1063,7 +1062,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('text/html', article_p.content_type)
 
     # should trigger
-    trigger1 = Trigger.create_or_update(
+    Trigger.create_or_update(
       name:                 'owner update - to customer',
       condition:            {
         'ticket.owner_id'    => {
@@ -1102,13 +1101,12 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
     assert_equal('Users', ticket_p.group.name)
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
-    article_p = ticket_p.articles.last
 
     Observer::Transaction.commit
     assert_equal(1, ticket_p.articles.count)
@@ -1147,7 +1145,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('text/html', article_p.content_type)
 
     # should not trigger
-    trigger1 = Trigger.create_or_update(
+    Trigger.create_or_update(
       name:                 'owner update - to customer',
       condition:            {
         'ticket.owner_id' => {
@@ -1182,7 +1180,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # process mail without Precedence header
     content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal(1, ticket_p.articles.count)
 
@@ -1197,7 +1195,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '5 notify owner' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa notify mail',
       condition:            {
         'ticket.state_id' => {
@@ -1287,7 +1285,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     assert_equal(3, ticket1.articles.count)
 
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa notify mail 2',
       condition:            {
         'ticket.state_id' => {
@@ -1332,7 +1330,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6 owner auto assignment' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id' => {
@@ -1446,7 +1444,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6.1 owner auto assignment based on organization' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.organization_id' => {
@@ -1559,7 +1557,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '6.2 owner auto assignment based on organization' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.organization_id' => {
@@ -1672,7 +1670,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '7 owner auto assignment' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id'   => {
@@ -1865,7 +1863,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '8 owner auto assignment' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id'    => {
@@ -2015,7 +2013,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '9 vip priority set' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa vip priority',
       condition:            {
         'customer.vip' => {
@@ -2153,7 +2151,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '10 owner auto assignment notify to customer' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa auto assignment',
       condition:            {
         'ticket.owner_id' => {
@@ -2280,7 +2278,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '11 notify to customer on public note' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa notify to customer on public note',
       condition:            {
         'article.internal'  => {
@@ -2490,7 +2488,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '12 notify on owner change' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa notify to customer on public note',
       condition:            {
         'ticket.owner_id' => {
@@ -2719,7 +2717,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test '1 empty condition should not create errors' do
     assert_raises(Exception) do
-      trigger_empty = Trigger.create!(
+      Trigger.create!(
         name:                 'aaa loop check',
         condition:            {
           'ticket.number' => {
@@ -2743,7 +2741,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> reply_to' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2800,7 +2798,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> from' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2856,7 +2854,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> origin_by_id' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2925,7 +2923,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> created_by_id' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -2993,7 +2991,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'multiple recipients owner_id, article_last_sender(reply_to) trigger' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3064,7 +3062,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'article_last_sender trigger -> invalid reply_to' do
-    trigger = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3118,7 +3116,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '2 loop check' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'aaa loop check',
       condition:            {
         'ticket.state_id'   => {
@@ -3448,7 +3446,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
                            })
     assert_equal('invalid invalid 4', trigger1.condition['ticket.first_response_at']['value'])
 
-    trigger2 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3529,7 +3527,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '4 tag based auto response' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 '100 add tag if sender 1',
       condition:            {
         'ticket.action' => {
@@ -3553,7 +3551,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger2 = Trigger.create!(
+    Trigger.create!(
       name:                 '200 add tag if sender 2',
       condition:            {
         'ticket.action' => {
@@ -3577,7 +3575,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    trigger3 = Trigger.create!(
+    Trigger.create!(
       name:                 '300 auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3720,12 +3718,12 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(2, ticket3.articles.count, 'ticket3.articles verify')
     assert_equal([], ticket3.tag_list)
-    article1 = ticket3.articles.last
+    ticket3.articles.last
 
   end
 
   test 'article.body' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3841,7 +3839,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal(%w[], ticket2.tag_list)
 
-    trigger1 = Trigger.create_or_update(
+    Trigger.create_or_update(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -3991,7 +3989,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # multi tag trigger with changed owner
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'change owner',
       condition:            {
         'ticket.owner_id' => {
@@ -4020,7 +4018,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # single tag trigger with changed owner
-    trigger2 = Trigger.create_or_update(
+    Trigger.create_or_update(
       name:                 'change owner',
       condition:            {
         'ticket.owner_id' => {
@@ -4082,7 +4080,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     # control test - should pass
     # create common object tag
-    tag_object = Tag::Object.create_or_update(name: 'Ticket')
+    Tag::Object.create_or_update(name: 'Ticket')
 
     # add tag
     ticket1.tag_add('thisisthebestjob', agent1.id)
@@ -4160,7 +4158,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger auto reply with umlaut in form' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4234,7 +4232,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger auto reply with 2 sender addresses in form' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4259,7 +4257,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
+    ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4275,7 +4273,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'make sure attachments should be attached with content id' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply',
       condition:            {
         'ticket.action'   => {
@@ -4300,7 +4298,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
+    ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4368,7 +4366,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger tags and auto responder when there is an article body contains matched values' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'detect message body',
       condition:            {
         'article.body' => {
@@ -4438,7 +4436,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test 'trigger note and auto responder (correct order) when there is an article body contains matched values' do
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'detect message body',
       condition:            {
         'article.body' => {
@@ -4599,7 +4597,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} copies all articles image attachments as well' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply with HTML quote',
       condition:            {
         'ticket.action'   => {
@@ -4628,7 +4626,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail048.box')))
+    ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail048.box')))
 
     assert_equal('AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]', ticket1.title, 'ticket1.title verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
@@ -4644,7 +4642,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} does not copy any non-image attachments' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
-    trigger1 = Trigger.create!(
+    Trigger.create!(
       name:                 'auto reply with HTML quote',
       condition:            {
         'ticket.action'   => {
@@ -4673,7 +4671,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id:        1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail069.box')))
+    ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail069.box')))
 
     assert_equal('Online-apotheke. Günstigster Preis. Ohne Rezepte', ticket1.title, 'ticket1.title verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')

@@ -74,7 +74,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       created_by_id:  1,
     )
 
-    sla1 = Sla.create_or_update(
+    Sla.create_or_update(
       name:                'test sla 1',
       condition:           {},
       first_response_time: 20,
@@ -102,7 +102,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
     )
-    article1 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket1.id,
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
@@ -157,7 +157,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
       created_by_id: @customer_user.id,
     )
-    article2 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket2.id,
       updated_by_id: @customer_user.id,
       created_by_id: @customer_user.id,
@@ -212,7 +212,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
     )
-    article3 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket3.id,
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
@@ -257,7 +257,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_not(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, true))
 
-    article3 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket3.id,
       updated_by_id: @customer_user.id,
       created_by_id: @customer_user.id,
@@ -292,7 +292,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
       created_by_id: @customer_user.id,
     )
-    article4 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket4.id,
       updated_by_id: @customer_user.id,
       created_by_id: @customer_user.id,
@@ -346,7 +346,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
     )
-    article5 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket5.id,
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
@@ -429,7 +429,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(ticket1, 'ticket created')
-    article_inbound = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket1.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',

@@ -440,7 +440,6 @@ returns
       files.push entry
     end
     files.sort.each do |entry|
-      filename = "#{path}/#{entry}"
       next if entry !~ /^send/
 
       message = Sessions.queue_file_read(path, entry)

@@ -41,7 +41,7 @@ class AdminOverviewTest < TestCase
     name = "overview_#{rand(99_999_999)}"
     ticket_titles = (1..3).map { |i| "Priority #{i} ticket" }
 
-    @browser = instance = browser_instance
+    @browser = browser_instance
     login(
       username: 'master@example.com',
       password: 'test',

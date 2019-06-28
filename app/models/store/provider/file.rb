@@ -108,7 +108,7 @@ class Store::Provider::File
     if !File.exist?(location)
       FileUtils.mkdir_p(location)
     end
-    full_path = location += file
+    full_path = location + file
     full_path.gsub('//', '/')
   end
 

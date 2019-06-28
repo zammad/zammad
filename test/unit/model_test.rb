@@ -103,8 +103,8 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: agent1.id,
       created_by_id: 1,
     )
-    roles     = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
+    roles = Role.where(name: 'Customer')
+    User.create_or_update(
       login:           'model-customer1@example.com',
       firstname:       'Model',
       lastname:        'Customer1',
@@ -117,7 +117,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id:   1,
       created_by_id:   1,
     )
-    customer2 = User.create_or_update(
+    User.create_or_update(
       login:           'model-customer2@example.com',
       firstname:       'Model',
       lastname:        'Customer2',
@@ -130,7 +130,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id:   agent1.id,
       created_by_id:   1,
     )
-    customer3 = User.create_or_update(
+    User.create_or_update(
       login:           'model-customer3@example.com',
       firstname:       'Model',
       lastname:        'Customer3',

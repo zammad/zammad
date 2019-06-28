@@ -86,6 +86,5 @@ store attachments for this object
         created_by_id: created_by_id,
       )
     end
-    attachments_buffer = nil
   end
 end

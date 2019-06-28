@@ -254,7 +254,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, domain = EmailHelper.parse_email(mailbox_user)
+    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
@@ -408,7 +408,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, domain = EmailHelper.parse_email(mailbox_user)
+    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Probe.outbound(
       {
         adapter: 'smtp',
@@ -478,7 +478,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, domain = EmailHelper.parse_email(mailbox_user)
+    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Verify.email(
       inbound:  {
         adapter: 'imap',
@@ -511,7 +511,9 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
-    user, domain = EmailHelper.parse_email(mailbox_user)
+
+    EmailHelper.parse_email(mailbox_user)
+
     result = EmailHelper::Verify.email(
       inbound:  {
         adapter: 'pop3',

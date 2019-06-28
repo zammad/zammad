@@ -133,8 +133,7 @@ X-Loop: yes
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({ trusted: true }, email_raw_string)
-    ticket = Ticket.find(ticket_p.id)
+    _ticket_p, article_p, _user_p, _mail = Channel::EmailParser.new.process({ trusted: true }, email_raw_string)
     article_email = Ticket::Article.find(article_p.id)
 
     assert_equal(0, email_count('my_zammad@example.com'))

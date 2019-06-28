@@ -57,7 +57,7 @@ class SlackTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article1 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket1.id,
       body:          text,
       type:          Ticket::Article::Type.find_by(name: 'note'),
@@ -95,7 +95,7 @@ class SlackTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article2 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket2.id,
       body:          text,
       type:          Ticket::Article::Type.find_by(name: 'note'),
@@ -176,7 +176,7 @@ class SlackTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article3 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket3.id,
       body:          text,
       type:          Ticket::Article::Type.find_by(name: 'note'),
@@ -214,7 +214,7 @@ class SlackTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article4 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket4.id,
       body:          text,
       type:          Ticket::Article::Type.find_by(name: 'note'),

@@ -22,11 +22,6 @@ returns
   def self.aggs(params_origin)
     params = params_origin.dup
 
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
-
     result = []
     if params[:interval] == 'month'
       stop_interval = 12

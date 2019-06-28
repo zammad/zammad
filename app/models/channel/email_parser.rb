@@ -202,9 +202,6 @@ returns
         # save changes set by x-zammad-ticket-followup-* headers
         ticket.save! if ticket.has_changes_to_save?
 
-        state      = Ticket::State.find(ticket.state_id)
-        state_type = Ticket::StateType.find(state.state_type_id)
-
         # set ticket to open again or keep create state
         if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
           new_state = Ticket::State.find_by(default_create: true)
@@ -480,7 +477,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     path = Rails.root.join('tmp', 'unprocessable_mail')
     files = []
     Dir.glob("#{path}/*.eml") do |entry|
-      ticket, article, user, mail = Channel::EmailParser.new.process(params, IO.binread(entry))
+      ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, IO.binread(entry))
       next if ticket.blank?
 
       files.push entry
@@ -608,15 +605,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     file.header.fields.each do |field|
 
       # full line, encode, ready for storage
-
       value = field.to_utf8
       if value.blank?
         value = field.raw_value
       end
       headers_store[field.name.to_s] = value
-    rescue => e
+    rescue
       headers_store[field.name.to_s] = field.raw_value
-
     end
 
     # cleanup content id, <> will be added automatically later

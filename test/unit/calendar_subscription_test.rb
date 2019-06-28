@@ -59,7 +59,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id:   1,
       created_by_id:   1,
     )
-    customer2 = User.create!(
+    User.create!(
       login:           'ticket-calendar-subscription-customer2@example.com',
       firstname:       'Notification',
       lastname:        'Customer2',

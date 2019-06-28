@@ -36,7 +36,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -68,7 +68,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_2.state.name)
     assert(ticket_2.preferences)
     assert(ticket_2.preferences['nagios'])
@@ -101,7 +101,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1_1.state.name)
     assert(ticket_1_1.preferences)
     assert(ticket_1_1.preferences['nagios'])
@@ -132,7 +132,7 @@ Date/Time: 2016-01-31 10:48:02 +0100
 
 Additional Info:
 "
-    ticket_1_2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket_1.id, ticket_1_2.id)
     assert_equal('closed', ticket_1_2.state.name)
     assert(ticket_1_2.preferences)
@@ -165,7 +165,7 @@ Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
 
 Comment: [] =
 "
-    ticket_3, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_3, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_3.state.name)
     assert(ticket_3.preferences)
     assert(ticket_3.preferences['nagios'])
@@ -198,7 +198,7 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 
 Comment: [] =
 "
-    ticket_3_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_3_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket_3.id, ticket_3_1.id)
     assert_equal('closed', ticket_3_1.state.name)
     assert(ticket_3_1.preferences)
@@ -237,7 +237,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -268,7 +268,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -297,7 +297,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -329,7 +329,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -363,7 +363,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -397,7 +397,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -433,7 +433,7 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 
 Comment: [] =
 "
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket_count = Ticket.count
     assert_not(ticket_1)
     assert_equal(ticket_count, Ticket.count)

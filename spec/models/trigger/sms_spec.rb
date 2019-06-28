@@ -9,15 +9,15 @@ RSpec.describe Trigger do
       another_agent = create(:admin_user, mobile: '+37061010000')
       Group.lookup(id: 1).users << another_agent
 
-      channel = create(:channel, area: 'Sms::Notification')
-      trigger = create(:trigger,
-                       disable_notification: false,
-                       perform:              {
-                         'notification.sms': {
-                           recipient: 'ticket_agents',
-                           body:      'space&nbsp;between #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
-                         }
-                       })
+      create(:channel, area: 'Sms::Notification')
+      create(:trigger,
+             disable_notification: false,
+             perform:              {
+               'notification.sms': {
+                 recipient: 'ticket_agents',
+                 body:      'space&nbsp;between #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
+               }
+             })
 
       ticket = create(:ticket, group: Group.lookup(id: 1), created_by_id: agent.id)
       Observer::Transaction.commit

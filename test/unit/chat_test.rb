@@ -156,7 +156,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(false, agent_state[:active])
 
     # set agent 1 to active
-    chat_agent1 = Chat::Agent.create_or_update(
+    Chat::Agent.create_or_update(
       active:        true,
       concurrent:    4,
       updated_by_id: @agent1.id,
@@ -224,7 +224,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # start next chat
-    chat_session2 = Chat::Session.create(
+    Chat::Session.create(
       chat_id: chat.id,
     )
 
@@ -250,7 +250,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # start new chats
-    chat_session3 = Chat::Session.create(
+    Chat::Session.create(
       chat_id: chat.id,
     )
     chat_session4 = Chat::Session.create(

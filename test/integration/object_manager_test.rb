@@ -74,7 +74,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     # create invalid attributes
     assert_raises(RuntimeError) do
-      attribute2 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test2_id',
         display:       'Test 2 with id',
@@ -92,7 +92,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       )
     end
     assert_raises(RuntimeError) do
-      attribute3 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test3_ids',
         display:       'Test 3 with id',
@@ -110,7 +110,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       )
     end
     assert_raises(ActiveRecord::RecordInvalid) do
-      attribute4 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test4',
         display:       'Test 4 with missing data_option[:type]',
@@ -154,7 +154,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
-      attribute6 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test6',
         display:       'Test 6',
@@ -201,7 +201,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
-      attribute8 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test8',
         display:       'Test 8',
@@ -243,7 +243,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     )
 
     assert_raises(ActiveRecord::RecordInvalid) do
-      attribute10 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test10',
         display:       'Test 10',
@@ -287,7 +287,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     assert_raises(RuntimeError) do
-      attribute13 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test13|',
         display:       'Test 13',
@@ -308,7 +308,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     assert_raises(RuntimeError) do
-      attribute14 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test14!',
         display:       'Test 14',
@@ -329,7 +329,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     assert_raises(RuntimeError) do
-      attribute15 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test15ä',
         display:       'Test 15',
@@ -352,7 +352,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     # Test case #16 invalidated after callback added to set default #data_option[:null] value
 
     assert_raises(ActiveRecord::RecordInvalid) do
-      attribute17 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test17',
         display:       'Test 17',
@@ -371,7 +371,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     assert_raises(RuntimeError) do
-      attribute18 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'delete',
         display:       'Test 18',
@@ -392,7 +392,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     attribute_count = ObjectManager::Attribute.count
     assert_raises(RuntimeError) do
-      attribute19 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'updated_at',
         display:       'Update Time',
@@ -414,7 +414,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(attribute_count, ObjectManager::Attribute.count)
 
     assert_raises(RuntimeError) do
-      attribute20 = ObjectManager::Attribute.add(
+      ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'updated_AT',
         display:       'Update Time',
@@ -492,7 +492,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('some attribute text', ticket1.attribute1)
 
     # add additional attributes
-    attribute2 = ObjectManager::Attribute.add(
+    ObjectManager::Attribute.add(
       object:        'Ticket',
       name:          'attribute2',
       display:       'Attribute 2',
@@ -511,7 +511,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    attribute3 = ObjectManager::Attribute.add(
+    ObjectManager::Attribute.add(
       object:        'Ticket',
       name:          'attribute3',
       display:       'Attribute 3',
@@ -528,7 +528,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    attribute4 = ObjectManager::Attribute.add(
+    ObjectManager::Attribute.add(
       object:        'Ticket',
       name:          'attribute4',
       display:       'Attribute 4',
@@ -757,7 +757,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    overview1 = Overview.create!(
+    Overview.create!(
       name:          'Overview1',
       link:          'my_overview',
       roles:         Role.all,
@@ -900,7 +900,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    attribute1 = ObjectManager::Attribute.add(
+    ObjectManager::Attribute.add(
       object:        'Ticket',
       name:          'watcher',
       display:       'watcher',

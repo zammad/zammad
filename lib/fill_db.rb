@@ -143,7 +143,7 @@ or if you only want to create 100 tickets
     if !overviews.zero?
       (1..overviews).each do
         ActiveRecord::Base.transaction do
-          overview = Overview.create!(
+          Overview.create!(
             name:      "Filloverview::#{rand(999_999)}",
             role_ids:  [Role.find_by(name: 'Agent').id],
             condition: {
@@ -190,7 +190,7 @@ or if you only want to create 100 tickets
         )
 
         # create article
-        article = Ticket::Article.create!(
+        Ticket::Article.create!(
           ticket_id:     ticket.id,
           from:          customer.email,
           to:            'some_recipient@example.com',

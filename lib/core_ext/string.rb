@@ -153,19 +153,20 @@ class String
           text_compare.downcase!
           text_compare.sub!(%r{/$}, '')
         end
-        placeholder = if link_compare.present? && text_compare.blank?
-                        link
-                      elsif link_compare.blank? && text_compare.present?
-                        text
-                      elsif link_compare && link_compare =~ /^mailto/i
-                        text
-                      elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
-                        "######LINKEXT:#{link}/TEXT:#{text}######"
-                      elsif text !~ /^http/
-                        "#{text} (######LINKRAW:#{link}######)"
-                      else
-                        "#{link} (######LINKRAW:#{text}######)"
-                      end
+
+        if link_compare.present? && text_compare.blank?
+          link
+        elsif link_compare.blank? && text_compare.present?
+          text
+        elsif link_compare && link_compare =~ /^mailto/i
+          text
+        elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
+          "######LINKEXT:#{link}/TEXT:#{text}######"
+        elsif text !~ /^http/
+          "#{text} (######LINKRAW:#{link}######)"
+        else
+          "#{link} (######LINKRAW:#{text}######)"
+        end
       end
     end
 
@@ -180,10 +181,10 @@ class String
 
     # pre/code handling 1/2
     string.gsub!(%r{<pre>(.+?)</pre>}m) do |placeholder|
-      placeholder = placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(/\n/, '###BR###')
     end
     string.gsub!(%r{<code>(.+?)</code>}m) do |placeholder|
-      placeholder = placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(/\n/, '###BR###')
     end
 
     # insert spaces on [A-z]\n[A-z]
@@ -231,11 +232,12 @@ class String
         if content.match?(/^www/i)
           content = "http://#{content}"
         end
-        placeholder = if content =~ /^(http|https|ftp|tel)/i
-                        "#{pre}######LINKRAW:#{content}#######{post}"
-                      else
-                        "#{pre}#{content}#{post}"
-                      end
+
+        if content =~ /^(http|https|ftp|tel)/i
+          "#{pre}######LINKRAW:#{content}#######{post}"
+        else
+          "#{pre}#{content}#{post}"
+        end
       end
     end
 
@@ -374,7 +376,7 @@ class String
       ]
       map.each do |regexp|
         string.sub!(/#{regexp}/m) do |placeholder|
-          placeholder = "#{marker}#{placeholder}"
+          "#{marker}#{placeholder}"
         end
       end
       return string
@@ -388,7 +390,7 @@ class String
 
     # search for signature separator "--\n"
     string.sub!(/^\s{0,2}--\s{0,2}$/) do |placeholder|
-      placeholder = "#{marker}#{placeholder}"
+      "#{marker}#{placeholder}"
     end
 
     map = {}
@@ -444,14 +446,12 @@ class String
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each_value do |regexp|
-
       string.sub!(/#{regexp}/) do |placeholder|
-        placeholder = "#{marker}#{placeholder}"
+        "#{marker}#{placeholder}"
+      rescue
+        # regexp was not possible because of some string encoding issue, use next
+        Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
       end
-    rescue
-      # regexp was not possible because of some string encoding issue, use next
-      Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
-
     end
 
     string

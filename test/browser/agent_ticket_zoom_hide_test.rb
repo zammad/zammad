@@ -21,7 +21,7 @@ class AgentTicketZoomHideTest < TestCase
     )
 
     # create two tickets
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'Nico',
         group:    'Users',
@@ -30,7 +30,7 @@ class AgentTicketZoomHideTest < TestCase
       }
     )
 
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'Nico',
         group:    'Users',

@@ -68,7 +68,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
     it 'does test attachments for split' do
       email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
       email_raw_string = File.read(email_file_path)
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+      ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
       authenticated_as(agent_user)
       get '/api/v1/ticket_split', params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, as: :json
@@ -83,7 +83,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
     it 'does test attachments for forward' do
       email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail008.box')
       email_raw_string = File.read(email_file_path)
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+      _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
       authenticated_as(agent_user)
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, as: :json
@@ -98,7 +98,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
 
       email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
       email_raw_string = File.read(email_file_path)
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+      _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
       post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }, as: :json
       expect(response).to have_http_status(:ok)

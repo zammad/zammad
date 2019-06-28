@@ -96,7 +96,7 @@ module CreatesTicketArticles
         begin
           base64_data = attachment[:data].gsub(/[\r\n]/, '')
           attachment_data = Base64.strict_decode64(base64_data)
-        rescue ArgumentError => e
+        rescue ArgumentError
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
         end
 

@@ -3,7 +3,7 @@ require 'test_helper'
 class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
   setup do
-    group = Group.create_or_update(
+    Group.create_or_update(
       name:               'LastOwnerUpdate',
       email_address:      EmailAddress.first,
       assignment_timeout: 60,
@@ -75,7 +75,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
     travel 1.hour
 
-    article1 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
@@ -96,7 +96,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
     travel 1.hour
 
-    article2 = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id:     ticket.id,
       from:          'some_sender@example.com',
       to:            'some_recipient@example.com',
