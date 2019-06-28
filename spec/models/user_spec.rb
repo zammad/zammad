@@ -1,6 +1,7 @@
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/has_groups_examples'
+require 'models/concerns/has_history_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
@@ -17,6 +18,7 @@ RSpec.describe User, type: :model do
 
   it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
   it_behaves_like 'HasGroups', group_access_factory: :agent_user
+  it_behaves_like 'HasHistory'
   it_behaves_like 'HasRoles', group_access_factory: :agent_user
   it_behaves_like 'HasXssSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user

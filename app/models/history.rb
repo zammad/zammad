@@ -149,73 +149,54 @@ returns
 =end
 
   def self.list(requested_object, requested_object_id, related_history_object = nil, assets = nil)
-    if related_history_object.blank?
-      history_object = object_lookup(requested_object)
-      history = History.where(history_object_id: history_object.id)
-                       .where(o_id: requested_object_id)
-                       .order(created_at: :asc)
-    else
-      history_object_requested = object_lookup(requested_object)
-      history_object_related   = object_lookup(related_history_object)
-      history = History.where(
-        '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? ))',
-        history_object_requested.id,
-        requested_object_id,
-        history_object_related.id,
-        requested_object_id,
+    histories = History.where(
+      history_object_id: object_lookup(requested_object).id,
+      o_id:              requested_object_id
+    )
+
+    if related_history_object.present?
+      histories = histories.or(
+        History.where(
+          history_object_id: object_lookup(related_history_object).id,
+          related_o_id:      requested_object_id
+        )
       )
-                       .order(created_at: :asc)
     end
-    asset_list = {}
-    list = []
-    history.each do |item|
 
-      if assets
-        asset_list = item.assets(asset_list)
-      end
+    histories = histories.order(:created_at)
 
-      data = item.attributes
-      data['object']    = object_lookup_id(data['history_object_id']).name
-      data['type']      = type_lookup_id(data['history_type_id']).name
-      data.delete('history_object_id')
-      data.delete('history_type_id')
+    list = histories.map(&:attributes).each do |data|
+      data['object'] = History::Object.lookup(id: data.delete('history_object_id'))&.name
+      data['type']   = History::Type.lookup(id: data.delete('history_type_id'))&.name
 
       if data['history_attribute_id']
-        data['attribute'] = attribute_lookup_id(data['history_attribute_id']).name
+        data['attribute'] = History::Attribute.lookup(id: data.delete('history_attribute_id'))&.name
       end
-      data.delete('history_attribute_id')
+
+      if data['related_history_object_id']
+        data['related_object'] = History::Object.lookup(id: data.delete('related_history_object_id'))&.name
+      end
 
       data.delete('updated_at')
+      data.delete('related_o_id') if data['related_o_id'].nil?
+
       if data['id_to'].nil? && data['id_from'].nil?
-        data.delete('id_to')
         data.delete('id_from')
+        data.delete('id_to')
       end
+
       if data['value_to'].nil? && data['value_from'].nil?
-        data.delete('value_to')
         data.delete('value_from')
+        data.delete('value_to')
       end
-      if !data['related_history_object_id'].nil?
-        data['related_object'] = object_lookup_id(data['related_history_object_id']).name
-      end
-      data.delete('related_history_object_id')
-
-      if data['related_o_id'].nil?
-        data.delete('related_o_id')
-      end
-
-      list.push data
     end
-    if assets
-      return {
-        list:   list,
-        assets: asset_list,
-      }
-    end
-    list
-  end
 
-  def self.type_lookup_id(id)
-    History::Type.lookup(id: id)
+    return list if !assets
+
+    {
+      list:   list,
+      assets: histories.reduce({}) { |memo, obj| obj.assets(memo) }
+    }
   end
 
   def self.type_lookup(name)
@@ -227,10 +208,6 @@ returns
     History::Type.create!(name: name)
   end
 
-  def self.object_lookup_id(id)
-    History::Object.lookup(id: id)
-  end
-
   def self.object_lookup(name)
     # lookup
     history_object = History::Object.lookup(name: name)
@@ -238,10 +215,6 @@ returns
 
     # create
     History::Object.create!(name: name)
-  end
-
-  def self.attribute_lookup_id(id)
-    History::Attribute.lookup(id: id)
   end
 
   def self.attribute_lookup(name)
@@ -253,13 +226,7 @@ returns
     History::Attribute.create!(name: name)
   end
 
-  class Object < ApplicationModel
-  end
-
-  class Type < ApplicationModel
-  end
-
-  class Attribute < ApplicationModel
-  end
-
+  class Object < ApplicationModel; end
+  class Type < ApplicationModel; end
+  class Attribute < ApplicationModel; end
 end
