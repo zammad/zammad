@@ -112,10 +112,6 @@ class App.UiElement.postmaster_match
             name:     'List-Archive'
           },
           {
-            value:    'mailing-list'
-            name:     'Mailing-List'
-          },
-          {
             value:    'message-id'
             name:     'Message-Id'
           },
