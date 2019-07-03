@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'system/examples/text_modules_group_dependency_examples'
+
 RSpec.describe 'Ticket Create', type: :system do
   context 'when applying ticket templates' do
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
@@ -29,5 +31,9 @@ RSpec.describe 'Ticket Create', type: :system do
       click '.sidebar-content .js-apply'
       expect(page).not_to have_selector 'select[name="group_id"]'
     end
+  end
+
+  context 'when using text modules' do
+    include_examples 'group-dependent text modules', path: 'ticket/create'
   end
 end

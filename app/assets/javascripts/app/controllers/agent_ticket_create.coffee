@@ -358,6 +358,7 @@ class App.TicketCreate extends App.Controller
       data:
         config: App.Config.all()
         user: App.Session.get()
+      taskKey: @taskKey
     )
 
     $('#tags').tokenfield()

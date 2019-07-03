@@ -29,6 +29,7 @@ class Edit extends App.ObserverController
         formMeta:       @formMeta
         params:         defaults
         isDisabled:     !ticket.editable()
+        taskKey:        @taskKey
         #bookmarkable:  true
       )
     else
@@ -41,6 +42,7 @@ class Edit extends App.ObserverController
         formMeta:       @formMeta
         params:         defaults
         isDisabled:     ticket.editable()
+        taskKey:        @taskKey
         #bookmarkable:  true
       )
 
@@ -122,6 +124,7 @@ class SidebarTicket extends App.Controller
       taskGet:   @taskGet
       formMeta:  @formMeta
       markForm:  @markForm
+      taskKey:   @taskKey
     )
 
     if @permissionCheck('ticket.agent')

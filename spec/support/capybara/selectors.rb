@@ -17,5 +17,5 @@ Capybara.add_selector(:clues_close) do
 end
 
 Capybara.add_selector(:richtext) do
-  css { |name| "div[data-name=#{name}]" }
+  css { |name| "div[data-name=#{name || 'body'}]" }
 end

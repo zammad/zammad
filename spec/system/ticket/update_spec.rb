@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require 'system/examples/text_modules_group_dependency_examples'
+
 RSpec.describe 'Ticket Update', type: :system do
 
   let(:group) { Group.find_by(name: 'Users') }
@@ -83,7 +85,7 @@ RSpec.describe 'Ticket Update', type: :system do
                                })
 
       # refresh browser to get macro accessable
-      page.driver.browser.navigate.refresh
+      refresh
 
       # create a new ticket and attempt to update its state without the required select attribute
       ticket = create(:ticket, group: group)
@@ -134,5 +136,9 @@ RSpec.describe 'Ticket Update', type: :system do
         expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
       end
     end
+  end
+
+  context 'when using text modules' do
+    include_examples 'group-dependent text modules', path:  "#ticket/zoom/#{Ticket.first.id}"
   end
 end

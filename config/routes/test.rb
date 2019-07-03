@@ -21,6 +21,7 @@ Zammad::Application.routes.draw do
   match '/tests_html_utils',                  to: 'tests#html_utils',                 via: :get
   match '/tests_ticket_selector',             to: 'tests#ticket_selector',            via: :get
   match '/tests_taskbar',                     to: 'tests#taskbar',                    via: :get
+  match '/tests_text_module',                 to: 'tests#text_module',                via: :get
   match '/tests/wait/:sec',                   to: 'tests#wait',                       via: :get
   match '/tests/unprocessable_entity',        to: 'tests#error_unprocessable_entity', via: :get
   match '/tests/not_authorized',              to: 'tests#error_not_authorized',       via: :get

@@ -66,6 +66,25 @@ module CommonActions
     find('.user-menu .user a')[:title]
   end
 
+  # Returns the User record for the currently logged in user.
+  #
+  # @example
+  #  current_user.login
+  # => 'master@example.com'
+  #
+  # @example
+  #  current_user do |user|
+  #    user.group_names_access_map = group_names_access_map
+  #    user.save!
+  #  end
+  #
+  # @return [User] the current user record.
+  def current_user
+    ::User.find_by(login: current_login).tap do |user|
+      yield user if block_given?
+    end
+  end
+
   # Logs out the currently logged in user.
   #
   # @example

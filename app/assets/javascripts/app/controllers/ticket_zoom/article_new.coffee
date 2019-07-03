@@ -236,8 +236,9 @@ class App.TicketZoomArticleNew extends App.Controller
         el: @$('.js-textarea').parent()
         data:
           ticket: ticket
-          user: App.Session.get()
+          user:   App.Session.get()
           config: App.Config.all()
+        taskKey: @taskKey
       )
       callback = (ticket) ->
         textModule.reload(
