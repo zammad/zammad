@@ -3,6 +3,7 @@ require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_lookup_examples'
 require 'models/concerns/has_history_examples'
+require 'models/concerns/has_tags_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 
@@ -11,6 +12,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanLookup'
   it_behaves_like 'HasHistory', history_relation_object: 'Ticket::Article'
+  it_behaves_like 'HasTags'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
 
