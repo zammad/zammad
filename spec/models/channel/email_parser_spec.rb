@@ -978,5 +978,23 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    describe 'suppressing normal Ticket::Article callbacks' do
+      context 'from sender: "Agent"' do
+        let(:agent) { create(:agent_user) }
+
+        it 'does not dispatch an email on article creation' do
+          expect(TicketArticleCommunicateEmailJob).not_to receive(:perform_later)
+
+          described_class.new.process({}, <<~RAW.chomp)
+            From: #{agent.email}
+            To: customer@example.com
+            Subject: some subject
+
+            Some Text
+          RAW
+        end
+      end
+    end
   end
 end

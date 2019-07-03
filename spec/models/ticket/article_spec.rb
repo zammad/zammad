@@ -403,6 +403,64 @@ RSpec.describe Ticket::Article, type: :model do
         end
       end
     end
+
+    describe 'Sending of outgoing emails', performs_jobs: true do
+      subject(:article) { create(:ticket_article, type_name: type, sender_name: sender) }
+
+      shared_examples 'sends email' do
+        it 'dispatches an email on creation (via TicketArticleCommunicateEmailJob)' do
+          expect { article }
+            .to have_enqueued_job(TicketArticleCommunicateEmailJob)
+        end
+      end
+
+      shared_examples 'does not send email' do
+        it 'does not dispatch an email' do
+          expect { article }
+            .not_to have_enqueued_job(TicketArticleCommunicateEmailJob)
+        end
+      end
+
+      context 'with "application_server" application handle', application_handle: 'application_server' do
+        context 'for type: "email"' do
+          let(:type) { 'email' }
+
+          context 'from sender: "Agent"' do
+            let(:sender) { 'Agent' }
+
+            include_examples 'sends email'
+          end
+
+          context 'from sender: "Customer"' do
+            let(:sender) { 'Customer' }
+
+            include_examples 'does not send email'
+          end
+        end
+
+        context 'for any other type' do
+          let(:type) { 'sms' }
+
+          context 'from any sender' do
+            let(:sender) { 'Agent' }
+
+            include_examples 'does not send email'
+          end
+        end
+      end
+
+      context 'with "*.postmaster" application handle', application_handle: 'scheduler.postmaster' do
+        context 'for any type' do
+          let(:type) { 'email' }
+
+          context 'from any sender' do
+            let(:sender) { 'Agent' }
+
+            include_examples 'does not send email'
+          end
+        end
+      end
+    end
   end
 
   describe 'clone attachments' do

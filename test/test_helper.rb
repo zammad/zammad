@@ -74,23 +74,4 @@ class ActiveSupport::TestCase
     count
   end
 
-  def email_count(recipient)
-
-    # read config file and count & recipients
-    file = Rails.root.join('log', "#{Rails.env}.log")
-    lines = []
-    IO.foreach(file) do |line|
-      lines.push line
-    end
-    count = 0
-    lines.reverse_each do |line|
-      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
-      next if line !~ /Send email to:/
-      next if line !~ /to:\s'#{recipient}'/
-
-      count += 1
-    end
-    count
-  end
-
 end
