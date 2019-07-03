@@ -5,7 +5,7 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_search?term=abc
   def search
-    list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order(name: :asc).limit(params[:limit] || 10)
+    list = Tag::Item.where('name_downcase LIKE ?', "%#{params[:term].strip.downcase}%").order(name: :asc).limit(params[:limit] || 10)
     results = []
     list.each do |item|
       result = {
