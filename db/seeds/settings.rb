@@ -46,7 +46,7 @@ Setting.create_if_not_exists(
   title:       'Maintenance Login',
   name:        'maintenance_login',
   area:        'Core::WebApp',
-  description: 'Put a message on the login page. To change it, click on the text area below and change it inline.',
+  description: 'Put a message on the login page. To change it, click on the text area below and change it in-line.',
   options:     {},
   state:       false,
   preferences: {
