@@ -2,11 +2,12 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '2.5.5'
-gem 'rails', '5.1.7'
+gem 'rails', '5.2.3'
 
 # core - rails additions
 gem 'activerecord-import'
 gem 'activerecord-session_store'
+gem 'bootsnap', require: false
 gem 'composite_primary_keys'
 gem 'json'
 gem 'rails-observers'

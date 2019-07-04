@@ -137,11 +137,17 @@ returns
         users = if params[:role_ids]
                   User.joins(:roles).where('roles.id' => params[:role_ids]).where(
                     '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order(order_sql).offset(offset).limit(limit)
+                  )
+                  .order(Arel.sql(order_sql))
+                  .offset(offset)
+                  .limit(limit)
                 else
                   User.where(
                     '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order(order_sql).offset(offset).limit(limit)
+                  )
+                  .order(Arel.sql(order_sql))
+                  .offset(offset)
+                  .limit(limit)
                 end
         users
       end

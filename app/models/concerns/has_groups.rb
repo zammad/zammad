@@ -72,7 +72,7 @@ module HasGroups
     access   = self.class.ensure_group_access_list_parameter(access)
 
     # check direct access
-    return true if group_through.klass.includes(:group).exists?(
+    return true if group_through.klass.eager_load(:group).exists?(
       group_through.foreign_key => id,
       group_id: group_id,
       access: access,
@@ -108,13 +108,13 @@ module HasGroups
     klass       = group_through.klass
 
     # check direct access
-    ids   = klass.includes(:group).where(foreign_key => id, access: access, groups: { active: true }).pluck(:group_id)
+    ids   = klass.eager_load(:group).where(foreign_key => id, access: access, groups: { active: true }).pluck(:group_id)
     ids ||= []
 
     # check indirect access through roles if possible
     return ids if !respond_to?(:role_ids)
 
-    role_group_ids = RoleGroup.includes(:group).where(role_id: role_ids, access: access, groups: { active: true }).pluck(:group_id)
+    role_group_ids = RoleGroup.eager_load(:group).where(role_id: role_ids, access: access, groups: { active: true }).pluck(:group_id)
 
     # combines and removes duplicates
     # and returns them in one statement

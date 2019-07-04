@@ -113,8 +113,8 @@ RSpec.describe Cti::CallerId do
       context 'shared by multiple CallerIds' do
         context '(for different users)' do
           subject!(:caller_ids) do
-            [create(:caller_id, caller_id: number, user: User.last),
-             create(:caller_id, caller_id: number, user: User.offset(1).last)]
+            [create(:caller_id, caller_id: number, user: create(:user)),
+             create(:caller_id, caller_id: number, user: create(:user))]
           end
 
           it 'returns all corresponding CallerId records' do
@@ -132,9 +132,8 @@ RSpec.describe Cti::CallerId do
 
         context '(some for the same user, some for another)' do
           subject!(:caller_ids) do
-            [create(:caller_id, caller_id: number, user: User.last),
-             create(:caller_id, caller_id: number, user: User.last),
-             create(:caller_id, caller_id: number, user: User.offset(1).last)]
+            [*create_list(:caller_id, 2, caller_id: number, user: create(:user)),
+             create(:caller_id, caller_id: number, user: create(:user))]
           end
 
           it 'returns one CallerId record per unique #user_id, by MAX(id)' do

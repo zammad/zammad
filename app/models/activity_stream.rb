@@ -5,8 +5,8 @@ class ActivityStream < ApplicationModel
   self.table_name = 'activity_streams'
 
   # rubocop:disable Rails/InverseOf
-  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'activity_stream_object_id'
-  belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'activity_stream_type_id'
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'activity_stream_object_id', optional: true
+  belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'activity_stream_type_id', optional: true
   # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects

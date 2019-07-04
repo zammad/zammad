@@ -3,7 +3,7 @@
 class Channel < ApplicationModel
   include Channel::Assets
 
-  belongs_to :group
+  belongs_to :group, optional: true
 
   store :options
   store :preferences

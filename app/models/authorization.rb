@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Authorization < ApplicationModel
-  belongs_to    :user
+  belongs_to    :user, optional: true
   after_create  :delete_user_cache
   after_update  :delete_user_cache
   after_destroy :delete_user_cache

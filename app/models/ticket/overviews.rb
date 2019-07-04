@@ -121,9 +121,9 @@ returns
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
                             .joins(tables)
-                            .order("#{order_by} #{direction}")
+                            .order(Arel.sql("#{order_by} #{direction}"))
                             .limit(2000)
-                            .pluck(:id, :updated_at, order_by)
+                            .pluck(:id, :updated_at, Arel.sql(order_by))
 
       tickets = ticket_result.map do |ticket|
         {

@@ -1886,7 +1886,7 @@ RSpec.describe String do
             .to raise_error(Encoding::InvalidByteSequenceError)
 
           expect { subject.utf8_encode(from: 'gb2312') }
-            .not_to raise_error(Encoding::InvalidByteSequenceError)
+            .not_to raise_error
         end
 
         it 'uses the detected input encoding instead' do

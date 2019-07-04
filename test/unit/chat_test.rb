@@ -49,6 +49,8 @@ class ChatTest < ActiveSupport::TestCase
   # see: https://github.com/zammad/zammad/issues/2353
   test 'chat event db connection test' do
 
+    skip "Can't properly disconnect while Spring is in use." if defined?(Spring)
+
     class DummyWs
       def send(msg)
         Rails.logger.info "WS send: #{msg}"

@@ -9,5 +9,5 @@ class Sla < ApplicationModel
   store      :condition
   store      :data
   validates  :name, presence: true
-  belongs_to :calendar
+  belongs_to :calendar, optional: true
 end

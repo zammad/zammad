@@ -134,7 +134,7 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push("#{ActiveRecord::Base.connection.quote_table_name(assoc.table_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}")
+      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(assoc.table_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 

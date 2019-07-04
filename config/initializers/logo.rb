@@ -1,6 +1,7 @@
+return if !ActiveRecord::Base.connected?
+
 # sync logo to fs / only if settings already exists
-if ActiveRecord::Base.connection.tables.include?('settings')
-  if Setting.column_names.include?('state_current')
-    StaticAssets.sync
-  end
-end
+return if ActiveRecord::Base.connection.tables.exclude?('settings')
+return if Setting.column_names.exclude?('state_current')
+
+StaticAssets.sync

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Karma::ActivityLog < ApplicationModel
-  belongs_to :object_lookup
+  belongs_to :object_lookup, optional: true
 
   self.table_name = 'karma_activity_logs'
 

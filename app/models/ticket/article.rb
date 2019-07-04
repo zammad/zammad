@@ -11,13 +11,13 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::ChecksAccess
   include Ticket::Article::Assets
 
-  belongs_to :ticket
+  belongs_to :ticket, optional: true
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article
-  belongs_to :type,       class_name: 'Ticket::Article::Type'
-  belongs_to :sender,     class_name: 'Ticket::Article::Sender'
-  belongs_to :created_by, class_name: 'User'
-  belongs_to :updated_by, class_name: 'User'
-  belongs_to :origin_by,  class_name: 'User'
+  belongs_to :type,       class_name: 'Ticket::Article::Type', optional: true
+  belongs_to :sender,     class_name: 'Ticket::Article::Sender', optional: true
+  belongs_to :created_by, class_name: 'User', optional: true
+  belongs_to :updated_by, class_name: 'User', optional: true
+  belongs_to :origin_by,  class_name: 'User', optional: true
 
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5

@@ -31,7 +31,7 @@ module CanBePublished
       local  = "#{scope_name}_by".to_sym
       remote = inverse_relation_name(scope_name).to_sym
 
-      belongs_to local, class_name: 'User', inverse_of: remote
+      belongs_to local, class_name: 'User', inverse_of: remote, optional: true
 
       User.has_many remote, class_name: model_name, inverse_of: local, foreign_key: "#{local}_id"
       User.association_attributes_ignored remote

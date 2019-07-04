@@ -190,7 +190,7 @@ returns
                             .where(access_condition)
                             .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
                             .joins(:articles)
-                            .order(order_sql)
+                            .order(Arel.sql(order_sql))
                             .offset(offset)
                             .limit(limit)
       else
@@ -199,7 +199,7 @@ returns
                             .joins(tables)
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
-                            .order(order_sql)
+                            .order(Arel.sql(order_sql))
                             .offset(offset)
                             .limit(limit)
       end

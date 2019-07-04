@@ -22,7 +22,8 @@ class KnowledgeBase::Category < ApplicationModel
   belongs_to :parent,   class_name:  'KnowledgeBase::Category',
                         foreign_key: :parent_id,
                         inverse_of:  :children,
-                        touch:       true
+                        touch:       true,
+                        optional:    true
 
   validates :category_icon, presence: true
 

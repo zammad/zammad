@@ -53,7 +53,7 @@ returns
           Cti::CallerId.select('MAX(id) as caller_id')
                        .where({ caller_id: caller_id, level: level }.compact)
                        .group(:user_id)
-                       .order('caller_id DESC') # not used as `caller_id: :desc` because is needed for `as caller_id`
+                       .order(Arel.sql('caller_id DESC')) # not used as `caller_id: :desc` because is needed for `as caller_id`
                        .limit(20)
                        .map(&:caller_id)
         end.find(&:present?)

@@ -8,8 +8,8 @@ class Group < ApplicationModel
   include HasHistory
   include HasObjectManagerAttributesValidation
 
-  belongs_to :email_address
-  belongs_to :signature
+  belongs_to :email_address, optional: true
+  belongs_to :signature, optional: true
 
   validates :name, presence: true
 

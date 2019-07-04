@@ -2,7 +2,7 @@
 
 class Token < ActiveRecord::Base
   before_create :generate_token
-  belongs_to    :user
+  belongs_to    :user, optional: true
   store         :preferences
 
 =begin

@@ -2,6 +2,9 @@ module ApplicationController::PreventsCsrf
   extend ActiveSupport::Concern
 
   included do
+    # disable Rails default (>= 5.2) CSRF checks
+    skip_before_action :verify_authenticity_token, raise: false
+
     before_action :verify_csrf_token
     after_action  :set_csrf_token_headers
   end

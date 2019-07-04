@@ -2,8 +2,8 @@
 
 class Link < ApplicationModel
 
-  belongs_to :link_type,   class_name: 'Link::Type'
-  belongs_to :link_object, class_name: 'Link::Object'
+  belongs_to :link_type,   class_name: 'Link::Type', optional: true
+  belongs_to :link_object, class_name: 'Link::Object', optional: true
 
   after_destroy :touch_link_references
 

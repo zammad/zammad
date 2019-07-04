@@ -102,7 +102,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     handler_attempts_map = {}
     failed_jobs.order(:created_at).limit(10).each do |job|
 
-      job_name = if job.name == 'ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper'.freeze
+      job_name = if job.class.name == 'Delayed::Backend::ActiveRecord::Job'.freeze && job.payload_object.respond_to?(:job_data)
                    job.payload_object.job_data['job_class']
                  else
                    job.name

@@ -6,9 +6,9 @@ class History < ApplicationModel
 
   self.table_name = 'histories'
 
-  belongs_to :history_type,      class_name: 'History::Type'
-  belongs_to :history_object,    class_name: 'History::Object'
-  belongs_to :history_attribute, class_name: 'History::Attribute'
+  belongs_to :history_type,      class_name: 'History::Type', optional: true
+  belongs_to :history_object,    class_name: 'History::Object', optional: true
+  belongs_to :history_attribute, class_name: 'History::Attribute', optional: true
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of

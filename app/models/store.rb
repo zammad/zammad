@@ -5,8 +5,8 @@ require_dependency 'store/file'
 
 class Store < ApplicationModel
 
-  belongs_to :store_object, class_name: 'Store::Object'
-  belongs_to :store_file,   class_name: 'Store::File'
+  belongs_to :store_object, class_name: 'Store::Object', optional: true
+  belongs_to :store_file,   class_name: 'Store::File', optional: true
 
   validates :filename, presence: true
 

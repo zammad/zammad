@@ -1,4 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+require_dependency 'karma/user'
+
 class User < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
@@ -20,7 +22,7 @@ class User < ApplicationModel
   has_and_belongs_to_many :organizations,  after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   has_many                :tokens,         after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
-  belongs_to              :organization,   inverse_of: :members
+  belongs_to              :organization,   inverse_of: :members, optional: true
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_validation :check_mail_delivery_failed, on: :update

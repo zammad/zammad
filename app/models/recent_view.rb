@@ -4,8 +4,8 @@ class RecentView < ApplicationModel
   include RecentView::Assets
 
   # rubocop:disable Rails/InverseOf
-  belongs_to :ticket, foreign_key: 'o_id'
-  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id'
+  belongs_to :ticket, foreign_key: 'o_id', optional: true
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id', optional: true
   # rubocop:enable Rails/InverseOf
 
   after_create  :notify_clients
@@ -42,7 +42,7 @@ class RecentView < ApplicationModel
                                      'MAX(id) as id')
                              .group(:o_id, :recent_view_object_id, :created_by_id)
                              .where(created_by_id: user.id)
-                             .order('MAX(created_at) DESC, MAX(id) DESC')
+                             .order(Arel.sql('MAX(created_at) DESC, MAX(id) DESC'))
                              .limit(limit)
 
     if object_name.present?

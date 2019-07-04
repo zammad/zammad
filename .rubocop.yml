@@ -268,3 +268,11 @@ Layout/MultilineMethodCallIndentation:
 Style/HashSyntax:
   Exclude:
     - "**/*.rake"
+
+Rails/Exit:
+  Exclude:
+    - "config/initializers/*.rb"
+
+Rails/Output:
+  Exclude:
+    - "config/initializers/*.rb"

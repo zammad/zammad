@@ -22,7 +22,7 @@ class ObjectManager::Attribute < ApplicationModel
 
   self.table_name = 'object_manager_attributes'
 
-  belongs_to :object_lookup
+  belongs_to :object_lookup, optional: true
 
   validates :name, presence: true
   validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
