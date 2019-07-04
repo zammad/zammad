@@ -393,5 +393,12 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
     end
+
+    it 'does session auth - admin - only with valid CSRF token' do
+      create(:admin_user, login: 'api-admin@example.com', password: 'adminpw')
+
+      post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 end
