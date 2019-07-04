@@ -1,5 +1,7 @@
 require 'rake'
 
+# if you make changes, then please also change this file 'spec/support/searchindex_backend.rb'
+# this is required as long as our test suite is made of RSpec and MiniTest
 module SearchindexHelper
 
   def self.included(base)

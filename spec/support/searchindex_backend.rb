@@ -1,4 +1,20 @@
+require 'rake'
+
+# if you make changes, then please also change this file 'test/support/searchindex_helper.rb'
+# this is required as long as our test suite is made of RSpec and MiniTest
 module SearchindexBackendHelper
+
+  def self.included(base)
+    # Execute in RSpec class context
+    base.class_exec do
+
+      after(:each) do
+        next if ENV['ES_URL'].blank?
+
+        Rake::Task['searchindex:drop'].execute
+      end
+    end
+  end
 
   def configure_elasticsearch(required: false)
     if ENV['ES_URL'].blank?
@@ -16,7 +32,7 @@ module SearchindexBackendHelper
 
     if ENV['ES_INDEX_RAND'].present?
       rand_id          = ENV.fetch('CI_JOB_ID', "r#{rand(999)}")
-      test_method_name = subject.gsub(/[^\w]/, '_')
+      test_method_name = self.class.description.gsub(/[^\w]/, '_')
       ENV['ES_INDEX']  = "es_index_#{test_method_name}_#{rand_id}_#{rand(999_999_999)}"
     end
     if ENV['ES_INDEX'].blank?
@@ -32,21 +48,11 @@ module SearchindexBackendHelper
   end
 
   def rebuild_searchindex
+    Rake::Task.clear
+    Zammad::Application.load_tasks
     Rake::Task['searchindex:rebuild'].execute
   end
 
-  def self.included(base)
-
-    # Execute in RSpec class context
-    base.class_exec do
-
-      after(:each) do
-        next if ENV['ES_URL'].blank?
-
-        Rake::Task['searchindex:drop'].execute
-      end
-    end
-  end
 end
 
 RSpec.configure do |config|

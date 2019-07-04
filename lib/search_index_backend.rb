@@ -331,7 +331,7 @@ remove whole data from index
     return [] if query.blank?
 
     url = build_url
-    return if url.blank?
+    return [] if url.blank?
 
     url += build_search_url(index)
 
@@ -735,9 +735,11 @@ return true if backend is configured
     if Setting.get('es_multi_index') == false
       url = Setting.get('es_url')
       url = if type
-              url_pipline = Setting.get('es_pipeline')
-              if url_pipline.present?
-                url_pipline = "?pipeline=#{url_pipline}"
+              if pipeline == true
+                url_pipline = Setting.get('es_pipeline')
+                if url_pipline.present?
+                  url_pipline = "?pipeline=#{url_pipline}"
+                end
               end
               if o_id
                 "#{url}/#{index}/#{type}/#{o_id}#{url_pipline}"

@@ -1,6 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe SearchIndexBackend do
+RSpec.describe SearchIndexBackend, searchindex: true do
+
+  before do
+    configure_elasticsearch
+    rebuild_searchindex
+  end
+
   describe '.build_query' do
     subject(:query) { described_class.build_query('', query_extension: params) }
 
@@ -20,7 +26,7 @@ RSpec.describe SearchIndexBackend do
       context 'on a single index' do
         let(:index) { 'User' }
 
-        it { is_expected.to be_nil }
+        it { is_expected.to be_an(Array).and be_empty }
       end
 
       context 'on multiple indices' do
@@ -96,6 +102,30 @@ RSpec.describe SearchIndexBackend do
       it 'returns the original query verbatim' do
         expect(queries.map(&described_class.method(:append_wildcard_to_simple_query)))
           .to eq(queries)
+      end
+    end
+  end
+
+  describe '.remove' do
+    context 'ticket' do
+      it 'from index after ticket delete' do
+
+        skip('No ES configured') if !SearchIndexBackend.enabled?
+
+        ticket = create :ticket
+        described_class.add('Ticket', ticket)
+
+        # give es time to rebuild index
+        sleep 2
+        result = described_class.search(ticket.number, 'Ticket', sort_by: ['updated_at'], order_by: ['desc'])
+        expect(result).to eq([{ id: ticket.id.to_s, type: 'Ticket' }])
+
+        described_class.remove('Ticket', ticket.id)
+        # give es time to rebuild index
+        sleep 2
+
+        result = described_class.search(ticket.number, 'Ticket', sort_by: ['updated_at'], order_by: ['desc'])
+        expect(result).to eq([])
       end
     end
   end
