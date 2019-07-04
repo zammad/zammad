@@ -262,17 +262,3 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   Include:
     - "**/*_spec.rb"
-
-# Special exceptions
-
-Style/HashSyntax:
-  Exclude:
-    - "**/*.rake"
-
-Rails/Exit:
-  Exclude:
-    - "config/initializers/*.rb"
-
-Rails/Output:
-  Exclude:
-    - "config/initializers/*.rb"
