@@ -102,7 +102,7 @@ pre:bundle-audit:
   script:
     - gem install bundler-audit
     - bundle-audit update
-    - bundle-audit
+    - bundle-audit --ignore CVE-2015-9284
 
 pre:github:
   <<: *pre_stage

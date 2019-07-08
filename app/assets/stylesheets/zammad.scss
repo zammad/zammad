@@ -2969,9 +2969,14 @@ ol.tabs li {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: -10px;
+  
+  > form {
+    width: calc(33.33% - 6px);
+  }
 }
 
 .auth-provider {
+  width: 100%;
   height: 40px;
   padding: 0 10px 0 7px;
   margin-bottom: 10px;
@@ -2981,7 +2986,8 @@ ol.tabs li {
   display: flex;
   align-items: center;
   text-decoration: none;
-  width: calc(33.33% - 6px);
+  border: none;
+  text-align: initial;
 
   &.auth-provider--wide {
     padding-right: 25px;

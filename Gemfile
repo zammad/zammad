@@ -64,7 +64,9 @@ gem 'doorkeeper'
 gem 'oauth2'
 
 # authentication - third party
-gem 'omniauth'
+gem 'omniauth-rails_csrf_protection'
+
+# authentication - third party providers
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-gitlab'

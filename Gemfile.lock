@@ -340,6 +340,9 @@ GEM
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    omniauth-rails_csrf_protection (0.1.2)
+      actionpack (>= 4.2)
+      omniauth (>= 1.3.1)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
@@ -596,7 +599,6 @@ DEPENDENCIES
   mysql2 (= 0.4.10)
   net-ldap
   oauth2
-  omniauth
   omniauth-facebook
   omniauth-github
   omniauth-gitlab
@@ -604,6 +606,7 @@ DEPENDENCIES
   omniauth-linkedin-oauth2
   omniauth-microsoft-office365
   omniauth-oauth2
+  omniauth-rails_csrf_protection
   omniauth-twitter
   omniauth-weibo-oauth2
   pg (= 0.21.0)

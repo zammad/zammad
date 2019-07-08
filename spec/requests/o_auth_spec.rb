@@ -5,7 +5,7 @@ RSpec.describe 'OAuth', type: :request do
   describe 'request handling' do
 
     it 'does o365 - start' do
-      get '/auth/microsoft_office365'
+      post '/auth/microsoft_office365'
       expect(response).to have_http_status(:found)
       expect(response.body).to include('https://login.microsoftonline.com/common/oauth2/v2.0/authorize')
       expect(response.body).to include('redirect_uri=http%3A%2F%2Fzammad.example.com%2Fauth%2Fmicrosoft_office365%2Fcallback')

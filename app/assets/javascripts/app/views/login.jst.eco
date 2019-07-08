@@ -48,21 +48,24 @@
             <% end %>
           </div>
 
-          <% if !_.isEmpty(@auth_providers): %>
+        </form>
+        <% if !_.isEmpty(@auth_providers): %>
           <div class="separator">
             <span class="separator-text"><%- @T('or sign in using') %></span>
           </div>
 
           <div class="auth-providers">
             <% for auth_provider in @auth_providers: %>
-              <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
-                <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
-                <span class="provider-name"><%- @T(auth_provider.name) %></span>
-              </a>
+              <form method="post" action="<%= auth_provider.url %>">
+                <input type="hidden" name="authenticity_token" value="<%= Spine.Ajax.defaults.headers['X-CSRF-Token'] %>">
+                <button type="submit" class="auth-provider auth-provider--<%= auth_provider.class %>">
+                  <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
+                  <span class="provider-name"><%- @T(auth_provider.name) %></span>
+                </button>
+              </form>
             <% end %>
           </div>
-          <% end %>
-        </form>
+        <% end %>
       </div>
 
       <p>
