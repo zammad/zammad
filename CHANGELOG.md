@@ -1,5 +1,20 @@
 # Change Log
 
+## [3.0.1](https://github.com/zammad/zammad/tree/3.0.1) (2019-07-10)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.0.0...3.0.1)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+- Concern 'CanLatestChange' returns wrong updated_at  [2624](https://github.com/zammad/zammad/issues/2624) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Tree Select shows empty value in ticket zoom after submit when value contains trailing spaces [2614](https://github.com/zammad/zammad/issues/2614) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- KB partly broken on IE11 - customer interface [2600](https://github.com/zammad/zammad/issues/2600) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Wrong date format in Excel Exports of reporting download [2594](https://github.com/zammad/zammad/issues/2594) [[bug](https://github.com/zammad/zammad/labels/bug)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+- Edit-Buttons on customer interface (as agent) has wrong link (Blank-Page) [2604](https://github.com/zammad/zammad/issues/2604) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Activation of Knowledgebase is impossible on IE11 - agent interface [2599](https://github.com/zammad/zammad/issues/2599) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Existing scheduler email notification without `body` will raise an exception. [2541](https://github.com/zammad/zammad/issues/2541) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- trigger email notification UI defective on removal of recipient [2516](https://github.com/zammad/zammad/issues/2516) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+
 ## [3.0.0](https://github.com/zammad/zammad/tree/3.0.0) (2019-06-06)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.9.0...3.0.0)
 
