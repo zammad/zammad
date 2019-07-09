@@ -6,84 +6,33 @@ class Integration::SipgateController < ApplicationController
   before_action :check_configured
 
   # notify about inbound call / block inbound call
-  def in
-    if params['event'] == 'newCall'
-      config_inbound = config_integration[:inbound] || {}
-      block_caller_ids = config_inbound[:block_caller_ids] || []
+  def event
 
-      # check if call need to be blocked
-      block_caller_ids.each do |item|
-        next if item[:caller_id] != params['from']
+    local_params = ActiveSupport::HashWithIndifferentAccess.new(params.permit!.to_h)
 
-        xml = Builder::XmlMarkup.new(indent: 2)
-        xml.instruct!
-        content = xml.Response(onHangup: url, onAnswer: url) do
-          xml.Reject('reason' => 'busy')
-        end
+    cti = Cti::Driver::SipgateIo.new(params: local_params, config: config_integration)
 
-        send_data content, type: 'application/xml; charset=UTF-8;'
+    result = cti.process
 
-        #params['Reject'] = 'busy'
-        params['comment'] = 'reject, busy'
-        if params['user']
-          params['comment'] = "#{params['user']} -> reject, busy"
-        end
-        Cti::Log.process(params)
-        return true
-      end
+    # check if inbound call should get rejected
+    if result[:action] == 'reject'
+      response_reject(result)
+      return true
     end
 
-    Cti::Log.process(params)
-
-    xml = Builder::XmlMarkup.new(indent: 2)
-    xml.instruct!
-    content = xml.Response(onHangup: url, onAnswer: url)
-    send_data content, type: 'application/xml; charset=UTF-8;'
-  end
-
-  # set caller id of outbound call
-  def out
-    config_outbound = config_integration[:outbound]
-    routing_table = nil
-    default_caller_id = nil
-    if config_outbound.present?
-      routing_table = config_outbound[:routing_table]
-      default_caller_id = config_outbound[:default_caller_id]
+    # check if oubound call change the outbound caller_id
+    if result[:action] == 'set_caller_id'
+      response_set_caller_id(result)
+      return true
     end
 
-    xml = Builder::XmlMarkup.new(indent: 2)
-    xml.instruct!
-
-    # set callerId
-    content = nil
-    to      = params[:to]
-    from    = nil
-    if to && routing_table.present?
-      routing_table.each do |row|
-        dest = row[:dest].gsub(/\*/, '.+?')
-        next if to !~ /^#{dest}$/
-
-        from = row[:caller_id]
-        content = xml.Response(onHangup: url, onAnswer: url) do
-          xml.Dial(callerId: from) { xml.Number(params[:to]) }
-        end
-        break
-      end
-      if !content && default_caller_id.present?
-        from = default_caller_id
-        content = xml.Response(onHangup: url, onAnswer: url) do
-          xml.Dial(callerId: default_caller_id) { xml.Number(params[:to]) }
-        end
-      end
-    else
-      content = xml.Response(onHangup: url, onAnswer: url)
+    if result[:action] == 'invalid_direction'
+      response_error('Invalid direction!')
+      return true
     end
 
-    send_data(content, type: 'application/xml; charset=UTF-8;')
-    if from.present?
-      params['from'] = from
-    end
-    Cti::Log.process(params)
+    response_ok(response)
+    true
   end
 
   private
@@ -128,4 +77,30 @@ class Integration::SipgateController < ApplicationController
   def url
     "#{base_url}/#{params['direction']}"
   end
+
+  def response_reject(_result)
+    xml = Builder::XmlMarkup.new(indent: 2)
+    xml.instruct!
+    content = xml.Response(onHangup: url, onAnswer: url) do
+      xml.Reject({ reason: 'busy' })
+    end
+    send_data content, type: 'application/xml; charset=UTF-8;'
+  end
+
+  def response_set_caller_id(result)
+    xml = Builder::XmlMarkup.new(indent: 2)
+    xml.instruct!
+    content = xml.Response(onHangup: url, onAnswer: url) do
+      xml.Dial(callerId: result[:params][:from_caller_id]) { xml.Number(result[:params][:to_caller_id]) }
+    end
+    send_data(content, type: 'application/xml; charset=UTF-8;')
+  end
+
+  def response_ok(_result)
+    xml = Builder::XmlMarkup.new(indent: 2)
+    xml.instruct!
+    content = xml.Response(onHangup: url, onAnswer: url)
+    send_data content, type: 'application/xml; charset=UTF-8;'
+  end
+
 end

@@ -2,7 +2,7 @@
 
   <h2>Placetel <%- @T('Settings') %></h2>
 
-  <p><%- @T('You need to configure the Zammad endpoints in the %s', 'Placetel') %>:<p>
+  <p><%- @T('You need to configure the Zammad endpoints in the %s web interface', 'Placetel') %>:<p>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
@@ -109,5 +109,32 @@
     </table>
   </div>
 -->
+  <h2><%- @T('User assignment to telephones') %></h2>
+
+  <p><%- @T('User assignment to telephones to be able to offer extended like open new ticket screen on answering a call.') %>
+
+  <div class="settings-entry">
+    <table class="settings-list js-userDeviceMap" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="45%"><%- @T('Placetel') %>/<%- @T('Device') %>
+          <th width="45%"><%- @T('Zammad') %>/<%- @T('User') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for row in @config.user_device_map: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="device_id" value="<%= row.device_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="user_id" value="<%= row.user_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="device_id" value="" placeholder="e. g. 777042617425@fpbx.de" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="user_id" value="" placeholder="<%- @Ti('e. g. user@example.com') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
   <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
 </form>

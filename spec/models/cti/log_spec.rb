@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Cti::Log do
-  subject(:log) { create(:'cti/log') }
+  subject(:user) { create(:user, roles: Role.where(name: 'Agent'), phone: phone) }
+
+  let(:phone) { '' }
+  let(:log) { create(:'cti/log') }
 
   describe '.log' do
     it 'returns a hash with :list and :assets keys' do
-      expect(described_class.log).to be_a(Hash).and include(:list, :assets)
+      expect(described_class.log(user)).to match(hash_including(:list, :assets))
     end
 
     context 'when over 60 Log records exist' do
@@ -17,7 +20,7 @@ RSpec.describe Cti::Log do
       end
 
       it 'returns the 60 latest ones in the :list key' do
-        expect(described_class.log[:list]).to match_array(cti_logs.last(60))
+        expect(described_class.log(user)[:list]).to match_array(cti_logs.last(60))
       end
     end
 
@@ -25,10 +28,52 @@ RSpec.describe Cti::Log do
       subject!(:cti_log) { create(:'cti/log', preferences: { from: [caller_id] }) }
 
       let(:caller_id) { create(:caller_id) }
-      let(:user) { User.find_by(id: caller_id.user_id) }
+      let(:caller_user) { User.find_by(id: caller_id.user_id) }
 
       it 'returns a hash of the CallerId Users and their assets in the :assets key' do
-        expect(described_class.log[:assets]).to eq(user.assets({}))
+        expect(described_class.log(user)[:assets]).to eq(caller_user.assets({}))
+      end
+    end
+
+    context 'when a notify map is defined' do
+      subject!(:cti_logs) do
+        [create(:'cti/log', queue: 'queue0'),
+         create(:'cti/log', queue: 'queue2'),
+         create(:'cti/log', queue: 'queue3'),
+         create(:'cti/log', queue: 'queue4')]
+      end
+
+      before do
+        cti_config = Setting.get('cti_config')
+        cti_config[:notify_map] = [ { queue: 'queue4', user_ids: [user.id.to_s] } ]
+        Setting.set('cti_config', cti_config)
+      end
+
+      it 'returns one matching log record' do
+
+        expect(described_class.log(user)[:list]).to match_array([cti_logs[3]])
+      end
+    end
+
+  end
+
+  describe '.push_caller_list_update?' do
+    let!(:existing_logs) { create_list(:'cti/log', 60) }
+    let(:log) { create(:'cti/log') }
+
+    context 'when given log is older than existing logs' do
+      before { travel(-10.seconds) }
+
+      it 'return false' do
+        expect(described_class.push_caller_list_update?(log)).to eq false
+      end
+    end
+
+    context 'when given log is newer than existing logs' do
+      before { travel(10.seconds) }
+
+      it 'return true' do
+        expect(described_class.push_caller_list_update?(log)).to eq true
       end
     end
   end
@@ -52,12 +97,25 @@ RSpec.describe Cti::Log do
       let(:event) { 'newCall' }
 
       context 'with unrecognized "call_id"' do
-        it 'creates a new Log record (#state: "newCall", #done: false)' do
+        it 'creates a new Log record' do
           expect { described_class.process(attributes) }
             .to change(described_class, :count).by(1)
 
           expect(described_class.last.attributes)
-            .to include('state' => 'newCall', 'done' => false)
+            .to include(
+              'call_id'      => '1',
+              'state'        => 'newCall',
+              'done'         => false,
+              'queue'        => '49123457',
+              'from'         => '49123456',
+              'from_comment' => nil,
+              'from_pretty'  => '49123456',
+              'start_at'     => nil,
+              'end_at'       => nil,
+              'to'           => '49123457',
+              'to_comment'   => 'user 1',
+              'to_pretty'    => '49123457'
+            )
         end
 
         context 'for direction "in", with a CallerId record matching the "from" number' do
@@ -178,6 +236,93 @@ RSpec.describe Cti::Log do
         end
       end
     end
+
+    context 'for preferences.from verification' do
+      subject(:log) do
+        described_class.process(attributes)
+      end
+
+      let(:customer_user_of_ticket) { create(:customer_user) }
+      let(:ticket_sample) do
+        create(:ticket_article, created_by_id: customer_user_of_ticket.id, body: 'some text 0123457')
+        Observer::Transaction.commit
+        Scheduler.worker(true)
+      end
+      let(:caller_id) { '0123456' }
+      let(:attributes) do
+        {
+          'cause'     => '',
+          'event'     => 'newCall',
+          'user'      => 'user 1',
+          'from'      => caller_id,
+          'to'        => '49123450',
+          'call_id'   => '1',
+          'direction' => 'in',
+        }
+      end
+
+      context 'with now related customer' do
+        it 'gives no caller information' do
+          expect(log.preferences[:from]).to eq(nil)
+        end
+      end
+
+      context 'with related known customer' do
+        let!(:customer_user) { create(:customer_user, phone: '0123456') }
+
+        it 'gives caller information' do
+          expect(log.preferences[:from].count).to eq(1)
+          expect(log.preferences[:from].first)
+            .to include(
+              'level'   => 'known',
+              'user_id' => customer_user.id,
+            )
+        end
+      end
+
+      context 'with related known customers' do
+        let!(:customer_user1) { create(:customer_user, phone: '0123456') }
+        let!(:customer_user2) { create(:customer_user, phone: '0123456') }
+
+        it 'gives caller information' do
+          expect(log.preferences[:from].count).to eq(2)
+          expect(log.preferences[:from].first)
+            .to include(
+              'level'   => 'known',
+              'user_id' => customer_user2.id,
+            )
+        end
+      end
+
+      context 'with related maybe customer' do
+        let(:caller_id) { '0123457' }
+        let!(:ticket) { ticket_sample }
+
+        it 'gives caller information' do
+          expect(log.preferences[:from].count).to eq(1)
+          expect(log.preferences[:from].first)
+            .to include(
+              'level'   => 'maybe',
+              'user_id' => customer_user_of_ticket.id,
+            )
+        end
+      end
+
+      context 'with related maybe and known customer' do
+        let(:caller_id) { '0123457' }
+        let!(:customer) { create(:customer_user, phone: '0123457') }
+        let!(:ticket) { ticket_sample }
+
+        it 'gives caller information' do
+          expect(log.preferences[:from].count).to eq(1)
+          expect(log.preferences[:from].first)
+            .to include(
+              'level'   => 'known',
+              'user_id' => customer.id,
+            )
+        end
+      end
+    end
   end
 
   describe 'Callbacks -' do
@@ -276,6 +421,71 @@ RSpec.describe Cti::Log do
 
       it 'gives the number unaltered' do
         expect(log.to_pretty).to eq('008')
+      end
+    end
+  end
+
+  describe '.queues_of_user' do
+    context 'without notify_map and no own phone number' do
+      it 'gives an empty array' do
+        expect(described_class.queues_of_user(user, Setting.get('cti_config'))).to eq([])
+      end
+    end
+
+    context 'with notify_map and no own phone number' do
+      before do
+        cti_config = Setting.get('cti_config')
+        cti_config[:notify_map] = [ { queue: 'queue4', user_ids: [user.id.to_s] } ]
+        Setting.set('cti_config', cti_config)
+      end
+
+      it 'gives an array with queue' do
+        expect(described_class.queues_of_user(user, Setting.get('cti_config'))).to eq(['queue4'])
+      end
+    end
+
+    context 'with notify_map and with own phone number' do
+      let(:phone) { '012345678' }
+
+      before do
+        cti_config = Setting.get('cti_config')
+        cti_config[:notify_map] = [ { queue: 'queue4', user_ids: [user.id.to_s] } ]
+        Setting.set('cti_config', cti_config)
+      end
+
+      it 'gives an array with queue and phone number' do
+        expect(described_class.queues_of_user(user, Setting.get('cti_config'))).to eq(%w[queue4 4912345678])
+      end
+    end
+  end
+
+  describe '#best_customer_id_of_log_entry' do
+    subject(:log1) do
+      described_class.process(
+        'event'     => 'newCall',
+        'user'      => 'user 1',
+        'from'      => '01234599',
+        'to'        => '49123450',
+        'call_id'   => '1',
+        'direction' => 'in',
+      )
+    end
+
+    let!(:agent1) { create(:agent_user, phone: '01234599') }
+    let!(:customer2) { create(:customer_user, phone: '') }
+    let!(:ticket_article1) { create(:ticket_article, created_by_id: customer2.id, body: 'some text 01234599') }
+
+    context 'with agent1 (known), customer1 (known) and customer2 (maybe)' do
+      let!(:customer1) { create(:customer_user, phone: '01234599') }
+
+      it 'gives customer1' do
+        expect(log1.best_customer_id_of_log_entry).to eq(customer1.id)
+      end
+    end
+
+    context 'with agent1 (known) and customer2 (maybe)' do
+      it 'gives customer2' do
+        expect(log1.best_customer_id_of_log_entry).to eq(agent1.id)
       end
     end
   end

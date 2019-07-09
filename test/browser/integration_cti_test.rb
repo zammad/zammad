@@ -153,7 +153,7 @@ class IntegrationCtiTest < TestCase
   end
 
   # Regression test for #2096
-  def test_inactive_users_displayed_with_strikethrough_in_caller_log
+  def test_inactive_users_displayed_inactive_in_caller_log
     id = rand(99_999_999)
 
     @browser = browser_instance
@@ -205,10 +205,10 @@ class IntegrationCtiTest < TestCase
     # view caller log
     click(css: 'a[href="#cti"]')
 
-    # assertion: names appear in strikethrough
+    # assertion: names appear in inactive
     match(
-      css:   'span.is-inactive',
-      value: 'John Doe',
+      css:   'span.avatar--inactive',
+      value: 'JD',
     )
   end
 
@@ -279,12 +279,12 @@ class IntegrationCtiTest < TestCase
 
     # assertions: Caller ID includes user organization
     match(
-      css:   '.js-callerLog tr:first-of-type span.user-popover',
+      css:   '.js-callerLog tr:first-of-type div.user-popover',
       value: 'John Doe (Zammad Foundation)',
     )
 
     match(
-      css:   '.js-callerLog tr:last-of-type span.user-popover',
+      css:   '.js-callerLog tr:last-of-type div.user-popover',
       value: 'John Doe (Zammad Foundation)',
     )
   end

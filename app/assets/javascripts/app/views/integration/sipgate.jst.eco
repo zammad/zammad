@@ -2,7 +2,7 @@
 
   <h2>sipgate.io <%- @T('Settings') %></h2>
 
-  <p><%- @T('You need to configure the Zammad endpoints in the Sipgate web interface') %>:<p>
+  <p><%- @T('You need to configure the Zammad endpoints in the %s web interface', 'Sipgate') %>:<p>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
@@ -92,6 +92,52 @@
         <tr>
           <td class="settings-list-control-cell"><input name="default_caller_id" value="<%= @config.outbound.default_caller_id %>" placeholder="4930609854189" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><%- @T('Default caller id for outbound calls.') %>
+      </tbody>
+    </table>
+  </div>
+
+  <p><%- @T('In order for Zammad to access %s, a %s API user and password must be stored here', 'Sipgate', 'Sipgate') %>:<p>
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Type') %>
+          <th width="80%"><%- @T('Content') %>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API User') %>
+          <td class="settings-list-control-cell"><input type="input" class="form-control form-control--small js-select" value="<%= @config.api_user %>" name="api_user" placeholder="someuser@example.com">
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API Password') %>
+          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small js-select" value="<%= @config.api_password %>" name="api_password" placeholder="">
+      </tbody>
+    </table>
+  </div>
+
+  <h2><%- @T('User assignment to Sipgate users') %></h2>
+
+  <p><%- @T('User assignment to Sipgate users to be able to offer extended like open new ticket screen on answering a call.') %>
+
+  <div class="settings-entry">
+    <table class="settings-list js-userRemoteMap" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="45%"><%- @T('Sipgate') %>/<%- @T('User') %>
+          <th width="45%"><%- @T('Zammad') %>/<%- @T('User') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for row in @config.user_remote_map: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="remote_user_id" value="<%= row.remote_user_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="user_id" value="<%= row.user_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="remote_user_id" value="" placeholder="e. g. W123" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="user_id" value="" placeholder="<%- @Ti('e. g. user@example.com') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
       </tbody>
     </table>
   </div>

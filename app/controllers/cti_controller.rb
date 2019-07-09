@@ -23,7 +23,7 @@ class CtiController < ApplicationController
       }
     ]
 
-    result = Cti::Log.log
+    result = Cti::Log.log(current_user)
     result[:backends] = backends
     render json: result
   end

@@ -8,19 +8,20 @@ module Cti
 
     validates :state, format: { with: /\A(newCall|answer|hangup)\z/,  message: 'newCall|answer|hangup is allowed' }
 
-    after_commit :push_incoming_call, :push_caller_list_update
+    after_commit :push_caller_list_update
 
 =begin
 
   Cti::Log.create!(
     direction: 'in',
     from: '007',
-    from_comment: 'AAA',
+    from_comment: '',
     to: '008',
     to_comment: 'BBB',
     call_id: '1',
     comment: '',
     state: 'newCall',
+    done: true,
   )
 
   Cti::Log.create!(
@@ -32,6 +33,7 @@ module Cti
     call_id: '2',
     comment: '',
     state: 'answer',
+    done: true,
   )
 
   Cti::Log.create!(
@@ -43,6 +45,7 @@ module Cti
     call_id: '3',
     comment: '',
     state: 'hangup',
+    done: true,
   )
 
 example data, can be used for demo
@@ -66,7 +69,15 @@ example data, can be used for demo
           object: 'User',
           o_id: 2,
           user_id: 2,
-        }
+        },
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'maybe',
+          object: 'User',
+          o_id: 2,
+          user_id: 3,
+        },
       ]
     },
     created_at: Time.zone.now,
@@ -81,6 +92,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'newCall',
+    done: true,
     preferences: {
       to: [
         {
@@ -105,6 +117,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'answer',
+    done: true,
     preferences: {
       from: [
         {
@@ -163,6 +176,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
+    done: true,
     start_at: Time.zone.now - 15.seconds,
     end_at: Time.zone.now,
     preferences: {
@@ -194,6 +208,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
+    done: true,
     start_at: Time.zone.now - 15.seconds,
     end_at: Time.zone.now,
     preferences: {
@@ -225,6 +240,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
+    done: true,
     start_at: Time.zone.now - 15.seconds,
     end_at: Time.zone.now,
     preferences: {
@@ -254,6 +270,7 @@ example data, can be used for demo
     call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
+    done: true,
     start_at: Time.zone.now - 20.seconds,
     end_at: Time.zone.now,
     preferences: {},
@@ -269,7 +286,7 @@ example data, can be used for demo
 
 =begin
 
-  Cti::Log.log
+  Cti::Log.log(current_user)
 
 returns
 
@@ -280,8 +297,8 @@ returns
 
 =end
 
-    def self.log
-      list = Cti::Log.log_records
+    def self.log(current_user)
+      list = Cti::Log.log_records(current_user)
 
       # add assets
       assets = list.map(&:preferences)
@@ -299,7 +316,7 @@ returns
 
 =begin
 
-  Cti::Log.log_records
+  Cti::Log.log_records(current_user)
 
 returns
 
@@ -307,7 +324,12 @@ returns
 
 =end
 
-    def self.log_records
+    def self.log_records(current_user)
+      cti_config = Setting.get('cti_config')
+      if cti_config[:notify_map].present?
+        return Cti::Log.where(queue: queues_of_user(current_user, cti_config)).order(created_at: :desc).limit(60)
+      end
+
       Cti::Log.order(created_at: :desc).limit(60)
     end
 
@@ -349,9 +371,15 @@ Cti::Log.process(
           to_comment = queue
         end
         from_comment, preferences = CallerId.get_comment_preferences(params['from'], 'from')
+        if queue.blank?
+          queue = params['to']
+        end
       else
         from_comment = user
         to_comment, preferences = CallerId.get_comment_preferences(params['to'], 'to')
+        if queue.blank?
+          queue = params['from']
+        end
       end
 
       log = find_by(call_id: call_id)
@@ -363,7 +391,7 @@ Cti::Log.process(
         end
         raise "call_id #{call_id} already exists!" if log
 
-        create(
+        log = create(
           direction:      params['direction'],
           from:           params['from'],
           from_comment:   from_comment,
@@ -417,29 +445,12 @@ Cti::Log.process(
       else
         raise ArgumentError, "Unknown event #{event.inspect}"
       end
-    end
 
-    def push_incoming_call
-      return true if destroyed?
-      return true if state != 'newCall'
-      return true if direction != 'in'
-
-      # send notify about event
-      users = User.with_permissions('cti.agent')
-      users.each do |user|
-        Sessions.send_to(
-          user.id,
-          {
-            event: 'cti_event',
-            data:  self,
-          },
-        )
-      end
-      true
+      log
     end
 
     def self.push_caller_list_update?(record)
-      list_ids = Cti::Log.log_records.pluck(:id)
+      list_ids = Cti::Log.order(created_at: :desc).limit(60).pluck(:id)
       return true if list_ids.include?(record.id)
 
       false
@@ -498,5 +509,54 @@ optional you can put the max oldest chat entries as argument
       parsed = TelephoneNumber.parse(to&.sub(/^\+?/, '+'))
       parsed.send(parsed.valid? ? :international_number : :original_number)
     end
+
+=begin
+
+returnes queues of user
+
+  ['queue1', 'queue2'] = Cti::Log.queues_of_user(User.find(123), config)
+
+=end
+
+    def self.queues_of_user(user, config)
+      queues = []
+      config[:notify_map]&.each do |row|
+        next if row[:user_ids].blank?
+        next if !row[:user_ids].include?(user.id.to_s) && !row[:user_ids].include?(user.id)
+
+        queues.push row[:queue]
+      end
+      if user.phone.present?
+        caller_ids = Cti::CallerId.extract_numbers(user.phone)
+        queues = queues.concat(caller_ids)
+      end
+      queues
+    end
+
+=begin
+
+return best customer id of caller log
+
+  log = Cti::Log.find(123)
+  customer_id = log.best_customer_id_of_log_entry
+
+=end
+
+    def best_customer_id_of_log_entry
+      customer_id = nil
+      if preferences[:from].present?
+        preferences[:from].each do |entry|
+          if customer_id.blank?
+            customer_id = entry[:user_id]
+          end
+          next if entry[:level] != 'known'
+
+          customer_id = entry[:user_id]
+          break
+        end
+      end
+      customer_id
+    end
+
   end
 end

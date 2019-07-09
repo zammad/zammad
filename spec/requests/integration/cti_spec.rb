@@ -61,10 +61,6 @@ RSpec.describe 'Integration CTI', type: :request do
                         note:      'some note',
                       }
                     ],
-                    notify_user_ids:  {
-                      2 => true,
-                      4 => false,
-                    },
                   }
                 })
 
@@ -72,29 +68,47 @@ RSpec.describe 'Integration CTI', type: :request do
   end
 
   describe 'request handling' do
+    let!(:token) { Setting.get('cti_token') }
 
     it 'does token check' do
-      params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&call_id=4991155921769858278-1&user%5B%5D=user+1&user%5B%5D=user+2'
-      post '/api/v1/cti/not_existing_token', params: params
+      post '/api/v1/cti/not_existing_token', params: {
+        event:     'newCall',
+        direction: 'in',
+        from:      '4912347114711',
+        to:        '4930600000000',
+        call_id:   '4991155921769858278-1',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Invalid token, please contact your admin!')
     end
 
     it 'does basic call' do
-      token = Setting.get('cti_token')
 
       # inbound - I
-      params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&call_id=4991155921769858278-1&user%5B%5D=user+1&user%5B%5D=user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        from:      '4912347114711',
+        to:        '4930600000000',
+        call_id:   '4991155921769858278-1',
+        user:      ['user+1', 'user+2'],
+      }
       expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_blank
 
       # inbound - II - block caller
-      params = 'event=newCall&direction=in&from=491715000000&to=4930600000000&call_id=4991155921769858278-2&user%5B%5D=user+1&user%5B%5D=user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        from:      '491715000000',
+        to:        '4930600000000',
+        call_id:   '4991155921769858278-2',
+        user:      ['user+1', 'user+2'],
+      }
       expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
@@ -102,8 +116,14 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(json_response['reason']).to eq('busy')
 
       # outbound - I - set default_caller_id
-      params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&call_id=8621106404543334274-3&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '8621106404543334274-3',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['action']).to eq('dial')
@@ -111,8 +131,14 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(json_response['caller_id']).to eq('4930777000000')
 
       # outbound - II - set caller_id based on routing_table by explicite number
-      params = 'event=newCall&direction=out&from=4930600000000&to=491714000000&call_id=8621106404543334274-4&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '491714000000',
+        call_id:   '8621106404543334274-4',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['action']).to eq('dial')
@@ -120,8 +146,14 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(json_response['caller_id']).to eq('41715880339000')
 
       # outbound - III - set caller_id based on routing_table by 41*
-      params = 'event=newCall&direction=out&from=4930600000000&to=4147110000000&call_id=8621106404543334274-5&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4147110000000',
+        call_id:   '8621106404543334274-5',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['action']).to eq('dial')
@@ -130,8 +162,15 @@ RSpec.describe 'Integration CTI', type: :request do
 
       # no config
       Setting.set('cti_config', {})
-      params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&call_id=4991155921769858278-6&user%5B%5D=user+1&user%5B%5D=user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        from:      '4912347114711',
+        to:        '4930600000000',
+        call_id:   '4991155921769858278-6',
+        user:      ['user+1', 'user+2'],
+
+      }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Feature not configured, please contact your admin!')
@@ -139,11 +178,16 @@ RSpec.describe 'Integration CTI', type: :request do
     end
 
     it 'does log call' do
-      token = Setting.get('cti_token')
 
       # outbound - I - new call
-      params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&call_id=1234567890-1&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-1',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
@@ -153,7 +197,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -165,8 +209,12 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 2.seconds
 
       # outbound - I - hangup by agent
-      params = 'event=hangup&direction=out&call_id=1234567890-1&cause=cancel'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'hangup',
+        direction: 'out',
+        call_id:   '1234567890-1',
+        cause:     'cancel',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
@@ -176,7 +224,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('cancel')
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -186,8 +234,14 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       # outbound - II - new call
-      params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&call_id=1234567890-2&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-2',
+        user:      ['user 1'],
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
@@ -197,7 +251,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -209,8 +263,13 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 2.seconds
 
       # outbound - II - answer by customer
-      params = 'event=answer&direction=out&call_id=1234567890-2&from=4930600000000&to=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'out',
+        call_id:   '1234567890-2',
+        from:      '4930600000000',
+        to:        '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
@@ -220,7 +279,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -232,8 +291,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 2.seconds
 
       # outbound - II - hangup by customer
-      params = 'event=hangup&direction=out&call_id=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'hangup',
+        direction: 'out',
+        call_id:   '1234567890-2',
+        cause:     'normalClearing',
+        from:      '4930600000000',
+        to:        '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy
@@ -243,7 +308,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -255,8 +320,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - I - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-3&user%5B%5D=user+1'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        call_id:   '1234567890-3',
+        user:      'user 1',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
@@ -266,7 +337,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -278,8 +349,13 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - I - answer by customer
-      params = 'event=answer&direction=in&call_id=1234567890-3&to=4930600000000&from=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'in',
+        call_id:   '1234567890-3',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
@@ -289,7 +365,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -301,8 +377,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - I - hangup by customer
-      params = 'event=hangup&direction=in&call_id=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'hangup',
+        direction: 'in',
+        call_id:   '1234567890-3',
+        cause:     'normalClearing',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-3')
       expect(log).to be_truthy
@@ -312,7 +394,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -324,18 +406,24 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - II - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-4&user%5B%5D=user+1,user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        call_id:   '1234567890-4',
+        user:      ['user 1', 'user 2'],
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
       expect(log.to).to eq('4930600000000')
       expect(log.from).to eq('4912347114711')
       expect(log.direction).to eq('in')
-      expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq('user 1, user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -347,8 +435,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - II - answer by voicemail
-      params = 'event=answer&direction=in&call_id=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'in',
+        call_id:   '1234567890-4',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        user:      'voicemail',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
@@ -358,7 +452,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('voicemail')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -370,8 +464,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - II - hangup by customer
-      params = 'event=hangup&direction=in&call_id=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'hangup',
+        direction: 'in',
+        call_id:   '1234567890-4',
+        cause:     'normalClearing',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-4')
       expect(log).to be_truthy
@@ -381,7 +481,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('voicemail')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -393,8 +493,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - III - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-5&user%5B%5D=user+1,user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        call_id:   '1234567890-5',
+        user:      'user 1,user 2',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-5')
       expect(log).to be_truthy
@@ -404,7 +510,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1,user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -416,8 +522,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - III - hangup by customer
-      params = 'event=hangup&direction=in&call_id=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'hangup',
+        direction: 'in',
+        call_id:   '1234567890-5',
+        cause:     'normalClearing',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-5')
       expect(log).to be_truthy
@@ -427,7 +539,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1,user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -439,8 +551,14 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - IV - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&call_id=1234567890-6&user%5B%5D=user+1,user+2'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '49999992222222',
+        call_id:   '1234567890-6',
+        user:      'user 1,user 2',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-6')
       expect(log).to be_truthy
@@ -452,7 +570,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.preferences['to']).to be_falsey
       expect(log.preferences['from']).to be_truthy
       expect(log.comment).to be_nil
-      expect(log.queue).to be_nil
+      expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -464,8 +582,15 @@ RSpec.describe 'Integration CTI', type: :request do
       travel 1.second
 
       # inbound - IV - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-7&user%5B%5D=user+1,user+2&queue=some_queue_name'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      'anonymous',
+        call_id:   '1234567890-7',
+        user:      'user 1,user 2',
+        queue:     'some_queue_name',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-7')
       expect(log).to be_truthy
@@ -486,10 +611,10 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
-      # get caller list
       get '/api/v1/cti/log'
       expect(response).to have_http_status(:unauthorized)
 
+      # get caller list
       authenticated_as(agent_user)
       get '/api/v1/cti/log', as: :json
       expect(response).to have_http_status(:ok)
@@ -515,12 +640,110 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(json_response['list'][6]['call_id']).to eq('1234567890-1')
     end
 
+    it 'does log call with notify group with two a log entry' do
+
+      # outbound - I - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-1',
+        user:      'user 1',
+      }
+      expect(response).to have_http_status(:ok)
+
+      # outbound - II - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-2',
+        user:      'user 1',
+      }
+
+      # inbound - III - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        call_id:   '1234567890-5',
+        user:      'user 1,user 2',
+      }
+      expect(response).to have_http_status(:ok)
+
+      # get caller list (with notify group with 2 log entries)
+      cti_config = Setting.get('cti_config')
+      cti_config[:notify_map] = [{ queue: '4930777000000', user_ids: [agent_user.id.to_s] }]
+      Setting.set('cti_config', cti_config)
+
+      authenticated_as(agent_user)
+      get '/api/v1/cti/log', as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response.dig('assets', 'User')).not_to be(nil)
+      expect(json_response['list'].map { |x| x['call_id'] }).to match_array(%w[1234567890-1 1234567890-2])
+    end
+
+    it 'does log call with notify group without a log entry' do
+
+      # outbound - I - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-1',
+        user:      'user 1',
+      }
+      expect(response).to have_http_status(:ok)
+
+      # outbound - II - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'out',
+        from:      '4930600000000',
+        to:        '4912347114711',
+        call_id:   '1234567890-2',
+        user:      'user 1',
+      }
+
+      # inbound - III - new call
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      '4912347114711',
+        call_id:   '1234567890-5',
+        user:      'user 1,user 2',
+      }
+      expect(response).to have_http_status(:ok)
+
+      # get caller list (with notify group without a log entry)
+      cti_config = Setting.get('cti_config')
+      cti_config[:notify_map] = [{ queue: '4912347114711', user_ids: [agent_user.to_s] }]
+      Setting.set('cti_config', cti_config)
+
+      authenticated_as(agent_user)
+      get '/api/v1/cti/log', as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response['list']).to eq([])
+    end
+
     it 'does queue param tests' do
-      token = Setting.get('cti_token')
 
       # inbound - queue & user
-      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-1&user%5B%5D=user+1,user+2&queue=some_queue_name'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      'anonymous',
+        call_id:   '1234567890-1',
+        user:      'user 1,user 2',
+        queue:     'some_queue_name',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-1')
       expect(log).to be_truthy
@@ -542,8 +765,15 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       # inbound - queue & no user
-      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-2&user%5B%5D=&queue=some_queue_name'
-      post "/api/v1/cti/#{token}", params: params
+      post "/api/v1/cti/#{token}", params: {
+        event:     'newCall',
+        direction: 'in',
+        to:        '4930600000000',
+        from:      'anonymous',
+        call_id:   '1234567890-2',
+        user:      '',
+        queue:     'some_queue_name',
+      }
       expect(response).to have_http_status(:ok)
       log = Cti::Log.find_by(call_id: '1234567890-2')
       expect(log).to be_truthy

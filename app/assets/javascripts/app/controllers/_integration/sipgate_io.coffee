@@ -28,6 +28,8 @@ class Form extends App.Controller
     'click .js-outboundRouting .js-add': 'addOutboundRouting'
     'click .js-inboundBlockCallerId .js-remove': 'removeInboundBlockCallerId'
     'click .js-outboundRouting .js-remove': 'removeOutboundRouting'
+    'click .js-userRemoteMap .js-add': 'addUserRemoteMap'
+    'click .js-userRemoteMap .js-remove': 'removeUserRemoteMap'
 
   constructor: ->
     super
@@ -43,6 +45,8 @@ class Form extends App.Controller
       config.inbound = {}
     if !config.inbound.block_caller_ids
       config.inbound.block_caller_ids = []
+    if !config.user_remote_map
+      config.user_remote_map = []
     config
 
   setConfig: (value) ->
@@ -58,6 +62,9 @@ class Form extends App.Controller
   updateCurrentConfig: =>
     config = @config
     cleanupInput = @cleanupInput
+
+    config.api_user = cleanupInput(@$('input[name=api_user]').val())
+    config.api_password = cleanupInput(@$('input[name=api_password]').val())
 
     # default caller_id
     default_caller_id = @$('input[name=default_caller_id]').val()
@@ -84,6 +91,17 @@ class Form extends App.Controller
       config.inbound.block_caller_ids.push {
         caller_id: cleanupInput(caller_id)
         note: note
+      }
+    )
+
+    # user device map
+    config.user_remote_map = []
+    @$('.js-userRemoteMap .js-row').each(->
+      remote_user_id = $(@).find('input[name="remote_user_id"]').val()
+      user_id = $(@).find('input[name="user_id"]').val()
+      config.user_remote_map.push {
+        remote_user_id: remote_user_id
+        user_id: user_id
       }
     )
 
@@ -134,6 +152,26 @@ class Form extends App.Controller
     @updateCurrentConfig()
 
   removeOutboundRouting: (e) =>
+    e.preventDefault()
+    @updateCurrentConfig()
+    element = $(e.currentTarget).closest('tr')
+    element.remove()
+    @updateCurrentConfig()
+
+  addUserRemoteMap: (e) =>
+    e.preventDefault()
+    @updateCurrentConfig()
+    element = $(e.currentTarget).closest('tr')
+    user_id = @cleanupInput(element.find('input[name="user_id"]').val())
+    remote_user_id = @cleanupInput(element.find('input[name="remote_user_id"]').val())
+    return if _.isEmpty(user_id) || _.isEmpty(remote_user_id)
+    @config.user_remote_map.push {
+      user_id: user_id
+      remote_user_id: remote_user_id
+    }
+    @render()
+
+  removeUserRemoteMap: (e) =>
     e.preventDefault()
     @updateCurrentConfig()
     element = $(e.currentTarget).closest('tr')

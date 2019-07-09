@@ -14,7 +14,7 @@
           <li class="divider"></li>
         <% end %>
         <% if item.navheader: %>
-          <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+          <li class="dropdown-header"><%- @T(item.navheader) %></li>
         <% end %>
         <li><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
       <% end %>

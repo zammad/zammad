@@ -1,0 +1,2 @@
+<%- @user.avatar() %>
+<div class="<%= @classes.join(' ') %>" data-id="<%- @user.id %>"><% if @level isnt 'known': %><%- @T('maybe') %>: <% end %><%= @user.displayNameLong() %></div>

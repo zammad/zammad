@@ -39,6 +39,8 @@ module Cti
 
 =begin
 
+get items (users) for a certain caller id
+
   caller_id_records = Cti::CallerId.lookup('49123456789')
 
 returns
@@ -310,6 +312,30 @@ returns
       return ["maybe #{from_comment_maybe}", preferences_maybe] if from_comment_maybe.present?
 
       nil
+    end
+
+=begin
+
+return users by caller_id
+
+  [user1, user2] = Cti::CallerId.known_agents_by_number('491234567')
+
+=end
+
+    def self.known_agents_by_number(number)
+      users = []
+      caller_ids = Cti::CallerId.extract_numbers(number)
+      caller_id_records = Cti::CallerId.lookup(caller_ids)
+      caller_id_records.each do |caller_id_record|
+        next if caller_id_record.level != 'known'
+
+        user = User.find_by(id: caller_id_record.user_id)
+        next if !user
+        next if !user.permissions?('cti.agent')
+
+        users.push user
+      end
+      users
     end
 
     def update_cti_logs

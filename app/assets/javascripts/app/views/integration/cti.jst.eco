@@ -93,5 +93,32 @@
     </table>
   </div>
 
+  <h2><%- @T('Notify Map') %></h2>
+
+  <p><%- @T('Notify certain users by matching caller id.') %><%- @T('If no mapping is defined, all user get notified about any event.') %>
+
+  <div class="settings-entry">
+    <table class="settings-list js-notifyMap" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="30%"><%- @T('Destination caller id or queue') %>
+          <th width="60%"><%- @T('Agents') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for row in @config.notify_map: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="queue" value="<%= row.queue %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell js-userSelector">
+          <td class="settings-list-row-control"><div class="btn btn--text js-removeMap"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="queue" value="" placeholder="4930609854189" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell js-userSelectorBlank">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-addMap"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
   <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
 </form>

@@ -57,7 +57,7 @@ License: MIT license
 highlight.pack.js
 Source: https://highlightjs.org
 Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
-License: BSD License
+License: BSD License (BSD-3-Clause)
 -----------------------------------------------------------------------------
 jquery.flot.js
 Source: https://github.com/dnschnur/flot
@@ -74,7 +74,7 @@ jquery.fineuploader-3.0.js
 Source: http://github.com/Valums-File-Uploader/file-uploader
 Copyright: 2010 Andrew Valums <andrew(at)valums.com>
            2012 Ray Nicholus <fineuploader(at)garstasio.com>
-License: MIT license, GNU GPL 2 or later, GNU LGPL 2 or later
+License: GNU GPL 2 or later, GNU LGPL 2 or later
 -----------------------------------------------------------------------------
 jquery.noty.js
 Source: https://github.com/needim/noty/
@@ -171,7 +171,7 @@ License: MIT license
 Font Awesome icon font
 Source: http://fontawesome.io/
 Copyright: Font Awesome by Dave Gandy - http://fontawesome.io
-License: SIL OFL 1.1
+License: MIT License
 -----------------------------------------------------------------------------
 Simple line icons font
 Source: https://github.com/thesabbir/simple-line-icons
