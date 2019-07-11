@@ -5608,13 +5608,13 @@ footer {
 
     &.is-open {
       &:before {
-        opacity: 0;
+        display: none;
       }
     }
 
     .btn {
-      padding-top: 17px;
-      padding-bottom: 17px;
+      padding-top: 15px;
+      padding-bottom: 15px;
       font-size: 10px;
     }
 
@@ -5626,7 +5626,7 @@ footer {
       top: -30px;
       height: 30px;
       background: linear-gradient(rgba(255,255,255,0), white);
-      transition: opacity 300ms;
+      pointer-events: none;
     }
   }
 
