@@ -44,7 +44,23 @@ RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
       it "updates empty perform['notification.email']['body'] attribute" do
         expect { migrate }.to change { job.reload.perform['notification.email']['body'] }.from('').to('-')
       end
+
+      context 'when selector contains current_user.id' do
+        subject(:job) do
+          UserInfo.ensure_current_user_id do
+
+            create(:job, condition: { 'ticket.owner_id' => { 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } } )
+          end
+        end
+
+        let(:type) { 'notification.email' }
+
+        it "updates empty perform['notification.email']['body'] attribute" do
+          expect { migrate }.to change { job.reload.perform['notification.email']['body'] }.from('').to('-')
+        end
+      end
     end
+
   end
 
   describe 'scheduler management' do

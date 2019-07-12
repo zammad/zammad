@@ -4,6 +4,10 @@ class Issue2541FixNotificationEmailWithoutBody < ActiveRecord::Migration[5.1]
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
+    # there might be Job/Trigger selectors referencing the current user
+    # that get e.g. validated in callbacks
+    UserInfo.current_user_id = 1
+
     # update jobs and triggers
     [::Job, ::Trigger].each do |model|
       model.where(active: true).each do |record|
