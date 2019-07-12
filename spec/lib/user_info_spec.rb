@@ -17,6 +17,8 @@ RSpec.describe UserInfo do
 
   describe '#ensure_current_user_id' do
 
+    let(:return_value) { 'Hello World' }
+
     it 'uses and keeps set User IDs' do
       test_id = 99
       described_class.current_user_id = test_id
@@ -37,5 +39,26 @@ RSpec.describe UserInfo do
 
       expect(described_class.current_user_id).to be nil
     end
+
+    it 'resets current_user_id in case of an exception' do
+      begin
+        described_class.ensure_current_user_id do
+          raise 'error'
+        end
+      rescue # rubocop:disable Lint/HandleExceptions
+      end
+
+      expect(described_class.current_user_id).to be nil
+    end
+
+    it 'passes return value of given block' do
+
+      received = described_class.ensure_current_user_id do
+        return_value
+      end
+
+      expect(received).to eq(return_value)
+    end
+
   end
 end
