@@ -12,6 +12,8 @@ class Store < ApplicationModel
 
   store :preferences
 
+  after_create :generate_previews
+
 =begin
 
 add an attachment to storage
@@ -50,40 +52,8 @@ returns
     data.delete('data')
     data.delete('object')
 
-    data['preferences'] ||= {}
-    resizable = false
-    ['Mime-Type', 'Content-Type', 'mime_type', 'content_type'].each do |key|
-      next if data['preferences'][key].blank?
-      next if !data['preferences'][key].match(%r{image/(jpeg|jpg|png)}i)
-
-      resizable = true
-      break
-    end
-
     # store meta data
-    store = Store.create!(data)
-
-    begin
-      if resizable
-        if store.content_preview(silence: true)
-          store.preferences[:resizable] = true
-          store.preferences[:content_preview] = true
-        end
-        if store.content_inline(silence: true)
-          store.preferences[:resizable] = true
-          store.preferences[:content_inline] = true
-        end
-        if store.preferences[:resizable]
-          store.save!
-        end
-      end
-    rescue => e
-      logger.error e
-      store.preferences[:resizable] = false
-      store.save!
-    end
-
-    store
+    Store.create!(data)
   end
 
 =begin
@@ -282,6 +252,33 @@ returns
   end
 
   private
+
+  def generate_previews
+    return true if Setting.get('import_mode')
+
+    resizable = preferences.slice('Mime-Type', 'Content-Type', 'mime_type', 'content_type')
+                           .values.grep(%r{image/(jpeg|jpg|png)}i).any?
+
+    begin
+      if resizable
+        if content_preview(silence: true)
+          preferences[:resizable] = true
+          preferences[:content_preview] = true
+        end
+        if content_inline(silence: true)
+          preferences[:resizable] = true
+          preferences[:content_inline] = true
+        end
+        if preferences[:resizable]
+          save!
+        end
+      end
+    rescue => e
+      logger.error e
+      preferences[:resizable] = false
+      save!
+    end
+  end
 
   def image_resize(content, width)
     local_sha = Digest::SHA256.hexdigest(content)

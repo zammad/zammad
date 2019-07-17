@@ -318,5 +318,22 @@ class StoreTest < ActiveSupport::TestCase
     assert_equal(store.preferences[:content_inline], true)
     assert_equal(store.preferences[:content_preview], true)
 
+    # possible, but skipped (preview and inline)
+    Setting.set('import_mode', true)
+    store = Store.add(
+      object:        'SomeObject3',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload2.jpg')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'image/jpg',
+        content_id:   234,
+      },
+      created_by_id: 1,
+    )
+    assert_nil(store.preferences[:resizable])
+    assert_nil(store.preferences[:content_inline])
+    assert_nil(store.preferences[:content_preview])
+
   end
 end
