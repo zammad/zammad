@@ -47,7 +47,7 @@
       <% if !_.isEmpty(@item.from_pretty): %>
         <a class="inherit-color" href="<%- App.Utils.phoneify(@item.from_pretty) %>"><%= @item.from_pretty %></a>
         <% if @item.direction is 'in': %>
-        <div class="btn btn--text btn--create no-padding js-newUser" href="#" data-phone="<%= @item.from_pretty %>"><%- @Icon('plus-small') %> <span><%- @T('Create User') %></div>
+        <div class="btn btn--text btn--create no-padding js-newUser" href="#" data-phone="<%= @item.from_pretty %>"><%- @Icon('plus-small') %> <span><%- @T('New User') %></div>
         <% end %>
       <% else: %>
         <a class="inherit-color" href="<%- App.Utils.phoneify(@item.from) %>"><%= @item.from %></a>
