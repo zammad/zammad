@@ -1,8 +1,7 @@
 class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.reset(user_id)
-    key = "TicketOverviewPull::#{user_id}"
-    Cache.write(key, { needed: true })
+    Cache.write("TicketOverviewPull::#{user_id}", { needed: true })
   end
 
   def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 8)
@@ -15,7 +14,6 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     @last_overview        = {}
     @last_overview_change = nil
     @last_ticket_change   = nil
-    @time_now             = Time.zone.now.to_i
   end
 
   def load
@@ -35,27 +33,20 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     index_and_lists
   end
 
-  def client_key
-    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
-  end
+  def local_to_run?
+    return false if !@time_now
 
-  def work_needed?
-    key = "TicketOverviewPull::#{@user.id}"
-    if Cache.get(key)
-      Cache.delete(key)
-      return true
-    end
-    return false if Sessions::CacheIn.get(client_key)
+    result = Cache.get("TicketOverviewPull::#{@user.id}")
+    Cache.delete("TicketOverviewPull::#{@user.id}") if result
+    return true if result
 
-    true
+    false
   end
 
   def push
+    return if !to_run? && !local_to_run?
 
-    return if !work_needed?
-
-    # reset check interval
-    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+    @time_now = Time.zone.now.to_i
 
     # check if min one ticket or overview has changed
     last_overview_change = Overview.latest_change

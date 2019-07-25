@@ -7,15 +7,16 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
     @ttl          = ttl
     @asset_lookup = asset_lookup
     @backends     = backend
-    @time_now     = Time.zone.now.to_i
   end
 
   def push
+    return if !to_run?
+
+    @time_now = Time.zone.now.to_i
+
     results = []
     @backends.each do |backend|
-      #puts "B: #{backend.inspect}"
       result = backend.push
-      #puts "R: #{result.inspect}"
       if result
         results.push result
       end

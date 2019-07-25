@@ -18,18 +18,10 @@ class Sessions::Backend::TicketCreate < Sessions::Backend::Base
     ticket_create_attributes
   end
 
-  def client_key
-    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
-  end
-
   def push
+    return if !to_run?
 
-    # check timeout
-    timeout = Sessions::CacheIn.get(client_key)
-    return if timeout
-
-    # set new timeout
-    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+    @time_now = Time.zone.now.to_i
 
     data = load
 

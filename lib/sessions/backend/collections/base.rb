@@ -11,7 +11,13 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     @ttl          = ttl
     @asset_lookup = asset_lookup
     @last_change  = nil
-    @time_now     = Time.zone.now.to_i
+  end
+
+  def to_run?
+    return true if !@time_now
+    return true if Time.zone.now.to_i > (@time_now + @ttl)
+
+    false
   end
 
   def load
@@ -20,18 +26,10 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     self.class.model.constantize.all.order(id: :asc)
   end
 
-  def client_key
-    "collections::load::#{self.class}::#{@user.id}::#{@client_id}"
-  end
-
   def push
+    return if !to_run?
 
-    # check timeout
-    timeout = Sessions::CacheIn.get(client_key)
-    return if timeout
-
-    # set new timeout
-    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+    @time_now = Time.zone.now.to_i
 
     # check permission based access
     if self.class.permissions

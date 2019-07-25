@@ -2,50 +2,6 @@ require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
 
-  test 'b cache' do
-    Sessions::CacheIn.set('last_run_test', true, { expires_in: 1.second })
-    result = Sessions::CacheIn.get('last_run_test')
-    assert_equal(true, result, 'check 1')
-
-    # should not be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(false, result, 'check 1 - expired')
-
-    # should be expired
-    travel 2.seconds
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(true, result, 'check 1 - expired')
-
-    # renew expire
-    result = Sessions::CacheIn.get('last_run_test', re_expire: true)
-    assert_equal(true, result, 'check 1 - re_expire')
-
-    # should not be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(false, result, 'check 1 - expired')
-
-    # ignore expired
-    travel 2.seconds
-    result = Sessions::CacheIn.get('last_run_test', ignore_expire: true)
-    assert_equal(true, result, 'check 1 - ignore_expire')
-
-    # should be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(true, result, 'check 2')
-
-    result = Sessions::CacheIn.get('last_run_test')
-    assert_nil(result, 'check 2')
-
-    # check delete cache
-    Sessions::CacheIn.set('last_run_delete', true, { expires_in: 5.seconds })
-    result = Sessions::CacheIn.get('last_run_delete')
-    assert_equal(true, result, 'check 1')
-    Sessions::CacheIn.delete('last_run_delete')
-    result = Sessions::CacheIn.get('last_run_delete')
-    assert_nil(result, 'check delete')
-    travel_back
-  end
-
   test 'c session create / update' do
 
     # create users

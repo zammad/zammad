@@ -1,4 +1,4 @@
-class Sessions::Backend::ActivityStream
+class Sessions::Backend::ActivityStream < Sessions::Backend::Base
 
   attr_writer :user
 
@@ -46,18 +46,10 @@ class Sessions::Backend::ActivityStream
     }
   end
 
-  def client_key
-    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
-  end
-
   def push
+    return if !to_run?
 
-    # check timeout
-    timeout = Sessions::CacheIn.get(client_key)
-    return if timeout
-
-    # set new timeout
-    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+    @time_now = Time.zone.now.to_i
 
     data = load
 
