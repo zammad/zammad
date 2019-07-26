@@ -201,6 +201,35 @@ RSpec.describe Job, type: :model do
           end
         end
       end
+
+      context 'when job has pre_condition:current_user.id in selector' do
+        let!(:matching_ticket) { create(:ticket, owner_id: 1) }
+        let!(:nonmatching_ticket) { create(:ticket, owner_id: create(:agent_user).id) }
+
+        let(:condition) do
+          {
+            'ticket.owner_id' => {
+              'operator'         => 'is',
+              'pre_condition'    => 'current_user.id',
+              'value'            => '',
+              'value_completion' => ''
+            },
+          }
+        end
+
+        before do
+          UserInfo.current_user_id = create(:admin_user).id
+          job
+          UserInfo.current_user_id = nil
+        end
+
+        it 'performs changes on matching tickets' do
+          expect { job.run(true) }
+            .to change { matching_ticket.reload.state }
+            .and not_change { nonmatching_ticket.reload.state }
+        end
+
+      end
     end
 
     describe '#executable?' do
