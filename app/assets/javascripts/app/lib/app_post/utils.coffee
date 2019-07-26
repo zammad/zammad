@@ -821,12 +821,16 @@ class App.Utils
 
       # en
       attachmentTranslatedRegExp = new RegExp("\\W#{word}\\W", 'i')
-      return word if message.match(attachmentTranslatedRegExp)
+
+      # remove blockquote, check only the unquoted content
+      return word if message.replace(/(<blockquote>.*<\/blockquote>)/g, "").match(attachmentTranslatedRegExp)
 
       # user locale
       attachmentTranslated = App.i18n.translateContent(word)
       attachmentTranslatedRegExp = new RegExp("\\W#{attachmentTranslated}\\W", 'i')
-      return attachmentTranslated if message.match(attachmentTranslatedRegExp)
+
+      # remove blockquote, check only the unquoted content
+      return attachmentTranslated if message.replace(/(<blockquote>.*<\/blockquote>)/g, "").match(attachmentTranslatedRegExp)
     false
 
   # human readable file size

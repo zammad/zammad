@@ -1281,6 +1281,11 @@ test("check check attachment reference", function() {
   result = 'Enclosed'
   verify = App.Utils.checkAttachmentReference(message)
   equal(verify, result)
+
+  message = '<div>Hi Test,</div><div><blockquote>On Monday, 22 July 2019, 14:07:54, Test User wrote:<br><br>Test attachment<br></blockquote></div>'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
 });
 
 // replace tags
