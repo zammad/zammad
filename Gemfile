@@ -191,6 +191,9 @@ group :development, :test do
   # record and replay TCP/HTTP transactions
   gem 'tcr', git: 'https://github.com/zammad-deps/tcr'
   gem 'vcr'
+
+  # handle deprecations in core and addons
+  gem 'deprecation_toolkit'
 end
 
 # Want to extend Zammad with additional gems?
