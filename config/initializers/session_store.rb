@@ -1,10 +1,4 @@
-# Be sure to restart your server when you modify this file.
+# Rails' constant auto-loading resolves to 'rails/initializable' instead
+require_dependency 'zammad/application/initializer/session_store'
 
-#Rails.application.config.session_store :cookie_store, key: '_zammad_session'
-
-# Use the database for sessions instead of the cookie-based default,
-# which shouldn't be used to store highly confidential information
-# (create the session table with "rails generate session_migration")
-Rails.application.config.session_store :active_record_store, {
-  key: '_zammad_session_' + Digest::MD5.hexdigest(Rails.root.to_s).to_s[5..15]
-}
+Zammad::Application::Initializer::SessionStore.perform
