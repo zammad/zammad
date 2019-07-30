@@ -816,21 +816,22 @@ class App.Utils
   # check if attachment is referenced in message
   @checkAttachmentReference: (message) ->
     return false if !message
+
+    # remove blockquote from message, check only the unquoted content
+    tmp = $('<div>' + message + '</div>')
+    tmp.find('blockquote').remove()
+    text = tmp.text()
+
     matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed', 'Enclosure', 'enclosure']
     for word in matchwords
-
       # en
       attachmentTranslatedRegExp = new RegExp("\\W#{word}\\W", 'i')
-
-      # remove blockquote, check only the unquoted content
-      return word if message.replace(/(<blockquote>.*<\/blockquote>)/g, "").match(attachmentTranslatedRegExp)
+      return word if text.match(attachmentTranslatedRegExp)
 
       # user locale
       attachmentTranslated = App.i18n.translateContent(word)
       attachmentTranslatedRegExp = new RegExp("\\W#{attachmentTranslated}\\W", 'i')
-
-      # remove blockquote, check only the unquoted content
-      return attachmentTranslated if message.replace(/(<blockquote>.*<\/blockquote>)/g, "").match(attachmentTranslatedRegExp)
+      return attachmentTranslated if text.match(attachmentTranslatedRegExp)
     false
 
   # human readable file size

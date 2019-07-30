@@ -1282,7 +1282,17 @@ test("check check attachment reference", function() {
   verify = App.Utils.checkAttachmentReference(message)
   equal(verify, result)
 
-  message = '<div>Hi Test,</div><div><blockquote>On Monday, 22 July 2019, 14:07:54, Test User wrote:<br><br>Test attachment<br></blockquote></div>'
+  message = '<div>Hi Test,</div><div><blockquote>On Monday, 22 July 2019, 14:07:54, Test User wrote:<br><br>Test attachment <br></blockquote></div>'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = '<div>Hi Test,</div><div><blockquote type="cite">cite attachment </blockquote></div>'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = '<div>Hi Test,</div><div><blockquote class="ecxgmail_quote">ecxgmail_quote attachment </blockquote></div>'
   result = false
   verify = App.Utils.checkAttachmentReference(message)
   equal(verify, result)
