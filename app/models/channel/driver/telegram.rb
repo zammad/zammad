@@ -9,7 +9,7 @@ class Channel::Driver::Telegram
     {
       adapter: 'telegram',
       auth: {
-        api_key:       api_key
+        api_key: api_key
       },
     },
     telegram_attributes,

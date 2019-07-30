@@ -8,8 +8,8 @@ RSpec.describe 'Telegram', type: :request do
       Ticket.destroy_all
 
       # configure telegram channel
-      token = 'valid_token'
-      bot_id = 123_456_789
+      token    = 'valid_token'
+      bot_id   = 123_456_789
       group_id = Group.find_by(name: 'Users').id
 
       UserInfo.current_user_id = 1
@@ -76,7 +76,7 @@ RSpec.describe 'Telegram', type: :request do
 
       post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('personal1_message_start'), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to eq('bot param missing')
+      expect(json_response['error']).to eq('bot params missing')
 
       callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
       post callback_url, params: read_message('personal1_message_start'), as: :json
@@ -240,7 +240,7 @@ RSpec.describe 'Telegram', type: :request do
       expect(ticket.articles.last.content_type).to eq('text/html')
       expect(ticket.articles.last.attachments.count).to eq(1)
 
-      # isend channel message 2
+      # send channel message 2
       post callback_url, params: read_message('channel1_message_content2'), as: :json
       expect(response).to have_http_status(:ok)
       expect(Ticket.count).to eq(3)
@@ -358,6 +358,93 @@ RSpec.describe 'Telegram', type: :request do
       expect(ticket.articles.last.body).to match(/Hello, I need your Help/i)
       expect(ticket.articles.last.content_type).to eq('text/plain')
       expect(ticket.articles.last.attachments.count).to eq(0)
+    end
+
+    it 'with two bots and different groups' do
+      Ticket.destroy_all
+
+      # configure telegram channel
+      token1 = 'valid_token1'
+      token2 = 'valid_token2'
+
+      bot_id1 = 123_456_789
+      bot_id2 = 987_654_321
+
+      group1 = create(:group)
+      group2 = create(:group)
+
+      UserInfo.current_user_id = 1
+      Channel.where(area: 'Telegram::Bot').destroy_all
+
+      Setting.set('http_type', 'https')
+      Setting.set('fqdn', 'example.com')
+
+      # channel 1 - try valid token
+      stub_request(:post, "https://api.telegram.org/bot#{token1}/getMe")
+        .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id1},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot1\"}}", headers: {})
+
+      bot1 = Telegram.check_token(token1)
+      expect(bot1['id']).to eq(bot_id1)
+
+      # channel 1 - valid token, host and port
+      stub_request(:post, "https://api.telegram.org:443/bot#{token1}/setWebhook")
+        .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id1}" })
+        .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
+
+      channel1 = Telegram.create_or_update_channel(token1, { group_id: group1.id, welcome: 'hi!' })
+
+      # start communication #1
+      callback_url1 = "/api/v1/channels_telegram_webhook/#{channel1.options[:callback_token]}?bid=#{channel1.options[:bot][:id]}"
+      post callback_url1, params: read_message('personal1_message_start'), as: :json
+      expect(response).to have_http_status(:ok)
+
+      # send message1
+      post callback_url1, params: read_message('personal1_message_content1'), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(Ticket.count).to eq(1)
+      ticket1 = Ticket.last
+      expect(ticket1.title).to eq('Hello, I need your Help')
+      expect(ticket1.state.name).to eq('new')
+      expect(ticket1.articles.count).to eq(1)
+      expect(ticket1.articles.first.body).to eq('Hello, I need your Help')
+      expect(ticket1.articles.first.content_type).to eq('text/plain')
+
+      expect(ticket1.articles.first.from).to eq('Test Firstname Test Lastname')
+      expect(ticket1.articles.first.to).to eq('@ChrispressoBot1')
+
+      # channel 2 - try valid token
+      UserInfo.current_user_id = 1
+      stub_request(:post, "https://api.telegram.org/bot#{token2}/getMe")
+        .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id2},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot2\"}}", headers: {})
+
+      bot2 = Telegram.check_token(token2)
+      expect(bot2['id']).to eq(bot_id2)
+
+      # channel 2 - valid token, host and port
+      stub_request(:post, "https://api.telegram.org:443/bot#{token2}/setWebhook")
+        .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id2}" })
+        .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
+
+      channel2 = Telegram.create_or_update_channel(token2, { group_id: group2.id, welcome: 'hi!' })
+
+      # start communication #1
+      callback_url2 = "/api/v1/channels_telegram_webhook/#{channel2.options[:callback_token]}?bid=#{channel2.options[:bot][:id]}"
+      post callback_url2, params: read_message('personal3_message_start'), as: :json
+      expect(response).to have_http_status(:ok)
+
+      # send message2
+      post callback_url2, params: read_message('personal3_message_content1'), as: :json
+      expect(response).to have_http_status(:ok)
+      expect(Ticket.count).to eq(2)
+      ticket2 = Ticket.last
+      expect(ticket2.title).to eq('Can you help me with my feature?')
+      expect(ticket2.state.name).to eq('new')
+      expect(ticket2.articles.count).to eq(1)
+      expect(ticket2.articles.first.body).to eq('Can you help me with my feature?')
+      expect(ticket2.articles.first.content_type).to eq('text/plain')
+
+      expect(ticket2.articles.first.from).to eq('Test Firstname2 Test Lastname2')
+      expect(ticket2.articles.first.to).to eq('@ChrispressoBot2')
     end
 
     def read_message(file)

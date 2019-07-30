@@ -15,7 +15,7 @@
     "entities": [
       {"offset": 0,
        "length": 6,
-       "type": "bot_command"      
+       "type": "bot_command"
       }
     ]
   }
