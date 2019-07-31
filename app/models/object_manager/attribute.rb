@@ -901,7 +901,7 @@ is certain attribute used by triggers, overviews or schedulers
     raise 'At least one letters is needed' if !name.match?(/[a-z]/)
 
     # do not allow model method names as attributes
-    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp]
+    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search]
     raise "#{name} is a reserved word, please choose a different one" if name.match?(/^(#{reserved_words.join('|')})$/)
 
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
