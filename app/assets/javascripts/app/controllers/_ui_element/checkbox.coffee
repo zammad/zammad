@@ -14,7 +14,7 @@ class App.UiElement.checkbox extends App.UiElement.ApplicationUiElement
     # sort attribute.options
     @sortOptions( attribute, params )
 
-    # finde selected/checked item of list
+    # find selected/checked item of list
     @selectedOptions( attribute, params )
 
     # disable item of list

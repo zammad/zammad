@@ -61,7 +61,7 @@ add a new activity entry for an object
       created_by_id:             data[:created_by_id]
     ).order(created_at: :desc).first
 
-    # resturn if old entry is really fresh
+    # return if old entry is really fresh
     if result
       activity_record_delay = 90.seconds
       return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )

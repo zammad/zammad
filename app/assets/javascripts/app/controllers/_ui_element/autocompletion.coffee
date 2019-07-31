@@ -21,7 +21,7 @@ class App.UiElement.autocompletion
         $(local_attribute).val(item.id).trigger('change')
         $(local_attribute + '_autocompletion_value_shown').val(item.value)
 
-        # call calback
+        # call callback
         if @callback
           params = App.ControllerForm.params(form)
           @callback(params)

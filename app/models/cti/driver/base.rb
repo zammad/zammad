@@ -11,7 +11,7 @@ class Cti::Driver::Base
 
   def process
 
-    # validate diections
+    # validate directions
     result = direction_check
     return result if result.present?
 
@@ -36,10 +36,10 @@ class Cti::Driver::Base
 
     log = Cti::Log.process(@params)
 
-    # push new call notifiation
+    # push new call notification
     push_incoming_call(log)
 
-    # open screen if call got answerd
+    # open screen if call got answered
     push_open_ticket_screen(log)
 
     result || {}
@@ -47,7 +47,7 @@ class Cti::Driver::Base
 
   def direction_check
 
-    # check possible diections
+    # check possible directions
     if @params['direction'] != 'in' && @params['direction'] != 'out'
       return {
         action: 'invalid_direction',

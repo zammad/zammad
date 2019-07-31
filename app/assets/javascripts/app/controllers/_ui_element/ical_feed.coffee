@@ -25,7 +25,7 @@ class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
       else
         item.find('.js-shadow').val( item.find('.js-list').val() )
 
-    # set inital state
+    # set initial state
     if icalFeeds[attribute.value]
       updateCheckList()
     else

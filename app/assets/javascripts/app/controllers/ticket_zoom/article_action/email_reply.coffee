@@ -46,7 +46,7 @@ class EmailReply extends App.Controller
             if !localAddress
               foreignRecipients.push recipient
 
-      # check if reply all is neede
+      # check if reply all is needed
       if foreignRecipients.length > 1
         actions.push {
           name: 'reply all'

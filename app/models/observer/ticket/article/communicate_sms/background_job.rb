@@ -13,7 +13,7 @@ class Observer::Ticket::Article::CommunicateSms::BackgroundJob
     ticket = Ticket.lookup(id: article.ticket_id)
     log_error(article, "Can't find article.preferences for Ticket::Article.find(#{article.id})") if !article.preferences
 
-    # if sender is system, take artile channel
+    # if sender is system, take article channel
     if article.sender.name == 'System'
       log_error(article, "Can't find article.preferences['sms_recipients'] for Ticket::Article.find(#{article.id})") if !article.preferences['sms_recipients']
       log_error(article, "Can't find article.preferences['channel_id'] for Ticket::Article.find(#{article.id})") if !article.preferences['channel_id']

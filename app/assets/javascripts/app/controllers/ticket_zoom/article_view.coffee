@@ -133,7 +133,7 @@ class ArticleViewItem extends App.ObserverController
       for attachment in article.attachments
         attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
         attachment.preview_url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=preview"
-        
+
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
@@ -159,7 +159,7 @@ class ArticleViewItem extends App.ObserverController
       bodyHtml = App.Utils.text2html(article.body)
       article['html'] = App.Utils.signatureIdentifyByPlaintext(bodyHtml)
 
-      # if no signature detected or within frist 25 lines, check if signature got detected in backend
+      # if no signature detected or within first 25 lines, check if signature got detected in backend
       if article['html'] is bodyHtml || (article.preferences && article.preferences.signature_detection < 25)
         signatureDetected = false
         body = article.body
@@ -245,7 +245,7 @@ class ArticleViewItem extends App.ObserverController
       bubbleContent.css('height', 'auto')
       return
 
-    # reset bubble heigth and "see more" opacity
+    # reset bubble height and "see more" opacity
     bubbleContent.css('height', '')
     bubbleOverflowContainer.css('opacity', '')
 
@@ -256,19 +256,19 @@ class ArticleViewItem extends App.ObserverController
     offsetTop = signatureMarker.position()
 
     # safari - workaround
-    # in safari somethimes the marker is directly on top via .top and inspector but it isn't
+    # in safari sometimes the marker is directly on top via .top and inspector but it isn't
     # in this case use the next element
     if offsetTop && offsetTop.top is 0
       offsetTop = signatureMarker.next('div, p, br').position()
 
-    # remember bubble content heigth
+    # remember bubble content height
     bubbleContentHeigth = bubbleContent.height()
 
-    # get marker heigth
+    # get marker height
     if offsetTop
       markerHeight = offsetTop.top
 
-    # if signature marker exists and heigth is within maxHeight
+    # if signature marker exists and height is within maxHeight
     if markerHeight && markerHeight < maxHeight
       newHeigth = markerHeight + 30
       if newHeigth < minHeight
@@ -279,7 +279,7 @@ class ArticleViewItem extends App.ObserverController
       bubbleContent.css('height', "#{newHeigth}px")
       bubbleOverflowContainer.removeClass('hide')
 
-    # if heigth is higher then maxHeight
+    # if height is higher then maxHeight
     else if bubbleContentHeigth > maxHeight
       bubbleContent.attr('data-height', bubbleContentHeigth + 30)
       bubbleContent.attr('data-height-origin', maxHeight)

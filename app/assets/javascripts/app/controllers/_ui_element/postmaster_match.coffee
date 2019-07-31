@@ -172,7 +172,7 @@ class App.UiElement.postmaster_match
       @buildValue(item, elementRow, key, groups, undefined, operator, attribute)
     )
 
-    # build inital params
+    # build initial params
     if _.isEmpty(params[attribute.name])
       item.find('.js-filterElement .js-attributeSelector select').trigger('change')
     else

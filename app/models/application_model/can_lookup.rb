@@ -36,7 +36,7 @@ return possible lookup keys for model
 
 returns
 
-  [:id, :name] # or fror users [:id, :login, :email]
+  [:id, :name] # or, for users: [:id, :login, :email]
 
 =end
 

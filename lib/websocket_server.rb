@@ -31,7 +31,7 @@ class WebsocketServer
         WebsocketServer.check_unused_connections
       end
 
-      # check open unused connections, kick all connection without activitie in the last 2 minutes
+      # check open unused connections, kick all connection without activity in the last 2 minutes
       EventMachine.add_periodic_timer(120) do
         WebsocketServer.check_unused_connections
       end

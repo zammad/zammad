@@ -34,7 +34,7 @@ class App.TicketZoom extends App.Controller
     if cache
       @load(cache)
 
-    # check if ticket has beed updated every 30 min
+    # check if ticket has been updated every 30 min
     update = =>
       if !@initFetched
         @fetch()
@@ -74,7 +74,7 @@ class App.TicketZoom extends App.Controller
         #console.log('debug no fetch, current ticket already there or requested')
         return
       if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        #console.log('debug no fetch, current ticket already newser or requested')
+        #console.log('debug no fetch, current ticket already newer or requested')
         return
     @ticketUpdatedAtLastCall = data.updated_at
 
@@ -200,7 +200,7 @@ class App.TicketZoom extends App.Controller
       url: @url()
       id:  @ticket_id
 
-    # set icon and tilte if defined
+    # set icon and title if defined
     if @taskIconClass
       meta.iconClass = @taskIconClass
     if @taskHead
@@ -773,7 +773,7 @@ class App.TicketZoom extends App.Controller
     # for condition check
     ticket = App.Ticket.fullLocal(@ticket_id)
 
-    # reset article - should not be resubmited on next ticket update
+    # reset article - should not be resubmitted on next ticket update
     ticket.article = undefined
 
     # update ticket attributes
@@ -903,7 +903,7 @@ class App.TicketZoom extends App.Controller
         #App.SessionStorage.set(@key, data)
         @load(data, true, true)
 
-        # reset article - should not be resubmited on next ticket update
+        # reset article - should not be resubmitted on next ticket update
         ticket.article = undefined
 
         # reset form after save

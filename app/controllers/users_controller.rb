@@ -115,7 +115,7 @@ class UsersController < ApplicationController
     clean_params = User.param_cleanup(clean_params, true)
 
     # check if it's first user, the admin user
-    # inital admin account
+    # initial admin account
     count = User.all.count
     admin_account_exists = true
     if count <= 2
@@ -168,7 +168,7 @@ class UsersController < ApplicationController
       user.group_ids = group_ids
 
       # remember source (in case show email verify banner)
-      # if not inital user creation
+      # if not initial user creation
       if admin_account_exists
         user.source = 'signup'
       end
@@ -205,7 +205,7 @@ class UsersController < ApplicationController
       end
     end
 
-    # send inviteation if needed / only if session exists
+    # send invitation if needed / only if session exists
     if params[:invite].present? && current_user
       sleep 5 if ENV['REMOTE_URL'].present?
       token = Token.create(action: 'PasswordReset', user_id: user.id)
@@ -321,7 +321,7 @@ class UsersController < ApplicationController
   # @path       [GET] /users/me
   #
   # @summary          Returns the User record of current user.
-  # @notes            The requestor need to have a valid authentication.
+  # @notes            The requester needs to have a valid authentication.
   #
   # @parameter        full         [Bool]    If set a Asset structure with all connected Assets gets returned.
   #

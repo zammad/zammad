@@ -19,7 +19,7 @@ class App.OnlineNotificationWidget extends App.Controller
   constructor: ->
     super
 
-    # at runtime if a online notifiction has changed
+    # at runtime if an online notification has changed
     @bind('OnlineNotification::changed', =>
       @delay(
         => @fetch()
@@ -54,7 +54,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
     @createContainer()
 
-    # rerender view, e. g. on langauge change
+    # rerender view, e.g. on language change
     @bind('ui:rerender', =>
       @createContainer()
       'online_notification'

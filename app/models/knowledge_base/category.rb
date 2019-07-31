@@ -124,7 +124,7 @@ class KnowledgeBase::Category < ApplicationModel
   def reordering_callback
     return if !parent_id_changed? && !position_changed?
 
-    # drop siblings cache to make sure orderign is always up to date
+    # drop siblings cache to make sure ordering is always up to date
     sibling_categories.each(&:cache_delete)
   end
   before_save :reordering_callback

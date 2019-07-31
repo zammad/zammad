@@ -154,7 +154,7 @@ class App.UiElement.postmaster_set
       @buildValue(item, elementRow, groupAndAttribute, groups, undefined, undefined, attribute)
     )
 
-    # build inital params
+    # build initial params
     if _.isEmpty(params[attribute.name])
       element = @placeholder(item, attribute, params, groups)
       item.append(element)

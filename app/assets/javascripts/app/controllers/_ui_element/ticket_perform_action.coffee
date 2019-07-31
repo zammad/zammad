@@ -16,7 +16,7 @@ class App.UiElement.ticket_perform_action
         name: 'Notification'
         model: 'Notification'
 
-    # megre config
+    # merge config
     elements = {}
     for groupKey, groupMeta of groups
       if !groupMeta.model || !App[groupMeta.model]
@@ -99,7 +99,7 @@ class App.UiElement.ticket_perform_action
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
     )
 
-    # build inital params
+    # build initial params
     if _.isEmpty(params[attribute.name])
 
       for groupAndAttribute in defaults

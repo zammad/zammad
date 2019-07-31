@@ -15,7 +15,7 @@ class App.SettingsForm extends App.Controller
 
   render: =>
 
-    # serach area settings
+    # search area settings
     settings = App.Setting.search(
       filter:
         area: @area

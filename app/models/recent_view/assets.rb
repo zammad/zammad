@@ -6,7 +6,7 @@ class RecentView
 
 =begin
 
-get all assets / related models for this recend view item
+get all assets / related models for this recent view item
 
   recent_view = RecentView.find(123)
   result = recent_view.assets(assets_if_exists)

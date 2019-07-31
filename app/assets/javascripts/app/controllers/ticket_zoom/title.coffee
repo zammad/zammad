@@ -23,7 +23,7 @@ class App.TicketZoomTitle extends App.ObserverController
     ticket = App.Ticket.find(@object_id)
     ticket.title = title
 
-    # reset article - should not be resubmited on next ticket update
+    # reset article - should not be resubmitted on next ticket update
     ticket.article = undefined
 
     ticket.save()

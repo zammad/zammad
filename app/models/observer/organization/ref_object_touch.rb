@@ -20,7 +20,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     # return if we run import mode
     return true if Setting.get('import_mode')
 
-    # featrue used for different propose, do not touch references
+    # feature used for different purpose; do not touch references
     return true if User.where(organization_id: record.id).count > 100
 
     # touch organizations tickets

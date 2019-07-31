@@ -13,7 +13,7 @@ module ApplicationController::HandlesDevices
 
   def user_device_log(user, type)
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
-    return true if params[:controller] == 'init' # do no device logging on static inital page
+    return true if params[:controller] == 'init' # do no device logging on static initial page
     return true if switched_from_user_id
     return true if !user
     return true if !user.permissions?('user_preferences.device')

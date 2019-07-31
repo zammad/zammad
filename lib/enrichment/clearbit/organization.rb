@@ -40,7 +40,7 @@ module Enrichment
         # Currently all target keys are prefixed with
         # organization.
         # which is not necessary since the target object
-        # is allways an organization
+        # is always an organization
         @mapping.transform_values! { |value| value.sub('organization.', '') }
         true
       end

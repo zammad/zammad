@@ -35,7 +35,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     # clean subject
     record.subject = ticket.subject_clean(record.subject)
 
-    # generate message id, force it in prodution, in test allow to set it for testing reasons
+    # generate message id, force it in production, in test allow to set it for testing reasons
     if !record.message_id || Rails.env.production?
       fqdn = Setting.get('fqdn')
       record.message_id = "<#{DateTime.current.to_s(:number)}.#{record.ticket_id}.#{rand(999_999_999_999)}@#{fqdn}>"

@@ -68,7 +68,7 @@ file system check of store, check data and sha (in case fix it)
 
   Store::File.verify
 
-read each file which should be in backend and verify agsinst sha hash
+read each file which should be in backend and verify against sha hash
 
 in case of fixing sha hash use:
 

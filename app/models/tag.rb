@@ -212,7 +212,7 @@ rename tag items
       old_tag_item         = Tag::Item.find(data[:id])
       already_existing_tag = Tag::Item.lookup(name: new_tag_name)
 
-      # check if no remame is needed
+      # check if no rename is needed
       return true if new_tag_name == old_tag_item.name
 
       # merge old with new tag if already existing

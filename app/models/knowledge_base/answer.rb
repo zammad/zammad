@@ -67,7 +67,7 @@ class KnowledgeBase::Answer < ApplicationModel
   def reordering_callback
     return if !category_id_changed? && !position_changed?
 
-    # drop siblings cache to make sure orderign is always up to date
+    # drop siblings cache to make sure ordering is always up to date
     category.answers.each(&:cache_delete)
   end
   before_save :reordering_callback

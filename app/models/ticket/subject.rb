@@ -17,7 +17,7 @@ returns
 
   def subject_build(subject, prefix_mode = nil)
 
-    # clena subject
+    # clean subject
     subject_parts = [subject_clean(subject)]
 
     # add hook

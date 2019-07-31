@@ -68,7 +68,7 @@ delete object activity stream, will be executed automatically
 
 =begin
 
-serve methode to ignore model attributes in activity stream and/or limit activity stream permission
+serve method to ignore model attributes in activity stream and/or limit activity stream permission
 
 class Model < ApplicationModel
   include HasActivityStreamLog

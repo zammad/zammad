@@ -161,7 +161,7 @@ log user device action
       user_device.ip = ip
       location_details = Service::GeoIp.location(ip)
 
-      # if we do not have any data from backend (e. g. geo ip ist out of service), ignore log
+      # if we do not have any data from backend (e.g. geo ip is out of service), ignore log
       if location_details && location_details['country_name']
 
         user_device.location_details = location_details

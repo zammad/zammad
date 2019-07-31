@@ -26,7 +26,7 @@ returns
       attributes[:tags] = tags
     end
 
-    # list ignored file extentions
+    # list ignored file extensions
     attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
 
     # max attachment size

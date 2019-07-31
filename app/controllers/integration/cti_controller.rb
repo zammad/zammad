@@ -18,7 +18,7 @@ class Integration::CtiController < ApplicationController
       return true
     end
 
-    # check if oubound call change the outbound caller_id
+    # check if outbound call changes the outbound caller_id
     if result[:action] == 'set_caller_id'
       data = {
         action:    'dial',

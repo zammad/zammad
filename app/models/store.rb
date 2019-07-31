@@ -297,7 +297,7 @@ returns
     return if image.width <= width
 
     # do not resize image if new height is smaller then 7px (images
-    # with small height are usally usefull to resize)
+    # with small height are usually useful to resize)
     ratio = image.width / width
     return if image.height / ratio <= 6
 

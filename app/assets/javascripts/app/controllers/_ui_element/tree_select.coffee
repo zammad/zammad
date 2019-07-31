@@ -28,7 +28,7 @@ class App.UiElement.tree_select extends App.UiElement.ApplicationUiElement
     # sort attribute.options
     @sortOptions(attribute, params)
 
-    # finde selected/checked item of list
+    # find selected/checked item of list
     if attribute.options
       @optionsSelect(attribute.options, attribute.value)
 

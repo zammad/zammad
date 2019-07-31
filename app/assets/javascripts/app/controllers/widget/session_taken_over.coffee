@@ -5,7 +5,7 @@ class Widget extends App.Controller
 
   bind: ->
 
-    # only do take over check after spool messages are finised
+    # only do takeover check after spool messages are finished
     App.Event.bind(
       'spool:sent'
       =>
@@ -36,7 +36,7 @@ class Widget extends App.Controller
         # check if error message is already shown
         if !@error
 
-          # only if new client id isnt own client id
+          # only if new client id isn't own client id
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
               head:         'Session'

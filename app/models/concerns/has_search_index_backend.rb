@@ -106,7 +106,7 @@ returns
 
 =begin
 
-serve methode to ignore model attributes in search index
+serve method to ignore model attributes in search index
 
 class Model < ApplicationModel
   include HasSearchIndexBackend

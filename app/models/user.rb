@@ -333,7 +333,7 @@ returns
 
 =begin
 
-authenticate user agains sso
+authenticate user again sso
 
   result = User.sso(sso_params)
 
@@ -725,7 +725,7 @@ returns
     # to prevent any unexpected regressions.)
     User.find(user_id_of_duplicate_user)
 
-    # merge missing attibutes
+    # merge missing attributes
     Models.merge('User', id, user_id_of_duplicate_user)
 
     true
@@ -759,7 +759,7 @@ returns
 
 =begin
 
-update/sync default preferences of users in a dedecated permissions
+update/sync default preferences of users with dedicated permissions
 
   result = User.update_default_preferences_by_permission('ticket.agent', force)
 
@@ -796,7 +796,7 @@ returns
 
 =begin
 
-update/sync default preferences of users in a dedecated role
+update/sync default preferences of users in a dedicated role
 
   result = User.update_default_preferences_by_role('Agent', force)
 
@@ -1254,7 +1254,7 @@ raise 'Minimum one user need to have admin permissions'
     # don't permit empty password update for existing users
     return password_was if password.blank?
 
-    # don't re-hash an already hashed passsword
+    # don't re-hash passwords
     return password if PasswordHash.crypted?(password)
 
     # hash the plaintext password

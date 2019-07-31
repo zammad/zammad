@@ -20,7 +20,7 @@ class Integration::SipgateController < ApplicationController
       return true
     end
 
-    # check if oubound call change the outbound caller_id
+    # check if outbound call changes the outbound caller_id
     if result[:action] == 'set_caller_id'
       response_set_caller_id(result)
       return true

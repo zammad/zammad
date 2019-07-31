@@ -8,7 +8,7 @@ execute post database statements after import (e. g. reset primary key sequences
 
   DbHelper.import_post
 
-or only for certan tables
+or only for certain tables
 
   DbHelper.import_post(table_name)
 

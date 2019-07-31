@@ -44,7 +44,7 @@ class Overview < ApplicationModel
         rearranged_prio += 1
       end
 
-      # don't start rearrange logic for overviews that alredy get rearranged
+      # don't start rearranging logic for overviews that have already been rearranged
       self.class.without_callback(:update, :before, :rearrangement) do
         # fetch and update overview only if prio needs to change
         overview = self.class.where(

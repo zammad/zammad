@@ -278,7 +278,7 @@ class App.TicketZoomArticleNew extends App.Controller
       if config && config.params
         params = config.params(params.type, params, @)
 
-    # add initals?
+    # add initials?
     for articleType in @articleTypes
       if articleType.name is @type
         if _.contains(articleType.features, 'body:initials')

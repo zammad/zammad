@@ -12,7 +12,7 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
-    # if we are logged in, no passwort reset is wanted, redirect to app
+    # if we are logged in, no password reset is wanted, redirect to app
     if @authenticateCheck()
       @navigate '#'
       return

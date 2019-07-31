@@ -26,7 +26,7 @@ module Import
         cache = Cache.get('import_otrs_stats')
         return cache if cache
 
-        # retrive statistic
+        # retrieve statistic
         statistic = Import::OTRS::Requester.list
         return statistic if !statistic
 

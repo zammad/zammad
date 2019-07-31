@@ -29,7 +29,7 @@ class Observer::Transaction < ActiveRecord::Observer
     # reset buffer
     EventBuffer.reset('transaction')
 
-    # get asyn backends
+    # get async backends
     sync_backends = []
     Setting.where(area: 'Transaction::Backend::Sync').order(:name).each do |setting|
       backend = Setting.get(setting.name)

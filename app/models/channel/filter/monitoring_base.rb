@@ -30,7 +30,7 @@ class Channel::Filter::MonitoringBase
     # check if sender is monitoring
     return if !Channel::Filter::Match::EmailRegex.match(value: mail[:from], match_rule: sender, check_mode: true)
 
-    # get mail attibutes like host and state
+    # get mail attributes like host and state
     result = {}
 
     mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info|Action|Description):(.+?)(\n|$)}i) do |_match|
@@ -118,7 +118,7 @@ class Channel::Filter::MonitoringBase
       end
     end
 
-    # ignorte states
+    # ignore states
     if state_ignore_match.present? && result['state'].present? && result['state'].match(/#{state_ignore_match}/i)
       mail[ 'x-zammad-ignore'.to_sym ] = true
       return true

@@ -241,7 +241,7 @@ class SessionsController < ApplicationController
   # "switch" back to user
   def switch_back_to_user
 
-    # check if it's a swich back
+    # check if it's a switch back
     raise Exceptions::NotAuthorized if !session[:switched_from_user_id]
 
     user = User.lookup(id: session[:switched_from_user_id])
@@ -253,7 +253,7 @@ class SessionsController < ApplicationController
       return false
     end
 
-    # rememeber current user
+    # remember current user
     current_session_user = current_user
 
     # remove switched_from_user_id
@@ -321,7 +321,7 @@ class SessionsController < ApplicationController
       config[setting.name] = value
     end
 
-    # remember if we can to swich back to user
+    # remember if we can switch back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true
     end

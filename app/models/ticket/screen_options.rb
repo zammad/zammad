@@ -157,7 +157,7 @@ returns
 
 =begin
 
-list tickets by customer groupd in state categroie open and closed
+list tickets by customer group in state categories open and closed
 
   result = Ticket::ScreenOptions.list_by_customer(
     customer_id: 123,

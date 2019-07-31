@@ -512,7 +512,7 @@ optional you can put the max oldest chat entries as argument
 
 =begin
 
-returnes queues of user
+returns queues of user
 
   ['queue1', 'queue2'] = Cti::Log.queues_of_user(User.find(123), config)
 

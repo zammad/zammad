@@ -76,7 +76,7 @@ check and if channel not exists reset configured channels for email addresses
     end
   end
 
-  # keep email email address is of inital group filled
+  # keep email email address is of initial group filled
   def update_email_address_id
     not_configured = Group.where(email_address_id: nil).count
     total = Group.count

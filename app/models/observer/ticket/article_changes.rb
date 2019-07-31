@@ -55,7 +55,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     true
   end
 
-  # set frist response
+  # set first response
   def first_response_at_update(record)
 
     # return if we run import mode
@@ -123,7 +123,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
         return true
       end
 
-      # if customer is sending agains, ignore update of last contact (usecase of update escalation)
+      # if customer is sending again, ignore update of last contact (use case of update escalation)
       return false if ticket.last_contact_customer_at &&
                       ticket.last_contact_at &&
                       ticket.last_contact_customer_at == ticket.last_contact_at

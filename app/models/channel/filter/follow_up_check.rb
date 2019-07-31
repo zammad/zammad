@@ -68,7 +68,7 @@ module Channel::Filter::FollowUpCheck
       end
     end
 
-    # get ticket# from references current email has same subject as inital article
+    # get ticket# from references current email has same subject as initial article
     if mail[:subject].present?
 
       # get all references 'References' + 'In-Reply-To'

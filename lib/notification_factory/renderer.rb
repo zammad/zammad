@@ -41,7 +41,7 @@ examples how to use
   # d('user.firstname', htmlEscape)
   def d(key, escape = nil)
 
-    # do validaton, ignore some methodes
+    # do validation, ignore some methods
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
 
     # aliases
@@ -72,7 +72,7 @@ examples how to use
 
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
-    # if object is not in avalable objects, just return
+    # if object is not in available objects, just return
     return "\#{#{object_name} / no such object}" if !object_refs
 
     # if content of method is a complex datatype, just return

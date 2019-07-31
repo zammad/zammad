@@ -232,7 +232,7 @@ returns
   class_methods do
 =begin
 
-serve methode to ignore model attributes in historization
+serve method to ignore model attributes in historization
 
 class Model < ApplicationModel
   include HasHistory
@@ -247,7 +247,7 @@ end
 
 =begin
 
-serve methode to ignore model attributes in historization
+serve method to ignore model attributes in historization
 
 class Model < ApplicationModel
   include HasHistory

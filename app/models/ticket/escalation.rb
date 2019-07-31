@@ -52,7 +52,7 @@ returns
     # return if we run import mode
     return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
 
-    # set escalation off if current state is not escalation relativ (e. g. ticket is closed)
+    # set escalation off if current state is not escalation relative (e.g. ticket is closed)
     return if !state_id
 
     state = Ticket::State.lookup(id: state_id)
@@ -60,7 +60,7 @@ returns
     if state.ignore_escalation?
       escalation_disabled = true
 
-      # early exit if nothing current state is not escalation relativ
+      # early exit if nothing current state is not escalation relative
       if !force
         return false if escalation_at.nil?
 

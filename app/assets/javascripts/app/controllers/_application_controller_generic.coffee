@@ -740,7 +740,7 @@ class App.Sidebar extends App.Controller
       dir:            App.i18n.dir()
     ))
 
-    # init sidebar badget
+    # init sidebar badge
     for item in itemsLocal
       el = localEl.find('.tabsSidebar-tab[data-tab="' + item.name + '"]')
       if item.badgeCallback

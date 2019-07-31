@@ -15,7 +15,7 @@ class Calendar < ApplicationModel
 
 =begin
 
-set inital default calendar
+set initial default calendar
 
   calendar = Calendar.init_setup
 
@@ -30,7 +30,7 @@ returns calendar object
       ip = nil
     end
 
-    # prevent multible setups for same ip
+    # prevent multiple setups for same ip
     cache = Cache.get('Calendar.init_setup.done')
     return if cache && cache[:ip] == ip
 

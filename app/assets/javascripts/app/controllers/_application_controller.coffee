@@ -4,7 +4,7 @@ class App.Controller extends Spine.Controller
 
   constructor: (params) ->
 
-    # unbind old bindlings
+    # unbind old bindings
     if params && params.el && params.el.unbind
       params.el.unbind()
 
@@ -93,7 +93,7 @@ class App.Controller extends Spine.Controller
     @off()
     @stopListening()
 
-  # add @title methode to set title
+  # add @title method to set title
   title: (name, translate = false) ->
 #    $('html head title').html(@Config.get(product_name) + ' - ' + App.i18n.translateInline(name))
     title = name
@@ -115,18 +115,18 @@ class App.Controller extends Spine.Controller
     App.Interval.reset()
     App.WebSocket.close(force: true)
 
-  # add @notify methode to create notification
+  # add @notify method to create notification
   notify: (data) ->
     App.Event.trigger 'notify', data
 
-  # add @notifyDesktop methode to create desktop notification
+  # add @notifyDesktop method to create desktop notification
   notifyDesktop: (data) ->
     App.Event.trigger 'notifyDesktop', data
 
-  # add @navupdate methode to update navigation
+  # add @navupdate method to update navigation
   navupdate: (url, force = false) ->
 
-    # ignore navupdate untill #clues are gone
+    # ignore navupdate until #clues are gone
     return if !force && window.location.hash is '#clues'
 
     App.Event.trigger 'navupdate', url

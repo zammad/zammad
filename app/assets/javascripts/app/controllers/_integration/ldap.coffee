@@ -351,7 +351,7 @@ class ConnectionWizard extends App.WizardModal
           @showAlert('js-bind', 'Unable to retrive group information, please check your bind user permissions.')
           return
 
-        # update config if successfull
+        # update config if successful
         for key, value of params
           @wizardConfig[key] = value
 

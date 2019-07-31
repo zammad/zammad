@@ -16,7 +16,7 @@ class App.UiElement.sla_times
       solution_time_in_text: @toText(params.solution_time)
     ) )
 
-    # appliy hour picker
+    # apply hour picker
     item.find('.js-timeConvertFrom').timepicker(
       maxHours: 999
     )

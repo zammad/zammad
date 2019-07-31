@@ -235,7 +235,7 @@ returns
   end
 
   def filter_attributes(attributes)
-    # remove forbitten attributes
+    # remove forbidden attributes
     %w[password token tokens token_ids].each do |item|
       attributes.delete(item)
     end
@@ -291,7 +291,7 @@ returns
 
 =begin
 
-serve methode to ignore model attribute associations
+serve method to ignore model attribute associations
 
 class Model < ApplicationModel
   include AssociationConcern

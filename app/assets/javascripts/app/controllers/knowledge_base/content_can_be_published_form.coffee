@@ -63,7 +63,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
     @form.find('[data-attribute-name="scheduled"]').remove()
     @datePicker.datepicker('setStartDate', new Date())
 
-    # add scheduled tiemr widgets
+    # add scheduled timer widgets
     now = new Date()
 
     for state in @states

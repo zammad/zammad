@@ -116,7 +116,7 @@ module Channel::Filter::IdentifySender
           return false if current_count == max_count
         end
       rescue => e
-        # parse not parseable fields by mail gem like
+        # parse not parsable fields by mail gem like
         #  - Max Kohl | [example.com] <kohl@example.com>
         #  - Max Kohl <max.kohl <max.kohl@example.com>
         Rails.logger.error 'ERROR: ' + e.inspect

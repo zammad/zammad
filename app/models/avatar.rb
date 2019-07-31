@@ -126,7 +126,7 @@ add avatar by url
       elsif data[:url].to_s.match?(%r{^https?://})
         url = data[:url].to_s
 
-        # check if source ist already updated within last 2 minutes
+        # check if source was updated within last 2 minutes
         if avatar_already_exists&.source_url == url
           return if avatar_already_exists.updated_at > 2.minutes.ago
         end

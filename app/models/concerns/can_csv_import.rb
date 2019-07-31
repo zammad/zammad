@@ -395,7 +395,7 @@ returns
 
 =begin
 
-serve methode to ignore model based on id
+serve method to ignore model based on id
 
 class Model < ApplicationModel
   include CanCsvImport
@@ -410,7 +410,7 @@ end
 
 =begin
 
-serve methode to ignore model attributes
+serve method to ignore model attributes
 
 class Model < ApplicationModel
   include CanCsvImport
@@ -433,7 +433,7 @@ end
 
 =begin
 
-serve methode to define if delete option is possible or not
+serve method to define if delete option is possible or not
 
 class Model < ApplicationModel
   include CanCsvImport

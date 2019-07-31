@@ -128,7 +128,7 @@ class App.User extends App.Model
 
   @_fillUp: (data) ->
 
-    # set socal media links
+    # set social media links
     if data['accounts']
       for account of data['accounts']
         if account == 'twitter'
@@ -238,7 +238,7 @@ class App.User extends App.Model
               if permission_key.substr(0, length) is requiredPermission.substr(0, length)
                 localAccess = true
 
-        # verify name.explicite permissions
+        # verify name.explicit permissions
         if !localAccess
           for part in parts
             if partString isnt ''

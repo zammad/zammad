@@ -167,7 +167,7 @@ class AppConfig extends App.ControllerModal
   onSubmit: (e) =>
     @formDisable(e)
 
-    # verify app credentals
+    # verify app credentials
     @ajax(
       id:   'facebook_app_verify'
       type: 'POST'

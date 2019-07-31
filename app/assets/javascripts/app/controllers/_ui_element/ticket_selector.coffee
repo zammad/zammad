@@ -140,7 +140,7 @@ class App.UiElement.ticket_selector
         @preview(item)
     )
 
-    # build inital params
+    # build initial params
     if !_.isEmpty(params[attribute.name])
       selectorExists = false
       for groupAndAttribute, meta of params[attribute.name]

@@ -83,7 +83,7 @@ class App.Model extends Spine.Model
 
   @validate: (data = {}) ->
 
-    # based on model attrbutes
+    # based on model attributes
     if App[ data['model'] ] && App[ data['model'] ].attributesGet
       attributes = App[ data['model'] ].attributesGet(data['screen'])
 
@@ -338,7 +338,7 @@ set new attributes of model (remove already available attributes)
 
   # localOrServer can be:
   #  change -> has changed local
-  #  destroy -> has beed removed local or remote
+  #  destroy -> has been removed local or remote
   #  refresh -> has been changed remote
 
   params =
@@ -456,7 +456,7 @@ set new attributes of model (remove already available attributes)
         'change'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local change #{@className}", items)
@@ -468,7 +468,7 @@ set new attributes of model (remove already available attributes)
         'destroy'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local destroy #{@className}", items)
@@ -482,7 +482,7 @@ set new attributes of model (remove already available attributes)
         'refresh'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local refresh #{@className}", items)
@@ -563,7 +563,7 @@ set new attributes of model (remove already available attributes)
   App.Model.fetchFull(
     @callback
     clear: true
-    force: false # only do server call if no record exsits
+    force: false # only do server call if no record exists
   )
 
 
@@ -606,7 +606,7 @@ set new attributes of model (remove already available attributes)
         if data.assets
           App.Collection.loadAssets(data.assets, targetModel: @className)
 
-          # in case of no record_ids are there, no inital render is fired
+          # if no record_ids are found, no initial render is fired
           if data.record_ids && _.isEmpty(data.record_ids)
             App[@className].trigger('refresh', [])
 

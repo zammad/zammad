@@ -104,7 +104,7 @@ class ChannelsEmailController < ApplicationController
     # check account duplicate
     return if account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
 
-    # check delivery for 30 sek.
+    # check delivery for 30 sec.
     result = EmailHelper::Verify.email(
       outbound: params[:outbound].to_h,
       inbound:  params[:inbound].to_h,
@@ -158,7 +158,7 @@ class ChannelsEmailController < ApplicationController
     # remember address && set channel for email address
     address = EmailAddress.find_by(email: email)
 
-    # if we are on initial setup, use already exisiting dummy email address
+    # on initial setup, use placeholder email address
     if Channel.count == 1
       address = EmailAddress.first
     end

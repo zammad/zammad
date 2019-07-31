@@ -36,7 +36,7 @@ class Scheduler < ApplicationModel
         logger.error "Can't reconnect to database #{e.inspect}"
       end
 
-      # read/load jobs and check if it is alredy started
+      # read/load jobs and check if each has already been started
       jobs = Scheduler.where('active = ?', true).order(prio: :asc)
       jobs.each do |job|
 
@@ -56,7 +56,7 @@ class Scheduler < ApplicationModel
 
   # Checks if a Scheduler Job should get started or not.
   # The decision is based on if there is a running thread or not.
-  # Invalid threads get canceled and new threads can get started.
+  # Invalid threads get cancelled and new threads can get started.
   #
   # @param [Scheduler] job The job that should get checked for running threads.
   #

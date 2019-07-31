@@ -4,7 +4,7 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
 
   included do
 
-    # Builds a case insenstive WHERE ... OR ... SQL query.
+    # Builds a case-insensitive WHERE ... OR ... SQL query.
     #
     # @see .or_cis
     #
@@ -19,10 +19,10 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
-    # Builds a case insenstive OR SQL grouping. This comes in handy for join queries.
+    # Builds a case-insensitive OR SQL grouping. This comes in handy for join queries.
     # For direct WHERE queries prefer .where_or_cis scope.
     #
-    # @param [Array] attributes the attributes that should get queried case insensitive. Strings or Arel attributes
+    # @param [Array] attributes the attributes that should get queried case-insensitive. Strings or Arel attributes
     # @param [String] query the SQL query that should be used for each given attribute.
     #
     # @example
@@ -30,7 +30,7 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
     #
     # @return [Arel::Nodes::Grouping] can be passed to ActiveRecord queries
     def or_cis(attributes, query)
-      # use Arel to create an Array of case insenstive
+      # use Arel to create an Array of case-insensitive
       # LIKE queries based on the current DB adapter
       cis_matches = attributes
                     .map do |attribute|

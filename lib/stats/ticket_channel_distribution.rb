@@ -30,7 +30,7 @@ class Stats::TicketChannelDistribution
       },
     ]
 
-    # calcualte
+    # calculate
     result = {}
     total_in = 0
     total_out = 0

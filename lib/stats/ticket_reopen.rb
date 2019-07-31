@@ -10,7 +10,7 @@ class Stats::TicketReopen
       user.id, Time.zone.now - 7.days
     ).count
 
-    # get count of repoens
+    # get count of reopens
     count = StatsStore.count_by_search(
       object: 'User',
       o_id:   user.id,
@@ -69,7 +69,7 @@ class Stats::TicketReopen
     ticket = Ticket.lookup(id: o_id)
     return if !ticket
 
-    # check if close_at is already set / if not, ticket is not reopend
+    # check if close_at is already set / if not, ticket is not reopened
     return if !ticket.close_at
 
     # only if state id has changed

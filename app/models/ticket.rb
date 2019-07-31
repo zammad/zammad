@@ -30,7 +30,7 @@ class Ticket < ApplicationModel
 
   activity_stream_permission 'ticket.agent'
 
-  activity_stream_attributes_ignored :organization_id, # organization_id will channge automatically on user update
+  activity_stream_attributes_ignored :organization_id, # organization_id will change automatically on user update
                                      :create_article_type_id,
                                      :create_article_sender_id,
                                      :article_count,
@@ -1195,11 +1195,11 @@ result
 
 get all articles of a ticket in correct order (overwrite active record default method)
 
-  artilces = ticket.articles
+  articles = ticket.articles
 
 result
 
-  [article1, articl2]
+  [article1, article2]
 
 =end
 
@@ -1356,7 +1356,7 @@ result
       end
       next if skip_user
 
-      # send notifications only to email adresses
+      # send notifications only to email addresses
       next if recipient_email.blank?
       next if recipient_email !~ /@/
 

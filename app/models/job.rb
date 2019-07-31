@@ -100,7 +100,7 @@ job.run(true)
   def executable?(start_at = Time.zone.now)
     return false if !active
 
-    # only execute jobs, older then 1 min, to give admin posibility to change
+    # only execute jobs older than 1 min to give admin time to make last-minute changes
     return false if updated_at > Time.zone.now - 1.minute
 
     # check if job got stuck

@@ -117,7 +117,7 @@ note: will not take down package migrations, use Package.unlink instead
 
 execute migration down + unlink files
 
-  Package.unlink('/path/to/src/extention')
+  Package.unlink('/path/to/src/extension')
 
 =end
 
@@ -153,7 +153,7 @@ execute migration down + unlink files
 
 link files + execute migration up
 
-  Package.link('/path/to/src/extention')
+  Package.link('/path/to/src/extension')
 
 =end
 
@@ -220,7 +220,7 @@ or
 
 returns
 
-  package # record of new created packae
+  package # record of newly created package
 
 =end
 
@@ -303,7 +303,7 @@ reinstall package
 
 returns
 
-  package # record of new created packae
+  package # record of newly created package
 
 =end
 
@@ -330,7 +330,7 @@ or
 
 returns
 
-  package # record of new created packae
+  package # record of newly created package
 
 =end
 

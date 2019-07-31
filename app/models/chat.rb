@@ -25,7 +25,7 @@ class Chat < ApplicationModel
               avatar: url,
             }
 
-            # get queue postion if needed
+            # get queue position if needed
             session = Chat::Session.messages_by_session_id(session_id)
             if session
               return {
@@ -174,7 +174,7 @@ broadcast new agent status to all agents
 
   Chat.broadcast_agent_state_update
 
-optional you can ignore it for dedecated user
+optional you can ignore it for dedicated user
 
   Chat.broadcast_agent_state_update(ignore_user_id)
 
@@ -243,7 +243,7 @@ optional you can put the max oldest chat entries
 
 =begin
 
-close chat sessions where participients are offline
+close chat sessions where participants are offline
 
   Chat.cleanup_close
 

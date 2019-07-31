@@ -20,7 +20,7 @@ class Index extends App.ControllerSubContent
 
   render: =>
 
-    # serach area settings
+    # search area settings
     settings = App.Setting.search(
       filter:
         area: 'API::Base'

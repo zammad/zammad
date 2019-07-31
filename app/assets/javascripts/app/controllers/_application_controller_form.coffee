@@ -689,7 +689,7 @@ class App.ControllerForm extends App.Controller
       # set forms to read only during communication with backend
       lookupForm.find('button, input, select, textarea').prop('readonly', true)
 
-      # disable radio and checbkox buttons
+      # disable radio and checkbox buttons
       lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', true)
 
       # disable additionals submits
@@ -714,7 +714,7 @@ class App.ControllerForm extends App.Controller
       # enable fields again
       lookupForm.find('button, input, select, textarea').prop('readonly', false)
 
-      # enable radio and checbkox buttons
+      # enable radio and checkbox buttons
       lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', false)
 
       # enable submits again

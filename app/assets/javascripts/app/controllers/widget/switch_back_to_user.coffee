@@ -7,7 +7,7 @@ class Widget extends App.ControllerWidgetOnDemand
     @bind 'app:ready', =>
       @render()
 
-    # e. g. if language has chnaged
+    # e.g. if language has changed
     @bind 'ui:rerender', =>
       @render()
 

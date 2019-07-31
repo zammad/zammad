@@ -847,7 +847,7 @@ class TicketZoomRef extends App.ControllerContent
     if highlights = localStorage['highlights']
       @highlighter.deserialize localStorage['highlights']
 
-  # the serialization creates one string for the entiery ticket
+  # the serialization creates one string for the entire ticket
   # containing the offsets and the highlight classes
   #
   # we have to check how it works with having open several tickets – it might break

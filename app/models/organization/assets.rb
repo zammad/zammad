@@ -42,7 +42,7 @@ returns
 
         if local_attributes['member_ids'].present?
 
-          # featrue used for different propose, do limit references
+          # feature used for different purpose; do limit references
           if local_attributes['member_ids'].count > 100
             local_attributes['member_ids'] = local_attributes['member_ids'].sort[0, 100]
           end

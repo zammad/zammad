@@ -26,7 +26,7 @@ returns
 
 =begin
 
-check if string contrains a valid ticket number
+check if string contains a valid ticket number
 
   result = Ticket::Number.check('some string [Ticket#123456]')
 

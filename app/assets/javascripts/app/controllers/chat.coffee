@@ -214,7 +214,7 @@ class App.CustomerChat extends App.Controller
       preferences = @Session.get('preferences')
       if App.Chat.first() && !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
 
-        # if we only have one chat, avtice it automatically
+        # if we only have one chat, active it automatically
         if App.Chat.count() < 2
           preferences.chat = {}
           preferences.chat.active = {}
