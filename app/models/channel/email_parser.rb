@@ -116,18 +116,15 @@ returns
     end
   rescue => e
     # store unprocessable email for bug reporting
-    path = Rails.root.join('tmp', 'unprocessable_mail')
-    FileUtils.mkpath path
-    md5 = Digest::MD5.hexdigest(msg)
-    filename = "#{path}/#{md5}.eml"
+    filename = archive_mail('unprocessable_mail', msg)
+
     message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+
     p message # rubocop:disable Rails/Output
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error e
-    File.open(filename, 'wb') do |file|
-      file.write msg
-    end
+
     return false if exception == false
 
     raise e.inspect + "\n" + e.backtrace.join("\n")
@@ -486,6 +483,19 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     files
   end
 
+=begin
+
+  process oversized emails by:
+  1. Archiving the oversized mail as tmp/oversized_mail/timestamp_md5.eml
+  2. Reply with a postmaster message to inform the sender
+
+=end
+
+  def process_oversized_mail(channel, msg)
+    archive_mail('oversized_mail', msg)
+    postmaster_response(channel, msg)
+  end
+
   private
 
   def message_header_hash(mail)
@@ -782,6 +792,70 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     }
 
     [attach]
+  end
+
+  # Archive the given message as tmp/folder/timestamp_md5.eml
+  def archive_mail(folder, msg)
+    path = Rails.root.join('tmp', folder)
+    FileUtils.mkpath path
+
+    # MD5 hash the msg and save it as "timestamp_md5.eml"
+    md5 = Digest::MD5.hexdigest(msg)
+    filename = "#{Time.zone.now.iso8601}_#{md5}.eml"
+    file_path = Rails.root.join('tmp', folder, filename)
+
+    File.open(file_path, 'wb') do |file|
+      file.write msg
+    end
+
+    file_path
+  end
+
+  # Auto reply as the postmaster to oversized emails with:
+  # [ALERT] Message too large
+  def postmaster_response(channel, msg)
+    begin
+      reply_mail = compose_postmaster_reply(msg)
+    rescue NotificationFactory::FileNotFoundError => e
+      Rails.logger.error 'No valid postmaster email_oversized template found. Skipping postmaster reply. ' + e.inspect
+      return
+    end
+
+    Rails.logger.error "Send mail too large postmaster message to: #{reply_mail[:to]}"
+    reply_mail[:from] = EmailAddress.find_by(channel: channel).email
+    channel.deliver(reply_mail)
+  rescue => e
+    Rails.logger.error "Error during sending of postmaster oversized email auto-reply: #{e.inspect}\n#{e.backtrace}"
+  end
+
+  # Compose a "Message too large" reply to the given message
+  def compose_postmaster_reply(raw_incoming_mail, locale = nil)
+    parsed_incoming_mail = Channel::EmailParser.new.parse(raw_incoming_mail)
+
+    # construct a dummy mail object
+    mail = OpenStruct.new
+    mail.from_display_name = parsed_incoming_mail[:from_display_name]
+    mail.subject = parsed_incoming_mail[:subject]
+    mail.msg_size = format('%.2f', raw_incoming_mail.size.to_f / 1024 / 1024)
+
+    reply = NotificationFactory::Mailer.template(
+      template:   'email_oversized',
+      locale:     locale,
+      format:     'txt',
+      objects:    {
+        mail: mail,
+      },
+      raw:        true, # will not add application template
+      standalone: true, # default: false - will send header & footer
+    )
+
+    reply.merge(
+      to:            parsed_incoming_mail[:from_email],
+      body:          reply[:body].gsub(/\n/, "\r\n"),
+      content_type:  'text/plain',
+      References:    parsed_incoming_mail[:message_id],
+      'In-Reply-To': parsed_incoming_mail[:message_id],
+    )
   end
 end
 

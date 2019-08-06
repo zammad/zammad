@@ -2583,6 +2583,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       'Send postmaster mail if mail too large',
+  name:        'postmaster_send_reject_if_mail_too_large',
+  area:        'Email::Base',
+  description: 'Send postmaster reject mail to sender of mail if mail is too large.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'postmaster_send_reject_if_mail_too_large',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    online_service_disable: true,
+    permission:             ['admin.channel_email'],
+  },
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
   title:       'Notification Sender',
   name:        'notification_sender',
   area:        'Email::Base',

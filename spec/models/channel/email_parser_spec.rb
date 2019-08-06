@@ -997,4 +997,124 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
   end
+
+  describe '#compose_postmaster_reply' do
+    let(:raw_incoming_mail) { File.read(Rails.root.join('test', 'data', 'mail', 'mail010.box')) }
+
+    shared_examples 'postmaster reply' do
+      it 'composes postmaster reply' do
+        reply = Channel::EmailParser.new.send(:compose_postmaster_reply, raw_incoming_mail, locale)
+        expect(reply[:to]).to eq('smith@example.com')
+        expect(reply[:content_type]).to eq('text/plain')
+        expect(reply[:subject]).to eq(expected_subject)
+        expect(reply[:body]).to eq(expected_body)
+      end
+    end
+
+    context 'for English locale (en)' do
+      include_examples 'postmaster reply' do
+        let(:locale) { 'en' }
+        let(:expected_subject) { '[ALERT] Message too large' }
+        let(:expected_body) do
+          body = <<~BODY
+            Dear Smith Sepp,
+
+            Unfortunately your email titled \"Gruß aus Oberalteich\" could not be delivered to one or more recipients.
+
+            Your message was 0.01 MB but we only accept messages up to 10 MB.
+
+            Please reduce the message size and try again. Thank you for your understanding.
+
+            Regretfully,
+
+            Postmaster of zammad.example.com
+          BODY
+          body.gsub(/\n/, "\r\n")
+        end
+      end
+    end
+
+    context 'for German locale (de)' do
+      include_examples 'postmaster reply' do
+        let(:locale) { 'de' }
+        let(:expected_subject) { '[Unzustellbar] Nachricht zu groß' }
+        let(:expected_body) do
+          body = <<~BODY
+            Hallo Smith Sepp,
+
+            Ihre E-Mail mit dem Betreff \"Gruß aus Oberalteich\" konnte nicht an einen oder mehrere Empfänger zugestellt werden.
+
+            Die Nachricht hatte eine Größe von 0.01 MB, wir akzeptieren jedoch nur E-Mails mit einer Größe von bis zu 10 MB.
+
+            Bitte reduzieren Sie die Größe Ihrer Nachricht und versuchen Sie es erneut. Vielen Dank für Ihr Verständnis.
+
+            Mit freundlichen Grüßen
+
+            Postmaster von zammad.example.com
+          BODY
+          body.gsub(/\n/, "\r\n")
+        end
+      end
+    end
+  end
+
+  describe '#compose_postmaster_reply' do
+    let(:raw_incoming_mail) { File.read(Rails.root.join('test', 'data', 'mail', 'mail010.box')) }
+
+    shared_examples 'postmaster reply' do
+      it 'composes postmaster reply' do
+        reply = Channel::EmailParser.new.send(:compose_postmaster_reply, raw_incoming_mail, locale)
+        expect(reply[:to]).to eq('smith@example.com')
+        expect(reply[:content_type]).to eq('text/plain')
+        expect(reply[:subject]).to eq(expected_subject)
+        expect(reply[:body]).to eq(expected_body)
+      end
+    end
+
+    context 'for English locale (en)' do
+      include_examples 'postmaster reply' do
+        let(:locale) { 'en' }
+        let(:expected_subject) { '[ALERT] Message too large' }
+        let(:expected_body) do
+          body = <<~BODY
+            Dear Smith Sepp,
+
+            Unfortunately your email titled \"Gruß aus Oberalteich\" could not be delivered to one or more recipients.
+
+            Your message was 0.01 MB but we only accept messages up to 10 MB.
+
+            Please reduce the message size and try again. Thank you for your understanding.
+
+            Regretfully,
+
+            Postmaster of zammad.example.com
+          BODY
+          body.gsub(/\n/, "\r\n")
+        end
+      end
+    end
+
+    context 'for German locale (de)' do
+      include_examples 'postmaster reply' do
+        let(:locale) { 'de' }
+        let(:expected_subject) { '[Unzustellbar] Nachricht zu groß' }
+        let(:expected_body) do
+          body = <<~BODY
+            Hallo Smith Sepp,
+
+            Ihre E-Mail mit dem Betreff \"Gruß aus Oberalteich\" konnte nicht an einen oder mehrere Empfänger zugestellt werden.
+
+            Die Nachricht hatte eine Größe von 0.01 MB, wir akzeptieren jedoch nur E-Mails mit einer Größe von bis zu 10 MB.
+
+            Bitte reduzieren Sie die Größe Ihrer Nachricht und versuchen Sie es erneut. Vielen Dank für Ihr Verständnis.
+
+            Mit freundlichen Grüßen
+
+            Postmaster von zammad.example.com
+          BODY
+          body.gsub(/\n/, "\r\n")
+        end
+      end
+    end
+  end
 end

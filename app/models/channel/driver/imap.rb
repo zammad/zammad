@@ -206,6 +206,7 @@ example
     count                 = 0
     count_fetched         = 0
     count_max             = 5000
+    too_large_messages    = []
     active_check_interval = 20
     notice                = ''
     message_ids.each do |message_id|
@@ -226,13 +227,6 @@ example
       # ignore verify messages
       next if !messages_is_too_old_verify?(message_meta, count, count_all)
 
-      # ignore to big messages
-      info = too_big?(message_meta, count, count_all)
-      if info
-        notice += "#{info}\n"
-        next
-      end
-
       # ignore deleted messages
       next if deleted?(message_meta, count, count_all)
 
@@ -251,7 +245,24 @@ example
       end
       next if !msg
 
-      process(channel, msg, false)
+      # do not process too big messages, instead download & send postmaster reply
+      too_large_info = too_large?(message_meta)
+      if too_large_info
+        if Setting.get('postmaster_send_reject_if_mail_too_large') == true
+          info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
+          Rails.logger.info info
+          notice += "#{info}\n"
+          process_oversized_mail(channel, msg)
+        else
+          info = "  - ignore message #{count}/#{count_all} - because message is too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
+          Rails.logger.info info
+          notice += "#{info}\n"
+          too_large_messages.push info
+          next
+        end
+      else
+        process(channel, msg, false)
+      end
 
       begin
         timeout(FETCH_MSG_TIMEOUT) do
@@ -282,6 +293,11 @@ example
     if count.zero?
       Rails.logger.info ' - no message'
     end
+
+    if too_large_messages.present?
+      raise too_large_messages.join("\n")
+    end
+
     Rails.logger.info 'done'
     {
       result:  'ok',
@@ -420,7 +436,7 @@ returns
 
 check if email is to big
 
-  Channel::Driver::IMAP.too_big?(message_meta, count, count_all)
+  Channel::Driver::IMAP.too_large?(message_meta, count, count_all)
 
 returns
 
@@ -428,14 +444,13 @@ returns
 
 =end
 
-  def too_big?(message_meta, count, count_all)
+  def too_large?(message_meta)
     max_message_size = Setting.get('postmaster_max_size').to_f
     real_message_size = message_meta.attr['RFC822.SIZE'].to_f / 1024 / 1024
     if real_message_size > max_message_size
-      info = "  - ignore message #{count}/#{count_all} - because message is too big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
-      Rails.logger.info info
-      return info
+      return [real_message_size, max_message_size]
     end
+
     false
   end
 

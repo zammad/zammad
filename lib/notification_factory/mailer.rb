@@ -281,7 +281,7 @@ returns
     template = NotificationFactory.template_read(
       locale:   data[:locale] || Setting.get('locale_default') || 'en-us',
       template: data[:template],
-      format:   'html',
+      format:   data[:format] || 'html',
       type:     'mailer',
     )
 
@@ -292,6 +292,10 @@ returns
       template: template[:subject],
       escape:   false
     ).render
+
+    # strip off the extra newline at the end for the subjects of plaintext templates
+    message_subject.chomp! if data[:format] == 'txt'
+
     message_body = NotificationFactory::Renderer.new(
       objects:  data[:objects],
       locale:   data[:locale],
