@@ -19,3 +19,7 @@ end
 Capybara.add_selector(:richtext) do
   css { |name| "div[data-name=#{name || 'body'}]" }
 end
+
+Capybara.add_selector(:text_module) do
+  css { |id| %(.shortcut > ul > li[data-id="#{id}"]) }
+end

@@ -22,30 +22,19 @@ RSpec.shared_examples 'group-dependent text modules' do |path:|
     visit path
 
     within(:active_content) do
-
-      selector_group_select          = 'select[name="group_id"]'
-      selector_text_module_selection = '.shortcut'
-      selector_text_module_item      = ".shortcut > ul > li[data-id='%s']"
-
-      # exercise
-      find(selector_group_select).find(:option, group1.name).select_option
+      find('select[name="group_id"]').select(group1.name)
       find(:richtext).send_keys('::')
 
-      # expectations
-      expect(page).to have_css(selector_text_module_selection, wait: 3)
-      expect(page).to have_css(format(selector_text_module_item, text_module_without_group.id))
-      expect(page).to have_css(format(selector_text_module_item, text_module_group1.id))
-      expect(page).to have_no_css(format(selector_text_module_item, text_module_group2.id))
+      expect(page).to have_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_selector(:text_module, text_module_group1.id)
+      expect(page).to have_no_selector(:text_module, text_module_group2.id)
 
-      # exercise
-      find(selector_group_select).find(:option, group2.name).select_option
+      find('select[name="group_id"]').select(group2.name)
       find(:richtext).send_keys('::')
 
-      # expectations
-      expect(page).to have_css(selector_text_module_selection, wait: 3)
-      expect(page).to have_css(format(selector_text_module_item, text_module_without_group.id))
-      expect(page).to have_no_css(format(selector_text_module_item, text_module_group1.id))
-      expect(page).to have_css(format(selector_text_module_item, text_module_group2.id))
+      expect(page).to have_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_no_selector(:text_module, text_module_group1.id)
+      expect(page).to have_selector(:text_module, text_module_group2.id)
     end
   end
 end
