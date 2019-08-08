@@ -3,6 +3,7 @@ class Sequencer
     module Import
       module Zendesk
         class Organizations < Sequencer::Unit::Import::Zendesk::SubSequence::Object
+          include ::Sequencer::Unit::Import::Zendesk::Mixin::IncrementalExport
 
           private
 

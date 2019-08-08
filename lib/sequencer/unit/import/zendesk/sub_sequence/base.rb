@@ -13,6 +13,7 @@ class Sequencer
 
             def self.included(base)
               base.extend(ClassMethods)
+
               base.uses :dry_run, :import_job
             end
 

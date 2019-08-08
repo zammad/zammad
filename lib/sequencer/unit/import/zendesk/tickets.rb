@@ -3,6 +3,7 @@ class Sequencer
     module Import
       module Zendesk
         class Tickets < Sequencer::Unit::Import::Zendesk::SubSequence::Object
+          include ::Sequencer::Unit::Import::Zendesk::Mixin::IncrementalExport
 
           uses :user_map, :organization_map, :group_map, :ticket_field_map
 

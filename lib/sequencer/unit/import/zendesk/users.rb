@@ -3,6 +3,7 @@ class Sequencer
     module Import
       module Zendesk
         class Users < Sequencer::Unit::Import::Zendesk::SubSequence::Object
+          include ::Sequencer::Unit::Import::Zendesk::Mixin::IncrementalExport
 
           uses :organization_map, :group_map, :user_group_map
 
