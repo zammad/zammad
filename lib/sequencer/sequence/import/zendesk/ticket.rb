@@ -6,6 +6,7 @@ class Sequencer
 
           def self.sequence
             [
+              'Import::Zendesk::Ticket::Skip::Deleted',
               'Import::Zendesk::Ticket::UserID',
               'Import::Zendesk::Ticket::OwnerID',
               'Import::Zendesk::Ticket::GroupID',
