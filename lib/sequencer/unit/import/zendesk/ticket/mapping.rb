@@ -17,7 +17,6 @@ class Sequencer
                   id:                       resource.id,
                   title:                    subject,
                   owner_id:                 owner_id,
-                  note:                     resource.description,
                   group_id:                 group_id,
                   customer_id:              user_id,
                   organization_id:          organization_id,
