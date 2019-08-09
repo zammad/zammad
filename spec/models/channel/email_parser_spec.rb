@@ -1014,7 +1014,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     context 'for English locale (en)' do
       include_examples 'postmaster reply' do
         let(:locale) { 'en' }
-        let(:expected_subject) { '[ALERT] Message too large' }
+        let(:expected_subject) { '[undeliverable] Message too large' }
         let(:expected_body) do
           body = <<~BODY
             Dear Smith Sepp,
@@ -1074,7 +1074,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     context 'for English locale (en)' do
       include_examples 'postmaster reply' do
         let(:locale) { 'en' }
-        let(:expected_subject) { '[ALERT] Message too large' }
+        let(:expected_subject) { '[undeliverable] Message too large' }
         let(:expected_body) do
           body = <<~BODY
             Dear Smith Sepp,

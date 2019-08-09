@@ -16,7 +16,7 @@ RSpec.describe NotificationFactory::Mailer do
         mail
       end
 
-      let(:en_expected_subject) { '[ALERT] Message too large' }
+      let(:en_expected_subject) { '[undeliverable] Message too large' }
 
       let(:en_expected_body) do
         <<~BODY

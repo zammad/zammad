@@ -129,7 +129,7 @@ Oversized Email Message Body #{'#' * 120_000}
     parser = Channel::EmailParser.new
     mail = parser.parse(msg)
     assert_equal(mail[:from_email], @email_address.email)
-    assert_equal(mail[:subject], '[ALERT] Message too large')
+    assert_equal(mail[:subject], '[undeliverable] Message too large')
     assert_equal("<#{@test_id}@zammad.test.com>",
                  mail['references'],
                  'Reply\'s Referecnes header must match the send message ID')

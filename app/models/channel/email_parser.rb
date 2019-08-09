@@ -812,7 +812,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   end
 
   # Auto reply as the postmaster to oversized emails with:
-  # [ALERT] Message too large
+  # [undeliverable] Message too large
   def postmaster_response(channel, msg)
     begin
       reply_mail = compose_postmaster_reply(msg)
