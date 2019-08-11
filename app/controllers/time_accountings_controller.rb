@@ -466,8 +466,9 @@ class TimeAccountingsController < ApplicationController
 
     if timezone.present?
       offset = time.in_time_zone(timezone).utc_offset
-      time -= offset
+      time += offset
     end
-    time.utc.iso8601.to_s.sub(/Z$/, '')
+    local_time = time.utc.iso8601.to_s.sub(/Z$/, '')
+    local_time.sub(/T/, ' ')
   end
 end
