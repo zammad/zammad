@@ -1,11 +1,11 @@
 class Index extends App.ControllerSubContent
   requiredPermission: 'admin.channel_telegram'
   events:
-    'click .js-new':       'new'
-    'click .js-edit':      'edit'
-    'click .js-delete':    'delete'
-    'click .js-disable':   'disable'
-    'click .js-enable':    'enable'
+    'click .js-new':     'new'
+    'click .js-edit':    'edit'
+    'click .js-delete':  'delete'
+    'click .js-disable': 'disable'
+    'click .js-enable':  'enable'
 
   constructor: ->
     super
@@ -114,14 +114,14 @@ class BotAdd extends App.ControllerModal
     content = $(App.view('telegram/bot_add')())
     createGroupSelection = (selected_id) ->
       return App.UiElement.select.render(
-        name: 'group_id'
-        multiple: false
-        limit: 100
-        null: false
-        relation: 'Group'
+        name:       'group_id'
+        multiple:   false
+        limit:      100
+        null:       false
+        relation:   'Group'
         nulloption: true
-        value: selected_id
-        class: 'form-control--small'
+        value:      selected_id
+        class:      'form-control--small'
       )
 
     content.find('.js-select').on('click', (e) =>
@@ -163,14 +163,14 @@ class BotEdit extends App.ControllerModal
 
     createGroupSelection = (selected_id) ->
       return App.UiElement.select.render(
-        name: 'group_id'
-        multiple: false
-        limit: 100
-        null: false
-        relation: 'Group'
+        name:       'group_id'
+        multiple:   false
+        limit:      100
+        null:       false
+        relation:   'Group'
         nulloption: true
-        value: selected_id
-        class: 'form-control--small'
+        value:      selected_id
+        class:      'form-control--small'
       )
 
     content.find('.js-messagesGroup').replaceWith createGroupSelection(@channel.group_id)

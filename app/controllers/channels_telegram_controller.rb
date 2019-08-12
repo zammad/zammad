@@ -57,7 +57,7 @@ class ChannelsTelegramController < ApplicationController
   end
 
   def webhook
-    raise Exceptions::UnprocessableEntity, 'bot params missing' if params['bid'].blank?
+    raise Exceptions::UnprocessableEntity, 'bot id is missing' if params['bid'].blank?
 
     channel = Telegram.bot_by_bot_id(params['bid'])
     raise Exceptions::UnprocessableEntity, 'bot not found' if !channel

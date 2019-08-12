@@ -35,7 +35,7 @@ RSpec.describe 'Telegram', type: :request do
 
       Setting.set('http_type', 'http')
       expect do
-        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
+        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
       end.to raise_error(RuntimeError)
 
       # try invalid port
@@ -48,7 +48,7 @@ RSpec.describe 'Telegram', type: :request do
       Setting.set('http_type', 'https')
       Setting.set('fqdn', 'somehost.example.com:12345')
       expect do
-        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
+        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
       end.to raise_error(RuntimeError)
 
       # try invalid host
@@ -58,7 +58,7 @@ RSpec.describe 'Telegram', type: :request do
 
       Setting.set('fqdn', 'somehost.example.com')
       expect do
-        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
+        Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
       end.to raise_error(RuntimeError)
 
       # valid token, host and port
@@ -67,7 +67,7 @@ RSpec.describe 'Telegram', type: :request do
         .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
       Setting.set('fqdn', 'example.com')
-      channel = Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
+      channel = Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
       UserInfo.current_user_id = nil
 
       # start communication #1
@@ -76,7 +76,7 @@ RSpec.describe 'Telegram', type: :request do
 
       post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('personal1_message_start'), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to eq('bot params missing')
+      expect(json_response['error']).to eq('bot id is missing')
 
       callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
       post callback_url, params: read_message('personal1_message_start'), as: :json
@@ -391,7 +391,7 @@ RSpec.describe 'Telegram', type: :request do
         .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id1}" })
         .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
-      channel1 = Telegram.create_or_update_channel(token1, { group_id: group1.id, welcome: 'hi!' })
+      channel1 = Telegram.create_or_update_channel(token1, { group_id: group1.id, welcome: 'hi!', goodbye: 'goodbye' })
 
       # start communication #1
       callback_url1 = "/api/v1/channels_telegram_webhook/#{channel1.options[:callback_token]}?bid=#{channel1.options[:bot][:id]}"
@@ -425,7 +425,7 @@ RSpec.describe 'Telegram', type: :request do
         .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id2}" })
         .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
-      channel2 = Telegram.create_or_update_channel(token2, { group_id: group2.id, welcome: 'hi!' })
+      channel2 = Telegram.create_or_update_channel(token2, { group_id: group2.id, welcome: 'hi!', goodbye: 'goodbye' })
 
       # start communication #1
       callback_url2 = "/api/v1/channels_telegram_webhook/#{channel2.options[:callback_token]}?bid=#{channel2.options[:bot][:id]}"

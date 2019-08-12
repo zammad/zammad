@@ -109,6 +109,7 @@ returns
       callback_url:   callback_url,
       api_token:      token,
       welcome:        params[:welcome],
+      goodbye:        params[:goodbye],
     }
     channel.group_id = group.id
     channel.active = true
@@ -654,9 +655,17 @@ returns
     # find ticket and close it
     elsif text.present? && text =~ %r{^/end}
       user = to_user(params)
-      ticket = Ticket.where(customer_id: user.id).order(:updated_at).first
-      ticket.state = Ticket::State.find_by(name: 'closed')
+
+      # get the last ticket of customer which is not closed yet, and close it
+      state_ids        = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
+      possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).order(:updated_at)
+      ticket           = possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == channel.id  }
+      ticket.state     = Ticket::State.find_by(name: 'closed')
       ticket.save!
+
+      return if !channel.options[:goodbye]
+
+      message(params[:message][:chat][:id], channel.options[:goodbye])
       return
     end
 
@@ -664,7 +673,7 @@ returns
 
     # use transaction
     Transaction.execute(reset_user_id: true) do
-      user = to_user(params)
+      user   = to_user(params)
       ticket = to_ticket(params, user, group_id, channel)
       to_article(params, user, ticket, channel)
     end

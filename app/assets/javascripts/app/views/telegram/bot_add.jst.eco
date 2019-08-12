@@ -23,6 +23,14 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
+      <label for="goodbye"><%- @T('Goodbye message') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="goodbye" type="text" name="goodbye" value="" placeholder="<%- @Ti('Have a nice day.') %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
       <label for=""><%- @T('Choose the group in which messages will get added to.') %> <span>*</span></label>
     </div>
     <div class="controls">
