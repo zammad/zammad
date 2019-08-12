@@ -81,7 +81,7 @@ class App.Overview extends App.Model
   @description = '''
 You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.
 
-You can also create overvies and limit them to specific agents or to groups of agents.
+You can also create overviews and limit them to specific agents or to groups of agents.
 '''
 
   uiUrl: ->

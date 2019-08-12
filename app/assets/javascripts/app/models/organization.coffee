@@ -20,7 +20,7 @@ class App.Organization extends App.Model
 Using **Organisations** you can **group** customers. This has among others two important benefits:
 
 1. As an **Agent** you do not only have an overview of the open tickets for one person but an **overview over their whole organisation**.
-2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to "shared", which can be defined per organization)).
+2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to "shared", which can be defined per organization).
 '''
 
   uiUrl: ->

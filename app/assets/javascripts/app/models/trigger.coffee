@@ -14,9 +14,12 @@ class App.Trigger extends App.Model
   @configure_overview = [
     'name',
   ]
-  ###
-  @description = '''
-Trigger are....
 
+  @description = '''
+Every time a customer creates a new ticket, they automatically receive a confirmation email to assure them that their issue has been submitted successfully. This behavior is built into Zammad, but it’s also highly customizable, and you can set up other automated actions just like it.
+
+Maybe you want to set a higher priority on any ticket with the word “urgent” in the title. Maybe you want to avoid sending auto-reply emails to customers from certain organizations. Maybe you want mark a ticket as “pending” whenever someone adds an internal note to a ticket.
+
+Whatever it is, you can do it with triggers: actions that watch tickets for certain changes, and then fire off whenever those changes occur.
 '''
-  ###
+

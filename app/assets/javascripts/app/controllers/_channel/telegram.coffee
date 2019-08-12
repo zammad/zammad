@@ -149,7 +149,8 @@ class BotAdd extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save Bot.')
+        error_message = App.i18n.translateContent(data.error || 'Unable to save Bot.')
+        @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
 class BotEdit extends App.ControllerModal
@@ -196,7 +197,8 @@ class BotEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        error_message = App.i18n.translateContent(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
 App.Config.set('Telegram', { prio: 5100, name: 'Telegram', parent: '#channels', target: '#channels/telegram', controller: Index, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')

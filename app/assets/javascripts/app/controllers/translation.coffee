@@ -153,8 +153,8 @@ class Index extends App.ControllerSubContent
 
   syncChanges: =>
     @loader = new App.ControllerModalLoading(
-      head:      'Get latest translations'
-      message:   'Getting latest translations from i18n.zammad.com'
+      head:      App.i18n.translateContent('Get latest translations')
+      message:   App.i18n.translateContent('Getting latest translations from i18n.zammad.com')
       container: @el.closest('.content')
     )
     hide = =>

@@ -2,7 +2,7 @@
 <fieldset>
 
   <h1><%- @T('Wall') %></h1>
-  <p class="description"><%- @T('Choose which group %s will get added to.', 'wall postings') %></p>
+  <p class="description"><%- @T('Choose the group in which wall postings will get added to.') %></p>
   <div class="js-wall">
     <h2><%= @channel.options.user.name %></h2>
     <div data-page-id="<%= @channel.options.user.id %>" class="js-groups"></div>
@@ -11,7 +11,7 @@
   <hr>
 
   <h1><%- @T('Pages') %></h1>
-  <p class="description"><%- @T('Choose which group %s will get added to.', 'page postings') %></p>
+  <p class="description"><%- @T('Choose the group in which page postings will get added to.') %></p>
   <div class="js-pages">
     <% if @channel.options.pages: %>
       <% for page in @channel.options.pages: %>

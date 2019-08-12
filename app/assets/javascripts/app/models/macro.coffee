@@ -55,6 +55,7 @@ class App.Macro extends App.Model
   ]
 
   @description = '''
-Macros are....
+Macros make it easy to automate common, multi-step tasks within Zammad.
 
+You can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click.
 '''

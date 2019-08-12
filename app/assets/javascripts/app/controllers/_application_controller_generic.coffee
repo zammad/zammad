@@ -243,7 +243,7 @@ class App.ControllerGenericDescription extends App.ControllerModal
   head: 'Description'
 
   content: =>
-    marked(@description)
+    marked(App.i18n.translateContent(@description))
 
   onSubmit: =>
     @close()
