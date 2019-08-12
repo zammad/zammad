@@ -20,9 +20,12 @@
   </h2>
   <p class="help-text"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></p>
   <% end %>
-  <div class="controls">
-	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
-	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
+  <div class="controls <% if !_.isEmpty(@attribute.linktemplate) && !_.isEmpty(@placeholderObjects): %>controls--button<% end %>">
+    <% if !_.isEmpty(@attribute.linktemplate) && !_.isEmpty(@placeholderObjects): %>
+    <a href="<%- @replacePlaceholder(@attribute.linktemplate, @placeholderObjects, true) %>" class="controls-button" target="_blank" rel="nofollow">
+      <span class="controls-button-inner"><%- @Icon('external') %></span>
+    </a>
+    <% end %>
     <span class="help-inline"></span>
     <% if @attribute.style != 'block': %>
     <span class="help-block"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></span>

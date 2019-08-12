@@ -228,3 +228,6 @@ App.ViewHelpers =
       className: params.className
       iconset:   params.iconset
     )
+
+  replacePlaceholder: (template, items, encodeLink = false) ->
+    App.Utils.replaceTags(template, items, encodeLink)

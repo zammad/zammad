@@ -2102,10 +2102,20 @@ input.has-error {
 
 .controls--button {
   display: flex;
+  flex-wrap: wrap;
+
+  .controls {
+    flex: 1;
+  } 
+  
+  .help-inline,
+  .help-block {
+    flex-basis: 100%;
+  }
 
   input,
   .form-control {
-    flex: 1;
+    flex: 1 1 0%;
     @include bidi-style(border-right-width, 0, border-left-width, 1px);
     @include bidi-style(border-top-right-radius, 0, border-top-left-radius, 3px);
     @include bidi-style(border-bottom-right-radius, 0, border-bottom-left-radius, 3px);
@@ -2154,6 +2164,14 @@ input.has-error {
   position: relative;
   border: 1px solid hsl(0, 0%, 90%);
   @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
+  
+  .icon {
+    fill: hsl(0,0%,61%);
+  }
+
+  &:hover .icon {
+    fill: hsl(0,0%,33%);
+  }
 }
 
 .searchfield {

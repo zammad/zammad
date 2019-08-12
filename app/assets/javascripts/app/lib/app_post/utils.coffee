@@ -704,7 +704,7 @@ class App.Utils
     res.join('')
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
-  @replaceTags: (template, objects) ->
+  @replaceTags: (template, objects, encodeLink = false) ->
     template = template.replace( /#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) ->
       key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
@@ -744,6 +744,7 @@ class App.Utils
       else
         value = ''
       value = '-' if value is ''
+      value = encodeURIComponent(value) if encodeLink
       value
     )
 

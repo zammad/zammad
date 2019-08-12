@@ -46,10 +46,10 @@ class App extends Spine.Controller
         if object[attributeNameWithoutRef]
           valueRef = object[attributeNameWithoutRef]
 
-    @viewPrintItem(value, attributeConfig, valueRef, table)
+    @viewPrintItem(value, attributeConfig, valueRef, table, object)
 
   # define print name helper
-  @viewPrintItem: (item, attributeConfig = {}, valueRef, table) ->
+  @viewPrintItem: (item, attributeConfig = {}, valueRef, table, object) ->
     return '-' if item is undefined
     return '-' if item is ''
     return item if item is null
@@ -107,18 +107,23 @@ class App extends Spine.Controller
       # translate content
       if attributeConfig.translate || (isObject && item.translate && item.translate())
         isHtmlEscape = true
-        resultLocal       = App.i18n.translateContent(resultLocal)
+        resultLocal  = App.i18n.translateContent(resultLocal)
 
       # transform date
       if attributeConfig.tag is 'date'
         isHtmlEscape = true
         resultLocal = App.i18n.translateDate(resultLocal)
 
+      linktemplate = @_placeholderReplacement(object, attributeConfig, resultLocal)
+      if linktemplate && isHtmlEscape is false
+        resultLocal = linktemplate
+        isHtmlEscape = true
+
       # transform input tel|url to make it clickable
-      if attributeConfig.tag is 'input'
+      if attributeConfig.tag is 'input' && !linktemplate
         if attributeConfig.type is 'tel'
           resultLocal = "<a href=\"#{App.Utils.phoneify(resultLocal)}\">#{App.Utils.htmlEscape(resultLocal)}</a>"
-        else if attributeConfig.type is 'url'
+        else if attributeConfig.type is 'url' && !linktemplate
           resultLocal = App.Utils.linkify(resultLocal)
         else
           resultLocal = App.Utils.htmlEscape(resultLocal)
@@ -145,6 +150,17 @@ class App extends Spine.Controller
       result += resultLocal
 
     result
+
+  @_placeholderReplacement: (object, attributeConfig, resultLocal) ->
+    return if !object
+    return if !attributeConfig
+    return if _.isEmpty(attributeConfig.linktemplate)
+    return if !object.constructor
+    return if !object.constructor.className
+    return if _.isEmpty(object[attributeConfig.name])
+    placeholderObjects = { attribute: attributeConfig, user: App.Session.get(), config: App.Config.all() }
+    placeholderObjects[object.constructor.className.toLowerCase()] = object
+    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{App.Utils.htmlEscape(resultLocal)}</a>"
 
   @view: (name) ->
     template = (params = {}) ->

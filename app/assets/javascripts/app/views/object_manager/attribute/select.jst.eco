@@ -50,4 +50,5 @@
             <%- @Icon('trash') %> <%- @T('Remove') %>
           </div>
   </table>
+  <div class="js-inputLinkTemplate"></div>
 </div>

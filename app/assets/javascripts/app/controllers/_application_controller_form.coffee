@@ -360,11 +360,16 @@ class App.ControllerForm extends App.Controller
 
       return item
     else
+      placeholderObjects = {}
+      if @model.className && !_.isEmpty(attribute.linktemplate) && !_.isEmpty(@params[attribute.name])
+        placeholderObjects = { attribute: attribute, user: App.Session.get(), config: App.Config.all() }
+        placeholderObjects[@model.className.toLowerCase()] = @params
       fullItem = $(
         App.view('generic/attribute')(
           attribute: attribute,
           item:      '',
           bookmarkable: @bookmarkable
+          placeholderObjects: placeholderObjects
         )
       )
       fullItem.find('.controls').prepend(item)

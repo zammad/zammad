@@ -1107,6 +1107,7 @@ test("object manager form 1", function() {
   var test_params = {
     data_option: {
       default: "",
+      linktemplate: "",
       maxlength: 120,
       type: "text"
     },
@@ -1218,6 +1219,7 @@ test("object manager form 2", function() {
   var test_params = {
     data_option: {
       default: "",
+      linktemplate: "",
       maxlength: 120,
       type: "text"
     },
@@ -1271,6 +1273,7 @@ test("object manager form 3", function() {
   var test_params = {
     data_option: {
       default: "",
+      linktemplate: "",
       maxlength: 120,
       type: "text"
     },
@@ -1308,6 +1311,7 @@ test("object manager form 3", function() {
   test_params = {
     data_option: {
       default: "",
+      linktemplate: "",
       maxlength: 120,
       type: "text"
     },
@@ -1595,4 +1599,29 @@ test("form deep nesting", function() {
 
   params = App.ControllerForm.params(el)
   deepEqual(params, defaults, 'nested params')
+});
+
+test("form with external links", function() {
+  $('#forms').append('<hr><h1>form with external links</h1><div><form id="form20"></form></div>')
+  var el = $('#form20')
+  var defaults = {
+    a: '133',
+    b: 'abc d',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'a', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, linktemplate:  "https://example.com/?q=#{ticket.a}" },
+        { name: 'b', display: 'Select1', tag: 'select', type: 'text', options: { a: 1, b: 2 }, limit: 100, null: true, linktemplate:  "https://example.com/?q=#{ticket.b}" },
+      ],
+      className: 'Ticket',
+    },
+    params: defaults,
+  });
+
+  params = App.ControllerForm.params(el)
+  deepEqual(params, defaults)
+  equal('https://example.com/?q=133', el.find('input[name="a"]').parents('.controls').find('a[href]').attr('href'))
+  equal('https://example.com/?q=abc%20d', el.find('select[name="b"]').parents('.controls').find('a[href]').attr('href'))
 });

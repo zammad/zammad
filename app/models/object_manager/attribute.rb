@@ -133,6 +133,7 @@ possible types
     maxlength: 200,
     null: true,
     note: 'some additional comment', # optional
+    link_template: '',               # optional
   },
 
 # select
@@ -150,6 +151,7 @@ possible types
     multiple: false, # currently only "false" supported
     translate: true, # optional
     note: 'some additional comment', # optional
+    link_template: '',               # optional
   },
 
 # tree_select

@@ -1425,7 +1425,7 @@ test("check replace tags", function() {
 
   user = new App.User({
     firstname: 'Bob',
-    lastname: 'Smith',
+    lastname: 'Smith Good',
     created_at: '2018-10-31T10:00:00Z',
   })
   message = "<div>#{user.firstname} #{user.created_at}</div>"
@@ -1450,6 +1450,14 @@ test("check replace tags", function() {
     user: user
   }
   verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<a href=\"https://example.co/q=#{user.lastname}\">some text</a>"
+  result  = '<a href=\"https://example.co/q=Smith%20Good\">some text</a>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data, true)
   equal(verify, result)
 });
 
