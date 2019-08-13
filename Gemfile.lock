@@ -301,7 +301,7 @@ GEM
     net-ldap (0.16.1)
     netrc (0.11.0)
     nio4r (2.3.1)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     nori (2.6.0)
     notiffany (0.1.1)
@@ -661,4 +661,4 @@ RUBY VERSION
    ruby 2.5.5p157
 
 BUNDLED WITH
-   1.7.3
+   1.17.3
