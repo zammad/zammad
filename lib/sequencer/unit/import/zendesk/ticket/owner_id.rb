@@ -10,7 +10,7 @@ class Sequencer
             private
 
             def owner_id
-              user_map.fetch(resource.assignee, 1)
+              user_map.fetch(resource.assignee_id, 1)
             end
           end
         end
