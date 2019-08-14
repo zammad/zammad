@@ -19,9 +19,9 @@ class FirstStepsController < ApplicationController
     if Setting.get('chat')
       chat_active = true
     end
-    from_active = false
+    form_active = false
     if Setting.get('form_ticket_create')
-      from_active = true
+      form_active = true
     end
     twitter_active = false
     if Channel.where(area: 'Twitter::Account').count.positive?
@@ -125,7 +125,7 @@ class FirstStepsController < ApplicationController
             },
             {
               name:     'Online Forms',
-              checked:  from_active,
+              checked:  form_active,
               location: '#channels/form',
             },
           ],
