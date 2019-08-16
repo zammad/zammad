@@ -447,7 +447,7 @@ ObjectManager::Attribute.add(
   data_type:   'richtext',
   data_option: {
     type:      'richtext',
-    maxlength: 20_000,
+    maxlength: 150_000,
     upload:    true,
     rows:      8,
     null:      true,
