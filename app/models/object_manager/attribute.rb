@@ -683,8 +683,9 @@ to send no browser reload event, pass false
             model.table_name,
             attribute.name,
             data_type,
-            limit: attribute.data_option[:maxlength],
-            null:  true
+            limit:   attribute.data_option[:maxlength],
+            default: attribute.data_option[:default],
+            null:    true
           )
         elsif attribute.data_type.match?(/^integer|user_autocompletion|datetime|date$/)
           ActiveRecord::Migration.change_column(
@@ -722,8 +723,9 @@ to send no browser reload event, pass false
           model.table_name,
           attribute.name,
           data_type,
-          limit: attribute.data_option[:maxlength],
-          null:  true
+          limit:   attribute.data_option[:maxlength],
+          default: attribute.data_option[:default],
+          null:    true
         )
       elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
         ActiveRecord::Migration.add_column(
