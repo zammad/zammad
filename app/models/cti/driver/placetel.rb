@@ -12,12 +12,11 @@ class Cti::Driver::Placetel < Cti::Driver::Base
       params['event'] = 'newCall'
     elsif params['event'] == 'HungUp'
       params['event'] = 'hangup'
+    elsif params['event'] == 'OutgoingCall'
+      params['direction'] = 'out'
+      params['event'] = 'newCall'
     elsif params['event'] == 'CallAccepted'
       params['event'] = 'answer'
-    end
-
-    if params['user'].blank? && params['peer'].present?
-      params['user'] = get_voip_user_by_peer(params['peer'])
     end
 
     # lookup current direction if not given
@@ -25,6 +24,19 @@ class Cti::Driver::Placetel < Cti::Driver::Base
       entry = Cti::Log.find_by(call_id: params[:call_id])
       if entry
         params['direction'] = entry.direction
+      end
+    end
+
+    # lookup caller if not given
+    if params['user'].blank?
+      # by from parameter for outgoing calls
+      if params['direction'] == 'out' && params['from']&.include?('@')
+        params['user'] = get_voip_user_by_peer(params['from'])
+      end
+
+      # by peer parameter for incoming calls
+      if params['direction'] == 'in' && params['peer'].present?
+        params['user'] = get_voip_user_by_peer(params['peer'])
       end
     end
 
