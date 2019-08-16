@@ -105,7 +105,7 @@ class CustomerTicketCreateTest < TestCase
       value: 'closed',
     )
 
-    # type in new content into rte to trigger the default follow up state
+    # type in new content into rte to trigger the default follow-up state
     set(
       css:      '.content.active [data-name="body"]',
       value:    'some body blublub default followup for reopen check',
@@ -120,7 +120,7 @@ class CustomerTicketCreateTest < TestCase
 
     # no we verify the reverse way:
     # if the body get changed to empty again then
-    # the default follow up state should get unset and
+    # the default follow-up state should get unset and
     # will change to the the default ticket state.
 
     # remove content from rte
@@ -136,7 +136,7 @@ class CustomerTicketCreateTest < TestCase
       value: 'closed',
     )
 
-    # type in new content into rte to trigger the default follow up state
+    # type in new content into rte to trigger the default follow-up state
     set(
       css:      '.content.active [data-name="body"]',
       value:    'some body blublub default followup for reopen check',

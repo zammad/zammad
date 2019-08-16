@@ -177,7 +177,7 @@ Comment: [] =
     assert_equal('WARNING', ticket_2.preferences['icinga']['state'])
     assert_not_equal(ticket_2.id, ticket_1.id)
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
@@ -212,7 +212,7 @@ Comment: [] =
     assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
     assert_equal(ticket_1.id, ticket_1_1.id)
 
-    # matching sender - follow up - recovery - CPU Load/host.internal.loc
+    # matching sender - follow-up - recovery - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10
@@ -522,7 +522,7 @@ Comment: [] =
 
   test 'matching sender tests' do
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
 User-Agent: Heirloom mailx 12.5 7/5/10

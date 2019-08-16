@@ -20,7 +20,7 @@ class Integration::CheckMkController < ApplicationController
     # check if ticket with host is open
     customer = User.lookup(id: 1)
 
-    # follow up detection by meta data
+    # follow-up detection by meta data
     integration = 'check_mk'
     open_states = Ticket::State.by_category(:open)
     ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)

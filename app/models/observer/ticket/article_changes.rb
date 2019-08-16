@@ -111,7 +111,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     ticket = record.ticket
     if sender.name == 'Customer'
 
-      # in case, update last_contact_customer_at on any customer follow up
+      # in case, update last_contact_customer_at on any customer follow-up
       if Setting.get('ticket_last_contact_behaviour') == 'based_on_customer_reaction'
 
         # set last_contact_at customer

@@ -50,11 +50,11 @@ Some Text"
     assert_equal('Agent', article.sender.name)
     assert_equal('me+is+customer@example.com', ticket.customer.email)
 
-    # check if follow up based on inital system sender address
+    # check if follow-up based on inital system sender address
     setting_orig = Setting.get('postmaster_follow_up_search_in')
     Setting.set('postmaster_follow_up_search_in', [])
 
-    # follow up possible because same subject
+    # follow-up possible because same subject
     email_raw_string = "From: me+is+customer@example.com
 To: myzammad@system.test
 Subject: #{subject}
@@ -68,7 +68,7 @@ Some Text"
     assert_equal(subject, ticket2.title)
     assert_equal(ticket.id, ticket2.id)
 
-    # follow up not possible because subject has changed
+    # follow-up not possible because subject has changed
     subject = "new subject without ticket ref #{rand(9_999_999)}"
     email_raw_string = "From: me+is+customer@example.com
 To: myzammad@system.test

@@ -645,7 +645,7 @@ class App.TicketZoom extends App.Controller
       state = App.TicketState.findByAttribute('id', @ticket.state_id)
       return if state && state.default_create is true
 
-    # prevent multiple changes for the default follow up state
+    # prevent multiple changes for the default follow-up state
     @isDefaultFollowUpStateSet = true
 
     # get state
@@ -952,7 +952,7 @@ class App.TicketZoom extends App.Controller
     # reset task
     @taskReset()
 
-    # reset default follow up state
+    # reset default follow-up state
     @resetDefaultFollowUpState()
 
     # reset/delete uploaded attachments

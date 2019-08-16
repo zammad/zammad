@@ -77,7 +77,7 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('WARNING', ticket_2.preferences['nagios']['state'])
     assert_not_equal(ticket_2.id, ticket_1.id)
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
@@ -110,7 +110,7 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('WARNING', ticket_1_1.preferences['nagios']['state'])
     assert_equal(ticket_1.id, ticket_1_1.id)
 
-    # matching sender - follow up - recovery - CPU Load/host.internal.loc
+    # matching sender - follow-up - recovery - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
@@ -305,7 +305,7 @@ WARNING - load average: 3.44, 0.99, 0.35
 
   test 'matching sender tests' do
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0

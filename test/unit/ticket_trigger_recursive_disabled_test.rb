@@ -644,7 +644,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     Trigger.create_or_update(
-      name:          'auto reply (on follow up of tickets)',
+      name:          'auto reply (on follow-up of tickets)',
       condition:     {
         'ticket.action'     => {
           'operator' => 'is',
@@ -665,7 +665,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       },
       perform:       {
         'notification.email' => {
-          'body'      => '<p>Your follow up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+          'body'      => '<p>Your follow-up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -673,7 +673,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
-          'subject'   => 'Thanks for your follow up (#{ticket.title})',
+          'subject'   => 'Thanks for your follow-up (#{ticket.title})',
         },
       },
       active:        true,
@@ -793,7 +793,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_equal(6, ticket_p.articles.count, 'ticket_p.articles verify')
 
     article_p = ticket_p.articles.last
-    assert_match('Thanks for your follow up (aaäöüßad asd)', article_p.subject)
+    assert_match('Thanks for your follow-up (aaäöüßad asd)', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
     assert_no_match('config\.', article_p.body)
     assert_match('http://zammad.example.com', article_p.body)
@@ -824,7 +824,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_equal(8, ticket_p.articles.count, 'ticket_p.articles verify')
 
     article_p = ticket_p.articles.last
-    assert_match('Thanks for your follow up (aaäöüßad asd)', article_p.subject)
+    assert_match('Thanks for your follow-up (aaäöüßad asd)', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
     assert_no_match('config\.', article_p.body)
     assert_match('http://zammad.example.com', article_p.body)
@@ -2528,7 +2528,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
     Trigger.create_or_update(
-      name:          'auto reply (on follow up of tickets)',
+      name:          'auto reply (on follow-up of tickets)',
       condition:     {
         'ticket.action'     => {
           'operator' => 'is',
@@ -2549,7 +2549,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       },
       perform:       {
         'notification.email' => {
-          'body'      => '<div>Your follow up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
+          'body'      => '<div>Your follow-up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
     <br/>
     <div>To provide additional information, please reply to this email or click on the following link:
     <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -2559,7 +2559,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     <br/>
     <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
           'recipient' => 'ticket_customer',
-          'subject'   => 'Thanks for your follow up (#{ticket.title})',
+          'subject'   => 'Thanks for your follow-up (#{ticket.title})',
         },
       },
       active:        true,

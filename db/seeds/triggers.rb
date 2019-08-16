@@ -42,7 +42,7 @@ Trigger.create_or_update(
   updated_by_id: 1,
 )
 Trigger.create_or_update(
-  name:          'auto reply (on follow up of tickets)',
+  name:          'auto reply (on follow-up of tickets)',
   condition:     {
     'ticket.action'     => {
       'operator' => 'is',
@@ -63,7 +63,7 @@ Trigger.create_or_update(
   },
   perform:       {
     'notification.email' => {
-      'body'      => '<div>Your follow up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
+      'body'      => '<div>Your follow-up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
 <div>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -73,7 +73,7 @@ Trigger.create_or_update(
 <br/>
 <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'article_last_sender',
-      'subject'   => 'Thanks for your follow up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+      'subject'   => 'Thanks for your follow-up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
   active:        false,

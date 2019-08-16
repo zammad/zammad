@@ -78,7 +78,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(article.to).to eq('+4915700000000')
       expect(article.cc).to be_nil
       expect(article.subject).to be_nil
-      expect(article.body).to eq('Follow up')
+      expect(article.body).to eq('Follow-up')
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('sms')
       expect(article.created_by_id).to eq(customer.id)

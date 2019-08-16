@@ -2515,9 +2515,9 @@ Setting.create_if_not_exists(
         name:    'postmaster_follow_up_search_in',
         tag:     'checkbox',
         options: {
-          'references' => 'References - Search for follow up also in In-Reply-To or References headers.',
-          'body'       => 'Body - Search for follow up also in mail body.',
-          'attachment' => 'Attachment - Search for follow up also in attachments.',
+          'references' => 'References - Search for follow-up also in In-Reply-To or References headers.',
+          'body'       => 'Body - Search for follow-up also in mail body.',
+          'attachment' => 'Attachment - Search for follow-up also in attachments.',
         },
       },
     ],
@@ -3309,7 +3309,7 @@ Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
   name:        '0200_postmaster_filter_follow_up_possible_check',
   area:        'Postmaster::PreFilter',
-  description: 'Define postmaster filter to check if follow ups get created (based on admin settings).',
+  description: 'Define postmaster filter to check if follow-ups get created (based on admin settings).',
   options:     {},
   state:       'Channel::Filter::FollowUpPossibleCheck',
   frontend:    false

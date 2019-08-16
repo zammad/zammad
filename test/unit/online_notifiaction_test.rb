@@ -272,7 +272,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # because it's already closed but an follow up arrived later
+    # because it's already closed but an follow-up arrived later
     assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
     assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))

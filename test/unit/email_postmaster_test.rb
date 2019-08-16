@@ -569,7 +569,7 @@ Some Text'
 
     PostmasterFilter.destroy_all
 
-    # follow up with create post master filter test
+    # follow-up with create post master filter test
     PostmasterFilter.create!(
       name: 'used - empty selector',
       match: {
@@ -592,7 +592,7 @@ Some Text'
     data = 'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any@example.com
-Subject: follow up with create post master filter test
+Subject: follow-up with create post master filter test
 
 Some Text'
 
@@ -601,7 +601,7 @@ Some Text'
 
     assert_equal(group2.name, ticket.group.name)
     assert_equal('2 normal', ticket.priority.name)
-    assert_equal('follow up with create post master filter test', ticket.title)
+    assert_equal('follow-up with create post master filter test', ticket.title)
 
     assert_equal('Customer', article.sender.name)
     assert_equal('email', article.type.name)
@@ -628,7 +628,7 @@ Some Text"
     assert_equal(group1.name, ticket_followup.group.name)
     assert_equal(group1.name, ticket_followup.group.name)
     assert_equal('2 normal', ticket_followup.priority.name)
-    assert_equal('follow up with create post master filter test', ticket_followup.title)
+    assert_equal('follow-up with create post master filter test', ticket_followup.title)
 
     assert_equal('Customer', article.sender.name)
     assert_equal('email', article.type.name)

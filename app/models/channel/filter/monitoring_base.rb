@@ -80,7 +80,7 @@ class Channel::Filter::MonitoringBase
                         end
     end
 
-    # follow up detection by meta data
+    # follow-up detection by meta data
     open_states = Ticket::State.by_category(:open)
     ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)
     ticket_ids.each do |ticket_id|

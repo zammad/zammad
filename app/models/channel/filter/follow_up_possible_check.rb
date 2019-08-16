@@ -10,7 +10,7 @@ module Channel::Filter::FollowUpPossibleCheck
     return true if !ticket
     return true if ticket.state.state_type.name !~ /^(closed|merged|removed)/i
 
-    # in case of closed tickets, remove follow up information
+    # in case of closed tickets, remove follow-up information
     case ticket.group.follow_up_possible
     when 'new_ticket'
       mail[:subject]                        = ticket.subject_clean(mail[:subject])
