@@ -4,6 +4,7 @@ class CtiController < ApplicationController
   prepend_before_action { authentication_check(permission: 'cti.agent') }
 
   # list current caller log
+  # GET /api/v1/cti/log
   def index
     backends = [
       {
@@ -29,10 +30,24 @@ class CtiController < ApplicationController
   end
 
   # set caller log to done
+  # POST /api/v1/cti/done/:id
   def done
     log = Cti::Log.find(params['id'])
     log.done = params['done']
     log.save!
+    render json: {}
+  end
+
+  # sets for all given ids the caller log to done
+  # POST /api/v1/cti/done/bulk
+  def done_bulk
+
+    log_ids = params['ids'] || []
+    log_ids.each do |log_id|
+      log = Cti::Log.find(log_id)
+      log.done = true
+      log.save!
+    end
     render json: {}
   end
 

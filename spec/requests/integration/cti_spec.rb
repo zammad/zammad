@@ -795,5 +795,42 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_talking_time).to be_nil
 
     end
+
+    it 'flags caller_log as done' do
+
+      cti_log1 = create(:cti_log)
+      log = Cti::Log.find(cti_log1.id)
+      expect(log.done).to eq(false)
+
+      authenticated_as(agent_user)
+      post "/api/v1/cti/done/#{cti_log1.id}", params: {
+        done: true
+      }
+      expect(response).to have_http_status(:ok)
+
+      log = Cti::Log.find(cti_log1.id)
+      expect(log.done).to eq(true)
+    end
+
+    it 'flags all caller_logs as done via done_bulk' do
+
+      cti_log1 = create(:cti_log)
+      cti_log2 = create(:cti_log)
+
+      log = Cti::Log.find(cti_log1.id)
+      expect(log.done).to eq(false)
+
+      authenticated_as(agent_user)
+      post '/api/v1/cti/done/bulk', params: {
+        ids: [cti_log1.id, cti_log2.id]
+      }
+
+      expect(response).to have_http_status(:ok)
+      log1 = Cti::Log.find(cti_log1.id)
+      expect(log1.done).to eq(true)
+
+      log2 = Cti::Log.find(cti_log2.id)
+      expect(log2.done).to eq(true)
+    end
   end
 end

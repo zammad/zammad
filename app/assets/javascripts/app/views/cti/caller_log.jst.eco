@@ -1,7 +1,13 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th style="width: 40px;"></th>
+      <th style="width: 40px;">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" class="js-checkAll">
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      </th>
       <th><%- @T('From') %></th>
       <th><%- @T('To') %></th>
       <!--<th style="width: 100px;"><%- @T('Queue') %></th>-->
@@ -13,7 +19,7 @@
   </thead>
   <tbody>
     <% for item in @list: %>
-    <tr class="u-center<% if item.done: %> is-grayed-out<% end %>" data-id="<%- item.id %>">
+    <tr class="u-center js-callerLog <% if item.done: %> is-grayed-out<% end %>" data-id="<%- item.id %>">
       <td class="table-checkbox u-positionOrigin">
         <label class="checkbox-replacement checkbox-replacement--fullscreen<% if item.disabled is true: %> is-disabled<% end %>">
           <input type="checkbox" class="js-check"<% if item.done: %> checked<% end %><% if item.disabled is true: %> disabled<% end %>>

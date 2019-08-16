@@ -5,6 +5,7 @@ FactoryBot.define do
     from      { '4930609854180' }
     to        { '4930609811111' }
     call_id   { (Cti::Log.pluck(:call_id).map(&:to_i).max || 0).next } # has SQL UNIQUE constraint
+    done      { false }
 
     trait :with_preferences do
       preferences { Cti::CallerId.get_comment_preferences(from, 'from')&.last }
