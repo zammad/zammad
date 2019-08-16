@@ -1,6 +1,6 @@
 class HtmlSanitizer
   LINKABLE_URL_SCHEMES = URI.scheme_list.keys.map(&:downcase) - ['mailto'] + ['tel']
-  PROCESSING_TIMEOUT = 10
+  PROCESSING_TIMEOUT = 20
   UNPROCESSABLE_HTML_MSG = 'This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
 
 =begin
@@ -205,6 +205,7 @@ satinize html string based on whiltelist
       Loofah.fragment(string).scrub!(scrubber_link).to_s
     end
   rescue Timeout::Error
+    Rails.logger.error "Could not process string via HtmlSanitizer.strict in #{PROCESSING_TIMEOUT} seconds. Current state: #{string}"
     UNPROCESSABLE_HTML_MSG
   end
 
@@ -237,6 +238,7 @@ cleanup html string:
       string
     end
   rescue Timeout::Error
+    Rails.logger.error "Could not process string via HtmlSanitizer.cleanup in #{PROCESSING_TIMEOUT} seconds. Current state: #{string}"
     UNPROCESSABLE_HTML_MSG
   end
 
