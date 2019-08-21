@@ -133,6 +133,12 @@ returns
 
     # get active Email::Outbound Channel and send
     channel = Channel.find_by(area: 'Email::Notification', active: true)
+
+    if channel.blank?
+      Rails.logger.info "Can't find an active 'Email::Notification' channel. Canceling notification sending."
+      return
+    end
+
     channel.deliver(
       {
         # in_reply_to: in_reply_to,
