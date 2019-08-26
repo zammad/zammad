@@ -417,7 +417,7 @@ returns
         end
 
         # only set value on _id if value/reference lookup exists
-        if mail[ header.to_sym ]
+        if mail[header.to_sym]
 
           Rails.logger.info "set_attributes_by_x_headers header #{header} found #{mail[header.to_sym]}"
           item_object.class.reflect_on_all_associations.map do |assoc|
@@ -426,13 +426,15 @@ returns
 
             Rails.logger.info "set_attributes_by_x_headers found #{assoc.class_name} lookup for '#{mail[header.to_sym]}'"
             item = assoc.class_name.constantize
-
             assoc_object = nil
-            if item.respond_to?(:name)
+            if item.new.respond_to?(:name)
               assoc_object = item.lookup(name: mail[header.to_sym])
             end
-            if !assoc_object && item.respond_to?(:login)
+            if !assoc_object && item.new.respond_to?(:login)
               assoc_object = item.lookup(login: mail[header.to_sym])
+            end
+            if !assoc_object && item.new.respond_to?(:email)
+              assoc_object = item.lookup(email: mail[header.to_sym])
             end
 
             if assoc_object.blank?
