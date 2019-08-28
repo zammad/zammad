@@ -21,7 +21,7 @@ info about used search index machine
       {
         json:         true,
         open_timeout: 8,
-        read_timeout: 12,
+        read_timeout: 14,
         user:         Setting.get('es_user'),
         password:     Setting.get('es_password'),
       }
@@ -84,7 +84,7 @@ update processors
             {
               json:         true,
               open_timeout: 8,
-              read_timeout: 12,
+              read_timeout: 60,
               user:         Setting.get('es_user'),
               password:     Setting.get('es_password'),
             }
@@ -108,7 +108,7 @@ update processors
           {
             json:         true,
             open_timeout: 8,
-            read_timeout: 12,
+            read_timeout: 60,
             user:         Setting.get('es_user'),
             password:     Setting.get('es_password'),
           }
@@ -181,7 +181,7 @@ create/update/delete index
       {
         json:         true,
         open_timeout: 8,
-        read_timeout: 30,
+        read_timeout: 60,
         user:         Setting.get('es_user'),
         password:     Setting.get('es_password'),
       }
@@ -219,7 +219,7 @@ add new object to search index
       {
         json:         true,
         open_timeout: 8,
-        read_timeout: 16,
+        read_timeout: 60,
         user:         Setting.get('es_user'),
         password:     Setting.get('es_password'),
       }
@@ -255,7 +255,7 @@ remove whole data from index
       url,
       {
         open_timeout: 8,
-        read_timeout: 16,
+        read_timeout: 60,
         user:         Setting.get('es_user'),
         password:     Setting.get('es_password'),
       }
@@ -285,9 +285,11 @@ remove whole data from index
 
   result = SearchIndexBackend.search('search query', ['User', 'Organization'], limit: limit)
 
-  result = SearchIndexBackend.search('search query', 'User', limit: limit)
+- result = SearchIndexBackend.search('search query', 'User', limit: limit)
 
   result = SearchIndexBackend.search('search query', 'User', limit: limit, sort_by: ['updated_at'], order_by: ['desc'])
+
+  result = SearchIndexBackend.search('search query', 'User', limit: limit, sort_by: ['active', updated_at'], order_by: ['desc', 'desc'])
 
   result = [
     {
