@@ -194,7 +194,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           RAW
         end
 
-        shared_context 'ticket reference in attachment' do
+        shared_context 'ticket reference in text/plain attachment' do
           let(:raw_mail) { <<~RAW.chomp }
             From: me@example.com
             Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
@@ -216,6 +216,96 @@ RSpec.describe Channel::EmailParser, type: :model do
               filename=test1.txt
             Content-Type: text/plain;
               name="test.txt"
+            Content-Transfer-Encoding: 7bit
+
+            Some Text #{ticket_ref}
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2--
+          RAW
+        end
+
+        shared_context 'ticket reference in text/html (as content) attachment' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
+            Subject: no reference
+            Date: Sun, 30 Aug 2015 23:20:54 +0200
+            To: Martin Edenhofer <me@znuny.com>
+            Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+            X-Mailer: Apple Mail (2.2104)
+
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Transfer-Encoding: 7bit
+            Content-Type: text/plain;
+              charset=us-ascii
+
+            no reference
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Disposition: attachment;
+              filename=test1.txt
+            Content-Type: text/html;
+              name="test.txt"
+            Content-Transfer-Encoding: 7bit
+
+            <div>Some Text #{ticket_ref}</div>
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2--
+          RAW
+        end
+
+        shared_context 'ticket reference in text/html (attribute) attachment' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
+            Subject: no reference
+            Date: Sun, 30 Aug 2015 23:20:54 +0200
+            To: Martin Edenhofer <me@znuny.com>
+            Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+            X-Mailer: Apple Mail (2.2104)
+
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Transfer-Encoding: 7bit
+            Content-Type: text/plain;
+              charset=us-ascii
+
+            no reference
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Disposition: attachment;
+              filename=test1.txt
+            Content-Type: text/html;
+              name="test.txt"
+            Content-Transfer-Encoding: 7bit
+
+            <div>Some Text <b data-something="#{ticket_ref}">some text</b></div>
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2--
+          RAW
+        end
+
+        shared_context 'ticket reference in image/jpg attachment' do
+          let(:raw_mail) { <<~RAW.chomp }
+            From: me@example.com
+            Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
+            Subject: no reference
+            Date: Sun, 30 Aug 2015 23:20:54 +0200
+            To: Martin Edenhofer <me@znuny.com>
+            Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+            X-Mailer: Apple Mail (2.2104)
+
+
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Transfer-Encoding: 7bit
+            Content-Type: text/plain;
+              charset=us-ascii
+
+            no reference
+            --Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2
+            Content-Disposition: attachment;
+              filename=test1.jpg
+            Content-Type: image/jpg;
+              name="test.jpg"
             Content-Transfer-Encoding: 7bit
 
             Some Text #{ticket_ref}
@@ -328,8 +418,23 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'creates a new ticket'
           end
 
-          context 'when attachment contains ticket reference' do
-            include_context 'ticket reference in attachment'
+          context 'when text/plain attachment contains ticket reference' do
+            include_context 'ticket reference in text/plain attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (as content) contains ticket reference' do
+            include_context 'ticket reference in text/html (as content) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (attribute) contains ticket reference' do
+            include_context 'ticket reference in text/html (attribute) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
             include_examples 'creates a new ticket'
           end
 
@@ -448,8 +553,23 @@ RSpec.describe Channel::EmailParser, type: :model do
             end
           end
 
-          context 'when attachment contains ticket reference' do
-            include_context 'ticket reference in attachment'
+          context 'when text/plain attachment contains ticket reference' do
+            include_context 'ticket reference in text/plain attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (as content) contains ticket reference' do
+            include_context 'ticket reference in text/html (as content) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (attribute) contains ticket reference' do
+            include_context 'ticket reference in text/html (attribute) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
             include_examples 'creates a new ticket'
           end
 
@@ -491,9 +611,24 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'creates a new ticket'
           end
 
-          context 'when attachment contains ticket reference' do
-            include_context 'ticket reference in attachment'
+          context 'when text/plain attachment contains ticket reference' do
+            include_context 'ticket reference in text/plain attachment'
             include_examples 'adds message to ticket'
+          end
+
+          context 'when text/html attachment (as content) contains ticket reference' do
+            include_context 'ticket reference in text/html (as content) attachment'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when text/html attachment (attribute) contains ticket reference' do
+            include_context 'ticket reference in text/html (attribute) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
+            include_examples 'creates a new ticket'
           end
 
           context 'when In-Reply-To header contains article message-id' do
@@ -534,8 +669,28 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'creates a new ticket'
           end
 
-          context 'when attachment contains ticket reference' do
-            include_context 'ticket reference in attachment'
+          context 'when text/plain attachment contains ticket reference' do
+            include_context 'ticket reference in text/plain attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (as content) contains ticket reference' do
+            include_context 'ticket reference in text/html (as content) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when text/html attachment (attribute) contains ticket reference' do
+            include_context 'ticket reference in text/html (attribute) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
             include_examples 'creates a new ticket'
           end
 
@@ -592,9 +747,24 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'adds message to ticket'
           end
 
-          context 'when attachment contains ticket reference' do
-            include_context 'ticket reference in attachment'
+          context 'when text/plain attachment contains ticket reference' do
+            include_context 'ticket reference in text/plain attachment'
             include_examples 'adds message to ticket'
+          end
+
+          context 'when text/html attachment (as content) contains ticket reference' do
+            include_context 'ticket reference in text/html (as content) attachment'
+            include_examples 'adds message to ticket'
+          end
+
+          context 'when text/html attachment (attribute) contains ticket reference' do
+            include_context 'ticket reference in text/html (attribute) attachment'
+            include_examples 'creates a new ticket'
+          end
+
+          context 'when image/jpg attachment contains ticket reference' do
+            include_context 'ticket reference in image/jpg attachment'
+            include_examples 'creates a new ticket'
           end
 
           context 'when In-Reply-To header contains article message-id' do
