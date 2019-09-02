@@ -41,7 +41,7 @@ class App.ControllerForm extends App.Controller
     # Previously the handlers are called directly, before the DOM elements are ready, thereby causing a race condition under IE11.
     # Now we only dispatch the handlers after the DOM is ready.
     if @handlers.length
-      $(@dispatch_handlers)
+      $(@dispatchHandlers)
 
     # if element is given, prepend form to it
     if @el
@@ -57,7 +57,7 @@ class App.ControllerForm extends App.Controller
     @finishForm = true
     @form
 
-  dispatch_handlers: =>
+  dispatchHandlers: =>
     params = App.ControllerForm.params(@form)
     for attribute in @attributes
       for handler in @handlers
