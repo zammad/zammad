@@ -895,13 +895,13 @@ is certain attribute used by triggers, overviews or schedulers
   def check_name
     return if !name
 
-    raise 'Name can\'t get used, *_id and *_ids are not allowed' if name.match?(/_(id|ids)$/i) || name.match?(/^id$/i)
+    raise 'Name can\'t get used, *_id and *_ids are not allowed' if name.match?(/.+?_(id|ids)$/i)
     raise 'Spaces in name are not allowed' if name.match?(/\s/)
     raise 'Only letters from a-z, numbers from 0-9, and _ are allowed' if !name.match?(/^[a-z0-9_]+$/)
     raise 'At least one letters is needed' if !name.match?(/[a-z]/)
 
     # do not allow model method names as attributes
-    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp]
+    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id]
     raise "#{name} is a reserved word, please choose a different one" if name.match?(/^(#{reserved_words.join('|')})$/)
 
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
