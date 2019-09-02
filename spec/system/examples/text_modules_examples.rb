@@ -1,10 +1,31 @@
-RSpec.shared_examples 'group-dependent text modules' do |path:|
+RSpec.shared_examples 'text modules' do |path:|
 
   let!(:group1)                    { create :group }
   let!(:group2)                    { create :group }
   let!(:text_module_without_group) { create :text_module }
   let!(:text_module_group1)        { create :text_module, groups: [group1] }
   let!(:text_module_group2)        { create :text_module, groups: [group2] }
+
+  it 'shows when send ::' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select(1)
+      find(:richtext).send_keys(':')
+      find(:richtext).send_keys(':')
+      expect(page).to have_selector(:text_module, text_module_without_group.id)
+    end
+  end
+
+  it 'does not show when send :enter:' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select(1)
+      find(:richtext).send_keys(':')
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(':')
+      expect(page).to have_no_selector(:text_module, text_module_without_group.id)
+    end
+  end
 
   it 'supports group-dependent text modules' do
 

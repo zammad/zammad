@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-require 'system/examples/text_modules_group_dependency_examples'
+require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
   context 'when applying ticket templates' do
@@ -34,6 +34,6 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   context 'when using text modules' do
-    include_examples 'group-dependent text modules', path: 'ticket/create'
+    include_examples 'text modules', path: 'ticket/create'
   end
 end

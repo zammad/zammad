@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-require 'system/examples/text_modules_group_dependency_examples'
+require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Update', type: :system do
 
@@ -139,6 +139,6 @@ RSpec.describe 'Ticket Update', type: :system do
   end
 
   context 'when using text modules' do
-    include_examples 'group-dependent text modules', path:  "#ticket/zoom/#{Ticket.first.id}"
+    include_examples 'text modules', path:  "#ticket/zoom/#{Ticket.first.id}"
   end
 end
