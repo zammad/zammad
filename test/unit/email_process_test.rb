@@ -3175,6 +3175,48 @@ Content-Type: text/html; charset=us-ascii; format=flowed
           ],
         },
       },
+      { # See https://github.com/zammad/zammad/issues/2704
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail083.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin083@example.de>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin083@example.de',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2704
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail084.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin084@example.de>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin084@example.de',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end

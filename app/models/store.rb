@@ -4,6 +4,7 @@ require_dependency 'store/object'
 require_dependency 'store/file'
 
 class Store < ApplicationModel
+  PREFERENCES_SIZE_MAX = 2400
 
   belongs_to :store_object, class_name: 'Store::Object', optional: true
   belongs_to :store_file,   class_name: 'Store::File', optional: true
@@ -13,6 +14,8 @@ class Store < ApplicationModel
   store :preferences
 
   after_create :generate_previews
+  before_create :oversized_preferences_check
+  before_update :oversized_preferences_check
 
 =begin
 
@@ -52,7 +55,6 @@ returns
     data.delete('data')
     data.delete('object')
 
-    # store meta data
     Store.create!(data)
   end
 
@@ -311,4 +313,43 @@ returns
     image_resized
   end
 
+  def oversized_preferences_check
+    return true if oversized_preferences_removed_by_content?(600)
+    return true if oversized_preferences_removed_by_key?(100)
+    return true if oversized_preferences_removed_by_content?(300)
+    return true if oversized_preferences_removed_by_key?(60)
+
+    true
+  end
+
+  def oversized_preferences_removed_by_content?(max_char)
+    oversized_preferences_removed? do |_key, content|
+      content.try(:size).to_i > max_char
+    end
+  end
+
+  def oversized_preferences_removed_by_key?(max_char)
+    oversized_preferences_removed? do |key, _content|
+      key.try(:size).to_i > max_char
+    end
+  end
+
+  def oversized_preferences_removed?
+    return true if !oversized_preferences_present?
+
+    preferences&.each do |key, content|
+      next if !yield(key, content)
+
+      preferences.delete(key)
+      Rails.logger.info "Removed oversized #{self.class.name} preference: '#{key}', '#{content}'"
+
+      break if !oversized_preferences_present?
+    end
+
+    !oversized_preferences_present?
+  end
+
+  def oversized_preferences_present?
+    preferences.to_yaml.size > PREFERENCES_SIZE_MAX
+  end
 end

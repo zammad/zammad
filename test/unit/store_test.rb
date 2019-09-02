@@ -334,6 +334,89 @@ class StoreTest < ActiveSupport::TestCase
     assert_nil(store.preferences[:resizable])
     assert_nil(store.preferences[:content_inline])
     assert_nil(store.preferences[:content_preview])
-
   end
+
+  test 'test maximal preferences size check with one oversized content' do
+    store = Store.add(
+      object:        'SomeObject1',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'text/plain',
+        content_id:   234,
+        some_key:     '0' * 2500,
+      },
+      created_by_id: 1,
+    )
+    assert_not(store.preferences.key?(:some_key))
+    assert(store.preferences.key?(:content_id))
+    assert(store.preferences.key?(:content_type))
+  end
+
+  test 'test maximal preferences size check with two oversized content' do
+    store = Store.add(
+      object:        'SomeObject1',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   {
+        content_type: 'text/plain',
+        content_id:   234,
+        some_key1:    '0' * 2000,
+        some_key2:    '0' * 2000,
+      },
+      created_by_id: 1,
+    )
+    assert_not(store.preferences.key?(:some_key1))
+    assert(store.preferences.key?(:some_key2))
+    assert(store.preferences.key?(:content_id))
+    assert(store.preferences.key?(:content_type))
+  end
+
+  test 'test maximal preferences size check with one oversized key' do
+    preferences = {
+      content_type: 'text/plain',
+      content_id:   234,
+    }
+    some_key1 = '0' * 2500
+    preferences[some_key1] = 'some content'
+
+    store = Store.add(
+      object:        'SomeObject1',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   preferences,
+      created_by_id: 1,
+    )
+    assert_not(store.preferences.key?(some_key1))
+    assert(store.preferences.key?(:content_id))
+    assert(store.preferences.key?(:content_type))
+  end
+
+  test 'test maximal preferences size check with two oversized key' do
+    preferences = {
+      content_type: 'text/plain',
+      content_id:   234,
+    }
+    some_key1 = '0' * 1500
+    preferences[some_key1] = 'some content'
+    some_key2 = '1' * 1500
+    preferences[some_key2] = 'some content'
+
+    store = Store.add(
+      object:        'SomeObject1',
+      o_id:          rand(1_234_567_890),
+      data:          File.binread(Rails.root.join('test', 'data', 'upload', 'upload1.txt')),
+      filename:      'test1.pdf',
+      preferences:   preferences,
+      created_by_id: 1,
+    )
+    assert_not(store.preferences.key?(some_key1))
+    assert(store.preferences.key?(some_key2))
+    assert(store.preferences.key?(:content_id))
+    assert(store.preferences.key?(:content_type))
+  end
+
 end
