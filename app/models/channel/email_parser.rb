@@ -724,7 +724,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # e. g. Content-Type: video/quicktime
     if filename.blank?
       map = {
-        'message/delivery-status': ['txt', 'delivery-status'],
+        'message/delivery-status': %w[txt delivery-status],
         'text/plain':              %w[txt document],
         'text/html':               %w[html document],
         'video/quicktime':         %w[mov video],

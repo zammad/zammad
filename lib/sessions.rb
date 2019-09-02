@@ -519,6 +519,7 @@ get spool messages
   def self.spool_list(timestamp, current_user_id)
     path = "#{@path}/spool/"
     FileUtils.mkpath path
+
     data      = []
     to_delete = []
     files     = []

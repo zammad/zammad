@@ -3,7 +3,7 @@ require 'browser_test_helper'
 class AgentTicketActionLevel0Test < TestCase
 
   def test_aaa_agent_ticket_create_with_one_group
-    agent    = "bob.smith_one_group#{rand(99_999_999)}"
+    agent = "bob.smith_one_group#{rand(99_999_999)}"
 
     @browser = browser_instance
     login(

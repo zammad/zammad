@@ -218,6 +218,7 @@ class AgentTicketAttachmentTest < TestCase
     tasks_close_all(
       browser: browser2,
     )
+
     random     = 'ticket-actions-6-test-' + rand(999_999).to_s
     user_email = random + '@example.com'
     user_create(

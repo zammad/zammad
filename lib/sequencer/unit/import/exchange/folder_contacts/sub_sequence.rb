@@ -24,7 +24,7 @@ class Sequencer
 
               total    = folder.total_count
               per_page = 1000
-              pages    = (total.to_f / per_page.to_f).ceil
+              pages    = (total.to_f / per_page).ceil
 
               display_path = ews_folder.display_path(folder)
               (1..pages).each do |page|

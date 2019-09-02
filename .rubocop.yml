@@ -3,6 +3,7 @@
 
 require:
   - rubocop-performance
+  - rubocop-rails
   - rubocop-rspec
 
 inherit_from:
@@ -17,6 +18,7 @@ AllCops:
     - 'bin/spring'
     - 'db/schema.rb'
     - 'vendor/**/*'
+    - 'public/assets/**/*'
   RSpec:
     Patterns:
       - '_spec.rb$'

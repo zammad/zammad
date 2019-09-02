@@ -9,7 +9,7 @@ class ElasticsearchActiveTest < ActiveSupport::TestCase
 
     rebuild_searchindex
 
-    roles  = Role.where(name: 'Agent')
+    roles = Role.where(name: 'Agent')
 
     @agent = User.create!(
       login:         'es-agent@example.com',

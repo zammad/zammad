@@ -133,7 +133,7 @@ execute migration down + unlink files
     Dir.glob(package_base_dir + '/**/*') do |entry|
       entry = entry.sub('//', '/')
       file = entry
-      file = file.sub(/#{package_base_dir.to_s}/, '')
+      file = file.sub(/#{package_base_dir}/, '')
       dest = @@root + '/' + file
 
       if File.symlink?(dest.to_s)
@@ -166,7 +166,7 @@ link files + execute migration up
     Dir.glob(package_base_dir + '/**/*') do |entry|
       entry = entry.sub('//', '/')
       file = entry
-      file = file.sub(/#{package_base_dir.to_s}/, '')
+      file = file.sub(/#{package_base_dir}/, '')
       file = file.sub(%r{^/}, '')
 
       # ignore files

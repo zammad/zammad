@@ -94,7 +94,7 @@ module Channel::Filter::IdentifySender
   def self.create_recipients(mail)
     max_count = 40
     current_count = 0
-    ['raw-to', 'raw-cc'].each do |item|
+    %w[raw-to raw-cc].each do |item|
       next if mail[item.to_sym].blank?
 
       begin

@@ -10,7 +10,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    roles  = Role.where(name: 'Agent')
+    roles = Role.where(name: 'Agent')
     agent1 = User.create!(
       login:         'ticket-calendar-subscription-agent1@example.com',
       firstname:     'Notification',

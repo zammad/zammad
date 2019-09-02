@@ -100,6 +100,7 @@ class Store::Provider::File
       parts.push sha[last_position, length3]
       last_position = end_position
     end
+
     path     = parts[ 0..6 ].join('/') + '/'
     file     = sha[last_position, sha.length]
     location = "#{base}/#{path}"

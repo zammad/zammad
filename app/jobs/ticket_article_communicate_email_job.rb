@@ -154,6 +154,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
           notification:                true,
         },
       )
+
       ticket       = Ticket.find(local_record.ticket_id)
       ticket.state = Ticket::State.find_by(default_follow_up: true)
       ticket.save!
