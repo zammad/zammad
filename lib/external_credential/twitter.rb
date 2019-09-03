@@ -185,7 +185,7 @@ class ExternalCredential::Twitter
 
     # delete already registered webhooks
     webhooks.each do |webhook|
-      client.webhook_delete(webhook[:id])
+      client.webhook_delete(webhook[:id], env_name)
     end
 
     # register new webhook
