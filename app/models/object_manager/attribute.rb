@@ -110,7 +110,7 @@ add a new attribute entry for an object
     created_at: '2014-06-04 10:00:00',
     updated_at: '2014-06-04 10:00:00',
 
-    force: true
+    force: true,
     editable: false,
     to_migrate: false,
     to_create: false,
@@ -329,8 +329,12 @@ possible types
         if record[:data_option] != data[:data_option]
 
           # do we need a database migration?
-          if record[:data_option][:maxlength] && data[:data_option][:maxlength] && record[:data_option][:maxlength].to_s != data[:data_option][:maxlength].to_s
+          %i[maxlength default].each do |option|
+            next if record[:data_option][option]&.to_s == data[:data_option][option]&.to_s
+
             data[:to_migrate] = true
+
+            break
           end
 
           record[:data_option_new] = data[:data_option]
@@ -660,7 +664,7 @@ to send no browser reload event, pass false
       end
 
       if attribute.data_type == 'select' && attribute.data_option[:options]
-        attribute.data_option[:historical_options] = attribute.data_option[:options]
+        attribute.data_option[:historical_options] = Hash(attribute.data_option[:historical_options]).merge(attribute.data_option[:options])
       end
 
       data_type = nil
