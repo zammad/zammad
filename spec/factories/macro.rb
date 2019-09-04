@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :macro do
     sequence(:name) { |n| "Macro #{n}" }
-    perform         { {} }
+    perform         { { 'ticket.state_id' => { 'value' => 1 } } }
     ux_flow_next_up { 'next_task' }
     note            { '' }
     active          { true }

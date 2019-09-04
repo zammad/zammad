@@ -87,9 +87,9 @@ class App.TicketOverview extends App.Controller
 
   startDragItem: (event) =>
     return if !@batchSupport
-    @grabbedItem = $(event.currentTarget)
-    offset = @grabbedItem.offset()
-    @batchDragger = $(App.view('ticket_overview/batch_dragger')())
+    @grabbedItem      = $(event.currentTarget)
+    offset            = @grabbedItem.offset()
+    @batchDragger     = $(App.view('ticket_overview/batch_dragger')())
     @grabbedItemClone = @grabbedItem.clone()
     @grabbedItemClone.data('offset', @grabbedItem.offset())
     @grabbedItemClone.addClass('batch-dragger-item js-main-item')
@@ -642,10 +642,35 @@ class App.TicketOverview extends App.Controller
     ))
 
   renderOptionsMacros: =>
-    macros = App.Macro.search(filter: { active: true }, sortBy:'name', order:'DESC')
+
+    @possibleMacros = []
+    macros          = App.Macro.search(filter: { active: true }, sortBy:'name', order:'DESC')
+
+    items = @el.find('[name="bulk"]:checked')
+
+    group_ids =[]
+    for item in items
+      ticket = App.Ticket.find($(item).val())
+      group_ids.push ticket.group_id
+
+    group_ids = _.uniq(group_ids)
+
+    for macro in macros
+
+      # push if no group_ids exists
+      if _.isEmpty(macro.group_ids) && !_.includes(@possibleMacros, macro)
+        @possibleMacros.push macro
+
+      # push if group_ids are equal
+      if _.isEqual(macro.group_ids, group_ids) && !_.includes(@possibleMacros, macro)
+        @possibleMacros.push macro
+
+      # push if all group_ids of tickets are in macro.group_ids
+      if !_.isEmpty(macro.group_ids) && _.isEmpty(_.difference(group_ids,macro.group_ids)) && !_.includes(@possibleMacros, macro)
+        @possibleMacros.push macro
 
     @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
-      macros: macros
+      macros: @possibleMacros
     ))
 
   active: (state) =>

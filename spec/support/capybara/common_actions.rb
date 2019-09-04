@@ -173,6 +173,16 @@ module CommonActions
     page.driver.browser.navigate.refresh
     attribute
   end
+
+  # opens the macro list in the ticket view via click
+  #
+  # @example
+  #  open_macro_list
+  #
+  def open_macro_list
+    click '.js-openDropdownMacro'
+  end
+
 end
 
 RSpec.configure do |config|

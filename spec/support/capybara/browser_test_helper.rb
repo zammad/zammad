@@ -27,6 +27,37 @@ module BrowserTestHelper
     Waiter.new(wait_handle)
   end
 
+  # Moves the mouse from its current position by the given offset.
+  # If the coordinates provided are outside the viewport (the mouse will end up outside the browser window)
+  # then the viewport is scrolled to match.
+  #
+  # @example
+  # move_mouse_by(x, y)
+  # move_mouse_by(100, 200)
+  #
+  def move_mouse_by(x_axis, y_axis)
+    page.driver.browser.action.move_by(x_axis, y_axis).perform
+  end
+
+  # Clicks and hold (without releasing) in the middle of the given element.
+  #
+  # @example
+  # click_and_hold(ticket)
+  # click_and_hold(tr[data-id='1'])
+  #
+  def click_and_hold(element)
+    page.driver.browser.action.click_and_hold(element).perform
+  end
+
+  # Releases the depressed left mouse button at the current mouse location.
+  #
+  # @example
+  # release_mouse
+  #
+  def release_mouse
+    page.driver.browser.action.release.perform
+  end
+
   class Waiter < SimpleDelegator
 
     # This method is a derivation of Selenium::WebDriver::Wait#until

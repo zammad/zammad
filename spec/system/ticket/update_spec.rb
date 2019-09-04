@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 require 'system/examples/text_modules_examples'
+require 'system/examples/macros_examples'
 
 RSpec.describe 'Ticket Update', type: :system do
 
@@ -140,5 +141,9 @@ RSpec.describe 'Ticket Update', type: :system do
 
   context 'when using text modules' do
     include_examples 'text modules', path:  "#ticket/zoom/#{Ticket.first.id}"
+  end
+
+  context 'when using macros' do
+    include_examples 'macros', path:  "#ticket/zoom/#{Ticket.first.id}"
   end
 end
