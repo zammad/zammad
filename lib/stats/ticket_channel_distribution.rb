@@ -10,7 +10,7 @@ class Stats::TicketChannelDistribution
     # get users groups
     group_ids = user.group_ids_access('full')
 
-    # get channels
+    # set default channels
     channels = [
       {
         sender: 'email',
@@ -20,19 +20,65 @@ class Stats::TicketChannelDistribution
         sender: 'phone',
         icon:   'phone',
       },
-      {
-        sender: 'twitter',
-        icon:   'twitter',
-      },
-      {
-        sender: 'facebook',
-        icon:   'facebook',
-      },
     ]
 
+    if Setting.get('customer_ticket_create')
+      channels.push(
+        {
+          sender: 'web',
+          icon:   'web',
+        }
+      )
+    end
+
+    if Setting.get('chat')
+      channels.push(
+        {
+          sender: 'chat',
+          icon:   'chat',
+        }
+      )
+    end
+
+    if Channel.where(area: 'Sms::Account').exists?
+      channels.push(
+        {
+          sender: 'sms',
+          icon:   'sms',
+        }
+      )
+    end
+
+    if Channel.where(area: 'Twitter::Account').exists?
+      channels.push(
+        {
+          sender: 'twitter',
+          icon:   'twitter',
+        }
+      )
+    end
+
+    if Channel.where(area: 'Facebook::Account').exists?
+      channels.push(
+        {
+          sender: 'facebook',
+          icon:   'facebook',
+        }
+      )
+    end
+
+    if Channel.where(area: 'Telegram::Account').exists?
+      channels.push(
+        {
+          sender: 'telegram',
+          icon:   'telegram',
+        }
+      )
+    end
+
     # calculate
-    result = {}
-    total_in = 0
+    result    = {}
+    total_in  = 0
     total_out = 0
     channels.each do |channel|
       result[channel[:sender].to_sym] = {

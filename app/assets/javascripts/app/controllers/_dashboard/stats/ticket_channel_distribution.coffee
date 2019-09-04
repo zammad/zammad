@@ -15,20 +15,25 @@ class Stats extends App.Controller
       data.StatsTicketChannelDistribution =
         channels:
           1:
-            inbound: 1
-            outbound: 0
-            inbound_in_percent: 0
+            icon:                'email'
+            sender:              'email'
+            inbound:             0
+            outbound:            0
+            inbound_in_percent:  0
             outbound_in_percent: 0
           2:
-            inbound: 0
-            outbound: 0
-            inbound_in_percent: 0
+            icon:                'phone'
+            sender:              'phone'
+            inbound:             0
+            outbound:            0
+            inbound_in_percent:  0
             outbound_in_percent: 0
-          3:
-            inbound: 2
-            outbound: 0
-            inbound_in_percent: 0
-            outbound_in_percent: 0
+
+    totalTickets = _.reduce data.StatsTicketChannelDistribution.channels, ((memo, channel) -> memo + channel.inbound + channel.outbound), 0
+    totalChannels = _.size data.StatsTicketChannelDistribution.channels
+
+    for id, channel of data.StatsTicketChannelDistribution.channels
+      channel.overal_percentage = Math.round((channel.inbound + channel.outbound) / totalTickets * 100)
 
     data.StatsTicketChannelDistribution.description =  'How many of your tickets are coming from email, phone, Twitter, or Facebook? (Shows percentages for both inbound and outbound tickets.)'
 
