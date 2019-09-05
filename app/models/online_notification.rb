@@ -61,22 +61,6 @@ add a new online notification for this user
 
 =begin
 
-mark online notification as seen
-
-  OnlineNotification.seen(
-    id: 2,
-  )
-
-=end
-
-  def self.seen(data)
-    notification = OnlineNotification.find(data[:id])
-    notification.seen = true
-    notification.save
-  end
-
-=begin
-
 remove whole online notifications of an object
 
   OnlineNotification.remove('Ticket', 123)

@@ -174,9 +174,9 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
   def mark_all_as_read
     notifications = OnlineNotification.list(current_user, 200)
     notifications.each do |notification|
-      if !notification['seen']
-        OnlineNotification.seen(id: notification['id'])
-      end
+      next if notification['seen']
+
+      OnlineNotification.find(notification['id']).update!(seen: true)
     end
     render json: {}, status: :ok
   end
