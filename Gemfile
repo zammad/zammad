@@ -150,9 +150,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'test-unit'
 
-  # test DB
-  gem 'sqlite3'
-
   # code coverage
   gem 'coveralls', require: false
   gem 'simplecov'

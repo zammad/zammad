@@ -499,7 +499,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.0)
     telegramAPI (1.4.2)
       rest-client (~> 2.0, >= 2.0.2)
     telephone_number (1.4.0)
@@ -643,7 +642,6 @@ DEPENDENCIES
   spring-commands-rspec
   spring-commands-testunit
   sprockets
-  sqlite3
   tcr!
   telegramAPI
   telephone_number
