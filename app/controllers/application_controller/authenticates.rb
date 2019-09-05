@@ -50,15 +50,6 @@ module ApplicationController::Authenticates
       return authentication_check_prerequesits(user, 'session', auth_param) if user
     end
 
-    # check sso based authentication
-    sso_user = User.sso(params)
-    if sso_user
-      if authentication_check_prerequesits(sso_user, 'session', auth_param)
-        session[:persistent] = true
-        return sso_user
-      end
-    end
-
     # check http basic based authentication
     authenticate_with_http_basic do |username, password|
       request.session_options[:skip] = true # do not send a session cookie
@@ -135,21 +126,37 @@ module ApplicationController::Authenticates
     false
   end
 
+  def authenticate_with_password
+    user = User.authenticate(params[:username], params[:password])
+    raise Exceptions::NotAuthorized, 'Wrong Username or Password combination.' if !user
+
+    session.delete(:switched_from_user_id)
+    authentication_check_prerequesits(user, 'session', {})
+  end
+
+  def authenticate_with_sso
+    user = begin
+              login = request.env['REMOTE_USER'] ||
+                      request.env['HTTP_REMOTE_USER'] ||
+                      request.headers['X-Forwarded-User']
+
+              User.lookup(login: login&.downcase)
+            end
+
+    raise Exceptions::NotAuthorized, 'no valid session' if !user
+
+    session.delete(:switched_from_user_id)
+    authentication_check_prerequesits(user, 'session', {})
+  end
+
   def authentication_check_prerequesits(user, auth_type, auth_param)
-    if check_maintenance_only(user)
-      raise Exceptions::NotAuthorized, 'Maintenance mode enabled!'
-    end
-
+    raise Exceptions::NotAuthorized, 'Maintenance mode enabled!' if in_maintenance_mode?(user)
     raise Exceptions::NotAuthorized, 'User is inactive!' if !user.active
-
-    # check scopes / permission check
-    if auth_param[:permission] && !user.permissions?(auth_param[:permission])
-      raise Exceptions::NotAuthorized, 'Not authorized (user)!'
-    end
+    raise Exceptions::NotAuthorized, 'Not authorized (user)!' if auth_param[:permission] && !user.permissions?(auth_param[:permission])
 
     current_user_set(user, auth_type)
     user_device_log(user, auth_type)
     logger.debug { "#{auth_type} for '#{user.login}'" }
-    true
+    user
   end
 end

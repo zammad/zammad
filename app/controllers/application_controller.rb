@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include ApplicationController::HandlesTransitions
   include ApplicationController::Authenticates
   include ApplicationController::SetsHeaders
-  include ApplicationController::ChecksMaintainance
+  include ApplicationController::ChecksMaintenance
   include ApplicationController::RendersModels
   include ApplicationController::HasUser
   include ApplicationController::HasResponseExtentions

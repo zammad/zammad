@@ -1,16 +1,9 @@
-module ApplicationController::ChecksMaintainance
+module ApplicationController::ChecksMaintenance
   extend ActiveSupport::Concern
 
   private
 
-  def check_maintenance(user)
-    return false if !check_maintenance_only(user)
-
-    raise Exceptions::NotAuthorized, 'Maintenance mode enabled!'
-  end
-
-  # check maintenance mode
-  def check_maintenance_only(user)
+  def in_maintenance_mode?(user)
     return false if Setting.get('maintenance_mode') != true
     return false if user.permissions?('admin.maintenance')
 

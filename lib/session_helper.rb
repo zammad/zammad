@@ -1,8 +1,20 @@
 module SessionHelper
-  def self.default_collections(user, assets = {})
+  def self.json_hash(user)
+    collections, assets = default_collections(user)
+
+    {
+      session:     user,
+      models:      models(user),
+      collections: collections,
+      assets:      assets,
+    }
+  end
+
+  def self.default_collections(user)
 
     # auto population collections, store all here
     default_collection = {}
+    assets = user.assets({})
 
     # load collections to deliver from external files
     dir = File.expand_path('..', __dir__)

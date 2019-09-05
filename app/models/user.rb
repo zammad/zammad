@@ -333,27 +333,6 @@ returns
 
 =begin
 
-authenticate user again sso
-
-  result = User.sso(sso_params)
-
-returns
-
-  result = user_model # user model if authentication was successfully
-
-=end
-
-  def self.sso(params)
-
-    # try to login against configure auth backends
-    user_auth = Sso.check(params)
-    return if !user_auth
-
-    user_auth
-  end
-
-=begin
-
 create user from from omni auth hash
 
   result = User.create_from_hash!(hash)
