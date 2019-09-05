@@ -48,7 +48,7 @@ module Channel::Filter::Database
 
         Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
 
-        if key.downcase == 'x-zammad-ticket-tags' && meta['value'].present? && meta['operator'].present?
+        if key.casecmp('x-zammad-ticket-tags').zero? && meta['value'].present? && meta['operator'].present?
           mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] ||= []
           tags = meta['value'].split(',')
 

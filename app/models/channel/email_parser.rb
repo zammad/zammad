@@ -331,7 +331,7 @@ returns
     end
     return true if !class_name
 
-    if class_name.downcase == 'article'
+    if class_name.casecmp('article').zero?
       class_name = 'Ticket::Article'
     end
     return true if !attribute

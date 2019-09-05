@@ -49,14 +49,6 @@ Metrics/PerceivedComplexity:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Performance/Casecmp:
-  Exclude:
-    - 'app/models/channel/email_parser.rb'
-    - 'app/models/channel/filter/database.rb'
-    - 'lib/tasks/zammad/setup/db_config.rake'
-
-# Offense count: 3
-# Cop supports --auto-correct.
 Rails/ApplicationRecord:
   Exclude:
     - 'app/models/application_model.rb'

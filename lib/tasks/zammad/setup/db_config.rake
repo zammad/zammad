@@ -15,7 +15,7 @@ namespace :zammad do
         next if FileUtils.identical?(template, destination)
 
         printf 'config/database.yml: File exists. Overwrite? [y/N] '
-        next if STDIN.gets.chomp.downcase != 'y'
+        next if !STDIN.gets.chomp.casecmp('y').zero?
       end
 
       FileUtils.cp(template, destination)
