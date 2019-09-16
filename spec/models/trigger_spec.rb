@@ -8,7 +8,7 @@ RSpec.describe Trigger, type: :model do
 
   describe 'Send-email triggers' do
     before do
-      Trigger.destroy_all  # Default DB state includes three sample triggers
+      described_class.destroy_all  # Default DB state includes three sample triggers
       trigger              # create subject trigger
     end
 

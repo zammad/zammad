@@ -17,7 +17,7 @@ RSpec.describe TicketOnlineNotificationSeenJob, type: :job do
     ticket.save!
 
     expect do
-      TicketOnlineNotificationSeenJob.perform_now(ticket.id, user.id)
+      described_class.perform_now(ticket.id, user.id)
     end.to change { online_notification.reload.seen }
   end
 end

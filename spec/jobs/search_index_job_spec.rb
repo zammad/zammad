@@ -19,6 +19,6 @@ RSpec.describe SearchIndexJob, type: :job do
   it 'retries on exception' do
     expect(::User).to receive(:lookup).and_raise(RuntimeError)
     described_class.perform_now('User', 1)
-    expect(SearchIndexJob).to have_been_enqueued
+    expect(described_class).to have_been_enqueued
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
         it 'destroys self' do
           expect { time_accounting.ticket_article.destroy }
             .to change(time_accounting, :persisted?).to(false)
-            .and change { Ticket::TimeAccounting.count }.by(-1)
+            .and change(described_class, :count).by(-1)
         end
 
         it 'does not destroy other TimeAccountings for same ticket' do
@@ -19,7 +19,7 @@ RSpec.describe Ticket::TimeAccounting, type: :model do
           create(:'ticket/time_accounting', :for_article, ticket: time_accounting.ticket)
 
           expect { time_accounting.ticket_article.destroy }
-            .to change { Ticket::TimeAccounting.count }.by(-1)
+            .to change(described_class, :count).by(-1)
         end
       end
     end

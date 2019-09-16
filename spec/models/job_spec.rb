@@ -37,7 +37,7 @@ RSpec.describe Job, type: :model do
       end
 
       it 'runs all executable jobs (and no others)' do
-        expect { Job.run }
+        expect { described_class.run }
           .to change { executable_jobs.map(&:reload).map(&:last_run_at).any?(&:nil?) }.to(false)
           .and not_change { nonexecutable_jobs.map(&:reload).map(&:last_run_at).all?(&:nil?) }
       end

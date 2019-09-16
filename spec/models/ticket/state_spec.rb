@@ -9,22 +9,22 @@ RSpec.describe Ticket::State, type: :model do
   describe 'Default state' do
     describe 'of whole table:' do
       it 'has seven records' do
-        expect(Ticket::State.pluck(:name))
+        expect(described_class.pluck(:name))
           .to match_array(%w[closed merged new open pending\ close pending\ reminder removed])
       end
     end
 
     describe 'of "new" state:' do
       it 'is the sole #default_create state' do
-        expect(Ticket::State.where(default_create: true))
-          .to match_array([Ticket::State.find_by(name: 'new')])
+        expect(described_class.where(default_create: true))
+          .to match_array([described_class.find_by(name: 'new')])
       end
     end
 
     describe 'of "open" state:' do
       it 'is the sole #default_follow_up state' do
-        expect(Ticket::State.where(default_follow_up: true))
-          .to match_array([Ticket::State.find_by(name: 'open')])
+        expect(described_class.where(default_follow_up: true))
+          .to match_array([described_class.find_by(name: 'open')])
       end
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe Ticket::State, type: :model do
       it 'looks up states by category' do
         expect(described_class.by_category(:open))
           .to be_an(ActiveRecord::Relation)
-          .and include(instance_of(Ticket::State))
+          .and include(instance_of(described_class))
       end
 
       context 'with invalid category name' do
@@ -48,7 +48,7 @@ RSpec.describe Ticket::State, type: :model do
 
   describe 'Attributes:' do
     describe '#default_create' do
-      let!(:original_default) { Ticket::State.find_by(default_create: true) }
+      let!(:original_default) { described_class.find_by(default_create: true) }
 
       context 'for newly created record' do
         subject!(:state) { build(:ticket_state, default_create: default_create) }
@@ -59,7 +59,7 @@ RSpec.describe Ticket::State, type: :model do
           it 'unsets previous default' do
             expect { state.save }
               .to change { original_default.reload.default_create }.to(false)
-              .and not_change { Ticket::State.where(default_create: true).count }
+              .and not_change { described_class.where(default_create: true).count }
           end
         end
 
@@ -68,8 +68,8 @@ RSpec.describe Ticket::State, type: :model do
 
           it 'does not alter existing default' do
             expect { state.save }
-              .to not_change { Ticket::State.find_by(default_create: true) }
-              .and not_change { Ticket::State.where(default_create: true).count }
+              .to not_change { described_class.find_by(default_create: true) }
+              .and not_change { described_class.where(default_create: true).count }
           end
         end
       end
@@ -83,16 +83,16 @@ RSpec.describe Ticket::State, type: :model do
           context 'and updated to false' do
             it 'assigns Ticket::State.first as default' do
               expect { state.update(default_create: false) }
-                .to change { Ticket::State.first.default_create }.to(true)
-                .and not_change { Ticket::State.where(default_create: true).count }
+                .to change { described_class.first.default_create }.to(true)
+                .and not_change { described_class.where(default_create: true).count }
             end
           end
 
           context 'and destroyed' do
             it 'assigns Ticket::State.first as default' do
               expect { state.destroy }
-                .to change { Ticket::State.first.default_create }.to(true)
-                .and not_change { Ticket::State.where(default_create: true).count }
+                .to change { described_class.first.default_create }.to(true)
+                .and not_change { described_class.where(default_create: true).count }
             end
           end
         end
@@ -104,15 +104,15 @@ RSpec.describe Ticket::State, type: :model do
             it 'unsets previous default' do
               expect { state.update(default_create: true) }
                 .to change { original_default.reload.default_create }.to(false)
-                .and not_change { Ticket::State.where(default_create: true).count }
+                .and not_change { described_class.where(default_create: true).count }
             end
           end
 
           context 'and destroyed' do
             it 'does not alter existing default' do
               expect { state.destroy }
-                .to not_change { Ticket::State.find_by(default_create: true) }
-                .and not_change { Ticket::State.where(default_create: true).count }
+                .to not_change { described_class.find_by(default_create: true) }
+                .and not_change { described_class.where(default_create: true).count }
             end
           end
         end
@@ -120,7 +120,7 @@ RSpec.describe Ticket::State, type: :model do
     end
 
     describe '#default_follow_up' do
-      let!(:original_default) { Ticket::State.find_by(default_follow_up: true) }
+      let!(:original_default) { described_class.find_by(default_follow_up: true) }
 
       context 'for newly created record' do
         subject!(:state) { build(:ticket_state, default_follow_up: default_follow_up) }
@@ -131,7 +131,7 @@ RSpec.describe Ticket::State, type: :model do
           it 'unsets previous default' do
             expect { state.save }
               .to change { original_default.reload.default_follow_up }.to(false)
-              .and not_change { Ticket::State.where(default_follow_up: true).count }
+              .and not_change { described_class.where(default_follow_up: true).count }
           end
         end
 
@@ -140,8 +140,8 @@ RSpec.describe Ticket::State, type: :model do
 
           it 'does not alter existing default' do
             expect { state.save }
-              .to not_change { Ticket::State.find_by(default_follow_up: true) }
-              .and not_change { Ticket::State.where(default_follow_up: true).count }
+              .to not_change { described_class.find_by(default_follow_up: true) }
+              .and not_change { described_class.where(default_follow_up: true).count }
           end
         end
       end
@@ -155,16 +155,16 @@ RSpec.describe Ticket::State, type: :model do
           context 'and updated to false' do
             it 'assigns Ticket::State.first as default' do
               expect { state.update(default_follow_up: false) }
-                .to change { Ticket::State.first.default_follow_up }.to(true)
-                .and not_change { Ticket::State.where(default_follow_up: true).count }
+                .to change { described_class.first.default_follow_up }.to(true)
+                .and not_change { described_class.where(default_follow_up: true).count }
             end
           end
 
           context 'and destroyed' do
             it 'assigns Ticket::State.first as default' do
               expect { state.destroy }
-                .to change { Ticket::State.first.default_follow_up }.to(true)
-                .and not_change { Ticket::State.where(default_follow_up: true).count }
+                .to change { described_class.first.default_follow_up }.to(true)
+                .and not_change { described_class.where(default_follow_up: true).count }
             end
           end
         end
@@ -176,15 +176,15 @@ RSpec.describe Ticket::State, type: :model do
             it 'unsets previous default' do
               expect { state.update(default_follow_up: true) }
                 .to change { original_default.reload.default_follow_up }.to(false)
-                .and not_change { Ticket::State.where(default_follow_up: true).count }
+                .and not_change { described_class.where(default_follow_up: true).count }
             end
           end
 
           context 'and destroyed' do
             it 'does not alter existing default' do
               expect { state.destroy }
-                .to not_change { Ticket::State.find_by(default_follow_up: true) }
-                .and not_change { Ticket::State.where(default_follow_up: true).count }
+                .to not_change { described_class.find_by(default_follow_up: true) }
+                .and not_change { described_class.where(default_follow_up: true).count }
             end
           end
         end

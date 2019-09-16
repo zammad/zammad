@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UserDevice, type: :model do
   describe '.add' do
-    let(:existing_record) { UserDevice.add(user_agent, ip, agent.id, fingerprint, type) }
+    let(:existing_record) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
     let(:ip) { '91.115.248.231' }
     let(:agent) { create(:agent_user) }
 
@@ -15,7 +15,7 @@ RSpec.describe UserDevice, type: :model do
 
       context 'when called with same parameters as existing record' do
         it 'returns the original record' do
-          expect(UserDevice.add(user_agent, ip, agent.id, fingerprint, type))
+          expect(described_class.add(user_agent, ip, agent.id, fingerprint, type))
             .to eq(existing_record)
         end
       end
@@ -24,8 +24,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_ip) { '176.198.137.254' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(user_agent, other_ip, agent.id, fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(user_agent, other_ip, agent.id, fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -34,8 +34,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_ip) { 'foo' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(user_agent, other_ip, agent.id, fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(user_agent, other_ip, agent.id, fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -44,8 +44,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_fingerprint) { 'fingerprintABCD' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(user_agent, ip, agent.id, other_fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(user_agent, ip, agent.id, other_fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -112,7 +112,7 @@ RSpec.describe UserDevice, type: :model do
 
       context 'when called with same parameters as existing record' do
         it 'returns the original record' do
-          expect(UserDevice.add(user_agent, ip, agent.id, fingerprint, type))
+          expect(described_class.add(user_agent, ip, agent.id, fingerprint, type))
             .to eq(existing_record)
         end
       end
@@ -121,8 +121,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_ip) { '176.198.137.254' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(user_agent, other_ip, agent.id, fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(user_agent, other_ip, agent.id, fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -131,7 +131,7 @@ RSpec.describe UserDevice, type: :model do
         let(:other_type) { 'token_auth' }
 
         it 'returns the original record' do
-          expect(UserDevice.add(user_agent, ip, agent.id, fingerprint, other_type))
+          expect(described_class.add(user_agent, ip, agent.id, fingerprint, other_type))
             .to eq(existing_record)
         end
       end
@@ -140,8 +140,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_user_agent) { '' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(other_user_agent, ip, agent.id, fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(other_user_agent, ip, agent.id, fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -151,7 +151,7 @@ RSpec.describe UserDevice, type: :model do
         let(:other_user_agent) { nil }
 
         it 'returns the original record' do
-          expect(UserDevice.add(other_user_agent, ip, agent.id, fingerprint, type))
+          expect(described_class.add(other_user_agent, ip, agent.id, fingerprint, type))
             .to eq(existing_record)
         end
       end
@@ -161,8 +161,8 @@ RSpec.describe UserDevice, type: :model do
         let(:other_ip) { '176.198.137.254' }
 
         it 'returns a new record' do
-          expect(UserDevice.add(user_agent, other_ip, agent.id, fingerprint, type))
-            .to be_a(UserDevice)
+          expect(described_class.add(user_agent, other_ip, agent.id, fingerprint, type))
+            .to be_a(described_class)
             .and not_eq(existing_record)
         end
       end
@@ -174,14 +174,14 @@ RSpec.describe UserDevice, type: :model do
       let(:type) { 'session' }
 
       it 'raises an error' do
-        expect { UserDevice.add(user_agent, ip, agent.id, fingerprint, type) }
+        expect { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
           .to raise_error(Exceptions::UnprocessableEntity)
       end
     end
   end
 
   describe '.action' do
-    let(:user_device) { UserDevice.add(user_agent, ip, agent.id, fingerprint, type) }
+    let(:user_device) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
     let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
     let(:ip) { '91.115.248.231' }
     let(:agent) { create(:agent_user) }
@@ -200,7 +200,7 @@ RSpec.describe UserDevice, type: :model do
 
       it 'returns a new user_device' do
         expect(described_class.action(user_device.id, user_agent, other_ip, agent.id, type))
-          .to be_a(UserDevice)
+          .to be_a(described_class)
           .and not_eq(user_device)
       end
     end

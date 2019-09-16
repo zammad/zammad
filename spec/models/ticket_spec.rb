@@ -43,7 +43,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'returns a list of unique tickets (i.e., no duplicates)' do
-          expect(Ticket.selectors(condition, limit: 100, access: 'full'))
+          expect(described_class.selectors(condition, limit: 100, access: 'full'))
             .to match_array([2, tickets.to_a])
         end
       end

@@ -6,7 +6,7 @@ RSpec.describe ObjectLookup, type: :model do
       subject(:object_lookup) { create(:object_lookup) }
 
       it 'returns its id' do
-        expect(ObjectLookup.by_name(object_lookup.name))
+        expect(described_class.by_name(object_lookup.name))
           .to eq(object_lookup.id)
       end
     end
@@ -15,24 +15,24 @@ RSpec.describe ObjectLookup, type: :model do
       let(:name) { 'FooBar' }
 
       it 'creates a new one with that name' do
-        expect { ObjectLookup.by_name(name) }
-          .to change(ObjectLookup, :count).by(1)
+        expect { described_class.by_name(name) }
+          .to change(described_class, :count).by(1)
 
-        expect(ObjectLookup.last.name).to eq(name)
+        expect(described_class.last.name).to eq(name)
       end
 
       it 'returns its id' do
-        expect(ObjectLookup.by_name(name))
-          .to eq(ObjectLookup.last.id)
+        expect(described_class.by_name(name))
+          .to eq(described_class.last.id)
       end
 
       context 'for names not in strict CamelCase' do
         let(:name) { 'Foo_Bar' }
 
         it 'does not modify the format' do
-          ObjectLookup.by_name(name)
+          described_class.by_name(name)
 
-          expect(ObjectLookup.last.name).to eq(name)
+          expect(described_class.last.name).to eq(name)
         end
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe ObjectLookup, type: :model do
       subject(:object_lookup) { create(:object_lookup) }
 
       it 'returns its name' do
-        expect(ObjectLookup.by_id(object_lookup.id))
+        expect(described_class.by_id(object_lookup.id))
           .to eq(object_lookup.name)
       end
     end

@@ -6,7 +6,7 @@ RSpec.describe TypeLookup, type: :model do
       subject(:type_lookup) { create(:type_lookup) }
 
       it 'returns its id' do
-        expect(TypeLookup.by_name(type_lookup.name))
+        expect(described_class.by_name(type_lookup.name))
           .to eq(type_lookup.id)
       end
     end
@@ -15,24 +15,24 @@ RSpec.describe TypeLookup, type: :model do
       let(:name) { 'FooBar' }
 
       it 'creates a new one with that name' do
-        expect { TypeLookup.by_name(name) }
-          .to change(TypeLookup, :count).by(1)
+        expect { described_class.by_name(name) }
+          .to change(described_class, :count).by(1)
 
-        expect(TypeLookup.last.name).to eq(name)
+        expect(described_class.last.name).to eq(name)
       end
 
       it 'returns its id' do
-        expect(TypeLookup.by_name(name))
-          .to eq(TypeLookup.last.id)
+        expect(described_class.by_name(name))
+          .to eq(described_class.last.id)
       end
 
       context 'for names not in strict CamelCase' do
         let(:name) { 'Foo_Bar' }
 
         it 'does not modify the format' do
-          TypeLookup.by_name(name)
+          described_class.by_name(name)
 
-          expect(TypeLookup.last.name).to eq(name)
+          expect(described_class.last.name).to eq(name)
         end
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe TypeLookup, type: :model do
       subject(:type_lookup) { create(:type_lookup) }
 
       it 'returns its name' do
-        expect(TypeLookup.by_id(type_lookup.id))
+        expect(described_class.by_id(type_lookup.id))
           .to eq(type_lookup.name)
       end
     end

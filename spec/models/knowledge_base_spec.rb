@@ -6,7 +6,7 @@ RSpec.describe KnowledgeBase, type: :model do
   subject(:knowledge_base) { create(:knowledge_base) }
 
   # make sure there's no KBs from seed data
-  before { KnowledgeBase.all.each(&:full_destroy!) }
+  before { described_class.all.each(&:full_destroy!) }
 
   include_context 'factory'
 
@@ -40,25 +40,25 @@ RSpec.describe KnowledgeBase, type: :model do
         before { knowledge_base }
 
         it 'ensure 2 knowledge bases are created' do
-          expect(KnowledgeBase.count).to eq(2)
+          expect(described_class.count).to eq(2)
         end
 
         it 'filter by activity' do
-          expect(KnowledgeBase.active).to contain_exactly(knowledge_base)
+          expect(described_class.active).to contain_exactly(knowledge_base)
         end
 
         it 'skip activity check for editors when filtering by activity' do
           user = create(:admin_user)
-          expect(KnowledgeBase.check_active_unless_editor(user).count).to eq(2)
+          expect(described_class.check_active_unless_editor(user).count).to eq(2)
         end
 
         it 'check activity if user is not editor when filtering by activity' do
           user = create(:agent_user)
-          expect(KnowledgeBase.check_active_unless_editor(user)).to contain_exactly(knowledge_base)
+          expect(described_class.check_active_unless_editor(user)).to contain_exactly(knowledge_base)
         end
 
         it 'skip activity check for guests when filtering by activity' do
-          expect(KnowledgeBase.check_active_unless_editor(nil)).to contain_exactly(knowledge_base)
+          expect(described_class.check_active_unless_editor(nil)).to contain_exactly(knowledge_base)
         end
       end
     end

@@ -138,7 +138,7 @@ RSpec.describe RecentView, type: :model do
     it 'wraps RecentView.create' do
       expect do
         described_class.log(viewed_object.class.name, viewed_object.id, admin)
-      end.to change(RecentView, :count).by(1)
+      end.to change(described_class, :count).by(1)
     end
 
     describe 'access privileges' do
@@ -152,7 +152,7 @@ RSpec.describe RecentView, type: :model do
 
         expect do
           described_class.log(viewed_object.class.name, viewed_object.id, agent)
-        end.not_to change(RecentView, :count)
+        end.not_to change(described_class, :count)
       end
     end
 
@@ -160,19 +160,19 @@ RSpec.describe RecentView, type: :model do
       it 'does not create RecentView for non-existent record' do
         expect do
           described_class.log('User', 99_999_999, admin)
-        end.not_to change(RecentView, :count)
+        end.not_to change(described_class, :count)
       end
 
       it 'does not create RecentView for instance of non-ObjectLookup class' do
         expect do
           described_class.log('Overview', 1, admin)
-        end.not_to change(RecentView, :count)
+        end.not_to change(described_class, :count)
       end
 
       it 'does not create RecentView for instance of non-existent class' do
         expect do
           described_class.log('NonExistentClass', 1, admin)
-        end.not_to change(RecentView, :count)
+        end.not_to change(described_class, :count)
       end
     end
   end

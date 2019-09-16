@@ -110,7 +110,7 @@ RSpec.describe SearchIndexBackend, searchindex: true do
     context 'ticket' do
       it 'from index after ticket delete' do
 
-        skip('No ES configured') if !SearchIndexBackend.enabled?
+        skip('No ES configured') if !described_class.enabled?
 
         ticket = create :ticket
         described_class.add('Ticket', ticket)

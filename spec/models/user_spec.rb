@@ -177,11 +177,11 @@ RSpec.describe User, type: :model do
 
     describe '.identify' do
       it 'returns users by given login' do
-        expect(User.identify(user.login)).to eq(user)
+        expect(described_class.identify(user.login)).to eq(user)
       end
 
       it 'returns users by given email' do
-        expect(User.identify(user.email)).to eq(user)
+        expect(described_class.identify(user.email)).to eq(user)
       end
     end
   end
@@ -716,7 +716,7 @@ RSpec.describe User, type: :model do
 
     describe '#out_of_office_replacement_id' do
       it 'cannot be set to invalid user ID' do
-        expect { agent.update(out_of_office_replacement_id: User.pluck(:id).max.next) }
+        expect { agent.update(out_of_office_replacement_id: described_class.pluck(:id).max.next) }
           .to raise_error(ActiveRecord::InvalidForeignKey)
       end
 
@@ -980,7 +980,7 @@ RSpec.describe User, type: :model do
     describe 'System-wide agent limit checks:' do
       let(:agent_role) { Role.lookup(name: 'Agent') }
       let(:admin_role) { Role.lookup(name: 'Admin') }
-      let(:current_agents) { User.with_permissions('ticket.agent') }
+      let(:current_agents) { described_class.with_permissions('ticket.agent') }
 
       describe '#validate_agent_limit_by_role' do
         context 'for Integer value of system_agent_limit' do

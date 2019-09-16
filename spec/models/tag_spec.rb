@@ -12,9 +12,9 @@ RSpec.describe Tag, type: :model do
     context 'when a Tag::Object does not exist for the given class' do
       it 'creates it and assigns it to a new Tag' do
         expect { described_class.tag_add(object: 'Foo', item: 'bar', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and change { Tag::Object.exists?(name: 'Foo') }.to(true)
-          .and change { Tag.last&.tag_object&.name }.to('Foo')
+          .and change { described_class.last&.tag_object&.name }.to('Foo')
       end
     end
 
@@ -23,33 +23,33 @@ RSpec.describe Tag, type: :model do
 
       it 'assigns it to a new Tag' do
         expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and not_change(Tag::Object, :count)
-          .and change { Tag.last&.tag_object&.name }.to('Ticket')
+          .and change { described_class.last&.tag_object&.name }.to('Ticket')
       end
     end
 
     context 'when a Tag::Item does not exist with the given name' do
       it 'creates it and assigns it to a new Tag' do
         expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and change { Tag::Item.exists?(name: 'foo') }.to(true)
-          .and change { Tag.last&.tag_item&.name }.to('foo')
+          .and change { described_class.last&.tag_item&.name }.to('foo')
       end
 
       it 'strips trailing/leading whitespace' do
         expect { described_class.tag_add(object: 'Ticket', item: '  foo ', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and change { Tag::Item.exists?(name: 'foo') }.to(true)
-          .and change { Tag.last&.tag_item&.name }.to('foo')
+          .and change { described_class.last&.tag_item&.name }.to('foo')
       end
 
       context 'and the name contains 8-bit Unicode characters' do
         it 'creates it and assigns it to a new Tag' do
           expect { described_class.tag_add(object: 'Ticket', item: 'fooöäüß', o_id: 1, created_by_id: 1) }
-            .to change(Tag, :count).by(1)
+            .to change(described_class, :count).by(1)
             .and change { Tag::Item.exists?(name: 'fooöäüß') }.to(true)
-            .and change { Tag.last&.tag_item&.name }.to('fooöäüß')
+            .and change { described_class.last&.tag_item&.name }.to('fooöäüß')
         end
       end
 
@@ -58,9 +58,9 @@ RSpec.describe Tag, type: :model do
 
         it 'creates it and assigns it to a new Tag' do
           expect { described_class.tag_add(object: 'Ticket', item: 'FOO', o_id: 1, created_by_id: 1) }
-            .to change(Tag, :count).by(1)
+            .to change(described_class, :count).by(1)
             .and change { Tag::Item.pluck(:name).include?('FOO') }.to(true) # .exists?(name: 'FOO') fails on MySQL
-            .and change { Tag.last&.tag_item&.name }.to('FOO')
+            .and change { described_class.last&.tag_item&.name }.to('FOO')
         end
       end
     end
@@ -70,16 +70,16 @@ RSpec.describe Tag, type: :model do
 
       it 'assigns it to a new Tag' do
         expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and not_change(Tag::Item, :count)
-          .and change { Tag.last&.tag_item&.name }.to('foo')
+          .and change { described_class.last&.tag_item&.name }.to('foo')
       end
 
       it 'strips leading/trailing whitespace' do
         expect { described_class.tag_add(object: 'Ticket', item: '  foo ', o_id: 1, created_by_id: 1) }
-          .to change(Tag, :count).by(1)
+          .to change(described_class, :count).by(1)
           .and not_change(Tag::Item, :count)
-          .and change { Tag.last&.tag_item&.name }.to('foo')
+          .and change { described_class.last&.tag_item&.name }.to('foo')
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe Tag, type: :model do
 
       it 'does not create any records' do
         expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
-          .to not_change(Tag, :count)
+          .to not_change(described_class, :count)
           .and not_change(Tag::Item, :count)
       end
     end
@@ -107,14 +107,14 @@ RSpec.describe Tag, type: :model do
 
       it 'destroys the Tag' do
         expect { described_class.tag_remove(object: 'Ticket', o_id: Ticket.first.id, item: 'foo') }
-          .to change(Tag, :count).by(-1)
+          .to change(described_class, :count).by(-1)
       end
     end
 
     context 'when no matching Tag exists' do
       it 'makes no changes' do
         expect { described_class.tag_remove(object: 'Ticket', o_id: Ticket.first.id, item: 'foo') }
-          .not_to change(Tag, :count)
+          .not_to change(described_class, :count)
       end
     end
   end

@@ -11,7 +11,7 @@ RSpec.describe History, type: :model do
       let!(:object) { create(:'cti/log') }
 
       it 'returns an empty array' do
-        expect(History.list(object.class.name, object.id))
+        expect(described_class.list(object.class.name, object.id))
           .to be_an(Array).and be_empty
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe History, type: :model do
         before { object.update(email: 'foo@example.com') }
 
         context 'or "assets" flag' do
-          let(:list) { History.list(object.class.name, object.id) }
+          let(:list) { described_class.list(object.class.name, object.id) }
 
           it 'returns an array of attribute hashes for those histories' do
             expect(list).to match_array(
@@ -58,9 +58,9 @@ RSpec.describe History, type: :model do
         end
 
         context 'but with "assets" flag' do
-          let(:list) { History.list(object.class.name, object.id, nil, true) }
+          let(:list) { described_class.list(object.class.name, object.id, nil, true) }
           let(:matching_histories) do
-            History.where(
+            described_class.where(
               o_id:              object.id,
               history_object_id: History::Object.lookup(name: object.class.name).id
             )
@@ -100,7 +100,7 @@ RSpec.describe History, type: :model do
         before { object.update(title: 'Lorem ipsum dolor') }
 
         context 'but no "assets" flag' do
-          let(:list) { History.list(object.class.name, object.id, 'Ticket::Article') }
+          let(:list) { described_class.list(object.class.name, object.id, 'Ticket::Article') }
 
           it 'returns an array of attribute hashes for those histories' do
             expect(list).to match_array(
@@ -145,12 +145,12 @@ RSpec.describe History, type: :model do
         end
 
         context 'and "assets" flag' do
-          let(:list) { History.list(object.class.name, object.id, 'Ticket::Article', true) }
+          let(:list) { described_class.list(object.class.name, object.id, 'Ticket::Article', true) }
           let(:matching_histories) do
-            History.where(
+            described_class.where(
               o_id:              object.id,
               history_object_id: History::Object.lookup(name: object.class.name).id
-            ) + History.where(
+            ) + described_class.where(
               o_id:              related_object.id,
               history_object_id: History::Object.lookup(name: related_object.class.name).id
             )

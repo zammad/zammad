@@ -3,39 +3,35 @@ require 'rails_helper'
 RSpec.describe ImportJob do
 
   before do
-    module Import
-      class Test < Import::Base
-        def start
-          @import_job.result = { state: 'Done' }
-        end
-      end
-    end
-
-    module Import
-      class NoRescheduleMethod
-
-        def initialize(import_job)
-          @import_job = import_job
-        end
-
-        def start
-          @import_job.result = { state: 'Done' }
-        end
-
-        def reschedule?(_delayed_job)
-          'invalid_but_checkable_result'
-        end
-      end
-    end
-  end
-
-  after do
-    Import.send(:remove_const, :Test)
-    Import.send(:remove_const, :NoRescheduleMethod)
+    stub_const test_backend_name, test_backend_class
+    stub_const test_backend_noreschedule_name, test_backend_noreschedule_class
   end
 
   let(:test_backend_name) { 'Import::Test' }
-  let(:test_backend_class) { test_backend_name.constantize }
+  let(:test_backend_class) do
+    Class.new(Import::Base) do
+      def start
+        @import_job.result = { state: 'Done' }
+      end
+    end
+  end
+
+  let(:test_backend_noreschedule_name) { 'Import::NoRescheduleMethod' }
+  let(:test_backend_noreschedule_class) do
+    Class.new do
+      def initialize(import_job)
+        @import_job = import_job
+      end
+
+      def start
+        @import_job.result = { state: 'Done' }
+      end
+
+      def reschedule?(_delayed_job)
+        'invalid_but_checkable_result'
+      end
+    end
+  end
 
   describe '#dry_run' do
 

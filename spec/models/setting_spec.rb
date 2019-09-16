@@ -7,7 +7,7 @@ RSpec.describe Setting, type: :model do
     context 'when given a valid Setting#name' do
       it 'returns #state_current[:value]' do
         expect { setting.update(state_current: { value: 'foo' }) }
-          .to change { Setting.get(setting.name) }.to('foo')
+          .to change { described_class.get(setting.name) }.to('foo')
       end
     end
   end
@@ -15,7 +15,7 @@ RSpec.describe Setting, type: :model do
   describe '.set' do
     context 'when given a valid Setting#name' do
       it 'sets #state_current = { value: <arg> }' do
-        expect { Setting.set(setting.name, 'foo') }
+        expect { described_class.set(setting.name, 'foo') }
           .to change { setting.reload.state_current }.to({ 'value' => 'foo' })
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe Setting, type: :model do
       before { Cache.write('foo', 'bar') }
 
       it 'resets the cache key' do
-        expect { Setting.set(setting.name, 'baz') }
+        expect { described_class.set(setting.name, 'baz') }
           .to change { Cache.get('foo') }.to(nil)
       end
     end
@@ -36,9 +36,9 @@ RSpec.describe Setting, type: :model do
     context 'when given a valid Setting#name' do
       it 'sets #state_current = { value: <orig> } (via #state_initial[:value])' do
         setting.update(state_initial: { value: 'foo' })
-        Setting.set(setting.name, 'bar')
+        described_class.set(setting.name, 'bar')
 
-        expect { Setting.reset(setting.name) }
+        expect { described_class.reset(setting.name) }
           .to change { setting.reload.state_current }.to({ value: 'foo' })
       end
     end

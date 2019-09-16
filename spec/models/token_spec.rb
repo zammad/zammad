@@ -6,19 +6,19 @@ RSpec.describe Token, type: :model do
   describe '.check' do
     context 'with name and action matching existing token' do
       it 'returns the token’s user' do
-        expect(Token.check(action: token.action, name: token.name)).to eq(token.user)
+        expect(described_class.check(action: token.action, name: token.name)).to eq(token.user)
       end
     end
 
     context 'with invalid name' do
       it 'returns nil' do
-        expect(Token.check(action: token.action, name: '1NV4L1D')).to be(nil)
+        expect(described_class.check(action: token.action, name: '1NV4L1D')).to be(nil)
       end
     end
 
     context 'with invalid action' do
       it 'returns nil' do
-        expect(Token.check(action: 'PasswordReset_NotExisting', name: token.name)).to be(nil)
+        expect(described_class.check(action: 'PasswordReset_NotExisting', name: token.name)).to be(nil)
       end
     end
 
@@ -30,14 +30,14 @@ RSpec.describe Token, type: :model do
           let(:created_at) { 1.month.ago }
 
           it 'returns the token’s user' do
-            expect(Token.check(action: token.action, name: token.name)).to eq(token.user)
+            expect(described_class.check(action: token.action, name: token.name)).to eq(token.user)
           end
 
           it 'does not delete the token' do
             token  # create token
 
-            expect { Token.check(action: token.action, name: token.name) }
-              .not_to change(Token, :count)
+            expect { described_class.check(action: token.action, name: token.name) }
+              .not_to change(described_class, :count)
           end
         end
       end
@@ -49,14 +49,14 @@ RSpec.describe Token, type: :model do
           let(:created_at) { 1.day.ago + 5 }
 
           it 'returns the token’s user' do
-            expect(Token.check(action: token.action, name: token.name)).to eq(token.user)
+            expect(described_class.check(action: token.action, name: token.name)).to eq(token.user)
           end
 
           it 'does not delete the token' do
             token  # create token
 
-            expect { Token.check(action: token.action, name: token.name) }
-              .not_to change(Token, :count)
+            expect { described_class.check(action: token.action, name: token.name) }
+              .not_to change(described_class, :count)
           end
         end
 
@@ -64,14 +64,14 @@ RSpec.describe Token, type: :model do
           let(:created_at) { 1.day.ago }
 
           it 'returns nil' do
-            expect(Token.check(action: token.action, name: token.name)).to be(nil)
+            expect(described_class.check(action: token.action, name: token.name)).to be(nil)
           end
 
           it 'deletes the token' do
             token  # create token
 
-            expect { Token.check(action: token.action, name: token.name) }
-              .to change(Token, :count).by(-1)
+            expect { described_class.check(action: token.action, name: token.name) }
+              .to change(described_class, :count).by(-1)
           end
         end
       end
@@ -85,43 +85,43 @@ RSpec.describe Token, type: :model do
 
       context 'with a permission shared by both token.user and token.preferences' do
         it 'returns token.user' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'ticket.agent')).to eq(agent)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'ticket.agent')).to eq(agent)
         end
       end
 
       context 'with the child of a permission shared by both token.user and token.preferences' do
         it 'returns token.user' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'ticket.agent.foo')).to eq(agent)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'ticket.agent.foo')).to eq(agent)
         end
       end
 
       context 'with the parent of a permission shared by both token.user and token.preferences' do
         it 'returns nil' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'ticket')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'ticket')).to be(nil)
         end
       end
 
       context 'with a permission in token.preferences, but not on token.user' do
         it 'returns nil' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'admin')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'admin')).to be(nil)
         end
       end
 
       context 'with a permission not in token.preferences, but on token.user' do
         it 'returns nil' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'cti.agent')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'cti.agent')).to be(nil)
         end
       end
 
       context 'with non-existent permission' do
         it 'returns nil' do
-          expect(Token.check(action: token.action, name: token.name, permission: 'foo')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'foo')).to be(nil)
         end
       end
 
       context 'with multiple permissions, where at least one is shared by both token.user and token.preferences' do
         it 'returns token.user' do
-          expect(Token.check(action: token.action, name: token.name, permission: %w[foo ticket.agent])).to eq(agent)
+          expect(described_class.check(action: token.action, name: token.name, permission: %w[foo ticket.agent])).to eq(agent)
         end
       end
     end
@@ -130,7 +130,7 @@ RSpec.describe Token, type: :model do
   describe 'Attributes:' do
     describe '#persistent' do
       context 'when not set on creation' do
-        subject(:token) { Token.create(action: 'foo', user_id: User.first.id) }
+        subject(:token) { described_class.create(action: 'foo', user_id: User.first.id) }
 
         it 'defaults to nil' do
           expect(token.persistent).to be(nil)
