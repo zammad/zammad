@@ -106,4 +106,9 @@ App.Config.set('auth_provider_all', {
     name:   'Weibo'
     config: 'auth_weibo'
     class:  'weibo'
+  saml:
+    url:    '/auth/saml'
+    name:   'SAML'
+    config: 'auth_saml'
+    class:  'saml'
 })

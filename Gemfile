@@ -74,6 +74,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-microsoft-office365'
 gem 'omniauth-oauth2'
+gem 'omniauth-saml'
 gem 'omniauth-twitter'
 gem 'omniauth-weibo-oauth2'
 
