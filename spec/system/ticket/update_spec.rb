@@ -41,7 +41,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
       within(:active_content) do
         # update should work now
-        find('.edit [name=internal_name1]').select('name 2')
+        find(".edit [name=#{attribute.name}]").select('name 2')
         click('.js-attributeBar .js-submit')
         expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
       end
@@ -85,7 +85,7 @@ RSpec.describe 'Ticket Update', type: :system do
                                  },
                                })
 
-      # refresh browser to get macro accessable
+      # refresh browser to get macro accessible
       refresh
 
       # create a new ticket and attempt to update its state without the required select attribute
