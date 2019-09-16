@@ -14,7 +14,7 @@ class App.LocalStorage
   @delete: (key, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.delete(key)
+    _instance.delete(key, user_id)
 
   @clear: ->
     if _instance == undefined
