@@ -127,6 +127,10 @@ class App.UiElement.postmaster_match
             value:    'x-loop'
             name:     'X-Loop'
           },
+          {
+            value:    'x-zammad-out-of-office'
+            name:     'X-Zammad-Out-Of-Office'
+          },
         ]
 
     groups
