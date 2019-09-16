@@ -568,7 +568,7 @@ condition example
 
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if selector['operator'] !~ /^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))$/
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))$/)
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
@@ -1358,7 +1358,7 @@ result
 
       # send notifications only to email addresses
       next if recipient_email.blank?
-      next if recipient_email !~ /@/
+      next if !recipient_email.match?(/@/)
 
       # check if address is valid
       begin
@@ -1375,7 +1375,7 @@ result
           recipient_email = "#{$2}@#{$3}"
         end
         next if recipient_email.blank?
-        next if recipient_email !~ /@/
+        next if !recipient_email.match?(/@/)
         next if recipient_email.match?(/\s/)
       end
 

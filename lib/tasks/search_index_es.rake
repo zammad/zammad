@@ -289,8 +289,8 @@ end
 def es_pipeline?
   number = es_version
   return false if number.blank?
-  return false if number =~ /^[2-4]\./
-  return false if number =~ /^5\.[0-5]\./
+  return false if number.match?(/^[2-4]\./)
+  return false if number.match?(/^5\.[0-5]\./)
 
   true
 end
@@ -299,7 +299,7 @@ end
 def es_multi_index?
   number = es_version
   return false if number.blank?
-  return false if number =~ /^[2-5]\./
+  return false if number.match?(/^[2-5]\./)
 
   true
 end
@@ -308,7 +308,7 @@ end
 def es_type_in_mapping?
   number = es_version
   return true if number.blank?
-  return true if number =~ /^[2-6]\./
+  return true if number.match?(/^[2-6]\./)
 
   false
 end

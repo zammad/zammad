@@ -114,8 +114,8 @@ class Transaction::Notification
         already_notified = false
         History.list('Ticket', ticket.id).each do |history|
           next if history['type'] != 'notification'
-          next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
-          next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
+          next if !history['value_to'].match?(/\(#{Regexp.escape(@item[:type])}:/)
+          next if !history['value_to'].match?(/#{Regexp.escape(identifier)}\(/)
           next if !history['created_at'].today?
 
           already_notified = true

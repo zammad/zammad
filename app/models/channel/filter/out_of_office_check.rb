@@ -8,7 +8,7 @@ module Channel::Filter::OutOfOfficeCheck
 
     # check ms out of office characteristics
     if mail[ 'x-auto-response-suppress'.to_sym ]
-      return if mail[ 'x-auto-response-suppress'.to_sym ] !~ /all/i
+      return if !mail[ 'x-auto-response-suppress'.to_sym ].match?(/all/i)
       return if !mail[ 'x-ms-exchange-inbox-rules-loop'.to_sym ]
 
       mail[ 'x-zammad-out-of-office'.to_sym ] = true

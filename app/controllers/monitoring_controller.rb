@@ -303,7 +303,7 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
     raise Exceptions::UnprocessableEntity, 'periode is missing!' if params[:periode].blank?
 
     scale = params[:periode][-1, 1]
-    raise Exceptions::UnprocessableEntity, 'periode need to have s, m, h or d as last!' if scale !~ /^(s|m|h|d)$/
+    raise Exceptions::UnprocessableEntity, 'periode need to have s, m, h or d as last!' if !scale.match?(/^(s|m|h|d)$/)
 
     periode = params[:periode][0, params[:periode].length - 1]
     raise Exceptions::UnprocessableEntity, 'periode need to be an integer!' if periode.to_i.zero?

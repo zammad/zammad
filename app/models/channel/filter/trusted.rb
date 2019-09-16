@@ -8,7 +8,7 @@ module Channel::Filter::Trusted
     # check if trust x-headers
     if !channel[:trusted]
       mail.each_key do |key|
-        next if key !~ /^x-zammad/i
+        next if !key.match?(/^x-zammad/i)
 
         mail.delete(key)
       end
@@ -17,7 +17,7 @@ module Channel::Filter::Trusted
 
     # verify values
     mail.each do |key, value|
-      next if key !~ /^x-zammad/i
+      next if !key.match?(/^x-zammad/i)
 
       # no assoc exists, remove header
       next if Channel::EmailParser.check_attributes_by_x_headers(key, value)

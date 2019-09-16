@@ -117,7 +117,7 @@ returns
         next if !mail
 
         # check if verify message exists
-        next if mail !~ /#{verify_string}/
+        next if !mail.match?(/#{verify_string}/)
 
         Rails.logger.info " - verify email #{verify_string} found"
         m.delete

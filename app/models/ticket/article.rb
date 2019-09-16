@@ -69,7 +69,7 @@ returns
 
   def self.insert_urls(article)
     return article if article['attachments'].blank?
-    return article if article['content_type'] !~ %r{text/html}i
+    return article if !article['content_type'].match?(%r{text/html}i)
     return article if article['body'] !~ /<img/i
 
     inline_attachments = {}

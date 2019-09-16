@@ -168,7 +168,7 @@ satinize html string based on whiltelist
           next if !node[attribute_name]
 
           href = cleanup_target(node[attribute_name])
-          next if href !~ /(javascript|livescript|vbscript):/i
+          next if !href.match?(/(javascript|livescript|vbscript):/i)
 
           node.delete(attribute_name)
         end

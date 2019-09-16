@@ -734,7 +734,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         'image/gif':               %w[gif image],
       }
       map.each do |type, ext|
-        next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+        next if !headers_store['Content-Type'].match?(/^#{Regexp.quote(type)}/i)
 
         filename = if headers_store['Content-Description'].present?
                      "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')

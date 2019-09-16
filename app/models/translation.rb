@@ -415,7 +415,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
         next
       end
       raise "Can't import translation, format is missing" if row[2].blank?
-      raise "Can't import translation, format is invalid (#{row[2]})" if row[2] !~ /^(time|string)$/
+      raise "Can't import translation, format is invalid (#{row[2]})" if !row[2].match?(/^(time|string)$/)
 
       item = {
         'locale'         => locale.locale,

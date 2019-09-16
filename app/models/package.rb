@@ -523,7 +523,7 @@ execute all pending package migrations at once
       end
 
       migrations_existing.each do |migration|
-        next if migration !~ /\.rb$/
+        next if !migration.match?(/\.rb$/)
 
         version = nil
         name    = nil

@@ -698,7 +698,7 @@ process webhook messages from twitter
           channel.options[:sync][:search].each do |local_search|
             next if local_search[:term].blank?
             next if local_search[:group_id].blank?
-            next if item['text'] !~ /#{Regexp.quote(local_search[:term])}/i
+            next if !item['text'].match?(/#{Regexp.quote(local_search[:term])}/i)
 
             group_id = local_search[:group_id]
             break

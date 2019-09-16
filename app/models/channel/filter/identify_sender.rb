@@ -104,7 +104,7 @@ module Channel::Filter::IdentifySender
         items.each do |address_data|
           email_address = address_data.address
           next if email_address.blank?
-          next if email_address !~ /@/
+          next if !email_address.match?(/@/)
           next if email_address.match?(/\s/)
 
           user_create(
@@ -132,7 +132,7 @@ module Channel::Filter::IdentifySender
             display_name = $1
           end
           next if address.blank?
-          next if address !~ /@/
+          next if !address.match?(/@/)
           next if address.match?(/\s/)
 
           user_create(

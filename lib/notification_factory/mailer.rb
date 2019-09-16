@@ -221,8 +221,8 @@ retunes
     result.each do |item|
       next if item['type'] != 'notification'
       next if item['object'] != 'Ticket'
-      next if item['value_to'] !~ /#{recipient.email}/i
-      next if item['value_to'] !~ /#{type}/i
+      next if !item['value_to'].match?(/#{recipient.email}/i)
+      next if !item['value_to'].match?(/#{type}/i)
 
       count += 1
     end

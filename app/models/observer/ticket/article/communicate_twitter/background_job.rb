@@ -30,7 +30,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     end
 
     log_error(article, "No such channel id #{ticket.preferences['channel_id']}") if !channel
-    log_error(article, "Channel.find(#{channel.id}) isn't a twitter channel!") if channel.options[:adapter] !~ /\Atwitter/i
+    log_error(article, "Channel.find(#{channel.id}) isn't a twitter channel!") if !channel.options[:adapter].match?(/\Atwitter/i)
 
     begin
       tweet = channel.deliver(

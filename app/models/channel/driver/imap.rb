@@ -182,7 +182,7 @@ example
         # check if verify message exists
         subject = message_meta['ENVELOPE'].subject
         next if !subject
-        next if subject !~ /#{verify_string}/
+        next if !subject.match?(/#{verify_string}/)
 
         Rails.logger.info " - verify email #{verify_string} found"
         timeout(600) do

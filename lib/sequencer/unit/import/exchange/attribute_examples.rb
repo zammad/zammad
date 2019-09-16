@@ -20,7 +20,7 @@ class Sequencer
                     break if extractor.enough
                   end
                 rescue NoMethodError => e
-                  raise if e.message !~ /Viewpoint::EWS::/
+                  raise if !e.message.match?(/Viewpoint::EWS::/)
 
                   logger.error e
                   logger.error "Skipping folder_id '#{folder_id}' due to unsupported entries."

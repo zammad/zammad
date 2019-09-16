@@ -959,7 +959,7 @@ try to find correct name
 
     self.email = email.downcase.strip
     return true if id == 1
-    raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if !email.match?(/@/)
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email.match?(/\s/)
 
     true
@@ -1182,7 +1182,7 @@ raise 'Minimum one user need to have admin permissions'
   def avatar_for_email_check
     return true if Setting.get('import_mode')
     return true if email.blank?
-    return true if email !~ /@/
+    return true if !email.match?(/@/)
     return true if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days
 
     # save/update avatar
