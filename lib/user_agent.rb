@@ -59,9 +59,12 @@ returns
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
-      Timeout.timeout(total_timeout) do
-        response = http.request(request)
-        return process(request, response, uri, count, params, options)
+
+      handled_open_timeout(options[:open_socket_tries]) do
+        Timeout.timeout(total_timeout) do
+          response = http.request(request)
+          return process(request, response, uri, count, params, options)
+        end
       end
     rescue => e
       log(url, request, nil, options)
@@ -112,9 +115,12 @@ returns
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
-      Timeout.timeout(total_timeout) do
-        response = http.request(request)
-        return process(request, response, uri, count, params, options)
+
+      handled_open_timeout(options[:open_socket_tries]) do
+        Timeout.timeout(total_timeout) do
+          response = http.request(request)
+          return process(request, response, uri, count, params, options)
+        end
       end
     rescue => e
       log(url, request, nil, options)
@@ -164,9 +170,12 @@ returns
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
-      Timeout.timeout(total_timeout) do
-        response = http.request(request)
-        return process(request, response, uri, count, params, options)
+
+      handled_open_timeout(options[:open_socket_tries]) do
+        Timeout.timeout(total_timeout) do
+          response = http.request(request)
+          return process(request, response, uri, count, params, options)
+        end
       end
     rescue => e
       log(url, request, nil, options)
@@ -209,9 +218,11 @@ returns
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
-      Timeout.timeout(total_timeout) do
-        response = http.request(request)
-        return process(request, response, uri, count, {}, options)
+      handled_open_timeout(options[:open_socket_tries]) do
+        Timeout.timeout(total_timeout) do
+          response = http.request(request)
+          return process(request, response, uri, count, {}, options)
+        end
       end
     rescue => e
       log(url, request, nil, options)
@@ -486,6 +497,16 @@ returns
       success: true,
       code:    '200',
     )
+  end
+
+  def self.handled_open_timeout(tries)
+    tries ||= 1
+
+    tries.times do |index|
+      yield
+    rescue Net::OpenTimeout
+      raise if (index + 1) == tries
+    end
   end
 
   class Result

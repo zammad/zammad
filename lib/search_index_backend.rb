@@ -19,11 +19,12 @@ info about used search index machine
       url,
       {},
       {
-        json:         true,
-        open_timeout: 8,
-        read_timeout: 14,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        json:              true,
+        open_timeout:      8,
+        read_timeout:      14,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -82,11 +83,12 @@ update processors
           response = UserAgent.delete(
             url,
             {
-              json:         true,
-              open_timeout: 8,
-              read_timeout: 60,
-              user:         Setting.get('es_user'),
-              password:     Setting.get('es_password'),
+              json:              true,
+              open_timeout:      8,
+              read_timeout:      60,
+              open_socket_tries: 3,
+              user:              Setting.get('es_user'),
+              password:          Setting.get('es_password'),
             }
           )
           Rails.logger.info "# #{response.code}"
@@ -106,11 +108,12 @@ update processors
           url,
           item,
           {
-            json:         true,
-            open_timeout: 8,
-            read_timeout: 60,
-            user:         Setting.get('es_user'),
-            password:     Setting.get('es_password'),
+            json:              true,
+            open_timeout:      8,
+            read_timeout:      60,
+            open_socket_tries: 3,
+            user:              Setting.get('es_user'),
+            password:          Setting.get('es_password'),
           }
         )
         Rails.logger.info "# #{response.code}"
@@ -179,11 +182,12 @@ create/update/delete index
       url,
       data[:data],
       {
-        json:         true,
-        open_timeout: 8,
-        read_timeout: 60,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        json:              true,
+        open_timeout:      8,
+        read_timeout:      60,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -217,11 +221,12 @@ add new object to search index
       url,
       data,
       {
-        json:         true,
-        open_timeout: 8,
-        read_timeout: 60,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        json:              true,
+        open_timeout:      8,
+        read_timeout:      60,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -254,10 +259,11 @@ remove whole data from index
     response = UserAgent.delete(
       url,
       {
-        open_timeout: 8,
-        read_timeout: 60,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        open_timeout:      8,
+        read_timeout:      60,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
     Rails.logger.info "# #{response.code}"
@@ -365,11 +371,12 @@ remove whole data from index
       url,
       query_data,
       {
-        json:         true,
-        open_timeout: 5,
-        read_timeout: 14,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        json:              true,
+        open_timeout:      5,
+        read_timeout:      14,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
 
@@ -512,11 +519,12 @@ example for aggregations within one year
       url,
       data,
       {
-        json:         true,
-        open_timeout: 5,
-        read_timeout: 14,
-        user:         Setting.get('es_user'),
-        password:     Setting.get('es_password'),
+        json:              true,
+        open_timeout:      5,
+        read_timeout:      14,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
       }
     )
 

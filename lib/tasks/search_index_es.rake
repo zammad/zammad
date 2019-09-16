@@ -275,12 +275,14 @@ end
 
 # get es version
 def es_version
-  info = SearchIndexBackend.info
-  number = nil
-  if info.present?
-    number = info['version']['number'].to_s
+  @es_version ||= begin
+    info = SearchIndexBackend.info
+    number = nil
+    if info.present?
+      number = info['version']['number'].to_s
+    end
+    number
   end
-  number
 end
 
 # no es_pipeline for elasticsearch 5.5 and lower
