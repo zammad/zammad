@@ -2525,6 +2525,8 @@ wait untill text in selector disabppears
       end
     end
 
+    # avoid accessing a stale element when accessing task type
+    sleep 1
     task_type(
       browser: instance,
       type:    params[:task_type] || 'stayOnTab',
