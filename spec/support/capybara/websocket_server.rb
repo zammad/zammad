@@ -19,6 +19,10 @@ RSpec.configure do |config|
 
     next if !server_required
 
-    Thread.kill(websocket_server)
+    # returns immediately and thread may be still shutting down
+    EventMachine.stop_event_loop
+
+    # give thread time to terminate
+    sleep 0.01 while websocket_server.status
   end
 end
