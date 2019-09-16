@@ -299,8 +299,8 @@ returns
       escape:   false
     ).render
 
-    # strip off the extra newline at the end for the subjects of plaintext templates
-    message_subject.chomp! if data[:format] == 'txt'
+    # strip off the extra newline at the end of the subject to avoid =0A suffixes (see #2726)
+    message_subject.chomp!
 
     message_body = NotificationFactory::Renderer.new(
       objects:  data[:objects],
