@@ -59,6 +59,10 @@ class App.TaskManager
     return if !_instance
     _instance.worker(key)
 
+  @ensureWorker: (key, callback) ->
+    return if !_instance
+    _instance.ensureWorker(key, callback)
+
   @nextTaskUrl: ->
     return if !_instance
     _instance.nextTaskUrl()
@@ -153,8 +157,8 @@ class _taskManagerSingleton extends App.Controller
       title:     App.i18n.translateInline('Loading...')
       head:      App.i18n.translateInline('Loading...')
     worker = App.TaskManager.worker(task.key)
-    if worker
-      data = worker.meta()
+    if worker && worker.meta
+      data = worker.meta(task)
 
       # apply meta data of controller
       if data
@@ -179,6 +183,15 @@ class _taskManagerSingleton extends App.Controller
   worker: (key) ->
     return @workers[ key ] if @workers[ key ]
     return
+
+  ensureWorker: (key, callback) =>
+    if worker = @worker(key)
+      callback(worker)
+      return
+
+    @one "TaskManager::#{key}::WorkerStarted", =>
+      @ensureWorker(key, callback)
+      true
 
   execute: (params) ->
     @queue.push params
@@ -306,6 +319,7 @@ class _taskManagerSingleton extends App.Controller
     # start controller if not already started
     if !@workers[params.key]
       @workers[params.key] = new App[params.controller](params_app)
+      App.Event.trigger "TaskManager::#{params.key}::WorkerStarted"
 
     # if controller is started hidden, call hide of controller
     if !params.show

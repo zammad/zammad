@@ -52,6 +52,14 @@ class App.Controller extends Spine.Controller
       @controllerId
     )
 
+  one: (event, callback) =>
+    App.Event.bind(
+      event
+      callback
+      @controllerId
+      true
+    )
+
   unbind: (event, callback) =>
     App.Event.unbind(
       event
