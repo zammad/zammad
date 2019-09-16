@@ -62,8 +62,5 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
       end
     end
 
-    it 'does convert UTC timestamp to local system based timestamp' do
-      expect(TimeAccountingsController.new.instance_eval { time_in_localtime_for_excel(Time.parse('2019-08-08T01:00:05Z').in_time_zone, 'Europe/Berlin') }).to eq('2019-08-08 03:00:05')
-    end
   end
 end

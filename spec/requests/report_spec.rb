@@ -81,10 +81,6 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       expect(@response['Content-Type']).to eq('application/vnd.ms-excel')
     end
 
-    it 'does convert UTC timestamp to local system based timestamp' do
-      expect(ReportsController.new.time_in_localtime_for_excel(Time.parse('2019-08-08T01:00:05Z').in_time_zone, 'Europe/Berlin')).to eq('2019-08-08 03:00:05')
-    end
-
     it 'does report example - deliver result' do
       skip('No ES configured') if !SearchIndexBackend.enabled?
 
