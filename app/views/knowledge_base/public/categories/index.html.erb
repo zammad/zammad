@@ -1,6 +1,6 @@
 <main class="main main--categories"
   <% if @object %>
-    data-base-path='<%= custom_path_if_needed help_category_path(@object, locale: '{locale}') %>'
+    data-base-path='<%= custom_path_if_needed help_category_path(@object, locale: '{locale}'), @knowledge_base %>'
     data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'
   <% end %>>
   <div class="container">
@@ -19,7 +19,7 @@
       </div>
     <% else %>
       <% if @categories&.present? %>
-        <ul class="sections sections--<%= effective_layout_name %>" data-less-than-four="<%= @categories.length < 4 %>">
+        <ul class="sections sections--<%= effective_layout_name(@knowledge_base, @object) %>" data-less-than-four="<%= @categories.length < 4 %>">
           <% @categories.each do |category| %>
             <%= render 'category', { category: category, knowledge_base: @knowledge_base } %>
           <% end %>

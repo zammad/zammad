@@ -1,11 +1,11 @@
 <nav class="breadcrumbs">
   <div class="container">
     <% ([knowledge_base] + objects).each do |object| %>
-      <%= link_to custom_path_if_needed(breadcrumb_path_for(object)), class: :breadcrumb do %>
+      <%= link_to custom_path_if_needed(breadcrumb_path_for(object), knowledge_base), class: :breadcrumb do %>
         <%= icon_for_object(object, knowledge_base.iconset) %>
 
         <span>
-          <%= object.translation.title %>
+          <%= breadcrumb_text_for(object) %>
         </span>
       <% end %>
     <% end %>

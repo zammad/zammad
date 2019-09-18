@@ -18,6 +18,9 @@ class KnowledgeBase::Answer < ApplicationModel
 
   validates :category, presence: true
 
+  # provide consistent naming with KB category
+  alias_attribute :parent, :category
+
   alias assets_essential assets
 
   def attributes_with_association_ids

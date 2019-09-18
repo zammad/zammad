@@ -336,6 +336,7 @@ browser:build:
     paths:
     - public/assets/.sprockets-manifest*
     - public/assets/application-*
+    - public/assets/knowledge_base*
     - public/assets/print-*
 
 .services_browser_template: &services_browser_definition

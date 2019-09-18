@@ -7,7 +7,7 @@
       <% @alternative.translations.each do |translation| %>
         <li>
           <%= translation.kb_locale.system_locale.name %>:
-          <%= link_to translation.title, custom_path_if_needed(url_for(locale: translation_locale_code(translation))) %>
+          <%= link_to translation.title, custom_path_if_needed(url_for(locale: translation_locale_code(translation)), @knowledge_base) %>
         </li>
       <% end %>
     </ul>

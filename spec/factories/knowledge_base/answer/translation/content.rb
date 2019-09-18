@@ -5,7 +5,7 @@ FactoryBot.define do
 
     before(:create) do |content|
       if content.translation.nil?
-        content.translation = create(:knowledge_base_answer_translation)
+        create(:knowledge_base_answer_translation, content: content)
       end
     end
   end

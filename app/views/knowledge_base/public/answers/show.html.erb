@@ -1,5 +1,5 @@
 <main class="main main--article"
-data-base-path='<%= custom_path_if_needed help_answer_path(@category, @object, locale: '{locale}') %>'
+data-base-path='<%= custom_path_if_needed help_answer_path(@category, @object, locale: '{locale}'), @knowledge_base %>'
 data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
   <article class="article">
     <div class="container">
@@ -16,7 +16,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
           <%= icon 'paperclip' %>
           <div class="attachments-title"><%= zt('Attached Files') %></div>
           <% attachments.each do |attachment| %>
-            <%= link_to custom_path_if_needed(attachment_path(attachment)), class: 'attachment', download: true do %>
+            <%= link_to custom_path_if_needed(attachment_path(attachment), @knowledge_base), class: 'attachment', download: true do %>
               <span class="attachment-name u-highlight"><%= attachment.filename %></span>
               <div class="attachment-size">404kb</div>
             <% end %>

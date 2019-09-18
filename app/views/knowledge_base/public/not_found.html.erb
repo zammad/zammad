@@ -4,7 +4,7 @@
     <h1><%= zt('Page not found') %></h1>
     <p>
       <%= zt('The page you were looking for does not exist.') %>
-      <%= link_to zt('Click here'), custom_path_if_needed(help_root_path(locale: fallback_locale.locale)) %>
+      <%= link_to zt('Click here'), custom_path_if_needed(help_root_path(locale: fallback_locale.locale), @knowledge_base) %>
       <%= zt('to go to the homepage.') %>
     </p>
   </div>

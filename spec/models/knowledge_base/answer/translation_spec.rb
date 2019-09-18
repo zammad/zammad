@@ -1,10 +1,8 @@
 require 'rails_helper'
 require 'models/contexts/factory_context'
 
-RSpec.describe KnowledgeBase::Answer::Translation, type: :model do
+RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id: 1 do
   subject { create(:knowledge_base_answer_translation) }
-
-  before { UserInfo.current_user_id = 1 }
 
   include_context 'factory'
 

@@ -16,7 +16,7 @@ FactoryBot.define do
       end
 
       if kb.kb_locales.blank?
-        kb.kb_locales << build(:knowledge_base_locale, knowledge_base: kb)
+        kb.kb_locales << build(:knowledge_base_locale, knowledge_base: kb, primary: true)
       end
     end
   end

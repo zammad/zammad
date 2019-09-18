@@ -3,11 +3,11 @@
       data-id='<%= @knowledge_base.id %>'
       data-iconset='<%= @knowledge_base.iconset %>'
       data-available-locales='<%= all_locales.map(&:locale).join(',') %>'
-      data-base-path='<%= custom_path_if_needed help_root_path(locale: '{locale}') %>'
+      data-base-path='<%= custom_path_if_needed help_root_path(locale: '{locale}'), @knowledge_base %>'
       data-primary-locale="<%= (filter_primary_kb_locale || all_locales.first)&.locale %>">
 
 <meta charset="utf-8">
-<title><%= kb_public_page_title %></title>
+<title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base %>
@@ -18,7 +18,7 @@
   <header class="header js-header">
     <div class="container">
       <h1 class="logo">
-        <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale])) do %>
+        <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale]), @knowledge_base) do %>
           <img src="/assets/images/<%= Setting.get('product_logo') %>">
         <% end %>
       </h1>
@@ -39,7 +39,7 @@
     </div>
   </header>
 
-  <%= render_breadcrumb_if_needed %>
+  <%= render_breadcrumb_if_needed(@knowledge_base, @object, @alternative) %>
 
   <%= yield %>
 
@@ -57,7 +57,7 @@
           <ul class="dropdown-menu dropdown-menu-right dropdown-menu-up" role="menu">
             <% @object_locales&.each do |locale| %>
               <li class="<%= 'is-selected' if locale.name == system_locale_via_uri.name %>">
-                <%= link_to custom_path_if_needed(url_for(locale: locale.locale)), hreflang: locale.locale do %>
+                <%= link_to custom_path_if_needed(url_for(locale: locale.locale), @knowledge_base), hreflang: locale.locale do %>
                   <%= icon 'checkmark' %>
                   <%= locale.name %>
                 <% end %>

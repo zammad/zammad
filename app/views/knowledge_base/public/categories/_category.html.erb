@@ -1,5 +1,5 @@
 <li class="section <%= visibility_class_name(category) %>">
-  <%= link_to custom_path_if_needed help_category_path(category.translation, locale: params[:locale]) do %>
+  <%= link_to custom_path_if_needed help_category_path(category.translation, locale: params[:locale]), @knowledge_base do %>
     <span class="section-inner">
       <%= icon(category.category_icon, knowledge_base.iconset) %>
       <span><%= category.translation.title %></span>

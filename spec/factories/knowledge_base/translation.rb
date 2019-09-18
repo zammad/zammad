@@ -3,5 +3,6 @@ FactoryBot.define do
     knowledge_base { kb_locale.knowledge_base }
     kb_locale      { nil }
     title          { Faker::Company.name }
+    footer_note    { 'footer' }
   end
 end
