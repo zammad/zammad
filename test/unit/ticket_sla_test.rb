@@ -165,6 +165,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       first_response_at: '2013-03-21 10:00:00 UTC',
     )
+    ticket.reload
 
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_at verify 3')
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 3')
@@ -184,6 +185,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       first_response_at: '2013-03-21 14:00:00 UTC',
     )
+    ticket.reload
 
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_at verify 4')
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 4')
@@ -203,6 +205,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       last_contact_agent_at: '2013-03-21 11:00:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 5')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 5')
@@ -222,6 +226,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       last_contact_agent_at: '2013-03-21 12:00:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 6')
@@ -241,6 +247,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       last_contact_customer_at: '2013-03-21 12:05:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 6')
@@ -260,6 +268,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       last_contact_agent_at: '2013-03-21 12:10:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 6')
@@ -279,6 +289,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       close_at: '2013-03-21 11:30:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_at verify 7')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 7')
@@ -298,6 +310,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       close_at: '2013-03-21 13:00:00 UTC',
     )
+    ticket.reload
+
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_at verify 8')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 8')
@@ -317,6 +331,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update!(
       state: Ticket::State.lookup(name: 'closed')
     )
+    ticket.reload
+
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify 9')
 
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at verify 9')

@@ -450,7 +450,7 @@ RSpec.describe Ticket, type: :model do
 
           it 'switches to "open"' do
             expect { article }
-              .to change { ticket.state.name }.from('new').to('open')
+              .to change { ticket.reload.state.name }.from('new').to('open')
           end
         end
       end
@@ -462,7 +462,7 @@ RSpec.describe Ticket, type: :model do
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'stays "closed"' do
-            expect { article }.not_to change { ticket.state.name }
+            expect { article }.not_to change { ticket.reload.state.name }
           end
         end
       end
@@ -503,7 +503,7 @@ RSpec.describe Ticket, type: :model do
         before { sla }  # create sla
 
         it 'is set based on SLA’s #first_response_time' do
-          expect(ticket.escalation_at.to_i)
+          expect(ticket.reload.escalation_at.to_i)
             .to eq(1.hour.from_now.to_i)
         end
 
@@ -540,7 +540,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'is updated based on the new SLA’s #first_response_time' do
           expect { ticket.save! }
-            .to change { ticket.escalation_at.to_i }.from(0).to(1.hour.from_now.to_i)
+            .to change { ticket.reload.escalation_at.to_i }.from(0).to(1.hour.from_now.to_i)
         end
       end
 
@@ -553,7 +553,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'is set to nil' do
           expect { ticket.save! }
-            .to change(ticket, :escalation_at).to(nil)
+            .to change { ticket.reload.escalation_at }.to(nil)
         end
       end
     end
@@ -574,7 +574,7 @@ RSpec.describe Ticket, type: :model do
         before { sla }  # create sla
 
         it 'is set based on SLA’s #first_response_time' do
-          expect(ticket.first_response_escalation_at.to_i)
+          expect(ticket.reload.first_response_escalation_at.to_i)
             .to eq(1.hour.from_now.to_i)
         end
 
@@ -606,7 +606,7 @@ RSpec.describe Ticket, type: :model do
         before { sla }  # create sla
 
         it 'is set based on SLA’s #update_time' do
-          expect(ticket.update_escalation_at.to_i)
+          expect(ticket.reload.update_escalation_at.to_i)
             .to eq(3.hours.from_now.to_i)
         end
 
@@ -642,7 +642,7 @@ RSpec.describe Ticket, type: :model do
         before { sla }  # create sla
 
         it 'is set based on SLA’s #solution_time' do
-          expect(ticket.close_escalation_at.to_i)
+          expect(ticket.reload.close_escalation_at.to_i)
             .to eq(4.hours.from_now.to_i)
         end
 
