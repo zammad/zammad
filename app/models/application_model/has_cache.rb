@@ -14,41 +14,25 @@ module ApplicationModel::HasCache
   end
 
   def cache_delete
-    keys = []
-
-    # delete by id caches
-    keys.push "#{self.class}::#{id}"
+    cache_keys = []
 
     # delete by id with attributes_with_association_ids caches
-    keys.push "#{self.class}::aws::#{id}"
+    cache_keys.push "#{self.class}::aws::#{id}"
 
-    # delete by name caches
-    if self[:name]
-      keys.push "#{self.class}::#{name}"
+    # delete caches of lookup_keys (e.g. id, name, email, login, number)
+    self.class.lookup_keys.each do |lookup_key|
+      cache_keys.push "#{self.class}::#{self[lookup_key]}"
+
+      next if !saved_changes? || !saved_changes.key?(lookup_key)
+
+      obsolete_lookup_key = saved_changes[lookup_key][0]
+      cache_keys.push "#{self.class}::#{obsolete_lookup_key}"
     end
 
-    # delete by login caches
-    if self[:login]
-      keys.push "#{self.class}::#{login}"
-    end
-
-    keys.each do |key|
+    cache_keys.each do |key|
       Cache.delete(key)
     end
 
-    # delete old name / login caches
-    if saved_changes?
-      if saved_changes.key?('name')
-        name = saved_changes['name'][0]
-        key = "#{self.class}::#{name}"
-        Cache.delete(key)
-      end
-      if saved_changes.key?('login')
-        name = saved_changes['login'][0]
-        key = "#{self.class}::#{name}"
-        Cache.delete(key)
-      end
-    end
     true
   end
 
