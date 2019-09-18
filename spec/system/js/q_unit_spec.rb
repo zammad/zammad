@@ -30,6 +30,10 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
       q_unit_tests('ui')
     end
 
+    it 'Local storage' do
+      q_unit_tests('local_storage')
+    end
+
     it 'Model' do
       async_q_unit_tests('model')
     end
