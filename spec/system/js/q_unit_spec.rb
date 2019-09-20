@@ -47,6 +47,10 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
       q_unit_tests('model_ui')
     end
 
+    it 'Model Ticket' do
+      q_unit_tests('model_ticket')
+    end
+
     it 'Ticket selector' do
       q_unit_tests('ticket_selector')
     end
