@@ -1,5 +1,9 @@
 FactoryBot.define do
   factory 'knowledge_base/category', aliases: %i[knowledge_base_category] do
+    transient do
+      add_translation { true }
+    end
+
     knowledge_base { parent&.knowledge_base || create(:knowledge_base) }
     category_icon  { 'f04b' }
 

@@ -215,18 +215,21 @@ test:integration:clearbit:
 
 ### Elasticsearch
 
+.script_integration_es_variables: &script_integration_es_variables
+  ES_INDEX_RAND: "true"
+  ES_URL: "http://elasticsearch:9200"
+
 .script_integration_es_template: &script_integration_es_definition
   <<: *base_env
   stage: test
   variables:
+    <<: *script_integration_es_variables
     RAILS_ENV: "test"
-    ES_INDEX_RAND: "true"
-    ES_URL: "http://elasticsearch:9200"
   script:
     - bundle exec rake zammad:db:unseeded
     - bundle exec rails test test/integration/elasticsearch_active_test.rb
     - bundle exec rails test test/integration/elasticsearch_test.rb
-    - bundle exec rspec --tag searchindex
+    - bundle exec rspec --tag searchindex --tag ~type:system
     - bundle exec rails test test/integration/report_test.rb
 
 test:integration:es:5.6:
@@ -375,12 +378,14 @@ browser:build:
 .variables_capybara_chrome_template: &variables_capybara_chrome_definition
   <<: *test_capybara_definition
   variables:
+    <<: *script_integration_es_variables
     RAILS_ENV: "test"
     BROWSER: "chrome"
 
 .variables_capybara_ff_template: &variables_capybara_ff_definition
   <<: *test_capybara_definition
   variables:
+    <<: *script_integration_es_variables
     RAILS_ENV: "test"
     BROWSER: "firefox"
 

@@ -147,6 +147,12 @@ namespace :searchindex do
 
   end
 
+  task :refresh, [:opts] => :environment do |_t, _args|
+    print 'refresh all indexes...'
+
+    SearchIndexBackend.refresh
+  end
+
   task :rebuild, [:opts] => :environment do |_t, _args|
     Rake::Task['searchindex:drop'].execute
     Rake::Task['searchindex:create'].execute

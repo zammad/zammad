@@ -13,7 +13,17 @@ module SearchindexHelper
     end
   end
 
-  def configure_elasticsearch(required: false)
+=begin
+
+prepares elasticsearch
+
+@param required [Boolean] raises error if ES is not configured. Recommended to avoid mysterious errors in CI.
+@param rebuild  [Boolean] rebuilds indexes and sleeps for 1 second after given yield block is executed
+
+@yield given block run after ES is setup, but before index rebuilding
+
+=end
+  def configure_elasticsearch(required: false, rebuild: false)
     if ENV['ES_URL'].blank?
       return if !required
 
@@ -30,7 +40,7 @@ module SearchindexHelper
     if ENV['ES_INDEX_RAND'].present?
       rand_id          = ENV.fetch('CI_JOB_ID', "r#{rand(999)}")
       test_method_name = method_name.gsub(/[^\w]/, '_')
-      ENV['ES_INDEX']  = "es_index_#{test_method_name}_#{rand_id}_#{rand(999_999_999)}"
+      ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id}_#{rand(999_999_999)}"
     end
     if ENV['ES_INDEX'].blank?
       raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
@@ -42,12 +52,17 @@ module SearchindexHelper
     Setting.set('es_attachment_max_size_in_mb', 1)
 
     yield if block_given?
+
+    return if !rebuild
+
+    rebuild_searchindex
   end
 
   def rebuild_searchindex
     Rake::Task.clear
     Zammad::Application.load_tasks
     Rake::Task['searchindex:rebuild'].execute
+    Rake::Task['searchindex:refresh'].execute
   end
 
 end

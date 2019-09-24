@@ -868,4 +868,42 @@ return true if backend is configured
     data
   end
 
+=begin
+
+refreshes all indexes to make previous request data visible in future requests
+
+  SearchIndexBackend.refresh
+
+=end
+
+  def self.refresh
+    return if !enabled?
+
+    url = "#{Setting.get('es_url')}/_all/_refresh"
+
+    Rails.logger.info "# curl -X POST \"#{url}\" "
+
+    response = UserAgent.post(
+      url,
+      {},
+      {
+        open_timeout:      8,
+        read_timeout:      60,
+        open_socket_tries: 3,
+        user:              Setting.get('es_user'),
+        password:          Setting.get('es_password'),
+      }
+    )
+
+    Rails.logger.info "# #{response.code}"
+
+    return true if response.success?
+
+    raise humanized_error(
+      verb:     'POST',
+      url:      url,
+      response: response,
+    )
+  end
+
 end
