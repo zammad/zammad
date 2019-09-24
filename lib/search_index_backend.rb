@@ -14,20 +14,8 @@ info about used search index machine
     url = Setting.get('es_url').to_s
     return if url.blank?
 
-    Rails.logger.info "# curl -X GET \"#{url}\""
-    response = UserAgent.get(
-      url,
-      {},
-      {
-        json:              true,
-        open_timeout:      8,
-        read_timeout:      14,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-    Rails.logger.info "# #{response.code}"
+    response = make_request(url)
+
     if response.success?
       installed_version = response.data.dig('version', 'number')
       raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
@@ -79,19 +67,8 @@ update processors
 
       items.each do |item|
         if item[:action] == 'delete'
-          Rails.logger.info "# curl -X DELETE \"#{url}\""
-          response = UserAgent.delete(
-            url,
-            {
-              json:              true,
-              open_timeout:      8,
-              read_timeout:      60,
-              open_socket_tries: 3,
-              user:              Setting.get('es_user'),
-              password:          Setting.get('es_password'),
-            }
-          )
-          Rails.logger.info "# #{response.code}"
+          response = make_request(url, method: :delete)
+
           next if response.success?
           next if response.code.to_s == '404'
 
@@ -101,30 +78,10 @@ update processors
             response: response,
           )
         end
-        Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-        Rails.logger.debug { "-d '#{data.to_json}'" }
-        item.delete(:action)
-        response = UserAgent.put(
-          url,
-          item,
-          {
-            json:              true,
-            open_timeout:      8,
-            read_timeout:      60,
-            open_socket_tries: 3,
-            user:              Setting.get('es_user'),
-            password:          Setting.get('es_password'),
-          }
-        )
-        Rails.logger.info "# #{response.code}"
-        next if response.success?
 
-        raise humanized_error(
-          verb:     'PUT',
-          url:      url,
-          payload:  item,
-          response: response,
-        )
+        item.delete(:action)
+
+        make_request_and_validate(url, data: item, method: :put)
       end
     end
     true
@@ -169,36 +126,7 @@ create/update/delete index
       return SearchIndexBackend.remove(data[:name])
     end
 
-    Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-    Rails.logger.debug { "-d '#{data[:data].to_json}'" }
-
-    # note that we use a high read timeout here because
-    # otherwise the request will be retried (underhand)
-    # which leads to an "index_already_exists_exception"
-    # HTTP 400 status error
-    # see: https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/issues/8
-    # Improving the Elasticsearch config is probably the proper solution
-    response = UserAgent.put(
-      url,
-      data[:data],
-      {
-        json:              true,
-        open_timeout:      8,
-        read_timeout:      60,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-    Rails.logger.info "# #{response.code}"
-    return true if response.success?
-
-    raise humanized_error(
-      verb:     'PUT',
-      url:      url,
-      payload:  data[:data],
-      response: response,
-    )
+    make_request_and_validate(url, data: data[:data], method: :put)
   end
 
 =begin
@@ -214,30 +142,7 @@ add new object to search index
     url = build_url(type, data['id'])
     return if url.blank?
 
-    Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug { "-d '#{data.to_json}'" }
-
-    response = UserAgent.post(
-      url,
-      data,
-      {
-        json:              true,
-        open_timeout:      8,
-        read_timeout:      60,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-    Rails.logger.info "# #{response.code}"
-    return true if response.success?
-
-    raise humanized_error(
-      verb:     'POST',
-      url:      url,
-      payload:  data,
-      response: response,
-    )
+    make_request_and_validate(url, data: data, method: :post)
   end
 
 =begin
@@ -259,19 +164,8 @@ remove whole data from index
 
     return if url.blank?
 
-    Rails.logger.info "# curl -X DELETE \"#{url}\""
+    response = make_request(url, method: :delete)
 
-    response = UserAgent.delete(
-      url,
-      {
-        open_timeout:      8,
-        read_timeout:      60,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-    Rails.logger.info "# #{response.code}"
     return true if response.success?
     return true if response.code.to_s == '400'
 
@@ -369,23 +263,8 @@ remove whole data from index
       query_data[:highlight] = { fields: fields_for_highlight }
     end
 
-    Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug { " -d'#{query_data.to_json}'" }
+    response = make_request(url, data: query_data)
 
-    response = UserAgent.get(
-      url,
-      query_data,
-      {
-        json:              true,
-        open_timeout:      5,
-        read_timeout:      14,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-
-    Rails.logger.info "# #{response.code}"
     if !response.success?
       Rails.logger.error humanized_error(
         verb:     'GET',
@@ -517,23 +396,8 @@ example for aggregations within one year
 
     data = selector2query(selectors, options, aggs_interval)
 
-    Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug { " -d'#{data.to_json}'" }
+    response = make_request(url, data: data)
 
-    response = UserAgent.get(
-      url,
-      data,
-      {
-        json:              true,
-        open_timeout:      5,
-        read_timeout:      14,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
-
-    Rails.logger.info "# #{response.code}"
     if !response.success?
       raise humanized_error(
         verb:     'GET',
@@ -920,28 +784,63 @@ refreshes all indexes to make previous request data visible in future requests
 
     url = "#{Setting.get('es_url')}/_all/_refresh"
 
-    Rails.logger.info "# curl -X POST \"#{url}\" "
+    make_request_and_validate(url, method: :post)
+  end
 
-    response = UserAgent.post(
-      url,
-      {},
-      {
-        open_timeout:      8,
-        read_timeout:      60,
-        open_socket_tries: 3,
-        user:              Setting.get('es_user'),
-        password:          Setting.get('es_password'),
-      }
-    )
+=begin
+
+helper method for making HTTP calls
+
+@param url [String] url
+@option params [Hash] :data is a payload hash
+@option params [Symbol] :method is a HTTP method
+@option params [Integer] :open_timeout is HTTP request open timeout
+@option params [Integer] :read_timeout is HTTP request read timeout
+
+@return UserAgent response
+
+=end
+  def self.make_request(url, data: {}, method: :get, open_timeout: 8, read_timeout: 60)
+    Rails.logger.info "# curl -X #{method} \"#{url}\" "
+    Rails.logger.debug { "-d '#{data.to_json}'" } if data.present?
+
+    options = {
+      json:              true,
+      open_timeout:      open_timeout,
+      read_timeout:      read_timeout,
+      open_socket_tries: 3,
+      user:              Setting.get('es_user'),
+      password:          Setting.get('es_password'),
+    }
+
+    response = UserAgent.send(method, url, data, options)
 
     Rails.logger.info "# #{response.code}"
+
+    response
+  end
+
+=begin
+
+helper method for making HTTP calls and raising error if response was not success
+
+@param url [String] url
+@option args [Hash] see {make_request}
+
+@return [Boolean] always returns true. Raises error if something went wrong.
+
+=end
+
+  def self.make_request_and_validate(url, **args)
+    response = make_request(url, args)
 
     return true if response.success?
 
     raise humanized_error(
-      verb:     'POST',
+      verb:     args[:method],
       url:      url,
-      response: response,
+      payload:  args[:data],
+      response: response
     )
   end
 
