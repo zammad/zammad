@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
 
 class KnowledgeBasesController < KnowledgeBase::BaseController
-  skip_before_action :authentication_check,    only: :init
   skip_before_action :ensure_editor_or_reader, only: :init
 
   def init

@@ -1,9 +1,3 @@
-RSpec.shared_context 'Knowledge Base users' do
-  let(:admin_user) { create :admin_user    }
-  let(:agent_user) { create :agent_user    }
-  let(:customer_user)   { create :customer_user }
-end
-
 RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
   let :knowledge_base do
     create(:knowledge_base)
@@ -21,7 +15,7 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
     create(:knowledge_base_category, knowledge_base: knowledge_base)
   end
 
-  let :answer do
+  let :draft_answer do
     create(:knowledge_base_answer, category: category)
   end
 

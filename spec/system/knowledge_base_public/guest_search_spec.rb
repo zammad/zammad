@@ -5,7 +5,7 @@ RSpec.describe 'Public Knowledge Base for guest search', type: :system, authenti
 
   before do
     configure_elasticsearch(required: true, rebuild: true) do
-      published_answer && answer && internal_answer
+      published_answer && draft_answer && internal_answer
     end
 
     visit help_no_locale_path
@@ -21,7 +21,7 @@ RSpec.describe 'Public Knowledge Base for guest search', type: :system, authenti
   end
 
   it 'not list draft article' do
-    expect(page).not_to allow_to_search_for answer
+    expect(page).not_to allow_to_search_for draft_answer
   end
 
   it 'not list internal article' do

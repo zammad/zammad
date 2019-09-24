@@ -4,7 +4,7 @@ RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated:
   include_context 'basic Knowledge Base'
 
   before do
-    published_answer && answer && internal_answer
+    published_answer && draft_answer && internal_answer
   end
 
   context 'homepage' do
@@ -29,7 +29,7 @@ RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated:
 
     it 'shows draft answer' do
       within '.main' do
-        expect(page).to have_selector(:link_containing, answer.translation.title)
+        expect(page).to have_selector(:link_containing, draft_answer.translation.title)
       end
     end
 

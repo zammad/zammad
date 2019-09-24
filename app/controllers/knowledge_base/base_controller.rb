@@ -32,7 +32,7 @@ class KnowledgeBase::BaseController < ApplicationController
   end
 
   def ensure_editor
-    permission_check %w[knowledge_base.editor]
+    permission_check 'knowledge_base.editor'
   end
 
   def ensure_editor_or_reader
