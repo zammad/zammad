@@ -18,9 +18,26 @@ RSpec.describe SearchIndexBackend, searchindex: true do
   end
 
   describe '.search' do
-    subject(:search) { described_class.search(query, index, limit: 3000) }
+
+    context 'query finds results' do
+
+      let(:record_type) { 'Ticket'.freeze }
+      let(:record) { create :ticket }
+
+      before do
+        described_class.add(record_type, record)
+        described_class.refresh
+      end
+
+      it 'finds added records' do
+        result = described_class.search(record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+    end
 
     context 'for query with no results' do
+      subject(:search) { described_class.search(query, index, limit: 3000) }
+
       let(:query) { 'preferences.notification_sound.enabled:*' }
 
       context 'on a single index' do
@@ -107,25 +124,40 @@ RSpec.describe SearchIndexBackend, searchindex: true do
   end
 
   describe '.remove' do
-    context 'ticket' do
-      it 'from index after ticket delete' do
+    context 'record gets deleted' do
 
-        skip('No ES configured') if !described_class.enabled?
+      let(:record_type) { 'Ticket'.freeze }
+      let(:deleted_record) { create :ticket }
 
-        ticket = create :ticket
-        described_class.add('Ticket', ticket)
+      before do
+        described_class.add(record_type, deleted_record)
+        described_class.refresh
+      end
 
-        # give es time to rebuild index
-        sleep 2
-        result = described_class.search(ticket.number, 'Ticket', sort_by: ['updated_at'], order_by: ['desc'])
-        expect(result).to eq([{ id: ticket.id.to_s, type: 'Ticket' }])
+      it 'removes record from search index' do
+        described_class.remove(record_type, deleted_record.id)
+        described_class.refresh
 
-        described_class.remove('Ticket', ticket.id)
-        # give es time to rebuild index
-        sleep 2
-
-        result = described_class.search(ticket.number, 'Ticket', sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search(deleted_record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([])
+      end
+
+      context 'other records present' do
+
+        let(:other_record) { create :ticket }
+
+        before do
+          described_class.add(record_type, other_record)
+          described_class.refresh
+        end
+
+        it "doesn't remove other records" do
+          described_class.remove(record_type, deleted_record.id)
+          described_class.refresh
+
+          result = described_class.search(other_record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
+          expect(result).to eq([{ id: other_record.id.to_s, type: record_type }])
+        end
       end
     end
   end
