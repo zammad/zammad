@@ -246,7 +246,12 @@ remove whole data from index
 =end
 
   def self.remove(type, o_id = nil)
-    url = build_url(type, o_id, false, false)
+    url = if o_id
+            build_url(type, o_id, false, true)
+          else
+            build_url(type, o_id, false, false)
+          end
+
     return if url.blank?
 
     Rails.logger.info "# curl -X DELETE \"#{url}\""
@@ -729,7 +734,25 @@ return true if backend is configured
     "#{local_index}_#{index.underscore.tr('/', '_')}"
   end
 
-  def self.build_url(type = nil, o_id = nil, pipeline = true, with_type = true)
+=begin
+
+generate url for index or document access (only for internal use)
+
+  # url to access single document in index (in case with_pipeline or not)
+  url = SearchIndexBackend.build_url('User', 123, with_pipeline)
+
+  # url to access whole index
+  url = SearchIndexBackend.build_url('User')
+
+  # url to access document definition in index (only es6 and higher)
+  url = SearchIndexBackend.build_url('User', nil, false, true)
+
+  # base url
+  url = SearchIndexBackend.build_url
+
+=end
+
+  def self.build_url(type = nil, o_id = nil, with_pipeline = true, with_document_type = true)
     return if !SearchIndexBackend.enabled?
 
     # for elasticsearch 5.6 and lower
@@ -737,7 +760,7 @@ return true if backend is configured
     if Setting.get('es_multi_index') == false
       url = Setting.get('es_url')
       url = if type
-              if pipeline == true
+              if with_pipeline == true
                 url_pipline = Setting.get('es_pipeline')
                 if url_pipline.present?
                   url_pipline = "?pipeline=#{url_pipline}"
@@ -756,7 +779,7 @@ return true if backend is configured
 
     # for elasticsearch 6.x and higher
     url = Setting.get('es_url')
-    if pipeline == true
+    if with_pipeline == true
       url_pipline = Setting.get('es_pipeline')
       if url_pipline.present?
         url_pipline = "?pipeline=#{url_pipline}"
@@ -764,20 +787,36 @@ return true if backend is configured
     end
     if type
       index = build_index_name(type)
-      if with_type == false
+
+      # access (e. g. creating or dropping) whole index
+      if with_document_type == false
         return "#{url}/#{index}"
       end
 
+      # access single document in index (e. g. drop or add document)
       if o_id
         return "#{url}/#{index}/_doc/#{o_id}#{url_pipline}"
       end
 
+      # access document type (e. g. creating or dropping document mapping)
       return "#{url}/#{index}/_doc#{url_pipline}"
     end
     "#{url}/"
   end
 
-  def self.build_search_url(index)
+=begin
+
+generate url searchaccess (only for internal use)
+
+  # url search access with single index
+  url = SearchIndexBackend.build_search_url('User')
+
+  # url to access all over es
+  url = SearchIndexBackend.build_search_url
+
+=end
+
+  def self.build_search_url(index = nil)
 
     # for elasticsearch 5.6 and lower
     if Setting.get('es_multi_index') == false

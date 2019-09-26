@@ -121,7 +121,7 @@ pre:github:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t ~type:system
+    - bundle exec rspec -t ~type:system -t ~searchindex
 
 test:rspec:mysql:
   stage: test
