@@ -412,17 +412,4 @@ returns
       o_id:   id,
     )
   end
-
-  class Flag < ApplicationModel
-  end
-
-  class Sender < ApplicationModel
-    include ChecksLatestChangeObserved
-    validates :name, presence: true
-  end
-
-  class Type < ApplicationModel
-    include ChecksLatestChangeObserved
-    validates :name, presence: true
-  end
 end

@@ -245,11 +245,3 @@ class Link < ApplicationModel
   end
 
 end
-
-class Link::Type < ApplicationModel
-  validates :name, presence: true
-end
-
-class Link::Object < ApplicationModel
-  validates :name, presence: true
-end

@@ -225,8 +225,4 @@ returns
     # create
     History::Attribute.create!(name: name)
   end
-
-  class Object < ApplicationModel; end
-  class Type < ApplicationModel; end
-  class Attribute < ApplicationModel; end
 end
