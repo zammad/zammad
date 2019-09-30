@@ -143,10 +143,10 @@ module ApplicationController::Authenticates
               User.lookup(login: login&.downcase)
             end
 
-    raise Exceptions::NotAuthorized, 'no valid session' if !user
+    raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER' if !user
 
     session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(user, 'session', {})
+    authentication_check_prerequesits(user, 'SSO', {})
   end
 
   def authentication_check_prerequesits(user, auth_type, auth_param)

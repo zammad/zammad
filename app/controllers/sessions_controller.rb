@@ -3,6 +3,7 @@
 class SessionsController < ApplicationController
   prepend_before_action :authentication_check, only: %i[switch_to_user list delete]
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth]
+  skip_before_action :user_device_check, only: %i[create_sso]
 
   # "Create" a login, aka "log the user in"
   def create
@@ -14,15 +15,21 @@ class SessionsController < ApplicationController
            json:   SessionHelper.json_hash(user).merge(config: config_frontend)
   end
 
+  def create_sso
+    authenticate_with_sso
+
+    redirect_to '/#'
+  end
+
   def show
-    user = authentication_check_only || authenticate_with_sso
+    user = authentication_check_only
+    raise Exceptions::NotAuthorized, 'no valid session' if user.blank?
+
     initiate_session_for(user)
 
     # return current session
     render json: SessionHelper.json_hash(user).merge(config: config_frontend)
   rescue Exceptions::NotAuthorized => e
-    raise if e.message != 'no valid session'
-
     render json: {
       error:       e.message,
       config:      config_frontend,

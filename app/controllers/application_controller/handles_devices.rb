@@ -17,6 +17,7 @@ module ApplicationController::HandlesDevices
     return true if switched_from_user_id
     return true if !user
     return true if !user.permissions?('user_preferences.device')
+    return true if type == 'SSO'
 
     time_to_check = true
     user_device_updated_at = session[:user_device_updated_at]
