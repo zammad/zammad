@@ -1,0 +1,11 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Atualizado por #{current_user.longname} em #{ticket.updated_at}_
+<% if @objects[:changes].present? %>
+  <% @objects[:changes].each do |key, value| %>
+  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
+  <% end %>
+<% end %>
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,0 +1,11 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 由 #{current_user.longname} 在 #{ticket.updated_at} 更新了_
+<% if @objects[:changes].present? %>
+  <% @objects[:changes].each do |key, value| %>
+  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
+  <% end %>
+<% end %>
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,0 +1,6 @@
+# #{ticket.title}
+_ You were mentioned in <#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>_
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

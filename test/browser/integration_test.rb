@@ -335,4 +335,106 @@ class IntegrationTest < TestCase
       value: 'yes',
     )
   end
+
+  def test_rocketchat
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all()
+
+    # change settings
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/integration"]')
+    click(css: 'a[href="#system/integration/rocketchat"]')
+    sleep 2
+    switch(
+      css:  '.content.active .main .js-switch',
+      type: 'on',
+    )
+    click(css: '.content.active .main .checkbox-replacement')
+    set(
+      css:   '.content.active .main input[name="webhook"]',
+      value: 'http://some_url/webhook/123',
+    )
+    set(
+      css:   '.content.active .main input[name="username"]',
+      value: 'someuser',
+    )
+    set(
+      css:   '.content.active .main input[name="password"]',
+      value: 'somepassword',
+    )
+    set(
+      css:   '.content.active .main input[name="channel"]',
+      value: '#general',
+    )
+
+    click(css: '.content.active .main .js-submit')
+
+    match(
+      css:   '.content.active .main input[name="webhook"]',
+      value: 'http://some_url/webhook/123',
+    )
+    match(
+      css:   '.content.active .main input[name="username"]',
+      value: 'someuser',
+    )
+    match(
+      css:   '.content.active .main input[name="password"]',
+      value: 'somepassword',
+    )
+    match(
+      css:   '.content.active .main input[name="channel"]',
+      value: '#general',
+    )
+
+    click(css: 'a[href="#dashboard"]')
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/integration"]')
+    click(css: 'a[href="#system/integration/rocketchat"]')
+
+    match(
+      css:   '.content.active .main input[name="webhook"]',
+      value: 'http://some_url/webhook/123',
+    )
+    match(
+      css:   '.content.active .main input[name="username"]',
+      value: 'someuser',
+    )
+    match(
+      css:   '.content.active .main input[name="password"]',
+      value: 'somepassword',
+    )
+    match(
+      css:   '.content.active .main input[name="channel"]',
+      value: '#general',
+    )
+
+    reload()
+
+    match(
+      css:   '.content.active .main input[name="webhook"]',
+      value: 'http://some_url/webhook/123',
+    )
+    match(
+      css:   '.content.active .main input[name="username"]',
+      value: 'someuser',
+    )
+    match(
+      css:   '.content.active .main input[name="password"]',
+      value: 'somepassword',
+    )
+    match(
+      css:   '.content.active .main input[name="channel"]',
+      value: '#general',
+    )
+
+    switch(
+      css:  '.content.active .main .js-switch',
+      type: 'off',
+    )
+  end
 end

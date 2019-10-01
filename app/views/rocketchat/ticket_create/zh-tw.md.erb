@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 由 #{current_user.longname} 在 #{ticket.updated_at} 創建_
+* #{t('Group')}: #{ticket.group.name}
+* #{t('Owner')}: #{ticket.owner.fullname}
+* #{t('State')}: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
