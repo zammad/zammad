@@ -62,8 +62,8 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
       end
 
       context 'when called twice, after changes have occurred to the Ticket table' do
+        let!(:ticket) { create(:ticket, group: group) }
         let!(:first_call) { collection.push }
-        let!(:ticket) { create(:ticket, group: group, owner: admin) }
 
         context 'before the TTL has passed' do
           it 'returns nil' do
@@ -73,16 +73,8 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
           context 'after .reset with the user’s id' do
             before { described_class.reset(admin.id) }
 
-            it 'returns an updated set of results' do
-              expect(collection.push)
-                .to be_an(Array)
-                .and have_attributes(length: Ticket::Overviews.all(current_user: admin).count)
-                .and all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
-            end
-
-            it 'includes FE assets for the new ticket' do
-              expect(collection.push.first[:data][:assets])  # first overview is "My assigned tickets",
-                .to eq(ticket.assets({}))                    # and newly created ticket was assigned to admin
+            it 'returns nil because no ticket and no overview has changed' do
+              expect(collection.push).to be nil
             end
           end
         end
@@ -90,32 +82,16 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
         context 'after the TTL has passed' do
           before { travel(ttl + 1) }
 
-          it 'returns an updated set of results' do
-            expect(collection.push)
-              .to be_an(Array)
-              .and have_attributes(length: Ticket::Overviews.all(current_user: admin).count)
-              .and all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
-          end
-
-          it 'includes FE assets for the new ticket' do
-            expect(collection.push.first[:data][:assets])  # first overview is "My assigned tickets",
-              .to eq(ticket.assets({}))                    # and newly created ticket was assigned to admin
+          it 'returns an empty result' do
+            expect(collection.push).to eq nil
           end
         end
 
         context 'after two hours have passed' do
           before { travel(2.hours + 1.second) }
 
-          it 'returns an updated set of results' do
-            expect(collection.push)
-              .to be_an(Array)
-              .and have_attributes(length: Ticket::Overviews.all(current_user: admin).count)
-              .and all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
-          end
-
-          it 'includes FE assets for old AND new tickets/overviews' do
-            expect(collection.push.first[:data][:assets])       # first overview is "My assigned tickets",
-              .to eq(Overview.first.assets(ticket.assets({})))  # and newly created ticket was assigned to admin
+          it 'returns an empty result' do
+            expect(collection.push).to eq nil
           end
         end
       end
@@ -136,39 +112,20 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
             it 'returns an updated set of results' do
               expect(collection.push)
                 .to be_an(Array)
-                .and have_attributes(length: Ticket::Overviews.all(current_user: admin).count)
+                .and have_attributes(length: 1)
                 .and all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
             end
-
-            it 'includes FE assets for the touched overview' do
-              expect(collection.push.first[:data][:assets])
-                .to eq(Overview.first.assets({}))
-            end
-          end
-        end
-
-        context 'after the TTL has passed' do
-          before { travel(ttl + 1) }
-
-          it 'includes FE assets for the touched overview' do
-            expect(collection.push.first[:data][:assets])
-              .to eq(Overview.first.assets({}))
           end
         end
 
         context 'after two hours have passed' do
           before { travel(2.hours + 1.second) }
 
-          it 'returns an updated set of results' do
+          it 'returns an empty result' do
             expect(collection.push)
               .to be_an(Array)
-              .and have_attributes(length: Ticket::Overviews.all(current_user: admin).count)
+              .and have_attributes(length: 1)
               .and all(match({ event: 'ticket_overview_list', data: hash_including(:assets) }))
-          end
-
-          it 'includes FE assets for old AND new tickets/overviews' do
-            expect(collection.push.first[:data][:assets])
-              .to eq(Overview.first.assets({}))
           end
         end
       end

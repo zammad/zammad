@@ -89,9 +89,9 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     index_and_lists.each do |data|
 
       # do not deliver unchanged lists
-      next if @last_overview[data[:overview][:id]] == data
+      next if @last_overview[data[:overview][:id]] == [data[:tickets], data[:overview]]
 
-      @last_overview[data[:overview][:id]] = data
+      @last_overview[data[:overview][:id]] = [data[:tickets], data[:overview]]
 
       assets = {}
       overview = Overview.lookup(id: data[:overview][:id])
