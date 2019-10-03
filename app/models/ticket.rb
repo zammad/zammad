@@ -127,7 +127,7 @@ returns
       tickets = where(state_id: next_state_map.keys)
                 .where('pending_time <= ?', Time.zone.now)
 
-      tickets.each do |ticket|
+      tickets.find_each(batch_size: 500) do |ticket|
         Transaction.execute do
           ticket.state_id      = next_state_map[ticket.state_id]
           ticket.updated_at    = Time.zone.now
@@ -151,7 +151,7 @@ returns
       tickets = where(state_id: reminder_state_map.keys)
                 .where('pending_time <= ?', Time.zone.now)
 
-      tickets.each do |ticket|
+      tickets.find_each(batch_size: 500) do |ticket|
 
         article_id = nil
         article = Ticket::Article.last_customer_agent_article(ticket.id)
@@ -190,14 +190,8 @@ returns
   def self.process_escalation
     result = []
 
-    # get max warning diff
-
-    tickets = where('escalation_at <= ?', Time.zone.now + 15.minutes)
-
-    tickets.each do |ticket|
-
-      # get sla
-      ticket.escalation_calculation_get_sla
+    # fetch all escalated and soon to be escalating tickets
+    where('escalation_at <= ?', Time.zone.now + 15.minutes).find_each(batch_size: 500) do |ticket|
 
       article_id = nil
       article = Ticket::Article.last_customer_agent_article(ticket.id)
