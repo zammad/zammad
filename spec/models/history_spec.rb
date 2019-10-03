@@ -188,5 +188,32 @@ RSpec.describe History, type: :model do
         end
       end
     end
+
+    context 'when given an object with histories' do
+      context 'and called without "condition" argument' do
+        let!(:object) { create(:user) }
+
+        before do
+          travel 3.days
+          object.update(email: 'foo@example.com')
+        end
+
+        context 'or "assets" flag' do
+          let(:list) { described_class.list(object.class.name, object.id, nil, nil, ['created_at > ?', [Time.zone.now - 2.days]]) }
+
+          it 'returns an array of attribute hashes for those histories' do
+            expect(list).to match_array(
+              [
+                hash_including(
+                  'type'     => 'updated',
+                  'o_id'     => object.id,
+                  'value_to' => 'foo@example.com',
+                )
+              ]
+            )
+          end
+        end
+      end
+    end
   end
 end
