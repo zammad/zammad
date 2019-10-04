@@ -663,6 +663,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     @agent1.preferences['notification_config']['group_ids'] = ['-']
     @agent2.save!
 
+    travel 1.minute # to skip loopup cache in Transaction::Notification
+
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket4 = Ticket.create!(
@@ -727,6 +729,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     @agent2.preferences['notification_config']['group_ids'] = [99]
     @agent2.save!
 
+    travel 1.minute # to skip loopup cache in Transaction::Notification
+
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket5 = Ticket.create!(
@@ -790,6 +794,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
     @agent2.preferences['notification_config']['group_ids'] = [999]
     @agent2.save!
+
+    travel 1.minute # to skip loopup cache in Transaction::Notification
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
@@ -867,6 +873,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     @agent2.preferences['notification_config']['matrix']['update']['channel']['online'] = true
     @agent2.preferences['notification_config']['group_ids'] = [999]
     @agent2.save!
+
+    travel 1.minute # to skip loopup cache in Transaction::Notification
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'

@@ -51,7 +51,7 @@ class Transaction::Notification
     recipients_reason = {}
 
     # loop through all users
-    possible_recipients = User.group_access(ticket.group_id, 'full').sort_by(&:login)
+    possible_recipients = possible_recipients_of_group(ticket.group_id)
 
     # apply owner
     if ticket.owner_id != 1
@@ -347,4 +347,12 @@ class Transaction::Notification
     )
   end
 
+  def possible_recipients_of_group(group_id)
+    cache = Cache.get("Transaction::Notification.group_access.full::#{group_id}")
+    return cache if cache
+
+    possible_recipients = User.group_access(group_id, 'full').sort_by(&:login)
+    Cache.write("Transaction::Notification.group_access.full::#{group_id}", possible_recipients, expires_in: 20.seconds)
+    possible_recipients
+  end
 end
