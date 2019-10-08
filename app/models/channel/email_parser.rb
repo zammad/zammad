@@ -488,7 +488,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 =begin
 
   process oversized emails by:
-  1. Archiving the oversized mail as tmp/oversized_mail/timestamp_md5.eml
+  1. Archiving the oversized mail as tmp/oversized_mail/md5.eml
   2. Reply with a postmaster message to inform the sender
 
 =end
@@ -796,15 +796,14 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     [attach]
   end
 
-  # Archive the given message as tmp/folder/timestamp_md5.eml
+  # Archive the given message as tmp/folder/md5.eml
   def archive_mail(folder, msg)
     path = Rails.root.join('tmp', folder)
     FileUtils.mkpath path
 
-    # MD5 hash the msg and save it as "timestamp_md5.eml"
+    # MD5 hash the msg and save it as "md5.eml"
     md5 = Digest::MD5.hexdigest(msg)
-    filename = "#{Time.zone.now.iso8601}_#{md5}.eml"
-    file_path = Rails.root.join('tmp', folder, filename)
+    file_path = Rails.root.join('tmp', folder, "#{md5}.eml")
 
     File.open(file_path, 'wb') do |file|
       file.write msg

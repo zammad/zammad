@@ -103,7 +103,7 @@ Oversized Email Message Body #{'#' * 120_000}
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
     path = Rails.root.join('tmp', 'oversized_mail')
     target_files = Dir.entries(path).select do |filename|
-      filename =~ /^.+_#{large_message_md5}\.eml$/
+      filename =~ /^#{large_message_md5}\.eml$/
     end
     assert(target_files.present?, 'Large message .eml log file must be present.')
 
