@@ -50,6 +50,8 @@ returns
 =end
 
   def subject_clean(subject)
+    return '' if subject.blank?
+
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider')
     ticket_subject_size = Setting.get('ticket_subject_size')
