@@ -229,7 +229,7 @@ class Scheduler < ApplicationModel
     Thread.new do
       ApplicationHandleInfo.current = 'scheduler'
 
-      logger.info "Started job thread for '#{job.name}' (#{job.method})..."
+      logger.debug { "Started job thread for '#{job.name}' (#{job.method})..." }
 
       # start loop for periods equal or under 5 minutes
       if job.period && job.period <= 5.minutes
@@ -262,7 +262,7 @@ class Scheduler < ApplicationModel
         job.pid = ''
         job.save
 
-        logger.info " ...stopped thread for '#{job.method}'"
+        logger.debug { " ...stopped thread for '#{job.method}'" }
 
         # release thread lock and remove thread handle
         @@jobs_started.delete(job.id)
@@ -275,8 +275,9 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
+    started_at = Time.zone.now
     job.update!(
-      last_run:      Time.zone.now,
+      last_run:      started_at,
       pid:           Thread.current.object_id,
       status:        'ok',
       error_message: '',
@@ -284,8 +285,11 @@ class Scheduler < ApplicationModel
 
     logger.info "execute #{job.method} (try_count #{try_count})..."
     eval job.method() # rubocop:disable Security/Eval
+    took = Time.zone.now - started_at
+    logger.info "ended #{job.method} took: #{took} seconds."
   rescue => e
-    logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect}"
+    took = Time.zone.now - started_at
+    logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect} in: #{took} seconds."
 
     # reconnect in case db connection is lost
     begin
@@ -325,7 +329,8 @@ class Scheduler < ApplicationModel
   # https://stackoverflow.com/questions/10048173/why-is-it-bad-style-to-rescue-exception-e-in-ruby
   # http://rubylearning.com/satishtalim/ruby_exceptions.html
   rescue Exception => e # rubocop:disable Lint/RescueException
-    logger.error "execute #{job.method} (try_count #{try_count}) exited with a non standard-error #{e.inspect}"
+    took = Time.zone.now - started_at
+    logger.error "execute #{job.method} (try_count #{try_count}) exited with a non standard-error #{e.inspect} in: #{took} seconds."
     raise
   end
 
