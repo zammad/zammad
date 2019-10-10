@@ -486,10 +486,12 @@ do(window) ->
 
     renderBase: ->
       @el.remove() if @el
-      @options.target.innerHTML += @view('chat')(
+      nodeElem = document.createElement("div")
+      nodeElem.innerHTML = @view('chat')(
         title: @options.title,
         scrollHint: @options.scrollHint
       )
+      @options.target.appenChild(nodeElem.firstChild)
       @el = @options.target.querySelector('.zammad-chat')
       @input = @el.querySelector('.zammad-chat-input')
       @body = @el.querySelector('.zammad-chat-body')
