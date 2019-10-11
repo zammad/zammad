@@ -90,6 +90,21 @@ RSpec.describe SignatureDetection do
         end
       end
     end
+
+    context 'when input messages do not share 5-line common substrings' do
+      let(:messages) do
+        Array.new(2) { { content: <<~RAW, content_type: 'text/plain' } }
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Ut ut tincidunt nunc. Sed mattis aliquam tellus sit amet lacinia.
+          Mauris fermentum dictum aliquet.
+          Nam ex risus, gravida et ornare ut, mollis non sapien.
+        RAW
+      end
+
+      it 'doesn’t break' do
+        expect { described_class.find_signature(messages) }.not_to raise_error
+      end
+    end
   end
 
   describe '.find_signature_line' do

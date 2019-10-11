@@ -38,6 +38,8 @@ returns
                                .map { |head, tail| [head + 1, tail - 1] }
                                .find { |head, tail| tail > head + 4 }
 
+      next if sig_range.nil?
+
       # Take up to 10 lines from this "gap" (i.e., the common substring)
       match_content = diff_lines[sig_range.first..sig_range.last]
                         .map { |l| l.sub(/^./, '') }
