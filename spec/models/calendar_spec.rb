@@ -129,9 +129,10 @@ RSpec.describe Calendar, type: :model do
         end
       end
 
-      context 'and current date has changed (past cache expiry)' do
+      context 'and current date has changed (past cache expiry)', performs_jobs: true do
         before do
           calendar  # create and sync
+          clear_jobs # clear (speak: process) created jobs
           travel 1.year
         end
 
@@ -146,7 +147,7 @@ RSpec.describe Calendar, type: :model do
         end
 
         it 'does create a background job for escalation rebuild' do
-          expect { calendar.sync }.to change { Delayed::Job.count }.by(1)
+          expect { calendar.sync }.to have_enqueued_job(SlaTicketRebuildEscalationJob)
         end
       end
 
