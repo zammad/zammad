@@ -3167,8 +3167,15 @@ test("htmlImage2DataUrl", function() {
   result = App.Utils.htmlImage2DataUrl(source)
   equal(result, should, source)
 
+  // GitHub issue #2305
   source = '<img src="cid:1234">some test'
   should = '<img src="cid:1234">some test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  // GitHub issue #2701
+  source = '<img alt="foo">some test'
+  should = '<img alt="foo">some test'
   result = App.Utils.htmlImage2DataUrl(source)
   equal(result, should, source)
 
