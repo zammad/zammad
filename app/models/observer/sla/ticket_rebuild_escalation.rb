@@ -6,16 +6,16 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
   def after_commit(record)
     return if _check(record)
 
-    _rebuild(record)
+    _rebuild
   end
 
   private
 
-  def _rebuild(record)
+  def _rebuild
     Cache.delete('SLA::List::Active')
 
     # send background job
-    SlaTicketRebuildEscalationJob.perform_later(record.id)
+    SlaTicketRebuildEscalationJob.perform_later
   end
 
   def _check(record)
