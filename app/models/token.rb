@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-class Token < ActiveRecord::Base
+class Token < ApplicationModel
   before_create :generate_token
   belongs_to    :user, optional: true
   store         :preferences
