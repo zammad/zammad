@@ -3,11 +3,9 @@ Signature.create_if_not_exists(
   name:          'default',
   body:          '
   #{user.firstname} #{user.lastname}
-
---
- Super Support - Waterford Business Park
- 5201 Blue Lagoon Drive - 8th Floor & 9th Floor - Miami, 33126 USA
- Email: hot@example.com - Web: http://www.example.com/
+  
+  VIAcode Incident Management System for Azure
+  <p>Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=passwordchangeemail">activate here</a></p>
 --'.text2html,
   updated_by_id: 1,
   created_by_id: 1

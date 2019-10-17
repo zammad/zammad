@@ -34,7 +34,7 @@ Setting.create_if_not_exists(
   title:       'Maintenance Mode',
   name:        'maintenance_mode',
   area:        'Core::WebApp',
-  description: 'Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session.',
+  description: 'Enable or disable the maintenance mode of VIAcode Incident Management System. If enabled, all non-administrators get logged out and only administrators can start a new session.',
   options:     {},
   state:       false,
   preferences: {
@@ -107,7 +107,7 @@ Setting.create_if_not_exists(
     placeholder: true,
     permission:  ['admin.branding'],
   },
-  state:       'Zammad Helpdesk',
+  state:       'VIAcode Incident Management System for Azure',
   frontend:    true
 )
 Setting.create_if_not_exists(
@@ -233,7 +233,7 @@ Setting.create_if_not_exists(
   title:       'SystemID',
   name:        'system_id',
   area:        'System::Base',
-  description: 'Defines the system identifier. Every ticket number contains this ID. This ensures that only tickets which belong to your system will be processed as follow-ups (useful when communicating between two instances of Zammad).',
+  description: 'Defines the system identifier. Every ticket number contains this ID. This ensures that only tickets which belong to your system will be processed as follow-ups (useful when communicating between two instances of VIAcode Incident Management System).',
   options:     {
     form: [
       {
@@ -269,7 +269,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       'zammad.example.com',
+  state:       'vims.example.com',
   preferences: {
     online_service_disable: true,
     placeholder:            true,
@@ -1090,7 +1090,7 @@ Setting.create_if_not_exists(
   title:       'Automatic account link on initial logon',
   name:        'auth_third_party_auto_link_at_inital_login',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables the automatic linking of an existing account on initial login via a third party application. If this is disabled, an existing user must first log into Zammad and then link his "Third Party" account to his Zammad account via Profile -> Linked Accounts.',
+  description: 'Enables the automatic linking of an existing account on initial login via a third party application. If this is disabled, an existing user must first log into VIAcode Incident Management System and then link his "Third Party" account to his VIAcode Incident Management System account via Profile -> Linked Accounts.',
   options:     {
     form: [
       {
@@ -2632,7 +2632,7 @@ Setting.create_if_not_exists(
   title:       'Bcc address for all outgoing emails',
   name:        'system_bcc',
   area:        'Email::Enhanced',
-  description: 'To archive all outgoing emails from Zammad to external, you can store a bcc email address here.',
+  description: 'To archive all outgoing emails from VIAcode Incident Management System to external, you can store a bcc email address here.',
   options:     {},
   state:       '',
   preferences: { online_service_disable: true },
@@ -2861,7 +2861,7 @@ Setting.create_if_not_exists(
   title:       'Import Mode',
   name:        'import_mode',
   area:        'Import::Base',
-  description: 'Puts Zammad into import mode (disables some triggers).',
+  description: 'Puts VIAcode Incident Management System into import mode (disables some triggers).',
   options:     {
     form: [
       {
@@ -3201,7 +3201,7 @@ Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
   name:        '0010_postmaster_filter_trusted',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to remove X-Zammad headers from not trusted sources.',
+  description: 'Defines postmaster filter to remove X-VIMS headers from not trusted sources.',
   options:     {},
   state:       'Channel::Filter::Trusted',
   frontend:    false
@@ -3219,7 +3219,7 @@ Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
   name:        '0012_postmaster_filter_sender_is_system_address',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender.',
+  description: 'Defines postmaster filter to check if email has been created by VIAcode Incident Management System itself and will set the article sender.',
   options:     {},
   state:       'Channel::Filter::SenderIsSystemAddress',
   frontend:    false
@@ -3246,7 +3246,7 @@ Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
   name:        '0020_postmaster_filter_auto_response_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.',
+  description: 'Defines postmaster filter to identify auto responses to prevent auto replies from VIAcode Incident Management System.',
   options:     {},
   state:       'Channel::Filter::AutoResponseCheck',
   frontend:    false
@@ -3999,7 +3999,7 @@ Setting.create_if_not_exists(
   title:       'sipgate.io alternative fqdn',
   name:        'sipgate_alternative_fqdn',
   area:        'Integration::Sipgate::Expert',
-  description: 'Alternative FQDN for callbacks if you operate Zammad in internal network.',
+  description: 'Alternative FQDN for callbacks if you operate VIAcode Incident Management System in internal network.',
   options:     {
     form: [
       {
