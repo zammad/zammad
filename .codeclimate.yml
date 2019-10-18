@@ -42,3 +42,4 @@ exclude_paths:
 - script/
 - test/
 - vendor/
+
