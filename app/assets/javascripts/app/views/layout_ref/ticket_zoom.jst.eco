@@ -322,6 +322,9 @@
               <li role="presentation">
                 <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
               </li>
+              <li role="presentation">
+                <a data-type="ticket-delegate" href="#" role="menuitem" tabindex="-1">Delegate</a>
+              </li>
             </ul>
           </div>
         </div>

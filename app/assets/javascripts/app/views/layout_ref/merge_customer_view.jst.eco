@@ -519,6 +519,10 @@
               <li>
                 <a data-type="customer-change" href="#" tabindex="-1">Change Customer</a>
               </li>
+
+              <li>
+                <a data-type="ticket-delegate" href="#" tabindex="-1">Delegate</a>
+              </li>
             </ul>
           </div>
         </div>
