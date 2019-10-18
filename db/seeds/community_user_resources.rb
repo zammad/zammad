@@ -4,7 +4,7 @@ org_community = Organization.create_if_not_exists(
 )
 user_community = User.create_or_update(
   id:              2,
-  login:           'sales@viaocde.com',
+  login:           'sales@viacode.com',
   firstname:       'VIAcode',
   lastname:        'Sales',
   email:           'sales@viacode.com',
