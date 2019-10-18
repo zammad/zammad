@@ -31,8 +31,8 @@ if Ticket.count.zero?
 
     Thank you for choosing VIAcode Incident Management System for Azure.
 
-  <p>Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=passwordchangeemail">activate here</a></p>
-  '.text2html,
+  Let VIAcode deal with these alerts & manage your Azure cloud operation for free; [activate here](https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=passwordchangeemail)
+  ',
     internal:  false,
   )
 end
