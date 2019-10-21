@@ -80,6 +80,27 @@ module BrowserTestHelper
       raise e
     end
 
+    # This method is a derivation of Selenium::WebDriver::Wait#until
+    # which ignores Capybara::ElementNotFound exceptions raised
+    # in the given block.
+    #
+    # @example
+    #  wait(5).until_disappear { find('[data-title="example"]') }
+    #
+    def until_disappears
+      self.until do
+
+        yield
+        false
+      rescue Capybara::ElementNotFound
+        true
+      end
+    rescue Selenium::WebDriver::Error::TimeOutError => e
+      # cleanup backtrace
+      e.set_backtrace(e.backtrace.drop(3))
+      raise e
+    end
+
     # This method loops a given block until the result of it is constant.
     #
     # @example

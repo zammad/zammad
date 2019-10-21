@@ -183,6 +183,33 @@ module CommonActions
     click '.js-openDropdownMacro'
   end
 
+  # Checks if modal is ready
+  #
+  # @param timeout [Integer] seconds to wait
+  def modal_ready(timeout: 4)
+    wait(timeout).until_exists { find('.modal.in') }
+  end
+
+  # Checks if modal has disappeared
+  #
+  # @param timeout [Integer] seconds to wait
+  def modal_disappear(timeout: 4)
+    wait(timeout).until_disappears { find('.modal.in') }
+  end
+
+  # Scrolls to given element
+  #
+  # @option options [String] :css selector
+  # @option options [String] :vertical may be "start", "center", "end", or "nearest". Defaults to "start".
+  def scroll_to(params)
+    vertical = params.fetch :vertical, 'start'
+
+    script = "$('#{params[:css]}').get(0).scrollIntoView({block: '#{vertical}'})"
+
+    execute_script script
+
+    wait(1).until_constant { evaluate_script "$('#{params[:css]}').get(0).scrollTop"  }
+  end
 end
 
 RSpec.configure do |config|
