@@ -146,10 +146,8 @@ class TicketCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(Ticket.find_by(number: '123456'))
 
-    ticket2 = Ticket.find_by(number: '123457')
-    assert(ticket2)
-    assert_equal(ticket2.title, 'some title2')
-    assert_equal(ticket2.note, 'some note2')
+    # any single failure will cause the entire import to be aborted
+    assert_nil(Ticket.find_by(number: '123457'))
 
     csv_string = "id;number;title;state;priority;owner;customer;group;note\n999999999;123456;some title1;new;2 normal;-;nicole.braun@zammad.org;Users;some note1\n;123457;some title22;closed;1 low;admin@example.com;nicole.braun@zammad.org;Users;some note22\n"
 
@@ -166,12 +164,8 @@ class TicketCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(Ticket.find_by(number: '123456'))
 
-    ticket2 = Ticket.find_by(number: '123457')
-    assert(ticket2)
-    assert_equal(ticket2.title, 'some title22')
-    assert_equal(ticket2.note, 'some note22')
-
-    ticket2.destroy!
+    # any single failure will cause the entire import to be aborted
+    assert_nil(Ticket.find_by(number: '123457'))
   end
 
   test 'invalid attributes' do

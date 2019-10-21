@@ -180,41 +180,48 @@ returns
       csv_object_ids_ignored = @csv_object_ids_ignored || []
       records = []
       line_count = 0
-      payload.each do |attributes|
-        line_count += 1
-        record = nil
-        lookup_keys.each do |lookup_by|
-          next if attributes[lookup_by].blank?
 
-          params = {}
-          params[lookup_by] = if %i[email login].include?(lookup_by)
-                                attributes[lookup_by].downcase
-                              else
-                                attributes[lookup_by]
-                              end
-          record = lookup(params)
-          break if record
-        end
+      Transaction.execute(disable_notification: true, bulk: true) do
+        payload.each do |attributes|
+          line_count += 1
+          record = nil
+          lookup_keys.each do |lookup_by|
+            next if attributes[lookup_by].blank?
 
-        if attributes[:id].present? && !record
-          errors.push "Line #{line_count}: unknown record with id '#{attributes[:id]}' for #{new.class}."
-          next
-        end
+            record = if lookup_by.in?(%i[name])
+                       find_by("LOWER(#{lookup_by}) = ?", attributes[lookup_by].downcase)
+                     elsif lookup_by.in?(%i[email login])
+                       lookup(attributes.slice(lookup_by).transform_values!(&:downcase))
+                     else
+                       lookup(attributes.slice(lookup_by))
+                     end
 
-        if record && csv_object_ids_ignored.include?(record.id)
-          errors.push "Line #{line_count}: unable to update record with id '#{attributes[:id]}' for #{new.class}."
-          next
-        end
+            break if record
+          end
 
-        begin
-          clean_params = association_name_to_id_convert(attributes)
-        rescue => e
-          errors.push "Line #{line_count}: #{e.message}"
-          next
-        end
+          if record.in?(records)
+            errors.push "Line #{line_count}: duplicate record found."
+            next
+          end
 
-        # create object
-        Transaction.execute(disable_notification: true, reset_user_id: true, bulk: true) do
+          if attributes[:id].present? && !record
+            errors.push "Line #{line_count}: unknown record with id '#{attributes[:id]}' for #{new.class}."
+            next
+          end
+
+          if record && csv_object_ids_ignored.include?(record.id)
+            errors.push "Line #{line_count}: unable to update record with id '#{attributes[:id]}' for #{new.class}."
+            next
+          end
+
+          begin
+            clean_params = association_name_to_id_convert(attributes)
+          rescue => e
+            errors.push "Line #{line_count}: #{e.message}"
+            next
+          end
+
+          # create object
           UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
           if !record || delete == true
             stats[:created] += 1
@@ -227,8 +234,6 @@ returns
                 clean_params[:updated_by_id] = 1
               end
               record = new(clean_params)
-              next if try == true
-
               record.associations_from_param(attributes)
               record.save!
             rescue => e
@@ -237,8 +242,6 @@ returns
             end
           else
             stats[:updated] += 1
-            next if try == true
-
             begin
               csv_verify_attributes(clean_params)
               clean_params = param_cleanup(clean_params)
@@ -261,14 +264,11 @@ returns
               next
             end
           end
+
+          records.push record if record
         end
-
-        records.push record
-      end
-
-      result = 'success'
-      if errors.present?
-        result = 'failed'
+      ensure
+        raise ActiveRecord::Rollback if try || errors.any?
       end
 
       {
@@ -276,7 +276,7 @@ returns
         records: records,
         errors:  errors,
         try:     try,
-        result:  result,
+        result:  errors.empty? ? 'success' : 'failed',
       }
     end
 

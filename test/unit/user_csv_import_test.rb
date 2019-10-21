@@ -213,15 +213,8 @@ class UserCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(User.find_by(login: 'user-simple-invalid_id-import1'))
 
-    user2 = User.find_by(login: 'user-simple-invalid_id-import2')
-    assert(user2)
-    assert_equal(user2.login, 'user-simple-invalid_id-import2')
-    assert_equal(user2.firstname, 'firstname-simple-import2')
-    assert_equal(user2.lastname, 'lastname-simple-import2')
-    assert_equal(user2.email, 'user-simple-invalid_id-import2@example.com')
-    assert_equal(user2.active, false)
-
-    user2.destroy!
+    # any single failure will cause the entire import to be aborted
+    assert_nil(User.find_by(login: 'user-simple-invalid_id-import2'))
   end
 
   test 'simple import with read only id' do
@@ -255,15 +248,8 @@ class UserCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(User.find_by(login: 'user-simple-readonly_id-import1'))
 
-    user2 = User.find_by(login: 'user-simple-readonly_id-import2')
-    assert(user2)
-    assert_equal(user2.login, 'user-simple-readonly_id-import2')
-    assert_equal(user2.firstname, 'firstname-simple-import2')
-    assert_equal(user2.lastname, 'lastname-simple-import2')
-    assert_equal(user2.email, 'user-simple-readonly_id-import2@example.com')
-    assert_equal(user2.active, false)
-
-    user2.destroy!
+    # any single failure will cause the entire import to be aborted
+    assert_nil(User.find_by(login: 'user-simple-readonly_id-import2'))
   end
 
   test 'simple import with roles' do
@@ -392,8 +378,8 @@ class UserCsvImportTest < ActiveSupport::TestCase
       try:          true,
     )
     assert_equal(true, result[:try])
-    assert_equal(3, result[:records].count)
-    assert_equal('success', result[:result])
+    assert_equal(2, result[:records].count)
+    assert_equal('failed', result[:result])
 
     assert_nil(User.find_by(login: 'user-duplicate-import1'))
     assert_nil(User.find_by(login: 'user-duplicate-import2'))
@@ -407,15 +393,12 @@ class UserCsvImportTest < ActiveSupport::TestCase
       try:          false,
     )
     assert_equal(false, result[:try])
-    assert_equal(3, result[:records].count)
-    assert_equal('success', result[:result])
+    assert_equal(2, result[:records].count)
+    assert_equal('failed', result[:result])
 
-    assert(User.find_by(login: 'user-duplicate-import1'))
-    assert(User.find_by(login: 'user-duplicate-import2'))
+    assert_nil(User.find_by(login: 'user-duplicate-import1'))
+    assert_nil(User.find_by(login: 'user-duplicate-import2'))
     assert_nil(User.find_by(login: 'user-duplicate-import3'))
-
-    User.find_by(login: 'user-duplicate-import1').destroy!
-    User.find_by(login: 'user-duplicate-import2').destroy!
   end
 
   test 'invalid attributes' do
@@ -486,7 +469,7 @@ class UserCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(User.find_by(login: 'user-reference-import1'))
     assert_nil(User.find_by(login: 'user-reference-import2'))
-    assert(User.find_by(login: 'user-reference-import3'))
+    assert_nil(User.find_by(login: 'user-reference-import3'))
     assert_equal("Line 1: No lookup value found for 'organization': \"organization-reference-import1\"", result[:errors][0])
     assert_equal("Line 2: No lookup value found for 'organization': \"organization-reference-import2\"", result[:errors][1])
 
@@ -506,7 +489,9 @@ class UserCsvImportTest < ActiveSupport::TestCase
     assert_equal('success', result[:result])
     assert_nil(User.find_by(login: 'user-reference-import1'))
     assert_nil(User.find_by(login: 'user-reference-import2'))
-    assert(User.find_by(login: 'user-reference-import3'))
+
+    # any single failure will cause the entire import to be aborted
+    assert_nil(User.find_by(login: 'user-reference-import3'))
 
     result = User.csv_import(
       string:       csv_string,

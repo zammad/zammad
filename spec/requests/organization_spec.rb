@@ -524,7 +524,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(json_response).to be_a_kind_of(Hash)
 
       expect(json_response['try']).to eq(true)
-      expect(json_response['records'].count).to eq(2)
+      expect(json_response['records']).to be_empty
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
       expect(json_response['errors'][0]).to eq("Line 1: Unable to create record - unknown attribute 'name2' for Organization.")

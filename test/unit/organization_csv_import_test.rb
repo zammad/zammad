@@ -139,12 +139,8 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
 
     assert_nil(Organization.find_by(name: 'organization-simple-invalid_id-import1'))
 
-    organization2 = Organization.find_by(name: 'organization-simple-invalid_id-import2')
-    assert(organization2)
-    assert_equal(organization2.name, 'organization-simple-invalid_id-import2')
-    assert_equal(organization2.active, true)
-
-    organization2.destroy!
+    # any single failure will cause the entire import to be aborted
+    assert_nil(Organization.find_by(name: 'organization-simple-invalid_id-import2'))
   end
 
   test 'simple import with members' do
