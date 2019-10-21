@@ -67,7 +67,11 @@ class ChannelsTelegramController < ApplicationController
     end
 
     telegram = Telegram.new(channel.options[:api_token])
-    telegram.to_group(params, channel.group_id, channel)
+    begin
+      telegram.to_group(params, channel.group_id, channel)
+    rescue Exceptions::UnprocessableEntity => e
+      Rails.logger.error e.message
+    end
 
     render json: {}, status: :ok
   end

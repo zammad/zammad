@@ -1,0 +1,29 @@
+{
+  "update_id": 954691820,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "message_id": 14,
+    "date": 1566319040,
+    "video":{
+      "duration":1,
+      "width":360,
+      "height":640,
+      "mime_type":"video/mp4",
+      "file_id":"videofileid",
+      "file_size":123456,
+      "thumb": {
+        "file_id": "videothumbfileid",
+        "file_size": 123456,
+        "width": 180,
+        "height": 320
+      }
+    },
+    "caption": "caption"
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}

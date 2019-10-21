@@ -1,0 +1,22 @@
+{
+  "update_id": 10002,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "entities": [
+      {
+        "offset": 0,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ],
+    "date": 1566317999,
+    "message_id": 7,
+    "text": "/end"
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}

@@ -1,0 +1,21 @@
+{
+  "update_id":1,
+  "message":{
+    "from": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername"
+    },
+    "chat": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername",
+      "type": "private"
+    },
+    "message_id":1,
+    "date":1441645532,
+    "text":"/start"
+  }
+}

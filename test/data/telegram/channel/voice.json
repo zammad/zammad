@@ -1,0 +1,20 @@
+{
+  "update_id": 954691818,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "message_id": 12,
+    "date": 1566318851,
+    "voice": {
+      "duration": 1,
+      "mime_type": "audio/ogg",
+      "file_id": "voicefileid",
+      "file_size": 1280
+    }
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}
