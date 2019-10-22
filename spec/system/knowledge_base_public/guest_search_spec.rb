@@ -17,14 +17,14 @@ RSpec.describe 'Public Knowledge Base for guest search', type: :system, authenti
   end
 
   it 'list published article' do
-    expect(page).to allow_to_search_for published_answer
+    expect(page).to produce_search_result_for published_answer
   end
 
   it 'not list draft article' do
-    expect(page).not_to allow_to_search_for draft_answer
+    expect(page).not_to produce_search_result_for draft_answer
   end
 
   it 'not list internal article' do
-    expect(page).not_to allow_to_search_for internal_answer
+    expect(page).not_to produce_search_result_for internal_answer
   end
 end

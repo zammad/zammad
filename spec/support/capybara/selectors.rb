@@ -39,18 +39,3 @@ end
 Capybara.add_selector(:link_containing) do
   xpath { |text| ".//a//*[text()[contains(.,\"#{text}\")]]" }
 end
-
-# Knowledge Base
-Capybara.add_selector(:knowledge_base_editor_bar) do
-  css { '.topbar' }
-end
-
-Capybara.add_selector(:knowledge_base_language_banner) do
-  css { '.language-banner' }
-end
-
-# don't use "knowledge_base" prefix because breadcrumbs
-# could be available in other contexts (in the future)
-Capybara.add_selector(:breadcrumb) do
-  css { '.breadcrumbs .breadcrumb span' }
-end

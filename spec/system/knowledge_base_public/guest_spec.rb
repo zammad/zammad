@@ -12,8 +12,8 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated: 
 
     it('is redirected to primary locale') { expect(page).to have_current_path help_root_path(primary_locale.system_locale.locale) }
 
-    it { expect(page).not_to have_selector(:breadcrumb) }
-    it { expect(page).not_to have_selector(:knowledge_base_editor_bar) }
+    it { expect(page).not_to have_breadcrumb }
+    it { expect(page).not_to have_editor_bar }
 
     it 'shows category' do
       within '.main' do
@@ -31,7 +31,7 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated: 
   context 'category' do
     before { visit help_category_path(primary_locale.system_locale.locale, category) }
 
-    it { expect(page).to have_selector(:breadcrumb) }
+    it { expect(page).to have_breadcrumb }
 
     it 'shows published answer' do
       within '.main' do
@@ -52,9 +52,9 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated: 
     end
 
     context 'breadcrumb' do
-      it { expect(page).to have_selector(:breadcrumb, count: 2) }
-      it { expect(page.all(:breadcrumb)[0]).to have_text(knowledge_base.translation.title) }
-      it { expect(page.all(:breadcrumb)[1]).to have_text(category.translation.title) }
+      it { expect(page).to have_breadcrumb.with(2).items }
+      it { expect(page).to have_breadcrumb_item(knowledge_base.translation.title).at_index(0) }
+      it { expect(page).to have_breadcrumb_item(category.translation.title).at_index(1) }
     end
   end
 
@@ -62,17 +62,17 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated: 
     before { visit help_answer_path(primary_locale.system_locale.locale, category, published_answer) }
 
     context 'breadcrumb' do
-      it { expect(page).to have_selector(:breadcrumb, count: 3) }
-      it { expect(page.all(:breadcrumb)[0]).to have_text(knowledge_base.translation.title) }
-      it { expect(page.all(:breadcrumb)[1]).to have_text(category.translation.title) }
-      it { expect(page.all(:breadcrumb)[2]).to have_text(published_answer.translation.title) }
+      it { expect(page).to have_breadcrumb.with(3).items }
+      it { expect(page).to have_breadcrumb_item(knowledge_base.translation.title).at_index(0) }
+      it { expect(page).to have_breadcrumb_item(category.translation.title).at_index(1) }
+      it { expect(page).to have_breadcrumb_item(published_answer.translation.title).at_index(2) }
     end
   end
 
   context 'wrong locale' do
     before { visit help_root_path(alternative_locale.system_locale.locale) }
 
-    it { expect(page).to have_selector(:knowledge_base_language_banner) }
+    it { expect(page).to have_language_banner }
 
     context 'switch to correct locale after clicking on language banner' do
       before do
@@ -81,7 +81,7 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated: 
         end
       end
 
-      it { expect(page).not_to have_selector(:knowledge_base_language_banner) }
+      it { expect(page).not_to have_language_banner }
     end
   end
 

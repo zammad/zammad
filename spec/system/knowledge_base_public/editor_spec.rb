@@ -10,7 +10,7 @@ RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated:
   context 'homepage' do
     before { visit help_no_locale_path }
 
-    it { expect(page).to have_selector(:knowledge_base_editor_bar) }
+    it { expect(page).to have_editor_bar }
 
     it 'expect to have edit button' do
       button = find '.topbar-btn'
