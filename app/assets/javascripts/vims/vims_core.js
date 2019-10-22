@@ -1,0 +1,3 @@
+function InitVims(){
+    alert('go');
+}
