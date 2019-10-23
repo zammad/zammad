@@ -11,12 +11,16 @@ class EmailDeliverTest < ActiveSupport::TestCase
       raise "Need MAIL_SERVER_ACCOUNT as ENV variable like export MAIL_SERVER_ACCOUNT='user:somepass'"
     end
 
+    if ENV['MAIL_SERVER_EMAIL'].blank?
+      raise "Need MAIL_SERVER_EMAIL as ENV variable like export MAIL_SERVER_EMAIL='someunitest@example.com'"
+    end
+
     server_login = ENV['MAIL_SERVER_ACCOUNT'].split(':')[0]
     server_password = ENV['MAIL_SERVER_ACCOUNT'].split(':')[1]
 
     email_address = EmailAddress.create!(
       realname:      'me Helpdesk',
-      email:         "me#{rand(999_999_999)}@example.com",
+      email:         "some-zammad-#{ENV['MAIL_SERVER_EMAIL']}",
       updated_by_id: 1,
       created_by_id: 1,
     )

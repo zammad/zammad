@@ -266,6 +266,8 @@ class App.Ticket extends App.Model
     user = App.User.current()
     return false if !user?
     return true if user.id is @customer_id
+    return true if user.organization_id && @organization_id && user.organization_id is @organization_id
+    return false if !@group_id
     group_ids = user.allGroupIds(permission)
     for local_group_id in group_ids
       if local_group_id.toString() is @group_id.toString()

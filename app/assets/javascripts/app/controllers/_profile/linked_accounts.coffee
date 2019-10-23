@@ -2,6 +2,7 @@ class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.linked_accounts'
   header: 'Linked Accounts'
   events:
+    'click .js-add':    'add'
     'click .js-remove': 'remove'
 
   constructor: ->
@@ -19,6 +20,11 @@ class Index extends App.ControllerSubContent
       user:           App.Session.get()
       auth_providers: auth_providers
     )
+
+  add: (e) =>
+    e.preventDefault()
+    key = $(e.target).data('key')
+    @el.find(".js-addForm-#{key}").submit()
 
   remove: (e) =>
     e.preventDefault()

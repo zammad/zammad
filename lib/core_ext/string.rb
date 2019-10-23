@@ -284,6 +284,7 @@ class String
         chr_orig
       end
     end
+    string = string.utf8_encode(fallback: :read_as_sanitized_binary)
 
     # remove tailing empty spaces
     string.gsub!(/[[:blank:]]+$/, '')

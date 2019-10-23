@@ -3180,6 +3180,31 @@ Content-Type: text/html; charset=us-ascii; format=flowed
   end
 
   test 'process trusted' do
+    groups = Group.all
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create!(
+      login:         'agent1',
+      firstname:     'Firstname',
+      lastname:      'agent1',
+      email:         'agent1@example.com',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles  = Role.where(name: 'Customer')
+    customer1 = User.create!(
+      login:         'customer1',
+      firstname:     'Firstname',
+      lastname:      'customer1',
+      email:         'customer1@example.com',
+      active:        true,
+      roles:         roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     files = [
       {
         data: 'From: me@example.com
@@ -3199,6 +3224,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority: 3 high
+X-Zammad-Ticket-owner: agent1@example.com 
 X-Zammad-Article-sender: System
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3213,6 +3239,7 @@ Some Text',
             state: 'new',
             priority: '3 high',
             title: 'some subject',
+            owner: agent1,
           },
           1 => {
             sender: 'System',
@@ -3227,6 +3254,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority_id: 777777
+X-Zammad-Ticket-owner: not_existing@example.com 
 X-Zammad-Article-sender_id: 999999
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3241,11 +3269,87 @@ Some Text',
             state: 'new',
             priority: '2 normal',
             title: 'some subject',
+            owner: User.find(1),
           },
           1 => {
             sender: 'Customer',
             type: 'phone',
             internal: true,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with customer as agent - customer can not be owner
+X-Zammad-Ticket-owner: customer1@example.com 
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with customer as agent - customer can not be owner',
+            owner: User.find(1),
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with agent login
+X-Zammad-Ticket-owner: agent1
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with agent login',
+            owner: agent1,
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with agent email
+X-Zammad-Ticket-owner: agent1@example.com
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with agent email',
+            owner: agent1,
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },

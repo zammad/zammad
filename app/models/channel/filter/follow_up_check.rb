@@ -29,9 +29,18 @@ module Channel::Filter::FollowUpCheck
     # get ticket# from attachment
     if setting.include?('attachment') && mail[:attachments]
       mail[:attachments].each do |attachment|
-        next if !attachment[:data]
+        next if attachment[:data].blank?
+        next if attachment[:preferences].blank?
+        next if attachment[:preferences]['Mime-Type'].blank?
 
-        ticket = Ticket::Number.check(attachment[:data].html2text)
+        if %r{text/html}i.match?(attachment[:preferences]['Mime-Type'])
+          ticket = Ticket::Number.check(attachment[:data].html2text)
+        end
+
+        if %r{text/plain}i.match?(attachment[:preferences]['Mime-Type'])
+          ticket = Ticket::Number.check(attachment[:data])
+        end
+
         next if !ticket
 
         Rails.logger.debug { "Follow up for '##{ticket.number}' in attachment." }
