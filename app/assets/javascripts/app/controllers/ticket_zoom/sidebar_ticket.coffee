@@ -92,11 +92,6 @@ class SidebarTicket extends App.Controller
           title:    'Change Customer'
           name:     'customer-change'
           callback: @changeCustomer
-        },
-        {
-          title: 'Delegate'
-          name: 'ticket-delegate'
-          callback @delegateTicket
         }
       ]
     @item
