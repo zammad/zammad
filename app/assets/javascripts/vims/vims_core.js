@@ -1,5 +1,5 @@
 var $x = undefined;
-//https://unpkg.com/micromodal/dist/micromodal.min.js
+
 (function() {
     var script = document.createElement("SCRIPT");
     script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
