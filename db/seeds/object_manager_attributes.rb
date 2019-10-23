@@ -296,6 +296,31 @@ ObjectManager::Attribute.add(
 )
 
 ObjectManager::Attribute.add(
+  force:  true,
+  object: 'Ticket',
+  name: 'vims_status',
+  display:  'VIMS status',
+  data_type: 'select',
+  data_option: {
+    default:    '',
+    options:    {
+      'none'           => 'none',
+      'delegated'      => 'delegated'
+    },
+    nulloption: true,
+    multiple:   false,
+    null:       true,
+    translate:  true,
+  },
+  editable: false,
+  active: true,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 81
+)
+
+ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
   name:        'tags',
