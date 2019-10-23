@@ -174,7 +174,4 @@ class SidebarTicket extends App.Controller
       container: @el.closest('.content')
     )
 
-  delegateTicket: =>
-    new App.
-
 App.Config.set('100-TicketEdit', SidebarTicket, 'TicketZoomSidebar')
