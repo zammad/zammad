@@ -335,7 +335,14 @@ ObjectManager::Attribute.add(
     translate: false,
   },
   editable:    false,
-  active:      true,  
+  active:      true, 
+  screens:     {
+    edit:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
@@ -360,10 +367,14 @@ ObjectManager::Attribute.add(
   screens:     {
     create_middle: {
       '-all-' => {
-        null: false,
+        null:       true,
       },
     },
-    edit:       {},
+    edit:          {
+      '-all-' => {
+        null: true,
+      },
+    },
   },
   to_create:   false,
   to_migrate:  false,
