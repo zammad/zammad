@@ -1,7 +1,7 @@
 # Change Log
 
-## [3.1.0](https://github.com/zammad/zammad/tree/3.2.0) (2019-xx-xx)
-[Full Changelog](https://github.com/zammad/zammad/compare/3.1.0...3.2.0)
+## [3.1.0](https://github.com/zammad/zammad/tree/3.1.0) (2019-07-10)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.0.0...3.1.0)
 
 **Implemented enhancements:**
 - Enhance tag search to use fulltext search [2569](https://github.com/zammad/zammad/issues/2569) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
