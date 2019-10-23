@@ -323,7 +323,7 @@ ObjectManager::Attribute.add(
 )
 
 ObjectManager::Attribute.add(
-  force:       false,
+  force:       true,
   object:      'Ticket',
   name:        'alert',
   display:     'alert',
@@ -334,16 +334,8 @@ ObjectManager::Attribute.add(
     null:      true,
     translate: false,
   },
-  editable:    true,
-  active:      true,
-  screens:     {
-    create_middle: {
-      '-all-' => {
-        null: false,
-      },
-    },
-    edit:       {},
-  },
+  editable:    false,
+  active:      true,  
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
@@ -351,10 +343,10 @@ ObjectManager::Attribute.add(
 )
 
 ObjectManager::Attribute.add(
-  force:       false,
+  force:       true,
   object:      'Ticket',
   name:        'repeat_count',
-  display:     'repeat_count',  
+  display:     'repeat count',  
   data_type:   'integer',
   data_option: {
     maxlength: 150,
@@ -363,7 +355,7 @@ ObjectManager::Attribute.add(
     min:       0,
     max:       999_999_999,
   },
-  editable:    true,
+  editable:    false,
   active:      true,
   screens:     {
     create_middle: {
