@@ -336,17 +336,33 @@ ObjectManager::Attribute.add(
   },
   editable:    false,
   active:      true, 
-  screens:     {
-    edit:          {
-      '-all-' => {
-        null: true,
+  screens: {
+    create_middle: {
+      ticket.customer: {
+        shown: false,
+        required: false,                    
       },
-    },
+      ticket.agent: {
+        shown: false,
+        required: false,                    
+      },
+      },
+      edit: {
+        ticket.customer: {
+          shown: false,
+          required: false,
+          },
+        ticket.agent: {
+          shown: false,
+          required: false,
+          },
+        },
   },
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
   position:    101,
+  deletable: false,
 )
 
 ObjectManager::Attribute.add(
@@ -370,18 +386,22 @@ ObjectManager::Attribute.add(
         null:       true,
       },
     },
-    edit:          {
-      '-all-' => {
-        null: true,
+   edit: {
+    ticket.customer: {
+      shown: true,
+      required: false,
       },
+    ticket.agent: {
+      shown: true,
+      required: false,
     },
   },
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
   position:    102,
+  deletable: false,
 )
-
 
 ObjectManager::Attribute.add(
   force:       true,
