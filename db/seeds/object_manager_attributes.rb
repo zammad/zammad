@@ -338,21 +338,21 @@ ObjectManager::Attribute.add(
   active:      true, 
   screens: {
     create_middle: {
-      ticket.customer: {
+     'ticket.customer' => {
         shown: false,
         required: false,                    
       },
-      ticket.agent: {
+      'ticket.agent' => {
         shown: false,
         required: false,                    
       },
       },
       edit: {
-        ticket.customer: {
+        'ticket.customer' => {
           shown: false,
           required: false,
           },
-        ticket.agent: {
+        'ticket.agent' => {
           shown: false,
           required: false,
           },
@@ -387,11 +387,11 @@ ObjectManager::Attribute.add(
       },
     },
    edit: {
-    ticket.customer: {
+    'ticket.customer' => {
       shown: true,
       required: false,
       },
-    ticket.agent: {
+    'ticket.agent' => {
       shown: true,
       required: false,
     },
