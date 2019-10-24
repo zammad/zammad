@@ -347,15 +347,7 @@ ObjectManager::Attribute.add(
         required: false,                    
       },
       },
-      edit: {
-        'ticket.customer' => {
-          shown: false,
-          required: false,
-          },
-        'ticket.agent' => {
-          shown: false,
-          required: false,
-          },
+      edit: {},
         },
   },
   to_create:   false,
@@ -386,15 +378,7 @@ ObjectManager::Attribute.add(
       },
     },
   },
-   edit: {
-    'ticket.customer' => {
-      shown: true,
-      required: false,
-      },
-    'ticket.agent' => {
-      shown: true,
-      required: false,
-    },
+   edit: {},
   },
   to_create:   false,
   to_migrate:  false,
