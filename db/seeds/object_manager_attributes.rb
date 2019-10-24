@@ -329,16 +329,17 @@ ObjectManager::Attribute.add(
   display:     'alert',
   data_type:   'input',
   data_option: {
+    default:    '',  
     type:      'text',
     maxlength: 2000,
-    null:      true,
+    null:      false,
     translate: false,
   },
-  editable:    true,
+  editable:    false,
   active:      true, 
   screens: {
     create_middle: {},
-      edit: {},        
+    edit: {},        
   },
   to_create:   false,
   to_migrate:  false,
@@ -353,24 +354,23 @@ ObjectManager::Attribute.add(
   display:     'repeat count',  
   data_type:   'integer',
   data_option: {
+    default:    0, 
     maxlength: 150,
-    null:      true,
+    null:      false,
     note:      'The number of the same alerts fired',
     min:       0,
     max:       999_999_999,
   },
-  editable:    true,
+  editable:    false,
   active:      true,
   screens:     {
     create_middle: {},
-   edit: {
+    edit: {
      'ticket.customer' => {
-        shown: true,
-        null: true,                    
+        shown: true,                           
       },
        'ticket.agent' => {
          shown: true,
-         null: true,
          },
      },    
   },
