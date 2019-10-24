@@ -386,6 +386,7 @@ ObjectManager::Attribute.add(
         null:       true,
       },
     },
+  },
    edit: {
     'ticket.customer' => {
       shown: true,
