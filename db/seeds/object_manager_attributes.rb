@@ -363,7 +363,6 @@ ObjectManager::Attribute.add(
   active:      true,
   screens:     {
     create_middle: {},
-    },  
    edit: {
      'ticket.customer' => {
         shown: true,
