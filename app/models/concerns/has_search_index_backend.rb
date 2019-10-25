@@ -128,11 +128,12 @@ reload search index with full data
 =end
 
     def search_index_reload
-      tolerance       = 5
+      tolerance       = 10
       tolerance_count = 0
       ids = all.order(created_at: :desc).pluck(:id)
       ids.each do |item_id|
-        item = find(item_id)
+        item = find_by(id: item_id)
+        next if !item
         next if item.ignore_search_indexing?(:destroy)
 
         begin
@@ -140,6 +141,7 @@ reload search index with full data
         rescue => e
           logger.error "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}"
           tolerance_count += 1
+          sleep 15
           raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
         end
       end

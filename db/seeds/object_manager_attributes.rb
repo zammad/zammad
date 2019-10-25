@@ -296,31 +296,6 @@ ObjectManager::Attribute.add(
 )
 
 ObjectManager::Attribute.add(
-  force:  true,
-  object: 'Ticket',
-  name: 'vims_status',
-  display:  'VIMS status',
-  data_type: 'select',
-  data_option: {
-    default:    '',
-    options:    {
-      'none'           => 'none',
-      'delegated'      => 'delegated'
-    },
-    nulloption: true,
-    multiple:   false,
-    null:       true,
-    translate:  true,
-  },
-  editable: false,
-  active: true,
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 81
-)
-
-ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
   name:        'tags',
@@ -346,6 +321,64 @@ ObjectManager::Attribute.add(
   to_delete:   false,
   position:    900,
 )
+
+ObjectManager::Attribute.add(
+  force:       false,
+  object:      'Ticket',
+  name:        'alert',
+  display:     'alert',
+  data_type:   'input',
+  data_option: {
+    type:      'text',
+    maxlength: 2000,
+    null:      true,
+    translate: false,
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit:       {},
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    101,
+)
+
+ObjectManager::Attribute.add(
+  force:       false,
+  object:      'Ticket',
+  name:        'repeat_count',
+  display:     'repeat_count',  
+  data_type:   'integer',
+  data_option: {
+    maxlength: 150,
+    null:      true,
+    note:      'The number of the same alerts fired',
+    min:       0,
+    max:       999_999_999,
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit:       {},
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    102,
+)
+
 
 ObjectManager::Attribute.add(
   force:       true,

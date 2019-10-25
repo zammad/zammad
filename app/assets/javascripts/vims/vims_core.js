@@ -5,6 +5,7 @@
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
+
 	let vimsDelegateScript = document.createElement("SCRIPT");
 	vimsDelegateScript.src = "/assets/vims/vims_delegate.js";
 	vimsDelegateScript.type = 'text/javascript';

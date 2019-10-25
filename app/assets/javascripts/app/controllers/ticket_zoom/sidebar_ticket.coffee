@@ -93,11 +93,6 @@ class SidebarTicket extends App.Controller
           name:     'customer-change'
           callback: @changeCustomer
         },
-        {
-          title: 'Delegate'
-          name: 'ticket-delegate'
-          callback @delegateTicket
-        }
       ]
     @item
 
@@ -178,8 +173,5 @@ class SidebarTicket extends App.Controller
       ticket_id: @ticket.id
       container: @el.closest('.content')
     )
-
-  delegateTicket: =>
-    new App.
 
 App.Config.set('100-TicketEdit', SidebarTicket, 'TicketZoomSidebar')

@@ -542,6 +542,18 @@ RSpec.describe String do
       TEXT
     end
 
+    context 'html encoding' do
+      it 'converts &Auml; in Ä' do
+        expect('<div>test something.&Auml;</div>'.html2text)
+          .to eq('test something.Ä')
+      end
+
+      it 'strips invalid html encoding chars' do
+        expect('<div>test something.&#55357;</div>'.html2text)
+          .to eq('test something.í ˝')
+      end
+    end
+
     context 'performance tests' do
       let(:filler) do
         %(<p>some word <a href="http://example.com?domain?example.com">some url</a> and the end.</p>\n) * 11 + "\n"
@@ -574,6 +586,7 @@ RSpec.describe String do
           </html>
         HTML
       end
+
     end
   end
 
