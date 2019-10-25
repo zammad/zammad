@@ -128,7 +128,7 @@ class TicketCsvImportTest < ActiveSupport::TestCase
     assert_equal(true, result[:try])
     assert_equal(1, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown record with id '999999999' for Ticket.", result[:errors][0])
+    assert_equal("Line 1: unknown Ticket with id '999999999'.", result[:errors][0])
 
     assert_nil(Ticket.find_by(number: '123456'))
     assert_nil(Ticket.find_by(number: '123457'))

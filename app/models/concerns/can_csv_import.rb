@@ -48,220 +48,129 @@ returns
 =end
 
     def csv_import(data)
-      try = true
-      if data[:try] != 'true' && data[:try] != true
-        try = false
-      end
-      delete = false
-      if data[:delete] == true || data[:delete] == 'true'
-        delete = true
+      try    = data[:try].to_s == 'true'
+      delete = data[:delete].to_s == 'true'
+
+      begin
+        data[:string] = File.read(data[:file]) if data[:file].present?
+      rescue Errno::ENOENT
+        raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'"
+      rescue => e
+        raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
       end
 
-      errors = []
-      if delete == true && @csv_delete_possible != true
-        errors.push "Delete is not possible for #{new.class}."
-        result = {
-          errors: errors,
+      header, *rows = ::CSV.parse(data[:string], data[:parse_params])
+      header&.each { |column| column.try(:strip!) }
+      header&.each { |column| column.try(:downcase!) }
+
+      begin
+        raise "Delete is not possible for #{self}." if delete && !csv_delete_possible
+        raise "Unable to parse empty file/string for #{self}." if data[:string].blank?
+        raise "Unable to parse file/string without header for #{self}." if header.blank?
+        raise "No records found in file/string for #{self}." if rows.first.blank?
+        raise "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{self} found." if (header & lookup_keys.map(&:to_s)).none?
+      rescue => e
+        return {
           try:    try,
           result: 'failed',
+          errors: [e.message],
         }
-        return result
-      end
-
-      if data[:file].present?
-        raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'" if !File.exist?(data[:file])
-
-        begin
-          file = File.open(data[:file], 'r:UTF-8')
-          data[:string] = file.read
-        rescue => e
-          raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
-        end
-      end
-      if data[:string].blank?
-        errors.push "Unable to parse empty file/string for #{new.class}."
-        result = {
-          errors: errors,
-          try:    try,
-          result: 'failed',
-        }
-        return result
-      end
-
-      rows = ::CSV.parse(data[:string], data[:parse_params])
-      header = rows.shift
-      if header.blank?
-        errors.push "Unable to parse file/string without header for #{new.class}."
-        result = {
-          errors: errors,
-          try:    try,
-          result: 'failed',
-        }
-        return result
-      end
-      header.each do |item|
-        if item.respond_to?(:strip!)
-          item.strip!
-        end
-        next if !item.respond_to?(:downcase!)
-
-        item.downcase!
-      end
-
-      if rows[0].blank?
-        errors.push "No records found in file/string for #{new.class}."
-        result = {
-          errors: errors,
-          try:    try,
-          result: 'failed',
-        }
-        return result
-      end
-
-      # check if min one lookup key exists
-      if header.count == (header - lookup_keys.map(&:to_s)).count
-        errors.push "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{new.class} found."
-        result = {
-          errors: errors,
-          try:    try,
-          result: 'failed',
-        }
-        return result
       end
 
       # get payload based on csv
       payload = []
       rows.each do |row|
-        if row[0].blank? && row[1].blank?
-          payload_last = payload.last
-          row.each_with_index do |item, count|
-            next if item.blank?
-            next if header[count].nil?
-
-            if payload_last[header[count].to_sym].class != Array
-              payload_last[header[count].to_sym] = [payload_last[header[count].to_sym]]
-            end
-            payload_last[header[count].to_sym].push item.strip
-          end
-          next
+        if row.first(2).any?(&:present?)
+          payload.push(
+            header.zip(row).to_h
+                  .compact.transform_values(&:strip)
+                  .except(nil).transform_keys(&:to_sym)
+                  .except(*csv_attributes_ignored)
+                  .merge(data[:fixed_params] || {})
+          )
+        else
+          header.zip(row).to_h
+                .compact.transform_values(&:strip)
+                .except(nil).transform_keys(&:to_sym)
+                .each { |col, val| payload.last[col] = [*payload.last[col], val] }
         end
-        attributes = {}
-        row.each_with_index do |item, count|
-          next if !item
-          next if header[count].blank?
-          next if @csv_attributes_ignored&.include?(header[count].to_sym)
-
-          attributes[header[count].to_sym] = if item.respond_to?(:strip)
-                                               item.strip
-                                             else
-                                               item
-                                             end
-        end
-        data[:fixed_params]&.each do |key, value|
-          attributes[key] = value
-        end
-        payload.push attributes
       end
 
       stats = {
         created: 0,
         updated: 0,
-      }
+        deleted: (count if delete),
+      }.compact
 
       # delete
-      if delete == true
-        stats[:deleted] = self.count
-        if try == false
-          destroy_all
-        end
-      end
+      destroy_all if delete && !try
 
       # create or update records
-      csv_object_ids_ignored = @csv_object_ids_ignored || []
       records = []
-      line_count = 0
+      errors  = []
 
-      Transaction.execute(disable_notification: true, bulk: true) do
-        payload.each do |attributes|
-          line_count += 1
-          record = nil
-          lookup_keys.each do |lookup_by|
-            next if attributes[lookup_by].blank?
+      transaction do
+        payload.each.with_index do |attributes, i|
+          record = (lookup_keys & attributes.keys).lazy.map do |lookup_key|
+            params = attributes.slice(lookup_key)
+            params.transform_values!(&:downcase) if lookup_key.in?(%i[email login])
+            lookup(params)
+          end.detect(&:present?)
 
-            record = if lookup_by.in?(%i[name])
-                       find_by("LOWER(#{lookup_by}) = ?", attributes[lookup_by].downcase)
-                     elsif lookup_by.in?(%i[email login])
-                       lookup(attributes.slice(lookup_by).transform_values!(&:downcase))
-                     else
-                       lookup(attributes.slice(lookup_by))
-                     end
-
-            break if record
-          end
-
-          if record.in?(records)
-            errors.push "Line #{line_count}: duplicate record found."
+          if record&.in?(records)
+            errors.push "Line #{i.next}: duplicate record found."
             next
           end
 
-          if attributes[:id].present? && !record
-            errors.push "Line #{line_count}: unknown record with id '#{attributes[:id]}' for #{new.class}."
+          if !record && attributes[:id].present?
+            errors.push "Line #{i.next}: unknown #{self} with id '#{attributes[:id]}'."
             next
           end
 
-          if record && csv_object_ids_ignored.include?(record.id)
-            errors.push "Line #{line_count}: unable to update record with id '#{attributes[:id]}' for #{new.class}."
+          if record&.id&.in?(csv_object_ids_ignored)
+            errors.push "Line #{i.next}: unable to update #{self} with id '#{attributes[:id]}'."
             next
           end
 
           begin
             clean_params = association_name_to_id_convert(attributes)
           rescue => e
-            errors.push "Line #{line_count}: #{e.message}"
+            errors.push "Line #{i.next}: #{e.message}"
             next
           end
 
           # create object
-          UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
-          if !record || delete == true
-            stats[:created] += 1
-            begin
-              csv_verify_attributes(clean_params)
-              clean_params = param_cleanup(clean_params)
+          Transaction.execute(disable_notification: true, reset_user_id: true, bulk: true) do
+            UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
 
-              if !UserInfo.current_user_id
-                clean_params[:created_by_id] = 1
-                clean_params[:updated_by_id] = 1
-              end
-              record = new(clean_params)
-              record.associations_from_param(attributes)
-              record.save!
-            rescue => e
-              errors.push "Line #{line_count}: Unable to create record - #{e.message}"
-              next
-            end
-          else
-            stats[:updated] += 1
-            begin
-              csv_verify_attributes(clean_params)
-              clean_params = param_cleanup(clean_params)
+            if !record || delete == true
+              stats[:created] += 1
+              begin
+                csv_verify_attributes(clean_params)
 
-              if !UserInfo.current_user_id
-                clean_params[:updated_by_id] = 1
-              end
-
-              record.with_lock do
+                record = new(param_cleanup(clean_params).reverse_merge(created_by_id: 1, updated_by_id: 1))
                 record.associations_from_param(attributes)
-                clean_params.each do |key, value|
-                  record[key] = value
-                end
-                next if !record.changed?
-
                 record.save!
+              rescue => e
+                errors.push "Line #{i.next}: Unable to create record - #{e.message}"
+                next
               end
-            rescue => e
-              errors.push "Line #{line_count}: Unable to update record - #{e.message}"
-              next
+            else
+              stats[:updated] += 1
+
+              begin
+                csv_verify_attributes(clean_params)
+                clean_params = param_cleanup(clean_params).reverse_merge(updated_by_id: 1)
+
+                record.with_lock do
+                  record.associations_from_param(attributes)
+                  record.assign_attributes(clean_params)
+                  record.save! if record.changed?
+                end
+              rescue => e
+                errors.push "Line #{i.next}: Unable to update record - #{e.message}"
+                next
+              end
             end
           end
 
@@ -324,7 +233,6 @@ returns
 
     def csv_example(params = {})
       header = []
-      csv_object_ids_ignored = @csv_object_ids_ignored || []
       records = where.not(id: csv_object_ids_ignored).offset(1).limit(23).to_a
       if records.count < 20
         record_ids = records.pluck(:id).concat(csv_object_ids_ignored)
@@ -338,7 +246,7 @@ returns
         record_attributes_with_association_names.each do |key, value|
           next if value.class == ActiveSupport::HashWithIndifferentAccess
           next if value.class == Hash
-          next if @csv_attributes_ignored&.include?(key.to_sym)
+          next if csv_attributes_ignored&.include?(key.to_sym)
           next if key.match?(/_id$/)
           next if key.match?(/_ids$/)
           next if key == 'created_by'
@@ -405,6 +313,8 @@ end
 =end
 
     def csv_object_ids_ignored(*object_ids)
+      return @csv_object_ids_ignored || [] if object_ids.empty?
+
       @csv_object_ids_ignored = object_ids
     end
 
@@ -428,6 +338,8 @@ end
 =end
 
     def csv_attributes_ignored(*attributes)
+      return @csv_attributes_ignored || [] if attributes.empty?
+
       @csv_attributes_ignored = attributes
     end
 
@@ -443,8 +355,10 @@ end
 
 =end
 
-    def csv_delete_possible(value)
-      @csv_delete_possible = value
+    def csv_delete_possible(*value)
+      return @csv_delete_possible if value.empty?
+
+      @csv_delete_possible = value.first
     end
   end
 end
