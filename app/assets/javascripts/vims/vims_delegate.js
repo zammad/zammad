@@ -14,7 +14,7 @@ DelegateModal.html = `
 		<p>Azure access token: <input type="text" id="vims-az-token"/></p>
 		<p>Save settings &nbsp;<input type="checkbox" id="vims-save-settings"/></p>
 		<p>
-			<a href="#" rel="modal:close">Close</a>
+			<a href="#" rel="vims-modal:close">Close</a>
 			&nbsp;
 			<input type="button" value="Ok" onclick="SendDelegation()"/>
 		</p>
@@ -22,7 +22,7 @@ DelegateModal.html = `
 </div>
 `;
 
-DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="/assets/vims/vims_modal.css" />';
+DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims-modal.css" />';
 
 function SendDelegation(){
 	let azInfo = new AzDevOpsConnectionInfo();

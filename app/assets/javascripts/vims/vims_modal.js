@@ -139,7 +139,7 @@
       show: function() {
         this.$elm.trigger($.vims_modal.BEFORE_OPEN, [this._ctx()]);
         if (this.options.showClose) {
-          this.closeButton = $('<a href="#close-modal" rel="modal:close" class="close-modal ' + this.options.closeClass + '">' + this.options.closeText + '</a>');
+          this.closeButton = $('<a href="#vims-close-modal" rel="vims-modal:close" class="vims-close-modal ' + this.options.closeClass + '">' + this.options.closeText + '</a>');
           this.$elm.append(this.closeButton);
         }
         this.$elm.addClass(this.options.modalClass).appendTo(this.$blocker);
@@ -200,7 +200,7 @@
   
     $.vims_modal.getCurrent = getCurrent;
   
-    $.vims_modaldefaults = {
+    $.vims_modal.defaults = {
       closeExisting: true,
       escapeClose: true,
       clickClose: true,
@@ -211,7 +211,7 @@
       spinnerHtml: '<div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div>',
       showSpinner: true,
       showClose: true,
-      fadeDuration: null,   // Number of milliseconds the fade animation takes.
+      fadeDuration: 300,   // Number of milliseconds the fade animation takes.
       fadeDelay: 1.0        // Point during the overlay's fade-in that the modal begins to fade in (.5 = 50%, 1.5 = 150%, etc.)
     };
   
@@ -236,8 +236,8 @@
     };
   
     // Automatically bind links with rel="modal:close" to, well, close the modal.
-    $(document).on('click.vims-modal', 'a[rel~="modal:close"]', $.vims_modal.close);
-    $(document).on('click.vims-modal', 'a[rel~="modal:open"]', function(event) {
+    $(document).on('click.vims-modal', 'a[rel~="vims-modal:close"]', $.vims_modal.close);
+    $(document).on('click.vims-modal', 'a[rel~="vims-modal:open"]', function(event) {
       event.preventDefault();
       $(this).vims_modal();
     });

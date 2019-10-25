@@ -43,7 +43,7 @@
     text-align: left;
   }
   
-  .vims-modal a.close-modal {
+  .vims-modal a.vims-close-modal {
     position: absolute;
     top: -12.5px;
     right: -12.5px;

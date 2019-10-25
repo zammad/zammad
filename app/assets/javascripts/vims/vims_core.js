@@ -1,13 +1,12 @@
 (function() {	
 	let modalJQueryScript = document.createElement("SCRIPT");
 	modalJQueryScript.type = 'text/javascript';
-	modalJQueryScript.src = "/assets/vims/vims_modal.js";
+	modalJQueryScript.src = "https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims-modal.js";
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
-
 	let vimsDelegateScript = document.createElement("SCRIPT");
-	vimsDelegateScript.src = "/assets/vims/vims_delegate.js";
+	vimsDelegateScript.src = "https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims_delegate.js";
 	vimsDelegateScript.type = 'text/javascript';
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
@@ -33,7 +32,7 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="modal:open">Delegate</a></li>');
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
 		}	
 		if(DelegateModal){
 			if($('#cssModal').length == 0){
@@ -55,3 +54,4 @@
 		stateDd.change();
 	}
 })();
+
