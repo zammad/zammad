@@ -4,6 +4,12 @@ class DelegateModal {
 		let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
 		$.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId } );
     }
+
+	static DelegateIncident(){
+		var stateDd = $('[name="vims_status"]');
+		stateDd.val('delegated');
+		stateDd.change();
+	}
 }
 
 DelegateModal.html = `
@@ -22,7 +28,7 @@ DelegateModal.html = `
 </div>
 `;
 
-DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims-modal.css" />';
+DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="/assets/vims/vims-modal.css" />';
 
 function SendDelegation(){
 	let azInfo = new AzDevOpsConnectionInfo();
@@ -31,7 +37,9 @@ function SendDelegation(){
 	azInfo.azArea = $("#vims-az-project-area").val();
 	azInfo.vimsId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 
-	DelegateModal.delegate(azInfo);
+	//DelegateModal.delegate(azInfo);
+	DelegateModal.DelegateIncident();
+	$.vims_modal.close();
 }
 
 class AzDevOpsConnectionInfo {

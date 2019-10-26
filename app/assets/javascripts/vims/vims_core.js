@@ -1,12 +1,12 @@
 (function() {	
 	let modalJQueryScript = document.createElement("SCRIPT");
 	modalJQueryScript.type = 'text/javascript';
-	modalJQueryScript.src = "https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims-modal.js";
+	modalJQueryScript.src = "/assets/vims/vims-modal.js";
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
 	let vimsDelegateScript = document.createElement("SCRIPT");
-	vimsDelegateScript.src = "https://gplotnikovdevelopdiag.blob.core.windows.net/vims-src/vims_delegate.js";
+	vimsDelegateScript.src = "/assets/vims/vims_delegate.js";
 	vimsDelegateScript.type = 'text/javascript';
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
@@ -42,16 +42,5 @@
 				$('body').append(DelegateModal.html);
 			}	
 		}
-		$('#vimsDelegateLi').click(function(e) { 		 
-			e.preventDefault();		
-			//DelegateIncident();
-		});
-	}
-
-	function DelegateIncident(){
-		var stateDd = $('[name="vims_status"]');
-		stateDd.val('delegated');
-		stateDd.change();
-	}
+	}	
 })();
-
