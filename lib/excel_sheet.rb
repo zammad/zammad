@@ -5,7 +5,6 @@ class ExcelSheet
     @header          = header
     @records         = records
     @timezone        = timezone.presence || Setting.get('timezone_default')
-    @timezone_offset = @timezone.present? ? Time.now.in_time_zone(@timezone).utc_offset : 0
     @locale          = locale || 'en-en'
     @tempfile        = Tempfile.new('excel-export.xls')
     @workbook        = WriteExcel.new(@tempfile)
@@ -113,7 +112,7 @@ class ExcelSheet
   def timestamp_in_localtime(time)
     return if time.blank?
 
-    (time + @timezone_offset).utc.strftime('%F %T') # "2019-08-19 16:21:52"
+    time.in_time_zone(@timezone).strftime('%F %T') # "2019-08-19 16:21:52"
   end
 
   def value_lookup(record, attribute, additional)
