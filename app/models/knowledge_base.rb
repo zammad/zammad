@@ -121,7 +121,7 @@ class KnowledgeBase < ApplicationModel
       .active
       .joins(:kb_locales)
       .group('knowledge_bases.id')
-      .pluck('COUNT(knowledge_base_locales.id) as locales_count')
+      .pluck(Arel.sql('COUNT(knowledge_base_locales.id) as locales_count'))
       .any? { |e| e > 1 }
   end
 

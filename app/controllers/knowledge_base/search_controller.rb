@@ -85,7 +85,7 @@ class KnowledgeBase::SearchController < ApplicationController
           end
 
     {
-      id:       object.id,
+      id:       object.id.to_s,
       type:     object.class.name,
       icon:     'knowledge-base-answer',
       date:     object.updated_at,
@@ -108,7 +108,7 @@ class KnowledgeBase::SearchController < ApplicationController
           end
 
     {
-      id:       object.id,
+      id:       object.id.to_s,
       type:     object.class.name,
       fontName: object.category.knowledge_base.iconset,
       date:     object.updated_at,
@@ -130,7 +130,7 @@ class KnowledgeBase::SearchController < ApplicationController
           end
 
     {
-      id:    object.id,
+      id:    object.id.to_s,
       type:  object.class.name,
       icon:  'knowledge-base',
       date:  object.updated_at,
