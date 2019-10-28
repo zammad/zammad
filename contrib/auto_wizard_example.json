@@ -23,7 +23,7 @@
     },
     {
       "name": "product_name",
-      "value": "Zammad Demo System"
+      "value": "VIM Demo System"
     },
     {
       "name": "system_online_service",
@@ -34,8 +34,8 @@
     {
       "id": 1,
       "channel_id": 10,
-      "realname": "Zammad Demo System",
-      "email": "zammad_demo@localhost"
+      "realname": "VIMS Demo System",
+      "email": "vims_demo@localhost"
     }
   ],
   "Organizations": [

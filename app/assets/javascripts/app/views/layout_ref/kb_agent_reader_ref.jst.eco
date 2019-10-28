@@ -268,7 +268,7 @@
         <p>A ticket is a container for a conversation with the customer about one dedicated topic/issue.</p>
 
         <h2>Ticket states</h2>
-        <p>In default setup Zammad has the following ticket states:</p>
+        <p>In default setup VIMS has the following ticket states:</p>
 
         <ul>
           <li>new
@@ -291,7 +291,7 @@
               <li>Tickets which will “sleep” (no further action/attention needed right now) till pending date is reached
               <li>Tickets will not escalate (in case of escalation, escalation is suspended)
               <li>The time where the ticket is in pending close is not counted for escalation
-              <li>After pending time is reached, the ticket will be closed by Zammad automatically
+              <li>After pending time is reached, the ticket will be closed by VIMS automatically
             </ul>
           <li>closed
             <ul>
