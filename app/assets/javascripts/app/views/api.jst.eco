@@ -45,7 +45,7 @@ curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn')
     &nbsp;
   </div>
 
-<p><%- @T('Manage applications that can use Zammad as an OAuth provider and applications that you\'ve authorized to use your account.') %></p>
+<p><%- @T('Manage applications that can use VIMS as an OAuth provider and applications that you\'ve authorized to use your account.') %></p>
 
 <div class="js-appList"></div>
 

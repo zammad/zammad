@@ -1,7 +1,7 @@
 {
   "name": "zammad-chat",
   "version": "1.0.0",
-  "description": "Zammad Customer Chat Javascript Widget",
+  "description": "VIMS Customer Chat Javascript Widget",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",

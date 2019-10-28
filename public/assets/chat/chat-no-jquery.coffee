@@ -749,11 +749,11 @@ do(window) ->
                 else
                   @socketReady = true
               when 'offline'
-                @onError 'Zammad Chat: No agent online'
+                @onError 'VIMS Chat: No agent online'
               when 'chat_disabled'
-                @onError 'Zammad Chat: Chat is disabled'
+                @onError 'VIMS Chat: Chat is disabled'
               when 'no_seats_available'
-                @onError "Zammad Chat: Too many clients in queue. Clients in queue: #{pipe.data.queue}"
+                @onError "VIMS Chat: Too many clients in queue. Clients in queue: #{pipe.data.queue}"
               when 'reconnect'
                 @onReopenSession pipe.data
 

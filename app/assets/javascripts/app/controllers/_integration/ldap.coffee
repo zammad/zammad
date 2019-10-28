@@ -3,7 +3,7 @@ class Index extends App.ControllerIntegrationBase
   featureName: 'LDAP'
   featureConfig: 'ldap_config'
   description: [
-    ['This service enables Zammad to connect with your LDAP server.']
+    ['This service enables VIMS to connect with your LDAP server.']
   ]
   events:
     'change .js-switch input': 'switch'

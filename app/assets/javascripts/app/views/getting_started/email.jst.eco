@@ -81,7 +81,7 @@
       <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <p class="js-message"><%- @T('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', 'x') %></p>
+        <p class="js-message"><%- @T('We have already found %s email(s) in your mailbox. VIMS will move it all from your mailbox into VIMS.', 'x') %></p>
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary js-goToSlide js-back" data-slide="js-intro"><%- @T('Go Back') %></a>

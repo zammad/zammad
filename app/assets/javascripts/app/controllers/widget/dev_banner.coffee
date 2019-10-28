@@ -4,7 +4,7 @@ class Widget
     return if App.Log.config('banner') is false
     banner = """
 |
-| Welcome Zammad Developer!
+| Welcome VIMS Developer!
 | You can enable debugging with the following examples (value is a regex):
 |
 | App.Log.config('module', '(websocket|delay|interval)') // enable debugging for websocket, delay and interval class

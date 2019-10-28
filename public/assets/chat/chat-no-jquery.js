@@ -1059,13 +1059,13 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                 }
                 break;
               case 'offline':
-                this.onError('Zammad Chat: No agent online');
+                this.onError('VIMS Chat: No agent online');
                 break;
               case 'chat_disabled':
-                this.onError('Zammad Chat: Chat is disabled');
+                this.onError('VIMS Chat: Chat is disabled');
                 break;
               case 'no_seats_available':
-                this.onError("Zammad Chat: Too many clients in queue. Clients in queue: " + pipe.data.queue);
+                this.onError("VIMS Chat: Too many clients in queue. Clients in queue: " + pipe.data.queue);
                 break;
               case 'reconnect':
                 this.onReopenSession(pipe.data);

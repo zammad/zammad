@@ -65,7 +65,7 @@ $(function() {
     noCSS: false,
     prefixCSS: 'zammad-form-',
     showTitle: false,
-    messageTitle: 'Zammad Form',
+    messageTitle: 'VIMS Form',
     messageSubmit: 'Submit',
     messageThankYou: 'Thank you for your inquiry! We\'ll contact you as soon as possible.',
     messageNoConfig: 'Unable to load form config from server. Maybe feature is disabled.',

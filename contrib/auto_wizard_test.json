@@ -53,7 +53,7 @@
     {
       "id": 1,
       "channel_id": 1,
-      "realname": "Zammad Helpdesk",
+      "realname": "VIAcode Incident Management for Azure",
       "email": "zammad@localhost"
     }
   ],
@@ -64,7 +64,7 @@
     },
     {
       "name": "product_name",
-      "value": "Zammad Test System"
+      "value": "VIMS Test System"
     }
   ],
   "TextModuleLocale": {

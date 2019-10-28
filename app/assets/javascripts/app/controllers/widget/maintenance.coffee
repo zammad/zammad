@@ -48,8 +48,8 @@ class Widget extends App.Controller
   maintanaceRestartAuto: (data) =>
     return if @messageRestartAuto
     @messageRestartAuto = new App.SessionMessage(
-      head:         'Zammad is restarting...'
-      message:      'Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.'
+      head:         'VIMS is restarting...'
+      message:      'Some system settings have changed, VIMS is restarting. Please wait until VIMS is back again.'
       keyboard:     false
       backdrop:     false
       buttonClose:  false
@@ -64,8 +64,8 @@ class Widget extends App.Controller
   maintanaceRestartManual: (data) =>
     return if @messageRestartManual
     @messageRestartManual = new App.SessionMessage(
-      head:         'Zammad need a restart!'
-      message:      'Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP___RESTART___CMD="/path/to/your___app___script.sh restart".'
+      head:         'VIMS need a restart!'
+      message:      'Some system settings have changed, please restart all VIMS processes! If you want to do this automatically, set environment variable APP___RESTART___CMD="/path/to/your___app___script.sh restart".'
       keyboard:     false
       backdrop:     false
       buttonClose:  false
@@ -80,7 +80,7 @@ class Widget extends App.Controller
     return if @messageConfigChanged
     @messageConfigChanged = new App.SessionMessage(
       head:         'Config has changed'
-      message:      'The configuration of Zammad has changed, please reload your browser.'
+      message:      'The configuration of VIMS has changed, please reload your browser.'
       keyboard:     false
       backdrop:     true
       buttonClose:  false
@@ -100,7 +100,7 @@ class Widget extends App.Controller
     message = =>
       @messageAppVersion = new App.SessionMessage(
         head:         'New Version'
-        message:      'A new version of Zammad is available, please reload your browser.'
+        message:      'A new version of VIMS is available, please reload your browser.'
         keyboard:     false
         backdrop:     true
         buttonClose:  false

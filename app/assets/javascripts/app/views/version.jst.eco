@@ -3,6 +3,6 @@
 </div>
 <div class="page-content">
   <p>
-    <%- @T('This is Zammad version %s', @version) %>
+    <%- @T('This is VIMS version %s', @version) %>
   </p>
 </div>
