@@ -1,3 +1,9 @@
+Dir[ Rails.root.join('lib', 'omniauth', '*') ].each do |file|
+  if File.file?(file)
+    require file
+  end
+end
+
 Rails.application.config.middleware.use OmniAuth::Builder do
 
   # twitter database connect
