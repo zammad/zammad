@@ -8,7 +8,7 @@ class SettingAddSipgateAlternativeFqdn < ActiveRecord::Migration[5.1]
       title:       'sipgate.io alternative fqdn',
       name:        'sipgate_alternative_fqdn',
       area:        'Integration::Sipgate::Expert',
-      description: 'Alternative FQDN for callbacks if you operate Zammad in internal network.',
+      description: 'Alternative FQDN for callbacks if you operate VIMS in internal network.',
       options:     {
         form: [
           {

@@ -81,7 +81,7 @@
           <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
-            Nicole Braun (Zammad Foundation)
+            VIAcode Sales (VIAcode Incident Management for Azure)
           </span> </td>
         <td>
           <a href="#ticket/zoom/1"> <span title="Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf">
@@ -138,7 +138,7 @@
           <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
-            Nicole Braun (Zammad Foundation)
+            VIAcode Sales (VIAcode Incident Management for Azure)
           </span> </td>
         <td>
           <a href="#ticket/zoom/5"> <span title="das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debugge">
@@ -157,7 +157,7 @@
           <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
-            Nicole Braun (Zammad Foundation)
+            VIAcode Sales (VIAcode Incident Management for Azuren)
           </span> </td>
         <td>
           <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">

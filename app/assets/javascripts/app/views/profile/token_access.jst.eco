@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="page-header-title"><h1><%- @T('Token Access') %></h1></div>
 </div>
-<p><%- @T('You can generate a personal access token for each application you use that needs access to the Zammad API.') %></p>
+<p><%- @T('You can generate a personal access token for each application you use that needs access to the VIMS API.') %></p>
 
 <h2><%- @T('Add a Personal Access Token') %></h2>
 <p><%- @T('Pick a name for the application, and we\'ll give you a unique token.') %></p>

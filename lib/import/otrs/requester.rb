@@ -122,12 +122,12 @@ module Import
         )
 
         if !response
-          raise "Can't connect to Zammad Migrator"
+          raise "Can't connect to VIMS Migrator"
         end
 
         if !response.success?
           log "ERROR: #{response.error}"
-          raise 'Zammad Migrator returned an error'
+          raise 'VIMS Migrator returned an error'
         end
         response
       end
