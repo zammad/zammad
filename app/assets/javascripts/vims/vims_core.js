@@ -1,7 +1,7 @@
 (function() {	
 	let modalJQueryScript = document.createElement("SCRIPT");
 	modalJQueryScript.type = 'text/javascript';
-	modalJQueryScript.src = "https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js";
+	modalJQueryScript.src = "https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js";
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
