@@ -17,7 +17,7 @@
 
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
-		subtree: false, // and lower descendants too
+		subtree: true,
 		characterDataOldValue: false // pass old data to callback
 	});
 
