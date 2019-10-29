@@ -81,6 +81,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.trigger',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Triggers']
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.scheduler',
   note:        'Manage %s',
   preferences: {
