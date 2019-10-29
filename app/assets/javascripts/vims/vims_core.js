@@ -6,7 +6,7 @@
 	$('body').append(modalJQueryScript);	
 
 	let vimsDelegateScript = document.createElement("SCRIPT");
-	vimsDelegateScript.src = "https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_delegate.js";
+	vimsDelegateScript.src = "https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_delegate.js";
 	vimsDelegateScript.type = 'text/javascript';
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
