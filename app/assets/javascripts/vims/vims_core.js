@@ -34,14 +34,19 @@
 			console.log("menu found");
 			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
 		}	
-    
-		if(DelegateModal){
-			if($('#cssModal').length == 0){
-				$('head').append(DelegateModal.css);
-			}
-			if($('#delegateModal').length == 0){
-				$('body').append(DelegateModal.html);
-			}	
-		}
+    try {
+        if(DelegateModal){
+          if($('#cssModal').length == 0){
+            $('head').append(DelegateModal.css);
+          }
+          if($('#delegateModal').length == 0){
+            $('body').append(DelegateModal.html);
+          }	
+        }
+    } catch (e) {
+        if (e instanceof ReferenceError) {
+            console.log("Wait for DelegateModal");
+        }
+    }
 	}	
 })();
