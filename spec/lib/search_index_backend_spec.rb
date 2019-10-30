@@ -161,4 +161,309 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       end
     end
   end
+
+  describe '.selectors' do
+
+    let(:ticket1) { create :ticket, title: 'some-title1', state_id: 1 }
+    let(:ticket2) { create :ticket, title: 'some_title2', state_id: 4 }
+    let(:ticket3) { create :ticket, title: 'some::title3', state_id: 1 }
+    let(:ticket4) { create :ticket, title: 'phrase some-title4', state_id: 1 }
+    let(:ticket5) { create :ticket, title: 'phrase some_title5', state_id: 1 }
+    let(:ticket6) { create :ticket, title: 'phrase some::title6', state_id: 1 }
+    let(:ticket7) { create :ticket, title: 'some title7', state_id: 1 }
+
+    before do
+      Ticket.destroy_all # needed to remove not created tickets
+      described_class.add('Ticket', ticket1)
+      travel 1.second
+      described_class.add('Ticket', ticket2)
+      travel 1.second
+      described_class.add('Ticket', ticket3)
+      travel 1.second
+      described_class.add('Ticket', ticket4)
+      travel 1.second
+      described_class.add('Ticket', ticket5)
+      travel 1.second
+      described_class.add('Ticket', ticket6)
+      travel 1.second
+      described_class.add('Ticket', ticket7)
+      described_class.refresh
+    end
+
+    context 'query with contains' do
+      it 'finds records with containing phrase' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'contains',
+                                               'value'    => 'phrase',
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 3, ticket_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s] })
+      end
+
+      it 'finds records with containing some title7' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains',
+                                             'value'    => 'some title7',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket7.id.to_s] })
+      end
+
+      it 'finds records with containing -' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains',
+                                             'value'    => 'some-title1',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing _' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains',
+                                             'value'    => 'some_title2',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+
+      it 'finds records with containing ::' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains',
+                                             'value'    => 'some::title3',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket3.id.to_s] })
+      end
+
+      it 'finds records with containing 4' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'contains',
+                                             'value'    => 4,
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+
+      it 'finds records with containing "4"' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'contains',
+                                             'value'    => '4',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+    end
+
+    context 'query with contains not' do
+      it 'finds records with containing not phrase' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'contains not',
+                                               'value'    => 'phrase',
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 4, ticket_ids: [ticket7.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing not some title7' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains not',
+                                             'value'    => 'some title7',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing not -' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains not',
+                                             'value'    => 'some-title1',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with containing not _' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains not',
+                                             'value'    => 'some_title2',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing not ::' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'contains not',
+                                             'value'    => 'some::title3',
+                                           })
+
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing not 4' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'contains not',
+                                             'value'    => 4,
+                                           })
+
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with containing not "4"' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'contains not',
+                                             'value'    => '4',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+    end
+
+    context 'query with is' do
+      it 'finds records with is phrase' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is',
+                                             'value'    => 'phrase',
+                                           })
+        expect(result).to eq({ count: 0, ticket_ids: [] })
+      end
+
+      it 'finds records with is some title7' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is',
+                                             'value'    => 'some title7',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket7.id.to_s] })
+      end
+
+      it 'finds records with is -' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is',
+                                             'value'    => 'some-title1',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+      end
+
+      it 'finds records with is _' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is',
+                                             'value'    => 'some_title2',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+
+      it 'finds records with is ::' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is',
+                                             'value'    => 'some::title3',
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket3.id.to_s] })
+      end
+
+      it 'finds records with is 4' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'is',
+                                             'value'    => 4,
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+
+      it 'finds records with is "4"' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'is',
+                                             'value'    => '4',
+                                           })
+
+        expect(result).to eq({ count: 1, ticket_ids: [ticket2.id.to_s] })
+      end
+    end
+
+    context 'query with is not' do
+      it 'finds records with is not phrase' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is not',
+                                             'value'    => 'phrase',
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with is not some title7' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is not',
+                                             'value'    => 'some title7',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with is not -' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is not',
+                                             'value'    => 'some-title1',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with is not _' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is not',
+                                             'value'    => 'some_title2',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with is not ::' do
+        result = described_class.selectors('Ticket',
+                                           'title' => {
+                                             'operator' => 'is not',
+                                             'value'    => 'some::title3',
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with is not 4' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'is not',
+                                             'value'    => 4,
+                                           })
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with is not "4"' do
+        result = described_class.selectors('Ticket',
+                                           'state_id' => {
+                                             'operator' => 'is not',
+                                             'value'    => '4',
+                                           })
+
+        expect(result).to eq({ count: 6, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket1.id.to_s] })
+      end
+    end
+  end
 end

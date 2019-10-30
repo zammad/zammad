@@ -197,7 +197,7 @@ def get_mapping_properties_object(object)
 
   # for elasticsearch 6.x and later
   string_type = 'text'
-  string_raw  = { 'type': 'keyword' }
+  string_raw  = { 'type': 'keyword', 'ignore_above': 5012 }
   boolean_raw = { 'type': 'boolean' }
 
   # for elasticsearch 5.6 and lower
@@ -212,7 +212,7 @@ def get_mapping_properties_object(object)
       result[name][:properties][key] = {
         type:   string_type,
         fields: {
-          raw: string_raw,
+          keyword: string_raw,
         }
       }
     elsif value.type == :integer
@@ -227,7 +227,7 @@ def get_mapping_properties_object(object)
       result[name][:properties][key] = {
         type:   'boolean',
         fields: {
-          raw: boolean_raw,
+          keyword: boolean_raw,
         }
       }
     elsif value.type == :binary

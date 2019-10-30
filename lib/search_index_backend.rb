@@ -301,9 +301,9 @@ remove whole data from index
       next if value.blank?
       next if order_by&.at(index).blank?
 
-      # for sorting values use .raw values (no analyzer is used - plain values)
+      # for sorting values use .keyword values (no analyzer is used - plain values)
       if value !~ /\./ && value !~ /_(time|date|till|id|ids|at)$/
-        value += '.raw'
+        value += '.keyword'
       end
       result.push(
         value => {
@@ -413,8 +413,15 @@ example for aggregations within one year
       response.data['hits']['hits'].each do |item|
         ticket_ids.push item['_id']
       end
+
+      # in lower ES 6 versions, we get total count directly, in higher
+      # versions we need to pick it from total has
+      count = response.data['hits']['total']
+      if response.data['hits']['total'].class != Integer
+        count = response.data['hits']['total']['value']
+      end
       return {
-        count:      response.data['hits']['total'],
+        count:      count,
         ticket_ids: ticket_ids,
       }
     end
@@ -440,31 +447,47 @@ example for aggregations within one year
     if selector.present?
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
+        wildcard_or_term = 'term'
         t = {}
 
-        # use .raw in cases where query contains ::
-        if data['value'].is_a?(Array)
-          data['value'].each do |value|
-            if value.is_a?(String) && value =~ /::/
-              key_tmp += '.raw'
+        # use .keyword in case of compare exact values
+        if data['operator'] == 'is' || data['operator'] == 'is not'
+          if data['value'].is_a?(Array)
+            data['value'].each do |value|
+              next if !value.is_a?(String) || value !~ /[A-z]/
+
+              wildcard_or_term = 'terms'
+              key_tmp += '.keyword'
               break
             end
+          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value'])
+            key_tmp += '.keyword'
+            wildcard_or_term = 'term'
           end
-        elsif data['value'].is_a?(String)
-          if /::/.match?(data['value'])
-            key_tmp += '.raw'
+        end
+
+        # use .keyword and wildcard search in cases where query contains non A-z chars
+        if data['operator'] == 'contains' || data['operator'] == 'contains not'
+          if data['value'].is_a?(Array)
+            data['value'].each_with_index do |value, index|
+              next if !value.is_a?(String) || value !~ /[A-z]/ || value !~ /\W/
+
+              data['value'][index] = "*#{value}*"
+              key_tmp += '.keyword'
+              wildcard_or_term = 'wildcards'
+              break
+            end
+          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value']) && data['value'] =~ /\W/
+            data['value'] = "*#{data['value']}*"
+            key_tmp += '.keyword'
+            wildcard_or_term = 'wildcard'
           end
         end
 
         # is/is not/contains/contains not
         if data['operator'] == 'is' || data['operator'] == 'is not' || data['operator'] == 'contains' || data['operator'] == 'contains not'
-          if data['value'].is_a?(Array)
-            t[:terms] = {}
-            t[:terms][key_tmp] = data['value']
-          else
-            t[:term] = {}
-            t[:term][key_tmp] = data['value']
-          end
+          t[wildcard_or_term] = {}
+          t[wildcard_or_term][key_tmp] = data['value']
           if data['operator'] == 'is' || data['operator'] == 'contains'
             query_must.push t
           elsif data['operator'] == 'is not' || data['operator'] == 'contains not'
@@ -581,6 +604,8 @@ example for aggregations within one year
       }
       sort[1] = '_score'
       data['sort'] = sort
+    else
+      data['sort'] = search_by_index_sort(options[:sort_by], options[:order_by])
     end
 
     data

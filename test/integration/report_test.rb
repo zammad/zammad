@@ -1380,7 +1380,7 @@ class ReportTest < ActiveSupport::TestCase
     assert(result)
     assert_nil(result[:ticket_ids][0])
 
-    # search for test_category.raw to find values with :: in query
+    # search for test_category.keyword to find values with :: in query
     result = Report::TicketGenericTime.items(
       range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
       range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
