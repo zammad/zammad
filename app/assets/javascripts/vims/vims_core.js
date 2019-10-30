@@ -34,7 +34,7 @@
 			console.log("menu found");
 			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
 		}	
-    require("https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js");
+    
 		if(DelegateModal){
 			if($('#cssModal').length == 0){
 				$('head').append(DelegateModal.css);
