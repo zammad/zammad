@@ -37,7 +37,7 @@ function SendDelegation(){
 	azInfo.azArea = $("#vims-az-project-area").val();
 	azInfo.vimsId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 
-	//DelegateModal.delegate(azInfo);
+	DelegateModal.delegate(azInfo);
 	DelegateModal.DelegateIncident();
 	$.vims_modal.close();
 }
