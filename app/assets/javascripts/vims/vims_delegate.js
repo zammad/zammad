@@ -41,7 +41,6 @@ function SendDelegation(){
 	azInfo.vimsId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 
 	DelegateModal.delegate(azInfo);
-	DelegateModal.DelegateIncident();
 	$.vims_modal.close();
 }
 
