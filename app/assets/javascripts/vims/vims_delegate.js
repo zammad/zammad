@@ -1,13 +1,13 @@
 class DelegateModal {
 
-    static delegate(azInfo){
+  static delegate(azInfo){
 		let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
 		$.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId }, function(data){
 			new AlertModal().show(data);
 			DelegateModal.DelegateIncident();		
 		});
-    }
-
+ }
+  
 	static DelegateIncident(){
 		var stateDd = $('[name="vims_status"]');
 		stateDd.val('delegated');
