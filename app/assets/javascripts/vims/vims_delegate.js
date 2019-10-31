@@ -29,8 +29,6 @@ DelegateModal.html = `
 	</div>
 `;
 
-DelegateModal.modalElement = any;
-
 DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
 
 function SendDelegation(){
