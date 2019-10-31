@@ -22,7 +22,7 @@
 	});
 
 	$('body').append('<div id="vims"></div>');
-
+  
 	function InsertDelegateMenu(){
 		let nav = $('#navigation > div.tasks.tasks-navigation.ui-sortable');
 		let ticketsCount = nav.children().length;
@@ -42,7 +42,7 @@
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#delegateModal').length == 0){
-				$('#vims').append(DelegateModal.html);
+				  $('#vims').append(DelegateModal.html);
 			  }	
 			}
 		} catch (e) {
