@@ -54,9 +54,6 @@ class AlertModal {
 	alertModalHtml = `
 	<div id="vims-alertModal" class="vims-modal">
 		<span id="vims-alertModal-text"></span>
-		<p>
-			<input type="button" value="Ok" onclick="SendDelegation()"/>
-		</p>
 	</div>
 	`;
 
