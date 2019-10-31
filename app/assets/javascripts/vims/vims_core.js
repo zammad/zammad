@@ -1,7 +1,7 @@
 (function() {	
 	let modalJQueryScript = document.createElement("SCRIPT");
 	modalJQueryScript.type = 'text/javascript';
-	modalJQueryScript.src = "https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js";
+	modalJQueryScript.src = "https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js";
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
@@ -17,7 +17,7 @@
 
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
-		subtree: true,
+    subtree: true,
 		characterDataOldValue: false // pass old data to callback
 	});
 
@@ -35,11 +35,11 @@
 			}
 			console.log("menu found");
 			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vims-delegateModal" rel="vims-modal:open">Delegate</a></li>');
-		}	
+		}
 		try {
 			if(DelegateModal){
 			  if($('#cssModal').length == 0){
-				$('head').append(DelegateModal.css);
+				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#delegateModal').length == 0){
 				$('#vims').append(DelegateModal.html);
