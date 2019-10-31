@@ -2,8 +2,10 @@ class DelegateModal {
 
   static delegate(azInfo){
 		let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
-		$.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId } );
-    }
+		$.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId }, function(data){
+			new AlertModal().show(data);
+			DelegateModal.DelegateIncident();		
+		});
 
 	static DelegateIncident(){
 		var stateDd = $('[name="vims_status"]');
@@ -47,4 +49,22 @@ class AzDevOpsConnectionInfo {
 	azProject = '';
 	azArea = '';
 	vimsId = 0;
+}
+
+class AlertModal {
+	
+	alertModalHtml = `
+	<div id="vims-alertModal" class="vims-modal">
+		<span id="vims-alertModal-text"></span>
+	</div>
+	`;
+
+	show(text){
+		$('#vims').append(alertModalHtml);
+		$('#vims-alertModal-text').val(text);
+		$('#vims-alertModal').vims_modal();		
+		$('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
+			$('#vims-alertModal').remove();
+		});
+	}
 }
