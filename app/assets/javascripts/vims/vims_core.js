@@ -33,7 +33,7 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vimsDelegateModal" rel="vims-modal:open">Delegate</a></li>');
 		}	
 		try {
 			if(DelegateModal){
