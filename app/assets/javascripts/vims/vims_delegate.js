@@ -29,8 +29,6 @@ DelegateModal.html = `
 	</div>
 `;
 
-DelegateModal.modalElement = any;
-
 DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
 
 function SendDelegation(){
@@ -56,9 +54,6 @@ class AlertModal {
 	alertModalHtml = `
 	<div id="vims-alertModal" class="vims-modal">
 		<span id="vims-alertModal-text"></span>
-		<p>
-			<input type="button" value="Ok" onclick="SendDelegation()"/>
-		</p>
 	</div>
 	`;
 
