@@ -10,6 +10,7 @@
 	vimsDelegateScript.type = 'text/javascript';
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
+	$('body').append('<div id="vims"></div>');
 
 	let observer = new MutationObserver(mutationRecords => {
 		InsertDelegateMenu();
@@ -17,12 +18,10 @@
 
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
-    subtree: true,
+    	subtree: true,
 		characterDataOldValue: false // pass old data to callback
 	});
 
-	$('body').append('<div id="vims"></div>');
-  
 	function InsertDelegateMenu(){
 		let nav = $('#navigation > div.tasks.tasks-navigation.ui-sortable');
 		let ticketsCount = nav.children().length;
