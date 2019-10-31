@@ -14,7 +14,7 @@ class DelegateModal {
 
 DelegateModal.html = `
 <div id="vims">
-	<div id="delegateModal" class="vims-modal">
+	<div id="vimsDelegateModal" class="vims-modal">
 		<p>Azure project: <input type="text" id="vims-az-project"/></p>
 		<p>Azure project area: <input type="text" id="vims-az-project-area"/></p>
 		<p>Azure access token: <input type="text" id="vims-az-token"/></p>
