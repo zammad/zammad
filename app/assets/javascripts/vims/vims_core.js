@@ -40,7 +40,7 @@
 			  if($('#cssModal').length == 0){
 				  $('head').append(DelegateModal.css);
 			  }
-			  if($('#delegateModal').length == 0){
+			  if($('#vimsDelegateModal').length == 0){
 				  $('#vims').append(DelegateModal.html);
 			  }	
 			}
