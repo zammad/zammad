@@ -6,7 +6,8 @@ class DelegateModal {
 			new AlertModal().show(data);
 			DelegateModal.DelegateIncident();		
 		});
-
+  }
+  
 	static DelegateIncident(){
 		var stateDd = $('[name="vims_status"]');
 		stateDd.val('delegated');
