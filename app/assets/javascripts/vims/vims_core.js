@@ -17,10 +17,11 @@
 
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
-		subtree: true, // and lower descendants too
+    subtree: true,
 		characterDataOldValue: false // pass old data to callback
 	});
 
+	$('body').append('<div id="vims"></div>')
 	function InsertDelegateMenu(){
 		let nav = $('#navigation > div.tasks.tasks-navigation.ui-sortable');
 		let ticketsCount = nav.children().length;
@@ -32,21 +33,21 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
-		}	
-    try {
-        if(DelegateModal){
-          if($('#cssModal').length == 0){
-            $('head').append(DelegateModal.css);
-          }
-          if($('#delegateModal').length == 0){
-            $('body').append(DelegateModal.html);
-          }	
-        }
-    } catch (e) {
-        if (e instanceof ReferenceError) {
-            console.log("Wait for DelegateModal");
-        }
-    }
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vims-delegateModal" rel="vims-modal:open">Delegate</a></li>');
+		}
+		try {
+			if(DelegateModal){
+			  if($('#cssModal').length == 0){
+				  $('head').append(DelegateModal.css);
+			  }
+			  if($('#delegateModal').length == 0){
+				  DelegateModal.modalElement = $('#vims').append(DelegateModal.html);
+			  }	
+			}
+		} catch (e) {
+			if (e instanceof ReferenceError) {
+				console.log("Looking for DelegateModal");
+			}
+		}
 	}	
 })();
