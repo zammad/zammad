@@ -41,7 +41,7 @@
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#delegateModal').length == 0){
-				  DelegateModal.modalElement = $('#vims').append(DelegateModal.html);
+				  $('#vims').append(DelegateModal.html);
 			  }	
 			}
 		} catch (e) {
