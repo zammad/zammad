@@ -18,7 +18,7 @@
 
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
-    	subtree: true,
+    subtree: true,
 		characterDataOldValue: false // pass old data to callback
 	});
 
@@ -41,7 +41,7 @@
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#delegateModal').length == 0){
-				$('body').append(DelegateModal.html);
+				  $('#vims').append(DelegateModal.html);
 			  }	
 			}
 		} catch (e) {
