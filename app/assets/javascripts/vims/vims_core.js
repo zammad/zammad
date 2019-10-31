@@ -21,7 +21,8 @@
 		characterDataOldValue: false // pass old data to callback
 	});
 
-	$('body').append('<div id="vims"></div>')
+	$('body').append('<div id="vims"></div>');
+  
 	function InsertDelegateMenu(){
 		let nav = $('#navigation > div.tasks.tasks-navigation.ui-sortable');
 		let ticketsCount = nav.children().length;
