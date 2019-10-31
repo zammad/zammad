@@ -33,15 +33,15 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vims-delegateModal" rel="vims-modal:open">Delegate</a></li>');
-		}
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#delegateModal" rel="vims-modal:open">Delegate</a></li>');
+		}	
 		try {
 			if(DelegateModal){
 			  if($('#cssModal').length == 0){
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#delegateModal').length == 0){
-				  $('#vims').append(DelegateModal.html);
+				$('body').append(DelegateModal.html);
 			  }	
 			}
 		} catch (e) {
