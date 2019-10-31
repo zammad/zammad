@@ -53,15 +53,9 @@ class AzDevOpsConnectionInfo {
 
 class AlertModal {
 	
-	alertModalHtml = `
-	<div id="vims-alertModal" class="vims-modal">
-		<span id="vims-alertModal-text"></span>
-	</div>
-	`;
-
 	show(text){
-		$('#vims').append(alertModalHtml);
-		$('#vims-alertModal-text').val(text);
+		$('#vims').append('<div id="vims-alertModal" class="vims-modal"><span id="vims-alertModal-text"></span></div>');
+		$('#vims-alertModal-text').text(text);
 		$('#vims-alertModal').vims_modal();		
 		$('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
 			$('#vims-alertModal').remove();
