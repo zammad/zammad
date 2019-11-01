@@ -332,7 +332,7 @@ ObjectManager::Attribute.add(
     default:    '',  
     type:      'text',
     maxlength: 2000,
-    null:      false,
+    null:      true,
     translate: false,
   },
   editable:    false,
@@ -356,7 +356,7 @@ ObjectManager::Attribute.add(
   data_option: {
     default:    0, 
     maxlength: 150,
-    null:      false,
+    null:      true,
     note:      'The number of the same alerts fired',
     min:       0,
     max:       999_999_999,
