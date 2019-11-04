@@ -20,7 +20,7 @@ DelegateModal.html = `
 	<div id="vimsDelegateModal" class="vims-modal">
 		<p>Azure project: <input type="text" id="vims-az-project"/></p>
 		<p>Azure project area: <input type="text" id="vims-az-project-area"/></p>
-		<p>Azure access token: <input type="text" id="vims-az-token"/></p>
+		<p>Azure access token: <input type="password" id="vims-az-token"/></p>
 		<p>Save settings &nbsp;<input type="checkbox" id="vims-save-settings"/></p>
 		<p>
 			<a href="#" rel="vims-modal:close">Close</a>
