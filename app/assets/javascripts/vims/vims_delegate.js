@@ -55,7 +55,7 @@ class AlertModal {
 	
 	show(text){
 		$('#vims').append('<div id="vims-alertModal" class="vims-modal"><span id="vims-alertModal-text"></span></div>');
-		$('#vims-alertModal-text').text(text);
+		$('#vims-alertModal-text').html(text);
 		$('#vims-alertModal').vims_modal();		
 		$('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
 			$('#vims-alertModal').remove();
