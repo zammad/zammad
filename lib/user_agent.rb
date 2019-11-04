@@ -205,7 +205,7 @@ returns
 
 =end
 
-  def self.delete(url, options = {}, count = 10)
+  def self.delete(url, params = {}, options = {}, count = 10)
     uri  = URI.parse(url)
     http = get_http(uri, options)
 
@@ -221,7 +221,7 @@ returns
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do
           response = http.request(request)
-          return process(request, response, uri, count, {}, options)
+          return process(request, response, uri, count, params, options)
         end
       end
     rescue => e
