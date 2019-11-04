@@ -42,6 +42,11 @@
 			  }
 			  if($('#vimsDelegateModal').length == 0){
 				  $('#vims').append(DelegateModal.html);
+          $.getJSON('https://vimsorchestrator.azurewebsites.net/api/azuredevopssettings', function(response){
+            $("#vims-az-token").val(response.azToken);
+            $("#vims-az-project").val(response.azProject);
+            $("#vims-az-project-area").val(response.azArea);
+          });
 			  }	
 			}
 		} catch (e) {
