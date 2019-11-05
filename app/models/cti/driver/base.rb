@@ -9,6 +9,10 @@ class Cti::Driver::Base
     params
   end
 
+  def config
+    {}
+  end
+
   def process
 
     # validate directions
@@ -151,6 +155,9 @@ class Cti::Driver::Base
     # based on answeringNumber
     if @params[:answeringNumber].present?
       user = Cti::CallerId.known_agents_by_number(@params[:answeringNumber]).first
+      if !user
+        user = User.find_by(phone: @params[:answeringNumber], active: true)
+      end
     end
 
     # based on user param
