@@ -7,6 +7,9 @@ RSpec.describe 'linking Knowledge Base answer', type: :system, authenticated: tr
     configure_elasticsearch(required: true, rebuild: true) do
       published_answer
     end
+
+    # refresh page to make sure it reflects updated settings
+    refresh
   end
 
   it do
