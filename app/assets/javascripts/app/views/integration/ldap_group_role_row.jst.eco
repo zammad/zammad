@@ -1,6 +1,6 @@
 <tr class="js-entry">
-  <td style="max-width: 240px" class="settings-list-control-cell js-ldapList">
-  <td class="settings-list-control-cell js-roleList">
+  <td style="width: 60%" class="settings-list-control-cell js-ldapList">
+  <td style="width: 35%" class="settings-list-control-cell js-roleList">
   <td class="settings-list-row-control">
     <div class="btn btn--text js-remove">
       <%- @Icon('trash') %> <%- @T('Remove') %>

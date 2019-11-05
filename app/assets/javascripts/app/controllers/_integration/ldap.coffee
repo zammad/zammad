@@ -168,6 +168,8 @@ class State
     App.Setting.get('ldap_integration')
 
 class ConnectionWizard extends App.WizardModal
+  className: 'modal fade modal--large'
+
   wizardConfig: {}
   slideMethod:
     'js-bind': 'bindShow'
