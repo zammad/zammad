@@ -452,6 +452,7 @@ class App.ControllerModal extends App.Controller
   keyboard: true
   large: false
   small: false
+  veryLarge: false
   head: '?'
   autoFocusOnFirstInput: true
   container: null
