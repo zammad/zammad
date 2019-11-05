@@ -3,7 +3,6 @@ class DelegateModal {
   static delegate(azInfo, needSaveSettings){
 		let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
 		$.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId, saveSettings: needSaveSettings }, function(data){
-			$("button:contains('Update')").click()
 			DelegateModal.DelegateIncident();		
 		});
   }
