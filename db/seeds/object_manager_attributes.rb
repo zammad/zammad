@@ -1452,6 +1452,136 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Organization',
+  name:        'azuredevops_organization',
+  display:     'Azure DevOps Organization',
+  data_type:   'input',
+  data_option: {
+    type:       'text',
+    maxlength:  150,
+    null:       false,
+    item_class: 'formGroup--halfSize',
+    permission: ['admin.organization'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1550,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Organization',
+  name:        'azuredevops_project',
+  display:     'Azure DevOps Project',
+  data_type:   'input',
+  data_option: {
+    type:       'text',
+    maxlength:  150,
+    null:       false,
+    item_class: 'formGroup--halfSize',
+    permission: ['admin.organization'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1551,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Organization',
+  name:        'azuredevops_area',
+  display:     'Azure DevOps Area',
+  data_type:   'input',
+  data_option: {
+    type:       'text',
+    maxlength:  250,
+    null:       false,
+    permission: ['admin.organization'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1552,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Organization',
+  name:        'azuredevops_area',
+  display:     'Azure DevOps Area',
+  data_type:   'input',
+  data_option: {
+    type:       'password',
+    maxlength:  150,
+    null:       false,
+    permission: ['admin.organization'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1553,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Organization',
   name:        'active',
   display:     'Active',
   data_type:   'active',

@@ -3,7 +3,6 @@ class DelegateModal {
 	static delegate(azInfo, needSaveSettings){
 		  let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
 		  $.post( url, { azproject: azInfo.azProject, azarea: azInfo.azArea, aztoken: azInfo.azToken, vimsid: azInfo.vimsId, saveSettings: needSaveSettings }, function(data){
-			  new AlertModal().show(data);
 			  DelegateModal.DelegateIncident();		
 		  });
 	}
@@ -55,11 +54,10 @@ class DelegateModal {
 	  
 	  show(text){
 		  $('#vims').append('<div id="vims-alertModal" class="vims-modal"><span id="vims-alertModal-text"></span></div>');
-		  $('#vims-alertModal-text').text(text);
+		  $('#vims-alertModal-text').html(text);
 		  $('#vims-alertModal').vims_modal();		
 		  $('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
 			  $('#vims-alertModal').remove();
 		  });
 	  }
   }
-  
