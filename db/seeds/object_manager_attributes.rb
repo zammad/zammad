@@ -1458,7 +1458,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  150,
-    null:       false,
+    null:       true,
     item_class: 'formGroup--halfSize',
     permission: ['admin.organization'],
   },
@@ -1491,7 +1491,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  150,
-    null:       false,
+    null:       true,
     item_class: 'formGroup--halfSize',
     permission: ['admin.organization'],
   },
@@ -1524,7 +1524,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  250,
-    null:       false,
+    null:       true,
     permission: ['admin.organization'],
   },
   editable:    false,
@@ -1550,8 +1550,8 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Organization',
-  name:        'azuredevops_area',
-  display:     'Azure DevOps Area',
+  name:        'azuredevops_token',
+  display:     'Azure DevOps Token',
   data_type:   'input',
   data_option: {
     type:       'password',
