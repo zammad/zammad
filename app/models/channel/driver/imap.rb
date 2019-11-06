@@ -208,6 +208,7 @@ example
     count_max             = 5000
     too_large_messages    = []
     active_check_interval = 20
+    result                = 'ok'
     notice                = ''
     message_ids.each do |message_id|
       count += 1
@@ -222,6 +223,18 @@ example
       message_meta = nil
       timeout(FETCH_METADATA_TIMEOUT) do
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
+      rescue Net::IMAP::ResponseParseError => e
+        raise if !e.message.match?(/unknown token/)
+
+        result = 'error'
+        notice += <<~NOTICE
+          One of your incoming emails could not be imported (#{e.message}).
+          Please remove it from your inbox directly
+          to prevent Zammad from trying to import it again.
+        NOTICE
+        Rails.logger.error "Net::IMAP failed to parse message #{message_id}: #{e.message} (#{e.class})"
+        Rails.logger.error '(See https://github.com/zammad/zammad/issues/2754 for more details)'
+        next
       end
 
       # ignore verify messages
@@ -300,7 +313,7 @@ example
 
     Rails.logger.info 'done'
     {
-      result:  'ok',
+      result:  result,
       fetched: count_fetched,
       notice:  notice,
     }
