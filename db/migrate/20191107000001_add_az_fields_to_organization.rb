@@ -5,9 +5,9 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
       return if !Setting.find_by(name: 'system_init_done')
   
       add_column :organizations, :azuredevops_organization, :string, limit: 150, null: true
-      add_column :organizations, :azuredevops_project, :string, limit: 150 null: true
-      add_column :organizations, :azuredevops_area, :string, limit: 250 null: true
-      add_column :organizations, :azuredevops_token, :string, limit: 150 null: true
+      add_column :organizations, :azuredevops_project, :string, limit: 150, null: true
+      add_column :organizations, :azuredevops_area, :string, limit: 250, null: true
+      add_column :organizations, :azuredevops_token, :string, limit: 150, null: true
 
       
       ObjectManager::Attribute.add(
