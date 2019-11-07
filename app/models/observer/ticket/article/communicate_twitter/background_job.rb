@@ -51,10 +51,9 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     # fill article with tweet info
 
     # direct message
-    tweet_id = nil
     if tweet.is_a?(Hash)
       tweet_type = 'DirectMessage'
-      tweet_id = tweet[:event][:id].to_s
+      article.message_id = tweet[:event][:id].to_s
       if tweet[:event] && tweet[:event][:type] == 'message_create'
         #article.from = "@#{tweet.sender.screen_name}"
         #article.to = "@#{tweet.recipient.screen_name}"
@@ -63,12 +62,19 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
           recipient_id: tweet[:event][:message_create][:target][:recipient_id],
           sender_id:    tweet[:event][:message_create][:sender_id],
         }
+
+        article.preferences['links'] = [
+          {
+            url:    "https://twitter.com/messages/#{article.preferences[:twitter][:recipient_id]}-#{article.preferences[:twitter][:sender_id]}",
+            target: '_blank',
+            name:   'on Twitter',
+          },
+        ]
       end
 
     # regular tweet
     elsif tweet.class == Twitter::Tweet
       tweet_type = 'Tweet'
-      tweet_id = tweet.id.to_s
       article.from = "@#{tweet.user.screen_name}"
       if tweet.user_mentions
         to = ''
@@ -95,6 +101,15 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
           created_at:          tweet.created_at,
         )
       end
+
+      article.message_id = tweet.id.to_s
+      article.preferences['links'] = [
+        {
+          url:    "https://twitter.com/statuses/#{tweet.id}",
+          target: '_blank',
+          name:   'on Twitter',
+        },
+      ]
     else
       raise "Unknown tweet type '#{tweet.class}'"
     end
@@ -103,15 +118,6 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article.preferences['delivery_status_message'] = nil
     article.preferences['delivery_status'] = 'success'
     article.preferences['delivery_status_date'] = Time.zone.now
-
-    article.message_id = tweet_id
-    article.preferences['links'] = [
-      {
-        url:    "https://twitter.com/statuses/#{tweet_id}",
-        target: '_blank',
-        name:   'on Twitter',
-      },
-    ]
 
     article.save!
 

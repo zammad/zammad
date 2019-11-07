@@ -87,6 +87,8 @@ RSpec/FilePath:
     - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
     - 'spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb'
     - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
+    - 'spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb'
+    - 'spec/jobs/issue_2715_fix_broken_twitter_urls_job_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
 
 # Offense count: 60
