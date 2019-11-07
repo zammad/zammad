@@ -56,16 +56,15 @@ class ExternalCredential::Twitter
       access_token_secret: access_token.secret,
     )
     client_user = client.who_am_i
-    client_user_id = client_user.id
 
     # check if account already exists
     Channel.where(area: 'Twitter::Account').each do |channel|
       next if !channel.options
       next if !channel.options['user']
       next if !channel.options['user']['id']
-      next if channel.options['user']['id'] != client_user_id && channel.options['user']['screen_name'] != client_user.screen_name
+      next if channel.options['user']['id'].to_s != client_user.id.to_s && channel.options['user']['screen_name'] != client_user.screen_name
 
-      channel.options['user']['id'] = client_user_id
+      channel.options['user']['id'] = client_user.id.to_s
       channel.options['user']['screen_name'] = client_user.screen_name
       channel.options['user']['name'] = client_user.name
 
@@ -90,7 +89,7 @@ class ExternalCredential::Twitter
       options:       {
         adapter: 'twitter',
         user:    {
-          id:          client_user_id,
+          id:          client_user.id.to_s,
           screen_name: client_user.screen_name,
           name:        client_user.name,
         },
