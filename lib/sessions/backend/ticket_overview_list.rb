@@ -86,6 +86,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
     # push overviews
     results = []
+    assets  = AssetsSet.new
     index_and_lists.each do |data|
 
       # do not deliver unchanged lists
@@ -93,7 +94,6 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
       @last_overview[data[:overview][:id]] = [data[:tickets], data[:overview]]
 
-      assets = {}
       overview = Overview.lookup(id: data[:overview][:id])
       next if !overview
 
@@ -108,7 +108,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
         assets = asset_push(ticket, assets)
       end
-      data[:assets] = assets
+
+      data[:assets] = assets.to_h
 
       if !@client
         result = {
@@ -125,6 +126,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
           data:  data,
         )
       end
+
+      assets.flush
     end
     return results if !@client
 
