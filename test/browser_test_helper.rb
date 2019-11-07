@@ -2663,7 +2663,14 @@ wait untill text in selector disabppears
            end
 
     # switch to overview
-    instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0].click
+    element = nil
+    6.times do
+      element = instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0]
+      break if element
+
+      sleep 1
+    end
+    element.click
 
     # hide larger overview selection list again
     sleep 0.5
@@ -2698,14 +2705,25 @@ wait untill text in selector disabppears
 
     overview_open(params)
 
+    element = nil
     if params[:title]
-      element = instance.find_element(css: '.content.active').find_element(partial_link_text: params[:title])
+      6.times do
+        element = instance.find_element(css: '.content.active').find_element(partial_link_text: params[:title])
+        break if element
+
+        sleep 1
+      end
       if !element
         screenshot(browser: instance, comment: 'ticket_open_by_overview_no_ticket_failed')
         raise "unable to find ticket #{params[:title]} in overview #{params[:link]}!"
       end
     else
-      element = instance.find_elements(partial_link_text: params[:number])[0]
+      6.times do
+        element = instance.find_elements(partial_link_text: params[:number])[0]
+        break if element
+
+        sleep 1
+      end
       if !element
         screenshot(browser: instance, comment: 'ticket_open_by_overview_no_ticket_failed')
         raise "unable to find ticket #{params[:number]} in overview #{params[:link]}!"
