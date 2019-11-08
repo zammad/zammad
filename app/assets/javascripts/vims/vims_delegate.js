@@ -1,5 +1,4 @@
 class DelegateModal {
-
 	static delegate(id){
 		  let url = 'https://vimsorchestrator.azurewebsites.net/api/azuredevops';
 		  $.post( url, { vimsid: id }, function(data){
@@ -30,7 +29,7 @@ class DelegateModal {
   DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
   
   function SendDelegation(){
-	  $.get('', function(resp){
+	  $.get('https://vimsorchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', function(resp){
 		$.vims_modal.show();
 		DelegateModal.delegate(document.URL.substr(document.URL.lastIndexOf('/') + 1));
 		$.vims_modal.close();
