@@ -150,7 +150,11 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :note,                   limit: 5000, null: true,  default: ''
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
-      t.timestamps limit: 3,   null: false
+      t.timestamps limit: 3,                        null: false
+      t.string :azuredevops_organization, limit: 150, null: true
+      t.string :azuredevops_project, limit: 150, null: true
+      t.string :azuredevops_area, limit: 150, null: true
+      t.string :azuredevops_token, limit: 150, null: true
     end
     add_index :organizations, [:name], unique: true
     add_index :organizations, [:domain]

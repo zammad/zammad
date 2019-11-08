@@ -33,7 +33,8 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vimsDelegateModal" rel="vims-modal:open">Delegate</a></li>');
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vimsDelegateModal" onclick="SendDelegation()">Delegate</a></li>');
+
 		}	
 		try {
 			if(DelegateModal){
@@ -41,12 +42,7 @@
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#vimsDelegateModal').length == 0){
-				  $('#vims').append(DelegateModal.html);
-          $.getJSON('https://vimsorchestrator.azurewebsites.net/api/azuredevopssettings', function(response){
-            $("#vims-az-token").val(response.azToken);
-            $("#vims-az-project").val(response.azProject);
-            $("#vims-az-project-area").val(response.azArea);
-          });
+				$('#vims').append(DelegateModal.html);
 			  }	
 			}
 		} catch (e) {
