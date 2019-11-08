@@ -19,7 +19,7 @@
 	observer.observe((document.documentElement || document.body), {
 		childList: true,
     subtree: true,
-		characterDataOldValue: false // pass old data to callback
+		characterDataOldValue: false
 	});
 
 	function InsertDelegateMenu(){
@@ -33,7 +33,7 @@
 				continue;
 			}
 			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vimsDelegateModal" rel="vims-modal:open">Delegate</a></li>');
+			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" href="#vimsDelegateModal" onclick="SendDelegation()">Delegate</a></li>');
 		}	
 		try {
 			if(DelegateModal){
