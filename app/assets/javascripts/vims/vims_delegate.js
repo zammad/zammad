@@ -1,5 +1,4 @@
 class DelegateModal {
-
 	static delegate(id){
 		  let url = 'https://vims-orchestrator.azurewebsites.net/api/azuredevops';
 		  $.post( url, { vimsid: id }, function(data){
