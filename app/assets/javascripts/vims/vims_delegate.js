@@ -26,7 +26,7 @@ class DelegateModal {
   </div>
   `;
   
-  DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
+  DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
   
   function SendDelegation(){
 	  $.get('https://vimsorchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', function(resp){
