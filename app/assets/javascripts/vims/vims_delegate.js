@@ -30,7 +30,7 @@ class DelegateModal {
   
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', function(resp){
+	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$.vims_modal.show();
 		DelegateModal.delegate(ticketId);
 		$.vims_modal.close();
