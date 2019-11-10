@@ -20,7 +20,7 @@ class DelegateModal {
 		  <p>
 			  <a href="#" rel="vims-modal:close">Close</a>
 			  &nbsp;
-			  <input type="button" value="Ok" onclick="SendDelegation()"/>
+			  <input type="button" value="Ok" onclick="Delegate()"/>
 		  </p>
 	  </div>
   </div>
@@ -31,10 +31,13 @@ class DelegateModal {
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
-		$.vims_modal.show();
-		DelegateModal.delegate(ticketId);
-		$.vims_modal.close();
+		$('#vimsDelegateModal').modal();		
 	  });
+  }
+
+  function Delegate(){
+	let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+	DelegateModal.delegate(ticketId);
   }
   
   class AlertModal {
