@@ -1479,7 +1479,7 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    1550,
+  position:    1551,
 )
 
 ObjectManager::Attribute.add(
@@ -1512,7 +1512,7 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    1551,
+  position:    1552,
 )
 
 ObjectManager::Attribute.add(
@@ -1544,7 +1544,7 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    1552,
+  position:    1553,
 )
 
 ObjectManager::Attribute.add(
@@ -1556,7 +1556,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'password',
     maxlength:  150,
-    null:       false,
+    null:       true,
     permission: ['admin.organization'],
   },
   editable:    false,
@@ -1576,7 +1576,7 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    1553,
+  position:    1554,
 )
 
 ObjectManager::Attribute.add(

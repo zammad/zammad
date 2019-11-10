@@ -29,9 +29,10 @@ class DelegateModal {
   DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
   
   function SendDelegation(){
-	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', function(resp){
+	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$.vims_modal.show();
-		DelegateModal.delegate(document.URL.substr(document.URL.lastIndexOf('/') + 1));
+		DelegateModal.delegate(ticketId);
 		$.vims_modal.close();
 	  });
   }
