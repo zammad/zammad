@@ -13,17 +13,15 @@ class DelegateModal {
 	  }
   }
   
-  DelegateModal.html = `
-  <div id="vims">
+  DelegateModal.html = `  
 	  <div id="vimsDelegateModal" class="vims-modal">
 		  <p>Are you sure you want to delegate this incident?</p>
 		  <p>
 			  <a href="#" rel="vims-modal:close">Close</a>
 			  &nbsp;
-			  <input type="button" value="Ok" onclick="Delegate()"/>
+			  <input type="button" value="Ok" onclick="Delegate()" rel="vims-modal:close"/>
 		  </p>
-	  </div>
-  </div>
+	  </div>  
   `;
   
   DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
@@ -31,7 +29,7 @@ class DelegateModal {
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
-		$('#vimsDelegateModal').modal();		
+		$('#vimsDelegateModal').vims_modal();		
 	  });
   }
 
