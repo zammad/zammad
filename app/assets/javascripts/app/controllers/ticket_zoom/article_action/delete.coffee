@@ -18,7 +18,15 @@ class Delete
 
     callback = ->
       article = App.TicketArticle.find(article.id)
-      article.destroy()
+      article.destroy(
+        fail: (article, details) ->
+          ui.log 'errors', details
+          ui.notify(
+            type:    'error'
+            msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to delete article!')
+            timeout: 6000
+        )
+      )
 
     new App.ControllerConfirm(
       message: 'Sure?'

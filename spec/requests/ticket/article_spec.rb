@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Ticket Article', type: :request do
+RSpec.describe 'Ticket Article API endpoints', type: :request do
 
   let(:admin_user) do
-    create(:admin_user)
+    create(:admin_user, groups: Group.all)
   end
   let!(:group) { create(:group) }
 
@@ -477,6 +477,55 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(0)
+    end
+  end
+
+  describe 'DELETE /api/v1/ticket_articles/:id' do
+
+    let!(:article) { create(:ticket_article, sender_name: 'Agent', type_name: 'note', updated_by_id: agent_user.id, created_by_id: agent_user.id  ) }
+
+    context 'by Admin user' do
+      before do
+        authenticated_as(admin_user)
+      end
+
+      it 'always succeeds' do
+        expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }
+      end
+    end
+
+    context 'by Agent user' do
+      before do
+        # this is needed, role needs full rights for the new group
+        # so that agent can delete the article
+        group_ids_access_map = Group.all.pluck(:id).each_with_object({}) { |group_id, result| result[group_id] = 'full'.freeze }
+        role = Role.find_by(name: 'Agent')
+        role.group_ids_access_map = group_ids_access_map
+        role.save!
+      end
+
+      context 'within 10 minutes of creation' do
+        before do
+
+          authenticated_as(agent_user)
+          travel 8.minutes
+        end
+
+        it 'succeeds' do
+          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }
+        end
+      end
+
+      context '10+ minutes after creation' do
+        before do
+          authenticated_as(agent_user)
+          travel 10.minutes
+        end
+
+        it 'fails' do
+          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }.to(false)
+        end
+      end
     end
   end
 end

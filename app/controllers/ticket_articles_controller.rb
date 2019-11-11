@@ -134,24 +134,31 @@ class TicketArticlesController < ApplicationController
     render json: article.attributes_with_association_names, status: :ok
   end
 
-  # DELETE /articles/1
+  # DELETE /api/v1/ticket_articles/:id
   def destroy
     article = Ticket::Article.find(params[:id])
     access!(article, 'delete')
 
     if current_user.permissions?('admin')
       article.destroy!
-      head :ok
+      render json: {}, status: :ok
       return
     end
 
-    if current_user.permissions?('ticket.agent') && article.created_by_id == current_user.id && article.type.name == 'note'
+    article_deletable =
+      current_user.permissions?('ticket.agent') &&
+      article.created_by_id == current_user.id &&
+      !article.type.communication?
+
+    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !article_deletable
+
+    if article_deletable && article.created_at >= 10.minutes.ago
       article.destroy!
-      head :ok
+      render json: {}, status: :ok
       return
     end
 
-    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!'
+    raise Exceptions::NotAuthorized, 'Articles can only be deleted within 10 minutes after creation.'
   end
 
   # POST /ticket_attachment_upload_clone_by_article
