@@ -1,16 +1,18 @@
 class DelegateModal {
+
 	static delegate(id){
-		  let url = 'https://vims-orchestrator.azurewebsites.net/api/azuredevops';
-		  $.post( url, { vimsid: id }, function(data){
-			  DelegateIncident();		
-		  });
+		$("a[rel='vims-modal:close']")[0].click();
+		let url = 'https://vims-orchestrator.azurewebsites.net/api/azuredevops';
+		$.post( url, { vimsid: id }, function(data){
+			//DelegateModal.delegateIncident();		
+		});
 	}
 	
-	  static DelegateIncident(){
-		  var stateDd = $('[name="vims_status"]');
-		  stateDd.val('delegated');
-		  stateDd.change();
-	  }
+	static delegateIncident(){
+		var stateDd = $('[name="vims_status"]');
+		stateDd.val('delegated');
+		stateDd.change();
+	}
   }
   
   DelegateModal.html = `  
@@ -19,12 +21,12 @@ class DelegateModal {
 		  <p>
 			  <a href="#" rel="vims-modal:close">Close</a>
 			  &nbsp;
-			  <input type="button" value="Ok" onclick="Delegate()" rel="vims-modal:close"/>
+			  <input type="button" value="Ok" onclick="Delegate()"/>
 		  </p>
 	  </div>  
   `;
   
-  DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/GeorgePlotnikov/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
+  DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.css" />';
   
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
