@@ -5,7 +5,9 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     return if !permission_check('chat.agent', 'chat')
 
     # find first in waiting list
-    chat_session = Chat::Session.where(state: 'waiting').order(created_at: :asc).first
+    chat_user = User.lookup(id: @session['id'])
+    chat_ids = Chat.agent_active_chat_ids(chat_user)
+    chat_session = Chat::Session.where(state: 'waiting', chat_id: chat_ids).order(created_at: :asc).first
     if !chat_session
       return {
         event: 'chat_session_start',
@@ -15,13 +17,12 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
         },
       }
     end
-    chat_session.user_id = @session['id']
+    chat_session.user_id = chat_user.id
     chat_session.state = 'running'
     chat_session.preferences[:participants] = chat_session.add_recipient(@client_id)
     chat_session.save
 
     # send chat_session_init to client
-    chat_user = User.lookup(id: chat_session.user_id)
     url = nil
     if chat_user.image && chat_user.image != 'none'
       url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
@@ -52,10 +53,10 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     Sessions.send(@client_id, data)
 
     # send state update with sessions to agents
-    Chat.broadcast_agent_state_update
+    Chat.broadcast_agent_state_update([chat_session.chat_id])
 
     # send position update to other waiting sessions
-    Chat.broadcast_customer_state_update
+    Chat.broadcast_customer_state_update(chat_session.chat_id)
 
     nil
   end

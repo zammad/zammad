@@ -832,6 +832,10 @@ class Setting extends App.ControllerModal
     # update runtime
     @windowSpace.maxChatWindows = params.chat.max_windows
 
+    # disable chat if we have no active chat selected
+    if params.chat && ( _.isEmpty(params.chat.active) || !_.includes(_.values(params.chat.active), 'on') )
+      @active = false
+
     # update user preferences
     @ajax(
       id:          'preferences'

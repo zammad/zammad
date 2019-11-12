@@ -40,14 +40,14 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
     )
 
     # send broadcast to agents
-    Chat.broadcast_agent_state_update
+    Chat.broadcast_agent_state_update([chat_session.chat_id])
 
     # return new session
     {
       event: 'chat_session_queue',
       data:  {
         state:      'queue',
-        position:   Chat.waiting_chat_count,
+        position:   Chat.waiting_chat_count([chat_session.chat_id]),
         session_id: chat_session.session_id,
       },
     }

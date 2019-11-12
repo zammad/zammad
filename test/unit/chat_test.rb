@@ -5,7 +5,7 @@ class ChatTest < ActiveSupport::TestCase
   setup do
     groups = Group.all
     roles  = Role.where(name: %w[Agent])
-    @agent1 = User.create_or_update(
+    @agent1 = User.create!(
       login:         'ticket-chat-agent1@example.com',
       firstname:     'Notification',
       lastname:      'Agent1',
@@ -18,7 +18,7 @@ class ChatTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @agent2 = User.create_or_update(
+    @agent2 = User.create!(
       login:         'ticket-chat-agent2@example.com',
       firstname:     'Notification',
       lastname:      'Agent2',
@@ -130,8 +130,7 @@ class ChatTest < ActiveSupport::TestCase
   end
 
   test 'default test' do
-
-    chat = Chat.create_or_update(
+    chat = Chat.create!(
       name:          'default',
       max_queue:     5,
       note:          '',
@@ -139,6 +138,19 @@ class ChatTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    @agent1.preferences[:chat] = {
+      active: {
+        chat.id => 'on',
+      },
+    }
+    @agent1.save!
+    @agent2.preferences[:chat] = {
+      active: {
+        chat.id => 'on',
+      },
+    }
+    @agent2.save!
 
     # check if feature is disabled
     assert_equal('chat_disabled', chat.customer_state[:state])
@@ -178,7 +190,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # start session
-    chat_session1 = Chat::Session.create(
+    chat_session1 = Chat::Session.create!(
       chat_id: chat.id,
       user_id: @agent1.id,
     )
@@ -197,7 +209,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # activate second agent
-    chat_agent2 = Chat::Agent.create_or_update(
+    chat_agent2 = Chat::Agent.create!(
       active:        true,
       concurrent:    2,
       updated_by_id: @agent2.id,
@@ -255,13 +267,13 @@ class ChatTest < ActiveSupport::TestCase
     Chat::Session.create(
       chat_id: chat.id,
     )
-    chat_session4 = Chat::Session.create(
+    chat_session4 = Chat::Session.create!(
       chat_id: chat.id,
     )
-    chat_session5 = Chat::Session.create(
+    chat_session5 = Chat::Session.create!(
       chat_id: chat.id,
     )
-    chat_session6 = Chat::Session.create(
+    chat_session6 = Chat::Session.create!(
       chat_id: chat.id,
     )
 
@@ -290,25 +302,25 @@ class ChatTest < ActiveSupport::TestCase
     chat_session6.state = 'running'
     chat_session6.save
 
-    Chat::Message.create(
+    Chat::Message.create!(
       chat_session_id: chat_session6.id,
       content:         'message 1',
       created_by_id:   @agent1.id,
     )
     travel 1.second
-    Chat::Message.create(
+    Chat::Message.create!(
       chat_session_id: chat_session6.id,
       content:         'message 2',
       created_by_id:   @agent1.id,
     )
     travel 1.second
-    Chat::Message.create(
+    Chat::Message.create!(
       chat_session_id: chat_session6.id,
       content:         'message 3',
       created_by_id:   @agent1.id,
     )
     travel 1.second
-    Chat::Message.create(
+    Chat::Message.create!(
       chat_session_id: chat_session6.id,
       content:         'message 4',
       created_by_id:   nil,
@@ -439,6 +451,155 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(4, agent_state[:seads_total])
     assert_equal(false, agent_state[:active])
     travel_back
+  end
+
+  test 'check if agent_state_with_sessions works correctly with 2 chats' do
+    chat1 = Chat.create!(
+      name:          'topic 1',
+      max_queue:     5,
+      note:          '',
+      active:        true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    chat2 = Chat.create!(
+      name:          'topic 2',
+      max_queue:     5,
+      note:          '',
+      active:        true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    @agent1.preferences[:chat] = {
+      active: {
+        chat1.id.to_s => 'on',
+      },
+    }
+    @agent1.save!
+    @agent2.preferences[:chat] = {
+      active: {
+        chat2.id.to_s => 'on',
+      },
+    }
+    @agent2.save!
+
+    Setting.set('chat', true)
+
+    # check customer state
+    assert_equal('offline', chat1.customer_state[:state])
+    assert_equal('offline', chat2.customer_state[:state])
+
+    # check agent state
+    agent_state = Chat.agent_state_with_sessions(@agent1.id)
+    assert_equal(0, agent_state[:waiting_chat_count])
+    assert_equal(0, agent_state[:running_chat_count])
+    assert_equal([], agent_state[:active_sessions])
+    assert_equal(0, agent_state[:seads_available])
+    assert_equal(0, agent_state[:seads_total])
+    assert_equal(false, agent_state[:active])
+
+    # set agent 1 to active
+    Chat::Agent.create!(
+      active:        true,
+      concurrent:    4,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
+    )
+
+    # check customer state
+    assert_equal('online', chat1.customer_state[:state])
+    assert_equal('offline', chat2.customer_state[:state])
+
+    # check agent state
+    agent_state = Chat.agent_state_with_sessions(@agent2.id)
+    assert_equal(0, agent_state[:waiting_chat_count])
+    assert_equal(0, agent_state[:running_chat_count])
+    assert_equal([], agent_state[:active_sessions])
+    assert_equal(0, agent_state[:seads_available])
+    assert_equal(0, agent_state[:seads_total])
+    assert_equal(false, agent_state[:active])
+
+    # set agent 2 to active
+    Chat::Agent.create!(
+      active:        true,
+      concurrent:    2,
+      updated_by_id: @agent2.id,
+      created_by_id: @agent2.id,
+    )
+
+    # check customer state
+    assert_equal('online', chat1.customer_state[:state])
+    assert_equal('online', chat2.customer_state[:state])
+
+    # start session
+    chat_session1 = Chat::Session.create!(
+      chat_id: chat1.id,
+      user_id: @agent1.id,
+    )
+    assert(chat_session1.session_id)
+
+    # check agent1 state
+    agent_state = Chat.agent_state_with_sessions(@agent1.id)
+    assert_equal(1, agent_state[:waiting_chat_count])
+    assert_equal(0, agent_state[:running_chat_count])
+    assert_equal([], agent_state[:active_sessions])
+    assert_equal(3, agent_state[:seads_available])
+    assert_equal(4, agent_state[:seads_total])
+    assert_equal(true, agent_state[:active])
+
+    # check agent2 state
+    agent_state = Chat.agent_state_with_sessions(@agent2.id)
+    assert_equal(0, agent_state[:waiting_chat_count])
+    assert_equal(0, agent_state[:running_chat_count])
+    assert_equal([], agent_state[:active_sessions])
+    assert_equal(2, agent_state[:seads_available])
+    assert_equal(2, agent_state[:seads_total])
+    assert_equal(true, agent_state[:active])
+  end
+
+  test 'if agent_active_chat_ids works correctly' do
+    chat1 = Chat.create!(
+      name:          'topic 1',
+      max_queue:     5,
+      note:          '',
+      active:        true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    chat2 = Chat.create!(
+      name:          'topic 2',
+      max_queue:     5,
+      note:          '',
+      active:        true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal([], Chat.agent_active_chat_ids(@agent1))
+    assert_equal([], Chat.agent_active_chat_ids(@agent2))
+
+    @agent1.preferences[:chat] = {
+      active: {
+        chat1.id.to_s => 'on',
+      },
+    }
+    @agent1.save!
+    @agent2.preferences[:chat] = {
+      active: {
+        chat2.id => 'on',
+      },
+    }
+    @agent2.save!
+    assert_equal([chat1.id], Chat.agent_active_chat_ids(@agent1))
+    assert_equal([chat2.id], Chat.agent_active_chat_ids(@agent2))
+
+    @agent2.preferences[:chat] = {
+      active: {
+        chat2.id => 'off',
+      },
+    }
+    @agent2.save!
+    assert_equal([chat1.id], Chat.agent_active_chat_ids(@agent1))
+    assert_equal([], Chat.agent_active_chat_ids(@agent2))
   end
 
   test 'blocked ip test' do

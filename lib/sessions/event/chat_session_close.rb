@@ -32,10 +32,10 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       chat_session.save
 
       # set state update to all agents
-      Chat.broadcast_agent_state_update
+      Chat.broadcast_agent_state_update([chat_session.chat_id])
 
       # send position update to other waiting sessions
-      Chat.broadcast_customer_state_update
+      Chat.broadcast_customer_state_update(chat_session.chat_id)
 
     # notify about "leaving"
     else

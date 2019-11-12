@@ -30,7 +30,7 @@ class Observer::Chat::Leave::BackgroundJob
     }
     chat_session.send_to_recipients(message, @client_id)
 
-    Chat.broadcast_agent_state_update
+    Chat.broadcast_agent_state_update([chat_session.chat_id])
   end
 
 end
