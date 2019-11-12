@@ -84,7 +84,8 @@ class App.Content extends App.ControllerWidgetPermanent
           history = App.Config.get('History')
           if history[10]
             history.shift()
-          history.push window.location.hash
+
+          history.push '#' + params.match.input
 
           # execute controller
           controller = (params) =>
