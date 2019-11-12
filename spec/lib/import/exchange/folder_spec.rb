@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Import::Exchange::Folder do
   # see https://github.com/zammad/zammad/issues/2152
 
-  describe '#display_path (#2152)' do
+  describe '#display_path (#2152)', :use_vcr do
     let(:subject)            { described_class.new(ews_connection) }
     let(:ews_connection)     { Viewpoint::EWSClient.new(endpoint, user, pass) }
     let(:endpoint)           { 'https://exchange.example.com/EWS/Exchange.asmx' }
@@ -11,11 +11,6 @@ RSpec.describe Import::Exchange::Folder do
     let(:pass)               { 'password' }
     let(:grandchild_of_root) { ews_connection.get_folder_by_name('Inbox') }
     let(:child_of_root)      { ews_connection.get_folder(grandchild_of_root.parent_folder_id) }
-
-    around do |example|
-      cassette_name = example.description.gsub(/[^0-9A-Za-z.\-]+/, '_')
-      VCR.use_cassette("lib/import/exchange/folder/#{cassette_name}") { example.run }
-    end
 
     context 'when server returns valid UTF-8' do
       context 'and target folder is in root directory' do

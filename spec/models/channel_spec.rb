@@ -1,17 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Channel do
-  describe '#fetch' do
-    around do |example|
-      VCR.use_cassette(cassette, match_requests_on: %i[method uri oauth_headers]) { example.run }
-    end
-
+  describe '#fetch', use_vcr: :with_oauth_headers do
     context 'for Twitter driver' do
       subject(:twitter_channel) { create(:twitter_channel) }
 
       context 'with invalid token' do
-        let(:cassette) { 'models/channel/driver/twitter/fetch_channel_invalid' }
-
         it 'returns false' do
           expect(twitter_channel.fetch(true)).to be(false)
         end
@@ -30,8 +24,6 @@ RSpec.describe Channel do
       end
 
       context 'with valid token' do
-        let(:cassette) { 'models/channel/driver/twitter/fetch_channel_valid' }
-
         it 'returns true' do
           expect(twitter_channel.fetch(true)).to be(true)
         end

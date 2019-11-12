@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=Today+the+weather+is+really...
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="some", oauth_nonce="some",
+        oauth_signature="some%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1543795610", oauth_token="key",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '2376'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 03 Dec 2018 00:06:49 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 03 Dec 2018 00:06:49 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A154379560980468557; Expires=Wed, 02 Dec 2020 00:06:49 GMT; Path=/;
+        Domain=.twitter.com
+      - lang=en; Path=/
+      - personalization_id="v1_I6QHv6WAcEJj8qqGADKl+Q=="; Expires=Wed, 02 Dec 2020
+        00:06:49 GMT; Path=/; Domain=.twitter.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - af3c2f4e24b6e6b940f913b84f710297
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '209'
+      X-Transaction:
+      - 00fb3d5400c70774
+      X-Tsa-Request-Body-Time:
+      - '0'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - 1; mode=block; report=https://twitter.com/i/xss_report
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Mon Dec 03 00:06:49 +0000 2018","id":1069382411899817990,"id_str":"1069382411899817990","text":"Today
+        the weather is really...","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/edenhofer.de\" rel=\"nofollow\"\u003eMartin Edenhofer\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":219826253,"id_str":"219826253","name":"Martin
+        Edenhofer","screen_name":"example","location":"","description":"Open Source
+        professional and geek. Also known as #OTRS and #Zammad inventor. ;)\r\nEntrepreneur
+        and Advisor for open source people in need.","url":"https:\/\/t.co\/whm4HTWdMw","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/whm4HTWdMw","expanded_url":"http:\/\/edenhofer.de\/","display_url":"edenhofer.de","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":311,"friends_count":314,"listed_count":16,"created_at":"Fri
+        Nov 26 00:19:49 +0000 2010","favourites_count":129,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":227,"lang":"en","contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":true,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/794220000450150401\/D-eFg44R_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/794220000450150401\/D-eFg44R_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/219826253\/1349428277","profile_link_color":"0084B4","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"regular"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Mon, 03 Dec 2018 00:06:50 GMT
+recorded_with: VCR 4.0.0

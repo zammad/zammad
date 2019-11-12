@@ -299,20 +299,11 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
-    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):' do
+    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', use_vcr: :with_oauth_headers do
       subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
 
       let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
-
-      let(:run_bg_jobs) do
-        lambda do
-          VCR.use_cassette(cassette, match_requests_on: %i[method uri oauth_headers]) do
-            Scheduler.worker(true)
-          end
-        end
-      end
-
-      let(:cassette) { 'models/channel/driver/twitter/article_to_tweet' }
+      let(:run_bg_jobs) { -> { Scheduler.worker(true) } }
 
       it 'sets #from to sender’s Twitter handle' do
         expect(&run_bg_jobs)
@@ -382,7 +373,6 @@ RSpec.describe Ticket::Article, type: :model do
 
       context 'when the original channel (specified in ticket.preferences) was deleted' do
         context 'but a new one with the same screen_name exists' do
-          let(:cassette)    { 'models/channel/driver/twitter/article_to_tweet_channel_replace' }
           let(:new_channel) { create(:twitter_channel) }
 
           before do

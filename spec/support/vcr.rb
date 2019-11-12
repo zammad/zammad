@@ -19,3 +19,21 @@ VCR.configure do |config|
         r2.headers['Authorization']&.map(&without_onetime_oauth_params)
   end
 end
+
+RSpec.configure do |config|
+  config.around(:each, use_vcr: true) do |example|
+    spec_path       = Pathname.new(example.file_path).realpath
+    cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(/_spec\.rb$/, '')
+    cassette_name   = "#{example.example_group.description} #{example.description}".gsub(/[^0-9A-Za-z.\-]+/, '_').downcase
+    request_profile = case example.metadata[:use_vcr]
+                      when true
+                        %i[method uri]
+                      when :with_oauth_headers
+                        %i[method uri oauth_headers]
+                      end
+
+    VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do
+      example.run
+    end
+  end
+end

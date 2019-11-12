@@ -89,10 +89,8 @@ RSpec.describe 'External Credentials', type: :request do
           end
 
           context 'with invalid credentials, via request params' do
-            it 'returns 200 with remote (Facebook auth) error' do
-              VCR.use_cassette('request/external_credentials/facebook/app_verify_invalid_credentials_with_not_created') do
-                post '/api/v1/external_credentials/facebook/app_verify', params: invalid_credentials, as: :json
-              end
+            it 'returns 200 with remote (Facebook auth) error', :use_vcr do
+              post '/api/v1/external_credentials/facebook/app_verify', params: invalid_credentials, as: :json
 
               expect(response).to have_http_status(:ok)
               expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
@@ -102,10 +100,8 @@ RSpec.describe 'External Credentials', type: :request do
           context 'with invalid credentials, via ExternalCredential record' do
             before { create(:facebook_credential, credentials: invalid_credentials) }
 
-            it 'returns 200 with remote (Facebook auth) error' do
-              VCR.use_cassette('request/external_credentials/facebook/app_verify_invalid_credentials_with_created') do
-                post '/api/v1/external_credentials/facebook/app_verify', as: :json
-              end
+            it 'returns 200 with remote (Facebook auth) error', :use_vcr do
+              post '/api/v1/external_credentials/facebook/app_verify', as: :json
 
               expect(response).to have_http_status(:ok)
               expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
@@ -137,10 +133,8 @@ RSpec.describe 'External Credentials', type: :request do
           context 'with invalid credentials, via ExternalCredential record' do
             before { create(:facebook_credential, credentials: invalid_credentials) }
 
-            it 'returns 500 with remote (Facebook auth) error' do
-              VCR.use_cassette('request/external_credentials/facebook/link_account_with_invalid_credential') do
-                get '/api/v1/external_credentials/facebook/link_account', as: :json
-              end
+            it 'returns 500 with remote (Facebook auth) error', :use_vcr do
+              get '/api/v1/external_credentials/facebook/link_account', as: :json
 
               expect(response).to have_http_status(:internal_server_error)
               expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
@@ -172,10 +166,8 @@ RSpec.describe 'External Credentials', type: :request do
           context 'with invalid credentials, via ExternalCredential record' do
             before { create(:facebook_credential, credentials: invalid_credentials) }
 
-            it 'returns 500 with remote (Facebook auth) error' do
-              VCR.use_cassette('request/external_credentials/facebook/callback_invalid_credentials') do
-                get '/api/v1/external_credentials/facebook/callback', as: :json
-              end
+            it 'returns 500 with remote (Facebook auth) error', :use_vcr do
+              get '/api/v1/external_credentials/facebook/callback', as: :json
 
               expect(response).to have_http_status(:internal_server_error)
               expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
@@ -212,10 +204,8 @@ RSpec.describe 'External Credentials', type: :request do
           end
 
           context 'with invalid credentials, via request params' do
-            it 'returns 200 with remote (Twitter auth) error' do
-              VCR.use_cassette('request/external_credentials/twitter/app_verify_invalid_credentials_with_not_created') do
-                post '/api/v1/external_credentials/twitter/app_verify', params: invalid_credentials, as: :json
-              end
+            it 'returns 200 with remote (Twitter auth) error', :use_vcr do
+              post '/api/v1/external_credentials/twitter/app_verify', params: invalid_credentials, as: :json
 
               expect(response).to have_http_status(:ok)
               expect(json_response).to include('error' => '401 Authorization Required')
@@ -225,10 +215,8 @@ RSpec.describe 'External Credentials', type: :request do
           context 'with invalid credentials, via existing ExternalCredential record' do
             before { create(:twitter_credential, credentials: invalid_credentials) }
 
-            it 'returns 200 with remote (Twitter auth) error' do
-              VCR.use_cassette('request/external_credentials/twitter/app_verify_invalid_credentials_with_created') do
-                post '/api/v1/external_credentials/twitter/app_verify', as: :json
-              end
+            it 'returns 200 with remote (Twitter auth) error', :use_vcr do
+              post '/api/v1/external_credentials/twitter/app_verify', as: :json
 
               expect(response).to have_http_status(:ok)
               expect(json_response).to include('error' => '401 Authorization Required')
@@ -260,10 +248,8 @@ RSpec.describe 'External Credentials', type: :request do
           context 'with invalid credentials, via ExternalCredential record' do
             before { create(:twitter_credential, credentials: invalid_credentials) }
 
-            it 'returns 500 with remote (Twitter auth) error' do
-              VCR.use_cassette('request/external_credentials/twitter/link_account_with_invalid_credential') do
-                get '/api/v1/external_credentials/twitter/link_account', as: :json
-              end
+            it 'returns 500 with remote (Twitter auth) error', :use_vcr do
+              get '/api/v1/external_credentials/twitter/link_account', as: :json
 
               expect(response).to have_http_status(:internal_server_error)
               expect(json_response).to include('error' => '401 Authorization Required')
