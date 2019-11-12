@@ -15,6 +15,10 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     translation.answer.visible?
   end
 
+  def visible_internally?
+    translation.answer.visible_internally?
+  end
+
   delegate :created_by_id, to: :translation
 
   def attributes_with_association_ids

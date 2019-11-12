@@ -1,5 +1,6 @@
 class AttachmentsController < ApplicationController
-  prepend_before_action :authentication_check, except: :show
+  prepend_before_action :authentication_check, except: %i[show destroy]
+  prepend_before_action :authentication_check_only, only: %i[show destroy]
   before_action :verify_object_permissions, only: %i[show destroy]
 
   def show

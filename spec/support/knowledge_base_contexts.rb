@@ -26,4 +26,8 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
   let :internal_answer do
     create(:knowledge_base_answer, category: category, internal_at: 1.week.ago)
   end
+
+  let :archived_answer do
+    create(:knowledge_base_answer, category: category, archived_at: 1.week.ago)
+  end
 end

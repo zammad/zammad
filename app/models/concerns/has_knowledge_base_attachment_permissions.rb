@@ -6,12 +6,15 @@ module HasKnowledgeBaseAttachmentPermissions
     def can_show_attachment?(file, user)
       return true if user_kb_editor?(user)
 
-      find(file.o_id)&.visible?
+      object = find(file.o_id)
+
+      return object&.visible_internally? if user_kb_reader?(user)
+
+      object&.visible?
     end
 
-    def can_destroy_attachment?(file, user)
+    def can_destroy_attachment?(_file, user)
       return if !user_kb_editor?(user)
-      return if !HasRichText.attachment_inline?(file)
 
       true
     end
@@ -20,6 +23,12 @@ module HasKnowledgeBaseAttachmentPermissions
       return false if user.nil?
 
       user.permissions? %w[knowledge_base.editor]
+    end
+
+    def user_kb_reader?(user)
+      return false if user.nil?
+
+      user.permissions? %w[knowledge_base.reader]
     end
   end
 
