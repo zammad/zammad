@@ -49,6 +49,10 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     App.KnowledgeBase.find(@knowledge_base_id).remove(clear: true)
     @fetchAndRender()
 
+  release: ->
+    super
+    @modal.el.remove()
+
   processLoaded: ->
     if @knowledge_base_id
       @renderLoaded()
@@ -59,7 +63,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     @renderScreenError(detail: 'No Knowledge Base. Please create first Knowledge Base', el: @$('.page-content'))
     @headerSwitchInput.prop('checked', false)
 
-    new App.KnowledgeBaseNewModal(
+    @modal = new App.KnowledgeBaseNewModal(
       parentVC:  @
       container: @el.closest('.main')
     )

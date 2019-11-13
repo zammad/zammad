@@ -46,6 +46,7 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
 
       success: (data) =>
         @parentVC.fetchAndRender()
+        @parentVC.modal = undefined
         @close()
 
       error: (xhr) =>
