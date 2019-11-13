@@ -1,8 +1,14 @@
 class SearchIndexJob < ApplicationJob
+  include HasActiveJobLock
 
   retry_on StandardError, attempts: 20, wait: lambda { |executions|
     executions * 10.seconds
   }
+
+  def lock_key
+    # "SearchIndexJob/User/42"
+    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
+  end
 
   def perform(object, o_id)
     @object = object

@@ -1,4 +1,11 @@
 class ChecksKbClientNotificationJob < ApplicationJob
+  include HasActiveJobLock
+
+  def lock_key
+    # "ChecksKbClientNotificationJob/KnowledgeBase::Answer/42/destroy"
+    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}/#{arguments[2]}"
+  end
+
   def perform(klass_name, id, event)
     object = klass_name.constantize.find_by(id: id)
     return if object.blank?

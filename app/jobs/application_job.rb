@@ -10,6 +10,10 @@ class ApplicationJob < ActiveJob::Base
   # This is a workaround to sync ActiveJob#executions to Delayed::Job#attempts
   # until we resolve this dependency.
   after_enqueue do |job|
+    # skip update of `attempts` attribute if job wasn't queued because of ActiveJobLock
+    #(another job with same lock key got queued before this job could be retried)
+    next if job.provider_job_id.blank?
+
     # update the column right away without loading Delayed::Job record
     # see: https://stackoverflow.com/a/34264580
     Delayed::Job.where(id: job.provider_job_id).update_all(attempts: job.executions) # rubocop:disable Rails/SkipsModelValidations

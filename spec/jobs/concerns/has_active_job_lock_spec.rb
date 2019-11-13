@@ -1,0 +1,120 @@
+require 'rails_helper'
+
+RSpec.describe HasActiveJobLock, type: :job do
+
+  before do
+    stub_const job_class_namespace, job_class
+  end
+
+  let(:job_class_namespace) { 'UniqueActiveJob' }
+
+  let(:job_class) do
+    Class.new(ApplicationJob) do
+      include HasActiveJobLock
+
+      cattr_accessor :perform_counter, default: 0
+
+      def perform
+        self.class.perform_counter += 1
+      end
+    end
+  end
+
+  shared_examples 'handle locking of jobs' do
+    context 'performing job is present' do
+
+      before { create(:active_job_lock, lock_key: job_class.name, created_at: 1.minute.ago, updated_at: 1.second.ago) }
+
+      it 'allows enqueueing of perform_later jobs' do
+        expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
+      end
+
+      it 'allows execution of perform_now jobs' do
+        expect { job_class.perform_now }.to change(job_class, :perform_counter).by(1)
+      end
+    end
+
+    context 'enqueued job is present' do
+
+      before { job_class.perform_later }
+
+      it "won't enqueue perform_later jobs" do
+        expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
+      end
+
+      it 'allows execution of perform_now jobs' do
+        expect { job_class.perform_now }.to change(job_class, :perform_counter).by(1)
+      end
+    end
+
+    context 'running perform_now job' do
+
+      let(:job_class) do
+        Class.new(super()) do
+
+          cattr_accessor :task_completed, default: false
+
+          def perform(long_running: false)
+
+            if long_running
+              sleep(0.1) until self.class.task_completed
+            end
+
+            # don't pass parameters to super method
+            super()
+          end
+        end
+      end
+
+      let!(:thread) { Thread.new { job_class.perform_now(long_running: true) } }
+
+      after do
+        job_class.task_completed = true
+        thread.join
+      end
+
+      it 'enqueues perform_later jobs' do
+        expect { job_class.perform_later }.to have_enqueued_job(job_class)
+      end
+
+      it 'allows execution of perform_now jobs' do
+        expect { job_class.perform_now }.to change(job_class, :perform_counter).by(1)
+      end
+    end
+
+    context 'dynamic lock key' do
+
+      let(:job_class) do
+        Class.new(super()) do
+
+          def lock_key
+            "#{super}/#{arguments[0]}/#{arguments[1]}"
+          end
+        end
+      end
+
+      it 'queues one job per lock key' do
+        expect do
+          2.times { job_class.perform_later('User', 23) }
+          job_class.perform_later('User', 42)
+        end.to have_enqueued_job(job_class).exactly(:twice)
+      end
+    end
+  end
+
+  include_examples 'handle locking of jobs'
+
+  context 'custom lock key' do
+
+    let(:job_class) do
+      Class.new(super()) do
+
+        def lock_key
+          'custom_lock_key'
+        end
+      end
+    end
+
+    include_examples 'handle locking of jobs'
+  end
+end

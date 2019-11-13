@@ -1,4 +1,11 @@
 class TicketOnlineNotificationSeenJob < ApplicationJob
+  include HasActiveJobLock
+
+  def lock_key
+    # "TicketOnlineNotificationSeenJob/23/42"
+    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
+  end
+
   def perform(ticket_id, user_id)
     user_id = user_id || 1
 

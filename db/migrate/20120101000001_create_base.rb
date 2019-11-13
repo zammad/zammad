@@ -715,5 +715,14 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :http_logs, [:created_at]
     add_foreign_key :http_logs, :users, column: :created_by_id
     add_foreign_key :http_logs, :users, column: :updated_by_id
+
+    create_table :active_job_locks do |t|
+      t.string :lock_key
+      t.string :active_job_id
+
+      t.timestamps
+    end
+    add_index :active_job_locks, :lock_key, unique: true
+    add_index :active_job_locks, :active_job_id, unique: true
   end
 end

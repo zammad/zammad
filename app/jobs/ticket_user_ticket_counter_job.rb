@@ -1,4 +1,11 @@
 class TicketUserTicketCounterJob < ApplicationJob
+  include HasActiveJobLock
+
+  def lock_key
+    # "TicketUserTicketCounterJob/23/42"
+    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
+  end
+
   def perform(customer_id, updated_by_id)
 
     # check if update is needed

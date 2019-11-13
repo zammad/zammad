@@ -9,6 +9,7 @@ module ZammadActiveJobHelper
   def clear_jobs
     enqueued_jobs.clear
     performed_jobs.clear
+    ActiveJobLock.destroy_all
   end
 end
 
