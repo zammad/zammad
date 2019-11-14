@@ -105,7 +105,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       article.message_id = tweet.id.to_s
       article.preferences['links'] = [
         {
-          url:    "https://twitter.com/statuses/#{tweet.id}",
+          url:    TwitterSync::STATUS_URL_TEMPLATE % tweet.id,
           target: '_blank',
           name:   'on Twitter',
         },

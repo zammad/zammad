@@ -3,11 +3,18 @@ require_dependency 'issue_2715_fix_broken_twitter_urls_job' # Rails autoloading 
 
 RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
   context 'with existing Twitter articles' do
+    let!(:tweet) { create(:twitter_article, preferences: tweet_preferences) }
     let!(:dm) { create(:twitter_dm_article, preferences: dm_preferences) }
+
+    let(:tweet_preferences) do
+      # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
+      { links: [{ url: "https://twitter.com/statuses/#{Faker::Number.number(20)}" }] }
+    end
 
     let(:dm_preferences) do
       {
-        links:   Array.new(5, &link_hash),
+        # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
+        links:   [{ url: "https://twitter.com/statuses/#{Faker::Number.number(20)}" }],
         twitter: {
           recipient_id: recipient_id,
           sender_id:    sender_id,
@@ -15,10 +22,14 @@ RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
       }
     end
 
-    # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
-    let(:link_hash) { ->(_) { { url: "https://twitter.com/statuses/#{Faker::Number.number(20)}" } } }
     let(:recipient_id) { '1234567890' }
     let(:sender_id) { '0987654321' }
+
+    it 'reformats all Twitter status URLs' do
+      expect { described_class.perform_now }
+        .to change { urls_of(tweet) }
+        .to all(match(%r{^https://twitter.com/_/status/#{tweet.message_id}$}))
+    end
 
     it 'reformats all Twitter DM URLs' do
       expect { described_class.perform_now }

@@ -23,6 +23,7 @@ FactoryBot.define do
       end
 
       association :ticket, factory: :twitter_ticket
+      message_id { '775410014383026176' }
       body { Faker::Lorem.sentence }
     end
 

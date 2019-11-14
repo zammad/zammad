@@ -4,6 +4,8 @@ require 'http/uri'
 
 class TwitterSync
 
+  STATUS_URL_TEMPLATE = 'https://twitter.com/_/status/%s'.freeze
+
   attr_accessor :client
 
   def initialize(auth, payload = nil)
@@ -303,7 +305,7 @@ class TwitterSync
         twitter: self.class.preferences_cleanup(twitter_preferences),
         links:   [
           {
-            url:    "https://twitter.com/statuses/#{item['id']}",
+            url:    STATUS_URL_TEMPLATE % item['id'],
             target: '_blank',
             name:   'on Twitter',
           },
@@ -399,7 +401,7 @@ class TwitterSync
       twitter: self.class.preferences_cleanup(twitter_preferences),
       links:   [
         {
-          url:    "https://twitter.com/statuses/#{tweet.id}",
+          url:    STATUS_URL_TEMPLATE % tweet.id,
           target: '_blank',
           name:   'on Twitter',
         },
@@ -571,7 +573,7 @@ create a tweet ot direct message from an article
     twitter: twitter_preferences,
     links: [
       {
-        url: 'https://twitter.com/statuses/123',
+        url: 'https://twitter.com/_/status/123',
         target: '_blank',
         name: 'on Twitter',
       },
@@ -584,7 +586,7 @@ or
     twitter: TwitterSync.preferences_cleanup(twitter_preferences),
     links: [
       {
-        url: 'https://twitter.com/statuses/123',
+        url: 'https://twitter.com/_/status/123',
         target: '_blank',
         name: 'on Twitter',
       },
