@@ -261,6 +261,7 @@ test( "datetime selector check", function() {
     model: {
       configure_attributes: [
         { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: false, default: defaults['datetime1'] },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: false, default: defaults['datetime2'] },
       ],
     },
     params: defaults,
@@ -270,49 +271,63 @@ test( "datetime selector check", function() {
   params = App.ControllerForm.params(el)
   test_params = {
     datetime1: null,
+    datetime2: null,
   }
   deepEqual(params, test_params, 'params check')
 
-  timeStamp = new Date()
+  var timeStamp1 = new Date()
+  timeStamp1.setMinutes(0)
+  timeStamp1.setSeconds(0)
+  timeStamp1.setMilliseconds(0)
+  timeStamp1.setHours(8)
 
-  el.find('.js-datepicker').datepicker('setDate', timeStamp)
-  el.find('.js-datepicker').trigger('blur')
+  el.find('[data-name="datetime1"] .js-datepicker').datepicker('setDate', timeStamp1)
+  el.find('[data-name="datetime1"] .js-datepicker').trigger('blur')
 
   // check params
-  var timezoneOffset = new Date().getTimezoneOffset()
-  var startHour = 8 + (timezoneOffset/60)
-  if (startHour < 10) {
-    startHour = '0' + startHour.toString()
-  }
-  currentTime = timeStamp.toISOString()
-  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, startHour + ':00:00.000Z')
   params = App.ControllerForm.params(el)
   test_params = {
-    datetime1: currentTime,
+    datetime1: timeStamp1.toISOString(),
+    datetime2: null,
   }
   deepEqual(params, test_params, 'params check')
 
-  el.find('.js-timepicker[data-item="time"]').val('9:00')
-  el.find('.js-timepicker[data-item="time"]').trigger('blur')
+  el.find('[data-name="datetime1"] .js-timepicker[data-item="time"]').val('9:00')
+  el.find('[data-name="datetime1"] .js-timepicker[data-item="time"]').trigger('blur')
+
+  timeStamp1.setHours(9)
 
   // check params
-  var timezoneOffset = new Date().getTimezoneOffset()
-  var startHour = 9 + (timezoneOffset/60)
-  if (startHour < 10) {
-    startHour = '0' + startHour.toString()
-  }
-  currentTime = timeStamp.toISOString()
-  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, startHour + ':00:00.000Z')
   params = App.ControllerForm.params(el)
   test_params = {
-    datetime1: currentTime,
+    datetime1: timeStamp1.toISOString(),
+    datetime2: null,
+  }
+  deepEqual(params, test_params, 'params check')
+
+  var timeStamp2 = new Date()
+  timeStamp2.setMinutes(0)
+  timeStamp2.setSeconds(0)
+  timeStamp2.setMilliseconds(0)
+  timeStamp2.setHours(22)
+
+  el.find('[data-name="datetime2"] .js-datepicker').datepicker('setDate', timeStamp2)
+  el.find('[data-name="datetime2"] .js-datepicker').trigger('blur')
+  el.find('[data-name="datetime2"] .js-timepicker[data-item="time"]').val(timeStamp2.getHours() + ':00')
+  el.find('[data-name="datetime2"] .js-timepicker[data-item="time"]').trigger('blur')
+
+  // check params
+  params = App.ControllerForm.params(el)
+  test_params = {
+    datetime1: timeStamp1.toISOString(),
+    datetime2: timeStamp2.toISOString(),
   }
   deepEqual(params, test_params, 'params check')
 
   // Regression test for issue #2173 - Invalid date causes errors
-  el.find('.js-datepicker').datepicker('setDate', '01/01/99999')
-  el.find('.js-datepicker').datepicker('setDate', '01/01/1ABCDEFG')
-  el.find('.js-datepicker').datepicker('setDate', '01/01/1äöüß')
+  el.find('[data-name="datetime1"] .js-datepicker').datepicker('setDate', '01/01/99999')
+  el.find('[data-name="datetime1"] .js-datepicker').datepicker('setDate', '01/01/1ABCDEFG')
+  el.find('[data-name="datetime1"] .js-datepicker').datepicker('setDate', '01/01/1äöüß')
 });
 
 test( "date selector check", function() {
