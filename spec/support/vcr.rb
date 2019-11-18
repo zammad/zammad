@@ -20,8 +20,8 @@ VCR.configure do |config|
   end
 end
 
-RSpec.configure do |config|
-  config.around(:each, use_vcr: true) do |example|
+module VCRHelper
+  def self.auto_record(example)
     spec_path       = Pathname.new(example.file_path).realpath
     cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(/_spec\.rb$/, '')
     cassette_name   = "#{example.example_group.description} #{example.description}".gsub(/[^0-9A-Za-z.\-]+/, '_').downcase
@@ -36,4 +36,58 @@ RSpec.configure do |config|
       example.run
     end
   end
+end
+
+module RSpec
+  VCR_ADVISORY = <<~MSG.freeze
+    If this test is failing unexpectedly, the VCR cassette may be to blame.
+    This can happen when changing `describe`/`context` labels on some specs;
+    see commit message 1ebddff95 for details.
+
+    Check `git status` to see if a new VCR cassette has been generated.
+    If so, rename the old cassette to replace the new one and try again.
+
+  MSG
+
+  module Support
+    module VCRHelper
+      def self.inject_advisory(example)
+        # block argument is an #<RSpec::Expectations::ExpectationNotMetError>
+        define_method(:notify_failure) do |e|
+          super(e.exception(VCR_ADVISORY + e.message))
+        end
+
+        example.run
+      ensure
+        remove_method(:notify_failure)
+      end
+    end
+
+    singleton_class.send(:prepend, VCRHelper)
+  end
+
+  module Expectations
+    module VCRHelper
+      def self.inject_advisory(example)
+        define_method(:handle_matcher) do |*args|
+          super(*args)
+        rescue => e
+          raise e.exception(VCR_ADVISORY + e.message)
+        end
+
+        example.run
+      ensure
+        remove_method(:handle_matcher)
+      end
+    end
+
+    PositiveExpectationHandler.singleton_class.send(:prepend, VCRHelper)
+    NegativeExpectationHandler.singleton_class.send(:prepend, VCRHelper)
+  end
+end
+
+RSpec.configure do |config|
+  config.around(:each, use_vcr: true, &VCRHelper.method(:auto_record))
+  config.around(:each, use_vcr: true, &RSpec::Support::VCRHelper.method(:inject_advisory))
+  config.around(:each, use_vcr: true, &RSpec::Expectations::VCRHelper.method(:inject_advisory))
 end
