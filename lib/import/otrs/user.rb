@@ -153,6 +153,7 @@ module Import
         return result if role_object['GroupIDs'].blank?
 
         permissions = role_object['GroupIDs'][ group['ID'] ]
+        permissions ||= role_object['GroupIDs'][ group['ID'].to_s ]
 
         return result if !permissions
 
