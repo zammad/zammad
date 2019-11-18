@@ -24,20 +24,20 @@ returns
   def assets(data)
 
     app_model_chat_session = Chat::Session.to_app_model
-    app_model_chat = Chat.to_app_model
-    app_model_user = User.to_app_model
 
-    data[ app_model_chat_session ] ||= {}
-
-    if !data[ app_model_chat_session ][ id ]
-      data[ app_model_chat_session ][ id ] = attributes_with_association_ids
-      data[ app_model_chat_session ][ id ]['messages'] = []
-      messages.each do |message|
-        data[ app_model_chat_session ][ id ]['messages'].push message.attributes
-      end
-      data[ app_model_chat_session ][ id ]['tags'] = tag_list
+    if !data[ app_model_chat_session ]
+      data[ app_model_chat_session ] = {}
     end
+    return data if data[ app_model_chat_session ][ id ]
 
+    data[ app_model_chat_session ][ id ] = attributes_with_association_ids
+    data[ app_model_chat_session ][ id ]['messages'] = []
+    messages.each do |message|
+      data[ app_model_chat_session ][ id ]['messages'].push message.attributes
+    end
+    data[ app_model_chat_session ][ id ]['tags'] = tag_list
+
+    app_model_chat = Chat.to_app_model
     if !data[ app_model_chat ] || !data[ app_model_chat ][ chat_id ]
       chat = Chat.lookup(id: chat_id)
       if chat
@@ -45,6 +45,7 @@ returns
       end
     end
 
+    app_model_user = User.to_app_model
     %w[created_by_id updated_by_id].each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]

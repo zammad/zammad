@@ -24,8 +24,14 @@ returns
 
   def assets(data)
 
-    app_model_ticket = Ticket.to_app_model
     app_model_article = Ticket::Article.to_app_model
+
+    if !data[ app_model_article ]
+      data[ app_model_article ] = {}
+    end
+    return data if data[ app_model_article ][ id ]
+
+    app_model_ticket = Ticket.to_app_model
     app_model_user = User.to_app_model
 
     if !data[ app_model_ticket ]
@@ -38,12 +44,7 @@ returns
       end
     end
 
-    if !data[ app_model_article ]
-      data[ app_model_article ] = {}
-    end
-    if !data[ app_model_article ][ id ]
-      data[ app_model_article ][ id ] = attributes_with_association_ids
-    end
+    data[ app_model_article ][ id ] = attributes_with_association_ids
 
     %w[created_by_id updated_by_id origin_by_id].each do |local_user_id|
       next if !self[ local_user_id ]

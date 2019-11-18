@@ -24,14 +24,16 @@ returns
   def assets(data)
 
     app_model_ticket = Ticket.to_app_model
-    app_model_user = User.to_app_model
 
     if !data[ app_model_ticket ]
       data[ app_model_ticket ] = {}
     end
-    if !data[ app_model_ticket ][ id ]
-      data[ app_model_ticket ][ id ] = attributes_with_association_ids
-    end
+    return data if data[ app_model_ticket ][ id ]
+
+    data[ app_model_ticket ][ id ] = attributes_with_association_ids
+
+    app_model_user = User.to_app_model
+
     %w[created_by_id updated_by_id owner_id customer_id].each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]

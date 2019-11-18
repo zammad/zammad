@@ -29,13 +29,14 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
+      return data if data[ app_model ][ id ]
+
+      data[ app_model ][ id ] = attributes_with_association_ids
+      data = assets_of_selector('condition', data)
+      data = assets_of_selector('perform', data)
+
       if !data[ User.to_app_model ]
         data[ User.to_app_model ] = {}
-      end
-      if !data[ app_model ][ id ]
-        data[ app_model ][ id ] = attributes_with_association_ids
-        data = assets_of_selector('condition', data)
-        data = assets_of_selector('perform', data)
       end
       %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]

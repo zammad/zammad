@@ -29,18 +29,18 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      if !data[ app_model ][ id ]
-        local_attributes = attributes_with_association_ids
+      return data if data[ app_model ][ id ]
 
-        local_attributes['object'] = ObjectLookup.by_id(local_attributes['activity_stream_object_id'])
-        local_attributes['type']   = TypeLookup.by_id(local_attributes['activity_stream_type_id'])
+      local_attributes = attributes_with_association_ids
 
-        # set temp. current attributes to assets pool to prevent
-        # loops, will be updated with lookup attributes later
-        data[ app_model ][ id ] = local_attributes
+      local_attributes['object'] = ObjectLookup.by_id(local_attributes['activity_stream_object_id'])
+      local_attributes['type']   = TypeLookup.by_id(local_attributes['activity_stream_type_id'])
 
-        ApplicationModel.assets_of_object_list([local_attributes], data)
-      end
+      # set temp. current attributes to assets pool to prevent
+      # loops, will be updated with lookup attributes later
+      data[ app_model ][ id ] = local_attributes
+
+      ApplicationModel.assets_of_object_list([local_attributes], data)
 
       return data if !self['created_by_id']
 

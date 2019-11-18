@@ -29,21 +29,21 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      if !data[ app_model ][ id ]
-        local_attributes = attributes_with_association_ids
+      return data if data[ app_model ][ id ]
 
-        # set temp. current attributes to assets pool to prevent
-        # loops, will be updated with lookup attributes later
-        data[ app_model ][ id ] = local_attributes
+      local_attributes = attributes_with_association_ids
 
-        local_attributes['group_ids'].each_key do |group_id|
-          next if data[:Group] && data[:Group][group_id]
+      # set temp. current attributes to assets pool to prevent
+      # loops, will be updated with lookup attributes later
+      data[ app_model ][ id ] = local_attributes
 
-          group = Group.lookup(id: group_id)
-          next if !group
+      local_attributes['group_ids'].each_key do |group_id|
+        next if data[:Group] && data[:Group][group_id]
 
-          data = group.assets(data)
-        end
+        group = Group.lookup(id: group_id)
+        next if !group
+
+        data = group.assets(data)
       end
 
       return data if !self['created_by_id'] && !self['updated_by_id']

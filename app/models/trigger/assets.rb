@@ -24,20 +24,22 @@ returns
 
     def assets(data)
 
-      app_model_overview = Trigger.to_app_model
-      app_model_user = User.to_app_model
+      app_model_trigger = Trigger.to_app_model
 
-      if !data[ app_model_overview ]
-        data[ app_model_overview ] = {}
+      if !data[ app_model_trigger ]
+        data[ app_model_trigger ] = {}
       end
+      return data if data[ app_model_trigger ][ id ]
+
+      data[ app_model_trigger ][ id ] = attributes_with_association_ids
+      data = assets_of_selector('condition', data)
+      data = assets_of_selector('perform', data)
+
+      app_model_user = User.to_app_model
       if !data[ app_model_user ]
         data[ app_model_user ] = {}
       end
-      if !data[ app_model_overview ][ id ]
-        data[ app_model_overview ][ id ] = attributes_with_association_ids
-        data = assets_of_selector('condition', data)
-        data = assets_of_selector('perform', data)
-      end
+
       %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]
         next if data[ app_model_user ][ self[ local_user_id ] ]

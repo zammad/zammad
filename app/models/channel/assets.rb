@@ -29,27 +29,27 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      if !data[ app_model ][ id ]
-        attributes = attributes_with_association_ids
+      return data if data[ app_model ][ id ]
 
-        # remove passwords if use is no admin
-        access = false
-        if UserInfo.current_user_id
-          user = User.lookup(id: UserInfo.current_user_id)
-          if user.permissions?('admin.channel')
-            access = true
-          end
-        end
-        if !access
-          %w[inbound outbound].each do |key|
-            if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
-              attributes['options'][key]['options'].delete('password')
-            end
-          end
-        end
+      attributes = attributes_with_association_ids
 
-        data[ self.class.to_app_model ][ id ] = attributes
+      # remove passwords if use is no admin
+      access = false
+      if UserInfo.current_user_id
+        user = User.lookup(id: UserInfo.current_user_id)
+        if user.permissions?('admin.channel')
+          access = true
+        end
       end
+      if !access
+        %w[inbound outbound].each do |key|
+          if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
+            attributes['options'][key]['options'].delete('password')
+          end
+        end
+      end
+
+      data[ self.class.to_app_model ][ id ] = attributes
 
       return data if !self['created_by_id'] && !self['updated_by_id']
 
