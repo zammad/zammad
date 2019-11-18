@@ -943,6 +943,18 @@ RSpec.describe Channel::EmailParser, type: :model do
             .not_to raise_error
         end
       end
+
+      context 'when attachment for follow up check contains invalid charsets (#2808)' do
+        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail085.box') }
+
+        before { Setting.set('postmaster_follow_up_search_in', %w[attachment body]) }
+
+        it 'does not raise Encoding::CompatibilityError:' do
+          expect { described_class.new.process({}, raw_mail) }
+            .not_to raise_error
+        end
+      end
+
     end
 
     describe 'attachment handling' do
