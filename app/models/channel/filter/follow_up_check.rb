@@ -34,7 +34,12 @@ module Channel::Filter::FollowUpCheck
         next if attachment[:preferences]['Mime-Type'].blank?
 
         if %r{text/html}i.match?(attachment[:preferences]['Mime-Type'])
-          ticket = Ticket::Number.check(attachment[:data].html2text)
+          begin
+            text = attachment[:data].html2text
+            ticket = Ticket::Number.check(text)
+          rescue => e
+            Rails.logger.error e
+          end
         end
 
         if %r{text/plain}i.match?(attachment[:preferences]['Mime-Type'])
