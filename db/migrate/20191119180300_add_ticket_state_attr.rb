@@ -1,4 +1,4 @@
-class AddPendingReviewAndDelegatedTicketStates < ActiveRecord::Migration[5.1]
+class AddTicketStateAttr < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
