@@ -89,6 +89,12 @@ module HasActiveJobLock
     ActiveJobLock.transaction(isolation: :serializable) do
       yield
     end
+  # PostgeSQL prevents locking on records that are already locked
+  # for UPDATE in Serializable Isolation Level transactions,
+  # but it's safe to retry as described in the docs:
+  # https://www.postgresql.org/docs/10/transaction-iso.html
+  rescue PG::TRSerializationFailure
+    retry
   rescue ActiveRecord::RecordNotUnique
     existing_active_job_lock!
   end
