@@ -448,6 +448,9 @@ example for aggregations within one year
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         wildcard_or_term = 'term'
+        if data['value'].is_a?(Array)
+          wildcard_or_term = 'terms'
+        end
         t = {}
 
         # use .keyword in case of compare exact values
@@ -456,13 +459,11 @@ example for aggregations within one year
             data['value'].each do |value|
               next if !value.is_a?(String) || value !~ /[A-z]/
 
-              wildcard_or_term = 'terms'
               key_tmp += '.keyword'
               break
             end
           elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value'])
             key_tmp += '.keyword'
-            wildcard_or_term = 'term'
           end
         end
 
