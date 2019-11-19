@@ -519,11 +519,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       context '10+ minutes after creation' do
         before do
           authenticated_as(agent_user)
-          travel 10.minutes
+          travel 11.minutes
         end
 
         it 'fails' do
-          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }.to(false)
+          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.not_to change { Ticket::Article.exists?(id: article.id) }
         end
       end
     end
