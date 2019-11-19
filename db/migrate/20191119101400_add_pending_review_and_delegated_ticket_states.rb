@@ -3,25 +3,22 @@ class AddPendingReviewAndDelegatedTicketStates < ActiveRecord::Migration[5.1]
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
-
-    Ticket::StateType.create_if_not_exists(id: 8, name: 'pending review', created_by_id: 1, updated_by_id: 1)
-    Ticket::StateType.create_if_not_exists(id: 9, name: 'delegated', created_by_id: 1, updated_by_id: 1)
     
     Ticket::State.create_if_not_exists(
       id:                8,
       name:              'pending review',
-      state_type_id:     Ticket::StateType.find_by(name: 'pending review').id,
+      state_type_id:     Ticket::StateType.find_by(name: 'open').id,
       ignore_escalation: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      created_by_id:     1,
+      updated_by_id:     1,
     )
     Ticket::State.create_if_not_exists(
       id:                9,
       name:              'delegated',
-      state_type_id:     Ticket::StateType.find_by(name: 'delegated').id,
+      state_type_id:     Ticket::StateType.find_by(name: 'open').id,
       ignore_escalation: true,
-      created_by_id: 1,
-      updated_by_id: 1,
+      created_by_id:     1,
+      updated_by_id:     1,
     )
     
   end
