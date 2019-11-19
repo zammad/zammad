@@ -362,7 +362,7 @@ class App.ControllerForm extends App.Controller
     else
       placeholderObjects = {}
       if @model.className && !_.isEmpty(attribute.linktemplate) && !_.isEmpty(@params[attribute.name])
-        placeholderObjects = { attribute: attribute, user: App.Session.get(), config: App.Config.all() }
+        placeholderObjects = { attribute: attribute, session: App.Session.get(), config: App.Config.all() }
         placeholderObjects[@model.className.toLowerCase()] = @params
       fullItem = $(
         App.view('generic/attribute')(

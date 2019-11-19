@@ -158,7 +158,7 @@ class App extends Spine.Controller
     return if !object.constructor
     return if !object.constructor.className
     return if _.isEmpty(object[attributeConfig.name])
-    placeholderObjects = { attribute: attributeConfig, user: App.Session.get(), config: App.Config.all() }
+    placeholderObjects = { attribute: attributeConfig, session: App.Session.get(), config: App.Config.all() }
     placeholderObjects[object.constructor.className.toLowerCase()] = object
     "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{App.Utils.htmlEscape(resultLocal)}</a>"
 
