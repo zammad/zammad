@@ -14,6 +14,16 @@ user_community = User.create_or_update(
   organization_id: org_community.id,
 )
 
+Organization.create_if_not_exists(
+  id:   2,
+  name: 'Customer'
+)
+
+Organization.create_if_not_exists(
+  id:   3,
+  name: 'Default SRE Provider'
+)
+
 UserInfo.current_user_id = user_community.id
 
 if Ticket.count.zero?
