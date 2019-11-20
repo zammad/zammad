@@ -28,6 +28,7 @@
 		- added rerender method to show correct today if task is longer open the 24 hours
 		- scroll into view
 		- fix vertical auto position
+		- disableScroll flag to
  */
 
 (function(factory){
@@ -767,13 +768,15 @@
 				});
 			}
 
-			// adjust scroll of scrollParent
-			var scrollParent = this.picker.scrollParent();
-			var bottomEdge = offset.top + height + this.picker.outerHeight();
-			var scrollBottomEdge = scrollParent.scrollTop() + scrollParent.height();
+			if(!this.o.disableScroll) {
+				// adjust scroll of scrollParent
+				var scrollParent = this.picker.scrollParent();
+				var bottomEdge = offset.top + height + this.picker.outerHeight();
+				var scrollBottomEdge = scrollParent.scrollTop() + scrollParent.height();
 
-			if(bottomEdge > scrollBottomEdge){
-				scrollParent.scrollTop(scrollParent.scrollTop() + (bottomEdge - scrollBottomEdge) + 10);
+				if(bottomEdge > scrollBottomEdge){
+					scrollParent.scrollTop(scrollParent.scrollTop() + (bottomEdge - scrollBottomEdge) + 10);
+				}
 			}
 
 			return this;

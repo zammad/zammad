@@ -37,6 +37,8 @@ class App.UiElement.basedate
       rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
+      orientation: attribute.orientation
+      disableScroll: attribute.disableScroll
     )
 
     @setNewTimeInitial(item, attribute)

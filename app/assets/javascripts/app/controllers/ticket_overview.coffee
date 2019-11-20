@@ -1357,6 +1357,10 @@ class BulkForm extends App.Controller
         localAttribute.null = true
         @configure_attributes_ticket.push localAttribute
 
+    time_attribute = _.findWhere(@configure_attributes_ticket, {'name': 'pending_time'})
+    time_attribute.orientation = 'top'
+    time_attribute.disableScroll = true
+
     @holder = @options.holder
     @visible = false
 
