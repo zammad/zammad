@@ -284,8 +284,19 @@
 
     if (clipboardData && clipboardData.items && clipboardData.items[0]) {
       var imageInserted = false
-      var item = clipboardData.items[0]
-      if (item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')) {
+      var item
+
+      // look for image only if no HTML with textual content is available.
+      // E.g. Excel provides images of the spreadsheet along with HTML.
+      // While some browsers make images available in clipboard as HTML,
+      // sometimes wrapped in multiple nodes.
+      if($(clipboardData.getData('text/html')).text().trim().length == 0) {
+        item = jQuery.grep(clipboardData.items, function(item){
+          return item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')
+        })[0]
+      }
+
+      if (item) {
         this.log('paste image', item)
         console.log(item)
 
@@ -326,6 +337,8 @@
 
         reader.readAsDataURL(imageFile)
         imageInserted = true
+      } else {
+        item = clipboardData.items[0]
       }
     }
     if (imageInserted) {
