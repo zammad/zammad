@@ -42,15 +42,15 @@ returns:
     when :work_on_all
       state_types = ['new', 'open', 'pending reminder']
     when :viewable
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
+      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed', 'pending review', 'delegated']
     when :viewable_agent_new
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed']
+      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'pending review', 'delegated']
     when :viewable_agent_edit
-      state_types = ['open', 'pending reminder', 'pending action', 'closed']
+      state_types = ['open', 'pending reminder', 'pending action', 'closed', 'pending review', 'delegated']
     when :viewable_customer_new
-      state_types = %w[new closed]
+      state_types = ['new', 'closed', 'pending review', 'delegated']
     when :viewable_customer_edit
-      state_types = %w[open closed]
+      state_types = ['open', 'closed', 'pending review', 'delegated']
     when :closed
       state_types = %w[closed]
     when :merged
