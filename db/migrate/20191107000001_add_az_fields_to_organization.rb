@@ -41,6 +41,8 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
         to_migrate:  false,
         to_delete:   false,
         position:    1550,
+        created_by_id: 1,
+        updated_by_id: 1
       )
 
       ObjectManager::Attribute.add(
@@ -74,6 +76,8 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
         to_migrate:  false,
         to_delete:   false,
         position:    1551,
+        created_by_id: 1,
+        updated_by_id: 1
       )
       
       ObjectManager::Attribute.add(
@@ -106,6 +110,8 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
         to_migrate:  false,
         to_delete:   false,
         position:    1552,
+        created_by_id: 1,
+        updated_by_id: 1
       )
 
       ObjectManager::Attribute.add(
@@ -138,6 +144,8 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
             to_migrate:  false,
             to_delete:   false,
             position:    1553,
+            created_by_id: 1,
+            updated_by_id: 1
         )
   
     end
