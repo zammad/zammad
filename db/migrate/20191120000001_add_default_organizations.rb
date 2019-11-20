@@ -5,11 +5,15 @@ class AddDefaultOrganizations < ActiveRecord::Migration[5.1]
       return if !Setting.find_by(name: 'system_init_done')
 
       Organization.create_if_not_exists(
-        name: 'Customer'
+        name: 'Customer',
+        created_by_id: 1,
+        updated_by_id: 1
       )
 
       Organization.create_if_not_exists(
-        name: 'Default SRE Provider'
+        name: 'Default SRE Provider',
+        created_by_id: 1,
+        updated_by_id: 1
       )
 
     end
