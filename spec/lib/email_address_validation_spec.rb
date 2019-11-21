@@ -7,7 +7,7 @@ RSpec.describe EmailAddressValidation do
     describe 'with dot in domain' do
 
       describe 'with MX record' do
-        let(:email_address) { 'support@zammad.com' }
+        let(:email_address) { 'greetings@example.com' }
         let(:email_address_validation) { described_class.new(email_address) }
 
         it 'reports given email address' do
@@ -45,7 +45,7 @@ RSpec.describe EmailAddressValidation do
     end
 
     describe 'without dot in domain' do
-      let(:email_address) { 'zammad@localhost' }
+      let(:email_address) { 'greetings@localhost' }
       let(:email_address_validation) { described_class.new(email_address) }
 
       it 'reports given email address' do
@@ -85,7 +85,7 @@ RSpec.describe EmailAddressValidation do
     end
 
     describe 'with invalid domain format' do
-      let(:email_address) { 'support@zammad..com' }
+      let(:email_address) { 'greetings@example..com' }
       let(:email_address_validation) { described_class.new(email_address) }
 
       it 'reports given email address' do
