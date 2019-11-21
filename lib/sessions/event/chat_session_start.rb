@@ -1,5 +1,20 @@
 class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
 
+=begin
+
+a agent start`s a new chat session
+
+payload
+
+  {
+    event: 'chat_session_start',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !permission_check('chat.agent', 'chat')
@@ -23,14 +38,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     chat_session.save
 
     # send chat_session_init to client
-    url = nil
-    if chat_user.image && chat_user.image != 'none'
-      url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
-    end
-    user = {
-      name:   chat_user.fullname,
-      avatar: url,
-    }
+    user = chat_session.agent_user
     data = {
       event: 'chat_session_start',
       data:  {

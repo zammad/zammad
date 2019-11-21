@@ -1,18 +1,38 @@
 class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
+=begin
+
+a agent or customer is closing the chat session
+
+payload
+
+  {
+    event: 'chat_session_close',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
 
     return if !check_chat_session_exists
 
     realname = 'Anonymous'
-    if @session && @session['id']
-      realname = User.lookup(id: @session['id']).fullname
+
+    # if it is a agent session, use the realname if the agent for close message
+    chat_session = current_chat_session
+    if @session && @session['id'] && chat_session.user_id
+      agent_user = chat_session.agent_user
+      if agent_user[:name]
+        realname = agent_user[:name]
+      end
     end
 
     # check count of participents
     participents_count = 0
-    chat_session = current_chat_session
     if chat_session.preferences[:participents]
       participents_count = chat_session.preferences[:participents].count
     end

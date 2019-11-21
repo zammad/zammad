@@ -1,5 +1,20 @@
 class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
 
+=begin
+
+a agent or customer is typing a chat session message
+
+payload
+
+  {
+    event: 'chat_session_typing',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !check_chat_session_exists

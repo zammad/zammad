@@ -1,5 +1,23 @@
 class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
 
+=begin
+
+a customer requests the current state of a chat
+
+payload
+
+  {
+    event: 'chat_status_agent',
+    data: {
+      session_id: 'the id of the current chat session',
+      url: 'optional url', # will trigger a chat_session_notice to agent
+    },
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !check_chat_exists

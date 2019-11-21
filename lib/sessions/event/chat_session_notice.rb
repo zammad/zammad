@@ -1,5 +1,22 @@
 class Sessions::Event::ChatSessionNotice < Sessions::Event::ChatBase
 
+=begin
+
+a customer action has triggered a notice to the agent (e. g. view url of customer has changed)
+
+payload
+
+  {
+    event: 'chat_session_notice',
+    data: {
+      message: 'url has changed to http://localhost',
+    },
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !check_chat_session_exists

@@ -1,5 +1,23 @@
 class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
+=begin
+
+a customer requests a new chat session
+
+payload
+
+  {
+    event: 'chat_session_init',
+    data: {
+      chat_id: 'the id of chat',
+      url: 'the browser url',
+    },
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !check_chat_exists

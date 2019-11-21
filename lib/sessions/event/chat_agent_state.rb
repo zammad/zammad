@@ -1,5 +1,22 @@
 class Sessions::Event::ChatAgentState < Sessions::Event::ChatBase
 
+=begin
+
+a agent triggers its own chat availability state
+
+payload
+
+  {
+    event: 'chat_agent_state',
+    data: {
+      active: true, # true|false
+    },
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
 

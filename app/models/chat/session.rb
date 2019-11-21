@@ -14,6 +14,27 @@ class Chat::Session < ApplicationModel
 
   store :preferences
 
+  def agent_user
+    return if user_id.blank?
+
+    user = User.lookup(id: user_id)
+    return if user.blank?
+
+    fullname = user.fullname
+    chat_preferences = user.preferences[:chat] || {}
+    if chat_preferences[:alternative_name].present?
+      fullname = chat_preferences[:alternative_name]
+    end
+    url = nil
+    if user.image && user.image != 'none' && chat_preferences[:avatar_state] != 'disabled'
+      url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{user.image}"
+    end
+    {
+      name:   fullname,
+      avatar: url,
+    }
+  end
+
   def generate_session_id
     self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)
   end

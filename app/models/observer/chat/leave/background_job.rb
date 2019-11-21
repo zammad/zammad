@@ -16,8 +16,13 @@ class Observer::Chat::Leave::BackgroundJob
     chat_session.save
 
     realname = 'Anonymous'
-    if @session && @session['id']
-      realname = User.lookup(id: @session['id']).fullname
+
+    # if it is a agent session, use the realname if the agent for close message
+    if @session && @session['id'] && chat_session.user_id
+      agent_user = chat_session.agent_user
+      if agent_user[:name]
+        realname = agent_user[:name]
+      end
     end
 
     # notify participants

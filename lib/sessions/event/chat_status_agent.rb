@@ -1,5 +1,20 @@
 class Sessions::Event::ChatStatusAgent < Sessions::Event::ChatBase
 
+=begin
+
+a agent requests a the current state of all chat sessions
+
+payload
+
+  {
+    event: 'chat_status_agent',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
 

@@ -1,5 +1,22 @@
 class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
 
+=begin
+
+a agent or customer creates a new chat session message
+
+payload
+
+  {
+    event: 'chat_session_message',
+    data: {
+      content: 'some message',
+    },
+  }
+
+return is sent as message back to peer
+
+=end
+
   def run
     return super if super
     return if !check_chat_session_exists

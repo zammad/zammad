@@ -67,17 +67,8 @@ reconnect - chat session already exists, serve agent and session chat messages (
 
       if chat_session
         if chat_session.state == 'running'
-          user = nil
-          if chat_session.user_id
-            chat_user = User.lookup(id: chat_session.user_id)
-            url = nil
-            if chat_user.image && chat_user.image != 'none'
-              url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
-            end
-            user = {
-              name:   chat_user.fullname,
-              avatar: url,
-            }
+          user = chat_session.agent_user
+          if user
 
             # get queue position if needed
             session = Chat::Session.messages_by_session_id(session_id)

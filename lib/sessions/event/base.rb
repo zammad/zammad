@@ -66,7 +66,7 @@ class Sessions::Event::Base
   def current_user_id
     if !@session
       error = {
-        event: "#{event}_error",
+        event: "#{@event}_error",
         data:  {
           state: 'no_session',
         },
@@ -76,7 +76,7 @@ class Sessions::Event::Base
     end
     if @session['id'].blank?
       error = {
-        event: "#{event}_error",
+        event: "#{@event}_error",
         data:  {
           state: 'no_session_user_id',
         },
