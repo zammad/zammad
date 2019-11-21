@@ -1028,10 +1028,10 @@ class UserTest < ActiveSupport::TestCase
     )
     roles = Role.where(name: 'Agent')
     User.create_or_update(
-      login:         "agent-default-vaild_agent_group_permission-1#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-1',
+      login:         "agent-default-valid_agent_group_permission-1#{name}@example.com",
+      firstname:     'valid_agent_group_permission-1',
       lastname:      "Agent#{name}",
-      email:         "agent-default-vaild_agent_group_permission-1#{name}@example.com",
+      email:         "agent-default-valid_agent_group_permission-1#{name}@example.com",
       password:      'agentpw',
       active:        true,
       roles:         roles,
@@ -1040,10 +1040,10 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     agent2 = User.create_or_update(
-      login:         "agent-default-vaild_agent_group_permission-2#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-2',
+      login:         "agent-default-valid_agent_group_permission-2#{name}@example.com",
+      firstname:     'valid_agent_group_permission-2',
       lastname:      "Agent#{name}",
-      email:         "agent-default-vaild_agent_group_permission-2#{name}@example.com",
+      email:         "agent-default-valid_agent_group_permission-2#{name}@example.com",
       password:      'agentpw',
       active:        true,
       roles:         roles,
@@ -1065,10 +1065,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'preferences[:notification_sound][:enabled] value check' do
-    roles  = Role.where(name: 'Agent')
+    name  = rand(999_999_999)
+    roles = Role.where(name: 'Agent')
+
     agent1 = User.create!(
       login:         "agent-default-preferences-1#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-1',
+      firstname:     'valid_agent_group_permission-1',
       lastname:      "Agent#{name}",
       email:         "agent-default-preferences-1#{name}@example.com",
       password:      'agentpw',
@@ -1086,7 +1088,7 @@ class UserTest < ActiveSupport::TestCase
 
     agent2 = User.create!(
       login:         "agent-default-preferences-2#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-2',
+      firstname:     'valid_agent_group_permission-2',
       lastname:      "Agent#{name}",
       email:         "agent-default-preferences-2#{name}@example.com",
       password:      'agentpw',
@@ -1104,7 +1106,7 @@ class UserTest < ActiveSupport::TestCase
 
     agent3 = User.create!(
       login:         "agent-default-preferences-3#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-3',
+      firstname:     'valid_agent_group_permission-3',
       lastname:      "Agent#{name}",
       email:         "agent-default-preferences-3#{name}@example.com",
       password:      'agentpw',
@@ -1126,7 +1128,7 @@ class UserTest < ActiveSupport::TestCase
 
     agent4 = User.create!(
       login:         "agent-default-preferences-4#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-4',
+      firstname:     'valid_agent_group_permission-4',
       lastname:      "Agent#{name}",
       email:         "agent-default-preferences-4#{name}@example.com",
       password:      'agentpw',
@@ -1154,7 +1156,7 @@ class UserTest < ActiveSupport::TestCase
     assert_raises(Exceptions::UnprocessableEntity) do
       User.create!(
         login:         "agent-default-preferences-5#{name}@example.com",
-        firstname:     'vaild_agent_group_permission-5',
+        firstname:     'valid_agent_group_permission-5',
         lastname:      "Agent#{name}",
         email:         "agent-default-preferences-5#{name}@example.com",
         password:      'agentpw',
@@ -1175,7 +1177,7 @@ class UserTest < ActiveSupport::TestCase
   test 'cleanup references on destroy' do
     agent1 = User.create!(
       login:         "agent-cleanup_check-1#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-1',
+      firstname:     'valid_agent_group_permission-1',
       lastname:      "Agent#{name}",
       email:         "agent-cleanup_check-1#{name}@example.com",
       password:      'agentpw',
@@ -1299,7 +1301,7 @@ class UserTest < ActiveSupport::TestCase
   test 'adding group drops cache' do
     agent1 = User.create!(
       login:         "agent-cleanup_check-1#{name}@example.com",
-      firstname:     'vaild_agent_group_permission-1',
+      firstname:     'valid_agent_group_permission-1',
       lastname:      "Agent#{name}",
       email:         "agent-cleanup_check-1#{name}@example.com",
       password:      'agentpw',
