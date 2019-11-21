@@ -13,7 +13,7 @@ class DelegateModal {
 		stateDd.val('delegated');
 		stateDd.change();
 	}
-  }
+}
   
   DelegateModal.html = `  
 	  <div id="vimsDelegateModal" class="vims-modal">
@@ -36,8 +36,13 @@ class DelegateModal {
   }
 
   function Delegate(){
-	let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-	DelegateModal.delegate(ticketId);
+	    let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+	    DelegateModal.delegate(ticketId);
+  }
+
+  function GetOrchestratorUrl(){
+    let location = window.location.origin;
+    return location.split('.')[0] + '-orchestrator' + location.substr(location.indexOf('.', 0));
   }
   
   class AlertModal {
