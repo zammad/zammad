@@ -1,6 +1,6 @@
 Group.create_if_not_exists(
   id:            1,
-  name:          'Users',
+  name:          'Incoming',
   signature_id:  Signature.first.id,
   note:          'Standard Group/Pool for Tickets.',
   updated_by_id: 1,
