@@ -41,13 +41,6 @@ class FormController < ApplicationController
     if params[:name].blank?
       errors['name'] = 'required'
     end
-    if params[:email].blank?
-      errors['email'] = 'required'
-    elsif !/@/.match?(params[:email])
-      errors['email'] = 'invalid'
-    elsif params[:email].match?(/(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/)
-      errors['email'] = 'invalid'
-    end
     if params[:title].blank?
       errors['title'] = 'required'
     end
@@ -55,11 +48,12 @@ class FormController < ApplicationController
       errors['body'] = 'required'
     end
 
-    # realtime verify
-    if errors['email'].blank?
+    if params[:email].blank?
+      errors['email'] = 'required'
+    else
       begin
-        address = ValidEmail2::Address.new(params[:email])
-        if !address || !address.valid? || !address.valid_mx?
+        email_address_validation = EmailAddressValidation.new(params[:email])
+        if !email_address_validation.valid_format? || !email_address_validation.valid_mx?
           errors['email'] = 'invalid'
         end
       rescue => e

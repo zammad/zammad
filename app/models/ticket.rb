@@ -1352,13 +1352,13 @@ result
 
       # send notifications only to email addresses
       next if recipient_email.blank?
-      next if !recipient_email.match?(/@/)
 
       # check if address is valid
       begin
         Mail::AddressList.new(recipient_email).addresses.each do |address|
           recipient_email = address.address
-          break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
+          email_address_validation = EmailAddressValidation.new(recipient_email)
+          break if recipient_email.present? && email_address_validation.valid_format?
         end
       rescue
         if recipient_email.present?
@@ -1368,10 +1368,10 @@ result
 
           recipient_email = "#{$2}@#{$3}"
         end
-        next if recipient_email.blank?
-        next if !recipient_email.match?(/@/)
-        next if recipient_email.match?(/\s/)
       end
+
+      email_address_validation = EmailAddressValidation.new(recipient_email)
+      next if !email_address_validation.valid_format?
 
       # do not sent notifications to this recipients
       send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')

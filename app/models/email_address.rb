@@ -48,8 +48,10 @@ check and if channel not exists reset configured channels for email addresses
     return true if email.blank?
 
     self.email = email.downcase.strip
-    raise Exceptions::UnprocessableEntity, 'Invalid email' if !email.match?(/@/)
-    raise Exceptions::UnprocessableEntity, 'Invalid email' if email.match?(/\s/)
+    email_address_validation = EmailAddressValidation.new(email)
+    if !email_address_validation.valid_format?
+      raise Exceptions::UnprocessableEntity, 'Invalid email'
+    end
 
     true
   end

@@ -95,14 +95,14 @@ Some Textäöü",
             {
               firstname: '',
               lastname: '',
-              fullname: 'me@exampl\'e.com',
-              email: 'me@exampl\'e.com',
+              fullname: 'me@example.com',
+              email: 'me@example.com',
             },
             {
               firstname: '',
               lastname: '',
-              fullname: 'customer@exampl\'e.com',
-              email: 'customer@exampl\'e.com',
+              fullname: 'customer@example.com',
+              email: 'customer@example.com',
             },
           ],
         },
@@ -2777,7 +2777,7 @@ Some Text',
               firstname: 'Clement.Si',
               lastname: '',
               fullname: 'Clement.Si',
-              email: 'claudia.shu@yahoo.com.',
+              email: 'claudia.shu@yahoo.com',
             },
             {
               firstname: '',
@@ -3266,7 +3266,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority: 3 high
-X-Zammad-Ticket-owner: agent1@example.com 
+X-Zammad-Ticket-owner: agent1@example.com
 X-Zammad-Article-sender: System
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3296,7 +3296,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority_id: 777777
-X-Zammad-Ticket-owner: not_existing@example.com 
+X-Zammad-Ticket-owner: not_existing@example.com
 X-Zammad-Article-sender_id: 999999
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3324,7 +3324,7 @@ Some Text',
         data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject / with customer as agent - customer can not be owner
-X-Zammad-Ticket-owner: customer1@example.com 
+X-Zammad-Ticket-owner: customer1@example.com
 
 Some Text',
         channel: {

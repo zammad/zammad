@@ -102,10 +102,11 @@ module Channel::Filter::IdentifySender
         next if items.blank?
 
         items.each do |address_data|
-          email_address = address_data.address
+          email_address = sanitize_email(address_data.address)
           next if email_address.blank?
-          next if !email_address.match?(/@/)
-          next if email_address.match?(/\s/)
+
+          email_address_validation = EmailAddressValidation.new(email_address)
+          next if !email_address_validation.valid_format?
 
           user_create(
             firstname: address_data.display_name,
@@ -131,9 +132,13 @@ module Channel::Filter::IdentifySender
           if recipient =~ /^(.+?)<(.+?)>/
             display_name = $1
           end
+
           next if address.blank?
-          next if !address.match?(/@/)
-          next if address.match?(/\s/)
+
+          address = sanitize_email(address)
+
+          email_address_validation = EmailAddressValidation.new(address)
+          next if !email_address_validation.valid_format?
 
           user_create(
             firstname: display_name,
@@ -194,10 +199,12 @@ module Channel::Filter::IdentifySender
     string.downcase
           .strip
           .delete('"')
+          .delete("'")
           .delete(' ')             # see https://github.com/zammad/zammad/issues/2254
           .sub(/^<|>$/, '')        # see https://github.com/zammad/zammad/issues/2254
           .sub(/\A'(.*)'\z/, '\1') # see https://github.com/zammad/zammad/issues/2154
           .gsub(/\s/, '')          # see https://github.com/zammad/zammad/issues/2198
+          .gsub(/\.\z/, '')
   end
 
 end

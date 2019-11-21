@@ -97,18 +97,19 @@ class TicketsController < ApplicationController
 
     # try to create customer if needed
     if clean_params[:customer_id].present? && clean_params[:customer_id] =~ /^guess:(.+?)$/
-      email = $1
-      if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
+      email_address = $1
+      email_address_validation = EmailAddressValidation.new(email_address)
+      if !email_address_validation.valid_format?
         render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
         return
       end
-      local_customer = User.find_by(email: email.downcase)
+      local_customer = User.find_by(email: email_address.downcase)
       if !local_customer
         role_ids = Role.signup_role_ids
         local_customer = User.create(
           firstname: '',
           lastname:  '',
-          email:     email,
+          email:     email_address,
           password:  '',
           active:    true,
           role_ids:  role_ids,
