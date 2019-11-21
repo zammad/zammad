@@ -618,7 +618,17 @@ class App.ControllerModal extends App.Controller
 
   onShown: (e) =>
     if @autoFocusOnFirstInput
-      @$('.form-group').first().find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().focus()
+
+      # select generated form
+      form = @$('.form-group').first()
+
+      # if not exists, use whole @el
+      if !form.get(0)
+        form = @el
+
+      # focus first input, select or textarea
+      form.find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().focus()
+
     @initalFormParams = @formParams()
 
   localOnClose: (e) =>
