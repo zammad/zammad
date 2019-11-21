@@ -28,7 +28,7 @@ UserInfo.current_user_id = user_community.id
 
 if Ticket.count.zero?
   ticket = Ticket.create!(
-    group_id:    Group.find_by(name: 'Users').id,
+    group_id:    Group.find_by(name: 'Incoming').id,
     customer_id: User.find_by(login: 'sales@viacode.com').id,
     title:       'Welcome to VIAcode Incident Management System for Azure!',
   )
