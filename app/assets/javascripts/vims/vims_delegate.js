@@ -2,7 +2,7 @@ class DelegateModal {
 
 	static delegate(id){
 		$("a[rel='vims-modal:close']")[0].click();
-		let url = 'https://vims-orchestrator.azurewebsites.net/api/azuredevops';
+		let url = 'https://vims-orchestrator.azurewebsites.net/vo-api/azuredevops';
 		$.post( url, { vimsid: id }, function(data){
 			//DelegateModal.delegateIncident();		
 		});
@@ -30,7 +30,7 @@ class DelegateModal {
   
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
+	  $.get('https://vims-orchestrator.azurewebsites.net/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$('#vimsDelegateModal').vims_modal();		
 	  });
   }
