@@ -87,6 +87,9 @@ class App.UiElement.ticket_selector
               config.operator = operator
             elements["#{groupKey}.#{config.name}"] = config
 
+          if config.tag == 'select'
+            config.multiple = true
+
     if attribute.out_of_office
       elements['ticket.out_of_office_replacement_id'] =
         name: 'out_of_office_replacement_id'
