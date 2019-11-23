@@ -101,26 +101,24 @@ RSpec.describe HasActiveJobLock, type: :job do
       end
     end
 
-    if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
-      context "when PG::TRSerializationFailure 'Could not serialize access due to concurrent update' is raised" do
+    context "when ActiveRecord::SerializationFailure 'PG::TRSerializationFailure: ERROR:  could not serialize access due to concurrent update' is raised" do
 
-        it 'retries execution until succeed' do
-          allow(ActiveRecord::Base.connection).to receive(:open_transactions).and_return(0)
-          allow(ActiveJobLock).to receive(:transaction).and_call_original
-          exception_raised = false
-          allow(ActiveJobLock).to receive(:transaction).with(isolation: :serializable) do |&block|
+      it 'retries execution until succeed' do
+        allow(ActiveRecord::Base.connection).to receive(:open_transactions).and_return(0)
+        allow(ActiveJobLock).to receive(:transaction).and_call_original
+        exception_raised = false
+        allow(ActiveJobLock).to receive(:transaction).with(isolation: :serializable) do |&block|
 
-            if !exception_raised
-              exception_raised = true
-              raise PG::TRSerializationFailure, 'Could not serialize access due to concurrent update'
-            end
-
-            block.call
+          if !exception_raised
+            exception_raised = true
+            raise ActiveRecord::SerializationFailure, 'PG::TRSerializationFailure: ERROR:  could not serialize access due to concurrent update'
           end
 
-          expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
-          expect(exception_raised).to be true
+          block.call
         end
+
+        expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
+        expect(exception_raised).to be true
       end
     end
   end
