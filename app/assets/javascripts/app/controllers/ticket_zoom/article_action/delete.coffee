@@ -2,14 +2,27 @@ class Delete
   @action: (actions, ticket, article, ui) ->
     return actions if ui.permissionCheck('ticket.customer')
 
-    if article.type.name is 'note'
-      if App.User.current()?.id == article.created_by_id && ui.permissionCheck('ticket.agent')
-        actions.push {
-          name: 'delete'
-          type: 'delete'
-          icon: 'trash'
-          href: '#'
-        }
+    return actions if article.type.name isnt 'note'
+
+    return actions if App.User.current()?.id != article.created_by_id
+
+    return actions if !ui.permissionCheck('ticket.agent')
+
+    # return if article is older then 10 minutes
+    created_at = Date.parse(article.created_at)
+    time_to_show = 600000 - (Date.parse(new Date()) - created_at)
+
+    return actions if time_to_show <= 0
+
+    actions.push {
+      name: 'delete'
+      type: 'delete'
+      icon: 'trash'
+      href: '#'
+    }
+
+    # rerender ations in 10 minutes again to hide delete action of article
+    ui.delay(ui.render, time_to_show, 'actions-rerender')
 
     actions
 

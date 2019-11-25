@@ -6,7 +6,7 @@ class App.TicketZoomArticleActions extends App.Controller
     super
     @render()
 
-  render: ->
+  render: =>
     actions = @actionRow(@ticket, @article)
 
     if actions
