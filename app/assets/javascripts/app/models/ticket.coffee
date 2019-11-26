@@ -114,6 +114,8 @@ class App.Ticket extends App.Model
   @macro: (params) ->
     for key, content of params.macro
       attributes = key.split('.')
+
+      # apply ticket changes
       if attributes[0] is 'ticket'
 
         # apply tag changes
@@ -141,6 +143,25 @@ class App.Ticket extends App.Model
         # apply direct value changes
         else
           params.ticket[attributes[1]] = content.value
+
+      # apply article changes
+      else if attributes[0] is 'article'
+
+        # preload required attributes
+        if attributes[1]
+          type = App.TicketArticleType.findByAttribute('name', attributes[1])
+          if type
+            params.article.type_id = type.id
+        if !content.sender_id
+          sender = App.TicketArticleSender.findByAttribute('name', 'Agent')
+          if sender
+            content.sender_id = sender.id
+        if !content.from
+          content.from = App.Session.get('login')
+
+        # apply direct value changes
+        for articleKey, aricleValue of content
+          params.article[articleKey] = aricleValue
 
   # check if selector is matching
   @selector: (ticket, selector) ->

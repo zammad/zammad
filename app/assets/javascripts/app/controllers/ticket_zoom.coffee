@@ -766,6 +766,7 @@ class App.TicketZoom extends App.Controller
       return
 
     ticketParams = @formParam(@$('.edit'))
+    articleParams = @articleNew.params()
 
     # validate ticket
     # we need to use the full ticket because
@@ -784,6 +785,7 @@ class App.TicketZoom extends App.Controller
       App.Ticket.macro(
         macro: macro.perform
         ticket: ticket
+        article: articleParams
         callback:
           tagAdd: (tag) =>
             return if !@sidebarWidget
@@ -832,7 +834,6 @@ class App.TicketZoom extends App.Controller
       @autosaveStart()
       return
 
-    articleParams = @articleNew.params()
     if articleParams && articleParams.body
       article = new App.TicketArticle
       article.load(articleParams)

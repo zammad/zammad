@@ -6,12 +6,13 @@ require 'system/examples/macros_examples'
 RSpec.describe 'Ticket Update', type: :system do
 
   let(:group) { Group.find_by(name: 'Users') }
+  let(:ticket) { create(:ticket, group: group) }
 
   # Regression test for issue #2242 - mandatory fields can be empty (or "-") on ticket update
   context 'when updating a ticket without its required select attributes' do
     it 'frontend checks reject the update', db_strategy: :reset do
       # setup and migrate a required select attribute
-      attribute = create_attribute :object_manager_attribute_select,
+      attribute = create_attribute(:object_manager_attribute_select,
                                    screens:     attributes_for(:required_screen),
                                    data_option: {
                                      options:    {
@@ -23,15 +24,14 @@ RSpec.describe 'Ticket Update', type: :system do
                                      relation:   '',
                                      maxlength:  255,
                                      nulloption: true,
-                                   }
+                                   })
 
       # create a new ticket and attempt to update its state without the required select attribute
-      ticket = create :ticket, group: group
       visit "#ticket/zoom/#{ticket.id}"
       within(:active_content) do
-        expect(page).to have_css('.js-objectNumber', wait: 2)
+        expect(page).to have_selector('.js-objectNumber', text: ticket.number)
 
-        select 'closed', from: 'state_id'
+        select('closed', from: 'state_id')
         click('.js-attributeBar .js-submit')
         expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
       end
@@ -50,60 +50,123 @@ RSpec.describe 'Ticket Update', type: :system do
       expect(ticket[attribute.name]).to eq('name 2')
       expect(ticket.state.name).to eq('closed')
     end
+  end
 
-    it 'with macro and required tree_select field', db_strategy: :reset do
-      # setup and migrate a required select attribute
-      attribute = create_attribute :object_manager_attribute_tree_select,
-                                   screens:     attributes_for(:required_screen),
-                                   data_option: {
-                                     options:    [
-                                       {
-                                         name:  'name 1',
-                                         value: 'name 1',
-                                       },
-                                       {
-                                         name:  'name 2',
-                                         value: 'name 2',
-                                       },
-                                     ],
-                                     default:    '',
-                                     null:       false,
-                                     relation:   '',
-                                     maxlength:  255,
-                                     nulloption: true,
-                                   }
+  context 'when updating a ticket with macro' do
+    context 'when required tree_select field is present' do
+      it 'performs no validation (#2492)', db_strategy: :reset do
+        # setup and migrate a required select attribute
+        attribute = create_attribute(:object_manager_attribute_tree_select,
+                                     screens:     attributes_for(:required_screen),
+                                     data_option: {
+                                       options:    [
+                                         {
+                                           name:  'name 1',
+                                           value: 'name 1',
+                                         },
+                                         {
+                                           name:  'name 2',
+                                           value: 'name 2',
+                                         },
+                                       ],
+                                       default:    '',
+                                       null:       false,
+                                       relation:   '',
+                                       maxlength:  255,
+                                       nulloption: true,
+                                     })
 
-      attribute_value = 'name 2'
-      state           = Ticket::State.by_category(:closed).first
-      macro           = create(:macro,
-                               perform: {
-                                 'ticket.state_id'          => {
-                                   value: state.id,
+        attribute_value = 'name 2'
+        state           = Ticket::State.by_category(:closed).first
+        macro           = create(:macro,
+                                 perform:         {
+                                   'ticket.state_id'          => {
+                                     value: state.id,
+                                   },
+                                   "ticket.#{attribute.name}" => {
+                                     value: attribute_value,
+                                   },
                                  },
-                                 "ticket.#{attribute.name}" => {
-                                   value: attribute_value,
-                                 },
-                               })
+                                 ux_flow_next_up: 'none',)
 
-      # refresh browser to get macro accessible
-      refresh
+        # refresh browser to get macro accessible
+        refresh
 
-      # create a new ticket and attempt to update its state without the required select attribute
-      ticket = create(:ticket, group: group)
-      visit "#ticket/zoom/#{ticket.id}"
+        # create a new ticket and attempt to update its state without the required select attribute
+        visit "#ticket/zoom/#{ticket.id}"
 
-      within(:active_content) do
-        expect(page).to have_css('.js-objectNumber', wait: 2)
+        within(:active_content) do
+          expect(page).to have_selector('.js-objectNumber', text: ticket.number)
 
-        click('.js-openDropdownMacro')
-        click(".js-dropdownActionMacro[data-id=\"#{macro.id}\"]")
-        expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+          expect(page).to have_field(attribute.name, with: '', visible: false)
+          expect(page).to have_select('state_id',
+                                      selected: 'new',
+                                      options:  ['new', 'closed', 'open', 'pending close', 'pending reminder'])
+
+          click('.js-openDropdownMacro')
+          click(".js-dropdownActionMacro[data-id=\"#{macro.id}\"]")
+          expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+        end
+
+        expect(page).to have_field(attribute.name, with: attribute_value, visible: false)
+        expect(page).to have_select('state_id',
+                                    selected: 'closed',
+                                    options:  ['closed', 'open', 'pending close', 'pending reminder'])
+
+        # the update should not have failed and thus the ticket is in closed state
+        ticket.reload
+        expect(ticket[attribute.name]).to eq(attribute_value)
+        expect(ticket.state.name).to eq(state.name)
       end
+    end
 
-      # the update should not have failed and thus the ticket is in closed state
-      ticket.reload
-      expect(ticket[attribute.name]).to eq(attribute_value)
-      expect(ticket.state.name).to eq(state.name)
+    context 'when macro has article configured' do
+      it 'creates an article with the configured attributes' do
+        state = Ticket::State.find_by(name: 'closed')
+        macro = create(:macro,
+                       perform:         {
+                         'ticket.state_id' => {
+                           value: state.id,
+                         },
+                         'article.note'    => {
+                           'body'     => 'test body',
+                           'internal' => 'true',
+                           'subject'  => 'test sub'
+                         },
+                       },
+                       ux_flow_next_up: 'none',)
+
+        # refresh browser to get macro accessible
+        refresh
+
+        # create a new ticket and attempt to update its state without the required select attribute
+        visit "#ticket/zoom/#{ticket.id}"
+
+        within(:active_content) do
+          expect(page).to have_selector('.js-objectNumber', text: ticket.number)
+          expect(page).to have_select('state_id',
+                                      selected: 'new',
+                                      options:  ['new', 'closed', 'open', 'pending close', 'pending reminder'])
+
+          click('.js-openDropdownMacro')
+          click(".js-dropdownActionMacro[data-id=\"#{macro.id}\"]")
+          expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+        end
+
+        expect(page).to have_selector('.content.active .article-content', text: 'test body')
+        expect(page).to have_select('state_id',
+                                    selected: 'closed',
+                                    options:  ['closed', 'open', 'pending close', 'pending reminder'])
+
+        # the update should not have failed and thus the ticket is in closed state
+        ticket.reload
+        expect(ticket.state.name).to eq(state.name)
+        article = ticket.articles.last
+        expect(article).to be_present
+        expect(article.body).to eq('test body')
+        expect(article.subject).to eq('test sub')
+        expect(article.internal).to eq(true)
+      end
     end
   end
 
@@ -140,10 +203,10 @@ RSpec.describe 'Ticket Update', type: :system do
   end
 
   context 'when using text modules' do
-    include_examples 'text modules', path:  "#ticket/zoom/#{Ticket.first.id}"
+    include_examples 'text modules', path: "#ticket/zoom/#{Ticket.first.id}"
   end
 
   context 'when using macros' do
-    include_examples 'macros', path:  "#ticket/zoom/#{Ticket.first.id}"
+    include_examples 'macros', path: "#ticket/zoom/#{Ticket.first.id}"
   end
 end
