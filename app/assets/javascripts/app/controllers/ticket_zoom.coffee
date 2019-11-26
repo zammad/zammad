@@ -500,6 +500,8 @@ class App.TicketZoom extends App.Controller
       if @Config.get('ticket_auto_assignment') is true
         if @ticket.owner_id is 1 && @permissionCheck('ticket.agent') && @ticket.editable('full')
           userIdsIgnore = @Config.get('ticket_auto_assignment_user_ids_ignore') || []
+          if !_.isArray(userIdsIgnore)
+            userIdsIgnore = [userIdsIgnore]
           userIgnored = false
           currentUserId = App.Session.get('id')
           for userIdIgnore in userIdsIgnore
