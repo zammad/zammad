@@ -87,6 +87,19 @@ class Transaction::Notification
       recipients_reason[user.id] = 'are in group'
     end
 
+    if ticket.customer_id != 1 && (!article || article.internal == false) && !already_checked_recipient_ids[ticket.customer_id]
+      # apply customer
+      settings = {
+        user:     ticket.customer,
+        channels: {
+          'online' => true,
+          'email' => true
+        }
+      }
+      recipients_and_channels.push settings
+      recipients_reason[ticket.customer_id] = 'are associated with this ticket'
+    end
+
     # send notifications
     recipients_and_channels.each do |item|
       user = item[:user]
@@ -250,7 +263,7 @@ class Transaction::Notification
         user_related_changes[key] = value
 
       # if config exists, just use existing attributes for user
-      elsif attribute_list[key.to_s]
+      elsif attribute_list[key.to_s] || user.id == record.customer_id && key.to_s == 'customer_id'
         user_related_changes[key] = value
       end
     end
