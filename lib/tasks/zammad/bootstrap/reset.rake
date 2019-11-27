@@ -2,7 +2,7 @@ namespace :zammad do
 
   namespace :bootstrap do
 
-    desc 'Resets a Zammad and reinitializes it'
+    desc 'Resets a VIMS and reinitializes it'
     task reset: %i[
       db:drop
       zammad:db:init

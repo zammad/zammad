@@ -4,7 +4,7 @@
 
 <form class="page-content">
 
-  <p><%- @T('All computers and browsers that have access to your Zammad appear here.') %></p>
+  <p><%- @T('All computers and browsers that have access to your VIMS appear here.') %></p>
 
   <table class="settings-list">
     <thead>

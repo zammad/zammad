@@ -4,7 +4,7 @@ namespace :zammad do
 
     namespace :test do
 
-      desc 'Prepares Zammad system for CI env'
+      desc 'Prepares VIMS system for CI env'
       task :prepare, [:elasticsearch] do |_task, args|
         ENV['RAILS_ENV'] ||= 'production'
         ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = 'true'

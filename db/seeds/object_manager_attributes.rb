@@ -323,62 +323,62 @@ ObjectManager::Attribute.add(
 )
 
 ObjectManager::Attribute.add(
-  force:       false,
+  force:       true,
   object:      'Ticket',
   name:        'alert',
   display:     'alert',
   data_type:   'input',
   data_option: {
+    default:    '',  
     type:      'text',
     maxlength: 2000,
     null:      true,
     translate: false,
   },
-  editable:    true,
-  active:      true,
-  screens:     {
-    create_middle: {
-      '-all-' => {
-        null: false,
-      },
-    },
-    edit:       {},
+  editable:    false,
+  active:      true, 
+  screens: {
+    create_middle: {},
+    edit: {},        
   },
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    101,
+  position:    101,  
 )
 
 ObjectManager::Attribute.add(
-  force:       false,
+  force:       true,
   object:      'Ticket',
   name:        'repeat_count',
-  display:     'repeat_count',  
+  display:     'repeat count',  
   data_type:   'integer',
   data_option: {
+    default:    0, 
     maxlength: 150,
     null:      true,
     note:      'The number of the same alerts fired',
     min:       0,
     max:       999_999_999,
   },
-  editable:    true,
+  editable:    false,
   active:      true,
   screens:     {
-    create_middle: {
-      '-all-' => {
-        null: false,
+    create_middle: {},
+    edit: {
+     'ticket.customer' => {
+        shown: true,                           
       },
-    },
-    edit:       {},
+       'ticket.agent' => {
+         shown: true,
+         },
+     },    
   },
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
   position:    102,
 )
-
 
 ObjectManager::Attribute.add(
   force:       true,

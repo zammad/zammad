@@ -1,25 +1,18 @@
-org_community = Organization.create_if_not_exists(
+Organization.create_if_not_exists(
   id:   1,
-  name: 'VIAcode',
-)
-user_community = User.create_or_update(
-  id:              2,
-  login:           'sales@viacode.com',
-  firstname:       'VIAcode',
-  lastname:        'Sales',
-  email:           'sales@viacode.com',
-  password:        '',
-  active:          true,
-  roles:           [ Role.find_by(name: 'Customer') ],
-  organization_id: org_community.id,
+  name: 'Default SRE Provider',
 )
 
-UserInfo.current_user_id = user_community.id
+Organization.create_if_not_exists(
+  id:   2,
+  name: 'Customer'
+)
+
 
 if Ticket.count.zero?
   ticket = Ticket.create!(
-    group_id:    Group.find_by(name: 'Users').id,
-    customer_id: User.find_by(login: 'sales@viacode.com').id,
+    group_id:    Group.find_by(name: 'Incoming').id,
+    customer_id: 1,
     title:       'Welcome to VIAcode Incident Management System for Azure!',
   )
   Ticket::Article.create!(
@@ -31,10 +24,9 @@ if Ticket.count.zero?
 
     Thank you for choosing VIAcode Incident Management System for Azure.
 
-  Let VIAcode deal with these alerts & manage your Azure cloud operation for free; [activate here](https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=passwordchangeemail)
-  ',
+    <p>Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=userinviteemail">activate here</a></p>',
+    content_type: 'text/html',
     internal:  false,
   )
 end
 
-UserInfo.current_user_id = 1

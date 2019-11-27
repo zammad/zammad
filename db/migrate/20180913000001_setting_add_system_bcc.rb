@@ -8,7 +8,7 @@ class SettingAddSystemBcc < ActiveRecord::Migration[5.1]
       title:       'Bcc address for all outgoing emails',
       name:        'system_bcc',
       area:        'Email::Enhanced',
-      description: 'To archive all outgoing emails from Zammad to external, you can store a bcc email address here.',
+      description: 'To archive all outgoing emails from VIMS to external, you can store a bcc email address here.',
       options:     {},
       state:       '',
       preferences: { online_service_disable: true },

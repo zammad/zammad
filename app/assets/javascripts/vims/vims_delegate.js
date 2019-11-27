@@ -2,7 +2,7 @@ class DelegateModal {
 
 	static delegate(id){
 		$("a[rel='vims-modal:close']")[0].click();
-		let url = 'https://vims-orchestrator.azurewebsites.net/api/azuredevops';
+		let url = GetOrchestratorUrl() + '/vo-api/azuredevops';
 		$.post( url, { vimsid: id }, function(data){
 			//DelegateModal.delegateIncident();		
 		});
@@ -13,7 +13,7 @@ class DelegateModal {
 		stateDd.val('delegated');
 		stateDd.change();
 	}
-  }
+}
   
   DelegateModal.html = `  
 	  <div id="vimsDelegateModal" class="vims-modal">
@@ -30,14 +30,19 @@ class DelegateModal {
   
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-	  $.get('https://vims-orchestrator.azurewebsites.net/api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
+	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$('#vimsDelegateModal').vims_modal();		
 	  });
   }
 
   function Delegate(){
-	let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-	DelegateModal.delegate(ticketId);
+	    let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+	    DelegateModal.delegate(ticketId);
+  }
+
+  function GetOrchestratorUrl(){
+    let location = window.location.origin;
+    return location.split('.')[0] + '-orchestrator' + location.substr(location.indexOf('.', 0));
   }
   
   class AlertModal {

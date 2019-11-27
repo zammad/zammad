@@ -29,8 +29,8 @@ module Channel::EmailBuild
       attr['X-Auto-Response-Suppress'] = 'All'
     end
 
-    attr['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
-    attr['X-Mailer'] = 'Zammad Mail Service'
+    attr['X-Powered-By'] = 'VIAcode Incident Management for Azure'
+    attr['X-Mailer'] = 'VIMS Mail Service'
 
     # set headers
     attr.each do |key, value|

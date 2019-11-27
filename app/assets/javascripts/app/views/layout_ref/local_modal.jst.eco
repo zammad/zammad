@@ -116,7 +116,7 @@
 
               <option value="">-</option>
 
-              <option value="1" selected="">Zammad Foundation</option>
+              <option value="1" selected="">VIMS</option>
 
 
               </select>

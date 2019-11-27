@@ -3,7 +3,7 @@ class KarmaContent extends App.ControllerContent
     new Karma()
 
 class Karma extends App.ControllerModal
-  head: 'Zammad Karma'
+  head: 'VIMS Karma'
   buttonSubmit: false
   buttonCancel: true
   shown: false

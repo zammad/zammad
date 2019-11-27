@@ -456,7 +456,7 @@ class UserCsvImportTest < ActiveSupport::TestCase
 
   test 'reference import' do
 
-    csv_string = "login;firstname;lastname;email;organization\nuser-reference-import1;firstname-reference-import1;firstname-reference-import1;user-reference-import1@example.com;organization-reference-import1\nuser-reference-import2;firstname-reference-import2;firstname-reference-import2;user-reference-import2@example.com;organization-reference-import2\nuser-reference-import3;firstname-reference-import3;firstname-reference-import3;user-reference-import3@example.com;Zammad Foundation\n"
+    csv_string = "login;firstname;lastname;email;organization\nuser-reference-import1;firstname-reference-import1;firstname-reference-import1;user-reference-import1@example.com;organization-reference-import1\nuser-reference-import2;firstname-reference-import2;firstname-reference-import2;user-reference-import2@example.com;organization-reference-import2\nuser-reference-import3;firstname-reference-import3;firstname-reference-import3;user-reference-import3@example.com;VIAcode Incident Management for Azure\n"
     result = User.csv_import(
       string:       csv_string,
       parse_params: {

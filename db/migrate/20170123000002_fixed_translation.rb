@@ -191,7 +191,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => 'import_mode',
         'title'       => nil,
-        'description' => 'Puts Zammad into import mode (disables some triggers).',
+        'description' => 'Puts VIMS into import mode (disables some triggers).',
       },
       {
         'name'        => 'import_backend',
@@ -251,12 +251,12 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => '0010_postmaster_filter_trusted',
         'title'       => 'Defines postmaster filter.',
-        'description' => 'Defines postmaster filter to remove X-Zammad headers from not trusted sources.',
+        'description' => 'Defines postmaster filter to remove X-VIMS headers from not trusted sources.',
       },
       {
         'name'        => '0012_postmaster_filter_sender_is_system_address',
         'title'       => 'Defines postmaster filter.',
-        'description' => 'Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender.',
+        'description' => 'Defines postmaster filter to check if email has been created by VIMS itself and will set the article sender.',
       },
       {
         'name'        => '0015_postmaster_filter_identify_sender',

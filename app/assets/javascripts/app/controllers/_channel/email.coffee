@@ -644,7 +644,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
               @account[key] = value
 
           if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. VIMS will move it all from your mailbox into VIMS.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
             @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
@@ -701,7 +701,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           @account.inbound = params
 
           if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. VIMS will move it all from your mailbox into VIMS.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
             @$('.js-inbound-acknowledge .js-next').unbind('click.verify')

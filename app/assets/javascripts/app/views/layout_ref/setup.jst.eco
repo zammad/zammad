@@ -62,7 +62,7 @@
           <div class="form-group">
             <label>System Url</label>
             <input type="url" class="form-control" placeholder="support.company.com">
-            <p class="help-block">The url to this installation of Zammad.</p>
+            <p class="help-block">The url to this installation of VIMS.</p>
           </div>
         </fieldset>
       </div>
@@ -74,7 +74,7 @@
     <div class="wizard-slide hide" data-slide="channels">
       <h2>Connect Channels</h2>
       <div class="wizard-body vertical center">
-        <p class="text-center">Setup the communication channels you want to sync with your Zammad inbox</p>
+        <p class="text-center">Setup the communication channels you want to sync with your VIMS inbox</p>
         <div class="wizard-buttonList vertical">
           <div class="btn auth_provider auth_provider--wide email" data-target="emailStart">
             <div class="email provider_icon"></div>
@@ -272,7 +272,7 @@
       <h2>Setup Finished</h2>
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> Starting Zammad
+          <span class="loading icon"></span> Starting VIMS
         </p>
       </div>
     </div>

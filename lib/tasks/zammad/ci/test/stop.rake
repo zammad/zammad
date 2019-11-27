@@ -4,7 +4,7 @@ namespace :zammad do
 
     namespace :test do
 
-      desc 'Stop of all Zammad services and cleans up the database(s)'
+      desc 'Stop of all VIMS services and cleans up the database(s)'
       task :stop, [:no_app] do |_task, args|
         ENV['RAILS_ENV'] ||= 'production'
         ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = 'true'

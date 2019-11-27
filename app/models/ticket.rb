@@ -1124,7 +1124,7 @@ perform active triggers on ticket
         end
 
         if recursive == false && local_options[:loop_count] > 1
-          message = "Do not execute recursive triggers per default until Zammad 3.0. With Zammad 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
+          message = "Do not execute recursive triggers per default until VIMS 3.0. With VIMS 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
           logger.info { message }
           return [true, message]
         end

@@ -48,7 +48,7 @@ check_daemons() {
 }
 
 execute() {
-  sudo -u $APP_USER -H bash -l -c "$1"
+  bash -l -c "$1"
 }
 
 start() {

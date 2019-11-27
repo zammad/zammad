@@ -4,7 +4,7 @@
       <p><%- @T('Login with %s', @C('fqdn')) %></p>
 
       <% if @C('maintenance_mode'): %>
-        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('VIMS is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
       <% end %>
       <% if @C('maintenance_login') && @C('maintenance_login_message'): %>
         <div class="hero-unit alert alert--success js-maintenanceLogin"><%- @C('maintenance_login_message') %></div>
@@ -84,8 +84,5 @@
     </div>
   </div>
   <div class="poweredBy">
-    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
-    <%- @T('Powered by') %>
-    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
   </div>
 </div>

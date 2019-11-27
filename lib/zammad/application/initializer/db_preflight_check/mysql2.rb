@@ -35,8 +35,8 @@ module Zammad
               MSG
             elsif max_allowed_packet_mb < Setting.get('postmaster_max_size').to_i
               warn(<<~MSG)
-                Database config value 'max_allowed_packet' less than Zammad setting 'Maximum Email Size'
-                Zammad will fail to process emails (both incoming and outgoing)
+                Database config value 'max_allowed_packet' less than VIMS setting 'Maximum Email Size'
+                VIMS will fail to process emails (both incoming and outgoing)
                 larger than the value of 'max_allowed_packet' (#{max_allowed_packet_mb}MB).
                 Please increase this value in your #{vendor} configuration accordingly.
               MSG

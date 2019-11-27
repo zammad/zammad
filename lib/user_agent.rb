@@ -48,7 +48,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Get.new(uri, { 'User-Agent' => 'Zammad User Agent' })
+    request = Net::HTTP::Get.new(uri, { 'User-Agent' => 'VIMS User Agent' })
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
@@ -101,7 +101,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Post.new(uri, { 'User-Agent' => 'Zammad User Agent' })
+    request = Net::HTTP::Post.new(uri, { 'User-Agent' => 'VIMS User Agent' })
 
     # set params
     request = set_params(request, params, options)
@@ -153,7 +153,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Put.new(uri, { 'User-Agent' => 'Zammad User Agent' })
+    request = Net::HTTP::Put.new(uri, { 'User-Agent' => 'VIMS User Agent' })
 
     # set params
     request = set_params(request, params, options)
@@ -201,7 +201,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Delete.new(uri, { 'User-Agent' => 'Zammad User Agent' })
+    request = Net::HTTP::Delete.new(uri, { 'User-Agent' => 'VIMS User Agent' })
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)

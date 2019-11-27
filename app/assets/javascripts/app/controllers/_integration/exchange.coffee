@@ -3,7 +3,7 @@ class Index extends App.ControllerIntegrationBase
   featureName: 'Exchange'
   featureConfig: 'exchange_config'
   description: [
-    ['This service enables Zammad to connect with your Exchange server.']
+    ['This service enables VIMS to connect with your Exchange server.']
   ]
   events:
     'change .js-switch input': 'switch'
