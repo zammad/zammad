@@ -290,7 +290,11 @@
       // E.g. Excel provides images of the spreadsheet along with HTML.
       // While some browsers make images available in clipboard as HTML,
       // sometimes wrapped in multiple nodes.
-      if($(clipboardData.getData('text/html')).text().trim().length == 0) {
+
+      var rawHTML     = clipboardData.getData('text/html')
+      var parsedHTML  = jQuery(jQuery.parseHTML(rawHTML))
+
+      if(parsedHTML.text().trim().length == 0) {
         item = jQuery.grep(clipboardData.items, function(item){
           return item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')
         })[0]
