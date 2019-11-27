@@ -228,10 +228,12 @@ function create_webserver_config () {
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
 
-  ES_CONNECTION="$(zammad run rails r "puts Setting.get('es_url')" 2>> /dev/null)"
+  ES_CONNECTION="$(zammad run rails r "puts Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
 
   if [ -z "${ES_CONNECTION}" ]; then
-    ES_CONNECTION="http://127.0.0.1:9200"
+    echo "-- Nevermind, no es_url is set, leaving Elasticsearch untouched ...!"
+    echo "-- The above is all right if you don't want to use Elasticsearch (locally) - if this is not intended, consult https://docs.zammad.org !"
+    return 0
   fi
 
   if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
@@ -252,8 +254,7 @@ function setup_elasticsearch () {
     ${INIT_CMD} restart elasticsearch
   else
     echo -e "\n It seems you're running an external Elasticsearch server on ${ES_CONNECTION}"
-    echo -e "Stopping local elasticsearch server..."
-    ${INIT_CMD} stop elasticsearch
+    echo -e "\n We'll not touch your Elasticsearch on the local and remote system."
     echo -e "\n Please get sure to install the 'ingest-attachment' plugin on your Elasticsearch server by:"
     echo -e "/usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment"
     echo -e "\nAfter this you might need to rebuild the searchindex by:"
