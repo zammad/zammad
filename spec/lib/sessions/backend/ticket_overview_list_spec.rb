@@ -82,14 +82,14 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
         let!(:first_call) { collection.push }
 
         it 'returns nil' do
-          expect(collection.push).to be(nil)
+          expect(collection.push).to eq(nil)
         end
 
         context 'even after the TTL has passed' do
           before { travel(ttl + 1) }
 
           it 'returns nil' do
-            expect(collection.push).to be(nil)
+            expect(collection.push).to eq(nil)
           end
         end
 
@@ -97,7 +97,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
           before { described_class.reset(admin.id) }
 
           it 'returns nil' do
-            expect(collection.push).to be(nil)
+            expect(collection.push).to eq(nil)
           end
         end
       end
@@ -108,14 +108,14 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
 
         context 'before the TTL has passed' do
           it 'returns nil' do
-            expect(collection.push).to be(nil)
+            expect(collection.push).to eq(nil)
           end
 
           context 'after .reset with the user’s id' do
             before { described_class.reset(admin.id) }
 
             it 'returns nil because no ticket and no overview has changed' do
-              expect(collection.push).to be nil
+              expect(collection.push).to eq(nil)
             end
           end
         end
@@ -124,7 +124,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
           before { travel(ttl + 1) }
 
           it 'returns an empty result' do
-            expect(collection.push).to eq nil
+            expect(collection.push).to eq(nil)
           end
         end
 
@@ -132,7 +132,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
           before { travel(2.hours + 1.second) }
 
           it 'returns an empty result' do
-            expect(collection.push).to eq nil
+            expect(collection.push).to eq(nil)
           end
         end
       end

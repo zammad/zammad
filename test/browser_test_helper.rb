@@ -2721,6 +2721,8 @@ wait untill text in selector disabppears
       end
     else
       6.times do
+
+        # prefere find_elements ofer find_element because of exception handling
         element = instance.find_elements(partial_link_text: params[:number])[0]
         break if element
 
@@ -2733,7 +2735,7 @@ wait untill text in selector disabppears
     end
     element.click
     sleep 1
-    number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
+    number = instance.find_element(css: '.content.active .ticketZoom-header .ticket-number').text
     if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_overview_open_failed_failed')
       raise "unable to open ticket #{params[:number]}!"

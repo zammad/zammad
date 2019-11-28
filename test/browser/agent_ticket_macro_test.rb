@@ -15,7 +15,7 @@ class AgentTicketMacroTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    'some subject - macro "Close & Tag as Spam" default',
+        title:    'macro "Close & Tag as Spam" default',
         body:     'some body - macro "Close & Tag as Spam" default',
       },
     )
@@ -66,7 +66,7 @@ class AgentTicketMacroTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    "some subject - macro #{macro_name}",
+        title:    "macro #{macro_name}",
         body:     "some body - macro #{macro_name}",
       },
     )
@@ -105,7 +105,7 @@ class AgentTicketMacroTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    "some subject - macro #{macro_name}",
+        title:    "macro #{macro_name}",
         body:     "some body - macro #{macro_name}",
       },
     )
@@ -134,7 +134,7 @@ class AgentTicketMacroTest < TestCase
       ux_flow_next_up: ux_flow_next_up,
     )
 
-    title_prefix = "some subject - macro #{macro_name}"
+    title_prefix = "macro #{macro_name}"
     ticket1      = ticket_create(
       data: {
         customer: 'nico',

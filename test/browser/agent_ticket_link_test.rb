@@ -101,6 +101,35 @@ class AgentTicketLinkTest < TestCase
       css:     '.content.active .ticketLinks',
       value:   ticket2[:title],
     )
+
+    # cleanup
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket1[:number],
+    )
+    sleep 1
+
+    ticket_update(
+      browser: browser2,
+      data:    {
+        state: 'closed',
+      }
+    )
+
+    tasks_close_all()
+
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket2[:number],
+    )
+    sleep 1
+
+    ticket_update(
+      browser: browser2,
+      data:    {
+        state: 'closed',
+      }
+    )
   end
 
 end

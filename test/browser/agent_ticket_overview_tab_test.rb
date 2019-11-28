@@ -45,7 +45,6 @@ class AgentTicketOverviewTabTest < TestCase
     #  js: '$(".content.active .sidebar").css("display", "block")',
     #)
     #click(text: 'Unassigned & Open')
-    sleep 8 # till overview is rendered
 
     ticket_open_by_overview(
       number: ticket1[:number],
@@ -63,9 +62,10 @@ class AgentTicketOverviewTabTest < TestCase
       task_type: 'closeNextInOverview', # default: stayOnTab / possible: closeTab, closeNextInOverview, stayOnTab
     )
 
-    match(
-      css:   '.tasks .task.is-active',
-      value: "overview tab test #2 - #{title}",
+    watch_for(
+      css:     '.tasks .task.is-active',
+      value:   "overview tab test #2 - #{title}",
+      timeout: 8,
     )
 
     assert_equal(1, @browser.find_elements(css: '.tasks .task').count)

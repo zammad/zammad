@@ -936,6 +936,10 @@ class Navbar extends App.Controller
         if item.link is @view
           @title item.name, true
 
+    # send first view info
+    if !@view && data && data[0] && data[0].link
+      App.WebSocket.send(event:'ticket_overview_select', data: { view: data[0].link })
+
     # redirect to first view
     if @activeState && !@view && !@vertical
       view = data[0].link
@@ -1036,6 +1040,8 @@ class Table extends App.Controller
 
     @view_mode = App.LocalStorage.get("mode:#{@view}", @Session.get('id')) || 's'
     console.log 'notice', 'view:', @view, @view_mode
+
+    App.WebSocket.send(event:'ticket_overview_select', data: { view: @view })
 
     # get ticket list
     ticketListShow = []

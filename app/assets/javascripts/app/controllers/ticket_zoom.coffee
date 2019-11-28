@@ -894,6 +894,10 @@ class App.TicketZoom extends App.Controller
     if macro && macro.ux_flow_next_up
       taskAction = macro.ux_flow_next_up
 
+    nextTicket = undefined
+    if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
+      nextTicket = @getNextTicketInOverview()
+
     # submit changes
     @ajax(
       id: "ticket_update_#{ticket.id}"
@@ -916,8 +920,8 @@ class App.TicketZoom extends App.Controller
           @sidebarWidget.commit()
 
         if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
+          @openTicketInOverview(nextTicket)
           App.Event.trigger('overview:fetch')
-          @taskOpenNextTicketInOverview()
           return
 
         if taskAction is 'closeTab' || taskAction is 'next_task'
