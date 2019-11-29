@@ -1,5 +1,30 @@
 # Change Log
 
+## [3.1.1](https://github.com/zammad/zammad/tree/3.1.1) (2019-12-02)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.1.0...3.1.1)
+
+**Implemented enhancements:**
+- Sometimes elasticsearch takes longer as expected and will raise timeout in Zammad [2720](https://github.com/zammad/zammad/issues/2720) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+
+**Fixed bugs:**
+- Unprocessable mail if follow up search is enabled for attachments with contains invalid charsets (postmaster_follow_up_search_in with attachment) [2808](https://github.com/zammad/zammad/issues/2808) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Image/attachment preview is to small, need to download image and open it locally  [2796](https://github.com/zammad/zammad/issues/2796) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- Unable to process email where group has option `follow_up_possible: 'new_ticket'` and arraiving email has no subject header [2768](https://github.com/zammad/zammad/issues/2768) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Fixes #2699 - Excel export of report or time accounting drops additional fields in row if integer field contain `null/nil/undefined`. [2699](https://github.com/zammad/zammad/issues/2699) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Removing a record drops whole index on Elasticsearch 6 and later [2742](https://github.com/zammad/zammad/issues/2742) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Can't change Ticket attributes of "Shared Organization" Ticket [2750](https://github.com/zammad/zammad/issues/2750) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Put _type, _doc and _id to reserved words for object managaer becasue of elasticssearch internal use [2728](https://github.com/zammad/zammad/issues/2728) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to process mail with enabled follow up detection in content of attachments [2723](https://github.com/zammad/zammad/issues/2723) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- mail processing impossible: invalid byte sequence in UTF-8 [2722](https://github.com/zammad/zammad/issues/2722) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Unable to set owner via `X-Zammad-Ticket-owner` header [2719](https://github.com/zammad/zammad/issues/2719) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Time zone incorrectly calculated in ticket list [2697](https://github.com/zammad/zammad/issues/2697) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Linking of external account in profile is broken [2675](https://github.com/zammad/zammad/issues/2675) [[authentication](https://github.com/zammad/zammad/labels/authentication)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[personal settings/menu](https://github.com/zammad/zammad/labels/personal settings/menu)]
+- Issue2541FixNotificationEmailWithoutBody database migration blocks update when records with `current_user.id` in selector exist [2663](https://github.com/zammad/zammad/issues/2663) [[bug](https://github.com/zammad/zammad/labels/bug)] [[update](https://github.com/zammad/zammad/labels/update)]
+- Zammad logs permanently to STDOUT on 3.1 [2660](https://github.com/zammad/zammad/issues/2660) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Last line in note is not selectable [2654](https://github.com/zammad/zammad/issues/2654) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Services die with: ThreadError: can't create Thread: Resource temporarily unavailable [2656](https://github.com/zammad/zammad/issues/2656) [[bug](https://github.com/zammad/zammad/labels/bug)] [[third party issue](https://github.com/zammad/zammad/labels/third party issue)] [[waiting for feedback](https://github.com/zammad/zammad/labels/waiting for feedback)]
+
+
 ## [3.1.0](https://github.com/zammad/zammad/tree/3.1.0) (2019-07-10)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.0.0...3.1.0)
 
