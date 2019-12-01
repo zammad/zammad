@@ -14,7 +14,7 @@ User.create_if_not_exists(
   lastname:        'Connector',
   email:           '',
   password:        'connector',
-  active:          false,
+  active:          true,
   roles:           [ Role.find_by(name: 'Connector') ],
   organization_id: customerOrg.id,
 )

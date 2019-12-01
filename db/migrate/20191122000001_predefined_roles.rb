@@ -20,7 +20,7 @@ class PredefinedRoles < ActiveRecord::Migration[5.1]
       )
 
       connector = Role.find_by(name: 'Connector')
-      connector.permission_grant('ticket.customer')
+      connector.permission_grant('ticket.agent')
 
 
     end
