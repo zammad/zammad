@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
 
 class KnowledgeBase::BaseController < ApplicationController
-  before_action :authentication_check
+  prepend_before_action :authentication_check
   before_action :ensure_editor_or_reader
   before_action :ensure_editor, only: %i[create update destroy]
 
