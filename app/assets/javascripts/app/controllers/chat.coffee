@@ -17,6 +17,7 @@ class App.CustomerChat extends App.Controller
   constructor: ->
     super
 
+    @popovers = []
     @chatWindows = {}
     @maxChatWindows = 4
     preferences = @Session.get('preferences')
@@ -221,7 +222,12 @@ class App.CustomerChat extends App.Controller
     chats
 
   updateMeta: =>
-    $('.popover').remove()
+
+    # clear old popovers
+    for popover in @popovers
+      popover.popover('destroy')
+    @popovers = []
+
     activeChatTopcis = @activeChatTopcis()
     @$('.js-header').html(App.view('customer_chat/chat_header')(chats: activeChatTopcis))
     @refreshElements()
@@ -244,7 +250,7 @@ class App.CustomerChat extends App.Controller
       for chat in App.Chat.all()
         do (chat) =>
           @$(".js-header .js-waitingCustomers[data-chat-id=#{chat.id}] .js-badgeWaitingCustomers").text(@meta.waiting_chat_count_by_chat[chat.id])
-          @el.find(".js-waitingCustomers[data-chat-id=#{chat.id}] .js-info").popover(
+          @popovers.push @el.find(".js-waitingCustomers[data-chat-id=#{chat.id}] .js-info").popover(
             trigger:    'hover'
             html:       true
             animation:  false
@@ -258,7 +264,7 @@ class App.CustomerChat extends App.Controller
           )
     else
       @badgeWaitingCustomers.text(@meta.waiting_chat_count)
-      @el.find('.js-waitingCustomers .js-totalInfo').popover(
+      @popovers.push @el.find('.js-waitingCustomers .js-totalInfo').popover(
         trigger:    'hover'
         html:       true
         animation:  false
@@ -280,7 +286,7 @@ class App.CustomerChat extends App.Controller
         @addChat(session)
     @meta.active_sessions = false
 
-    @el.find('.js-chattingCustomers .js-info').popover(
+    @popovers.push @el.find('.js-chattingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
@@ -293,7 +299,7 @@ class App.CustomerChat extends App.Controller
         @chatSessionList(@meta.running_chat_session_list)
     )
 
-    @el.find('.js-activeAgents .js-info').popover(
+    @popovers.push @el.find('.js-activeAgents .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
