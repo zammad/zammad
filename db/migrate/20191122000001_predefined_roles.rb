@@ -21,7 +21,7 @@ class PredefinedRoles < ActiveRecord::Migration[5.1]
 
       connector = Role.find_by(name: 'Connector')
       connector.permission_grant('ticket.agent')
-
+      RoleGroup.create_if_not_exists(role: connector, group: Group.find_by(name: 'Incoming'))
 
     end
 end
