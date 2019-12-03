@@ -753,6 +753,8 @@ do($ = window.jQuery, window) ->
             @onSessionClosed pipe.data
           when 'chat_session_left'
             @onSessionClosed pipe.data
+          when 'chat_session_notice'
+            @addStatus @T(pipe.data.message)
           when 'chat_status_customer'
             switch pipe.data.state
               when 'online'

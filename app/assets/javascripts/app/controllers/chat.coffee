@@ -4,11 +4,12 @@ class App.CustomerChat extends App.Controller
     'click .js-settings': 'settings'
 
   elements:
-    '.js-acceptChat': 'acceptChatElement'
-    '.js-badgeWaitingCustomers': 'badgeWaitingCustomers'
+    '.js-acceptChat':             'acceptChatElement'
+    '.js-badgeWaitingCustomers':  'badgeWaitingCustomers'
+    '.js-totalInfo':              'totalInfo'
     '.js-badgeChattingCustomers': 'badgeChattingCustomers'
-    '.js-badgeActiveAgents': 'badgeActiveAgents'
-    '.chat-workspace': 'workspace'
+    '.js-badgeActiveAgents':      'badgeActiveAgents'
+    '.chat-workspace':            'workspace'
 
   sounds:
     chat_new: new Audio('assets/sounds/chat_new.mp3')
@@ -28,7 +29,9 @@ class App.CustomerChat extends App.Controller
     @meta =
       active: false
       waiting_chat_count: 0
+      waiting_chat_count_by_chat: {}
       waiting_chat_session_list: []
+      waiting_chat_session_list_by_chat: {}
       running_chat_count: 0
       running_chat_session_list: []
       active_agent_count: 0
@@ -99,65 +102,23 @@ class App.CustomerChat extends App.Controller
 
     @html App.view('customer_chat/index')()
 
-    chatSessionList = (list) ->
-      for chat_session in list
-        chat = App.Chat.find(chat_session.chat_id)
-        chat_session.name = "#{chat.displayName()} [##{chat_session.id}]"
-        chat_session.geo_data = ''
-        if chat_session.preferences && chat_session.preferences.geo_ip
-          if chat_session.preferences.geo_ip.country_name
-            chat_session.geo_data += chat_session.preferences.geo_ip.country_name
-          if chat_session.preferences.geo_ip.city_name
-            chat_session.geo_data += " #{chat_session.preferences.geo_ip.city_name}"
-        if chat_session.user_id
-          chat_session.user = App.User.find(chat_session.user_id)
-      App.view('customer_chat/chat_list')(
-        chat_sessions: list
-      )
-
-    @el.find('.js-waitingCustomers .js-info').popover(
-      trigger:    'hover'
-      html:       true
-      animation:  false
-      delay:      0
-      placement:  'bottom'
-      container:  'body' # place in body do prevent it from animating
-      title: ->
-        App.i18n.translateContent('Waiting Customers')
-      content: =>
-        chatSessionList(@meta.waiting_chat_session_list)
+  chatSessionList: (list) ->
+    list = [] if !list
+    for chat_session in list
+      chat = App.Chat.find(chat_session.chat_id)
+      chat_session.name = "#{chat.displayName()} [##{chat_session.id}]"
+      chat_session.geo_data = ''
+      if chat_session.preferences && chat_session.preferences.geo_ip
+        if chat_session.preferences.geo_ip.country_name
+          chat_session.geo_data += chat_session.preferences.geo_ip.country_name
+        if chat_session.preferences.geo_ip.city_name
+          chat_session.geo_data += " #{chat_session.preferences.geo_ip.city_name}"
+      if chat_session.user_id
+        chat_session.user = App.User.find(chat_session.user_id)
+    App.view('customer_chat/chat_list')(
+      chat_sessions: list
     )
 
-    @el.find('.js-chattingCustomers .js-info').popover(
-      trigger:    'hover'
-      html:       true
-      animation:  false
-      delay:      0
-      placement:  'bottom'
-      container:  'body'
-      title: ->
-        App.i18n.translateContent('Chatting Customers')
-      content: =>
-        chatSessionList(@meta.running_chat_session_list)
-    )
-
-    @el.find('.js-activeAgents .js-info').popover(
-      trigger:    'hover'
-      html:       true
-      animation:  false
-      delay:      0
-      placement:  'bottom'
-      container:  'body'
-      title: ->
-        App.i18n.translateContent('Active Agents')
-      content: =>
-        users = []
-        for user_id in @meta.active_agent_ids
-          users.push App.User.find(user_id)
-        App.view('customer_chat/user_list')(
-          users: users
-        )
-    )
 
   show: (params) =>
     @title 'Customer Chat', true
@@ -248,15 +209,68 @@ class App.CustomerChat extends App.Controller
       @stopPushState()
       @pushState()
 
+  activeChatTopcis: =>
+    preferences = @Session.get('preferences')
+    return [] if !preferences
+    return [] if !preferences.chat
+    return [] if !preferences.chat.active
+    chats = []
+    for chat in App.Chat.all()
+      if preferences.chat.active[chat.id] is 'on' || preferences.chat.active[chat.id.toString()] is 'on'
+        chats.push chat
+    chats
+
   updateMeta: =>
+    $('.popover').remove()
+    activeChatTopcis = @activeChatTopcis()
+    @$('.js-header').html(App.view('customer_chat/chat_header')(chats: activeChatTopcis))
+    @refreshElements()
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
-      @acceptChatElement.addClass('is-clickable is-blinking')
+
+      # activate normal button
+      @acceptChatElement.not('[data-chat-id]').addClass('is-active pulsate-animation')
+
+      # activate specific chat buttons
+      if activeChatTopcis.length > 1
+        for chat in activeChatTopcis
+          if @meta.waiting_chat_count_by_chat[chat.id]
+            @$(".js-header .js-acceptChat[data-chat-id=#{chat.id}]").addClass('is-active pulsate-animation').attr('disabled', false)
       @idleTimeoutStart()
     else
-      @acceptChatElement.removeClass('is-clickable is-blinking')
+      @acceptChatElement.removeClass('is-active pulsate-animation')
       @idleTimeoutStop()
 
-    @badgeWaitingCustomers.text(@meta.waiting_chat_count)
+    if activeChatTopcis.length > 1
+      for chat in App.Chat.all()
+        do (chat) =>
+          @$(".js-header .js-waitingCustomers[data-chat-id=#{chat.id}] .js-badgeWaitingCustomers").text(@meta.waiting_chat_count_by_chat[chat.id])
+          @el.find(".js-waitingCustomers[data-chat-id=#{chat.id}] .js-info").popover(
+            trigger:    'hover'
+            html:       true
+            animation:  false
+            delay:      0
+            placement:  'bottom'
+            container:  'body' # place in body do prevent it from animating
+            title: ->
+              App.i18n.translateContent('Waiting Customers')
+            content: =>
+              @chatSessionList(@meta.waiting_chat_session_list_by_chat[chat.id])
+          )
+    else
+      @badgeWaitingCustomers.text(@meta.waiting_chat_count)
+      @el.find('.js-waitingCustomers .js-totalInfo').popover(
+        trigger:    'hover'
+        html:       true
+        animation:  false
+        delay:      0
+        placement:  'bottom'
+        container:  'body' # place in body do prevent it from animating
+        title: ->
+          App.i18n.translateContent('Waiting Customers')
+        content: =>
+          @chatSessionList(@meta.waiting_chat_session_list_by_chat[activeChatTopcis[0].id])
+      )
+
     @badgeChattingCustomers.text(@meta.running_chat_count)
     @badgeActiveAgents.text(@meta.active_agent_count)
 
@@ -265,6 +279,37 @@ class App.CustomerChat extends App.Controller
       for session in @meta.active_sessions
         @addChat(session)
     @meta.active_sessions = false
+
+    @el.find('.js-chattingCustomers .js-info').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      0
+      placement:  'bottom'
+      container:  'body'
+      title: ->
+        App.i18n.translateContent('Chatting Customers')
+      content: =>
+        @chatSessionList(@meta.running_chat_session_list)
+    )
+
+    @el.find('.js-activeAgents .js-info').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      0
+      placement:  'bottom'
+      container:  'body'
+      title: ->
+        App.i18n.translateContent('Active Agents')
+      content: =>
+        users = []
+        for user_id in @meta.active_agent_ids
+          users.push App.User.find(user_id)
+        App.view('customer_chat/user_list')(
+          users: users
+        )
+    )
 
     @updateNavMenu()
 
@@ -298,9 +343,10 @@ class App.CustomerChat extends App.Controller
     for session_id, chat of @chatWindows
       chat.trigger('layout-changed')
 
-  acceptChat: =>
+  acceptChat: (e) =>
     return if @windowCount() >= @maxChatWindows
-    App.WebSocket.send(event:'chat_session_start')
+    chat_id = $(e.currentTarget).attr('data-chat-id')
+    App.WebSocket.send(event:'chat_session_start', chat_id: chat_id)
     @idleTimeoutStop()
 
   settings: (params = {}) ->
@@ -344,6 +390,7 @@ class ChatWindow extends App.Controller
     'click .js-scrollHint':          'onScrollHintClick'
     'click .js-info':                'toggleMeta'
     'click .js-createTicket':        'ticketCreate'
+    'click .js-transferChat':        'transfer'
     'submit .js-metaForm':           'sendMetaForm'
 
   elements:
@@ -450,6 +497,7 @@ class ChatWindow extends App.Controller
     @html App.view('customer_chat/chat_window')(
       name: @name
       session: @session
+      chats: App.Chat.all()
     )
 
     @el.one('transitionend', @onTransitionend)
@@ -765,6 +813,12 @@ class ChatWindow extends App.Controller
       @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
     else if showHint
       @showScrollHint()
+
+  transfer: (e) =>
+    e.preventDefault()
+    chat_id = $(e.currentTarget).attr('data-chat-id')
+    App.WebSocket.send(event:'chat_transfer', chat_id: chat_id, session_id: @session.id)
+    @close()
 
   ticketCreate: (e) =>
     e.preventDefault()

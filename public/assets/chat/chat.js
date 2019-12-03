@@ -1032,6 +1032,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           case 'chat_session_left':
             this.onSessionClosed(pipe.data);
             break;
+          case 'chat_session_notice':
+            this.addStatus(this.T(pipe.data.message));
+            break;
           case 'chat_status_customer':
             switch (pipe.data.state) {
               case 'online':

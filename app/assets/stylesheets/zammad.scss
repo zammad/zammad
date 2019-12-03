@@ -889,6 +889,23 @@ pre code.hljs {
 
 .status-fields {
   display: flex;
+  max-width: 100%;
+  
+  .dropdown li {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .dropdown-menu .status-badge {
+    margin-left: 10px;
+  }
+  
+  .dropdown-menu .badge {
+    margin-top: -2px;
+    margin-right: 7px;
+    background: hsla(0,0%,0%,.5);
+  }
 }
 
 .status-field {
@@ -896,20 +913,21 @@ pre code.hljs {
   border: 1px solid hsl(0,0%,90%);
   display: flex;
   height: 34px;
+  flex-shrink: 1;
+  min-width: 20px;
+  padding: 5px 0;
   align-items: center;
-  line-height: 35px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
-  &.is-clickable {
+  &.is-active {
     background: hsl(203,65%,55%);
     color: white;
     border-color: hsl(203,65%,45%);
     box-shadow: 1px 0 hsl(203,65%,45%);
     position: relative;
     @extend %clickable;
-  }
-
-  &.is-blinking {
-    animation: pulsate 667ms ease-in-out infinite alternate;
   }
 
   &:not(:last-child):not(:only-child) {
@@ -919,6 +937,12 @@ pre code.hljs {
   &:first-child {
     border-radius: 5px 0 0 5px;
     @include rtl(border-radius, 0 5px 5px 0);
+    
+    .dropdown.open & {
+      border-radius: 5px 0 0 0;
+      
+      @include rtl(border-radius, 0 5px 0 0);
+    }
   }
 
   &:last-child {
@@ -931,7 +955,7 @@ pre code.hljs {
   }
 
   .badge {
-    @include bidi-style(margin, 0 5px 0 10px, margin, 0 10px 0 5px);
+    @include bidi-style(margin, 0 7px 0 10px, margin, 0 10px 0 7px);
     background: hsla(210,50%,10%,.24);
   }
 
@@ -941,6 +965,22 @@ pre code.hljs {
     align-items: center;
     justify-content: center;
     align-self: stretch;
+  }
+
+  &--arrow {
+    @extend %clickable;
+    border-left: none;
+    width: 34px;
+    justify-content: center;
+    
+    .icon {
+      fill: currentColor;
+    }
+  }
+
+  &--spacer {
+    padding-left: 16px;
+    padding-right: 2px;
   }
 }
 
@@ -2945,6 +2985,10 @@ ol.tabs li {
 
     .tab {
       flex: none;
+      
+      &:nth-last-child(2) {
+        @include bidi-style(border-right-width, 0, border-right-width, 1px);
+      }
     }
   }
 
@@ -7386,6 +7430,12 @@ footer {
 
   .dropdown-menu > li[disabled] {
     opacity: 0.33;
+    
+    &:hover,
+    &.is-active {
+      background: none;
+      cursor: default;
+    }
   }
 
   .dropdown-menu > li > a {
@@ -7404,7 +7454,7 @@ footer {
     display: block;
   }
 
-  .dropdown-menu .badge {
+  .dropdown-menu .badge--text {
     @include bidi-style(padding-left, 10px, padding-right, 0);
   }
 

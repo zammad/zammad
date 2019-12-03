@@ -1858,42 +1858,40 @@ figcaption {
   }
 -->
 <script>
-  var chat = new ZammadChat({
-    chatId: 1,
-    host: 'ws://localhost:6042',
-    cssUrl: 'http://localhost:5000/assets/chat/chat.css',
-    debug: true
-  });
+  function getSearchParameters() {
+        var prmstr = window.location.search.substr(1);
+        return prmstr != null && prmstr != '' ? transformToAssocArray(prmstr) : {};
+  }
+  function transformToAssocArray( prmstr ) {
+      var params = {};
+      var prmarr = prmstr.split('&');
+      for ( var i = 0; i < prmarr.length; i++) {
+          var tmparr = prmarr[i].split('=');
+          params[tmparr[0]] = tmparr[1];
+      }
+      return params;
+  }
+  var hostname = window.location.hostname;
+  var port = window.location.port;
+  var params = getSearchParameters();
+  var host = 'ws://'+ (location.host || 'localhost').split(':')[0] +':6042'
+  if (params['port']) {
+    host = 'ws://' + hostname + ':' + params['port']
+  }
+  cssUrl = 'http://' + hostname + ':' + port + '/assets/chat/chat.css'
 
-  $('.settings :input').on({
-    change: function(){
-      switch($(this).attr('data-option')){
-        case "flat":
-          $('.zammad-chat').toggleClass('zammad-chat--flat', this.checked);
-          break;
-        case "color":
-          setScssVariable('themeColor', this.value);
-          updateStyle();
-          break;
-        case "borderRadius":
-          setScssVariable('borderRadius', this.value + "px");
-          updateStyle();
-          break;
-      }
-    },
-    input: function(){
-      switch($(this).attr('data-option')){
-        case "borderRadius":
-          $('[data-option="borderRadius"]').val(this.value);
-          setScssVariable('borderRadius', this.value + "px");
-          updateStyle();
-          break;
-        case "fontSize":
-          $('[data-option="fontSize"]').val(this.value);
-          setScssVariable('fontSize', this.value + "px");
-          updateStyle();
-          break;
-      }
-    }
+  var chat = new ZammadChat({
+    chatId: 2,
+    host: host,
+    cssUrl: cssUrl,
+    debug: true,
+    background: '#494d52',
+    flat: true,
+    idleTimeout: 1,
+    idleTimeoutIntervallCheck: 0.5,
+    inactiveTimeout: 2,
+    inactiveTimeoutIntervallCheck: 0.5,
+    waitingListTimeout: 1.2,
+    waitingListTimeoutIntervallCheck: 0.5,
   });
 </script>

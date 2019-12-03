@@ -3,28 +3,7 @@
       <div class="page-header-title">
         <h1><%- @T('Customer Chat') %></h1>
       </div>
-      <div class="page-header-center">
-        <div class="status-fields">
-          <div class="status-field js-acceptChat js-waitingCustomers">
-            <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %> 
-            <div class="status-badge js-info">
-              <div class="info-badge"><%- @Icon('info') %></div>
-            </div>
-          </div>
-          <div class="status-field js-chattingCustomers">
-            <span class="badge js-badgeChattingCustomers"></span> <%- @T('Chatting Customers') %> 
-            <div class="status-badge js-info">
-              <div class="info-badge"><%- @Icon('info') %></div>
-            </div>
-          </div>
-          <div class="status-field js-activeAgents">
-            <span class="badge js-badgeActiveAgents"></span> <%- @T('Active Agents') %> 
-            <div class="status-badge js-info">
-              <div class="info-badge"><%- @Icon('info') %></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="page-header-center js-header"></div>
       <div class="page-header-meta">
         <div class="btn btn--action js-settings"><%- @T('Settings') %></div>
       </div>

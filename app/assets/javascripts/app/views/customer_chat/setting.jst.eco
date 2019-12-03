@@ -29,11 +29,11 @@
     <%- @Icon('arrow-down', 'dropdown-arrow') %>
   </div>
 </div>
-<table class="settings-list">
+<table class="settings-list settings-list--stretch">
   <thead>
     <tr>
       <th><%- @T('Topic') %>
-      <th width="100%"><%- @T('Greeting') %> (<%- @T('Separate multiple values by ;') %>)
+      <th><%- @T('Greeting') %> (<%- @T('Separate multiple values by ;') %>)
       <th><%- @T('Enabled') %>
     </th></tr>
   </thead>

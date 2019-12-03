@@ -47,6 +47,12 @@ RSpec.describe Sessions::Event::ChatSessionStart do
       session:   { 'id' => agent.id },
     )
   end
+  let(:chat_message_history) do
+    Chat::Message.create!(
+      chat_session_id: chat_session.id,
+      content:         'some message',
+    )
+  end
 
   before do
     Setting.set('chat', true)
@@ -175,6 +181,39 @@ RSpec.describe Sessions::Event::ChatSessionStart do
             'state'       => 'running',
             'preferences' => hash_including(
               'participants' => ['customer_session_id', client_id]
+            ),
+            'id'          => chat_session.id,
+            'chat_id'     => chat_session.chat_id,
+            'session_id'  => chat_session.session_id,
+            'name'        => nil,
+          )
+        )
+      )
+    end
+  end
+
+  context 'when starting a chat session as agent with transfered conversation' do
+    it 'send out chat_session_start to customer and agent with already created messages' do
+      chat_message_history
+      expect(subject_as_agent.run).to eq(nil)
+      messages_to_customer = Sessions.queue('customer_session_id')
+      expect(messages_to_customer.count).to eq(0)
+
+      messages_to_agent = Sessions.queue(client_id)
+      expect(messages_to_agent.count).to eq(1)
+      expect(messages_to_agent[0]).to include(
+        'event' => 'chat_session_start',
+        'data'  => hash_including(
+          'session' => hash_including(
+            'user_id'     => agent.id,
+            'state'       => 'running',
+            'preferences' => hash_including(
+              'participants' => ['customer_session_id', client_id]
+            ),
+            'messages'    => array_including(
+              hash_including(
+                'content' => 'some message',
+              ),
             ),
             'id'          => chat_session.id,
             'chat_id'     => chat_session.chat_id,
