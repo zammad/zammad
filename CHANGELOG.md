@@ -1,15 +1,77 @@
 # Change Log
 
-## [3.2.0](https://github.com/zammad/zammad/tree/3.2.0) (2019-xx-xx)
+## [3.2.0](https://github.com/zammad/zammad/tree/3.2.0) (2019-12-02)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.1.0...3.2.0)
 
 **Implemented enhancements:**
-
-
-
+- multiselect for field type select in trigger filters [1559](https://github.com/zammad/zammad/issues/1559) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Chat enhancement: Option to set Agent display name [2291](https://github.com/zammad/zammad/issues/2291) [[chat](https://github.com/zammad/zammad/labels/chat)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Article deletion for agents within 10 minutes of creation [2687](https://github.com/zammad/zammad/issues/2687) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Allow direct or extention numbers in answeringNumber of CTI API [2797](https://github.com/zammad/zammad/issues/2797) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Backup permission issue: Could not change directory [2508](https://github.com/zammad/zammad/issues/2508) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Triggers not present in the permissions list of a role [2608](https://github.com/zammad/zammad/issues/2608) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Telegram: Can't receive Videos and "too large" files [2289](https://github.com/zammad/zammad/issues/2289) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[telegram](https://github.com/zammad/zammad/labels/telegram)]
+- Send postmaster email to sender if email is too big and not processed by Zammad [2092](https://github.com/zammad/zammad/issues/2092) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Enhance postmaster filters to be able ignoring vacation mails (out of office) [2734](https://github.com/zammad/zammad/issues/2734) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Display only used Channels in Dashboard [1010](https://github.com/zammad/zammad/issues/1010) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Sometimes elasticsearch takes longer as expected and will raise timeout in Zammad [2720](https://github.com/zammad/zammad/issues/2720) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Enhance CTI-Caller-Log to "mark as seen" all unread entries at once [2647](https://github.com/zammad/zammad/issues/2647) [[CTI](https://github.com/zammad/zammad/labels/CTI)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+-  Added new placetel outbound support for call logging. [2703](https://github.com/zammad/zammad/issues/2703) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- No description for Macros [813](https://github.com/zammad/zammad/issues/813) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Trigger word "attachment" leads to attachment warning pop-up even if it is just in quoted customer text. [2325](https://github.com/zammad/zammad/issues/2325) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
 
 **Fixed bugs:**
-
-
-
+- Insertion of inline pictures does not work, if you copy an image in your Browser [2645](https://github.com/zammad/zammad/issues/2645) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- It seems you're running an external Elasticsearch server on http://localhost:9200 [2400](https://github.com/zammad/zammad/issues/2400) [[bug](https://github.com/zammad/zammad/labels/bug)] [[update](https://github.com/zammad/zammad/labels/update)]
+- ticket auto assignment is not working if only one excluded user is defined [2692](https://github.com/zammad/zammad/issues/2692) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't add new articles via Macro [542](https://github.com/zammad/zammad/issues/542) [[bug](https://github.com/zammad/zammad/labels/bug)] [[macros](https://github.com/zammad/zammad/labels/macros)]
+- Error while fetching email from inbox will block processing of other mails in inbox [2754](https://github.com/zammad/zammad/issues/2754) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Useless display of delete icon below note [2813](https://github.com/zammad/zammad/issues/2813) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- TimeAccounting modal dialog input not focused [2818](https://github.com/zammad/zammad/issues/2818) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Datepicker in bulk action not usable in bulk action if ticket list is longer the one page. [2274](https://github.com/zammad/zammad/issues/2274) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
+- Array values (e.g. several states) nuke reporting profiles [2809](https://github.com/zammad/zammad/issues/2809) [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+- Unprocessable mail if follow up search is enabled for attachments with contains invalid charsets (postmaster_follow_up_search_in with attachment) [2808](https://github.com/zammad/zammad/issues/2808) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Admin Settings-> Knowledge base messes up display of other Admin settings [2784](https://github.com/zammad/zammad/issues/2784) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zammad ignores disabled Chat-Topics for agents [2441](https://github.com/zammad/zammad/issues/2441) [[bug](https://github.com/zammad/zammad/labels/bug)] [[chat](https://github.com/zammad/zammad/labels/chat)]
+- Knowledge Base - Attachments not working for internal readers [2777](https://github.com/zammad/zammad/issues/2777) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Twitter DMs and Mentions do not arrive [2460](https://github.com/zammad/zammad/issues/2460) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Image/attachment preview is to small, need to download image and open it locally  [2796](https://github.com/zammad/zammad/issues/2796) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- Reporting does not return all tickets when using values with that "devide" values (e. g. some_value) [2785](https://github.com/zammad/zammad/issues/2785) [[bug](https://github.com/zammad/zammad/labels/bug)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+- not possible to search or link KB-answer within ticket [2789](https://github.com/zammad/zammad/issues/2789) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Wrong dates on synced calendars [2229](https://github.com/zammad/zammad/issues/2229) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- CSV-Import doesn't lookup records by "name" field [2658](https://github.com/zammad/zammad/issues/2658) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Signature detection fails if no signature range could be found [2740](https://github.com/zammad/zammad/issues/2740) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't forward articles containing a <img> tag without src attribute [2701](https://github.com/zammad/zammad/issues/2701) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Unable to process email where group has option `follow_up_possible: 'new_ticket'` and arraiving email has no subject header [2768](https://github.com/zammad/zammad/issues/2768) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Removing a record drops whole index on Elasticsearch 6 and later [2742](https://github.com/zammad/zammad/issues/2742) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Can't change Ticket attributes of "Shared Organization" Ticket [2750](https://github.com/zammad/zammad/issues/2750) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- SAML authentication [2741](https://github.com/zammad/zammad/issues/2741) [[authentication](https://github.com/zammad/zammad/labels/authentication)]
+- Fixes #2699 - Excel export of report or time accounting drops additional fields in row if integer field contain `null/nil/undefined`. [2699](https://github.com/zammad/zammad/issues/2699) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- System mail notification subjects ending with =0A [2726](https://github.com/zammad/zammad/issues/2726) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Default value not set for attributes of type input, select, tree_select, richtext, textarea, checkbox [1653](https://github.com/zammad/zammad/issues/1653) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Gitlab Login not working after upgrade to Zammad 3.x [2595](https://github.com/zammad/zammad/issues/2595) [[authentication](https://github.com/zammad/zammad/labels/authentication)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Registering of Twitter App fails for Twitter App with existing webhooks [2730](https://github.com/zammad/zammad/issues/2730) [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+- No owner set for Tickets imported from Zendesk [2702](https://github.com/zammad/zammad/issues/2702) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Zendesk import doesn't consider all tickets [2694](https://github.com/zammad/zammad/issues/2694) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Zendesk import fails for deleted tickets [1161](https://github.com/zammad/zammad/issues/1161) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Zendesk import fails due import of (too long) ticket description as (unused) note [2538](https://github.com/zammad/zammad/issues/2538) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Put _type, _doc and _id to reserved words for object managaer becasue of elasticssearch internal use [2728](https://github.com/zammad/zammad/issues/2728) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Quick text launched in text editor even if new line is between :: [2710](https://github.com/zammad/zammad/issues/2710) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Unable to process mail with enabled follow up detection in content of attachments [2723](https://github.com/zammad/zammad/issues/2723) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- mail processing impossible: invalid byte sequence in UTF-8 [2722](https://github.com/zammad/zammad/issues/2722) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Unable to set owner via `X-Zammad-Ticket-owner` header [2719](https://github.com/zammad/zammad/issues/2719) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Chat header's height is too small [2596](https://github.com/zammad/zammad/issues/2596) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[chat](https://github.com/zammad/zammad/labels/chat)]
+- Inconsistency in "follow up" strings [2661](https://github.com/zammad/zammad/issues/2661) [[bug](https://github.com/zammad/zammad/labels/bug)] [[translation](https://github.com/zammad/zammad/labels/translation)]
+- Limit on copy and paste in note box for new articles [2696](https://github.com/zammad/zammad/issues/2696) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Telegram not possible to close ticket via `/end` [2695](https://github.com/zammad/zammad/issues/2695) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[telegram](https://github.com/zammad/zammad/labels/telegram)]
+- clickable URL (template) for ObjectManager Attribute [2103](https://github.com/zammad/zammad/issues/2103) [[feature backlog](https://github.com/zammad/zammad/labels/feature backlog)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Time zone incorrectly calculated in ticket list [2697](https://github.com/zammad/zammad/issues/2697) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- ObjectManager::Attribute names collide with reserved application words ( e.g. `url`) and break functionalities [2664](https://github.com/zammad/zammad/issues/2664) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Zammad ignores group mapping on Telegram if same sending user [2379](https://github.com/zammad/zammad/issues/2379) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+- Linking of external account in profile is broken [2675](https://github.com/zammad/zammad/issues/2675) [[authentication](https://github.com/zammad/zammad/labels/authentication)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[personal settings/menu](https://github.com/zammad/zammad/labels/personal settings/menu)]
+- Scheduler/Job with current_user in condition is not working [2685](https://github.com/zammad/zammad/issues/2685) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Issue2541FixNotificationEmailWithoutBody database migration blocks update when records with `current_user.id` in selector exist [2663](https://github.com/zammad/zammad/issues/2663) [[bug](https://github.com/zammad/zammad/labels/bug)] [[update](https://github.com/zammad/zammad/labels/update)]
+- Zammad logs permanently to STDOUT on 3.1 [2660](https://github.com/zammad/zammad/issues/2660) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Last line in note is not selectable [2654](https://github.com/zammad/zammad/issues/2654) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Services die with: ThreadError: can't create Thread: Resource temporarily unavailable [2656](https://github.com/zammad/zammad/issues/2656) [[bug](https://github.com/zammad/zammad/labels/bug)] [[third party issue](https://github.com/zammad/zammad/labels/third party issue)] [[waiting for feedback](https://github.com/zammad/zammad/labels/waiting for feedback)]
 
