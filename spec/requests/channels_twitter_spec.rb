@@ -22,8 +22,10 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
     end
 
     context 'without valid twitter credentials in the DB' do
-      let!(:twitter_channel) { create(:twitter_channel, external_credential: twitter_credential) }
-      let(:twitter_credential) { create(:twitter_credential, credentials: { foo: 'bar' }) }
+      before do
+        twitter_credential.credentials.delete(:consumer_secret)
+        twitter_credential.save!
+      end
 
       it 'responds 422 Unprocessable Entity' do
         get '/api/v1/channels_twitter_webhook', params: params, as: :json
@@ -33,7 +35,7 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
     end
 
     context 'without "crc_token" param' do
-      let(:params) { {} }
+      before { params.delete(:crc_token) }
 
       it 'responds 422 Unprocessable Entity' do
         get '/api/v1/channels_twitter_webhook', params: params, as: :json
@@ -44,10 +46,9 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
   end
 
   describe 'POST /api/v1/channels_twitter_webhook' do
-    let(:payload) { params.stringify_keys.to_s.gsub(/=>/, ':').tr(' ', '') }
+    let(:payload) { params.stringify_keys.to_s.gsub(/=>/, ':').delete(' ') }
     let(:headers) { { 'x-twitter-webhooks-signature': hash_signature } }
-    let(:params) { { foo: 'bar', for_user_id: user_id } }
-    let(:user_id) { twitter_channel.options[:user][:id] }
+    let(:params) { { foo: 'bar', for_user_id: twitter_channel.options[:user][:id] } }
 
     # What's this all about? See the "Optional signature header validation" section of this article:
     # https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/guides/securing-webhooks
@@ -71,8 +72,8 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
           end
         end
 
-        context 'when payload doesn’t match' do
-          let(:headers) { { 'x-twitter-webhooks-signature': 'Not actually a signature' } }
+        context 'when invalid (not based on consumer secret + payload)' do
+          let(:headers) { { 'x-twitter-webhooks-signature': 'Not a valid signature' } }
 
           it 'responds 401 Not Authorized' do
             post '/api/v1/channels_twitter_webhook', params: params, headers: headers, as: :json

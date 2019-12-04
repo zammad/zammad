@@ -4,36 +4,6 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
   let!(:external_credential) { create(:twitter_credential, credentials: credentials) }
   let(:credentials) { { consumer_key: 'CCC', consumer_secret: 'DDD' } }
 
-  describe '#webhook_verify (for Twitter to confirm Zammad’s credentials)' do
-    context 'with only cached credentials' do
-      let!(:external_credential) { nil }
-
-      before { Cache.write('external_credential_twitter', credentials) }
-
-      it 'returns an HMAC signature for cached credentials plus params[:crc_token]' do
-        get '/api/v1/channels_twitter_webhook',
-            params:  { crc_token: 'some_random', nonce: 'some_nonce' },
-            headers: { 'x-twitter-webhooks-signature' => 'something' },
-            as:      :json
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response).to include('response_token' => 'sha256=VE19eUk6krbdSqWPdvH71xtFhApBAU81uPW3UT65vOs=')
-      end
-    end
-
-    context 'with only credentials stored in DB' do
-      it 'returns an HMAC signature for stored credentials plus params[:crc_token]' do
-        get '/api/v1/channels_twitter_webhook',
-            params:  { crc_token: 'some_random', nonce: 'some_nonce' },
-            headers: { 'x-twitter-webhooks-signature' => 'something' },
-            as:      :json
-
-        expect(response).to have_http_status(:ok)
-        expect(json_response).to include('response_token' => 'sha256=VE19eUk6krbdSqWPdvH71xtFhApBAU81uPW3UT65vOs=')
-      end
-    end
-  end
-
   describe '#webhook_incoming' do
     let!(:channel) do
       create(
@@ -65,77 +35,6 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           }
         }
       )
-    end
-
-    describe 'confirming authenticity of incoming Twitter webhook' do
-      context 'with valid headers & parameters' do
-        it 'returns 200 success' do
-          post '/api/v1/channels_twitter_webhook',
-               params:  { for_user_id: channel.options[:user][:id], key: 'value' },
-               headers: { 'x-twitter-webhooks-signature' => 'sha256=JjEmBe1lVKT8XldrYUKibF+D5ehp8f0jDk3PXZSHEWI=' },
-               as:      :json
-
-          expect(response).to have_http_status(:ok)
-        end
-      end
-
-      context 'when request is missing x-twitter-webhooks-signature header' do
-        it 'returns 422 with error message' do
-          post '/api/v1/channels_twitter_webhook', as: :json
-
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(json_response).to include('error' => "Missing 'x-twitter-webhooks-signature' header")
-        end
-      end
-
-      context 'when Zammad has no Twitter credentials (in DB or cache)' do
-        let!(:external_credential) { nil }
-        let!(:channel) { nil }
-
-        it 'returns 422 with error message' do
-          post '/api/v1/channels_twitter_webhook',
-               headers: { 'x-twitter-webhooks-signature' => 'something' },
-               as:      :json
-
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(json_response).to include('error' => "No such external_credential 'twitter'!")
-        end
-      end
-
-      context 'with invalid token in x-twitter-webhooks-signature header' do
-        it 'returns 401 with error message' do
-          post '/api/v1/channels_twitter_webhook',
-               headers: { 'x-twitter-webhooks-signature' => 'something' },
-               as:      :json
-
-          expect(response).to have_http_status(:unauthorized)
-          expect(json_response).to include('error' => 'Not authorized')
-        end
-      end
-
-      context 'with :for_user_id request parameter' do
-        it 'returns 422 with error message' do
-          post '/api/v1/channels_twitter_webhook',
-               params:  { key: 'value' },
-               headers: { 'x-twitter-webhooks-signature' => 'sha256=EERHBy/k17v+SuT+K0OXuwhJtKnPtxi0n/Y4Wye4kVU=' },
-               as:      :json
-
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(json_response).to include('error' => "Missing 'for_user_id' in payload!")
-        end
-      end
-
-      context 'with invalid :for_user_id request parameter' do
-        it 'returns 422 with error message' do
-          post '/api/v1/channels_twitter_webhook',
-               params:  { for_user_id: 'not_existing', key: 'value' },
-               headers: { 'x-twitter-webhooks-signature' => 'sha256=QaJiQl/4WRp/GF37b+eAdF6kPgptjDCLOgAIIbB1s0I=' },
-               as:      :json
-
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(json_response).to include('error' => "No such channel for user id 'not_existing'!")
-        end
-      end
     end
 
     describe 'auto-creation of tickets/articles on webhook receipt' do
