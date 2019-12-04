@@ -24,7 +24,7 @@
 
 	function InsertDelegateMenu(){
         let currTicket = $('#navigation > div.tasks.tasks-navigation.ui-sortable').find('.is-active');
-        if(menu == undefined || menu.length == 0){
+        if(currTicket == undefined || currTicket.length == 0){
             return;
         }
 
