@@ -4,12 +4,18 @@ class Issue2460FixCorruptedTwitterIds < ActiveRecord::Migration[5.2]
 
     Channel.where(area: 'Twitter::Account').each do |channel|
 
-      client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = channel.options['auth']['consumer_key']
-        config.consumer_secret     = channel.options['auth']['consumer_secret']
-        config.access_token        = channel.options['auth']['oauth_token']
-        config.access_token_secret = channel.options['auth']['oauth_token_secret']
+      begin
+        client = Twitter::REST::Client.new do |config|
+          config.consumer_key        = channel.options['auth']['consumer_key']
+          config.consumer_secret     = channel.options['auth']['consumer_secret']
+          config.access_token        = channel.options['auth']['oauth_token']
+          config.access_token_secret = channel.options['auth']['oauth_token_secret']
+        end
+      rescue => e
+        Rails.logger.error "Error while trying to update corrupted Twitter User ID: #{e.message}"
       end
+
+      next if client.blank?
 
       channel.options['user']['id'] = client.user.id.to_s
 
