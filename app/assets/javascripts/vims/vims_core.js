@@ -38,7 +38,7 @@
         let menu = $(selector + ' > div > div.tabsSidebar.tabsSidebar--attributeBarSpacer.vertical > div:nth-child(1) > div.sidebar-header > div.sidebar-header-actions.js-actions > div > ul');
         if(menu == undefined || menu.length == 0 || $("#vimsDelegateLi").length > 0){
             console.log("menu not found");
-            continue;
+            return;
         }
         console.log("menu found");
         menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" onclick="SendDelegation()">Delegate</a></li>');
