@@ -23,19 +23,26 @@
 	});
 
 	function InsertDelegateMenu(){
-		let nav = $('#navigation > div.tasks.tasks-navigation.ui-sortable');
-		let ticketsCount = nav.children().length;
-		for(let i = 0; i < ticketsCount; i++){
-			let selector = "#content_permanent_Ticket-" + (i + 1);
-			let menu = $(selector + ' > div > div.tabsSidebar.tabsSidebar--attributeBarSpacer.vertical > div:nth-child(1) > div.sidebar-header > div.sidebar-header-actions.js-actions > div > ul');
-			if(menu == undefined || menu.length == 0 || $("#vimsDelegateLi").length > 0){
-				console.log("menu not found");
-				continue;
-			}
-			console.log("menu found");
-			menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" onclick="SendDelegation()">Delegate</a></li>');
+        let currTicket = $('#navigation > div.tasks.tasks-navigation.ui-sortable').find('.is-active');
+        if(menu == undefined || menu.length == 0){
+            return;
+        }
 
-		}	
+        let currTickerDomSelector = currTicket[0];
+        let ticketData = currTickerDomSelector.dataset.key;
+        if(!ticketData.startsWith('Ticket-')){
+            return;
+        }
+        let ticketId = ticketData.substr(ticketData.indexOf('-') + 1);
+        let selector = "#content_permanent_Ticket-" + ticketId;
+        let menu = $(selector + ' > div > div.tabsSidebar.tabsSidebar--attributeBarSpacer.vertical > div:nth-child(1) > div.sidebar-header > div.sidebar-header-actions.js-actions > div > ul');
+        if(menu == undefined || menu.length == 0 || $("#vimsDelegateLi").length > 0){
+            console.log("menu not found");
+            continue;
+        }
+        console.log("menu found");
+        menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" onclick="SendDelegation()">Delegate</a></li>');
+
 		try {
 			if(DelegateModal){
 			  if($('#cssModal').length == 0){
