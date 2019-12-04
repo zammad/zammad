@@ -33,6 +33,7 @@ RSpec.configure do |config|
 
       example.run
 
+    ensure
       ::ActiveJob::Base.queue_adapter = default_queue_adapter
     end
   end

@@ -80,6 +80,23 @@ RSpec.describe HasActiveJobLock, type: :job do
       it 'allows execution of perform_now jobs' do
         expect { job_class.perform_now }.to change(job_class, :perform_counter).by(1)
       end
+
+      context 'when Delayed::Job gets destroyed' do
+
+        before do
+          ::ActiveJob::Base.queue_adapter = :delayed_job
+        end
+
+        it 'is ensured that ActiveJobLock gets removed' do
+          job = job_class.perform_later
+
+          expect do
+            Delayed::Job.find(job.provider_job_id).destroy!
+          end.to change {
+            ActiveJobLock.exists?(lock_key: job.lock_key, active_job_id: job.job_id)
+          }.to(false)
+        end
+      end
     end
 
     context 'dynamic lock key' do
