@@ -15,5 +15,15 @@ RSpec.describe Issue2460FixCorruptedTwitterIds, type: :db_migration do
         .to change { twitter_channel.reload.options[:user][:id] }
         .to(twitter_api_user_id.to_s)
     end
+
+    context 'with invalid credentials stored' do
+
+      before { allow(Twitter::REST::Client).to receive(:new).and_raise(Twitter::Error::Unauthorized.new('Could not authenticate you.')) }
+
+      it 'skips the Channel' do
+        expect { migrate }
+          .not_to change { twitter_channel.reload.options[:user][:id] }
+      end
+    end
   end
 end
