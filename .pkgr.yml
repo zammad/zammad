@@ -16,6 +16,19 @@ targets:
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.5-9.el7.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.5-9.el7.x86_64.rpm
+  centos-8:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - which
+      - epel-release
+      - imlib2
+      - imlib2-devel
+    build_dependencies:
+      - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
+      - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
   debian-8:
     dependencies:
       - curl
