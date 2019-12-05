@@ -17,13 +17,12 @@ class DelegateModal {
   
   DelegateModal.html = `  
 	  <div id="vimsDelegateModal" class="vims-modal">
-	    <h1 class="vims-modal-title">Delegate</h1>
 		  <p>Are you sure you want to delegate this incident?</p>
-		  <div class="vims-modal-footer>
-			  <a href="#" rel="vims-modal:close" class="vims-modal-btn"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
+		  <p>
+			  <a href="#" rel="vims-modal:close">Close</a>
 			  &nbsp;
-			  <input class="vims-btn-success" type="button" value="Ok" onclick="Delegate()"/>
-		  </div>
+			  <input type="button" value="Ok" onclick="Delegate()"/>
+		  </p>
 	  </div>  
   `;
   
