@@ -56,6 +56,7 @@ if Ticket.count.zero?
     group_id:    Group.find_by(name: 'Incoming').id,
     customer_id: 1,
     title:       'Change admin password and enter email',
+    priority_id: 3,
   )
   Ticket::Article.create!(
     ticket_id: ticket.id,
