@@ -3,11 +3,21 @@ Organization.create_if_not_exists(
   name: 'Default SRE Provider',
 )
 
-Organization.create_if_not_exists(
+customerOrg = Organization.create_if_not_exists(
   id:   2,
   name: 'Customer'
 )
 
+User.create_if_not_exists(
+  login:           'connector',
+  firstname:       'Azure Monitor',
+  lastname:        'Connector',
+  email:           '',
+  password:        'connector',
+  active:          true,
+  roles:           [ Role.find_by(name: 'Connector') ],
+  organization_id: customerOrg.id,
+)
 
 if Ticket.count.zero?
   ticket = Ticket.create!(

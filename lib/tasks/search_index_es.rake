@@ -79,6 +79,18 @@ namespace :searchindex do
       pipeline = "zammad#{rand(999_999_999_999)}"
       Setting.set('es_pipeline', pipeline)
     end
+
+    # define pipeline_field_attributes
+    # ES 5.6 and nower has no ignore_missing support
+    pipeline_field_attributes = {
+      ignore_failure: true,
+    }
+    if es_multi_index?
+      pipeline_field_attributes = {
+        ignore_failure: true,
+        ignore_missing: true,
+      }
+    end
     print 'create pipeline (pipeline)... '
     SearchIndexBackend.processors(
       "_ingest/pipeline/#{pipeline}": [
@@ -91,22 +103,19 @@ namespace :searchindex do
           processors:  [
             {
               foreach: {
-                field:          'article',
-                ignore_failure: true,
-                processor:      {
+                field:     'article',
+                processor: {
                   foreach: {
-                    field:          '_ingest._value.attachment',
-                    ignore_failure: true,
-                    processor:      {
+                    field:     '_ingest._value.attachment',
+                    processor: {
                       attachment: {
-                        target_field:   '_ingest._value',
-                        field:          '_ingest._value._content',
-                        ignore_failure: true,
-                      }
+                        target_field: '_ingest._value',
+                        field:        '_ingest._value._content',
+                      }.merge(pipeline_field_attributes),
                     }
-                  }
+                  }.merge(pipeline_field_attributes),
                 }
-              }
+              }.merge(pipeline_field_attributes),
             }
           ]
         }
