@@ -8,6 +8,17 @@ customerOrg = Organization.create_if_not_exists(
   name: 'Customer'
 )
 
+user_admin = User.create_or_update(
+  id:              2,
+  login:           'admin',
+  firstname:       'Admin',
+  lastname:        'User',
+  email:           '',
+  password:        'admin',
+  active:          true,
+  roles:           [ Role.find_by(name: 'Admin'), Role.find_by(name: 'Agent') ],
+)
+
 User.create_if_not_exists(
   login:           'connector',
   firstname:       'Azure Monitor',
@@ -18,6 +29,8 @@ User.create_if_not_exists(
   roles:           [ Role.find_by(name: 'Connector') ],
   organization_id: customerOrg.id,
 )
+
+UserInfo.current_user_id = user_admin.id
 
 if Ticket.count.zero?
   ticket = Ticket.create!(
@@ -38,5 +51,21 @@ if Ticket.count.zero?
     content_type: 'text/html',
     internal:  false,
   )
+  
+  ticket = Ticket.create!(
+    group_id:    Group.find_by(name: 'Incoming').id,
+    customer_id: 1,
+    title:       'Change admin password and enter email',
+  )
+  Ticket::Article.create!(
+    ticket_id: ticket.id,
+    type_id:   Ticket::Article::Type.find_by(name: 'phone').id,
+    sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+    body:      '<a href="#manage/users">Please change admin password and enter email</a>',
+    content_type: 'text/html',
+    internal:  false,
+  )
 end
+
+UserInfo.current_user_id = 1
 
