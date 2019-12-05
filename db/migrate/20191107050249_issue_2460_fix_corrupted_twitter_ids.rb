@@ -4,6 +4,7 @@ class Issue2460FixCorruptedTwitterIds < ActiveRecord::Migration[5.2]
 
     Channel.where(area: 'Twitter::Account').each do |channel|
 
+      client = nil
       begin
         client = Twitter::REST::Client.new do |config|
           config.consumer_key        = channel.options['auth']['consumer_key']
@@ -15,7 +16,7 @@ class Issue2460FixCorruptedTwitterIds < ActiveRecord::Migration[5.2]
         Rails.logger.error "Error while trying to update corrupted Twitter User ID: #{e.message}"
       end
 
-      next if client.blank?
+      next if client.nil?
 
       channel.options['user']['id'] = client.user.id.to_s
 
