@@ -13,7 +13,7 @@ gem 'json'
 gem 'rails-observers'
 
 # core - application servers
-gem 'puma', group: :puma
+gem 'puma', '~>3.12', group: :puma
 gem 'unicorn', group: :unicorn
 
 # core - supported ORMs
