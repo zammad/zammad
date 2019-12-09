@@ -3,7 +3,7 @@ Organization.create_if_not_exists(
   name: 'Default SRE Provider',
 )
 
-customerOrg = Organization.create_if_not_exists(
+Organization.create_if_not_exists(
   id:   2,
   name: 'Customer'
 )
