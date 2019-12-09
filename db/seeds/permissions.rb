@@ -419,4 +419,4 @@ customer.permission_grant('user_preferences.avatar')
 customer.permission_grant('ticket.customer')
 
 connector = Role.find_by(name: 'Connector')
-connector.permission_grant('ticket.customer')
+connector.permission_grant('ticket.agent')
