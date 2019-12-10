@@ -3,6 +3,7 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
         
         return if !Setting.find_by(name: 'system_init_done')
         
+        overview_role = Role.find_by(name: 'Agent')
         Overview.create_or_update(
             name:      'Unassigned & Open',
             link:      'all_unassigned',
