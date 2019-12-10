@@ -57,7 +57,7 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
         Overview.create_if_not_exists(
             name:      'My delegated Tickets',
             link:      'my_delegated',
-            prio:      1000,
+            prio:      1090,
             role_ids:  [overview_role.id],
             condition: {
               'ticket.state_id' => {
