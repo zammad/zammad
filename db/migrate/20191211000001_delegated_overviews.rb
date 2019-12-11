@@ -31,7 +31,7 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
             },
           )
 
-        Overview.create_if_not_exists(
+        Overview.create_or_update(
             name:      'Open',
             link:      'all_open',
             prio:      1030,
@@ -54,7 +54,7 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
             },
           )    
 
-        Overview.create_if_not_exists(
+        Overview.create_or_update(
             name:      'My delegated Tickets',
             link:      'my_delegated',
             prio:      1090,
@@ -80,6 +80,8 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
               view_mode_default: 's',
             },
           )
+
+        Cache.clear
           
     end
 end
