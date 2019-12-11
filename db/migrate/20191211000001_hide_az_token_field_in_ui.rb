@@ -1,7 +1,6 @@
-class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
+class HideAzTokenFieldInUi < ActiveRecord::Migration[5.1]
     def up
   
-      # return if it's a new setup
       return if !Setting.find_by(name: 'system_init_done')
 
       ObjectManager::Attribute.add(
@@ -36,7 +35,6 @@ class AddAzFieldsToOrganization < ActiveRecord::Migration[5.1]
             position:    1553,
             created_by_id: 1,
             updated_by_id: 1
-        )
-  
+      )
     end
   end
