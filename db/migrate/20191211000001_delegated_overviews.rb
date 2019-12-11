@@ -79,6 +79,8 @@ class DelegatedOverviews < ActiveRecord::Migration[5.1]
               m:                 %w[number title customer group created_at],
               view_mode_default: 's',
             },
+            updated_by_id: 1,
+            created_by_id: 1,
           )
 
         Cache.clear
