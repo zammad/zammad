@@ -1569,7 +1569,7 @@ ObjectManager::Attribute.add(
     },
     view: {
       '-all-' => {
-        shown: true,
+        shown: false,
       },
     },
   },
