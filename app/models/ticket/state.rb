@@ -40,7 +40,7 @@ returns:
     when :work_on
       state_types = %w[new open]
     when :work_on_all
-      state_types = ['new', 'open', 'pending reminder']
+      state_types = ['new', 'open', 'pending reminder','delegated']
     when :viewable
       state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed', 'pending review', 'delegated']
     when :viewable_agent_new
@@ -55,6 +55,8 @@ returns:
       state_types = %w[closed]
     when :merged
       state_types = %w[merged]
+    when :delegated
+      state_types = ['delegated']
     end
 
     raise "Unknown category '#{category}'" if state_types.blank?
