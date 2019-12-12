@@ -34,6 +34,9 @@ class DelegateModal {
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$('#vimsDelegateModal').vims_modal();		
 	  }).fail(function(data) {
+        if(App.ControllerModal != undefined){
+            delete App.ControllerModal;
+        }
         if(data.status === 400){
             return;
         }
