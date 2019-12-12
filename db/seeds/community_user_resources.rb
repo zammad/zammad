@@ -3,7 +3,7 @@ Organization.create_if_not_exists(
   name: 'Default SRE Provider',
 )
 
-customerOrg = Organization.create_if_not_exists(
+Organization.create_if_not_exists(
   id:   2,
   name: 'Customer'
 )
@@ -17,17 +17,6 @@ user_admin = User.create_or_update(
   password:        'admin',
   active:          true,
   roles:           [ Role.find_by(name: 'Admin'), Role.find_by(name: 'Agent') ],
-)
-
-User.create_if_not_exists(
-  login:           'connector',
-  firstname:       'Azure Monitor',
-  lastname:        'Connector',
-  email:           '',
-  password:        'connector',
-  active:          true,
-  roles:           [ Role.find_by(name: 'Connector') ],
-  organization_id: customerOrg.id,
 )
 
 UserInfo.current_user_id = user_admin.id
