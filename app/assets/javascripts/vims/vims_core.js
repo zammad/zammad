@@ -49,7 +49,8 @@
 				  $('head').append(DelegateModal.css);
 			  }
 			  if($('#vimsDelegateModal').length == 0){
-				$('#vims').append(DelegateModal.html);
+				  $('#vims').append(DelegateModal.html);
+          delete App.ControllerModal; //https://github.com/zammad/zammad/blob/master/app/assets/javascripts/app/lib/app_post/ajax.coffee#L106
 			  }	
 			}
 		} catch (e) {
