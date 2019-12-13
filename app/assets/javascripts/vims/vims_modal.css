@@ -148,6 +148,14 @@
   animation-delay: -0.9s;
 }
 
+.vims-alert-modal {
+  padding: 50px 30px;
+	width: 100%; 
+	margin-top: 50px;
+	position: relative;
+	margin-right: 20%;
+}
+
 @-webkit-keyframes sk-stretchdelay {
   0%, 40%, 100% { -webkit-transform: scaleY(0.5) }
   20% { -webkit-transform: scaleY(1.0) }

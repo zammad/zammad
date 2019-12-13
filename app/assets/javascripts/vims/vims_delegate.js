@@ -33,6 +33,14 @@ class DelegateModal {
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$('#vimsDelegateModal').vims_modal();		
+	  }).fail(function(data) {
+        if(App.ControllerModal != undefined){
+            delete App.ControllerModal;
+        }
+        if(data.status === 400){
+            return;
+        }
+		    new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');
 	  });
   }
 
@@ -49,7 +57,7 @@ class DelegateModal {
   class AlertModal {
 	  
 	  show(text){
-		  $('#vims').append('<div id="vims-alertModal" class="vims-modal"><span id="vims-alertModal-text"></span></div>');
+		  $('#vims').append('<div id="vims-alertModal" class="vims-modal vims-alert-modal"><span id="vims-alertModal-text"></span></div>');
 		  $('#vims-alertModal-text').html(text);
 		  $('#vims-alertModal').vims_modal();		
 		  $('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){

@@ -188,6 +188,34 @@ Overview.create_if_not_exists(
   },
 )
 
+Overview.create_if_not_exists(
+  name:      'My delegated Tickets',
+  link:      'my_delegated',
+  prio:      1090,
+  role_ids:  [overview_role.id],
+  condition: {
+    'ticket.state_id' => {
+      operator: 'is',
+      value:    Ticket::State.by_category(:delegated).pluck(:id),
+    },
+    'ticket.owner_id' => {
+      operator:      'is',
+      pre_condition: 'current_user.id',
+    },
+  },
+  order:     {
+    by:        'created_at',
+    direction: 'ASC',
+  },
+  view:      {
+    d:                 %w[title customer group created_at],
+    s:                 %w[title customer group created_at],
+    m:                 %w[number title customer group created_at],
+    view_mode_default: 's',
+  },
+)
+
+
 overview_role = Role.find_by(name: 'Customer')
 Overview.create_if_not_exists(
   name:      'My Tickets',
@@ -240,5 +268,6 @@ Overview.create_if_not_exists(
     s:                 %w[number title customer state created_at],
     m:                 %w[number title customer state created_at],
     view_mode_default: 's',
-  },
+  },  
 )
+
