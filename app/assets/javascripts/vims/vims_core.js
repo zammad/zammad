@@ -41,7 +41,7 @@
             return;
         }
         console.log("menu found");
-        menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" onclick="SendDelegation()">Delegate</a></li>');
+        menu.append('<li onclick="SendDelegation()"><a id="vimsDelegateLi" role="menuitem" tabindex="-1">Delegate</a></li>');
 
 		try {
 			if(DelegateModal){
