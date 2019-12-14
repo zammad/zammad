@@ -34,10 +34,7 @@ class DelegateModal {
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
 		$('#vimsDelegateModal').vims_modal();		
 	  }).fail(function(data) {
-        if(App.ControllerModal != undefined){
-            delete App.ControllerModal;
-        }
-        if(data.status === 400){
+        if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
             return;
         }
 		    new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');

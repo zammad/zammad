@@ -50,7 +50,6 @@
 			  }
 			  if($('#vimsDelegateModal').length == 0){
 				  $('#vims').append(DelegateModal.html);
-          //https://github.com/zammad/zammad/blob/master/app/assets/javascripts/app/lib/app_post/ajax.coffee#L106
 			  }	
 			}
 		} catch (e) {
