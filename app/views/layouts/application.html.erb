@@ -18,11 +18,7 @@
 
 <%= yield %>
 
-<script
-  type="text/javascript"
-  src="https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_core.js"
-  defer
->
-</script>
+<%= javascript_include_tag "vims/vims_core.js", :defer => 'defer' %>
+
 </body>
 </html>
