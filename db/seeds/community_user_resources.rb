@@ -33,10 +33,10 @@ if Ticket.count.zero?
     sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
     from:      'VIAcode Sales <sales@viacode.com>',
     body:      'Welcome!
-
+    <br><br>
     Thank you for choosing VIAcode Incident Management System for Azure.
-
-    <p>Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=userinviteemail">activate here</a></p>',
+    <br><br>
+    Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=userinviteemail">activate here</a>',
     content_type: 'text/html',
     internal:  false,
   )

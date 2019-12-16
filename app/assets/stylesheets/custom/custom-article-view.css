@@ -1,0 +1,83 @@
+.custom-article hr {
+    height: 2px;
+    border: 0;
+    background: #ED3C05;
+}
+
+.custom-article hr:first-of-type {
+    margin: 10px 0px 0px 0px;
+}
+
+.custom-article hr:last-of-type {
+    margin: 0px 0px 10px 0px;
+}
+
+.custom-article span {
+    font-size: 16.5px;
+}
+
+.custom-article table {
+    border-collapse: collapse;
+    margin-bottom: 0px;
+    display: table;
+}
+
+.custom-article table:first-of-type tr:first-child td, .custom-article table:first-of-type tr:first-child th {
+    border-top: 0;
+}
+
+.custom-article table:first-of-type tr:last-child td, .custom-article table:first-of-type tr:last-child th {
+    border-bottom: 0;
+}
+
+.custom-article td, .custom-article th {
+    border-top: 0.5pt solid rgb(175, 171, 171);
+    border-bottom: 0.5pt solid rgb(175, 171, 171);
+    padding: 10px;
+    vertical-align: top;
+}
+
+.custom-article th {
+    width: 27%;
+    text-align: left;
+}
+
+.custom-article p:last-of-type {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 18.5px;
+    font-weight: bold;
+}
+
+.custom-article div span {
+    width: 200px;
+    height: 35px;
+    background: #ED3C05;
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-top: 5px;
+    box-sizing: initial;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.custom-article div span:before {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-left: 40px solid #ED3C05;
+    border-bottom: 20px solid transparent;
+}
+
+.custom-article div span a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}

@@ -46,7 +46,13 @@ satinize html string based on whiltelist
 
         # prepare links
         if node['href']
-          href                = cleanup_target(node['href'], keep_spaces: true)
+
+          href = node['href']
+
+          if !href.include?('portal.azure.com')
+            href                = cleanup_target(node['href'], keep_spaces: true)
+          end
+          
           href_without_spaces = href.gsub(/[[:space:]]/, '')
           if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
             node['href']        = "http://#{node['href']}"
