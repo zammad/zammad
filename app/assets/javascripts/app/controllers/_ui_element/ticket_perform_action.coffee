@@ -1,7 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ticket_perform_action
   @defaults: (attribute) ->
-    defaults = ['ticket.pending_time']
+    defaults = ['ticket.state_id']
 
     groups =
       ticket:
@@ -36,7 +36,7 @@ class App.UiElement.ticket_perform_action
             if !row.readonly
               config = _.clone(row)
               if config.name is 'pending_time'
-                config.operator = ['relative', 'static']
+                config.operator = ['static', 'relative']
               if config.tag is 'tag'
                 config.operator = ['add', 'remove']
               elements["#{groupKey}.#{config.name}"] = config
@@ -301,7 +301,12 @@ class App.UiElement.ticket_perform_action
 
     # render ui element
     item = ''
-    if config && App.UiElement[config.tag]
+    if meta.operator is 'relative'
+      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
+      if attribute.value && attribute.value[groupAndAttribute]
+        config['value'] = _.clone(attribute.value[groupAndAttribute])
+      item = App.UiElement['time_range'].render(config, {})
+    else if config && App.UiElement[config.tag]
       config['name'] = name
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
@@ -314,11 +319,6 @@ class App.UiElement.ticket_perform_action
         item = App.UiElement[tagSearch].render(config, {})
       else
         item = App.UiElement[config.tag].render(config, {})
-    if meta.operator is 'relative'
-      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
-      if attribute.value && attribute.value[groupAndAttribute]
-        config['value'] = _.clone(attribute.value[groupAndAttribute])
-      item = App.UiElement['time_range'].render(config, {})
 
     elementRow.find('.js-value').removeClass('hide').html(item)
 
