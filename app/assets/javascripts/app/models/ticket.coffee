@@ -133,6 +133,20 @@ class App.Ticket extends App.Model
               else
                 @tagAdd(params.ticket.id, tag)
 
+        else if attributes[1] is 'pending_time' && content.operator is 'relative'
+          pendtil = new Date
+          if content.range is 'day'
+            pendtil.setDate(pendtil.getDate() + parseInt(content.value, 10))
+          if content.range is 'minute'
+            pendtil.setMinutes(pendtil.getMinutes() + parseInt(content.value, 10))
+          if content.range is 'hour'
+            pendtil.setHours(pendtil.getHours() + parseInt(content.value, 10))
+          if content.range is 'month'
+            pendtil.setMonth(pendtil.getMonth() + parseInt(content.value, 10))
+          if content.range is 'year'
+            pendtil.setYear(pendtil.getYear() + parseInt(content.value, 10))
+          params.ticket[attributes[1]] = pendtil.toISOString()
+
         # apply user changes
         else if attributes[1] is 'owner_id'
           if content.pre_condition is 'current_user.id'
