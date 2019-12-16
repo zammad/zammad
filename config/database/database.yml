@@ -14,11 +14,19 @@ default: &default
   # username: zammad
   # password:
 
+  # If the database server is not on localhost, you can set hostname and port:
+  # host:
+  # port:
+
   #### mysql config #####
 
   # adapter: mysql2
   # username: zammad
   # password: <Password>
+
+  # If the database server is not on localhost, you can set hostname and port:
+  # host:
+  # port:
 
 production:
   <<: *default
