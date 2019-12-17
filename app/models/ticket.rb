@@ -880,6 +880,32 @@ perform changes on ticket
         next
       end
 
+      # Apply pending_time changes
+      if attribute == 'pending_time' && value['operator']
+        if value['operator'] == 'static'
+          self[attribute] = value['value']
+          changed = true
+          next
+        elsif value['operator'] == 'relative'
+          pendtil = Time.zone.now
+          val = value['value'].to_i
+          if value['range'] == 'day'
+            pendtil +=  val.days
+          elsif value['range'] == 'minute'
+            pendtil += val.minutes
+          elsif value['range'] == 'hour'
+            pendtil += val.hours
+          elsif value['range'] == 'month'
+            pendtil += val.months
+          elsif value['range'] == 'year'
+            pendtil += val.years
+          end
+          self[attribute] = pendtil
+          changed = true
+          next
+        end
+      end
+
       # update tags
       if key == 'ticket.tags'
         next if value['value'].blank?
