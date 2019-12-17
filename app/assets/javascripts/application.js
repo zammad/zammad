@@ -46,8 +46,6 @@
 
 //= require ./app/index.coffee
 
-//= require_tree ./vims
-
 // IE8 workaround for missing console.log
 if (!window.console) {
   window.console = {}
