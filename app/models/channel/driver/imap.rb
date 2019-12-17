@@ -234,8 +234,9 @@ example
         NOTICE
         Rails.logger.error "Net::IMAP failed to parse message #{message_id}: #{e.message} (#{e.class})"
         Rails.logger.error '(See https://github.com/zammad/zammad/issues/2754 for more details)'
-        next
       end
+
+      next if message_meta.nil?
 
       # ignore verify messages
       next if !messages_is_too_old_verify?(message_meta, count, count_all)
