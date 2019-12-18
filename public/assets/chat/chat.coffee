@@ -371,6 +371,23 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with %s got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор с %s был закрыт.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор был закрыт.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'К сожалению, ожидание свободного места требует больше времени. Повторите попытку позже или отправьте нам электронное письмо. Спасибо!'
+      'sv':
+        '<strong>Chat</strong> with us!': '<strong>Chatta</strong> med oss!'
+        'Scroll down to see new messages': 'Rulla ner för att se nya meddelanden'
+        'Online': 'Online'
+        'Offline': 'Offline'
+        'Connecting': 'Ansluter'
+        'Connection re-established': 'Anslutningen återupprättas'
+        'Today': 'I dag'
+        'Send': 'Skicka'
+        'Chat closed by %s': 'Chatt stängd av %s'
+        'Compose your message...': 'Skriv ditt meddelande...'
+        'All colleagues are busy.': 'Alla kollegor är upptagna.'
+        'You are on waiting list position <strong>%s</strong>.': 'Du är på väntelistan som position <strong>%s</strong>.'
+        'Start new conversation': 'Starta ny konversation'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Eftersom du inte svarat inom %s minuterna i din konversation med <strong>%s</strong> så stängdes chatten.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Då du inte svarat inom de senaste %s minuterna så avslutades din chatt.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi är ledsna, det tar längre tid som förväntat att få en ledig plats. Försök igen senare eller skicka ett e-postmeddelande till oss. Tack!'
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
