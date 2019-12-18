@@ -1,12 +1,12 @@
 (function() {	
 	let modalJQueryScript = document.createElement("SCRIPT");
 	modalJQueryScript.type = 'text/javascript';
-	modalJQueryScript.src = "https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_modal.js";
+	modalJQueryScript.src = "assets/vims/vims_modal.js";
 	modalJQueryScript.defer = "defer";
 	$('body').append(modalJQueryScript);	
 
 	let vimsDelegateScript = document.createElement("SCRIPT");
-	vimsDelegateScript.src = "https://combinatronics.com/viacode/VIAcode-Incident-Management-System/develop/app/assets/javascripts/vims/vims_delegate.js";
+	vimsDelegateScript.src = "assets/vims/vims_delegate.js";
 	vimsDelegateScript.type = 'text/javascript';
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
@@ -41,7 +41,7 @@
             return;
         }
         console.log("menu found");
-        menu.append('<li><a id="vimsDelegateLi" role="menuitem" tabindex="-1" onclick="SendDelegation()">Delegate</a></li>');
+        menu.append('<li onclick="SendDelegation()"><a id="vimsDelegateLi" role="menuitem" tabindex="-1">Delegate</a></li>');
 
 		try {
 			if(DelegateModal){
@@ -50,7 +50,6 @@
 			  }
 			  if($('#vimsDelegateModal').length == 0){
 				  $('#vims').append(DelegateModal.html);
-          //https://github.com/zammad/zammad/blob/master/app/assets/javascripts/app/lib/app_post/ajax.coffee#L106
 			  }	
 			}
 		} catch (e) {
