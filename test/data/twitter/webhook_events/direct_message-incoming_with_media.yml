@@ -1,0 +1,98 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+for_user_id: '2975699229'
+direct_message_events:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  type: message_create
+  id: '1209117907864571908'
+  created_timestamp: '1577111148216'
+  message_create: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    target: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      recipient_id: '2975699229'
+    sender_id: '1205290247124217856'
+    message_data: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      text: " https://t.co/amoKo1v19w"
+      entities: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        hashtags: []
+        symbols: []
+        user_mentions: []
+        urls:
+        - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          url: https://t.co/amoKo1v19w
+          expanded_url: https://twitter.com/messages/media/1209117907864571908
+          display_url: pic.twitter.com/amoKo1v19w
+          indices:
+          - 1
+          - 24
+      attachment: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        type: media
+        media: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          id: 1209117874389843969
+          id_str: '1209117874389843969'
+          indices:
+          - 1
+          - 24
+          media_url: https://pbs.twimg.com/dm_gif_preview/1209117874389843969/Lgs2ZRqicjZjx6kFdwQcu2T5rmEq7br_m8QKHj-RybsPv0yeq5.jpg
+          media_url_https: https://pbs.twimg.com/dm_gif_preview/1209117874389843969/Lgs2ZRqicjZjx6kFdwQcu2T5rmEq7br_m8QKHj-RybsPv0yeq5.jpg
+          url: https://t.co/amoKo1v19w
+          display_url: pic.twitter.com/amoKo1v19w
+          expanded_url: https://twitter.com/messages/media/1209117907864571908
+          type: animated_gif
+          sizes: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            small: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              w: 270
+              h: 480
+              resize: fit
+            thumb: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              w: 150
+              h: 150
+              resize: crop
+            medium: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              w: 270
+              h: 480
+              resize: fit
+            large: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              w: 270
+              h: 480
+              resize: fit
+          video_info: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            aspect_ratio:
+            - 9
+            - 16
+            variants:
+            - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              bitrate: 0
+              content_type: video/mp4
+              url: https://video.twimg.com/dm_gif/1209117874389843969/Lgs2ZRqicjZjx6kFdwQcu2T5rmEq7br_m8QKHj-RybsPv0yeq5.mp4
+users: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  '1205290247124217856': !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '1205290247124217856'
+    created_timestamp: '1576198570797'
+    name: pennbrooke
+    screen_name: pennbrooke1
+    location: London
+    description: More like penn-broke, amirite?
+    url: https://t.co/Y9Umsm0AJJ
+    protected: false
+    verified: false
+    followers_count: 0
+    friends_count: 1
+    statuses_count: 8
+    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+  '2975699229': !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '2975699229'
+    created_timestamp: '1421116717416'
+    name: Ryan Lue
+    screen_name: ScruffyMcG
+    location: Taipei
+    description: I like turtles.
+    url: https://t.co/Y9Umsm0AJJ
+    protected: false
+    verified: false
+    followers_count: 31
+    friends_count: 56
+    statuses_count: 7
+    profile_image_url: http://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+    profile_image_url_https: https://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+controller: channels_twitter
+action: webhook_incoming

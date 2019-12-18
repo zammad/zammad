@@ -1,0 +1,82 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+for_user_id: '2975699229'
+follow_events:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  type: unfollow
+  created_timestamp: '1576540568600'
+  target: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '1205290247124217856'
+    default_profile_image: false
+    profile_background_image_url: ''
+    friends_count: 1
+    favourites_count: 0
+    profile_link_color: -1
+    profile_background_image_url_https: ''
+    utc_offset: 0
+    screen_name: pennbrooke1
+    is_translator: false
+    followers_count: 1
+    name: pennbrooke
+    lang: ''
+    profile_use_background_image: false
+    created_at: Fri Dec 13 00:56:10 +0000 2019
+    profile_text_color: -1
+    notifications: false
+    protected: false
+    statuses_count: 2
+    url: https://t.co/Y9Umsm0AJJ
+    contributors_enabled: false
+    default_profile: true
+    profile_sidebar_border_color: -1
+    time_zone: ''
+    geo_enabled: false
+    verified: false
+    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    following: false
+    profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_background_tile: false
+    listed_count: 0
+    profile_sidebar_fill_color: -1
+    location: London
+    follow_request_sent: false
+    description: More like penn-broke, amirite?
+    profile_background_color: -1
+  source: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '2975699229'
+    default_profile_image: false
+    profile_background_image_url: ''
+    friends_count: 57
+    favourites_count: 20
+    profile_link_color: -1
+    profile_background_image_url_https: ''
+    utc_offset: 0
+    screen_name: ScruffyMcG
+    is_translator: false
+    followers_count: 31
+    name: Ryan Lue
+    lang: ''
+    profile_use_background_image: false
+    created_at: Tue Jan 13 02:38:37 +0000 2015
+    profile_text_color: -1
+    notifications: false
+    protected: false
+    statuses_count: 6
+    url: https://t.co/Y9Umsm0AJJ
+    contributors_enabled: false
+    default_profile: true
+    profile_sidebar_border_color: -1
+    time_zone: ''
+    geo_enabled: false
+    verified: false
+    profile_image_url: http://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+    following: false
+    profile_image_url_https: https://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+    profile_background_tile: false
+    listed_count: 0
+    profile_sidebar_fill_color: -1
+    location: Taipei
+    follow_request_sent: false
+    description: I like turtles.
+    profile_background_color: -1
+controller: channels_twitter
+action: webhook_incoming

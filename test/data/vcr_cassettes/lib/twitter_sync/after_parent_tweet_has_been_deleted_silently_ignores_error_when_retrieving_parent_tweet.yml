@@ -1,0 +1,247 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=London&sensor=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - maps.googleapis.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 27 Dec 2019 03:45:36 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      Content-Length:
+      - '202'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=1
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "error_message" : "You must use an API key to authenticate each request to Google Maps Platform APIs. For additional information, please refer to http://g.co/dev/maps-no-account",
+           "results" : [],
+           "status" : "REQUEST_DENIED"
+        }
+    http_version: 
+  recorded_at: Fri, 27 Dec 2019 03:45:36 GMT
+- request:
+    method: get
+    uri: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - abs.twimg.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - image/png
+      Date:
+      - Fri, 27 Dec 2019 03:45:36 GMT
+      Etag:
+      - '"QcuRPIhOAYpzfGh0vMtQAQ=="'
+      Expires:
+      - Sat, 26 Dec 2020 03:45:36 GMT
+      Last-Modified:
+      - Sat, 22 Dec 2018 15:21:58 GMT
+      Server:
+      - ECS (tpe/68A3)
+      Strict-Transport-Security:
+      - max-age=631138519
+      Surrogate-Key:
+      - twitter-assets
+      X-Cache:
+      - HIT
+      X-Connection-Hash:
+      - 97b9e7d1341932a1fcad07625c3f5283
+      X-Content-Type-Options:
+      - nosniff
+      X-Response-Time:
+      - '8'
+      X-Ton-Expected-Size:
+      - '504'
+      Content-Length:
+      - '504'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAwFBMVEXM1t3K1dy5xc2xvca7xs+KmaVrfYtld4agrrhneYhoeoiksbufrbegrbe7xs66xs6Dk5+/ytKdqrWElKCDk6Byg5HG0NjEz9bH0dlqfIprfIuAkJ2ir7nJ09p1hpN0hZO9yNDH0tmbqbTBzNOzv8iqtsCotL6ntL7L1dy3w8yjsLqVpK+Onam8x9CRn6ttf43CzdWMm6dmeIeLmqauusSwvMVxgpCToa29ydFneIeRoKzK1Nttfo2yvseZp7KHl6OOgUPZAAAA80lEQVR4Ae3SA5oDQRgE0Aortm1zNub9T7Xm4O/+uMo7w8O/duNyezxuF3R5fX4+8vu80BII8lUoDA0RfhKFUizIT4JxqCT4RQIKSZokIUvRJAVZmiYZyLI0yUIWpEkQohwtcpDkaZGHpECLAkRFmpQgK9OkDFmFJhXIqjV+Ua9CoZHlJ9kGlJqtLF9lW01oaXe6vX6308aPMRiOxpPJeDQcQMd0Nuer+WwKlcXS4CfG3QKi1Zwm8xUEAYMWRkAZSbvT2qAtYw1bzQ0dbJqws6WjLWzs9nS038HqQMEBFscTBacjzDoUnWF2oegCsytFV7x6ADhgICRy9ELGAAAAAElFTkSuQmCC
+    http_version: 
+  recorded_at: Fri, 27 Dec 2019 03:45:36 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=London&sensor=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - maps.googleapis.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 27 Dec 2019 03:45:36 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      Content-Length:
+      - '202'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=1
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "error_message" : "You must use an API key to authenticate each request to Google Maps Platform APIs. For additional information, please refer to http://g.co/dev/maps-no-account",
+           "results" : [],
+           "status" : "REQUEST_DENIED"
+        }
+    http_version: 
+  recorded_at: Fri, 27 Dec 2019 03:45:37 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/1207610954160037890.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="<redacted>", oauth_nonce="ab5fd57ec81489a5a223b56d9af20f0a",
+        oauth_signature="<redacted>", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1577418337", oauth_token="<redacted>",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 27 Dec 2019 03:45:37 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Fri, 27 Dec 2019 03:45:37 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A157741833757006606; Max-Age=63072000; Expires=Sun, 26 Dec 2021
+        03:45:37 GMT; Path=/; Domain=.twitter.com
+      - lang=en; Path=/
+      - personalization_id="v1_V1rxHe+i86BweSiS2JR1/A=="; Max-Age=63072000; Expires=Sun,
+        26 Dec 2021 03:45:37 GMT; Path=/; Domain=.twitter.com
+      Status:
+      - 404 Not Found
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - ccc3c9dacffc76705aadbb69ebb5e093
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Remaining:
+      - '896'
+      X-Rate-Limit-Reset:
+      - '1577419233'
+      X-Response-Time:
+      - '110'
+      X-Transaction:
+      - 003a85720095790f
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":144,"message":"No status found with that ID."}]}'
+    http_version: 
+  recorded_at: Fri, 27 Dec 2019 03:45:37 GMT
+recorded_with: VCR 4.0.0

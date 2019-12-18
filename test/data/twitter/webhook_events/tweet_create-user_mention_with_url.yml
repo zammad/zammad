@@ -1,0 +1,92 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+for_user_id: '2975699229'
+user_has_blocked: false
+tweet_create_events:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  created_at: Mon Dec 23 13:12:50 +0000 2019
+  id: 1209099545700786176
+  id_str: '1209099545700786176'
+  text: "@ScruffyMcG https://t.co/AyVD0yiqOT"
+  source: <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>
+  truncated: false
+  in_reply_to_status_id: 
+  in_reply_to_status_id_str: 
+  in_reply_to_user_id: 2975699229
+  in_reply_to_user_id_str: '2975699229'
+  in_reply_to_screen_name: ScruffyMcG
+  user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: 1205290247124217856
+    id_str: '1205290247124217856'
+    name: pennbrooke
+    screen_name: pennbrooke1
+    location: 
+    url: 
+    description: 
+    translator_type: none
+    protected: false
+    verified: false
+    followers_count: 0
+    friends_count: 1
+    listed_count: 0
+    favourites_count: 0
+    statuses_count: 6
+    created_at: Fri Dec 13 00:56:10 +0000 2019
+    utc_offset: 
+    time_zone: 
+    geo_enabled: false
+    lang: 
+    contributors_enabled: false
+    is_translator: false
+    profile_background_color: F5F8FA
+    profile_background_image_url: ''
+    profile_background_image_url_https: ''
+    profile_background_tile: false
+    profile_link_color: 1DA1F2
+    profile_sidebar_border_color: C0DEED
+    profile_sidebar_fill_color: DDEEF6
+    profile_text_color: '333333'
+    profile_use_background_image: true
+    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    default_profile: true
+    default_profile_image: false
+    following: 
+    follow_request_sent: 
+    notifications: 
+  geo: 
+  coordinates: 
+  place: 
+  contributors: 
+  is_quote_status: false
+  quote_count: 0
+  reply_count: 0
+  retweet_count: 0
+  favorite_count: 0
+  entities: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    hashtags: []
+    urls:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      url: https://t.co/AyVD0yiqOT
+      expanded_url: https://zammad.org/
+      display_url: zammad.org
+      indices:
+      - 12
+      - 35
+    user_mentions:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      screen_name: ScruffyMcG
+      name: Ryan Lue
+      id: 2975699229
+      id_str: '2975699229'
+      indices:
+      - 0
+      - 11
+    symbols: []
+  favorited: false
+  retweeted: false
+  possibly_sensitive: false
+  filter_level: low
+  lang: und
+  timestamp_ms: '1577106770335'
+controller: channels_twitter
+action: webhook_incoming

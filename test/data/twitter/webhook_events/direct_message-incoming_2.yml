@@ -1,0 +1,51 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+for_user_id: '2975699229'
+direct_message_events:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  type: message_create
+  id: '1207556329834835973'
+  created_timestamp: '1576738839001'
+  message_create: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    target: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      recipient_id: '2975699229'
+    sender_id: '1205290247124217856'
+    message_data: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      text: and I'm a hungry, hungry hippo!
+      entities: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        hashtags: []
+        symbols: []
+        user_mentions: []
+        urls: []
+users: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  '1205290247124217856': !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '1205290247124217856'
+    created_timestamp: '1576198570797'
+    name: pennbrooke
+    screen_name: pennbrooke1
+    location: London
+    description: More like penn-broke, amirite?
+    url: https://t.co/Y9Umsm0AJJ
+    protected: false
+    verified: false
+    followers_count: 0
+    friends_count: 1
+    statuses_count: 2
+    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+  '2975699229': !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: '2975699229'
+    created_timestamp: '1421116717416'
+    name: Ryan Lue
+    screen_name: ScruffyMcG
+    location: Taipei
+    description: I like turtles.
+    url: https://t.co/Y9Umsm0AJJ
+    protected: false
+    verified: false
+    followers_count: 31
+    friends_count: 56
+    statuses_count: 6
+    profile_image_url: http://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+    profile_image_url_https: https://pbs.twimg.com/profile_images/877073703330238464/fnxECj4z_normal.jpg
+controller: channels_twitter
+action: webhook_incoming

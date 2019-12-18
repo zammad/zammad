@@ -1,0 +1,158 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+for_user_id: '2975699229'
+user_has_blocked: false
+tweet_create_events:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  created_at: Mon Dec 23 13:20:23 +0000 2019
+  id: 1209101446706122752
+  id_str: '1209101446706122752'
+  text: "@ScruffyMcG https://t.co/DHD7xWvvh5"
+  display_text_range:
+  - 0
+  - 11
+  source: <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>
+  truncated: false
+  in_reply_to_status_id: 
+  in_reply_to_status_id_str: 
+  in_reply_to_user_id: 2975699229
+  in_reply_to_user_id_str: '2975699229'
+  in_reply_to_screen_name: ScruffyMcG
+  user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: 1205290247124217856
+    id_str: '1205290247124217856'
+    name: pennbrooke
+    screen_name: pennbrooke1
+    location: 
+    url: 
+    description: 
+    translator_type: none
+    protected: false
+    verified: false
+    followers_count: 0
+    friends_count: 1
+    listed_count: 0
+    favourites_count: 0
+    statuses_count: 7
+    created_at: Fri Dec 13 00:56:10 +0000 2019
+    utc_offset: 
+    time_zone: 
+    geo_enabled: false
+    lang: 
+    contributors_enabled: false
+    is_translator: false
+    profile_background_color: F5F8FA
+    profile_background_image_url: ''
+    profile_background_image_url_https: ''
+    profile_background_tile: false
+    profile_link_color: 1DA1F2
+    profile_sidebar_border_color: C0DEED
+    profile_sidebar_fill_color: DDEEF6
+    profile_text_color: '333333'
+    profile_use_background_image: true
+    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    default_profile: true
+    default_profile_image: false
+    following: 
+    follow_request_sent: 
+    notifications: 
+  geo: 
+  coordinates: 
+  place: 
+  contributors: 
+  is_quote_status: false
+  quote_count: 0
+  reply_count: 0
+  retweet_count: 0
+  favorite_count: 0
+  entities: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    hashtags: []
+    urls: []
+    user_mentions:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      screen_name: ScruffyMcG
+      name: Ryan Lue
+      id: 2975699229
+      id_str: '2975699229'
+      indices:
+      - 0
+      - 11
+    symbols: []
+    media:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      id: 1209101411717242881
+      id_str: '1209101411717242881'
+      indices:
+      - 12
+      - 35
+      media_url: http://pbs.twimg.com/tweet_video_thumb/EMeXU-7UYAEm71w.jpg
+      media_url_https: https://pbs.twimg.com/tweet_video_thumb/EMeXU-7UYAEm71w.jpg
+      url: https://t.co/DHD7xWvvh5
+      display_url: pic.twitter.com/DHD7xWvvh5
+      expanded_url: https://twitter.com/pennbrooke1/status/1209101446706122752/photo/1
+      type: photo
+      sizes: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        small: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+        thumb: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 150
+          h: 150
+          resize: crop
+        medium: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+        large: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+  extended_entities: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    media:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      id: 1209101411717242881
+      id_str: '1209101411717242881'
+      indices:
+      - 12
+      - 35
+      media_url: http://pbs.twimg.com/tweet_video_thumb/EMeXU-7UYAEm71w.jpg
+      media_url_https: https://pbs.twimg.com/tweet_video_thumb/EMeXU-7UYAEm71w.jpg
+      url: https://t.co/DHD7xWvvh5
+      display_url: pic.twitter.com/DHD7xWvvh5
+      expanded_url: https://twitter.com/pennbrooke1/status/1209101446706122752/photo/1
+      type: animated_gif
+      video_info: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        aspect_ratio:
+        - 9
+        - 16
+        variants:
+        - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          bitrate: 0
+          content_type: video/mp4
+          url: https://video.twimg.com/tweet_video/EMeXU-7UYAEm71w.mp4
+      sizes: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        small: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+        thumb: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 150
+          h: 150
+          resize: crop
+        medium: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+        large: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          w: 270
+          h: 480
+          resize: fit
+  favorited: false
+  retweeted: false
+  possibly_sensitive: false
+  filter_level: low
+  lang: und
+  timestamp_ms: '1577107223570'
+controller: channels_twitter
+action: webhook_incoming
