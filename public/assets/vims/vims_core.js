@@ -11,6 +11,7 @@
 	vimsDelegateScript.defer = "defer";
 	$('body').append(vimsDelegateScript);		
 	$('body').append('<div id="vims"></div>');
+	$('head').append('<link id="cssModal" rel="stylesheet" href="assets/vims/vims_modal.css" />');
 
 	let observer = new MutationObserver(mutationRecords => {
 		InsertDelegateMenu();
@@ -45,9 +46,6 @@
 
 		try {
 			if(DelegateModal){
-			  if($('#cssModal').length == 0){
-				  $('head').append(DelegateModal.css);
-			  }
 			  if($('#vimsDelegateModal').length == 0){
 				  $('#vims').append(DelegateModal.html);
 			  }	
