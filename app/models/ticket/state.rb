@@ -30,7 +30,7 @@ returns:
 
     case category.to_sym
     when :open
-      state_types = ['new', 'open', 'pending reminder', 'pending action']
+      state_types = ['new', 'open', 'pending reminder', 'pending action','delegated','pending review']
     when :pending_reminder
       state_types = ['pending reminder']
     when :pending_action
