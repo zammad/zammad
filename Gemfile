@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '2.5.5'
-gem 'rails', '5.2.3'
+gem 'rails', '5.2.4.1'
 
 # core - rails additions
 gem 'activerecord-import'
@@ -49,7 +49,7 @@ gem 'eco'
 gem 'sassc-rails'
 
 # asset handling - pipeline
-gem 'sprockets'
+gem 'sprockets', '~> 3.7.2'
 gem 'uglifier'
 
 gem 'autoprefixer-rails'
