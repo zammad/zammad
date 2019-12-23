@@ -68,7 +68,7 @@
         <div class="attachments"></div>
         <div class="article-attachment">
           <div class="attachmentPlaceholder">
-            <span class="attachmentPlaceholder-hint"><%- @T('Enter Answer or') %></span>
+            <span class="attachmentPlaceholder-hint"><%- @T('Enter Note or') %></span>
             <span class="attachmentPlaceholder-inputHolder fileUpload">
               <% uid =  _.uniqueId('fileUpload_') %>
               <input multiple="multiple" type="file" name="file" id="<%- uid %>">
