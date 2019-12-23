@@ -1,5 +1,5 @@
 <style type="text/css">
-  blockquote {
+    blockquote {
     border-left: 2px solid blue;
     padding-left: 1em;
   }
@@ -30,6 +30,84 @@
   .footer a {
     color: #aaaaaa;
   }
+
+  .bottom-link {
+    padding-top: 7px;
+    width: 220px;
+    height: 35px;
+    text-decoration: underline;
+    color:  #787878;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+  }
+
+  .custom-article span {
+    font-size: 16.5px;
+  }
+
+  .custom-article table {
+    border-collapse: collapse;
+    margin-bottom: 0px;
+    display: table;
+    width: 1111px
+  }
+
+  .custom-article td, .custom-article th {
+    border-top: 0.5pt solid rgb(175, 171, 171);
+    border-bottom: 0.5pt solid rgb(175, 171, 171);
+    padding: 10px;
+    vertical-align: top;
+  }
+
+  .custom-article th {
+    width: 27%;
+    text-align: left;
+  }
+
+  .custom-article p:last-of-type {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 18.5px;
+    font-weight: bold;
+  }
+
+  .custom-article div span {
+    width: 200px;
+    height: 35px;
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding-top: 5px;
+    box-sizing: initial;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+
+  .custom-article div span a {
+    text-decoration: underline;
+    color: #ED3C05;
+    font-size: 20px;
+  }
+
+  .exclamation-point{
+    width: 60px;
+    height: 60px;
+  }
+
+  .subtitle{
+    font-size: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+  }
+
+  .regular-text{
+    font-size: 20px;
+  }
+
 </style>
 <% if @objects[:standalone] != true %>
 <div class="header">

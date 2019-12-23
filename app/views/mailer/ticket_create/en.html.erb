@@ -1,25 +1,33 @@
 New Ticket (#{ticket.title})
 
-<div>Hi #{recipient.firstname},</div>
-<br>
-<div>A new ticket (#{ticket.title}) has been created by "<b>#{current_user.longname}</b>".</div>
-<br>
-<div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
-</div>
+
 <br>
 <% if @objects[:article] %>
+
+  <table>
+    <tr>
+      <td style="width: 60px;">
+        <img class="exclamation-point" src="#{config.http_type}://#{config.fqdn}/assets/images/exclamation_point.png"></img>
+      </td>
+      <td style="padding-left: 20px;">
+        <div class="subtitle">New incident "#{ticket.title}" has been created in group "#{ticket.group.name}" by "#{ticket.customer.fullname}".</div>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+
   <div>
-  #{t('Information')}:
-  <blockquote type="cite">
-  #{article.body_as_html}
-  </blockquote>
+    <div class="regular-text"> #{t('Incident Details')}: </div>
+    <div class="custom-article">
+      #{article.body_as_html}
+    </div>
   </div>
 <% end %>
+
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in VIAcode Incident Management System for Azure')}</a>
+  <a class="bottom-link" href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View in VIAcode Portal')}</a>
 </div>
+<br>
 <p>Let VIAcode deal with these alerts & manage your Azure cloud operation for free; <a href="https://www.viacode.com/services/azure-managed-services/?utm_source=product&utm_medium=email&utm_campaign=VIMS&utm_content=ticketcreateemail">activate here</a></p>
