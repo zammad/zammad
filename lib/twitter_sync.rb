@@ -458,7 +458,7 @@ class TwitterSync
 
 =begin
 
-create a tweet ot direct message from an article
+create a tweet or direct message from an article
 
 =end
 
@@ -498,6 +498,12 @@ create a tweet ot direct message from an article
 
       Rails.logger.debug { 'Create tweet from article...' }
 
+      # rubocop:disable Style/AsciiComments
+      # workaround for https://github.com/sferik/twitter/issues/677
+      # https://github.com/zammad/zammad/issues/2873 - unable to post
+      # tweets with * - replace `*` with the wide-asterisk `＊`.
+      # rubocop:enable Style/AsciiComments
+      article[:body].tr!('*', '＊') if article[:body].present?
       tweet = @client.update(
         article[:body],
         {
