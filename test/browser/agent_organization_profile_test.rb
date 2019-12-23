@@ -142,6 +142,7 @@ class AgentOrganizationProfileTest < TestCase
     set(
       browser: browser1,
       css:     '.active .profile [data-name="note"]',
+      slow:    true,
       value:   message,
     )
     empty_search(
