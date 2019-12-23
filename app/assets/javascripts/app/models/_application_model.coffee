@@ -806,7 +806,7 @@ set new attributes of model (remove already available attributes)
       type:  'GET'
       url:   "#{@apiPath}/tags"
       data:
-        object: @.className
+        object: @serverClassName || @className
         o_id:   id
       processData: true
       success: (data, status, xhr) ->
@@ -818,7 +818,7 @@ set new attributes of model (remove already available attributes)
       type:  'GET'
       url:   "#{@apiPath}/tags/add"
       data:
-        object: @.className
+        object: @serverClassName || @className
         o_id:   id
         item:   item
       processData: true
@@ -829,7 +829,7 @@ set new attributes of model (remove already available attributes)
       type:  'GET'
       url:   "#{@apiPath}/tags/remove"
       data:
-        object: @.className
+        object: @serverClassName || @className
         o_id:   id
         item:   item
       processData: true
