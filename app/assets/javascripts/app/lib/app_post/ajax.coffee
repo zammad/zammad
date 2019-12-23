@@ -101,6 +101,15 @@ class _ajaxSingleton
       # do not show any error message with code 502
       return if status is 502
 
+      #vims hanlde these errors by itself
+      return if status is 400
+      return if status is 403
+      return if status is 404
+      return if status is 408
+      return if status is 500
+      return if status is 502
+      return if status is 503
+
       # show error message
       new App.ControllerModal(
         head:          "StatusCode: #{status}"
