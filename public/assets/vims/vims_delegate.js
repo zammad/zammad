@@ -27,8 +27,7 @@ class DelegateModal {
 	  </div>  
   `;
   
-  DelegateModal.css = '<link id="cssModal" rel="stylesheet" href="assets/vims/vims_modal.css" />';
-  
+
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
