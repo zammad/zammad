@@ -40,7 +40,7 @@ returns:
     when :work_on
       state_types = %w[new open]
     when :work_on_all
-      state_types = ['new', 'open', 'pending reminder','delegated']
+      state_types = ['new', 'open', 'pending reminder','delegated','pending review']
     when :viewable
       state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed', 'pending review', 'delegated']
     when :viewable_agent_new
