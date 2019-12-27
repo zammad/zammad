@@ -5,6 +5,7 @@ require 'http/uri'
 class TwitterSync
 
   STATUS_URL_TEMPLATE = 'https://twitter.com/_/status/%s'.freeze
+  DM_URL_TEMPLATE = 'https://twitter.com/messages/%s'.freeze
 
   attr_accessor :client
 
@@ -208,18 +209,21 @@ class TwitterSync
           end
         end
       end
+
       app = get_app_webhook(item['message_create']['source_app_id'])
       article_type = 'twitter direct-message'
+      recipient_id = item['message_create']['target']['recipient_id']
       recipient_screen_name = to_user_webhook_data(item['message_create']['target']['recipient_id'])['screen_name']
+      sender_id = item['message_create']['sender_id']
       sender_screen_name = to_user_webhook_data(item['message_create']['sender_id'])['screen_name']
       to = "@#{recipient_screen_name}"
       from = "@#{sender_screen_name}"
 
       twitter_preferences = {
         created_at:            item['created_timestamp'],
-        recipient_id:          item['message_create']['target']['recipient_id'],
+        recipient_id:          recipient_id,
         recipient_screen_name: recipient_screen_name,
-        sender_id:             item['message_create']['sender_id'],
+        sender_id:             sender_id,
         sender_screen_name:    sender_screen_name,
         app_id:                app['app_id'],
         app_name:              app['app_name'],
@@ -229,7 +233,7 @@ class TwitterSync
         twitter: self.class.preferences_cleanup(twitter_preferences),
         links:   [
           {
-            url:    "https://twitter.com/messages/#{twitter_preferences[:recipient_id]}-#{twitter_preferences[:sender_id]}",
+            url:    DM_URL_TEMPLATE % [recipient_id, sender_id].map(&:to_i).sort.join('-'),
             target: '_blank',
             name:   'on Twitter',
           },
@@ -256,6 +260,17 @@ class TwitterSync
           end
           to += "@#{local_user['screen_name']}"
           mention_ids.push local_user['id']
+        end
+
+        item['entities']['urls']&.each do |local_media|
+
+          if local_media['url'].present?
+            if local_media['expanded_url'].present?
+              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['expanded_url'])
+            elsif local_media['display_url']
+              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['display_url'])
+            end
+          end
         end
 
         item['entities']['media']&.each do |local_media|
@@ -813,10 +828,10 @@ download public media file from twitter
       }
 
       # ignore if value is already set
-      map.each do |target, _source|
+      map.each do |target, source|
         next if user[target].present?
 
-        new_value = user_payload['source'].to_s
+        new_value = user_payload[source].to_s
         next if new_value.blank?
 
         user_data[target] = new_value
