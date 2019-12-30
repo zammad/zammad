@@ -44,6 +44,7 @@ Rails.application.config.html_sanitizer_attributes_whitelist = {
   'q'          => %w[cite],
   'span'       => %w[style],
   'time'       => %w[datetime pubdate],
+  'div'        => %w[id],
 }
 
 # only this css properties are allowed

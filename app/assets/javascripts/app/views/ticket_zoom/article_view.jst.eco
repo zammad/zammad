@@ -47,7 +47,7 @@
         <div class="bubble-arrow"></div>
         <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
           <div class="richtext-content">
-            <div class="custom-article"><%- @article.html %></div>
+            <%- @article.html %>
           </div>
           <div class="textBubble-overflowContainer hide">
             <div class="btn btn--text js-toggleFold"><%- @T('See more') %></div>
