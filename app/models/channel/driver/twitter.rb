@@ -143,7 +143,7 @@ returns
 
 =end
 
-  def process(payload, channel)
+  def process(_adapter_options, payload, channel)
     @client = TwitterSync.new(channel.options[:auth], payload)
     @client.process_webhook(channel)
   end

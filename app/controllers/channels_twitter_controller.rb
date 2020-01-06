@@ -8,7 +8,7 @@ class ChannelsTwitterController < ApplicationController
   before_action :validate_webhook_signature!, only: :webhook_incoming
 
   def webhook_incoming
-    ::Channel::Driver::Twitter.new.process(params.permit!.to_h, @channel)
+    @channel.process(params.permit!.to_h)
     render json: {}
   end
 

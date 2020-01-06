@@ -43,7 +43,7 @@ RSpec.describe Channel::Driver::Twitter do
 
       context 'from unknown user' do
         it 'creates a User record for the sender' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(User, :count).by(1)
             .and change { User.exists?(sender_attributes) }.to(true)
         end
@@ -51,7 +51,7 @@ RSpec.describe Channel::Driver::Twitter do
         it 'creates an Avatar record for the sender', :use_vcr do
           # Why 2, and not 1? Avatar.add auto-generates a default (source: 'init') record
           # before actually adding the specified (source: 'twitter') one.
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Avatar, :count).by_at_least(1)
             .and change { Avatar.exists?(avatar_attributes) }.to(true)
 
@@ -59,7 +59,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates an Authorization record for the sender' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Authorization, :count).by(1)
             .and change { Authorization.exists?(authorization_attributes) }.to(true)
         end
@@ -75,14 +75,14 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'updates the sender’s existing User record' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to not_change(User, :count)
             .and not_change { user.reload.attributes.slice('login', 'firstname') }
             .and change { User.exists?(sender_attributes.except('login', 'firstname')) }.to(true)
         end
 
         it 'updates the sender’s existing Avatar record', :use_vcr do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to not_change(Avatar, :count)
             .and change { Avatar.exists?(avatar_attributes) }.to(true)
 
@@ -90,7 +90,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'updates the sender’s existing Authorization record' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to not_change(Authorization, :count)
             .and change { Authorization.exists?(authorization_attributes) }.to(true)
         end
@@ -98,7 +98,7 @@ RSpec.describe Channel::Driver::Twitter do
     end
 
     context 'for incoming DM' do
-      let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming.yml') }
+      let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming.yml') }
 
       include_examples 'for user processing' do
         # Payload sent by Twitter is { ..., users: [{ <uid>: <sender> }, { <uid>: <receiver> }] }
@@ -123,21 +123,20 @@ RSpec.describe Channel::Driver::Twitter do
         let(:title) { payload[:direct_message_events].first[:message_create][:message_data][:text] }
 
         it 'creates a new ticket' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket, :count).by(1)
             .and change { Ticket.exists?(ticket_attributes) }.to(true)
         end
 
         context 'for duplicate messages' do
           before do
-            described_class.new.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]),
-              channel
+            channel.process(
+              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
           it 'does not create duplicate ticket' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to not_change(Ticket, :count)
               .and not_change(Ticket::Article, :count)
           end
@@ -149,7 +148,7 @@ RSpec.describe Channel::Driver::Twitter do
           let(:title) { "#{'a' * 80}..." }
 
           it 'creates ticket with truncated title' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change(Ticket, :count).by(1)
               .and change { Ticket.exists?(ticket_attributes) }.to(true)
           end
@@ -158,19 +157,18 @@ RSpec.describe Channel::Driver::Twitter do
         context 'in reply to existing thread/ticket' do
           # import parent DM
           before do
-            described_class.new.process(
+            channel.process(
               YAML.safe_load(
-                File.read(Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming.yml')),
+                File.read(Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming.yml')),
                 [ActiveSupport::HashWithIndifferentAccess]
-              ),
-              channel
+              )
             )
           end
 
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming_2.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming_2.yml') }
 
           it 'uses existing ticket' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to not_change(Ticket, :count)
               .and not_change { Ticket.last.state }
           end
@@ -179,7 +177,7 @@ RSpec.describe Channel::Driver::Twitter do
             before { Ticket.last.update(state: Ticket::State.find_by(name: 'closed')) }
 
             it 'creates a new ticket' do
-              expect { described_class.new.process(payload, channel) }
+              expect { channel.process(payload) }
                 .to change(Ticket, :count).by(1)
                 .and change { Ticket.exists?(ticket_attributes) }.to(true)
             end
@@ -189,7 +187,7 @@ RSpec.describe Channel::Driver::Twitter do
             before { Ticket.last.update(state: Ticket::State.find_by(name: 'pending reminder')) }
 
             it 'sets existing ticket to "open"' do
-              expect { described_class.new.process(payload, channel) }
+              expect { channel.process(payload) }
                 .to not_change(Ticket, :count)
                 .and change { Ticket.last.state.name }.to('open')
             end
@@ -240,30 +238,29 @@ RSpec.describe Channel::Driver::Twitter do
         let(:user_ids) { payload[:users].values.map { |u| u[:id] } }
 
         it 'creates a new article' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket::Article, :count).by(1)
             .and change { Ticket::Article.exists?(article_attributes) }.to(true)
         end
 
         context 'for duplicate messages' do
           before do
-            described_class.new.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]),
-              channel
+            channel.process(
+              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
           it 'does not create duplicate article' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to not_change(Ticket::Article, :count)
           end
         end
 
         context 'when message contains shortened (t.co) url' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming_with_url.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming_with_url.yml') }
 
           it 'replaces the t.co url for the original' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(body: <<~BODY.chomp) }.to(true)
                 Did you know about this? https://en.wikipedia.org/wiki/Frankenstein#Composition
               BODY
@@ -273,7 +270,7 @@ RSpec.describe Channel::Driver::Twitter do
     end
 
     context 'for outgoing DM' do
-      let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-outgoing.yml') }
+      let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-outgoing.yml') }
 
       describe 'ticket creation' do
         let(:ticket_attributes) do
@@ -291,7 +288,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates a closed ticket' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket, :count).by(1)
             .and change { Ticket.exists?(ticket_attributes) }.to(true)
         end
@@ -340,16 +337,16 @@ RSpec.describe Channel::Driver::Twitter do
         let(:user_ids) { payload[:users].values.map { |u| u[:id] } }
 
         it 'creates a new article' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket::Article, :count).by(1)
             .and change { Ticket::Article.exists?(article_attributes) }.to(true)
         end
 
         context 'when message contains shortened (t.co) url' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming_with_url.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming_with_url.yml') }
 
           it 'replaces the t.co url for the original' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(body: <<~BODY.chomp) }.to(true)
                 Did you know about this? https://en.wikipedia.org/wiki/Frankenstein#Composition
               BODY
@@ -357,10 +354,10 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         context 'when message contains a media attachment (e.g., JPG)' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'direct_message-incoming_with_media.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming_with_media.yml') }
 
           it 'does not store it as an attachment on the article' do
-            described_class.new.process(payload, channel)
+            channel.process(payload)
 
             expect(Ticket::Article.last.attachments).to be_empty
           end
@@ -369,7 +366,7 @@ RSpec.describe Channel::Driver::Twitter do
     end
 
     context 'for incoming tweet' do
-      let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention.yml') }
+      let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention.yml') }
 
       include_examples 'for user processing' do
         # Payload sent by Twitter is { ..., tweet_create_events: [{ ..., user: <author> }] }
@@ -392,43 +389,42 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates a new ticket' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket, :count).by(1)
         end
 
         context 'for duplicate tweets' do
           before do
-            described_class.new.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]),
-              channel
+            channel.process(
+              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
           it 'does not create duplicate ticket' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to not_change(Ticket, :count)
               .and not_change(Ticket::Article, :count)
           end
         end
 
         context 'in response to existing tweet thread' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-response.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-response.yml') }
 
           let(:parent_tweet_payload) do
             YAML.safe_load(
-              File.read(Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention.yml')),
+              File.read(Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention.yml')),
               [ActiveSupport::HashWithIndifferentAccess]
             )
           end
 
           context 'that hasn’t been imported yet', :use_vcr do
             it 'creates a new ticket' do
-              expect { described_class.new.process(payload, channel) }
+              expect { channel.process(payload) }
                 .to change(Ticket, :count).by(1)
             end
 
             it 'retrieves the parent tweet via the Twitter API' do
-              expect { described_class.new.process(payload, channel) }
+              expect { channel.process(payload) }
                 .to change(Ticket::Article, :count).by(2)
 
               expect(Ticket::Article.second_to_last.body).to eq(parent_tweet_payload[:tweet_create_events].first[:text])
@@ -441,22 +437,22 @@ RSpec.describe Channel::Driver::Twitter do
               end
 
               it 'creates a new ticket' do
-                expect { described_class.new.process(payload, channel) }
+                expect { channel.process(payload) }
                   .to change(Ticket, :count).by(1)
               end
 
               it 'silently ignores error when retrieving parent tweet' do
-                expect { described_class.new.process(payload, channel) }.to not_raise_error
+                expect { channel.process(payload) }.to not_raise_error
               end
             end
           end
 
           context 'that was previously imported' do
             # import parent tweet
-            before { described_class.new.process(parent_tweet_payload, channel) }
+            before { channel.process(parent_tweet_payload) }
 
             it 'uses existing ticket' do
-              expect { described_class.new.process(payload, channel) }
+              expect { channel.process(payload) }
                 .to not_change(Ticket, :count)
                 .and not_change { Ticket.last.state }
             end
@@ -465,7 +461,7 @@ RSpec.describe Channel::Driver::Twitter do
               before { Ticket.last.update(state: Ticket::State.find_by(name: 'closed')) }
 
               it 'sets existing ticket to "open"' do
-                expect { described_class.new.process(payload, channel) }
+                expect { channel.process(payload) }
                   .to not_change(Ticket, :count)
                   .and change { Ticket.last.state.name }.to('open')
               end
@@ -516,38 +512,38 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates a new article' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket::Article, :count).by(1)
             .and change { Ticket::Article.exists?(article_attributes) }.to(true)
         end
 
         context 'when message mentions multiple users' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention_multiple.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention_multiple.yml') }
 
           let(:mentionees) { "@#{payload[:tweet_create_events].first[:entities][:user_mentions].map { |um| um[:screen_name] }.join(', @')}" }
 
           it 'records all mentionees in comma-separated "to" attribute' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(to: mentionees) }.to(true)
           end
         end
 
         context 'when message exceeds 140 characters' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention_extended.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention_extended.yml') }
 
           let(:full_body) { payload[:tweet_create_events].first[:extended_tweet][:full_text] }
 
           it 'records the full (extended) tweet body' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(body: full_body) }.to(true)
           end
         end
 
         context 'when message contains shortened (t.co) url' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention_with_url.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention_with_url.yml') }
 
           it 'replaces the t.co url for the original' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(body: <<~BODY.chomp) }.to(true)
                 @ScruffyMcG https://zammad.org/
               BODY
@@ -555,17 +551,17 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         context 'when message contains a media attachment (e.g., JPG)' do
-          let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention_with_media.yml') }
+          let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention_with_media.yml') }
 
           it 'replaces the t.co url for the original' do
-            expect { described_class.new.process(payload, channel) }
+            expect { channel.process(payload) }
               .to change { Ticket::Article.exists?(body: <<~BODY.chomp) }.to(true)
                 @ScruffyMcG https://twitter.com/pennbrooke1/status/1209101446706122752/photo/1
               BODY
           end
 
           it 'stores it as an attachment on the article', :use_vcr do
-            described_class.new.process(payload, channel)
+            channel.process(payload)
 
             expect(Ticket::Article.last.attachments).to be_one
           end
@@ -574,7 +570,7 @@ RSpec.describe Channel::Driver::Twitter do
     end
 
     context 'for outgoing tweet' do
-      let(:payload_file) { Rails.root.join('test', 'data', 'twitter', 'webhook_events', 'tweet_create-user_mention_outgoing.yml') }
+      let(:payload_file) { Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention_outgoing.yml') }
 
       describe 'ticket creation' do
         let(:ticket_attributes) do
@@ -592,7 +588,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates a closed ticket' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket, :count).by(1)
         end
       end
@@ -639,7 +635,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         it 'creates a new article' do
-          expect { described_class.new.process(payload, channel) }
+          expect { channel.process(payload) }
             .to change(Ticket::Article, :count).by(1)
             .and change { Ticket::Article.exists?(article_attributes) }.to(true)
         end
