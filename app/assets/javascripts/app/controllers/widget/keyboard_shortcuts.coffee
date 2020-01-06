@@ -391,6 +391,23 @@ App.Config.set(
               description: 'Navigate through article'
             }
           ]
+        },
+        {
+          where: 'Used when composing a Ticket article'
+          shortcuts: [
+            {
+              key: '::'
+              hotkeys: false,
+              description: 'Inserts Text module'
+              globalEvent: 'richtext-insert-text-module'
+            }
+            {
+              key: '??'
+              hotkeys: false,
+              description: 'Inserts Knowledge Base answer'
+              globalEvent: 'richtext-insert-kb-answer'
+            }
+          ]
         }
 
       ]
