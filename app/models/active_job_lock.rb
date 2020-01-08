@@ -1,4 +1,4 @@
-class ActiveJobLock < ApplicationModel
+class ActiveJobLock < ActiveRecord::Base
 
   def of?(active_job)
     active_job.job_id == active_job_id

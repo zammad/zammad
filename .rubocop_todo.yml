@@ -48,14 +48,6 @@ Metrics/ModuleLength:
 Metrics/PerceivedComplexity:
   Max: 115
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Rails/ApplicationRecord:
-  Exclude:
-    - 'app/models/application_model.rb'
-    - 'app/models/notification.rb'
-    - 'app/models/token.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: Include.

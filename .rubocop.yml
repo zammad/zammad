@@ -166,6 +166,11 @@ Style/BracesAroundHashParameters:
   Description: 'Enforce braces style around hash parameters.'
   Enabled: false
 
+Rails/ApplicationRecord:
+  Exclude:
+    - 'app/models/application_model.rb'
+    - 'app/models/active_job_lock.rb'
+
 Rails/BulkChangeTable:
   Description: 'Check whether alter queries are combinable.'
   Enabled: false
