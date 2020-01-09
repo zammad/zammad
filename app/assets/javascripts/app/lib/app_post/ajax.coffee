@@ -103,13 +103,13 @@ class _ajaxSingleton
 
       #TODO: INCOMMENT ME WHEN DECIDE TO USE THE ORCHESTRATOR
       #vims hanlde these errors by itself
-      #return if status is 400
-      #return if status is 403
-      #return if status is 404
-      #return if status is 408
-      #return if status is 500
-      #return if status is 502
-      #return if status is 503
+      return if status is 400
+      return if status is 403
+      return if status is 404
+      return if status is 408
+      return if status is 500
+      return if status is 502
+      return if status is 503
 
       # show error message
       new App.ControllerModal(
