@@ -1,7 +1,7 @@
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["agent"] = function (__obj) {
+window.zammadChatTemplates["agent"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -739,10 +739,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.render = function() {
+      var btn;
       if (!this.el || !document.querySelector('.zammad-chat')) {
         this.renderBase();
       }
-      document.querySelector("." + this.options.buttonClass).classList.add(this.inactiveClass);
+      btn = document.querySelector("." + this.options.buttonClass);
+      if (btn) {
+        btn.classList.add(this.inactiveClass);
+      }
       this.setAgentOnlineState('online');
       this.log.debug('widget rendered');
       this.startTimeoutObservers();
@@ -1088,9 +1092,13 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onError = function(message) {
+      var btn;
       this.log.debug(message);
       this.addStatus(message);
-      document.querySelector("." + this.options.buttonClass).classList.add('zammad-chat-is-hidden');
+      btn = document.querySelector("." + this.options.buttonClass);
+      if (btn) {
+        btn.classList.add('zammad-chat-is-hidden');
+      }
       if (this.isOpen) {
         this.disableInput();
         return this.destroy({
@@ -1953,7 +1961,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["chat"] = function (__obj) {
+window.zammadChatTemplates["chat"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2044,7 +2052,7 @@ window.zammadChatTemplates["chat"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["customer_timeout"] = function (__obj) {
+window.zammadChatTemplates["customer_timeout"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2117,7 +2125,7 @@ window.zammadChatTemplates["customer_timeout"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["loader"] = function (__obj) {
+window.zammadChatTemplates["loader"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2172,7 +2180,7 @@ window.zammadChatTemplates["loader"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["message"] = function (__obj) {
+window.zammadChatTemplates["message"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2239,7 +2247,7 @@ window.zammadChatTemplates["message"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["status"] = function (__obj) {
+window.zammadChatTemplates["status"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2294,7 +2302,7 @@ window.zammadChatTemplates["status"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["timestamp"] = function (__obj) {
+window.zammadChatTemplates["timestamp"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2353,7 +2361,7 @@ window.zammadChatTemplates["timestamp"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["typingIndicator"] = function (__obj) {
+window.zammadChatTemplates["typingIndicator"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2404,7 +2412,7 @@ window.zammadChatTemplates["typingIndicator"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["waiting"] = function (__obj) {
+window.zammadChatTemplates["waiting"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2463,7 +2471,7 @@ window.zammadChatTemplates["waiting"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["waiting_list_timeout"] = function (__obj) {
+window.zammadChatTemplates["waiting_list_timeout"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
