@@ -1005,8 +1005,11 @@ class App.TicketZoom extends App.Controller
   # reset task state
   taskReset: =>
     @form_id = App.ControllerForm.formId()
+
     @articleNew.form_id = @form_id
     @articleNew.render()
+
+    @articleView.updateFormId(@form_id)
 
     @localTaskData =
       ticket:  {}
