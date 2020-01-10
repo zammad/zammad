@@ -115,7 +115,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Email address is already used for other user.')
+      expect(json_response['error']).to eq("Email address 'rest-customer1@example.com' is already used for other user.")
 
       # email missing with enabled feature
       params = { firstname: 'some firstname', signup: true }
@@ -295,7 +295,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_truthy
-      expect(json_response['error']).to eq('Email address is already used for other user.')
+      expect(json_response['error']).to eq("Email address 'new_agent_by_admin2@example.com' is already used for other user.")
 
       # missing required attributes
       params = { note: 'some note' }
