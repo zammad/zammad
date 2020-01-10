@@ -172,6 +172,15 @@ do(window) ->
       inactiveTimeoutIntervallCheck: 0.5
       waitingListTimeout: 4
       waitingListTimeoutIntervallCheck: 0.5
+      # Callbacks
+      onReady: undefined
+      onCloseTransitionend: undefined
+      onError: undefined
+      onOpenTransitionend: undefined
+      onConnectionReestablished: undefined
+      onSessionClosed: undefined
+      onConnectionEstablished: undefined
+      onCssLoaded: undefined
 
     logPrefix: 'chat'
     _messageCount: 0
@@ -766,6 +775,8 @@ do(window) ->
         btn.addEventListener('click', @open)
         btn.classList.remove(@inactiveClass)
 
+      @options.onReady?()
+
       if @options.show
         @show()
 
@@ -781,6 +792,8 @@ do(window) ->
         @destroy(remove: false)
       else
         @destroy(remove: true)
+
+      @options.onError?(message)
 
     onReopenSession: (data) =>
       @log.debug 'old messages', data.session
@@ -927,6 +940,7 @@ do(window) ->
 
       if @isFullscreen
         @disableScrollOnRoot()
+      @options.onOpenTransitionend?()
 
     sessionClose: =>
       # send close
@@ -991,6 +1005,7 @@ do(window) ->
       @el.querySelector('.zammad-chat-agent-status').classList.add('zammad-chat-is-hidden')
 
       @isOpen = false
+      @options.onCloseTransitionend?()
 
       @io.reconnect()
 
@@ -1157,12 +1172,14 @@ do(window) ->
       @lastAddedType = 'status'
       @setAgentOnlineState 'online'
       @addStatus @T('Connection re-established')
+      @options.onConnectionReestablished?()
 
     onSessionClosed: (data) ->
       @addStatus @T('Chat closed by %s', data.realname)
       @disableInput()
       @setAgentOnlineState 'offline'
       @inactiveTimeout.stop()
+      @options.onSessionClosed?(data)
 
     setSessionId: (id) =>
       @sessionId = id
@@ -1202,6 +1219,7 @@ do(window) ->
       @waitingListTimeout.stop()
       @idleTimeout.stop()
       @inactiveTimeout.start()
+      @options.onConnectionEstablished?(data)
 
     showCustomerTimeout: ->
       @el.querySelector('.zammad-chat-modal').innerHTML = @view('customer_timeout')
@@ -1254,6 +1272,7 @@ do(window) ->
       @cssLoaded = true
       if @socketReady
         @onReady()
+      @options.onCssLoaded?()
 
     startTimeoutObservers: =>
       @idleTimeout = new Timeout(

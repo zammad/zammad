@@ -363,7 +363,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       inactiveTimeout: 8,
       inactiveTimeoutIntervallCheck: 0.5,
       waitingListTimeout: 4,
-      waitingListTimeoutIntervallCheck: 0.5
+      waitingListTimeoutIntervallCheck: 0.5,
+      onReady: void 0,
+      onCloseTransitionend: void 0,
+      onError: void 0,
+      onOpenTransitionend: void 0,
+      onConnectionReestablished: void 0,
+      onSessionClosed: void 0,
+      onConnectionEstablished: void 0,
+      onCssLoaded: void 0
     };
 
     ZammadChat.prototype.logPrefix = 'chat';
@@ -1079,12 +1087,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onReady = function() {
-      var btn;
+      var base, btn;
       this.log.debug('widget ready for use');
       btn = document.querySelector("." + this.options.buttonClass);
       if (btn) {
         btn.addEventListener('click', this.open);
         btn.classList.remove(this.inactiveClass);
+      }
+      if (typeof (base = this.options).onReady === "function") {
+        base.onReady();
       }
       if (this.options.show) {
         return this.show();
@@ -1092,7 +1103,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onError = function(message) {
-      var btn;
+      var base, btn;
       this.log.debug(message);
       this.addStatus(message);
       btn = document.querySelector("." + this.options.buttonClass);
@@ -1101,14 +1112,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       }
       if (this.isOpen) {
         this.disableInput();
-        return this.destroy({
+        this.destroy({
           remove: false
         });
       } else {
-        return this.destroy({
+        this.destroy({
           remove: true
         });
       }
+      return typeof (base = this.options).onError === "function" ? base.onError(message) : void 0;
     };
 
     ZammadChat.prototype.onReopenSession = function(data) {
@@ -1251,12 +1263,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onOpenTransitionend = function() {
+      var base;
       this.el.removeEventListener('transitionend', this.onOpenTransitionend);
       this.el.classList.remove('zammad-chat--animate');
       this.idleTimeout.stop();
       if (this.isFullscreen) {
-        return this.disableScrollOnRoot();
+        this.disableScrollOnRoot();
       }
+      return typeof (base = this.options).onOpenTransitionend === "function" ? base.onOpenTransitionend() : void 0;
     };
 
     ZammadChat.prototype.sessionClose = function() {
@@ -1309,6 +1323,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onCloseTransitionend = function() {
+      var base;
       this.el.removeEventListener('transitionend', this.onCloseTransitionend);
       this.el.classList.remove('zammad-chat-is-open', 'zammad-chat--animate');
       this.el.style.transform = '';
@@ -1317,6 +1332,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       this.el.querySelector('.zammad-chat-agent').classList.add('zammad-chat-is-hidden');
       this.el.querySelector('.zammad-chat-agent-status').classList.add('zammad-chat-is-hidden');
       this.isOpen = false;
+      if (typeof (base = this.options).onCloseTransitionend === "function") {
+        base.onCloseTransitionend();
+      }
       return this.io.reconnect();
     };
 
@@ -1520,16 +1538,20 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onConnectionReestablished = function() {
+      var base;
       this.lastAddedType = 'status';
       this.setAgentOnlineState('online');
-      return this.addStatus(this.T('Connection re-established'));
+      this.addStatus(this.T('Connection re-established'));
+      return typeof (base = this.options).onConnectionReestablished === "function" ? base.onConnectionReestablished() : void 0;
     };
 
     ZammadChat.prototype.onSessionClosed = function(data) {
+      var base;
       this.addStatus(this.T('Chat closed by %s', data.realname));
       this.disableInput();
       this.setAgentOnlineState('offline');
-      return this.inactiveTimeout.stop();
+      this.inactiveTimeout.stop();
+      return typeof (base = this.options).onSessionClosed === "function" ? base.onSessionClosed(data) : void 0;
     };
 
     ZammadChat.prototype.setSessionId = function(id) {
@@ -1542,6 +1564,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onConnectionEstablished = function(data) {
+      var base;
       if (this.onInitialQueueDelayId) {
         clearTimeout(this.onInitialQueueDelayId);
       }
@@ -1567,7 +1590,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       this.setAgentOnlineState('online');
       this.waitingListTimeout.stop();
       this.idleTimeout.stop();
-      return this.inactiveTimeout.start();
+      this.inactiveTimeout.start();
+      return typeof (base = this.options).onConnectionEstablished === "function" ? base.onConnectionEstablished(data) : void 0;
     };
 
     ZammadChat.prototype.showCustomerTimeout = function() {
@@ -1635,10 +1659,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.onCssLoaded = function() {
+      var base;
       this.cssLoaded = true;
       if (this.socketReady) {
-        return this.onReady();
+        this.onReady();
       }
+      return typeof (base = this.options).onCssLoaded === "function" ? base.onCssLoaded() : void 0;
     };
 
     ZammadChat.prototype.startTimeoutObservers = function() {
