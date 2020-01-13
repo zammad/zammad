@@ -141,8 +141,8 @@ class UsersController < ApplicationController
       end
 
       # check if user already exists
-      exists = User.find_by(email: clean_params[:email].downcase.strip)
-      raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.' if exists
+      exists = User.exists?(email: clean_params[:email].downcase.strip)
+      raise Exceptions::UnprocessableEntity, "Email address '#{clean_params[:email].downcase.strip}' is already used for other user." if exists
 
       user = User.new(clean_params)
       user.associations_from_param(params)

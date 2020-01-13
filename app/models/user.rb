@@ -1026,9 +1026,9 @@ try to find correct name
     return true if email.blank?
     return true if !changes
     return true if !changes['email']
-    return true if !User.find_by(email: email.downcase.strip)
+    return true if !User.exists?(email: email.downcase.strip)
 
-    raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
+    raise Exceptions::UnprocessableEntity, "Email address '#{email.downcase.strip}' is already used for other user."
   end
 
   def validate_roles(role)

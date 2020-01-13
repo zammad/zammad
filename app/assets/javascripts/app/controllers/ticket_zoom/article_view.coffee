@@ -60,6 +60,9 @@ class App.TicketZoomArticleView extends App.Controller
 
     false
 
+  updateFormId: (newFormId) ->
+    for id, viewItem of @articleController
+      viewItem.updateFormId(newFormId)
 
 class ArticleViewItem extends App.ObserverController
   model: 'TicketArticle'
@@ -205,7 +208,7 @@ class ArticleViewItem extends App.ObserverController
       size:      40
     )
 
-    new App.TicketZoomArticleActions(
+    @articleActions = new App.TicketZoomArticleActions(
       el:              @$('.js-article-actions')
       ticket:          @ticket
       article:         article
@@ -425,3 +428,6 @@ class ArticleViewItem extends App.ObserverController
     e.preventDefault()
     e.stopPropagation()
     new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML, parentElement: $(e.currentTarget))
+
+  updateFormId: (newFormId) ->
+    @articleActions?.form_id = newFormId

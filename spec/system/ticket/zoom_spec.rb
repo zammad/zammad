@@ -126,7 +126,50 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
       end
     end
-
   end
 
+  context 'when ticket has an attachment' do
+
+    let(:group)           { Group.find_by(name: 'Users') }
+    let(:ticket)          { create(:ticket, group: group) }
+    let(:article)         { create(:ticket_article, ticket: ticket) }
+    let(:attachment_name) { 'some_file.txt' }
+
+    before do
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          'some content',
+        filename:      attachment_name,
+        preferences:   {
+          'Content-Type' => 'text/plain',
+        },
+        created_by_id: 1,
+      )
+    end
+
+    context 'article was already forwarded once' do
+      before do
+        visit "#ticket/zoom/#{ticket.id}"
+
+        within(:active_content) do
+          find('a[data-type=emailForward]').click
+
+          click('.js-reset')
+          have_no_css('.js-reset')
+        end
+      end
+
+      it 'adds attachments when forwarding multiple times' do
+
+        within(:active_content) do
+          find('a[data-type=emailForward]').click
+        end
+
+        within('.js-writeArea') do
+          expect(page).to have_text attachment_name
+        end
+      end
+    end
+  end
 end
