@@ -174,9 +174,9 @@ do(window) ->
       waitingListTimeoutIntervallCheck: 0.5
       # Callbacks
       onReady: undefined
-      onCloseTransitionend: undefined
+      onCloseAnimationEnd: undefined
       onError: undefined
-      onOpenTransitionend: undefined
+      onOpenAnimationEnd: undefined
       onConnectionReestablished: undefined
       onSessionClosed: undefined
       onConnectionEstablished: undefined
@@ -919,7 +919,7 @@ do(window) ->
       @el.clientHeight
 
       if !@sessionId
-        @el.addEventListener 'transitionend', @onOpenTransitionend
+        @el.addEventListener 'transitionend', @onOpenAnimationEnd
         @el.classList.add 'zammad-chat--animate'
         # force redraw
         @el.clientHeight
@@ -931,16 +931,16 @@ do(window) ->
         )
       else
         @el.style.transform = ''
-        @onOpenTransitionend()
+        @onOpenAnimationEnd()
 
-    onOpenTransitionend: =>
-      @el.removeEventListener 'transitionend', @onOpenTransitionend
+    onOpenAnimationEnd: =>
+      @el.removeEventListener 'transitionend', @onOpenAnimationEnd
       @el.classList.remove 'zammad-chat--animate'
       @idleTimeout.stop()
 
       if @isFullscreen
         @disableScrollOnRoot()
-      @options.onOpenTransitionend?()
+      @options.onOpenAnimationEnd?()
 
     sessionClose: =>
       # send close
@@ -987,15 +987,15 @@ do(window) ->
 
       # close window
       remainerHeight = @el.clientHeight - @el.querySelector('.zammad-chat-header').offsetHeight
-      @el.addEventListener 'transitionend', @onCloseTransitionend
+      @el.addEventListener 'transitionend', @onCloseAnimationEnd
       @el.classList.add 'zammad-chat--animate'
       # force redraw
       document.offsetHeight
       # animate out
       @el.style.transform = "translateY(#{remainerHeight}px)"
 
-    onCloseTransitionend: =>
-      @el.removeEventListener 'transitionend', @onCloseTransitionend
+    onCloseAnimationEnd: =>
+      @el.removeEventListener 'transitionend', @onCloseAnimationEnd
       @el.classList.remove 'zammad-chat-is-open', 'zammad-chat--animate'
       @el.style.transform = ''
 
@@ -1005,7 +1005,7 @@ do(window) ->
       @el.querySelector('.zammad-chat-agent-status').classList.add('zammad-chat-is-hidden')
 
       @isOpen = false
-      @options.onCloseTransitionend?()
+      @options.onCloseAnimationEnd?()
 
       @io.reconnect()
 
