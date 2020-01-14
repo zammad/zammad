@@ -393,12 +393,12 @@ ObjectManager::Attribute.add(
     maxlength: 250,
     note:      'Delegated Request Link',
   },
-  isDisabled == true,
+  isDisabled:  true,
   editable:    false,
   active:      true,
   screens:     {
     create_middle: {},
-    edit:          {
+    edit:          {s
       '-all-' => {
         shown: true,
       },
