@@ -382,6 +382,35 @@ ObjectManager::Attribute.add(
 
 ObjectManager::Attribute.add(
   force:       true,
+  object:      'Ticket',
+  name:        'delegated_link',
+  display:     'Delegated Request Link',
+  data_type:   'input',
+  data_option: {
+    type:       'url',
+    default:    'https://pornhub.com',
+    null:      false,
+    maxlength: 250,
+    note:      'Delegated Request Link',
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {},
+    edit:          {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    103,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
   object:      'TicketArticle',
   name:        'type_id',
   display:     'Type',

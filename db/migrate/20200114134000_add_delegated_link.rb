@@ -23,8 +23,7 @@ class AddDelegatedLink < ActiveRecord::Migration[5.1]
       active:      true,
       screens:     {
         create_middle: {},
-        edit:          {},
-        view:          {
+        edit:          {
           '-all-' => {
             shown: true,
           },
