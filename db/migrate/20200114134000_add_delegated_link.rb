@@ -27,6 +27,7 @@ class AddDelegatedLink < ActiveRecord::Migration[5.1]
         view         : {
           '-all-' => {
             shown: true,
+                     },
                         },
       },
       to_create:   false,
