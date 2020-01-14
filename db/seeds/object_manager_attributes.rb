@@ -398,7 +398,7 @@ ObjectManager::Attribute.add(
   active:      true,
   screens:     {
     create_middle: {},
-    edit:          {s
+    edit:          {
       '-all-' => {
         shown: true,
       },
