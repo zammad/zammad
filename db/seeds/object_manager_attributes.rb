@@ -388,12 +388,11 @@ ObjectManager::Attribute.add(
   data_type:   'input',
   data_option: {
     type:       'text',
-    default:    'https://pornhub.com',
+    default:    '',
     null:      true,
     maxlength: 250,
     note:      'Delegated Request Link',
   },
-  isDisabled:  true,
   editable:    false,
   active:      true,
   screens:     {
