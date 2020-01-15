@@ -391,7 +391,6 @@ ObjectManager::Attribute.add(
     default:    '',
     null:      true,
     maxlength: 250,
-    note:      'Delegated Request Link',
   },
   editable:    false,
   active:      true,
