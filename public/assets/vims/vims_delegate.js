@@ -51,7 +51,7 @@ class DelegateModal {
 
   function GetOrchestratorUrl(){
     let location = window.location.origin;
-    return location.split('.')[0] + '-orchestrator' + location.substr(location.indexOf('.', 0));
+    return location.split('.')[0] + '-azdevops' + location.substr(location.indexOf('.', 0));
   }
   
   class AlertModal {
