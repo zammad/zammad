@@ -4,7 +4,7 @@ class AddDelegatedLink < ActiveRecord::Migration[5.1]
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    add_column :tickets, :delegated_link, :string, limit: 250, null: false, default: 'https://pornhub.com'
+    add_column :tickets, :delegated_link, :string, limit: 250, null: false, default: ''
 
     ObjectManager::Attribute.add(
       force:       true,
