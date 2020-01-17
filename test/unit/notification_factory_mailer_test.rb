@@ -161,6 +161,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent1.preferences[:notification_config][:group_ids] = nil
     agent1.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -180,6 +181,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent2.preferences[:notification_config][:group_ids] = nil
     agent2.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent2, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -198,6 +200,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     # no group selection
     agent1.preferences[:notification_config][:group_ids] = []
     agent1.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -217,6 +220,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent2.preferences[:notification_config][:group_ids] = []
     agent2.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent2, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -234,6 +238,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent1.preferences[:notification_config][:group_ids] = ['-']
     agent1.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -253,6 +258,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent2.preferences[:notification_config][:group_ids] = ['-']
     agent2.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent2, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -271,6 +277,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     # dedecated group selection
     agent1.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
     agent1.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')
     assert_equal(true, result[:channels][:online])
@@ -289,6 +296,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     agent2.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
     agent2.save
+    travel 30.seconds
 
     result = NotificationFactory::Mailer.notification_settings(agent2, ticket1, 'create')
     assert_equal(true, result[:channels][:online])

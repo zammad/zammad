@@ -30,10 +30,20 @@ returns
       type = map[type]
     end
 
-    return if !user.preferences
-    return if !user.preferences['notification_config']
+    # this cache will optimize the preference catch performance
+    # because of the yaml deserialization its pretty slow
+    # on many tickets you we cache it.
+    user_preferences = Cache.get("NotificationFactory::Mailer.notification_settings::#{user.id}")
+    if user_preferences.blank?
+      user_preferences = user.preferences
 
-    matrix = user.preferences['notification_config']['matrix']
+      Cache.write("NotificationFactory::Mailer.notification_settings::#{user.id}", user_preferences, expires_in: 20.seconds)
+    end
+
+    return if !user_preferences
+    return if !user_preferences['notification_config']
+
+    matrix = user_preferences['notification_config']['matrix']
     return if !matrix
 
     owned_by_nobody = false
@@ -60,7 +70,7 @@ returns
 
     # check if group is in selected groups
     if !owned_by_me
-      selected_group_ids = user.preferences['notification_config']['group_ids']
+      selected_group_ids = user_preferences['notification_config']['group_ids']
       if selected_group_ids.is_a?(Array)
         hit = nil
         if selected_group_ids.blank?
