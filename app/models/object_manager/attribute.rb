@@ -508,11 +508,24 @@ returns:
         data[:screen] = {}
         item.screens.each do |screen, permission_options|
           data[:screen][screen] = {}
+
+          if permission_options['-all-']
+            data[:screen][screen] = permission_options['-all-']
+            next
+          end
+
           permission_options.each do |permission, options|
-            if permission == '-all-'
-              data[:screen][screen] = options
-            elsif user&.permissions?(permission)
-              data[:screen][screen] = options
+            next if !user&.permissions?(permission)
+
+            options.each do |key, value|
+              if [true, false].include?(data[:screen][screen][key])
+                data[:screen][screen][key] = data[:screen][screen][key].nil? ? false : data[:screen][screen][key]
+                if options[key]
+                  data[:screen][screen][key] = true
+                end
+              else
+                data[:screen][screen][key] = value
+              end
             end
           end
         end
