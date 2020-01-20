@@ -317,7 +317,7 @@ RSpec.describe Ticket::Article, type: :model do
           .to('') # Tweet in VCR cassette is addressed to no one
       end
 
-      it 'sets #message_id to tweet ID (https://twitter.com/statuses/<id>)' do
+      it 'sets #message_id to tweet ID (https://twitter.com/_/status/<id>)' do
         expect(&run_bg_jobs)
           .to change { twitter_article.reload.message_id }
           .to('1069382411899817990')
@@ -332,7 +332,7 @@ RSpec.describe Ticket::Article, type: :model do
           .to include(
             'name'   => 'on Twitter',
             'target' => '_blank',
-            'url'    => "https://twitter.com/statuses/#{twitter_article.message_id}"
+            'url'    => "https://twitter.com/_/status/#{twitter_article.message_id}"
           )
       end
 

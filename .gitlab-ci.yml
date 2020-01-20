@@ -593,22 +593,6 @@ test:browser:autowizard_ff:
   <<: *test_browser_integration_definition
   <<: *script_integration_auto_wizard_definition
 
-test:browser:integration:twitter_chrome:
-  <<: *browser_integration_auto_wizard_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "chrome"
-    AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
-    TEST_FILE: "test/integration/twitter_browser_test.rb"
-
-test:browser:integration:twitter_ff:
-  <<: *browser_integration_auto_wizard_definition
-  variables:
-    <<: *variables_browser_definition
-    BROWSER: "firefox"
-    AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
-    TEST_FILE: "test/integration/twitter_browser_test.rb"
-
 test:browser:integration:facebook_chrome:
   <<: *browser_integration_auto_wizard_definition
   variables:

@@ -51,7 +51,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
   release: ->
     super
-    @modal.el.remove()
+    @modal?.el.remove()
 
   processLoaded: ->
     if @knowledge_base_id

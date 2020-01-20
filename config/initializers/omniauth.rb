@@ -66,3 +66,5 @@ end
 OmniAuth.config.full_host = proc {
   "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
 }
+
+OmniAuth.config.logger = Rails.logger

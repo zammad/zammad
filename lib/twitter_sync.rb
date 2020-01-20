@@ -4,6 +4,8 @@ require 'http/uri'
 
 class TwitterSync
 
+  STATUS_URL_TEMPLATE = 'https://twitter.com/_/status/%s'.freeze
+
   attr_accessor :client
 
   def initialize(auth, payload = nil)
@@ -190,7 +192,6 @@ class TwitterSync
     message_id = nil
     article_type = nil
     in_reply_to = nil
-    twitter_preferences = {}
     attachments = []
 
     if item['type'] == 'message_create'
@@ -213,6 +214,7 @@ class TwitterSync
       sender_screen_name = to_user_webhook_data(item['message_create']['sender_id'])['screen_name']
       to = "@#{recipient_screen_name}"
       from = "@#{sender_screen_name}"
+
       twitter_preferences = {
         created_at:            item['created_timestamp'],
         recipient_id:          item['message_create']['target']['recipient_id'],
@@ -222,6 +224,18 @@ class TwitterSync
         app_id:                app['app_id'],
         app_name:              app['app_name'],
       }
+
+      article_preferences = {
+        twitter: self.class.preferences_cleanup(twitter_preferences),
+        links:   [
+          {
+            url:    "https://twitter.com/messages/#{twitter_preferences[:recipient_id]}-#{twitter_preferences[:sender_id]}",
+            target: '_blank',
+            name:   'on Twitter',
+          },
+        ],
+      }
+
     elsif item['text'].present?
       message_id = item['id']
       text = item['text']
@@ -287,6 +301,17 @@ class TwitterSync
         truncated:           item['truncated'],
       }
 
+      article_preferences = {
+        twitter: self.class.preferences_cleanup(twitter_preferences),
+        links:   [
+          {
+            url:    STATUS_URL_TEMPLATE % item['id'],
+            target: '_blank',
+            name:   'on Twitter',
+          },
+        ],
+      }
+
     else
       raise "Unknown tweet type '#{item.class}'"
     end
@@ -299,17 +324,6 @@ class TwitterSync
       ticket.state = ticket_state
       ticket.save!
     end
-
-    article_preferences = {
-      twitter: self.class.preferences_cleanup(twitter_preferences),
-      links:   [
-        {
-          url:    "https://twitter.com/statuses/#{item['id']}",
-          target: '_blank',
-          name:   'on Twitter',
-        },
-      ],
-    }
 
     article = Ticket::Article.create!(
       from:        from,
@@ -387,7 +401,7 @@ class TwitterSync
       twitter: self.class.preferences_cleanup(twitter_preferences),
       links:   [
         {
-          url:    "https://twitter.com/statuses/#{tweet.id}",
+          url:    STATUS_URL_TEMPLATE % tweet.id,
           target: '_blank',
           name:   'on Twitter',
         },
@@ -444,7 +458,7 @@ class TwitterSync
 
 =begin
 
-create a tweet ot direct message from an article
+create a tweet or direct message from an article
 
 =end
 
@@ -484,6 +498,12 @@ create a tweet ot direct message from an article
 
       Rails.logger.debug { 'Create tweet from article...' }
 
+      # rubocop:disable Style/AsciiComments
+      # workaround for https://github.com/sferik/twitter/issues/677
+      # https://github.com/zammad/zammad/issues/2873 - unable to post
+      # tweets with * - replace `*` with the wide-asterisk `＊`.
+      # rubocop:enable Style/AsciiComments
+      article[:body].tr!('*', '＊') if article[:body].present?
       tweet = @client.update(
         article[:body],
         {
@@ -559,7 +579,7 @@ create a tweet ot direct message from an article
     twitter: twitter_preferences,
     links: [
       {
-        url: 'https://twitter.com/statuses/123',
+        url: 'https://twitter.com/_/status/123',
         target: '_blank',
         name: 'on Twitter',
       },
@@ -572,7 +592,7 @@ or
     twitter: TwitterSync.preferences_cleanup(twitter_preferences),
     links: [
       {
-        url: 'https://twitter.com/statuses/123',
+        url: 'https://twitter.com/_/status/123',
         target: '_blank',
         name: 'on Twitter',
       },

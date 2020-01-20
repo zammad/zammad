@@ -522,6 +522,10 @@ RSpec.describe 'Monitoring', type: :request do
       prev_es_config = Setting.get('es_url')
       Setting.set('es_url', 'http://127.0.0.1:92001')
 
+      # delete all background jobs created while seeding
+      # to have a clean state for checking for failed ones
+      Delayed::Job.destroy_all
+
       # add a new object
       object = create(:object_manager_attribute_text)
 

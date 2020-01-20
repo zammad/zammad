@@ -9,10 +9,10 @@ FactoryBot.define do
       name { 'twitter' }
 
       credentials do
-        { consumer_key:       123,
-          consumer_secret:    123,
-          oauth_token:        123,
-          oauth_token_secret: 123 }
+        { consumer_key:       '123',
+          consumer_secret:    '123',
+          oauth_token:        '123',
+          oauth_token_secret: '123' }
       end
     end
   end

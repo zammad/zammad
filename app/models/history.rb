@@ -146,20 +146,9 @@ returns
     assets: assets,
   }
 
-return all history entries of an object and it's assets and extended with an condition (e. g. to only retrive new history entries)
-
-  history = History.list('Ticket', 123, nil, true, ['created_at > ?', [Time.zone.now - 2.days]])
-
-returns
-
-  history = {
-    list: list,
-    assets: assets,
-  }
-
 =end
 
-  def self.list(requested_object, requested_object_id, related_history_object = nil, assets = nil, condition = nil)
+  def self.list(requested_object, requested_object_id, related_history_object = nil, assets = nil)
     histories = History.where(
       history_object_id: object_lookup(requested_object).id,
       o_id:              requested_object_id
@@ -172,10 +161,6 @@ returns
           related_o_id:      requested_object_id
         )
       )
-    end
-
-    if condition.present?
-      histories = histories.where(condition)
     end
 
     histories = histories.order(:created_at)

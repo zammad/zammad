@@ -4,6 +4,8 @@ class App.KnowledgeBaseAnswer extends App.Model
   @extend App.KnowledgeBaseActions
   @extend App.KnowledgeBaseCanBePublished
 
+  @serverClassName: 'KnowledgeBase::Answer'
+
   url: ->
     @knowledge_base().generateURL('answers')
 

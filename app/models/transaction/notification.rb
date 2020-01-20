@@ -111,15 +111,13 @@ class Transaction::Notification
         if !identifier || identifier == ''
           identifier = user.login
         end
-        already_notified = false
-        History.list('Ticket', ticket.id, nil, nil, ['created_at > ?', [Time.zone.now - 2.days]]).each do |history|
-          next if history['type'] != 'notification'
-          next if !history['value_to'].match?(/\(#{Regexp.escape(@item[:type])}:/)
-          next if !history['value_to'].match?(/#{Regexp.escape(identifier)}\(/)
-          next if !history['created_at'].today?
 
-          already_notified = true
-        end
+        already_notified = History.where(
+          history_type_id:   History.type_lookup('notification').id,
+          history_object_id: History.object_lookup('Ticket').id,
+          o_id:              ticket.id
+        ).where('created_at > ?', Time.zone.now.beginning_of_day).where('value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%").exists?
+
         next if already_notified
       end
 

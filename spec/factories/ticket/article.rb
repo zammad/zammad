@@ -23,6 +23,16 @@ FactoryBot.define do
       end
 
       association :ticket, factory: :twitter_ticket
+      message_id { '775410014383026176' }
+      body { Faker::Lorem.sentence }
+    end
+
+    factory :twitter_dm_article do
+      transient do
+        type_name { 'twitter direct-message' }
+      end
+
+      association :ticket, factory: :twitter_ticket
       body { Faker::Lorem.sentence }
     end
   end

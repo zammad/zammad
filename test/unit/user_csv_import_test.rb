@@ -195,7 +195,7 @@ class UserCsvImportTest < ActiveSupport::TestCase
     assert_equal(true, result[:try])
     assert_equal(1, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unknown record with id '999999999' for User.", result[:errors][0])
+    assert_equal("Line 1: unknown User with id '999999999'.", result[:errors][0])
 
     assert_nil(User.find_by(login: 'user-simple-invalid_id-import1'))
     assert_nil(User.find_by(login: 'user-simple-invalid_id-import2'))
@@ -230,7 +230,7 @@ class UserCsvImportTest < ActiveSupport::TestCase
     assert_equal(true, result[:try])
     assert_equal(1, result[:errors].count)
     assert_equal('failed', result[:result])
-    assert_equal("Line 1: unable to update record with id '1' for User.", result[:errors][0])
+    assert_equal("Line 1: unable to update User with id '1'.", result[:errors][0])
 
     assert_nil(User.find_by(login: 'user-simple-readonly_id-import1'))
     assert_nil(User.find_by(login: 'user-simple-readonly_id-import2'))
