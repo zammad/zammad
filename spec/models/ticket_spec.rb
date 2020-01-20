@@ -191,7 +191,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'sets the relative_time to 2 days from now'  do
           expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
-            .to change(ticket, :pending_time).to be > Time.zone.now
+            .to change(ticket, :pending_time).to be > Time.zone.now + 1.days
         end
       end
 
