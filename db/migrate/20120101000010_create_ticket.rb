@@ -56,7 +56,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :title,                            :string,    limit: 250, null: false
       t.column :alert,                            :string,    limit: 999, null: true
       t.column :repeat_count,                     :integer,               null: true
-      t.column :external_ticket_id                :string,                null: true
+      t.column :external_ticket_id,               :string,                null: true
       t.column :owner_id,                         :integer,               null: false
       t.column :customer_id,                      :integer,               null: false
       t.column :note,                             :string,    limit: 250, null: true
