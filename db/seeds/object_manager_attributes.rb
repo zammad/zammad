@@ -408,7 +408,7 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    103,
+  position:    104,
 )
 
 ObjectManager::Attribute.add(

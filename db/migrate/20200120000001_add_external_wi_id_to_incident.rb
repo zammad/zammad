@@ -34,7 +34,7 @@ class AddExternalWiIdToIncident < ActiveRecord::Migration[5.1]
         to_create:   false,
         to_migrate:  false,
         to_delete:   false,
-        position:    103,  
+        position:    104,  
         created_by_id: 1,
         updated_by_id: 1,
       )
