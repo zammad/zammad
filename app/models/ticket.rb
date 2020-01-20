@@ -881,23 +881,23 @@ perform changes on ticket
       end
 
       # Apply pending_time changes
-      if attribute == 'pending_time' && value['operator']
-        if value['operator'] == 'static'
-          self[attribute] = value['value']
+      if attribute == 'pending_time' && value[:operator]
+        if value[:operator] == 'static'
+          self[attribute] = value[:value]
           changed = true
           next
-        elsif value['operator'] == 'relative'
+        elsif value[:operator] == 'relative'
           pendtil = Time.zone.now
           val = value['value'].to_i
-          if value['range'] == 'day'
+          if value[:range] == 'day'
             pendtil +=  val.days
-          elsif value['range'] == 'minute'
+          elsif value[:range] == 'minute'
             pendtil += val.minutes
-          elsif value['range'] == 'hour'
+          elsif value[:range] == 'hour'
             pendtil += val.hours
-          elsif value['range'] == 'month'
+          elsif value[:range] == 'month'
             pendtil += val.months
-          elsif value['range'] == 'year'
+          elsif value[:range] == 'year'
             pendtil += val.years
           end
           self[attribute] = pendtil

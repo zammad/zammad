@@ -174,6 +174,27 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      # Test for PR https://github.com/zammad/zammad/pull/2862
+      context 'with "pending_time" => { "operator": "relative" } in "perform" hash' do
+        let (:perform) do
+          {
+            'ticket.state_id' => { 
+              'value' => Ticket::State.lookup(name: 'pending reminder').id.to_s
+            },
+            'ticket.pending_time' => {
+              'operator': 'relative',
+              'value': 2,
+              'range': 'day'
+            },
+          }
+        end
+
+        it 'sets the relative_time to 2 days from now'  do
+          expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+            .to change(ticket, :pending_time).to be > Time.zone.now
+        end
+      end
+
       context 'with "ticket.action" => { "value" => "delete" } in "perform" hash' do
         let(:perform) do
           {
