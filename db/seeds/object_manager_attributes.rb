@@ -383,6 +383,34 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
+  delegated_link',
+  display:     'Delegated Request Link',
+  data_type:   'input',
+  data_option: {
+    type:       'text',
+    default:    '',
+    null:      true,
+    maxlength: 250,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {},
+    edit:          {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    103,
+)
+  
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
   name:        'external_ticket_id',
   display:     'External ticket id',  
   data_type:   'input',
@@ -410,6 +438,8 @@ ObjectManager::Attribute.add(
   to_delete:   false,
   position:    104,
 )
+
+  
 
 ObjectManager::Attribute.add(
   force:       true,

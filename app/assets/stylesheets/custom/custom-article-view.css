@@ -1,3 +1,4 @@
+/*Main template article*/
 #custom-article hr {
     height: 2px;
     border: 0;
@@ -80,4 +81,33 @@
     text-decoration: none;
     color: white;
     font-size: 20px;
+}
+
+
+/*Delegation article*/
+.delegation-details span {
+  font-size: 16.5px;
+}
+
+.delegation-details table {
+  border-collapse: collapse;
+  margin-bottom: 0px;
+  display: table;
+}
+
+.delegation-details td, .delegation-details th {
+  border-top: 0.5pt solid rgb(175, 171, 171);
+  border-bottom: 0.5pt solid rgb(175, 171, 171);
+  padding: 10px;
+  vertical-align: top;
+}
+
+.delegation-details th {
+  width: 27%;
+  text-align: left;
+}
+
+.delegation-details p {
+  font-size: 18.5px;
+  font-weight: bold;
 }
