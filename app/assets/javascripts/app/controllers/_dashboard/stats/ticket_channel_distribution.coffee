@@ -33,7 +33,7 @@ class Stats extends App.Controller
     totalChannels = _.size data.StatsTicketChannelDistribution.channels
 
     for id, channel of data.StatsTicketChannelDistribution.channels
-      channel.overal_percentage = Math.round((channel.inbound + channel.outbound) / totalTickets * 100)
+      channel.overal_percentage = Math.round((channel.inbound + channel.outbound) / totalTickets * 100) || 0
 
     data.StatsTicketChannelDistribution.description =  'How many of your tickets are coming from email, phone, Twitter, or Facebook? (Shows percentages for both inbound and outbound tickets.)'
 
