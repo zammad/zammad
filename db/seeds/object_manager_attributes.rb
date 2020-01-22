@@ -383,7 +383,7 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
-  delegated_link',
+  name:        'delegated_link',
   display:     'Delegated Request Link',
   data_type:   'input',
   data_option: {
