@@ -34,9 +34,13 @@ class DelegateModal {
 		$('#vimsDelegateModal').vims_modal();		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
+			new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	
             return;
         }
-		    new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');
+		new AlertModal().show(data.responseText);
+	  })
+	  .success(function(data){
+		  Delegate();
 	  });
   }
 
@@ -50,8 +54,7 @@ class DelegateModal {
     return location.split('.')[0] + '-azdevops' + location.substr(location.indexOf('.', 0));
   }
   
-  class AlertModal {
-	  
+  class AlertModal {	  
 	  show(text){
 		  $('#vims').append('<div id="vims-alertModal" class="vims-modal vims-alert-modal"><span id="vims-alertModal-text"></span></div>');
 		  $('#vims-alertModal-text').html(text);
