@@ -85,29 +85,29 @@
 
 
 /*Delegation article*/
-.delegation-details span {
+#delegation-details span {
   font-size: 16.5px;
 }
 
-.delegation-details table {
+#delegation-details table {
   border-collapse: collapse;
   margin-bottom: 0px;
   display: table;
 }
 
-.delegation-details td, .delegation-details th {
+#delegation-details td, #delegation-details th {
   border-top: 0.5pt solid rgb(175, 171, 171);
   border-bottom: 0.5pt solid rgb(175, 171, 171);
   padding: 10px;
   vertical-align: top;
 }
 
-.delegation-details th {
+#delegation-details th {
   width: 27%;
   text-align: left;
 }
 
-.delegation-details p {
+#delegation-details p {
   font-size: 18.5px;
   font-weight: bold;
 }
