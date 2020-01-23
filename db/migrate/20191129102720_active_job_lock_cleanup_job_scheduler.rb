@@ -6,6 +6,7 @@ class ActiveJobLockCleanupJobScheduler < ActiveRecord::Migration[5.2]
       name:          'Cleanup ActiveJob locks.',
       method:        'ActiveJobLockCleanupJob.perform_now',
       period:        1.day,
+      last_run:      Time.zone.now,
       prio:          2,
       active:        true,
       updated_by_id: 1,
