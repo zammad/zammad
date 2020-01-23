@@ -926,7 +926,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
               result = dataUrl;
               img = new Image();
               img.style.width = '100%';
-              img.style.maxWidth = width(+'px');
+              img.style.maxWidth = width + 'px';
               img.src = result;
               if (document.caretPositionFromPoint) {
                 pos = document.caretPositionFromPoint(x, y);
@@ -977,7 +977,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                 }
                 img = new Image();
                 img.style.width = '100%';
-                img.style.maxWidth = width(+'px');
+                img.style.maxWidth = width + 'px';
                 img.src = dataUrl;
                 return document.execCommand('insertHTML', false, img);
               };
@@ -1812,7 +1812,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.enableScrollOnRoot = function() {
-      this.scrollRoot.scrollTop = this.rootScrollOffset(+'px');
+      this.scrollRoot.scrollTop = this.rootScrollOffset;
       this.scrollRoot.style.overflow = '';
       return this.scrollRoot.style.position = '';
     };

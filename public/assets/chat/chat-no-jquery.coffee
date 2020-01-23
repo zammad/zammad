@@ -558,7 +558,7 @@ do(window) ->
             result = dataUrl
             img = new Image()
             img.style.width = '100%'
-            img.style.maxWidth = width +'px'
+            img.style.maxWidth = width + 'px'
             img.src = result
 
             if document.caretPositionFromPoint
@@ -606,7 +606,7 @@ do(window) ->
 
               img = new Image()
               img.style.width = '100%'
-              img.style.maxWidth = width +'px'
+              img.style.maxWidth = width + 'px'
               img.src = dataUrl
               document.execCommand('insertHTML', false, img)
 
@@ -1311,7 +1311,7 @@ do(window) ->
       @scrollRoot.style.position = 'fixed'
 
     enableScrollOnRoot: ->
-      @scrollRoot.scrollTop = @rootScrollOffset +'px'
+      @scrollRoot.scrollTop = @rootScrollOffset
       @scrollRoot.style.overflow = ''
       @scrollRoot.style.position = ''
 
