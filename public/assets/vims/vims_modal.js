@@ -115,7 +115,7 @@
     block: function() {
       this.$elm.trigger($.vims_modal.BEFORE_BLOCK, [this._ctx()]);
       this.$body.css('overflow','hidden');
-      this.$blocker = $('<div class="' + this.options.blockerClass + ' vims-blocker current"></div>').appendTo(this.$body);
+      this.$blocker = $('<div class="' + this.options.blockerClass + ' modal modal--local current"></div>').appendTo(this.$body);
       selectCurrent();
       if(this.options.doFade) {
         this.$blocker.css('opacity',0).animate({opacity: 1}, this.options.fadeDuration);
