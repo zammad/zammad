@@ -52,7 +52,8 @@ class DelegateModal {
         }
 		$('#vimsDelegateModal').vims_modal({
             showClose: false,
-            blockerClass: "vims-blocker-light"
+            modalClass: "vims-hidden",
+            blockerClass: "vims-blocker-light"            
           });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
