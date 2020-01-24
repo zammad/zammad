@@ -21,7 +21,7 @@ class DelegateModal {
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
         if ($('#vimsDelegateModal').length == 0) {
             $('#vims').append(`  
-                  <div id="vimsDelegateModal" class="vims-modal modal-dialog">
+                  <div id="vimsDelegateModal" class="vims-hidden modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                           <a href="#" rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
@@ -51,7 +51,8 @@ class DelegateModal {
               `);
         }
 		$('#vimsDelegateModal').vims_modal({
-            showClose: false
+            showClose: false,
+            blockerClass: "vims-blocker-light"
           });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
