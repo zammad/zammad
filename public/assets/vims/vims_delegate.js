@@ -23,8 +23,8 @@ class DelegateModal {
             $('#vims').append(`  
                   <div id="vimsDelegateModal" class="vims-modal modal-dialog">
                     <div class="modal-content">
-                        <a href="#" rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
                         <div class="modal-header">
+                          <a href="#" rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
                           <h1 class="modal-title">Delegate</h1>
                         </div>
                           <div class="modal-body">
