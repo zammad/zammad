@@ -144,9 +144,9 @@
       }
       this.$elm.addClass(this.options.modalClass).appendTo(this.$blocker);
       if(this.options.doFade) {
-        this.$elm.css({opacity: 0, display: 'inline-block'}).animate({opacity: 1}, this.options.fadeDuration);
+        this.$elm.css({opacity: 0, display: 'block'}).animate({opacity: 1}, this.options.fadeDuration);
       } else {
-        this.$elm.css('display', 'inline-block');
+        this.$elm.css('display', 'block');
       }
       this.$elm.trigger($.vims_modal.OPEN, [this._ctx()]);
     },
