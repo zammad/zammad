@@ -9,23 +9,46 @@ class DelegateModal {
 	}
 }
   
-  DelegateModal.html = `  
-	  <div id="vimsDelegateModal" class="vims-modal">
-	    <h1 class="vims-modal-title">Delegate</h1>
-		  <p>Are you sure you want to delegate this incident?</p>
-		  <div class="vims-modal-footer>
-			  <a href="#" rel="vims-modal:close" class="vims-modal-btn"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
-			  &nbsp;
-			  <input class="vims-btn-success" type="button" value="Ok" onclick="Delegate()"/>
-		  </div>
-	  </div>  
-  `;
-  
 
   function SendDelegation(){
 	  let ticketId = document.URL.substr(document.URL.lastIndexOf('/') + 1);
 	  $.get(GetOrchestratorUrl() + '/vo-api/VimsOrganizationAzureDevOpsSettings', { vimsid: ticketId }, function(resp){
-		$('#vimsDelegateModal').vims_modal();		
+        if ($('#vimsDelegateModal').length == 0) {
+            $('#vims').append(`  
+                  <div id="vimsDelegateModal" class="vims-hidden modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <a rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
+                          <h1 class="modal-title">Delegate</h1>
+                        </div>
+                          <div class="modal-body">
+                            New Backlog Item will be created for this incident at the connected Azure DevOps project.
+                            <br />
+                            Backlog Item details:
+                            <ul>
+                                <li>Backlog Item Name: ` + resp.backlogItemName + `</li>
+                                <li>Organization: ` + resp.organization + `</li>
+                                <li>Project: ` + resp.project + `</li>
+                                <li>Area: ` + resp.area + `</li>
+                            </ul>
+                          </div>
+                          <div class="modal-footer">
+                              <div class="modal-leftFooter">
+                                <a rel="vims-modal:close" class="btn btn--subtle btn--text align-left">Cancel & Go Back</a>
+                              </div>
+                              <div class="modal-rightFooter">
+                                <input class="btn btn--success align-right" type="button" value="Ok" onclick="Delegate()"/>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+              `);
+        }
+		$('#vimsDelegateModal').vims_modal({
+            showClose: false,
+            modalClass: "vims-hidden",
+            blockerClass: "vims-blocker-light"            
+          });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
 			new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	

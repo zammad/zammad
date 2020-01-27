@@ -115,7 +115,7 @@
     block: function() {
       this.$elm.trigger($.vims_modal.BEFORE_BLOCK, [this._ctx()]);
       this.$body.css('overflow','hidden');
-      this.$blocker = $('<div class="' + this.options.blockerClass + ' vims-blocker current"></div>').appendTo(this.$body);
+      this.$blocker = $('<div class="' + this.options.blockerClass + ' modal modal--local current"></div>').appendTo(this.$body);
       selectCurrent();
       if(this.options.doFade) {
         this.$blocker.css('opacity',0).animate({opacity: 1}, this.options.fadeDuration);
@@ -144,9 +144,9 @@
       }
       this.$elm.addClass(this.options.modalClass).appendTo(this.$blocker);
       if(this.options.doFade) {
-        this.$elm.css({opacity: 0, display: 'inline-block'}).animate({opacity: 1}, this.options.fadeDuration);
+        this.$elm.css({opacity: 0, display: 'block'}).animate({opacity: 1}, this.options.fadeDuration);
       } else {
-        this.$elm.css('display', 'inline-block');
+        this.$elm.css('display', 'block');
       }
       this.$elm.trigger($.vims_modal.OPEN, [this._ctx()]);
     },
@@ -236,7 +236,9 @@
   };
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
-  $(document).on('click.vims-modal', 'a[rel~="vims-modal:close"]', $.vims_modal.close);
+  $(document).on('click.vims-modal', 'a[rel~="vims-modal:close"]', function(event) {
+    $.vims_modal.close();
+  });
   $(document).on('click.vims-modal', 'a[rel~="vims-modal:open"]', function(event) {
     event.preventDefault();
     $(this).vims_modal();

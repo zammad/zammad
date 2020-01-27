@@ -32,17 +32,5 @@
         }
         console.log("menu found");
         menu.append('<li onclick="SendDelegation()"><a id="vimsDelegateLi" role="menuitem" tabindex="-1">Delegate</a></li>');
-
-		try {
-			if(DelegateModal){
-			  if($('#vimsDelegateModal').length == 0){
-				  $('#vims').append(DelegateModal.html);
-			  }	
-			}
-		} catch (e) {
-			if (e instanceof ReferenceError) {
-				console.log("Looking for DelegateModal");
-			}
-		}
 	}	
 })();
