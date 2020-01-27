@@ -6,9 +6,9 @@ class DelegatedCustomerOverview < ActiveRecord::Migration[5.1]
         overview_role = Role.find_by(name: 'Customer')
 
         Overview.create_or_update(
-            name:      'My delegated Tickets',
+            name:      'My delegated',
             link:      'my_delegated_tickets',
-            prio:      1090,
+            prio:      1300,
             role_ids:  [overview_role.id],
             condition: {
               'ticket.state_id' => {
