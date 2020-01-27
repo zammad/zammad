@@ -55,9 +55,6 @@ class DelegateModal {
             return;
         }
 		new AlertModal().show(data.responseText);
-	  })
-	  .success(function(data){
-		  Delegate();
 	  });
   }
 
