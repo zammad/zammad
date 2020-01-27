@@ -51,7 +51,7 @@ class DelegateModal {
           });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
-			new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	
+			new AlertModal().show('Delegation settings are missing. Please, set configuration for Azure DevOps connector in your organization settings and try again.');	
             return;
         }
 		new AlertModal().show(data.responseText);
@@ -73,9 +73,22 @@ class DelegateModal {
   
   class AlertModal {	  
 	  show(text){
-		  $('#vims').append('<div id="vims-alertModal" class="vims-modal vims-alert-modal"><span id="vims-alertModal-text"></span></div>');
+		  $('#vims').append(`<div id="vims-alertModal" class="modal-dialog vims-hidden">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
+                                        <h1 class="modal-title">Warning</h1>
+                                    </div>
+                                    <div id="vims-alertModal-text" class="modal-body"></div>
+                                    <div class="modal-footer"></div>
+                                </div>
+                            </div>`);
 		  $('#vims-alertModal-text').html(text);
-		  $('#vims-alertModal').vims_modal();		
+		  $('#vims-alertModal').vims_modal({
+            showClose: false,
+            modalClass: "",
+            blockerClass: "vims-blocker-light"            
+          });		
 		  $('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
 			  $('#vims-alertModal').remove();
 		  });
