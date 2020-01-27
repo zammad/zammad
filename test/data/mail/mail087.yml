@@ -1,0 +1,24 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Test test@example.com
+from_email: Test test@example.com
+from_display_name: Test test@example.com
+to: support@example.com
+subject: Failed Mail
+body: no visible content
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: !binary |-
+    JVBERi0xLjEgCiXi48/TCjEgMCBvYmoKPDwgCi9UeXBlIC9DYXRhbG9nIAovUGFnZXMgMyAwIFIgNjYzMzQ4NzM+XQo+PgpzdGFydHhyZWYKNDM4MjAzCiUlRU9GCg==
+  filename: fax_1234.pdf
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: application/pdf; name=fax_+491234.pdf
+    Mime-Type: application/pdf
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "Sehr geehrter Kunde,\r\n\r\nSie haben soeben ein neues Fax von +491234, fuer
+    Rufnummer 012347 empfangen.\r\n\r\nEmpfangszeit: Thursday, January 23 2020, at
+    03:39 PM\r\nAbsender: +491234\r\nEmpfaenger: 01234\r\n"
+  filename: file
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Charset: UTF-8

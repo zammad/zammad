@@ -722,7 +722,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # e. g. Content-Type: video/quicktime
-    if filename.blank?
+    if filename.blank? && (content_type = headers_store['Content-Type'])
       map = {
         'message/delivery-status': %w[txt delivery-status],
         'text/plain':              %w[txt document],
@@ -734,7 +734,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         'image/gif':               %w[gif image],
       }
       map.each do |type, ext|
-        next if !headers_store['Content-Type'].match?(/^#{Regexp.quote(type)}/i)
+        next if !content_type.match?(/^#{Regexp.quote(type)}/i)
 
         filename = if headers_store['Content-Description'].present?
                      "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')

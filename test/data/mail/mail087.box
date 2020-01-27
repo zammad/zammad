@@ -1,0 +1,27 @@
+To: support@example.com
+Subject: Failed Mail
+From: Test test@example.com
+Content-Type: multipart/mixed; boundary=earendil
+Message-Id: 20200123143934.05D7EE792E@example.com
+Date: Thu, 23 Jan 2020 15:39:33 +0100 (CET)
+MIME-Version: 1.0
+
+--earendil
+Content-Disposition: attachment; filename=fax_1234.pdf
+Content-Type: application/pdf; name=fax_+491234.pdf
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjEgCiXi48/TCjEgMCBvYmoKPDwgCi9UeXBlIC9DYXRhbG9nIAovUGFnZXMgMyAwIFIg
+NjYzMzQ4NzM+XQo+PgpzdGFydHhyZWYKNDM4MjAzCiUlRU9GCg==
+
+--earendil
+Content-Transfer-Encoding: quoted-printable
+
+Sehr geehrter Kunde,
+
+Sie haben soeben ein neues Fax von +491234, fuer Rufnummer 01234=
+7 empfangen.
+
+Empfangszeit: Thursday, January 23 2020, at 03:39 PM
+Absender: +491234
+Empfaenger: 01234
