@@ -4,14 +4,8 @@ class DelegateModal {
 		$("a[rel='vims-modal:close']")[0].click();
 		let url = GetOrchestratorUrl() + '/vo-api/azuredevops';
 		$.post( url, { vimsid: id }, function(data){
-			//DelegateModal.delegateIncident();		
+				
 		});
-	}
-	
-	static delegateIncident(){
-		var stateDd = $('[name="vims_status"]');
-		stateDd.val('delegated');
-		stateDd.change();
 	}
 }
   
