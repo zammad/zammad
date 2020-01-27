@@ -51,7 +51,7 @@ class DelegateModal {
           });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
-			new AlertModal().show('Delegation settings are missing. Please, set configuration for Azure DevOps connector in your organization settings and try again.');	
+			new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	
             return;
         }
 		new AlertModal().show(data.responseText);
