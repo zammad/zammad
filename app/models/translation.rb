@@ -237,14 +237,15 @@ or
       end
     end
 
-    record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pluck(:target).first
-    return timestamp.to_s if !record
-
     begin
       timestamp = timestamp.in_time_zone(timezone)
     rescue
       return timestamp.to_s
     end
+
+    record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pluck(:target).first
+    return timestamp.to_s if !record
+
     record.sub!('dd', format('%02d', timestamp.day))
     record.sub!('d', timestamp.day.to_s)
     record.sub!('mm', format('%02d', timestamp.month))

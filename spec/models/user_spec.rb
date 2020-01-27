@@ -647,10 +647,20 @@ RSpec.describe User, type: :model do
       context 'with no #preferences[:locale]' do
         let(:preferences) { {} }
 
-        before { Setting.set('locale_default', 'foo') }
+        context 'with default locale' do
+          before { Setting.set('locale_default', 'foo') }
 
-        it 'returns the system-wide default locale' do
-          expect(user.locale).to eq('foo')
+          it 'returns the system-wide default locale' do
+            expect(user.locale).to eq('foo')
+          end
+        end
+
+        context 'without default locale' do
+          before { Setting.set('locale_default', nil) }
+
+          it 'returns en-us' do
+            expect(user.locale).to eq('en-us')
+          end
         end
       end
 

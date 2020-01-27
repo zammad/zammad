@@ -5,7 +5,7 @@ class ExcelSheet
     @header          = header
     @records         = records
     @timezone        = timezone.presence || Setting.get('timezone_default')
-    @locale          = locale || 'en-en'
+    @locale          = locale || Locale.default
     @tempfile        = Tempfile.new('excel-export.xls')
     @workbook        = WriteExcel.new(@tempfile)
     @worksheet       = @workbook.add_worksheet

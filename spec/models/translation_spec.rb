@@ -38,11 +38,11 @@ RSpec.describe Translation do
     end
 
     it 'not_existing with timestamp as string' do
-      expect(described_class.timestamp('not_existing', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('2018-10-10 10:00:00 UTC')
+      expect(described_class.timestamp('not_existing', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('2018-10-10 12:00:00 +0200')
     end
 
     it 'not_existing with time object' do
-      expect(described_class.timestamp('not_existing', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('2018-10-10 10:00:00 UTC')
+      expect(described_class.timestamp('not_existing', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('2018-10-10 12:00:00 +0200')
     end
 
     it 'not_existing with invalid timestamp string' do

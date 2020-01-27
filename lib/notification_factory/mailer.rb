@@ -295,7 +295,7 @@ returns
     end
 
     template = NotificationFactory.template_read(
-      locale:   data[:locale] || Setting.get('locale_default') || 'en-us',
+      locale:   data[:locale] || Locale.default,
       template: data[:template],
       format:   data[:format] || 'html',
       type:     'mailer',

@@ -76,7 +76,7 @@ class CalendarSubscriptions::Tickets
       condition:    condition,
     )
 
-    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale       = @user.locale
     translated_ticket = Translation.translate(user_locale, 'ticket')
 
     events_data = []
@@ -126,7 +126,7 @@ class CalendarSubscriptions::Tickets
       condition:    condition,
     )
 
-    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale       = @user.locale
     translated_ticket = Translation.translate(user_locale, 'ticket')
     customer          = Translation.translate(user_locale, 'customer')
 
@@ -183,7 +183,7 @@ class CalendarSubscriptions::Tickets
       condition:    condition,
     )
 
-    user_locale                  = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale                  = @user.locale
     translated_ticket_escalation = Translation.translate(user_locale, 'ticket escalation')
     customer                     = Translation.translate(user_locale, 'customer')
 

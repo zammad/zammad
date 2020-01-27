@@ -916,9 +916,9 @@ try to find correct name
     firstname.blank? && lastname.blank?
   end
 
-  # get locale of user or system if user's own is not set
+  # get locale identifier of user or system if user's own is not set
   def locale
-    preferences.fetch(:locale) { Setting.get('locale_default') }
+    preferences.fetch(:locale) { Locale.default }
   end
 
   private

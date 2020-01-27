@@ -119,6 +119,14 @@ all:
     result.data
   end
 
+  #  Default system locale
+  #
+  #  @example
+  #    Locale.default
+  def self.default
+    Setting.get('locale_default') || 'en-us'
+  end
+
   private_class_method def self.to_database(data)
     ActiveRecord::Base.transaction do
       data.each do |locale|

@@ -1462,7 +1462,6 @@ result
     # get subject
     subject = NotificationFactory::Mailer.template(
       templateInline: value['subject'],
-      locale:         'en-en',
       objects:        objects,
       quote:          false,
     )
@@ -1470,7 +1469,6 @@ result
 
     body = NotificationFactory::Mailer.template(
       templateInline: value['body'],
-      locale:         'en-en',
       objects:        objects,
       quote:          true,
     )
@@ -1561,8 +1559,6 @@ result
     objects = build_notification_template_objects(article)
     body = NotificationFactory::Renderer.new(
       objects:  objects,
-      locale:   'en-en',
-      timezone: Setting.get('timezone_default'),
       template: value['body'],
       escape:   false
     ).render.html2text.tr(' ', ' ') # convert non-breaking space to simple space

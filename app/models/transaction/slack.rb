@@ -86,8 +86,8 @@ class Transaction::Slack
 
     result = NotificationFactory::Slack.template(
       template: template,
-      locale:   user[:preferences][:locale] || Setting.get('locale_default'),
-      timezone: user[:preferences][:timezone] || Setting.get('timezone_default'),
+      locale:   user.locale,
+      timezone: Setting.get('timezone_default'),
       objects:  {
         ticket:       ticket,
         article:      article,
