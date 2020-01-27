@@ -70,9 +70,22 @@ class DelegateModal {
   
   class AlertModal {	  
 	  show(text){
-		  $('#vims').append('<div id="vims-alertModal" class="vims-modal vims-alert-modal"><span id="vims-alertModal-text"></span></div>');
+		  $('#vims').append(`<div id="vims-alertModal" class="modal-dialog vims-hidden">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
+                                        <h1 class="modal-title">Warning</h1>
+                                    </div>
+                                    <div id="vims-alertModal-text" class="modal-body"></div>
+                                    <div class="modal-footer"></div>
+                                </div>
+                            </div>`);
 		  $('#vims-alertModal-text').html(text);
-		  $('#vims-alertModal').vims_modal();		
+		  $('#vims-alertModal').vims_modal({
+            showClose: false,
+            modalClass: "",
+            blockerClass: "vims-blocker-light"            
+          });		
 		  $('#vims-alertModal').on($.vims_modal.AFTER_CLOSE, function(event, modal){
 			  $('#vims-alertModal').remove();
 		  });
