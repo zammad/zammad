@@ -1,4 +1,4 @@
-class DelegatedOverviews < ActiveRecord::Migration[5.1]
+class DelegatedCustomerOverview < ActiveRecord::Migration[5.1]
     def up
         
         return if !Setting.find_by(name: 'system_init_done')
