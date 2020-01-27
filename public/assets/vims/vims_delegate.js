@@ -24,7 +24,7 @@ class DelegateModal {
                   <div id="vimsDelegateModal" class="vims-hidden modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                          <a href="#" rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
+                          <a rel="vims-modal:close" class="modal-close"><svg class="icon icon-diagonal-cross "><use xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></a>
                           <h1 class="modal-title">Delegate</h1>
                         </div>
                           <div class="modal-body">
@@ -40,7 +40,7 @@ class DelegateModal {
                           </div>
                           <div class="modal-footer">
                               <div class="modal-leftFooter">
-                                <a href="#" rel="vims-modal:close" class="btn btn--subtle btn--text align-left">Cancel & Go Back</a>
+                                <a rel="vims-modal:close" class="btn btn--subtle btn--text align-left">Cancel & Go Back</a>
                               </div>
                               <div class="modal-rightFooter">
                                 <input class="btn btn--success align-right" type="button" value="Ok" onclick="Delegate()"/>

@@ -236,7 +236,9 @@
   };
 
   // Automatically bind links with rel="modal:close" to, well, close the modal.
-  $(document).on('click.vims-modal', 'a[rel~="vims-modal:close"]', $.vims_modal.close);
+  $(document).on('click.vims-modal', 'a[rel~="vims-modal:close"]', function(event) {
+    $.vims_modal.close();
+  });
   $(document).on('click.vims-modal', 'a[rel~="vims-modal:open"]', function(event) {
     event.preventDefault();
     $(this).vims_modal();
