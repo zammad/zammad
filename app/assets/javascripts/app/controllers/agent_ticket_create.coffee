@@ -231,6 +231,7 @@ class App.TicketCreate extends App.Controller
         # convert non text/html from text 2 html
         if a.content_type.match(/\/html/)
           t.body = a.body
+          t.body = App.Utils.htmlImage2DataUrl(t.body)
         else
           t.body  = App.Utils.text2html(a.body)
 
