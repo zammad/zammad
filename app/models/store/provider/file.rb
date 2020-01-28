@@ -19,7 +19,7 @@ class Store::Provider::File
 
     # write file to file system
     if !File.exist?(location)
-      Rails.logger.debug { "storge write '#{location}' (#{permission})" }
+      Rails.logger.debug { "storage write '#{location}' (#{permission})" }
       file = File.new(location, 'wb')
       file.write(data)
       file.close
@@ -59,7 +59,7 @@ class Store::Provider::File
   def self.delete(sha)
     location = get_location(sha)
     if File.exist?(location)
-      Rails.logger.info "storge remove '#{location}'"
+      Rails.logger.info "storage remove '#{location}'"
       File.delete(location)
     end
 
