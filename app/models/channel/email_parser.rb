@@ -574,38 +574,48 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   def collect_attachments(mail)
     attachments = []
 
-    # Add non-plaintext body as an attachment
-    if mail.html_part&.body.present? ||
-       (!mail.multipart? && mail.mime_type.present? && mail.mime_type != 'text/plain')
-      message = mail.html_part || mail
-
-      filename = message.filename.presence ||
-                 (message.mime_type.eql?('text/html') ? 'message.html' : '-no name-')
-
-      headers_store = {
-        'content-alternative' => true,
-        'original-format'     => message.mime_type.eql?('text/html'),
-        'Mime-Type'           => message.mime_type,
-        'Charset'             => message.charset,
-      }.reject { |_, v| v.blank? }
-
-      attachments.push({ data:        body_text(message),
-                         filename:    filename,
-                         preferences: headers_store })
-    end
+    attachments.push(*get_nonplaintext_body_as_attachment(mail))
 
     mail.parts.each do |part|
-
-      new_attachments = get_attachments(part, attachments, mail).flatten.compact
-      attachments.push(*new_attachments)
-    rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
-      raise e if (fail_count ||= 0).positive?
-
-      (fail_count += 1) && retry
-
+      attachments.push(*gracefully_get_attachments(part, attachments, mail))
     end
 
     attachments
+  end
+
+  def get_nonplaintext_body_as_attachment(mail)
+    if !(mail.html_part&.body.present? || (!mail.multipart? && mail.mime_type.present? && mail.mime_type != 'text/plain'))
+      return
+    end
+
+    message = mail.html_part || mail
+
+    if !mail.mime_type.starts_with?('text/') && mail.html_part.blank?
+      return gracefully_get_attachments(message, [], mail)
+    end
+
+    filename = message.filename.presence || (message.mime_type.eql?('text/html') ? 'message.html' : '-no name-')
+
+    headers_store = {
+      'content-alternative' => true,
+      'original-format'     => message.mime_type.eql?('text/html'),
+      'Mime-Type'           => message.mime_type,
+      'Charset'             => message.charset,
+    }.reject { |_, v| v.blank? }
+
+    [{
+      data:        body_text(message),
+      filename:    filename,
+      preferences: headers_store
+    }]
+  end
+
+  def gracefully_get_attachments(part, attachments, mail)
+    get_attachments(part, attachments, mail).flatten.compact
+  rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
+    raise e if (fail_count ||= 0).positive?
+
+    (fail_count += 1) && retry
   end
 
   def get_attachments(file, attachments, mail)
