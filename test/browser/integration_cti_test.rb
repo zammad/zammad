@@ -61,7 +61,7 @@ class IntegrationCtiTest < TestCase
 
     watch_for_disappear(
       css:     '.js-phoneMenuItem .counter',
-      timeout: 6,
+      timeout: 15,
     )
 
     click(css: 'a[href="#manage"]')
