@@ -25,7 +25,8 @@ class HIdeExternalWiId < ActiveRecord::Migration[5.1]
             edit: {
               '-all-' => {
                 shown: false,
-              },    
+              },
+            }    
         },
         to_create:   false,
         to_migrate:  false,

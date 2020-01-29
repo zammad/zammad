@@ -427,7 +427,8 @@ ObjectManager::Attribute.add(
     edit: {
       '-all-' => {
         shown: false,
-      },    
+      },
+    }    
   },
   to_create:   false,
   to_migrate:  false,
