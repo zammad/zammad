@@ -1,4 +1,4 @@
-class HIdeExternalWiId < ActiveRecord::Migration[5.1]
+class HideExternalWiId < ActiveRecord::Migration[5.1]
     def up
   
       # return if it's a new setup
