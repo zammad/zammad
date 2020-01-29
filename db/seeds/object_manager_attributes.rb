@@ -425,13 +425,10 @@ ObjectManager::Attribute.add(
   screens:     {
     create_middle: {},
     edit: {
-     'ticket.customer' => {
-        shown: true,                           
+      '-all-' => {
+        shown: false,
       },
-       'ticket.agent' => {
-         shown: true,
-         },
-     },    
+    }    
   },
   to_create:   false,
   to_migrate:  false,
