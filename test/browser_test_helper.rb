@@ -2891,6 +2891,12 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(params[:value])
     sleep 2
+
+    watch_for_disappear(
+      browser: instance,
+      css:     '.navigation .search.loading'
+    )
+
     #instance.find_element(partial_link_text: params[:value] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-name\").first().click()")
     watch_for(
