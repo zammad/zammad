@@ -100,7 +100,7 @@ class TicketsController < ApplicationController
       email_address = $1
       email_address_validation = EmailAddressValidation.new(email_address)
       if !email_address_validation.valid_format?
-        render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
+        render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
         return
       end
       local_customer = User.find_by(email: email_address.downcase)

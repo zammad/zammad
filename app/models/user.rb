@@ -962,7 +962,7 @@ try to find correct name
 
     email_address_validation = EmailAddressValidation.new(email)
     if !email_address_validation.valid_format?
-      raise Exceptions::UnprocessableEntity, 'Invalid email'
+      raise Exceptions::UnprocessableEntity, "Invalid email '#{email}'"
     end
 
     true

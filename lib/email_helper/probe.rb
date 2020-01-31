@@ -56,7 +56,7 @@ returns on fail
         return {
           result:   'invalid',
           messages: {
-            email: 'Invalid email.'
+            email: "Invalid email '#{params[:email]}'."
           },
         }
       end
