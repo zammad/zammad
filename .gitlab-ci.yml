@@ -350,7 +350,7 @@ browser:build:
       alias: postgresql
     - name: registry.znuny.com/docker/zammad-elasticsearch:stable
       alias: elasticsearch
-    - name: docker.io/elgalu/selenium:3.14.0-p17
+    - name: docker.io/elgalu/selenium:3.141.59-p32
       alias: selenium
     - name: registry.znuny.com/docker/docker-imap-devel:latest
       alias: mail
@@ -549,7 +549,7 @@ test:browser:core:chrome_6:
   services:
     - name: registry.znuny.com/docker/zammad-postgresql:latest
       alias: postgresql
-    - name: docker.io/elgalu/selenium:3.14.0-p17
+    - name: docker.io/elgalu/selenium:3.141.59-p32
       alias: selenium
 
 .test_browser_integration_template: &test_browser_integration_definition

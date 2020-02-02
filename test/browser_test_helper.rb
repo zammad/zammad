@@ -353,9 +353,25 @@ class TestCase < ActiveSupport::TestCase
     end
     return if !clues
 
-    instance.execute_script("$('.js-modal--clue .js-close').click()")
+    checks   = 25
+    previous = clues.location
+    (checks + 1).times do |check|
+      raise "Element still moving after #{checks} checks" if check == checks
+
+      current = clues.location
+      sleep 0.2 if ENV['CI']
+      break if previous == current
+
+      previous = current
+    end
+    clues.click
+
+    watch_for_disappear(
+      browser: instance,
+      css:     'modal-backdrop js-backdrop',
+    )
+
     assert(true, 'clues closed')
-    sleep 1
   end
 
 =begin
@@ -752,11 +768,18 @@ class TestCase < ActiveSupport::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements(css: params[:css])[0]
-    if !params[:no_click]
-      element.click
+    begin
+      retries ||= 0
+      element = instance.find_elements(css: params[:css])[0]
+      if !params[:no_click]
+        element.click
+      end
+      element.clear
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      sleep retries
+      retries += 1
+      retry if retries < 3
     end
-    element.clear
 
     begin
       if !params[:slow]
@@ -1596,8 +1619,13 @@ wait untill text in selector disabppears
         break
       end
     rescue
-      # try again
+      # Firefox doesn't move the mouse if it's already at the position.
+      # Therefore the hover event is not triggered in all cases.
+      # That's why we move the mouse a bit as a workaround and try again.
+      # The last working selenium version was: https://github.com/elgalu/docker-selenium/releases/tag/3.14.0-p17
+      instance.action.move_by(100, 100).perform
 
+      # try again
     end
     assert(true, 'all tasks closed')
   end

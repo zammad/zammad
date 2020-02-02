@@ -37,6 +37,10 @@ class MaintenanceLoginMessageTest < TestCase
       browser: browser2,
       url:     browser_url,
     )
+    watch_for(
+      browser: browser2,
+      css:     '.login',
+    )
     exists_not(
       browser: browser2,
       css:     '.js-maintenanceLogin',
