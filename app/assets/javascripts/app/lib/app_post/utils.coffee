@@ -823,7 +823,7 @@ class App.Utils
     tmp.find('blockquote').remove()
     text = tmp.text()
 
-    matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed', 'Enclosure', 'enclosure']
+    matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed', 'Enclosure', 'enclosure', 'Screenshot', 'screenshot']
     for word in matchwords
       # en
       attachmentTranslatedRegExp = new RegExp("\\W#{word}\\W", 'i')
