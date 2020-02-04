@@ -146,6 +146,7 @@ class App.Ticket extends App.Model
             pendtil.setMonth(pendtil.getMonth() + parseInt(content.value, 10))
           if content.range is 'year'
             pendtil.setYear(pendtil.getYear() + parseInt(content.value, 10))
+          pendtil.setSeconds(0)
           params.ticket[attributes[1]] = pendtil.toISOString()
 
         # apply user changes
