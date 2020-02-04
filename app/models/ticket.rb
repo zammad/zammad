@@ -888,6 +888,7 @@ perform changes on ticket
           next
         elsif value[:operator] == 'relative'
           pendtil = Time.zone.now
+          pendtil -= pendtil.sec.seconds
           val = value[:value].to_i
           if value[:range] == 'day'
             pendtil +=  val.days
