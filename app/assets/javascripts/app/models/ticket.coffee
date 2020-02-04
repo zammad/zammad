@@ -147,6 +147,7 @@ class App.Ticket extends App.Model
           if content.range is 'year'
             pendtil.setYear(pendtil.getYear() + parseInt(content.value, 10))
           pendtil.setSeconds(0)
+          pendtil.setMilliseconds(0)
           params.ticket[attributes[1]] = pendtil.toISOString()
 
         # apply user changes
