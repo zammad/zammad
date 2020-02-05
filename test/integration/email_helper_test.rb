@@ -4,9 +4,9 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'a mx_records' do
 
-    domain = 'znuny.com'
+    domain = 'zammad.com'
     mx_domains = EmailHelper.mx_records(domain)
-    assert_equal('arber.znuny.com', mx_domains[0])
+    assert_equal('mx2.zammad.com', mx_domains[0])
 
   end
 
@@ -48,20 +48,20 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'provider_inbound_mx' do
 
-    email = 'linus@znuny.com'
+    email = 'linus@zammad.com'
     password = 'some_pw'
     user, domain = EmailHelper.parse_email(email)
     mx_domains = EmailHelper.mx_records(domain)
     map = EmailHelper.provider_inbound_mx(user, email, password, mx_domains)
 
     assert_equal('imap', map[0][:adapter])
-    assert_equal('arber.znuny.com', map[0][:options][:host])
+    assert_equal('mx2.zammad.com', map[0][:options][:host])
     assert_equal(993, map[0][:options][:port])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('imap', map[1][:adapter])
-    assert_equal('arber.znuny.com', map[1][:options][:host])
+    assert_equal('mx2.zammad.com', map[1][:options][:host])
     assert_equal(993, map[1][:options][:port])
     assert_equal(email, map[1][:options][:user])
     assert_equal(password, map[1][:options][:password])
@@ -70,19 +70,19 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'provider_inbound_guess' do
 
-    email = 'linus@znuny.com'
+    email = 'linus@zammad.com'
     password = 'some_pw'
     user, domain = EmailHelper.parse_email(email)
     map = EmailHelper.provider_inbound_guess(user, email, password, domain)
 
     assert_equal('imap', map[0][:adapter])
-    assert_equal('mail.znuny.com', map[0][:options][:host])
+    assert_equal('mail.zammad.com', map[0][:options][:host])
     assert_equal(993, map[0][:options][:port])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('imap', map[1][:adapter])
-    assert_equal('mail.znuny.com', map[1][:options][:host])
+    assert_equal('mail.zammad.com', map[1][:options][:host])
     assert_equal(993, map[1][:options][:port])
     assert_equal(email, map[1][:options][:user])
     assert_equal(password, map[1][:options][:password])
@@ -91,21 +91,21 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'provider_outbound_mx' do
 
-    email = 'linus@znuny.com'
+    email = 'linus@zammad.com'
     password = 'some_pw'
     user, domain = EmailHelper.parse_email(email)
     mx_domains = EmailHelper.mx_records(domain)
     map = EmailHelper.provider_outbound_mx(user, email, password, mx_domains)
 
     assert_equal('smtp', map[0][:adapter])
-    assert_equal('arber.znuny.com', map[0][:options][:host])
+    assert_equal('mx2.zammad.com', map[0][:options][:host])
     assert_equal(25, map[0][:options][:port])
     assert_equal(true, map[0][:options][:start_tls])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('smtp', map[1][:adapter])
-    assert_equal('arber.znuny.com', map[1][:options][:host])
+    assert_equal('mx2.zammad.com', map[1][:options][:host])
     assert_equal(25, map[1][:options][:port])
     assert_equal(true, map[1][:options][:start_tls])
     assert_equal(email, map[1][:options][:user])
@@ -115,20 +115,20 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'provider_outbound_guess' do
 
-    email = 'linus@znuny.com'
+    email = 'linus@zammad.com'
     password = 'some_pw'
     user, domain = EmailHelper.parse_email(email)
     map = EmailHelper.provider_outbound_guess(user, email, password, domain)
 
     assert_equal('smtp', map[0][:adapter])
-    assert_equal('mail.znuny.com', map[0][:options][:host])
+    assert_equal('mail.zammad.com', map[0][:options][:host])
     assert_equal(25, map[0][:options][:port])
     assert_equal(true, map[0][:options][:start_tls])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('smtp', map[1][:adapter])
-    assert_equal('mail.znuny.com', map[1][:options][:host])
+    assert_equal('mail.zammad.com', map[1][:options][:host])
     assert_equal(25, map[1][:options][:port])
     assert_equal(true, map[1][:options][:start_tls])
     assert_equal(email, map[1][:options][:user])
@@ -236,7 +236,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host:     'arber.znuny.com',
+        host:     'mx2.zammad.com',
         port:     993,
         ssl:      true,
         user:     'some@example.com',
@@ -245,23 +245,22 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Authentication failed!', result[:message_human])
-    assert_equal('arber.znuny.com', result[:settings][:options][:host])
+    assert_equal('mx2.zammad.com', result[:settings][:options][:host])
 
     # realtest - test I
     if !ENV['EMAILHELPER_MAILBOX_1']
-      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@zammad.com:somepass'"
     end
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host:     'arber.znuny.com',
+        host:     'mx2.zammad.com',
         port:     993,
         ssl:      true,
-        user:     user,
+        user:     mailbox_user,
         password: mailbox_password,
       }
     )
@@ -388,36 +387,33 @@ class EmailHelperTest < ActiveSupport::TestCase
       {
         adapter: 'smtp',
         options: {
-          host:      'arber.znuny.com',
-          port:      25,
-          start_tls: true,
-          user:      'some@example.com',
-          password:  'password',
+          host:     'mx2.zammad.com',
+          port:     587,
+          user:     'some@example.com',
+          password: 'password',
         }
       },
       'some@example.com',
     )
     assert_equal('invalid', result[:result])
     assert_equal('Authentication failed!', result[:message_human])
-    assert_equal('arber.znuny.com', result[:settings][:options][:host])
+    assert_equal('mx2.zammad.com', result[:settings][:options][:host])
 
     # realtest - test I
     if !ENV['EMAILHELPER_MAILBOX_1']
-      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@zammad.com:somepass'"
     end
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Probe.outbound(
       {
         adapter: 'smtp',
         options: {
-          host:      'arber.znuny.com',
-          port:      25,
-          start_tls: true,
-          user:      user,
-          password:  mailbox_password,
+          host:     'mx2.zammad.com',
+          port:     587,
+          user:     mailbox_user,
+          password: mailbox_password,
         }
       },
       mailbox_user,
@@ -436,7 +432,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
-      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@zammad.com:somepass'"
     end
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
@@ -447,8 +443,8 @@ class EmailHelperTest < ActiveSupport::TestCase
       password: mailbox_password,
     )
     assert_equal('ok', result[:result])
-    assert_equal('arber.znuny.com', result[:setting][:inbound][:options][:host])
-    assert_equal('arber.znuny.com', result[:setting][:outbound][:options][:host])
+    assert_equal('mx2.zammad.com', result[:setting][:inbound][:options][:host])
+    assert_equal('mx2.zammad.com', result[:setting][:outbound][:options][:host])
 
     # realtest - test II, gmail with only pop3
     if !ENV['EMAILHELPER_MAILBOX_2']
@@ -473,31 +469,29 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
-      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@zammad.com:somepass'"
     end
 
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
-    user, _domain = EmailHelper.parse_email(mailbox_user)
     result = EmailHelper::Verify.email(
       inbound:  {
         adapter: 'imap',
         options: {
-          host:     'arber.znuny.com',
+          host:     'mx2.zammad.com',
           port:     993,
           ssl:      true,
-          user:     user,
+          user:     mailbox_user,
           password: mailbox_password,
         },
       },
       outbound: {
         adapter: 'smtp',
         options: {
-          host:      'arber.znuny.com',
-          port:      25,
-          start_tls: true,
-          user:      user,
-          password:  mailbox_password,
+          host:     'mx2.zammad.com',
+          port:     587,
+          user:     mailbox_user,
+          password: mailbox_password,
         },
       },
       sender:   mailbox_user,
