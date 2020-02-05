@@ -33,7 +33,7 @@ https://zammad.org/screenshots
 
 ## REST API
 
-https://docs.zammad.org/en/latest/api-intro.html
+https://docs.zammad.org/en/latest/api/intro.html
 
 
 ## Contributing
