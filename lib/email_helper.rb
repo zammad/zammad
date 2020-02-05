@@ -1,4 +1,4 @@
-module EmailHelper
+class EmailHelper
 
 =begin
 
@@ -452,6 +452,24 @@ returns
             start_tls: true,
             user:      email,
             password:  password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:     domain,
+            port:     587,
+            user:     user,
+            password: password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:     domain,
+            port:     587,
+            user:     email,
+            password: password,
           },
         },
       ]

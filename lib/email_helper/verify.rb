@@ -1,4 +1,4 @@
-module EmailHelper
+class EmailHelper
   class Verify
 
 =begin
