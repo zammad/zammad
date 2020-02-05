@@ -22,9 +22,8 @@ class DelegateModal {
                           <h1 class="modal-title">Delegate</h1>
                         </div>
                           <div class="modal-body">
-                            New Backlog Item will be created for this incident at the connected Azure DevOps project.
+                            The new product backlog item will be created for the following Azure DevOps project:
                             <br />
-                            Backlog Item details:
                             <ul>
                                 <li>Backlog Item Name: ` + resp.backlogItemName + `</li>
                                 <li>Organization: ` + resp.organization + `</li>
@@ -51,7 +50,7 @@ class DelegateModal {
           });		
 	  }).fail(function(data) {
         if(![400, 403, 404, 408, 500, 502, 503].includes(data.status)){
-			new AlertModal().show('Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	
+			new AlertModal().show('The Azure DevOps Connector API cannot be reached. Please check if Azure DevOps connector is deployed and configured <link to Azure DevOps AMP>');	
             return;
         }
 		new AlertModal().show(data.responseText);
