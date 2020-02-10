@@ -63,6 +63,35 @@ test("text2html", function() {
   result = App.Utils.text2html(source)
   equal(result, should, source)
 
+  source = "Some\nValue\n"
+  should = "<div>Some</div><div>Value</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
+
+  source = "Some\rValue\r"
+  should = "<div>Some</div><div>Value</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
+
+  source = "Some\n\rValue\n\r"
+  should = "<div>Some</div><div>Value</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
+
+  source = "Some\r\nValue\r\n"
+  should = "<div>Some</div><div>Value</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
+
+  source = "Some   Value 123"
+  should = "<div>Some &nbsp; Value 123</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
+
+  source = "Some\n   Value\n    123"
+  should = "<div>Some</div><div> &nbsp; Value</div><div> &nbsp; &nbsp;123</div>"
+  result = App.Utils.text2html(source)
+  equal(result, should, source)
 });
 
 // htmlStrip
@@ -3306,3 +3335,35 @@ test('App.Utils.joinUrlComponents()', function() {
   //   expect @joinUrlComponents() to filter them out of the results before joining the rest with slashes
   equal(App.Utils.joinUrlComponents('foo', undefined, 'bar', null, 'baz'), 'foo/bar/baz', 'with a list including null or undefined')
 });
+
+test('App.Utils.clipboardHtmlIsWithText()', function() {
+
+  // no content with text
+  equal(App.Utils.clipboardHtmlIsWithText('<div></div>'), false)
+  equal(App.Utils.clipboardHtmlIsWithText('<div> </div>'), false)
+  equal(App.Utils.clipboardHtmlIsWithText('<div><img src="test.jpg"/></div>'), false)
+  equal(App.Utils.clipboardHtmlIsWithText('<div><!-- some comment --></div>'), false)
+  equal(App.Utils.clipboardHtmlIsWithText('<div><!-- some comment --> </div>'), false)
+  equal(App.Utils.clipboardHtmlIsWithText("<div><!-- some comment --> \n </div>"), false)
+
+  // content with text
+  equal(App.Utils.clipboardHtmlIsWithText('test'), true)
+  equal(App.Utils.clipboardHtmlIsWithText('<div>test</div>'), true)
+  equal(App.Utils.clipboardHtmlIsWithText('<meta http-equiv="content-type" content="text/html; charset=utf-8">sometext'), true)
+});
+
+test('App.Utils.clipboardHtmlInsertPreperation()', function() {
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div></div>', {}), '')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div> </div>', {}), ' ')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><img src="test.jpg"/></div>', {}), '<img src="test.jpg">')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><!-- some comment --></div>', {}), '')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><!-- some comment --> </div>', {}), ' ')
+  equal(App.Utils.clipboardHtmlInsertPreperation("<div><!-- some comment --> \n </div>", {}), " \n ")
+  equal(App.Utils.clipboardHtmlInsertPreperation('test', {}), 'test')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div>test</div>', {}), 'test')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<meta http-equiv="content-type" content="text/html; charset=utf-8">sometext', {}), '<div>sometext</div>')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b> 123</div>', { mode: 'textonly' }), 'test 123')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b><br> 123</div>', { mode: 'textonly' }), 'test 123')
+  equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b><br> 123</div>', { mode: 'textonly', multiline: true }), 'test<br> 123')
+});
+

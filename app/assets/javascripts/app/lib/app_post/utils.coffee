@@ -73,6 +73,8 @@ class App.Utils
     ascii = @textCleanup(ascii)
     #ascii = @htmlEscape(ascii)
     ascii = @linkify(ascii)
+    ascii = ascii.replace(/(\n\r|\r\n|\r)/g, "\n")
+    ascii = ascii.replace(/  /g, ' &nbsp;')
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
@@ -1269,3 +1271,42 @@ class App.Utils
       .filter (elem) ->
         elem?
       .join '/'
+
+  @clipboardHtmlIsWithText: (html) ->
+    if !html
+      return false
+
+    parsedHTML = jQuery(jQuery.parseHTML(html))
+
+    if !parsedHTML || !parsedHTML.text
+      return false
+
+    if parsedHTML.text().trim().length is 0
+      return false
+
+    true
+
+  @clipboardHtmlInsertPreperation: (htmlRaw, options) ->
+    if options.mode is 'textonly'
+      if !options.multiline
+        html = App.Utils.htmlRemoveTags(htmlRaw)
+      else
+        html = App.Utils.htmlRemoveRichtext(htmlRaw)
+    else
+      html = App.Utils.htmlCleanup(htmlRaw)
+
+    htmlString = html.html()
+
+    if !htmlString && html && html.text && html.text()
+      htmlString = App.Utils.text2html(html.text())
+
+    # as fallback, get text from htmlRaw
+    if !htmlString || htmlString == ''
+      parsedHTML = jQuery(jQuery.parseHTML(htmlRaw))
+      if parsedHTML
+        text = parsedHTML.text().trim()
+
+      if text
+        htmlString = App.Utils.text2html(text)
+
+    htmlString
