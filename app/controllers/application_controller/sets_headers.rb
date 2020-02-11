@@ -3,7 +3,7 @@ module ApplicationController::SetsHeaders
 
   included do
     before_action :cors_preflight_check
-    after_action :set_access_control_headers
+    after_action :set_access_control_headers, :set_cache_control_headers
   end
 
   private
@@ -20,6 +20,15 @@ module ApplicationController::SetsHeaders
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, PATCH, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
     headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
+  end
+
+  def set_cache_control_headers
+
+    # by default http cache is disabled
+    # expires_now function only sets no-cache so we handle the headers by our own.
+    headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    headers['Pragma']        = 'no-cache'
+    headers['Expires']       = '-1'
   end
 
   # If this is a preflight OPTIONS request, then short-circuit the
