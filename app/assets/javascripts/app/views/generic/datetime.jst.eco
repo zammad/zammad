@@ -1,6 +1,6 @@
 <div class="controls controls--datetime" data-name="<%= @attribute.nameRaw %>">
-  <input type="hidden" value="<%= @attribute.value %>" name="<%= @attribute.name %>">
-  <input type="text" value="" class="form-control flex-shrink-horizontal js-datepicker <%= @attribute.class %>" data-item="date">
+  <input type="hidden" value="<%= @attribute.value %>" name="<%= @attribute.name %>" <% if @attribute.disabled: %> disabled<% end %>>
+  <input type="text" value="" class="form-control flex-shrink-horizontal js-datepicker <%= @attribute.class %>" data-item="date" <% if @attribute.disabled: %> disabled<% end %>>
   <div class="controls-label"><%- @T('at') %></div>
-  <input type="text" value="" class="form-control time js-timepicker <%= @attribute.class %>" data-item="time">
+  <input type="text" value="" class="form-control time js-timepicker <%= @attribute.class %>" data-item="time" <% if @attribute.disabled: %> disabled<% end %>>
 </div>

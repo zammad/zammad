@@ -1,7 +1,7 @@
 <div class="<%= @attribute.class %> radio radio--list">
 <% for row in @attribute.options: %>
   <label class="inline-label radio-replacement<%= ' is-disabled' if row.disabled %>">
-    <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %> <%= row.disabled %>>
+    <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %> <%= row.disabled %> <% if @attribute.disabled: %> disabled<% end %>>
     <%- @Icon('radio', 'icon-unchecked') %>
     <%- @Icon('radio-checked', 'icon-checked') %>
     <span class="label-text"><%- @T(row.name) %></span>

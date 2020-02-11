@@ -2025,6 +2025,17 @@ input.time.time--12 {
   background: none;
 }
 
+.richtext.form-control [contenteditable="false"] {
+    cursor: not-allowed;
+    opacity: 1;
+    background: hsl(210,17%,93%);
+    border-color: hsl(210,10%,85%);
+    &:focus,
+    &.focus {
+      border-color: hsl(200,71%,59%);
+    }
+}
+
 .richtext.form-control .attachments.attachments--list:not(:empty) {
   border-top: 1px solid rgba(0,0,0,.04);
   white-space: normal;

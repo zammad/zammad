@@ -1,5 +1,6 @@
 <div class="attachments"></div>
 <div class="article-attachment">
+  <% if !@attribute.disabled: %>
   <div class="attachmentPlaceholder">
     <span class="attachmentPlaceholder-inputHolder fileUpload">
       <% uid =  _.uniqueId('fileUpload_') %>
@@ -9,6 +10,7 @@
       </label>
     </span>
   </div>
+  <% end %>
   <div class="attachmentUpload hide">
     <div class="horizontal">
       <div class="u-highlight">
