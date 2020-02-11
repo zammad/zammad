@@ -31,7 +31,7 @@ returns
       if links.present?
         overview_filter[:link] = links
       end
-      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio, :name)
+      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio, :name)
       return overviews
     end
 
