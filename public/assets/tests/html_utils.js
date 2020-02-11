@@ -3306,3 +3306,9 @@ test('App.Utils.joinUrlComponents()', function() {
   //   expect @joinUrlComponents() to filter them out of the results before joining the rest with slashes
   equal(App.Utils.joinUrlComponents('foo', undefined, 'bar', null, 'baz'), 'foo/bar/baz', 'with a list including null or undefined')
 });
+
+test('App.Utils.signatureIdentifyByHtmlHelper()', function() {
+  result = App.Utils.signatureIdentifyByHtmlHelper("&lt;script&gt;alert('fish2');&lt;/script&gt;<blockquote></blockquote>")
+
+  equal(result, "&lt;script&gt;alert('fish2');&lt;/script&gt;<span class=\"js-signatureMarker\"></span><blockquote></blockquote>", 'signatureIdentifyByHtmlHelper does not reactivate alert')
+});

@@ -679,7 +679,8 @@ class App.Utils
     $('<div/>').html(message).contents().each (index, node) ->
       text = $(node).text()
       if node.nodeType == Node.TEXT_NODE
-        res.push text
+        # convert text back to HTML as it was before
+        res.push $('<div>').text(text).html()
         if text.trim().length
           contentNodes.push index
       else if node.nodeType == Node.ELEMENT_NODE
