@@ -3367,3 +3367,8 @@ test('App.Utils.clipboardHtmlInsertPreperation()', function() {
   equal(App.Utils.clipboardHtmlInsertPreperation('<div><b>test</b><br> 123</div>', { mode: 'textonly', multiline: true }), 'test<br> 123')
 });
 
+test('App.Utils.signatureIdentifyByHtmlHelper()', function() {
+  result = App.Utils.signatureIdentifyByHtmlHelper("&lt;script&gt;alert('fish2');&lt;/script&gt;<blockquote></blockquote>")
+
+  equal(result, "&lt;script&gt;alert('fish2');&lt;/script&gt;<span class=\"js-signatureMarker\"></span><blockquote></blockquote>", 'signatureIdentifyByHtmlHelper does not reactivate alert')
+});
