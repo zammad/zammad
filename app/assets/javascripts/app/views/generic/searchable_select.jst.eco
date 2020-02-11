@@ -7,6 +7,7 @@
     <%= @attribute.autofocus %>
     value="<%= @attribute.value %>"
     tabindex="-1"
+    <% if @attribute.disabled: %> disabled<% end %>
   >
   <input
     class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
@@ -14,6 +15,7 @@
     value="<%= @attribute.valueName %>"
     autocomplete="off"
     <%= @attribute.required %>
+    <% if @attribute.disabled: %> disabled<% end %>
    >
   <div class="searchableSelect-autocomplete">
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
