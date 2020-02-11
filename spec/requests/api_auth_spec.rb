@@ -39,6 +39,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
     end
@@ -57,6 +60,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
     end
@@ -75,6 +81,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
     end
@@ -104,6 +113,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
@@ -251,6 +263,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
@@ -286,6 +301,9 @@ RSpec.describe 'Api Auth', type: :request do
       Setting.set('api_token_access', true)
       get '/api/v1/tickets', params: {}, as: :json
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
@@ -370,6 +388,9 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
+      expect(response.header['Cache-Control']).to match(/no-cache, no-store/)
+      expect(response.header['Pragma']).to eq('no-cache')
+      expect(response.header['Expires']).to eq('-1')
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
