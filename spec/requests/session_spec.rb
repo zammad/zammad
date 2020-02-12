@@ -2,6 +2,33 @@ require 'rails_helper'
 
 RSpec.describe 'Sessions endpoints', type: :request do
 
+  describe 'GET /signshow' do
+
+    context 'user logged in' do
+
+      subject(:user) { create(:agent_user, password: password) }
+
+      let(:password) { SecureRandom.urlsafe_base64(20) }
+      let(:fingerprint) { SecureRandom.urlsafe_base64(40) }
+
+      before do
+        params = {
+          fingerprint: fingerprint,
+          username:    user.login,
+          password:    password
+        }
+        post '/api/v1/signin', params: params, as: :json
+      end
+
+      it 'leaks no sensitive data' do
+        params = { fingerprint: fingerprint }
+        get '/api/v1/signshow', params: params, as: :json
+
+        expect(json_response['session']).not_to include('password')
+      end
+    end
+  end
+
   describe 'GET /auth/sso (single sign-on)' do
     context 'with invalid user login' do
       let(:login) { User.pluck(:login).max.next }

@@ -236,9 +236,7 @@ returns
 
   def filter_attributes(attributes)
     # remove forbidden attributes
-    %w[password token tokens token_ids].each do |item|
-      attributes.delete(item)
-    end
+    attributes.except!('password', 'token', 'tokens', 'token_ids')
   end
 
 =begin
