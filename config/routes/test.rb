@@ -25,10 +25,6 @@ Zammad::Application.routes.draw do
   match '/tests_taskbar',                     to: 'tests#taskbar',                    via: :get
   match '/tests_text_module',                 to: 'tests#text_module',                via: :get
   match '/tests/wait/:sec',                   to: 'tests#wait',                       via: :get
-  match '/tests/unprocessable_entity',        to: 'tests#error_unprocessable_entity', via: :get
-  match '/tests/not_authorized',              to: 'tests#error_not_authorized',       via: :get
-  match '/tests/ar_not_found',                to: 'tests#error_ar_not_found',         via: :get
-  match '/tests/standard_error',              to: 'tests#error_standard_error',       via: :get
-  match '/tests/argument_error',              to: 'tests#error_argument_error',       via: :get
+  match '/tests/raised_exception',            to: 'tests#error_raised_exception',     via: :get
 
 end
