@@ -9,29 +9,12 @@ class TestsController < ApplicationController
     render json: result
   end
 
-  # GET /test/unprocessable_entity
-  def error_unprocessable_entity
-    raise Exceptions::UnprocessableEntity, 'some error message'
-  end
+  # GET /test/raised_exception
+  def error_raised_exception
+    exception = params.fetch(:exception, 'StandardError')
+    message   = params.fetch(:message, 'no message provided')
 
-  # GET /test/not_authorized
-  def error_not_authorized
-    raise Exceptions::NotAuthorized, 'some error message'
-  end
-
-  # GET /test/ar_not_found
-  def error_ar_not_found
-    raise ActiveRecord::RecordNotFound, 'some error message'
-  end
-
-  # GET /test/standard_error
-  def error_standard_error
-    raise StandardError, 'some error message'
-  end
-
-  # GET /test/argument_error
-  def error_argument_error
-    raise ArgumentError, 'some error message'
+    raise exception.safe_constantize, message
   end
 
 end
