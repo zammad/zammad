@@ -423,7 +423,7 @@ test:browser:integration:api_client_php:
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
   script:
     - RAILS_ENV=test bundle exec rake db:create
-    - bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
+    - RAILS_ENV=test bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
     - git clone https://github.com/zammad/zammad-api-client-php.git
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin

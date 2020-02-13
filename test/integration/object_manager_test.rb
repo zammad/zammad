@@ -73,7 +73,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_not(attribute1)
 
     # create invalid attributes
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test2_id',
@@ -91,7 +91,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         updated_by_id: 1,
       )
     end
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test3_ids',
@@ -286,7 +286,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     )
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test13|',
@@ -307,7 +307,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test14!',
@@ -328,7 +328,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'test15ä',
@@ -370,7 +370,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'delete',
@@ -391,7 +391,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
     attribute_count = ObjectManager::Attribute.count
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'updated_at',
@@ -413,7 +413,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(attribute_count, ObjectManager::Attribute.count)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object:        'Ticket',
         name:          'updated_AT',
