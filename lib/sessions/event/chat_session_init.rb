@@ -24,17 +24,17 @@ return is sent as message back to peer
 
     # geo ip lookup
     geo_ip = nil
-    if @remote_ip
-      geo_ip = Service::GeoIp.location(@remote_ip)
+    if remote_ip
+      geo_ip = Service::GeoIp.location(remote_ip)
     end
 
     # dns lookup
     dns_name = nil
-    if @remote_ip
+    if remote_ip
       begin
         dns = Resolv::DNS.new
         dns.timeouts = 3
-        result = dns.getname @remote_ip
+        result = dns.getname remote_ip
         if result
           dns_name = result.to_s
         end
@@ -51,7 +51,7 @@ return is sent as message back to peer
       preferences: {
         url:          @payload['data']['url'],
         participants: [@client_id],
-        remote_ip:    @remote_ip,
+        remote_ip:    remote_ip,
         geo_ip:       geo_ip,
         dns_name:     dns_name,
       },
