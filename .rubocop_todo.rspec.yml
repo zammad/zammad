@@ -14,7 +14,9 @@
 # Configuration parameters: CountComments, ExcludedMethods.
 # ExcludedMethods: refine
 Metrics/BlockLength:
-  Max: 1987
+  Max: 1653
+  Exclude:
+    - 'spec/requests/ticket_spec.rb'
 
 # Offense count: 16
 RSpec/AnyInstance:

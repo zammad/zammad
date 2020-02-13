@@ -180,11 +180,16 @@ returns
     state_id_list_open   = Ticket::State.by_category(:open).pluck(:id)
     state_id_list_closed = Ticket::State.by_category(:closed).pluck(:id)
 
+    # open tickets by customer
+    access_condition = Ticket.access_condition(data[:current_user], 'read')
+
     # get tickets
     tickets_open = Ticket.where(
       customer_id: data[:customer_id],
       state_id:    state_id_list_open
-    ).limit(data[:limit] || 15).order(created_at: :desc)
+    )
+    .where(access_condition)
+    .limit(data[:limit] || 15).order(created_at: :desc)
     assets = {}
     ticket_ids_open = []
     tickets_open.each do |ticket|
@@ -195,7 +200,9 @@ returns
     tickets_closed = Ticket.where(
       customer_id: data[:customer_id],
       state_id:    state_id_list_closed
-    ).limit(data[:limit] || 15).order(created_at: :desc)
+    )
+    .where(access_condition)
+    .limit(data[:limit] || 15).order(created_at: :desc)
     ticket_ids_closed = []
     tickets_closed.each do |ticket|
       ticket_ids_closed.push ticket.id
