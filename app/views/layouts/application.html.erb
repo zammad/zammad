@@ -9,9 +9,9 @@
   <%= stylesheet_link_tag "application", :media => 'all' %>
   <%= stylesheet_link_tag "application-print", :media => 'print' %>
   <% if Rails.configuration.assets.debug %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application", nonce: true %>
   <% else %>
-  <%= javascript_include_tag "application", :defer => 'defer' %>
+  <%= javascript_include_tag "application", nonce: true, :defer => 'defer' %>
   <% end %>
   <%= csrf_meta_tags %>
 </head>

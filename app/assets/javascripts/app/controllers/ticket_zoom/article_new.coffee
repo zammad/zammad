@@ -132,7 +132,10 @@ class App.TicketZoomArticleNew extends App.Controller
       textRange.select()
 
   isIE10: ->
-    Function('/*@cc_on return document.documentMode===10@*/')()
+    detected = App.Browser.detection()
+    return false if !detected.browser
+    return false if detected.browser.name != 'Explorer'
+    return detected.browser.major == 10
 
   release: =>
     if @subscribeIdTextModule

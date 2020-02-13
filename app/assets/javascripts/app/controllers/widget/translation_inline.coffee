@@ -47,6 +47,33 @@ class Widget extends App.Controller
     # enable translation inline
     App.Config.set('translation_inline', true)
 
+    @observer = new MutationObserver((mutations) ->
+
+      mutations.forEach((mutation) ->
+
+        mutation.addedNodes.forEach((addedNode) ->
+
+          $(addedNode).find('span.translation').on('click.translation', (e) ->
+            e.stopPropagation()
+            return false
+          )
+          $(addedNode).find('span.translation').on('keydown.translation', (e) ->
+            e.stopPropagation()
+            return true
+          )
+        )
+
+        mutation.removedNodes.forEach((removedNode) ->
+          $(removedNode).find('span.translation').off('.translation')
+        )
+      )
+    )
+
+    @observer.observe(document.body, {
+      subtree:   true,
+      childList: true,
+    })
+
     # rerender controllers
     App.Event.trigger('ui:rerender')
 
@@ -93,7 +120,9 @@ class Widget extends App.Controller
         element
 
   disable: ->
-    $('body').off('focus.translation blur.translation')
+    @observer.disconnect()
+
+    $('body').off('.translation')
 
     # disable translation inline
     App.Config.set('translation_inline', false)

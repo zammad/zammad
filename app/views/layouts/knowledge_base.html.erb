@@ -70,10 +70,13 @@
   </footer>
 </div>
 
-<script type='text/javascript'>
+<%= javascript_tag nonce: true do -%>
   if(window.fetch === undefined || window.Promise === undefined || Element.prototype.prepend === undefined){
-    document.write('<script src="<%= path_to_javascript('knowledge_base_public_polyfills') %>"><\/script>')
+    var polyfillScriptTag = document.createElement('script');
+    polyfillScriptTag.setAttribute('src', '<%= path_to_javascript('knowledge_base_public_polyfills') %>');
+    polyfillScriptTag.setAttribute('nonce', '<%= content_security_policy_nonce %>');
+    document.body.appendChild(polyfillScriptTag);
   }
-</script>
+<% end -%>
 
-<%= javascript_include_tag 'knowledge_base_public' %>
+<%= javascript_include_tag 'knowledge_base_public', nonce: true %>

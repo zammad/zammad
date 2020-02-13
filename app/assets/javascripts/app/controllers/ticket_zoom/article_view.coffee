@@ -134,7 +134,12 @@ class ArticleViewItem extends App.ObserverController
     attachments = App.TicketArticle.contentAttachments(article)
     if article.attachments
       for attachment in article.attachments
-        attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
+
+        dispositionParams = ''
+        if attachment?.preferences['Content-Type'] isnt 'application/pdf' && attachment?.preferences['Content-Type'] isnt 'text/html'
+          dispositionParams = '?disposition=attachment'
+
+        attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}#{dispositionParams}"
         attachment.preview_url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=preview"
 
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
