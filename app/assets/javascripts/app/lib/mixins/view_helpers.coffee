@@ -193,6 +193,7 @@ App.ViewHelpers =
 
   canDownload: (contentType) ->
     contentType = App.Utils.contentTypeCleanup(contentType)
+    return false if contentType is 'application/pdf'
     contentType != 'text/html'
 
   canPreview: (contentType) ->

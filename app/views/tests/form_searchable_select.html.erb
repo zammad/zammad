@@ -1,7 +1,6 @@
 
 <link rel="stylesheet" href="/assets/tests/qunit-1.21.0.css">
-<script src="/assets/tests/qunit-1.21.0.js"></script>
-<script src="/assets/tests/form_searchable_select.js"></script>
+<%= javascript_include_tag "/assets/tests/qunit-1.21.0.js", "/assets/tests/form_searchable_select.js", nonce: true %>
 
 <style type="text/css">
 body {
@@ -9,8 +8,8 @@ body {
 }
 </style>
 
-<script type="text/javascript">
-</script>
+<%= javascript_tag nonce: true do -%>
+<% end -%>
 
 <div id="qunit" class="u-dontfold"></div>
 
