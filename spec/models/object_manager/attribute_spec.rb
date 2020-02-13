@@ -54,14 +54,14 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     it 'rejects ActiveRecord reserved word "attribute"' do
       expect do
         described_class.add attributes_for :object_manager_attribute_text, name: 'attribute'
-      end.to raise_error 'attribute is a reserved word, please choose a different one'
+      end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name attribute is a reserved word! (2)')
     end
 
     %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id].each do |reserved_word|
       it "rejects Zammad reserved word '#{reserved_word}'" do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
-        end.to raise_error "#{reserved_word} is a reserved word, please choose a different one"
+        end.to raise_error(ActiveRecord::RecordInvalid, /is a reserved word! \(1\)/)
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       it "rejects word '#{reserved_word}' which is used for database references" do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
-        end.to raise_error "Name can't get used, *_id and *_ids are not allowed"
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name can't get used because *_id and *_ids are not allowed")
       end
     end
 

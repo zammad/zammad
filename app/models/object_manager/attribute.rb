@@ -897,34 +897,49 @@ is certain attribute used by triggers, overviews or schedulers
   def check_name
     return if !name
 
-    raise 'Name can\'t get used, *_id and *_ids are not allowed' if name.match?(/.+?_(id|ids)$/i)
-    raise 'Spaces in name are not allowed' if name.match?(/\s/)
-    raise 'Only letters from a-z, numbers from 0-9, and _ are allowed' if !name.match?(/^[a-z0-9_]+$/)
-    raise 'At least one letters is needed' if !name.match?(/[a-z]/)
+    if name.match?(/.+?_(id|ids)$/i)
+      errors.add(:name, "can't get used because *_id and *_ids are not allowed")
+    end
+    if name.match?(/\s/)
+      errors.add(:name, 'spaces are not allowed')
+    end
+    if !name.match?(/^[a-z0-9_]+$/)
+      errors.add(:name, 'Only letters from a-z because numbers from 0-9 and _ are allowed')
+    end
+    if !name.match?(/[a-z]/)
+      errors.add(:name, 'At least one letters is needed')
+    end
 
     # do not allow model method names as attributes
     reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id]
-    raise "#{name} is a reserved word, please choose a different one" if name.match?(/^(#{reserved_words.join('|')})$/)
+    if name.match?(/^(#{reserved_words.join('|')})$/)
+      errors.add(:name, "#{name} is a reserved word! (1)")
+    end
 
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
     begin
       ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
     rescue  ActiveRecord::DangerousAttributeError
-      raise "#{name} is a reserved word, please choose a different one"
+      errors.add(:name, "#{name} is a reserved word! (2)")
     end
 
     record = object_lookup.name.constantize.new
-    return true if !record.respond_to?(name.to_sym)
-    raise "#{name} already exists!" if record.attributes.key?(name) && new_record?
-    return true if record.attributes.key?(name)
+    if record.respond_to?(name.to_sym) && record.attributes.key?(name) && new_record?
+      errors.add(:name, "#{name} already exists!")
+    end
 
-    raise "#{name} is a reserved word, please choose a different one"
+    if errors.present?
+      raise ActiveRecord::RecordInvalid, self
+    end
+
+    true
   end
 
   def check_editable
     return if editable
 
-    raise 'Attribute not editable!'
+    errors.add(:name, 'Attribute not editable!')
+    raise ActiveRecord::RecordInvalid, self
   end
 
   private

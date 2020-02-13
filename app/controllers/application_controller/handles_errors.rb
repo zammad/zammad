@@ -75,8 +75,18 @@ module ApplicationController::HandlesErrors
       data[:error_human] = data[:error]
     end
 
-    if Rails.env.production? && data[:error_human].present?
-      data[:error] = data.delete(:error_human)
+    if Rails.env.production?
+      if data[:error_human].present?
+        data[:error] = data.delete(:error_human)
+      else
+        # We want to avoid leaking of internal information but also want the user
+        # to give the administrator a reference to find the cause of the error.
+        # Therefore we generate a one time unique error ID that can be used to
+        # search the logs and find the actual error message.
+        error_code_prefix = "Error ID #{SecureRandom.urlsafe_base64(6)}:"
+        Rails.logger.error "#{error_code_prefix} #{data[:error]}"
+        data[:error] = "#{error_code_prefix} Please contact your administrator."
+      end
     end
     data
   end

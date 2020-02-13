@@ -7,7 +7,17 @@ RSpec.describe 'Error handling', type: :request do
 
     it { expect(response).to have_http_status(http_status) }
     it { expect(json_response).to be_a_kind_of(Hash) }
-    it { expect(json_response['error']).to eq(message) }
+    it do
+      # There is a special case where we mask technical errors and return
+      # a random error code that can be easily found in the logs by an
+      # administrator. However, this makes it hard to check for the exact error
+      # message. Therefore we only check for the substring in this particular case
+      if message == 'Please contact your administrator'
+        expect(json_response['error']).to include(message)
+      else
+        expect(json_response['error']).to eq(message)
+      end
+    end
   end
 
   shared_examples 'HTML response format' do
@@ -18,6 +28,39 @@ RSpec.describe 'Error handling', type: :request do
     it { expect(response.body).to include("<title>#{title}</title>") }
     it { expect(response.body).to include("<h1>#{headline}</h1>") }
     it { expect(response.body).to include(message) }
+  end
+
+  context 'error with confidential message is raised' do
+
+    let(:admin_user) { create(:admin_user, groups: Group.all) }
+    let!(:ticket) { create(:ticket) }
+    let(:invalid_group_id) { 99_999 }
+    let(:message) { 'Please contact your administrator' }
+    let(:http_status) { :unprocessable_entity }
+
+    before do
+      # fake production ENV to enable error hiding
+      env = double(
+        production?:  true,
+        test?:        false,
+        development?: false
+      )
+      allow(::Rails).to receive(:env).and_return(env)
+
+      authenticated_as(admin_user)
+      put "/api/v1/tickets/#{ticket.id}?all=true", params: { group_id: invalid_group_id }, as: as
+    end
+
+    context 'requesting JSON' do
+      include_examples 'JSON response format'
+    end
+
+    context 'requesting HTML' do
+      let(:title) { '422: Unprocessable Entity' }
+      let(:headline) { '422: The change you wanted was rejected.' }
+
+      include_examples 'HTML response format'
+    end
   end
 
   context 'URL route does not exist' do
