@@ -284,8 +284,9 @@ class TicketsController < ApplicationController
 
     # return result
     result = Ticket::ScreenOptions.list_by_customer(
-      customer_id: params[:customer_id],
-      limit:       15,
+      current_user: current_user,
+      customer_id:  params[:customer_id],
+      limit:        15,
     )
     render json: result
   end
