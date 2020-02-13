@@ -2,7 +2,7 @@
 
 class FormController < ApplicationController
   skip_before_action :verify_csrf_token
-  before_action :cors_preflight_check_execute
+  before_action :cors_preflight_check
   after_action :set_access_control_headers_execute
   skip_before_action :user_device_check
 
