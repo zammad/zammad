@@ -2141,4 +2141,59 @@ RSpec.describe 'Ticket', type: :request do
       end
     end
   end
+
+  describe 'GET /api/v1/ticket_customer' do
+
+    subject(:ticket) { create(:ticket, customer: customer_authorized) }
+
+    let(:organization_authorized) { create(:organization) }
+    let(:customer_authorized) { create(:customer_user, organization: organization_authorized) }
+
+    let(:organization_unauthorized) { create(:organization) }
+    let(:customer_unauthorized) { create(:customer_user, organization: organization_unauthorized) }
+
+    let(:agent) { create(:agent_user, groups: [ticket.group]) }
+
+    describe 'listing information' do
+
+      before do
+        ticket
+      end
+
+      shared_examples 'has access' do
+        it 'succeeds' do
+          get '/api/v1/ticket_customer',
+              params: { customer_id: customer_authorized.id },
+              as:     :json
+
+          expect(json_response['ticket_ids_open']).to include(ticket.id)
+          expect(json_response['ticket_ids_closed']).to be_blank
+        end
+      end
+
+      shared_examples 'has no access' do
+        it 'fails' do
+          get '/api/v1/ticket_customer',
+              params: { customer_id: customer_authorized.id },
+              as:     :json
+
+          expect(json_response['ticket_ids_open']).to be_blank
+          expect(json_response['ticket_ids_closed']).to be_blank
+          expect(json_response['assets']).to be_blank
+        end
+      end
+
+      context 'as agent', authenticated_as: -> { agent } do
+        include_examples 'has access'
+      end
+
+      context 'as authorized customer', authenticated_as: -> { customer_authorized } do
+        include_examples 'has access'
+      end
+
+      context 'as unauthorized customer', authenticated_as: -> { customer_unauthorized } do
+        include_examples 'has no access'
+      end
+    end
+  end
 end
