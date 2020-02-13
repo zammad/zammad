@@ -208,8 +208,10 @@ class SignupPasswordChangeAndResetTest < TestCase
     click(css: '.content .btn--primary')
     watch_for(
       css:   'body',
-      value: 'address invalid',
+      value: 'sent password reset instructions',
     )
+
+    click(css: '.content .btn--primary')
 
     set(
       css:   'input[name="username"]',

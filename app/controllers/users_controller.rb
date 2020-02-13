@@ -534,9 +534,12 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
     raise Exceptions::UnprocessableEntity, 'No email!' if !params[:email]
 
-    # check is verify is possible to send
     user = User.find_by(email: params[:email].downcase)
-    raise Exceptions::UnprocessableEntity, 'No such user!' if !user
+    if !user
+      # result is always positive to avoid leaking of existing user accounts
+      render json: { message: 'ok' }, status: :ok
+      return
+    end
 
     #if user.verified == true
     #  render json: { error: 'Already verified!' }, status: :unprocessable_entity
@@ -610,14 +613,10 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
         render json: { message: 'ok', token: result[:token].name }, status: :ok
         return
       end
-
-      # token sent to user, send ok to browser
-      render json: { message: 'ok' }, status: :ok
-      return
     end
 
-    # unable to generate token
-    render json: { message: 'failed' }, status: :ok
+    # result is always positive to avoid leaking of existing user accounts
+    render json: { message: 'ok' }, status: :ok
   end
 
 =begin
