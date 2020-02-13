@@ -1,5 +1,5 @@
 class App.Chat extends App.Model
-  @configure 'Chat', 'name', 'active', 'public', 'max_queue', 'block_ip', 'block_country', 'note'
+  @configure 'Chat', 'name', 'active', 'public', 'max_queue', 'block_ip', 'whitelisted_websites', 'block_country', 'note'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/chats'
   @countries:
@@ -250,6 +250,7 @@ class App.Chat extends App.Model
     { name: 'note',           display: 'Note',            tag: 'textarea',    limit: 250, null: true },
     { name: 'max_queue',      display: 'Max. clients in waitlist', tag: 'input',   default: 2 },
     { name: 'block_ip',       display: 'Blocked IPs (separated by ;)', tag: 'input', default: '', null: true },
+    { name: 'whitelisted_websites', display: 'Allow websites (separated by ;)', tag: 'input', default: '', null: true },
     { name: 'block_country',  display: 'Blocked countries', tag: 'column_select', multiple: true, null: true, default: '', options: @countries, seperator: ';' },
     { name: 'active',         display: 'Active',          tag: 'active',      default: true },
     { name: 'created_by_id',  display: 'Created by',      relation: 'User',   readonly: 1 },

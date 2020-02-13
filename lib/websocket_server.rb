@@ -48,7 +48,6 @@ class WebsocketServer
 
   def self.onopen(websocket, handshake)
     headers = handshake.headers
-    remote_ip = get_remote_ip(headers)
     client_id = websocket.object_id.to_s
     log 'notice', 'Client connected.', client_id
     Sessions.create( client_id, {}, { type: 'websocket' } )
@@ -60,7 +59,6 @@ class WebsocketServer
       last_ping:   Time.now.utc.to_i,
       error_count: 0,
       headers:     headers,
-      remote_ip:   remote_ip,
     }
   end
 
@@ -103,7 +101,7 @@ class WebsocketServer
         event:     data['event'],
         payload:   data,
         session:   @clients[client_id][:session],
-        remote_ip: @clients[client_id][:remote_ip],
+        headers:   @clients[client_id][:headers],
         client_id: client_id,
         clients:   @clients,
         options:   @options,
@@ -114,12 +112,6 @@ class WebsocketServer
     else
       log 'error', "unknown message '#{data.inspect}'", client_id
     end
-  end
-
-  def self.get_remote_ip(headers)
-    return headers['X-Forwarded-For'] if headers && headers['X-Forwarded-For']
-
-    nil
   end
 
   def self.websocket_send(client_id, data)
