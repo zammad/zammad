@@ -105,6 +105,14 @@ class Sessions::Event::Base
     user
   end
 
+  def remote_ip
+    @headers&.fetch('X-Forwarded-For', nil).presence
+  end
+
+  def origin
+    @headers&.fetch('Origin', nil).presence
+  end
+
   def permission_check(key, event)
     user = current_user
     return if !user
