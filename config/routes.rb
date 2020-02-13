@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # just remember to delete public/index.html.
   root to: 'init#index', via: :get
+  root to: 'errors#routing', via: %i[post put delete options]
 
   # load routes from external files
   dir = File.expand_path(__dir__)
@@ -18,6 +19,5 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*a', to: 'errors#routing', via: %i[get post put delete]
-
+  match '*a', to: 'errors#routing', via: %i[get post put delete options]
 end
