@@ -213,6 +213,7 @@ class App.CTI extends App.Controller
       type:  'POST'
       url:   "#{@apiPath}/cti/done/#{id}"
       data:  JSON.stringify(done: done)
+      queue: 'cti_done_queue'
     )
 
   newTicket: (user) =>
