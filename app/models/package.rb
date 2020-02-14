@@ -52,7 +52,7 @@ returns:
 
 =begin
 
-install all packages located under auto_install/*.zpm
+install all packages located under auto_install/*.(s)zpm
 
   Package.auto_install
 
@@ -64,7 +64,7 @@ install all packages located under auto_install/*.zpm
 
     data = []
     Dir.foreach(path) do |entry|
-      if entry =~ /\.zpm/ && entry !~ /^\./
+      if entry =~ /\.s?zpm/ && entry !~ /^\./
         data.push entry
       end
     end
