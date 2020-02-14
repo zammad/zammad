@@ -133,6 +133,9 @@ test("form params check", function() {
     select4: undefined,
     selectmulti1: false,
     selectmulti2: [ false, true ],
+    selectmulti3: '["a","b"]',
+    selectmulti4: '{"notan": "array"}',
+    selectmulti5: '{"invalid":, "json"',
     selectmultioption1: false,
     selectmultioption2: [ false, true ],
     autocompletion2: 'id2',
@@ -174,6 +177,9 @@ test("form params check", function() {
         { name: 'select4', display: 'Select4', tag: 'select', null: false, nulloption: true,  options: { aa: 'aa', bb: 'bb', select3: 'select4' } },
         { name: 'selectmulti1', display: 'SelectMulti1', tag: 'select', null: true, multiple: true, options: { true: 'internal', false: 'public' } },
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' } },
+        { name: 'selectmulti3', display: 'SelectMulti3', tag: 'select', null: false, multiple: true, options: { 'a': 'AA', 'b': 'BB' } },
+        { name: 'selectmulti4', display: 'SelectMulti4', tag: 'select', null: false, multiple: true, options: { 'a': 'AA', 'b': 'BB' } },
+        { name: 'selectmulti5', display: 'SelectMulti5', tag: 'select', null: false, multiple: true, options: { 'a': 'AA', 'b': 'BB' } },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }] },
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }] },
         { name: 'autocompletion1', display: 'AutoCompletion1', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
@@ -261,6 +267,16 @@ test("form params check", function() {
   equal(el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
   equal(el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
+  equal(el.find('[name="selectmulti3"]').val()[0], 'a', 'check selectmulti3 value')
+  equal(el.find('[name="selectmulti3"]').val()[1], 'b', 'check selectmulti3 value')
+  equal(el.find('[name="selectmulti3"]').prop('required'), true, 'check selectmulti3 required')
+  equal(el.find('[name="selectmulti3"]').is(":focus"), false, 'check selectmulti3 focus')
+
+  equal(el.find('[name="selectmulti4"]').find('option').length, 3, 'check selectmulti4 value')
+  equal(el.find('[name="selectmulti4"]').find('option')[0].value, '{"notan": "array"}', 'check selectmulti4 value')
+
+  equal(el.find('[name="selectmulti5"]').find('option').length, 3, 'check selectmulti5 value')
+
   params = App.ControllerForm.params(el)
   test_params = {
     input1: '',
@@ -277,6 +293,9 @@ test("form params check", function() {
     select4: '',
     selectmulti1: 'false',
     selectmulti2: [ 'true', 'false' ],
+    selectmulti3: ["a","b"],
+    selectmulti4: '{"notan": "array"}',
+    selectmulti5: '{"invalid":, "json"',
     selectmultioption1: 'false',
     selectmultioption2: [ 'true', 'false' ],
     autocompletion1: '',

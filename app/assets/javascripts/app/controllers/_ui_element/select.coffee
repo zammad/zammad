@@ -8,6 +8,15 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     else
       attribute.multiple = ''
 
+    if attribute.multiple && _.isString(attribute.value) && !_.isEmpty(attribute.value)
+      try
+        value = JSON.parse(attribute.value)
+        # only accept serialized arrays, nothing else
+        if _.isArray(value)
+          attribute.value = value
+      catch e
+        console.log("Invalid json passed as attribute value to selectmulti")
+
     if form.rejectNonExistentValues
       attribute.rejectNonExistentValues = true
 
