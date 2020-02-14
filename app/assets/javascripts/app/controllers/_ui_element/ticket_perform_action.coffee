@@ -109,14 +109,16 @@ class App.UiElement.ticket_perform_action
         item.append(element)
         @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, {}, attribute)
 
-      return item
+    else
 
-    for groupAndAttribute, meta of params[attribute.name]
+      for groupAndAttribute, meta of params[attribute.name]
 
-      # build and append
-      element = @placeholder(item, attribute, params, groups, elements)
-      @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, meta, attribute)
-      item.append(element)
+        # build and append
+        element = @placeholder(item, attribute, params, groups, elements)
+        @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, meta, attribute)
+        item.append(element)
+    
+    @disableRemoveForOneAttribute(item)
     item
 
   @buildAttributeSelector: (elementFull, groups, elements) ->
@@ -145,6 +147,13 @@ class App.UiElement.ticket_perform_action
           optgroup.append("<option value=\"#{elementKey}\" #{selected}>#{displayName}</option>")
     selection
 
+  # disable - if we only have one attribute
+  @disableRemoveForOneAttribute: (elementFull) ->
+    if elementFull.find('.js-attributeSelector select').length > 1
+      elementFull.find('.js-remove').removeClass('is-disabled')
+    else
+      elementFull.find('.js-remove').addClass('is-disabled')
+
   @updateAttributeSelectors: (elementFull) ->
 
     # enable all
@@ -157,10 +166,7 @@ class App.UiElement.ticket_perform_action
     )
 
     # disable - if we only have one attribute
-    if elementFull.find('.js-attributeSelector select').length > 1
-      elementFull.find('.js-remove').removeClass('is-disabled')
-    else
-      elementFull.find('.js-remove').addClass('is-disabled')
+    @disableRemoveForOneAttribute(elementFull)
 
   @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
