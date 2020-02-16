@@ -151,6 +151,7 @@ class App.UiElement.postmaster_match
 
     # remove filter
     item.find('.js-remove').bind('click', (e) =>
+      return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @rebuildAttributeSelectors(item)
     )
