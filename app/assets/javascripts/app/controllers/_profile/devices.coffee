@@ -36,7 +36,7 @@ class Index extends App.ControllerSubContent
 
   delete: (e) =>
     e.preventDefault()
-    id = $(e.target).closest('a').data('device-id')
+    id = $(e.target).closest('div').data('device-id')
 
     @ajax(
       id:          'user_devices_delete'
