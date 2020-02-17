@@ -10,9 +10,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="8efb0d12349b48e6acaa2ec6ff224cc2",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="8efb0d12349b48e6acaa2ec6ff224cc2",
         oauth_signature="uABvZoC5sN%2F68E4oxp6Qk6SxO2Y%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795852", oauth_token="key",
+        oauth_timestamp="1543795852", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -524,9 +524,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="83003a1356235c21998dbe47bd20e034",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="83003a1356235c21998dbe47bd20e034",
         oauth_signature="KtBt4mbxUM9pQeEHXi%2BywugYuqk%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795853", oauth_token="key",
+        oauth_timestamp="1543795853", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -769,9 +769,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="bb5275ca035610773ca6172601e35be6",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="bb5275ca035610773ca6172601e35be6",
         oauth_signature="yk2RDPjsEnljxqdWfmCOjS01ylg%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795854", oauth_token="key",
+        oauth_timestamp="1543795854", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -1227,9 +1227,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="756b2ebc88106059e7afdec3979455ed",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="756b2ebc88106059e7afdec3979455ed",
         oauth_signature="KYRdmzJiODGS%2BYqqmYUPhwq2Fwc%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795855", oauth_token="key",
+        oauth_timestamp="1543795855", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -1419,9 +1419,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="de1e719ccd92c862ad99062c09332301",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="de1e719ccd92c862ad99062c09332301",
         oauth_signature="ueto3kSV%2BcRxu%2FXOod5N4CqW%2BNk%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795855", oauth_token="key",
+        oauth_timestamp="1543795855", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -1664,9 +1664,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="4b3ceecc83d55c1b720580fb1e3d36db",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="4b3ceecc83d55c1b720580fb1e3d36db",
         oauth_signature="sYaGT3aj%2BUSwTMuTWouWuQti3BQ%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795856", oauth_token="key",
+        oauth_timestamp="1543795856", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -1964,9 +1964,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="9778307d17972ae3edc5b5d2a5530bb4",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="9778307d17972ae3edc5b5d2a5530bb4",
         oauth_signature="qf8Acv3oYLzER%2BF53HL%2F7xQfbvM%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795857", oauth_token="key",
+        oauth_timestamp="1543795857", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -2213,9 +2213,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="7ff1412c085625c63956f13fee4a0066",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="7ff1412c085625c63956f13fee4a0066",
         oauth_signature="XTJJazMUukMF7V0QJysnt0RIbV0%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795857", oauth_token="key",
+        oauth_timestamp="1543795857", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -3369,9 +3369,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="db0fdd3eedd9c9a4c4a7dea0f6dd3cc9",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="db0fdd3eedd9c9a4c4a7dea0f6dd3cc9",
         oauth_signature="5OrIGadCeuoU%2BpDkNkUYviu0awo%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795861", oauth_token="key",
+        oauth_timestamp="1543795861", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -3509,9 +3509,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="12ed1f52923c07c7a35ea78d2d177e7d",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="12ed1f52923c07c7a35ea78d2d177e7d",
         oauth_signature="UEKkeqCiwZnRNZK2xL9yFh2jYLA%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795862", oauth_token="key",
+        oauth_timestamp="1543795862", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -4496,9 +4496,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="df1d4b0020304d719b581ad2a89ac722",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="df1d4b0020304d719b581ad2a89ac722",
         oauth_signature="ZVjS8VWcWdYXZpr2I3ZX56DOWTE%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795865", oauth_token="key",
+        oauth_timestamp="1543795865", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -4744,9 +4744,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="2dbf57fffac364cfd3d3bb63b01ca49f",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="2dbf57fffac364cfd3d3bb63b01ca49f",
         oauth_signature="DoKz2xUY3qPs%2Bnscylkyemx7acY%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795866", oauth_token="key",
+        oauth_timestamp="1543795866", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -5044,9 +5044,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="43788c0bf65af0ea0e0e59b029a98a58",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="43788c0bf65af0ea0e0e59b029a98a58",
         oauth_signature="8H%2Bw00OP0m9rjOpLRdQia%2BOjtIo%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795866", oauth_token="key",
+        oauth_timestamp="1543795866", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -5296,9 +5296,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="813d8700f25ff78f741b2c778b312cf7",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="813d8700f25ff78f741b2c778b312cf7",
         oauth_signature="Ha0OSsfG5yFKzMdNbRHC2Fn9tKo%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795867", oauth_token="key",
+        oauth_timestamp="1543795867", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -5859,9 +5859,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="6ba7598ee7171aa89d5172a75b5e7634",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="6ba7598ee7171aa89d5172a75b5e7634",
         oauth_signature="RrL7Yjl6GE4OJ4IJX4H5GiYLFJU%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795868", oauth_token="key",
+        oauth_timestamp="1543795868", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -6105,9 +6105,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="3a2fab4325efb72a9fe7f466fdb96910",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="3a2fab4325efb72a9fe7f466fdb96910",
         oauth_signature="%2BwYKPEqhsVvUK7IDnOSZpB4J1h0%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795869", oauth_token="key",
+        oauth_timestamp="1543795869", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -6299,9 +6299,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="bab0a69fdb7b4718244cb9e3a86f28d4",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="bab0a69fdb7b4718244cb9e3a86f28d4",
         oauth_signature="WrbLQ6TcP7153IxnujSFyoJ462w%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795870", oauth_token="key",
+        oauth_timestamp="1543795870", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close
@@ -6493,9 +6493,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="b88d83169c5ad58749312e180ccb580a",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="b88d83169c5ad58749312e180ccb580a",
         oauth_signature="mwtfaPm2G4x5pRnOr79wWj%2F4UOc%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795870", oauth_token="key",
+        oauth_timestamp="1543795870", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close

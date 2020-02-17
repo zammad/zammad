@@ -10,9 +10,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="some", oauth_nonce="some",
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="some",
         oauth_signature="some%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795610", oauth_token="key",
+        oauth_timestamp="1543795610", oauth_token="REDACTED",
         oauth_version="1.0"
       Connection:
       - close

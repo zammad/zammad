@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Twitter channel API endpoints', type: :request do
   let!(:twitter_channel) { create(:twitter_channel) }
-  let!(:twitter_credential) { create(:twitter_credential) }
+  let(:twitter_credential) { ExternalCredential.find(twitter_channel.options[:auth][:external_credential_id]) }
 
   let(:hash_signature) { %(sha256=#{Base64.strict_encode64(OpenSSL::HMAC.digest('sha256', consumer_secret, payload))}) }
   let(:consumer_secret) { twitter_credential.credentials[:consumer_secret] }
@@ -22,7 +22,8 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
     end
 
     context 'without valid twitter credentials in the DB' do
-      let!(:twitter_credential) { create(:twitter_credential, credentials: { foo: 'bar' }) }
+      let!(:twitter_channel) { create(:twitter_channel, external_credential: twitter_credential) }
+      let(:twitter_credential) { create(:twitter_credential, credentials: { foo: 'bar' }) }
 
       it 'responds 422 Unprocessable Entity' do
         get '/api/v1/channels_twitter_webhook', params: params, as: :json
