@@ -6,6 +6,9 @@ RSpec.describe Channel do
       context 'with valid token' do
         subject(:twitter_channel) { create(:twitter_channel) }
 
+        # travel back in time when VCR was recorded
+        before { travel_to '2020-02-06 13:37 +0100' }
+
         it 'returns true' do
           expect(twitter_channel.fetch(true)).to be(true)
         end
