@@ -63,7 +63,9 @@ class KnowledgeBase < ApplicationModel
   def custom_address_uri
     return nil if custom_address.blank?
 
-    URI("protocol://#{custom_address}")
+    scheme = Setting.get('http_type') || 'http'
+
+    URI("#{scheme}://#{custom_address}")
   rescue URI::InvalidURIError
     nil
   end

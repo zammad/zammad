@@ -116,9 +116,8 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
   openSnippetsModal: (e) ->
     @preventDefaultAndStopPropagation(e)
 
-    loader = new App.ControllerModalLoading(
-      container: @el.closest('.main')
-    )
+    button = e.currentTarget
+    button.disabled = true
 
     @ajax(
       id:          'knowledge_bases_init_admin'
@@ -126,7 +125,7 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
       url:         @object().manageUrl('server_snippets')
       processData: true
       success:     (data, status, xhr) =>
-        loader.hide()
+        button.disabled = false
 
         new App.KnowledgeBaseServerSnippet(
           container:    @el.closest('.main')
@@ -135,7 +134,7 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
           address_type: data.address_type
         )
       error:       (xhr) =>
-        loader.hide()
+        button.disabled = false
 
         if xhr.status != 422
           return

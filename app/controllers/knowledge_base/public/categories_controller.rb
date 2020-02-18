@@ -39,7 +39,7 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
 
     path = help_root_path(locale: primary_locale.locale)
 
-    redirect_to custom_path_if_needed(path, knowledge_base)
+    redirect_to custom_path_if_needed(path, knowledge_base, full: true)
   end
 
   private
