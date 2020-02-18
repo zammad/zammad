@@ -1,6 +1,4 @@
 class App.WidgetOrganization extends App.Controller
-  @extend App.PopoverProvidable
-  @registerPopovers 'User'
 
   events:
     'focusout [contenteditable]': 'update'
@@ -44,18 +42,24 @@ class App.WidgetOrganization extends App.Controller
       organizationData.push attributeConfig
 
     # insert userData
-    @html App.view('widget/organization')(
+    elLocal = $(App.view('widget/organization')(
       organization:     organization
       organizationData: organizationData
-    )
+    ))
+
+    for user in organization.members
+      new User(
+        object_id: user.id
+        el: elLocal.find('div.userList-row[data-id=' + user.id + ']')
+      )
+
+    @html elLocal
 
     @$('[contenteditable]').ce(
       mode:      'textonly'
       multiline: true
       maxlength: 250
     )
-
-    @renderPopovers()
 
   update: (e) =>
     name  = $(e.target).attr('data-name')
@@ -66,3 +70,21 @@ class App.WidgetOrganization extends App.Controller
       data[name] = value
       org.updateAttributes(data)
       @log 'notice', 'update', name, value, org
+
+class User extends App.ObserverController
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
+  model: 'User'
+  observe:
+    firstname: true
+    lastname: true
+    image: true
+
+  render: (user) =>
+    @html App.view('organization_profile/member')(
+      user: user
+      el: @el,
+    )
+
+    @renderPopovers()

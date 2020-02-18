@@ -30,6 +30,86 @@ update search index, if configured - will be executed automatically
 
 =begin
 
+update search index, if configured - will be executed automatically
+
+  model = Organizations.find(123)
+  result = model.search_index_update_associations_full
+
+returns
+
+  # Updates asscociation data for users and tickets of the organization in this example
+  result = true
+
+=end
+
+  def search_index_update_associations_full
+    return if self.class.to_s != 'Organization'
+
+    # reindex all organization tickets for the given organization id
+    # we can not use the delta function for this because of the excluded
+    # ticket article attachments. see explain in delta function
+    Ticket.select('id').where(organization_id: id).order(id: :desc).limit(10_000).pluck(:id).each do |ticket_id|
+      SearchIndexJob.perform_later('Ticket', ticket_id, false)
+    end
+  end
+
+=begin
+
+update search index, if configured - will be executed automatically
+
+  model = Organizations.find(123)
+  result = model.search_index_update_associations_delta
+
+returns
+
+  # Updates asscociation data for users and tickets of the organization in this example
+  result = true
+
+=end
+
+  def search_index_update_associations_delta
+
+    # start background job to transfer data to search index
+    return true if !SearchIndexBackend.enabled?
+    return if search_index_value.blank?
+
+    Models.indexable.each do |local_object|
+      next if local_object == self.class
+
+      # delta update of associations is only possible for
+      # objects which are not containing modifications of the source
+      # https://github.com/zammad/zammad/blob/264853dcbe4e53addaf0f8e6df3735ceddc9de63/lib/tasks/search_index_es.rake#L266
+      # because of the exlusion of the article attachments for the ticket
+      # we dont have the attachment data available in the json store of the object.
+      # so the search index would lose the attachment information on the _update_by_query function
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html
+      next if local_object.to_s == 'Ticket'
+
+      local_object.new.attributes.each do |key, _value|
+        attribute_name      = key.to_s
+        attribute_ref_name  = local_object.search_index_attribute_ref_name(attribute_name)
+        attribute_class     = local_object.reflect_on_association(attribute_ref_name)&.klass
+
+        next if attribute_name.blank?
+        next if attribute_ref_name.blank?
+        next if attribute_class.blank?
+        next if attribute_class != self.class
+
+        data = {
+          attribute_ref_name => search_index_value
+        }
+        where = {
+          attribute_name => id
+        }
+        SearchIndexBackend.update_by_query(local_object.to_s, data, where)
+      end
+    end
+
+    true
+  end
+
+=begin
+
 delete search index object, will be executed automatically
 
   model = Model.find(123)

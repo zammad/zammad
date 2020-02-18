@@ -2,7 +2,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 
 namespace :searchindex do
-  task :drop, [:opts] => :environment do |_t, _args|
+  task :drop, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     print 'drop indexes...'
 
     # drop indexes
@@ -23,7 +23,7 @@ namespace :searchindex do
     Rake::Task['searchindex:drop_pipeline'].execute
   end
 
-  task :create, [:opts] => :environment do |_t, _args|
+  task :create, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     print 'create indexes...'
 
     if es_multi_index?
@@ -67,7 +67,7 @@ namespace :searchindex do
     Rake::Task['searchindex:create_pipeline'].execute
   end
 
-  task :create_pipeline, [:opts] => :environment do |_t, _args|
+  task :create_pipeline, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     if !es_pipeline?
       Setting.set('es_pipeline', '')
       next
@@ -124,7 +124,7 @@ namespace :searchindex do
     puts 'done'
   end
 
-  task :drop_pipeline, [:opts] => :environment do |_t, _args|
+  task :drop_pipeline, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     next if !es_pipeline?
 
     # update processors
@@ -142,7 +142,7 @@ namespace :searchindex do
     puts 'done'
   end
 
-  task :reload, [:opts] => :environment do |_t, _args|
+  task :reload, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
 
     puts 'reload data...'
     Models.indexable.each do |model_class|
@@ -156,16 +156,22 @@ namespace :searchindex do
 
   end
 
-  task :refresh, [:opts] => :environment do |_t, _args|
+  task :refresh, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     print 'refresh all indexes...'
 
     SearchIndexBackend.refresh
   end
 
-  task :rebuild, [:opts] => :environment do |_t, _args|
+  task :rebuild, [:opts] => %i[environment searchindex:version_supported] do |_t, _args|
     Rake::Task['searchindex:drop'].execute
     Rake::Task['searchindex:create'].execute
     Rake::Task['searchindex:reload'].execute
+  end
+
+  task :version_supported, [:opts] => :environment do |_t, _args|
+    next if es_version_supported?
+
+    abort "Your elastic search version is not supported! Please update your version to a greater equal than 5.6.0 (Your current version: #{es_version})."
   end
 end
 
@@ -298,6 +304,16 @@ def es_version
     end
     number
   end
+end
+
+def es_version_supported?
+  version_split = es_version.split('.')
+  version       = "#{version_split[0]}#{format('%03d', version_split[1])}#{format('%03d', version_split[2])}".to_i
+
+  # only versions greater/equal than 5.6.0 are supported
+  return if version < 5_006_000
+
+  true
 end
 
 # no es_pipeline for elasticsearch 5.5 and lower

@@ -48,7 +48,6 @@ module Zammad
       'observer::_user::_ref_object_touch',
       'observer::_user::_ticket_organization',
       'observer::_user::_geo',
-      'observer::_organization::_ref_object_touch',
       'observer::_sla::_ticket_rebuild_escalation',
       'observer::_transaction'
 

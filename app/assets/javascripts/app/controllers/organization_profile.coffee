@@ -112,6 +112,8 @@ class ActionRow extends App.ObserverActionRow
 
 class Object extends App.ObserverController
   model: 'Organization'
+  observe:
+    member_ids: true
   observeNot:
     cid: true
     created_at: true
@@ -196,6 +198,7 @@ class Member extends App.ObserverController
     login: true
     email: true
     active: true
+    image: true
   globalRerender: false
 
   render: (user) =>

@@ -31,39 +31,12 @@ RSpec.describe Organization, type: :model do
       let!(:member) { create(:customer_user, organization: organization) }
       let!(:member_ticket) { create(:ticket, customer: member) }
 
-      context 'when basic attributes are updated' do
-        it 'touches its members and their tickets' do
-          expect { organization.update(name: 'foo') }
-            .to change { member.reload.updated_at }
-            .and change { member_ticket.reload.updated_at }
-        end
-      end
-
       context 'when member associations are added' do
         let(:user) { create(:customer_user) }
 
         it 'is touched, and touches its other members (but not their tickets)' do
           expect { organization.members.push(user) }
             .to change { organization.reload.updated_at }
-            .and change { member.reload.updated_at }
-            .and not_change { member_ticket.reload.updated_at }
-        end
-      end
-
-      context 'with 100+ members' do
-        let!(:members) { create_list(:user, 101, organization: organization) }
-        let!(:member_ticket) { create(:ticket, customer: members.first) }
-
-        # This _should_ be split into two separate examples,
-        # but setup is slow and expensive.
-        it 'does not perform any association updates' do
-          expect { organization.update(name: 'foo') }
-            .to not_change { members.map(&:reload).map(&:updated_at) }
-            .and not_change { member_ticket.reload.updated_at }
-
-          expect { organization.members.push(member) }
-            .to not_change { organization.reload.updated_at }
-            .and not_change { members.map(&:reload).map(&:updated_at) }
         end
       end
     end

@@ -20,37 +20,22 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     # return if we run import mode
     return true if Setting.get('import_mode')
 
-    # touch old organization if changed
-    member_ids = []
     organization_id_changed = record.saved_changes['organization_id']
-    if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
-      if organization_id_changed[0]
+    return true if !organization_id_changed
 
-        # featrue used for different propose, do not touch references
-        if User.where(organization_id: organization_id_changed[0]).count < 100
-          organization = Organization.find(organization_id_changed[0])
-          organization.touch # rubocop:disable Rails/SkipsModelValidations
-          member_ids = organization.member_ids
-        end
-      end
+    return true if organization_id_changed[0] == organization_id_changed[1]
+
+    # touch old organization
+    if organization_id_changed[0]
+      organization = Organization.find(organization_id_changed[0])
+      organization.touch # rubocop:disable Rails/SkipsModelValidations
     end
 
     # touch new/current organization
-    if record.organization
-
-      # featrue used for different propose, do not touch references
-      if User.where(organization_id: record.organization_id).count < 100
-        record.organization.touch # rubocop:disable Rails/SkipsModelValidations
-        member_ids += record.organization.member_ids
-      end
+    if record&.organization
+      record.organization.touch # rubocop:disable Rails/SkipsModelValidations
     end
 
-    # touch old/current customer
-    member_ids.uniq.each do |user_id|
-      next if user_id == record.id
-
-      User.find(user_id).touch # rubocop:disable Rails/SkipsModelValidations
-    end
     true
   end
 end

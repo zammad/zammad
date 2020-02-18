@@ -106,24 +106,27 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['name']).to eq('Zammad Foundation')
-      expect(json_response[0]['member_ids']).to be_truthy
-      expect(json_response[0]['members']).to be_falsey
+      organization = json_response.detect { |object| object['name'] == 'Zammad Foundation' }
+      expect(organization['name']).to eq('Zammad Foundation')
+      expect(organization['member_ids']).to be_truthy
+      expect(organization['members']).to be_falsey
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['name']).to eq('Zammad Foundation')
-      expect(json_response[0]['member_ids']).to be_truthy
-      expect(json_response[0]['members']).to be_truthy
+      organization = json_response.detect { |object| object['name'] == 'Zammad Foundation' }
+      expect(organization['name']).to eq('Zammad Foundation')
+      expect(organization['member_ids']).to be_truthy
+      expect(organization['members']).to be_truthy
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&label=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['label']).to eq('Zammad Foundation')
-      expect(json_response[0]['value']).to eq('Zammad Foundation')
-      expect(json_response[0]['member_ids']).to be_falsey
-      expect(json_response[0]['members']).to be_falsey
+      organization = json_response.detect { |object| object['label'] == 'Zammad Foundation' }
+      expect(organization['label']).to eq('Zammad Foundation')
+      expect(organization['value']).to eq('Zammad Foundation')
+      expect(organization['member_ids']).to be_falsey
+      expect(organization['members']).to be_falsey
     end
 
     it 'does index with customer1' do

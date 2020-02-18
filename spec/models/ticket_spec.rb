@@ -852,20 +852,6 @@ RSpec.describe Ticket, type: :model do
             .and change { other_organization.reload.updated_at }
         end
       end
-
-      context 'when organization has 100+ members' do
-        let!(:other_members) { create_list(:user, 100, organization: organization) }
-
-        context 'and customer association is changed' do
-          it 'touches both old and new customer, and their organizations' do
-            expect { ticket.update(customer: other_customer) }
-              .to change { customer.reload.updated_at }
-              .and change { organization.reload.updated_at }
-              .and change { other_customer.reload.updated_at }
-              .and change { other_organization.reload.updated_at }
-          end
-        end
-      end
     end
 
     describe 'Association & attachment management:' do

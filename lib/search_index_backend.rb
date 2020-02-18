@@ -119,7 +119,7 @@ create/update/delete index
 
   def self.index(data)
 
-    url = build_url(data[:name], nil, false, false)
+    url = build_url(type: data[:name], with_pipeline: false, with_document_type: false)
     return if url.blank?
 
     if data[:action] && data[:action] == 'delete'
@@ -139,10 +139,52 @@ add new object to search index
 
   def self.add(type, data)
 
-    url = build_url(type, data['id'])
+    url = build_url(type: type, object_id: data['id'])
     return if url.blank?
 
     make_request_and_validate(url, data: data, method: :post)
+  end
+
+=begin
+
+This function updates specifc attributes of an index based on a query.
+
+  data = {
+    organization: {
+      name: "Zammad Foundation"
+    }
+  }
+  where = {
+    organization_id: 1
+  }
+  SearchIndexBackend.update_by_query('Ticket', data, where)
+
+=end
+
+  def self.update_by_query(type, data, where)
+    return if data.blank?
+    return if where.blank?
+
+    url = build_url(type: type, action: '_update_by_query', with_pipeline: false, with_document_type: false, url_params: { conflicts: 'proceed' })
+    return if url.blank?
+
+    script_list = []
+    data.each do |key, _value|
+      script_list.push("ctx._source.#{key}=params.#{key}")
+    end
+
+    data = {
+      script: {
+        lang:   'painless',
+        source: script_list.join(';'),
+        params: data,
+      },
+      query:  {
+        term: where,
+      },
+    }
+
+    make_request_and_validate(url, data: data, method: :post, read_timeout: 10.minutes)
   end
 
 =begin
@@ -157,9 +199,9 @@ remove whole data from index
 
   def self.remove(type, o_id = nil)
     url = if o_id
-            build_url(type, o_id, false, true)
+            build_url(type: type, object_id: o_id, with_pipeline: false, with_document_type: true)
           else
-            build_url(type, o_id, false, false)
+            build_url(type: type, object_id: o_id, with_pipeline: false, with_document_type: false)
           end
 
     return if url.blank?
@@ -237,10 +279,8 @@ remove whole data from index
   def self.search_by_index(query, index, options = {})
     return [] if query.blank?
 
-    url = build_url
+    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: true)
     return [] if url.blank?
-
-    url += build_search_url(index)
 
     # real search condition
     condition = {
@@ -389,10 +429,8 @@ example for aggregations within one year
   def self.selectors(index, selectors = nil, options = {}, aggs_interval = nil)
     raise 'no selectors given' if !selectors
 
-    url = build_url(nil, nil, false, false)
+    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: true)
     return if url.blank?
-
-    url += build_search_url(index)
 
     data = selector2query(selectors, options, aggs_interval)
 
@@ -626,10 +664,28 @@ return true if backend is configured
     true
   end
 
-  def self.build_index_name(index)
+  def self.build_index_name(index = nil)
     local_index = "#{Setting.get('es_index')}_#{Rails.env}"
+    return local_index if index.blank?
+    return "#{local_index}/#{index}" if lower_equal_es56?
 
     "#{local_index}_#{index.underscore.tr('/', '_')}"
+  end
+
+=begin
+
+return true if the elastic search version is lower equal 5.6
+
+  result = SearchIndexBackend.lower_equal_es56?
+
+returns
+
+  result = true
+
+=end
+
+  def self.lower_equal_es56?
+    Setting.get('es_multi_index') == false
   end
 
 =begin
@@ -637,96 +693,63 @@ return true if backend is configured
 generate url for index or document access (only for internal use)
 
   # url to access single document in index (in case with_pipeline or not)
-  url = SearchIndexBackend.build_url('User', 123, with_pipeline)
+  url = SearchIndexBackend.build_url(type: 'User', object_id: 123, with_pipeline: true)
 
   # url to access whole index
-  url = SearchIndexBackend.build_url('User')
+  url = SearchIndexBackend.build_url(type: 'User')
 
   # url to access document definition in index (only es6 and higher)
-  url = SearchIndexBackend.build_url('User', nil, false, true)
+  url = SearchIndexBackend.build_url(type: 'User', with_pipeline: false, with_document_type: true)
 
   # base url
   url = SearchIndexBackend.build_url
 
 =end
 
-  def self.build_url(type = nil, o_id = nil, with_pipeline = true, with_document_type = true)
+  # rubocop:disable Metrics/ParameterLists
+  def self.build_url(type: nil, action: nil, object_id: nil, with_pipeline: true, with_document_type: true, url_params: {})
+    # rubocop:enable  Metrics/ParameterLists
     return if !SearchIndexBackend.enabled?
 
-    # for elasticsearch 5.6 and lower
-    index = "#{Setting.get('es_index')}_#{Rails.env}"
-    if Setting.get('es_multi_index') == false
-      url = Setting.get('es_url')
-      url = if type
-              if with_pipeline == true
-                url_pipline = Setting.get('es_pipeline')
-                if url_pipline.present?
-                  url_pipline = "?pipeline=#{url_pipline}"
-                end
-              end
-              if o_id
-                "#{url}/#{index}/#{type}/#{o_id}#{url_pipline}"
-              else
-                "#{url}/#{index}/#{type}#{url_pipline}"
-              end
-            else
-              "#{url}/#{index}"
-            end
-      return url
-    end
+    # set index
+    index = build_index_name(type)
 
-    # for elasticsearch 6.x and higher
-    url = Setting.get('es_url')
-    if with_pipeline == true
+    # add pipeline if needed
+    if index && with_pipeline == true
       url_pipline = Setting.get('es_pipeline')
       if url_pipline.present?
-        url_pipline = "?pipeline=#{url_pipline}"
+        url_params['pipeline'] = url_pipline
       end
     end
-    if type
-      index = build_index_name(type)
 
-      # access (e. g. creating or dropping) whole index
-      if with_document_type == false
-        return "#{url}/#{index}"
-      end
-
-      # access single document in index (e. g. drop or add document)
-      if o_id
-        return "#{url}/#{index}/_doc/#{o_id}#{url_pipline}"
-      end
-
-      # access document type (e. g. creating or dropping document mapping)
-      return "#{url}/#{index}/_doc#{url_pipline}"
-    end
-    "#{url}/"
-  end
-
-=begin
-
-generate url searchaccess (only for internal use)
-
-  # url search access with single index
-  url = SearchIndexBackend.build_search_url('User')
-
-  # url to access all over es
-  url = SearchIndexBackend.build_search_url
-
-=end
-
-  def self.build_search_url(index = nil)
-
-    # for elasticsearch 5.6 and lower
-    if Setting.get('es_multi_index') == false
-      if index
-        return "/#{index}/_search"
-      end
-
-      return '/_search'
+    # prepare url params
+    params_string = ''
+    if url_params.present?
+      params_string = '?' + url_params.map { |key, value| "#{key}=#{value}" }.join('&')
     end
 
-    # for elasticsearch 6.x and higher
-    "#{build_index_name(index)}/_doc/_search"
+    url = Setting.get('es_url')
+    return "#{url}#{params_string}" if index.blank?
+
+    # add type information
+    url = "#{url}/#{index}"
+
+    # add document type
+    if with_document_type && !lower_equal_es56?
+      url = "#{url}/_doc"
+    end
+
+    # add action
+    if action
+      url = "#{url}/#{action}"
+    end
+
+    # add object id
+    if object_id.present?
+      url = "#{url}/#{object_id}"
+    end
+
+    "#{url}#{params_string}"
   end
 
   def self.humanized_error(verb:, url:, payload: nil, response:)

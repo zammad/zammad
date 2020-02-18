@@ -6,11 +6,11 @@ class SearchIndexJob < ApplicationJob
   }
 
   def lock_key
-    # "SearchIndexJob/User/42"
-    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
+    # "SearchIndexJob/User/42/true"
+    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}/#{arguments[2]}"
   end
 
-  def perform(object, o_id)
+  def perform(object, o_id, update_associations = true)
     @object = object
     @o_id   = o_id
 
@@ -18,6 +18,11 @@ class SearchIndexJob < ApplicationJob
     return if !exists?(record)
 
     record.search_index_update_backend
+
+    return if !update_associations
+
+    record.search_index_update_associations_delta
+    record.search_index_update_associations_full
   end
 
   private

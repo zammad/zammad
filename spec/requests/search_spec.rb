@@ -27,6 +27,12 @@ RSpec.describe 'Search', type: :request, searchindex: true do
   let!(:organization5) do
     create(:organization, name: 'ABC_D Org')
   end
+  let!(:organization_nested) do
+    create(:organization, name: 'Tomato42 Ltd.', note: 'Tomato42 Ltd.')
+  end
+  let!(:customer_user_nested) do
+    create(:customer_user, organization: organization_nested)
+  end
   let!(:customer_user2) do
     create(:customer_user, organization: organization1)
   end
@@ -42,6 +48,9 @@ RSpec.describe 'Search', type: :request, searchindex: true do
   let!(:ticket3) do
     create(:ticket, title: 'test 1234-2', customer: customer_user3, group: group)
   end
+  let!(:ticket_nested) do
+    create(:ticket, title: 'vegetable request', customer: customer_user_nested, group: group)
+  end
   let!(:article1) do
     create(:ticket_article, ticket_id: ticket1.id)
   end
@@ -50,6 +59,20 @@ RSpec.describe 'Search', type: :request, searchindex: true do
   end
   let!(:article3) do
     create(:ticket_article, ticket_id: ticket3.id)
+  end
+  let!(:article_nested) do
+    article = create(:ticket_article, ticket_id: ticket_nested.id)
+
+    Store.add(
+      object:        'Ticket::Article',
+      o_id:          article.id,
+      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      filename:      'es-normal.txt',
+      preferences:   {},
+      created_by_id: 1,
+    )
+
+    article
   end
 
   before do
@@ -326,6 +349,101 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response['result'][0]['type']).to eq('Organization')
       target_id = json_response['result'][0]['id']
       expect(json_response['assets']['Organization'][target_id.to_s]['name']).to eq('ABC_D Org')
+    end
+
+    it 'does find the user of the nested organization and also even if the organization name changes' do
+      params = {
+        query: 'Tomato42',
+        limit: 10,
+      }
+
+      # because of the initial relation between user and organization
+      # both user and organization will be found as result
+      authenticated_as(agent_user)
+      post '/api/v1/search/User', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer_user_nested.id.to_s]).to be_truthy
+
+      organization_nested.update(name: 'Cucumber43 Ltd.')
+      Scheduler.worker(true)
+      SearchIndexBackend.refresh
+
+      params = {
+        query: 'Cucumber43',
+        limit: 10,
+      }
+
+      # even after a change of the organization name we should find
+      # the customer user because of the nested organization data
+      post '/api/v1/search/User', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer_user_nested.id.to_s]).to be_truthy
+    end
+
+    it 'does find the ticket by organization name even if the organization name changes' do
+      params = {
+        query: 'Tomato42',
+        limit: 10,
+      }
+
+      authenticated_as(agent_user)
+      post '/api/v1/search/Ticket', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
+      expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
+
+      organization_nested.update(name: 'Cucumber43 Ltd.')
+      Scheduler.worker(true)
+      SearchIndexBackend.refresh
+
+      params = {
+        query: 'Cucumber43',
+        limit: 10,
+      }
+
+      post '/api/v1/search/Ticket', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
+      expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
+    end
+
+    it 'does find the ticket by attachment even after ticket reindex' do
+      params = {
+        query: 'text66',
+        limit: 10,
+      }
+
+      authenticated_as(agent_user)
+      post '/api/v1/search/Ticket', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
+
+      organization_nested.update(name: 'Cucumber43 Ltd.')
+      Scheduler.worker(true)
+      SearchIndexBackend.refresh
+
+      params = {
+        query: 'text66',
+        limit: 10,
+      }
+
+      post '/api/v1/search/Ticket', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_truthy
+      expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
     end
   end
 end
