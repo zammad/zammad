@@ -5,7 +5,7 @@ namespace :zammad do
     namespace :log do
 
       desc 'Flushes all scheduler log files'
-      task :scheduler do
+      task :scheduler do # rubocop:disable Rails/RakeEnvironment
         %w[err out].each do |suffix|
           File.write(Rails.root.join('log', "scheduler_#{suffix}.log"), '')
         end

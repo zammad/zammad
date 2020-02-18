@@ -18,7 +18,7 @@ module Ticket::Number::Date
       counter.update(content: "#{counter_increment};#{date}")
     end
 
-    number  = date.delete('-') + Setting.get('system_id').to_s + format('%04d', counter.content.split(';').first)
+    number  = date.delete('-') + Setting.get('system_id').to_s + format('%<counter>04d', counter: counter.content.split(';').first)
     number += checksum(number) if config[:checksum]
 
     number

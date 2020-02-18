@@ -27,7 +27,7 @@ RSpec.describe 'Monitoring', type: :request do
       channel.last_log_out = nil
       channel.save!
     end
-    dir = Rails.root.join('tmp', 'unprocessable_mail')
+    dir = Rails.root.join('tmp/unprocessable_mail')
     Dir.glob("#{dir}/*.eml") do |entry|
       File.delete(entry)
     end
@@ -457,7 +457,7 @@ RSpec.describe 'Monitoring', type: :request do
       travel_back
 
       # health_check - unprocessable mail
-      dir = Rails.root.join('tmp', 'unprocessable_mail')
+      dir = Rails.root.join('tmp/unprocessable_mail')
       FileUtils.mkdir_p(dir)
       FileUtils.touch("#{dir}/test.eml")
 

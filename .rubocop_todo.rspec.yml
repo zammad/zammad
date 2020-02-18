@@ -170,6 +170,7 @@ RSpec/ScatteredSetup:
 # Offense count: 8
 RSpec/SubjectStub:
   Exclude:
+    - 'spec/lib/import/exchange/folder_spec.rb'
     - 'spec/models/concerns/has_groups_examples.rb'
     - 'spec/models/concerns/has_roles_examples.rb'
     - 'spec/models/job_spec.rb'

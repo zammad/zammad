@@ -140,7 +140,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
 
     describe 'auto-creation of tickets/articles on webhook receipt' do
       let(:webhook_payload) do
-        JSON.parse(File.read(Rails.root.join('test', 'data', 'twitter', payload_file))).symbolize_keys
+        JSON.parse(File.read(Rails.root.join('test/data/twitter', payload_file))).symbolize_keys
       end
 
       context 'for outbound DMs' do
@@ -238,7 +238,7 @@ RSpec.describe 'Twitter Webhook Integration', type: :request do
           before { post '/api/v1/channels_twitter_webhook', **previous_webhook_payload, as: :json }
 
           let(:previous_webhook_payload) do
-            JSON.parse(File.read(Rails.root.join('test', 'data', 'twitter', 'webhook2_direct_message.json'))).symbolize_keys
+            JSON.parse(File.read(Rails.root.join('test/data/twitter/webhook2_direct_message.json'))).symbolize_keys
           end
 
           it 'returns 200' do

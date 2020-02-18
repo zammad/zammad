@@ -473,7 +473,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 =end
 
   def self.process_unprocessable_mails(params = {})
-    path = Rails.root.join('tmp', 'unprocessable_mail')
+    path = Rails.root.join('tmp/unprocessable_mail')
     files = []
     Dir.glob("#{path}/*.eml") do |entry|
       ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, IO.binread(entry))
@@ -847,7 +847,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     mail = OpenStruct.new
     mail.from_display_name = parsed_incoming_mail[:from_display_name]
     mail.subject = parsed_incoming_mail[:subject]
-    mail.msg_size = format('%.2f', raw_incoming_mail.size.to_f / 1024 / 1024)
+    mail.msg_size = format('%<MB>.2f', MB: raw_incoming_mail.size.to_f / 1024 / 1024)
 
     reply = NotificationFactory::Mailer.template(
       template:   'email_oversized',

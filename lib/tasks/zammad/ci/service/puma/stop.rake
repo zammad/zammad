@@ -7,9 +7,9 @@ namespace :zammad do
       namespace :puma do
 
         desc 'Stops the puma application webserver'
-        task :stop do
+        task :stop do # rubocop:disable Rails/RakeEnvironment
 
-          file = Rails.root.join('tmp', 'pids', 'server.pid')
+          file = Rails.root.join('tmp/pids/server.pid')
           pid  = File.read(file).to_i
 
           Process.kill('SIGTERM', pid)

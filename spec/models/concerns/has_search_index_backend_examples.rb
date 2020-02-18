@@ -1,6 +1,6 @@
 RSpec.shared_examples 'HasSearchIndexBackend' do |indexed_factory:|
 
-  context '#search_index_update', performs_jobs: true do
+  describe '#search_index_update', performs_jobs: true do
     subject { create(indexed_factory) }
 
     before do

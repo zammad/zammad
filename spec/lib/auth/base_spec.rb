@@ -6,7 +6,7 @@ RSpec.describe Auth::Base do
   let(:user) { create(:user) }
   let(:instance) { described_class.new({ adapter: described_class.name }) }
 
-  context '#valid?' do
+  describe '#valid?' do
     it_behaves_like 'Auth backend'
 
     it "requires an implementation of the 'valid?' method" do

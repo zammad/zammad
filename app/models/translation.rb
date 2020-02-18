@@ -246,15 +246,15 @@ or
     record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pluck(:target).first
     return timestamp.to_s if !record
 
-    record.sub!('dd', format('%02d', timestamp.day))
+    record.sub!('dd', format('%<day>02d', day: timestamp.day))
     record.sub!('d', timestamp.day.to_s)
-    record.sub!('mm', format('%02d', timestamp.month))
+    record.sub!('mm', format('%<month>02d', month: timestamp.month))
     record.sub!('m', timestamp.month.to_s)
     record.sub!('yyyy', timestamp.year.to_s)
     record.sub!('yy', timestamp.year.to_s.last(2))
-    record.sub!('SS', format('%02d', timestamp.sec.to_s))
-    record.sub!('MM', format('%02d', timestamp.min.to_s))
-    record.sub!('HH', format('%02d', timestamp.hour.to_s))
+    record.sub!('SS', format('%<second>02d', second: timestamp.sec.to_s))
+    record.sub!('MM', format('%<minute>02d', minute: timestamp.min.to_s))
+    record.sub!('HH', format('%<hour>02d', hour: timestamp.hour.to_s))
     "#{record} (#{timezone})"
   end
 
@@ -288,9 +288,9 @@ or
     record = Translation.where(locale: locale, source: 'date', format: 'time').pluck(:target).first
     return date.to_s if !record
 
-    record.sub!('dd', format('%02d', date.day))
+    record.sub!('dd', format('%<day>02d', day: date.day))
     record.sub!('d', date.day.to_s)
-    record.sub!('mm', format('%02d', date.month))
+    record.sub!('mm', format('%<month>02d', month: date.month))
     record.sub!('m', date.month.to_s)
     record.sub!('yyyy', date.year.to_s)
     record.sub!('yy', date.year.to_s.last(2))
@@ -313,7 +313,7 @@ all:
 
   def self.load_from_file(dedicated_locale = nil)
     version = Version.get
-    directory = Rails.root.join('config', 'translations')
+    directory = Rails.root.join('config/translations')
     locals_to_sync(dedicated_locale).each do |locale|
       file = Rails.root.join(directory, "#{locale}-#{version}.yml")
       return false if !File.exist?(file)
@@ -358,7 +358,7 @@ all:
       )
       raise "Can't load translations from #{url}: #{result.error}" if !result.success?
 
-      directory = Rails.root.join('config', 'translations')
+      directory = Rails.root.join('config/translations')
       if !File.directory?(directory)
         Dir.mkdir(directory, 0o755)
       end

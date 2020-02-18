@@ -1,4 +1,4 @@
-Dir[ Rails.root.join('lib', 'omniauth', '*') ].each do |file|
+Dir[ Rails.root.join('lib/omniauth/*') ].sort.each do |file|
   if File.file?(file)
     require file
   end

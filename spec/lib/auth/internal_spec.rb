@@ -7,7 +7,7 @@ RSpec.describe Auth::Internal do
   let(:user) { create(:user, password: password) }
   let(:instance) { described_class.new({ adapter: described_class.name }) }
 
-  context '#valid?' do
+  describe '#valid?' do
     it_behaves_like 'Auth backend'
 
     it 'authenticates via password' do

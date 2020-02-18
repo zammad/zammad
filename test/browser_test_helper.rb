@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable HandleExceptions, NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
+# rubocop:disable Lint/SuppressedException, Lint/NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
 require File.expand_path('../config/environment', __dir__)
 require 'selenium-webdriver'
 require 'json'
@@ -1475,7 +1475,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
               return true
             end
           end
-        rescue
+        rescue # rubocop:disable Lint/SuppressedException
           # try again
         end
       end
@@ -1537,7 +1537,7 @@ wait untill text in selector disabppears
             sleep 1
             return true
           end
-        rescue
+        rescue # rubocop:disable Lint/SuppressedException
           # try again
         end
       end
@@ -1700,7 +1700,7 @@ wait untill text in selector disabppears
         else
           break
         end
-      rescue
+      rescue # rubocop:disable Lint/SuppressedException
         # try again
       end
     end
@@ -2542,7 +2542,7 @@ wait untill text in selector disabppears
           if text.match?(/(Discard your unsaved changes.|Verwerfen der)/)
             found = true
           end
-        rescue
+        rescue # rubocop:disable Lint/SuppressedException
           # try again
         end
         sleep 1
@@ -2580,7 +2580,7 @@ wait untill text in selector disabppears
           sleep 1
           return true
         end
-      rescue
+      rescue # rubocop:disable Lint/SuppressedException
         # try again
       end
       sleep 1
@@ -4485,7 +4485,7 @@ wait untill text in selector disabppears
           puts "#{time}/#{log.level}: #{log.message}"
         end
       end
-    rescue
+    rescue # rubocop:disable Lint/SuppressedException
       # failed to get logs
     end
     return if !DEBUG

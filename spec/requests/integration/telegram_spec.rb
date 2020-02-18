@@ -133,6 +133,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           post '/api/v1/channels_telegram_webhook', params: read_message('private', 'start'), as: :json
           expect(response).to have_http_status(:not_found)
         end
+
         it 'bot id is missing' do
           post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('private', 'start'), as: :json
           expect(response).to have_http_status(:unprocessable_entity)

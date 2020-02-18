@@ -1,6 +1,6 @@
 module NotificationFactory
-  TEMPLATE_PATH_STRING = Rails.root.join('app', 'views', '%<type>s', '%<template>s', '%<filename>s').to_s.freeze
-  APPLICATION_TEMPLATE_PATH_STRING = Rails.root.join('app', 'views', '%<type>s', 'application.%<format>s.erb').to_s.freeze
+  TEMPLATE_PATH_STRING = Rails.root.join('app/views/%<type>s/%<template>s/%<filename>s').to_s.freeze
+  APPLICATION_TEMPLATE_PATH_STRING = Rails.root.join('app/views/%<type>s/application.%<format>s.erb').to_s.freeze
 
 =begin
 

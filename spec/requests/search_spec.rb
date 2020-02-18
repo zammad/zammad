@@ -66,7 +66,7 @@ RSpec.describe 'Search', type: :request, searchindex: true do
     Store.add(
       object:        'Ticket::Article',
       o_id:          article.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
       filename:      'es-normal.txt',
       preferences:   {},
       created_by_id: 1,

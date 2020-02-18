@@ -8,7 +8,7 @@ RSpec.describe NotificationFactory do
     let(:rendered_locale) { 'en' }
     let(:parsed_template) { { subject: template_lines.first, body: template_lines.drop(1).join } }
     let(:template_lines) { File.readlines(template_path) }
-    let(:template_path) { Rails.root.join('app', 'views', 'mailer', 'signup', "#{rendered_locale}.html.erb") }
+    let(:template_path) { Rails.root.join("app/views/mailer/signup/#{rendered_locale}.html.erb") }
 
     let(:read_params) do
       { type: 'mailer', template: 'signup', locale: 'en', format: 'html' }
@@ -89,7 +89,7 @@ RSpec.describe NotificationFactory do
 
   describe '::application_template_read' do
     let(:read_params) { { type: 'mailer', format: 'html' } }
-    let(:template_path) { Rails.root.join('app', 'views', 'mailer', 'application.html.erb') }
+    let(:template_path) { Rails.root.join('app/views/mailer/application.html.erb') }
 
     it 'returns template file content as string' do
       expect(described_class.application_template_read(read_params))

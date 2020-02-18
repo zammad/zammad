@@ -1,5 +1,5 @@
 # require all database migrations so we can test them without manual require
-Rails.root.join('db', 'migrate').children.each do |migration|
+Rails.root.join('db/migrate').children.each do |migration|
   require migration.to_s
 end
 

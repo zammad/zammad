@@ -308,7 +308,7 @@ end
 
 def es_version_supported?
   version_split = es_version.split('.')
-  version       = "#{version_split[0]}#{format('%03d', version_split[1])}#{format('%03d', version_split[2])}".to_i
+  version       = "#{version_split[0]}#{format('%<minor>03d', minor: version_split[1])}#{format('%<patch>03d', patch: version_split[2])}".to_i
 
   # only versions greater/equal than 5.6.0 are supported
   return if version < 5_006_000

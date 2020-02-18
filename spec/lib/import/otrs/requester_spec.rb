@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Import::OTRS::Requester do
 
-  context '.list' do
+  describe '.list' do
     it 'responds to list' do
       expect(described_class).to respond_to(:list)
     end
   end
 
-  context '.load' do
+  describe '.load' do
 
     it 'responds to load' do
       expect(described_class).to respond_to(:load)
@@ -39,7 +39,7 @@ RSpec.describe Import::OTRS::Requester do
     end
   end
 
-  context '.connection_test' do
+  describe '.connection_test' do
     it 'responds to connection_test' do
       expect(described_class).to respond_to(:connection_test)
     end

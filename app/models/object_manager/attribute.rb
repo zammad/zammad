@@ -25,7 +25,7 @@ class ObjectManager::Attribute < ApplicationModel
   belongs_to :object_lookup, optional: true
 
   validates :name, presence: true
-  validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
+  validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' } # rubocop:disable Style/FormatStringToken
   validate :data_option_must_have_appropriate_values
   validate :data_type_must_not_change, on: :update
 

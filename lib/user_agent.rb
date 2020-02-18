@@ -68,7 +68,7 @@ returns
       end
     rescue => e
       log(url, request, nil, options)
-      return Result.new(
+      Result.new(
         error:   e.inspect,
         success: false,
         code:    0,
@@ -124,7 +124,7 @@ returns
       end
     rescue => e
       log(url, request, nil, options)
-      return Result.new(
+      Result.new(
         error:   e.inspect,
         success: false,
         code:    0,
@@ -179,7 +179,7 @@ returns
       end
     rescue => e
       log(url, request, nil, options)
-      return Result.new(
+      Result.new(
         error:   e.inspect,
         success: false,
         code:    0,
@@ -226,7 +226,7 @@ returns
       end
     rescue => e
       log(url, request, nil, options)
-      return Result.new(
+      Result.new(
         error:   e.inspect,
         success: false,
         code:    0,

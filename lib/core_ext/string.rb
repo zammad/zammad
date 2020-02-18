@@ -60,7 +60,7 @@ class String
 =end
 
   def to_filename
-    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    camel_cased_word = dup
     camel_cased_word.gsub(/::/, '/')
                     .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
                     .gsub(/([a-z\d])([A-Z])/, '\1_\2')
@@ -77,7 +77,7 @@ class String
 =end
 
   def to_classname
-    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    camel_cased_word = dup
     camel_cased_word.gsub!(/\.rb$/, '')
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
@@ -109,7 +109,7 @@ class String
 =end
 
   def html2text(string_only = false, strict = false)
-    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    string = dup
 
     # in case of invalid encoding, strip invalid chars
     # see also test/data/mail/mail021.box
@@ -322,7 +322,7 @@ class String
 =end
 
   def html2html_strict
-    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    string = dup
     string = HtmlSanitizer.cleanup_replace_tags(string)
     string = HtmlSanitizer.strict(string, true).strip
     string = HtmlSanitizer.cleanup(string).strip

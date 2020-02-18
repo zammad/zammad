@@ -58,7 +58,7 @@ fetch one account
       self.last_log_in = result[:notice]
       preferences[:last_fetch] = Time.zone.now
       save!
-      return true
+      true
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
@@ -67,7 +67,7 @@ fetch one account
       self.last_log_in = error
       preferences[:last_fetch] = Time.zone.now
       save!
-      return false
+      false
     end
   end
 
@@ -98,7 +98,7 @@ stream instance of account
 
       # set scheduler job to active
 
-      return driver_instance
+      driver_instance
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error

@@ -9,7 +9,7 @@ class Twitter::Streaming::ConnectionCustom < Twitter::Streaming::Connection
 
     ssl_client.connect
     request.stream(ssl_client)
-    while body = ssl_client.readpartial(1024) # rubocop:disable AssignmentInCondition
+    while body = ssl_client.readpartial(1024) # rubocop:disable Lint/AssignmentInCondition
       response << body
     end
   end

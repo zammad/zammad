@@ -7,7 +7,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
     let(:group_role) { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
 
-    context '#role_access?' do
+    describe '#role_access?' do
 
       it 'responds to role_access?' do
         expect(subject).to respond_to(:role_access?)
@@ -57,7 +57,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
       end
     end
 
-    context '.role_access_ids' do
+    describe '.role_access_ids' do
 
       before do
         role.group_names_access_map = {
@@ -115,7 +115,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
         }
       end
 
-      context '#group_access?' do
+      describe '#group_access?' do
 
         it 'falls back to #role_access?' do
           expect(subject).to receive(:role_access?)
@@ -128,7 +128,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
         end
       end
 
-      context '#group_ids_access' do
+      describe '#group_ids_access' do
 
         before do
           role.group_names_access_map = {
@@ -198,7 +198,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
         end
       end
 
-      context '.group_access_ids' do
+      describe '.group_access_ids' do
 
         it 'includes the result of .role_access_ids' do
           result = described_class.group_access_ids(group_role, 'read')

@@ -93,7 +93,7 @@ Oversized Email Message Body #{'#' * 120_000}
 ".gsub(/\n/, "\r\n")
 
     large_message_md5 = Digest::MD5.hexdigest(large_message)
-    large_message_size = format('%.2f', large_message.size.to_f / 1024 / 1024)
+    large_message_size = format('%<MB>.2f', MB: large_message.size.to_f / 1024 / 1024)
 
     imap.append(@folder, large_message, [], Time.zone.now)
 
@@ -101,7 +101,7 @@ Oversized Email Message Body #{'#' * 120_000}
 
     # 1. verify that the oversized email has been saved locally to:
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
-    path = Rails.root.join('tmp', 'oversized_mail')
+    path = Rails.root.join('tmp/oversized_mail')
     target_files = Dir.entries(path).select do |filename|
       filename =~ /^#{large_message_md5}\.eml$/
     end
@@ -111,7 +111,7 @@ Oversized Email Message Body #{'#' * 120_000}
     target_file = target_files.max
 
     # verify that the file is byte for byte identical to the sent message
-    file_path = Rails.root.join('tmp', 'oversized_mail', target_file)
+    file_path = Rails.root.join('tmp/oversized_mail', target_file)
     eml_data = File.read(file_path)
     assert_equal(large_message, eml_data)
 
@@ -181,7 +181,7 @@ Oversized Email Message Body #{'#' * 120_000}
 
     # 1. verify that the oversized email has been saved locally to:
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
-    path = Rails.root.join('tmp', 'oversized_mail')
+    path = Rails.root.join('tmp/oversized_mail')
     target_files = Dir.entries(path).select do |filename|
       filename =~ /^.+?\.eml$/
     end

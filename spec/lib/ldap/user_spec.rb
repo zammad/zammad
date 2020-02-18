@@ -8,7 +8,7 @@ RSpec.describe Ldap::User do
 
   let(:mocked_ldap) { double() }
 
-  context '.uid_attribute' do
+  describe '.uid_attribute' do
 
     it 'responds to .uid_attribute' do
       expect(described_class).to respond_to(:uid_attribute)
@@ -86,7 +86,7 @@ RSpec.describe Ldap::User do
       described_class.new(initialization_config, ldap: mocked_ldap)
     end
 
-    context '#valid?' do
+    describe '#valid?' do
 
       it 'responds to #valid?' do
         expect(instance).to respond_to(:valid?)
@@ -117,7 +117,7 @@ RSpec.describe Ldap::User do
       end
     end
 
-    context '#attributes' do
+    describe '#attributes' do
 
       it 'responds to #attributes' do
         expect(instance).to respond_to(:attributes)
@@ -146,7 +146,7 @@ RSpec.describe Ldap::User do
       end
     end
 
-    context '#filter' do
+    describe '#filter' do
 
       let(:initialization_config) do
         {
@@ -169,7 +169,7 @@ RSpec.describe Ldap::User do
       end
     end
 
-    context '#uid_attribute' do
+    describe '#uid_attribute' do
 
       let(:initialization_config) do
         {

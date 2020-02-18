@@ -214,7 +214,7 @@ RSpec.describe Ldap do
       )
     end
 
-    context '#preferences' do
+    describe '#preferences' do
 
       it 'responds to #preferences' do
         expect(instance).to respond_to(:preferences)
@@ -231,7 +231,7 @@ RSpec.describe Ldap do
       end
     end
 
-    context '#search' do
+    describe '#search' do
 
       let(:base) { 'DC=domain,DC=tld' }
       let(:filter) { '(objectClass=user)' }
@@ -307,7 +307,7 @@ RSpec.describe Ldap do
       end
     end
 
-    context '#entries?' do
+    describe '#entries?' do
 
       let(:filter) { '(objectClass=user)' }
 

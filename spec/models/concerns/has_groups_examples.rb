@@ -6,7 +6,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     let(:group_read) { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
 
-    context '.group_through_identifier' do
+    describe '.group_through_identifier' do
 
       it 'responds to group_through_identifier' do
         expect(described_class).to respond_to(:group_through_identifier)
@@ -21,7 +21,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '.group_through' do
+    describe '.group_through' do
 
       it 'responds to group_through' do
         expect(described_class).to respond_to(:group_through)
@@ -32,13 +32,13 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#groups' do
+    describe '#groups' do
 
       it 'responds to groups' do
         expect(subject).to respond_to(:groups)
       end
 
-      context '#groups.access' do
+      describe '#groups.access' do
 
         it 'responds to groups.access' do
           expect(subject.groups).to respond_to(:access)
@@ -77,7 +77,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_access?' do
+    describe '#group_access?' do
 
       before do
         subject.group_names_access_map = {
@@ -120,7 +120,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_ids_access' do
+    describe '#group_ids_access' do
 
       before do
         subject.group_names_access_map = {
@@ -179,7 +179,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#groups_access' do
+    describe '#groups_access' do
 
       it 'responds to groups_access' do
         expect(subject).to respond_to(:groups_access)
@@ -199,7 +199,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_names_access_map=' do
+    describe '#group_names_access_map=' do
 
       it 'responds to group_names_access_map=' do
         expect(subject).to respond_to(:group_names_access_map=)
@@ -300,7 +300,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_names_access_map' do
+    describe '#group_names_access_map' do
 
       it 'responds to group_names_access_map' do
         expect(subject).to respond_to(:group_names_access_map)
@@ -341,7 +341,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_ids_access_map=' do
+    describe '#group_ids_access_map=' do
 
       it 'responds to group_ids_access_map=' do
         expect(subject).to respond_to(:group_ids_access_map=)
@@ -424,7 +424,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#group_ids_access_map' do
+    describe '#group_ids_access_map' do
 
       it 'responds to group_ids_access_map' do
         expect(subject).to respond_to(:group_ids_access_map)
@@ -465,7 +465,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#associations_from_param' do
+    describe '#associations_from_param' do
 
       it 'handles group_ids parameter as group_ids_access_map' do
         expected = {
@@ -488,7 +488,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#attributes_with_association_ids' do
+    describe '#attributes_with_association_ids' do
 
       it 'includes group_ids as group_ids_access_map' do
         expected = {
@@ -503,7 +503,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '#attributes_with_association_names' do
+    describe '#attributes_with_association_names' do
 
       it 'includes group_ids as group_ids_access_map' do
         expected = {
@@ -530,7 +530,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '.group_access' do
+    describe '.group_access' do
 
       before do
         subject.group_names_access_map = {
@@ -566,7 +566,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
-    context '.group_access_ids' do
+    describe '.group_access_ids' do
 
       it 'responds to group_access_ids' do
         expect(described_class).to respond_to(:group_access_ids)

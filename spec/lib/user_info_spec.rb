@@ -45,7 +45,7 @@ RSpec.describe UserInfo do
         described_class.ensure_current_user_id do
           raise 'error'
         end
-      rescue # rubocop:disable Lint/HandleExceptions
+      rescue # rubocop:disable Lint/SuppressedException
       end
 
       expect(described_class.current_user_id).to be nil

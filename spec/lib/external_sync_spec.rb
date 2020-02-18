@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ExternalSync do
 
-  context '#changed?' do
+  describe '#changed?' do
 
     it 'keeps ActiveRecord instance unchanged on local but no remote changes' do
       object           = create(:group)
@@ -68,7 +68,7 @@ RSpec.describe ExternalSync do
 
   end
 
-  context '#map' do
+  describe '#map' do
     it 'maps to symbol keys' do
       mapping = {
         'key' => 'key'

@@ -5,7 +5,7 @@ namespace :zammad do
     namespace :test do
 
       desc 'Prepares Zammad system for CI env'
-      task :prepare, [:elasticsearch] do |_task, args|
+      task :prepare, [:elasticsearch] do |_task, args| # rubocop:disable Rails/RakeEnvironment
         ENV['RAILS_ENV'] ||= 'production'
         ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = 'true'
         # we have to enforce the env

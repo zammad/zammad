@@ -7,7 +7,7 @@ namespace :zammad do
       namespace :websocket do
 
         desc 'Stops the websocket server'
-        task :stop do
+        task :stop do # rubocop:disable Rails/RakeEnvironment
 
           command = [
             'bundle',

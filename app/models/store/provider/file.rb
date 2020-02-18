@@ -79,7 +79,7 @@ class Store::Provider::File
   def self.get_location(sha)
 
     # generate directory
-    base = Rails.root.join('storage', 'fs').to_s
+    base = Rails.root.join('storage/fs').to_s
     parts = []
     length1 = 4
     length2 = 5

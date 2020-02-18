@@ -143,7 +143,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object:        'Ticket::Article',
       o_id:          article1.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
       filename:      'es-normal.txt',
       preferences:   {},
       created_by_id: 1,
@@ -205,7 +205,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object:        'Ticket::Article',
       o_id:          article1.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-normal.txt')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
       filename:      'es-normal.txt',
       preferences:   {},
       created_by_id: 1,
@@ -216,7 +216,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object:        'Ticket::Article',
       o_id:          article1.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-pdf1.pdf')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-pdf1.pdf')),
       filename:      'es-pdf1.pdf',
       preferences:   {},
       created_by_id: 1,
@@ -227,7 +227,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object:        'Ticket::Article',
       o_id:          article1.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-box1.box')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-box1.box')),
       filename:      'mail1.box',
       preferences:   {},
       created_by_id: 1,
@@ -238,7 +238,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object:        'Ticket::Article',
       o_id:          article1.id,
-      data:          File.binread(Rails.root.join('test', 'data', 'elasticsearch', 'es-too-big.txt')),
+      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-too-big.txt')),
       filename:      'es-too-big.txt',
       preferences:   {},
       created_by_id: 1,

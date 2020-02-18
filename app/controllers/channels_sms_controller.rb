@@ -66,7 +66,7 @@ class ChannelsSmsController < ApplicationChannelController
 
   def channels_config
     list = []
-    Dir.glob(Rails.root.join('app', 'models', 'channel', 'driver', 'sms', '*.rb')).each do |path|
+    Dir.glob(Rails.root.join('app/models/channel/driver/sms/*.rb')).each do |path|
       filename = File.basename(path)
       require_dependency "channel/driver/sms/#{filename.sub('.rb', '')}"
       list.push Channel.driver_class("sms/#{filename}").definition

@@ -17,8 +17,8 @@ class ActiveSupport::TestCase
   Cache.clear
 
   # load seeds
-  load Rails.root.join('db', 'seeds.rb')
-  load Rails.root.join('test', 'fixtures', 'seeds.rb')
+  load Rails.root.join('db/seeds.rb')
+  load Rails.root.join('test/fixtures/seeds.rb')
 
   # set system mode to done / to activate
   Setting.set('system_init_done', true)

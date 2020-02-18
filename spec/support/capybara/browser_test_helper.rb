@@ -71,7 +71,7 @@ module BrowserTestHelper
       self.until do
 
         yield
-      rescue Capybara::ElementNotFound # rubocop:disable Lint/HandleExceptions
+      rescue Capybara::ElementNotFound # rubocop:disable Lint/SuppressedException
 
       end
     rescue Selenium::WebDriver::Error::TimeOutError => e

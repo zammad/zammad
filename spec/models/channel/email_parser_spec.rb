@@ -689,11 +689,6 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'creates a new ticket'
           end
 
-          context 'when image/jpg attachment contains ticket reference' do
-            include_context 'ticket reference in image/jpg attachment'
-            include_examples 'creates a new ticket'
-          end
-
           context 'when In-Reply-To header contains article message-id' do
             include_context 'ticket reference in In-Reply-To header'
             include_examples 'adds message to ticket'
@@ -847,7 +842,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'formatting to/from addresses' do
       # see https://github.com/zammad/zammad/issues/2198
       context 'when sender address contains spaces (#2198)' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail071.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail071.box') }
         let(:sender_email) { 'powerquadrantsystem@example.com' }
 
         it 'removes them before creating a new user' do
@@ -867,7 +862,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
       # see https://github.com/zammad/zammad/issues/2254
       context 'when sender address contains > (#2254)' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail076.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail076.box') }
         let(:sender_email) { 'millionslotteryspaintransfer@example.com' }
 
         it 'removes them before creating a new user' do
@@ -897,7 +892,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       HEADER
 
       context 'for emails from an unrecognized email address' do
-        let(:message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_1.txt') }
+        let(:message_file) { Rails.root.join('test/data/email_signature_detection/client_a_1.txt') }
 
         it 'does not detect signatures' do
           described_class.new.process({}, raw_mail)
@@ -913,9 +908,9 @@ RSpec.describe Channel::EmailParser, type: :model do
           described_class.new.process({}, header + File.read(previous_message_file))
         end
 
-        let(:previous_message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_1.txt') }
+        let(:previous_message_file) { Rails.root.join('test/data/email_signature_detection/client_a_1.txt') }
 
-        let(:message_file) { Rails.root.join('test', 'data', 'email_signature_detection', 'client_a_2.txt') }
+        let(:message_file) { Rails.root.join('test/data/email_signature_detection/client_a_2.txt') }
 
         it 'sets detected signature on user (in a background job)' do
           described_class.new.process({}, raw_mail)
@@ -936,7 +931,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'charset handling' do
       # see https://github.com/zammad/zammad/issues/2224
       context 'when header specifies Windows-1258 charset (#2224)' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail072.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail072.box') }
 
         it 'does not raise Encoding::ConverterNotFoundError' do
           expect { described_class.new.process({}, raw_mail) }
@@ -945,7 +940,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       context 'when attachment for follow up check contains invalid charsets (#2808)' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail085.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail085.box') }
 
         before { Setting.set('postmaster_follow_up_search_in', %w[attachment body]) }
 
@@ -959,7 +954,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
     describe 'attachment handling' do
       context 'with header "Content-Transfer-Encoding: x-uuencode"' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail078-content_transfer_encoding_x_uuencode.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail078-content_transfer_encoding_x_uuencode.box') }
         let(:article) { described_class.new.process({}, raw_mail).second }
 
         it 'does not raise RuntimeError' do
@@ -977,7 +972,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'inline image handling' do
       # see https://github.com/zammad/zammad/issues/2486
       context 'when image is large but not resizable' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail079.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail079.box') }
         let(:attachment) { article.attachments.to_a.find { |i| i.filename == 'a.jpg' } }
         let(:article) { described_class.new.process({}, raw_mail).second }
 
@@ -1026,7 +1021,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       let(:message_id) { raw_mail[/(?<=^(References|Message-ID): )\S*/] }
 
       context 'with future retries (delayed)' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail078.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail078.box') }
 
         context 'on a closed ticket' do
           before { ticket.update(state: Ticket::State.find_by(name: 'closed')) }
@@ -1055,7 +1050,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       context 'with no future retries (undeliverable): sample input 1' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail033-undelivered-mail-returned-to-sender.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail033-undelivered-mail-returned-to-sender.box') }
 
         context 'for original message sent by Agent' do
           it 'sets #preferences on resulting ticket to { "send-auto-responses" => false, "is-auto-reponse" => true }' do
@@ -1097,7 +1092,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       context 'with no future retries (undeliverable): sample input 2' do
-        let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail055.box') }
+        let(:mail_file) { Rails.root.join('test/data/mail/mail055.box') }
 
         it 'finds the article referenced in the bounce message headers, then adds the bounce message to its ticket' do
           expect { described_class.new.process({}, raw_mail) }
@@ -1181,67 +1176,7 @@ RSpec.describe Channel::EmailParser, type: :model do
   end
 
   describe '#compose_postmaster_reply' do
-    let(:raw_incoming_mail) { File.read(Rails.root.join('test', 'data', 'mail', 'mail010.box')) }
-
-    shared_examples 'postmaster reply' do
-      it 'composes postmaster reply' do
-        reply = described_class.new.send(:compose_postmaster_reply, raw_incoming_mail, locale)
-        expect(reply[:to]).to eq('smith@example.com')
-        expect(reply[:content_type]).to eq('text/plain')
-        expect(reply[:subject]).to eq(expected_subject)
-        expect(reply[:body]).to eq(expected_body)
-      end
-    end
-
-    context 'for English locale (en)' do
-      include_examples 'postmaster reply' do
-        let(:locale) { 'en' }
-        let(:expected_subject) { '[undeliverable] Message too large' }
-        let(:expected_body) do
-          body = <<~BODY
-            Dear Smith Sepp,
-
-            Unfortunately your email titled \"Gruß aus Oberalteich\" could not be delivered to one or more recipients.
-
-            Your message was 0.01 MB but we only accept messages up to 10 MB.
-
-            Please reduce the message size and try again. Thank you for your understanding.
-
-            Regretfully,
-
-            Postmaster of zammad.example.com
-          BODY
-          body.gsub(/\n/, "\r\n")
-        end
-      end
-    end
-
-    context 'for German locale (de)' do
-      include_examples 'postmaster reply' do
-        let(:locale) { 'de' }
-        let(:expected_subject) { '[Unzustellbar] Nachricht zu groß' }
-        let(:expected_body) do
-          body = <<~BODY
-            Hallo Smith Sepp,
-
-            Ihre E-Mail mit dem Betreff \"Gruß aus Oberalteich\" konnte nicht an einen oder mehrere Empfänger zugestellt werden.
-
-            Die Nachricht hatte eine Größe von 0.01 MB, wir akzeptieren jedoch nur E-Mails mit einer Größe von bis zu 10 MB.
-
-            Bitte reduzieren Sie die Größe Ihrer Nachricht und versuchen Sie es erneut. Vielen Dank für Ihr Verständnis.
-
-            Mit freundlichen Grüßen
-
-            Postmaster von zammad.example.com
-          BODY
-          body.gsub(/\n/, "\r\n")
-        end
-      end
-    end
-  end
-
-  describe '#compose_postmaster_reply' do
-    let(:raw_incoming_mail) { File.read(Rails.root.join('test', 'data', 'mail', 'mail010.box')) }
+    let(:raw_incoming_mail) { File.read(Rails.root.join('test/data/mail/mail010.box')) }
 
     shared_examples 'postmaster reply' do
       it 'composes postmaster reply' do

@@ -66,7 +66,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
     end
 
     it 'does test attachments for split' do
-      email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
+      email_file_path  = Rails.root.join('test/data/mail/mail024.box')
       email_raw_string = File.read(email_file_path)
       ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
@@ -81,7 +81,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
     end
 
     it 'does test attachments for forward' do
-      email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail008.box')
+      email_file_path  = Rails.root.join('test/data/mail/mail008.box')
       email_raw_string = File.read(email_file_path)
       _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
@@ -96,7 +96,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       expect(json_response['attachments']).to be_a_kind_of(Array)
       expect(json_response['attachments']).to be_blank
 
-      email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
+      email_file_path  = Rails.root.join('test/data/mail/mail024.box')
       email_raw_string = File.read(email_file_path)
       _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 

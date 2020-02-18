@@ -46,7 +46,7 @@ RSpec.describe Calendar, type: :model do
 
     describe '#public_holidays' do
       subject(:calendar) do
-        create(:calendar, ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'))
+        create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'))
       end
 
       before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
@@ -63,7 +63,7 @@ RSpec.describe Calendar, type: :model do
 
         context 'with one-time and n-time (recurring) events' do
           subject(:calendar) do
-            create(:calendar, ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar3.ics'))
+            create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar3.ics'))
           end
 
           it 'accurately computes/imports events' do
@@ -87,7 +87,7 @@ RSpec.describe Calendar, type: :model do
 
   describe '#sync' do
     subject(:calendar) do
-      create(:calendar, ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'), default: false)
+      create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'), default: false)
     end
 
     before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
@@ -106,6 +106,7 @@ RSpec.describe Calendar, type: :model do
           expect { calendar.sync }
             .not_to change(calendar, :public_holidays)
         end
+
         it 'does not create a background job for escalation rebuild' do
           calendar  # create and sync (1 inital background job is created)
           expect { calendar.sync } # a second sync right after calendar create
@@ -123,6 +124,7 @@ RSpec.describe Calendar, type: :model do
           expect { calendar.sync }
             .not_to change(calendar, :public_holidays)
         end
+
         it 'does not create a background job for escalation rebuild' do
           expect { calendar.sync }
             .not_to change { Delayed::Job.count }
@@ -152,7 +154,7 @@ RSpec.describe Calendar, type: :model do
       end
 
       context 'and iCal URL has changed' do
-        before { calendar.assign_attributes(ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar2.ics')) }
+        before { calendar.assign_attributes(ical_url: Rails.root.join('test/data/calendar/calendar2.ics')) }
 
         it 'replaces #public_holidays with event data computed from new iCal URL' do
           expect { calendar.save }

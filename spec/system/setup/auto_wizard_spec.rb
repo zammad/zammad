@@ -5,7 +5,7 @@ RSpec.describe 'Auto wizard', type: :system, set_up: false do
   it 'Automatic setup and login' do
 
     FileUtils.ln(
-      Rails.root.join('contrib', 'auto_wizard_test.json'),
+      Rails.root.join('contrib/auto_wizard_test.json'),
       Rails.root.join('auto_wizard.json'),
       force: true
     )

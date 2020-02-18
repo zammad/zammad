@@ -462,10 +462,10 @@ returns
     return if message.blank?
 
     begin
-      return JSON.parse(message)
+      JSON.parse(message)
     rescue => e
       log('error', "can't parse queue message: #{message}, #{e.inspect}")
-      return
+      nil
     end
   end
 

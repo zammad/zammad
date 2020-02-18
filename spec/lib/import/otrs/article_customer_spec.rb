@@ -48,14 +48,14 @@ RSpec.describe Import::OTRS::ArticleCustomer do
     expect(User.last.login).to eq('user@example.com')
   end
 
-  context '.find' do
+  describe '.find' do
 
     it 'returns nil if no email could be found' do
       expect(described_class.find({})).to be nil
     end
   end
 
-  context '.local_email' do
+  describe '.local_email' do
 
     it 'returns nil if no email could be found' do
       expect(described_class.local_email(nil)).to be nil

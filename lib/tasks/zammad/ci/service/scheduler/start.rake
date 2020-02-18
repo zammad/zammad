@@ -7,7 +7,7 @@ namespace :zammad do
       namespace :scheduler do
 
         desc 'Starts the scheduler'
-        task :start do
+        task :start do # rubocop:disable Rails/RakeEnvironment
 
           command = [
             'bundle',

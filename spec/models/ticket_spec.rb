@@ -924,7 +924,7 @@ RSpec.describe Ticket, type: :model do
       context 'when ticket is generated from email (with attachments)' do
         subject(:ticket) { Channel::EmailParser.new.process({}, raw_email).first }
 
-        let(:raw_email) { File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box')) }
+        let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail001.box')) }
 
         it 'adds attachments to the Store{::File,::Provider::DB} tables' do
           expect { ticket }
@@ -965,9 +965,7 @@ RSpec.describe Ticket, type: :model do
                 .and change { Store::File.count }.by(0)
                 .and change { Store::Provider::DB.count }.by(0)
             end
-          end
 
-          context 'when only the duplicate ticket is destroyed' do
             it 'deletes all related attachments' do
               duplicate.destroy
 

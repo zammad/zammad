@@ -46,7 +46,7 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
           it { is_expected.to be(false) }
         end
 
-        context 'and invalid regex (misused ? repeat operator)' do
+        context 'and invalid regex (unassociated wild card operator)' do
           let(:sender) { 'regex:*' }
 
           it { is_expected.to be(false) }
@@ -102,7 +102,7 @@ RSpec.describe Channel::Filter::Match::EmailRegex do
           ERR
         end
 
-        context 'and invalid regex (misused ? repeat operator)' do
+        context 'and invalid regex (unassociated wild card operator)' do
           let(:sender) { 'regex:*' }
 
           it { expect { subject }.to raise_error(<<~ERR.chomp) }

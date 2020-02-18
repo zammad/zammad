@@ -8,7 +8,7 @@ RSpec.describe ::Auth::Ldap do
   let(:password) { 'somepassword' }
   let(:instance) { described_class.new({ adapter: described_class.name }) }
 
-  context '#valid?' do
+  describe '#valid?' do
     it_behaves_like 'Auth backend'
 
     it 'authenticates users' do

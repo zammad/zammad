@@ -64,7 +64,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     end
 
     # unprocessable mail check
-    directory = Rails.root.join('tmp', 'unprocessable_mail').to_s
+    directory = Rails.root.join('tmp/unprocessable_mail').to_s
     if File.exist?(directory)
       count = 0
       Dir.glob("#{directory}/*.eml") do |_entry|
