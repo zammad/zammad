@@ -364,6 +364,19 @@ class App.UiElement.ticket_perform_action
       meta: meta || {}
     ))
     notificationElement.find('.js-recipient select').replaceWith(selection)
+
+    visibilitySelection = App.UiElement.select.render(
+      name: "#{name}::internal"
+      multiple: false
+      null: false
+      options: { true: 'internal', false: 'public' }
+      value: meta.internal || 'false'
+      class: 'form-control--small'
+      translate: true
+    )
+
+    notificationElement.find('.js-internal').html(visibilitySelection)
+
     notificationElement.find('.js-body div[contenteditable="true"]').ce(
       mode: 'richtext'
       placeholder: 'message'

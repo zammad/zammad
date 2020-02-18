@@ -1481,7 +1481,7 @@ result
       subject:       subject,
       content_type:  'text/html',
       body:          body,
-      internal:      false,
+      internal:      value['internal'] || false, # default to public if value was not set
       sender:        Ticket::Article::Sender.find_by(name: 'System'),
       type:          Ticket::Article::Type.find_by(name: 'email'),
       preferences:   {
@@ -1569,7 +1569,7 @@ result
       subject:       'SMS notification',
       to:            sms_recipients_to,
       body:          body,
-      internal:      true,
+      internal:      value['internal'] || false, # default to public if value was not set
       sender:        Ticket::Article::Sender.find_by(name: 'System'),
       type:          Ticket::Article::Type.find_by(name: 'sms'),
       preferences:   {

@@ -210,6 +210,95 @@ RSpec.describe Ticket, type: :model do
           end
         end
       end
+
+      context 'with a notification trigger' do
+        # https://github.com/zammad/zammad/issues/2782
+        #
+        # Notification triggers should log notification as private or public
+        # according to given configuration
+        let(:user) { create(:admin_user, mobile: '+37061010000') }
+
+        before { ticket.group.users << user }
+
+        let(:perform) do
+          {
+            notification_key => {
+              body:      'Old programmers never die. They just branch to a new address.',
+              recipient: 'ticket_agents',
+              subject:   'Old programmers never die. They just branch to a new address.'
+            }
+          }.deep_merge(additional_options).deep_stringify_keys
+        end
+
+        let(:notification_key) { "notification.#{notification_type}" }
+
+        shared_examples 'verify log visibility status' do
+          shared_examples 'notification trigger' do
+            it 'adds Ticket::Article' do
+              expect { ticket.perform_changes(perform, 'trigger', ticket, user) }
+                .to change { ticket.articles.count }.by(1)
+            end
+
+            it 'new Ticket::Article visibility reflects setting' do
+              ticket.perform_changes(perform, 'trigger', ticket, User.first)
+              new_article = ticket.articles.reload.last
+              expect(new_article.internal).to be target_internal_value
+            end
+          end
+
+          context 'when set to private' do
+            let(:additional_options) do
+              {
+                notification_key => {
+                  internal: true
+                }
+              }
+            end
+
+            let(:target_internal_value) { true }
+
+            it_behaves_like 'notification trigger'
+          end
+
+          context 'when set to internal' do
+            let(:additional_options) do
+              {
+                notification_key => {
+                  internal: false
+                }
+              }
+            end
+
+            let(:target_internal_value) { false }
+
+            it_behaves_like 'notification trigger'
+          end
+
+          context 'when no selection was made' do # ensure previously created triggers default to public
+            let(:additional_options) do
+              {}
+            end
+
+            let(:target_internal_value) { false }
+
+            it_behaves_like 'notification trigger'
+          end
+        end
+
+        context 'dispatching email' do
+          let(:notification_type) { :email }
+
+          include_examples 'verify log visibility status'
+        end
+
+        context 'dispatching SMS' do
+          let(:notification_type) { :sms }
+
+          before { create(:channel, area: 'Sms::Notification') }
+
+          include_examples 'verify log visibility status'
+        end
+      end
     end
 
     describe '#access?' do

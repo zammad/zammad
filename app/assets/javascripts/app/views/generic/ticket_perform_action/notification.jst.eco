@@ -1,4 +1,5 @@
 <div class="flex">
+  <div class="js-internal"></div>
   <div class="controls js-recipient u-positionOrigin">
     <select></select>
     <%- @Icon('arrow-down', 'dropdown-arrow') %>

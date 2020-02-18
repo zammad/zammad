@@ -49,6 +49,7 @@ test( "ticket_perform_action check", function() {
       },
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
         subject: 'some subject'
       },
@@ -100,6 +101,7 @@ test( "ticket_perform_action check", function() {
     ticket_perform_action2: {
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
         subject: 'some subject'
       },
@@ -135,6 +137,7 @@ test( "ticket_perform_action check", function() {
     ticket_perform_action2: {
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
         subject: 'some subject'
       },
@@ -148,6 +151,7 @@ test( "ticket_perform_action check", function() {
     ticket_perform_action3: {
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: 'ticket_owner',
         subject: 'some subject'
       },
@@ -171,6 +175,7 @@ test( "ticket_perform_action check", function() {
     ticket_perform_action2: {
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: 'ticket_customer',
         subject: 'some subject'
       },
@@ -184,6 +189,7 @@ test( "ticket_perform_action check", function() {
     ticket_perform_action3: {
       'notification.email': {
         body: 'some body',
+        internal: 'false',
         recipient: 'ticket_owner',
         subject: 'some subject'
       },
@@ -194,4 +200,88 @@ test( "ticket_perform_action check", function() {
   }
   deepEqual(params, test_params, 'form param check')
 
+  // set notification to internal
+  $('[data-attribute-name="ticket_perform_action2"] .js-internal select').val('true').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    ticket_perform_action1: {
+      'ticket.state_id': {
+        value: '2'
+      }
+    },
+    ticket_perform_action2: {
+      'notification.email': {
+        body: 'some body',
+        internal: 'true',
+        recipient: 'ticket_customer',
+        subject: 'some subject'
+      },
+      'ticket.priority_id': {
+        value: '2'
+      },
+      'ticket.state_id': {
+        value: '1'
+      },
+    },
+    ticket_perform_action3: {
+      'notification.email': {
+        body: 'some body',
+        internal: 'false',
+        recipient: 'ticket_owner',
+        subject: 'some subject'
+      },
+      'ticket.state_id': {
+        value: '3'
+      }
+    }
+  }
+  deepEqual(params, test_params, 'form param check')
+});
+
+// Test for backwards compatibility after issue is fixed https://github.com/zammad/zammad/issues/2782
+test( "ticket_perform_action backwards check after issue #2782", function() {
+  $('#forms').append('<hr><h1>ticket_perform_action check</h1><form id="form2"></form>')
+
+  var el = $('#form2')
+
+  var defaults = {
+    ticket_perform_action5: {
+      'notification.email': {
+        body: 'some body',
+        recipient: ['ticket_owner', 'ticket_customer'],
+        subject: 'some subject'
+      },
+    },
+  }
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'ticket_perform_action5',
+          display: 'TicketPerformAction5',
+          tag:     'ticket_perform_action',
+          null:    true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    ticket_perform_action5: {
+      'notification.email': {
+        body: 'some body',
+        internal: 'false',
+        recipient: ['ticket_owner', 'ticket_customer'],
+        subject: 'some subject'
+      },
+    }
+  }
+
+  deepEqual(params, test_params, 'form param check')
 });
