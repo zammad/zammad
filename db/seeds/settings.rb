@@ -72,7 +72,7 @@ Setting.create_if_not_exists(
   area:        'Core::Develop',
   description: 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
   options:     {},
-  state:       false,
+  state:       Rails.env.development?,
   preferences: { online_service_disable: true },
   frontend:    true
 )

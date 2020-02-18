@@ -6,7 +6,7 @@ RSpec.describe 'Ticket Create', type: :system do
   context 'when applying ticket templates' do
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
     it 'unavailable attributes do not get applied', authenticated: false do
-      user              = create(:agent_user)
+      user              = create(:agent_user, password: 'test')
       permitted_group   = create(:group)
       unpermitted_group = create(:group)
 
