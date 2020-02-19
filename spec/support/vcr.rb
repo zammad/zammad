@@ -53,8 +53,8 @@ module RSpec
     module VCRHelper
       def self.inject_advisory(example)
         # block argument is an #<RSpec::Expectations::ExpectationNotMetError>
-        define_method(:notify_failure) do |e|
-          super(e.exception(VCR_ADVISORY + e.message))
+        define_method(:notify_failure) do |e, options = {}|
+          super(e.exception(VCR_ADVISORY + e.message), options)
         end
 
         example.run
