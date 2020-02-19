@@ -86,22 +86,33 @@ class App.i18n
     _instance.mapTime
 
   @detectBrowserLocale: ->
-    return 'en-us' if !window.navigator.userLanguage && !window.navigator.language
-
     if window.navigator.languages
-      allLocales = App.Locale.all()
       for browserLocale in window.navigator.languages
-        for localAllLocale in allLocales
-          if browserLocale is localAllLocale.locale
-            return localAllLocale.locale
+        if local = @findLocalLocale(browserLocale)
+          return local
 
-      for browserLocale in window.navigator.languages
-        browserLocale = browserLocale.substr(0, 2)
-        for localAllLocale in allLocales
-          if browserLocale is localAllLocale.alias
-            return localAllLocale.locale
+    if window.navigator.language
+      if local = @findLocalLocale(window.navigator.language)
+        return local
 
-    window.navigator.userLanguage || window.navigator.language || 'en-us'
+    if window.navigator.userLanguage
+      if local = @findLocalLocale(window.navigator.userLanguage)
+        return local
+
+    return 'en-us'
+
+  @findLocalLocale: (given) ->
+    givenLower = given.toLowerCase()
+
+    for local in App.Locale.all()
+      if givenLower == local.locale.toLowerCase()
+        return local.locale.toLowerCase()
+
+    givenAlias = given.substr(0, 2).toLowerCase()
+
+    for local in App.Locale.all()
+      if givenAlias == local.alias.toLowerCase()
+        return local.locale.toLowerCase()
 
   @detectBrowserTimezone: ->
     return if !window.Intl

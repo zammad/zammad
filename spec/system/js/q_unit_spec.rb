@@ -24,6 +24,10 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
     async_q_unit_tests('core')
   end
 
+  it 'I18n' do
+    async_q_unit_tests('i18n')
+  end
+
   context 'UI' do
 
     it 'Base' do
