@@ -1036,5 +1036,110 @@ RSpec.describe 'User', type: :request, searchindex: true do
       result.collect! { |v| v['id'] }
       expect(result).to eq([user1.id, user2.id])
     end
+
+    context 'does password reset send work' do
+      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com') }
+
+      context 'for user without email address' do
+        let(:user) { create(:customer_user, login: 'somebody', email: '') }
+
+        it 'return failed' do
+          post '/api/v1/users/password_reset', params: { username: user.login }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('failed')
+        end
+      end
+
+      context 'for user with email address' do
+        it 'return ok' do
+          post '/api/v1/users/password_reset', params: { username: user.login }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('ok')
+        end
+      end
+
+      context 'for user with email address but disabled feature' do
+        before { Setting.set('user_lost_password', false) }
+
+        it 'raise 422' do
+          post '/api/v1/users/password_reset', params: { username: user.login }, as: :json
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response['error']).to be_truthy
+          expect(json_response['error']).to eq('Feature not enabled!')
+        end
+      end
+    end
+
+    context 'does password reset by token work' do
+      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com') }
+      let(:token) { create(:token, action: 'PasswordReset', user_id: user.id) }
+
+      context 'for user without email address' do
+        let(:user) { create(:customer_user, login: 'somebody', email: '') }
+
+        it 'return failed' do
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('failed')
+        end
+      end
+
+      context 'for user with email address' do
+        it 'return ok' do
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('ok')
+        end
+      end
+
+      context 'for user with email address but disabled feature' do
+        before { Setting.set('user_lost_password', false) }
+
+        it 'raise 422' do
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response['error']).to be_truthy
+          expect(json_response['error']).to eq('Feature not enabled!')
+        end
+      end
+    end
+
+    context 'password change' do
+      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com', password: 'Test1234#.') }
+
+      before { authenticated_as(user, login: 'somebody', password: 'Test1234#.') }
+
+      context 'user without email address' do
+        let(:user) { create(:customer_user, login: 'somebody', email: '', password: 'Test1234#.') }
+
+        it 'return ok' do
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('ok')
+        end
+      end
+
+      context 'user with email address' do
+        it 'return ok' do
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response['message']).to eq('ok')
+        end
+      end
+    end
   end
 end

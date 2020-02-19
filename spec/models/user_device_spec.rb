@@ -219,4 +219,31 @@ RSpec.describe UserDevice, type: :model do
       end
     end
   end
+
+  describe '#notification_send' do
+    let(:user_device) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
+    let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
+    let(:ip) { '91.115.248.231' }
+    let(:fingerprint) { 'fingerprint1234' }
+    let(:type) { 'session' }
+
+    context 'user with email address' do
+      let(:agent) { create(:agent_user, email: 'somebody@example.com') }
+
+      it 'returns true' do
+        expect(user_device.notification_send('user_device_new_location'))
+          .to eq(true)
+      end
+    end
+
+    context 'user without email address' do
+      let(:agent) { create(:agent_user, email: '') }
+
+      it 'returns false' do
+        expect(user_device.notification_send('user_device_new_location'))
+          .to eq(false)
+      end
+    end
+  end
+
 end

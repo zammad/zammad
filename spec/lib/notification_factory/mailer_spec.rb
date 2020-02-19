@@ -90,4 +90,31 @@ RSpec.describe NotificationFactory::Mailer do
       end
     end
   end
+
+  describe '#send' do
+    subject(:result) do
+      described_class.send(
+        recipient: user,
+        subject:   'some subject',
+        body:      'some body',
+      )
+    end
+
+    context 'recipient with email address' do
+      let(:user) { create(:agent_user, email: 'somebody@example.com') }
+
+      it 'returns a Mail::Message' do
+        expect( result ).to be_kind_of(Mail::Message)
+      end
+    end
+
+    context 'recipient without email address' do
+      let(:user) { create(:agent_user, email: '') }
+
+      it 'raises Exceptions::UnprocessableEntity' do
+        expect { result }.to raise_error(Exceptions::UnprocessableEntity)
+      end
+    end
+  end
+
 end

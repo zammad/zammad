@@ -202,6 +202,11 @@ send user notification about new device or new location for device
   def notification_send(template)
     user = User.find(user_id)
 
+    if user.email.blank?
+      Rails.logger.info { "Unable to notification (#{template}) to user_id: #{user.id} be cause of missing email address." }
+      return false
+    end
+
     Rails.logger.debug { "Send notification (#{template}) to: #{user.email}" }
 
     NotificationFactory::Mailer.notification(
@@ -212,6 +217,8 @@ send user notification about new device or new location for device
         user:        user,
       }
     )
+
+    true
   end
 
 =begin

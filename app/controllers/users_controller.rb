@@ -597,11 +597,16 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
     result = User.password_reset_new_token(params[:username])
     if result && result[:token]
 
-      # send mail
-      user = result[:user]
+      # unable to send email
+      if !result[:user] || result[:user].email.blank?
+        render json: { message: 'failed' }, status: :ok
+        return
+      end
+
+      # send password reset emails
       NotificationFactory::Mailer.notification(
         template: 'password_reset',
-        user:     user,
+        user:     result[:user],
         objects:  result
       )
 
@@ -642,38 +647,48 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
 =end
 
   def password_reset_verify
-    if params[:password]
 
-      # check password policy
-      result = password_policy(params[:password])
-      if result != true
-        render json: { message: 'failed', notice: result }, status: :ok
+    # check if feature is enabled
+    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
+    raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
+
+    # if no password is given, verify token only
+    if params[:password].blank?
+      user = User.by_reset_token(params[:token])
+      if user
+        render json: { message: 'ok', user_login: user.login }, status: :ok
         return
       end
-
-      # set new password with token
-      user = User.password_reset_via_token(params[:token], params[:password])
-
-      # send mail
-      if user
-        NotificationFactory::Mailer.notification(
-          template: 'password_change',
-          user:     user,
-          objects:  {
-            user:         user,
-            current_user: current_user,
-          }
-        )
-      end
-
-    else
-      user = User.by_reset_token(params[:token])
-    end
-    if user
-      render json: { message: 'ok', user_login: user.login }, status: :ok
-    else
       render json: { message: 'failed' }, status: :ok
+      return
     end
+
+    # check password policy
+    result = password_policy(params[:password])
+    if result != true
+      render json: { message: 'failed', notice: result }, status: :ok
+      return
+    end
+
+    # set new password with token
+    user = User.password_reset_via_token(params[:token], params[:password])
+
+    # send mail
+    if !user || user.email.blank?
+      render json: { message: 'failed' }, status: :ok
+      return
+    end
+
+    NotificationFactory::Mailer.notification(
+      template: 'password_change',
+      user:     user,
+      objects:  {
+        user:         user,
+        current_user: current_user,
+      }
+    )
+
+    render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
 =begin
@@ -725,14 +740,16 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     user.update!(password: params[:password_new])
 
-    NotificationFactory::Mailer.notification(
-      template: 'password_change',
-      user:     user,
-      objects:  {
-        user:         user,
-        current_user: current_user,
-      }
-    )
+    if user.email.present?
+      NotificationFactory::Mailer.notification(
+        template: 'password_change',
+        user:     user,
+        objects:  {
+          user:         user,
+          current_user: current_user,
+        }
+      )
+    end
 
     render json: { message: 'ok', user_login: user.login }, status: :ok
   end

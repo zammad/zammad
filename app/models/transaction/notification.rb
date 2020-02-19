@@ -159,7 +159,7 @@ class Transaction::Notification
       end
 
       # ignore email channel notification and empty emails
-      if !channels['email'] || !user.email || user.email == ''
+      if !channels['email'] || user.email.blank?
         add_recipient_list(ticket, user, used_channels, @item[:type])
         next
       end
