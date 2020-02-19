@@ -1684,6 +1684,19 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets']['User'][customer_user.id.to_s]['firstname']).to eq(customer_user.firstname)
       expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
 
+      # it should be not possible to modify the ticket number
+      expected_ticket_number = ticket.number
+      params = {
+        title:  'a update ticket #4',
+        number: '77777',
+      }
+      put "/api/v1/tickets/#{ticket.id}?full=true", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+
+      ticket = Ticket.find(json_response['id'])
+      expect(json_response['assets']['Ticket'][ticket.id.to_s]['title']).to eq('a update ticket #4')
+      expect(json_response['assets']['Ticket'][ticket.id.to_s]['number']).to eq(expected_ticket_number)
     end
 
     it 'does ticket split with html - check attachments (05.01)' do

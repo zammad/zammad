@@ -229,6 +229,9 @@ class TicketsController < ApplicationController
     # only apply preferences changes (keep not updated keys/values)
     clean_params = ticket.param_preferences_merge(clean_params)
 
+    # disable changes on ticket number
+    clean_params.delete('number')
+
     # overwrite params
     if !current_user.permissions?('ticket.agent')
       %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
