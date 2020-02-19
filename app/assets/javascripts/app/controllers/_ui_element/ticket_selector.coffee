@@ -200,6 +200,7 @@ class App.UiElement.ticket_selector
         triggerSearch()
       )
 
+    @disableRemoveForOneAttribute(item)
     item
 
   @preview: (item) ->
@@ -240,6 +241,13 @@ class App.UiElement.ticket_selector
             optgroup.append("<option value=\"#{elementKey}\">#{displayName}</option>")
     selection
 
+  # disable - if we only have one attribute
+  @disableRemoveForOneAttribute: (elementFull) ->
+    if elementFull.find('.js-attributeSelector select').length > 1
+      elementFull.find('.js-remove').removeClass('is-disabled')
+    else
+      elementFull.find('.js-remove').addClass('is-disabled')
+
   @updateAttributeSelectors: (elementFull) ->
 
     # enable all
@@ -252,10 +260,7 @@ class App.UiElement.ticket_selector
     )
 
     # disable - if we only have one attribute
-    if elementFull.find('.js-attributeSelector select').length > 1
-      elementFull.find('.js-remove').removeClass('is-disabled')
-    else
-      elementFull.find('.js-remove').addClass('is-disabled')
+    @disableRemoveForOneAttribute(elementFull)
 
 
   @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->

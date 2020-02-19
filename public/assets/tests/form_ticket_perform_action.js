@@ -285,3 +285,81 @@ test( "ticket_perform_action backwards check after issue #2782", function() {
 
   deepEqual(params, test_params, 'form param check')
 });
+
+test( "ticket_perform_action rows manipulation", function() {
+  App.TicketPriority.refresh([
+    {
+      id:         2,
+      name:       '2 normal',
+      active:     false,
+    },
+    {
+      id:         1,
+      name:       '1 low',
+      active:     true,
+    },
+  ])
+
+  App.TicketState.refresh([
+    {
+      id:         1,
+      name:       'new',
+      active:     true,
+    },
+    {
+      id:         2,
+      name:       'open',
+      active:     true,
+    },
+    {
+      id:         3,
+      name:       'closed',
+      active:     false,
+    },
+  ])
+
+  $('#forms').append('<hr><h1>ticket_perform_action rows manipulation</h1><form id="form99"></form>')
+  var el = $('#form99')
+  var defaults = {
+    ticket_perform_action1: {
+      'ticket.state_id': {
+        value: '2'
+      }
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'ticket_perform_action99',
+          display: 'TicketPerformAction99',
+          tag:     'ticket_perform_action',
+          null:    true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  equal(true, true)
+
+  var selector = '[data-attribute-name="ticket_perform_action99"] '
+
+  $(selector + '.js-remove').click()
+
+  equal($(selector + '.js-filterElement').length, 1, 'prevents removing single initial row')
+
+  $(selector + '.js-add').click()
+
+  equal($(selector + '.js-filterElement').length, 2, 'adds 2nd row')
+
+  $(selector + ' .js-remove:last').click()
+
+  equal($(selector + '.js-filterElement').length, 1, 'removes 2nd row')
+
+  $(selector + '.js-remove:last').click()
+
+  equal($(selector + ' .js-filterElement').length, 1, 'prevents removing last row')
+});
