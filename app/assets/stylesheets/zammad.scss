@@ -11251,6 +11251,10 @@ span.is-disabled {
   form {
     flex-shrink: 0;
   }
+  
+  .richtext-content {
+    word-break: break-all;
+  }
 
   .page-header {
     margin: 1px 0 3px;
