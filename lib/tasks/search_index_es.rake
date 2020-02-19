@@ -116,6 +116,17 @@ namespace :searchindex do
                   }.merge(pipeline_field_attributes),
                 }
               }.merge(pipeline_field_attributes),
+            },
+            {
+              foreach: {
+                field:     'attachment',
+                processor: {
+                  attachment: {
+                    target_field: '_ingest._value',
+                    field:        '_ingest._value._content',
+                  }.merge(pipeline_field_attributes),
+                }
+              }.merge(pipeline_field_attributes),
             }
           ]
         }
@@ -285,6 +296,23 @@ def get_mapping_properties_object(object)
             type: 'attachment',
           }
         }
+      }
+    end
+  end
+
+  if object.name == 'KnowledgeBase::Answer::Translation'
+    # do not server attachments if document is requested
+    result[name][:_source] = {
+      excludes: ['attachment']
+    }
+
+    # for elasticsearch 5.5 and lower
+    if !es_pipeline?
+      result[name][:_source] = {
+        excludes: ['attachment']
+      }
+      result[name][:properties][:attachment] = {
+        type: 'attachment',
       }
     end
   end

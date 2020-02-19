@@ -54,9 +54,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup
     attrs = super
 
-    attrs['title']    = ActionController::Base.helpers.strip_tags attrs['title']
-    attrs['content']  = content.search_index_attribute_lookup if content
-    attrs['scope_id'] = answer.category_id
+    attrs['title']      = ActionController::Base.helpers.strip_tags attrs['title']
+    attrs['content']    = content.search_index_attribute_lookup if content
+    attrs['scope_id']   = answer.category_id
+    attrs['attachment'] = answer.attachments_for_search_index_attribute_lookup
 
     attrs
   end

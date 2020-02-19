@@ -59,6 +59,46 @@ store attachments for this object
     attachments_buffer_check
   end
 
+=begin
+
+Returns attachments in ElasticSearch-compatible format
+For use in #search_index_attribute_lookup
+
+=end
+
+  def attachments_for_search_index_attribute_lookup
+    # list ignored file extensions
+    attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
+
+    # max attachment size
+    attachment_max_size_in_mb = (Setting.get('es_attachment_max_size_in_mb') || 10).megabytes
+    attachment_total_max_size_in_kb = 314_572.kilobytes
+    attachment_total_max_size_in_kb_current = 0.kilobytes
+
+    attachments.each_with_object([]) do |attachment, memo|
+      # check if attachment exists
+      next if !attachment.content
+
+      size_in_bytes = attachment.content.size.bytes
+
+      # check file size
+      next if size_in_bytes > attachment_max_size_in_mb
+
+      # check ignored files
+      next if !attachment.filename || attachments_ignore.include?(File.extname(attachment.filename).downcase)
+
+      # check if fits into total size limit
+      next if attachment_total_max_size_in_kb_current + size_in_bytes > attachment_total_max_size_in_kb
+
+      attachment_total_max_size_in_kb_current += size_in_bytes
+
+      memo << {
+        '_name'    => attachment.filename,
+        '_content' => Base64.encode64(attachment.content).delete("\n")
+      }
+    end
+  end
+
   private
 
   def attachments_buffer
