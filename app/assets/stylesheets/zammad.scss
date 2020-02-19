@@ -7042,7 +7042,7 @@ footer {
 
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
-  @extend .zIndex-8;
+  @extend .zIndex-9;
   position: absolute;
   max-height: 380px;
   overflow: auto;
