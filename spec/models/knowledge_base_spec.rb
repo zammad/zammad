@@ -63,4 +63,14 @@ RSpec.describe KnowledgeBase, type: :model do
       end
     end
   end
+
+  context 'acceptable colors' do
+    let(:allowed_values) { ['#aaa', '#ff0000', 'rgb(0,100,100)', 'hsl(0,100%,50%)'] }
+    let(:not_allowed_values) { ['aaa', '#aa', '#ff000', 'rgb(0,100,100', 'def(0,100%,0.5)', 'test'] }
+
+    it { is_expected.to allow_values(*allowed_values).for(:color_header) }
+    it { is_expected.to allow_values(*allowed_values).for(:color_highlight) }
+    it { is_expected.not_to allow_values(*not_allowed_values).for(:color_header) }
+    it { is_expected.not_to allow_values(*not_allowed_values).for(:color_highlight) }
+  end
 end

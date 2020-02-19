@@ -82,6 +82,10 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
       q_unit_tests('form_timer')
     end
 
+    it 'Color' do
+      q_unit_tests('form_color')
+    end
+
     it 'Extended' do
       q_unit_tests('form_extended')
     end
