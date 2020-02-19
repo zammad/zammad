@@ -64,6 +64,8 @@ class App.KnowledgeBaseAnswer extends App.Model
         buttons: [
           'link'
           'link_answer'
+          'insert_image'
+          'embed_video'
         ]
         display: 'Content'
         tag:     'richtext'

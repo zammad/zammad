@@ -26,7 +26,7 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
     else
       input
 
-  wrapLink: ->
+  apply: (callback) ->
     input = @el.find('input').val()
     url = @ensureProtocol(input)
 
@@ -50,3 +50,10 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
         @applyOnto(newElem, url)
         placeholder.wrap(newElem)
         placeholder.contents()
+
+    callback()
+
+  clear: ->
+    switch @selection.type
+      when 'existing'
+        $(@selection.dom).contents().unwrap()

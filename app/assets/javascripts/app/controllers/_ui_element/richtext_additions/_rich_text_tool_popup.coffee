@@ -1,7 +1,11 @@
 class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerForm
   events:
     'submit form':      'onSubmit'
-    'click .js-unlink': 'onUnlink'
+    'click .js-clear': 'onClear'
+
+  labelNew:      'Link'
+  labelExisting: 'Update'
+  labelClear:    'Remove'
 
   formParams: (params) ->
     # needs implementation
@@ -9,13 +13,13 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
   constructor: (params) ->
     if params.selection.type is 'existing'
       url        = params.selection.dom.attr('href')
-      label      = 'Update'
+      label      = @labelExisting
       additional = [{
-        className: 'btn btn--danger js-unlink'
-        text:      'Remove'
+        className: 'btn btn--danger js-clear'
+        text:      @labelClear
       }]
     else
-      label = 'Link'
+      label = @labelNew
 
     defaultParams =
       params: @formParams(params)
@@ -39,15 +43,16 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
   getAjaxAttributes: (field, attributes) ->
     @delegate?.getAjaxAttributes?(field, attributes)
 
-  onUnlink: (e) ->
+  onClear: (e) =>
     e.preventDefault()
     e.stopPropagation()
 
-    switch @selection.type
-      when 'existing'
-        $(@selection.dom).contents().unwrap()
+    @clear()
 
     $(@event.currentTarget).popover('hide')
+
+  clear: ->
+    # needs implementation
 
   @wrapElement: (wrapper, selection) ->
     topLevelOriginals = App.UiElement.richtext.buildParentsList(selection.range.startContainer, selection.range.commonAncestorContainer).reverse()
@@ -114,15 +119,15 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
 
     wrapper.insertAfter(topLevelOriginalStart)
 
-  wrapLink: ->
+  apply: (callback) ->
     # needs implementation
+    callback()
 
   onSubmit: (e) ->
     e.preventDefault()
 
-    @wrapLink()
-
-    $(@event.currentTarget).popover('destroy')
+    @apply =>
+      $(@event.currentTarget).popover('destroy')
 
   didInitialize: ->
     switch @selection.type

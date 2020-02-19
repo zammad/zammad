@@ -82,9 +82,16 @@ class App.KnowledgeBaseReaderController extends App.Controller
     @renderPopovers()
 
   renderBody: (translation) ->
-    body = $($.parseHTML(translation.content().body))
+    body = translation.content().body
+    body = @prepareLinks(body)
+    body = @prepareVideos(body)
 
-    for linkDom in body.find('a').andSelf('a').toArray()
+    @answerBody.html(body)
+
+  prepareLinks: (input) ->
+    input = $($.parseHTML(input))
+
+    for linkDom in input.find('a').andSelf('a').toArray()
       switch $(linkDom).attr('data-target-type')
         when 'knowledge-base-answer'
           if object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')
@@ -92,7 +99,30 @@ class App.KnowledgeBaseReaderController extends App.Controller
           else
             $(linkDom).attr 'href', '#'
 
-    @answerBody.html(body)
+    $('<container>').append(input).html()
+
+  prepareVideos: (input) ->
+    input.replace /\(([\s]*)widget:([\s]*)video[\W]([\s\S])+?\)/g, (match) ->
+      settings = match
+        .slice(1, -1)
+        .split(',')
+        .map (pair) -> pair.split(':').map (elem) -> elem.trim()
+        .reduce (memo, elem) ->
+          memo[elem[0]] = elem[1]
+          return memo
+        , {}
+
+      # coffeelint: disable=indentation
+      url = switch settings.provider
+            when 'youtube'
+              "http://www.youtube.com/embed/#{settings.id}"
+            when 'vimeo'
+              "https://player.vimeo.com/video/#{settings.id}"
+      # coffeelint: enable=indentation
+
+      return match unless url
+
+      "<div class='videoWrapper'><iframe id='#{settings.provider}#{settings.id}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
 
   renderAttachments: (attachments) ->
     @answerAttachments.html App.view('generic/attachments')(

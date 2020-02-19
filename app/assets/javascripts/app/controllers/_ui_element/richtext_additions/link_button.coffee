@@ -1,5 +1,5 @@
 # coffeelint: disable=camel_case_classes
-class App.UiElement.richtext.toolButtons.link extends App.UiElement.richtext.additions.RichTextToolButton
+class App.UiElement.richtext.toolButtons.link extends App.UiElement.richtext.additions.RichTextToolButtonLink
   @icon: 'chain'
   @text: 'Weblink'
   @klass: -> App.UiElement.richtext.additions.RichTextToolPopupLink

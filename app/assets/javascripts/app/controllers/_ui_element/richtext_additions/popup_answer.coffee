@@ -18,7 +18,7 @@ class App.UiElement.richtext.additions.RichTextToolPopupAnswer extends App.UiEle
 
     dom
 
-  wrapLink: ->
+  apply: (callback) ->
     id = @el.find('input').val()
     object = App.KnowledgeBaseAnswerTranslation.find(id)
     textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
@@ -41,3 +41,10 @@ class App.UiElement.richtext.additions.RichTextToolPopupAnswer extends App.UiEle
         @applyOnto(newElem, object)
         placeholder.wrap(newElem)
         placeholder.contents()
+
+    callback()
+
+  clear: ->
+    switch @selection.type
+      when 'existing'
+        $(@selection.dom).contents().unwrap()

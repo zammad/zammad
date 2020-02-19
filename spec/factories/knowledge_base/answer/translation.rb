@@ -24,5 +24,9 @@ FactoryBot.define do
         translation.kb_locale = translation.answer.category.knowledge_base.kb_locales.first
       end
     end
+
+    trait :with_video do
+      content { build(:knowledge_base_answer_translation_content, :with_video) }
+    end
   end
 end

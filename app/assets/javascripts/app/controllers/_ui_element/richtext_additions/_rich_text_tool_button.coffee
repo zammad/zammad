@@ -5,10 +5,13 @@ class App.UiElement.richtext.additions.RichTextToolButton
   @klass: ->
     # Needs implementation. Return constructor of RichTextToolPopup subclass.
 
+  @pickExisting: (sel, textEditor) ->
+    # needs implementation
+
   @initializeAttributes: {}
 
   @instantiateContent: (event, selection, delegate) ->
-    attrs = @initializeAttributes
+    attrs = $.extend(true, {}, @initializeAttributes)
 
     attrs['event']     = event
     attrs['selection'] = selection
@@ -35,46 +38,6 @@ class App.UiElement.richtext.additions.RichTextToolButton
 
     hash
 
-  @pickLinkInSingleContainer: (elem, containerToLookUpTo) ->
-    if elem.nodeName == 'A'
-      elem
-    else if innerLink = $(elem).find('a')[0]
-      innerLink
-    else if containerToLookUpTo and closestLink = $(elem).closest('a', containerToLookUpTo)[0]
-      closestLink
-    else
-      null
-
-  @pickLinkAt: (elem, container, direction, boundary = null) ->
-    for parent in App.UiElement.richtext.buildParentsListWithSelf(elem, container)
-      if parent.nodeName is 'A'
-        return parent
-
-      for elem in App.UiElement.richtext.allDirectionalSiblings(parent, direction, boundary)
-        if link = @pickLinkInSingleContainer(elem)
-          return link
-
-    null
-
-  @pickLink: (sel, textEditor) ->
-    range = sel.getRangeAt(0)
-
-    if range.startContainer == range.endContainer
-      return @pickLinkInSingleContainer(range.startContainer, textEditor)
-
-    if link = @pickLinkAt(range.startContainer, range.commonAncestorContainer, 1, range.endContainer)
-      return link
-
-    if startParent = App.UiElement.richtext.buildParentsList(range.startContainer, range.commonAncestorContainer).pop()
-      for elem in App.UiElement.richtext.allDirectionalSiblings(startParent, 1, range.endContainer)
-        if link = @pickLinkInSingleContainer(elem)
-          return link
-
-    if link = @pickLinkAt(range.endContainer, range.commonAncestorContainer, -1)
-      return link
-
-    return null
-
   # close other buttons' popovers
   @closeOtherPopovers: (event) ->
     $(event.currentTarget)
@@ -88,15 +51,10 @@ class App.UiElement.richtext.additions.RichTextToolButton
   @selectionSnapshot: (sel) ->
     textEditor = $(event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
 
-    if sel.isCollapsed and selectedLink = $(sel.anchorNode).closest('a')[0]
+    if selected = @pickExisting(sel, textEditor)
       {
         type: 'existing'
-        dom:  $(selectedLink)
-      }
-    else if !sel.isCollapsed and selectedLink = @pickLink(sel, textEditor)
-      {
-        type: 'existing'
-        dom:  $(selectedLink)
+        dom:  $(selected)
       }
     else if sel.type is 'Range' and $(sel.anchorNode).closest('[contenteditable]', textEditor)[0]
       range = sel.getRangeAt(0)
@@ -117,6 +75,7 @@ class App.UiElement.richtext.additions.RichTextToolButton
         dom:  textEditor
       }
 
+  # on clicking button above rich text area
   @onClick: (event, delegate) ->
     event.stopPropagation()
     event.preventDefault()

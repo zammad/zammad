@@ -8,7 +8,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
       </h1>
 
       <div class="article-content">
-        <%= prepare_rich_text_links @object.translation.content.body_with_urls.html_safe %>
+        <%= prepare_rich_text(@object.translation.content.body_with_urls).html_safe %>
       </div>
 
       <% if (attachments = @object.attachments_sorted) && attachments.present? %>

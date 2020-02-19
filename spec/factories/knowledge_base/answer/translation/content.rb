@@ -8,5 +8,9 @@ FactoryBot.define do
         create(:knowledge_base_answer_translation, content: content)
       end
     end
+
+    trait :with_video do
+      body { '( widget: video, provider: youtube, id: vTTzwJsHpU8 )' }
+    end
   end
 end

@@ -1,4 +1,8 @@
 module KnowledgeBaseRichTextHelper
+  def prepare_rich_text(input)
+    prepare_rich_text_videos(prepare_rich_text_links(input))
+  end
+
   def prepare_rich_text_links(input)
     scrubber = Loofah::Scrubber.new do |node|
       next if node.name != 'a'
@@ -21,5 +25,27 @@ module KnowledgeBaseRichTextHelper
     parsed = Loofah.scrub_fragment(input, scrubber).to_s.html_safe # rubocop:disable Rails/OutputSafety
 
     parsed
+  end
+
+  def prepare_rich_text_videos(input)
+    input.gsub(/\(([\s]*)widget:([\s]*)video[\W]([\s\S])+?\)/) do |match|
+      settings = match
+        .slice(1...-1)
+        .split(',')
+        .map { |pair| pair.split(':').map(&:strip) }
+        .to_h
+        .symbolize_keys
+
+      url = case settings[:provider]
+            when 'youtube'
+              "http://www.youtube.com/embed/#{settings[:id]}"
+            when 'vimeo'
+              "https://player.vimeo.com/video/#{settings[:id]}"
+            end
+
+      return match unless url
+
+      "<div class='videoWrapper'><iframe id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
+    end
   end
 end
