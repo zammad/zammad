@@ -156,5 +156,47 @@ RSpec.describe Trigger, type: :model do
         end
       end
     end
+
+    context 'with condition execution_time.calendar_id' do
+      let(:calendar) { create(:calendar) }
+      let(:perform) do
+        { 'ticket.title'=>{ 'value'=>'triggered' } }
+      end
+      let!(:ticket) { create(:ticket, title: 'Test Ticket') }
+
+      context 'is in working time' do
+        let(:condition) do
+          { 'execution_time.calendar_id' => { 'operator' => 'is in working time', 'value' => calendar.id } }
+        end
+
+        it 'does trigger only in working time' do
+          travel_to Time.zone.parse('2020-02-12T12:00:00Z0')
+          expect { Observer::Transaction.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+
+        it 'does not trigger out of working time' do
+          travel_to Time.zone.parse('2020-02-12T02:00:00Z0')
+          Observer::Transaction.commit
+          expect(ticket.reload.title).to eq('Test Ticket')
+        end
+      end
+
+      context 'is not in working time' do
+        let(:condition) do
+          { 'execution_time.calendar_id' => { 'operator' => 'is not in working time', 'value' => calendar.id } }
+        end
+
+        it 'does not trigger in working time' do
+          travel_to Time.zone.parse('2020-02-12T12:00:00Z0')
+          Observer::Transaction.commit
+          expect(ticket.reload.title).to eq('Test Ticket')
+        end
+
+        it 'does trigger out of working time' do
+          travel_to Time.zone.parse('2020-02-12T02:00:00Z0')
+          expect { Observer::Transaction.commit }.to change { ticket.reload.title }.to('triggered')
+        end
+      end
+    end
   end
 end

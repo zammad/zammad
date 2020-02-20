@@ -25,20 +25,22 @@ returns
     def assets(data)
 
       app_model_trigger = Trigger.to_app_model
+      data[ app_model_trigger ] ||= {}
 
-      if !data[ app_model_trigger ]
-        data[ app_model_trigger ] = {}
-      end
       return data if data[ app_model_trigger ][ id ]
 
       data[ app_model_trigger ][ id ] = attributes_with_association_ids
       data = assets_of_selector('condition', data)
       data = assets_of_selector('perform', data)
 
-      app_model_user = User.to_app_model
-      if !data[ app_model_user ]
-        data[ app_model_user ] = {}
+      app_model_calendar = Calendar.to_app_model
+      data[ app_model_calendar ] ||= {}
+      Calendar.find_each do |calendar|
+        data = calendar.assets(data)
       end
+
+      app_model_user = User.to_app_model
+      data[ app_model_user ] ||= {}
 
       %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]

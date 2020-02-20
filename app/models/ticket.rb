@@ -434,7 +434,7 @@ get count of tickets and tickets which match on selector
     access = options[:access] || 'full'
     raise 'no selectors given' if !selectors
 
-    query, bind_params, tables = selector2sql(selectors, current_user: current_user)
+    query, bind_params, tables = selector2sql(selectors, current_user: current_user, execution_time: options[:execution_time])
     return [] if !query
 
     ActiveRecord::Base.transaction(requires_new: true) do
@@ -528,6 +528,7 @@ condition example
       selector = attribute.split(/\./)
       next if !selector[1]
       next if selector[0] == 'ticket'
+      next if selector[0] == 'execution_time'
       next if tables.include?(selector[0])
 
       if query != ''
@@ -554,6 +555,7 @@ condition example
     end
 
     # add conditions
+    no_result = false
     selectors.each do |attribute, selector_raw|
 
       # validation
@@ -562,7 +564,7 @@ condition example
 
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))$/)
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$/)
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
@@ -826,10 +828,23 @@ condition example
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
+      elsif selector['operator'].include?('in working time')
+        next if attributes[1] != 'calendar_id'
+        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
+
+        biz = Calendar.lookup(id: selector['value'])&.biz
+        next if biz.blank?
+
+        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
+          no_result = true
+          break
+        end
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
     end
+
+    return if no_result
 
     [query, bind_params, tables]
   end
@@ -1106,7 +1121,7 @@ perform active triggers on ticket
         end
 
         # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(condition, limit: 1)
+        ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true)
 
         next if ticket_count.blank?
         next if ticket_count.zero?

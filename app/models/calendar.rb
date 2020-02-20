@@ -327,6 +327,21 @@ returns
     holidays
   end
 
+  def biz
+    Biz::Schedule.new do |config|
+
+      # get business hours
+      hours = business_hours_to_hash
+      raise "No configured hours found in calendar #{inspect}" if hours.blank?
+
+      config.hours = hours
+
+      # get holidays
+      config.holidays = public_holidays_to_array
+      config.time_zone = timezone
+    end
+  end
+
   private
 
   # if changed calendar is default, set all others default to false

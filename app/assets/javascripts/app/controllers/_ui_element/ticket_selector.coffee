@@ -17,6 +17,10 @@ class App.UiElement.ticket_selector
         name: 'Organization'
         model: 'Organization'
 
+    if attribute.executionTime
+      groups.execution_time =
+        name: 'Execution Time'
+
     operators_type =
       '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
       '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
@@ -71,24 +75,36 @@ class App.UiElement.ticket_selector
         operator: ['is', 'is not']
 
     for groupKey, groupMeta of groups
-      for row in App[groupMeta.model].configure_attributes
+      if groupKey is 'execution_time'
+        if attribute.executionTime
+          elements['execution_time.calendar_id'] =
+            name: 'calendar_id'
+            display: 'Calendar'
+            tag: 'select'
+            relation: 'Calendar'
+            null: false
+            translate: false
+            operator: ['is in working time', 'is not in working time']
 
-        # ignore passwords and relations
-        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
-          config = _.clone(row)
-          for operatorRegEx, operator of operators_type
-            myRegExp = new RegExp(operatorRegEx, 'i')
-            if config.tag && config.tag.match(myRegExp)
-              config.operator = operator
-            elements["#{groupKey}.#{config.name}"] = config
-          for operatorRegEx, operator of operators_name
-            myRegExp = new RegExp(operatorRegEx, 'i')
-            if config.name && config.name.match(myRegExp)
-              config.operator = operator
-            elements["#{groupKey}.#{config.name}"] = config
+      else
+        for row in App[groupMeta.model].configure_attributes
 
-          if config.tag == 'select'
-            config.multiple = true
+          # ignore passwords and relations
+          if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
+            config = _.clone(row)
+            for operatorRegEx, operator of operators_type
+              myRegExp = new RegExp(operatorRegEx, 'i')
+              if config.tag && config.tag.match(myRegExp)
+                config.operator = operator
+              elements["#{groupKey}.#{config.name}"] = config
+            for operatorRegEx, operator of operators_name
+              myRegExp = new RegExp(operatorRegEx, 'i')
+              if config.name && config.name.match(myRegExp)
+                config.operator = operator
+              elements["#{groupKey}.#{config.name}"] = config
+
+            if config.tag == 'select'
+              config.multiple = true
 
     if attribute.out_of_office
       elements['ticket.out_of_office_replacement_id'] =

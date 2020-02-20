@@ -154,18 +154,7 @@ returns
       self.update_escalation_at    = nil
       self.close_escalation_at     = nil
     end
-    biz = Biz::Schedule.new do |config|
-
-      # get business hours
-      hours = calendar.business_hours_to_hash
-      raise "No configured hours found in calendar #{calendar.inspect}" if hours.blank?
-
-      config.hours = hours
-
-      # get holidays
-      config.holidays = calendar.public_holidays_to_array
-      config.time_zone = calendar.timezone
-    end
+    biz = calendar.biz
 
     # get history data
     history_data = nil
