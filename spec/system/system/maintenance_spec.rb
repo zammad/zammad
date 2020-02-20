@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin > Maintenance login message', type: :system do
+RSpec.describe 'Manage > Maintenance', type: :system do
   it 'switch maintenance_login on' do
     Setting.set 'maintenance_login', false
 
-    open_page
+    visit 'system/maintenance'
+    refresh # ensure changed Setting is loaded
 
     find('.js-loginSetting label').click
     find('.js-loginSetting input', visible: :all).check # required for chrome
@@ -15,7 +16,8 @@ RSpec.describe 'Admin > Maintenance login message', type: :system do
   it 'switch maintenance_login off' do
     Setting.set 'maintenance_login', true
 
-    open_page
+    visit 'system/maintenance'
+    refresh # ensure changed Setting is loaded
 
     find('.js-loginSetting label').click
     find('.js-loginSetting input', visible: :all).uncheck # required for chrome
@@ -28,7 +30,8 @@ RSpec.describe 'Admin > Maintenance login message', type: :system do
 
     Setting.set 'maintenance_login_message', message
 
-    open_page
+    visit 'system/maintenance'
+    refresh # ensure changed Setting is loaded
 
     expect(find('.js-loginPreview [data-name="message"]')).to have_text message
   end
@@ -39,7 +42,8 @@ RSpec.describe 'Admin > Maintenance login message', type: :system do
 
     Setting.set 'maintenance_login_message', message_prefix
 
-    open_page
+    visit 'system/maintenance'
+    refresh # ensure changed Setting is loaded
 
     within(:active_content) do
       elem = find('#maintenance-message.hero-unit')
@@ -51,12 +55,5 @@ RSpec.describe 'Admin > Maintenance login message', type: :system do
     find('#global-search').click # unfocus
 
     wait(10).until { expect(Setting.get('maintenance_login_message')).to eq "#{message_prefix}#{message_suffix}" }
-  end
-
-  def open_page
-    refresh # make sure initial Setting are applied
-
-    click(:manage)
-    click(:href, '#system/maintenance')
   end
 end

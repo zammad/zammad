@@ -1,26 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin > Settings > Ticket', type: :system do
+RSpec.describe 'Manage > Settings > Ticket', type: :system do
 
-  describe 'owner auto-assignment admin settings' do
-    it 'enable and disable feature' do
+  before { visit 'settings/ticket' }
 
-      click(:manage)
+  describe 'owner auto-assignment' do
+
+    it 'enables/disables Setting ticket_auto_assignment' do
 
       within(:active_content) do
-        click(:href, '#settings/ticket')
         click(:href, '#auto_assignment')
         expect(page).to have_field('ticket_auto_assignment', checked: false, visible: false)
-        find('.js-ticketAutoAssignment').click()
+        find('.js-ticketAutoAssignment').click
         expect(page).to have_field('ticket_auto_assignment', checked: true, visible: false)
       end
 
       refresh
 
       within(:active_content) do
-        find('a[href="#auto_assignment"]').click()
+        click(:href, '#auto_assignment')
         expect(page).to have_field('ticket_auto_assignment', checked: true, visible: false)
-        find('.js-ticketAutoAssignment').click()
+        find('.js-ticketAutoAssignment').click
         expect(page).to have_field('ticket_auto_assignment', checked: false, visible: false)
       end
     end
