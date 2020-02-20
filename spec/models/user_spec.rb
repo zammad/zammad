@@ -1144,26 +1144,14 @@ RSpec.describe User, type: :model do
     end
 
     describe 'Touching associations on update:' do
-      subject(:user) { create(:customer_user, organization: organization) }
+      subject!(:user) { create(:customer_user) }
 
-      let(:organization) { create(:organization) }
-      let(:other_customer) { create(:customer_user) }
+      let!(:organization) { create(:organization) }
 
-      context 'when basic attributes are updated' do
+      context 'when a customer gets a organization' do
         it 'touches its organization' do
-          expect { user.update(firstname: 'foo') }
+          expect { user.update(organization: organization) }
             .to change { organization.reload.updated_at }
-        end
-      end
-
-      context 'when organization has 100+ other members' do
-        let!(:other_members) { create_list(:user, 100, organization: organization) }
-
-        context 'and basic attributes are updated' do
-          it 'does not touch its organization' do
-            expect { user.update(firstname: 'foo') }
-              .to not_change { organization.reload.updated_at }
-          end
         end
       end
     end
