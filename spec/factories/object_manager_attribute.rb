@@ -1,6 +1,11 @@
 FactoryBot.define do
   factory :object_manager_attribute, class: ObjectManager::Attribute do
-    object_lookup_id          { ObjectLookup.by_name('Ticket') }
+    transient do
+      object_name { 'Ticket' }
+      additional_data_options { nil }
+    end
+
+    object_lookup_id          { ObjectLookup.by_name(object_name) }
     sequence(:name)           { |n| "internal_name#{n}" }
     sequence(:display)        { |n| "Display Name #{n}" }
     data_option_new           { {} }
@@ -22,6 +27,13 @@ FactoryBot.define do
         },
         'edit'       => {}
       }
+    end
+
+    callback(:after_stub, :before_create) do |object, context|
+      next if context.additional_data_options.blank?
+
+      object.data_option ||= {}
+      object.data_option.merge! context.additional_data_options
     end
   end
 
