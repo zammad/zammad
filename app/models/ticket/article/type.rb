@@ -2,5 +2,7 @@
 
 class Ticket::Article::Type < ApplicationModel
   include ChecksLatestChangeObserved
+  include HasCollectionUpdate
+
   validates :name, presence: true
 end

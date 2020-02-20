@@ -7,6 +7,7 @@ RSpec.shared_examples 'text modules' do |path:|
   let!(:text_module_group2)        { create :text_module, groups: [group2] }
 
   it 'shows when send ::' do
+    refresh # workaround to get new created objects from db
     visit path
     within(:active_content) do
       find('select[name="group_id"]').select(1)
@@ -40,8 +41,8 @@ RSpec.shared_examples 'text modules' do |path:|
       user.save!
     end
 
+    refresh # workaround to get changed settings from db
     visit path
-
     within(:active_content) do
       find('select[name="group_id"]').select(group1.name)
       find(:richtext).send_keys('::')

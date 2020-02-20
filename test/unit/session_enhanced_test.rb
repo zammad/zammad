@@ -249,58 +249,6 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert(Sessions.session_exists?(client_id2), 'check if session exists')
     assert(Sessions.session_exists?(client_id3), 'check if session exists')
 
-    travel 8.seconds
-    sleep 8
-
-    # check collections
-    collections = {
-      'Group' => true,
-      'User'  => nil,
-    }
-    assert_if_collection_reset_message_exists(client_id1_0, collections, 'init')
-    assert_if_collection_reset_message_exists(client_id1_1, collections, 'init')
-    assert_if_collection_reset_message_exists(client_id2, collections, 'init')
-    assert_if_collection_reset_message_exists(client_id3, collections, 'init')
-
-    collections = {
-      'Group' => nil,
-      'User'  => nil,
-    }
-    assert_if_collection_reset_message_exists(client_id1_0, collections, 'init2')
-    assert_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
-    assert_if_collection_reset_message_exists(client_id2, collections, 'init2')
-    assert_if_collection_reset_message_exists(client_id3, collections, 'init2')
-
-    travel 8.seconds
-    sleep 8
-
-    collections = {
-      'Group' => nil,
-      'User'  => nil,
-    }
-    assert_if_collection_reset_message_exists(client_id1_0, collections, 'init3')
-    assert_if_collection_reset_message_exists(client_id1_1, collections, 'init3')
-    assert_if_collection_reset_message_exists(client_id2, collections, 'init3')
-    assert_if_collection_reset_message_exists(client_id3, collections, 'init3')
-
-    # change collection
-    group = Group.first
-    travel 4.seconds
-    group.touch
-
-    travel 12.seconds
-    sleep 12
-
-    # check collections
-    collections = {
-      'Group' => true,
-      'User'  => nil,
-    }
-    assert_if_collection_reset_message_exists(client_id1_0, collections, 'update')
-    assert_if_collection_reset_message_exists(client_id1_1, collections, 'update')
-    assert_if_collection_reset_message_exists(client_id2, collections, 'update')
-    assert_if_collection_reset_message_exists(client_id3, collections, 'update')
-
     # check if session still exists after idle cleanup
     travel 10.seconds
     Sessions.destroy_idle_sessions(2)
@@ -318,30 +266,4 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     travel_back
   end
 
-  def assert_if_collection_reset_message_exists(client_id, collections_orig, type)
-    messages = Sessions.queue(client_id)
-    #puts "cid: #{client_id}"
-    #puts "m: #{messages.inspect}"
-    collections_result = {}
-    messages.each do |message|
-      #puts ""
-      #puts "message: #{message.inspect}"
-      next if message['event'] != 'resetCollection'
-      #puts "rc: "
-      next if !message['data']
-
-      message['data'].each_key do |key|
-        #puts "rc: #{key}"
-        collections_result[key] = true
-      end
-    end
-    #puts "c: #{collections_result.inspect}"
-    collections_orig.each_key do |key|
-      if collections_orig[key].nil?
-        assert_nil(collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
-      else
-        assert_equal(collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
-      end
-    end
-  end
 end

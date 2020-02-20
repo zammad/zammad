@@ -7,7 +7,7 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
-require 'models/user/can_lookup_search_index_attributes_examples'
+require 'models/user/has_ticket_create_screen_impact_examples'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasObjectManagerAttributesValidation'
-  it_behaves_like 'CanLookupSearchIndexAttributes'
+  it_behaves_like 'HasTicketCreateScreenImpact'
 
   describe 'Class methods:' do
     describe '.authenticate' do
@@ -1144,14 +1144,26 @@ RSpec.describe User, type: :model do
     end
 
     describe 'Touching associations on update:' do
-      subject!(:user) { create(:customer_user) }
+      subject(:user) { create(:customer_user, organization: organization) }
 
-      let!(:organization) { create(:organization) }
+      let(:organization) { create(:organization) }
+      let(:other_customer) { create(:customer_user) }
 
-      context 'when a customer gets a organization ' do
+      context 'when basic attributes are updated' do
         it 'touches its organization' do
-          expect { user.update(organization: organization) }
+          expect { user.update(firstname: 'foo') }
             .to change { organization.reload.updated_at }
+        end
+      end
+
+      context 'when organization has 100+ other members' do
+        let!(:other_members) { create_list(:user, 100, organization: organization) }
+
+        context 'and basic attributes are updated' do
+          it 'does not touch its organization' do
+            expect { user.update(firstname: 'foo') }
+              .to not_change { organization.reload.updated_at }
+          end
         end
       end
     end

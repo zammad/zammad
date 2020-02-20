@@ -12,9 +12,7 @@ class Sessions::Client
 
     backends = [
       'Sessions::Backend::TicketOverviewList',
-      'Sessions::Backend::Collections',
       'Sessions::Backend::ActivityStream',
-      'Sessions::Backend::TicketCreate',
     ]
 
     asset_lookup             = {}

@@ -6,6 +6,8 @@ class Role < ApplicationModel
   include ChecksClientNotification
   include ChecksLatestChangeObserved
   include HasGroups
+  include HasCollectionUpdate
+  include HasTicketCreateScreenImpact
 
   include Role::Assets
 

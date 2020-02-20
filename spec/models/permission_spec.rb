@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'models/concerns/has_collection_update_examples'
 
 RSpec.describe Permission, type: :model do
+  it_behaves_like 'HasCollectionUpdate', collection_factory: :permission
+
   describe '.with_parents' do
     context 'when given a simple string (no dots)' do
       it 'returns an array containing only that string' do

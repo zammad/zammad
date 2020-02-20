@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'models/concerns/has_collection_update_examples'
 
 RSpec.describe EmailAddress, type: :model do
+  it_behaves_like 'HasCollectionUpdate', collection_factory: :email_address
+
   subject(:email_address) { create(:email_address) }
 
   describe 'Attributes:' do

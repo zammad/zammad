@@ -12,13 +12,13 @@ class User < ApplicationModel
   include HasGroups
   include HasRoles
   include HasObjectManagerAttributesValidation
-
+  include HasTicketCreateScreenImpact
+  include User::HasTicketCreateScreenImpact
   include User::ChecksAccess
   include User::Assets
   include User::Search
   include User::SearchIndex
 
-  has_and_belongs_to_many :roles,          after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
   has_and_belongs_to_many :organizations,  after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   has_many                :tokens,         after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update

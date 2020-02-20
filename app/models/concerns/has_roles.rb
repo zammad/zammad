@@ -2,6 +2,14 @@
 module HasRoles
   extend ActiveSupport::Concern
 
+  included do
+    has_and_belongs_to_many :roles,
+                            before_add:    %i[validate_agent_limit_by_role validate_roles],
+                            after_add:     %i[cache_update check_notifications push_ticket_create_screen_for_role_change],
+                            before_remove: :last_admin_check_by_role,
+                            after_remove:  %i[cache_update push_ticket_create_screen_for_role_change]
+  end
+
   # Checks a given Group( ID) for given access(es) for the instance associated roles.
   #
   # @example Group ID param
@@ -34,6 +42,15 @@ module HasRoles
         active: true
       }
     )
+  end
+
+  def push_ticket_create_screen_for_role_change(role)
+    return if Setting.get('import_mode')
+
+    permission = Permission.lookup(name: 'ticket.agent')
+    return if !role.permissions.exists?(id: permission.id)
+
+    push_ticket_create_screen_background_job
   end
 
   # methods defined here are going to extend the class, not the instance of it

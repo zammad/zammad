@@ -7,6 +7,8 @@ class Group < ApplicationModel
   include ChecksLatestChangeObserved
   include HasHistory
   include HasObjectManagerAttributesValidation
+  include HasCollectionUpdate
+  include HasTicketCreateScreenImpact
 
   belongs_to :email_address, optional: true
   belongs_to :signature, optional: true

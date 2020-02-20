@@ -2,6 +2,7 @@
 
 class EmailAddress < ApplicationModel
   include ChecksLatestChangeObserved
+  include HasCollectionUpdate
 
   has_many        :groups,   after_add: :cache_update, after_remove: :cache_update
   belongs_to      :channel, optional: true
@@ -14,6 +15,8 @@ class EmailAddress < ApplicationModel
   after_create    :update_email_address_id
   after_update    :update_email_address_id
   before_destroy  :delete_group_reference
+
+  collection_push_permission('ticket.agent')
 
 =begin
 

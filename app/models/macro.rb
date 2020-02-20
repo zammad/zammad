@@ -4,10 +4,13 @@ class Macro < ApplicationModel
   include ChecksClientNotification
   include ChecksLatestChangeObserved
   include CanSeed
+  include HasCollectionUpdate
 
   store     :perform
   validates :name, presence: true
   validates :ux_flow_next_up, inclusion: { in: %w[none next_task next_from_overview] }
 
   has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
+
+  collection_push_permission('ticket.agent')
 end
