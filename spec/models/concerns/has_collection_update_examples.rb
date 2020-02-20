@@ -1,6 +1,6 @@
 RSpec.shared_examples 'HasCollectionUpdate' do |collection_factory:|
 
-  context '#push_collection_to_clients', performs_jobs: true do
+  describe '#push_collection_to_clients', performs_jobs: true do
     subject { create(collection_factory) }
 
     context 'creating a record' do

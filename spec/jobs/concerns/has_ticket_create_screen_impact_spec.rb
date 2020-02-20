@@ -105,6 +105,7 @@ RSpec.describe HasTicketCreateScreenImpact, type: :job do
         end
         expect(collection_jobs.count).to be(0)
       end
+
       it 'agent should enqueue a job' do
         agent_new
         collection_jobs = enqueued_jobs.select do |job|
@@ -112,6 +113,7 @@ RSpec.describe HasTicketCreateScreenImpact, type: :job do
         end
         expect(collection_jobs.count).to be(1)
       end
+
       it 'admin should enqueue no job' do
         admin_new
         collection_jobs = enqueued_jobs.select do |job|
@@ -130,9 +132,11 @@ RSpec.describe HasTicketCreateScreenImpact, type: :job do
         it 'customer should enqueue no job' do
           expect { customer.update!(firstname: 'new firstname') }.not_to have_enqueued_job(TicketCreateScreenJob)
         end
+
         it 'agent should enqueue a job' do
           expect { agent.update!(firstname: 'new firstname') }.to have_enqueued_job(TicketCreateScreenJob)
         end
+
         it 'admin should enqueue no job' do
           expect { admin.update!(firstname: 'new firstname') }.not_to have_enqueued_job(TicketCreateScreenJob)
         end
@@ -142,9 +146,11 @@ RSpec.describe HasTicketCreateScreenImpact, type: :job do
         it 'customer should enqueue no job' do
           expect { customer.update!(active: false) }.not_to have_enqueued_job(TicketCreateScreenJob)
         end
+
         it 'agent should enqueue a job' do
           expect { agent.update!(active: false) }.to have_enqueued_job(TicketCreateScreenJob)
         end
+
         it 'admin should enqueue no job' do
           admin_new # Prevend "Minimum one user needs to have admin permissions."
           clear_jobs
@@ -161,9 +167,11 @@ RSpec.describe HasTicketCreateScreenImpact, type: :job do
       it 'customer should enqueue a job' do
         expect { customer.destroy! }.to have_enqueued_job(TicketCreateScreenJob)
       end
+
       it 'agent should enqueue a job' do
         expect { agent.destroy! }.to have_enqueued_job(TicketCreateScreenJob)
       end
+
       it 'admin should enqueue a job' do
         expect { admin.destroy! }.to have_enqueued_job(TicketCreateScreenJob)
       end

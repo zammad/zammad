@@ -1,6 +1,6 @@
 RSpec.shared_examples 'HasTicketCreateScreenImpact' do |create_screen_factory:|
 
-  context '#push_ticket_create_screen', performs_jobs: true do
+  describe '#push_ticket_create_screen', performs_jobs: true do
     subject { create(create_screen_factory) }
 
     context 'creating a record' do

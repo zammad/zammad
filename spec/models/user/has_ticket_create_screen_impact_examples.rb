@@ -1,6 +1,6 @@
 RSpec.shared_examples 'HasTicketCreateScreenImpact' do
 
-  context '#push_ticket_create_screen', performs_jobs: true do
+  describe '#push_ticket_create_screen', performs_jobs: true do
     shared_examples 'relevant User Role' do |role|
 
       context "relevant User Role is '#{role}'" do
