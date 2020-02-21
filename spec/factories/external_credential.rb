@@ -29,10 +29,10 @@ FactoryBot.define do
       # Instead, store your twitter API credentials in env vars to utilize this factory.
       # (Try https://github.com/direnv/direnv to set env vars automatically.)
       transient do
-        consumer_key       { 'REDACTED' }
-        consumer_secret    { 'REDACTED' }
-        oauth_token        { 'REDACTED' }
-        oauth_token_secret { 'REDACTED' }
+        consumer_key       { ENV.fetch('TWITTER_CONSUMER_KEY') { 'REDACTED' } }
+        consumer_secret    { ENV.fetch('TWITTER_CONSUMER_SECRET') { 'REDACTED' } }
+        oauth_token        { ENV.fetch('TWITTER_OAUTH_TOKEN') { 'REDACTED' } }
+        oauth_token_secret { ENV.fetch('TWITTER_OAUTH_TOKEN_SECRET') { 'REDACTED' } }
       end
 
       trait :invalid do

@@ -34,6 +34,42 @@ FactoryBot.define do
 
       association :ticket, factory: :twitter_ticket
       body { Faker::Lorem.sentence }
+
+      trait :pending_delivery do
+        transient do
+          recipient { create(:twitter_authorization) }
+          sender_id { Faker::Number.number(10) }
+        end
+
+        from         { User.with_permissions('ticket.agent').first.fullname }
+        to           { recipient.username }
+        in_reply_to  { Faker::Number.number(19) }
+        content_type { 'text/plain' }
+      end
+
+      trait :delivered do
+        pending_delivery
+        message_id { Faker::Number.number(19) }
+        preferences do
+          {
+            delivery_retry:          1,
+            twitter:                 {
+              recipient_id: recipient.uid,
+              sender_id:    sender_id
+            },
+            links:                   [
+              {
+                url:    "https://twitter.com/messages/#{recipient.uid}-#{sender_id}",
+                target: '_blank',
+                name:   'on Twitter'
+              }
+            ],
+            delivery_status_message: nil,
+            delivery_status:         'success',
+            delivery_status_date:    Time.current
+          }
+        end
+      end
     end
   end
 end
