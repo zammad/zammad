@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Channel::Driver::Twitter do
   subject(:channel) { create(:twitter_channel) }
 
+  let(:external_credential) { ExternalCredential.find(channel.options[:auth][:external_credential_id]) }
+
   describe '#process', current_user_id: 1 do
     # Twitter channels must be configured to know whose account they're monitoring.
     subject(:channel) do
@@ -640,6 +642,134 @@ RSpec.describe Channel::Driver::Twitter do
             .and change { Ticket::Article.exists?(article_attributes) }.to(true)
         end
       end
+    end
+  end
+
+  describe '#send', :use_vcr do
+    shared_examples 'for #send' do
+      # Channel#deliver takes a hash in the following format
+      # (see Observer::Ticket::Article::CommunicateTwitter::BackgroundJob#perform)
+      #
+      # Why not just accept the whole article?
+      # Presumably so all channels have a consistent interface...
+      # but it might be a good idea to let it accept both one day
+      # (the "robustness principle")
+      let(:delivery_payload) do
+        {
+          type:        outgoing_tweet.type.name,
+          to:          outgoing_tweet.to,
+          body:        outgoing_tweet.body,
+          in_reply_to: outgoing_tweet.in_reply_to
+        }
+      end
+
+      describe 'Import Mode behavior' do
+        before { Setting.set('import_mode', true) }
+
+        it 'is a no-op' do
+          expect(Twitter::REST::Client).not_to receive(:new)
+
+          channel.deliver(delivery_payload)
+        end
+      end
+
+      describe 'Twitter API authentication' do
+        let(:consumer_credentials) do
+          {
+            consumer_key:    external_credential.credentials[:consumer_key],
+            consumer_secret: external_credential.credentials[:consumer_secret],
+          }
+        end
+
+        let(:oauth_credentials) do
+          {
+            access_token:        channel.options[:auth][:oauth_token],
+            access_token_secret: channel.options[:auth][:oauth_token_secret],
+          }
+        end
+
+        it 'uses consumer key/secret stored on ExternalCredential' do
+          expect(Twitter::REST::Client)
+            .to receive(:new).with(hash_including(consumer_credentials))
+            .and_call_original
+
+          channel.deliver(delivery_payload)
+        end
+
+        it 'uses OAuth token/secret stored on #options hash' do
+          expect(Twitter::REST::Client)
+            .to receive(:new).with(hash_including(oauth_credentials))
+            .and_call_original
+
+          channel.deliver(delivery_payload)
+        end
+      end
+
+      describe 'Twitter API activity' do
+        it 'creates a tweet/DM via the API' do
+          channel.deliver(delivery_payload)
+
+          expect(WebMock)
+            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
+            .with(body: request_body)
+        end
+
+        it 'returns the created tweet/DM' do
+          expect(channel.deliver(delivery_payload)).to match(return_value)
+        end
+      end
+    end
+
+    context 'for tweets' do
+      let!(:outgoing_tweet) { create(:twitter_article) }
+      let(:endpoint) { '/statuses/update.json' }
+      let(:request_body) { <<~BODY.chomp }
+        in_reply_to_status_id&status=#{URI.encode_www_form_component(outgoing_tweet.body)}
+      BODY
+      let(:return_value) { Twitter::Tweet }
+
+      include_examples 'for #send'
+
+      context 'in a thread' do
+        let!(:outgoing_tweet) { create(:twitter_article, :reply) }
+        let(:request_body) { <<~BODY.chomp }
+          in_reply_to_status_id=#{outgoing_tweet.in_reply_to}&status=#{URI.encode_www_form_component(outgoing_tweet.body)}
+        BODY
+
+        it 'creates a tweet via the API' do
+          channel.deliver(delivery_payload)
+
+          expect(WebMock)
+            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
+            .with(body: request_body)
+        end
+      end
+
+      context 'containing an asterisk (workaround for sferik/twitter #677)' do
+        let!(:outgoing_tweet) { create(:twitter_article, body: 'foo * bar') }
+        let(:request_body) { <<~BODY.chomp }
+          in_reply_to_status_id&status=#{URI.encode_www_form_component('foo ＊ bar')}
+        BODY
+
+        it 'converts it to a full-width asterisk (U+FF0A)' do
+          channel.deliver(delivery_payload)
+
+          expect(WebMock)
+            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
+            .with(body: request_body)
+        end
+      end
+    end
+
+    context 'for DMs' do
+      let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery) }
+      let(:endpoint) { '/direct_messages/events/new.json' }
+      let(:request_body) { <<~BODY.chomp }
+        {"event":{"type":"message_create","message_create":{"target":{"recipient_id":"#{Authorization.last.uid}"},"message_data":{"text":"#{outgoing_tweet.body}"}}}}
+      BODY
+      let(:return_value) { { event: hash_including(type: 'message_create') } }
+
+      include_examples 'for #send'
     end
   end
 end

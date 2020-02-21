@@ -25,6 +25,10 @@ FactoryBot.define do
       association :ticket, factory: :twitter_ticket
       message_id { '775410014383026176' }
       body { Faker::Lorem.sentence }
+
+      trait :reply do
+        in_reply_to  { Faker::Number.number(19) }
+      end
     end
 
     factory :twitter_dm_article do
@@ -41,7 +45,7 @@ FactoryBot.define do
           sender_id { Faker::Number.number(10) }
         end
 
-        from         { User.with_permissions('ticket.agent').first.fullname }
+        from         { ticket.owner.fullname }
         to           { recipient.username }
         in_reply_to  { Faker::Number.number(19) }
         content_type { 'text/plain' }

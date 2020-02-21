@@ -10,12 +10,12 @@ class TwitterSync
   attr_accessor :client
 
   def initialize(auth, payload = nil)
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = auth[:consumer_key]
-      config.consumer_secret     = auth[:consumer_secret]
-      config.access_token        = auth[:oauth_token] || auth[:access_token]
-      config.access_token_secret = auth[:oauth_token_secret] || auth[:access_token_secret]
-    end
+    @client = Twitter::REST::Client.new(
+      consumer_key:        auth[:consumer_key],
+      consumer_secret:     auth[:consumer_secret],
+      access_token:        auth[:oauth_token] || auth[:access_token],
+      access_token_secret: auth[:oauth_token_secret] || auth[:access_token_secret],
+    )
     @payload = payload
   end
 
