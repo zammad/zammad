@@ -154,7 +154,7 @@ App.Config.set(
   {
     name: 'Clearbit'
     target: '#system/integration/clearbit'
-    description: 'A powerfull service to get more information about your customers.'
+    description: 'A powerful service to get more information about your customers.'
     controller: Index
     state: State
     permission: ['admin.integration.clearbit']
