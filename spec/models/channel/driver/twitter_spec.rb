@@ -772,4 +772,101 @@ RSpec.describe Channel::Driver::Twitter do
       include_examples 'for #send'
     end
   end
+
+  describe '#fetch', :use_vcr do
+    describe 'Twitter API authentication' do
+      let(:consumer_credentials) do
+        {
+          consumer_key:    external_credential.credentials[:consumer_key],
+          consumer_secret: external_credential.credentials[:consumer_secret],
+        }
+      end
+
+      let(:oauth_credentials) do
+        {
+          access_token:        channel.options[:auth][:oauth_token],
+          access_token_secret: channel.options[:auth][:oauth_token_secret],
+        }
+      end
+
+      it 'uses consumer key/secret stored on ExternalCredential' do
+        expect(Twitter::REST::Client)
+          .to receive(:new).with(hash_including(consumer_credentials))
+          .and_call_original
+
+        channel.fetch
+      end
+
+      it 'uses OAuth token/secret stored on #options hash' do
+        expect(Twitter::REST::Client)
+          .to receive(:new).with(hash_including(oauth_credentials))
+          .and_call_original
+
+        channel.fetch
+      end
+    end
+
+    describe 'Twitter API activity' do
+      # travel back in time when VCR was recorded
+      before { travel_to '2020-02-06 13:37 +0100' }
+
+      it 'sets successful status attributes' do
+        expect { channel.fetch(true) }
+          .to change { channel.reload.attributes }
+          .to hash_including(
+            'status_in'    => 'ok',
+            'last_log_in'  => '',
+            'status_out'   => nil,
+            'last_log_out' => nil
+          )
+      end
+
+      it 'adds tickets based on .options[:sync][:search] parameters' do
+        expect { channel.fetch(true) }
+          .to change(Ticket, :count).by(8)
+
+        expect(Ticket.last.attributes).to include(
+          'title'       => "Come and join our team to bring Zammad even further forward!   It's gonna be ama...",
+          'preferences' => { 'channel_id'          => channel.id,
+                             'channel_screen_name' => channel.options[:user][:screen_name] },
+          'customer_id' => User.find_by(firstname: 'Mr.Generation', lastname: '').id
+        )
+      end
+
+      it 'skips tweets more than 15 days older than channel itself'
+
+      context 'and "track_retweets" option' do
+        subject(:channel) { create(:twitter_channel, custom_options: { sync: { track_retweets: true } }) }
+
+        it 'adds tickets based on .options[:sync][:search] parameters' do
+          expect { channel.fetch(true) }
+            .to change(Ticket, :count).by(21)
+
+          expect(Ticket.last.attributes).to include(
+            'title'       => 'RT @BarackObama: Kobe was a legend on the court and just getting started in what...',
+            'preferences' => { 'channel_id'          => channel.id,
+                               'channel_screen_name' => channel.options[:user][:screen_name] },
+            'customer_id' => User.find_by(firstname: 'Zammad', lastname: 'Ali').id
+          )
+        end
+      end
+
+      context 'and legacy "import_older_tweets" option' do
+        subject(:channel) { create(:twitter_channel, :legacy) }
+
+        it 'adds tickets based on .options[:sync][:search] parameters' do
+          expect { channel.fetch(true) }
+            .to change(Ticket, :count).by(21)
+
+          expect(Ticket.last.attributes).to include(
+            'title'       => 'Wir haben unsere DMs deaktiviert. ' \
+                             'Leider können wir dank der neuen Twitter API k...',
+            'preferences' => { 'channel_id'          => channel.id,
+                               'channel_screen_name' => channel.options[:user][:screen_name] },
+            'customer_id' => User.find_by(firstname: 'Ccc', lastname: 'Event Logistics').id
+          )
+        end
+      end
+    end
+  end
 end

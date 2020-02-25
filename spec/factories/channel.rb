@@ -39,7 +39,6 @@ FactoryBot.define do
           },
           sync:                     {
             webhook_id:      '',
-            track_retweets:  true,
             mentions:        {
               group_id: Group.first.id
             },
