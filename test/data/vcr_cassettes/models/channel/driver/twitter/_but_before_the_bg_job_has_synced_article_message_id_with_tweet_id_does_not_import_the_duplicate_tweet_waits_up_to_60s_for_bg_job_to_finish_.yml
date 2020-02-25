@@ -1,0 +1,245 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=zammadzammadzammad
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="bd6dd2182d97c3db65b31354e57e4898",
+        oauth_signature="CB1L6ABVnKvvX6MYA%2FgAwEO2bJk%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1583840885", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '1875'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 10 Mar 2020 11:48:05 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 10 Mar 2020 11:48:05 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158384088580519536; Max-Age=63072000; Expires=Thu, 10 Mar 2022
+        11:48:05 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_C0O4/lMYKslqdCLoRaa92g=="; Max-Age=63072000; Expires=Thu,
+        10 Mar 2022 11:48:05 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - 17fe1248d1e3052bdc237af4f58d515a
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '164'
+      X-Transaction:
+      - 00a2bc2500997791
+      X-Tsa-Request-Body-Time:
+      - '0'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Tue Mar 10 11:48:05 +0000 2020","id":1237344473199153152,"id_str":"1237344473199153152","text":"zammadzammadzammad","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\/\" rel=\"nofollow\"\u003ezammad\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1205290247124217856,"id_str":"1205290247124217856","name":"pennbrooke","screen_name":"pennbrooke1","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Dec 13 00:56:10 +0000 2019","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":19,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_image_url_https":"https:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":true,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"lv"}'
+    http_version: 
+  recorded_at: Tue, 10 Mar 2020 11:48:06 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammadzammadzammad&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="37876a49fa0c474bd7732dea70083056",
+        oauth_signature="f159trPoyOipHcp%2BPlL33Kh2nO4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1583840887", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '2346'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 10 Mar 2020 11:48:07 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 10 Mar 2020 11:48:07 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158384088754038008; Max-Age=63072000; Expires=Thu, 10 Mar 2022
+        11:48:07 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_N5oIKIuBSmkhNAVvuM7dWQ=="; Max-Age=63072000; Expires=Thu,
+        10 Mar 2022 11:48:07 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - a615db05b45fdf48368de9e967c599c2
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '177'
+      X-Rate-Limit-Reset:
+      - '1583841131'
+      X-Response-Time:
+      - '134'
+      X-Transaction:
+      - '004926c000957504'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"created_at":"Tue Mar 10 11:48:05 +0000 2020","id":1237344473199153152,"id_str":"1237344473199153152","text":"zammadzammadzammad","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"lv","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\/\" rel=\"nofollow\"\u003ezammad\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1205290247124217856,"id_str":"1205290247124217856","name":"pennbrooke","screen_name":"pennbrooke1","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Dec 13 00:56:10 +0000 2019","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":19,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_image_url_https":"https:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":true,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"lv"}],"search_metadata":{"completed_in":0.017,"max_id":1237344473199153152,"max_id_str":"1237344473199153152","next_results":"?max_id=1237344473199153151&q=zammadzammadzammad&count=100&include_entities=1&result_type=mixed","query":"zammadzammadzammad","refresh_url":"?since_id=1237344473199153152&q=zammadzammadzammad&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: 
+  recorded_at: Tue, 10 Mar 2020 11:48:07 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&include_entities=1&max_id=1237344473199153151&q=zammadzammadzammad&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="75815ceef5c89fbf52da222e32a10c88",
+        oauth_signature="BVaaa8THWe1R6DZEOr%2F8FAFm2v8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1583840902", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '297'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 10 Mar 2020 11:48:23 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 10 Mar 2020 11:48:23 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158384090303371642; Max-Age=63072000; Expires=Thu, 10 Mar 2022
+        11:48:23 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_j9baN1VbzoK0Aak9kVoDHQ=="; Max-Age=63072000; Expires=Thu,
+        10 Mar 2022 11:48:23 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - b2aecb9288e6367f9f95d89e76d342bc
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '176'
+      X-Rate-Limit-Reset:
+      - '1583841131'
+      X-Response-Time:
+      - '123'
+      X-Transaction:
+      - '0087d22d00c9bd19'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[],"search_metadata":{"completed_in":0.012,"max_id":1237344473199153151,"max_id_str":"1237344473199153151","query":"zammadzammadzammad","refresh_url":"?since_id=1237344473199153151&q=zammadzammadzammad&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: 
+  recorded_at: Tue, 10 Mar 2020 11:48:23 GMT
+recorded_with: VCR 4.0.0
