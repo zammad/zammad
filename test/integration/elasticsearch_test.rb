@@ -104,7 +104,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('es-customer1@example.com', attributes['email'])
     assert(attributes['preferences'])
     assert_not(attributes['password'])
-    assert_equal({ 'name' => 'Customer Organization Update', 'note' => 'some note' }, attributes['organization'])
+    assert_equal('Customer Organization Update', attributes['organization'])
 
     # organization
     attributes = @organization1.search_index_data

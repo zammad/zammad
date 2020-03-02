@@ -91,7 +91,9 @@ returns
 
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
-    return if search_index_value.blank?
+
+    new_search_index_value = search_index_value
+    return if new_search_index_value.blank?
 
     Models.indexable.each do |local_object|
       next if local_object == self.class
@@ -106,9 +108,9 @@ returns
       next if local_object.to_s == 'Ticket'
 
       local_object.new.attributes.each do |key, _value|
-        attribute_name      = key.to_s
-        attribute_ref_name  = local_object.search_index_attribute_ref_name(attribute_name)
-        attribute_class     = local_object.reflect_on_association(attribute_ref_name)&.klass
+        attribute_name     = key.to_s
+        attribute_ref_name = local_object.search_index_attribute_ref_name(attribute_name)
+        attribute_class    = local_object.reflect_on_association(attribute_ref_name)&.klass
 
         next if attribute_name.blank?
         next if attribute_ref_name.blank?
@@ -116,7 +118,7 @@ returns
         next if attribute_class != self.class
 
         data = {
-          attribute_ref_name => search_index_value
+          attribute_ref_name => new_search_index_value,
         }
         where = {
           attribute_name => id

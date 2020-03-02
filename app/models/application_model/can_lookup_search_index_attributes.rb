@@ -94,11 +94,11 @@ returns
 
     # get name of ref object
     value = nil
-    if respond_to?('search_index_data')
+    if respond_to?('name')
+      value = send('name')
+    elsif respond_to?('search_index_data')
       value = send('search_index_data')
       return if value == true
-    elsif respond_to?('name')
-      value = send('name')
     end
 
     value

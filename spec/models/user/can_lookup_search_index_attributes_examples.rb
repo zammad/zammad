@@ -1,13 +1,11 @@
 RSpec.shared_examples 'CanLookupSearchIndexAttributes' do
   describe '.search_index_value_by_attribute' do
-    it 'returns hash of data' do
+    it 'returns search index value for attribute' do
       organization = create(:organization, name: 'Tomato42', note: 'special recipe')
       user         = create(:agent_user, organization: organization)
 
       value = user.search_index_value_by_attribute('organization_id')
-      expect_value = { 'name' => 'Tomato42', 'note' => 'special recipe' }
-      expect(value).to be_a_kind_of(Hash)
-      expect(value).to eq(expect_value)
+      expect(value).to eq('Tomato42')
     end
   end
 
@@ -16,9 +14,7 @@ RSpec.shared_examples 'CanLookupSearchIndexAttributes' do
       organization = create(:organization, name: 'Tomato42', note: 'special recipe')
 
       value = organization.search_index_value
-      expect_value = { 'name' => 'Tomato42', 'note' => 'special recipe' }
-      expect(value).to be_a_kind_of(Hash)
-      expect(value).to eq(expect_value)
+      expect(value).to eq('Tomato42')
     end
   end
 
