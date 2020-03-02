@@ -312,6 +312,7 @@ class ReportTest < ActiveSupport::TestCase
 
     # execute background jobs
     Scheduler.worker(true)
+    SearchIndexBackend.refresh
   end
 
   test 'compare' do

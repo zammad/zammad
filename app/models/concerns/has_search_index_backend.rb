@@ -5,7 +5,7 @@ module HasSearchIndexBackend
   included do
     after_create  :search_index_update
     after_update  :search_index_update
-    after_touch   :search_index_update
+    after_touch   :search_index_update_touch
     after_destroy :search_index_destroy
   end
 
@@ -19,6 +19,26 @@ update search index, if configured - will be executed automatically
 =end
 
   def search_index_update
+    return true if ignore_search_indexing?(:update)
+
+    # start background job to transfer data to search index
+    return true if !SearchIndexBackend.enabled?
+
+    SearchIndexJob.perform_later(self.class.to_s, id)
+    SearchIndexAssociationsJob.perform_later(self.class.to_s, id)
+    true
+  end
+
+=begin
+
+update search index, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_update_touch
+
+=end
+
+  def search_index_update_touch
     return true if ignore_search_indexing?(:update)
 
     # start background job to transfer data to search index
@@ -49,7 +69,7 @@ returns
     # we can not use the delta function for this because of the excluded
     # ticket article attachments. see explain in delta function
     Ticket.select('id').where(organization_id: id).order(id: :desc).limit(10_000).pluck(:id).each do |ticket_id|
-      SearchIndexJob.perform_later('Ticket', ticket_id, false)
+      SearchIndexJob.perform_later('Ticket', ticket_id)
     end
   end
 
