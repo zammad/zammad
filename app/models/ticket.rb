@@ -591,6 +591,22 @@ condition example
         selector['value'] = selector['value'].split(/,/).collect(&:strip)
       end
 
+      if selector['operator'].include?('in working time')
+        next if attributes[1] != 'calendar_id'
+        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
+
+        biz = Calendar.lookup(id: selector['value'])&.biz
+        next if biz.blank?
+
+        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
+          no_result = true
+          break
+        end
+
+        # skip to next condition
+        next
+      end
+
       if query != ''
         query += ' AND '
       end
@@ -828,17 +844,6 @@ condition example
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
-      elsif selector['operator'].include?('in working time')
-        next if attributes[1] != 'calendar_id'
-        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
-
-        biz = Calendar.lookup(id: selector['value'])&.biz
-        next if biz.blank?
-
-        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
-          no_result = true
-          break
-        end
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end

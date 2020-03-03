@@ -166,7 +166,7 @@ RSpec.describe Trigger, type: :model do
 
       context 'is in working time' do
         let(:condition) do
-          { 'execution_time.calendar_id' => { 'operator' => 'is in working time', 'value' => calendar.id } }
+          { 'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.all.pluck(:id) }, 'execution_time.calendar_id' => { 'operator' => 'is in working time', 'value' => calendar.id } }
         end
 
         it 'does trigger only in working time' do
