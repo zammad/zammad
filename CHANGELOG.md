@@ -1,5 +1,21 @@
 # Change Log
 
+## [3.2.1](https://github.com/zammad/zammad/tree/3.2.1) (2020-03-03)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.2.0...3.2.1)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+- Moving from Manage Knowledge base view to another Manage view requires multiple clicks [2895](https://github.com/zammad/zammad/issues/2895) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Forwarding: Attachment of original content gets removed starting from the second forward without reloading per ticket [2406](https://github.com/zammad/zammad/issues/2406) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Tweet which is containing * will not send out, Twitter::Error::Unauthorized: Could not authenticate you. [2873](https://github.com/zammad/zammad/issues/2873) [[third party issue](https://github.com/zammad/zammad/labels/third party issue)]
+- Added Swedish chat translation [2869](https://github.com/zammad/zammad/pull/2869)
+- Error while fetching email from inbox will block processing of other mails in inbox [2754](https://github.com/zammad/zammad/issues/2754) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Invalid stored Twitter credentials block migration [2826](https://github.com/zammad/zammad/issues/2826) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[migration](https://github.com/zammad/zammad/labels/migration)]
+- Zammad doesn't work with Elasticsearch 7.5.x [2824](https://github.com/zammad/zammad/issues/2824) [[bug](https://github.com/zammad/zammad/labels/bug)] [[search](https://github.com/zammad/zammad/labels/search)]
+- Unable to open notifications (if chat is enabled) [2823](https://github.com/zammad/zammad/issues/2823) [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+
+
 ## [3.2.0](https://github.com/zammad/zammad/tree/3.2.0) (2019-12-02)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.1.0...3.2.0)
 
