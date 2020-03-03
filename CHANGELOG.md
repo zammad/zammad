@@ -1,15 +1,46 @@
 # Change Log
 
-## [3.3.0](https://github.com/zammad/zammad/tree/3.3.0) (2020-xx-xx)
+## [3.3.0](https://github.com/zammad/zammad/tree/3.3.0) (2020-03-03)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.2.0...3.3.0)
 
 **Implemented enhancements:**
-
-
-
+- Calendar as filter condition for Trigger/Automatization [1553](https://github.com/zammad/zammad/issues/1553) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Knowledge Base does't support animated GIFs and embedded Video (Youtube/Vimeo) content. [2713](https://github.com/zammad/zammad/issues/2713) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Can't create internal Articles via Trigger/Automatization [2782](https://github.com/zammad/zammad/issues/2782) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- `??`-Knowledge Base Answer search keyboard shortcut is not listed [2837](https://github.com/zammad/zammad/issues/2837) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Chat button is no longer optional in no jQuery version. [2881](https://github.com/zammad/zammad/issues/2881) [[chat](https://github.com/zammad/zammad/labels/chat)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- "Enter answer" textual change [2860](https://github.com/zammad/zammad/issues/2860) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
 
 **Fixed bugs:**
-
-
-
+- Performance: Improved touching assets of users, organizations and tickets  [2911](https://github.com/zammad/zammad/issues/2911) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[performance](https://github.com/zammad/zammad/labels/performance)] [[search](https://github.com/zammad/zammad/labels/search)]
+- Link-Template attributes within Organizations and user cause Organization and user creation to fail within UI [2920](https://github.com/zammad/zammad/issues/2920) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Attachments of KB Answers don't get added to Elasticsearch [2810](https://github.com/zammad/zammad/issues/2810) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[search](https://github.com/zammad/zammad/labels/search)]
+- Can't use HEX/HSL color value in KB Admin color picker [2641](https://github.com/zammad/zammad/issues/2641) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Error when changing passwords for users without email [2904](https://github.com/zammad/zammad/issues/2904) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+- Editing of KB article not possible if long text is pasted [2918](https://github.com/zammad/zammad/issues/2918) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Fix issue with devices session remove button [2935](https://github.com/zammad/zammad/pull/2935)
+- Auto-Complete on Typing for Tags is hidden behind Pop-Up Windows [2890](https://github.com/zammad/zammad/issues/2890) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Wrong language on login screen [2505](https://github.com/zammad/zammad/issues/2505) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Fix issue with modal dialogues when last action or condition is removed [2934](https://github.com/zammad/zammad/pull/2934)
+- KB link to public interface loses HTTP type [2628](https://github.com/zammad/zammad/issues/2628) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- omniauth-github: Please use the Authorization HTTP header instead as using the access_token query parameter is deprecated and will be removed July 1st, 2020. [2937](https://github.com/zammad/zammad/issues/2937) [[third party issue](https://github.com/zammad/zammad/labels/third party issue)] [[update](https://github.com/zammad/zammad/labels/update)]
+- Unable to paste from clipboard in note field in ticket zoom [2924](https://github.com/zammad/zammad/issues/2924) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- fix(px_handling): broken px handling in no-jquery coffee version [2905](https://github.com/zammad/zammad/pull/2905)
+- Ticket split does reference article inline images instead of copying them [2910](https://github.com/zammad/zammad/issues/2910) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Emails with binary body (attachment as body) get handled as if they were text messages which breaks the attachment [2894](https://github.com/zammad/zammad/issues/2894) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Fix storage log message typo [2908](https://github.com/zammad/zammad/pull/2908)
+- Time format always english if generated from system [2169](https://github.com/zammad/zammad/issues/2169) [[bug](https://github.com/zammad/zammad/labels/bug)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Missing Content-Type header of parsed email fails processing [2906](https://github.com/zammad/zammad/issues/2906) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Dashboard dispalying NaN [2897](https://github.com/zammad/zammad/issues/2897) [[bug](https://github.com/zammad/zammad/labels/bug)] [[dashboard](https://github.com/zammad/zammad/labels/dashboard)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Feat/chat hooks [2888](https://github.com/zammad/zammad/pull/2888)
+- Granted field access gets redacted by a later (alphabetically) permission [2893](https://github.com/zammad/zammad/issues/2893) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Moving from Manage Knowledge base view to another Manage view requires multiple clicks [2895](https://github.com/zammad/zammad/issues/2895) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Forwarding: Attachment of original content gets removed starting from the second forward without reloading per ticket [2406](https://github.com/zammad/zammad/issues/2406) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Tweet which is containing * will not send out, Twitter::Error::Unauthorized: Could not authenticate you. [2873](https://github.com/zammad/zammad/issues/2873) [[third party issue](https://github.com/zammad/zammad/labels/third party issue)]
+- Added Swedish chat translation [2869](https://github.com/zammad/zammad/pull/2869)
+- Twitter-URLs (show this on twitter) are no longer valid / working [2715](https://github.com/zammad/zammad/issues/2715) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Error while fetching email from inbox will block processing of other mails in inbox [2754](https://github.com/zammad/zammad/issues/2754) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Invalid stored Twitter credentials block migration [2826](https://github.com/zammad/zammad/issues/2826) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[migration](https://github.com/zammad/zammad/labels/migration)]
+- Zammad doesn't work with Elasticsearch 7.5.x [2824](https://github.com/zammad/zammad/issues/2824) [[bug](https://github.com/zammad/zammad/labels/bug)] [[search](https://github.com/zammad/zammad/labels/search)]
+- Unable to open notifications (if chat is enabled) [2823](https://github.com/zammad/zammad/issues/2823) [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
 
