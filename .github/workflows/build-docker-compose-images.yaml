@@ -1,0 +1,20 @@
+name: build-docker-compose-images
+
+on:
+  push:
+    branches: [stable]
+
+jobs:
+  build-docker-compose-images:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGES: "zammad zammad-elasticsearch zammad-postgresql"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_REPOSITORY: "zammad-docker-compose"
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      GITHUB_REPOSITORY: "zammad-docker-compose"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Build docker image
+        run: .github/docker-image-build.sh
