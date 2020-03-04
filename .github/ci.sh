@@ -12,15 +12,12 @@ DB_CONFIG="test:\n  adapter: postgresql\n  database: zammad_test\n  host: 127.0.
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends autoconf automake autotools-dev bison build-essential curl git-core libffi-dev libgdbm-dev libgmp-dev libmariadbclient-dev-compat libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libtool libxml2-dev libxslt1-dev libyaml-0-2 libyaml-dev patch pkg-config postfix sqlite3 zlib1g-dev libimlib2 libimlib2-dev
 
-if [ "${CIRCLE_JOB}" == "install-mysql" ]; then
+if [ "${ZAMMAD_DBS}" == "mysql" ]; then
   DB_ADAPTER="mysql2"
   INSTALL_OPTION="postgres"
-elif [ "${CIRCLE_JOB}" == "install-postgresql" ]; then
+elif [ "${ZAMMAD_DBS}" == "postgresql" ]; then
   DB_ADAPTER="postgresql"
   INSTALL_OPTION="mysql"
-else
-  echo "nothing to do for circle ci job ${CIRCLE_JOB}..."
-  exit 0
 fi
 
 # create db config

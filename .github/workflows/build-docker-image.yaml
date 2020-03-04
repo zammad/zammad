@@ -1,0 +1,20 @@
+name: build-docker-image
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGES: "zammad"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_REPOSITORY: "zammad"
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      GITHUB_REPOSITORY: "zammad-docker"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Build docker image
+        run: .github/docker-image-build.sh
