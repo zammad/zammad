@@ -1,4 +1,4 @@
-# Welcome to Zammad
+# Welcome to Zammad 💌
 
 Zammad is a web based open source helpdesk/customer support system with many
 features to manage customer communication via several channels like telephone,
