@@ -24,10 +24,14 @@ for DOCKER_IMAGE in ${DOCKER_IMAGES}; do
 
   if [ "${DOCKER_REPOSITORY}" == "zammad-docker-compose" ]; then
     docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}" -f "containers/${DOCKER_IMAGE}/Dockerfile" .
+
+    docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}"
     docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest"
+    docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}"
   else
     docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:latest" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${ZAMMAD_VERSION}" .
+
+    docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:latest"
+    docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${ZAMMAD_VERSION}"
   fi
-  docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}"
-  docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}"
 done
