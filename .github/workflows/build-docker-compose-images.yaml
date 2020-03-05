@@ -16,5 +16,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
       - name: Build docker image
         run: .github/docker-image-build.sh
