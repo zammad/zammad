@@ -231,7 +231,6 @@ class App.TicketCreate extends App.Controller
         # convert non text/html from text 2 html
         if a.content_type.match(/\/html/)
           t.body = a.body
-          t.body = App.Utils.htmlImage2DataUrl(t.body)
         else
           t.body  = App.Utils.text2html(a.body)
 
@@ -345,6 +344,10 @@ class App.TicketCreate extends App.Controller
       params:         params
       taskKey:        @taskKey
     )
+
+    # convert remote images into data urls
+    App.Utils.htmlImage2DataUrlAsyncInline(@$('[contenteditable=true]'))
+
     App.Ticket.configure_attributes.pop()
 
     # set type selector

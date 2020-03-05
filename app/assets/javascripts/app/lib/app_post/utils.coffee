@@ -1225,6 +1225,20 @@ class App.Utils
     ctx.drawImage(img, 0, 0)
     canvas.toDataURL('image/png')
 
+  @htmlImage2DataUrlAsyncInline: (html, callback) ->
+    html.find('img').each( (index) ->
+      element = $(@)
+      src = element.attr('src')
+
+      # <img src="cid: ..."> or an empty src attribute may mean broken emails (see issue #2305 / #2701)
+      return if !src? or src.match(/^(data|cid):/i)
+
+      App.Utils._htmlImage2DataUrlAsync(@, (data) ->
+        element.attr('src', data)
+        callback(element) if callback
+      )
+    )
+
   # works asynchronously to make sure images are loaded before converting to base64
   # output is passed to callback
   @htmlImage2DataUrlAsync: (html, callback) ->
@@ -1252,7 +1266,7 @@ class App.Utils
     imageCache = new Image()
     imageCache.onload = ->
       data = App.Utils._htmlImage2DataUrl(originalImage)
-      callback(data)
+      callback(data) if callback
 
     imageCache.src = originalImage.src
 
