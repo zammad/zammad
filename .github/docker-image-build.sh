@@ -23,11 +23,11 @@ for DOCKER_IMAGE in ${DOCKER_IMAGES}; do
   echo "Build Zammad Docker image ${DOCKER_IMAGE} with version ${ZAMMAD_VERSION} for DockerHubs ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE} repo"
 
   if [ "${DOCKER_REPOSITORY}" == "zammad-docker-compose" ]; then
-    docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" -t ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE} -t ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest -t ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION} -f containers/${DOCKER_IMAGE}/Dockerfile .
-    docker push ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest
+    docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}" -f "containers/${DOCKER_IMAGE}/Dockerfile" .
+    docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-latest"
   else
-    docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +”%Y-%m-%dT%H:%M:%SZ”)" -t ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:latest -t ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${ZAMMAD_VERSION} .
+    docker build --pull --no-cache --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:latest" -t "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${ZAMMAD_VERSION}" .
   fi
-  docker push ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}
-  docker push ${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}
-fi
+  docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}"
+  docker push "${DOCKER_REGISTRY}/${REPO_USER}/${DOCKER_REPOSITORY}:${DOCKER_IMAGE}-${ZAMMAD_VERSION}"
+done
