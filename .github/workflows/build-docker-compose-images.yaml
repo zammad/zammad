@@ -12,7 +12,7 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       DOCKER_REPOSITORY: "zammad-docker-compose"
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      GITHUB_REPOSITORY: "zammad-docker-compose"
+      DOCKER_GITHUB_REPOSITORY: "zammad-docker-compose"
     steps:
       - name: Checkout code
         uses: actions/checkout@master
