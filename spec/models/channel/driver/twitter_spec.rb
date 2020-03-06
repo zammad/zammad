@@ -773,7 +773,7 @@ RSpec.describe Channel::Driver::Twitter do
     end
   end
 
-  describe '#fetch', :use_vcr do
+  describe '#fetch', use_vcr: :time_sensitive do
     describe 'Twitter API authentication' do
       let(:consumer_credentials) do
         {
@@ -807,9 +807,6 @@ RSpec.describe Channel::Driver::Twitter do
     end
 
     describe 'Twitter API activity' do
-      # travel back in time when VCR was recorded
-      before { travel_to '2020-02-06 13:37 +0100' }
-
       it 'sets successful status attributes' do
         expect { channel.fetch(true) }
           .to change { channel.reload.attributes }

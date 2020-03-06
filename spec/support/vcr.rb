@@ -20,24 +20,6 @@ VCR.configure do |config|
   end
 end
 
-module VCRHelper
-  def self.auto_record(example)
-    spec_path       = Pathname.new(example.file_path).realpath
-    cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(/_spec\.rb$/, '')
-    cassette_name   = "#{example.example_group.description} #{example.description}".gsub(/[^0-9A-Za-z.\-]+/, '_').downcase
-    request_profile = case example.metadata[:use_vcr]
-                      when true
-                        %i[method uri]
-                      when :with_oauth_headers
-                        %i[method uri oauth_headers]
-                      end
-
-    VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do
-      example.run
-    end
-  end
-end
-
 module RSpec
   VCR_ADVISORY = <<~MSG.freeze
     If this test is failing unexpectedly, the VCR cassette may be to blame.
@@ -87,7 +69,27 @@ module RSpec
 end
 
 RSpec.configure do |config|
-  config.around(:each, use_vcr: true, &VCRHelper.method(:auto_record))
+  config.around(:each, use_vcr: true) do |example|
+    vcr_options = Array(example.metadata[:use_vcr])
+
+    spec_path       = Pathname.new(example.file_path).realpath
+    cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(/_spec\.rb$/, '')
+    cassette_name   = "#{example.example_group.description} #{example.description}".gsub(/[^0-9A-Za-z.\-]+/, '_').downcase
+    request_profile = [
+      :method,
+      :uri,
+      vcr_options.include?(:with_oauth_headers) ? :oauth_headers : nil
+    ].compact
+
+    VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do |cassette|
+      if vcr_options.include?(:time_sensitive) && !cassette.recording?
+        travel_to(cassette.http_interactions.interactions.first.recorded_at)
+      end
+
+      example.run
+    end
+  end
+
   config.around(:each, use_vcr: true, &RSpec::Support::VCRHelper.method(:inject_advisory))
   config.around(:each, use_vcr: true, &RSpec::Expectations::VCRHelper.method(:inject_advisory))
 end
