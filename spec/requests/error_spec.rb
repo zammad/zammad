@@ -13,7 +13,7 @@ RSpec.describe 'Error handling', type: :request do
       # a random error code that can be easily found in the logs by an
       # administrator. However, this makes it hard to check for the exact error
       # message. Therefore we only check for the substring in this particular case
-      if message == 'Please contact your administrator'
+      if message == 'Please contact your administrator' || message == 'Mysql2::Error' || message == 'PG::ForeignKeyViolation'
         expect(json_response['error']).to include(message)
       else
         expect(json_response['error']).to eq(message)
@@ -33,34 +33,50 @@ RSpec.describe 'Error handling', type: :request do
 
   context 'error with confidential message is raised' do
 
-    let(:admin_user) { create(:admin_user, groups: Group.all) }
     let!(:ticket) { create(:ticket) }
     let(:invalid_group_id) { 99_999 }
-    let(:message) { 'Please contact your administrator' }
     let(:http_status) { :unprocessable_entity }
 
     before do
-      # fake production ENV to enable error hiding
-      env = double(
-        production?:  true,
-        test?:        false,
-        development?: false
-      )
-      allow(::Rails).to receive(:env).and_return(env)
-
-      authenticated_as(admin_user)
+      authenticated_as(requesting_user)
       put "/api/v1/tickets/#{ticket.id}?all=true", params: { group_id: invalid_group_id }, as: as
     end
 
-    context 'requesting JSON' do
-      include_examples 'JSON response format'
+    context 'agent user' do
+      let(:requesting_user) { create(:agent_user, groups: Group.all) }
+      let(:message) { 'Please contact your administrator' }
+
+      context 'requesting JSON' do
+        include_examples 'JSON response format'
+      end
+
+      context 'requesting HTML' do
+        let(:title) { '422: Unprocessable Entity' }
+        let(:headline) { '422: The change you wanted was rejected.' }
+
+        include_examples 'HTML response format'
+      end
     end
 
-    context 'requesting HTML' do
-      let(:title) { '422: Unprocessable Entity' }
-      let(:headline) { '422: The change you wanted was rejected.' }
+    context 'admin user' do
+      let(:requesting_user) { create(:admin_user, groups: Group.all) }
 
-      include_examples 'HTML response format'
+      if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
+        let(:message) { 'Mysql2::Error' }
+      else
+        let(:message) { 'PG::ForeignKeyViolation' }
+      end
+
+      context 'requesting JSON' do
+        include_examples 'JSON response format'
+      end
+
+      context 'requesting HTML' do
+        let(:title) { '422: Unprocessable Entity' }
+        let(:headline) { '422: The change you wanted was rejected.' }
+
+        include_examples 'HTML response format'
+      end
     end
   end
 
@@ -112,12 +128,12 @@ RSpec.describe 'Error handling', type: :request do
       get '/tests/raised_exception', params: { exception: exception.name, message: message }, as: as
     end
 
-    shared_examples 'handles exception' do |exception, http_status, title, headline|
+    shared_examples 'exception check' do |message, exception, http_status, title, headline|
 
       context "#{exception} is raised" do
         let(:exception) { exception }
         let(:http_status) { http_status }
-        let(:message) { 'some error message' }
+        let(:message) { message }
 
         context 'requesting JSON' do
           include_examples 'JSON response format'
@@ -132,10 +148,18 @@ RSpec.describe 'Error handling', type: :request do
       end
     end
 
-    include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
+    shared_examples 'handles exception' do |exception, http_status, title, headline|
+      include_examples 'exception check', 'some error message', exception, http_status, title, headline
+    end
+
+    shared_examples 'masks exception' do |exception, http_status, title, headline|
+      include_examples 'exception check', 'Please contact your administrator', exception, http_status, title, headline
+    end
+
     include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
+    include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
     include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-    include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-    include_examples 'handles exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+    include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+    include_examples 'masks exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
   end
 end
