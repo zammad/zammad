@@ -28,7 +28,7 @@ returns
       end
 
       if params.nil?
-        raise ArgumentError, "No params for #{self}!"
+        raise Exceptions::UnprocessableEntity, "No params for #{self}!"
       end
 
       # cleanup each member of array
@@ -61,7 +61,7 @@ returns
           next if data[name].blank?
           next if assoc.klass.lookup(id: data[name])
 
-          raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
+          raise Exceptions::UnprocessableEntity, "Invalid value for param '#{name}': #{data[name].inspect}"
         end
         clean_params[attribute] = data[attribute]
       end
