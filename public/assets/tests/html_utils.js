@@ -3263,20 +3263,28 @@ test('App.Utils.icon()', function() {
   equal(App.Utils.icon('arrow-{end}'), svgTag, 'for rtl locale / name includes "{end}"')
 });
 
-source = '<img src="/assets/images/avatar-bg.png">some test'
-$('#image2text').html(source)
-var htmlImage2DataUrlTest = function() {
-
-  var result = App.Utils.htmlImage2DataUrl(source)
-  test("htmlImage2DataUrl async", function() {
-    var result = App.Utils.htmlImage2DataUrl(source)
-    ok(result.match(/some test/), source)
-    ok(!result.match(/avatar-bg.png/), source)
-    ok(result.match(/^\<img src=\"data:image\/png;base64,/), source)
+var source1 = '<img src="/assets/images/avatar-bg.png">some test'
+$('#image2data1').html(source1)
+var htmlImage2DataUrlTest1 = function() {
+  test("htmlImage2DataUrl1 async", function() {
+    var result1 = App.Utils.htmlImage2DataUrl(source1)
+    ok(result1.match(/some test/), source1)
+    ok(!result1.match(/avatar-bg.png/), source1)
+    ok(result1.match(/^\<img src=\"data:image\/png;base64,/), source1)
   });
-
 }
-$('#image2text img').one('load', htmlImage2DataUrlTest)
+$('#image2data1 img').one('load', htmlImage2DataUrlTest1)
+
+
+var source2 = '<img src="/assets/images/chat-demo-avatar.png">some test'
+$('#image2data2').html(source2)
+var htmlImage2DataUrlTest2 = function(element) {
+  test("htmlImage2DataUrl2 async", function() {
+    ok(!element.html().match(/chat-demo-avatar/), source2)
+    ok(element.get(0).outerHTML.match(/^\<img src=\"data:image\/png;base64,/), source2)
+  });
+}
+App.Utils.htmlImage2DataUrlAsyncInline($('#image2data2'), htmlImage2DataUrlTest2)
 
 }
 
