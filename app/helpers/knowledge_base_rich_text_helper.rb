@@ -38,7 +38,7 @@ module KnowledgeBaseRichTextHelper
 
       url = case settings[:provider]
             when 'youtube'
-              "http://www.youtube.com/embed/#{settings[:id]}"
+              "https://www.youtube.com/embed/#{settings[:id]}"
             when 'vimeo'
               "https://player.vimeo.com/video/#{settings[:id]}"
             end

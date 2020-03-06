@@ -43,7 +43,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{published_answer_with_video.id}"
 
       iframe = find('iframe')
-      expect(iframe['src']).to start_with('http://www.youtube.com/embed/')
+      expect(iframe['src']).to start_with('https://www.youtube.com/embed/')
     end
   end
 end

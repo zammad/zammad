@@ -115,7 +115,7 @@ class App.KnowledgeBaseReaderController extends App.Controller
       # coffeelint: disable=indentation
       url = switch settings.provider
             when 'youtube'
-              "http://www.youtube.com/embed/#{settings.id}"
+              "https://www.youtube.com/embed/#{settings.id}"
             when 'vimeo'
               "https://player.vimeo.com/video/#{settings.id}"
       # coffeelint: enable=indentation
