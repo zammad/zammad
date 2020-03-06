@@ -34,7 +34,7 @@ gem install bundler:1.7.3
 bundle install --without "${INSTALL_OPTION}"
 
 # unit tests
-# bundle exec rubocop
+bundle exec rubocop
 bundle exec rake zammad:db:init
 bundle exec rspec -t ~type:system -t ~searchindex
 bundle exec rake zammad:db:reset
