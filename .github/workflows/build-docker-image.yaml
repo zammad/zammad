@@ -8,11 +8,12 @@ jobs:
   build-docker-image:
     runs-on: ubuntu-latest
     env:
+      DOCKER_GITHUB_REPOSITORY: "zammad-docker"
       DOCKER_IMAGES: "zammad"
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       DOCKER_REPOSITORY: "zammad"
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_GITHUB_REPOSITORY: "zammad-docker"
+      REPO_USER: ${{ secrets.REPO_USER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@master

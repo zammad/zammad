@@ -2,17 +2,18 @@ name: build-docker-compose-images
 
 on:
   push:
-    branches: [stable]
+    branches: [stable**]
 
 jobs:
   build-docker-compose-images:
     runs-on: ubuntu-latest
     env:
+      DOCKER_GITHUB_REPOSITORY: "zammad-docker-compose"
       DOCKER_IMAGES: "zammad zammad-elasticsearch zammad-postgresql"
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       DOCKER_REPOSITORY: "zammad-docker-compose"
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_GITHUB_REPOSITORY: "zammad-docker-compose"
+      REPO_USER: ${{ secrets.REPO_USER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@master
