@@ -13,7 +13,7 @@ RSpec.describe 'Public Knowledge Base answer', type: :system, authenticated: fal
       visit help_answer_path(primary_locale.system_locale.locale, category, published_answer_with_video)
 
       iframe = find('iframe')
-      expect(iframe['src']).to start_with('http://www.youtube.com/embed/')
+      expect(iframe['src']).to start_with('https://www.youtube.com/embed/')
     end
   end
 end
