@@ -10099,8 +10099,12 @@ output {
     }
   }
 
-  &-divider {
+  &-group-label {
     opacity: 0.5;
+    
+    .filter-active & {
+      display: none;
+    }
     
     ~ .columnSelect-option {
       padding-left: 10px;

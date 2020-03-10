@@ -132,6 +132,7 @@ class App.ColumnSelect extends Spine.Controller
         $(el).addClass('is-filtered')
 
     @clearButton.toggleClass 'is-hidden', filter.length is 0
+    @pool.toggleClass 'filter-active', filter.length != 0
 
   clear: ->
     @search.val('')
