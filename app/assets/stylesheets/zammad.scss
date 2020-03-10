@@ -8644,7 +8644,6 @@ label + .wizard-buttonList {
 
 .horizontal-filter {
   display: flex;
-  align-items: center;
   background: hsl(197,20%,93%);
   padding: 7px;
   border: 1px solid hsl(198,19%,86%);
@@ -8691,8 +8690,20 @@ label + .wizard-buttonList {
 
 .horizontal-filter-body {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   flex: 1;
+}
+
+.horizontal-filter-group {
+  padding: 10px;
+  background: hsl(109,0%,97%);
+  border: 1px solid hsl(201,19%,86%);
+  border-radius: 5px;
+  margin: 0 5px;
+  
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .horizontal-filter-value {
@@ -8838,7 +8849,7 @@ output {
 
 .filter-controls {
   display: flex;
-  align-items: center;
+  margin-top: 5.5px;
 }
 
 .filter-control {

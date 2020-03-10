@@ -1,11 +1,36 @@
-<div class="flex">
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Visibility') %></label>
+  </div>
   <div class="js-internal"></div>
+</div>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Recipient') %></label>
+  </div>
   <div class="controls js-recipient u-positionOrigin">
     <select></select>
-    <%- @Icon('arrow-down', 'dropdown-arrow') %>
   </div>
-  <% if @notificationType is 'email': %>
-    <div class="controls js-subject"><input type="text" name="<%= @name %>::subject" value="<%= @meta.subject %>" style="width: 100%;" placeholder="<%- @T('Subject') %>"></div>
-  <% end %>
+</div>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Recipient') %></label>
+  </div>
+  <div class="controls js-recipientUser u-positionOrigin">
+    <select></select>
+  </div>
+</div>
+<% if @notificationType is 'email': %>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Subject') %></label>
+  </div>
+  <div class="controls js-subject"><input type="text" name="<%= @name %>::subject" value="<%= @meta.subject %>" style="width: 100%;" placeholder="<%- @T('Subject') %>"></div>
+</div>
+<% end %>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Body') %></label>
+  </div>
   <div class="controls js-body js-body-<%- @notificationType %>"><div class="richtext form-control"><div contenteditable="true" data-name="<%= @name %>::body"><%- @meta.body %></div></div></div>
 </div>

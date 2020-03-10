@@ -6,8 +6,8 @@
       </div>
     </div>
     <div class="js-setAttribute"></div>
-    <div class="js-setNotification flex"></div>
-    <div class="js-setArticle flex"></div>
+    <div class="horizontal-filter-group js-setNotification flex"></div>
+    <div class="horizontal-filter-group js-setArticle flex"></div>
   </div>
   <div class="filter-controls js-rowActions">
     <div class="filter-control filter-control-remove js-remove" title="<%- @Ti('Remote') %>">

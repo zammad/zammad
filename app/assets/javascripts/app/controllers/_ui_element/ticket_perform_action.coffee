@@ -377,7 +377,6 @@ class App.UiElement.ticket_perform_action
       null: false
       options: { true: 'internal', false: 'public' }
       value: meta.internal || 'false'
-      class: 'form-control--small'
       translate: true
     )
 
@@ -423,9 +422,9 @@ class App.UiElement.ticket_perform_action
       name: "#{name}::internal"
       multiple: false
       null: false
+      label: 'Visibility'
       options: { true: 'internal', false: 'public' }
       value: meta.internal
-      class: 'form-control--small'
       translate: true
     )
     articleElement = $( App.view('generic/ticket_perform_action/article')(
