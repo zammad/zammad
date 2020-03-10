@@ -1474,7 +1474,25 @@ class InputsRef extends App.ControllerContent
         name:        'project-name'
         id:          'project-name-123'
         placeholder: 'Enter Project Name'
-        options:     [{value:0,name:'Apple',selected:true},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'}]
+        options:     [{value:0,name:'Apple',selected:true},
+        {value:1,name:'Microsoft',selected:true},
+        {value:2,name:'Google'},
+        {value:3,name:'Deutsche Bahn'},
+        {value:4,name:'Sparkasse'},
+        {value:5,name:'Deutsche Post'},
+        {value:6,name:'Mitfahrzentrale'},
+        {value:7,name:'Starbucks'},
+        {value:8,name:'Mac Donalds'},
+        {value:9,name:'Flixbus'},
+        {value:10,name:'Betahaus'},
+        {value:11,name:'Bruno Banani'},
+        {value:12,name:'Alpina'},
+        {value:13,name:'Samsung'},
+        {value:14,name:'ChariTea'},
+        {value:15,name:'fritz-kola'},
+        {value:16,name:'Vitamin Water'},
+        {value:17,name:'Znuny'},
+        {value:18,name:'Max & Moritz'}]
     @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
 
     # selectable search
@@ -1535,7 +1553,32 @@ class InputsRef extends App.ControllerContent
       attribute:
         name:        'company-name'
         id:          'company-name-12345'
-        options:     [{value:0,name:'Apple'},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'},{value:19,name:'Telefónica Deutschland Holding GmbH'}]
+        options:     [
+          {label:'Group A', group: [
+            {value:0,name:'Apple'},
+            {value:1,name:'Microsoft',selected:true},
+            {value:2,name:'Google'},
+            {value:3,name:'Deutsche Bahn'},
+            {value:4,name:'Sparkasse'},
+            {value:5,name:'Deutsche Post'},
+            {value:6,name:'Mitfahrzentrale'}
+          ]},
+          {label:'Group B', group: [
+            {value:7,name:'Starbucks'},
+            {value:8,name:'Mac Donalds'},
+            {value:9,name:'Flixbus'},
+            {value:10,name:'Betahaus'},
+            {value:11,name:'Bruno Banani'},
+            {value:12,name:'Alpina'},
+            {value:13,name:'Samsung'},
+            {value:14,name:'ChariTea'},
+            {value:15,name:'fritz-kola'},
+            {value:16,name:'Vitamin Water'},
+            {value:17,name:'Znuny'},
+            {value:18,name:'Max & Moritz'},
+            {value:19,name:'Telefónica Deutschland Holding GmbH'}
+          ]}
+        ]
     @$('.columnSelectPlaceholder').replaceWith( columnSelectObject.element() )
 
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )

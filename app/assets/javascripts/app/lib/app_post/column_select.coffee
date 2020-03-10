@@ -42,22 +42,37 @@ class App.ColumnSelect extends Spine.Controller
     if !_.isEmpty(@attribute.seperator)
       values = []
       if @attribute.value
-        values = @attribute.value.split(';')
+        values = @attribute.value.split(@attribute.seperator)
       else if @attribute.default
-        values = @attribute.default.split(';')
+        values = @attribute.default.split(@attribute.seperator)
 
       for value in values
         for option in @options.attribute.options
-          if option.value is value
+          # is grouped
+          if option.group is not undefined
+            for o in option.group
+              if o.value is value
+                o.selected = true
+          else if option.value is value
             option.selected = true
 
     @values = []
+    allOptions = []
     _.each @options.attribute.options, (option) =>
-      if option.selected
-        @values.push option.value.toString()
+      # is grouped
+      if option.group != undefined
+        for o in option.group
+          allOptions.push(o)
+          if o.selected
+            @values.push o.value.toString()
+      else
+        allOptions.push(option)
+        if option.selected
+          @values.push option.value.toString()
 
     @html App.view('generic/column_select')(
       attribute: @options.attribute
+      allOptions: allOptions
       values: @values
     )
 
