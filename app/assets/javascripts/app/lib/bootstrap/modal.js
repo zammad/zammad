@@ -257,8 +257,8 @@
       left: this.$body.offset().left,
       top: this.$body.offset().top,
       width: this.$body.width(),
-      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing && this.scrollbarWidth > 0 ? this.scrollbarWidth : '',
+      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing && this.scrollbarWidth > 0 ? this.scrollbarWidth : ''
     }
 
     if(App.i18n.dir() == 'rtl'){
