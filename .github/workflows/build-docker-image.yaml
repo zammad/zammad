@@ -13,8 +13,10 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       DOCKER_REPOSITORY: "zammad"
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      REPO_USER: ${{ secrets.REPO_USER }}
     steps:
+      - name: Alias GITHUB_ACTOR as REPO_USER
+        run: |
+          echo "::set-env name=REPO_USER::$GITHUB_ACTOR"
       - name: Checkout code
         uses: actions/checkout@master
       - name: Fetch all history for all tags and branches
