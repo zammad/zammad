@@ -9450,6 +9450,7 @@ output {
     font-size: 12px;
     padding: 5px 5px 0;
     text-align: center;
+    font-weight: bold;
   }
 
   .day {
@@ -9457,6 +9458,9 @@ output {
     height: 26px;
     border-radius: 14px;
     padding: 1px 0 0 !important;
+    color: white;
+    background: none;
+    font-weight: bold;
   }
 
   .month,
@@ -9483,6 +9487,7 @@ output {
 
     &.today {
       background: hsl(240,10%,4%);
+      font-weight: bold;
     }
 
     &.focused {
