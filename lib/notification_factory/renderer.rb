@@ -58,7 +58,7 @@ examples how to use
         'article.body_as_html'                      => true,
         'article.body_as_text_with_quote.text2html' => true,
       }
-      if no_escape[key]
+      if no_escape[key] || key =~ /articles_.*.body_as_html/i
         escape = false
       end
     end

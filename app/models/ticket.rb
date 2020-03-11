@@ -1221,6 +1221,31 @@ result
     Ticket::Article.where(ticket_id: id).order(:created_at, :id)
   end
 
+  # get only public articles
+  def articles_public
+    Ticket::Article.where(ticket_id: id, internal: false).order(:created_at, :id)
+  end
+
+  # get only articles by agent
+  def articles_agent
+    Ticket::Article.where(ticket_id: id, sender_id: Ticket::Article::Sender.find_by(name: 'Agent')).order(:created_at, :id)
+  end
+
+  # get only public articles by agent
+  def articles_agent_public
+    Ticket::Article.where(ticket_id: id, internal: false, sender_id: Ticket::Article::Sender.find_by(name: 'Agent')).order(:created_at, :id)
+  end
+
+  # get only articles by customer
+  def articles_customer
+    Ticket::Article.where(ticket_id: id, sender_id: Ticket::Article::Sender.find_by(name: 'Customer')).order(:created_at, :id)
+  end
+
+  # get only articles by system
+  def articles_system
+    Ticket::Article.where(ticket_id: id, sender_id: Ticket::Article::Sender.find_by(name: 'System')).order(:created_at, :id)
+  end
+
   private
 
   def check_generate
