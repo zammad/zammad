@@ -13,7 +13,9 @@ ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')"
 echo "${DOCKER_PASSWORD}" | docker login --username="${DOCKER_USERNAME}" --password-stdin
 
 # clone docker repo
-git clone https://github.com/"${REPO_USER}"/"${DOCKER_GITHUB_REPOSITORY}"
+DOCKER_REPOSITORY_CLONE_URL="https://github.com/${REPO_USER}/${DOCKER_GITHUB_REPOSITORY}"
+echo "Cloning ${DOCKER_REPOSITORY_CLONE_URL}"
+git clone "${DOCKER_REPOSITORY_CLONE_URL}"
 
 # enter dockerfile dir
 cd "${REPO_ROOT}/${DOCKER_GITHUB_REPOSITORY}"

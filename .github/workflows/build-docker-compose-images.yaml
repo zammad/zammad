@@ -14,10 +14,9 @@ jobs:
       DOCKER_REPOSITORY: "zammad-docker-compose"
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
     steps:
-     - name: Alias GITHUB_ACTOR as REPO_USER
-      run: |
-        echo "::set-env name=REPO_USER::$GITHUB_ACTOR"
-     - name: Checkout code
+      - name: Extract REPO_USER from GITHUB_REPOSITORY ENV
+        run: echo "::set-env name=REPO_USER::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')"
+      - name: Checkout code
         uses: actions/checkout@master
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
