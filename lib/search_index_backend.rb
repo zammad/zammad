@@ -849,7 +849,7 @@ helper method for making HTTP calls
 @return UserAgent response
 
 =end
-  def self.make_request(url, data: {}, method: :get, open_timeout: 8, read_timeout: 60)
+  def self.make_request(url, data: {}, method: :get, open_timeout: 8, read_timeout: 180)
     Rails.logger.info "# curl -X #{method} \"#{url}\" "
     Rails.logger.debug { "-d '#{data.to_json}'" } if data.present?
 
@@ -857,6 +857,7 @@ helper method for making HTTP calls
       json:              true,
       open_timeout:      open_timeout,
       read_timeout:      read_timeout,
+      total_timeout:     (open_timeout + read_timeout + 60),
       open_socket_tries: 3,
       user:              Setting.get('es_user'),
       password:          Setting.get('es_password'),
