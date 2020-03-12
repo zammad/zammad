@@ -904,24 +904,15 @@ RSpec.describe Channel::Driver::Twitter do
           end
 
           describe 'Race condition: when #fetch finds a half-processed, outgoing tweet' do
-            subject!(:channel) { create(:twitter_channel, custom_options: custom_options) }
-
-            let(:custom_options) do
-              {
-                user: {
-                  # Must match connected Twitter account's user ID (on Twitter)--
-                  # that's how #fetch distinguishes between agents' tweets and other people's.
-                  id: '1205290247124217856'
-                },
-                sync: {
-                  search: [
-                    {
-                      term:     'zammadzammadzammad',
-                      group_id: Group.first.id
-                    }
-                  ]
-                }
-              }
+            subject!(:channel) do
+              create(:twitter_channel,
+                     search_term:    'zammadzammadzammad',
+                     custom_options: {
+                       user: {
+                         # Must match outgoing tweet author Twitter user ID
+                         id: '1205290247124217856',
+                       },
+                     })
             end
 
             let!(:tweet) { create(:twitter_article, body: 'zammadzammadzammad') }
@@ -969,20 +960,7 @@ RSpec.describe Channel::Driver::Twitter do
         end
 
         context 'for very common search terms' do
-          subject(:channel) { create(:twitter_channel, custom_options: custom_options) }
-
-          let(:custom_options) do
-            {
-              sync: {
-                search: [
-                  {
-                    term:     'coronavirus',
-                    group_id: Group.first.id
-                  }
-                ]
-              }
-            }
-          end
+          subject(:channel) { create(:twitter_channel, search_term: 'coronavirus') }
 
           let(:twitter_articles) { Ticket::Article.joins(:type).where(ticket_article_types: { name: 'twitter status' }) }
 

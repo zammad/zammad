@@ -47,13 +47,9 @@ FactoryBot.define do
             },
             search:          [
               {
-                term:     'zammad',
+                term:     search_term,
                 group_id: Group.first.id
               },
-              {
-                term:     'hash_tag1',
-                group_id: Group.first.id
-              }
             ],
           },
           subscribed_to_webhook_id: external_credential.credentials[:webhook_id],
@@ -65,6 +61,7 @@ FactoryBot.define do
         external_credential { create(:twitter_credential) }
         oauth_token { external_credential.credentials[:oauth_token] }
         oauth_token_secret { external_credential.credentials[:oauth_token_secret] }
+        search_term { 'zammad' }
       end
 
       trait :legacy do
