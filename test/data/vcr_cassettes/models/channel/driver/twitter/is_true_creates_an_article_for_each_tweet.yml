@@ -1,0 +1,437 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammad&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="4cf21224c8251d6a4258c53521e91153",
+        oauth_signature="1Bhg5ml%2Fqh6g9vzdqS61dVhkOMQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1580796438", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '124247'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 04 Feb 2020 06:07:18 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 04 Feb 2020 06:07:18 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158079643841913533; Max-Age=63072000; Expires=Thu, 3 Feb 2022
+        06:07:18 GMT; Path=/; Domain=.twitter.com
+      - lang=en; Path=/
+      - personalization_id="v1_sndnLJA9djOn3UynRVrAHg=="; Max-Age=63072000; Expires=Thu,
+        3 Feb 2022 06:07:18 GMT; Path=/; Domain=.twitter.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - e258dfc9229bc838cd9d50c00177c48a
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1580797338'
+      X-Response-Time:
+      - '182'
+      X-Transaction:
+      - 00cf981300b03fb6
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"created_at":"Thu
+        Jan 30 17:54:11 +0000 2020","id":1222941090417803264,"id_str":"1222941090417803264","text":"RT
+        @zammadhq: Good morning! Come to our Global Office. And stay where your heart
+        is. We are looking for creative colleagues! \ud83d\udc69\u200d\ud83d\ude92\ud83d\udc68\u200d\ud83c\udf3e\ud83d\udc68\u200d\ud83c\udf73\ud83e\uddb9\u200d\u2640\ufe0f\u2026","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"zammadhq","name":"Zammad
+        HQ","id":785412523193425920,"id_str":"785412523193425920","indices":[3,12]}],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1095164760683937793,"id_str":"1095164760683937793","name":"epicjobs","screen_name":"epicjobs","location":"","description":"Discover
+        jobs for design, product, ux, ui, engineering, pm, research, and more via
+        Twitter.","url":"https:\/\/t.co\/SEL0wCY0OD","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/SEL0wCY0OD","expanded_url":"http:\/\/epicjobs.co","display_url":"epicjobs.co","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":10704,"friends_count":3,"listed_count":59,"created_at":"Tue
+        Feb 12 03:36:40 +0000 2019","favourites_count":456,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":403,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1121064385504534529\/-Wgf9Ot2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1121064385504534529\/-Wgf9Ot2_normal.png","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1095164760683937793\/1558719255","profile_link_color":"333333","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Tue
+        Jan 28 10:43:56 +0000 2020","id":1222108036795334657,"id_str":"1222108036795334657","text":"Good
+        morning! Come to our Global Office. And stay where your heart is. We are looking
+        for creative colleagues! \ud83d\udc69\u200d\ud83d\ude92\u2026 https:\/\/t.co\/FOl3SnktR7","truncated":true,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"https:\/\/t.co\/FOl3SnktR7","expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1222108036795334657","display_url":"twitter.com\/i\/web\/status\/1\u2026","indices":[116,139]}]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":785412523193425920,"id_str":"785412523193425920","name":"Zammad
+        HQ","screen_name":"zammadhq","location":"","description":"Helpdesk and Customer
+        Support made easy. Open Source for download or to go with SaaS. #zammad","url":"https:\/\/t.co\/XITyrXmhTP","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/XITyrXmhTP","expanded_url":"http:\/\/zammad.com","display_url":"zammad.com","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":595,"friends_count":577,"listed_count":19,"created_at":"Mon
+        Oct 10 09:31:52 +0000 2016","favourites_count":349,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":551,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/785412523193425920\/1476097853","profile_link_color":"31B068","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":7,"favorite_count":11,"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"},"is_quote_status":false,"retweet_count":7,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"},{"created_at":"Tue
+        Jan 28 11:56:51 +0000 2020","id":1222126386334388225,"id_str":"1222126386334388225","text":"@zammadhq
+        Are you guys going to be at FOSDEM in Brussels this weekend? As Zammad users
+        ourselves we would love to c\u2026 https:\/\/t.co\/2OBpnTUyIL","truncated":true,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"zammadhq","name":"Zammad
+        HQ","id":785412523193425920,"id_str":"785412523193425920","indices":[0,9]}],"urls":[{"url":"https:\/\/t.co\/2OBpnTUyIL","expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1222126386334388225","display_url":"twitter.com\/i\/web\/status\/1\u2026","indices":[117,140]}]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":1222108036795334657,"in_reply_to_status_id_str":"1222108036795334657","in_reply_to_user_id":785412523193425920,"in_reply_to_user_id_str":"785412523193425920","in_reply_to_screen_name":"zammadhq","user":{"id":1168172858469732355,"id_str":"1168172858469732355","name":"Cloud68","screen_name":"Cloud68HQ","location":"Tirana,
+        Albania","description":"Reclaim your data from big tech!\n\nManaging Nextcloud,
+        Discourse &amp; other open source instances for you, so you don''t have to.
+        Official ProtonMail partners.","url":"https:\/\/t.co\/eaUgbpg8RK","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/eaUgbpg8RK","expanded_url":"https:\/\/cloud68.co","display_url":"cloud68.co","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":91,"friends_count":227,"listed_count":1,"created_at":"Sun
+        Sep 01 14:44:59 +0000 2019","favourites_count":139,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":49,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1189466673532854272\/ZZRN4sw8_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1189466673532854272\/ZZRN4sw8_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1168172858469732355\/1572424995","profile_link_color":"1DA1F2","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":1,"favorited":false,"retweeted":false,"lang":"en"},{"created_at":"Tue
+        Jan 28 10:51:28 +0000 2020","id":1222109934923460608,"id_str":"1222109934923460608","text":"Come
+        and join our team to bring Zammad even further forward! \n\nIt''s gonna be
+        amazing, promised! https:\/\/t.co\/DMlrQdIEeE","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"https:\/\/t.co\/DMlrQdIEeE","expanded_url":"https:\/\/twitter.com\/zammadhq\/status\/1222108036795334657","display_url":"twitter.com\/zammadhq\/statu\u2026","indices":[96,119]}]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":290111612,"id_str":"290111612","name":"Mr.Generation","screen_name":"Mr_Generation","location":"Berlin,
+        Deutschland","description":"Streaming\/Gaming | Light technican (Hobby) |
+        Webmaster of so much | IT-Admin | Photography | coffee junkie | Zammad | Berlin","url":"https:\/\/t.co\/sXMe6W0b5t","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/sXMe6W0b5t","expanded_url":"https:\/\/www.mrgeneration.de\/","display_url":"mrgeneration.de","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":62,"friends_count":116,"listed_count":2,"created_at":"Fri
+        Apr 29 19:07:04 +0000 2011","favourites_count":693,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1788,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1095305778460798983\/mA-tSgeW_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1095305778460798983\/mA-tSgeW_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/290111612\/1549976386","profile_link_color":"404040","profile_sidebar_border_color":"FC58FC","profile_sidebar_fill_color":"FAEDF8","profile_text_color":"F26F9F","profile_use_background_image":true,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":true,"quoted_status_id":1222108036795334657,"quoted_status_id_str":"1222108036795334657","quoted_status":{"created_at":"Tue
+        Jan 28 10:43:56 +0000 2020","id":1222108036795334657,"id_str":"1222108036795334657","text":"Good
+        morning! Come to our Global Office. And stay where your heart is. We are looking
+        for creative colleagues! \ud83d\udc69\u200d\ud83d\ude92\u2026 https:\/\/t.co\/FOl3SnktR7","truncated":true,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"https:\/\/t.co\/FOl3SnktR7","expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1222108036795334657","display_url":"twitter.com\/i\/web\/status\/1\u2026","indices":[116,139]}]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":785412523193425920,"id_str":"785412523193425920","name":"Zammad
+        HQ","screen_name":"zammadhq","location":"","description":"Helpdesk and Customer
+        Support made easy. Open Source for download or to go with SaaS. #zammad","url":"https:\/\/t.co\/XITyrXmhTP","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/XITyrXmhTP","expanded_url":"http:\/\/zammad.com","display_url":"zammad.com","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":595,"friends_count":577,"listed_count":19,"created_at":"Mon
+        Oct 10 09:31:52 +0000 2016","favourites_count":349,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":551,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/785412523193425920\/1476097853","profile_link_color":"31B068","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":7,"favorite_count":11,"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"},"retweet_count":0,"favorite_count":4,"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"},{"created_at":"Sat
+        Dec 01 06:30:03 +0000 2018","id":1068754078241501184,"id_str":"1068754078241501184","text":"GitHub
+        Trending Archive, 29 Nov 2018, Ruby. mgleon08\/example-crawler, tongueroo\/jets,
+        testdouble\/standard, matthe\u2026 https:\/\/t.co\/JhiOoxbwVL","truncated":true,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"https:\/\/t.co\/JhiOoxbwVL","expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1068754078241501184","display_url":"twitter.com\/i\/web\/status\/1\u2026","indices":[117,140]}]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/github.example.com\/awesome\/\" rel=\"nofollow\"\u003eGithub
+        Awesome Search\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":993040996744159233,"id_str":"993040996744159233","name":"example","screen_name":"example","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":81,"friends_count":105,"listed_count":1,"created_at":"Sun
+        May 06 08:13:18 +0000 2018","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":9355,"lang":"en","contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/996714244090417152\/2QDJvxkN_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/996714244090417152\/2QDJvxkN_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/993040996744159233\/1526470497","profile_link_color":"E81C4F","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"}],"search_metadata":{"completed_in":0.045,"max_id":1224440380881428480,"max_id_str":"1224440380881428480","next_results":"?max_id=1221826904430346239&q=zammad&count=100&include_entities=1&result_type=mixed","query":"zammad","refresh_url":"?since_id=1224440380881428480&q=zammad&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:18 GMT
+- request:
+    method: get
+    uri: http://pbs.twimg.com/profile_images/1121064385504534529/-Wgf9Ot2_bigger.png
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - pbs.twimg.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length
+      Age:
+      - '76528'
+      Cache-Control:
+      - max-age=604800, must-revalidate
+      Content-Type:
+      - image/png
+      Date:
+      - Tue, 04 Feb 2020 06:07:27 GMT
+      Last-Modified:
+      - Wed, 24 Apr 2019 14:50:32 GMT
+      Server:
+      - ECS (tpe/68A8)
+      Strict-Transport-Security:
+      - max-age=631138519
+      Surrogate-Key:
+      - profile_images profile_images/bucket/2 profile_images/1121064385504534529
+      X-Cache:
+      - HIT
+      X-Connection-Hash:
+      - d794e5057dfcb8c176f39934751f5fec
+      X-Content-Type-Options:
+      - nosniff
+      X-Response-Time:
+      - '110'
+      Content-Length:
+      - '4041'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:27 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=Tirana,%20Albania&sensor=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - maps.googleapis.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Feb 2020 06:07:32 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      Content-Length:
+      - '202'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=1
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "error_message" : "You must use an API key to authenticate each request to Google Maps Platform APIs. For additional information, please refer to http://g.co/dev/maps-no-account",
+           "results" : [],
+           "status" : "REQUEST_DENIED"
+        }
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:32 GMT
+- request:
+    method: get
+    uri: http://pbs.twimg.com/profile_images/1189466673532854272/ZZRN4sw8_bigger.jpg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - pbs.twimg.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length
+      Age:
+      - '237853'
+      Cache-Control:
+      - max-age=604800, must-revalidate
+      Content-Type:
+      - image/jpeg
+      Date:
+      - Tue, 04 Feb 2020 06:07:32 GMT
+      Last-Modified:
+      - Wed, 30 Oct 2019 08:56:48 GMT
+      Server:
+      - ECS (tpe/68A1)
+      Strict-Transport-Security:
+      - max-age=631138519
+      Surrogate-Key:
+      - profile_images profile_images/bucket/7 profile_images/1189466673532854272
+      X-Cache:
+      - HIT
+      X-Connection-Hash:
+      - b140b365ea73f0d34e1c7c5a2ad7cbc9
+      X-Content-Type-Options:
+      - nosniff
+      X-Response-Time:
+      - '108'
+      Content-Length:
+      - '3863'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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vb5H8//EACQRAQACAQIFBQEAAAAAAAAAAAEAETEhURBBcYGhIGGRsfDB/9oACAEDAQE/ELMwGH7vLWu8B6FfBqg68/DrK2uz9xaBvAr3fExETlMr23+YFFMdD195QGvVD+sq5F54KZBjjc5iAplWppslnbn5l6wK9r+2K2bd39p24f/EACMRAQABAwMFAQEBAAAAAAAAAAERACExQVFhcYGRocHwENH/2gAIAQIBAT8Qzlg/Qc0ThubQp1WO1qJHVGFLbmvqj5gO5YnZNXqkUOaEC04OqSu2KAIBwMEGUqQUFHITm+aWFb4ieTD1LetqlkL3Hqa9yKC0uW5nccTQ0uys8p8MVZsS/PtMSNDqqNvfimRqELziL4qZBWQN9mdPjvQMho2JtOT70ouA8Aq8QgUYOEwTLPCn7/TBisfuW9IpGGkTC7qpd9HxV4JOlnmCohOA+6vf+f/EACcQAQABAwQBAwUBAQAAAAAAAAERACExQVFhcZGBofAQwdHh8SCx/9oACAEBAAE/EKdoI+HdWi31Fr85u/tS0aSxI6kLDhigwzVdtyMpxzNZQAtCoLAyRMLUboGH2i5IO6HMl9J06ibN/qp3isAEq020hZssAmp7MdvGMIguq4c0NN80nZItO6HhqEFOo6Fq5ASPhPMlEe2W81Fv6oLFWAQBny5gzktZG+JrjcTRGybn0hHEI5S/8MUaORSDLyYTtGPNTAfXmlwdB7/8U2ZEJxftO+XmoUM1JdIZUJLnK+xgPfmjROFGrJm9ufpouD6XKsa375o2QIza34AuelSb1Kgjhb2jMSz6UqYuLSZXopTXp5mgTb1jXdaztakYQl2XT9FGvRWc7bxQYqMDtZuOfOMU30FlooB5w/lS/DIVJT0+xQHFhEyLRKWYeK4fml4U+5DNmaYNoORiaJnk898YUhYkmZL5HE/QkHAgyqz1EUFggQ11HrW4Ax4/ihGglrKlIxma+afajaYDdIdlIAJS/wBihfSknpHJcp6O+aBsKVsZMjlr1WlROTJgC0aunrUE8sC51xFYlDmlLA/KN8jSCid3pvsK/kVM8QKGHqdY/tKplwmWjT8Vb/1EEtl0X42q2ZVzt7u7+5oiuhK1eS0vvSNmtQjHLZ8kmiHKTs9acX/VEBlFMFCnAt4qKM227U/NJlBXZtJ0AfLVHQeC76wN/wDtPhaZJvhdWqFBsaJH2eAeI3pNAEFjGozO/NXkuC2kuqht+monp3WVlcr9cmSw9x0eat8GIY2wpw0z1EVz4XxR8JNpE0VL3U57soSoELGzWtUobOl13Wr/AJayVkpg6/y//9kgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA=
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:32 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=Tirana,%20Albania&sensor=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Zammad User Agent
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Host:
+      - maps.googleapis.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Feb 2020 06:07:32 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      Content-Length:
+      - '202'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=1
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "error_message" : "You must use an API key to authenticate each request to Google Maps Platform APIs. For additional information, please refer to http://g.co/dev/maps-no-account",
+           "results" : [],
+           "status" : "REQUEST_DENIED"
+        }
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:32 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/1222108036795334657.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="fadbc0e65e0cd98a1bbd46262121c7af",
+        oauth_signature="vqic%2BIyQkpIlEzbY2VXidbD2CQ4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1580796452", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '2781'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 04 Feb 2020 06:07:32 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 04 Feb 2020 06:07:32 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158079645287432567; Max-Age=63072000; Expires=Thu, 3 Feb 2022
+        06:07:32 GMT; Path=/; Domain=.twitter.com
+      - lang=en; Path=/
+      - personalization_id="v1_8MuLQGGHeQ0iKjjEyK3kwA=="; Max-Age=63072000; Expires=Thu,
+        3 Feb 2022 06:07:32 GMT; Path=/; Domain=.twitter.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - 608ef1d33f94f7800d75e9f14fc86838
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Remaining:
+      - '892'
+      X-Rate-Limit-Reset:
+      - '1580797340'
+      X-Response-Time:
+      - '125'
+      X-Transaction:
+      - 00dc12c800f73e29
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Tue Jan 28 10:43:56 +0000 2020","id":1222108036795334657,"id_str":"1222108036795334657","text":"Good
+        morning! Come to our Global Office. And stay where your heart is. We are looking
+        for creative colleagues! \ud83d\udc69\u200d\ud83d\ude92\u2026 https:\/\/t.co\/FOl3SnktR7","truncated":true,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"https:\/\/t.co\/FOl3SnktR7","expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1222108036795334657","display_url":"twitter.com\/i\/web\/status\/1\u2026","indices":[116,139]}]},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":785412523193425920,"id_str":"785412523193425920","name":"Zammad
+        HQ","screen_name":"zammadhq","location":"","description":"Helpdesk and Customer
+        Support made easy. Open Source for download or to go with SaaS. #zammad","url":"https:\/\/t.co\/XITyrXmhTP","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/XITyrXmhTP","expanded_url":"http:\/\/zammad.com","display_url":"zammad.com","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":595,"friends_count":577,"listed_count":19,"created_at":"Mon
+        Oct 10 09:31:52 +0000 2016","favourites_count":349,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":551,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"000000","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/785412960797745152\/wxdIvejo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/785412523193425920\/1476097853","profile_link_color":"31B068","profile_sidebar_border_color":"000000","profile_sidebar_fill_color":"000000","profile_text_color":"000000","profile_use_background_image":false,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"can_media_tag":true,"followed_by":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":7,"favorite_count":11,"favorited":false,"retweeted":false,"possibly_sensitive":false,"possibly_sensitive_appealable":false,"lang":"en"}'
+    http_version: 
+  recorded_at: Tue, 04 Feb 2020 06:07:32 GMT
+recorded_with: VCR 4.0.0
