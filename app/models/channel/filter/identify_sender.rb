@@ -120,8 +120,8 @@ module Channel::Filter::IdentifySender
         # parse not parsable fields by mail gem like
         #  - Max Kohl | [example.com] <kohl@example.com>
         #  - Max Kohl <max.kohl <max.kohl@example.com>
-        Rails.logger.error 'ERROR: ' + e.inspect
-        Rails.logger.error "ERROR: try it by my self (#{item}): #{mail[item.to_sym]}"
+        Rails.logger.error e
+        Rails.logger.error "try it by my self (#{item}): #{mail[item.to_sym]}"
         recipients = mail[item.to_sym].to_s.split(',')
         recipients.each do |recipient|
           address = nil

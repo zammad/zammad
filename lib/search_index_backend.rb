@@ -216,7 +216,7 @@ remove whole data from index
       url:      url,
       response: response,
     )
-    Rails.logger.info "NOTICE: can't delete index: #{humanized_error}"
+    Rails.logger.warn "Can't delete index: #{humanized_error}"
     false
   end
 
@@ -754,10 +754,13 @@ generate url for index or document access (only for internal use)
 
   def self.humanized_error(verb:, url:, payload: nil, response:)
     prefix = "Unable to process #{verb} request to elasticsearch URL '#{url}'."
-    suffix = "\n\nResponse:\n#{response.inspect}\n\nPayload:\n#{payload.inspect}"
+    suffix = "\n\nResponse:\n#{response.inspect}\n\n"
 
     if payload.respond_to?(:to_json)
+      suffix += "Payload:\n#{payload.to_json}"
       suffix += "\n\nPayload size: #{payload.to_json.bytesize / 1024 / 1024}M"
+    else
+      suffix += "Payload:\n#{payload.inspect}"
     end
 
     message = if response&.error&.match?('Connection refused')

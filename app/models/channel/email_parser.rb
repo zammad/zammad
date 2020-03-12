@@ -118,9 +118,9 @@ returns
     # store unprocessable email for bug reporting
     filename = archive_mail('unprocessable_mail', msg)
 
-    message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+    message = "Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
 
-    p message # rubocop:disable Rails/Output
+    p 'ERROR: ' + message # rubocop:disable Rails/Output
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error e

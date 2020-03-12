@@ -1398,8 +1398,8 @@ result
       begin
         next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
       rescue => e
-        logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
-        logger.error 'ERROR: ' + e.inspect
+        logger.error "Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
+        logger.error e
         next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
       end
 

@@ -17,7 +17,7 @@ class ExternalSync < ApplicationModel
           object[attribute] = value
           changed         ||= true
         rescue => e
-          Rails.logger.error "ERROR: Unable to assign attribute #{attribute} to object #{object.class.name}: #{e.inspect}"
+          Rails.logger.error "Unable to assign attribute #{attribute} to object #{object.class.name}: #{e.inspect}"
         end
       end
       changed

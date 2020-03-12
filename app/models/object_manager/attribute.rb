@@ -393,7 +393,7 @@ use "force: true" to delete also not editable fields
     elsif data[:object_lookup_id]
       data[:object] = ObjectLookup.by_id(data[:object_lookup_id])
     else
-      raise 'ERROR: need object or object_lookup_id param!'
+      raise 'need object or object_lookup_id param!'
     end
 
     data[:name].downcase!
@@ -404,17 +404,17 @@ use "force: true" to delete also not editable fields
       name:             data[:name],
     )
     if !record
-      raise "ERROR: No such field #{data[:object]}.#{data[:name]}"
+      raise "No such field #{data[:object]}.#{data[:name]}"
     end
 
     if !data[:force] && !record.editable
-      raise "ERROR: #{data[:object]}.#{data[:name]} can't be removed!"
+      raise "#{data[:object]}.#{data[:name]} can't be removed!"
     end
 
     # check to make sure that no triggers, overviews, or schedulers references this attribute
     if ObjectManager::Attribute.attribute_used_by_references?(data[:object], data[:name])
       text = ObjectManager::Attribute.attribute_used_by_references_humaniced(data[:object], data[:name])
-      raise "ERROR: #{data[:object]}.#{data[:name]} is referenced by #{text} and thus cannot be deleted!"
+      raise "#{data[:object]}.#{data[:name]} is referenced by #{text} and thus cannot be deleted!"
     end
 
     # if record is to create, just destroy it

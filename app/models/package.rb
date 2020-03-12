@@ -420,7 +420,7 @@ execute all pending package migrations at once
       data = File.open(location, 'rb')
       contents = data.read
     rescue => e
-      raise 'ERROR: ' + e.inspect
+      raise e
     end
     contents
   end
@@ -462,7 +462,7 @@ execute all pending package migrations at once
       file.close
       File.chmod(permission.to_s.to_i(8), location)
     rescue => e
-      raise 'ERROR: ' + e.inspect
+      raise e
     end
     true
   end

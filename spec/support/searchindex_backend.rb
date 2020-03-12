@@ -30,7 +30,7 @@ prepares elasticsearch
     if ENV['ES_URL'].blank?
       return if !required
 
-      raise "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
+      raise "Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
     end
 
     Setting.set('es_url', ENV['ES_URL'])
@@ -46,7 +46,7 @@ prepares elasticsearch
       ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id}_#{rand(999_999_999)}"
     end
     if ENV['ES_INDEX'].blank?
-      raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+      raise "Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
     end
 
     Setting.set('es_index', ENV['ES_INDEX'])

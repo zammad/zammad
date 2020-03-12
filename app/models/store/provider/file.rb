@@ -29,7 +29,7 @@ class Store::Provider::File
     # check sha
     local_sha = Digest::SHA256.hexdigest(get(sha))
     if sha != local_sha
-      raise "ERROR: Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
+      raise "Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
     end
 
     true
@@ -40,7 +40,7 @@ class Store::Provider::File
     location = get_location(sha)
     Rails.logger.debug { "read from fs #{location}" }
     if !File.exist?(location)
-      raise "ERROR: No such file #{location}"
+      raise "No such file #{location}"
     end
 
     data    = File.open(location, 'rb')
@@ -49,7 +49,7 @@ class Store::Provider::File
     # check sha
     local_sha = Digest::SHA256.hexdigest(content)
     if local_sha != sha
-      raise "ERROR: Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
+      raise "Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
     end
 
     content

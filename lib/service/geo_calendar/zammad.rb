@@ -28,7 +28,7 @@ class Service::GeoCalendar::Zammad
         },
       )
       if !response.success? && response.code.to_s !~ /^40.$/
-        raise "ERROR: #{response.code}/#{response.body}"
+        raise "#{response.code}/#{response.body}"
       end
 
       data = response.data

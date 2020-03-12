@@ -26,7 +26,7 @@ module Channel::Filter::SenderIsSystemAddress
         return true
       end
     rescue => e
-      Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+      Rails.logger.error 'SenderIsSystemAddress: ' + e.inspect
     end
 
     # check if sender is agent
@@ -41,7 +41,7 @@ module Channel::Filter::SenderIsSystemAddress
       mail['x-zammad-article-sender'.to_sym] = 'Agent'
       return true
     rescue => e
-      Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+      Rails.logger.error 'SenderIsSystemAddress: ' + e.inspect
     end
 
     true
