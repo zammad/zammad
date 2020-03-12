@@ -723,20 +723,14 @@ condition example
         bind_params.push selector['value'].count
         bind_params.push selector['value']
       elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "1 <= (
-                          SELECT
-                            COUNT(*)
-                          FROM
-                            tag_objects,
-                            tag_items,
-                            tags
-                          WHERE
-                            tickets.id = tags.o_id AND
-                            tag_objects.id = tags.tag_object_id AND
-                            tag_objects.name = 'Ticket' AND
-                            tag_items.id = tags.tag_item_id AND
-                            tag_items.name IN (?)
-                        )"
+        tables += ', tag_objects, tag_items, tags'
+        query += "
+          tickets.id = tags.o_id AND
+          tag_objects.id = tags.tag_object_id AND
+          tag_objects.name = 'Ticket' AND
+          tag_items.id = tags.tag_item_id AND
+          tag_items.name IN (?)"
+
         bind_params.push selector['value']
       elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
         query += "0 = (
