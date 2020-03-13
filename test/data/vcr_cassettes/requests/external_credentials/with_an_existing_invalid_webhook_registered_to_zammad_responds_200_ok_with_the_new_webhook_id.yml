@@ -1,0 +1,221 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/oauth/request_token
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - OAuth gem v0.5.4
+      Content-Length:
+      - '0'
+      Authorization:
+      - OAuth oauth_callback="https%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Ftwitter%2Fcallback",
+        oauth_consumer_key="REDACTED", oauth_nonce="csPRCe8Nu9cv8FNuxnLrInhnw96JjKTcZwK0HW8Njk",
+        oauth_signature="snIl5z49RgjhAiQs%2FQxk3kA%2FXtk%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1584946407", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '129'
+      Content-Security-Policy:
+      - default-src 'none'; connect-src 'self'; font-src https://abs.twimg.com https://abs-0.twimg.com
+        data:; frame-src 'self' twitter:; img-src https://abs.twimg.com https://*.twimg.com
+        https://pbs.twimg.com data:; media-src 'none'; object-src 'none'; script-src
+        https://abs.twimg.com https://abs-0.twimg.com https://twitter.com https://mobile.twitter.com;
+        style-src https://abs.twimg.com https://abs-0.twimg.com; report-uri https://twitter.com/i/csp_report?a=NVQWGYLXFVWG6Z3JNY%3D%3D%3D%3D%3D%3D&ro=false;
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Mon, 23 Mar 2020 06:53:28 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 23 Mar 2020 06:53:28 GMT
+      Ml:
+      - S
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158494640855835907; Max-Age=63072000; Expires=Wed, 23 Mar 2022
+        06:53:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_0zvtRwIZbniQqVSLo6XdbQ=="; Max-Age=63072000; Expires=Wed,
+        23 Mar 2022 06:53:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - f86b366038f347fcd3bba565fd31387f
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '174'
+      X-Transaction:
+      - '008597c000517be9'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: oauth_token=dMaNHgAAAAAA9CNXAAABcQYq7Hg&oauth_token_secret=d9QXHdi5FXmJjA1NZwKJBvvYh3tyv5IE&oauth_callback_confirmed=true
+    http_version: 
+  recorded_at: Mon, 23 Mar 2020 06:53:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/account_activity/all/zammad/webhooks.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="942e58699c99fd8bd9ba1cd69942f14f",
+        oauth_signature="O3JqHZhT8NsLR7yAA1QHIyxFVBw%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1584946408", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '159'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 23 Mar 2020 06:53:29 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 23 Mar 2020 06:53:29 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158494640936571915; Max-Age=63072000; Expires=Wed, 23 Mar 2022
+        06:53:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_/ujsZ3ysdevr5v1b89RLmA=="; Max-Age=63072000; Expires=Wed,
+        23 Mar 2022 06:53:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 3a297b509badf9dde9b3bd63225f2460
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '15'
+      X-Rate-Limit-Remaining:
+      - '11'
+      X-Rate-Limit-Reset:
+      - '1584946869'
+      X-Response-Time:
+      - '129'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '[{"id":"1241980494134145024","url":"https://zammad.example.com/api/v1/channels_twitter_webhook","valid":false,"created_timestamp":"2020-03-23
+        06:50:00 +0000"}]'
+    http_version: 
+  recorded_at: Mon, 23 Mar 2020 06:53:29 GMT
+- request:
+    method: put
+    uri: https://api.twitter.com/1.1/account_activity/all/zammad/webhooks/1241980494134145024.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="0e68c87513ac6d73759d3d581842342a",
+        oauth_signature="yJoLurGrHTs20uGEsm3uDEBgwUE%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1584946414", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 23 Mar 2020 06:53:36 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 23 Mar 2020 06:53:36 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158494641515025640; Max-Age=63072000; Expires=Wed, 23 Mar 2022
+        06:53:36 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_sOQIzWywRzjCDnBIeqxEvw=="; Max-Age=63072000; Expires=Wed,
+        23 Mar 2022 06:53:36 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - f79cb739010ea5fa189afc005a998ebd
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '1192'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    http_version: 
+  recorded_at: Mon, 23 Mar 2020 06:53:36 GMT
+recorded_with: VCR 4.0.0

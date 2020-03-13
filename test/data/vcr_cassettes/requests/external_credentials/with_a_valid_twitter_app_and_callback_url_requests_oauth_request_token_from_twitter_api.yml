@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/oauth/request_token
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - OAuth gem v0.5.4
+      Content-Length:
+      - '0'
+      Authorization:
+      - OAuth oauth_callback="https%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Ftwitter%2Fcallback",
+        oauth_consumer_key="REDACTED", oauth_nonce="JoMl0wFgjCmgtLpMNWvnxGSBNEJdV8No8LNEczS2d0U",
+        oauth_signature="q%2BvTAhVMi62idkd4vHFk%2Fpaq43o%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1584366932", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Content-Length:
+      - '128'
+      Content-Security-Policy:
+      - default-src 'none'; connect-src 'self'; font-src https://abs.twimg.com https://abs-0.twimg.com
+        data:; frame-src 'self' twitter:; img-src https://abs.twimg.com https://*.twimg.com
+        https://pbs.twimg.com data:; media-src 'none'; object-src 'none'; script-src
+        https://abs.twimg.com https://abs-0.twimg.com https://twitter.com https://mobile.twitter.com;
+        style-src https://abs.twimg.com https://abs-0.twimg.com; report-uri https://twitter.com/i/csp_report?a=NVQWGYLXFVWG6Z3JNY%3D%3D%3D%3D%3D%3D&ro=false;
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Mon, 16 Mar 2020 13:55:32 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Mon, 16 Mar 2020 13:55:32 GMT
+      Ml:
+      - S
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158436693266223710; Max-Age=63072000; Expires=Wed, 16 Mar 2022
+        13:55:32 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_LovT1kuyT4gkNHPUL+9O6g=="; Max-Age=63072000; Expires=Wed,
+        16 Mar 2022 13:55:32 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - bfabbced05a4e94816a757d869cfd575
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '180'
+      X-Transaction:
+      - '0083912f0005d95b'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: oauth_token=6BpW6AAAAAABCFc9AAABcOOg0sA&oauth_token_secret=LOd9KByBr5ZAKjSAxGYhsiDmgbsnsRxO&oauth_callback_confirmed=true
+    http_version: 
+  recorded_at: Mon, 16 Mar 2020 13:55:32 GMT
+recorded_with: VCR 4.0.0
