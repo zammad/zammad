@@ -774,6 +774,31 @@ RSpec.describe Channel::Driver::Twitter do
   end
 
   describe '#fetch', use_vcr: :time_sensitive do
+    describe 'rate limiting' do
+      before do
+        allow(Rails.env).to receive(:test?).and_return(false)
+        channel.fetch
+      end
+
+      context 'within 20 minutes of last run' do
+        before { travel(19.minutes) }
+
+        it 'aborts' do
+          expect { channel.fetch }
+            .not_to change { channel.reload.preferences[:last_fetch] }
+        end
+      end
+
+      context '20+ minutes since last run' do
+        before { travel(20.minutes) }
+
+        it 'runs again' do
+          expect { channel.fetch }
+            .to change { channel.reload.preferences[:last_fetch] }
+        end
+      end
+    end
+
     describe 'Twitter API authentication' do
       let(:consumer_credentials) do
         {
@@ -968,6 +993,10 @@ RSpec.describe Channel::Driver::Twitter do
           # In this case, we bundle these examples together because
           # separating them would duplicate expensive setup:
           # even with HTTP caching, this single example takes nearly a minute.
+          #
+          # Also, note that this rate limiting is partially duplicated
+          # in #fetchable?, which prevents #fetch from running
+          # more than once in a 20-minute period.
           it 'imports max. ~120 articles every 15 minutes' do
             channel.fetch
 
