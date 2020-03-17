@@ -1340,6 +1340,13 @@ result
         User.group_access(group_id, 'full').sort_by(&:login).each do |user|
           recipients_raw.push(user.email)
         end
+      elsif recipient =~ /\Auserid_(\d+)\z/
+        user = User.lookup(id: $1)
+        if !user
+          logger.warn "Can't find configured Trigger Email recipient User with ID '#{$1}'"
+          next
+        end
+        recipients_raw.push(user.email)
       else
         logger.error "Unknown email notification recipient '#{recipient}'"
         next
@@ -1538,6 +1545,11 @@ result
       owner_id
     when 'ticket_agents'
       User.group_access(group_id, 'full').sort_by(&:login)
+    when /\Auserid_(\d+)\z/
+      return $1 if User.exists?($1)
+
+      logger.warn "Can't find configured Trigger SMS recipient User with ID '#{$1}'"
+      nil
     else
       logger.error "Unknown sms notification recipient '#{recipient}'"
       nil
@@ -1548,6 +1560,7 @@ result
     Array(value['recipient'])
       .each_with_object([]) { |recipient_type, sum| sum.concat(Array(sms_recipients_by_type(recipient_type, article))) }
       .map { |user_or_id| User.lookup(id: user_or_id) }
+      .uniq(&:id)
       .select { |user| user.mobile.present? }
   end
 

@@ -117,7 +117,7 @@ class App.UiElement.ticket_perform_action
         element = @placeholder(item, attribute, params, groups, elements)
         @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, meta, attribute)
         item.append(element)
-    
+
     @disableRemoveForOneAttribute(item)
     item
 
@@ -348,20 +348,38 @@ class App.UiElement.ticket_perform_action
     if !_.isArray(meta.recipient)
       meta.recipient = [meta.recipient]
 
-    column_select_options = []
+    columnSelectOptions = []
     for key, value of options
       selected = undefined
       for recipient in meta.recipient
         if key is recipient
           selected = true
-      column_select_options.push({ value: key, name: App.i18n.translateInline(value), selected: selected })
+      columnSelectOptions.push({ value: key, name: App.i18n.translateInline(value), selected: selected })
 
-    column_select = new App.ColumnSelect
+    columnSelectRecipientUserOptions = []
+    for user in App.User.all()
+      key = "userid_#{user.id}"
+      selected = undefined
+      for recipient in meta.recipient
+        if key is recipient
+          selected = true
+      columnSelectRecipientUserOptions.push({ value: key, name: "#{user.firstname} #{user.lastname}", selected: selected })
+
+    columnSelectRecipient = new App.ColumnSelect
       attribute:
         name:    "#{name}::recipient"
-        options: column_select_options
+        options: [
+          {
+            label: 'Variables',
+            group: columnSelectOptions
+          },
+          {
+            label: 'User',
+            group: columnSelectRecipientUserOptions
+          },
+        ]
 
-    selection = column_select.element()
+    selectionRecipient = columnSelectRecipient.element()
 
     notificationElement = $( App.view('generic/ticket_perform_action/notification')(
       attribute: attribute
@@ -369,7 +387,7 @@ class App.UiElement.ticket_perform_action
       notificationType: notificationType
       meta: meta || {}
     ))
-    notificationElement.find('.js-recipient select').replaceWith(selection)
+    notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
 
     visibilitySelection = App.UiElement.select.render(
       name: "#{name}::internal"

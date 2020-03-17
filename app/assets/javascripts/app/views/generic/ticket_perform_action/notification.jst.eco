@@ -12,14 +12,6 @@
     <select></select>
   </div>
 </div>
-<div class="form-group">
-  <div class="formGroup-label">
-    <label><%- @T('Recipient') %></label>
-  </div>
-  <div class="controls js-recipientUser u-positionOrigin">
-    <select></select>
-  </div>
-</div>
 <% if @notificationType is 'email': %>
 <div class="form-group">
   <div class="formGroup-label">

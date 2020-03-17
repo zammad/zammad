@@ -6,6 +6,35 @@ RSpec.describe Trigger, type: :model do
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
 
+  describe 'validation' do
+
+    let(:condition) do
+      { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
+    end
+    let(:perform) do
+      { 'ticket.title' => { 'value'=>'triggered' } }
+    end
+
+    context 'notification.email' do
+      context 'missing recipient' do
+
+        let(:perform) do
+          {
+            'notification.email' => {
+              'subject' => 'Hello',
+              'body'    => 'World!'
+            }
+          }
+        end
+
+        it 'raises an error' do
+          expect { trigger.save! }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid perform notification.email, recipient is missing!')
+        end
+      end
+    end
+
+  end
+
   describe 'Send-email triggers' do
     before do
       described_class.destroy_all  # Default DB state includes three sample triggers
@@ -85,6 +114,57 @@ RSpec.describe Trigger, type: :model do
             </div>&gt;/snip&lt;
           RAW
                                     )
+        end
+      end
+
+      context 'notification.email recipient' do
+        let!(:ticket) { create(:ticket) }
+        let!(:recipient1) { create(:user, email: 'test1@zammad-test.com') }
+        let!(:recipient2) { create(:user, email: 'test2@zammad-test.com') }
+        let!(:recipient3) { create(:user, email: 'test3@zammad-test.com') }
+
+        let(:perform) do
+          {
+            'notification.email' => {
+              'recipient' => recipient,
+              'subject'   => 'Hello',
+              'body'      => 'World!'
+            }
+          }
+        end
+
+        before { Observer::Transaction.commit }
+
+        context 'mix of recipient group keyword and single recipient users' do
+          let(:recipient) { [ 'ticket_customer', "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
+
+          it 'contains all recipients' do
+            expect(ticket.articles.last.to).to eq("#{ticket.customer.email}, #{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
+          end
+
+          context 'duplicate recipient' do
+            let(:recipient) { [ 'ticket_customer', "userid_#{ticket.customer.id}" ] }
+
+            it 'contains only one recipient' do
+              expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
+            end
+          end
+        end
+
+        context 'list of single users only' do
+          let(:recipient) { [ "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
+
+          it 'contains all recipients' do
+            expect(ticket.articles.last.to).to eq("#{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
+          end
+        end
+
+        context 'recipient group keyword only' do
+          let(:recipient) { 'ticket_customer' }
+
+          it 'contains matching recipient' do
+            expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
+          end
         end
       end
     end

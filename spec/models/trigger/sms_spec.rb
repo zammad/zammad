@@ -61,5 +61,36 @@ RSpec.describe Trigger do
         expect(triggered_article.body).to match(time_in_zone.strftime('%d.%m.%y'))
       end
     end
+
+    context 'recipients' do
+
+      let(:recipient1) { create(:agent_user, mobile: '+37061010000', groups: [ticket_group]) }
+      let(:recipient2) { create(:agent_user, mobile: '+37061010001', groups: [ticket_group]) }
+      let(:recipient3) { create(:agent_user, mobile: '+37061010002', groups: [ticket_group]) }
+
+      let(:ticket_group) { create(:group) }
+
+      let(:ticket) do
+        ticket = create(:ticket, group: ticket_group, created_by_id: create(:agent_user).id)
+        Observer::Transaction.commit
+        ticket
+      end
+
+      before do
+        create(:channel, area: 'Sms::Notification')
+        create(:trigger,
+               disable_notification: false,
+               perform:              {
+                 'notification.sms': {
+                   recipient: ['ticket_agents', "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}"],
+                   body:      'Hello World!',
+                 }
+               })
+      end
+
+      it 'contains no duplicates' do
+        expect(ticket.articles.last.preferences['sms_recipients'].sort).to eq([recipient1.mobile, recipient2.mobile, recipient3.mobile].sort)
+      end
+    end
   end
 end

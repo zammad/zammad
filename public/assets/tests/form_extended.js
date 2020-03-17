@@ -727,7 +727,7 @@ test('form checks', function() {
         internal: 'false'
       },
     },
-  } 
+  }
   new App.ControllerForm({
     el:        el,
     model:     {
