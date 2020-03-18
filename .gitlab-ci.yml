@@ -1,4 +1,4 @@
-image: registry.znuny.com/docker/zammad-ruby:2.5.5
+image: registry.znuny.com/docker/zammad-ruby:2.6.5
 
 # Global variables added to the ENV of each job
 variables:
@@ -60,8 +60,11 @@ variables:
       alias: postgresql
 
 # Cache gems in between jobs and pipelines
+# ATTENTION: We use a combination of the Ruby major and minor version number
+# as a key for the cache to avoid cache growth and incompatibilities between
+# the gems. Search hook: 2.6.5 (change it when updating the Ruby version too)
 cache:
-  key: "ruby25"
+  key: "ruby26"
   paths:
     - vendor/ruby
 
