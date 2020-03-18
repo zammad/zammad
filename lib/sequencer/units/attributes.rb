@@ -71,6 +71,10 @@ class Sequencer
 
                 result[attribute].from = index
               end
+
+              unit[:optional].try(:each) do |attribute|
+                result[attribute].optional = index
+              end
             end
           end
         end

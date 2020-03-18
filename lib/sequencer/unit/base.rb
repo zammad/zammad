@@ -54,6 +54,53 @@ class Sequencer
         end
       end
 
+      # Creates the class macro `optional` that allows a Unit to
+      # declare the attributes it will use via parameter or block.
+      # On the other hand it returns the declared attributes if
+      # called without parameters.
+      #
+      # This method can be called multiple times and will add the
+      # given attributes to the list. It takes care of handling
+      # duplicates so no uniq check is required. It's safe to use
+      # for inheritance structures and modules.
+      #
+      # It additionally creates a getter instance method for each declared
+      # attribute like e.g. attr_reader does. This allows direct access
+      # to an attribute via `attribute_name`. See examples.
+      #
+      # @param [Array<Symbol>] attributes an optional list of attributes that the Unit optional
+      #
+      # @yield [] A block returning a list of attributes
+      #
+      # @example Via regular Array<Symbol> parameter
+      #  optional :instance, :action, :connection
+      #
+      # @example Via block
+      #  optional do
+      #    additional = method(parameter)
+      #    [:some, additional]
+      #  end
+      #
+      # @example Listing declared attributes
+      #  Unit::Name.optional
+      #  # => [:instance, :action, :connection, :some, :suprise]
+      #
+      # @example Using declared attribute in the Unit via state object
+      #  state.use(:instance).id
+      #
+      # @example Using declared attribute in the Unit via getter
+      #  instance.id
+      #
+      # @return [Array<Symbol>] the list of all declared optionals of a Unit.
+      def self.optional(*attributes, &block)
+        declaration_accessor(
+          key:        __method__,
+          attributes: attributes(*attributes, &block)
+        ) do |attribute|
+          use_getter(attribute)
+        end
+      end
+
       # Creates the class macro `provides` that allows a Unit to
       # declare the attributes it will provided via parameter or block.
       # On the other hand it returns the declared attributes if

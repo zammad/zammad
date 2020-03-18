@@ -35,11 +35,11 @@ class Sequencer
                 end
 
                 def self.prepended(base)
+                  base.optional :action
                   base.extend(ClassMethods)
                 end
 
                 def process
-                  action = state.optional(:action)
                   if self.class.skip_action?(action)
                     logger.debug { "Skipping due to provided action #{action.inspect}." }
                   else

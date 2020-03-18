@@ -5,12 +5,13 @@ class Sequencer
         class IdPathMap < Sequencer::Unit::Base
           include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
+          optional :ews_folder_ids
           provides :ews_folder_id_path_map
 
           def process
             state.provide(:ews_folder_id_path_map) do
 
-              ids   = state.optional(:ews_folder_ids)
+              ids   = ews_folder_ids
               ids ||= []
 
               ews_folder.id_folder_map.collect do |id, folder|

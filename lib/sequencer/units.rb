@@ -30,11 +30,11 @@ class Sequencer
       end
     end
 
-    # Provides an Array of :uses and :provides declarations for each Unit.
+    # Provides an Array of :uses, :provides and :optional declarations for each Unit.
     #
     # @example
     #  units.declarations
-    #  #=> [{uses: [:question], provides: [:answer], ...}]
+    #  #=> [{uses: [:question], provides: [:answer], optional: [:facts], ...}]
     #
     # @return [Array<Hash{Symbol => Array<Symbol>}>] the declarations of the Units
     def declarations
@@ -42,6 +42,7 @@ class Sequencer
         {
           uses:     unit.uses,
           provides: unit.provides,
+          optional: unit.optional,
         }
       end
     end

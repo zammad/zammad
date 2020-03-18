@@ -51,9 +51,10 @@ class Sequencer
     end
 
     # Returns the value of the given attribute.
-    # The attribute gets validated against the .uses list of attributes. In the
-    # case than an attribute gets used that is not declared to be used
-    # an exception will be raised.
+    # The attribute gets validated against the .uses and .optionals
+    # lists of attributes. In the case that an attribute gets used
+    # that is not declared to be used or optional, an exception
+    # gets raised.
     #
     # @param [Symbol] attribute the attribute for which the value is requested.
     #
@@ -74,6 +75,7 @@ class Sequencer
 
     # Returns the value of the given attribute.
     # The attribute DOES NOT get validated against the .uses list of attributes.
+    # Use this method only in edge cases and prefer .optional macro and state.use otherwise.
     #
     # @param [Symbol] attribute the attribute for which the value is requested.
     #
@@ -95,6 +97,7 @@ class Sequencer
 
     # Checks if a value for the given attribute is provided.
     # The attribute DOES NOT get validated against the .uses list of attributes.
+    # Use this method only in edge cases and prefer .optional macro and state.use otherwise.
     #
     # @param [Symbol] attribute the attribute which should get checked.
     #
@@ -168,7 +171,7 @@ class Sequencer
 
     def available
       @attributes.select do |_identifier, attribute|
-        @index.between?(attribute.from, attribute.to)
+        @index.between?(attribute.from, attribute.till)
       end.keys
     end
 
@@ -181,7 +184,9 @@ class Sequencer
     end
 
     def useable?(attribute)
-      unit.uses.include?(attribute)
+      return true if unit.uses.include?(attribute)
+
+      unit.optional.include?(attribute)
     end
 
     def set(attribute, value)
@@ -230,6 +235,8 @@ class Sequencer
           provided_attr = attribute.will_be_provided?
 
           if !init_param && !provided_attr
+            next if attribute.optional?
+
             message = "Attribute '#{identifier}' is used in Unit '#{unit(attribute.to).name}' (index: #{attribute.to}) but is not provided or given via initial parameters."
             logger.error(message)
             raise message
@@ -261,7 +268,7 @@ class Sequencer
 
         @attributes.delete_if do |identifier, attribute|
           remove = !attribute.will_be_used?
-          remove ||= attribute.to <= @index
+          remove ||= attribute.till <= @index
           if remove && attribute.will_be_used?
             logger.public_send(log_level[:cleanup][:remove]) { "Removing unneeded attribute '#{identifier}': #{@values[identifier].inspect}" }
           end

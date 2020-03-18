@@ -6,7 +6,8 @@ class Sequencer
           module Statistics
             class Update < Sequencer::Unit::Base
 
-              uses :statistics_diff
+              uses     :statistics_diff
+              optional :import_job
               provides :statistics
 
               def process
@@ -24,7 +25,6 @@ class Sequencer
               private
 
               def statistics
-                import_job = state.optional(:import_job)
                 return {} if import_job.nil?
 
                 import_job.result
