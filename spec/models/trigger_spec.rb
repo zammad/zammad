@@ -157,6 +157,21 @@ RSpec.describe Trigger, type: :model do
           it 'contains all recipients' do
             expect(ticket.articles.last.to).to eq("#{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
           end
+
+          context 'assets' do
+            it 'resolves Users from recipient list' do
+              expect(trigger.assets({})[:User].keys).to include(recipient1.id, recipient2.id, recipient3.id)
+            end
+
+            context 'single entry' do
+
+              let(:recipient) { "userid_#{recipient1.id}" }
+
+              it 'resolves User from recipient list' do
+                expect(trigger.assets({})[:User].keys).to include(recipient1.id)
+              end
+            end
+          end
         end
 
         context 'recipient group keyword only' do

@@ -73,28 +73,35 @@ get assets and record_ids of selector
         logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"
         next
       end
-      reflection = attribute[1].sub(/_id$/, '')
-      #reflection = reflection.to_sym
-      next if !models[attribute_class]
-      next if !models[attribute_class][:reflections]
-      next if !models[attribute_class][:reflections][reflection]
-      next if !models[attribute_class][:reflections][reflection].klass
 
-      attribute_ref_class = models[attribute_class][:reflections][reflection].klass
-      if content['value'].instance_of?(Array)
-        content['value'].each do |item_id|
-          next if item_id.blank?
+      if attribute_class == ::Notification
+        next if content['recipient'].blank?
 
-          attribute_object = attribute_ref_class.lookup(id: item_id)
-          next if !attribute_object
+        attribute_ref_class = ::User
+        item_ids            = []
+        Array(content['recipient']).each do |identifier|
+          next if identifier !~ /\Auserid_(\d+)\z/
 
-          assets = attribute_object.assets(assets)
+          item_ids.push($1)
         end
-      elsif content['value'].present?
-        attribute_object = attribute_ref_class.find_by(id: content['value'])
-        if attribute_object
-          assets = attribute_object.assets(assets)
-        end
+      else
+        reflection = attribute[1].sub(/_id$/, '')
+        next if !models[attribute_class]
+        next if !models[attribute_class][:reflections]
+        next if !models[attribute_class][:reflections][reflection]
+        next if !models[attribute_class][:reflections][reflection].klass
+
+        attribute_ref_class = models[attribute_class][:reflections][reflection].klass
+        item_ids            = Array(content['value'])
+      end
+
+      item_ids.each do |item_id|
+        next if item_id.blank?
+
+        attribute_object = attribute_ref_class.lookup(id: item_id)
+        next if !attribute_object
+
+        assets = attribute_object.assets(assets)
       end
     end
     assets
