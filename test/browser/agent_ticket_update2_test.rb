@@ -160,7 +160,7 @@ class AgentTicketUpdate2Test < TestCase
       css:     '.active div.ticket-article',
       value:   'some level 3 <b>body</b> in instance 2',
     )
-    sleep 1
+    sleep 2
     match_not(
       browser:  browser1,
       css:      '.content.active .js-reset',

@@ -74,7 +74,7 @@ class AgentTicketEmailSignatureTest < TestCase
         ],
       }
     )
-    sleep 6
+    sleep 10 # wait until background job is processed
 
     #
     # check signature in new ticket

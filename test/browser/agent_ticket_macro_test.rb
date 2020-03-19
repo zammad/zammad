@@ -158,6 +158,8 @@ class AgentTicketMacroTest < TestCase
     # when we re-enter the Zoom view for a ticket via the overview
     tasks_close_all()
 
+    sleep 8 # to update overview list to open correct/next ticket in overview
+
     ticket_open_by_overview(
       title: ticket1[:title],
       link:  '#ticket/view/all_unassigned',
