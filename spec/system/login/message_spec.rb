@@ -63,7 +63,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
     visit '/'
 
-    wait(5).until do
+    wait(8).until do
       pinged_since?(timestamp) && connection_open?
     end
 
