@@ -137,7 +137,7 @@ RSpec.describe 'Settings', type: :request do
       setting = Setting.find_by(name: 'product_name')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('Not authorized (required ["admin.branding"])')
+      expect(json_response['error']).to eq('Not authorized (required ["admin.branding"])!')
 
       setting = Setting.find_by(name: 'api_token_access')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
@@ -157,7 +157,7 @@ RSpec.describe 'Settings', type: :request do
       }
       put "/api/v1/settings/#{setting.id}", params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('Not authorized (required ["admin.branding"])')
+      expect(json_response['error']).to eq('Not authorized (required ["admin.branding"])!')
 
       # update
       setting = Setting.find_by(name: 'api_token_access')

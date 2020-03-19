@@ -303,7 +303,7 @@ class App.User extends App.Model
 
     Checks if requester has given access level on requested.
     Possible access levels are: read, update and delete
-    See backend method User#access?
+    See backend policy UserPolicy
 
     requester = App.User.find(1)
     requested = App.User.find(3)

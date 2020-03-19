@@ -1,9 +1,5 @@
 # Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
 class KnowledgeBase::ManageController < KnowledgeBase::BaseController
-  prepend_before_action { permission_check('admin.knowledge_base') }
-  skip_before_action :ensure_editor_or_reader
-  skip_before_action :ensure_editor
-
   def init
     render json: assets
   end

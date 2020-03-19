@@ -4,18 +4,18 @@ class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
 
+  prepend_before_action -> { authorize! }, only: %i[index import_example import_start]
   prepend_before_action :authentication_check
 
   # GET /articles
   def index
-    permission_check('admin')
     model_index_render(Ticket::Article, params)
   end
 
   # GET /articles/1
   def show
     article = Ticket::Article.find(params[:id])
-    access!(article, 'read')
+    authorize!(article)
 
     if response_expand?
       result = article.attributes_with_association_names
@@ -35,15 +35,13 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_articles/by_ticket/1
   def index_by_ticket
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     articles = []
 
     if response_expand?
       ticket.articles.each do |article|
-
-        # ignore internal article if customer is requesting
-        next if article.internal == true && current_user.permissions?('ticket.customer')
+        next if !authorized?(article, :show?)
 
         result = article.attributes_with_association_names
         articles.push result
@@ -57,9 +55,7 @@ class TicketArticlesController < ApplicationController
       assets = {}
       record_ids = []
       ticket.articles.each do |article|
-
-        # ignore internal article if customer is requesting
-        next if article.internal == true && current_user.permissions?('ticket.customer')
+        next if !authorized?(article, :show?)
 
         record_ids.push article.id
         assets = article.assets({})
@@ -72,9 +68,7 @@ class TicketArticlesController < ApplicationController
     end
 
     ticket.articles.each do |article|
-
-      # ignore internal article if customer is requesting
-      next if article.internal == true && current_user.permissions?('ticket.customer')
+      next if !authorized?(article, :show?)
 
       articles.push article.attributes_with_association_names
     end
@@ -84,7 +78,7 @@ class TicketArticlesController < ApplicationController
   # POST /articles
   def create
     ticket = Ticket.find(params[:ticket_id])
-    access!(ticket, 'create')
+    authorize!(ticket)
     article = article_create(ticket, params)
 
     if response_expand?
@@ -105,11 +99,7 @@ class TicketArticlesController < ApplicationController
   # PUT /articles/1
   def update
     article = Ticket::Article.find(params[:id])
-    access!(article, 'change')
-
-    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin')
-      raise Exceptions::NotAuthorized, 'Not authorized (ticket.agent or admin permission required)!'
-    end
+    authorize!(article)
 
     clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
@@ -137,34 +127,15 @@ class TicketArticlesController < ApplicationController
   # DELETE /api/v1/ticket_articles/:id
   def destroy
     article = Ticket::Article.find(params[:id])
-    access!(article, 'delete')
-
-    if current_user.permissions?('admin')
-      article.destroy!
-      render json: {}, status: :ok
-      return
-    end
-
-    article_deletable =
-      current_user.permissions?('ticket.agent') &&
-      article.created_by_id == current_user.id &&
-      !article.type.communication?
-
-    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !article_deletable
-
-    if article_deletable && article.created_at >= 10.minutes.ago
-      article.destroy!
-      render json: {}, status: :ok
-      return
-    end
-
-    raise Exceptions::NotAuthorized, 'Articles can only be deleted within 10 minutes after creation.'
+    authorize!(article)
+    article.destroy!
+    render json: {}, status: :ok
   end
 
   # POST /ticket_attachment_upload_clone_by_article
   def ticket_attachment_upload_clone_by_article
     article = Ticket::Article.find(params[:article_id])
-    access!(article.ticket, 'read')
+    authorize!(article.ticket, :show?)
 
     render json: {
       attachments: article_attachments_clone(article),
@@ -174,7 +145,7 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
     ticket = Ticket.lookup(id: params[:ticket_id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
@@ -185,7 +156,7 @@ class TicketArticlesController < ApplicationController
       end
 
       ticket = article.ticket
-      access!(ticket, 'read')
+      authorize!(ticket, :show?)
     end
 
     list = article.attachments || []
@@ -226,7 +197,7 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_article_plain/1
   def article_plain
     article = Ticket::Article.find(params[:id])
-    access!(article, 'read')
+    authorize!(article, :show?)
 
     file = article.as_raw
 
@@ -250,7 +221,6 @@ class TicketArticlesController < ApplicationController
   # @response_message 200 File download.
   # @response_message 401 Invalid session.
   def import_example
-    permission_check('admin')
     csv_string = Ticket::Article.csv_example(
       col_sep: ',',
     )
@@ -273,7 +243,6 @@ class TicketArticlesController < ApplicationController
   # @response_message 201 Import started.
   # @response_message 401 Invalid session.
   def import_start
-    permission_check('admin')
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
     end

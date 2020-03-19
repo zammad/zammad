@@ -3,7 +3,7 @@
 class Integration::ExchangeController < ApplicationController
   include Integration::ImportJobBase
 
-  prepend_before_action { authentication_check(permission: 'admin.integration.exchange') }
+  prepend_before_action { authentication_check && authorize! }
 
   def autodiscover
     answer_with do

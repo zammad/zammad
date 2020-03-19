@@ -3,8 +3,6 @@
 class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
   include HasPublishing
 
-  before_action :check_reader_access, only: :show
-
   # accessible outside of specific Knowledge Base
   # /api/v1/knowledge_bases/recent_answers
   def recent_answers
@@ -83,15 +81,4 @@ class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
     render json: { id: object.id, assets: assets }, status: :created
   end
 
-  private
-
-  def check_reader_access
-    return if current_user.permissions? 'knowledge_base.editor'
-
-    object = klass.find params[:id]
-
-    return if object.can_be_published_aasm.internal? || object.can_be_published_aasm.published?
-
-    raise ActiveRecord::RecordNotFound
-  end
 end

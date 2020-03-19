@@ -7,10 +7,6 @@ class SearchController < ApplicationController
   # GET|POST /api/v1/search/:objects
 
   def search_generic
-
-    # enable search only for users with valid session
-    raise Exceptions::NotAuthorized if !current_user
-
     # get params
     query = params[:query]
     if query.respond_to?(:permit!)

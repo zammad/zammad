@@ -2,7 +2,6 @@
 
 class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   before_action :load_knowledge_base, only: %i[reorder_root_categories reorder_categories reorder_answers]
-  before_action :check_reader_access, only: :show # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def reorder_root_categories
     reorder @knowledge_base.categories.root, params[:ordered_ids], KnowledgeBase::Category
@@ -45,15 +44,5 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   def load_knowledge_base
     @knowledge_base = KnowledgeBase.find params[:knowledge_base_id]
     @category = @knowledge_base.categories.find params[:id] if params.key? :id
-  end
-
-  def check_reader_access
-    return if current_user.permissions? 'knowledge_base.editor'
-
-    object = klass.find params[:id]
-
-    return if object.internal_content?
-
-    raise ActiveRecord::RecordNotFound
   end
 end

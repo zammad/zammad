@@ -220,7 +220,7 @@ Naming/MethodParameterName:
                 Checks for method parameter names that contain capital letters,
                 end in numbers, or do not meet a minimal length.
   Enabled: true
-  AllowedNames: e, id, _, ip
+  AllowedNames: e, id, _, ip, to
 
 Lint/BooleanSymbol:
   Description: 'Check for `:true` and `:false` symbols.'

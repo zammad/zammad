@@ -35,6 +35,9 @@ gem 'argon2'
 # core - state machine
 gem 'aasm'
 
+# core - authorization
+gem 'pundit'
+
 # performance - Memcached
 gem 'dalli'
 
@@ -150,6 +153,9 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'test-unit'
+
+  # for testing Pundit authorisation policies in RSpec
+  gem 'pundit-matchers'
 
   # code coverage
   gem 'coveralls', require: false

@@ -10,7 +10,6 @@ class Organization < ApplicationModel
   include ChecksHtmlSanitized
   include HasObjectManagerAttributesValidation
 
-  include Organization::ChecksAccess
   include Organization::Assets
   include Organization::Search
   include Organization::SearchIndex

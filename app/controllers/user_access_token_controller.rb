@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UserAccessTokenController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'user_preferences.access_token') }
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 

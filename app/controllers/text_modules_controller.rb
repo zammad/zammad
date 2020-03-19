@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TextModulesController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -49,7 +49,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 =end
 
   def index
-    permission_check(['admin.text_module', 'ticket.agent'])
     model_index_render(TextModule, params)
   end
 
@@ -71,7 +70,6 @@ curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    permission_check(['admin.text_module', 'ticket.agent'])
     model_show_render(TextModule, params)
   end
 
@@ -101,7 +99,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def create
-    permission_check('admin.text_module')
     model_create_render(TextModule, params)
   end
 
@@ -131,7 +128,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def update
-    permission_check('admin.text_module')
     model_update_render(TextModule, params)
   end
 
@@ -149,7 +145,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    permission_check('admin.text_module')
     model_destroy_render(TextModule, params)
   end
 
@@ -162,7 +157,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @response_message 200 File download.
   # @response_message 401 Invalid session.
   def import_example
-    permission_check('admin.text_module')
     csv_string = TextModule.csv_example(
       col_sep: params[:col_sep] || ',',
     )
@@ -185,7 +179,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @response_message 201 Import started.
   # @response_message 401 Invalid session.
   def import_start
-    permission_check('admin.text_module')
     string = params[:data]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')

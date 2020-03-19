@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UserDevicesController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'user_preferences.device') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     devices = UserDevice.where(user_id: current_user.id).order(updated_at: :desc, name: :asc)

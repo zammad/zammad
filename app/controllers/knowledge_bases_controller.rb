@@ -1,18 +1,8 @@
 # Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
 
 class KnowledgeBasesController < KnowledgeBase::BaseController
-  skip_before_action :ensure_editor_or_reader, only: :init
-
   def init
     render json: assets(params[:answer_translation_content_ids])
-  end
-
-  def create
-    raise Exceptions::NotAuthorized
-  end
-
-  def destroy
-    raise Exceptions::NotAuthorized
   end
 
   private

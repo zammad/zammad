@@ -2,8 +2,7 @@
 
 class KnowledgeBase::BaseController < ApplicationController
   prepend_before_action :authentication_check
-  before_action :ensure_editor_or_reader
-  before_action :ensure_editor, only: %i[create update destroy]
+  before_action :authorize!
 
   def show
     model_show_render(klass, params_for_permission)
@@ -21,21 +20,13 @@ class KnowledgeBase::BaseController < ApplicationController
     model_destroy_render(klass, params_for_permission)
   end
 
-  private
-
   def klass
     @klass ||= controller_path.classify.constantize
   end
 
+  private
+
   def params_for_permission
     params.permit klass.agent_allowed_params
-  end
-
-  def ensure_editor
-    permission_check 'knowledge_base.editor'
-  end
-
-  def ensure_editor_or_reader
-    permission_check 'knowledge_base.*'
   end
 end

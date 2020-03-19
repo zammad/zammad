@@ -6,7 +6,7 @@ require_dependency 'ldap/group'
 class Integration::LdapController < ApplicationController
   include Integration::ImportJobBase
 
-  prepend_before_action { authentication_check(permission: 'admin.integration.ldap') }
+  prepend_before_action { authentication_check && authorize! }
 
   def discover
     answer_with do

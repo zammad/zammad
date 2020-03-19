@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TemplatesController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -47,7 +47,6 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password}
 =end
 
   def index
-    permission_check(['admin.template', 'ticket.agent'])
     model_index_render(Template, params)
   end
 
@@ -69,7 +68,6 @@ curl http://localhost/api/v1/templates/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    permission_check(['admin.template', 'ticket.agent'])
     model_show_render(Template, params)
   end
 
@@ -97,7 +95,6 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def create
-    permission_check(['admin.template', 'ticket.agent'])
     model_create_render(Template, params)
   end
 
@@ -125,7 +122,6 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def update
-    permission_check(['admin.template', 'ticket.agent'])
     model_update_render(Template, params)
   end
 
@@ -143,7 +139,6 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def destroy
-    permission_check(['admin.template', 'ticket.agent'])
     model_destroy_render(Template, params)
   end
 end

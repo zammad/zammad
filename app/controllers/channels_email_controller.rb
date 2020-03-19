@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.channel_email') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     system_online_service = Setting.get('system_online_service')

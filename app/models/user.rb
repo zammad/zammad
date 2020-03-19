@@ -14,7 +14,6 @@ class User < ApplicationModel
   include HasObjectManagerAttributesValidation
   include HasTicketCreateScreenImpact
   include User::HasTicketCreateScreenImpact
-  include User::ChecksAccess
   include User::Assets
   include User::Search
   include User::SearchIndex
@@ -421,14 +420,10 @@ returns
 =end
 
   def permissions?(key)
-    keys = key
-    if key.class == String
-      keys = [key]
-    end
-    keys.each do |local_key|
+    Array(key).each do |local_key|
       list = []
       if local_key.match?(/\.\*$/)
-        local_key.sub!('.*', '.%')
+        local_key = local_key.sub('.*', '.%')
         permissions = ::Permission.with_parents(local_key)
         list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
       else

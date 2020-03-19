@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class ReportsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'report') }
+  prepend_before_action { authentication_check && authorize! }
 
   # GET /api/reports/config
   def reporting_config

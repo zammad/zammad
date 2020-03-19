@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class CtiController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'cti.agent') }
+  prepend_before_action { authentication_check && authorize! }
 
   # list current caller log
   # GET /api/v1/cti/log

@@ -2,7 +2,7 @@
 require_dependency 'channel/driver/twitter'
 
 class ChannelsTwitterController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.channel_twitter') }, except: %i[webhook_incoming webhook_verify]
+  prepend_before_action -> { authentication_check && authorize! }, except: %i[webhook_incoming webhook_verify]
   skip_before_action :verify_csrf_token, only: %i[webhook_incoming webhook_verify]
 
   before_action :validate_webhook_signature!, only: :webhook_incoming

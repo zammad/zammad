@@ -4,6 +4,8 @@ module ApplicationController::Authenticates
   private
 
   def permission_check(key)
+    ActiveSupport::Deprecation.warn("Method 'permission_check' is deprecated. Use Pundit policy and `authorize!` instead.")
+
     if @_token_auth
       user = Token.check(
         action:     'api',
@@ -76,6 +78,8 @@ module ApplicationController::Authenticates
         inactive_user: true,
       )
       if user && auth_param[:permission]
+        ActiveSupport::Deprecation.warn("Paramter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
+
         user = Token.check(
           action:        'api',
           name:          token_string,
@@ -95,6 +99,8 @@ module ApplicationController::Authenticates
            Time.zone.today >= token.expires_at
           raise Exceptions::NotAuthorized, 'Not authorized (token expired)!'
         end
+
+        @_token = token # remember for Pundit authorization / permit!
       end
 
       @_token_auth = token_string # remember for permission_check
@@ -152,7 +158,14 @@ module ApplicationController::Authenticates
   def authentication_check_prerequesits(user, auth_type, auth_param)
     raise Exceptions::NotAuthorized, 'Maintenance mode enabled!' if in_maintenance_mode?(user)
     raise Exceptions::NotAuthorized, 'User is inactive!' if !user.active
-    raise Exceptions::NotAuthorized, 'Not authorized (user)!' if auth_param[:permission] && !user.permissions?(auth_param[:permission])
+
+    if auth_param[:permission]
+      ActiveSupport::Deprecation.warn("Parameter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
+
+      if !user.permissions?(auth_param[:permission])
+        raise Exceptions::NotAuthorized, 'Not authorized (user)!'
+      end
+    end
 
     current_user_set(user, auth_type)
     user_device_log(user, auth_type)

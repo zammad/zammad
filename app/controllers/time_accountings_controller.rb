@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TimeAccountingsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.time_accounting') }
+  prepend_before_action { authentication_check && authorize! }
 
   def by_ticket
 

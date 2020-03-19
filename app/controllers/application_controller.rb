@@ -12,5 +12,5 @@ class ApplicationController < ActionController::Base
   include ApplicationController::PreventsCsrf
   include ApplicationController::HasSecureContentSecurityPolicyForDownloads
   include ApplicationController::LogsHttpAccess
-  include ApplicationController::ChecksAccess
+  include ApplicationController::Authorizes
 end

@@ -301,63 +301,6 @@ RSpec.describe Ticket, type: :model do
       end
     end
 
-    describe '#access?' do
-      context 'when given ticket’s owner' do
-        it 'returns true for both "read" and "full" privileges' do
-          expect(ticket.access?(ticket.owner, 'read')).to be(true)
-          expect(ticket.access?(ticket.owner, 'full')).to be(true)
-        end
-      end
-
-      context 'when given the ticket’s customer' do
-        it 'returns true for both "read" and "full" privileges' do
-          expect(ticket.access?(ticket.customer, 'read')).to be(true)
-          expect(ticket.access?(ticket.customer, 'full')).to be(true)
-        end
-      end
-
-      context 'when given a user that is neither owner nor customer' do
-        let(:user) { create(:agent_user) }
-
-        it 'returns false for both "read" and "full" privileges' do
-          expect(ticket.access?(user, 'read')).to be(false)
-          expect(ticket.access?(user, 'full')).to be(false)
-        end
-
-        context 'but the user is an agent with full access to ticket’s group' do
-          before { user.group_names_access_map = { ticket.group.name => 'full' } }
-
-          it 'returns true for both "read" and "full" privileges' do
-            expect(ticket.access?(user, 'read')).to be(true)
-            expect(ticket.access?(user, 'full')).to be(true)
-          end
-        end
-
-        context 'but the user is a customer from the same organization as ticket’s customer' do
-          subject(:ticket) { create(:ticket, customer: customer) }
-
-          let(:customer) { create(:customer_user, organization: create(:organization)) }
-          let(:colleague) { create(:customer_user, organization: customer.organization) }
-
-          context 'and organization.shared is true (default)' do
-            it 'returns true for both "read" and "full" privileges' do
-              expect(ticket.access?(colleague, 'read')).to be(true)
-              expect(ticket.access?(colleague, 'full')).to be(true)
-            end
-          end
-
-          context 'but organization.shared is false' do
-            before { customer.organization.update(shared: false) }
-
-            it 'returns false for both "read" and "full" privileges' do
-              expect(ticket.access?(colleague, 'read')).to be(false)
-              expect(ticket.access?(colleague, 'full')).to be(false)
-            end
-          end
-        end
-      end
-    end
-
     describe '#subject_build' do
       context 'with default "ticket_hook_position" setting ("right")' do
         it 'returns the given string followed by a ticket reference (of the form "[Ticket#123]")' do

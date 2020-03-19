@@ -3,9 +3,9 @@
 class FirstStepsController < ApplicationController
   prepend_before_action :authentication_check
 
-  def index
-    return if !access?
+  before_action -> { render json: [] }, if: -> { !authorized? }
 
+  def index
     invite_agents = false
     #if User.of_role('Agent').count > 2
     #  invite_agents = true
@@ -169,8 +169,6 @@ class FirstStepsController < ApplicationController
   end
 
   def test_ticket
-    return if !access?
-
     agent = current_user
     customer = test_customer
     from = "#{customer.fullname} <#{customer.email}>"
@@ -219,13 +217,6 @@ class FirstStepsController < ApplicationController
 
   def test_customer
     User.find_by(login: 'nicole.braun@zammad.org')
-  end
-
-  def access?
-    return true if current_user.permissions?(['admin', 'ticket.agent'])
-
-    render json: []
-    false
   end
 
   def check_availability(result)

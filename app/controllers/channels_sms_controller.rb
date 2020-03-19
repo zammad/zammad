@@ -1,8 +1,5 @@
-class ChannelsSmsController < ApplicationChannelController
-  PERMISSION = 'admin.channel_sms'.freeze
-  AREA = ['Sms::Notification'.freeze, 'Sms::Account'.freeze].freeze
-
-  prepend_before_action -> { authentication_check(permission: self.class::PERMISSION) }, except: [:webhook]
+class ChannelsSmsController < ApplicationController
+  prepend_before_action -> { authentication_check && authorize! }, except: [:webhook]
   skip_before_action :verify_csrf_token, only: [:webhook]
 
   def index
@@ -13,6 +10,33 @@ class ChannelsSmsController < ApplicationChannelController
       config:                   channels_config,
       assets:                   assets
     }
+  end
+
+  def show
+    model_show_render(Channel, params)
+  end
+
+  def create
+    model_create_render(Channel, channel_params)
+  end
+
+  def update
+    model_update_render(Channel, channel_params)
+  end
+
+  def enable
+    channel.update!(active: true)
+    render json: channel
+  end
+
+  def disable
+    channel.update!(active: false)
+    render json: channel
+  end
+
+  def destroy
+    channel.destroy!
+    render json: {}
   end
 
   def test
@@ -49,13 +73,17 @@ class ChannelsSmsController < ApplicationChannelController
 
   private
 
+  def channel
+    @channel ||= Channel.lookup(id: params[:id])
+  end
+
   def test_options
     params.permit(:recipient, :message)
   end
 
   def channel_params
     raise 'Missing area params' if params[:area].blank?
-    if !self.class::AREA.include?(params[:area])
+    if ['Sms::Notification', 'Sms::Account'].exclude?(params[:area])
       raise "Invalid area '#{params[:area]}'!"
     end
     raise 'Missing options params' if params[:options].blank?

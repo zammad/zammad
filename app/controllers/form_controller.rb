@@ -1,13 +1,14 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class FormController < ApplicationController
+  prepend_before_action -> { authorize! }, only: %i[configuration submit]
+
   skip_before_action :verify_csrf_token
   before_action :cors_preflight_check
   after_action :set_access_control_headers_execute
   skip_before_action :user_device_check
 
   def configuration
-    return if !enabled?
     return if !fingerprint_exists?
     return if limit_reached?
 
@@ -23,7 +24,7 @@ class FormController < ApplicationController
       token:    token_gen(params[:fingerprint])
     }
 
-    if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
+    if authorized?(policy_record, :test?)
       result[:enabled] = true
     end
 
@@ -31,7 +32,6 @@ class FormController < ApplicationController
   end
 
   def submit
-    return if !enabled?
     return if !fingerprint_exists?
     return if !token_valid?(params[:token], params[:fingerprint])
     return if limit_reached?
@@ -144,6 +144,14 @@ class FormController < ApplicationController
 
   private
 
+  # we don't wann to tell what the cause for the authorization error is
+  # so we capture the exception and raise an anonymized one
+  def authorize!(*)
+    super
+  rescue Pundit::NotAuthorizedError
+    raise Exceptions::NotAuthorized
+  end
+
   def token_gen(fingerprint)
     crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
     fingerprint = "#{Base64.strict_encode64(Setting.get('fqdn'))}:#{Time.zone.now.to_i}:#{Base64.strict_encode64(fingerprint)}"
@@ -216,12 +224,4 @@ class FormController < ApplicationController
     Rails.logger.info 'No fingerprint given!'
     raise Exceptions::NotAuthorized
   end
-
-  def enabled?
-    return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
-    return true if Setting.get('form_ticket_create')
-
-    raise Exceptions::NotAuthorized
-  end
-
 end

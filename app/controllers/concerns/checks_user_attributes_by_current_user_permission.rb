@@ -4,11 +4,10 @@ module ChecksUserAttributesByCurrentUserPermission
   private
 
   def check_attributes_by_current_user_permission(params)
+    authorize!
+
     # admins can do whatever they want
     return true if current_user.permissions?('admin.user')
-
-    # non-agents (customers) can't set anything
-    raise Exceptions::NotAuthorized if !current_user.permissions?('ticket.agent')
 
     # regular agents are not allowed to set Groups and Roles
     %w[Role Group].each do |model|

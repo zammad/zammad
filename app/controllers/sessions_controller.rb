@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  prepend_before_action :authentication_check, only: %i[switch_to_user list delete]
+  prepend_before_action -> { authentication_check && authorize! }, only: %i[switch_to_user list delete]
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth]
   skip_before_action :user_device_check, only: %i[create_sso]
 
@@ -97,8 +97,6 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    permission_check(['admin.session', 'admin.user'])
-
     # check user
     if !params[:id]
       render(
@@ -176,7 +174,6 @@ class SessionsController < ApplicationController
   end
 
   def list
-    permission_check('admin.session')
     assets = {}
     sessions_clean = []
     SessionHelper.list.each do |session|
@@ -197,7 +194,6 @@ class SessionsController < ApplicationController
   end
 
   def delete
-    permission_check('admin.session')
     SessionHelper.destroy(params[:id])
     render json: {}
   end

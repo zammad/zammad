@@ -11,6 +11,7 @@ module ApplicationController::HandlesErrors
     rescue_from ArgumentError, with: :unprocessable_entity
     rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
     rescue_from Exceptions::NotAuthorized, with: :unauthorized
+    rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
   end
 
   def not_found(e)
@@ -32,10 +33,20 @@ module ApplicationController::HandlesErrors
   end
 
   def unauthorized(e)
+    logger.info { e }
     error = humanize_error(e)
     response.headers['X-Failure'] = error.fetch(:error_human, error[:error])
     respond_to_exception(e, :unauthorized)
     http_log
+  end
+
+  def pundit_not_authorized_error(e)
+    logger.info { e }
+    # check if a special authorization_error should be shown in the result payload
+    # which was raised in one of the policies. Fall back to a simple "Not authorized"
+    # error to hide actual cause for security reasons.
+    exeption = e.policy.custom_exception || Exceptions::NotAuthorized.new
+    unauthorized(exeption)
   end
 
   private

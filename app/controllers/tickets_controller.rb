@@ -6,8 +6,8 @@ class TicketsController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
 
+  prepend_before_action -> { authorize! }, only: %i[selector import_example import_start]
   prepend_before_action :authentication_check
-  before_action :follow_up_possible_check, only: :update
 
   # GET /api/v1/tickets
   def index
@@ -55,7 +55,7 @@ class TicketsController < ApplicationController
   # GET /api/v1/tickets/1
   def show
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket)
 
     if response_expand?
       result = ticket.attributes_with_association_names
@@ -221,7 +221,8 @@ class TicketsController < ApplicationController
   # PUT /api/v1/tickets/1
   def update
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'change')
+    authorize!(ticket, :follow_up?)
+    authorize!(ticket)
 
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -269,9 +270,7 @@ class TicketsController < ApplicationController
   # DELETE /api/v1/tickets/1
   def destroy
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'delete')
-
-    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !current_user.permissions?('admin')
+    authorize!(ticket)
 
     ticket.destroy!
 
@@ -296,7 +295,7 @@ class TicketsController < ApplicationController
 
     # get ticket data
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     # get history of ticket
     render json: ticket.history_get(true)
@@ -385,7 +384,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-    access!(ticket_master, 'change')
+    authorize!(ticket_master, :update?)
 
     # check slave ticket
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
@@ -396,7 +395,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-    access!(ticket_slave, 'change')
+    authorize!(ticket_slave, :update?)
 
     # merge ticket
     ticket_slave.merge_to(
@@ -415,11 +414,11 @@ class TicketsController < ApplicationController
   # GET /api/v1/ticket_split
   def ticket_split
     ticket = Ticket.find(params[:ticket_id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
     assets = ticket.assets({})
 
     article = Ticket::Article.find(params[:article_id])
-    access!(article.ticket, 'read')
+    authorize!(article.ticket, :show?)
     assets = article.assets(assets)
 
     render json: {
@@ -497,8 +496,6 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/selector
   def selector
-    permission_check('admin.*')
-
     ticket_count, tickets = Ticket.selectors(params[:condition], limit: 6, execution_time: true)
 
     assets = {}
@@ -627,7 +624,6 @@ class TicketsController < ApplicationController
   # @response_message 200 File download.
   # @response_message 401 Invalid session.
   def import_example
-    permission_check('admin')
     csv_string = Ticket.csv_example(
       col_sep: ',',
     )
@@ -650,7 +646,6 @@ class TicketsController < ApplicationController
   # @response_message 201 Import started.
   # @response_message 401 Invalid session.
   def import_start
-    permission_check('admin')
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
     end
@@ -673,16 +668,6 @@ class TicketsController < ApplicationController
 
   private
 
-  def follow_up_possible_check
-    ticket = Ticket.find(params[:id])
-
-    return true if current_user.permissions?('ticket.agent') # agents can always reopen tickets, regardless of group configuration
-    return true if ticket.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
-    return true if ticket.state.name != 'closed' # check if the ticket state is already closed
-
-    raise Exceptions::UnprocessableEntity, 'Cannot follow-up on a closed ticket. Please create a new ticket.'
-  end
-
   def ticket_all(ticket)
 
     # get attributes to update
@@ -698,9 +683,7 @@ class TicketsController < ApplicationController
     # get related users
     article_ids = []
     ticket.articles.each do |article|
-
-      # ignore internal article if customer is requesting
-      next if article.internal == true && current_user.permissions?('ticket.customer')
+      next if !authorized?(article, :show?)
 
       article_ids.push article.id
       assets = article.assets(assets)

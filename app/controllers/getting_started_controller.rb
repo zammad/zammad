@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class GettingStartedController < ApplicationController
+  prepend_before_action -> { authorize! }, only: [:base]
 
 =begin
 
@@ -105,10 +106,6 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   end
 
   def base
-
-    # check admin permissions
-    permission_check('admin.wizard')
-
     # validate url
     messages = {}
     settings = {}

@@ -378,6 +378,10 @@ GEM
       pry (>= 0.9.11)
     public_suffix (3.0.3)
     puma (3.12.4)
+    pundit (2.0.1)
+      activesupport (>= 3.0.0)
+    pundit-matchers (1.6.0)
+      rspec-rails (>= 3.0.0)
     rack (2.2.2)
     rack-livereload (0.3.17)
       rack
@@ -627,6 +631,8 @@ DEPENDENCIES
   pry-rescue
   pry-stack_explorer
   puma (~> 3.12)
+  pundit
+  pundit-matchers
   rack-livereload
   rails (= 5.2.4.1)
   rails-controller-testing

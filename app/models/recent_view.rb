@@ -76,12 +76,11 @@ class RecentView < ApplicationModel
   end
 
   def self.access(object, o_id, user)
-    object.to_s
-          .constantize
-          .try(:lookup, { id: o_id })
-          .try(:access?, user, 'read')
-  rescue NameError
-    false
+    record = object.to_s
+              .safe_constantize
+              .try(:lookup, { id: o_id })
+
+    Pundit.policy(user, record).try(:show?)
   end
 
 =begin

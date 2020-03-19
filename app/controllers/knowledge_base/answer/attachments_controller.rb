@@ -2,7 +2,7 @@
 
 class KnowledgeBase::Answer::AttachmentsController < ApplicationController
   prepend_before_action :authentication_check
-  prepend_before_action { permission_check('knowledge_base.editor') }
+  prepend_before_action :authorize!
 
   before_action :fetch_answer
 

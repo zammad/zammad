@@ -95,10 +95,4 @@ module ApplicationController::HasUser
 
     session[:user_agent] = request.env['HTTP_USER_AGENT']
   end
-
-  def valid_session_with_user
-    return true if current_user
-
-    raise Exceptions::UnprocessableEntity, 'No session user!'
-  end
 end

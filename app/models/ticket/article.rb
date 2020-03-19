@@ -8,7 +8,6 @@ class Ticket::Article < ApplicationModel
   include CanCsvImport
   include HasObjectManagerAttributesValidation
 
-  include Ticket::Article::ChecksAccess
   include Ticket::Article::Assets
 
   belongs_to :ticket, optional: true

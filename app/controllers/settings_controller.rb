@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SettingsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.*') }
+  prepend_before_action { authentication_check && authorize! }
 
   # GET /settings
   def index
     list = []
     Setting.all.each do |setting|
-      next if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
+      next if !authorized?(setting, :show?)
 
       list.push setting
     end
@@ -16,7 +16,6 @@ class SettingsController < ApplicationController
 
   # GET /settings/1
   def show
-    check_access('read')
     model_show_render(Setting, params)
   end
 
@@ -27,14 +26,12 @@ class SettingsController < ApplicationController
 
   # PUT /settings/1
   def update
-    check_access('write')
     clean_params = keep_certain_attributes
     model_update_render(Setting, clean_params)
   end
 
   # PUT /settings/image/:id
   def update_image
-    check_access('write')
     clean_params = keep_certain_attributes
 
     if !clean_params[:logo]
@@ -104,21 +101,5 @@ class SettingsController < ApplicationController
       params[:preferences].merge!(setting.preferences)
     end
     params
-  end
-
-  def check_access(type)
-    setting = Setting.lookup(id: params[:id])
-
-    if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
-      raise Exceptions::NotAuthorized, "Not authorized (required #{setting.preferences[:permission].inspect})"
-    end
-
-    if type == 'write'
-      return true if !Setting.get('system_online_service')
-      if setting.preferences && setting.preferences[:online_service_disable]
-        raise Exceptions::NotAuthorized, 'Not authorized (service disabled)'
-      end
-    end
-    true
   end
 end

@@ -1,7 +1,10 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status amount_check]
+  prepend_before_action { authorize! }
+  prepend_before_action -> { authentication_check }, except: %i[health_check status amount_check]
+  prepend_before_action -> { authentication_check_only }, only: %i[health_check status amount_check]
+
   skip_before_action :verify_csrf_token
 
 =begin
@@ -27,8 +30,6 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
 =end
 
   def health_check
-    token_or_permission_check
-
     issues = []
     actions = Set.new
 
@@ -210,8 +211,6 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
 =end
 
   def status
-    token_or_permission_check
-
     last_login = nil
     last_login_user = User.where('last_login IS NOT NULL').order(last_login: :desc).limit(1).first
     if last_login_user
@@ -298,8 +297,6 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
 =end
 
   def amount_check
-    token_or_permission_check
-
     raise Exceptions::UnprocessableEntity, 'periode is missing!' if params[:periode].blank?
 
     scale = params[:periode][-1, 1]
@@ -370,7 +367,6 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
   end
 
   def token
-    access_check
     token = SecureRandom.urlsafe_base64(40)
     Setting.set('monitoring_token', token)
 
@@ -381,27 +377,8 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
   end
 
   def restart_failed_jobs
-    access_check
-
     Scheduler.restart_failed_jobs
 
     render json: {}, status: :ok
   end
-
-  private
-
-  def token_or_permission_check
-    user = authentication_check_only(permission: 'admin.monitoring')
-    return if user
-    return if Setting.get('monitoring_token') == params[:token]
-
-    raise Exceptions::NotAuthorized
-  end
-
-  def access_check
-    return if Permission.find_by(name: 'admin.monitoring', active: true)
-
-    raise Exceptions::NotAuthorized
-  end
-
 end

@@ -13,7 +13,6 @@ class Ticket < ApplicationModel
   include HasOnlineNotifications
   include HasKarmaActivityLog
   include HasLinks
-  include Ticket::ChecksAccess
   include HasObjectManagerAttributesValidation
 
   include Ticket::Escalation
