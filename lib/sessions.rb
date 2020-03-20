@@ -616,11 +616,41 @@ delete spool messages
 
     # just make sure that spool path exists
     if !File.exist?(@path)
-      FileUtils.mkpath @path
+      FileUtils.mkpath(@path)
     end
 
     # dispatch sessions
-    if node_id&.zero?
+    if node_id.blank? && ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i.positive?
+
+      dispatcher_pid = Process.pid
+      node_count     = ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i
+      node_pids      = []
+      (1..node_count).each do |worker_node_id|
+        node_pids << fork do
+          title         = "Zammad Session Jobs Node ##{worker_node_id}: dispatch_pid:#{dispatcher_pid} -> worker_pid:#{Process.pid}"
+          $PROGRAM_NAME = title
+
+          log('info', "#{title} started.")
+
+          ::Sessions.jobs(worker_node_id)
+          sleep node_count
+        rescue Interrupt # rubocop:disable Layout/RescueEnsureAlignment
+          nil
+        end
+      end
+
+      Signal.trap 'SIGTERM' do
+
+        node_pids.each do |node_pid|
+          Process.kill 'TERM', node_pid
+        end
+
+        Process.waitall
+
+        raise SignalException, 'SIGTERM'
+      end
+
+      # displatch client_ids to nodes
       loop do
 
         # nodes

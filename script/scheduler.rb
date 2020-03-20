@@ -59,7 +59,15 @@ Daemons.run_proc('scheduler', daemon_options) do
 
   Rails.logger.info 'Scheduler started.'
   at_exit do
-    Rails.logger.info 'Scheduler stopped.'
+
+    # use process title for stop log entry
+    # if differs from default process title
+    title = 'Scheduler'
+    if $PROGRAM_NAME != 'scheduler.rb'
+      title = $PROGRAM_NAME
+    end
+
+    Rails.logger.info "#{title} stopped."
   end
 
   begin
