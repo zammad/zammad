@@ -224,7 +224,9 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_examples 'for failure cases' do
             let(:status) { :ok }
-            let(:error_message) { '401 Authorization Required' }
+            let(:error_message) { <<~ERR.chomp }
+              401 Authorization Required (Invalid credentials may be to blame.)
+            ERR
           end
         end
 
@@ -234,7 +236,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              403 Forbidden, maybe credentials wrong or callback_url for application wrong configured.
+              403 Forbidden (Your app's callback URL configuration on developer.twitter.com may be to blame.)
             ERR
           end
         end
@@ -343,7 +345,9 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_examples 'for failure cases' do
             let(:status) { :internal_server_error }
-            let(:error_message) { '401 Authorization Required' }
+            let(:error_message) { <<~ERR.chomp }
+              401 Authorization Required (Invalid credentials may be to blame.)
+            ERR
           end
         end
 
@@ -353,7 +357,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :internal_server_error }
             let(:error_message) { <<~ERR.chomp }
-              403 Forbidden, maybe credentials wrong or callback_url for application wrong configured.
+              403 Forbidden (Your app's callback URL configuration on developer.twitter.com may be to blame.)
             ERR
           end
         end
