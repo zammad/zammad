@@ -3278,13 +3278,19 @@ $('#image2data1 img').one('load', htmlImage2DataUrlTest1)
 
 var source2 = '<img src="/assets/images/chat-demo-avatar.png">some test'
 $('#image2data2').html(source2)
-var htmlImage2DataUrlTest2 = function(element) {
-  test("htmlImage2DataUrl2 async", function() {
-    ok(!element.html().match(/chat-demo-avatar/), source2)
-    ok(element.get(0).outerHTML.match(/^\<img src=\"data:image\/png;base64,/), source2)
+var htmlImage2DataUrlTest2Success = function(element) {
+  test('htmlImage2DataUrl2 async', function() {
+    ok(!$(element).html().match(/chat-demo-avatar/), source2)
+    ok($(element).get(0).outerHTML.match(/^\<img src=\"data:image\/png;base64,/), source2)
+    ok($(element).attr('style'), 'max-width: 100%;')
   });
 }
-App.Utils.htmlImage2DataUrlAsyncInline($('#image2data2'), htmlImage2DataUrlTest2)
+var htmlImage2DataUrlTest2Fail = function() {
+  test('htmlImage2DataUrl2 async', function() {
+    ok(false, 'fail callback is exectuted!')
+  });
+}
+App.Utils.htmlImage2DataUrlAsyncInline($('#image2data2'), {success: htmlImage2DataUrlTest2Success, fail: htmlImage2DataUrlTest2Fail})
 
 }
 

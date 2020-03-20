@@ -382,6 +382,7 @@
       if (htmlString) {
         this.log('insert html from clipboard', htmlString)
         this.paste(htmlString)
+        App.Utils.htmlImage2DataUrlAsyncInline(this.$element)
         return true
       }
     }
