@@ -3217,6 +3217,28 @@ Content-Type: text/html; charset=us-ascii; format=flowed
           ],
         },
       },
+      { # See https://github.com/zammad/zammad/issues/2971
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail088.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin088@example.de>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'no visible content',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin088@example.de',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
