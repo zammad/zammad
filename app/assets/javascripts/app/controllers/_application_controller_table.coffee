@@ -934,7 +934,7 @@ class App.ControllerTable extends App.Controller
 
   onColResizeMousemove: (event) =>
     # use pixels while moving for max precision
-    if $('html[dir="rtl"]').length
+    if App.i18n.dir() is 'rtl'
       difference = @resizeStartX - event.pageX
     else
       difference = event.pageX - @resizeStartX
