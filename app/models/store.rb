@@ -318,6 +318,8 @@ returns
     return true if oversized_preferences_removed_by_key?(100)
     return true if oversized_preferences_removed_by_content?(300)
     return true if oversized_preferences_removed_by_key?(60)
+    return true if oversized_preferences_removed_by_content?(150)
+    return true if oversized_preferences_removed_by_key?(30)
 
     true
   end
