@@ -248,7 +248,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              Unable to get list of webooks. Maybe you do not have an Twitter developer approval right now or you use the wrong 'Dev environment label': Forbidden.
+              Forbidden. Are you sure you created a development environment on developer.twitter.com?
             ERR
           end
         end
@@ -260,7 +260,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              Unable to get list of webooks. Maybe you do not have an Twitter developer approval right now or you use the wrong 'Dev environment label': Unable to get list of webooks. You use the wrong 'Dev environment label', only {:environments=>[{:environment_name=>\"zammad\", :webhooks=>[]}]} available.
+              Dev Environment Label invalid. Please use an existing one ["zammad"], or create a new one.
             ERR
           end
         end
