@@ -34,6 +34,8 @@ RSpec.describe Import::OTRS::Priority do
         active:        true,
         updated_at:    '2014-04-28 10:53:18',
         created_at:    '2014-04-28 10:53:18',
+        ui_color:      'high-priority',
+        ui_icon:       'important',
         name:          '4 high',
         id:            '4'
       }

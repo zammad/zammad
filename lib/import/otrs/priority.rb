@@ -47,10 +47,24 @@ module Import
         reset_primary_key_sequence('ticket_priorities')
       end
 
+      def ui_color(priority)
+        return 'high-priority' if ['4 high', '5 very high'].include?(priority['Name'])
+
+        nil
+      end
+
+      def ui_icon(priority)
+        return 'important' if ['4 high', '5 very high'].include?(priority['Name'])
+
+        nil
+      end
+
       def map(priority)
         {
           created_by_id: 1,
           updated_by_id: 1,
+          ui_color:      ui_color(priority),
+          ui_icon:       ui_icon(priority),
           active:        active?(priority),
         }
           .merge(from_mapping(priority))
