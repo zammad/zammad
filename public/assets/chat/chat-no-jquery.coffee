@@ -1270,7 +1270,7 @@ do(window) ->
       @scrollRoot.style.position = 'fixed'
 
     enableScrollOnRoot: ->
-      @scrollRoot.scrollTop = @rootScrollOffset + 'px'
+      @scrollRoot.scrollTop = @rootScrollOffset
       @scrollRoot.style.overflow = ''
       @scrollRoot.style.position = ''
 
