@@ -450,7 +450,9 @@ do(window) ->
         @renderBase()
 
       # disable open button
-      document.querySelector(".#{ @options.buttonClass }").classList.add @inactiveClass
+      btn = document.querySelector(".#{ @options.buttonClass }")
+      if btn
+        btn.classList.add @inactiveClass
 
       @setAgentOnlineState 'online'
 
@@ -753,7 +755,10 @@ do(window) ->
     onError: (message) =>
       @log.debug message
       @addStatus(message)
-      document.querySelector(".#{ @options.buttonClass }").classList.add('zammad-chat-is-hidden')
+      btn = document.querySelector(".#{ @options.buttonClass }")
+      if btn
+        btn.classList.add('zammad-chat-is-hidden')
+
       if @isOpen
         @disableInput()
         @destroy(remove: false)
