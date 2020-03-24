@@ -1,7 +1,7 @@
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["agent"] = function (__obj) {
+window.zammadChatTemplates["agent"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -51,6 +51,97 @@ window.zammadChatTemplates["agent"] = function (__obj) {
       __out.push(__sanitize(this.agent.name));
     
       __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["chat"] = function(__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      __out.push('<div class="zammad-chat');
+    
+      if (this.flat) {
+        __out.push(__sanitize(' zammad-chat--flat'));
+      }
+    
+      __out.push('"');
+    
+      if (this.fontSize) {
+        __out.push(__sanitize(" style='font-size: " + this.fontSize + "'"));
+      }
+    
+      __out.push('>\n  <div class="zammad-chat-header js-chat-open"');
+    
+      if (this.background) {
+        __out.push(__sanitize(" style='background: " + this.background + "'"));
+      }
+    
+      __out.push('>\n    <div class="zammad-chat-header-controls js-chat-toggle">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden js-chat-status" data-status="online"></span>\n      <span class="zammad-chat-header-icon">\n        <svg class="zammad-chat-header-icon-open" width="13" height="7" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-header-icon-close" width="13" height="13" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24" width="24" height="24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z"/></svg>\n      <span class="zammad-chat-welcome-text">');
+    
+      __out.push(this.T(this.title));
+    
+      __out.push('</span>\n    </div>\n  </div>\n  <div class="zammad-chat-modal"></div>\n  <div class="zammad-scroll-hint is-hidden">\n    <svg class="zammad-scroll-hint-icon" width="20" height="18" viewBox="0 0 20 18"><path d="M0,2.00585866 C0,0.898053512 0.898212381,0 1.99079514,0 L18.0092049,0 C19.1086907,0 20,0.897060126 20,2.00585866 L20,11.9941413 C20,13.1019465 19.1017876,14 18.0092049,14 L1.99079514,14 C0.891309342,14 0,13.1029399 0,11.9941413 L0,2.00585866 Z M10,14 L16,18 L16,14 L10,14 Z" fill-rule="evenodd"/></svg>\n    ');
+    
+      __out.push(this.T(this.scrollHint));
+    
+      __out.push('\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <div class="zammad-chat-input" rows="1" placeholder="');
+    
+      __out.push(this.T('Compose your message...'));
+    
+      __out.push('" contenteditable="true"></div>\n    <button type="submit" class="zammad-chat-button zammad-chat-send"');
+    
+      if (this.background) {
+        __out.push(__sanitize(" style='background: " + this.background + "'"));
+      }
+    
+      __out.push('>');
+    
+      __out.push(this.T('Send'));
+    
+      __out.push('</button>\n  </form>\n</div>');
     
     }).call(this);
     
@@ -658,7 +749,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       this.send = bind(this.send, this);
       this.onKeydown = bind(this.onKeydown, this);
       this.onPaste = bind(this.onPaste, this);
-      this.onPaste = bind(this.onPaste, this);
+      this.onDrop = bind(this.onDrop, this);
       this.render = bind(this.render, this);
       this.view = bind(this.view, this);
       this.T = bind(this.T, this);
@@ -778,7 +869,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return event.stopPropagation();
     };
 
-    ZammadChat.prototype.onPaste = function(e) {
+    ZammadChat.prototype.onDrop = function(e) {
       var dataTransfer, file, reader, x, y;
       e.stopPropagation();
       e.preventDefault();
@@ -805,7 +896,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
               result = dataUrl;
               img = new Image();
               img.style.width = '100%';
-              img.style.maxWidth = width(+'px');
+              img.style.maxWidth = width + 'px';
               img.src = result;
               if (document.caretPositionFromPoint) {
                 pos = document.caretPositionFromPoint(x, y);
@@ -856,7 +947,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                 }
                 img = new Image();
                 img.style.width = '100%';
-                img.style.maxWidth = width(+'px');
+                img.style.maxWidth = width + 'px';
                 img.src = dataUrl;
                 return document.execCommand('insertHTML', false, img);
               };
@@ -1669,7 +1760,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.enableScrollOnRoot = function() {
-      this.scrollRoot.scrollTop = this.rootScrollOffset(+'px');
+      this.scrollRoot.scrollTop = this.rootScrollOffset;
       this.scrollRoot.style.overflow = '';
       return this.scrollRoot.style.position = '';
     };
@@ -1935,98 +2026,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["chat"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      __out.push('<div class="zammad-chat');
-    
-      if (this.flat) {
-        __out.push(__sanitize(' zammad-chat--flat'));
-      }
-    
-      __out.push('"');
-    
-      if (this.fontSize) {
-        __out.push(__sanitize(" style='font-size: " + this.fontSize + "'"));
-      }
-    
-      __out.push('>\n  <div class="zammad-chat-header js-chat-open"');
-    
-      if (this.background) {
-        __out.push(__sanitize(" style='background: " + this.background + "'"));
-      }
-    
-      __out.push('>\n    <div class="zammad-chat-header-controls js-chat-toggle">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden js-chat-status" data-status="online"></span>\n      <span class="zammad-chat-header-icon">\n        <svg class="zammad-chat-header-icon-open" width="13" height="7" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-header-icon-close" width="13" height="13" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24" width="24" height="24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z"/></svg>\n      <span class="zammad-chat-welcome-text">');
-    
-      __out.push(this.T(this.title));
-    
-      __out.push('</span>\n    </div>\n  </div>\n  <div class="zammad-chat-modal"></div>\n  <div class="zammad-scroll-hint is-hidden">\n    <svg class="zammad-scroll-hint-icon" width="20" height="18" viewBox="0 0 20 18"><path d="M0,2.00585866 C0,0.898053512 0.898212381,0 1.99079514,0 L18.0092049,0 C19.1086907,0 20,0.897060126 20,2.00585866 L20,11.9941413 C20,13.1019465 19.1017876,14 18.0092049,14 L1.99079514,14 C0.891309342,14 0,13.1029399 0,11.9941413 L0,2.00585866 Z M10,14 L16,18 L16,14 L10,14 Z" fill-rule="evenodd"/></svg>\n    ');
-    
-      __out.push(this.T(this.scrollHint));
-    
-      __out.push('\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <div class="zammad-chat-input" rows="1" placeholder="');
-    
-      __out.push(this.T('Compose your message...'));
-    
-      __out.push('" contenteditable="true"></div>\n    <button type="submit" class="zammad-chat-button zammad-chat-send"');
-    
-      if (this.background) {
-        __out.push(__sanitize(" style='background: " + this.background + "'"));
-      }
-    
-      __out.push('>');
-    
-      __out.push(this.T('Send'));
-    
-      __out.push('</button>\n  </form>\n</div>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["customer_timeout"] = function (__obj) {
+window.zammadChatTemplates["customer_timeout"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2099,7 +2099,7 @@ window.zammadChatTemplates["customer_timeout"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["loader"] = function (__obj) {
+window.zammadChatTemplates["loader"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2154,7 +2154,7 @@ window.zammadChatTemplates["loader"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["message"] = function (__obj) {
+window.zammadChatTemplates["message"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2221,7 +2221,7 @@ window.zammadChatTemplates["message"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["status"] = function (__obj) {
+window.zammadChatTemplates["status"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2276,7 +2276,7 @@ window.zammadChatTemplates["status"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["timestamp"] = function (__obj) {
+window.zammadChatTemplates["timestamp"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2335,7 +2335,7 @@ window.zammadChatTemplates["timestamp"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["typingIndicator"] = function (__obj) {
+window.zammadChatTemplates["typingIndicator"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2386,7 +2386,7 @@ window.zammadChatTemplates["typingIndicator"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["waiting"] = function (__obj) {
+window.zammadChatTemplates["waiting"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -2445,7 +2445,7 @@ window.zammadChatTemplates["waiting"] = function (__obj) {
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["waiting_list_timeout"] = function (__obj) {
+window.zammadChatTemplates["waiting_list_timeout"] = function(__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
