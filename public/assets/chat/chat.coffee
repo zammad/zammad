@@ -170,6 +170,15 @@ do($ = window.jQuery, window) ->
       inactiveTimeoutIntervallCheck: 0.5
       waitingListTimeout: 4
       waitingListTimeoutIntervallCheck: 0.5
+      # Callbacks
+      onReady: undefined
+      onCloseAnimationEnd: undefined
+      onError: undefined
+      onOpenAnimationEnd: undefined
+      onConnectionReestablished: undefined
+      onSessionClosed: undefined
+      onConnectionEstablished: undefined
+      onCssLoaded: undefined
 
     logPrefix: 'chat'
     _messageCount: 0
@@ -758,6 +767,8 @@ do($ = window.jQuery, window) ->
       @log.debug 'widget ready for use'
       $(".#{ @options.buttonClass }").click(@open).removeClass(@inactiveClass)
 
+      @options.onReady?()
+
       if @options.show
         @show()
 
@@ -770,6 +781,8 @@ do($ = window.jQuery, window) ->
         @destroy(remove: false)
       else
         @destroy(remove: true)
+
+      @options.onError?(message)
 
     onReopenSession: (data) =>
       @log.debug 'old messages', data.session
@@ -922,6 +935,8 @@ do($ = window.jQuery, window) ->
       if @isFullscreen
         @disableScrollOnRoot()
 
+      @options.onOpenAnimationEnd?()
+
     sessionClose: =>
       # send close
       @send 'chat_session_close',
@@ -979,6 +994,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
 
       @isOpen = false
+      @options.onCloseAnimationEnd?()
 
       @io.reconnect()
 
@@ -1145,12 +1161,14 @@ do($ = window.jQuery, window) ->
       @lastAddedType = 'status'
       @setAgentOnlineState 'online'
       @addStatus @T('Connection re-established')
+      @options.onConnectionReestablished?()
 
     onSessionClosed: (data) ->
       @addStatus @T('Chat closed by %s', data.realname)
       @disableInput()
       @setAgentOnlineState 'offline'
       @inactiveTimeout.stop()
+      @options.onSessionClosed?(data)
 
     setSessionId: (id) =>
       @sessionId = id
@@ -1190,6 +1208,7 @@ do($ = window.jQuery, window) ->
       @waitingListTimeout.stop()
       @idleTimeout.stop()
       @inactiveTimeout.start()
+      @options.onConnectionEstablished?(data)
 
     showCustomerTimeout: ->
       @el.find('.zammad-chat-modal').html @view('customer_timeout')
@@ -1248,6 +1267,7 @@ do($ = window.jQuery, window) ->
       @cssLoaded = true
       if @socketReady
         @onReady()
+      @options.onCssLoaded?()
 
     startTimeoutObservers: =>
       @idleTimeout = new Timeout(
