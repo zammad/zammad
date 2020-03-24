@@ -293,6 +293,54 @@ RSpec.describe Trigger, type: :model do
         end
       end
     end
+
+    context 'with article last sender equals system address' do
+      let!(:ticket) { create(:ticket) }
+      let(:perform) do
+        {
+          'notification.email' => {
+            'recipient' => 'article_last_sender',
+            'subject'   => 'foo last sender',
+            'body'      => 'some body with &gt;snip&lt;#{article.body_as_html}&gt;/snip&lt;', # rubocop:disable Lint/InterpolationCheck
+          }
+        }
+      end
+      let(:condition) do
+        { 'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.all.pluck(:id) } }
+      end
+      let!(:system_address) do
+        create(:email_address)
+      end
+
+      context 'article with from equal to the a system address' do
+        let!(:article) do
+          create(:ticket_article,
+                 ticket: ticket,
+                 from:   system_address.email,)
+        end
+
+        it 'does not trigger because of the last article is created my system address' do
+          expect { Observer::Transaction.commit }.to change { ticket.reload.articles.count }.by(0)
+          expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
+          expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
+        end
+      end
+
+      context 'article with reply_to equal to the a system address' do
+        let!(:article) do
+          create(:ticket_article,
+                 ticket:   ticket,
+                 from:     system_address.email,
+                 reply_to: system_address.email,)
+        end
+
+        it 'does not trigger because of the last article is created my system address' do
+          expect { Observer::Transaction.commit }.to change { ticket.reload.articles.count }.by(0)
+          expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
+          expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
+        end
+      end
+    end
   end
 
   context 'with pre condition current_user.id' do

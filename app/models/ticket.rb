@@ -1411,6 +1411,9 @@ result
       email_address_validation = EmailAddressValidation.new(recipient_email)
       next if !email_address_validation.valid_format?
 
+      # do not send notification if system address
+      next if EmailAddress.exists?(email: recipient_email.downcase)
+
       # do not sent notifications to this recipients
       send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
       begin
