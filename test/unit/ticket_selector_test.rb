@@ -1199,4 +1199,67 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
   end
 
+  test 'access: "ignore"' do
+    Ticket.destroy_all
+
+    Ticket.create!(
+      title:         'some title1',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Ticket.create!(
+      title:         'some title2',
+      group:         @group,
+      customer_id:   @customer1.id,
+      owner_id:      @agent1.id,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
+      created_at:    '2015-02-05 16:37:00',
+      updated_by_id: @agent2.id,
+      created_by_id: 1,
+    )
+
+    condition = {
+      'ticket.title' => {
+        operator: 'contains',
+        value:    'some',
+      },
+    }
+
+    # visible by owner
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    assert_equal(2, ticket_count)
+
+    # not visible by another agent
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
+    assert_equal(0, ticket_count)
+
+    # visible by another user when access: "ignore". For example, when tickets are performed after action of another user
+    ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2, access: 'ignore')
+    assert_equal(2, ticket_count)
+
+    condition2 = {
+      'ticket.updated_by_id' => {
+        operator:         'is',
+        pre_condition:    'current_user.id',
+        value:            '',
+        value_completion: ''
+      }
+    }
+
+    # not visible by another agent even if matches current user precondition
+    ticket_count, _tickets = Ticket.selectors(condition2, limit: 10, current_user: @agent2)
+    assert_equal(0, ticket_count)
+
+    # visible by another user when access: "ignore" if matches current user precondition
+    ticket_count, _tickets = Ticket.selectors(condition2, limit: 10, current_user: @agent2, access: 'ignore')
+    assert_equal(1, ticket_count)
+  end
 end

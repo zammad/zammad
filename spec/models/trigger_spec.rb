@@ -294,4 +294,40 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  context 'with pre condition current_user.id' do
+    let(:perform) do
+      { 'ticket.title'=>{ 'value'=>'triggered' } }
+    end
+
+    let(:user) do
+      user = create(:agent_user)
+      user.roles.first.groups << group
+      user
+    end
+
+    let(:group) { Group.first }
+
+    let(:ticket) do
+      create(:ticket,
+             title: 'Test Ticket', group: group,
+             owner_id: user.id, created_by_id: user.id, updated_by_id: user.id)
+    end
+
+    shared_examples 'successful trigger' do |attribute:|
+      let(:attribute) { attribute }
+
+      let(:condition) do
+        { attribute => { operator: 'is', pre_condition: 'current_user.id', value: '', value_completion: '' } }
+      end
+
+      it "for #{attribute}" do
+        ticket && trigger
+        expect { Observer::Transaction.commit }.to change { ticket.reload.title }.to('triggered')
+      end
+    end
+
+    it_behaves_like 'successful trigger', attribute: 'ticket.updated_by_id'
+    it_behaves_like 'successful trigger', attribute: 'ticket.owner_id'
+  end
 end

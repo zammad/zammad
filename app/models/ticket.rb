@@ -423,7 +423,21 @@ returns
 
 get count of tickets and tickets which match on selector
 
+@param  [Hash] selectors hash with conditions
+@oparam [Hash] options
+
+@option options [String]  :access can be 'full', 'read', 'create' or 'ignore' (ignore means a selector over all tickets), defaults to 'full'
+@option options [Integer] :limit of tickets to return
+@option options [User]    :user is a current user
+@option options [Integer] :execution_time is a current user
+
+@return [Integer, [<Ticket>]]
+
+@example
   ticket_count, tickets = Ticket.selectors(params[:condition], limit: limit, current_user: current_user, access: 'full')
+
+  ticket_count # count of found tickets
+  tickets      # tickets
 
 =end
 
@@ -438,7 +452,7 @@ get count of tickets and tickets which match on selector
 
     ActiveRecord::Base.transaction(requires_new: true) do
 
-      if !current_user
+      if !current_user || access == 'ignore'
         ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
         tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
         return [ticket_count, tickets]
@@ -1118,17 +1132,21 @@ perform active triggers on ticket
           }
         end
 
-        # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true)
-
-        next if ticket_count.blank?
-        next if ticket_count.zero?
-        next if tickets.first.id != ticket.id
-
         user_id = ticket.updated_by_id
         if article
           user_id = article.updated_by_id
         end
+
+        user = if user_id != 1
+                 User.lookup(id: user_id)
+               end
+
+        # verify is condition is matching
+        ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true, current_user: user, access: 'ignore')
+
+        next if ticket_count.blank?
+        next if ticket_count.zero?
+        next if tickets.first.id != ticket.id
 
         if recursive == false && local_options[:loop_count] > 1
           message = "Do not execute recursive triggers per default until Zammad 3.0. With Zammad 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
