@@ -49,4 +49,48 @@ RSpec.describe Import::OTRS::Priority do
       updates_with(zammad_structure)
     end
   end
+
+  context 'normal' do
+
+    let(:object_structure) { load_priority_json('normal') }
+    let(:zammad_structure) do
+      {
+        created_by_id: '1',
+        updated_by_id: '1',
+        active:        true,
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        ui_color:      nil,
+        ui_icon:       nil,
+        name:          '3 normal',
+        id:            '3'
+      }
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'low' do
+
+    let(:object_structure) { load_priority_json('low') }
+    let(:zammad_structure) do
+      {
+        created_by_id: '1',
+        updated_by_id: '1',
+        active:        true,
+        updated_at:    '2014-04-28 10:53:18',
+        created_at:    '2014-04-28 10:53:18',
+        ui_color:      'low-priority',
+        ui_icon:       'low-priority',
+        name:          '2 low',
+        id:            '2'
+      }
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
 end

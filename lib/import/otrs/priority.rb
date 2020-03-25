@@ -49,12 +49,14 @@ module Import
 
       def ui_color(priority)
         return 'high-priority' if ['4 high', '5 very high'].include?(priority['Name'])
+        return 'low-priority' if ['2 low', '1 very low'].include?(priority['Name'])
 
         nil
       end
 
       def ui_icon(priority)
         return 'important' if ['4 high', '5 very high'].include?(priority['Name'])
+        return 'low-priority' if ['2 low', '1 very low'].include?(priority['Name'])
 
         nil
       end
