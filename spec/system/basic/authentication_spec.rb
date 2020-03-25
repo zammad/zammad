@@ -15,4 +15,14 @@ RSpec.describe 'Authentication', type: :system do
     logout
     expect_current_route 'login', wait: 2
   end
+
+  it 'will unset user attributes after logout' do
+    logout
+    expect_current_route 'login', wait: 2
+
+    visit '/#signup'
+
+    # check wrong displayed fields in registration form after logout. #2989
+    page.should_not have_selector('select[name=organization_id]')
+  end
 end
