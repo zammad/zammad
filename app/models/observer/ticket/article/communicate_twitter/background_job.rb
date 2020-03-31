@@ -11,7 +11,6 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article.preferences['delivery_retry'] += 1
 
     ticket = Ticket.lookup(id: article.ticket_id)
-    log_error(article, "Can't find ticket.preferences for Ticket.find(#{article.ticket_id})") if !ticket.preferences
     log_error(article, "Can't find ticket.preferences['channel_id'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['channel_id']
     channel = Channel.lookup(id: ticket.preferences['channel_id'])
 
@@ -30,7 +29,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     end
 
     log_error(article, "No such channel id #{ticket.preferences['channel_id']}") if !channel
-    log_error(article, "Channel.find(#{channel.id}) isn't a twitter channel!") if !channel.options[:adapter].match?(/\Atwitter/i)
+    log_error(article, "Channel.find(#{channel.id}) isn't a twitter channel!") if !channel.options[:adapter].try(:match?, /\Atwitter/i)
 
     begin
       tweet = channel.deliver(
@@ -65,7 +64,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
 
         article.preferences['links'] = [
           {
-            url:    "https://twitter.com/messages/#{article.preferences[:twitter][:recipient_id]}-#{article.preferences[:twitter][:sender_id]}",
+            url:    TwitterSync::DM_URL_TEMPLATE % article.preferences[:twitter].slice(:recipient_id, :sender_id).values.map(&:to_i).sort.join('-'),
             target: '_blank',
             name:   'on Twitter',
           },
