@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/direct_messages/events/new.json
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","message_create":{"target":{"recipient_id":"2688148651"},"message_data":{"text":"Please
+        ignore this message."}}}}'
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="89f9fb3a4a61083d5a43108631b561fb",
+        oauth_signature="9Kmi04TwHkzb1Qg1kc4UcFaAuzc%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1585654994", oauth_token="REDACTED",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '313'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 31 Mar 2020 11:43:15 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 31 Mar 2020 11:43:15 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158565499496785911; Max-Age=63072000; Expires=Thu, 31 Mar 2022
+        11:43:15 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_ixvQSJNpQwDdhsQnnFjMbg=="; Max-Age=63072000; Expires=Thu,
+        31 Mar 2022 11:43:15 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write-directmessages
+      X-Connection-Hash:
+      - 89771d0fa3e3da3329775711776b1a24
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Response-Time:
+      - '215'
+      X-Transaction:
+      - 00e3834000e91bc3
+      X-Tsa-Request-Body-Time:
+      - '0'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","id":"1244953398509617156","created_timestamp":"1585654994977","message_create":{"target":{"recipient_id":"2688148651"},"sender_id":"1205290247124217856","message_data":{"text":"Please
+        ignore this message.","entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]}}}}}'
+    http_version: 
+  recorded_at: Tue, 31 Mar 2020 11:43:15 GMT
+recorded_with: VCR 4.0.0

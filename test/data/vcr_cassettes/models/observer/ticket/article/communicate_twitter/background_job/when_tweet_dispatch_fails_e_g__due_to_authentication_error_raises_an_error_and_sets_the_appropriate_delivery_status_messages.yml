@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=Officia+qui+quo+laudantium.
+    headers:
+      User-Agent:
+      - TwitterRubyGem/6.2.0
+      Authorization:
+      - OAuth oauth_consumer_key="q7K8GEkhyCHs9jHLtkmD9Kod4", oauth_nonce="03c07d843276ea5be9e32934e277cd07",
+        oauth_signature="etY6LuIgozpV2JPPFCnnSRykVf4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1585657668", oauth_token="7783712304-H9s75r2d532diPmJYK6JrvUWxu9gTDZ6ocjfToL",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '62'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 31 Mar 2020 12:27:49 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158565766914726723; Max-Age=63072000; Expires=Thu, 31 Mar 2022
+        12:27:49 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_Pk8vk94r2BPsy5pPrAyZiw=="; Max-Age=63072000; Expires=Thu,
+        31 Mar 2022 12:27:49 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 43a5b1d7e5d707d650f1cf02cdef086c
+      X-Response-Time:
+      - '107'
+      X-Tsa-Request-Body-Time:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":89,"message":"Invalid or expired token."}]}'
+    http_version: 
+  recorded_at: Tue, 31 Mar 2020 12:27:49 GMT
+recorded_with: VCR 4.0.0
