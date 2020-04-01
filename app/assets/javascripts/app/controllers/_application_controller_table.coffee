@@ -934,7 +934,10 @@ class App.ControllerTable extends App.Controller
 
   onColResizeMousemove: (event) =>
     # use pixels while moving for max precision
-    difference = event.pageX - @resizeStartX
+    if App.i18n.dir() is 'rtl'
+      difference = @resizeStartX - event.pageX
+    else
+      difference = event.pageX - @resizeStartX
 
     if @resizeLeftStartWidth + difference < @minColWidth
       difference = - (@resizeLeftStartWidth - @minColWidth)
