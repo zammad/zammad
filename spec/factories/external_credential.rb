@@ -22,15 +22,12 @@ FactoryBot.define do
         }
       end
 
-      # Our Twitter API tests need valid credentials,
-      # but storing them in this file is bad for security.
-      # So what do we do?
+      # When recording a new VCR cassette,
+      # Twitter API tests need valid credentials--
+      # but storing them in this file is a security no-no.
       #
-      #   * Paste the keys in here,
-      #   * run the tests (with `use_vcr: :with_oauth_headers`),
-      #   * let VCR cache the network traffic, and
-      #   * change the keys back to "REDACTED"
-      #     (both here and in the resulting VCR cassettes).
+      # Instead, store your twitter API credentials in env vars to utilize this factory.
+      # (Try https://github.com/direnv/direnv to set env vars automatically.)
       transient do
         consumer_key       { 'REDACTED' }
         consumer_secret    { 'REDACTED' }
