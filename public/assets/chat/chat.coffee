@@ -414,6 +414,23 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Eftersom du inte svarat inom %s minuterna i din konversation med <strong>%s</strong> så stängdes chatten.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Då du inte svarat inom de senaste %s minuterna så avslutades din chatt.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi är ledsna, det tar längre tid som förväntat att få en ledig plats. Försök igen senare eller skicka ett e-postmeddelande till oss. Tack!'
+      'no':
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> med oss!'
+        'Scroll down to see new messages': 'Bla ned for å se nye meldinger'
+        'Online': 'Pålogget'
+        'Offline': 'Avlogget'
+        'Connecting': 'Koble til'
+        'Connection re-established': 'Tilkoblingen er gjenopprettet'
+        'Today': 'I dag'
+        'Send': 'Send'
+        'Chat closed by %s': 'Chat avsluttes om %s'
+        'Compose your message...': 'Skriv din melding...'
+        'All colleagues are busy.': 'Alle våre kolleger er for øyeblikket opptatt.'
+        'You are on waiting list position <strong>%s</strong>.': 'Du står nå i kø og er nr. <strong>%s</strong> på ventelisten.'
+        'Start new conversation': 'Start en ny samtale'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ettersom du ikke har respondert i løpet av de siste %s minuttene av samtalen, vil samtalen med  <strong>%s</strong> nå avsluttes.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Ettersom du ikke har respondert i løpet av de siste %s minuttene, har samtalen nå blitt avsluttet.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi beklager, men det tar lengre tid enn vanlig å få en ledig plass i vår chat. Vennligst prøv igjen på et senere tidspunkt eller send oss en e-post. Tusen takk!'
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
