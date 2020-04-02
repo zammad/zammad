@@ -1,8 +1,10 @@
 <hr>
-<h2><%- @T('Usage') %></h2>
+<h2><%- @T(@header) %></h2>
 <% if @description: %>
   <% for item in @description: %>
     <p><%- @T(item...) %></p>
   <% end %>
 <% end %>
-<pre><code class="language-<%- @style %> js-code"><%- @content %></code></pre>
+<% if @content: %>
+  <pre><code class="language-<%- @style %> js-code"><%- @content %></code></pre>
+<% end %>
