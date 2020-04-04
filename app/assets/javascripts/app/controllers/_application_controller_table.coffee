@@ -97,8 +97,6 @@ class App.ControllerTable extends App.Controller
   checkBoxColWidth: 30
   radioColWidth: 22
   sortableColWidth: 36
-  destroyColWidth: 70
-  cloneColWidth: 70
 
   events:
     'click .js-sort': 'sortByColumn'
@@ -307,9 +305,9 @@ class App.ControllerTable extends App.Controller
       explanation: @explanation
     )
 
-  renderTableFull: (rows) =>
+  renderTableFull: (rows, options = {}) =>
     @log 'debug', 'table.renderTableFull', @orderBy, @orderDirection
-    @tableHeaders()
+    @tableHeaders(options)
     @sortList()
     bulkIds = @getBulkSelected()
     container = @renderTableContainer()
@@ -534,7 +532,7 @@ class App.ControllerTable extends App.Controller
     return true if @overviewAttributes isnt @lastOverview
     false
 
-  tableHeaders: =>
+  tableHeaders: (options = {}) =>
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
@@ -557,27 +555,11 @@ class App.ControllerTable extends App.Controller
           if !attribute.style
             attribute.style = {}
 
-          if attributeName is item
+          if attributeName is item || (attributeName is "#{item}_id" || attributeName is "#{item}_ids")
             # e.g. column: owner
             headerFound = true
-            if @headerWidth[attribute.name]
-              attribute.displayWidth = @headerWidth[attribute.name] * availableWidth
-            else if !attribute.width
-              attribute.displayWidth = @baseColWidth
-            else
-              # convert percentages to pixels
-              value = parseInt attribute.width, 10
-              unit = attribute.width.match(/[px|%]+/)[0]
 
-              if unit is '%'
-                attribute.displayWidth = value / 100 * availableWidth
-              else
-                attribute.displayWidth = value
-            @headers.push attribute
-          else
-            # e.g. column: owner_id or owner_ids
-            if attributeName is "#{item}_id" || attributeName is "#{item}_ids"
-              headerFound = true
+            if !options.skipHeadersResize
               if @headerWidth[attribute.name]
                 attribute.displayWidth = @headerWidth[attribute.name] * availableWidth
               else if !attribute.width
@@ -591,8 +573,7 @@ class App.ControllerTable extends App.Controller
                   attribute.displayWidth = value / 100 * availableWidth
                 else
                   attribute.displayWidth = value
-              @headers.push attribute
-
+            @headers.push attribute
 
     # execute header callback
     if @callbackHeader
@@ -647,6 +628,7 @@ class App.ControllerTable extends App.Controller
           click: @toggleActionDropdown
 
     @calculateHeaderWidths()
+    @storeHeaderWidths()
 
     @columnsLength = @headers.length
     if @checkbox || @radio
@@ -841,8 +823,12 @@ class App.ControllerTable extends App.Controller
 
     availableWidth = @availableWidth
 
-    widths = @getHeaderWidths()
-    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount()
+    # ensure all widths are integers
+    @headers = _.map @headers, (col) ->
+      col.displayWidth = Math.floor(col.displayWidth)
+      return col
+
+    shrinkBy = Math.ceil (@getHeaderWidths() - availableWidth) / @getShrinkableHeadersCount()
 
     # make all cols evenly smaller
     @headers = _.map @headers, (col) =>
@@ -878,12 +864,6 @@ class App.ControllerTable extends App.Controller
     if @dndCallback
       widths += @sortableColWidth
 
-    if @destroy
-      widths += @destroyColWidth
-
-    if @clone
-      widths += @cloneColWidth
-
     widths
 
   setHeaderWidths: =>
@@ -900,6 +880,8 @@ class App.ControllerTable extends App.Controller
     for header in @headers
       widths[header.name] = header.displayWidth / @availableWidth
 
+    @headerWidth = widths
+
     App.LocalStorage.set(@preferencesStoreKey(), { headerWidth: widths }, @Session.get('id'))
 
   onResize: =>
@@ -911,6 +893,7 @@ class App.ControllerTable extends App.Controller
     @availableWidth = localWidth
     localDelay = =>
       localSetHeaderWidths = =>
+        @availableWidth = @el.width()
         @setHeaderWidths()
       App.QueueManager.add('tableRender', localSetHeaderWidths)
       App.QueueManager.run('tableRender')
@@ -953,8 +936,8 @@ class App.ControllerTable extends App.Controller
 
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
-    leftWidth = @resizeTargetLeft.width() / resizeBaseWidth
-    rightWidth = @resizeTargetRight.width() / resizeBaseWidth
+    leftWidth = @resizeTargetLeft.outerWidth() / resizeBaseWidth
+    rightWidth = @resizeTargetRight.outerWidth() / resizeBaseWidth
 
     leftColumnKey = @resizeTargetLeft.attr('data-column-key')
     rightColumnKey = @resizeTargetRight.attr('data-column-key')
@@ -1003,7 +986,7 @@ class App.ControllerTable extends App.Controller
     @preferencesStore('order', 'customOrderBy', @orderBy)
     @preferencesStore('order', 'customOrderDirection', @orderDirection)
     render = =>
-      @renderTableFull()
+      @renderTableFull(false, skipHeadersResize: true)
     App.QueueManager.add('tableRender', render)
     App.QueueManager.run('tableRender')
 
