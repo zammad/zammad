@@ -201,7 +201,14 @@ class EmailReply extends App.Controller
       body = App.Utils.textCleanup(article.body)
       body = App.Utils.text2html(body)
 
-    body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{body}</blockquote></div><div><br></div>"
+    quote_header = ''
+    if App.Config.get('ui_ticket_zoom_article_email_full_quote_header')
+      date = @date_format(article.created_at)
+      name = article.updated_by.displayName()
+      email = article.updated_by.email
+      quote_header = App.i18n.translateInline('On %s, %s <%s> wrote:', date, name, email) + '<br><br>'
+
+    body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
     articleNew = {}
     articleNew.body = body
