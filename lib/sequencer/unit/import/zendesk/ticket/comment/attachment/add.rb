@@ -19,13 +19,24 @@ class Sequencer
                     o_id:          instance.id,
                     data:          response.body,
                     filename:      resource.file_name,
-                    preferences:   {
-                      'Content-Type' => resource.content_type
-                    },
+                    preferences:   store_preferences,
                     created_by_id: 1
                   )
                 rescue => e
                   handle_failure(e)
+                end
+
+                private
+
+                def store_preferences
+                  output = { 'Content-Type' => resource.content_type }
+
+                  if Store.resizable_mime? resource.content_type
+                    output[:resizable]       = true
+                    output[:content_preview] = true
+                  end
+
+                  output
                 end
               end
             end

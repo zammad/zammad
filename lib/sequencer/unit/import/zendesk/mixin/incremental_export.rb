@@ -12,7 +12,7 @@ class Sequencer
             end
 
             def resource_collection
-              "::ZendeskAPI::#{resource_klass}".constantize.incremental_export(client, 1)
+              client.send resource_klass.pluralize.underscore
             end
 
             def resource_iteration
