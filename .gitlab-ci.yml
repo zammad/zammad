@@ -273,7 +273,6 @@ test:integration:zendesk:
   script:
     - bundle exec rake zammad:db:unseeded
     - bundle exec rails test test/integration/zendesk_import_test.rb
-  allow_failure: true
 
 ### OTRS
 

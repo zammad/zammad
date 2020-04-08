@@ -59,13 +59,13 @@ class ZendeskImportTest < ActiveSupport::TestCase
       },
       Tickets:       {
         skipped:     0,
-        created:     142,
+        created:     141,
         updated:     1,
         unchanged:   0,
         failed:      0,
         deactivated: 0,
-        sum:         143,
-        total:       143
+        sum:         142,
+        total:       142
       }
     }
 
@@ -78,9 +78,9 @@ class ZendeskImportTest < ActiveSupport::TestCase
     assert_equal(3, Group.count, 'groups')
     assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
-    assert_equal(143, Ticket.count, 'tickets')
+    assert_equal(142, Ticket.count, 'tickets')
     assert_equal(151, Ticket::Article.count, 'ticket articles')
-    assert_equal(2, Store.count, 'ticket article attachments')
+    assert_equal(3, Store.count, 'ticket article attachments')
 
     # TODO: Macros, Views, Automations...
   end
@@ -328,15 +328,14 @@ class ZendeskImportTest < ActiveSupport::TestCase
         id:   2,
         data: {
           title:                    'test',
-          #note:                    'This is the first comment. Feel free to delete this sample ticket.',
-          note:                     'test email',
+          note:                     nil,
           create_article_type_id:   1,
           create_article_sender_id: 2,
           article_count:            2,
           state_id:                 3,
           group_id:                 3,
           priority_id:              3,
-          owner_id:                 1,
+          owner_id:                 User.find_by(login: 'bob.smith@znuny.com').id,
           customer_id:              7,
           organization_id:          2,
           test_checkbox:            true,
@@ -350,16 +349,14 @@ class ZendeskImportTest < ActiveSupport::TestCase
         id:   3,
         data: {
           title:                    'Bob Smith, here is the test ticket you requested',
-          note:                     'Hello! This is a Zendesk ticket. We are going to go through the basic support ticket operation in Zendesk.
-
-If you\'re reading this message in your email, click the ticket number link that immediately follows the line \'You have been assigned to this t',
+          note:                     nil,
           create_article_type_id:   10,
           create_article_sender_id: 2,
-          article_count:            4,
+          article_count:            5,
           state_id:                 3,
           group_id:                 3,
           priority_id:              1,
-          owner_id:                 1,
+          owner_id:                 User.find_by(login: 'bob.smith@znuny.com').id,
           customer_id:              8,
           organization_id:          nil,
           test_checkbox:            false,
@@ -373,7 +370,7 @@ If you\'re reading this message in your email, click the ticket number link that
         id:   5,
         data: {
           title:                    'Twitter',
-          note:                     "@gabyalanisr Brandon Arely Snuppy Jaz Jerry Liz Irvig &amp; Wera\nY Losa Otrs Yop \npero si quieres Los Que Puedas",
+          note:                     nil,
           create_article_type_id:   6,
           create_article_sender_id: 2,
           article_count:            1,
@@ -389,7 +386,7 @@ If you\'re reading this message in your email, click the ticket number link that
         id:   143,
         data: {
           title:                    'Basti ist cool',
-          note:                     'Basti ist cool',
+          note:                     nil,
           create_article_type_id:   8,
           create_article_sender_id: 2,
           article_count:            1,
@@ -462,6 +459,18 @@ If you\'re reading this message in your email, click the ticket number link that
               'content_preview' => true
             },
             filename:    'paris.jpg',
+          },
+        },
+      },
+      {
+        message_id: 538_901_840_720,
+        data:       {
+          count: 1,
+          1 => {
+            preferences: {
+              'Content-Type' => 'text/rtf'
+            },
+            filename:    'test.rtf',
           },
         },
       },
