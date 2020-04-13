@@ -187,14 +187,14 @@ module CommonActions
   #
   # @param timeout [Integer] seconds to wait
   def modal_ready(timeout: 4)
-    wait(timeout).until_exists { find('.modal.in') }
+    wait(timeout).until_exists { find('.modal.in', wait: 0) }
   end
 
   # Checks if modal has disappeared
   #
   # @param timeout [Integer] seconds to wait
   def modal_disappear(timeout: 4)
-    wait(timeout).until_disappears { find('.modal.in') }
+    wait(timeout).until_disappears { find('.modal', wait: 0) }
   end
 
   # Scrolls to given element
