@@ -644,7 +644,7 @@ class App.TicketOverview extends App.Controller
   renderOptionsMacros: =>
 
     @possibleMacros = []
-    macros          = App.Macro.search(filter: { active: true }, sortBy:'name', order:'DESC')
+    macros          = App.Macro.getList()
 
     items = @el.find('[name="bulk"]:checked')
 

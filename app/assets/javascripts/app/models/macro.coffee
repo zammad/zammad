@@ -23,6 +23,10 @@ class App.Macro extends App.Model
     'group_ids',
   ]
 
+  # get list of macros to show in UI
+  @getList: ->
+    App.Macro.search(filter: { active: true }, sortBy:'name', order:'ASC')
+
   @description = '''
 Macros make it easy to automate common, multi-step tasks within Zammad.
 

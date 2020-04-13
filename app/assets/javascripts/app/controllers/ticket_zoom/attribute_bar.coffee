@@ -41,7 +41,7 @@ class App.TicketZoomAttributeBar extends App.Controller
     if @resetButton.get(0) && !@resetButton.hasClass('hide')
       resetButtonShown = true
 
-    macros = App.Macro.search(filter: { active: true }, sortBy:'name', order:'DESC')
+    macros = App.Macro.getList()
 
     @macroLastUpdated = App.Macro.lastUpdatedAt()
     @possibleMacros   = []
