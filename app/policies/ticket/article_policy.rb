@@ -25,7 +25,7 @@ class Ticket::ArticlePolicy < ApplicationPolicy
     # which were created by themselves within the last 10 minutes
     return missing_admin_permission if !user.permissions?('ticket.agent')
     return missing_admin_permission if record.created_by_id != user.id
-    return missing_admin_permission if record.type.communication?
+    return missing_admin_permission if record.type.communication? && !record.internal?
     return too_old_to_undo if record.created_at <= 10.minutes.ago
 
     true

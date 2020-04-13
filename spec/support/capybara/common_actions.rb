@@ -212,6 +212,19 @@ module CommonActions
   def modal_disappear(timeout: 4)
     wait(timeout).until_disappears { find('.modal', wait: 0) }
   end
+
+  # Executes action inside of modal. Makes sure modal has opened and closes
+  #
+  # @param timeout [Integer] seconds to wait
+  def in_modal(timeout: 4)
+    modal_ready(timeout: timeout)
+
+    within '.modal' do
+      yield
+    end
+
+    modal_disappear(timeout: timeout)
+  end
 end
 
 RSpec.configure do |config|

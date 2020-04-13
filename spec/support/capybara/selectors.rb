@@ -8,6 +8,10 @@ Capybara.add_selector(:active_content) do
   css { |content_class| ['.content.active', content_class].compact.join(' ') }
 end
 
+Capybara.add_selector(:active_ticket_article) do
+  css { |article| ['.content.active', "#article-#{article.id}" ].compact.join(' ') }
+end
+
 Capybara.add_selector(:manage) do
   css { 'a[href="#manage"]' }
 end

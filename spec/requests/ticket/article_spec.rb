@@ -480,52 +480,142 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
   end
 
-  describe 'DELETE /api/v1/ticket_articles/:id' do
+  describe 'DELETE /api/v1/ticket_articles/:id', authenticated_as: -> { user } do
+    let(:ticket) do
+      output = create(:ticket)
 
-    let!(:article) { create(:ticket_article, sender_name: 'Agent', type_name: 'note', updated_by_id: agent_user.id, created_by_id: agent_user.id  ) }
+      # make group ticket was created in available to current user
+      role = user.roles.first
+      map = role.group_ids_access_map
+      map[output.group.id] = :full
+      role.group_ids_access_map = map
+      role.save!
 
-    context 'by Admin user' do
-      before do
-        authenticated_as(admin_user)
-      end
+      output
+    end
 
-      it 'always succeeds' do
-        expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }
+    let(:article_communication) do
+      create(:ticket_article,
+             sender_name: 'Agent', type_name: 'email', ticket: ticket,
+             updated_by_id: agent_user.id, created_by_id: agent_user.id  )
+    end
+
+    let(:article_note) do
+      create(:ticket_article,
+             sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
+             updated_by_id: agent_user.id, created_by_id: agent_user.id  )
+    end
+
+    let(:article_note_customer) do
+      create(:ticket_article,
+             sender_name: 'Customer', internal: false, type_name: 'note', ticket: ticket,
+             updated_by_id: customer_user.id, created_by_id: customer_user.id  )
+    end
+
+    let(:article_note_communication) do
+      create(:ticket_article_type, name: 'note_communication', communication: true)
+
+      create(:ticket_article,
+             sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
+             updated_by_id: agent_user.id, created_by_id: agent_user.id  )
+    end
+
+    def delete_article_via_rest(article)
+      delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json
+    end
+
+    shared_examples 'succeeds' do
+      it 'succeeds' do
+        expect { delete_article_via_rest(article) }.to change { Ticket::Article.exists?(id: article.id) }
       end
     end
 
-    context 'by Agent user' do
-      before do
-        # this is needed, role needs full rights for the new group
-        # so that agent can delete the article
-        group_ids_access_map = Group.all.pluck(:id).each_with_object({}) { |group_id, result| result[group_id] = 'full'.freeze }
-        role = Role.find_by(name: 'Agent')
-        role.group_ids_access_map = group_ids_access_map
-        role.save!
+    shared_examples 'fails' do
+      it 'fails' do
+        expect { delete_article_via_rest(article) }.not_to change { Ticket::Article.exists?(id: article.id) }
       end
+    end
 
-      context 'within 10 minutes of creation' do
-        before do
+    shared_examples 'deleting' do |item:, now:, later:, much_later:|
+      context "deleting #{item}" do
+        let(:article) { send(item) }
 
-          authenticated_as(agent_user)
-          travel 8.minutes
+        include_examples now ? 'succeeds' : 'fails'
+
+        context '8 minutes later' do
+          before { article && travel(8.minutes) }
+
+          include_examples later ? 'succeeds' : 'fails'
         end
 
-        it 'succeeds' do
-          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.to change { Ticket::Article.exists?(id: article.id) }
-        end
-      end
+        context '11 minutes later' do
+          before { article && travel(11.minutes) }
 
-      context '10+ minutes after creation' do
-        before do
-          authenticated_as(agent_user)
-          travel 11.minutes
-        end
-
-        it 'fails' do
-          expect { delete "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json }.not_to change { Ticket::Article.exists?(id: article.id) }
+          include_examples much_later ? 'succeeds' : 'fails'
         end
       end
+    end
+
+    context 'as admin' do
+      let(:user) { admin_user }
+
+      include_examples 'deleting',
+                       item: 'article_communication',
+                       now: true, later: true, much_later: true
+
+      include_examples 'deleting',
+                       item: 'article_note',
+                       now: true, later: true, much_later: true
+
+      include_examples 'deleting',
+                       item: 'article_note_customer',
+                       now: true, later: true, much_later: true
+
+      include_examples 'deleting',
+                       item: 'article_note_communication',
+                       now: true, later: true, much_later: true
+    end
+
+    context 'as agent' do
+      let(:user) { agent_user }
+
+      include_examples 'deleting',
+                       item: 'article_communication',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note',
+                       now: true, later: true, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_customer',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_communication',
+                       now: true, later: true, much_later: false
+
+    end
+
+    context 'as customer' do
+      let(:user) { customer_user }
+
+      include_examples 'deleting',
+                       item: 'article_communication',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_customer',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_communication',
+                       now: false, later: false, much_later: false
+
     end
   end
 end

@@ -206,4 +206,145 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'delete article', authenticated: -> { user } do
+    let(:admin_user)    { User.find_by! email: 'master@example.com' }
+    let(:agent_user)    { create :agent, password: 'test', groups: [Group.first] }
+    let(:customer_user) { create :customer, password: 'test' }
+    let(:ticket)        { create :ticket, group: agent_user.groups.first, customer: customer_user }
+    let(:article)       { send(item) }
+
+    def article_communication
+      create_ticket_article(sender_name: 'Agent', internal: false, type_name: 'email', updated_by: customer_user)
+    end
+
+    def article_note
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note', updated_by: agent_user)
+    end
+
+    def article_note_customer
+      create_ticket_article(sender_name: 'Customer', internal: false, type_name: 'note', updated_by: customer_user)
+    end
+
+    def article_note_communication
+      create(:ticket_article_type, name: 'note_communication', communication: true)
+
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note_communication', updated_by: agent_user)
+    end
+
+    def create_ticket_article(sender_name:, internal:, type_name:, updated_by:)
+      create(:ticket_article,
+             sender_name: sender_name, internal: internal, type_name: type_name, ticket: ticket,
+             body: "to be deleted #{offset} #{item}",
+             updated_by_id: updated_by.id, created_by_id: updated_by.id,
+             created_at: offset.ago, updated_at: offset.ago)
+    end
+
+    context 'going through full stack' do
+      context 'as admin' do
+        let(:user)   { admin_user }
+        let(:item)   { 'article_communication' }
+        let(:offset) { 0.minutes }
+
+        it 'succeeds' do
+          refresh # make sure user roles are loaded
+
+          ensure_websocket do
+            visit "ticket/zoom/#{ticket.id}"
+          end
+
+          within :active_ticket_article, article, wait: 15 do
+            click '.js-ArticleAction[data-type=delete]'
+          end
+
+          in_modal do
+            click '.js-submit'
+          end
+
+          wait.until_disappears { find :active_ticket_article, article, wait: false }
+        end
+      end
+    end
+
+    context 'verifying permissions matrix' do
+      shared_examples 'according to permission matrix' do |item:, expects_visible:, offset:, description:|
+        context "looking at #{description} #{item}" do
+          let(:item) { item }
+          let!(:article) {  send(item) }
+
+          let(:offset) { offset }
+          let(:matcher) { expects_visible ? :have_css : :have_no_css }
+
+          it expects_visible ? 'delete button is visible' : 'delete button is not visible' do
+            refresh # make sure user roles are loaded
+
+            visit "ticket/zoom/#{ticket.id}"
+
+            within :active_ticket_article, article, wait: 15 do
+              expect(page).to send(matcher, '.js-ArticleAction[data-type=delete]', wait: 0)
+            end
+          end
+        end
+      end
+
+      shared_examples 'deleting ticket article' do |item:, now:, later:, much_later:|
+        include_examples 'according to permission matrix', item: item, expects_visible: now,        offset: 0.minutes,  description: 'just created'
+        include_examples 'according to permission matrix', item: item, expects_visible: later,      offset: 6.minutes,  description: 'few minutes old'
+        include_examples 'according to permission matrix', item: item, expects_visible: much_later, offset: 11.minutes, description: 'very old'
+      end
+
+      context 'as admin' do
+        let(:user) { admin_user }
+
+        include_examples 'deleting ticket article',
+                         item: 'article_communication',
+                         now: true, later: true, much_later: true
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note',
+                         now: true, later: true, much_later: true
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_customer',
+                         now: true, later: true, much_later: true
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_communication',
+                         now: true, later: true, much_later: true
+      end
+
+      context 'as agent' do
+        let(:user) { agent_user }
+
+        include_examples 'deleting ticket article',
+                         item: 'article_communication',
+                         now: false, later: false, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note',
+                         now: true, later: true, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_customer',
+                         now: false, later: false, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_communication',
+                         now: true, later: true, much_later: false
+      end
+
+      context 'as customer' do
+        let(:user) { customer_user }
+
+        include_examples 'deleting ticket article',
+                         item: 'article_communication',
+                         now: false, later: false, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_customer',
+                         now: false, later: false, much_later: false
+
+      end
+    end
+  end
 end
