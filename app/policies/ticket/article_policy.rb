@@ -26,12 +26,24 @@ class Ticket::ArticlePolicy < ApplicationPolicy
     return missing_admin_permission if !user.permissions?('ticket.agent')
     return missing_admin_permission if record.created_by_id != user.id
     return missing_admin_permission if record.type.communication? && !record.internal?
-    return too_old_to_undo if record.created_at <= 10.minutes.ago
+    return too_old_to_undo          if deletable_timeframe? && record.created_at <= deletable_timeframe.ago
 
     true
   end
 
   private
+
+  def deletable_timeframe_setting
+    Setting.get('ui_ticket_zoom_article_delete_timeframe')
+  end
+
+  def deletable_timeframe?
+    deletable_timeframe_setting&.positive?
+  end
+
+  def deletable_timeframe
+    deletable_timeframe_setting.seconds
+  end
 
   def access?(query)
     if record.internal == true && user.permissions?('ticket.customer')

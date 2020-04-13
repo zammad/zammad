@@ -482,16 +482,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
   describe 'DELETE /api/v1/ticket_articles/:id', authenticated_as: -> { user } do
     let(:ticket) do
-      output = create(:ticket)
-
-      # make group ticket was created in available to current user
-      role = user.roles.first
-      map = role.group_ids_access_map
-      map[output.group.id] = :full
-      role.group_ids_access_map = map
-      role.save!
-
-      output
+      create(:ticket, group: Group.first)
     end
 
     let(:article_communication) do
@@ -616,6 +607,54 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
                        item: 'article_note_communication',
                        now: false, later: false, much_later: false
 
+    end
+
+    context 'with custom timeframe' do
+      before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
+
+      let(:article) { article_note }
+
+      context 'as admin' do
+        let(:user) { admin_user }
+
+        context 'deleting after timeframe' do
+          before { article && travel(8000.seconds) }
+
+          include_examples 'succeeds'
+        end
+      end
+
+      context 'as agent' do
+        let(:user) { agent_user }
+
+        context 'deleting before timeframe' do
+          before { article && travel(5000.seconds) }
+
+          include_examples 'succeeds'
+        end
+
+        context 'deleting after timeframe' do
+          before { article && travel(8000.seconds) }
+
+          include_examples 'fails'
+        end
+      end
+    end
+
+    context 'with timeframe as 0' do
+      before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
+
+      let(:article) { article_note }
+
+      context 'as agent' do
+        let(:user) { agent_user }
+
+        context 'deleting long after' do
+          before { article && travel(99.days) }
+
+          include_examples 'succeeds'
+        end
+      end
     end
   end
 end

@@ -208,9 +208,9 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   describe 'delete article', authenticated: -> { user } do
-    let(:admin_user)    { User.find_by! email: 'master@example.com' }
-    let(:agent_user)    { create :agent, password: 'test', groups: [Group.first] }
-    let(:customer_user) { create :customer, password: 'test' }
+    let(:admin_user)    { create :admin, groups: [Group.first] }
+    let(:agent_user)    { create :agent, groups: [Group.first] }
+    let(:customer_user) { create :customer }
     let(:ticket)        { create :ticket, group: agent_user.groups.first, customer: customer_user }
     let(:article)       { send(item) }
 
@@ -344,6 +344,53 @@ RSpec.describe 'Ticket zoom', type: :system do
                          item: 'article_note_customer',
                          now: false, later: false, much_later: false
 
+      end
+
+      context 'with custom offset' do
+        before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
+
+        context 'as admin' do
+          let(:user) { admin_user }
+
+          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true, offset: 8000.seconds, description: 'outside of delete timeframe'
+        end
+
+        context 'as agent' do
+          let(:user) { agent_user }
+
+          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
+        end
+      end
+
+      context 'with timeframe as 0' do
+        before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
+
+        context 'as agent' do
+          let(:user) { agent_user }
+
+          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true, offset: 99.days, description: 'long after'
+        end
+      end
+    end
+
+    context 'button is hidden on the go' do
+      before         { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 5 }
+
+      let(:user)     { agent_user }
+      let(:item)     { 'article_note' }
+      let!(:article) { send(item) }
+      let(:offset)   { 0.seconds }
+
+      it 'successfully' do
+        refresh # make sure user roles are loaded
+
+        visit "ticket/zoom/#{ticket.id}"
+
+        within :active_ticket_article, article do
+          find '.js-ArticleAction[data-type=delete]' # make sure delete button did show up
+          expect(page).to have_no_css('.js-ArticleAction[data-type=delete]', wait: 15)
+        end
       end
     end
   end

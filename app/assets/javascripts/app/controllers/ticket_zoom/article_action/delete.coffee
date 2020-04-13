@@ -18,9 +18,9 @@ class Delete
     actions
 
   @isDeletable: (actions, ticket, article, ui) ->
-    return { isDeletable: true } if ui.permissionCheck('admin')
-
+    return { isDeletable: true }  if ui.permissionCheck('admin')
     return { isDeletable: false } if !@deletableForAgent(actions, ticket, article, ui)
+    return { isDeletable: true }  if !@hasDeletableTimeframe()
 
     timeout = @deletableTimeout(actions, ticket, article, ui)
 
@@ -28,9 +28,18 @@ class Delete
 
     { isDeletable: true, timeout: timeout }
 
+  @deletableTimeframeSetting: ->
+    App.Config.get('ui_ticket_zoom_article_delete_timeframe')
+
+  @hasDeletableTimeframe: ->
+    @deletableTimeframeSetting() && @deletableTimeframeSetting() > 0
+
   @deletableTimeout: (actions, ticket, article, ui) ->
-    created_at = Date.parse(article.created_at)
-    600000 - (Date.parse(new Date()) - created_at)
+    timeframe_miliseconds = @deletableTimeframeSetting() * 1000
+    now                   = Date.parse(new Date())
+    created_at            = Date.parse(article.created_at)
+
+    timeframe_miliseconds - (now - created_at)
 
   @deletableForAgent: (actions, ticket, article, ui) ->
     return false if !ui.permissionCheck('ticket.agent')
