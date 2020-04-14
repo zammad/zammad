@@ -23,6 +23,6 @@ RSpec.describe 'Authentication', type: :system do
     visit '/#signup'
 
     # check wrong displayed fields in registration form after logout. #2989
-    page.should_not have_selector('select[name=organization_id]')
+    expect(page).to have_no_selector('select[name=organization_id]')
   end
 end
