@@ -207,7 +207,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.references :user, null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :authorizations, %i[uid provider]
+    add_index :authorizations, %i[uid provider], unique: true
     add_index :authorizations, [:user_id]
     add_index :authorizations, [:username]
     add_foreign_key :authorizations, :users

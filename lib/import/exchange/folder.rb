@@ -13,9 +13,7 @@ module Import
       end
 
       def id_folder_map
-        @id_folder_map ||= all.collect do |folder|
-          [folder.id, folder]
-        end.to_h
+        @id_folder_map ||= all.index_by(&:id)
 
         # duplicate object to avoid errors where keys get
         # added via #get_folder while iterating over

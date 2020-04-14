@@ -517,7 +517,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end.to_h
 
     # imported_fields = mail.header.fields.map { |f| [f.name.downcase, f.to_utf8] }.to_h
-    raw_fields = mail.header.fields.map { |f| ["raw-#{f.name.downcase}", f] }.to_h
+    raw_fields = mail.header.fields.index_by { |f| "raw-#{f.name.downcase}" }
     custom_fields = {}.tap do |h|
       h.replace(imported_fields.slice(*RECIPIENT_FIELDS)
                                .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' })
