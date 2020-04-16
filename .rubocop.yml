@@ -11,6 +11,7 @@ inherit_from:
   - .rubocop_todo.rspec.yml
 
 AllCops:
+  NewCops: enable
   DisplayCopNames: true
   Exclude:
     - 'bin/rails'
@@ -243,15 +244,6 @@ Lint/InterpolationCheck:
     - "test/unit/notification_factory_template_test.rb"
     - "test/unit/ticket_trigger_test.rb"
     - "test/unit/ticket_trigger_recursive_disabled_test.rb"
-
-Lint/RaiseException:
-  Description: Checks for `raise` or `fail` statements which are raising `Exception` class.
-  StyleGuide: "#raise-exception"
-  Enabled: true
-
-Lint/StructNewOverride:
-  Description: "Disallow overriding the `Struct` built-in methods via `Struct.new`."
-  Enabled: true
 
 # RSpec tests
 Style/NumericPredicate:
