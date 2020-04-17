@@ -1,0 +1,22 @@
+From: IT example <example@service-now.com>
+To: support@example.com
+Message-ID: <18659453.58107.1576665116411@app129169.gva3.service-now.com>
+Subject: =?UTF-8?Q?Incident_INC678439_--_Arbeitsnotizen_beigef=C3=BCgt?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+    boundary="----=_Part_58105_29005161.1576665006397"
+X-ServiceNow-Source: Notification-5555502c4ff4aa0096d7e6101310c734
+X-ServiceNow-SysEmail-Version: 2
+Precedence: bulk
+Auto-Submitted: auto-generated
+X-ServiceNow-Generated: true
+
+------=_Part_58105_29005161.1576665006397
+Content-Type: multipart/alternative;
+    boundary="----=_Part_58106_4969544.1576665006398"
+
+------=_Part_58106_4969544.1576665006398
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+
+Incident content

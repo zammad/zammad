@@ -983,6 +983,34 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'ServiceNow handling' do
+      context 'when emails with service now reference are sent' do
+        let(:mail_file) { Rails.root.join('test/data/mail/mail089.box') }
+        let(:mail_file_answer) { Rails.root.join('test/data/mail/mail090.box') }
+        let(:raw_mail_answer)  { File.read(mail_file_answer) }
+
+        it 'does create a ticket with external sync reference' do
+          expect { described_class.new.process({}, raw_mail) }
+            .to change(Ticket, :count).by(1)
+            .and change(Ticket::Article, :count).by(1)
+            .and change(ExternalSync, :count).by(1)
+
+          expect(ExternalSync.last.source).to eq('ServiceNow')
+          expect(ExternalSync.last.source_id).to eq('INC678439')
+          expect(ExternalSync.last.object).to eq('Ticket')
+          expect(ExternalSync.last.o_id).to eq(Ticket.last.id)
+          expect(Ticket.last.articles.last.subject).to eq('Incident INC678439 -- zugewiesen an EXT-XXXINIS')
+
+          expect { described_class.new.process({}, raw_mail_answer) }
+            .to change(Ticket, :count).by(0)
+            .and change(Ticket::Article, :count).by(1)
+            .and change(ExternalSync, :count).by(0)
+
+          expect(Ticket.last.articles.last.subject).to eq('Incident INC678439 -- Arbeitsnotizen beigefügt')
+        end
+      end
+    end
+
     describe 'XSS protection' do
       let(:article) { described_class.new.process({}, raw_mail).second }
 

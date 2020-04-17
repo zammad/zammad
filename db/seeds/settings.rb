@@ -3450,6 +3450,24 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '5400_postmaster_filter_service_now_check',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify service now mails for correct follow-ups.',
+  options:     {},
+  state:       'Channel::Filter::ServiceNowCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '5401_postmaster_filter_service_now_check',
+  area:        'Postmaster::PostFilter',
+  description: 'Defines postmaster filter to identify service now mails for correct follow-ups.',
+  options:     {},
+  state:       'Channel::Filter::ServiceNowCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       'Icinga integration',
   name:        'icinga_integration',
   area:        'Integration::Switch',
