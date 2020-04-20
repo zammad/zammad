@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Manage > Calendars', type: :system do
 
   context 'Date' do
+    let(:calendar_title) { "test calendar #{rand(999_999_999)}" }
 
     it 'show festivity dates correctly far away from UTC', time_zone: 'America/Sao_Paulo' do
       visit '/#manage/calendars'
@@ -12,7 +13,7 @@ RSpec.describe 'Manage > Calendars', type: :system do
       modal_ready
 
       within '.modal-dialog' do
-        fill_in 'name', with: 'test calendar'
+        fill_in 'name', with: calendar_title
 
         click '.dropdown-toggle'
         click '.dropdown-menu [data-value="America/Sao_Paulo"]'
@@ -24,20 +25,22 @@ RSpec.describe 'Manage > Calendars', type: :system do
 
       modal_disappear
 
-      container = find('.action') { |elem| elem.find('.action-row h2').text == 'test calendar' }
+      within :active_content do
+        within '.action', text: calendar_title do
+          find('.js-edit').click
+        end
+      end
 
-      container.find('.js-edit').click
-
-      modal_ready
+      wait(5).until_constant { find('.modal-dialog').style('height') }
 
       within '.modal-dialog' do
-        scroll_to(css: '.modal-dialog', vertical: 'end')
+        row = first('.holiday_selector tr') do |elem|
+          elem.find('input.js-summary').value.starts_with?('Christmas Eve')
+        rescue
+          false
+        end
 
-        rows = find_all('.holiday_selector tr') { |elem| elem.has_css?('input.js-summary') && elem.find('input.js-summary').value.starts_with?('Christmas Eve') }
-        row = rows[0]
-
-        expect(row).to have_text('24')
-        expect(row).to have_text('12')
+        expect(row).to have_text('24').and have_text('12')
       end
     end
   end
