@@ -3,6 +3,7 @@
     <% if @search_return_url: %>
       <a href="<%= @search_return_url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--prev">
         <%- @Icon('arrow-left') %>
+        <div class="spacer"></div>
         <span class="knowledge-base-article-nav-link-title"><%- @T('Back to search results') %></span>
       </a>
     <% end %>

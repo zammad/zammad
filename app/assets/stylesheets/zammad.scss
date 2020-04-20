@@ -469,7 +469,8 @@ pre code.hljs {
     min-width: 0;
 
     .icon {
-      margin: -2px 5px 0 -2px;
+      @include ltr(margin, -2px 5px 0 -2px);
+      @include rtl(margin, -2px -2px 0 5px);
     }
 
     .icon:only-child {
@@ -610,7 +611,10 @@ pre code.hljs {
 
     .icon {
       opacity: 1;
-      margin-right: 6px;
+      @include ltr(margin-right, 6px);
+      @include ltr(margin-left, -2px);
+      @include rtl(margin-right, -2px);
+      @include rtl(margin-left, 6px);
       width: 16px;
       max-height: 16px;
       object-fit: contain;
@@ -10518,15 +10522,20 @@ output {
   
   &-menu {
     display: flex;
-    margin-left: auto;
-    padding-left: 20px;
+    @include ltr(margin-left, auto);
+    @include rtl(margin-right, auto);
+    @include bidi-style(padding-left, 20px, padding-right, 0);
   }
 }
 
 .breadcrumb {
   position: relative;
-  padding: 11px 13px 8px;
-  padding-right: 21px;
+  padding-top: 11px;
+  padding-bottom: 8px;
+  @include ltr(padding-right, 21px);
+  @include ltr(padding-left, 13px);
+  @include rtl(padding-left, 21px);
+  @include rtl(padding-right, 13px);
   color: inherit;
   cursor: pointer;
   @extend .u-textTruncate;
@@ -10539,16 +10548,19 @@ output {
     height: 50%;
     background: currentColor;
     opacity: .33;
-    right: 0;
+    @include ltr(right, 0);
+    @include rtl(left, 0);
     top: 0;
     transform-origin: bottom;
-    transform: rotate(-37deg);
+    @include ltr(transform, rotate(-37deg));
+    @include rtl(transform, rotate(37deg));
   }
 
   &:after {
     top: 50%;
     transform-origin: top;
-    transform: rotate(37deg);
+    @include ltr(transform, rotate(37deg));
+    @include rtl(transform, rotate(-37deg));
   }
 
   &:last-child {
@@ -10559,7 +10571,7 @@ output {
   }
 
   .modified-icon {
-    margin-right: 3px;
+    @include bidi-style(margin-right, 3px, margin-left, 0);
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
@@ -11230,7 +11242,8 @@ span.is-disabled {
 
   &-sidebar {
     position: absolute;
-    right: 0;
+    @include ltr(right, 0);
+    @include rtl(left, 0);
     top: 0;
     width: 280px;
     height: 100%;
@@ -11245,10 +11258,12 @@ span.is-disabled {
     &.hidden {
       display: block !important;
       visibility: visible !important;
-      transform: translateX(100%);
+      @include ltr(transform, translateX(100%));
+      @include rtl(transform, translateX(-100%));
       
       + .knowledge-base-main {
-        margin-right: 0;
+        @include ltr(margin-right, 0);
+        @include rtl(margin-left, 0);
       }
     }
 
@@ -11259,11 +11274,14 @@ span.is-disabled {
   }
     
   &-main {
-    transition: margin-right 500ms;
-    margin-right: 280px;
+    @include ltr(transition, margin-right 500ms);
+    @include ltr(margin-right, 280px);
+    @include rtl(transition, margin-left 500ms);
+    @include rtl(margin-left, 280px);
     
     @include desktop {
-      margin-right: 28%;
+      @include ltr(margin-right, 28%);
+      @include rtl(margin-left, 28%);
     }
   }
 
@@ -11459,11 +11477,13 @@ span.is-disabled {
     flex-shrink: 0;
     
     &-holder {
-      margin-right: 11px;
+      @include ltr(margin-right, 11px);
+      @include rtl(margin-left, 11px);
       margin-top: 1px;
       
       .nav-pills & {
-        margin-right: 7px;
+        @include ltr(margin-right, 7px);
+        @include rtl(margin-left, 7px);
       }
     }
 
@@ -11521,22 +11541,21 @@ span.is-disabled {
       padding: 15px;
       max-width: 50%;
       display: flex;
-    
+      align-items: center;
+
+      .spacer {
+        width: 5px
+      }
+
       .icon {
         flex-shrink: 0;
         fill: currentColor;
         opacity: 1;
-        margin: 2px 5px 0 0;
         vertical-align: top;
       }
 
       &--next {
-        margin-left: auto;
-               
-        .icon {
-          margin-right: 0;
-          margin-left: 5px;
-        }
+        @include bidi-style(margin-left, auto, margin-right, inherit);
       }
 
       &-title {

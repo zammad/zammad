@@ -164,11 +164,6 @@ ol {
   }
 }
 
-ul,
-ol {
-  padding-left: 1.5em;
-}
-
 strong,
 b {
   font-weight: 500;
@@ -206,7 +201,7 @@ b {
 
   &-tag {
     font-weight: bold;
-    margin-right: 17px;
+    @include bidi-style(margin-right, 17px, margin-left, 0px);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -215,9 +210,8 @@ b {
     font-size: 13px;
   }
 
-  &-controls {
-    margin-left: auto;
-    display: flex;
+  &-flex {
+    margin: auto;
   }
 
   &-btn {
@@ -315,7 +309,8 @@ b {
       background: white;
       border: 1px solid $border;
       border-radius: 999px;
-      padding: .75em 1.1em .75em 2.8em;
+      @include ltr(padding, .75em 1.1em .75em 2.8em);
+      @include rtl(padding, .75em 2.8em .75em 1.1em);
       outline: none;
       font-weight: 300;
       
@@ -327,7 +322,7 @@ b {
 
     .icon {
       position: absolute;
-      left: 1.1em;
+      @include bidi-style(left, 1.1em, right, inherit);
       top: 50%;
       margin-top: -.54em;
       fill: $dark-color;
@@ -339,6 +334,8 @@ b {
   &-results {
     list-style: none;
     padding: .5em 0 0;
+    padding-right: 0;
+    padding-left: 0;
     
     .section {
       margin-bottom: 2px;
@@ -363,7 +360,7 @@ b {
     border: 1px solid transparent;
     border-radius: 3px;
     padding: .8em;
-    padding-left: 2.75em;
+    @include bidi-style(padding-left, 2.75em, padding-right, 0.8em);
     position: relative;
     
     &:hover {
@@ -374,7 +371,7 @@ b {
 
   &-icon {
     position: absolute;
-    left: .6em;
+    @include bidi-style(left, .6em, right, 0em);
     top: .6em;
     color: hsl(210,22%,84%);
     
@@ -400,6 +397,7 @@ b {
   
   &-category {
     color: $subtle-color;
+    display: inline-block;
     
     &:after {
       content: " — ";
@@ -441,6 +439,11 @@ b {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+
+    ul,
+    ol {
+      @include bidi-style(padding-left, 1.5em, padding-right, 0);
+    }
   }
 }
 
@@ -497,7 +500,8 @@ b {
 
 .breadcrumb {
   position: relative;
-  padding: 6px 20px 6px 11px;
+  @include ltr(padding, 6px 20px 6px 11px);
+  @include rtl(padding, 6px 11px 6px 20px);
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
@@ -526,24 +530,28 @@ b {
     }
   }
 
-  &:before,
-  &:after {
+  &:after,
+  &:before {
     content: "";
     position: absolute;
     width: 1px;
     height: 40%;
     background: $color;
     opacity: .2;
-    right: 0;
+    @include ltr(right, 0);
+    @include rtl(left, 0);
     top: 0;
     transform-origin: bottom;
-    transform: translateY(13%) rotate(-37deg);
+
+    @include ltr(transform, translateY(13%) rotate(-37deg));
+    @include rtl(transform, translateY(13%) rotate(37deg));
   }
 
   &:after {
     top: 50%;
     transform-origin: top;
-    transform: translateY(-13%) rotate(37deg);
+    @include ltr(transform, translateY(-13%) rotate(37deg));
+    @include rtl(transform, translateY(-13%) rotate(-37deg));
   }
 
   .icon {
@@ -561,7 +569,7 @@ b {
 
   .icon,
   [data-font] {
-    margin-right: 3px;
+    @include bidi-style(margin-right, 3px, margin-left, 0px);
     vertical-align: middle;
     opacity: .75;
   }
@@ -634,7 +642,7 @@ b {
   }
 
   .not-published-note {
-    margin-left: .5em;
+    @include bidi-style(margin-left, .5em, margin-right, 0px);
     margin-top: .5em;
   }
 }
@@ -793,7 +801,8 @@ b {
   .section-inner & {
     color: $highlight-color;
     fill: currentColor;
-    margin: 4px 9px 0 3px;
+    @include ltr(margin, 4px 9px 0 3px);
+    @include rtl(margin, 4px 3px 0 9px);
     line-height: inherit; 
     flex-shrink: 0;
   }
@@ -1043,7 +1052,7 @@ b {
     align-items: center;
     
     .icon {
-      margin: 0 5px 0 -2px;
+      @include bidi-style(margin, 0 5px 0 -2px, margin, 0 -2px 0 5px);
       fill: currentColor;
 
       &:only-child {
@@ -1051,7 +1060,7 @@ b {
       }
 
       &:last-child {
-        margin: 0 -2px 0 7px;
+        @include bidi-style(margin, 0 -2px 0 7px, margin, 0 7px 0 -2px);
       }
     }
 
@@ -1192,7 +1201,7 @@ b {
 
     .icon {
       display: none;
-      margin-right: 7px;
+      @include bidi-style(margin-right, 7px, margin-left, 0px);
       vertical-align: middle;
     }
   }
@@ -1206,13 +1215,13 @@ b {
   background: hsl(234,10%,19%);
   color: hsl(234,5%,80%);
   display: flex;
-  
+
   &-text {
     font-size: 14px;
     line-height: 22px;
     margin: 7px;
   }
-  
+
   .button {
     margin-left: 5px;
   }
@@ -1221,12 +1230,16 @@ b {
     fill: currentColor;
     width: 22px;
     height: 22px;
-    margin: 8px 2px 0 10px;
+    @include ltr(margin, 8px 2px 0 10px);
+    @include rtl(margin, 8px 10px 0 2px);
     vertical-align: middle;
   }
 
+  .spacer {
+    margin: auto;
+  }
+
   .close {
-    margin-left: auto;
     padding: 7px 5px 0;
     fill: currentColor;
     width: 34px;

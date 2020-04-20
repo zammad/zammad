@@ -41,6 +41,7 @@
   '  <p class="language-banner-text">' +
   '    The Knowledge Base is available in your language <a class="button button--small">activate</a>' +
   '  </p>' +
+  '  <div class="spacer"></div>' +
   '  <div class="close">' +
   Zammad.Util.generateIcon('diagonal-cross') +
   '  </div>' +

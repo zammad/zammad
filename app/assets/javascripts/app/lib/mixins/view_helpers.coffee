@@ -232,3 +232,10 @@ App.ViewHelpers =
 
   replacePlaceholder: (template, items, encodeLink = false) ->
     App.Utils.replaceTags(template, items, encodeLink)
+
+  # prints value depending on direction of active locale
+  dir: (ltr, rtl) ->
+    if App.i18n.dir() == 'ltr'
+      ltr
+    else
+      rtl

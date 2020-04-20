@@ -61,4 +61,8 @@ module KnowledgeBaseHelper
       .build(host: host, scheme: scheme, port: port, fragment: path)
       .to_s
   end
+
+  def dropdown_menu_direction
+    system_locale_via_uri.dir == 'ltr' ? 'right' : 'left'
+  end
 end

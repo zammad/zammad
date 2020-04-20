@@ -117,8 +117,10 @@
   SearchResultElement.template = '<a>' +
   '  <span class="result-icon"></span>' +
   '  <h3 class="result-title"></h3>' +
-  '  <span class="result-category"></span>' +
-  '  <span class="result-preview"></span>' +
+  '  <div class="result-subtitle">' +
+  '    <span class="result-category"></span>' +
+  '    <span class="result-preview"></span>' +
+  ' </div>' +
   '</a>';
 
   function SearchResultMessage(data) {

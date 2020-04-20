@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="<%= system_locale_via_uri.locale %>"
+      dir="<%= system_locale_via_uri.dir %>"
+      adir="ltr"
       data-id='<%= @knowledge_base.id %>'
       data-iconset='<%= @knowledge_base.iconset %>'
       data-available-locales='<%= all_locales.map(&:locale).join(',') %>'
@@ -10,7 +12,7 @@
 <title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
-<%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base %>
+<%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
 
 <div class="wrapper js-wrapper">
   <%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if editor? %>
@@ -54,7 +56,7 @@
             <%= system_locale_via_uri.name %>
             <%= icon 'arrow-down' %>
           </a>
-          <ul class="dropdown-menu dropdown-menu-right dropdown-menu-up" role="menu">
+          <ul class="dropdown-menu dropdown-menu-<%= dropdown_menu_direction %> dropdown-menu-up" role="menu">
             <% @object_locales&.each do |locale| %>
               <li class="<%= 'is-selected' if locale.name == system_locale_via_uri.name %>">
                 <%= link_to custom_path_if_needed(url_for(locale: locale.locale), @knowledge_base), hreflang: locale.locale do %>

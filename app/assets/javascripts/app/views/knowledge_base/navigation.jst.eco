@@ -36,7 +36,7 @@
     <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="false">
       <%- @Icon('arrow-down') %>
     </div>
-    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-full-height" role="menu">
+    <ul class="dropdown-menu dropdown-menu-<%= @dir('right', 'left') %> dropdown-menu-full-height" role="menu">
       <% for locale in @kbLocales.collection: %>
         <li role="presentation">
           <a href="<%= locale.url %>" role="menuitem" tabindex="-1">
