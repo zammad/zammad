@@ -375,10 +375,17 @@
     if (trigger) {
       var _this     = this;
 
-      trigger.renderValue(this, elem, function(text) {
+      var form_id = this.$element.closest('form').find('[name=form_id]').val()
+
+      trigger.renderValue(this, elem, function(text, attachments) {
         _this.cutInput()
         _this.paste(text)
         _this.close(true)
+
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          attachments: attachments,
+          form_id: form_id
+        })
       })
     }
   }
@@ -455,7 +462,7 @@
 
     if (!item) return
 
-    callback(item.content)
+    callback(item.content, [])
   }
 
   Collection.renderResults = function(textmodule, term) {
@@ -497,6 +504,8 @@
     var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
     textmodule.appendResults(element)
 
+    var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
+
     App.Ajax.request({
       id:   'textmoduleKbAnswer',
       type: 'GET',
@@ -508,8 +517,23 @@
 
         var body = translation.content().bodyWithPublicURLs()
 
-        App.Utils.htmlImage2DataUrlAsync(body, function(output){
-          callback(output)
+        App.Ajax.request({
+          id:   'textmoduleKbAnswerAttachments',
+          type: 'POST',
+          data: JSON.stringify({
+            form_id: form_id
+          }),
+          url:  translation.parent().generateURL('/attachments/clone_to_form'),
+          success: function(data, status, xhr) {
+            translation.parent().attachments += data.attachments
+
+            App.Utils.htmlImage2DataUrlAsync(body, function(output){
+              callback(output, translation.parent().attachments)
+            })
+          },
+          error: function(xhr) {
+            callback('')
+          }
         })
       },
       error: function(xhr) {

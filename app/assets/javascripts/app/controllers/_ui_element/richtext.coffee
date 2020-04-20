@@ -36,6 +36,15 @@ class App.UiElement.richtext
         for file in attribute.attachments
           renderFile(file)
 
+      App.Event.bind('ui::ticket::addArticleAttachent', (data) ->
+        form_id = item.closest('form').find('[name=form_id]').val()
+
+        return if data.form_id isnt form_id
+        return if _.isEmpty(data.attachments)
+        for file in data.attachments
+          renderFile(file)
+      , form.form_id)
+
       # remove items
       item.find('.attachments').on('click', '.js-delete', (e) =>
         id = $(e.currentTarget).data('id')

@@ -81,7 +81,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # add article attachment
     @bind('ui::ticket::addArticleAttachent', (data) =>
-      return if data.ticket.id.toString() isnt @ticket_id.toString()
+      return if data.ticket?.id?.toString() isnt @ticket_id.toString() && data.form_id isnt @form_id
       return if _.isEmpty(data.attachments)
       for file in data.attachments
         @renderAttachment(file)

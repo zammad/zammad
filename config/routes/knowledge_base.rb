@@ -49,7 +49,11 @@ Zammad::Application.routes.draw do
                           only:       %i[create update show destroy],
                           concerns:   :has_publishing do
 
-        resources :attachments, controller: 'knowledge_base/answer/attachments', only: %i[create destroy]
+        resources :attachments, controller: 'knowledge_base/answer/attachments', only: %i[create destroy] do
+          collection do
+            post :clone_to_form
+          end
+        end
       end
     end
   end

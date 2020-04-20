@@ -18,5 +18,21 @@ FactoryBot.define do
         translation_traits { [:with_video] }
       end
     end
+
+    trait :with_attachment do
+      transient do
+        attachment { File.open('spec/fixtures/upload/hello_world.txt') }
+      end
+
+      after(:create) do |answer, context|
+        Store.add(
+          object:      answer.class.name,
+          o_id:        answer.id,
+          data:        context.attachment.read,
+          filename:    File.basename(context.attachment.path),
+          preferences: {}
+        )
+      end
+    end
   end
 end

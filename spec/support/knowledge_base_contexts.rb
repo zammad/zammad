@@ -20,7 +20,7 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
   end
 
   let :published_answer do
-    create(:knowledge_base_answer, category: category, published_at: 1.week.ago)
+    create(:knowledge_base_answer, :with_attachment, category: category, published_at: 1.week.ago)
   end
 
   let :published_answer_with_video do

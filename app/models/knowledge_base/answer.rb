@@ -5,6 +5,7 @@ class KnowledgeBase::Answer < ApplicationModel
   include CanBePublished
   include HasKnowledgeBaseAttachmentPermissions
   include ChecksKbClientNotification
+  include CanCloneAttachments
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[category_id promoted internal_note].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
@@ -94,6 +95,11 @@ class KnowledgeBase::Answer < ApplicationModel
 
   def api_url
     Rails.application.routes.url_helpers.knowledge_base_answer_path(category.knowledge_base, self)
+  end
+
+  # required by CanCloneAttachments
+  def content_type
+    'text/html'
   end
 
   private
