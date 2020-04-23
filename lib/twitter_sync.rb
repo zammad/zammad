@@ -573,19 +573,6 @@ create a tweet or direct message from an article
     false
   end
 
-  def direct_message_limit_reached(tweet, factor = 1)
-    max_count = 100
-    max_count = max_count * factor
-    type_id = Ticket::Article::Type.lookup(name: 'twitter direct-message').id
-    created_at = Time.zone.now - 15.minutes
-    created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
-    if created_count > max_count
-      Rails.logger.info "Tweet direct message limit reached #{created_count}/#{max_count}, ignored tweed id (#{tweet.id})"
-      return true
-    end
-    false
-  end
-
 =begin
 
   replace Twitter::Place and Twitter::Geo as hash and replace Twitter::NullObject with nil
