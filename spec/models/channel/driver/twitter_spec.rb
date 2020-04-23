@@ -934,11 +934,24 @@ RSpec.describe Channel::Driver::Twitter do
                      search_term:    'zammadzammadzammad',
                      custom_options: {
                        user: {
-                         # Must match outgoing tweet author Twitter user ID
+                         # "outgoing" tweets = authored by this Twitter user ID
                          id: '1205290247124217856',
                        },
                      })
             end
+
+            # This test case requires the use_vcr: :time_sensitive option
+            # to travel_to(when the VCR cassette was recorded).
+            #
+            # This ensures that #fetch doesn't ignore
+            # the "older" tweets stored in the VCR cassette,
+            # but it also freezes time,
+            # which breaks this test expectation logic:
+            #
+            #     expect { channel.fetch }.to change(Time, :current).by_at_least(5)
+            #
+            # So, we unfreeze time here.
+            before { travel_back }
 
             let!(:tweet) { create(:twitter_article, body: 'zammadzammadzammad') }
 
@@ -954,19 +967,6 @@ RSpec.describe Channel::Driver::Twitter do
                 YML
 
                 around do |example|
-                  # This test case requires the use_vcr: :time_sensitive option
-                  # to travel_to(when the VCR cassette was recorded).
-                  #
-                  # This ensures that #fetch doesn't ignore
-                  # the "older" tweets stored in the VCR cassette,
-                  # but it also freezes time,
-                  # which breaks this race condition handling logic:
-                  #
-                  #     break if Delayed::Job.where('created_at < ?', Time.current).none?
-                  #
-                  # So, we unfreeze time here.
-                  travel_back
-
                   # Run BG job (Why not use Scheduler.worker?
                   # It led to hangs & failures elsewhere in test suite.)
                   Thread.new do
@@ -978,8 +978,17 @@ RSpec.describe Channel::Driver::Twitter do
                 it 'does not import the duplicate tweet (waits up to 60s for BG job to finish)' do
                   expect { channel.fetch }
                     .to not_change(Ticket::Article, :count)
+                    .and change(Time, :current).by_at_least(5)
                 end
               end
+            end
+
+            # To reproduce this test case, the VCR cassette has been modified
+            # so that the fetched tweet has a different ("incoming") author user ID.
+            it 'skips race condition handling for incoming tweets' do
+              expect { channel.fetch }
+                .to change(Ticket::Article, :count)
+                .and change(Time, :current).by_at_most(1)
             end
           end
         end
