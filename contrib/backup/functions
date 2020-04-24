@@ -159,6 +159,26 @@ function restore_zammad () {
   chown -R zammad:zammad ${ZAMMAD_DIR}
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
+    echo "# ... Dropping current database ${DB_NAME}"
+
+    # This step is only needed for some pgsql dumps, as they don't provide a drop table statement which will cause
+    # relation errors during restoration (as on package installation there's always an initialised database)
+    if command -v zammad > /dev/null; then
+      zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+      zammad run rake db:drop
+      zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=0
+    else
+      ${ZAMMAD_DIR}/bin/rake db:drop
+    fi
+
+    echo "# ... Creating database ${DB_NAME} for owner ${DB_USER}"
+    if command -v zammad > /dev/null; then
+      # We'll skip this part for docker installations
+      su -c "psql -c \"CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};\"" postgres
+    else
+      ${ZAMMAD_DIR}/bin/rake db:create
+    fi
+
     echo "# Restoring PostgrSQL DB"
     zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | su -c "psql -d ${DB_NAME}" postgres
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
