@@ -21,7 +21,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
         Setting.set 'maintenance_login', false
 
-        wait(10).until_disappears { find '.js-maintenanceLogin', text: message }
+        wait(10).until_disappears { find '.js-maintenanceLogin', text: message, wait: false }
 
         expect(page).not_to have_css('.js-maintenanceLogin')
       end
@@ -31,7 +31,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
         Setting.set 'maintenance_login_message', alt_message
 
-        wait(10).until_exists { find '.js-maintenanceLogin', text: alt_message }
+        wait(10).until_exists { find '.js-maintenanceLogin', text: alt_message, wait: false }
 
         expect(page).to have_css('.js-maintenanceLogin', text: alt_message)
       end
@@ -51,7 +51,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
         Setting.set 'maintenance_login', true
 
-        wait(10).until_exists { find '.js-maintenanceLogin', text: message }
+        wait(10).until_exists { find '.js-maintenanceLogin', text: message, wait: false }
 
         expect(page).to have_css('.js-maintenanceLogin', text: message)
       end

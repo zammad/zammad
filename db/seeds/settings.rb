@@ -278,6 +278,14 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       'Websocket backend',
+  name:        'websocket_backend',
+  area:        'System::WebSocket',
+  description: 'Defines how to reach websocket server. "websocket" is default on production, "websocketPort" is for CI',
+  state:       Rails.env.production? ? 'websocket' : 'websocketPort',
+  frontend:    true
+)
+Setting.create_if_not_exists(
   title:       'Websocket port',
   name:        'websocket_port',
   area:        'System::WebSocket',

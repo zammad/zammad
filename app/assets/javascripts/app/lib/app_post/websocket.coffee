@@ -52,13 +52,15 @@ class _webSocketSingleton extends App.Controller
   connectionEstablished:    false
   connectionWasEstablished: false
   tryToConnect:             false
-  backend:                  'websocket'
+  backend:                  undefined # set in constructor when config is available
   backend_port:             ''
   client_id:                undefined
   error:                    false
 
   constructor: (@args) ->
     super
+
+    @backend = @Config.get('websocket_backend') || 'websocket'
 
     # on auth, send new auth data to server
     App.Event.bind(

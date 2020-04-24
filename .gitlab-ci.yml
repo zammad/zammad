@@ -361,7 +361,7 @@ browser:build:
 
 .variables_browser_template: &variables_browser_definition
   RAILS_ENV: "production"
-  APP_RESTART_CMD: "bundle exec rake zammad:ci:app:restart"
+  APP_RESTART_CMD: "bundle exec rake environment zammad:ci:app:restart"
 
 .test_browser_core_template: &test_browser_core_definition
   <<: *base_env
