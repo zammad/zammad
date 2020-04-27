@@ -141,11 +141,14 @@ class App.TicketZoomArticleNew extends App.Controller
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
+    @releaseGlobalClickEvents()
+
+  releaseGlobalClickEvents: ->
     $(window).off 'click.ticket-zoom-select-type'
-    $(window).on 'click.ticket-zoom-textarea'
+    $(window).off 'click.ticket-zoom-textarea'
 
   render: ->
-
+    @releaseGlobalClickEvents()
     ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(

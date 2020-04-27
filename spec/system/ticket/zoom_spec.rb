@@ -172,4 +172,38 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  context 'replying' do
+
+    context 'Group without signature' do
+
+      let(:ticket) { create(:ticket) }
+      let(:current_user) { create(:agent_user, password: 'test', groups: [ticket.group]) }
+
+      before do
+        # initial article to reply to
+        create(:ticket_article, ticket: ticket)
+      end
+
+      it 'ensures that text input opens on multiple replies', authenticated: -> { current_user } do
+        visit "ticket/zoom/#{ticket.id}"
+
+        2.times do |article_offset|
+          articles_existing = 1
+          articles_expected = articles_existing + (article_offset + 1)
+
+          all('a[data-type=emailReply]').last.click
+
+          # wait till input box expands completely
+          find('.attachmentPlaceholder-label').in_fixed_postion
+          expect(page).not_to have_css('.attachmentPlaceholder-hint', wait: 0)
+
+          find('.articleNewEdit-body').send_keys('Some reply')
+          click '.js-submit'
+
+          expect(page).to have_css('.ticket-article-item', count: articles_expected)
+        end
+      end
+    end
+  end
 end
