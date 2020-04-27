@@ -25,5 +25,11 @@ FactoryBot.define do
     factory :admin_user, aliases: %i[admin] do
       roles { Role.where(name: %w[Admin Agent]) }
     end
+
+    # make given password accessible for e.g. authentication logic
+    before(:create) do |user|
+      password_plain = user.password
+      user.define_singleton_method(:password_plain, -> { password_plain })
+    end
   end
 end

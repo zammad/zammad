@@ -14,12 +14,26 @@ RSpec.configure do |config|
     next if !example.metadata.fetch(:set_up, true)
 
     # check if authentication should be performed
-    next if example.metadata.fetch(:authenticated, true).blank?
+    authenticated = example.metadata.fetch(:authenticated, true)
+    next if authenticated.blank?
 
-    # authenticate
-    login(
-      username: 'master@example.com',
-      password: 'test',
-    )
+    if authenticated.is_a?(Proc)
+      user     = instance_exec(&authenticated)
+      password = user.password_plain
+
+      raise "Can't authenticate user that has no password set" if password.blank?
+
+      credentials = {
+        username: user.email,
+        password: password,
+      }
+    else
+      credentials = {
+        username: 'master@example.com',
+        password: 'test',
+      }
+    end
+
+    login(credentials)
   end
 end
