@@ -4,8 +4,9 @@ class App.UiElement.richtext.additions.RichTextToolPopupVideo extends App.UiElem
 
   @regexps: {
     youtube: [
-      /youtube.com\/watch\?v=([\w]+)/
-      /youtu.be\/([\w]+)/
+      /youtube.com\/watch\?v=(\S[^:#?&/]+)/
+      /youtu.be\/(\S[^:#?&/]+)/
+      /youtube.com\/embed\/(\S[^:#?&/]+)/
     ],
     vimeo: [
       /vimeo.com\/([\w]+)/

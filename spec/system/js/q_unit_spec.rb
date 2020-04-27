@@ -141,4 +141,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
       q_unit_tests('taskbar')
     end
   end
+
+  context 'Knowlede Base Editor' do
+    it 'Vdeo Embeding' do
+      q_unit_tests('kb_video_embeding')
+    end
+  end
 end
