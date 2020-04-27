@@ -23,7 +23,7 @@ class Capybara::Node::Element
       raise "Element still moving after #{checks} checks" if check == checks
 
       current = native.location
-      sleep 0.2 if ENV['CI']
+      sleep 0.2
       break if previous == current
 
       previous = current
