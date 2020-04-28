@@ -769,3 +769,51 @@ test('table test 5', function() {
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'some data 2', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'false', 'check row 2')
 });
+
+test('table test 6/7', function() {
+  $('#table').append('<hr><h1>sotable table with data</h1><div id="table-data6"></div>')
+  var el_head_sortable = $('#table-data6')
+
+  $('#table').append('<hr><h1>not sortable table with data</h1><div id="table-data7"></div>')
+  var el_not_head_sortable = $('#table-data7')
+
+  data = [
+    { name: 'a item', data: 'g data', active: true },
+    { name: 'b item', data: 'b data', active: false },
+    { name: 'c item', data: 'z data', active: true },
+  ]
+
+  new App.ControllerTable({
+    tableId:  'a',
+    el:       el_head_sortable,
+    overview: ['name', 'data', 'active'],
+    attribute_list: [
+      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
+      { name: 'data',     display: 'Data',      type: 'text' },
+      { name: 'active',   display: 'Active',    type: 'text' },
+    ],
+    objects: data
+  });
+
+  new App.ControllerTable({
+    tableId:  'b',
+    el:       el_not_head_sortable,
+    overview: ['name', 'data', 'active'],
+    attribute_list: [
+      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
+      { name: 'data',     display: 'Data',      type: 'text' },
+      { name: 'active',   display: 'Active',    type: 'text' },
+    ],
+    objects: data,
+    dndCallback: function() { return true }
+  });
+
+  equal(el_head_sortable.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'a item', 'check row 1')
+  equal(el_not_head_sortable.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'a item', 'check row 1')
+
+  el_head_sortable.find('table > thead > tr > th:nth-child(2) > .js-sort').click()
+  el_not_head_sortable.find('table > thead > tr > th:nth-child(3) > .js-sort').click()
+
+  equal(el_head_sortable.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'b item', 'check row 1')
+  equal(el_not_head_sortable.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'a item', 'check row 1')
+});

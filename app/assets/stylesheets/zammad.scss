@@ -1143,6 +1143,10 @@ table {
 .table-column-head {
   display: flex;
   @extend %clickable;
+
+  &-unclickable {
+    cursor: default;
+  }
 }
 
 .table-column-sortIcon {
