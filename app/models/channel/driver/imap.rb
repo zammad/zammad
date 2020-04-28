@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 require 'net/imap'
+require 'mail'
 
 class Channel::Driver::Imap < Channel::EmailParser
 
@@ -126,12 +127,12 @@ example
     end
 
     message_ids = nil
-    timeout(6.minutes) do
-
-      message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
-    rescue
+    begin
+      timeout(6.minutes) do
+        message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
+      end
+    rescue Timeout::Error
       message_ids = @imap.search(filter)
-
     end
 
     # check mode only
@@ -180,7 +181,7 @@ example
         end
 
         # check if verify message exists
-        subject = message_meta['ENVELOPE'].subject
+        subject = Mail::Encodings.value_decode(message_meta['ENVELOPE'].subject)
         next if !subject
         next if !subject.match?(/#{verify_string}/)
 
