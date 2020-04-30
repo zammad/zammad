@@ -21,7 +21,10 @@ RSpec.configure do |config|
       user     = instance_exec(&authenticated)
       password = user.password_plain
 
-      raise "Can't authenticate user that has no password set" if password.blank?
+      if password.blank?
+        password = 'automagically set by your friendly capybara helper'
+        user.update!(password: password)
+      end
 
       credentials = {
         username: user.email,
