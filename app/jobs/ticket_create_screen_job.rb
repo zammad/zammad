@@ -19,7 +19,7 @@ class TicketCreateScreenJob < ApplicationJob
       # no data exists
       next if ticket_create_attributes.blank?
 
-      Rails.logger.error "push ticket_create for user #{user.id}"
+      Rails.logger.debug { "push ticket_create for user #{user.id}" }
       Sessions.send(client_id, {
                       event: 'ticket_create_attributes',
                       data:  ticket_create_attributes,
