@@ -281,6 +281,7 @@ class TicketsController < ApplicationController
   # GET /api/v1/ticket_customer
   # GET /api/v1/tickets_customer
   def ticket_customer
+    permission_check('ticket.agent')
 
     # return result
     result = Ticket::ScreenOptions.list_by_customer(
@@ -293,6 +294,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_history/1
   def ticket_history
+    permission_check('ticket.agent')
 
     # get ticket data
     ticket = Ticket.find(params[:id])
@@ -304,6 +306,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_related/1
   def ticket_related
+    permission_check('ticket.agent')
 
     ticket = Ticket.find(params[:ticket_id])
     assets = ticket.assets({})
@@ -363,6 +366,8 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_recent
   def ticket_recent
+    permission_check('ticket.agent')
+
     ticket_ids = RecentView.list(current_user, 10, Ticket.name).map(&:o_id)
     tickets    = ticket_ids.map { |elem| Ticket.lookup(id: elem) }
     assets     = ApplicationModel::CanAssets.reduce(tickets)
@@ -375,6 +380,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_merge/1/1
   def ticket_merge
+    permission_check('ticket.agent')
 
     # check master ticket
     ticket_master = Ticket.find_by(number: params[:master_ticket_number])
@@ -414,6 +420,8 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_split
   def ticket_split
+    permission_check('ticket.agent')
+
     ticket = Ticket.find(params[:ticket_id])
     access!(ticket, 'read')
     assets = ticket.assets({})

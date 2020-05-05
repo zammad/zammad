@@ -1781,6 +1781,10 @@ RSpec.describe 'Ticket', type: :request do
         created_by_id: 1,
       )
 
+      authenticated_as(customer_user)
+      get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
+      expect(response).to have_http_status(:unauthorized)
+
       authenticated_as(agent_user)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1905,6 +1909,10 @@ RSpec.describe 'Ticket', type: :request do
         group:       group_no_permission,
         customer_id: customer_user.id,
       )
+
+      authenticated_as(customer_user)
+      get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(:unauthorized)
 
       authenticated_as(agent_user)
       get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
@@ -2056,7 +2064,39 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets'].class).to eq(Hash)
       expect(json_response['assets']['User'][customer_user.id.to_s]).not_to be_nil
       expect(json_response['assets']['Ticket'][ticket1.id.to_s]).not_to be_nil
+
+      authenticated_as(customer_user)
+      get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(:unauthorized)
     end
+
+    it 'does ticket related' do
+      ticket1 = create(
+        :ticket,
+        title:       'some title',
+        group:       ticket_group,
+        customer_id: customer_user.id,
+      )
+
+      authenticated_as(agent_user)
+      get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+
+      authenticated_as(customer_user)
+      get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'does ticket recent' do
+      authenticated_as(agent_user)
+      get '/api/v1/ticket_recent', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+
+      authenticated_as(customer_user)
+      get '/api/v1/ticket_recent', params: {}, as: :json
+      expect(response).to have_http_status(:unauthorized)
+    end
+
   end
 
   describe 'stats' do
@@ -2201,7 +2241,7 @@ RSpec.describe 'Ticket', type: :request do
       end
 
       context 'as authorized customer', authenticated_as: -> { customer_authorized } do
-        include_examples 'has access'
+        include_examples 'has no access'
       end
 
       context 'as unauthorized customer', authenticated_as: -> { customer_unauthorized } do
