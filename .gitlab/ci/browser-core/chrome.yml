@@ -1,0 +1,41 @@
+1_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "1"
+
+2_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "2"
+
+3_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "3"
+
+4_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "4"
+
+5_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "5"
+
+6_chrome:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "chrome"
+    TEST_SLICE: "6"

@@ -1,0 +1,36 @@
+.template_integration_otrs: &template_integration_otrs
+  extends:
+    - .template_integration
+  script:
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec rails test test/integration/otrs_import_test.rb
+
+otrs:6:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "https://vz1185.test.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+
+otrs:5:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+
+otrs:4:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+
+otrs:33:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+
+otrs:32:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+
+otrs:31:
+  <<: *template_integration_otrs
+  variables:
+    IMPORT_OTRS_ENDPOINT: "http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"

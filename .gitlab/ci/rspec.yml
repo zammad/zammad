@@ -1,0 +1,22 @@
+include:
+  - local: '/.gitlab/ci/rspec/mysql.yml'
+  - local: '/.gitlab/ci/rspec/postgresql.yml'
+
+.template_rspec: &template_rspec
+  extends:
+    - .env_base
+  variables:
+    RAILS_ENV: "test"
+  script:
+    - bundle exec rake zammad:db:init
+    - bundle exec rspec -t ~type:system -t ~searchindex
+
+# we need at least one job to store and include this template
+# $IGNORE is not defined
+ignore:
+  stage: test
+  only:
+    variables:
+      - $IGNORE
+  script:
+    - ''

@@ -1,0 +1,88 @@
+include:
+
+  # browser-core
+  - local: '/.gitlab/ci/browser-core/build.yml'
+  - local: '/.gitlab/ci/browser-core/autowizard_chrome.yml'
+  - local: '/.gitlab/ci/browser-core/autowizard_ff.yml'
+  - local: '/.gitlab/ci/browser-core/api_client_php.yml'
+  - local: '/.gitlab/ci/browser-core/api_client_ruby.yml'
+  - local: '/.gitlab/ci/browser-core/capybara_chrome.yml'
+  - local: '/.gitlab/ci/browser-core/capybara_ff.yml'
+  - local: '/.gitlab/ci/browser-core/chrome.yml'
+  - local: '/.gitlab/ci/browser-core/firefox.yml'
+
+.template_browser-core: &template_browser-core
+  stage: browser-core
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .variables_es
+    - .variables_app_restart_cmd
+    - .services_mysql_postgresql_elasticsearch_selenium_imap
+  variables:
+    RAILS_ENV: "production"
+  script:
+    # temporary workaround to check Yahoo! mailbox only in 3_firefox* tests
+    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_AUTO1 ; fi
+    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_AUTO2 ; fi
+    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_MANUAL1 ; fi
+    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_MANUAL2 ; fi
+    - env
+    - script/build/test_slice_tests.sh $TEST_SLICE
+    - RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake zammad:ci:test:start[with_elasticsearch]
+    - time bundle exec rails test --fail-fast test/browser
+
+.template_browser-core_autowizard: &template_browser-core_autowizard
+  stage: browser-core
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .variables_app_restart_cmd
+    - .services_postgresql_selenium
+  variables:
+    RAILS_ENV: "production"
+    AUTO_WIZARD_FILE: "contrib/auto_wizard_example.json"
+    TEST_FILE: "test/integration/auto_wizard_browser_test.rb"
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - cp $AUTO_WIZARD_FILE auto_wizard.json
+    - bundle exec rake zammad:ci:test:start
+    - bundle exec rails test $TEST_FILE
+
+.template_browser-core_api_client: &template_browser-core_api_client
+  stage: browser-core
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .variables_app_restart_cmd
+    - .services_mysql_postgresql
+  variables:
+    RAILS_ENV: "production"
+
+.template_browser-core_capybara: &template_browser-core_capybara
+  stage: browser-core
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .variables_es
+    - .services_mysql_postgresql_elasticsearch_selenium_imap
+  variables:
+    RAILS_ENV: "test"
+  script:
+    - bundle exec rake zammad:ci:test:prepare[with_elasticsearch]
+    - bundle exec rspec --fail-fast -t type:system
+
+# we need at least one job to store and include this template
+# $IGNORE is not defined
+ignore:
+  stage: test
+  only:
+    variables:
+      - $IGNORE
+  script:
+    - ''

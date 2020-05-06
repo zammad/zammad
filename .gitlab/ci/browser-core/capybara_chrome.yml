@@ -1,0 +1,5 @@
+capybara_chrome:
+  extends:
+    - .template_browser-core_capybara
+  variables:
+    BROWSER: "chrome"

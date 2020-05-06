@@ -1,0 +1,42 @@
+1_firefox:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "1"
+
+2_firefox:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "2"
+
+3_firefox:
+  extends:
+    - .template_browser-core
+    - .tags_mail
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "3"
+
+4_firefox:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "4"
+
+5_firefox:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "5"
+
+6_firefox:
+  extends:
+    - .template_browser-core
+  variables:
+    BROWSER: "firefox"
+    TEST_SLICE: "6"

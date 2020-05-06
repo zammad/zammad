@@ -1,0 +1,5 @@
+rspec:postgresql:
+  stage: test
+  extends:
+    - .services_postgresql
+    - .template_rspec

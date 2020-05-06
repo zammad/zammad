@@ -1,0 +1,24 @@
+include:
+  - local: '/.gitlab/ci/unit/mysql.yml'
+  - local: '/.gitlab/ci/unit/postgresql.yml'
+
+.template_unit: &template_unit
+  extends:
+    - .env_base
+  variables:
+    RAILS_ENV: "test"
+  script:
+    - bundle exec rake zammad:db:init
+    - bundle exec rake test:units
+    - bundle exec rails test test/integration/object_manager_test.rb
+    - bundle exec rails test test/integration/package_test.rb
+
+# we need at least one job to store and include this template
+# $IGNORE is not defined
+ignore:
+  stage: test
+  only:
+    variables:
+      - $IGNORE
+  script:
+    - ''

@@ -1,0 +1,7 @@
+clearbit:
+  extends:
+    - .template_integration
+  script:
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec rails test test/integration/clearbit_test.rb
+  allow_failure: true

@@ -1,0 +1,51 @@
+include:
+
+  # browser-integration
+  - local: '/.gitlab/ci/browser-integration/facebook_chrome.yml'
+  - local: '/.gitlab/ci/browser-integration/facebook_ff.yml'
+  - local: '/.gitlab/ci/browser-integration/idoit_chrome.yml'
+  - local: '/.gitlab/ci/browser-integration/otrs_chrome.yml'
+  - local: '/.gitlab/ci/browser-integration/zendesk_chrome.yml'
+
+.template_browser-integration: &template_browser-integration
+  stage: browser-integration
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .variables_app_restart_cmd
+    - .services_postgresql_selenium
+  variables:
+    RAILS_ENV: "production"
+    AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - cp $AUTO_WIZARD_FILE auto_wizard.json
+    - bundle exec rake zammad:ci:test:start
+    - bundle exec rails test $TEST_FILE
+
+.template_browser-integration_import: &template_browser-integration_import
+  stage: browser-integration
+  dependencies:
+    - browser:build
+  extends:
+    - .env_base
+    - .services_postgresql_selenium
+  variables:
+    RAILS_ENV: "production"
+    BROWSER: "chrome"
+    RAILS_SERVE_STATIC_FILES: "true"
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake zammad:ci:test:start
+    - bundle exec rails test $TEST_FILE
+
+# we need at least one job to store and include this template
+# $IGNORE is not defined
+ignore:
+  stage: test
+  only:
+    variables:
+      - $IGNORE
+  script:
+    - ''

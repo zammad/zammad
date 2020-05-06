@@ -1,0 +1,17 @@
+browser:build:
+  stage: test
+  extends:
+    - .tags_docker
+    - .services_postgresql
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - public/assets/.sprockets-manifest*
+    - public/assets/application-*
+    - public/assets/knowledge_base*
+    - public/assets/print-*
+  variables:
+    RAILS_ENV: "production"
+  script:
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec rake assets:precompile

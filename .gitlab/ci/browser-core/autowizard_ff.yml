@@ -1,0 +1,5 @@
+autowizard_ff:
+  extends:
+    - .template_browser-core_autowizard
+  variables:
+    BROWSER: "firefox"

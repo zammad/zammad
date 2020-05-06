@@ -1,0 +1,6 @@
+facebook_ff:
+  extends:
+    - .template_browser-integration
+  variables:
+    BROWSER: "firefox"
+    TEST_FILE: "test/integration/facebook_browser_test.rb"

@@ -1,0 +1,17 @@
+api_client_php:
+  extends:
+    - .template_browser-core_api_client
+  variables:
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "master@example.com"
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - RAILS_ENV=test bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
+    - git clone https://github.com/zammad/zammad-api-client-php.git
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/local/bin
+    - ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+    - cd zammad-api-client-php
+    - composer install
+    - vendor/bin/phpunit

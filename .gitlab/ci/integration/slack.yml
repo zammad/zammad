@@ -1,0 +1,8 @@
+slack:
+  extends:
+    - .template_integration
+  script:
+    - bundle exec rake zammad:db:unseeded
+    - echo "gem 'slack-api'" >> Gemfile.local
+    - bundle install -j $(nproc)
+    - bundle exec rails test test/integration/slack_test.rb

@@ -1,0 +1,8 @@
+geo:
+  extends:
+    - .template_integration
+  script:
+    - bundle exec rake zammad:db:unseeded
+    - bundle exec rails test test/integration/geo_calendar_test.rb
+    - bundle exec rails test test/integration/geo_location_test.rb
+    - bundle exec rails test test/integration/geo_ip_test.rb

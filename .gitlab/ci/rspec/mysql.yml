@@ -1,0 +1,5 @@
+rspec:mysql:
+  stage: test
+  extends:
+    - .services_mysql
+    - .template_rspec
