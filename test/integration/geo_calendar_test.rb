@@ -49,26 +49,26 @@ class GeoIpCalendar < ActiveSupport::TestCase
 
     result = Service::GeoCalendar.location('17.171.2.25')
     assert(result)
-    assert_equal('United States/California', result['name'])
-    assert_equal('America/Los_Angeles', result['timezone'])
+    assert_equal('United States', result['name'])
+    assert_equal('America/Chicago', result['timezone'])
     assert_equal('http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics', result['ical_url'])
 
     result = Service::GeoCalendar.location('184.168.47.225')
     assert(result)
-    assert_equal('United States/Arizona', result['name'])
-    assert_equal('America/Phoenix', result['timezone'])
+    assert_equal('United States', result['name'])
+    assert_equal('America/Chicago', result['timezone'])
     assert_equal('http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics', result['ical_url'])
 
     result = Service::GeoCalendar.location('69.172.201.245')
     assert(result)
-    assert_equal('United States/New York', result['name'])
-    assert_equal('America/New_York', result['timezone'])
-    assert_equal('http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics', result['ical_url'])
+    assert_equal('Canada', result['name'])
+    assert_equal('America/Toronto', result['timezone'])
+    assert_equal('http://www.google.com/calendar/ical/en.canadian%23holiday%40group.v.calendar.google.com/public/basic.ics', result['ical_url'])
 
     result = Service::GeoCalendar.location('132.247.70.37')
     assert(result)
-    assert_equal('Mexico/Sonora', result['name'])
-    assert_equal('America/Hermosillo', result['timezone'])
+    assert_equal('Mexico/Mexico City', result['name'])
+    assert_equal('America/Mexico_City', result['timezone'])
     assert_equal('http://www.google.com/calendar/ical/en.mexican%23holiday%40group.v.calendar.google.com/public/basic.ics', result['ical_url'])
 
   end
