@@ -1,7 +1,7 @@
 require 'integration_test_helper'
 
 class UserAgentTest < ActiveSupport::TestCase
-  host = 'https://r2d2.znuny.com'
+  host = 'https://web-test.dc.zammad.com'
   #host = 'http://127.0.0.1:3003'
 
   setup do
@@ -27,7 +27,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"123"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # get / 404
@@ -54,7 +54,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"some value"/)
     assert(result.body =~ %r{"application/x-www-form-urlencoded"})
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # post / 404
@@ -84,7 +84,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"some value"/)
     assert(result.body =~ %r{"application/x-www-form-urlencoded"})
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # put / 404
@@ -110,7 +110,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"delete"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # delete / 404
@@ -141,7 +141,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"123"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # get / 401
@@ -177,7 +177,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"some value"/)
     assert(result.body =~ %r{"application/x-www-form-urlencoded"})
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # post / 401
@@ -215,7 +215,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"some value"/)
     assert(result.body =~ %r{"application/x-www-form-urlencoded"})
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # put / 401
@@ -250,7 +250,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"delete"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # delete / 401
@@ -283,7 +283,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"abc"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # get / 301
@@ -302,7 +302,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"abc"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # get / 401
@@ -334,7 +334,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"123"/)
     assert(result.body =~ /"content_type_requested":null/)
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # ftp / 200
@@ -477,7 +477,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ %r{"application/json"})
     assert_equal('some value ', result.data['submitted']['key'])
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
 
     # get / 404
@@ -514,7 +514,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ %r{"application/json"})
     assert_equal('some value ', result.data['submitted']['key'])
     if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
-      assert(result.body =~ /"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/)
+      assert_match(/"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"/, result.body)
     end
   end
 
