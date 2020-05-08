@@ -114,7 +114,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # parameters for updating
       params = {
-        'name':        'test4',
+        'name':        object.name,
         'object':      'Ticket',
         'display':     'Test 4',
         'active':      true,
@@ -152,7 +152,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['name']).to eq('test4')
+      expect(json_response['name']).to eq(object.name)
       expect(json_response['display']).to eq('Test 4')
     end
 
@@ -263,10 +263,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['name']).to eq('test5')
     end
 
-    it 'does update user select object', db_strategy: :reset do
-
+    it 'does update user select object', authenticated_as: -> { admin_user }, db_strategy: :reset do
       # add a new object
-      object = create(:object_manager_attribute_text)
+      object = create(:object_manager_attribute_text, object_name: 'User')
 
       migration = ObjectManager::Attribute.migration_execute
       expect(migration).to eq(true)
@@ -285,7 +284,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         data_type:   'select',
         display:     'Test 7',
         id:          'c-204',
-        name:        'test7',
+        name:        object.name,
         object:      'User',
         screens:     {
           create: {
@@ -322,12 +321,11 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       # update the object
-      authenticated_as(admin_user)
       put "/api/v1/object_manager_attributes/#{object.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['options']).to be_truthy
-      expect(json_response['name']).to eq('test7')
+      expect(json_response['name']).to eq(object.name)
       expect(json_response['display']).to eq('Test 7')
     end
 
@@ -1018,6 +1016,76 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['data_option']['default']).to eq('test')
       expect(json_response['data_option_new']['default']).to eq('fuu')
       expect(json_response['data_type']).to eq('select')
+    end
+
+    it "doesn't let to update item that doesn't exist", authenticated_as: -> { admin_user } do
+      params = {
+        active:      true,
+        data_option: {
+          type:      'text',
+          maxlength: 200
+        },
+        data_type:   'input',
+        display:     'Test 7',
+        name:        'attribute_that_doesnt_exist',
+        object:      'User',
+      }
+
+      # update the object
+      put '/api/v1/object_manager_attributes/abc', params: params, as: :json
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    context 'position handling', authenticated_as: -> { admin_user } do
+      let(:params) do
+        {
+          'name':        "customerdescription_#{rand(999_999_999)}",
+          'object':      'Ticket',
+          'display':     "custom description #{rand(999_999_999)}",
+          'active':      true,
+          'data_type':   'input',
+          'data_option': {
+            'default':   'test',
+            'type':      'text',
+            'maxlength': 120,
+          },
+        }
+      end
+
+      let(:new_attribute_id)     { json_response['id'] }
+      let(:new_attribute_object) { ObjectManager::Attribute.find new_attribute_id }
+
+      before { post '/api/v1/object_manager_attributes', params: params, as: :json }
+
+      context 'when creating a new attribute' do
+        it 'defaults to 1550' do
+          expect(new_attribute_object.position).to eq 1550
+        end
+      end
+
+      context 'when updating an existing attribute' do
+        let(:alternative_position) { 123 }
+        let(:alternative_display)  { 'another description' }
+        let(:alternative_params)   { params.deep_dup.update(display: alternative_display) }
+
+        before do
+          new_attribute_object.update! position: alternative_position
+
+          put "/api/v1/object_manager_attributes/#{new_attribute_id}", params: alternative_params, as: :json
+
+          new_attribute_object.reload
+        end
+
+        # confirm that test build up was correct
+        it 'request succeeds' do
+          expect(new_attribute_object.display).to eq alternative_display
+        end
+
+        # https://github.com/zammad/zammad/issues/3044
+        it 'position did not reset' do
+          expect(new_attribute_object.position).to eq alternative_position
+        end
+      end
     end
   end
 end

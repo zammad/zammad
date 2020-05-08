@@ -527,7 +527,7 @@ RSpec.describe 'Monitoring', type: :request do
       Delayed::Job.destroy_all
 
       # add a new object
-      object = create(:object_manager_attribute_text)
+      object = create(:object_manager_attribute_text, name: 'test4')
 
       migration = ObjectManager::Attribute.migration_execute
       expect(true).to eq(migration)

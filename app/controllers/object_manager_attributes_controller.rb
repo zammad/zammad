@@ -29,44 +29,20 @@ class ObjectManagerAttributesController < ApplicationController
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
-    begin
-      object_manager_attribute = ObjectManager::Attribute.add(
-        object:      permitted_params[:object],
-        name:        permitted_params[:name],
-        display:     permitted_params[:display],
-        data_type:   permitted_params[:data_type],
-        data_option: permitted_params[:data_option],
-        active:      permitted_params[:active],
-        screens:     permitted_params[:screens],
-        position:    1550,
-        editable:    true,
-      )
-      render json: object_manager_attribute.attributes_with_association_ids, status: :created
-    rescue => e
-      logger.error e
-      raise Exceptions::UnprocessableEntity, e
-    end
+    add_attribute_using_params(permitted_params.merge(position: 1550), status: :created)
   end
 
   # PUT /object_manager_attributes/1
   def update
-
-    object_manager_attribute = ObjectManager::Attribute.add(
-      object:      permitted_params[:object],
-      name:        permitted_params[:name],
-      display:     permitted_params[:display],
-      data_type:   permitted_params[:data_type],
-      data_option: permitted_params[:data_option],
-      active:      permitted_params[:active],
-      screens:     permitted_params[:screens],
-      position:    1550,
-      editable:    true,
+    # check if attribute already exists
+    exists = ObjectManager::Attribute.get(
+      object: permitted_params[:object],
+      name:   permitted_params[:name],
     )
-    render json: object_manager_attribute.attributes_with_association_ids, status: :ok
-  rescue => e
-    logger.error e
-    raise Exceptions::UnprocessableEntity, e
 
+    raise Exceptions::UnprocessableEntity, 'does not exist' if !exists
+
+    add_attribute_using_params(permitted_params, status: :ok)
   end
 
   # DELETE /object_manager_attributes/1
@@ -149,5 +125,17 @@ class ObjectManagerAttributesController < ApplicationController
 
       permitted
     end
+  end
+
+  def add_attribute_using_params(given_params, status:)
+    attributes = given_params.slice(:object, :name, :display, :data_type, :data_option, :active, :screens, :position)
+    attributes[:editable] = true
+
+    object_manager_attribute = ObjectManager::Attribute.add(attributes)
+
+    render json: object_manager_attribute.attributes_with_association_ids, status: status
+  rescue => e
+    logger.error e
+    raise Exceptions::UnprocessableEntity, e
   end
 end
