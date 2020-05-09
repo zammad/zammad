@@ -23,11 +23,6 @@ include:
   variables:
     RAILS_ENV: "production"
   script:
-    # temporary workaround to check Yahoo! mailbox only in 3_firefox* tests
-    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_AUTO1 ; fi
-    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_AUTO2 ; fi
-    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_MANUAL1 ; fi
-    - if [[ $CI_JOB_NAME != 3_firefox* ]]; then unset MAILBOX_MANUAL2 ; fi
     - env
     - script/build/test_slice_tests.sh $TEST_SLICE
     - RAILS_ENV=test bundle exec rake db:create
