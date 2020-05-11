@@ -98,7 +98,7 @@ RSpec.describe 'Ticket Update', type: :system do
         within(:active_content) do
           expect(page).to have_selector('.js-objectNumber', text: ticket.number)
 
-          expect(page).to have_field(attribute.name, with: '', visible: false)
+          expect(page).to have_field(attribute.name, with: '', visible: :hidden)
           expect(page).to have_select('state_id',
                                       selected: 'new',
                                       options:  ['new', 'closed', 'open', 'pending close', 'pending reminder'])
@@ -108,7 +108,7 @@ RSpec.describe 'Ticket Update', type: :system do
           expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
         end
 
-        expect(page).to have_field(attribute.name, with: attribute_value, visible: false)
+        expect(page).to have_field(attribute.name, with: attribute_value, visible: :hidden)
         expect(page).to have_select('state_id',
                                     selected: 'closed',
                                     options:  ['closed', 'open', 'pending close', 'pending reminder'])

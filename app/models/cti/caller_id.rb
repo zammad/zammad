@@ -237,9 +237,9 @@ returns
       number.gsub!(/\D/, '')
       case number
       when /^00/
-        number[2..-1]
+        number[2..]
       when /^0/
-        DEFAULT_COUNTRY_ID + number[1..-1]
+        DEFAULT_COUNTRY_ID + number[1..]
       else
         number
       end

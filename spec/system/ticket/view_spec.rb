@@ -41,7 +41,7 @@ RSpec.describe 'Ticket views', type: :system do
       # move a bit to the left to display macro batches
       move_mouse_by(-250, 0)
 
-      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: true)
+      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: :visible)
       expect(page).to have_no_selector(:macro_batch, macro_group1.id)
       expect(page).to have_no_selector(:macro_batch, macro_group2.id)
 
@@ -60,7 +60,7 @@ RSpec.describe 'Ticket views', type: :system do
       # move a bit to the left to display macro batches
       move_mouse_by(-250, 0)
 
-      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: true)
+      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: :visible)
       expect(page).to have_selector(:macro_batch, macro_group1.id)
       expect(page).to have_no_selector(:macro_batch, macro_group2.id)
 
@@ -79,7 +79,7 @@ RSpec.describe 'Ticket views', type: :system do
       # move a bit to the left to display macro batches
       move_mouse_by(-250, 0)
 
-      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: true)
+      expect(page).to have_selector(:macro_batch, macro_without_group.id, visible: :visible)
       expect(page).to have_no_selector(:macro_batch, macro_group1.id)
       expect(page).to have_selector(:macro_batch, macro_group2.id)
 

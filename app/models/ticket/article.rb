@@ -46,6 +46,7 @@ class Ticket::Article < ApplicationModel
                              :cc
 
   attr_accessor :should_clone_inline_attachments
+
   alias should_clone_inline_attachments? should_clone_inline_attachments
 
   # fillup md5 of message id to search easier on very long message ids

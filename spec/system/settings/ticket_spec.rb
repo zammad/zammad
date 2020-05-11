@@ -10,18 +10,18 @@ RSpec.describe 'Manage > Settings > Ticket', type: :system do
 
       within(:active_content) do
         click(:href, '#auto_assignment')
-        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: false)
+        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: :hidden)
         find('.js-ticketAutoAssignment').click
-        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: false)
+        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: :hidden)
       end
 
       refresh
 
       within(:active_content) do
         click(:href, '#auto_assignment')
-        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: false)
+        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: :hidden)
         find('.js-ticketAutoAssignment').click
-        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: false)
+        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: :hidden)
       end
     end
   end
