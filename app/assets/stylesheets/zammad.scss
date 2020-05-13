@@ -2472,6 +2472,36 @@ input.has-error {
   }
 }
 
+.kb-menu-preview {
+  margin-bottom: 1em;
+
+  &-container {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid hsl(213,14%,91%);
+    
+    &--footer {
+      justify-content: center;
+    }
+  }
+
+  a, span {
+    font-size: 14px;
+    padding: .5em 1em;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 2em;
+  }
+
+  a {
+    color: hsl(206,8%,50%);
+  }
+
+  .label {
+    text-transform: none;
+  }
+}
+
 .modified-icon {
   position: relative;
   line-height: 1;
@@ -11683,4 +11713,12 @@ span.is-disabled {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.btn-manage-public-menu-edit {
+  margin-top: 0
+}
+
+.kb-menu-settings-entry {
+  margin-bottom: 12px
 }

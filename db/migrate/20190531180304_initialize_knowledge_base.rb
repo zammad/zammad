@@ -92,6 +92,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
     create_table :knowledge_base_menu_items do |t|
       t.references :kb_locale, null: false, foreign_key: { to_table: :knowledge_base_locales, on_delete: :cascade }
+      t.string     :location,  null: false, index: true
       t.integer    :position,  null: false, index: true
       t.string     :title,     null: false, limit: 100
       t.string     :url,       null: false, limit: 500

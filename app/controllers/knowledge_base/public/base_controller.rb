@@ -24,9 +24,7 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   end
 
   def menu_items
-    @menu_items ||= KnowledgeBase::MenuItem
-                  .sorted
-                  .using_locale(guess_locale_via_uri || filter_primary_kb_locale)
+    @menu_items ||= KnowledgeBase::MenuItem.using_locale(guess_locale_via_uri || filter_primary_kb_locale)
   end
 
   def system_locale_via_uri

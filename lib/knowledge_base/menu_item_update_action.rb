@@ -1,8 +1,13 @@
 class KnowledgeBase
   class MenuItemUpdateAction
-    def initialize(kb_locale, menu_items_data)
+    def initialize(kb_locale, location, menu_items_data)
       @kb_locale       = kb_locale
+      @location        = location
       @menu_items_data = menu_items_data
+    end
+
+    def scope
+      @kb_locale.menu_items.location(@location)
     end
 
     def perform!
@@ -16,15 +21,49 @@ class KnowledgeBase
       end
     end
 
+    # Mass-update KB menu items
+    #
+    # @param [KnowledgeBase] knowledge_base
+    # @param [[<Hash>]] params @see .update_location_params!
+    #
+    # @return [<KnowledgeBase::MenuItem>]
+    def self.update_using_params!(knowledge_base, params)
+      return if params.blank?
+
+      params
+        .map { |location_params| update_location_using_params! knowledge_base, location_params }
+        .map(&:reload)
+        .reduce(:+)
+    end
+
+    # Mass-update KB menu items in a given location
+    #
+    # @param [KnowledgeBase] knowledge_base
+    # @param [Hash] location_params
+    #
+    # @option location_params [Integer] :kb_locale_id
+    # @option location_params [String] :location header or footer
+    # @option location_params [[<Hash>]] :menu_items @see #update_order
+    def self.update_location_using_params!(knowledge_base, location_params)
+      action = new(
+        knowledge_base.kb_locales.find(location_params[:kb_locale_id]),
+        location_params[:location],
+        location_params[:menu_items]
+      )
+
+      action.perform!
+      action.scope
+    end
+
     private
 
     def update_order
-      old_items = @kb_locale.menu_items.to_a
+      old_items = scope.to_a
 
       @menu_items_data
         .reject { |elem| elem[:_destroy] }
         .each_with_index do |data_elem, index|
-          item = old_items.find { |record| record.id == data_elem[:id] } || @kb_locale.menu_items.build
+          item = old_items.find { |record| record.id == data_elem[:id] } || scope.build
 
           item.position = index
           item.title    = data_elem[:title]
@@ -43,7 +82,7 @@ class KnowledgeBase
     end
 
     def all_ids_present?
-      old_ids = @kb_locale.menu_items.pluck(:id)
+      old_ids = scope.pluck(:id)
       new_ids = @menu_items_data.map { |elem| elem[:id]&.to_i }.compact
 
       old_ids.sort == new_ids.sort

@@ -91,6 +91,7 @@ RSpec/FilePath:
     - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
     - 'spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb'
     - 'spec/jobs/issue_2715_fix_broken_twitter_urls_job_spec.rb'
+    - 'spec/db/migrate/issue_2867_footer_header_public_link_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
 
 # Offense count: 60

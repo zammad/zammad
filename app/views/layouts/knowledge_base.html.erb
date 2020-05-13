@@ -25,7 +25,7 @@
         <% end %>
       </h1>
       <nav class="menu">
-        <% menu_items.each do |menu_item| %>
+        <% menu_items.location_header.each do |menu_item| %>
           <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
         <% end %>
       </nav>
@@ -51,6 +51,13 @@
         <div class="copyright">
           <%= @knowledge_base.translation.footer_note %>
         </div>
+
+        <nav class="menu">
+          <% menu_items.location_footer.each do |menu_item| %>
+            <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
+          <% end %>
+        </nav>
+
         <div class="language-picker">
           <a class="btn btn--action" href="#" data-toggle="dropdown" aria-expanded="false">
             <%= system_locale_via_uri.name %>

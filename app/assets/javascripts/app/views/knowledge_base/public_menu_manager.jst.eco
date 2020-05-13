@@ -1,0 +1,40 @@
+<h2>
+  <%- @T 'Public Menu' %>
+</h2>
+
+<p class="help-text">
+  <%- @T 'Here you can add further links to your public FAQ page, which will be displayed either in the header or footer.' %>
+</p>
+
+<% for location in @locations: %>
+  <div class="settings-entry kb-menu-settings-entry">
+    <h3><%= @T(location.headline) %></h3>
+
+    <% for kb_locale in @locales: %>
+      <div class="kb-menu-preview">
+        <div class="label"><%= kb_locale.systemLocale().name %></div>
+
+        <div class="kb-menu-preview-container kb-menu-preview-container--<%= location.identifier %>" style="background-color: <%= location.color %>">
+          <% menu_items = App.KnowledgeBaseMenuItem.using_kb_locale_location(kb_locale, location.identifier) %>
+
+          <% if menu_items.length == 0: %>
+            <span class="text-muted"><%= @T 'Empty' %></span>
+          <% else: %>
+            <% for item in menu_items: %>
+              <a href="<%= item.url %>" target="_blank"><%= item.title %></a>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <a
+      class="btn btn--primary js-edit btn-manage-public-menu-edit"
+      href="#"
+      data-target-location="<%= location.identifier %>"
+      data-target-locale="<%= kb_locale.id %>">
+
+      <%= @T 'Edit' %>
+    </a>
+  </div>
+<% end %>

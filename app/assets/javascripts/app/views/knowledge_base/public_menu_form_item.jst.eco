@@ -1,4 +1,4 @@
-<form data-kb-locale-id="<%= @kb_locale_id %>" class="settings-entry">
+<div data-kb-locale-id="<%= @kb_locale_id %>" class="settings-entry">
   <h2><%= @title %></h2>
 
   <div class="js-alert alert alert--danger hidden"></div>
@@ -28,8 +28,4 @@
             </a>
     </table>
   </div>
-
-  <div class="horizontal justify-end">
-    <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
-  </div>
-</form>
+</div>

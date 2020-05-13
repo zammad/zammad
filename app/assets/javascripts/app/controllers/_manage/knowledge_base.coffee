@@ -109,7 +109,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
       },{
         name:       'Public Menu'
         target:     'public_menu'
-        controller: App.KnowledgeBasePublicMenuForm
+        controller: App.KnowledgeBasePublicMenuManager
         params:     _.extend({}, params, { screen: 'public_menu' })
       },{
         name:       'Delete'

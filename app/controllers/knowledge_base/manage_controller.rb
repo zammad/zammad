@@ -31,13 +31,10 @@ class KnowledgeBase::ManageController < KnowledgeBase::BaseController
 
   def update_menu_items
     kb = KnowledgeBase.find params[:id]
-    kb_locale = kb.kb_locales.find params[:kb_locale_id]
 
-    KnowledgeBase::MenuItemUpdateAction
-      .new(kb_locale, params[:menu_items])
-      .perform!
+    affected_items = KnowledgeBase::MenuItemUpdateAction.update_using_params! kb, params_for_permission[:menu_items_sets]
 
-    render json: { assets: ApplicationModel::CanAssets.reduce(kb_locale.menu_items.reload, {}) }
+    render json: { assets: ApplicationModel::CanAssets.reduce(affected_items || [], {}) }
   end
 
   def destroy
