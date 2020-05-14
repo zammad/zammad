@@ -36,10 +36,6 @@ module CommonActions
     wait(4).until_exists do
       current_login
     end
-
-    return if User.find_by(login: current_login).preferences[:intro]
-
-    find(:clues_close, wait: 3).in_fixed_postion.click
   end
 
   # Checks if the current session is logged in.
