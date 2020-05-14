@@ -175,7 +175,7 @@ class Index extends App.ControllerSubContent
       success: =>
         loader.update(locale.name, false)
         locale = locales.shift()
-        if _.isEmpty(locales)
+        if !locale
           hide()
           return
         @_syncChanges(locale, locales, loader, hide)
