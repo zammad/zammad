@@ -135,7 +135,7 @@ App.ViewHelpers =
     if escalation
       cssClass += ' escalation'
     humanTime = App.PrettyDate.humanTime(time, escalation)
-    "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
+    "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
   # Why not just use `Icon: App.Utils.icon`?
   # Because App.Utils isn't loaded until after this file.

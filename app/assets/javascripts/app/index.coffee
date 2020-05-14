@@ -140,7 +140,7 @@ class App extends Spine.Controller
         humanTime = ''
         if !table
           humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
-        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
+        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
       if !isHtmlEscape && typeof resultLocal is 'string'
         resultLocal = App.Utils.htmlEscape(resultLocal)
