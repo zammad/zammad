@@ -21,9 +21,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
         Setting.set 'maintenance_login', false
 
-        wait(10).until_disappears { find '.js-maintenanceLogin', text: message, wait: false }
-
-        expect(page).not_to have_css('.js-maintenanceLogin')
+        expect(page).to have_no_css('.js-maintenanceLogin', text: message, wait: 10)
       end
 
       it 'changes message text on the go' do
@@ -31,9 +29,7 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
 
         Setting.set 'maintenance_login_message', alt_message
 
-        wait(10).until_exists { find '.js-maintenanceLogin', text: alt_message, wait: false }
-
-        expect(page).to have_css('.js-maintenanceLogin', text: alt_message)
+        expect(page).to have_no_css('.js-maintenanceLogin', text: alt_message, wait: 10)
       end
     end
 
@@ -59,28 +55,8 @@ RSpec.describe 'Login Message', type: :system, authenticated: false do
   end
 
   def open_login_page
-    timestamp = Time.zone.now.to_i
-
     visit '/'
 
-    wait(8).until do
-      pinged_since?(timestamp) && connection_open?
-    end
-
-    true
-  end
-
-  def pinged_since?(timestamp)
-    Sessions
-      .list
-      .values
-      .map  { |elem| elem.dig(:meta, :last_ping) }
-      .any? { |elem| elem >= timestamp }
-  end
-
-  def connection_open?
-    page
-      .evaluate_script('App.WebSocket.channel()')
-      .present?
+    ensure_websocket
   end
 end
