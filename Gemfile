@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '2.5.5'
-gem 'rails', '5.2.4.2'
+gem 'rails', '5.2.4.3'
 
 # core - rails additions
 gem 'activerecord-import'
