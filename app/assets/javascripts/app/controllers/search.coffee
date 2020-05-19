@@ -37,10 +37,8 @@ class App.Search extends App.Controller
     )
 
   meta: =>
-    if @query
-      title = App.Utils.htmlEscape(@query)
-    else
-      title = App.i18n.translateInline('Extended Search')
+    title = @query || App.i18n.translateInline('Extended Search')
+
     meta =
       url:   @url()
       id:    ''
