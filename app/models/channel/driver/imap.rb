@@ -111,7 +111,7 @@ example
     end
 
     timeout(check_type_timeout) do
-      @imap.login(options[:user], options[:password])
+      @imap.login(options[:user], options[:password].dup&.force_encoding('ascii-8bit'))
     end
 
     timeout(check_type_timeout) do
