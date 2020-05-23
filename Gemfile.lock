@@ -376,7 +376,7 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     public_suffix (3.0.3)
-    puma (3.12.4)
+    puma (3.12.6)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
