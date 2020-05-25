@@ -27,7 +27,8 @@ module ApplicationController::Authenticates
 
     # check if basic_auth fallback is possible
     if auth_param[:basic_auth_promt] && !user
-      return request_http_basic_authentication
+      request_http_basic_authentication
+      return false
     end
 
     # return auth not ok
