@@ -11,6 +11,9 @@ class App.Sla extends App.Model
     { name: 'created_at',     display: 'Created',         tag: 'datetime', readonly: 1 },
     { name: 'updated_by_id',  display: 'Updated by',      relation: 'User', readonly: 1 },
     { name: 'updated_at',     display: 'Updated',         tag: 'datetime', readonly: 1 },
+    { name: 'first_response_time', null: false, skipRendering: true, required_if: { 'first_response_time_enabled': ['on'] } },
+    { name: 'update_time',         null: false, skipRendering: true, required_if: { 'update_time_enabled': ['on'] } },
+    { name: 'solution_time',       null: false, skipRendering: true, required_if: { 'solution_time_enabled': ['on'] } },
   ]
   @configure_delete = true
   @configure_overview = [

@@ -109,6 +109,14 @@ RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, webso
     it 'Validation' do
       q_unit_tests('form_validation')
     end
+
+    it 'Skip rendering' do
+      q_unit_tests('form_skip_rendering')
+    end
+
+    it 'SLA times' do
+      q_unit_tests('form_sla_times')
+    end
   end
 
   context 'Table' do

@@ -168,10 +168,13 @@ test('form checks', function() {
     priority4_id: '2',
     priority5_id: '1',
     first_response_time: '150',
+    first_response_time_enabled: 'on',
     first_response_time_in_text: '02:30',
     solution_time: '',
+    solution_time_enabled: undefined,
     solution_time_in_text: '',
     update_time: '45',
+    update_time_enabled: 'on',
     update_time_in_text: '00:45',
     working_hours: {
       mon: {
@@ -313,10 +316,13 @@ test('form checks', function() {
       },
     },
     first_response_time: '30',
+    first_response_time_enabled: 'on',
     first_response_time_in_text: '00:30',
     solution_time: '',
+    solution_time_enabled: undefined,
     solution_time_in_text: '',
     update_time: '',
+    update_time_enabled: undefined,
     update_time_in_text: '',
   }
   deepEqual(params, test_params, 'form param check')

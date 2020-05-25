@@ -94,8 +94,8 @@ class App.ControllerForm extends App.Controller
 
     for attributeName, attribute of attributesClean
 
-      # ignore read only attributes
-      if !attribute.readonly
+      # ignore read only or not rendered attributes attributes
+      if !attribute.readonly && !attribute.skipRendering
 
         # check generic filter
         if @filter && !attribute.filter

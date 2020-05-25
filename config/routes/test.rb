@@ -20,6 +20,8 @@ Zammad::Application.routes.draw do
   match '/tests_form_column_select',          to: 'tests#form_column_select',         via: :get
   match '/tests_form_searchable_select',      to: 'tests#form_searchable_select',     via: :get
   match '/tests_form_ticket_perform_action',  to: 'tests#form_ticket_perform_action', via: :get
+  match '/tests_form_sla_times',              to: 'tests#form_sla_times',             via: :get
+  match '/tests_form_skip_rendering',         to: 'tests#form_skip_rendering',        via: :get
   match '/tests_table',                       to: 'tests#table',                      via: :get
   match '/tests_table_extended',              to: 'tests#table_extended',             via: :get
   match '/tests_html_utils',                  to: 'tests#html_utils',                 via: :get

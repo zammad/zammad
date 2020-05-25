@@ -6,47 +6,47 @@
       <th><%- @T('Time') %> <span class="text-muted"><%- @T('in hours') %></span>
   </thead>
   <tbody>
-    <tr>
+    <tr class="form-group">
       <td class="u-positionOrigin">
         <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
-          <input type="checkbox" class="js-activateRow" id="first_response_time">
+          <input type="checkbox" class="js-activateRow" id="first_response_time" name="first_response_time_enabled">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
-      <td>
-        <label class="inline-label" for="first_response_time"><%- @T('First Response Time') %></label>
+      <td class="u-clickable js-forward-click">
+        <div><%- @T('First Response Time') %></div>
         <p class="subtle"><%- @T('Timeframe for the first response.') %></p>
-      <td>
+      <td class="u-clickable js-focus-input">
         <input type="hidden" name="first_response_time" value="<%= @first_response_time %>" class="js-timeConvertTo">
-        <input type="text" value="<%= @first_response_time_in_text %>" class="form-control--small timeframe js-timeConvertFrom"  placeholder="hh:mm" name="first_response_time_in_text">
+        <input type="text" value="<%= @first_response_time_in_text %>" class="form-control form-control--small timeframe js-timeConvertFrom"  placeholder="hh:mm" name="first_response_time_in_text" data-name="first_response_time">
 
-    <tr>
+    <tr class="form-group">
       <td class="u-positionOrigin">
         <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
-          <input type="checkbox" class="js-activateRow" id="update_time">
+          <input type="checkbox" class="js-activateRow" id="update_time" name="update_time_enabled">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
-      <td>
-        <label class="inline-label" for="update_time"><%- @T('Update Time') %></label>
+      <td class="u-clickable js-forward-click">
+        <div><%- @T('Update Time') %></div>
         <p class="subtle"><%- @T('Timeframe for every following response.') %></p>
       <td>
         <input type="hidden" name="update_time" value="<%= @update_time %>" class="js-timeConvertTo">
-        <input type="text" value="<%= @update_time_in_text %>" class="form-control--small timeframe js-timeConvertFrom" placeholder="hh:mm" name="update_time_in_text">
+        <input type="text" value="<%= @update_time_in_text %>" class="form-control form-control--small timeframe js-timeConvertFrom" placeholder="hh:mm" name="update_time_in_text" data-name="update_time">
 
-    <tr>
+    <tr class="form-group">
       <td class="u-positionOrigin">
         <label class="checkbox-replacement checkbox-replacement--fullscreen dont-grey-out">
-          <input type="checkbox" id="solution_time" class="js-activateRow">
+          <input type="checkbox" id="solution_time" class="js-activateRow" name="solution_time_enabled">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
-      <td>
-        <label class="inline-label" for="solution_time"><%- @T('Solution Time') %></label>
+      <td class="u-clickable js-forward-click">
+        <div><%- @T('Solution Time') %></div>
         <p class="subtle"><%- @T('Timeframe for solving the problem.') %></p>
       <td>
         <input type="hidden" name="solution_time" value="<%= @solution_time %>" class="js-timeConvertTo">
-        <input type="text" value="<%= @solution_time_in_text %>" class="form-control--small timeframe js-timeConvertFrom" placeholder="hh:mm" name="solution_time_in_text">
+        <input type="text" value="<%= @solution_time_in_text %>" class="form-control form-control--small timeframe js-timeConvertFrom" placeholder="hh:mm" name="solution_time_in_text" data-name="solution_time">
 
     </tr>
   </tbody>
