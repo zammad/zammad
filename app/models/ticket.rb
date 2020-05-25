@@ -582,7 +582,7 @@ condition example
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
          (selector['value'].class == Array && selector['value'].respond_to?(:blank?) && selector['value'].blank?) ||
-         (selector['operator'] =~ /^contains/ && selector['value'].respond_to?(:blank?) && selector['value'].blank?)
+         (selector['operator'].start_with?('contains') && selector['value'].respond_to?(:blank?) && selector['value'].blank?)
         return nil if selector['pre_condition'].nil?
         return nil if selector['pre_condition'].respond_to?(:blank?) && selector['pre_condition'].blank?
         return nil if selector['pre_condition'] == 'specific'
@@ -938,9 +938,9 @@ perform changes on ticket
 
       # lookup pre_condition
       if value['pre_condition']
-        if value['pre_condition'].match?(/^not_set/)
+        if value['pre_condition'].start_with?('not_set')
           value['value'] = 1
-        elsif value['pre_condition'].match?(/^current_user\./)
+        elsif value['pre_condition'].start_with?('current_user.')
           raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
 
           value['value'] = current_user_id

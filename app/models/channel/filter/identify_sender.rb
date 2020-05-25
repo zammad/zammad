@@ -188,8 +188,8 @@ module Channel::Filter::IdentifySender
 
     string.strip
           .delete('"')
-          .gsub(/^'/, '')
-          .gsub(/'$/, '')
+          .delete_prefix("'")
+          .delete_suffix("'")
           .gsub(/.+?\s\(.+?\)$/, '')
   end
 
@@ -204,7 +204,7 @@ module Channel::Filter::IdentifySender
           .sub(/^<|>$/, '')        # see https://github.com/zammad/zammad/issues/2254
           .sub(/\A'(.*)'\z/, '\1') # see https://github.com/zammad/zammad/issues/2154
           .gsub(/\s/, '')          # see https://github.com/zammad/zammad/issues/2198
-          .gsub(/\.\z/, '')
+          .delete_suffix('.')
   end
 
 end

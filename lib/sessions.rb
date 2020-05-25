@@ -440,7 +440,7 @@ returns
       files.push entry
     end
     files.sort.each do |entry|
-      next if !entry.match?(/^send/)
+      next if !entry.start_with?('send')
 
       message = Sessions.queue_file_read(path, entry)
       next if !message

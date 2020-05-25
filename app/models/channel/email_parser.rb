@@ -638,8 +638,8 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     # cleanup content id, <> will be added automatically later
     if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '')
-      headers_store['Content-ID'].gsub!(/>$/, '')
+      headers_store['Content-ID'].delete_prefix!('<')
+      headers_store['Content-ID'].delete_suffix!('>')
     end
 
     # get filename from content-disposition

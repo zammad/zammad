@@ -422,7 +422,7 @@ returns
   def permissions?(key)
     Array(key).each do |local_key|
       list = []
-      if local_key.match?(/\.\*$/)
+      if local_key.end_with?('.*')
         local_key = local_key.sub('.*', '.%')
         permissions = ::Permission.with_parents(local_key)
         list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)

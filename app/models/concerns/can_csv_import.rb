@@ -247,8 +247,8 @@ returns
           next if value.class == ActiveSupport::HashWithIndifferentAccess
           next if value.class == Hash
           next if csv_attributes_ignored&.include?(key.to_sym)
-          next if key.match?(/_id$/)
-          next if key.match?(/_ids$/)
+          next if key.end_with?('_id')
+          next if key.end_with?('_ids')
           next if key == 'created_by'
           next if key == 'updated_by'
           next if key == 'created_at'

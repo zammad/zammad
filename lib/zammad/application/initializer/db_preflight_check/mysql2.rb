@@ -42,7 +42,7 @@ module Zammad
               MSG
             end
           # Setting.get will fail if 'settings' table does not exist
-          rescue ActiveRecord::StatementInvalid # rubocop:disable Lint/SuppressedException
+          rescue ActiveRecord::StatementInvalid
           end
 
           def self.connection

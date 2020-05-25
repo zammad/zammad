@@ -37,7 +37,7 @@ class Package::Migration < ApplicationModel
     end
 
     migrations_existing.each do |migration|
-      next if !migration.match?(/\.rb$/)
+      next if !migration.end_with?('.rb')
 
       version = nil
       name    = nil

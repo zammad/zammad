@@ -721,12 +721,12 @@ returns
 
     # send welcome message and don't create ticket
     text = params[:message][:text]
-    if text.present? && text =~ %r{^/start}
+    if text.present? && text.start_with?('/start')
       message(params[:message][:chat][:id], channel.options[:welcome] || 'You are welcome! Just ask me something!', params[:message][:from][:language_code])
       return
 
     # find ticket and close it
-    elsif text.present? && text =~ %r{^/end}
+    elsif text.present? && text.start_with?('/end')
       user = to_user(params)
 
       # get the last ticket of customer which is not closed yet, and close it

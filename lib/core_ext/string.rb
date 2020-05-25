@@ -78,7 +78,7 @@ class String
 
   def to_classname
     camel_cased_word = dup
-    camel_cased_word.gsub!(/\.rb$/, '')
+    camel_cased_word.delete_suffix!('.rb')
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
 

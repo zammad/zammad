@@ -54,7 +54,7 @@ class KnowledgeBase < ApplicationModel
 
     data[:KnowledgeBase].each do |_, elem|
       elem.delete_if do |k, _|
-        k.match?(/_ids$/)
+        k.end_with?('_ids')
       end
     end
 

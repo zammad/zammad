@@ -170,7 +170,7 @@ link files + execute migration up
       file = file.sub(%r{^/}, '')
 
       # ignore files
-      if file.match?(/^README/)
+      if file.start_with?('README')
         logger.info "NOTICE: Ignore #{file}"
         next
       end
