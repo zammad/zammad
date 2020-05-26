@@ -2,6 +2,6 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
   def show?
     return if user.permissions?('knowledge_base.editor')
 
-    record.klass.find(params[:id]).internal_content?
+    record.klass.find(record.params[:id]).internal_content?
   end
 end
