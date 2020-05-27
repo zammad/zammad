@@ -6,7 +6,7 @@ class TicketsController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
 
-  prepend_before_action -> { authorize! }, only: %i[selector import_example import_start]
+  prepend_before_action -> { authorize! }, only: %i[create selector import_example import_start]
   prepend_before_action :authentication_check
 
   # GET /api/v1/tickets
