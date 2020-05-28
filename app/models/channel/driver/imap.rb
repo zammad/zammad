@@ -57,6 +57,17 @@ example
     password: 'xxx',
     keep_on_server: true,
   }
+
+  OR
+
+  params = {
+    host: 'imap.gmail.com',
+    user: 'xxx@gmail.com',
+    password: 'xxx',
+    keep_on_server: true,
+    auth_type: 'XOAUTH2'
+  }
+
   channel = Channel.last
   instance = Channel::Driver::Imap.new
   result = instance.fetch(params, channel, 'verify')
@@ -95,7 +106,7 @@ example
       folder = options[:folder]
     end
 
-    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
+    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server},auth_type=#{options.fetch(:auth_type, 'LOGIN')})"
 
     # on check, reduce open_timeout to have faster probing
     check_type_timeout = 45
@@ -111,7 +122,11 @@ example
     end
 
     timeout(check_type_timeout) do
-      @imap.login(options[:user], options[:password].dup&.force_encoding('ascii-8bit'))
+      if options[:auth_type].present?
+        @imap.authenticate(options[:auth_type], options[:user], options[:password])
+      else
+        @imap.login(options[:user], options[:password].dup&.force_encoding('ascii-8bit'))
+      end
     end
 
     timeout(check_type_timeout) do
@@ -481,7 +496,6 @@ returns
 =end
 
   def channel_has_changed?(channel)
-    Rails.logger.info "CC #{channel.id} CHECK."
     current_channel = Channel.find_by(id: channel.id)
     if !current_channel
       Rails.logger.info "Channel with id #{channel.id} is deleted in the meantime. Stop fetching."

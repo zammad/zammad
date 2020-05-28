@@ -187,6 +187,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     'click .js-emailAddressEdit': 'emailAddressEdit'
     'click .js-emailAddressDelete': 'emailAddressDelete',
     'click .js-editNotificationOutbound': 'editNotificationOutbound'
+    'click .js-migrateGoogleMail': 'migrateGoogleMail'
 
   constructor: ->
     super
@@ -378,6 +379,12 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback:      @load
       channelDriver: @channelDriver
     )
+
+  migrateGoogleMail: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('.action').data('id')
+    @navigate "#channels/google/#{id}"
+
 
 class App.ChannelEmailEdit extends App.ControllerModal
   buttonClose: true

@@ -13,7 +13,7 @@ class Channel::Driver::Smtp
       openssl_verify_mode:  'none', # optional
       user:                 'someuser',
       password:             'somepass'
-      authentication:       nil, # nil, autodetection - to use certain schema use 'plain', 'login' or 'cram_md5'
+      authentication:       nil, # nil, autodetection - to use certain schema use 'plain', 'login', 'xoauth2' or 'cram_md5'
     },
     mail_attributes,
     notification

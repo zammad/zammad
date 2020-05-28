@@ -663,6 +663,14 @@ class App.ControllerModal extends App.Controller
     @clearAlerts()
     @onSubmit(e)
 
+  startLoading: =>
+    @$('.modal-body').addClass('hide')
+    @$('.modal-loader').removeClass('hide')
+
+  stopLoading: =>
+    @$('.modal-body').removeClass('hide')
+    @$('.modal-loader').addClass('hide')
+
 class App.SessionMessage extends App.ControllerModal
   showTrySupport: true
 

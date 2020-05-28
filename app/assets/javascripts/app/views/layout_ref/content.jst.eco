@@ -81,6 +81,9 @@
   <div class="alert alert--success horizontal" role="alert">Connection established! <code class="align-right">.alert--success</code></div>
   <div class="alert alert--warning horizontal" role="alert">Delete Cookies? <code class="align-right">.alert--warning</code></div>
   <div class="alert alert--danger horizontal" role="alert">System Shutting Down! <code class="align-right">.alert--danger</code></div>
+  <h3>Alert with button</h3>
+  <div class="alert alert--success horizontal centered" role="alert">Add all 5 rules to your rule-set. <div class="flex-spacer"></div><div class="double-spacer"></div><div class="btn btn--action">Add Rules</div></div>
+  <div class="alert alert--danger horizontal centered" role="alert">Please migrate this account. <div class="flex-spacer"></div><div class="double-spacer"></div><div class="btn btn--action">Migrate now!</div></div>
 
   <hr>
 

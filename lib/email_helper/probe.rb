@@ -172,7 +172,7 @@ get result of inbound probe
 
   result = EmailHelper::Probe.inbound(
     adapter: 'imap',
-    settings: {
+    options: {
       host: 'imap.gmail.com',
       port: 993,
       ssl: true,

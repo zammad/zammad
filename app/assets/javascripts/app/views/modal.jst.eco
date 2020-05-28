@@ -17,6 +17,9 @@
       <div class="modal-body">
       <%- @content %>
       </div>
+      <div class="modal-loader js-loading hide">
+        <div class="loading icon"></div>
+      </div>
       <div class="modal-footer">
   <% if @buttonCancel: %>
         <div class="modal-leftFooter">

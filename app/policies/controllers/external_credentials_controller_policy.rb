@@ -6,7 +6,7 @@ class Controllers::ExternalCredentialsControllerPolicy < Controllers::Applicatio
 
   def provider_name
     @provider_name ||= begin
-      if record.params[:id].present?
+      if record.params[:id].present? && ExternalCredential.exists?(record.params[:id])
         ExternalCredential.find(record.params[:id]).name
       else
         record.params[:provider] || record.params[:name]

@@ -214,6 +214,8 @@ GEM
       retriable (~> 2.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
     guard (2.15.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -600,6 +602,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   github_changelog_generator
+  gmail_xoauth
   guard
   guard-livereload
   guard-symlink

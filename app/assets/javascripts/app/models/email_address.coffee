@@ -3,12 +3,22 @@ class App.EmailAddress extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/email_addresses'
 
-  @filterChannel: (options, type) ->
+  @filterChannel: (options, type, params) ->
     return options if type isnt 'collection'
+
+    localChannel = undefined
+    if params && params.channel_id
+      if App.Channel.exists(params.channel_id)
+        localChannel = App.Channel.find(params.channel_id)
+
     _.filter(
       options
       (channel) ->
-        return channel if channel && channel.area is 'Email::Account'
+        return if !channel
+        if localChannel
+          return channel if channel.area is localChannel.area
+        else
+          return channel if channel.area is 'Google::Account' || channel.area is 'Email::Account'
     )
 
   @configure_attributes = [

@@ -6688,10 +6688,16 @@ footer {
   border-radius: 3px;
   color: white;
   border: none;
+  background: hsla(0,0%,0%,.3);
 
   .icon {
     @include bidi-style(margin-right, 10px, margin-left, 0);
     fill: currentColor;
+  }
+
+  .btn {
+    background: hsla(0,0%,0%,.2);
+    color: inherit;
   }
 
   &--info {
@@ -6705,6 +6711,10 @@ footer {
   &--warning {
     color: hsl(45,98%,17%);
     background: hsl(45,98%,63%);
+    
+    .btn {
+      background: hsla(0,0%,100%,.2);
+    }
   }
 
   &--danger {
@@ -7243,6 +7253,11 @@ footer {
 
 .modal {
   @extend .zIndex-10;
+  
+  &-loader {
+    text-align: center;
+    padding: 70px;
+  }
 }
 
 .modal-dialog {
@@ -9346,7 +9361,12 @@ output {
     }
   }
 
-  .action-flow {
+  &-alert {
+    width: calc(100% + 20px);
+    margin: -10px -10px 10px;
+  }
+
+  &-flow {
     display: flex;
     flex-wrap: wrap;
 
@@ -9359,7 +9379,7 @@ output {
     }
   }
 
-  .action-separator {
+  &-separator {
     width: 1px;
     background: hsl(0,0%,97%);
     margin: 0 10px;
@@ -9378,9 +9398,9 @@ output {
     }
   }
 
-  .action-block,
-  .action-controls,
-  .action-row {
+  &-block,
+  &-controls,
+  &-row {
     padding: 10px;
 
     h2:first-child,
@@ -9389,22 +9409,26 @@ output {
     }
   }
 
-  .action-block {
+  &-block {
     &.action-block--flex {
       flex: 1;
     }
   }
 
-  .action-row {
+  &-row {
     flex-basis: 100%;
   }
 
   h3 {
     color: hsl(0,0%,60%);
     margin-top: 0;
+    
+    + .btn--text {
+      margin-bottom: -4px;
+    }
   }
 
-  .action-label {
+  &-label {
     background: hsl(197,20%,93%);
     border: 1px solid hsl(197,20%,88%);
     align-self: flex-start;
@@ -9415,7 +9439,7 @@ output {
     cursor: default;
   }
 
-  .action-flow-icon {
+  &-flow-icon {
     width: 15px;
     height: 24px;
     margin-top: 16px; /* compensate for h3 height */
@@ -9424,7 +9448,7 @@ output {
     fill: hsl(198,17%,89%);
   }
 
-  .action-controls {
+  &-controls {
     display: flex;
     @include bidi-style(margin-left, auto, margin-right, 0);
     align-self: flex-end;

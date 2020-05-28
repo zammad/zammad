@@ -381,8 +381,9 @@ class App.ControllerTabs extends App.Controller
   events:
     'click .nav-tabs [data-toggle="tab"]': 'tabRemember'
 
-  constructor: ->
-    super
+  constructor: (params) ->
+    @originParams = params # remember params for sub-controller
+    super(params)
 
     # check authentication
     if @requiredPermission
@@ -420,7 +421,7 @@ class App.ControllerTabs extends App.Controller
         params.target = tab.target
         params.el = @$("##{tab.target}")
         @controllerList ||= []
-        @controllerList.push new tab.controller(params)
+        @controllerList.push new tab.controller(_.extend(@originParams, params))
 
     # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
     if @tabs.length <= 1
@@ -450,7 +451,7 @@ class App.ControllerNavSidbar extends App.Controller
     @bind('ui:rerender',
       =>
         @render(true)
-        @updateNavigation(true)
+        @updateNavigation(true, params)
     )
 
   show: (params = {}) =>
@@ -460,7 +461,7 @@ class App.ControllerNavSidbar extends App.Controller
       for key, value of params
         if key isnt 'el' && key isnt 'shown' && key isnt 'match'
           @[key] = value
-    @updateNavigation()
+    @updateNavigation(false, params)
     if @activeController && _.isFunction(@activeController.show)
       @activeController.show(params)
 
@@ -482,7 +483,7 @@ class App.ControllerNavSidbar extends App.Controller
       selectedItem: selectedItem
     )
 
-  updateNavigation: (force) =>
+  updateNavigation: (force, params) =>
     groups = @groupsSorted()
     selectedItem = @selectedItem(groups)
     return if !selectedItem
@@ -491,7 +492,7 @@ class App.ControllerNavSidbar extends App.Controller
     @$('.sidebar li').removeClass('active')
     @$(".sidebar li a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
 
-    @executeController(selectedItem)
+    @executeController(selectedItem, params)
 
   groupsSorted: =>
 
@@ -552,16 +553,14 @@ class App.ControllerNavSidbar extends App.Controller
 
     selectedItem
 
-  executeController: (selectedItem) =>
+  executeController: (selectedItem, params) =>
 
     if @activeController
       @activeController.el.remove()
       @activeController = undefined
 
     @$('.main').append('<div>')
-    @activeController = new selectedItem.controller(
-      el: @$('.main div')
-    )
+    @activeController = new selectedItem.controller(_.extend(params, el: @$('.main div')))
 
   setPosition: (position) =>
     return if @shown

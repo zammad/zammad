@@ -27,6 +27,11 @@ class ExternalCredential < ApplicationModel
     "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider}/#{channel_id}"
   end
 
+  def self.refresh_token(provider, params)
+    backend = ExternalCredential.load_backend(provider)
+    backend.refresh_token(params)
+  end
+
   def self.load_backend(provider)
     adapter = "ExternalCredential::#{provider.camelcase}"
     require_dependency adapter.to_filename.to_s

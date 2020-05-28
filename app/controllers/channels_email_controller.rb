@@ -19,12 +19,11 @@ class ChannelsEmailController < ApplicationController
         end
         next
       end
+      assets = channel.assets(assets)
       if channel.area == 'Email::Account'
         account_channel_ids.push channel.id
-        assets = channel.assets(assets)
       elsif channel.area == 'Email::Notification' && channel.active
         notification_channel_ids.push channel.id
-        assets = channel.assets(assets)
       end
     end
     EmailAddress.all.each do |email_address|

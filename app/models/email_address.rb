@@ -30,7 +30,7 @@ check and if channel not exists reset configured channels for email addresses
     EmailAddress.all.each do |email_address|
 
       # set to active if channel exists
-      if email_address.channel_id && Channel.find_by(id: email_address.channel_id)
+      if email_address.channel_id && Channel.exists?(email_address.channel_id)
         if !email_address.active
           email_address.save!
         end
