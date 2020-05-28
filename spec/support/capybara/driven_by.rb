@@ -4,7 +4,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
 
     # start a silenced Puma as application server
-    Capybara.server = :puma, { Silent: true, Host: '0.0.0.0' }
+    Capybara.server = :puma, { Silent: true, Host: '0.0.0.0', Threads: '0:16' }
 
     # set the Host from gather container IP for CI runs
     if ENV['CI'].present?
