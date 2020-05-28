@@ -1266,9 +1266,13 @@ class App.Utils
 
     cacheOrDone = ->
       if (nextElem = elems.pop())
-        App.Utils._htmlImage2DataUrlAsync(nextElem, success: (data) ->
-          $(nextElem).attr('src', data)
-          cacheOrDone()
+        App.Utils._htmlImage2DataUrlAsync(nextElem,
+          success: (img, data) ->
+            $(nextElem).attr('src', data)
+            cacheOrDone()
+          fail: (img) ->
+            $(nextElem).remove()
+            cacheOrDone()
         )
       else
         callback(output[0].innerHTML)

@@ -4,27 +4,52 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated: 
   include_context 'basic Knowledge Base'
 
   let(:field) { find(:richtext) }
-  let(:target_translation) { published_answer.translations.first }
+  let(:target_translation) { answer.translations.first }
 
   before do
     configure_elasticsearch(required: true, rebuild: true) do
-      published_answer
+      answer
     end
   end
 
-  it 'adds text' do
-    open_page
-    insert_kb_answer(target_translation, field)
+  context 'given published answer' do
+    let(:answer) { published_answer }
 
-    expect(field).to have_text target_translation.content.body
+    it 'adds text' do
+      open_page
+      insert_kb_answer(target_translation, field)
+
+      expect(field).to have_text target_translation.content.body
+    end
+
+    it 'attaches file' do
+      open_page
+      insert_kb_answer(target_translation, field)
+
+      within(:active_content) do
+        expect(page).to have_css '.attachments .attachment--row'
+      end
+    end
   end
 
-  it 'attaches file' do
-    open_page
-    insert_kb_answer(target_translation, field)
+  context 'given answer with image' do
+    let(:answer) { create(:knowledge_base_answer, :with_image, published_at: 1.week.ago) }
 
-    within(:active_content) do
-      expect(page).to have_css '.attachments .attachment--row'
+    it 'inserts image' do
+      open_page
+      insert_kb_answer(target_translation, field)
+
+      within(:active_content) do
+        within(:richtext) do
+          wait(5).until do
+            elem   = first('img')
+            script = 'return arguments[0].naturalWidth;'
+            height = Capybara.current_session.driver.browser.execute_script(script, elem.native)
+
+            expect(height).to be_positive
+          end
+        end
+      end
     end
   end
 

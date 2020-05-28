@@ -28,5 +28,9 @@ FactoryBot.define do
     trait :with_video do
       content { build(:knowledge_base_answer_translation_content, :with_video) }
     end
+
+    trait :with_image do
+      content { build(:knowledge_base_answer_translation_content, :with_image) }
+    end
   end
 end

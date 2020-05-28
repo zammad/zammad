@@ -19,6 +19,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_image do
+      transient do
+        translation_traits { [:with_image] }
+      end
+    end
+
     trait :with_attachment do
       transient do
         attachment { File.open('spec/fixtures/upload/hello_world.txt') }
