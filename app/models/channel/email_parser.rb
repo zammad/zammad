@@ -78,6 +78,8 @@ class Channel::EmailParser
     msg = Mail::Utilities.binary_unsafe_to_crlf(msg)
     mail = Mail.new(msg)
 
+    force_parts_encoding_if_needed(mail)
+
     headers = message_header_hash(mail)
     body = message_body_hash(mail)
     message_attributes = [
@@ -499,6 +501,18 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   end
 
   private
+
+  # https://github.com/zammad/zammad/issues/2922
+  def force_parts_encoding_if_needed(mail)
+    mail.parts.each { |elem| force_single_part_encoding_if_needed(elem) }
+  end
+
+  # https://github.com/zammad/zammad/issues/2922
+  def force_single_part_encoding_if_needed(part)
+    return if part.charset != 'iso-2022-jp'
+
+    part.body = part.body.encoded.unpack1('M').tr('_', ' ').force_encoding('ISO-2022-JP').encode('UTF-8')
+  end
 
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|

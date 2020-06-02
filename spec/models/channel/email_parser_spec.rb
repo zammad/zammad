@@ -30,6 +30,15 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    describe 'handling Japanese email in ISO-2022-JP encoding' do
+      let(:mail_file) { Rails.root.join('test/data/mail/mail091.box') }
+      let(:raw_mail)  { File.read(mail_file) }
+      let(:parsed)    { described_class.new.parse(raw_mail) }
+
+      it { expect(parsed['body']).to eq '<div>このアドレスへのメルマガを解除してください。</div>' }
+      it { expect(parsed['subject']).to eq 'メルマガ解除' }
+    end
   end
 
   describe '#process' do

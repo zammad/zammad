@@ -1,0 +1,77 @@
+Return-Path: <XXXX@XXXXXXXX.jp>
+Delivered-To: support@ourdomain.com
+Received: by mail.ourdomain.com (Postfix, from userid 1004)
+	id 02458FC2EB; Wed, 27 Feb 2019 09:29:45 +0900 (JST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ourdomain.com 02458FC2EB
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+	HOST.ourdomain.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-97.0 required=5.0 tests=BAYES_50,FROM_EXCESS_BASE64,
+	HTML_MESSAGE,SPF_PASS,USER_IN_WHITELIST autolearn=no autolearn_force=no
+	version=3.4.0
+X-Spam-Report: 
+	* -100 USER_IN_WHITELIST From: address is in the user's white-list
+	*  2.0 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+	*      [score: 0.4960]
+	* -0.0 SPF_PASS SPF: sender matches SPF record
+	*  0.0 HTML_MESSAGE BODY: HTML included in message
+	*  1.0 FROM_EXCESS_BASE64 From: base64 encoded unnecessarily
+Received: from somehost.jp (mogw0822.ocn.ad.jp [xxx.xxx.xxx.23])
+	by mail.ourdomain.com (Postfix) with ESMTP id A76D9FC2EB
+	for <support@ourdomain.com>; Wed, 27 Feb 2019 09:29:44 +0900 (JST)
+Received: from mf-host (mf-host.jp [xxx.xxx.xxx.79])
+	by host.jp (Postfix) with ESMTP id 614881004FA
+	for <support@ourdomain.com>; Wed, 27 Feb 2019 09:29:44 +0900 (JST)
+Received: from ocn-host.jp ([xxx.xxx.xxx.23])
+	by mf-smf-unw005c2 with ESMTP
+	id yn3qgKZOo017Kyn6WgDN2M; Wed, 27 Feb 2019 09:29:44 +0900
+Received: from smtp.xxx.jp ([ff.fff.fff.fff])
+	by ocn-vhost.jp with ESMTP
+	id yn6WgBk4btz0Qyn6Wg5IEF; Wed, 27 Feb 2019 09:29:44 +0900
+Received: from SL2P216MB0329.DDDDDDDDDDD.OUTLOOK.COM (unknown [xx.xxx.x.85])
+	by smtp.host.jp (Postfix) with ESMTPA
+	for <support@ourdomain.com>; Wed, 27 Feb 2019 09:29:44 +0900 (JST)
+From: =?iso-2022-jp?B?GyRCMixLXE9CQDUbKEI=?= <mail@domain.jp>
+To: "support@ourdomain.com" <support@ourdomain.com>
+Subject: =?iso-2022-jp?B?GyRCJWElayVeJSwycj18GyhC?=
+Thread-Topic: =?iso-2022-jp?B?GyRCJWElayVeJSwycj18GyhC?=
+Thread-Index: AQHUzjN2aEAazYh0xE2h2E6iacecxA==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Wed, 27 Feb 2019 00:29:21 +0000
+Message-ID:
+	<SL2P216MB032969A22C6D22226A7B3613EF740@SL2P216MB0329.XXXXXXX.YYYYYYYY.OUTLOOK.COM>
+Accept-Language: ja-JP, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+Content-Type: multipart/alternative;
+	boundary="_000_SL2P216MB032969A22C6D22226A7B3613EF740SL2P216MB0329KORP_"
+MIME-Version: 1.0
+
+--_000_SL2P216MB032969A22C6D22226A7B3613EF740SL2P216MB0329KORP_
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
+
+=1B$B$3$N%"%I%l%9$X$N%a%k%^%,$r2r=3D|$7$F$/$@$5$$!#=1B(B
+
+--_000_SL2P216MB032969A22C6D22226A7B3613EF740SL2P216MB0329KORP_
+Content-Type: text/html; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-2022-=
+jp">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Meiryo, =1B$B%a%$%j%*=1B(B, &quot;Hiragino Sans&=
+quot;, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+=1B$B$3$N%"%I%l%9$X$N%a%k%^%,$r2r=3D|$7$F$/$@$5$$!#=1B(B</div>
+</body>
+</html>
+
+--_000_SL2P216MB032969A22C6D22226A7B3613EF740SL2P216MB0329KORP_--
