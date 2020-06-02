@@ -586,7 +586,7 @@ returns
     return if !user
 
     # reset password
-    user.update!(password: password)
+    user.update!(password: password, verified: true)
 
     # delete token
     Token.find_by(action: 'PasswordReset', name: token).destroy

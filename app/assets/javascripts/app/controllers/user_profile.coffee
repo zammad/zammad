@@ -77,6 +77,8 @@ class App.UserProfile extends App.Controller
 class ActionRow extends App.ObserverActionRow
   model: 'User'
   observe:
+    verified: true
+    source: true
     organization_id: true
 
   showHistory: (user) =>
@@ -100,6 +102,25 @@ class ActionRow extends App.ObserverActionRow
   newTicket: (user) =>
     @navigate("ticket/create/customer/#{user.id}")
 
+  resendVerificationEmail: (user) =>
+    @ajax(
+      id:          'email_verify_send'
+      type:        'POST'
+      url:         @apiPath + '/users/email_verify_send'
+      data:        JSON.stringify(email: user.email)
+      processData: true
+      success: (data, status, xhr) =>
+        @notify
+          type:      'success'
+          msg:       App.i18n.translateContent('Email sent to "%s". Please let the user verify his email address.', user.email)
+          removeAll: true
+      error: (data, status, xhr) =>
+        @notify
+          type:      'error'
+          msg:       App.i18n.translateContent('Failed to sent Email "%s". Please contact an administrator.', user.email)
+          removeAll: true
+    )
+
   actions: (user) =>
     actions = [
       {
@@ -120,6 +141,13 @@ class ActionRow extends App.ObserverActionRow
         title:    'Edit'
         callback: @editUser
       }
+
+      if user.verified isnt true && user.source is 'signup'
+        actions.push({
+          name:     'resend_verification_email'
+          title:    'Resend verification email'
+          callback: @resendVerificationEmail
+        })
 
     actions
 
