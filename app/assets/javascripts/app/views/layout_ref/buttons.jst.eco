@@ -4,9 +4,10 @@
   <h2>Normal Buttons</h2>
   <h3>Default</h3>
   <div class="btn">Default Button</div>
+  <div class="btn btn--active">Active Button</div>
   <div class="btn btn--slim">Slim Button</div>
-  <div class="btn is-disabled">Disabled Button (via .is-disabled)</div>
-  <div class="btn" disabled>Disabled Button (via [disabled])</div>
+  <div class="btn is-disabled">.is-disabled Button</div>
+  <div class="btn" disabled>[disabled] Button</div>
 
   <h3>Primary</h3>
   <div class="btn btn--primary">Primary Button</div>
@@ -24,6 +25,7 @@
   <div class="horizontal">
     <div class="btn btn--split--first">Split First Button</div>
     <div class="btn btn--split">Split Button</div>
+    <div class="btn btn--split btn--active">Active Split Button</div>
     <div class="btn btn--split--last">Split Last Button</div>
   </div>
 

@@ -1,4 +1,6 @@
 class App.TicketZoomArticleNew extends App.Controller
+  @include App.SecurityOptions
+
   elements:
     '.js-textarea':                       'textarea'
     '.attachmentPlaceholder':             'attachmentPlaceholder'
@@ -24,6 +26,7 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .list-entry-type div':    'changeType'
     'focus .js-textarea':            'openTextarea'
     'input .js-textarea':            'updateLetterCount'
+    'click .js-active-toggle':       'toggleButton'
 
   constructor: ->
     super
@@ -104,6 +107,12 @@ class App.TicketZoomArticleNew extends App.Controller
     # rerender, e. g. on language change
     @bind('ui:rerender', =>
       @render()
+    )
+
+    # update security options
+    @bind('ui::ticket::updateSecurityOptions', (data) =>
+      return if data.taskKey isnt @taskKey
+      @updateSecurityOptions()
     )
 
   tokanice: (type = 'email') ->
@@ -294,6 +303,11 @@ class App.TicketZoomArticleNew extends App.Controller
             params.body = "#{params.body}\n#{@signature.text()}"
           break
 
+    # add security params
+    if @securityOptionsShown()
+      params.preferences ||= {}
+      params.preferences.security = @paramsSecurity()
+
     params
 
   validate: =>
@@ -417,6 +431,15 @@ class App.TicketZoomArticleNew extends App.Controller
             @warningTextLength = articleType.warningTextLength
             @delay(@updateLetterCount, 600)
             @$('.js-textSizeLimit').removeClass('hide')
+          if name is 'security'
+            if @securityEnabled()
+              @securityOptionsShow()
+
+              # add observer to change options
+              @$('.js-to, .js-cc').bind('change', =>
+                @updateSecurityOptions()
+              )
+              @updateSecurityOptions()
 
     # convert remote src images to data uri
     @$('[data-name=body] img').each( (i,image) ->
@@ -433,6 +456,9 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     @scrollToBottom() if wasScrolledToBottom
+
+  updateSecurityOptions: =>
+    @updateSecurityOptionsRemote(@ticket.id, @ui.ticketParams(), @params(), @paramsSecurity())
 
   setArticleTypePost: (type, signaturePosition = 'bottom') =>
     for localConfig in @actions()
@@ -625,3 +651,6 @@ class App.TicketZoomArticleNew extends App.Controller
       if localConfig
         actions.push localConfig
     actions
+
+  toggleButton: (event) ->
+    @$(event.currentTarget).toggleClass('btn--active')

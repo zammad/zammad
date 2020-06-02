@@ -27,10 +27,17 @@
           <form role="form" class="ticket-create">
             <input type="hidden" name="formSenderType"/>
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
-
             <div class="ticket-form-top"></div>
+            <div class="form-group js-securityOptions hide">
+              <div class="formGroup-label">
+                <label for=""><%- @T('Security') %></label>
+              </div>
+              <div class="horizontal">
+                <div class="btn btn--action js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>
+                <div class="btn btn--action js-securitySign js-active-toggle" disabled><%- @Icon('not-signed', 'btn-inactive-icon') %><%- @Icon('signed', 'btn-active-icon') %><%- @T('Sign') %></div>
+              </div>
+            </div>
             <div class="article-form-top"></div>
-
             <div class="formset-inset">
               <div class="ticket-form-middle horizontal two-columns"></div>
               <div class="ticket-form-bottom"></div>

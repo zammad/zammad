@@ -179,6 +179,15 @@ module CommonActions
     click '.js-openDropdownMacro'
   end
 
+  def open_article_meta
+    wrapper = all(%(div.ticket-article-item)).last
+
+    wrapper.find('.article-content .textBubble').click
+    wait(3).until do
+      wrapper.find('.article-content-meta .article-meta.top').in_fixed_postion
+    end
+  end
+
   def use_template(template)
     wait(4).until do
       field  = find('#form-template select[name="id"]')

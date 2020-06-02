@@ -263,6 +263,15 @@ class TicketArticlesController < ApplicationController
     render json: result, status: :ok
   end
 
+  def retry_security_process
+    article = Ticket::Article.find(params[:id])
+    authorize!(article, :update?)
+
+    result = SecureMailing.retry(article)
+
+    render json: result
+  end
+
   private
 
   def sanitized_disposition

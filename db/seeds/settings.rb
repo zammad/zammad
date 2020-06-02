@@ -3351,6 +3351,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
+  name:        '0016_postmaster_filter_smime',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to handle secure mailing.',
+  options:     {},
+  state:       'Channel::Filter::SecureMailing',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
   name:        '0020_postmaster_filter_auto_response_check',
   area:        'Postmaster::PreFilter',
   description: 'Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.',
@@ -4548,4 +4557,46 @@ Setting.create_if_not_exists(
     permission: ['admin.ui']
   },
   frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       'S/MIME integration',
+  name:        'smime_integration',
+  area:        'Integration::Switch',
+  description: 'Defines if S/MIME encryption is enabled or not.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'smime_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       'S/MIME config',
+  name:        'smime_config',
+  area:        'Integration::SMIME',
+  description: 'Defines the S/MIME config.',
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    true,
 )

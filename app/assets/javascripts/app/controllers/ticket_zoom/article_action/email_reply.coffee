@@ -253,7 +253,7 @@ class EmailReply extends App.Controller
       icon:       'email'
       attributes: attributes
       internal:   false,
-      features:   ['attachment']
+      features:   ['attachment', 'security']
     }
 
     articleTypes

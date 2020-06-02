@@ -1,0 +1,37 @@
+<div>
+<p class="alert alert--danger js-error hide"></p>
+
+<div class="form-field-group">
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="key-upload"><%- @T('Upload Private Key') %></label>
+    </div>
+    <div class="controls">
+      <input name="file" type="file" id="key-upload">
+    </div>
+  </div>
+
+  <div class="or-divider">
+    <span><%- @T('or') %></span>
+  </div>
+
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="key-paste"><%- @T('Paste Private Key') %></label>
+    </div>
+    <div class="controls">
+      <textarea cols="25" rows="20" name="data" style="height: 200px;" id="key-paste"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="formGroup-label">
+    <label for="key-secret"><%- @T('Enter Private Key secret') %></label>
+  </div>
+  <div class="controls">
+    <input class="form-control" name="secret" type="password" id="key-secret">
+  </div>
+</div>
+
+</div>

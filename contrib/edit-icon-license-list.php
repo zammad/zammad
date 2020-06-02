@@ -131,7 +131,7 @@ $imageTypes = '{*.svg}';
 
 # Set to true if you prefer sorting images by name
 # If set to false, images will be sorted by date
-$sortByImageName = false;
+$sortByImageName = true;
 
 # Set to false if you want the oldest images to appear first
 # This is only used if images are sorted by date (see above)

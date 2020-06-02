@@ -27,6 +27,20 @@ module BrowserTestHelper
     Waiter.new(wait_handle)
   end
 
+  # This checks the number of queued AJAX requests in the frontend JS app
+  # and assures that the number is constantly zero for 0.5 seconds.
+  # It comes in handy when waiting for AJAX requests to be completed
+  # before performing further actions.
+  #
+  # @example
+  #  await_empty_ajax_queue
+  #
+  def await_empty_ajax_queue
+    wait(5, interval: 0.5).until_constant do
+      page.evaluate_script('App.Ajax.queue().length').zero?
+    end
+  end
+
   # Moves the mouse from its current position by the given offset.
   # If the coordinates provided are outside the viewport (the mouse will end up outside the browser window)
   # then the viewport is scrolled to match.
@@ -72,7 +86,6 @@ module BrowserTestHelper
 
         yield
       rescue Capybara::ElementNotFound
-
       end
     rescue Selenium::WebDriver::Error::TimeOutError => e
       # cleanup backtrace

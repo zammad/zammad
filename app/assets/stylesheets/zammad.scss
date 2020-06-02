@@ -155,7 +155,6 @@ a {
 
   &.is-disabled,
   &[disabled] {
-    pointer-events: none;
     cursor: not-allowed !important;
     opacity: .33;
   }
@@ -443,7 +442,6 @@ pre code.hljs {
   &.is-disabled,
   &[disabled],
   &:disabled {
-    pointer-events: none;
     cursor: not-allowed;
     opacity: .33;
   }
@@ -492,19 +490,31 @@ pre code.hljs {
     }
 
     &.btn--small {
-      height: 27px;
+      height: 26px;
       font-size: 11px;
       padding-left: 8px;
       padding-right: 8px;
     }
   }
 
+  &-active-icon {
+    display: none;
+  }
+
   &--active {
-    background: hsla(0,0%,0%,.5);
+    background: hsl(204,7%,28%);
     color: white;
     
     &:active {
       background: hsla(0,0%,0%,.55);
+    }
+    
+    .btn-inactive-icon {
+      display: none;
+    }
+
+    .btn-active-icon {
+      display: inline;
     }
   }
 
@@ -531,9 +541,11 @@ pre code.hljs {
   &--primary {
     color: white;
     background: hsl(203,65%,55%);
+    
     &:active {
       background: hsl(203,65%,45%);
     }
+
     .icon {
       fill: white;
       opacity: 1;
@@ -1543,7 +1555,7 @@ label,
 .checkbox.form-group label,
 .label {
   text-transform: uppercase;
-  color: hsl(198,19%,72%);
+  color: hsl(198,15%,69%);
   display: block;
   font-size: 13px;
   font-weight: normal;
@@ -1656,6 +1668,18 @@ https://stackoverflow.com/questions/17408815/fieldset-resizes-wrong-appears-to-h
 */
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
+}
+
+.form-field-group {
+  padding: 20px;
+  background: hsl(0,0%,97%);
+  --background: hsl(0,0%,97%);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
 }
 
 fieldset > .form-group {
@@ -5660,11 +5684,62 @@ footer {
       vertical-align: top;
       margin: 2px 3px 0 0;
       @include rtl(margin, 2px 0 0 3px);
+      
+      &.icon-lock {
+        margin: 0;
+      }
     }
 
     .article-meta .text-muted {
       color: #96969b;
     }
+
+  .article-meta-permanent {
+    margin: 0 55px;
+    
+    + .article-content .textBubble {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top-width: 0;
+    }
+    
+    .alert {
+      margin-bottom: 0;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 0;
+      box-shadow: 0 0 0 1px inset hsla(0,0%,0%,.04);
+      
+      &:first-child {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+      }
+      
+      &--blank {
+        background: hsl(212,14%,99%);
+        color: hsl(198,16%,70%);
+        
+        .customer.ticket-article-item & {
+          background: hsl(201,43%,96%);
+          border-color: hsl(203,38%,92%);
+        }
+      }
+
+      .icon {
+        fill: currentColor;
+        margin: 2px 6px 0 0;
+        vertical-align: top;
+        width: 14px;
+        height: 14px;
+      }
+
+      .icon-lock {
+        margin-top: 1px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 
   .internal-border {
     padding: 5px;
@@ -5775,7 +5850,7 @@ footer {
 
     .bubble-arrow {
       position: absolute;
-      width: 7px;
+      width: 6px;
       height: 9px;
       left: -6px;
       top: 15px;
@@ -5786,7 +5861,7 @@ footer {
       content: "";
       position: absolute;
       top: -1px;
-      left: 2px;
+      left: 1px;
       width: 11px;
       height: 11px;
       background: white;
@@ -6724,6 +6799,15 @@ footer {
   &--square {
     border-radius: 0;
   }
+
+  .btn {
+    margin-top: -4px;
+    margin-bottom: -5px;
+    
+    &:last-child {
+      margin-right: -5px;
+    }
+  }
 }
 
 .tags,
@@ -7412,7 +7496,6 @@ footer {
   .dropdown-icon {
     width: 16px;
     height: 16px;
-    opacity: 0.39;
   }
 
   .dropdown-menu.dropdown-menu--light {
@@ -8020,9 +8103,37 @@ footer {
   }
 }
 
+.or-divider {
+  position: relative;
+  margin: 16px 0;
+  text-align: center;
+  
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    margin-top: -1px;
+    height: 1px;
+    background: hsla(0,0%,0%,.1);
+  }
+  
+  span {
+    position: relative;
+    background: white;
+    background: var(--background, white);
+    padding: 0 10px;
+  }
+}
+
 .settings-entry {
   margin-bottom: 42px;
   max-width: 700px;
+  
+  &--stretched {
+    max-width: none;
+  }
 }
 
 .setting-controls {

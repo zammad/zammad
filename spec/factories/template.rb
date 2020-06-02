@@ -17,12 +17,13 @@ FactoryBot.define do
     trait :dummy_data do
       options do
         {
-          'formSenderType' => sender_type,
-          'title'          => title,
-          'body'           => body,
-          'customer_id'    => customer.id,
-          'group_id'       => group.id,
-          'owner_id'       => owner.id,
+          'formSenderType'         => sender_type,
+          'title'                  => title,
+          'body'                   => body,
+          'customer_id'            => customer.id,
+          'customer_id_completion' => "#{customer.firstname} #{customer.lastname} <#{customer.email}>",
+          'group_id'               => group.id,
+          'owner_id'               => owner.id,
         }
       end
     end

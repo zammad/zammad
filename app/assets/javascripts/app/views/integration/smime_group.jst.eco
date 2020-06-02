@@ -1,0 +1,24 @@
+<table class="settings-list">
+  <thead>
+    <tr>
+      <th width="55%"><%- @T('Group') %>
+      <th><%- @T('Sign') %>
+      <th><%- @T('Encryption') %>
+  </thead>
+  <tbody>
+  <% if _.isEmpty(@groups): %>
+  <tr>
+    <td colspan="6">
+      <%- @T('No Entries') %>
+    </td>
+  </tr>
+  <% else: %>
+    <% for group in @groups: %>
+      <tr data-id="<%= group.id %>">
+        <td><%= group.name %>
+        <td class="js-signDefault">
+        <td class="js-encryptionDefault">
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,14 @@
+<form>
+  <h2><%- @T('Certificates & Private Keys') %></h2>
+  <div class="settings-entry settings-entry--stretched js-certList"></div>
+
+  <div class="btn btn--primary js-addCertificate"><%- @T('Add Certificate') %></div>
+  <div class="btn js-addPrivateKey"><%- @T('Add Private Key') %></div>
+
+  <hr>
+
+  <h2><%- @T('Default Behavior') %></h2>
+  <p>Choose the default behavior of the S/MIME integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents call always manually alter the behavior for each article.</p>
+  <div class="settings-entry settings-entry--stretched js-groupList"></div>
+  <div class="btn btn--primary js-updateGroup"><%- @T('Update') %></div>
+</form>

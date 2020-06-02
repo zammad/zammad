@@ -428,6 +428,35 @@ class App.UiElement.ticket_perform_action
 
     elementRow.find('.js-setNotification').html(notificationElement).removeClass('hide')
 
+    if App.Config.get('smime_integration') == true
+      selection = App.UiElement.select.render(
+        name: "#{name}::sign"
+        multiple: false
+        options: {
+          'no': 'Do not sign email'
+          'discard': 'Sign email (if not possible, discard notification)'
+          'always': 'Sign email (if not possible, send notification anyway)'
+        }
+        value: meta.sign
+        translate: true
+      )
+
+      elementRow.find('.js-sign').html(selection)
+
+      selection = App.UiElement.select.render(
+        name: "#{name}::encryption"
+        multiple: false
+        options: {
+          'no': 'Do not encrypt email'
+          'discard': 'Encrypt email (if not possible, discard notification)'
+          'always': 'Encrypt email (if not possible, send notification anyway)'
+        }
+        value: meta.encryption
+        translate: true
+      )
+
+      elementRow.find('.js-encryption').html(selection)
+
   @buildArticleArea: (articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
     return if elementRow.find(".js-setArticle .js-body-#{articleType}").get(0)

@@ -3,6 +3,8 @@ module Channel::EmailBuild
 
 =begin
 
+generate email
+
   mail = Channel::EmailBuild.build(
     from: 'sender@example.com',
     to: 'recipient@example.com',
@@ -10,35 +12,37 @@ module Channel::EmailBuild
     content_type: 'text/plain',
   )
 
+generate email with S/MIME
+
+  mail = Channel::EmailBuild.build(
+    from: 'sender@example.com',
+    to: 'recipient@example.com',
+    body: 'somebody with some text',
+    content_type: 'text/plain',
+    security: {
+      type: 'S/MIME',
+      encryption: {
+        success: true,
+      },
+      sign: {
+        success: true,
+      },
+    }
+  )
+
 =end
 
   def self.build(attr, notification = false)
     mail = Mail.new
-
-    # set organization
-    organization = Setting.get('organization')
-    if organization
-      mail['Organization'] = organization.to_s
-    end
-
-    # notification
-    if notification
-      attr['X-Loop']                   = 'yes'
-      attr['Precedence']               = 'bulk'
-      attr['Auto-Submitted']           = 'auto-generated'
-      attr['X-Auto-Response-Suppress'] = 'All'
-    end
-
-    attr['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
-    attr['X-Mailer'] = 'Zammad Mail Service'
 
     # set headers
     attr.each do |key, value|
       next if key.to_s == 'attachments'
       next if key.to_s == 'body'
       next if key.to_s == 'content_type'
+      next if key.to_s == 'security'
 
-      mail[key.to_s] = if value && value.class != Array
+      mail[key.to_s] = if value.present? && value.class != Array
                          value.to_s
                        else
                          value
@@ -70,6 +74,7 @@ module Channel::EmailBuild
     if !html_alternative && attr[:attachments].blank?
       mail.content_type 'text/plain; charset=UTF-8'
       mail.body attr[:body]
+      SecureMailing.outgoing(mail, attr[:security])
       return mail
     end
 
@@ -119,6 +124,25 @@ module Channel::EmailBuild
         }
       end
     end
+
+    SecureMailing.outgoing(mail, attr[:security])
+
+    # set organization
+    organization = Setting.get('organization')
+    if organization.present?
+      mail['Organization'] = organization.to_s
+    end
+
+    if notification
+      mail['X-Loop']                   = 'yes'
+      mail['Precedence']               = 'bulk'
+      mail['Auto-Submitted']           = 'auto-generated'
+      mail['X-Auto-Response-Suppress'] = 'All'
+    end
+
+    mail['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
+    mail['X-Mailer'] = 'Zammad Mail Service'
+
     mail
   end
 

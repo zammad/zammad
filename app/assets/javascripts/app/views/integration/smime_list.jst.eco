@@ -1,0 +1,34 @@
+<table class="settings-list settings-list--stretch">
+  <thead>
+    <tr>
+      <th width="55%"><%- @T('Subject') %>
+      <th width="10%"><%- @T('Hash') %>
+      <th width="10%"><%- @T('Fingerprint') %>
+      <th width="10%"><%- @T('Created') %>
+      <th width="10%"><%- @T('Expires') %>
+      <th width="5%"><%- @T('Actions') %>
+  </thead>
+  <tbody>
+  <% if _.isEmpty(@certs): %>
+  <tr>
+    <td colspan="6">
+      <%- @T('No Entries') %>
+    </td>
+  </tr>
+  <% else: %>
+    <% for cert in @certs: %>
+      <tr data-id="<%= cert.id %>">
+        <td><%= cert.subject %>
+          <% if cert.private_key: %><br><i><%- @T('Including private key.') %></i><% end %>
+        <td><%= cert.doc_hash %>
+        <td title="<%= cert.fingerprint %>"><%= cert.fingerprint.substr(1, 10) %>...
+        <td><%- @datetime(cert.not_before_at) %>
+        <td><%- @datetime(cert.not_after_at) %>
+        <td>
+         <div class="btn btn--text js-remove" title="<%- @Ti('Remove') %>">
+           <%- @Icon('trash') %>
+         </div>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

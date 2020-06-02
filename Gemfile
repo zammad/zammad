@@ -38,6 +38,9 @@ gem 'aasm'
 # core - authorization
 gem 'pundit'
 
+# core - image processing
+gem 'rszr', '0.5.2'
+
 # performance - Memcached
 gem 'dalli'
 
@@ -130,8 +133,8 @@ gem 'autodiscover', git: 'https://github.com/zammad-deps/autodiscover'
 gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm'
 gem 'viewpoint'
 
-# image processing
-gem 'rszr', '0.5.2'
+# integrations - S/MIME
+gem 'openssl'
 
 # Gems used only for develop/test and not required
 # in production environments by default.

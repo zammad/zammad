@@ -48,7 +48,7 @@
       <thead><tr><th><%- @T('No Entries') %>
     </table>
   <% else: %>
-    <table class="settings-list" style="width: 100%;">
+    <table class="settings-list settings-list--stretch">
       <thead>
         <tr>
           <th width="40%"><%- @T('LDAP') %>
@@ -69,7 +69,7 @@
       <thead><tr><th><%- @T('No Entries') %>
     </table>
   <% else: %>
-    <table class="settings-list" style="width: 100%;">
+    <table class="settings-list settings-list--stretch">
       <thead>
         <tr>
           <th width="40%"><%- @T('LDAP') %>

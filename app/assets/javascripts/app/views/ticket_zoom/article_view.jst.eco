@@ -31,8 +31,50 @@
         <div class="article-meta-value flex contain-text"><%= @article.subject %></div>
       </div>
     <% end %>
+    <% if @article.preferences.security?.encryption?.success || @article.preferences.security?.sign?.success: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T('Security') %></div>
+        <div class="article-meta-value flex contain-text">
+          <% if @article.preferences.security?.encryption?.success: %>
+            <span title="<%- @Ti(@article.preferences.security?.encryption?.comment) %>"><%- @Icon('lock', 'article-meta-icon') %> <%- @T('Encrypted') %></span>
+          <% end %>
+          <% if @article.preferences.security?.encryption?.success && @article.preferences.security?.sign?.success: %>
+          ,
+          <% end %>
+          <% if @article.preferences.security?.sign?.success is not null: %>
+            <span title="<%- @Ti(@article.preferences.security?.sign?.comment) %>"><%- @Icon((if @article.preferences.security?.sign?.success is true then 'signed' else 'not-signed'), 'article-meta-icon') %> <%- @T(if @article.preferences.security?.sign?.success is true then 'Signed' else 'Unsigned') %></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
     </div>
   </div>
+</div>
+<div class="article-meta-permanent">
+<% if (@article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment) || (@article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment): %>
+  <div class="alert alert--warning">
+    <%- @Icon('not-signed') %> <%- @T('Security Error') %>
+    <% if @article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment: %>
+      <br>
+      <%- @T('Sign') %>: <%- @T(@article.preferences.security?.sign?.comment) %>
+    <% end %>
+    <% if @article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment: %>
+      <br>
+      <%- @T('Encryption') %>: <%- @T(@article.preferences.security?.encryption?.comment) %>
+    <% end %>
+    <div class="flex-spacer"></div>
+    <div class="btn btn--action btn--small js-securityRetryProcess"><%- @T('Retry security process') %></div>
+  </div>
+<% else if @article.preferences.security?.encryption?.success is true || @article.preferences.security?.sign?.success is true: %>
+  <div class="alert alert--blank horizontal">
+  <% if @article.preferences.security?.encryption?.success is true: %>
+    <span title="<%- @T('Encrypted') %>"><%- @Icon('lock') %></span>
+  <% end %>
+  <% if @article.preferences.security?.sign?.success is true: %>
+    <span title="<%- @T('Signed') %>"><%- @Icon('signed') %></span>
+  <% end %>
+  </div>
+<% end %>
 </div>
 <div class="article-content">
   <% if @article.sender.name isnt 'Agent': %>

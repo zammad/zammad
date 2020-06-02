@@ -355,6 +355,7 @@ GEM
     omniauth-weibo-oauth2 (0.5.2)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
+    openssl (2.1.2)
     parallel (1.19.1)
     parser (2.7.1.2)
       ast (~> 2.4.0)
@@ -629,6 +630,7 @@ DEPENDENCIES
   omniauth-saml
   omniauth-twitter
   omniauth-weibo-oauth2
+  openssl
   pg (= 0.21.0)
   pre-commit
   pry-rails

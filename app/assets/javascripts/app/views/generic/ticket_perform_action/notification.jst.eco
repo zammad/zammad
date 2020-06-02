@@ -24,5 +24,13 @@
   <div class="formGroup-label">
     <label><%- @T('Body') %></label>
   </div>
-  <div class="controls js-body js-body-<%- @notificationType %>"><div class="richtext form-control"><div contenteditable="true" data-name="<%= @name %>::body"><%- @meta.body %></div></div></div>
+  <div class="controls js-body js-body-<%- @notificationType %>">
+    <div class="richtext form-control">
+      <div contenteditable="true" data-name="<%= @name %>::body"><%- @meta.body %></div>
+    </div>
+  </div>
+  <div class="controls js-sign">
+  </div>
+  <div class="controls js-encryption">
+  </div>
 </div>

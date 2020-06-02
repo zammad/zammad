@@ -87,6 +87,7 @@ class Channel::EmailParser
       headers,
       body,
       self.class.sender_attributes(headers),
+      raw: msg,
     ]
     message_attributes.reduce({}.with_indifferent_access, &:merge)
   end

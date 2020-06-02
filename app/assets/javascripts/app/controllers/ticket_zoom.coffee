@@ -709,12 +709,11 @@ class App.TicketZoom extends App.Controller
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
     ticketSidebar = @$('.tabsSidebar-tab[data-tab="ticket"]')
-    articleForm   = @$('.article-add')
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @forRemoveMeta(@formParam(ticketForm))
-    params.article = @forRemoveMeta(@formParam(articleForm))
+    params.ticket  = @forRemoveMeta(@ticketParams())
+    params.article = @forRemoveMeta(@articleNew.params())
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
@@ -743,6 +742,9 @@ class App.TicketZoom extends App.Controller
 
       resetButton.removeClass('hide')
 
+  ticketParams: =>
+    @formParam(@$('.edit'))
+
   submitDisable: (e) =>
     if e
       @formDisable(e)
@@ -767,7 +769,7 @@ class App.TicketZoom extends App.Controller
       @submitEnable(e)
       return
 
-    ticketParams = @formParam(@$('.edit'))
+    ticketParams = @ticketParams()
     articleParams = @articleNew.params()
 
     # validate ticket

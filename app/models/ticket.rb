@@ -1498,6 +1498,57 @@ result
       return
     end
 
+    security = nil
+    if Setting.get('smime_integration')
+      sign       = value['sign'].present? && value['sign'] != 'no'
+      encryption = value['encryption'].present? && value['encryption'] != 'no'
+      security   = {
+        type:       'S/MIME',
+        sign:       {
+          success: false,
+        },
+        encryption: {
+          success: false,
+        },
+      }
+
+      if sign
+        sign_found = false
+        begin
+          list = Mail::AddressList.new(email_address.email)
+          from = list.addresses.first.to_s
+          cert = SMIMECertificate.for_sender_email_address(from)
+          if cert && !cert.expired?
+            sign_found                = true
+            security[:sign][:success] = true
+            security[:sign][:comment] = "certificate for #{email_address.email} found"
+          end
+        rescue # rubocop:disable Lint/SuppressedException
+        end
+
+        if value['sign'] == 'discard' && !sign_found
+          logger.info "Unable to send trigger based notification to #{recipient_string} because of missing group #{group.name} email #{email_address.email} certificate for signing (discarding notification)."
+          return
+        end
+      end
+
+      if encryption
+        certs_found = false
+        begin
+          SMIMECertificate.for_recipipent_email_addresses!(recipients_checked)
+          certs_found                     = true
+          security[:encryption][:success] = true
+          security[:encryption][:comment] = "certificates found for #{recipient_string}"
+        rescue # rubocop:disable Lint/SuppressedException
+        end
+
+        if value['encryption'] == 'discard' && !certs_found
+          logger.info "Unable to send trigger based notification to #{recipient_string} because public certificate is not available for encryption (discarding notification)."
+          return
+        end
+      end
+    end
+
     objects = build_notification_template_objects(article)
 
     # get subject
@@ -1516,6 +1567,12 @@ result
 
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
 
+    preferences                  = {}
+    preferences[:perform_origin] = perform_origin
+    if security.present?
+      preferences[:security] = security
+    end
+
     message = Ticket::Article.create(
       ticket_id:     id,
       to:            recipient_string,
@@ -1525,9 +1582,7 @@ result
       internal:      value['internal'] || false, # default to public if value was not set
       sender:        Ticket::Article::Sender.find_by(name: 'System'),
       type:          Ticket::Article::Type.find_by(name: 'email'),
-      preferences:   {
-        perform_origin: perform_origin,
-      },
+      preferences:   preferences,
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -62,7 +62,8 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
           subject:      subject,
           content_type: record.content_type,
           body:         record.body,
-          attachments:  record.attachments
+          attachments:  record.attachments,
+          security:     record.preferences[:security],
         },
         notification
       )

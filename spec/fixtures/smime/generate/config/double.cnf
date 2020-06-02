@@ -1,0 +1,15 @@
+[ smime ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectKeyIdentifier = hash
+#authorityKeyIdentifier = keyid:always,issuer
+authorityKeyIdentifier = keyid,issuer
+extendedKeyUsage = emailProtection
+subjectAltName=@alt_names
+
+[alt_names]
+IP.1 = 192.168.0.23
+IP.2 = 192.168.0.42
+email.1 = smimedouble@example.com
+email.2 = smimedouble@example.de
+otherName = 1.2.3.4;UTF8:some other identifier
