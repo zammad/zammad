@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
 
-  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image]
+  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]
   prepend_before_action :authentication_check_only, only: [:create]
 
   # @path       [GET] /users
@@ -143,6 +143,15 @@ class UsersController < ApplicationController
       # check if user already exists
       exists = User.exists?(email: clean_params[:email].downcase.strip)
       raise Exceptions::UnprocessableEntity, "Email address '#{clean_params[:email].downcase.strip}' is already used for other user." if exists
+
+      # check password policy
+      if clean_params[:password].present?
+        result = password_policy(clean_params[:password])
+        if result != true
+          render json: { error: result }, status: :unprocessable_entity
+          return
+        end
+      end
 
       user = User.new(clean_params)
       user.associations_from_param(params)
@@ -507,6 +516,8 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
     user = User.signup_verify_via_token(params[:token], current_user)
     raise Exceptions::UnprocessableEntity, 'Invalid token!' if !user
 
+    current_user_set(user)
+
     render json: { message: 'ok', user_email: user.email }, status: :ok
   end
 
@@ -535,16 +546,11 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
     raise Exceptions::UnprocessableEntity, 'No email!' if !params[:email]
 
     user = User.find_by(email: params[:email].downcase)
-    if !user
+    if !user || user.verified == true
       # result is always positive to avoid leaking of existing user accounts
       render json: { message: 'ok' }, status: :ok
       return
     end
-
-    #if user.verified == true
-    #  render json: { error: 'Already verified!' }, status: :unprocessable_entity
-    #  return
-    #end
 
     Token.create(action: 'Signup', user_id: user.id)
 
@@ -1053,13 +1059,13 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def password_policy(password)
     if Setting.get('password_min_size').to_i > password.length
-      return ["Can\'t update password, it must be at least %s characters long!", Setting.get('password_min_size')]
+      return ['Invalid password, it must be at least %s characters long!', Setting.get('password_min_size')]
     end
     if Setting.get('password_need_digit').to_i == 1 && password !~ /\d/
-      return ["Can't update password, it must contain at least 1 digit!"]
+      return ['Invalid password, it must contain at least 1 digit!']
     end
     if Setting.get('password_min_2_lower_2_upper_characters').to_i == 1 && ( password !~ /[A-Z].*[A-Z]/ || password !~ /[a-z].*[a-z]/ )
-      return ["Can't update password, it must contain at least 2 lowercase and 2 uppercase characters!"]
+      return ['Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!']
     end
 
     true

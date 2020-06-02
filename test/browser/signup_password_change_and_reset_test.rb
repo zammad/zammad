@@ -23,65 +23,26 @@ class SignupPasswordChangeAndResetTest < TestCase
     )
     set(
       css:   'input[name="password"]',
-      value: 'some-pass',
+      value: 'some-pass-123',
     )
     set(
       css:   'input[name="password_confirm"]',
-      value: 'some-pass',
+      value: 'some-pass-123',
     )
     click(css: 'button.js-submit')
 
-    watch_for_disappear(
-      css:     '.signup',
-      timeout: 10,
-    )
-
-    match(
-      css:       '.user-menu .user a',
-      value:     signup_user_email,
-      attribute: 'title',
-    )
-
-    # check email verify
-    location(url: "#{browser_url}#email_verify/not_existing")
     watch_for(
       css:   '#content',
-      value: 'Unable to verify email',
+      value: 'Registration successful!',
     )
-    logout()
 
-    login(
-      username: signup_user_email,
-      password: 'some-pass',
-      url:      "#{browser_url}#email_verify/not_existing2",
-    )
-    watch_for(
-      css:   '#content',
-      value: 'Unable to verify email',
-    )
-    execute(
-      js: 'App.Event.trigger("user_signup_verify", App.Session.get())',
-    )
-    modal_ready()
-    click(css: '.modal .js-submit')
+    # auto login via token trick in dev mode
+    click(css: '.signup .js-submitResend')
 
-    execute(
-      js: 'App.Auth.logout()',
-    )
-    sleep 6
     watch_for(
-      css: '#login',
+      css:   '.content.active',
+      value: 'Welcome!',
     )
-    login(
-      username: signup_user_email,
-      password: 'some-pass',
-    )
-    watch_for(
-      css:   '#content',
-      value: 'Your email address has been verified',
-    )
-    modal_disappear()
-    sleep 2
 
     # change password
     click(css: '.navbar-items-personal .user a')
@@ -109,7 +70,7 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password_old"]',
-      value: 'some-pass',
+      value: 'some-pass-123',
     )
     set(
       css:   'input[name="password_new_confirm"]',

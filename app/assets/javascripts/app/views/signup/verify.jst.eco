@@ -1,0 +1,16 @@
+<div class="signup fullscreen">
+  <div class="fullscreen-center">
+    <div class="hero-unit fullscreen-body">
+      <h1><%- @T('Registration successful!') %></h1>
+      <p><%- @T('Thanks for joining. Email sent to "%s".', @email) %></p>
+      <p><%- @T('Please click the link in the verification email.') %> <%- @T('If you don\'t see the email, check other places it might be, like your junk, spam, social, or other folders.') %></p>
+      <form>
+        <input type="hidden" name="email" value="<%= @email %>">
+        <div class="form-controls">
+          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Go Back') %></a>
+          <button class="btn btn--primary js-submitResend align-right"><%- @T('Resend verification email') %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

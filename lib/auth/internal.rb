@@ -12,7 +12,11 @@ class Auth
         return true
       end
 
-      PasswordHash.verified?(user.password, password)
+      password_verified = PasswordHash.verified?(user.password, password)
+
+      raise Exceptions::NotAuthorized, 'Please verify your account before you can login!' if !user.verified && user.source == 'signup' && password_verified
+
+      password_verified
     end
 
     private
