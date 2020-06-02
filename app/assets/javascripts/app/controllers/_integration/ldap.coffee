@@ -461,13 +461,12 @@ class ConnectionWizard extends App.WizardModal
 
     el = []
     for source, dest of user_attribute_map
-      continue if !(source of @wizardConfig.wizardData.backend_user_attributes)
       el.push @buildRowUserAttribute(source, dest)
     el
 
   buildRowUserAttribute: (source, dest) =>
     el = $(App.view('integration/ldap_user_attribute_row')())
-    el.find('.js-ldapAttribute').html(@createSelection('source', @wizardConfig.wizardData.backend_user_attributes, source))
+    el.find('.js-ldapAttribute').html(@createSelection('source', @wizardConfig.wizardData.backend_user_attributes, source, true))
     el.find('.js-userAttribute').html(@createSelection('dest', @wizardConfig.wizardData.user_attributes, dest))
     el
 
