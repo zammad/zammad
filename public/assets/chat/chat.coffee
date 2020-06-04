@@ -363,6 +363,24 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ponieważ w ciągu ostatnich %s minut nie odpowiedziałeś, Twoja rozmowa z <strong>%s</strong> została zamknięta.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa została zamknięta.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przykro nam, ale to trwa dłużej niż się spodziewamy. Spróbuj ponownie później lub wyślij nam wiadomość e-mail. Dziękuję!'
+      'pt-br': {
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> fale conosco!',
+        'Scroll down to see new messages': 'Role para baixo, para ver nosvas mensagens',
+        'Online': 'Online',
+        'Offline': 'Desconectado',
+        'Connecting': 'Conectando',
+        'Connection re-established': 'Conexão restabelecida',
+        'Today': 'Hoje',
+        'Send': 'Enviar',
+        'Chat closed by %s': 'Chat encerrado por %s',
+        'Compose your message...': 'Escreva sua mensagem...',
+        'All colleagues are busy.': 'Todos os agentes estão ocupados.',
+        'You are on waiting list position <strong>%s</strong>.': 'Você está na posição <strong>%s</strong> na fila de espera.',
+        'Start new conversation': 'Iniciar uma nova conversa',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Como você não respondeu nos últimos %s minutos sua conversa com <strong>%s</strong> foi encerrada.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Como você não respondeu nos últimos %s minutos sua conversa foi encerrada.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Desculpe, mas o tempo de espera por um agente foi excedido. Tente novamente mais tarde ou nós envie um email. Obrigado'
+      },
       'zh-cn':
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!'
         'Scroll down to see new messages': '向下滚动以查看新消息'
