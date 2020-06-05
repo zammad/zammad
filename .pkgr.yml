@@ -84,6 +84,17 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+  ubuntu-20.04:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server|sqlite
+      - libimlib2
+      - libimlib2-dev
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
   sles-12:
     dependencies:
       - curl
