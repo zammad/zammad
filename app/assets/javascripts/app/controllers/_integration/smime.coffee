@@ -55,12 +55,12 @@ class Form extends App.Controller
 
   addCertificate: =>
     new Certificate(
-      callback: @list
+      callback: @certList
     )
 
   addPrivateKey: =>
     new PrivateKey(
-      callback: @list
+      callback: @certList
     )
 
   updateGroup: (e) =>

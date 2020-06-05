@@ -15,7 +15,7 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
   end
 
   it 'enabling and adding of public and private key' do
-    visit '#system/integration/smime'
+    visit 'system/integration/smime'
 
     # enable S/MIME
     click 'label[for=setting-switch]'
