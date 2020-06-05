@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
-  let!(:channel) do
+  let(:channel) do
     create(:channel,
            area:    'Google::Account',
            options: {
