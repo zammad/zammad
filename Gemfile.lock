@@ -547,7 +547,7 @@ GEM
       hashdiff
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     writeexcel (1.0.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
