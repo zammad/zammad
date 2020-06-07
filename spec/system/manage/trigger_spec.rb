@@ -42,7 +42,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
         tag_item = create :tag_item
 
         visit '/#manage/trigger'
-        click '.page-header-meta .btn--success'
+        click_on 'New Trigger'
 
         modal_ready
 
