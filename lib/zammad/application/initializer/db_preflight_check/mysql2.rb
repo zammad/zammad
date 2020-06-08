@@ -41,8 +41,8 @@ module Zammad
                 Please increase this value in your #{vendor} configuration accordingly.
               MSG
             end
-          # Setting.get will fail if 'settings' table does not exist
           rescue ActiveRecord::StatementInvalid
+            # Setting.get will fail if 'settings' table does not exist
           end
 
           def self.connection

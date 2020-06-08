@@ -137,7 +137,7 @@ class String
       string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
         link = $3
         text = $6
-        text.gsub!(/\<.+?\>/, '')
+        text.gsub!(/<.+?>/, '')
 
         link_compare = link.dup
         if link_compare.present?
@@ -218,7 +218,7 @@ class String
     string.gsub!(%r{</td>}i, ' ')
 
     # strip all other tags
-    string.gsub!(/\<.+?\>/, '')
+    string.gsub!(/<.+?>/, '')
 
     # replace multiple spaces with one
     string.gsub!(/  /, ' ')
@@ -348,8 +348,8 @@ class String
     string.gsub!(/(<br>[[:space:]]*){3,}/im, '<br><br>')
     string.gsub!(%r\(<br(|/)>[[:space:]]*){3,}\im, '<br/><br/>')
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
-    string.gsub!(%r{\A(<br(|\/)>[[:space:]]*)*}i, '')
-    string.gsub!(%r{[[:space:]]*(<br(|\/)>[[:space:]]*)*\Z}i, '')
+    string.gsub!(%r{\A(<br(|/)>[[:space:]]*)*}i, '')
+    string.gsub!(%r{[[:space:]]*(<br(|/)>[[:space:]]*)*\Z}i, '')
     string.gsub!(%r{(<p></p>){1,10}\Z}i, '')
 
     string.signature_identify('html')

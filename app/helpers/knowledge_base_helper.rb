@@ -11,7 +11,7 @@ module KnowledgeBaseHelper
     custom_address = knowledge_base.custom_address_uri
     return path unless custom_address
 
-    output = path.gsub(%r{^\/help}, custom_address.path || '').presence || '/'
+    output = path.gsub(%r{^/help}, custom_address.path || '').presence || '/'
 
     if full
       fqdn = request.headers.env['SERVER_NAME']

@@ -28,7 +28,7 @@ module KnowledgeBaseRichTextHelper
   end
 
   def prepare_rich_text_videos(input)
-    input.gsub(/\(([\s]*)widget:([\s]*)video[\W]([\s\S])+?\)/) do |match|
+    input.gsub(/\((\s*)widget:(\s*)video\W([\s\S])+?\)/) do |match|
       settings = match
         .slice(1...-1)
         .split(',')

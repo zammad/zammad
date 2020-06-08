@@ -9,21 +9,19 @@ class KnowledgeBase::Category < ApplicationModel
 
   belongs_to :knowledge_base, inverse_of: :categories
 
-  has_many   :answers,  class_name:  'KnowledgeBase::Answer',
-                        foreign_key: :category_id,
-                        inverse_of:  :category,
-                        dependent:   :restrict_with_exception
+  has_many   :answers,  class_name: 'KnowledgeBase::Answer',
+                        inverse_of: :category,
+                        dependent:  :restrict_with_exception
 
   has_many   :children, class_name:  'KnowledgeBase::Category',
                         foreign_key: :parent_id,
                         inverse_of:  :parent,
                         dependent:   :restrict_with_exception
 
-  belongs_to :parent,   class_name:  'KnowledgeBase::Category',
-                        foreign_key: :parent_id,
-                        inverse_of:  :children,
-                        touch:       true,
-                        optional:    true
+  belongs_to :parent,   class_name: 'KnowledgeBase::Category',
+                        inverse_of: :children,
+                        touch:      true,
+                        optional:   true
 
   validates :category_icon, presence: true
 

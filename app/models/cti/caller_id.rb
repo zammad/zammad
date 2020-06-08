@@ -226,7 +226,7 @@ returns
       # see specs for example
       return [] if !text.is_a?(String)
 
-      text.scan(/([\d|\s|\-|\(|\)]{6,26})/).map do |match|
+      text.scan(/([\d|\s|\-|(|)]{6,26})/).map do |match|
         normalize_number(match[0])
       end
     end

@@ -86,6 +86,7 @@ module BrowserTestHelper
 
         yield
       rescue Capybara::ElementNotFound
+        # doesn't exist yet
       end
     rescue Selenium::WebDriver::Error::TimeOutError => e
       # cleanup backtrace

@@ -16,7 +16,7 @@ class Ldap
     #
     # @return [Boolean]
     def self.valid?(string)
-      string.match?(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w+/)
+      string.match?(/\w{8}-\w{4}-\w{4}-\w{4}-\w+/)
     end
 
     # Convers a given GUID string into the HEX equivalent.

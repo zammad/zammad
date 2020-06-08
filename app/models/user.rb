@@ -892,7 +892,7 @@ try to find correct name
 
     # -no name- "firstname.lastname@example.com"
     if string.blank? && email.present?
-      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
+      scan = email.scan(/^(.+?)\.(.+?)@.+?$/)
       if scan[0].present?
         if scan[0][0].present?
           firstname = scan[0][0].strip

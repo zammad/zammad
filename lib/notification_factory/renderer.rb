@@ -105,7 +105,7 @@ examples how to use
       end
 
       arguments = nil
-      if /\A(?<method_id>[^\(]+)\((?<parameter>[^\)]+)\)\z/ =~ method
+      if /\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z/ =~ method
 
         if parameter != parameter.to_i.to_s
           value = "\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}"

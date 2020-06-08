@@ -31,7 +31,7 @@ class Sequencer
               # model___name
               # model_name
               # model_name
-              transliterated.gsub(%r{[\s\/]}, '_').underscore
+              transliterated.gsub(%r{[\s/]}, '_').underscore
             end
 
             def transliterated

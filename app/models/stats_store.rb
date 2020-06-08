@@ -3,11 +3,8 @@
 class StatsStore < ApplicationModel
   include HasSearchIndexBackend
   include StatsStore::SearchIndex
-
-  # rubocop:disable Rails/InverseOf
-  belongs_to :stats_store_object, class_name: 'ObjectLookup', foreign_key: 'stats_store_object_id', optional: true
-  belongs_to :related_stats_store_object, class_name: 'ObjectLookup', foreign_key: 'related_stats_store_object_id', optional: true
-  # rubocop:enable Rails/InverseOf
+  belongs_to :stats_store_object, class_name: 'ObjectLookup', optional: true
+  belongs_to :related_stats_store_object, class_name: 'ObjectLookup', optional: true
 
   store :data
 

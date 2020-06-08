@@ -48,7 +48,7 @@ class Channel::Filter::MonitoringBase
 
     # icinga - get state by body - new templates
     if result['state'].blank?
-      if mail[:body] =~ /.+?\sis\s(.+?)\!/
+      if mail[:body] =~ /.+?\sis\s(.+?)!/
         result['state'] = $1
       end
     end
@@ -57,7 +57,7 @@ class Channel::Filter::MonitoringBase
     # Subject: [PROBLEM] Ping IPv4 on host1234.dc.example.com is WARNING!
     # Subject: [PROBLEM] Host host1234.dc.example.com is DOWN!
     if result['state'].blank?
-      if mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)\!/
+      if mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)!/
         result['state'] = $2
       end
     end

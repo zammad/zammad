@@ -21,7 +21,7 @@ class KnowledgeBase::MenuItem < ApplicationModel
 
     url.strip!
 
-    return if url.match? %r{^\S+\:\/\/}
+    return if url.match? %r{^\S+://}
     return if url[0] == '/'
 
     self.url = "http://#{url}"

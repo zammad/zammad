@@ -8,7 +8,7 @@ if Kernel.respond_to?(:open_uri_original_open)
       if name.respond_to?(:open) && name.method(:open).parameters.present?
         name.open(*rest, &block)
       elsif name.respond_to?(:to_str) &&
-            %r{\A[A-Za-z][A-Za-z0-9+\-\.]*://} =~ name &&
+            %r{\A[A-Za-z][A-Za-z0-9+\-.]*://} =~ name &&
             (uri = URI.parse(name)).respond_to?(:open)
         uri.open(*rest, &block)
       else

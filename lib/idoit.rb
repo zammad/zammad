@@ -124,7 +124,7 @@ or with filter:
       },
     )
 
-    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ /JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<\!DOCTYPE\s+html/i
+    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ /JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html/i
     raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
 
     # add link to idoit

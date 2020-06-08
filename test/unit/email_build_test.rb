@@ -7,7 +7,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     result = Channel::EmailBuild.html_complete_check(html)
 
     assert(result.start_with?('<!DOCTYPE'), 'test 1')
-    assert(result !~ /^.+?<\!DOCTYPE/, 'test 1')
+    assert(result !~ /^.+?<!DOCTYPE/, 'test 1')
     assert(result =~ /<html>/, 'test 1')
     assert(result =~ /font-family/, 'test 1')
     assert(result =~ %r{<b>test</b>}, 'test 1')
@@ -15,8 +15,8 @@ class EmailBuildTest < ActiveSupport::TestCase
     html   = 'invalid <!DOCTYPE html><html><b>test</b></html>'
     result = Channel::EmailBuild.html_complete_check(html)
 
-    assert(result !~ /^<\!DOCTYPE/, 'test 2')
-    assert(result =~ /^.+?<\!DOCTYPE/, 'test 2')
+    assert(result !~ /^<!DOCTYPE/, 'test 2')
+    assert(result =~ /^.+?<!DOCTYPE/, 'test 2')
     assert(result =~ /<html>/, 'test 2')
     assert(result !~ /font-family/, 'test 2')
     assert(result =~ %r{<b>test</b>}, 'test 2')
