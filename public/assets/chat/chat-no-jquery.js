@@ -150,6 +150,79 @@ window.zammadChatTemplates["chat"] = function(__obj) {
   return __out.join('');
 };
 
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["customer_timeout"] = function(__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      __out.push('<div class="zammad-chat-modal-text">\n  ');
+    
+      if (this.agent) {
+        __out.push('\n    ');
+        __out.push(this.T('Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.', this.delay, this.agent));
+        __out.push('\n  ');
+      } else {
+        __out.push('\n    ');
+        __out.push(this.T('Since you didn\'t respond in the last %s minutes your conversation got closed.', this.delay));
+        __out.push('\n  ');
+      }
+    
+      __out.push('\n  <br>\n  <div class="zammad-chat-button js-restart"');
+    
+      if (this.background) {
+        __out.push(__sanitize(" style='background: " + this.background + "'"));
+      }
+    
+      __out.push('>');
+    
+      __out.push(this.T('Start new conversation'));
+    
+      __out.push('</div>\n</div>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
@@ -669,6 +742,24 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ponieważ w ciągu ostatnich %s minut nie odpowiedziałeś, Twoja rozmowa z <strong>%s</strong> została zamknięta.',
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa została zamknięta.',
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przykro nam, ale to trwa dłużej niż się spodziewamy. Spróbuj ponownie później lub wyślij nam wiadomość e-mail. Dziękuję!'
+      },
+      'pt-br': {
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> fale conosco!',
+        'Scroll down to see new messages': 'Role para baixo, para ver nosvas mensagens',
+        'Online': 'Online',
+        'Offline': 'Desconectado',
+        'Connecting': 'Conectando',
+        'Connection re-established': 'Conexão restabelecida',
+        'Today': 'Hoje',
+        'Send': 'Enviar',
+        'Chat closed by %s': 'Chat encerrado por %s',
+        'Compose your message...': 'Escreva sua mensagem...',
+        'All colleagues are busy.': 'Todos os agentes estão ocupados.',
+        'You are on waiting list position <strong>%s</strong>.': 'Você está na posição <strong>%s</strong> na fila de espera.',
+        'Start new conversation': 'Iniciar uma nova conversa',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Como você não respondeu nos últimos %s minutos sua conversa com <strong>%s</strong> foi encerrada.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Como você não respondeu nos últimos %s minutos sua conversa foi encerrada.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Desculpe, mas o tempo de espera por um agente foi excedido. Tente novamente mais tarde ou nós envie um email. Obrigado'
       },
       'zh-cn': {
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!',
@@ -2164,79 +2255,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   })(Base);
   return window.ZammadChat = ZammadChat;
 })(window);
-
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["customer_timeout"] = function(__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      __out.push('<div class="zammad-chat-modal-text">\n  ');
-    
-      if (this.agent) {
-        __out.push('\n    ');
-        __out.push(this.T('Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.', this.delay, this.agent));
-        __out.push('\n  ');
-      } else {
-        __out.push('\n    ');
-        __out.push(this.T('Since you didn\'t respond in the last %s minutes your conversation got closed.', this.delay));
-        __out.push('\n  ');
-      }
-    
-      __out.push('\n  <br>\n  <div class="zammad-chat-button js-restart"');
-    
-      if (this.background) {
-        __out.push(__sanitize(" style='background: " + this.background + "'"));
-      }
-    
-      __out.push('>');
-    
-      __out.push(this.T('Start new conversation'));
-    
-      __out.push('</div>\n</div>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
 
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
