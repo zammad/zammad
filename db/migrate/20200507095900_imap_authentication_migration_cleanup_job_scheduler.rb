@@ -8,6 +8,7 @@ class ImapAuthenticationMigrationCleanupJobScheduler < ActiveRecord::Migration[5
       name:          'Delete obsolete classic IMAP backup.',
       method:        'ImapAuthenticationMigrationCleanupJob.perform_now',
       period:        1.day,
+      last_run:      Time.zone.now,
       prio:          2,
       active:        true,
       updated_by_id: 1,
