@@ -11461,7 +11461,8 @@ span.is-disabled {
   }
 
   .richtext-content {
-    word-break: break-all;
+    word-break: break-word;
+    word-wrap: anywhere;
   }
 
   .page-header {
