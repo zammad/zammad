@@ -48,7 +48,7 @@ App.SecurityOptions =
               if smimeConfig.group_id[type][ticket.group_id.toString()] == false
                 selected[selector] = false
 
-          @$('.js-securityEncrypt').attr('title', data.encryption.comment)
+          @$('.js-securityEncryptComment').attr('title', data.encryption.comment)
 
           # if encryption is possible
           if data.encryption.success is true
@@ -65,7 +65,7 @@ App.SecurityOptions =
             @$('.js-securityEncrypt').attr('disabled', true)
             @$('.js-securityEncrypt').removeClass('btn--active')
 
-          @$('.js-securitySign').attr('title', data.sign.comment)
+          @$('.js-securitySignComment').attr('title', data.sign.comment)
 
           # if sign is possible
           if data.sign.success is true

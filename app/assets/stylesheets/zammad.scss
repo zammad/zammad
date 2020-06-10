@@ -155,6 +155,7 @@ a {
 
   &.is-disabled,
   &[disabled] {
+    pointer-events: none;
     cursor: not-allowed !important;
     opacity: .33;
   }
@@ -442,6 +443,7 @@ pre code.hljs {
   &.is-disabled,
   &[disabled],
   &:disabled {
+    pointer-events: none;
     cursor: not-allowed;
     opacity: .33;
   }

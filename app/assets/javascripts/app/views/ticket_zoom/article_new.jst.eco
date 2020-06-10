@@ -61,8 +61,12 @@
           <label for=""><%- @T('Security') %></label>
         </div>
         <div class="horizontal">
-          <div class="btn btn--action js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>
-          <div class="btn btn--action js-securitySign js-active-toggle" disabled><%- @Icon('not-signed', 'btn-inactive-icon') %><%- @Icon('signed', 'btn-active-icon') %><%- @T('Sign') %></div>
+          <span class="js-securityEncryptComment">
+            <div class="btn btn--action js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>
+          </span>
+          <span class="js-securitySignComment" style="margin-left: 10px;">
+            <div class="btn btn--action js-securitySign js-active-toggle" disabled><%- @Icon('not-signed', 'btn-inactive-icon') %><%- @Icon('signed', 'btn-active-icon') %><%- @T('Sign') %></div>
+          </span>
         </div>
       </div>
 
