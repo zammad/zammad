@@ -57,6 +57,10 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   # SAML database connect
   provider :saml_database
+
+  # discord database connect
+  provider :discord_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
+
 end
 
 # This fixes issue #1642 and is required for setups in which Zammad is used

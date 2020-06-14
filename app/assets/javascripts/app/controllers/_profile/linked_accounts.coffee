@@ -111,4 +111,9 @@ App.Config.set('auth_provider_all', {
     name:   'SAML'
     config: 'auth_saml'
     class:  'saml'
+  discord:
+    url:    '/auth/discord',
+    name:   'Discord',
+    config: 'auth_discord',
+    class:  'discord'
 })

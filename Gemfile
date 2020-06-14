@@ -83,6 +83,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
 gem 'omniauth-weibo-oauth2'
+gem 'omniauth-discord'
 
 # channels
 gem 'gmail_xoauth'
