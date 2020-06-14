@@ -1739,7 +1739,6 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 
-
 Setting.create_if_not_exists(
   title:       'Authentication via %s',
   name:        'auth_discord',
@@ -1797,8 +1796,6 @@ Setting.create_if_not_exists(
   },
   frontend:    false
 )
-
-
 
 Setting.create_if_not_exists(
   title:       'Minimum length',

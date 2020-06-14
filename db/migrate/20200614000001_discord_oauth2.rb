@@ -3,6 +3,7 @@ class DiscordOauth2 < ActiveRecord::Migration[4.2]
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
+
     Setting.find_by(name: 'auth_discord').destroy
     Setting.find_by(name: 'auth_discord_credentials').destroy
     Setting.create_if_not_exists(

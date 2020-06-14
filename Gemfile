@@ -73,6 +73,7 @@ gem 'oauth2'
 gem 'omniauth-rails_csrf_protection'
 
 # authentication - third party providers
+gem 'omniauth-discord'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-gitlab'
@@ -83,7 +84,6 @@ gem 'omniauth-oauth2'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
 gem 'omniauth-weibo-oauth2'
-gem 'omniauth-discord'
 
 # channels
 gem 'gmail_xoauth'
