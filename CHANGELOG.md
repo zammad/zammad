@@ -1,15 +1,48 @@
 # Change Log
 
-## [3.4.0](https://github.com/zammad/zammad/tree/3.4.0) (2020-xx-xx)
+## [3.4.0](https://github.com/zammad/zammad/tree/3.4.0) (2020-06-15)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.3.0...3.4.0)
 
 **Implemented enhancements:**
-
-
-
+- G Suite accounts will only allow access to apps using OAuth. Password-based access will no longer be supported. [2866](https://github.com/zammad/zammad/issues/2866) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Fullquote Header for forwarded mails [3014](https://github.com/zammad/zammad/pull/3014) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- KB Links should be able to be displayed in the header and footer of the public KB [2867](https://github.com/zammad/zammad/issues/2867) [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[theming / skinning](https://github.com/zammad/zammad/labels/theming / skinning)]
+- Ensure email channel authentication to be ASCII-8Bit [2964](https://github.com/zammad/zammad/issues/2964) [[channel](https://github.com/zammad/zammad/labels/channel)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Custom ordering of Macros impossible (ordered by time added) [2698](https://github.com/zammad/zammad/issues/2698) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[macros](https://github.com/zammad/zammad/labels/macros)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
+- RTL writing system support in Public KB [2598](https://github.com/zammad/zammad/issues/2598) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Detect ServiceNow follow-ups [3022](https://github.com/zammad/zammad/issues/3022) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[integration](https://github.com/zammad/zammad/labels/integration)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
+- Enhance Check_MK integration to set ticket attributes (e. g. for SLAs) and improve code snippeds for integration. [3004](https://github.com/zammad/zammad/issues/3004) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Customer chat widget translation in Norwegian (no & nb) is missing [2999](https://github.com/zammad/zammad/issues/2999) [[chat](https://github.com/zammad/zammad/labels/chat)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Send Trigger and Scheduler Notification Email/SMS to single user [535](https://github.com/zammad/zammad/issues/535) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[feature backlog](https://github.com/zammad/zammad/labels/feature backlog)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Knowledge Base does't support animated GIFs and embedded Video (Youtube/Vimeo) content. [2713](https://github.com/zammad/zammad/issues/2713) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
 
 **Fixed bugs:**
-
-
-
-
+- Password strength settings are ignored when creating new customer accounts [2907](https://github.com/zammad/zammad/issues/2907) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- S/MIME encryption [1961](https://github.com/zammad/zammad/issues/1961) [[feature backlog](https://github.com/zammad/zammad/labels/feature backlog)]
+- add translation portuguese Brazil: pt-br [3073](https://github.com/zammad/zammad/pull/3073)
+- Japanese encoding 7-bit iso-2022-jp is processed incorrectly [2498](https://github.com/zammad/zammad/issues/2498) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)] [[third party issue](https://github.com/zammad/zammad/labels/third party issue)]
+- Loading KB-Answers doesn't work for contained images [3060](https://github.com/zammad/zammad/issues/3060) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Develop: Updating KB answers throws error 500 for agents without edit rights [3065](https://github.com/zammad/zammad/issues/3065) [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Develop: Access to calendar (ical) no longer works if being unauthenticated (Error 500) [3064](https://github.com/zammad/zammad/issues/3064) [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[personal settings/menu](https://github.com/zammad/zammad/labels/personal settings/menu)]
+- SLA GUI - inconsistency when no checkmark is set [2282](https://github.com/zammad/zammad/issues/2282) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[escalation logic](https://github.com/zammad/zammad/labels/escalation logic)]
+- Backward compatibility of deleting own notes [2990](https://github.com/zammad/zammad/issues/2990) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Deletion of notes impossible if internal and communication = true [2853](https://github.com/zammad/zammad/issues/2853) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Hungarian translation to chat [3055](https://github.com/zammad/zammad/pull/3055) [[chat](https://github.com/zammad/zammad/labels/chat)] [[translation](https://github.com/zammad/zammad/labels/translation)]
+- "Get latest translations" update all but latest locales [3054](https://github.com/zammad/zammad/issues/3054) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zammads resets attribute position if custom object is being updated [3044](https://github.com/zammad/zammad/issues/3044) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Do not sort tables by (click on) header names if sortable by dnd is enabled (e. g. Admin -> Overview). [2548](https://github.com/zammad/zammad/issues/2548) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
+- Sorting overviews sometimes causes columns to jump [2995](https://github.com/zammad/zammad/issues/2995) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Reply Article box closes when replying multiple times and placeholder covers input [3040](https://github.com/zammad/zammad/issues/3040) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- miss package gawk on Debian [304](https://github.com/zammad/zammad/issues/304)
+- Including KB Answers into Ticket Articles doesn't attach Attachments [2644](https://github.com/zammad/zammad/issues/2644) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Zendesk import error [2941](https://github.com/zammad/zammad/issues/2941) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Fix issue with table column resize in RTL (right to left) languages [2979](https://github.com/zammad/zammad/pull/2979)
+- Chat add hebrew lang [2965](https://github.com/zammad/zammad/pull/2965)
+- OTRS migration priority color wrong for 3 normal. [2981](https://github.com/zammad/zammad/issues/2981) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Signup view broken after logout [2640](https://github.com/zammad/zammad/issues/2640) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zammad should not inform himself [2923](https://github.com/zammad/zammad/issues/2923) [[bug](https://github.com/zammad/zammad/labels/bug)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Triggers with current_user.id precondition are not executed [2982](https://github.com/zammad/zammad/issues/2982) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Mails with voicemails attached not being added (#<ActiveRecord::ValueTooLong: PG::StringDataRightTruncation: ERROR:  value too long for type character varying(2500) (RuntimeError)) [2971](https://github.com/zammad/zammad/issues/2971) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Not possible to copy inline images text from article to article (copy text and image image - via clipboard ctrl+c/ctrl+v) [2976](https://github.com/zammad/zammad/issues/2976) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Roles and Users selection in Overview administration UI ambiguous [2714](https://github.com/zammad/zammad/issues/2714) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
+- Fix typo for IntegrationClearBit [2940](https://github.com/zammad/zammad/pull/2940)
