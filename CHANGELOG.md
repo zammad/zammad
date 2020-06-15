@@ -1,5 +1,21 @@
 # Change Log
 
+## [3.3.1](https://github.com/zammad/zammad/tree/3.3.1) (2020-06-15)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.3.0...3.3.1)
+
+**Implemented enhancements:**
+- Customer chat widget translation in Norwegian (no & nb) is missing [2999](https://github.com/zammad/zammad/issues/2999) [[chat](https://github.com/zammad/zammad/labels/chat)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Knowledge Base does't support animated GIFs and embedded Video (Youtube/Vimeo) content. [2713](https://github.com/zammad/zammad/issues/2713) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- Calendar as filter condition for Trigger/Automatization [1553](https://github.com/zammad/zammad/issues/1553) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+
+**Fixed bugs:**
+- Password strength settings are ignored when creating new customer accounts [2907](https://github.com/zammad/zammad/issues/2907) [[bug](https://github.com/zammad/zammad/labels/bug)] [[security](https://github.com/zammad/zammad/labels/security)]
+- Zendesk import error [2941](https://github.com/zammad/zammad/issues/2941) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Fix issue with table column resize in RTL (right to left) languages [2979](https://github.com/zammad/zammad/pull/2979)
+- Mails with voicemails attached not being added (#<ActiveRecord::ValueTooLong: PG::StringDataRightTruncation: ERROR:  value too long for type character varying(2500) (RuntimeError)) [2971](https://github.com/zammad/zammad/issues/2971) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Not possible to copy inline images text from article to article (copy text and image image - via clipboard ctrl+c/ctrl+v) [2976](https://github.com/zammad/zammad/issues/2976) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+
+
 ## [3.3.0](https://github.com/zammad/zammad/tree/3.3.0) (2020-03-03)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.2.0...3.3.0)
 
