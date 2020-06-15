@@ -395,8 +395,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  context 'S/MIME active', authenticated_as: :agent do
-
+  context 'S/MIME active', authenticated_as: :authenticate do
     let(:system_email_address) { 'smime1@example.com' }
     let(:email_address) { create(:email_address, email: system_email_address) }
     let(:group) { create(:group, email_address: email_address) }
@@ -408,8 +407,9 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     let!(:ticket) { create(:ticket, group: group, owner: agent, customer: customer) }
 
-    before do
+    def authenticate
       Setting.set('smime_integration', true)
+      agent
     end
 
     context 'received mail' do

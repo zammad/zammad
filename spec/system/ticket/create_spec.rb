@@ -22,14 +22,15 @@ RSpec.describe 'Ticket Create', type: :system do
     include_examples 'text modules', path: 'ticket/create'
   end
 
-  context 'S/MIME' do
-
-    prepend_before do
+  context 'S/MIME', authenticated_as: :authenticate do
+    def authenticate
       Setting.set('smime_integration', true)
+      current_user
     end
 
     context 'no certificate present' do
-      let!(:template) { create(:template, :dummy_data) }
+      let!(:template)    { create(:template, :dummy_data) }
+      let(:current_user) { true }
 
       it 'has no security selections' do
         visit 'ticket/create'
@@ -55,7 +56,8 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
 
-    context 'private key configured', authenticated_as: :agent do
+    context 'private key configured' do
+      let(:current_user) { agent }
       let!(:template) { create(:template, :dummy_data, group: group, owner: agent, customer: customer) }
 
       let(:system_email_address) { 'smime1@example.com' }
