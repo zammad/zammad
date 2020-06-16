@@ -384,7 +384,7 @@ GEM
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-livereload (0.3.17)
       rack
     rack-test (1.1.0)
