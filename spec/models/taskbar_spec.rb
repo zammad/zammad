@@ -2,6 +2,45 @@ require 'rails_helper'
 
 RSpec.describe Taskbar do
 
+  context 'key = Search' do
+
+    context 'multiple taskbars', current_user_id: 1 do
+      let(:key) { 'Search' }
+      let(:other_taskbar) { create(:taskbar, key: key) }
+
+      describe '#create' do
+
+        it "doesn't update other taskbar" do
+          expect do
+            create(:taskbar, key: key)
+          end.not_to change { other_taskbar.reload.updated_at }
+        end
+      end
+
+      context 'existing taskbar' do
+
+        subject(:taskbar) { create(:taskbar, key: key) }
+
+        describe '#update' do
+
+          it "doesn't update other taskbar" do
+            expect do
+              taskbar.update!(state: { foo: :bar })
+            end.not_to change { other_taskbar.reload.updated_at }
+          end
+        end
+
+        describe '#destroy' do
+          it "doesn't update other taskbar" do
+            expect do
+              taskbar.destroy!
+            end.not_to change { other_taskbar.reload.updated_at }
+          end
+        end
+      end
+    end
+  end
+
   context 'single creation' do
 
     let(:taskbar) do

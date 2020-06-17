@@ -88,6 +88,7 @@ class Taskbar < ApplicationModel
   end
 
   def update_preferences_infos
+    return true if key == 'Search'
     return true if local_update
 
     # find other same open tasks
