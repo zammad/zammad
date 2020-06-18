@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'linking Knowledge Base answer', type: :system, authenticated: true, searchindex: true do
+RSpec.describe 'linking Knowledge Base answer', type: :system, authenticated_as: true, searchindex: true do
   include_context 'basic Knowledge Base'
 
   before do

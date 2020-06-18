@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base menu items', type: :system, authenticated: false do
+RSpec.describe 'Public Knowledge Base menu items', type: :system, authenticated_as: false do
   include_context 'basic Knowledge Base'
   include_context 'Knowledge Base menu items'
 

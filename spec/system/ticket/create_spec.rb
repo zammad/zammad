@@ -10,7 +10,7 @@ RSpec.describe 'Ticket Create', type: :system do
     let!(:template) { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
 
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
-    it 'unavailable attributes do not get applied', authenticated: -> { agent } do
+    it 'unavailable attributes do not get applied', authenticated_as: :agent do
       visit 'ticket/create'
 
       use_template(template)
@@ -55,7 +55,7 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
 
-    context 'private key configured', authenticated: -> { agent } do
+    context 'private key configured', authenticated_as: :agent do
       let!(:template) { create(:template, :dummy_data, group: group, owner: agent, customer: customer) }
 
       let(:system_email_address) { 'smime1@example.com' }

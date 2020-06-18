@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Authentication', type: :system do
 
-  it 'Login', authenticated: false do
+  it 'Login', authenticated_as: false do
     login(
       username: 'master@example.com',
       password: 'test',

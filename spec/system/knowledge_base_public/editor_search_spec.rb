@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base for guest search', type: :system, authenticated: true, searchindex: true do
+RSpec.describe 'Public Knowledge Base for guest search', type: :system, authenticated_as: true, searchindex: true do
   include_context 'basic Knowledge Base'
 
   before do

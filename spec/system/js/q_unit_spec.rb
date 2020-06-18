@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'QUnit', type: :system, authenticated: false, set_up: true, websocket: false do
+RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, websocket: false do
 
   def q_unit_tests(test_name)
 

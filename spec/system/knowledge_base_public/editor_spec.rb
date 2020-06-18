@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated: true do
+RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated_as: true do
   include_context 'basic Knowledge Base'
 
   before do

@@ -185,7 +185,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         create(:ticket_article, ticket: ticket)
       end
 
-      it 'ensures that text input opens on multiple replies', authenticated: -> { current_user } do
+      it 'ensures that text input opens on multiple replies', authenticated_as: :current_user do
         visit "ticket/zoom/#{ticket.id}"
 
         2.times do |article_offset|
@@ -207,7 +207,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'delete article', authenticated: -> { user } do
+  describe 'delete article', authenticated_as: :user do
     let(:admin_user)    { create :admin, groups: [Group.first] }
     let(:agent_user)    { create :agent, groups: [Group.first] }
     let(:customer_user) { create :customer }
@@ -395,7 +395,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  context 'S/MIME active', authenticated: -> { agent } do
+  context 'S/MIME active', authenticated_as: :agent do
 
     let(:system_email_address) { 'smime1@example.com' }
     let(:email_address) { create(:email_address, email: system_email_address) }

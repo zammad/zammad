@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase translation update', type: :request, authentication: true do
+RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated_as: :current_user do
   include_context 'basic Knowledge Base'
 
-  let(:new_title) { 'new title for update test' }
+  let(:new_title)    { 'new title for update test' }
+  let(:current_user) { create(user_identifier) if defined?(user_identifier) }
 
   let(:params_for_updating) do
     {
@@ -22,19 +23,25 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticatio
   end
 
   describe 'changes KB translation title' do
-    describe 'as editor', authenticated_as: :admin_user do
+    describe 'as editor' do
+      let(:user_identifier) { :admin_user }
+
       it 'updates title' do
         expect { request }.to change { knowledge_base.reload.translations.first.title }.to(new_title)
       end
     end
 
-    describe 'as reader', authenticated_as: :agent_user do
+    describe 'as reader' do
+      let(:user_identifier) { :agent_user }
+
       it 'does not change title' do
         expect { request }.not_to change { knowledge_base.reload.translations.first.title }
       end
     end
 
-    describe 'as non-KB user', authenticated_as: :customer do
+    describe 'as non-KB user' do
+      let(:user_identifier) { :customer }
+
       it 'does not change title' do
         expect { request }.not_to change { knowledge_base.reload.translations.first.title }
       end
@@ -50,16 +57,22 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticatio
   describe 'can make request to KB translation' do
     before { request }
 
-    describe 'as editor', authenticated_as: :admin_user do
+    describe 'as editor' do
+      let(:user_identifier) { :admin_user }
+
       it { expect(response).to have_http_status(:ok) }
       it { expect(json_response).to be_a_kind_of(Hash) }
     end
 
-    describe 'as reader', authenticated_as: :agent_user do
+    describe 'as reader' do
+      let(:user_identifier) { :agent_user }
+
       it { expect(response).to have_http_status(:unauthorized) }
     end
 
-    describe 'as non-KB user', authenticated_as: :customer do
+    describe 'as non-KB user' do
+      let(:user_identifier) { :customer }
+
       it { expect(response).to have_http_status(:unauthorized) }
     end
 

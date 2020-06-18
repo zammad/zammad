@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base answer', type: :system, authenticated: false do
+RSpec.describe 'Public Knowledge Base answer', type: :system, authenticated_as: false do
   include_context 'basic Knowledge Base'
 
   context 'video content' do

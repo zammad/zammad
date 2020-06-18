@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase attachments', type: :request do
+RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :current_user do
   include_context 'basic Knowledge Base'
 
   let(:attachment) do
@@ -16,7 +16,8 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     )
   end
 
-  let(:endpoint) { "/api/v1/attachments/#{attachment.id}" }
+  let(:endpoint)     { "/api/v1/attachments/#{attachment.id}" }
+  let(:current_user) { create(user_identifier) if defined?(user_identifier) }
 
   describe 'visible when attached to' do
     shared_examples 'a visible resource' do
@@ -36,15 +37,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'draft answer' do
       let(:object) { draft_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-existent resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-existent resource'
       end
 
@@ -56,15 +63,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'internal answer' do
       let(:object) { internal_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-existent resource'
       end
 
@@ -76,15 +89,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'published answer' do
       let(:object) { published_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a visible resource'
       end
 
@@ -96,15 +115,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'archived answer' do
       let(:object) { archived_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-existent resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a visible resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-existent resource'
       end
 
@@ -126,15 +151,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'draft answer' do
       let(:object) { draft_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-deletable resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a deletable resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-deletable resource'
       end
 
@@ -146,15 +177,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'internal answer' do
       let(:object) { internal_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-deletable resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a deletable resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-deletable resource'
       end
 
@@ -166,15 +203,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'published answer' do
       let(:object) { published_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-deletable resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a deletable resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-deletable resource'
       end
 
@@ -186,15 +229,21 @@ RSpec.describe 'KnowledgeBase attachments', type: :request do
     describe 'archived answer' do
       let(:object) { archived_answer }
 
-      describe 'as agent', authenticated_as: :agent_user do
+      describe 'as agent' do
+        let(:user_identifier) { :agent }
+
         it_behaves_like 'a non-deletable resource'
       end
 
-      context 'as admin', authenticated_as: :admin_user do
+      context 'as admin' do
+        let(:user_identifier) { :admin }
+
         it_behaves_like 'a deletable resource'
       end
 
-      context 'as customer', authenticated_as: :customer_user do
+      context 'as customer' do
+        let(:user_identifier) { :customer }
+
         it_behaves_like 'a non-deletable resource'
       end
 

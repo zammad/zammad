@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated: true, searchindex: true do
+RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated_as: true, searchindex: true do
   include_context 'basic Knowledge Base'
 
   let(:field) { find(:richtext) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # https://github.com/zammad/zammad/issues/266
-RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system, authenticated: true do
+RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system, authenticated_as: true do
   include_context 'basic Knowledge Base'
   include_context 'Knowledge Base menu items'
 
