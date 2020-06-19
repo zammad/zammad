@@ -300,6 +300,15 @@ RSpec.describe Cti::CallerId do
 
         caller_id.save
       end
+
+      it 'skips jobs on import_mode true' do
+        Setting.set('import_mode', true)
+
+        expect(UpdateCtiLogsByCallerJob).not_to receive(:perform_now)
+        expect(UpdateCtiLogsByCallerJob).not_to receive(:perform_later)
+
+        caller_id.save
+      end
     end
 
     describe 'on destruction' do

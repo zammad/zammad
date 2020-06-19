@@ -345,6 +345,7 @@ return users by caller_id
     end
 
     def update_cti_logs_with_fg_optimization
+      return if Setting.get('import_mode')
       return if object != 'User'
       return if level != 'known'
 
