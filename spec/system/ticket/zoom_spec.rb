@@ -599,13 +599,17 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       let(:smime_config) { {} }
 
-      before do
+      def authenticate
+        Setting.set('smime_integration', true)
+
         Setting.set('smime_config', smime_config)
 
         create(:ticket_article, ticket: ticket, from: customer.email)
 
         create(:smime_certificate, :with_private, fixture: system_email_address)
         create(:smime_certificate, fixture: sender_email_address)
+
+        agent
       end
 
       shared_examples 'security defaults example' do |sign:, encrypt:|
