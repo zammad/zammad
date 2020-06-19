@@ -4,8 +4,8 @@ RSpec.describe 'Twilio SMS', type: :request do
 
   describe 'request handling' do
 
-    let(:agent_user) do
-      create(:agent_user, groups: Group.all)
+    let(:agent) do
+      create(:agent, groups: Group.all)
     end
 
     it 'does basic call' do
@@ -131,15 +131,15 @@ RSpec.describe 'Twilio SMS', type: :request do
         body:      'some test',
         type:      'sms',
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some test')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/111/Messages.json')
         .with(
@@ -171,7 +171,7 @@ RSpec.describe 'Twilio SMS', type: :request do
     it 'does customer based on already existing mobile attibute' do
 
       customer = create(
-        :customer_user,
+        :customer,
         email:  'me@example.com',
         mobile: '01710000000',
       )

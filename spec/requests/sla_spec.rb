@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'SLAs', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
 
   describe 'request handling' do
@@ -17,7 +17,7 @@ RSpec.describe 'SLAs', type: :request do
     end
 
     it 'does index sla with admin' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/slas', as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)

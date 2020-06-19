@@ -48,12 +48,12 @@ RSpec.describe KnowledgeBase, type: :model do
         end
 
         it 'skip activity check for editors when filtering by activity' do
-          user = create(:admin_user)
+          user = create(:admin)
           expect(described_class.check_active_unless_editor(user).count).to eq(2)
         end
 
         it 'check activity if user is not editor when filtering by activity' do
-          user = create(:agent_user)
+          user = create(:agent)
           expect(described_class.check_active_unless_editor(user)).to contain_exactly(knowledge_base)
         end
 

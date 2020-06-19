@@ -24,7 +24,7 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
 
   describe 'changes KB translation title' do
     describe 'as editor' do
-      let(:user_identifier) { :admin_user }
+      let(:user_identifier) { :admin }
 
       it 'updates title' do
         expect { request }.to change { knowledge_base.reload.translations.first.title }.to(new_title)
@@ -32,7 +32,7 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
     end
 
     describe 'as reader' do
-      let(:user_identifier) { :agent_user }
+      let(:user_identifier) { :agent }
 
       it 'does not change title' do
         expect { request }.not_to change { knowledge_base.reload.translations.first.title }
@@ -58,14 +58,14 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
     before { request }
 
     describe 'as editor' do
-      let(:user_identifier) { :admin_user }
+      let(:user_identifier) { :admin }
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(json_response).to be_a_kind_of(Hash) }
     end
 
     describe 'as reader' do
-      let(:user_identifier) { :agent_user }
+      let(:user_identifier) { :agent }
 
       it { expect(response).to have_http_status(:unauthorized) }
     end

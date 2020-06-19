@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :authorization do
     transient do
-      user { create(:customer_user) }
+      user { create(:customer) }
     end
 
     factory :twitter_authorization do

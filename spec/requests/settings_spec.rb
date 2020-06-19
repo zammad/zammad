@@ -2,20 +2,20 @@ require 'rails_helper'
 
 RSpec.describe 'Settings', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
-  let(:admin_api_user) do
+  let(:admin_api) do
     role_api = create(:role)
     role_api.permission_grant('admin.api')
 
-    create(:admin_user, roles: [role_api])
+    create(:admin, roles: [role_api])
   end
-  let(:agent_user) do
-    create(:agent_user)
+  let(:agent) do
+    create(:agent)
   end
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
 
   describe 'request handling' do
@@ -38,7 +38,7 @@ RSpec.describe 'Settings', type: :request do
     it 'does settings index with admin' do
 
       # index
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
@@ -115,7 +115,7 @@ RSpec.describe 'Settings', type: :request do
     it 'does settings index with admin-api' do
 
       # index
-      authenticated_as(admin_api_user)
+      authenticated_as(admin_api)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
@@ -187,7 +187,7 @@ RSpec.describe 'Settings', type: :request do
     it 'does settings index with agent' do
 
       # index
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
@@ -204,7 +204,7 @@ RSpec.describe 'Settings', type: :request do
     it 'does settings index with customer' do
 
       # index
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)

@@ -4,7 +4,7 @@ require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
   context 'when applying ticket templates' do
-    let(:agent) { create(:agent_user, groups: [permitted_group]) }
+    let(:agent) { create(:agent, groups: [permitted_group]) }
     let(:permitted_group) { create(:group) }
     let(:unpermitted_group) { create(:group) }
     let!(:template) { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
@@ -64,7 +64,7 @@ RSpec.describe 'Ticket Create', type: :system do
       let(:email_address) { create(:email_address, email: system_email_address) }
       let(:group) { create(:group, email_address: email_address) }
       let(:agent_groups) { [group] }
-      let(:agent) { create(:agent_user, groups: agent_groups) }
+      let(:agent) { create(:agent, groups: agent_groups) }
 
       before do
         create(:smime_certificate, :with_private, fixture: system_email_address)
@@ -73,7 +73,7 @@ RSpec.describe 'Ticket Create', type: :system do
       context 'recipient certificate present' do
 
         let(:recipient_email_address) { 'smime2@example.com' }
-        let(:customer) { create(:customer_user, email: recipient_email_address) }
+        let(:customer) { create(:customer, email: recipient_email_address) }
 
         before do
           create(:smime_certificate, fixture: recipient_email_address)

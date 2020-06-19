@@ -4,7 +4,7 @@ RSpec.describe UserDevice, type: :model do
   describe '.add' do
     let(:existing_record) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
     let(:ip) { '91.115.248.231' }
-    let(:agent) { create(:agent_user) }
+    let(:agent) { create(:agent) }
 
     context 'with existing record of type: "session"' do
       before { existing_record }  # create existing record
@@ -184,7 +184,7 @@ RSpec.describe UserDevice, type: :model do
     let(:user_device) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
     let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
     let(:ip) { '91.115.248.231' }
-    let(:agent) { create(:agent_user) }
+    let(:agent) { create(:agent) }
     let(:fingerprint) { 'fingerprint1234' }
     let(:type) { 'session' }
 
@@ -228,7 +228,7 @@ RSpec.describe UserDevice, type: :model do
     let(:type) { 'session' }
 
     context 'user with email address' do
-      let(:agent) { create(:agent_user, email: 'somebody@example.com') }
+      let(:agent) { create(:agent, email: 'somebody@example.com') }
 
       it 'returns true' do
         expect(user_device.notification_send('user_device_new_location'))
@@ -237,7 +237,7 @@ RSpec.describe UserDevice, type: :model do
     end
 
     context 'user without email address' do
-      let(:agent) { create(:agent_user, email: '') }
+      let(:agent) { create(:agent, email: '') }
 
       it 'returns false' do
         expect(user_device.notification_send('user_device_new_location'))

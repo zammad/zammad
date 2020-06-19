@@ -21,7 +21,7 @@ RSpec.describe 'User endpoint', type: :request do
     let(:attributes) { attributes_params_for(:user) }
 
     it 'responds unauthorized for customer' do
-      requester = create(:customer_user)
+      requester = create(:customer)
       authenticated_as(requester)
 
       expect do
@@ -71,7 +71,7 @@ RSpec.describe 'User endpoint', type: :request do
           end
 
           it 'responds successful for agent but removes assignment' do
-            requester = create(:agent_user)
+            requester = create(:agent)
             authenticated_as(requester)
 
             expect do
@@ -144,7 +144,7 @@ RSpec.describe 'User endpoint', type: :request do
           end
 
           it 'responds successful for agent but removes assignment' do
-            requester = create(:agent_user)
+            requester = create(:agent)
             authenticated_as(requester)
 
             expect do
@@ -228,21 +228,21 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is successful for other admin' do
         authorized_update_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is successful for agent' do
         authorized_update_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is successful for customer' do
         authorized_update_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
@@ -261,33 +261,33 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other admin' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is unauthorized for agent' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is unauthorized for customer' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
 
     context 'request by agent' do
 
-      let(:requester) { create(:agent_user) }
+      let(:requester) { create(:agent) }
 
       it 'is unauthorized for admin' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
@@ -301,33 +301,33 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other agent' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is successful for customer' do
         authorized_update_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
 
     context 'request by customer' do
 
-      let(:requester) { create(:customer_user) }
+      let(:requester) { create(:customer) }
 
       it 'is unauthorized for admin' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is unauthorized for agent' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
@@ -341,7 +341,7 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other customer' do
         unauthorized_update_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
 
@@ -352,7 +352,7 @@ RSpec.describe 'User endpoint', type: :request do
 
         unauthorized_update_request(
           requester: requester,
-          requested: create(:customer_user, organization: same_organization),
+          requested: create(:customer, organization: same_organization),
         )
       end
     end
@@ -399,7 +399,7 @@ RSpec.describe 'User endpoint', type: :request do
       shared_examples 'permitted agent update' do
 
         it 'responds successful for agent but removes assignment' do
-          requester = create(:agent_user)
+          requester = create(:agent)
           authenticated_as(requester)
 
           expect do
@@ -415,7 +415,7 @@ RSpec.describe 'User endpoint', type: :request do
       shared_examples 'forbidden agent update' do
 
         it 'responds successful for agent but removes assignment' do
-          requester = create(:agent_user)
+          requester = create(:agent)
           authenticated_as(requester)
 
           expect do
@@ -545,21 +545,21 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is successful for other admin' do
         authorized_destroy_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is successful for agent' do
         authorized_destroy_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is successful for customer' do
         authorized_destroy_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
@@ -578,33 +578,33 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other admin' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is unauthorized for agent' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is unauthorized for customer' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
 
     context 'request by agent' do
 
-      let(:requester) { create(:agent_user) }
+      let(:requester) { create(:agent) }
 
       it 'is unauthorized for admin' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
@@ -618,33 +618,33 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other agent' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
       it 'is unauthorized for customer' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
     end
 
     context 'request by customer' do
 
-      let(:requester) { create(:customer_user) }
+      let(:requester) { create(:customer) }
 
       it 'is unauthorized for admin' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:admin_user),
+          requested: create(:admin),
         )
       end
 
       it 'is unauthorized for agent' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:agent_user),
+          requested: create(:agent),
         )
       end
 
@@ -658,7 +658,7 @@ RSpec.describe 'User endpoint', type: :request do
       it 'is unauthorized for other customer' do
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:customer_user),
+          requested: create(:customer),
         )
       end
 
@@ -669,7 +669,7 @@ RSpec.describe 'User endpoint', type: :request do
 
         unauthorized_destroy_request(
           requester: requester,
-          requested: create(:customer_user, organization: same_organization),
+          requested: create(:customer, organization: same_organization),
         )
       end
     end

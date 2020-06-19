@@ -197,7 +197,7 @@ RSpec.describe Trigger, type: :model do
         let(:email_address) { create(:email_address, email: system_email_address) }
 
         let(:group) { create(:group, email_address: email_address) }
-        let(:customer) { create(:customer_user, email: customer_email_address) }
+        let(:customer) { create(:customer, email: customer_email_address) }
 
         let(:security_preferences) { Ticket::Article.last.preferences[:security] }
 
@@ -552,7 +552,7 @@ RSpec.describe Trigger, type: :model do
     end
 
     let(:user) do
-      user = create(:agent_user)
+      user = create(:agent)
       user.roles.first.groups << group
       user
     end

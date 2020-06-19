@@ -6,7 +6,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
     context 'user logged in' do
 
-      subject(:user) { create(:agent_user, password: password) }
+      subject(:user) { create(:agent, password: password) }
 
       let(:password) { SecureRandom.urlsafe_base64(20) }
       let(:fingerprint) { SecureRandom.urlsafe_base64(40) }

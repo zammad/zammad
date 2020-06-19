@@ -12,7 +12,7 @@ describe TicketPolicy do
   end
 
   context 'when given a user that is neither owner nor customer' do
-    let(:user) { create(:agent_user) }
+    let(:user) { create(:agent) }
 
     it { is_expected.not_to permit_actions(%i[show full]) }
 
@@ -24,8 +24,8 @@ describe TicketPolicy do
 
     context 'but the user is a customer from the same organization as ticket’s customer' do
       let(:record) { create(:ticket, customer: customer) }
-      let(:customer) { create(:customer_user, organization: create(:organization)) }
-      let(:user) { create(:customer_user, organization: customer.organization) }
+      let(:customer) { create(:customer, organization: create(:organization)) }
+      let(:user) { create(:customer, organization: customer.organization) }
 
       context 'and organization.shared is true (default)' do
 

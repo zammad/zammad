@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'External Credentials', type: :request do
-  let(:admin_user) { create(:admin_user) }
+  let(:admin) { create(:admin) }
 
   context 'without authentication' do
     describe '#index' do
@@ -42,7 +42,7 @@ RSpec.describe 'External Credentials', type: :request do
   end
 
   context 'authenticated as admin' do
-    before { authenticated_as(admin_user, via: :browser) }
+    before { authenticated_as(admin, via: :browser) }
 
     describe '#index' do
       it 'responds with an array of ExternalCredential records' do

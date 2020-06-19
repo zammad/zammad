@@ -80,7 +80,7 @@ RSpec.describe Token, type: :model do
     describe 'permission matching' do
       subject(:token) { create(:api_token, user: agent, preferences: preferences) }
 
-      let(:agent) { create(:agent_user) }
+      let(:agent) { create(:agent) }
       let(:preferences) { { permission: %w[admin ticket.agent] } } # agent has no access to admin.*
 
       context 'with a permission shared by both token.user and token.preferences' do

@@ -146,7 +146,7 @@ RSpec.describe Cti::CallerId do
 
   describe '.rebuild' do
     context 'when a User record contains a valid phone number' do
-      let!(:user) { create(:agent_user, phone: '+49 123 456') }
+      let!(:user) { create(:agent, phone: '+49 123 456') }
 
       context 'and no corresponding CallerId exists' do
         it 'generates a CallerId record (with #level "known")' do
@@ -173,7 +173,7 @@ RSpec.describe Cti::CallerId do
     end
 
     context 'when two User records contains the same valid phone number' do
-      let!(:users) { create_list(:agent_user, 2, phone: '+49 123 456') }
+      let!(:users) { create_list(:agent, 2, phone: '+49 123 456') }
 
       it 'generates two corresponding CallerId records (with #level "known")' do
         described_class.destroy_all  # CallerId already generated in User callback
@@ -251,17 +251,17 @@ RSpec.describe Cti::CallerId do
 
   describe '.known_agents_by_number' do
     context 'with known agent caller_id' do
-      let!(:agent_user1) { create(:agent_user, phone: '0123456') }
-      let!(:agent_user2) { create(:agent_user, phone: '0123457') }
+      let!(:agent1) { create(:agent, phone: '0123456') }
+      let!(:agent2) { create(:agent, phone: '0123457') }
 
       it 'gives matching agents' do
         expect(described_class.known_agents_by_number('49123456'))
-          .to match_array([agent_user1])
+          .to match_array([agent1])
       end
     end
 
     context 'with known customer caller_id' do
-      let!(:customer_user1) { create(:customer_user, phone: '0123456') }
+      let!(:customer1) { create(:customer, phone: '0123456') }
 
       it 'returns an empty array' do
         expect(described_class.known_agents_by_number('49123456')).to eq([])
@@ -270,11 +270,11 @@ RSpec.describe Cti::CallerId do
 
     context 'with maybe caller_id' do
       let(:ticket1) do
-        create(:ticket_article, created_by_id: customer_user2.id, body: 'some text 0123457') # create ticket
+        create(:ticket_article, created_by_id: customer2.id, body: 'some text 0123457') # create ticket
         Observer::Transaction.commit
         Scheduler.worker(true)
       end
-      let!(:customer_user2) { create(:customer_user) }
+      let!(:customer2) { create(:customer) }
 
       it 'returns an empty array' do
         expect(described_class.known_agents_by_number('49123457').count).to eq(0)

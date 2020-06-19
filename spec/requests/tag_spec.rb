@@ -4,7 +4,7 @@ RSpec.describe Tag, type: :request do
 
   describe 'request handling' do
 
-    let(:agent) { create(:agent_user) }
+    let(:agent) { create(:agent) }
 
     context 'tag search' do
       before do

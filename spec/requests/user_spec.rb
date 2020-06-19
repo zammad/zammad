@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'User', type: :request, searchindex: true do
 
-  let!(:admin_user) do
+  let!(:admin) do
     create(
-      :admin_user,
+      :admin,
       groups:    Group.all,
       login:     'rest-admin',
       firstname: 'Rest',
@@ -12,9 +12,9 @@ RSpec.describe 'User', type: :request, searchindex: true do
       email:     'rest-admin@example.com',
     )
   end
-  let!(:admin_user_pw) do
+  let!(:admin_with_pw) do
     create(
-      :admin_user,
+      :admin,
       groups:    Group.all,
       login:     'rest-admin-pw',
       firstname: 'Rest',
@@ -23,9 +23,9 @@ RSpec.describe 'User', type: :request, searchindex: true do
       password:  'adminpw',
     )
   end
-  let!(:agent_user) do
+  let!(:agent) do
     create(
-      :agent_user,
+      :agent,
       groups:    Group.all,
       login:     'rest-agent@example.com',
       firstname: 'Rest',
@@ -33,9 +33,9 @@ RSpec.describe 'User', type: :request, searchindex: true do
       email:     'rest-agent@example.com',
     )
   end
-  let!(:customer_user) do
+  let!(:customer) do
     create(
-      :customer_user,
+      :customer,
       login:     'rest-customer1@example.com',
       firstname: 'Rest',
       lastname:  'Customer1',
@@ -51,9 +51,9 @@ RSpec.describe 'User', type: :request, searchindex: true do
   let!(:organization3) do
     create(:organization, name: 'Rest Org #3')
   end
-  let!(:customer_user2) do
+  let!(:customer2) do
     create(
-      :customer_user,
+      :customer,
       organization: organization,
       login:        'rest-customer2@example.com',
       firstname:    'Rest',
@@ -191,7 +191,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     it 'does auth tests - username auth, wrong pw' do
-      authenticated_as(admin_user, password: 'not_existing')
+      authenticated_as(admin, password: 'not_existing')
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('authentication failed')
@@ -219,7 +219,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     it 'does user index and create with admin' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
@@ -238,13 +238,13 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response.length >= 3).to be_truthy
 
       # show/:id
-      get "/api/v1/users/#{agent_user.id}", params: {}, as: :json
+      get "/api/v1/users/#{agent.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
       expect('rest-agent@example.com').to eq(json_response['email'])
 
-      get "/api/v1/users/#{customer_user.id}", params: {}, as: :json
+      get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
@@ -327,7 +327,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     it 'does user index and create with agent' do
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
@@ -367,42 +367,42 @@ RSpec.describe 'User', type: :request, searchindex: true do
       params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response_user1 = JSON.parse(@response.body)
-      expect(json_response_user1).to be_truthy
-      user = User.find(json_response_user1['id'])
+      json_response1 = JSON.parse(@response.body)
+      expect(json_response1).to be_truthy
+      user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
-      expect(json_response_user1['login']).to eq('new_admin_by_agent@example.com')
-      expect(json_response_user1['email']).to eq('new_admin_by_agent@example.com')
+      expect(json_response1['login']).to eq('new_admin_by_agent@example.com')
+      expect(json_response1['email']).to eq('new_admin_by_agent@example.com')
 
       # create user with agent role
       role = Role.lookup(name: 'Agent')
       params = { firstname: "Agent#{firstname}", lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response_user1 = JSON.parse(@response.body)
-      expect(json_response_user1).to be_truthy
-      user = User.find(json_response_user1['id'])
+      json_response1 = JSON.parse(@response.body)
+      expect(json_response1).to be_truthy
+      user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
-      expect(json_response_user1['login']).to eq('new_agent_by_agent@example.com')
-      expect(json_response_user1['email']).to eq('new_agent_by_agent@example.com')
+      expect(json_response1['login']).to eq('new_agent_by_agent@example.com')
+      expect(json_response1['email']).to eq('new_agent_by_agent@example.com')
 
       # create user with customer role
       role = Role.lookup(name: 'Customer')
       params = { firstname: "Customer#{firstname}", lastname: 'Customer Last', email: 'new_customer_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
-      json_response_user1 = JSON.parse(@response.body)
-      expect(json_response_user1).to be_truthy
-      user = User.find(json_response_user1['id'])
+      json_response1 = JSON.parse(@response.body)
+      expect(json_response1).to be_truthy
+      user = User.find(json_response1['id'])
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
-      expect(json_response_user1['login']).to eq('new_customer_by_agent@example.com')
-      expect(json_response_user1['email']).to eq('new_customer_by_agent@example.com')
+      expect(json_response1['login']).to eq('new_customer_by_agent@example.com')
+      expect(json_response1['email']).to eq('new_customer_by_agent@example.com')
 
       # search as agent
       Scheduler.worker(true)
@@ -411,7 +411,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
 
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['firstname']).to eq("Customer#{firstname}")
       expect(json_response[0]['lastname']).to eq('Customer Last')
       expect(json_response[0]['role_ids']).to be_truthy
@@ -420,7 +420,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['firstname']).to eq("Customer#{firstname}")
       expect(json_response[0]['lastname']).to eq('Customer Last')
       expect(json_response[0]['role_ids']).to be_truthy
@@ -429,7 +429,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&label=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['role_ids']).to be_falsey
@@ -438,7 +438,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get "/api/v1/users/search?term=#{CGI.escape("Customer#{firstname}")}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq('new_customer_by_agent@example.com')
       expect(json_response[0]['role_ids']).to be_falsey
@@ -447,12 +447,12 @@ RSpec.describe 'User', type: :request, searchindex: true do
       # Regression test for issue #2539 - search pagination broken in users_controller.rb
       # Get the total number of users N, then search with one result per page, so there should N pages with one result each
       get '/api/v1/users/search', params: { query: '*' }, as: :json
-      total_user_number = json_response.count
-      (1..total_user_number).each do |i|
+      total_number = json_response.count
+      (1..total_number).each do |i|
         get '/api/v1/users/search', params: { query: '*', per_page: 1, page: i }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response).to be_a_kind_of(Array)
-        expect(json_response.count).to eq(1), "Page #{i}/#{total_user_number} of the user search pagination test have the wrong result!"
+        expect(json_response.count).to eq(1), "Page #{i}/#{total_number} of the user search pagination test have the wrong result!"
       end
 
       role = Role.find_by(name: 'Agent')
@@ -465,7 +465,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&role_ids=#{role.id}&label=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['role_ids']).to be_falsey
@@ -481,7 +481,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&permissions=#{permission.name}&label=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['id']).to eq(json_response_user1['id'])
+      expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['role_ids']).to be_falsey
@@ -489,7 +489,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     it 'does user index and create with customer1' do
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
@@ -502,12 +502,12 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(1).to eq(json_response.length)
 
       # show/:id
-      get "/api/v1/users/#{customer_user.id}", params: {}, as: :json
+      get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
       expect('rest-customer1@example.com').to eq(json_response['email'])
 
-      get "/api/v1/users/#{customer_user2.id}", params: {}, as: :json
+      get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(Hash).to eq(json_response.class)
       expect(json_response['error']).to be_truthy
@@ -531,7 +531,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     it 'does user index with customer2' do
-      authenticated_as(customer_user2)
+      authenticated_as(customer2)
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
@@ -544,12 +544,12 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(1).to eq(json_response.length)
 
       # show/:id
-      get "/api/v1/users/#{customer_user2.id}", params: {}, as: :json
+      get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
       expect('rest-customer2@example.com').to eq(json_response['email'])
 
-      get "/api/v1/users/#{customer_user.id}", params: {}, as: :json
+      get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(Hash).to eq(json_response.class)
       expect(json_response['error']).to be_truthy
@@ -562,7 +562,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
     it 'does users show and response format (04.01)' do
       user = create(
-        :customer_user,
+        :customer,
         login:         'rest-customer3@example.com',
         firstname:     'Rest',
         lastname:      'Customer3',
@@ -570,11 +570,11 @@ RSpec.describe 'User', type: :request, searchindex: true do
         password:      'customer3pw',
         active:        true,
         organization:  organization,
-        updated_by_id: admin_user.id,
-        created_by_id: admin_user.id,
+        updated_by_id: admin.id,
+        created_by_id: admin.id,
       )
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/users/#{user.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -584,8 +584,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['password']).to be_falsey
       expect(json_response['role_ids']).to eq(user.role_ids)
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       get "/api/v1/users/#{user.id}?expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -596,8 +596,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization']).to eq(user.organization.name)
       expect(json_response['role_ids']).to eq(user.role_ids)
       expect(json_response['password']).to be_falsey
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       get "/api/v1/users/#{user.id}?expand=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -608,8 +608,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['password']).to be_falsey
       expect(json_response['role_ids']).to eq(user.role_ids)
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       get "/api/v1/users/#{user.id}?full=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -633,13 +633,13 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['password']).to be_falsey
       expect(json_response['role_ids']).to eq(user.role_ids)
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
     end
 
     it 'does user index and response format (04.02)' do
       user = create(
-        :customer_user,
+        :customer,
         login:         'rest-customer3@example.com',
         firstname:     'Rest',
         lastname:      'Customer3',
@@ -647,11 +647,11 @@ RSpec.describe 'User', type: :request, searchindex: true do
         password:      'customer3pw',
         active:        true,
         organization:  organization,
-        updated_by_id: admin_user.id,
-        created_by_id: admin_user.id,
+        updated_by_id: admin.id,
+        created_by_id: admin.id,
       )
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
@@ -662,8 +662,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response.last['role_ids']).to eq(user.role_ids)
       expect(json_response.last['organization_id']).to eq(user.organization_id)
       expect(json_response.last['password']).to be_falsey
-      expect(json_response.last['updated_by_id']).to eq(admin_user.id)
-      expect(json_response.last['created_by_id']).to eq(admin_user.id)
+      expect(json_response.last['updated_by_id']).to eq(admin.id)
+      expect(json_response.last['created_by_id']).to eq(admin.id)
 
       get '/api/v1/users?expand=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -674,8 +674,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response.last['organization_id']).to eq(user.organization_id)
       expect(json_response.last['organization']).to eq(user.organization.name)
       expect(json_response.last['password']).to be_falsey
-      expect(json_response.last['updated_by_id']).to eq(admin_user.id)
-      expect(json_response.last['created_by_id']).to eq(admin_user.id)
+      expect(json_response.last['updated_by_id']).to eq(admin.id)
+      expect(json_response.last['created_by_id']).to eq(admin.id)
 
       get '/api/v1/users?expand=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -687,8 +687,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response.last['role_ids']).to eq(user.role_ids)
       expect(json_response.last['organization_id']).to eq(user.organization_id)
       expect(json_response.last['password']).to be_falsey
-      expect(json_response.last['updated_by_id']).to eq(admin_user.id)
-      expect(json_response.last['created_by_id']).to eq(admin_user.id)
+      expect(json_response.last['updated_by_id']).to eq(admin.id)
+      expect(json_response.last['created_by_id']).to eq(admin.id)
 
       get '/api/v1/users?full=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -715,8 +715,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response.last['role_ids']).to eq(user.role_ids)
       expect(json_response.last['organization_id']).to eq(user.organization_id)
       expect(json_response.last['password']).to be_falsey
-      expect(json_response.last['updated_by_id']).to eq(admin_user.id)
-      expect(json_response.last['created_by_id']).to eq(admin_user.id)
+      expect(json_response.last['updated_by_id']).to eq(admin.id)
+      expect(json_response.last['created_by_id']).to eq(admin.id)
     end
 
     it 'does ticket create and response format (04.03)' do
@@ -727,7 +727,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
         organization: organization.name,
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
@@ -737,8 +737,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['organization']).to be_falsey
       expect(json_response['password']).to be_falsey
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       post '/api/v1/users?expand=true', params: params, as: :json
       expect(response).to have_http_status(:created)
@@ -749,8 +749,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['organization']).to eq(user.organization.name)
       expect(json_response['password']).to be_falsey
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       post '/api/v1/users?full=true', params: params, as: :json
       expect(response).to have_http_status(:created)
@@ -765,17 +765,17 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['assets']['User'][user.id.to_s]['lastname']).to eq(user.lastname)
       expect(json_response['assets']['User'][user.id.to_s]['password']).to be_falsey
 
-      expect(json_response['assets']['User'][admin_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][admin_user.id.to_s]['id']).to eq(admin_user.id)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['firstname']).to eq(admin_user.firstname)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['lastname']).to eq(admin_user.lastname)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['password']).to be_falsey
+      expect(json_response['assets']['User'][admin.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][admin.id.to_s]['id']).to eq(admin.id)
+      expect(json_response['assets']['User'][admin.id.to_s]['firstname']).to eq(admin.firstname)
+      expect(json_response['assets']['User'][admin.id.to_s]['lastname']).to eq(admin.lastname)
+      expect(json_response['assets']['User'][admin.id.to_s]['password']).to be_falsey
 
     end
 
     it 'does ticket update and response formats (04.04)' do
       user = create(
-        :customer_user,
+        :customer,
         login:         'rest-customer3@example.com',
         firstname:     'Rest',
         lastname:      'Customer3',
@@ -783,11 +783,11 @@ RSpec.describe 'User', type: :request, searchindex: true do
         password:      'customer3pw',
         active:        true,
         organization:  organization,
-        updated_by_id: admin_user.id,
-        created_by_id: admin_user.id,
+        updated_by_id: admin.id,
+        created_by_id: admin.id,
       )
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       params = {
         firstname: 'a update firstname #1',
       }
@@ -801,8 +801,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['organization']).to be_falsey
       expect(json_response['password']).to be_falsey
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       params = {
         firstname: 'a update firstname #2',
@@ -817,8 +817,8 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['organization_id']).to eq(user.organization_id)
       expect(json_response['organization']).to eq(user.organization.name)
       expect(json_response['password']).to be_falsey
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
 
       params = {
         firstname: 'a update firstname #3',
@@ -836,17 +836,17 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['assets']['User'][user.id.to_s]['lastname']).to eq(user.lastname)
       expect(json_response['assets']['User'][user.id.to_s]['password']).to be_falsey
 
-      expect(json_response['assets']['User'][admin_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][admin_user.id.to_s]['id']).to eq(admin_user.id)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['firstname']).to eq(admin_user.firstname)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['lastname']).to eq(admin_user.lastname)
-      expect(json_response['assets']['User'][admin_user.id.to_s]['password']).to be_falsey
+      expect(json_response['assets']['User'][admin.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][admin.id.to_s]['id']).to eq(admin.id)
+      expect(json_response['assets']['User'][admin.id.to_s]['firstname']).to eq(admin.firstname)
+      expect(json_response['assets']['User'][admin.id.to_s]['lastname']).to eq(admin.lastname)
+      expect(json_response['assets']['User'][admin.id.to_s]['password']).to be_falsey
 
     end
 
     it 'does csv example - customer no access (05.01)' do
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/users/import_example', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('Not authorized (user)!')
@@ -854,7 +854,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
     it 'does csv example - admin access (05.02)' do
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/users/import_example', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
@@ -873,7 +873,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       # invalid file
       csv_file = fixture_file_upload('csv_import/user/simple_col_not_existing.csv', 'text/csv')
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -929,14 +929,14 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
     it 'does user history' do
       user1 = create(
-        :customer_user,
+        :customer,
         login:     'history@example.com',
         firstname: 'History',
         lastname:  'Customer1',
         email:     'history@example.com',
       )
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/users/history/#{user1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -950,7 +950,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       firstname = "user_search_sortable #{rand(999_999_999)}"
 
       user1 = create(
-        :customer_user,
+        :customer,
         login:           'rest-user_search_sortableA@example.com',
         firstname:       "#{firstname} A",
         lastname:        'user_search_sortableA',
@@ -962,7 +962,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
         created_at:      '2016-02-05 17:42:00',
       )
       user2 = create(
-        :customer_user,
+        :customer,
         login:                        'rest-user_search_sortableB@example.com',
         firstname:                    "#{firstname} B",
         lastname:                     'user_search_sortableB',
@@ -979,7 +979,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       Scheduler.worker(true)
       sleep 2 # let es time to come ready
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'created_at', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
@@ -1038,10 +1038,10 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     context 'does password reset send work' do
-      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com') }
+      let(:user) { create(:customer, login: 'somebody', email: 'somebody@example.com') }
 
       context 'for user without email address' do
-        let(:user) { create(:customer_user, login: 'somebody', email: '') }
+        let(:user) { create(:customer, login: 'somebody', email: '') }
 
         it 'return failed' do
           post '/api/v1/users/password_reset', params: { username: user.login }, as: :json
@@ -1076,11 +1076,11 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     context 'does password reset by token work' do
-      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com') }
+      let(:user) { create(:customer, login: 'somebody', email: 'somebody@example.com') }
       let(:token) { create(:token, action: 'PasswordReset', user_id: user.id) }
 
       context 'for user without email address' do
-        let(:user) { create(:customer_user, login: 'somebody', email: '') }
+        let(:user) { create(:customer, login: 'somebody', email: '') }
 
         it 'return failed' do
           post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
@@ -1115,12 +1115,12 @@ RSpec.describe 'User', type: :request, searchindex: true do
     end
 
     context 'password change' do
-      let(:user) { create(:customer_user, login: 'somebody', email: 'somebody@example.com', password: 'Test1234#.') }
+      let(:user) { create(:customer, login: 'somebody', email: 'somebody@example.com', password: 'Test1234#.') }
 
       before { authenticated_as(user, login: 'somebody', password: 'Test1234#.') }
 
       context 'user without email address' do
-        let(:user) { create(:customer_user, login: 'somebody', email: '', password: 'Test1234#.') }
+        let(:user) { create(:customer, login: 'somebody', email: '', password: 'Test1234#.') }
 
         it 'return ok' do
           post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json

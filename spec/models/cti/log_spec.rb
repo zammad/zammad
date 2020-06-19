@@ -242,9 +242,9 @@ RSpec.describe Cti::Log do
         described_class.process(attributes)
       end
 
-      let(:customer_user_of_ticket) { create(:customer_user) }
+      let(:customer_of_ticket) { create(:customer) }
       let(:ticket_sample) do
-        create(:ticket_article, created_by_id: customer_user_of_ticket.id, body: 'some text 0123457')
+        create(:ticket_article, created_by_id: customer_of_ticket.id, body: 'some text 0123457')
         Observer::Transaction.commit
         Scheduler.worker(true)
       end
@@ -268,28 +268,28 @@ RSpec.describe Cti::Log do
       end
 
       context 'with related known customer' do
-        let!(:customer_user) { create(:customer_user, phone: '0123456') }
+        let!(:customer) { create(:customer, phone: '0123456') }
 
         it 'gives caller information' do
           expect(log.preferences[:from].count).to eq(1)
           expect(log.preferences[:from].first)
             .to include(
               'level'   => 'known',
-              'user_id' => customer_user.id,
+              'user_id' => customer.id,
             )
         end
       end
 
       context 'with related known customers' do
-        let!(:customer_user1) { create(:customer_user, phone: '0123456') }
-        let!(:customer_user2) { create(:customer_user, phone: '0123456') }
+        let!(:customer1) { create(:customer, phone: '0123456') }
+        let!(:customer2) { create(:customer, phone: '0123456') }
 
         it 'gives caller information' do
           expect(log.preferences[:from].count).to eq(2)
           expect(log.preferences[:from].first)
             .to include(
               'level'   => 'known',
-              'user_id' => customer_user2.id,
+              'user_id' => customer2.id,
             )
         end
       end
@@ -303,14 +303,14 @@ RSpec.describe Cti::Log do
           expect(log.preferences[:from].first)
             .to include(
               'level'   => 'maybe',
-              'user_id' => customer_user_of_ticket.id,
+              'user_id' => customer_of_ticket.id,
             )
         end
       end
 
       context 'with related maybe and known customer' do
         let(:caller_id) { '0123457' }
-        let!(:customer) { create(:customer_user, phone: '0123457') }
+        let!(:customer) { create(:customer, phone: '0123457') }
         let!(:ticket) { ticket_sample }
 
         it 'gives caller information' do
@@ -471,12 +471,12 @@ RSpec.describe Cti::Log do
       )
     end
 
-    let!(:agent1) { create(:agent_user, phone: '01234599') }
-    let!(:customer2) { create(:customer_user, phone: '') }
+    let!(:agent1) { create(:agent, phone: '01234599') }
+    let!(:customer2) { create(:customer, phone: '') }
     let!(:ticket_article1) { create(:ticket_article, created_by_id: customer2.id, body: 'some text 01234599') }
 
     context 'with agent1 (known), customer1 (known) and customer2 (maybe)' do
-      let!(:customer1) { create(:customer_user, phone: '01234599') }
+      let!(:customer1) { create(:customer, phone: '01234599') }
 
       it 'gives customer1' do
         expect(log1.best_customer_id_of_log_entry).to eq(customer1.id)

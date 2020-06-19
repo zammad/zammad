@@ -3,20 +3,20 @@ require 'byebug'
 
 RSpec.describe 'Text Module', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
-  let(:agent_user) do
-    create(:agent_user)
+  let(:agent) do
+    create(:agent)
   end
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
 
   describe 'request handling' do
 
     it 'does csv example - customer no access' do
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/text_modules/import_example', as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('Not authorized (user)!')
@@ -25,7 +25,7 @@ RSpec.describe 'Text Module', type: :request do
     it 'does csv example - admin access' do
       TextModule.load('en-en')
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/text_modules/import_example', as: :json
       expect(response).to have_http_status(:ok)
       rows = CSV.parse(@response.body)
@@ -49,7 +49,7 @@ RSpec.describe 'Text Module', type: :request do
       # invalid file
       csv_file = fixture_file_upload('csv_import/text_module/simple_col_not_existing.csv', 'text/csv')
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/text_modules/import', params: { try: true, file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)

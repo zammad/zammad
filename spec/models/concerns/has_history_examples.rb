@@ -91,7 +91,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: nil|
 
         describe 'of #owner' do
           let(:attribute) { 'owner' }
-          let(:new_value) { create(:customer_user) }  # Ticket#owner is restricted to active agents of the same group
+          let(:new_value) { create(:customer) }  # Ticket#owner is restricted to active agents of the same group
 
           include_examples 'failed attribute update' if described_class.attribute_names.include?('owner_id')
         end

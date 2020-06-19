@@ -158,7 +158,7 @@ RSpec.describe SignatureDetection do
 
   describe '.rebuild_all_articles' do
     context 'when a user exists with a recorded signature' do
-      let!(:customer) { create(:customer_user, preferences: { signature_detection: "\nbar" }) }
+      let!(:customer) { create(:customer, preferences: { signature_detection: "\nbar" }) }
 
       context 'and multiple articles exist for that customer' do
         let!(:articles) do

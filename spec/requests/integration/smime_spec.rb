@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Integration SMIME', type: :request do
 
-  let(:admin_user) { create(:admin_user) }
+  let(:admin) { create(:admin) }
   let(:email_address) { 'smime1@example.com' }
 
   before do
-    authenticated_as(admin_user)
+    authenticated_as(admin)
   end
 
   describe '/integration/smime/certificate' do

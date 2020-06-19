@@ -5,15 +5,15 @@ RSpec.describe 'Ticket', type: :request do
   let!(:ticket_group) do
     create(:group, email_address: create(:email_address) )
   end
-  let(:admin_user) do
-    create(:admin_user, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')
+  let(:admin) do
+    create(:admin, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')
   end
-  let!(:agent_user) do
-    create(:agent_user, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+  let!(:agent) do
+    create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
   end
-  let!(:customer_user) do
+  let!(:customer) do
     create(
-      :customer_user,
+      :customer,
       login:     'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname:  'Customer1',
@@ -33,7 +33,7 @@ RSpec.describe 'Ticket', type: :request do
           type:         'note',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -51,7 +51,7 @@ RSpec.describe 'Ticket', type: :request do
           type:         'note',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -64,10 +64,10 @@ RSpec.describe 'Ticket', type: :request do
         group:       ticket_group.name,
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {},
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -80,20 +80,20 @@ RSpec.describe 'Ticket', type: :request do
         group:       ticket_group.name,
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - minimal article and customer.email (01.04)' do
@@ -102,20 +102,20 @@ RSpec.describe 'Ticket', type: :request do
         group:    ticket_group.name,
         priority: '2 normal',
         state:    'new',
-        customer: customer_user.email,
+        customer: customer.email,
         article:  {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - wrong owner_id - 0 (01.05)' do
@@ -125,12 +125,12 @@ RSpec.describe 'Ticket', type: :request do
         priority:    '2 normal',
         owner_id:    0,
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -144,20 +144,20 @@ RSpec.describe 'Ticket', type: :request do
         priority:    '2 normal',
         owner_id:    '',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #5')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - wrong owner_id - 99999 (01.07)' do
@@ -167,12 +167,12 @@ RSpec.describe 'Ticket', type: :request do
         priority:    '2 normal',
         owner_id:    99_999,
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -186,20 +186,20 @@ RSpec.describe 'Ticket', type: :request do
         priority:    '2 normal',
         owner_id:    nil,
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #7')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - minimal article with guess customer (01.09)' do
@@ -213,15 +213,15 @@ RSpec.describe 'Ticket', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #9')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - minimal article with guess customer (01.10)' do
@@ -233,15 +233,15 @@ RSpec.describe 'Ticket', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #10')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - minimal article with customer hash (01.11)' do
@@ -257,15 +257,15 @@ RSpec.describe 'Ticket', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create with agent - minimal article with customer hash with article.origin_by (01.11)' do
@@ -282,19 +282,19 @@ RSpec.describe 'Ticket', type: :request do
           origin_by: 'some_new_customer@example.com',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.1')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(agent_user.id)
-      expect(article.created_by_id).to eq(agent_user.id)
+      expect(article.updated_by_id).to eq(agent.id)
+      expect(article.created_by_id).to eq(agent.id)
       expect(article.origin_by_id).to eq(User.lookup(email: 'some_new_customer@example.com').id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
@@ -316,19 +316,19 @@ RSpec.describe 'Ticket', type: :request do
           origin_by: 'some_new_customer@example.com',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.2')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(agent_user.id)
-      expect(article.created_by_id).to eq(agent_user.id)
+      expect(article.updated_by_id).to eq(agent.id)
+      expect(article.created_by_id).to eq(agent.id)
       expect(article.origin_by_id).to eq(User.lookup(email: 'some_new_customer@example.com').id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
@@ -351,19 +351,19 @@ RSpec.describe 'Ticket', type: :request do
           origin_by: 'some_new_customer@example.com',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.3')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(agent_user.id)
-      expect(article.created_by_id).to eq(agent_user.id)
+      expect(article.updated_by_id).to eq(agent.id)
+      expect(article.created_by_id).to eq(agent.id)
       expect(article.origin_by_id).to eq(User.lookup(email: 'some_new_customer@example.com').id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
@@ -382,23 +382,23 @@ RSpec.describe 'Ticket', type: :request do
         article:  {
           sender:    'Customer',
           body:      'some test 123',
-          origin_by: customer_user.login,
+          origin_by: customer.login,
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.4')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(agent_user.id)
-      expect(article.created_by_id).to eq(agent_user.id)
-      expect(article.origin_by_id).to eq(customer_user.id)
+      expect(article.updated_by_id).to eq(agent.id)
+      expect(article.created_by_id).to eq(agent.id)
+      expect(article.origin_by_id).to eq(customer.id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
       expect(article.from).to eq('Tickets Customer1')
@@ -408,12 +408,12 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #12',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -424,7 +424,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #13',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -435,15 +435,15 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #13')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -459,7 +459,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #14',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -477,15 +477,15 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #14')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -501,7 +501,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #15',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -512,7 +512,7 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -523,7 +523,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #15a',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -534,7 +534,7 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -545,7 +545,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #15b',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -556,7 +556,7 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response['title']).to eq('a new ticket #15b')
@@ -571,7 +571,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #15c',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -582,7 +582,7 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response['title']).to eq('a new ticket #15c')
@@ -597,7 +597,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #16',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           subject:     'some test 123',
           body:        'some test 123',
@@ -607,7 +607,7 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
@@ -618,7 +618,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #17',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           content_type: 'text/html',
           subject:      'some test 123',
@@ -627,15 +627,15 @@ RSpec.describe 'Ticket', type: :request do
   9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" /> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAJAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzJCOTE2NzlGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzJCOTE2N0FGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMkI5MTY3N0ZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMkI5MTY3OEZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQRERoTGioZGSo1KCEoNTEpKCgpMUE4ODg4OEFEREREREREREREREREREREREREREREREREREREREREREREREQBFhoaIh0iKRoaKTkpIik5RDktLTlEREREOERERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABAADAMBIgACEQEDEQH/xABbAAEBAAAAAAAAAAAAAAAAAAAEBQEBAQAAAAAAAAAAAAAAAAAABAUQAAEEAgMAAAAAAAAAAAAAAAABAhIDESIxBAURAAICAwAAAAAAAAAAAAAAAAESABNRoQP/2gAMAwEAAhEDEQA/AJDq1rfF3Imeg/1+lFy2oR564DKWWWbweV+Buf/Z">',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #17')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -658,7 +658,7 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       'a new ticket #18',
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           content_type: 'text/html',
           subject:      'some test 123',
@@ -671,15 +671,15 @@ RSpec.describe 'Ticket', type: :request do
           ],
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #18')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles.count).to eq(1)
@@ -714,14 +714,14 @@ RSpec.describe 'Ticket', type: :request do
           }
         }
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #1')
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       links = Link.list(
         link_object:       'Ticket',
         link_object_value: json_response['id'],
@@ -737,9 +737,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'ticket with wrong ticket id',
         group_id:    group.id,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
@@ -765,12 +765,12 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       title,
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         preferences: {
           some_key1: 123,
         },
       )
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -783,7 +783,7 @@ RSpec.describe 'Ticket', type: :request do
 
       params = {
         title:       "#{title} - 2",
-        customer_id: agent_user.id,
+        customer_id: agent.id,
         preferences: {
           some_key2: 'abc',
         },
@@ -793,8 +793,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
-      expect(json_response['customer_id']).to eq(agent_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(agent.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(1)
       expect(json_response['preferences']['some_key1']).to eq(123)
       expect(json_response['preferences']['some_key2']).to eq('abc')
@@ -814,7 +814,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article_json_response['body']).to eq('some body')
       expect(article_json_response['content_type']).to eq('text/plain')
       expect(article_json_response['internal']).to eq(false)
-      expect(article_json_response['created_by_id']).to eq(agent_user.id)
+      expect(article_json_response['created_by_id']).to eq(agent.id)
       expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
@@ -859,7 +859,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(true)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
@@ -875,7 +875,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(true)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
@@ -907,9 +907,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'ticket with corret ticket id',
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -921,15 +921,15 @@ RSpec.describe 'Ticket', type: :request do
 
       params = {
         title:       'ticket with corret ticket id - 2',
-        customer_id: agent_user.id,
+        customer_id: agent.id,
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq('ticket with corret ticket id - 2')
-      expect(json_response['customer_id']).to eq(agent_user.id)
-      expect(json_response['updated_by_id']).to eq(admin_user.id)
+      expect(json_response['customer_id']).to eq(agent.id)
+      expect(json_response['updated_by_id']).to eq(admin.id)
       expect(json_response['created_by_id']).to eq(1)
 
       params = {
@@ -947,7 +947,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(false)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
@@ -964,7 +964,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(true)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
@@ -986,7 +986,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(false)
-      expect(json_response['created_by_id']).to eq(admin_user.id)
+      expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
@@ -1005,7 +1005,7 @@ RSpec.describe 'Ticket', type: :request do
           :ticket,
           title:       "#{title} - #{count}",
           group:       ticket_group,
-          customer_id: customer_user.id,
+          customer_id: customer.id,
         )
         create(
           :ticket_article,
@@ -1017,7 +1017,7 @@ RSpec.describe 'Ticket', type: :request do
         travel 2.seconds
       end
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1074,15 +1074,15 @@ RSpec.describe 'Ticket', type: :request do
           body: 'some body',
         },
       }
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c1')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
     end
 
     it 'does ticket create with customer with wrong customer (03.02)' do
@@ -1091,22 +1091,22 @@ RSpec.describe 'Ticket', type: :request do
         state:       'new',
         priority:    '2 normal',
         group:       ticket_group.name,
-        customer_id: agent_user.id,
+        customer_id: agent.id,
         article:     {
           content_type: 'text/plain', # or text/html
           body:         'some body',
           sender:       'System',
         },
       }
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
     end
 
     it 'does ticket create with customer with wrong customer hash (03.03)' do
@@ -1116,9 +1116,9 @@ RSpec.describe 'Ticket', type: :request do
         priority: '2 normal',
         group:    ticket_group.name,
         customer: {
-          firstname: agent_user.firstname,
-          lastname:  agent_user.lastname,
-          email:     agent_user.email,
+          firstname: agent.firstname,
+          lastname:  agent.lastname,
+          email:     agent.email,
         },
         article:  {
           content_type: 'text/plain', # or text/html
@@ -1126,15 +1126,15 @@ RSpec.describe 'Ticket', type: :request do
           sender:       'System',
         },
       }
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
     end
 
     it 'does ticket with wrong ticket id (03.04)' do
@@ -1142,9 +1142,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'ticket with wrong ticket id',
         group:       ticket_group,
-        customer_id: agent_user.id,
+        customer_id: agent.id,
       )
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1170,9 +1170,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       title,
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1184,7 +1184,7 @@ RSpec.describe 'Ticket', type: :request do
 
       params = {
         title:       "#{title} - 2",
-        customer_id: agent_user.id,
+        customer_id: agent.id,
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
@@ -1192,7 +1192,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
       expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
       expect(json_response['created_by_id']).to eq(1)
 
       params = {
@@ -1209,7 +1209,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article_json_response['subject']).to eq('some subject')
       expect(article_json_response['body']).to eq('some body')
       expect(article_json_response['content_type']).to eq('text/plain')
-      expect(article_json_response['created_by_id']).to eq(customer_user.id)
+      expect(article_json_response['created_by_id']).to eq(customer.id)
       expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
       expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
@@ -1254,7 +1254,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).to eq('some subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
@@ -1282,7 +1282,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['internal']).to eq(false)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'web').id)
 
@@ -1301,7 +1301,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket create with agent - minimal article with customer hash with article.origin_by (03.6)' do
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       params = {
         title:    'a new ticket #3.6',
         group:    ticket_group.name,
@@ -1312,7 +1312,7 @@ RSpec.describe 'Ticket', type: :request do
         },
         article:  {
           body:      'some test 123',
-          origin_by: agent_user.login,
+          origin_by: agent.login,
         },
       }
 
@@ -1321,21 +1321,21 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(customer_user.id)
-      expect(article.created_by_id).to eq(customer_user.id)
-      expect(article.origin_by_id).to eq(customer_user.id)
+      expect(article.updated_by_id).to eq(customer.id)
+      expect(article.created_by_id).to eq(customer.id)
+      expect(article.origin_by_id).to eq(customer.id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
       expect(article.from).to eq('Tickets Customer1')
     end
 
     it 'does ticket create with agent - minimal article with customer hash with article.origin_by (03.6)' do
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       params = {
         title:    'a new ticket #3.6.1',
         group:    ticket_group.name,
@@ -1347,7 +1347,7 @@ RSpec.describe 'Ticket', type: :request do
         article:  {
           sender:       'Agent',
           body:         'some test 123',
-          origin_by_id: agent_user.id,
+          origin_by_id: agent.id,
         },
       }
 
@@ -1356,14 +1356,14 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6.1')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
       ticket = Ticket.find(json_response['id'])
       article = ticket.articles.first
-      expect(article.updated_by_id).to eq(customer_user.id)
-      expect(article.created_by_id).to eq(customer_user.id)
-      expect(article.origin_by_id).to eq(customer_user.id)
+      expect(article.updated_by_id).to eq(customer.id)
+      expect(article.created_by_id).to eq(customer.id)
+      expect(article.origin_by_id).to eq(customer.id)
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('note')
       expect(article.from).to eq('Tickets Customer1')
@@ -1375,11 +1375,11 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:         title,
         group:         ticket_group,
-        customer_id:   customer_user.id,
-        updated_by_id: agent_user.id,
-        created_by_id: agent_user.id,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
       )
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1389,8 +1389,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['priority']).to be_falsey
       expect(json_response['owner']).to be_falsey
       expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       get "/api/v1/tickets/#{ticket.id}?expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1401,8 +1401,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['group']).to eq(ticket.group.name)
       expect(json_response['priority']).to eq(ticket.priority.name)
       expect(json_response['owner']).to eq(ticket.owner.login)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       get "/api/v1/tickets/#{ticket.id}?expand=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1413,8 +1413,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['priority']).to be_falsey
       expect(json_response['owner']).to be_falsey
       expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       get "/api/v1/tickets/#{ticket.id}?full=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1429,16 +1429,16 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['customer_id']).to eq(ticket.customer_id)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]['id']).to eq(agent_user.id)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['firstname']).to eq(agent_user.firstname)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['lastname']).to eq(agent_user.lastname)
+      expect(json_response['assets']['User'][agent.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][agent.id.to_s]['id']).to eq(agent.id)
+      expect(json_response['assets']['User'][agent.id.to_s]['firstname']).to eq(agent.firstname)
+      expect(json_response['assets']['User'][agent.id.to_s]['lastname']).to eq(agent.lastname)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]['id']).to eq(customer_user.id)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['firstname']).to eq(customer_user.firstname)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
+      expect(json_response['assets']['User'][customer.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer.id.to_s]['id']).to eq(customer.id)
+      expect(json_response['assets']['User'][customer.id.to_s]['firstname']).to eq(customer.firstname)
+      expect(json_response['assets']['User'][customer.id.to_s]['lastname']).to eq(customer.lastname)
 
       get "/api/v1/tickets/#{ticket.id}?full=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1449,8 +1449,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['priority']).to be_falsey
       expect(json_response['owner']).to be_falsey
       expect(json_response['customer_id']).to eq(ticket.customer_id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket index and response format (04.02)' do
@@ -1459,11 +1459,11 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:         title,
         group:         ticket_group,
-        customer_id:   customer_user.id,
-        updated_by_id: agent_user.id,
-        created_by_id: agent_user.id,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
       )
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
@@ -1476,8 +1476,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response[1]['priority']).to be_falsey
       expect(json_response[1]['owner']).to be_falsey
       expect(json_response[1]['customer_id']).to eq(ticket.customer_id)
-      expect(json_response[1]['updated_by_id']).to eq(agent_user.id)
-      expect(json_response[1]['created_by_id']).to eq(agent_user.id)
+      expect(json_response[1]['updated_by_id']).to eq(agent.id)
+      expect(json_response[1]['created_by_id']).to eq(agent.id)
 
       get '/api/v1/tickets?expand=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1490,8 +1490,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response[1]['group']).to eq(ticket.group.name)
       expect(json_response[1]['priority']).to eq(ticket.priority.name)
       expect(json_response[1]['owner']).to eq(ticket.owner.login)
-      expect(json_response[1]['updated_by_id']).to eq(agent_user.id)
-      expect(json_response[1]['created_by_id']).to eq(agent_user.id)
+      expect(json_response[1]['updated_by_id']).to eq(agent.id)
+      expect(json_response[1]['created_by_id']).to eq(agent.id)
 
       get '/api/v1/tickets?expand=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1504,8 +1504,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response[1]['priority']).to be_falsey
       expect(json_response[1]['owner']).to be_falsey
       expect(json_response[1]['customer_id']).to eq(ticket.customer_id)
-      expect(json_response[1]['updated_by_id']).to eq(agent_user.id)
-      expect(json_response[1]['created_by_id']).to eq(agent_user.id)
+      expect(json_response[1]['updated_by_id']).to eq(agent.id)
+      expect(json_response[1]['created_by_id']).to eq(agent.id)
 
       get '/api/v1/tickets?full=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1522,16 +1522,16 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['customer_id']).to eq(ticket.customer_id)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]['id']).to eq(agent_user.id)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['firstname']).to eq(agent_user.firstname)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['lastname']).to eq(agent_user.lastname)
+      expect(json_response['assets']['User'][agent.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][agent.id.to_s]['id']).to eq(agent.id)
+      expect(json_response['assets']['User'][agent.id.to_s]['firstname']).to eq(agent.firstname)
+      expect(json_response['assets']['User'][agent.id.to_s]['lastname']).to eq(agent.lastname)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]['id']).to eq(customer_user.id)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['firstname']).to eq(customer_user.firstname)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
+      expect(json_response['assets']['User'][customer.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer.id.to_s]['id']).to eq(customer.id)
+      expect(json_response['assets']['User'][customer.id.to_s]['firstname']).to eq(customer.firstname)
+      expect(json_response['assets']['User'][customer.id.to_s]['lastname']).to eq(customer.lastname)
 
       get '/api/v1/tickets?full=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1544,8 +1544,8 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response[1]['priority']).to be_falsey
       expect(json_response[1]['owner']).to be_falsey
       expect(json_response[1]['customer_id']).to eq(ticket.customer_id)
-      expect(json_response[1]['updated_by_id']).to eq(agent_user.id)
-      expect(json_response[1]['created_by_id']).to eq(agent_user.id)
+      expect(json_response[1]['updated_by_id']).to eq(agent.id)
+      expect(json_response[1]['created_by_id']).to eq(agent.id)
     end
 
     it 'does ticket create and response format (04.03)' do
@@ -1553,14 +1553,14 @@ RSpec.describe 'Ticket', type: :request do
       params = {
         title:       title,
         group:       ticket_group.name,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         state:       'new',
         priority:    '2 normal',
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1573,9 +1573,9 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['group_id']).to eq(ticket.group_id)
       expect(json_response['group']).to be_falsey
       expect(json_response['title']).to eq(title)
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       post '/api/v1/tickets?expand=true', params: params, as: :json
       expect(response).to have_http_status(:created)
@@ -1589,9 +1589,9 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['group_id']).to eq(ticket.group_id)
       expect(json_response['group']).to eq(ticket.group.name)
       expect(json_response['title']).to eq(title)
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       post '/api/v1/tickets?full=true', params: params, as: :json
       expect(response).to have_http_status(:created)
@@ -1606,16 +1606,16 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['customer_id']).to eq(ticket.customer_id)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]['id']).to eq(agent_user.id)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['firstname']).to eq(agent_user.firstname)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['lastname']).to eq(agent_user.lastname)
+      expect(json_response['assets']['User'][agent.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][agent.id.to_s]['id']).to eq(agent.id)
+      expect(json_response['assets']['User'][agent.id.to_s]['firstname']).to eq(agent.firstname)
+      expect(json_response['assets']['User'][agent.id.to_s]['lastname']).to eq(agent.lastname)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]['id']).to eq(customer_user.id)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['firstname']).to eq(customer_user.firstname)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
+      expect(json_response['assets']['User'][customer.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer.id.to_s]['id']).to eq(customer.id)
+      expect(json_response['assets']['User'][customer.id.to_s]['firstname']).to eq(customer.firstname)
+      expect(json_response['assets']['User'][customer.id.to_s]['lastname']).to eq(customer.lastname)
 
     end
 
@@ -1625,15 +1625,15 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:         title,
         group:         ticket_group,
-        customer_id:   customer_user.id,
-        updated_by_id: agent_user.id,
-        created_by_id: agent_user.id,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
       )
 
       params = {
         title: 'a update ticket #1',
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1646,9 +1646,9 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['group_id']).to eq(ticket.group_id)
       expect(json_response['group']).to be_falsey
       expect(json_response['title']).to eq('a update ticket #1')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       params = {
         title: 'a update ticket #2',
@@ -1665,9 +1665,9 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['group_id']).to eq(ticket.group_id)
       expect(json_response['group']).to eq(ticket.group.name)
       expect(json_response['title']).to eq('a update ticket #2')
-      expect(json_response['customer_id']).to eq(customer_user.id)
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
-      expect(json_response['created_by_id']).to eq(agent_user.id)
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
 
       params = {
         title: 'a update ticket #3',
@@ -1685,16 +1685,16 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['customer_id']).to eq(ticket.customer_id)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][agent_user.id.to_s]['id']).to eq(agent_user.id)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['firstname']).to eq(agent_user.firstname)
-      expect(json_response['assets']['User'][agent_user.id.to_s]['lastname']).to eq(agent_user.lastname)
+      expect(json_response['assets']['User'][agent.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][agent.id.to_s]['id']).to eq(agent.id)
+      expect(json_response['assets']['User'][agent.id.to_s]['firstname']).to eq(agent.firstname)
+      expect(json_response['assets']['User'][agent.id.to_s]['lastname']).to eq(agent.lastname)
 
       expect(json_response['assets']['User']).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][customer_user.id.to_s]['id']).to eq(customer_user.id)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['firstname']).to eq(customer_user.firstname)
-      expect(json_response['assets']['User'][customer_user.id.to_s]['lastname']).to eq(customer_user.lastname)
+      expect(json_response['assets']['User'][customer.id.to_s]).to be_truthy
+      expect(json_response['assets']['User'][customer.id.to_s]['id']).to eq(customer.id)
+      expect(json_response['assets']['User'][customer.id.to_s]['firstname']).to eq(customer.firstname)
+      expect(json_response['assets']['User'][customer.id.to_s]['lastname']).to eq(customer.lastname)
 
       # it should be not possible to modify the ticket number
       expected_ticket_number = ticket.number
@@ -1716,9 +1716,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:         'some title',
         group:         ticket_group,
-        customer_id:   customer_user.id,
-        updated_by_id: agent_user.id,
-        created_by_id: agent_user.id,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
       )
       article = create(
         :ticket_article,
@@ -1793,11 +1793,11 @@ RSpec.describe 'Ticket', type: :request do
         created_by_id: 1,
       )
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1825,9 +1825,9 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:         'some title',
         group:         ticket_group,
-        customer_id:   customer_user.id,
-        updated_by_id: agent_user.id,
-        created_by_id: agent_user.id,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
       )
       article = create(
         :ticket_article,
@@ -1878,7 +1878,7 @@ RSpec.describe 'Ticket', type: :request do
         created_by_id: 1,
       )
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1907,26 +1907,26 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'ticket merge1',
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
       ticket2 = create(
         :ticket,
         title:       'ticket merge2',
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
       ticket3 = create(
         :ticket,
         title:       'ticket merge2',
         group:       group_no_permission,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1963,18 +1963,18 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'ticket merge1',
         group:       group_change_permission,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
       ticket2 = create(
         :ticket,
         title:       'ticket merge2',
         group:       group_change_permission,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
 
-      agent_user.group_names_access_map = { group_change_permission.name => %w[read change] }
+      agent.group_names_access_map = { group_change_permission.name => %w[read change] }
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1989,7 +1989,7 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       "#{title} A",
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         created_at:  '2018-02-05 17:42:00',
         updated_at:  '2018-02-05 20:42:00',
       )
@@ -2004,7 +2004,7 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       "#{title} B",
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         state:       Ticket::State.lookup(name: 'new'),
         priority:    Ticket::Priority.lookup(name: '3 hoch'),
         created_at:  '2018-02-05 19:42:00',
@@ -2017,37 +2017,37 @@ RSpec.describe 'Ticket', type: :request do
         ticket_id: ticket2.id,
       )
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'desc' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[asc asc] }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc]  }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -2059,7 +2059,7 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'some title',
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
       create(
         :ticket_article,
@@ -2068,16 +2068,16 @@ RSpec.describe 'Ticket', type: :request do
         ticket_id: ticket1.id,
       )
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['history'].class).to eq(Array)
       expect(json_response['assets'].class).to eq(Hash)
-      expect(json_response['assets']['User'][customer_user.id.to_s]).not_to be_nil
+      expect(json_response['assets']['User'][customer.id.to_s]).not_to be_nil
       expect(json_response['assets']['Ticket'][ticket1.id.to_s]).not_to be_nil
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
     end
@@ -2087,24 +2087,24 @@ RSpec.describe 'Ticket', type: :request do
         :ticket,
         title:       'some title',
         group:       ticket_group,
-        customer_id: customer_user.id,
+        customer_id: customer.id,
       )
 
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'does ticket recent' do
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/ticket_recent', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/ticket_recent', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
     end
@@ -2115,11 +2115,11 @@ RSpec.describe 'Ticket', type: :request do
     let(:ticket1) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
     let(:ticket2) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
     let(:ticket3) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
-    let(:customer) { create(:customer_user, organization: organization) }
+    let(:customer) { create(:customer, organization: organization) }
     let(:organization) { create(:organization, shared: false) }
 
     before do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
 
       ticket1
       travel 2.minutes
@@ -2146,8 +2146,8 @@ RSpec.describe 'Ticket', type: :request do
   describe '/api/v1/tickets' do
     subject(:ticket) { create(:ticket, state_name: 'closed') }
 
-    let(:admin) { create(:admin_user, groups: [ticket.group]) }
-    let(:agent) { create(:agent_user, groups: [ticket.group]) }
+    let(:admin) { create(:admin, groups: [ticket.group]) }
+    let(:agent) { create(:agent, groups: [ticket.group]) }
     let(:customer) { ticket.customer }
 
     describe 'reopening a ticket' do
@@ -2212,12 +2212,12 @@ RSpec.describe 'Ticket', type: :request do
     subject(:ticket) { create(:ticket, customer: customer_authorized) }
 
     let(:organization_authorized) { create(:organization) }
-    let(:customer_authorized) { create(:customer_user, organization: organization_authorized) }
+    let(:customer_authorized) { create(:customer, organization: organization_authorized) }
 
     let(:organization_unauthorized) { create(:organization) }
-    let(:customer_unauthorized) { create(:customer_user, organization: organization_unauthorized) }
+    let(:customer_unauthorized) { create(:customer, organization: organization_unauthorized) }
 
-    let(:agent) { create(:agent_user, groups: [ticket.group]) }
+    let(:agent) { create(:agent, groups: [ticket.group]) }
 
     describe 'listing information' do
 

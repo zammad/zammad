@@ -13,14 +13,14 @@ RSpec.describe 'Api Auth', type: :request do
     end
   end
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
-  let(:agent_user) do
-    create(:agent_user)
+  let(:agent) do
+    create(:agent)
   end
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
 
   describe 'request handling' do
@@ -28,7 +28,7 @@ RSpec.describe 'Api Auth', type: :request do
     it 'does basic auth - admin' do
 
       Setting.set('api_password_access', false)
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -49,7 +49,7 @@ RSpec.describe 'Api Auth', type: :request do
     it 'does basic auth - agent' do
 
       Setting.set('api_password_access', false)
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -70,7 +70,7 @@ RSpec.describe 'Api Auth', type: :request do
     it 'does basic auth - customer' do
 
       Setting.set('api_password_access', false)
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -94,13 +94,13 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:      'api',
         persistent:  true,
-        user_id:     admin_user.id,
+        user_id:     admin.id,
         preferences: {
           permission: ['admin.session'],
         },
       )
 
-      authenticated_as(admin_user, token: admin_token)
+      authenticated_as(admin, token: admin_token)
 
       Setting.set('api_token_access', false)
       get '/api/v1/sessions', params: {}, as: :json
@@ -136,8 +136,8 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (token)!')
 
-      admin_user.active = false
-      admin_user.save!
+      admin.active = false
+      admin.save!
 
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
@@ -152,8 +152,8 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('User is inactive!')
 
-      admin_user.active = true
-      admin_user.save!
+      admin.active = true
+      admin.save!
 
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -247,10 +247,10 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:     'api',
         persistent: true,
-        user_id:    agent_user.id,
+        user_id:    agent.id,
       )
 
-      authenticated_as(agent_user, token: agent_token)
+      authenticated_as(agent, token: agent_token)
 
       Setting.set('api_token_access', false)
       get '/api/v1/tickets', params: {}, as: :json
@@ -286,10 +286,10 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:     'api',
         persistent: true,
-        user_id:    customer_user.id,
+        user_id:    customer.id,
       )
 
-      authenticated_as(customer_user, token: customer_token)
+      authenticated_as(customer, token: customer_token)
 
       Setting.set('api_token_access', false)
       get '/api/v1/tickets', params: {}, as: :json
@@ -324,13 +324,13 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:     'api',
         persistent: true,
-        user_id:    admin_user.id,
+        user_id:    admin.id,
       )
 
-      authenticated_as(admin_user, token: admin_token)
+      authenticated_as(admin, token: admin_token)
 
-      admin_user.active = false
-      admin_user.save!
+      admin.active = false
+      admin.save!
 
       Setting.set('api_token_access', false)
       get '/api/v1/sessions', params: {}, as: :json
@@ -355,11 +355,11 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:     'api',
         persistent: true,
-        user_id:    admin_user.id,
+        user_id:    admin.id,
         expires_at: Time.zone.today
       )
 
-      authenticated_as(admin_user, token: admin_token)
+      authenticated_as(admin, token: admin_token)
 
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
@@ -379,11 +379,11 @@ RSpec.describe 'Api Auth', type: :request do
         :token,
         action:     'api',
         persistent: true,
-        user_id:    admin_user.id,
+        user_id:    admin.id,
         expires_at: Time.zone.tomorrow
       )
 
-      authenticated_as(admin_user, token: admin_token)
+      authenticated_as(admin, token: admin_token)
 
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -399,7 +399,7 @@ RSpec.describe 'Api Auth', type: :request do
     end
 
     it 'does session auth - admin' do
-      create(:admin_user, login: 'api-admin@example.com', password: 'adminpw')
+      create(:admin, login: 'api-admin@example.com', password: 'adminpw')
 
       get '/'
       token = response.headers['CSRF-TOKEN']
@@ -416,7 +416,7 @@ RSpec.describe 'Api Auth', type: :request do
     end
 
     it 'does session auth - admin - only with valid CSRF token' do
-      create(:admin_user, login: 'api-admin@example.com', password: 'adminpw')
+      create(:admin, login: 'api-admin@example.com', password: 'adminpw')
 
       post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }
       expect(response).to have_http_status(:unauthorized)

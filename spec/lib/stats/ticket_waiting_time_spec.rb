@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Stats::TicketWaitingTime do
   describe '.generate' do
-    let(:user) { create(:agent_user, groups: [group]) }
+    let(:user) { create(:agent, groups: [group]) }
     let(:group) { create(:group) }
 
     context 'when given an agent with no tickets' do

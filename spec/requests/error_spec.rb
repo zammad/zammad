@@ -43,7 +43,7 @@ RSpec.describe 'Error handling', type: :request do
     end
 
     context 'agent user' do
-      let(:requesting_user) { create(:agent_user, groups: Group.all) }
+      let(:requesting_user) { create(:agent, groups: Group.all) }
       let(:message) { 'Please contact your administrator' }
 
       context 'requesting JSON' do
@@ -59,7 +59,7 @@ RSpec.describe 'Error handling', type: :request do
     end
 
     context 'admin user' do
-      let(:requesting_user) { create(:admin_user, groups: Group.all) }
+      let(:requesting_user) { create(:admin, groups: Group.all) }
 
       if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
         let(:message) { 'Mysql2::Error' }

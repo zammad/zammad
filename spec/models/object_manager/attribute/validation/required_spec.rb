@@ -23,7 +23,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
 
     shared_examples 'a permission based validator' do |permission:|
 
-      let(:performing_user) { create(:agent_user) }
+      let(:performing_user) { create(:agent) }
 
       before { UserInfo.current_user_id = performing_user.id }
 
@@ -87,7 +87,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
 
       context 'for required => false' do
 
-        let(:performing_user) { create(:agent_user) }
+        let(:performing_user) { create(:agent) }
 
         before { UserInfo.current_user_id = performing_user.id }
 

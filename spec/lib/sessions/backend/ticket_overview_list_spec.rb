@@ -12,7 +12,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
   end
 
   describe '.push' do
-    let(:admin) { create(:admin_user, groups: [group]) }
+    let(:admin) { create(:admin, groups: [group]) }
     let(:group) { create(:group) }
     let(:client_id) { '12345' }
     let(:ttl) { 3 }  # seconds

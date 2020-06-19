@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe RecentView, type: :model do
-  let(:admin)    { create(:admin_user) }
-  let(:agent)    { create(:agent_user) }
-  let(:customer) { create(:customer_user) }
+  let(:admin)    { create(:admin) }
+  let(:agent)    { create(:agent) }
+  let(:customer) { create(:customer) }
   let(:ticket)   { create(:ticket, owner: owner, customer: customer) }
   let(:tickets)  { create_list(:ticket, 15, owner: owner, customer: customer) }
   let(:owner)    { admin }

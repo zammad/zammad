@@ -2,7 +2,7 @@ RSpec.shared_examples 'CanLookupSearchIndexAttributes' do
   describe '.search_index_value_by_attribute' do
     it 'returns search index value for attribute' do
       organization = create(:organization, name: 'Tomato42', note: 'special recipe')
-      user         = create(:agent_user, organization: organization)
+      user         = create(:agent, organization: organization)
 
       value = user.search_index_value_by_attribute('organization_id')
       expect(value).to eq('Tomato42')

@@ -11,7 +11,7 @@ module SendsNotificationEmailsHelper
   #
   #     sent(
   #       template: 'user_device_new',
-  #       user:     admin_user,
+  #       user:     admin,
   #     )
   #   end
   #
@@ -31,7 +31,7 @@ module SendsNotificationEmailsHelper
   # @example
   # not_sent(
   #   template: 'user_device_new_location',
-  #   user:     admin_user,
+  #   user:     admin,
   # )
   #
   # @return [nil]
@@ -50,7 +50,7 @@ module SendsNotificationEmailsHelper
   # @example
   # sent(
   #   template: 'user_device_new_location',
-  #   user:     admin_user,
+  #   user:     admin,
   # )
   #
   # @return [nil]

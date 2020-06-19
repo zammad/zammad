@@ -14,7 +14,7 @@ RSpec.describe Trigger do
 
     context 'sends interpolated, html-free SMS' do
       before do
-        another_agent = create(:admin_user, mobile: '+37061010000')
+        another_agent = create(:admin, mobile: '+37061010000')
         Group.lookup(id: 1).users << another_agent
 
         create(:channel, area: 'Sms::Notification')
@@ -30,7 +30,7 @@ RSpec.describe Trigger do
 
       let(:message_body) { 'space&nbsp;between #{ticket.title} #{ticket.created_at}' } # rubocop:disable Lint/InterpolationCheck
 
-      let(:agent) { create(:agent_user) }
+      let(:agent) { create(:agent) }
       let(:ticket) do
         ticket = create(:ticket, group: Group.lookup(id: 1), created_by_id: agent.id)
         Observer::Transaction.commit
@@ -64,14 +64,14 @@ RSpec.describe Trigger do
 
     context 'recipients' do
 
-      let(:recipient1) { create(:agent_user, mobile: '+37061010000', groups: [ticket_group]) }
-      let(:recipient2) { create(:agent_user, mobile: '+37061010001', groups: [ticket_group]) }
-      let(:recipient3) { create(:agent_user, mobile: '+37061010002', groups: [ticket_group]) }
+      let(:recipient1) { create(:agent, mobile: '+37061010000', groups: [ticket_group]) }
+      let(:recipient2) { create(:agent, mobile: '+37061010001', groups: [ticket_group]) }
+      let(:recipient3) { create(:agent, mobile: '+37061010002', groups: [ticket_group]) }
 
       let(:ticket_group) { create(:group) }
 
       let(:ticket) do
-        ticket = create(:ticket, group: ticket_group, created_by_id: create(:agent_user).id)
+        ticket = create(:ticket, group: ticket_group, created_by_id: create(:agent).id)
         Observer::Transaction.commit
         ticket
       end

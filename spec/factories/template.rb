@@ -9,9 +9,9 @@ FactoryBot.define do
       title { 'Title dummy.' }
       body { 'Content dummy.' }
       sender_type { 'email-out' }
-      customer { create(:customer_user) }
+      customer { create(:customer) }
       group { Group.first }
-      owner { create(:agent_user) }
+      owner { create(:agent) }
     end
 
     trait :dummy_data do

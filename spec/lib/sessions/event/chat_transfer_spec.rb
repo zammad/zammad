@@ -15,9 +15,9 @@ RSpec.describe Sessions::Event::ChatTransfer do
     )
   end
   let!(:agent) do
-    create(:agent_user, preferences: { chat: { active: { chat.id.to_s => 'on' } } })
+    create(:agent, preferences: { chat: { active: { chat.id.to_s => 'on' } } })
   end
-  let!(:customer) { create(:customer_user) }
+  let!(:customer) { create(:customer) }
   let(:subject_as_agent) do
     Sessions.create(client_id, { 'id' => agent.id }, {})
     Sessions.queue(client_id)

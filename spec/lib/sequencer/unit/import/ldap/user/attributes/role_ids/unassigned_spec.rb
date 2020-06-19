@@ -35,7 +35,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       login:     'jane_doe' }.with_indifferent_access
   end
 
-  let(:instance) { create(:agent_user, mapped) }
+  let(:instance) { create(:agent, mapped) }
 
   context 'when user exists from previous import' do
     context 'and is active' do

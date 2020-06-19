@@ -125,7 +125,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
 
         context 'when from address matches an existing agent' do
-          let!(:agent) { create(:agent_user, email: 'foo@bar.com') }
+          let!(:agent) { create(:agent, email: 'foo@bar.com') }
 
           it 'sets article.sender to "Agent"' do
             described_class.new.process({}, raw_mail)
@@ -141,7 +141,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
 
         context 'when from address matches an existing customer' do
-          let!(:customer) { create(:customer_user, email: 'foo@bar.com') }
+          let!(:customer) { create(:customer, email: 'foo@bar.com') }
 
           it 'sets article.sender to "Customer"' do
             described_class.new.process({}, raw_mail)
@@ -816,8 +816,8 @@ RSpec.describe Channel::EmailParser, type: :model do
     end
 
     describe 'assigning ticket.customer' do
-      let(:agent) { create(:agent_user) }
-      let(:customer) { create(:customer_user) }
+      let(:agent) { create(:agent) }
+      let(:customer) { create(:customer) }
 
       let(:raw_mail) { <<~RAW.chomp }
         From: #{agent.email}
@@ -1195,7 +1195,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
     describe 'suppressing normal Ticket::Article callbacks' do
       context 'from sender: "Agent"' do
-        let(:agent) { create(:agent_user) }
+        let(:agent) { create(:agent) }
 
         it 'does not dispatch an email on article creation' do
           expect(TicketArticleCommunicateEmailJob).not_to receive(:perform_later)

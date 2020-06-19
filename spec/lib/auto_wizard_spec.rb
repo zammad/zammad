@@ -107,7 +107,7 @@ RSpec.describe AutoWizard do
         }
       end
 
-      let(:group_agent) { create(:agent_user) }
+      let(:group_agent) { create(:agent) }
       let(:group_signature) { create(:signature) }
       let(:group_email) { create(:email_address) }
 

@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Ticket Escalation', type: :request do
 
-  let!(:agent_user) do
-    create(:agent_user, groups: Group.all)
+  let!(:agent) do
+    create(:agent, groups: Group.all)
   end
-  let!(:customer_user) do
-    create(:customer_user)
+  let!(:customer) do
+    create(:customer)
   end
   let!(:calendar) do
     create(
@@ -78,15 +78,15 @@ RSpec.describe 'Ticket Escalation', type: :request do
         },
       }
 
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('some value 123')
-      expect(json_response['updated_by_id']).to eq(customer_user.id)
-      expect(json_response['created_by_id']).to eq(customer_user.id)
+      expect(json_response['updated_by_id']).to eq(customer.id)
+      expect(json_response['created_by_id']).to eq(customer.id)
 
       ticket_p = Ticket.find(json_response['id'])
 
@@ -128,14 +128,14 @@ Some Text"
           to:   'customer@example.com',
         },
       }
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       put "/api/v1/tickets/#{ticket_p.id}", params: params, as: :json
 
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'open').id)
       expect(json_response['title']).to eq('some value 123 - update')
-      expect(json_response['updated_by_id']).to eq(agent_user.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(user_p.id)
 
       ticket_p.reload

@@ -1,7 +1,7 @@
 RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], selectors: [], own_attributes: true|
   subject { create(described_class.name.underscore, updated_by_id: admin.id) }
 
-  let(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin) }
 
   describe '#assets (for supplying model data to front-end framework)' do
     shared_examples 'own asset attributes' do

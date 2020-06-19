@@ -11,7 +11,7 @@ FactoryBot.define do
     # assign to an existing user, if possible
     created_by_id do
       User.find { |u| u.role?(user_role.capitalize) }&.id ||
-        create("#{user_role}_user").id
+        create(user_role).id
     end
   end
 end

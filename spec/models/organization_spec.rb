@@ -28,11 +28,11 @@ RSpec.describe Organization, type: :model do
 
   describe 'Callbacks, Observers, & Async Transactions -' do
     describe 'Touching associations on update:' do
-      let!(:member) { create(:customer_user, organization: organization) }
+      let!(:member) { create(:customer, organization: organization) }
       let!(:member_ticket) { create(:ticket, customer: member) }
 
       context 'when member associations are added' do
-        let(:user) { create(:customer_user) }
+        let(:user) { create(:customer) }
 
         it 'is touched, and touches its other members (but not their tickets)' do
           expect { organization.members.push(user) }

@@ -6,7 +6,7 @@ RSpec.describe Stats do
 
     before do
       # create a user for which the stats can be generated
-      create(:agent_user)
+      create(:agent)
     end
 
     it 'generates stats' do

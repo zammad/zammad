@@ -5,7 +5,7 @@ require 'models/contexts/factory_context'
 RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id: 1, searchindex: 1 do
   include_context 'basic Knowledge Base'
 
-  let(:user)     { create(:admin_user) }
+  let(:user)     { create(:admin) }
   let(:filename) { 'test.rtf' }
   let(:query)    { 'RTF document' }
 

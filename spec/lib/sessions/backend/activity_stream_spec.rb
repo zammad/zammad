@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Sessions::Backend::ActivityStream do
   context 'when async processes affect associated objects / DB records (#2066)' do
     let(:subject)            { described_class.new(user, {}) }
-    let(:user)               { create(:agent_user, groups: [group]) }
+    let(:user)               { create(:agent, groups: [group]) }
     let(:group)              { Group.find_by(name: 'Users') }
     let(:associated_tickets) { create_list(:ticket, ticket_count, group: group) }
     let(:ticket_count)       { 20 }

@@ -216,7 +216,7 @@ RSpec.describe Ticket, type: :model do
         #
         # Notification triggers should log notification as private or public
         # according to given configuration
-        let(:user) { create(:admin_user, mobile: '+37061010000') }
+        let(:user) { create(:admin, mobile: '+37061010000') }
 
         before { ticket.group.users << user }
 
@@ -386,13 +386,13 @@ RSpec.describe Ticket, type: :model do
 
   describe 'Attributes:' do
     describe '#owner' do
-      let(:original_owner) { create(:agent_user, groups: [ticket.group]) }
+      let(:original_owner) { create(:agent, groups: [ticket.group]) }
 
       before { ticket.update(owner: original_owner) }
 
       context 'when assigned directly' do
         context 'to an active agent belonging to ticket.group' do
-          let(:agent) { create(:agent_user, groups: [ticket.group]) }
+          let(:agent) { create(:agent, groups: [ticket.group]) }
 
           it 'can be set' do
             expect { ticket.update(owner: agent) }
@@ -401,7 +401,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'to an agent not belonging to ticket.group' do
-          let(:agent) { create(:agent_user, groups: [other_group]) }
+          let(:agent) { create(:agent, groups: [other_group]) }
           let(:other_group) { create(:group) }
 
           it 'resets to default user (id: 1) instead' do
@@ -411,7 +411,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'to an inactive agent' do
-          let(:agent) { create(:agent_user, groups: [ticket.group], active: false) }
+          let(:agent) { create(:agent, groups: [ticket.group], active: false) }
 
           it 'resets to default user (id: 1) instead' do
             expect { ticket.update(owner: agent) }
@@ -420,7 +420,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'to a non-agent' do
-          let(:agent) { create(:customer_user, groups: [ticket.group]) }
+          let(:agent) { create(:customer, groups: [ticket.group]) }
 
           it 'resets to default user (id: 1) instead' do
             expect { ticket.update(owner: agent) }
@@ -763,9 +763,9 @@ RSpec.describe Ticket, type: :model do
     describe 'Touching associations on update:' do
       subject(:ticket) { create(:ticket, customer: customer) }
 
-      let(:customer) { create(:customer_user, organization: organization) }
+      let(:customer) { create(:customer, organization: organization) }
       let(:organization) { create(:organization) }
-      let(:other_customer) { create(:customer_user, organization: other_organization) }
+      let(:other_customer) { create(:customer, organization: other_organization) }
       let(:other_organization) { create(:organization) }
 
       context 'on creation' do

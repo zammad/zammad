@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'ObjectManager Attributes', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
 
   describe 'request handling' do
 
     it 'does add new ticket text object' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
 
       # token based on headers
@@ -56,7 +56,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     end
 
     it 'does add new ticket text object - no default' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
 
       # token based on headers
@@ -109,7 +109,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       migration = ObjectManager::Attribute.migration_execute
       expect(migration).to eq(true)
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
 
       # parameters for updating
@@ -157,7 +157,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     end
 
     it 'does add new ticket boolean object' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
 
       # token based on headers
@@ -205,7 +205,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     end
 
     it 'does add new user select object' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: {}, as: :json
 
       # token based on headers
@@ -263,7 +263,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['name']).to eq('test5')
     end
 
-    it 'does update user select object', authenticated_as: -> { admin_user }, db_strategy: :reset do
+    it 'does update user select object', authenticated_as: -> { admin }, db_strategy: :reset do
       # add a new object
       object = create(:object_manager_attribute_text, object_name: 'User')
 
@@ -366,7 +366,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         'id':          'c-201'
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
@@ -416,7 +416,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
@@ -471,7 +471,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
@@ -566,7 +566,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
@@ -652,7 +652,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
@@ -785,7 +785,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       params = {
@@ -926,7 +926,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       expect(response).to have_http_status(:created) # created
@@ -988,7 +988,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
         },
       }
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       expect(response).to have_http_status(:created) # created
@@ -1018,7 +1018,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['data_type']).to eq('select')
     end
 
-    it "doesn't let to update item that doesn't exist", authenticated_as: -> { admin_user } do
+    it "doesn't let to update item that doesn't exist", authenticated_as: -> { admin } do
       params = {
         active:      true,
         data_option: {
@@ -1036,7 +1036,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    context 'position handling', authenticated_as: -> { admin_user } do
+    context 'position handling', authenticated_as: -> { admin } do
       let(:params) do
         {
           'name':        "customerdescription_#{rand(999_999_999)}",

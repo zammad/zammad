@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Api Auth On Behalf Of', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user, groups: Group.all)
+  let(:admin) do
+    create(:admin, groups: Group.all)
   end
-  let(:agent_user) do
-    create(:agent_user)
+  let(:agent) do
+    create(:agent)
   end
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
 
   describe 'request handling' do
@@ -20,16 +20,16 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'Users',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(admin_user, on_behalf_of: customer_user.id)
+      authenticated_as(admin, on_behalf_of: customer.id)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(customer_user.id).to eq(json_response['created_by_id'])
+      expect(customer.id).to eq(json_response['created_by_id'])
     end
 
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by login' do
@@ -40,19 +40,19 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'Users',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(admin_user, on_behalf_of: customer_user.login)
+      authenticated_as(admin, on_behalf_of: customer.login)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       json_response_ticket = json_response
       expect(json_response_ticket).to be_a_kind_of(Hash)
-      expect(customer_user.id).to eq(json_response_ticket['created_by_id'])
+      expect(customer.id).to eq(json_response_ticket['created_by_id'])
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/activity_stream?full=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       json_response_activity = json_response
@@ -68,7 +68,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       end
 
       expect(ticket_created).to be_truthy
-      expect(customer_user.id).to eq(ticket_created.created_by_id)
+      expect(customer.id).to eq(ticket_created.created_by_id)
 
       get '/api/v1/activity_stream', params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -85,7 +85,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       end
 
       expect(ticket_created).to be_truthy
-      expect(customer_user.id).to eq(ticket_created.created_by_id)
+      expect(customer.id).to eq(ticket_created.created_by_id)
     end
 
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by email' do
@@ -94,16 +94,16 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'Users',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(admin_user, on_behalf_of: customer_user.email)
+      authenticated_as(admin, on_behalf_of: customer.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(customer_user.id).to eq(json_response['created_by_id'])
+      expect(customer.id).to eq(json_response['created_by_id'])
     end
 
     it 'does X-On-Behalf-Of auth - ticket create admin for unknown' do
@@ -112,12 +112,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'Users',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(admin_user, on_behalf_of: 99_449_494_949)
+      authenticated_as(admin, on_behalf_of: 99_449_494_949)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -131,12 +131,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'Users',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(customer_user, on_behalf_of: admin_user.email)
+      authenticated_as(customer, on_behalf_of: admin.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -150,12 +150,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
         group:       'secret1234',
         priority:    '2 normal',
         state:       'new',
-        customer_id: customer_user.id,
+        customer_id: customer.id,
         article:     {
           body: 'some test 123',
         },
       }
-      authenticated_as(admin_user, on_behalf_of: customer_user.email)
+      authenticated_as(admin, on_behalf_of: customer.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')

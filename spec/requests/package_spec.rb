@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Packages', type: :request do
 
-  let(:admin_user) do
-    create(:admin_user)
+  let(:admin) do
+    create(:admin)
   end
-  let(:agent_user) do
-    create(:agent_user)
+  let(:agent) do
+    create(:agent)
   end
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
 
   describe 'request handling' do
@@ -24,7 +24,7 @@ RSpec.describe 'Packages', type: :request do
     end
 
     it 'does packages index with admin' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:ok)
@@ -33,7 +33,7 @@ RSpec.describe 'Packages', type: :request do
     end
 
     it 'does packages index with admin and wrong pw' do
-      authenticated_as(admin_user, password: 'wrongadminpw')
+      authenticated_as(admin, password: 'wrongadminpw')
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
@@ -42,9 +42,9 @@ RSpec.describe 'Packages', type: :request do
     end
 
     it 'does packages index with inactive admin' do
-      admin_user = create(:admin_user, active: false, password: 'we need a password here')
+      admin = create(:admin, active: false, password: 'we need a password here')
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
@@ -53,7 +53,7 @@ RSpec.describe 'Packages', type: :request do
     end
 
     it 'does packages index with agent' do
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
@@ -63,7 +63,7 @@ RSpec.describe 'Packages', type: :request do
     end
 
     it 'does packages index with customer' do
-      authenticated_as(customer_user)
+      authenticated_as(customer)
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)

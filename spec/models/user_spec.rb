@@ -13,14 +13,14 @@ require 'models/user/can_lookup_search_index_attributes_examples'
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
 
-  let(:customer) { create(:customer_user) }
-  let(:agent)    { create(:agent_user) }
-  let(:admin)    { create(:admin_user) }
+  let(:customer) { create(:customer) }
+  let(:agent)    { create(:agent) }
+  let(:admin)    { create(:admin) }
 
   it_behaves_like 'ApplicationModel', can_assets: { associations: :organization }
-  it_behaves_like 'HasGroups', group_access_factory: :agent_user
+  it_behaves_like 'HasGroups', group_access_factory: :agent
   it_behaves_like 'HasHistory'
-  it_behaves_like 'HasRoles', group_access_factory: :agent_user
+  it_behaves_like 'HasRoles', group_access_factory: :agent
   it_behaves_like 'HasXssSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
@@ -310,7 +310,7 @@ RSpec.describe User, type: :model do
       context 'when designated as the substitute' do
         let!(:agent_on_holiday) do
           create(
-            :agent_user,
+            :agent,
             out_of_office_start_at:       Time.current.yesterday,
             out_of_office_end_at:         Time.current.tomorrow,
             out_of_office_replacement_id: agent.id,
@@ -867,19 +867,19 @@ RSpec.describe User, type: :model do
             before { Setting.set('system_agent_limit', current_agents.count + 1) }
 
             it 'grants agent creation' do
-              expect { create(:agent_user) }
+              expect { create(:agent) }
                 .to change(current_agents, :count).by(1)
             end
 
             it 'grants role change' do
-              future_agent = create(:customer_user)
+              future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
                 .to change(current_agents, :count).by(1)
             end
 
             describe 'role updates' do
-              let(:agent) { create(:agent_user) }
+              let(:agent) { create(:agent) }
 
               it 'grants update by instances' do
                 expect { agent.roles = [admin_role, agent_role] }
@@ -902,9 +902,9 @@ RSpec.describe User, type: :model do
             it 'creation of new agents' do
               Setting.set('system_agent_limit', current_agents.count + 2)
 
-              create_list(:agent_user, 2)
+              create_list(:agent, 2)
 
-              expect { create(:agent_user) }
+              expect { create(:agent) }
                 .to raise_error(Exceptions::UnprocessableEntity)
                 .and change(current_agents, :count).by(0)
             end
@@ -912,7 +912,7 @@ RSpec.describe User, type: :model do
             it 'prevents role change' do
               Setting.set('system_agent_limit', current_agents.count)
 
-              future_agent = create(:customer_user)
+              future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
@@ -926,19 +926,19 @@ RSpec.describe User, type: :model do
             before { Setting.set('system_agent_limit', (current_agents.count + 1).to_s) }
 
             it 'grants agent creation' do
-              expect { create(:agent_user) }
+              expect { create(:agent) }
                 .to change(current_agents, :count).by(1)
             end
 
             it 'grants role change' do
-              future_agent = create(:customer_user)
+              future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
                 .to change(current_agents, :count).by(1)
             end
 
             describe 'role updates' do
-              let(:agent) { create(:agent_user) }
+              let(:agent) { create(:agent) }
 
               it 'grants update by instances' do
                 expect { agent.roles = [admin_role, agent_role] }
@@ -961,9 +961,9 @@ RSpec.describe User, type: :model do
             it 'creation of new agents' do
               Setting.set('system_agent_limit', (current_agents.count + 2).to_s)
 
-              create_list(:agent_user, 2)
+              create_list(:agent, 2)
 
-              expect { create(:agent_user) }
+              expect { create(:agent) }
                 .to raise_error(Exceptions::UnprocessableEntity)
                 .and change(current_agents, :count).by(0)
             end
@@ -971,7 +971,7 @@ RSpec.describe User, type: :model do
             it 'prevents role change' do
               Setting.set('system_agent_limit', current_agents.count.to_s)
 
-              future_agent = create(:customer_user)
+              future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
@@ -987,7 +987,7 @@ RSpec.describe User, type: :model do
 
           context 'when exceeding the agent limit' do
             it 'prevents re-activation of agents' do
-              inactive_agent = create(:agent_user, active: false)
+              inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
@@ -1001,7 +1001,7 @@ RSpec.describe User, type: :model do
 
           context 'when exceeding the agent limit' do
             it 'prevents re-activation of agents' do
-              inactive_agent = create(:agent_user, active: false)
+              inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
@@ -1013,7 +1013,7 @@ RSpec.describe User, type: :model do
     end
 
     describe 'Touching associations on update:' do
-      subject!(:user) { create(:customer_user) }
+      subject!(:user) { create(:customer) }
 
       let!(:organization) { create(:organization) }
 

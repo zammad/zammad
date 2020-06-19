@@ -101,7 +101,7 @@ RSpec.describe NotificationFactory::Mailer do
     end
 
     context 'recipient with email address' do
-      let(:user) { create(:agent_user, email: 'somebody@example.com') }
+      let(:user) { create(:agent, email: 'somebody@example.com') }
 
       it 'returns a Mail::Message' do
         expect( result ).to be_kind_of(Mail::Message)
@@ -109,7 +109,7 @@ RSpec.describe NotificationFactory::Mailer do
     end
 
     context 'recipient without email address' do
-      let(:user) { create(:agent_user, email: '') }
+      let(:user) { create(:agent, email: '') }
 
       it 'raises Exceptions::UnprocessableEntity' do
         expect { result }.to raise_error(Exceptions::UnprocessableEntity)

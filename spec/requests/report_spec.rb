@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Report', type: :request, searchindex: true do
 
-  let!(:admin_user) do
-    create(:admin_user)
+  let!(:admin) do
+    create(:admin)
   end
   let!(:year) do
     DateTime.now.utc.year
@@ -72,7 +72,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
   describe 'request handling' do
 
     it 'does report example - admin access' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get "/api/v1/reports/sets?sheet=true;metric=count;year=#{year};month=#{month};week=#{week};day=#{day};timeRange=year;profile_id=1;downloadBackendSelected=count::created", params: {}, as: :json
 
       expect(response).to have_http_status(:ok)
@@ -84,7 +84,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
     it 'does report example - deliver result' do
       skip('No ES configured') if !SearchIndexBackend.enabled?
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
 
       # 2019-03-15 - day interval
       params = {

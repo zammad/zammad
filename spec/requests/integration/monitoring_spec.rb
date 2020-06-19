@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Monitoring', type: :request do
 
-  let!(:admin_user) do
-    create(:admin_user, groups: Group.all)
+  let!(:admin) do
+    create(:admin, groups: Group.all)
   end
-  let!(:agent_user) do
-    create(:agent_user, groups: Group.all)
+  let!(:agent) do
+    create(:agent, groups: Group.all)
   end
-  let!(:customer_user) do
-    create(:customer_user)
+  let!(:customer) do
+    create(:customer)
   end
   let!(:token) do
     SecureRandom.urlsafe_base64(64)
@@ -231,7 +231,7 @@ RSpec.describe 'Monitoring', type: :request do
     it 'does monitoring with admin user' do
 
       # health_check
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
@@ -264,7 +264,7 @@ RSpec.describe 'Monitoring', type: :request do
     it 'does monitoring with agent user' do
 
       # health_check
-      authenticated_as(agent_user)
+      authenticated_as(agent)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
 
@@ -300,7 +300,7 @@ RSpec.describe 'Monitoring', type: :request do
       permission.save!
 
       # health_check
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
 
@@ -512,7 +512,7 @@ RSpec.describe 'Monitoring', type: :request do
     end
 
     it 'does check restart_failed_jobs' do
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post '/api/v1/monitoring/restart_failed_jobs', params: {}, as: :json
       expect(response).to have_http_status(:ok)
     end
@@ -532,7 +532,7 @@ RSpec.describe 'Monitoring', type: :request do
       migration = ObjectManager::Attribute.migration_execute
       expect(true).to eq(migration)
 
-      authenticated_as(admin_user)
+      authenticated_as(admin)
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
       token = @response.headers['CSRF-TOKEN']
 

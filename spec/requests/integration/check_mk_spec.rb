@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Integration Check MK', type: :request do
-  let(:customer_user) do
-    create(:customer_user)
+  let(:customer) do
+    create(:customer)
   end
   let(:group) do
     create(:group)
@@ -36,7 +36,7 @@ RSpec.describe 'Integration Check MK', type: :request do
           state:    'down',
           host:     'some host',
           service:  'some service',
-          customer: customer_user.email,
+          customer: customer.email,
         }
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
@@ -48,7 +48,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         ticket = Ticket.find(json_response['ticket_id'])
         expect(ticket.state.name).to eq('new')
-        expect(ticket.customer.email).to eq(customer_user.email)
+        expect(ticket.customer.email).to eq(customer.email)
         expect(ticket.articles.count).to eq(1)
       end
 
@@ -58,7 +58,7 @@ RSpec.describe 'Integration Check MK', type: :request do
           state:    'down',
           host:     'some host',
           service:  'some service',
-          customer: customer_user.login,
+          customer: customer.login,
         }
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
@@ -70,7 +70,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         ticket = Ticket.find(json_response['ticket_id'])
         expect(ticket.state.name).to eq('new')
-        expect(ticket.customer.email).to eq(customer_user.email)
+        expect(ticket.customer.email).to eq(customer.email)
         expect(ticket.articles.count).to eq(1)
       end
 
