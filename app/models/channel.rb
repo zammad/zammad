@@ -347,7 +347,7 @@ get instance of channel driver
     options[:outbound][:options][:password] = result[:access_token]
 
     save!
-  rescue StandardError => e
+  rescue => e
     logger.error e
     raise "Failed to refresh XOAUTH2 access_token of provider '#{options[:auth][:provider]}'! #{e.inspect}"
   end
