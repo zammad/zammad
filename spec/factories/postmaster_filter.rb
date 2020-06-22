@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :postmaster_filter do
-    sequence(:name) { |n| "Test PostmasterFilter #{n}"  }
+    sequence(:name) { |n| "Test PostmasterFilter #{n}" }
     channel         { 'email' }
     match           { { 'from' => { 'operator' => 'contains', 'value' => 'a' } } }
     perform         { { 'x-zammad-ticket-tags' => { 'operator' => 'remove', 'value' => 'test2, test7' } } }

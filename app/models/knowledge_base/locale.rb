@@ -50,5 +50,5 @@ class KnowledgeBase::Locale < ApplicationModel
     knowledge_base.kb_locales.find_by(primary: true)
   end
 
-  scope :available_for, ->(object) { where(id: object.translations.select(:kb_locale_id))  }
+  scope :available_for, ->(object) { where(id: object.translations.select(:kb_locale_id)) }
 end

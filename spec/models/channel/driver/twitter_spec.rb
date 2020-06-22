@@ -921,7 +921,7 @@ RSpec.describe Channel::Driver::Twitter do
               tweet_ids.each { |tweet_id| create(:ticket_article, message_id: tweet_id) }
             end
 
-            let(:tweet_ids) { [1222126386334388225, 1222109934923460608] }  # rubocop:disable Style/NumericLiterals
+            let(:tweet_ids) { [1222126386334388225, 1222109934923460608] } # rubocop:disable Style/NumericLiterals
 
             it 'does not import duplicates' do
               expect { channel.fetch }.not_to change(Ticket::Article, :count)
@@ -970,7 +970,7 @@ RSpec.describe Channel::Driver::Twitter do
                   # Run BG job (Why not use Scheduler.worker?
                   # It led to hangs & failures elsewhere in test suite.)
                   Thread.new do
-                    sleep 5  # simulate other bg jobs holding up the queue
+                    sleep 5 # simulate other bg jobs holding up the queue
                     twitter_job.invoke_job
                   end.tap { example.run }.join
                 end

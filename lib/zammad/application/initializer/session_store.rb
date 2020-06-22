@@ -6,8 +6,8 @@ module Zammad
   class Application
     class Initializer
       module SessionStore
-        STORE_TYPE  = :active_record_store  # default: :cookie_store
-        SESSION_KEY = ('_zammad_session_' + Digest::MD5.hexdigest(Rails.root.to_s)[5..15]).freeze  # default: '_zammad_session'
+        STORE_TYPE  = :active_record_store # default: :cookie_store
+        SESSION_KEY = ('_zammad_session_' + Digest::MD5.hexdigest(Rails.root.to_s)[5..15]).freeze # default: '_zammad_session'
 
         def self.perform
           Rails.application.config.session_store STORE_TYPE,

@@ -139,6 +139,14 @@ Layout/EmptyLinesAroundModuleBody:
   Description: "Keeps track of empty lines around module bodies."
   Enabled: false
 
+Layout/ExtraSpacing:
+  Description: 'Do not use unnecessary spacing.'
+  Enabled: true
+  Exclude:
+    - 'config/routes/**/*'
+    - 'db/migrate/20120101000001_create_base.rb'
+    - 'db/migrate/20120101000010_create_ticket.rb'
+
 Style/MultilineBlockChain:
   Description: 'Avoid multi-line chains of blocks.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'

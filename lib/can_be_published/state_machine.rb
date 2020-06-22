@@ -53,7 +53,7 @@ module CanBePublished
     end
 
     aasm do
-      state :draft,    initial: true
+      state :draft, initial: true
       state :internal
       state :published
       state :archived

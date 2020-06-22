@@ -38,7 +38,7 @@ RSpec.shared_examples 'ApplicationModel::CanLookup' do
       end
 
       describe "cache storage by #{attribute}" do
-        context 'inside a DB transaction' do  # provided by default RSpec config
+        context 'inside a DB transaction' do # provided by default RSpec config
           it 'leaves the cache untouched' do
             expect { described_class.lookup(attribute => instance.send(attribute)) }
               .not_to change { described_class.cache_get(instance.send(attribute)) }

@@ -17,7 +17,7 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
 
   describe '#show?' do
     let(:action_name) { :show }
-    let(:params)      { { id: internal_answer.category.id  } }
+    let(:params)      { { id: internal_answer.category.id } }
 
     context 'with knowledge_base.reader permissions' do
       let(:user) { create(:agent) }

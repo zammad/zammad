@@ -145,7 +145,7 @@ RSpec.describe RecentView, type: :model do
       let(:owner) { agent }
 
       it 'does not create RecentView for records the given user cannot read' do
-        ticket.update(owner:        User.first,    # read access may come from ticket ownership,
+        ticket.update(owner:        User.first, # read access may come from ticket ownership,
                       customer:     User.first, # customer status,
                       organization: nil)    # organization's 'shared' status,
         agent.update(groups: [])            # and membership in the Ticket's group

@@ -20,7 +20,7 @@ returns
 =end
 
   def self.find_signature(messages)
-    signature_candidates = Hash.new(0)  # <potential_signature>: <score>
+    signature_candidates = Hash.new(0) # <potential_signature>: <score>
     messages             = messages.map { |m| m[:content_type].match?(%r{text/html}i) ? m[:content].html2text(true) : m[:content] }
     message_pairs        = messages.each_cons(2).to_a
     diffs                = message_pairs.map { |msg_pair| Diffy::Diff.new(*msg_pair).to_s }

@@ -48,7 +48,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
     end
 
     create_table :knowledge_base_category_translations do |t|
-      t.string :title,       limit: 250, null: false
+      t.string :title, limit: 250, null: false
 
       t.references :kb_locale, null: false, foreign_key: { to_table: :knowledge_base_locales }
       t.references :category,  null: false, foreign_key: { to_table: :knowledge_base_categories, on_delete: :cascade }
@@ -78,7 +78,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
     end
 
     create_table :knowledge_base_answer_translations do |t|
-      t.string :title,   limit: 250,  null: false
+      t.string :title, limit: 250, null: false
 
       t.references :kb_locale, null: false, foreign_key: { to_table: :knowledge_base_locales }
       t.references :answer,    null: false, foreign_key: { to_table: :knowledge_base_answers, on_delete: :cascade }

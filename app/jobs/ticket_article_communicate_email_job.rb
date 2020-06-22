@@ -12,7 +12,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
 
     subject_prefix_mode = record.preferences[:subtype]
 
-    subject = ticket.subject_build(record.subject,  subject_prefix_mode)
+    subject = ticket.subject_build(record.subject, subject_prefix_mode)
 
     # set retry count
     record.preferences['delivery_retry'] ||= 0

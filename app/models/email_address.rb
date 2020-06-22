@@ -4,7 +4,7 @@ class EmailAddress < ApplicationModel
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
-  has_many        :groups,   after_add: :cache_update, after_remove: :cache_update
+  has_many        :groups, after_add: :cache_update, after_remove: :cache_update
   belongs_to      :channel, optional: true
   validates       :realname, presence: true
   validates       :email,    presence: true

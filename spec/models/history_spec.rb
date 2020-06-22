@@ -29,7 +29,7 @@ RSpec.describe History, type: :model do
             expect(list).to match_array(
               [
                 hash_including(
-                  'o_id'   => object.id,
+                  'o_id' => object.id,
                 ),
                 hash_including(
                   'o_id'     => object.id,
@@ -95,7 +95,7 @@ RSpec.describe History, type: :model do
 
       context 'with "related_history_object" argument' do
         let!(:object) { related_object.ticket }
-        let!(:related_object) { create(:ticket_article, internal: true) }  # MUST be internal, or else callbacks will create additional histories
+        let!(:related_object) { create(:ticket_article, internal: true) } # MUST be internal, or else callbacks will create additional histories
 
         before { object.update(title: 'Lorem ipsum dolor') }
 

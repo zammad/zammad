@@ -405,7 +405,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
       col_sep: ',',
     }
     rows = ::CSV.parse(content, params)
-    rows.shift  # remove header
+    rows.shift # remove header
 
     translation_raw = []
     rows.each do |row|

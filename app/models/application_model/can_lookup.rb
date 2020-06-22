@@ -48,8 +48,8 @@ returns
 
     def find_and_save_to_cache_by(attr)
       record = find_by(attr)
-      return nil if string_key?(attr.keys.first) && (record&.send(attr.keys.first) != attr.values.first)  # enforce case-sensitivity on MySQL
-      return record if ActiveRecord::Base.connection.transaction_open?  # rollbacks can invalidate cache entries
+      return nil if string_key?(attr.keys.first) && (record&.send(attr.keys.first) != attr.values.first) # enforce case-sensitivity on MySQL
+      return record if ActiveRecord::Base.connection.transaction_open? # rollbacks can invalidate cache entries
 
       cache_set(attr.values.first, record)
       record

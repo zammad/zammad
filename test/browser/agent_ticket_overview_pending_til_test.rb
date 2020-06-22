@@ -45,12 +45,12 @@ class AgentTicketOverviewPendingTil < TestCase
       }
     )
     overview_open(
-      name:    name,
+      name: name,
     )
 
     # sort by Pending Til
     click(
-      css:      '.content.active table.table th.js-tableHead[data-column-key="pending_time"]',
+      css: '.content.active table.table th.js-tableHead[data-column-key="pending_time"]',
     )
 
     # check if the first and second rows both correctly contain 'pending close'

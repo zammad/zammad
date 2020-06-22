@@ -739,7 +739,7 @@ class AdminObjectManagerTest < TestCase
 
     # open the previously created ticket and verify its attribute selection
     click(
-      xpath:   '//a/div[contains(text(),"select_attributes_delete_test")]',
+      xpath: '//a/div[contains(text(),"select_attributes_delete_test")]',
     )
     # confirm that all options and their display values are there and are in the correct order
     select_element = @browser.find_elements(css: '.content.active select[name="select_attributes_delete_test"]')[0]

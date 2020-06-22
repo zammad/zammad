@@ -37,8 +37,8 @@ RSpec.describe Trigger, type: :model do
 
   describe 'Send-email triggers' do
     before do
-      described_class.destroy_all  # Default DB state includes three sample triggers
-      trigger              # create subject trigger
+      described_class.destroy_all # Default DB state includes three sample triggers
+      trigger # create subject trigger
     end
 
     let(:perform) do
@@ -396,7 +396,7 @@ RSpec.describe Trigger, type: :model do
 
       context 'when new article is created directly' do
         context 'with empty #preferences hash' do
-          let!(:article) { create(:ticket_article, ticket: ticket)  }
+          let!(:article) { create(:ticket_article, ticket: ticket) }
 
           it 'fires (without altering ticket state)' do
             expect { Observer::Transaction.commit }

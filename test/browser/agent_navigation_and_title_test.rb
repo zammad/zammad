@@ -129,7 +129,7 @@ class AgentNavigationAndTitleTest < TestCase
     exists_not(css: '#navigation .tasks .js-item.is-active')
 
     # click on admin
-    click(css:  'a[href = "#manage"]')
+    click(css: 'a[href = "#manage"]')
     verify_title(value: 'Users')
     exists_not(css: '#navigation .js-menu .is-active')
     exists_not(css: '#navigation .tasks .js-item.is-active')

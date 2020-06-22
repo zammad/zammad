@@ -16,7 +16,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   belongs_to                    :content, class_name: 'KnowledgeBase::Answer::Translation::Content', inverse_of: :translation, dependent: :destroy
   accepts_nested_attributes_for :content, update_only: true
 
-  validates :title,        presence: true,            length: { maximum: 250 }
+  validates :title,        presence: true, length: { maximum: 250 }
   validates :content,      presence: true
   validates :kb_locale_id, uniqueness: { scope: :answer_id }
 

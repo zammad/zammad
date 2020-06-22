@@ -177,7 +177,7 @@ RSpec.describe Job, type: :model do
           end
 
           it 'updates #next_run_at' do
-            travel_to(Time.current.last_week)  # force new value for #next_run_at
+            travel_to(Time.current.last_week) # force new value for #next_run_at
 
             expect { job.run }.to change { job.reload.next_run_at }
           end
@@ -194,7 +194,7 @@ RSpec.describe Job, type: :model do
             end
 
             it 'updates #next_run_at' do
-              travel_to(Time.current.last_week)  # force new value for #next_run_at
+              travel_to(Time.current.last_week) # force new value for #next_run_at
 
               expect { job.run }.to change { job.reload.next_run_at }
             end

@@ -125,7 +125,7 @@ RSpec.describe Role do
         context 'when reactivating a role adds new agents' do
           subject(:role) { create(:agent_role, active: false) }
 
-          before { create(:user, roles: [role])  }
+          before { create(:user, roles: [role]) }
 
           context 'exceeding the system limit' do
             before { Setting.set('system_agent_limit', agents.count) }

@@ -5,7 +5,7 @@ FactoryBot.define do
       sender_name { 'Customer' }
     end
 
-    association :ticket, strategy: :create  # or else build(:ticket_article).save fails
+    association :ticket, strategy: :create # or else build(:ticket_article).save fails
     from          { 'factory-customer-1@example.com' }
     to            { 'factory-customer-1@example.com' }
     subject       { 'factory article' }
@@ -28,7 +28,7 @@ FactoryBot.define do
       sender_name { 'Agent' }
 
       trait :reply do
-        in_reply_to  { Faker::Number.number(19) }
+        in_reply_to { Faker::Number.number(19) }
       end
     end
 

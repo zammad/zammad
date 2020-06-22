@@ -150,7 +150,7 @@ RSpec.describe Cti::CallerId do
 
       context 'and no corresponding CallerId exists' do
         it 'generates a CallerId record (with #level "known")' do
-          described_class.destroy_all  # CallerId already generated in User callback
+          described_class.destroy_all # CallerId already generated in User callback
 
           expect { described_class.rebuild }
             .to change { described_class.exists?(user_id: user.id, caller_id: '49123456', level: 'known') }
@@ -176,7 +176,7 @@ RSpec.describe Cti::CallerId do
       let!(:users) { create_list(:agent, 2, phone: '+49 123 456') }
 
       it 'generates two corresponding CallerId records (with #level "known")' do
-        described_class.destroy_all  # CallerId already generated in User callback
+        described_class.destroy_all # CallerId already generated in User callback
 
         expect { described_class.rebuild }
           .to change { described_class.exists?(user_id: users.first.id, caller_id: '49123456', level: 'known') }
@@ -196,7 +196,7 @@ RSpec.describe Cti::CallerId do
         let(:sender_name) { 'Customer' }
 
         it 'generates a CallerId record (with #level "maybe")' do
-          described_class.destroy_all  # CallerId already generated in Article observer job
+          described_class.destroy_all # CallerId already generated in Article observer job
 
           expect { described_class.rebuild }
             .to change { described_class.exists?(user_id: article.created_by_id, caller_id: '49123456', level: 'maybe') }

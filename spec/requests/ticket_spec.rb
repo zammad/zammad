@@ -2048,7 +2048,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin)
-      get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc]  }, as: :json
+      get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc] }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])

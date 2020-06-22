@@ -126,7 +126,7 @@ returns
     end
 
     # store hash in config
-    return  if !list || !list[0]
+    return if !list || !list[0]
 
     file = Store.find(list[0].id)
     filelocation = filename(file)

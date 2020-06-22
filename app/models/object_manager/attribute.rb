@@ -932,7 +932,7 @@ is certain attribute used by triggers, overviews or schedulers
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
     begin
       ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
-    rescue  ActiveRecord::DangerousAttributeError
+    rescue ActiveRecord::DangerousAttributeError
       errors.add(:name, "#{name} is a reserved word! (2)")
     end
 

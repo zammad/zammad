@@ -15,7 +15,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
     let(:admin) { create(:admin, groups: [group]) }
     let(:group) { create(:group) }
     let(:client_id) { '12345' }
-    let(:ttl) { 3 }  # seconds
+    let(:ttl) { 3 } # seconds
 
     context 'when 3rd argument ("client") is false' do
       subject(:collection) { described_class.new(admin, {}, false, client_id, ttl) }

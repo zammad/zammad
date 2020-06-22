@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Ticket::Number do
   let(:stubbed_subclass) { double('Foo') }
 
-  before { stub_const('Ticket::Number::Foo', stubbed_subclass)  }
+  before { stub_const('Ticket::Number::Foo', stubbed_subclass) }
 
   describe '.generate' do
     before { Setting.set('ticket_number', 'Ticket::Number::Foo') }

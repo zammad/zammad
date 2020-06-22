@@ -520,7 +520,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#escalation_at' do
-      before { travel_to(Time.current) }  # freeze time
+      before { travel_to(Time.current) } # freeze time
 
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -532,7 +532,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'with an SLA in the system' do
-        before { sla }  # create sla
+        before { sla } # create sla
 
         it 'is set based on SLA’s #first_response_time' do
           expect(ticket.reload.escalation_at.to_i)
@@ -540,12 +540,12 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'after first agent’s response' do
-          before { ticket }  # create ticket
+          before { ticket } # create ticket
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'is updated based on the SLA’s #update_time' do
-            travel(1.minute)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+            travel(1.minute) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
 
             expect { article }
               .to change { ticket.reload.escalation_at.to_i }
@@ -554,7 +554,7 @@ RSpec.describe Ticket, type: :model do
 
           context 'when new #update_time is later than original #solution_time' do
             it 'is updated based on the original #solution_time' do
-              travel(2.hours)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+              travel(2.hours) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
 
               expect { article }
                 .to change { ticket.reload.escalation_at.to_i }
@@ -591,7 +591,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#first_response_escalation_at' do
-      before { travel_to(Time.current) }  # freeze time
+      before { travel_to(Time.current) } # freeze time
 
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -603,7 +603,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'with an SLA in the system' do
-        before { sla }  # create sla
+        before { sla } # create sla
 
         it 'is set based on SLA’s #first_response_time' do
           expect(ticket.reload.first_response_escalation_at.to_i)
@@ -611,7 +611,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'after first agent’s response' do
-          before { ticket }  # create ticket
+          before { ticket } # create ticket
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
@@ -623,7 +623,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#update_escalation_at' do
-      before { travel_to(Time.current) }  # freeze time
+      before { travel_to(Time.current) } # freeze time
 
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -635,7 +635,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'with an SLA in the system' do
-        before { sla }  # create sla
+        before { sla } # create sla
 
         it 'is set based on SLA’s #update_time' do
           expect(ticket.reload.update_escalation_at.to_i)
@@ -643,12 +643,12 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'after first agent’s response' do
-          before { ticket }  # create ticket
+          before { ticket } # create ticket
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'is updated based on the SLA’s #update_time' do
-            travel(1.minute)  # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+            travel(1.minute) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
 
             expect { article }
               .to change { ticket.reload.update_escalation_at.to_i }
@@ -659,7 +659,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#close_escalation_at' do
-      before { travel_to(Time.current) }  # freeze time
+      before { travel_to(Time.current) } # freeze time
 
       let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -671,7 +671,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'with an SLA in the system' do
-        before { sla }  # create sla
+        before { sla } # create sla
 
         it 'is set based on SLA’s #solution_time' do
           expect(ticket.reload.close_escalation_at.to_i)
@@ -679,7 +679,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'after first agent’s response' do
-          before { ticket }  # create ticket
+          before { ticket } # create ticket
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
@@ -878,7 +878,7 @@ RSpec.describe Ticket, type: :model do
 
         context 'and subsequently destroyed' do
           it 'deletes all related attachments' do
-            ticket  # create ticket
+            ticket # create ticket
 
             expect { ticket.destroy }
               .to change(Store, :count).by(-2)
@@ -888,7 +888,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'and a duplicate ticket is generated from the same email' do
-          before { ticket }  # create ticket
+          before { ticket } # create ticket
 
           let(:duplicate) { Channel::EmailParser.new.process({}, raw_email).first }
 
@@ -901,7 +901,7 @@ RSpec.describe Ticket, type: :model do
 
           context 'when only the duplicate ticket is destroyed' do
             it 'deletes only the duplicate attachments' do
-              duplicate  # create ticket
+              duplicate # create ticket
 
               expect { duplicate.destroy }
                 .to change(Store, :count).by(-2)

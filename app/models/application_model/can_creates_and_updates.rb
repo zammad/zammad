@@ -163,7 +163,7 @@ returns
 
         # do lookup with == to handle case insensitive databases
         records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(email) = LOWER(?)',  data[:email])
+                    where('LOWER(email) = LOWER(?)', data[:email])
                   else
                     where(email: data[:email])
                   end

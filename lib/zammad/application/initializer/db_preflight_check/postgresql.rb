@@ -22,7 +22,7 @@ module Zammad
           end
 
           def self.check_version_compatibility
-            return if connection.nil?  # Edge case: if Postgres can't find a DB to connect to
+            return if connection.nil? # Edge case: if Postgres can't find a DB to connect to
 
             super
           end

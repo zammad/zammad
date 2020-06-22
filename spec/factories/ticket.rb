@@ -5,7 +5,7 @@ FactoryBot.define do
       priority_name { '2 normal' }
     end
 
-    association :group, strategy: :create  # or else build(:ticket).save fails
+    association :group, strategy: :create # or else build(:ticket).save fails
 
     customer
     title         { 'Test Ticket' }

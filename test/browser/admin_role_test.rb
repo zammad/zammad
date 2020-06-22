@@ -246,7 +246,7 @@ class AdminRoleTest < TestCase
     )
 
     click(
-      css:  '.content.active a[href="#manage/users"]',
+      css: '.content.active a[href="#manage/users"]',
     )
 
     # an inactive role should not appear in the role filter tabs

@@ -63,7 +63,7 @@ class SMIMESupport < ActiveRecord::Migration[5.2]
       t.datetime :not_after_at,                  null: true
       t.binary :raw,                limit: 10.megabytes,  null: false
       t.binary :private_key,        limit: 10.megabytes,  null: true
-      t.string :private_key_secret, limit: 500,  null: true
+      t.string :private_key_secret, limit: 500, null: true
       t.timestamps limit: 3, null: false
     end
     add_index :smime_certificates, [:fingerprint], unique: true

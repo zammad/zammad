@@ -17,7 +17,7 @@ class Role < ApplicationModel
                           after_add:     :cache_update,
                           before_remove: :last_admin_check_by_permission,
                           after_remove:  :cache_update
-  validates               :name,  presence: true
+  validates               :name, presence: true
   store                   :preferences
 
   before_create  :check_default_at_signup_permissions

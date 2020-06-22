@@ -110,7 +110,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       title: 'Welcome to Zammad',
     )
     watch_for(
-      css:      '.content.active .js-settingContainer .js-setting .dropdown-icon',
+      css: '.content.active .js-settingContainer .js-setting .dropdown-icon',
     )
 
     # enable email full quote in the ticket zoom config page
@@ -186,7 +186,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       title: 'Welcome to Zammad',
     )
     watch_for(
-      css:      '.content.active .js-settingContainer .js-setting .dropdown-icon',
+      css: '.content.active .js-settingContainer .js-setting .dropdown-icon',
     )
 
     # enable email full quote in the ticket zoom config page

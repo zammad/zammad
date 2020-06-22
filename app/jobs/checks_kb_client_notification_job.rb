@@ -53,9 +53,9 @@ class ChecksKbClientNotificationJob < ApplicationJob
       .sessions
       .map { |client_id| Sessions.get(client_id)&.dig(:user, 'id') }
       .compact
-      .map { |user_id|   User.find_by(id: user_id) }
+      .map { |user_id| User.find_by(id: user_id) }
       .compact
-      .select   { |user|      user.permissions? "knowledge_base.#{permission_suffix}" }
+      .select { |user| user.permissions? "knowledge_base.#{permission_suffix}" }
   end
 
   def self.notify_later(object, event)

@@ -5,7 +5,7 @@ RSpec.describe Sessions::Backend::Base do
 
   let(:agent) { create(:agent) }
   let(:client_id) { '123-1' }
-  let(:ttl) { 3 }  # seconds
+  let(:ttl) { 3 } # seconds
   let!(:ticket) { Ticket.first || create(:ticket) }
 
   describe '#asset_needed?' do

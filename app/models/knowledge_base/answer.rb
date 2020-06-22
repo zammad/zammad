@@ -10,7 +10,7 @@ class KnowledgeBase::Answer < ApplicationModel
   AGENT_ALLOWED_ATTRIBUTES       = %i[category_id promoted internal_note].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
 
-  belongs_to :category, class_name: 'KnowledgeBase::Category',                  inverse_of: :answers,  touch: true
+  belongs_to :category, class_name: 'KnowledgeBase::Category', inverse_of: :answers, touch: true
 
   scope :include_contents, -> { eager_load(translations: :content) }
   scope :sorted,           -> { order(position: :asc) }

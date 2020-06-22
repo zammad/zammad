@@ -42,9 +42,9 @@ RSpec.describe Channel::EmailParser, type: :model do
   end
 
   describe '#process' do
-    let(:raw_mail)  { File.read(mail_file) }
+    let(:raw_mail) { File.read(mail_file) }
 
-    before { Trigger.destroy_all }  # triggers may cause additional articles to be created
+    before { Trigger.destroy_all } # triggers may cause additional articles to be created
 
     describe 'auto-creating new users' do
       context 'with one unrecognized email address' do

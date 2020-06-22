@@ -14,7 +14,7 @@ class EnhancedPermissions < ActiveRecord::Migration[4.2]
     create_table :roles_groups, id: false do |t|
       t.references :role,                null: false
       t.references :group,               null: false
-      t.string :access,       limit: 50, null: false, default: 'full'
+      t.string :access, limit: 50, null: false, default: 'full'
     end
     add_index :roles_groups, [:role_id]
     add_index :roles_groups, [:group_id]

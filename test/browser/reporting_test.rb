@@ -25,7 +25,7 @@ class ReportingTest < TestCase
     )
 
     click(
-      css:  'a[href="#manage"]',
+      css: 'a[href="#manage"]',
     )
     click(
       css: '.content.active a[href="#manage/report_profiles"]',
