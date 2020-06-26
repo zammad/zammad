@@ -8852,6 +8852,10 @@ label + .wizard-buttonList {
   input[type=text] {
     width: auto;
   }
+
+  input[data-item=time] {
+    width: 4.5ch;
+  }
 }
 
 .horizontal-filter-body {
