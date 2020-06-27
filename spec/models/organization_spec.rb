@@ -41,4 +41,30 @@ RSpec.describe Organization, type: :model do
       end
     end
   end
+
+  describe '#domain_assignment' do
+    it 'fails if enabled and domain is missing' do
+      organization.domain_assignment = true
+      organization.domain = nil
+      organization.valid?
+
+      expect(organization.errors[:domain]).to be_present
+    end
+
+    it 'succeeds if enabled and domain is present' do
+      organization.domain_assignment = true
+      organization.domain = 'example.org'
+      organization.valid?
+
+      expect(organization.errors[:domain]).to be_empty
+    end
+
+    it 'succeeds if disabled and domain is missing' do
+      organization.domain_assignment = false
+      organization.domain = nil
+      organization.valid?
+
+      expect(organization.errors[:domain]).to be_empty
+    end
+  end
 end
