@@ -8,13 +8,37 @@
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       </th>
-      <th><%- @T('From') %></th>
-      <th><%- @T('To') %></th>
+      <th>
+        <div class="table-column-head">
+          <%- @T('From') %>
+        </div>
+      </th>
+      <th>
+        <div class="table-column-head">
+          <%- @T('To') %>
+        </div>
+      </th>
       <!--<th style="width: 100px;"><%- @T('Queue') %></th>-->
-      <th style="width: 130px;"><%- @T('Status') %></th>
-      <th style="width: 80px;"><%- @T('Waiting') %></th>
-      <th style="width: 80px;"><%- @T('Duration') %></th>
-      <th style="width: 170px;"><%- @T('Time') %></th>
+      <th style="width: 130px;">
+        <div class="table-column-head">
+          <%- @T('Status') %>
+        </div>
+      </th>
+      <th style="width: 80px;">
+        <div class="table-column-head">
+          <%- @T('Waiting') %>
+        </div>
+      </th>
+      <th style="width: 80px;">
+        <div class="table-column-head">
+          <%- @T('Duration') %>
+        </div>
+      </th>
+      <th style="width: 170px;">
+        <div class="table-column-head">
+          <%- @T('Time') %>
+        </div>
+      </th>
     </tr>
   </thead>
   <tbody>
