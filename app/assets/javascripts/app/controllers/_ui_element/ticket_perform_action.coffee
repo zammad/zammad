@@ -35,8 +35,13 @@ class App.UiElement.ticket_perform_action
             # ignore readonly attributes
             if !row.readonly
               config = _.clone(row)
-              if config.tag is 'tag'
-                config.operator = ['add', 'remove']
+
+              switch config.tag
+                when 'datetime'
+                  config.operator = ['static', 'relative']
+                when 'tag'
+                  config.operator = ['add', 'remove']
+
               elements["#{groupKey}.#{config.name}"] = config
 
     # add ticket deletion action
@@ -318,13 +323,22 @@ class App.UiElement.ticket_perform_action
         item = App.UiElement[tagSearch].render(config, {})
       else
         item = App.UiElement[config.tag].render(config, {})
-    if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)'
+
+    relative_operators = [
+      'before (relative)',
+      'within next (relative)',
+      'within last (relative)',
+      'after (relative)',
+      'relative'
+    ]
+
+    if _.include(relative_operators, meta.operator)
       config['name'] = "#{attribute.name}::#{groupAndAttribute}"
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute])
       item = App.UiElement['time_range'].render(config, {})
 
-    elementRow.find('.js-value').removeClass('hide').html(item)
+    elementRow.find('.js-setAttribute > .flex > .js-value').removeClass('hide').html(item)
 
   @buildNotificationArea: (notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 

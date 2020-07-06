@@ -153,6 +153,72 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      # Test for backwards compatibility after PR https://github.com/zammad/zammad/pull/2862
+      context 'with "pending_time" => { "value": DATE } in "perform" hash' do
+        let(:perform) do
+          {
+            'ticket.state_id'     => {
+              'value' => Ticket::State.lookup(name: 'pending reminder').id.to_s
+            },
+            'ticket.pending_time' => {
+              'value' => timestamp,
+            },
+          }
+        end
+
+        let(:timestamp) { Time.zone.now }
+
+        it 'changes pending date to given date' do
+          freeze_time do
+            expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+              .to change(ticket, :pending_time).to(be_within(1.minute).of(timestamp))
+          end
+        end
+      end
+
+      # Test for PR https://github.com/zammad/zammad/pull/2862
+      context 'with "pending_time" => { "operator": "relative" } in "perform" hash' do
+        shared_examples 'verify' do
+          it 'verify relative pending time rule' do
+            freeze_time do
+              interval = relative_value.send(relative_range).from_now
+
+              expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+                .to change(ticket, :pending_time).to(be_within(1.minute).of(interval))
+            end
+          end
+        end
+
+        let(:perform) do
+          {
+            'ticket.state_id'     => {
+              'value' => Ticket::State.lookup(name: 'pending reminder').id.to_s
+            },
+            'ticket.pending_time' => {
+              'operator' => 'relative',
+              'value'    => relative_value,
+              'range'    => relative_range_config
+            },
+          }
+        end
+
+        let(:relative_range_config) { relative_range.to_s.singularize }
+
+        context 'and value in days' do
+          let(:relative_value) { 2 }
+          let(:relative_range) { :days }
+
+          include_examples 'verify'
+        end
+
+        context 'and value in minutes' do
+          let(:relative_value) { 60 }
+          let(:relative_range) { :minutes }
+
+          include_examples 'verify'
+        end
+      end
+
       context 'with "ticket.action" => { "value" => "delete" } in "perform" hash' do
         let(:perform) do
           {

@@ -907,6 +907,38 @@ perform changes on ticket
         next
       end
 
+      # Apply pending_time changes
+      if key == 'ticket.pending_time'
+        new_value = case value['operator']
+                    when 'static'
+                      value['value']
+                    when 'relative'
+                      pendtil = Time.zone.now
+                      val     = value['value'].to_i
+
+                      case value['range']
+                      when 'day'
+                        pendtil += val.days
+                      when 'minute'
+                        pendtil += val.minutes
+                      when 'hour'
+                        pendtil += val.hours
+                      when 'month'
+                        pendtil += val.months
+                      when 'year'
+                        pendtil += val.years
+                      end
+
+                      pendtil
+                    end
+
+        if new_value
+          self[attribute] = new_value
+          changed = true
+          next
+        end
+      end
+
       # update tags
       if key == 'ticket.tags'
         next if value['value'].blank?

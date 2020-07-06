@@ -25,6 +25,7 @@ Zammad::Application.routes.draw do
   match '/tests_table',                       to: 'tests#table',                      via: :get
   match '/tests_table_extended',              to: 'tests#table_extended',             via: :get
   match '/tests_html_utils',                  to: 'tests#html_utils',                 via: :get
+  match '/tests_ticket_macro',                to: 'tests#ticket_macro',               via: :get
   match '/tests_ticket_selector',             to: 'tests#ticket_selector',            via: :get
   match '/tests_taskbar',                     to: 'tests#taskbar',                    via: :get
   match '/tests_text_module',                 to: 'tests#text_module',                via: :get

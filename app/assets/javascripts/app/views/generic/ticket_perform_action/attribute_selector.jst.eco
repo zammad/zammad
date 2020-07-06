@@ -11,5 +11,5 @@
       <%- @Icon('arrow-down', 'dropdown-arrow') %>
     </div>
   </div>
-  <div class="controls js-value"></div>
+  <div class="controls js-value horizontal"></div>
 </div>

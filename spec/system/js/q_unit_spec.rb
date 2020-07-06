@@ -106,6 +106,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
       q_unit_tests('form_ticket_perform_action')
     end
 
+    it 'Ticket macro' do
+      q_unit_tests('ticket_macro')
+    end
+
     it 'Validation' do
       q_unit_tests('form_validation')
     end
