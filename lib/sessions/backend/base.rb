@@ -1,7 +1,6 @@
 class Sessions::Backend::Base
 
-  attr_writer :user
-  attr_writer :time_now
+  attr_writer :user, :time_now
 
   def initialize(user, asset_lookup, client, client_id, ttl = 10)
     @user         = user

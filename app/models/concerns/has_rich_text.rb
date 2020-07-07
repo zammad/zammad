@@ -150,9 +150,8 @@ Checks if file is used inline
         node['src'] = Rails.application.routes.url_helpers.attachment_path(attachment.id)
       end
 
-      parsed = Loofah.scrub_fragment(raw, scrubber).to_s
+      Loofah.scrub_fragment(raw, scrubber).to_s
 
-      parsed
     end
 
     def has_rich_text_inline_cids(object, attr) # rubocop:disable Naming/PredicateName

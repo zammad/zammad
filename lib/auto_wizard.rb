@@ -155,9 +155,9 @@ returns
   end
 
   def self.file_location
-    auto_wizard_file_name     = 'auto_wizard.json'
-    auto_wizard_file_location = Rails.root.join(auto_wizard_file_name)
-    auto_wizard_file_location
+    auto_wizard_file_name = 'auto_wizard.json'
+    Rails.root.join(auto_wizard_file_name)
+
   end
   private_class_method :file_location
 end

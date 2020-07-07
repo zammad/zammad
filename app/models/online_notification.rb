@@ -118,13 +118,13 @@ return all online notifications of an object
 
   def self.list_by_object(object_name, o_id)
     object_id = ObjectLookup.by_name(object_name)
-    notifications = OnlineNotification.where(
+    OnlineNotification.where(
       object_lookup_id: object_id,
       o_id:             o_id,
     )
                                       .order(created_at: :desc)
                                       .limit(10_000)
-    notifications
+
   end
 
 =begin

@@ -22,9 +22,8 @@ module KnowledgeBaseRichTextHelper
       end
     end
 
-    parsed = Loofah.scrub_fragment(input, scrubber).to_s.html_safe # rubocop:disable Rails/OutputSafety
+    Loofah.scrub_fragment(input, scrubber).to_s.html_safe # rubocop:disable Rails/OutputSafety
 
-    parsed
   end
 
   def prepare_rich_text_videos(input)

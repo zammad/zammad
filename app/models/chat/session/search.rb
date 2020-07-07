@@ -78,10 +78,10 @@ returns
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
-        chat_sessions = Chat::Session.where(
+        Chat::Session.where(
           'name LIKE ?', "%#{query}%"
         ).order('name').offset(offset).limit(limit).to_a
-        chat_sessions
+
       end
     end
   end

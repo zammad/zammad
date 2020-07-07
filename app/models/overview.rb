@@ -91,7 +91,7 @@ class Overview < ApplicationModel
     local_link = name.downcase
     local_link = local_link.parameterize(separator: '_')
     local_link.gsub!(/\s/, '_')
-    local_link.gsub!(/_+/, '_')
+    local_link.squeeze!('_')
     local_link = CGI.escape(local_link)
     if local_link.blank?
       local_link = id || rand(999)

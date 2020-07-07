@@ -239,7 +239,7 @@ example
       timeout(FETCH_METADATA_TIMEOUT) do
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
       rescue Net::IMAP::ResponseParseError => e
-        raise if !e.message.match?(/unknown token/)
+        raise if !e.message.include?('unknown token')
 
         result = 'error'
         notice += <<~NOTICE

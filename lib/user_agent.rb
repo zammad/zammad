@@ -511,11 +511,7 @@ returns
 
   class Result
 
-    attr_reader :error
-    attr_reader :body
-    attr_reader :data
-    attr_reader :code
-    attr_reader :content_type
+    attr_reader :error, :body, :data, :code, :content_type
 
     def initialize(options)
       @success      = options[:success]

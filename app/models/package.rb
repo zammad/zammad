@@ -64,7 +64,7 @@ install all packages located under auto_install/*.zpm
 
     data = []
     Dir.foreach(path) do |entry|
-      if entry =~ /\.zpm/ && entry !~ /^\./
+      if entry.include?('.zpm') && entry !~ /^\./
         data.push entry
       end
     end

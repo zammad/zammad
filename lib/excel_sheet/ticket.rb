@@ -66,27 +66,27 @@ class ExcelSheet::Ticket < ExcelSheet
       header.push object
     end
 
-    header = header.concat([
-                             { display: 'Created At', name: 'created_at', width: 18, data_type: 'datetime' },
-                             { display: 'Updated At', name: 'updated_at', width: 18, data_type: 'datetime' },
-                             { display: 'Closed At', name: 'close_at', width: 18, data_type: 'datetime' },
-                             { display: 'Close Escalation At', name: 'close_escalation_at', width: 18, data_type: 'datetime' },
-                             { display: 'Close In Min', name: 'close_in_min', width: 10, data_type: 'integer' },
-                             { display: 'Close Diff In Min', name: 'close_diff_in_min', width: 10, data_type: 'integer' },
-                             { display: 'First Response At', name: 'first_response_at', width: 18, data_type: 'datetime' },
-                             { display: 'First Response Escalation At', name: 'first_response_escalation_at', width: 18, data_type: 'datetime' },
-                             { display: 'First Response In Min', name: 'first_response_in_min', width: 10, data_type: 'integer' },
-                             { display: 'First Response Diff In Min', name: 'first_response_diff_in_min', width: 10, data_type: 'integer' },
-                             { display: 'Update Escalation At', name: 'update_escalation_at', width: 18, data_type: 'datetime' },
-                             { display: 'Update In Min', name: 'update_in_min', width: 10, data_type: 'integer' },
-                             { display: 'Update Diff In Min', name: 'update_diff_in_min', width: 10, data_type: 'integer' },
-                             { display: 'Last Contact At', name: 'last_contact_at', width: 18, data_type: 'datetime' },
-                             { display: 'Last Contact Agent At', name: 'last_contact_agent_at', width: 18, data_type: 'datetime' },
-                             { display: 'Last Contact Customer At', name: 'last_contact_customer_at', width: 18, data_type: 'datetime' },
-                             { display: 'Article Count', name: 'article_count', width: 10, data_type: 'integer' },
-                             { display: 'Escalation At', name: 'escalation_at', width: 18, data_type: 'datetime' },
-                           ])
-    header
+    header.concat([
+                    { display: 'Created At', name: 'created_at', width: 18, data_type: 'datetime' },
+                    { display: 'Updated At', name: 'updated_at', width: 18, data_type: 'datetime' },
+                    { display: 'Closed At', name: 'close_at', width: 18, data_type: 'datetime' },
+                    { display: 'Close Escalation At', name: 'close_escalation_at', width: 18, data_type: 'datetime' },
+                    { display: 'Close In Min', name: 'close_in_min', width: 10, data_type: 'integer' },
+                    { display: 'Close Diff In Min', name: 'close_diff_in_min', width: 10, data_type: 'integer' },
+                    { display: 'First Response At', name: 'first_response_at', width: 18, data_type: 'datetime' },
+                    { display: 'First Response Escalation At', name: 'first_response_escalation_at', width: 18, data_type: 'datetime' },
+                    { display: 'First Response In Min', name: 'first_response_in_min', width: 10, data_type: 'integer' },
+                    { display: 'First Response Diff In Min', name: 'first_response_diff_in_min', width: 10, data_type: 'integer' },
+                    { display: 'Update Escalation At', name: 'update_escalation_at', width: 18, data_type: 'datetime' },
+                    { display: 'Update In Min', name: 'update_in_min', width: 10, data_type: 'integer' },
+                    { display: 'Update Diff In Min', name: 'update_diff_in_min', width: 10, data_type: 'integer' },
+                    { display: 'Last Contact At', name: 'last_contact_at', width: 18, data_type: 'datetime' },
+                    { display: 'Last Contact Agent At', name: 'last_contact_agent_at', width: 18, data_type: 'datetime' },
+                    { display: 'Last Contact Customer At', name: 'last_contact_customer_at', width: 18, data_type: 'datetime' },
+                    { display: 'Article Count', name: 'article_count', width: 10, data_type: 'integer' },
+                    { display: 'Escalation At', name: 'escalation_at', width: 18, data_type: 'datetime' },
+                  ])
+
   end
 
   def gen_rows

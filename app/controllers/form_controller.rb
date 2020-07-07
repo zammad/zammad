@@ -61,7 +61,7 @@ class FormController < ApplicationController
         Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
 
         # ignore 450, graylistings
-        errors['email'] = message if !message.match?(/450/)
+        errors['email'] = message if !message.include?('450')
       end
     end
 

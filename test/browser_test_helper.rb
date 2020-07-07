@@ -811,7 +811,7 @@ class TestCase < ActiveSupport::TestCase
     end
 
     # it's not working stable with ff via selenium, use js
-    if browser =~ /firefox/i && params[:css] =~ /\[data-name=/
+    if browser =~ /firefox/i && params[:css].include?('[data-name=')
       log('set_ff_trigger_workaround', params)
       instance.execute_script("$('#{params[:css]}').trigger('focusout')")
     end
@@ -1024,7 +1024,7 @@ class TestCase < ActiveSupport::TestCase
     instance = params[:browser] || @browser
     element  = instance.find_elements(css: params[:css])[0]
 
-    if params[:css].match?(/select/)
+    if params[:css].include?('select')
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       success  = false
       dropdown.selected_options&.each do |option|

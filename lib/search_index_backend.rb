@@ -779,7 +779,7 @@ generate url for index or document access (only for internal use)
   # add * on simple query like "somephrase23"
   def self.append_wildcard_to_simple_query(query)
     query.strip!
-    query += '*' if !query.match?(/:/)
+    query += '*' if !query.include?(':')
     query
   end
 

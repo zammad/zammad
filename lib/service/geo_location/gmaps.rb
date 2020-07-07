@@ -42,7 +42,7 @@ class Service::GeoLocation::Gmaps
 
     result = JSON.parse(response.body)
 
-    address = result['results'].first['address_components'].first['long_name']
-    address
+    result['results'].first['address_components'].first['long_name']
+
   end
 end

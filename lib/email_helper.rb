@@ -106,7 +106,7 @@ returns
 
   def self.provider(email, password)
     # check domain based attributes
-    provider_map = {
+    {
       google_imap: {
         domain:   'gmail|googlemail|google',
         inbound:  {
@@ -177,7 +177,7 @@ returns
         },
       },
     }
-    provider_map
+
   end
 
 =begin
@@ -274,7 +274,7 @@ returns
 =end
 
   def self.provider_inbound_guess(user, email, password, domain)
-    inbound = [
+    [
       {
         adapter: 'imap',
         options: {
@@ -376,7 +376,7 @@ returns
         },
       },
     ]
-    inbound
+
   end
 
 =begin
@@ -511,7 +511,7 @@ returns
 =end
 
   def self.provider_outbound_guess(user, email, password, domain)
-    outbound = [
+    [
       {
         adapter: 'smtp',
         options: {
@@ -593,7 +593,7 @@ returns
         },
       },
     ]
-    outbound
+
   end
 
 =begin

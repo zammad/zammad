@@ -65,7 +65,7 @@ class ActiveSupport::TestCase
     end
     count = 0
     lines.reverse_each do |line|
-      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
+      break if line.include?('++++NEW++++TEST++++')
       next if !line.match?(/Send notification \(#{type}\)/)
       next if !line.match?(/to:\s#{recipient}/)
 
