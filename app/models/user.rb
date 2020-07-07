@@ -392,13 +392,12 @@ returns
 =end
 
   def permissions
-    list = {}
-    ::Permission.select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
-      next if permission[1]['selectable'] == false
-
-      list[permission[0]] = true
-    end
-    list
+    ::Permission.joins(roles: :users)
+                .where(users: { id: id }, roles: { active: true }, active: true)
+                .pluck(:name, :preferences)
+                .each_with_object({}) do |(name, preferences), hash|
+                  hash[name] = true if preferences['selectable'] != false
+                end
   end
 
 =begin
@@ -419,23 +418,24 @@ returns
 
 =end
 
-  def permissions?(key)
-    Array(key).each do |local_key|
-      list = []
-      if local_key.end_with?('.*')
-        local_key = local_key.sub('.*', '.%')
-        permissions = ::Permission.with_parents(local_key)
-        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
-      else
-        permission = ::Permission.lookup(name: local_key)
-        break if permission&.active == false
+  def permissions?(names)
+    base_query = ::Permission.joins(roles: :users)
+                             .where(users: { id: id })
+                             .where(roles: { active: true })
+                             .where(active: true)
 
-        permissions = ::Permission.with_parents(local_key)
-        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
-      end
-      return true if list.present?
+    permission_names = Array(names).reject { |name| ::Permission.lookup(name: name)&.active == false }
+    verbatim_names   = permission_names.flat_map { |name| ::Permission.with_parents(name) }.uniq
+    wildcard_names   = permission_names.select { |name| name.end_with?('.*') }
+                                       .map { |name| name.sub('.*', '.%') }
+
+    permissions = base_query.where(name: verbatim_names)
+
+    wildcard_names.each do |name|
+      permissions = permissions.or(base_query.where('permissions.name LIKE ?', name))
     end
-    false
+
+    permissions.exists?
   end
 
 =begin

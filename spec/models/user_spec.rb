@@ -369,6 +369,52 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#permissions' do
+      let(:user) { create(:agent).tap { |u| u.roles = [u.roles.first] } }
+      let(:role) { user.roles.first }
+      let(:permissions) { role.permissions }
+
+      it 'returns a hash of <permissions> => true' do
+        expect(user.permissions).to eq(permissions.each.with_object({}) { |p, hash| hash[p.name] = true })
+      end
+
+      shared_examples 'for omissions' do
+        it 'omits them from the returned hash' do
+          expect(user.permissions.keys).not_to include(*omitted_permissions.map(&:name))
+        end
+      end
+
+      context 'for permissions that do not belong to this user' do
+        let(:omitted_permissions) { Permission.all - permissions }
+
+        include_examples 'for omissions'
+      end
+
+      context 'for inactive permissions' do
+        before { omitted_permissions.each { |p| p.update(active: false) } }
+
+        let!(:omitted_permissions) { permissions.first(1) }
+
+        include_examples 'for omissions'
+      end
+
+      context 'for permissions on inactive roles' do
+        before { role.update(active: false) }
+
+        let(:omitted_permissions) { permissions }
+
+        include_examples 'for omissions'
+      end
+
+      context 'for permissions with !preferences["selectable"]' do
+        before { omitted_permissions.each { |p| p.update(preferences: { selectable: false }) } }
+
+        let(:omitted_permissions) { permissions.first(1) }
+
+        include_examples 'for omissions'
+      end
+    end
+
     describe '#permissions?' do
       subject(:user) { create(:user, roles: [role]) }
 

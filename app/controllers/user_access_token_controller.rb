@@ -27,42 +27,28 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
 =end
 
   def index
-    tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order(updated_at: :desc, label: :asc)
-    token_list = []
-    tokens.each do |token|
-      attributes = token.attributes
-      attributes.delete('persistent')
-      attributes.delete('name')
-      token_list.push attributes
-    end
-    local_permissions = current_user.permissions
-    local_permissions_new = {}
-    local_permissions.each_key do |key|
-      keys = ::Permission.with_parents(key)
-      keys.each do |local_key|
-        next if local_permissions_new.key?([local_key])
+    tokens = Token.select(Token.column_names - %w[persistent name])
+                  .where(action: 'api', persistent: true, user_id: current_user.id)
+                  .order(updated_at: :desc, label: :asc)
 
-        if local_permissions[local_key] == true
-          local_permissions_new[local_key] = true
-          next
-        end
-        local_permissions_new[local_key] = false
-      end
-    end
-    permissions = []
-    Permission.all.where(active: true).order(:name).each do |permission|
-      next if !local_permissions_new.key?(permission.name) && !current_user.permissions?(permission.name)
+    base_query       = Permission.order(:name).where(active: true)
+    permission_names = current_user.permissions.keys
+    ancestor_names   = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq -
+                       permission_names
+    descendant_names = permission_names.map { |name| "#{name}.%" }
 
-      permission_attributes = permission.attributes
-      if local_permissions_new[permission.name] == false
-        permission_attributes['preferences']['disabled'] = true
-      end
-      permissions.push permission_attributes
+    permissions = base_query.where(name: [*ancestor_names, *permission_names])
+
+    descendant_names.each do |name|
+      permissions = permissions.or(base_query.where('permissions.name LIKE ?', name))
     end
+
+    permissions.select { |permission| permission.name.in?(ancestor_names) }
+               .each { |permission| permission.preferences['disabled'] = true }
 
     render json: {
-      tokens:      token_list,
-      permissions: permissions,
+      tokens:      tokens.map(&:attributes),
+      permissions: permissions.map(&:attributes),
     }, status: :ok
   end
 
