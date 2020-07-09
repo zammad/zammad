@@ -66,17 +66,10 @@ returns:
 =end
 
   def self.source_name(from:)
-    result = nil
-    begin
-      Mail::AddressList.new(from).addresses.each do |line|
-        result = "ServiceNow-#{line.address}"
-        break
-      end
-    rescue
-      Rails.logger.info "Unable to parse email address in '#{from}'"
-    end
-
-    result
+    address = Mail::AddressList.new(from).addresses.first.address.downcase
+    "ServiceNow-#{address}"
+  rescue => e
+    Rails.logger.info "Unable to parse email address in '#{from}': #{e.message}"
   end
 
   def self.from_sync_entry(mail:, source_name:, source_id:)

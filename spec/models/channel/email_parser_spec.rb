@@ -1024,6 +1024,15 @@ RSpec.describe Channel::EmailParser, type: :model do
         it 'adds Article to existing Ticket' do
           expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
         end
+
+        context 'key insensitive sender address' do
+
+          let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
+
+          it 'adds Article to existing Ticket' do
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          end
+        end
       end
     end
 
