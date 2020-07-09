@@ -4,23 +4,25 @@ module Channel::Filter::ServiceNowCheck
 
   # This filter will run pre and post
   def self.run(_channel, mail, ticket = nil, _article = nil, _session_user = nil)
-    source_id = self.source_id(from: mail[:from], subject: mail[:subject])
+    return if mail['x-servicenow-generated'].blank?
+
+    source_id = self.source_id(subject: mail[:subject])
     return if source_id.blank?
+
+    source_name = self.source_name(from: mail[:from])
+    return if source_name.blank?
 
     # check if we can followup by existing service now relation
     if ticket.blank?
-      sync_entry = ExternalSync.find_by(
-        source:    'ServiceNow',
-        source_id: source_id,
-        object:    'Ticket',
+      from_sync_entry(
+        mail:        mail,
+        source_name: source_name,
+        source_id:   source_id,
       )
-      return if sync_entry.blank?
-
-      mail[ 'x-zammad-ticket-id'.to_sym ] = sync_entry.o_id
       return
     end
 
-    ExternalSync.create_with(source_id: source_id).find_or_create_by(source: 'ServiceNow', object: 'Ticket', o_id: ticket.id)
+    ExternalSync.create_with(source_id: source_id).find_or_create_by(source: source_name, object: 'Ticket', o_id: ticket.id)
   end
 
 =begin
@@ -28,7 +30,7 @@ module Channel::Filter::ServiceNowCheck
 This function returns the source id of the service now email if given.
 
   source_id = Channel::Filter::ServiceNowCheck.source_id(
-    from:    'test@servicnow.com',
+    from:    'test@service-now.com',
     subject: 'Incident INC12345 --- test',
   )
 
@@ -38,16 +40,7 @@ returns:
 
 =end
 
-  def self.source_id(from: '', subject: '')
-
-    # check if data is sent by service now
-    begin
-      return if Mail::AddressList.new(from).addresses.none? do |line|
-        line.address.end_with?('@service-now.com')
-      end
-    rescue
-      Rails.logger.info "Unable to parse email address in '#{from}'"
-    end
+  def self.source_id(subject: '')
 
     # check if we can find the service now relation
     source_id = nil
@@ -56,5 +49,44 @@ returns:
     end
 
     source_id
+  end
+
+=begin
+
+This function returns the sync id of the service now email if given.
+
+  source_name = Channel::Filter::ServiceNowCheck.source_name(
+    from:    'test@service-now.com',
+  )
+
+returns:
+
+  source_name = 'ServiceNow-test@service-now.com'
+
+=end
+
+  def self.source_name(from:)
+    result = nil
+    begin
+      Mail::AddressList.new(from).addresses.each do |line|
+        result = "ServiceNow-#{line.address}"
+        break
+      end
+    rescue
+      Rails.logger.info "Unable to parse email address in '#{from}'"
+    end
+
+    result
+  end
+
+  def self.from_sync_entry(mail:, source_name:, source_id:)
+    sync_entry = ExternalSync.find_by(
+      source:    source_name,
+      source_id: source_id,
+      object:    'Ticket',
+    )
+    return if sync_entry.blank?
+
+    mail[ 'x-zammad-ticket-id'.to_sym ] = sync_entry.o_id
   end
 end
