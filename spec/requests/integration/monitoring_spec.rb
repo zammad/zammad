@@ -128,6 +128,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
+      expect(json_response['issues']).to eq([])
       expect(json_response['healthy']).to eq(true)
       expect(json_response['message']).to eq('success')
 

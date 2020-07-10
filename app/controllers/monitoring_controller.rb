@@ -168,6 +168,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       result = {
         healthy: true,
         message: 'success',
+        issues:  issues,
         token:   token,
       }
       render json: result
