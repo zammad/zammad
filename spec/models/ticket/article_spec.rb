@@ -256,6 +256,16 @@ RSpec.describe Ticket::Article, type: :model do
           end
         end
 
+        context 'for import' do
+          before do
+            Setting.set('import_mode', true)
+          end
+
+          it 'truncates body to 1.5 million chars' do
+            expect(article.body.length).to eq(1_500_000)
+          end
+        end
+
         context 'for "test.postmaster" thread', application_handle: 'test.postmaster' do
           it 'truncates body to 1.5 million chars' do
             expect(article.body.length).to eq(1_500_000)
