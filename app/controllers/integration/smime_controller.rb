@@ -3,6 +3,28 @@
 class Integration::SMIMEController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
+  def certificate_download
+    cert = SMIMECertificate.find(params[:id])
+
+    send_data(
+      cert.raw,
+      filename:    "#{cert.doc_hash}.crt",
+      type:        'text/plain',
+      disposition: 'attachment'
+    )
+  end
+
+  def private_key_download
+    cert = SMIMECertificate.find(params[:id])
+
+    send_data(
+      cert.private_key,
+      filename:    "#{cert.doc_hash}.key",
+      type:        'text/plain',
+      disposition: 'attachment'
+    )
+  end
+
   def certificate_list
     render json: SMIMECertificate.all
   end
