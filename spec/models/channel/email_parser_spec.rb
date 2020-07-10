@@ -993,29 +993,45 @@ RSpec.describe Channel::EmailParser, type: :model do
     end
 
     describe 'ServiceNow handling' do
-      context 'when emails with service now reference are sent' do
+
+      context 'new Ticket' do
         let(:mail_file) { Rails.root.join('test/data/mail/mail089.box') }
-        let(:mail_file_answer) { Rails.root.join('test/data/mail/mail090.box') }
-        let(:raw_mail_answer)  { File.read(mail_file_answer) }
 
-        it 'does create a ticket with external sync reference' do
-          expect { described_class.new.process({}, raw_mail) }
-            .to change(Ticket, :count).by(1)
-            .and change(Ticket::Article, :count).by(1)
-            .and change(ExternalSync, :count).by(1)
+        it 'creates an ExternalSync reference' do
+          described_class.new.process({}, raw_mail)
 
-          expect(ExternalSync.last.source).to eq('ServiceNow')
-          expect(ExternalSync.last.source_id).to eq('INC678439')
-          expect(ExternalSync.last.object).to eq('Ticket')
-          expect(ExternalSync.last.o_id).to eq(Ticket.last.id)
-          expect(Ticket.last.articles.last.subject).to eq('Incident INC678439 -- zugewiesen an EXT-XXXINIS')
+          expect(ExternalSync.last).to have_attributes(
+            source:    'ServiceNow-example@service-now.com',
+            source_id: 'INC678439',
+            object:    'Ticket',
+            o_id:      Ticket.last.id,
+          )
+        end
+      end
 
-          expect { described_class.new.process({}, raw_mail_answer) }
-            .to change(Ticket, :count).by(0)
-            .and change(Ticket::Article, :count).by(1)
-            .and change(ExternalSync, :count).by(0)
+      context 'follow up' do
 
-          expect(Ticket.last.articles.last.subject).to eq('Incident INC678439 -- Arbeitsnotizen beigefügt')
+        let(:mail_file) { Rails.root.join('test/data/mail/mail090.box') }
+        let(:ticket) { create(:ticket) }
+        let!(:external_sync) do
+          create(:external_sync,
+                 source:    'ServiceNow-example@service-now.com',
+                 source_id: 'INC678439',
+                 object:    'Ticket',
+                 o_id:      ticket.id,)
+        end
+
+        it 'adds Article to existing Ticket' do
+          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+        end
+
+        context 'key insensitive sender address' do
+
+          let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
+
+          it 'adds Article to existing Ticket' do
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          end
         end
       end
     end
