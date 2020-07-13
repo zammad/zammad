@@ -187,7 +187,7 @@ class Admin extends App.WizardFullScreen
 
     @html App.view('getting_started/admin')()
 
-    new App.ControllerForm(
+    @form = new App.ControllerForm(
       el:        @$('.js-admin-form')
       model:     App.User
       screen:    'signup'
@@ -208,9 +208,16 @@ class Admin extends App.WizardFullScreen
     )
     if errors
       @log 'error new', errors
+
+      # Only highlight, but don't add message. Error text breaks layout.
+      Object.keys(errors).forEach (key) ->
+        errors[key] = null
+
       @formValidate(form: e.target, errors: errors)
       @formEnable(e)
       return false
+    else
+      @formValidate(form: e.target, errors: errors)
 
     # save user
     user.save(
@@ -231,11 +238,10 @@ class Admin extends App.WizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        App.Event.trigger 'notify', {
-          type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || 'Can\'t create user!')
-          timeout: 2500
-        }
+        if _.isArray(details.error)
+          @form.showAlert( App.i18n.translateInline( details.error[0], details.error[1] ) )
+        else
+          @form.showAlert(details.error_human || details.error || 'Unable to create user!')
     )
 
   relogin: (data, status, xhr) =>

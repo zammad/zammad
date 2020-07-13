@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'System setup process', type: :system, set_up: false do
+RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false do
 
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)
@@ -9,7 +9,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
     raise "Unable to get fqdn based on #{app_host}"
   end
 
-  it 'Setting up a new system', authenticated_as: false do
+  it 'Setting up a new system' do
 
     if !ENV['MAILBOX_INIT']
       skip("NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'")
@@ -108,6 +108,25 @@ RSpec.describe 'System setup process', type: :system, set_up: false do
 
       click(:href, '#settings/system')
       expect(page).to have_field('fqdn', with: fqdn)
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/3106
+  it 'Shows an error message if too weak password is filled in' do
+    visit '/'
+
+    click_on('Setup new System')
+
+    within('.js-admin') do
+      fill_in 'firstname',        with: 'Test Master'
+      fill_in 'lastname',         with: 'Agent'
+      fill_in 'email',            with: 'master@example.com'
+      fill_in 'password',         with: 'asd'
+      fill_in 'password_confirm', with: 'asd'
+
+      click_on('Create')
+
+      expect(page).to have_text 'Invalid password,'
     end
   end
 end

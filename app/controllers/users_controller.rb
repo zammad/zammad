@@ -143,10 +143,7 @@ class UsersController < ApplicationController
       # check password policy
       if clean_params[:password].present?
         result = password_policy(clean_params[:password])
-        if result != true
-          render json: { error: result }, status: :unprocessable_entity
-          return
-        end
+        raise Exceptions::UnprocessableEntity, result if result != true
       end
 
       user = User.new(clean_params)
