@@ -10,7 +10,7 @@ body: |-
   <p><b>Chantel Wilken</b></p><p><b>John Smith</b></p><p><b>Tel: 053-8311646</b></p><p><b> : 053-8311710</b></p><p><b>Fax to e-mail: 0865586973</b></p><p><b>Fax to e-mail: 0865665137</b></p></div><p>&nbsp;</p><div>
   <span class="js-signatureMarker"></span><p><b>From:</b> Profsen Lab [mailto:from@example.com] <br><b>Sent:</b> Wednesday, 06 March 2019 08:52<br><b>To:</b> to@example.com<br><b>Subject:</b> FW: Tax Invoice INX4183</p></div><p>&nbsp;</p><div>
   <p><b>Chantel Wilken</b></p><p><b>John Smith</b></p><p><b>Tel: 053-8311646</b></p><p><b> : 053-8311710</b></p><p><b>Fax to e-mail: 0865586973</b></p><p><b>Fax to e-mail: 0865665137</b></p></div><p>&nbsp;</p><div>
-  <p><b>From:</b> Profsen Lab [mailto:from@example.com] <br><b>Sent:</b> Monday, 04 March 2019 12:41<br><b>To:</b> from@example.com<br><b>Subject:</b> Tax Invoice INX4183</p></div><p>&nbsp;</p><p>Tax Invoice INX4183 from Shammah Dental BK t/a John Smith</p><p>&nbsp;</p></div>
+  <p><b>From:</b> Profsen Lab %5Bmailto:from@example.com%5D <br><b>Sent:</b> Monday, 04 March 2019 12:41<br><b>To:</b> from@example.com<br><b>Subject:</b> Tax Invoice INX4183</p></div><p>&nbsp;</p><p>Tax Invoice INX4183 from Shammah Dental BK t/a John Smith</p><p>&nbsp;</p></div>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

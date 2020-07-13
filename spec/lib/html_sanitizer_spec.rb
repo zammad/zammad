@@ -198,9 +198,17 @@ RSpec.describe HtmlSanitizer do
     context 'with href links that contain square brackets' do
       it 'correctly URL encodes them' do
         expect(described_class.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))
-          .to eq('<a href="https://example.com/?foo=bar&amp;baz%5Bx%5D=y" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?foo=bar&amp;baz[x]=y">example</a>')
+          .to eq('<a href="https://example.com/?foo=bar&amp;baz%5Bx%5D=y" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?foo=bar&amp;baz%5Bx%5D=y">example</a>')
       end
     end
+
+    context 'with href links that contain http urls' do
+      it 'correctly URL encodes them' do
+        expect(described_class.strict(+'<a href="https://example.com/?foo=https%3A%2F%2Fexample.com%3Flala%3A123">example</a>', true))
+          .to eq('<a href="https://example.com/?foo=https%3A%2F%2Fexample.com%3Flala%3A123" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?foo=https%3A%2F%2Fexample.com%3Flala%3A123">example</a>')
+      end
+    end
+
   end
 
   describe '.cleanup' do
