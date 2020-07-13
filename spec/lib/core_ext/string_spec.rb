@@ -1141,7 +1141,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <a href="http://example.com %22test%22">http://what-different.example.com</a>
           HTML
-            <a href="http://example.com%20%22test%22" rel="nofollow noreferrer noopener" target="_blank" title='http://example.com "test"'>http://what-different.example.com</a>
+            <a href="http://example.com%20%22test%22" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com%20%22test%22">http://what-different.example.com</a>
           TEXT
         end
 
@@ -1150,31 +1150,6 @@ RSpec.describe String do
             <a href="http://example.com">http://EXAMPLE.com</a>
           HTML
             <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://EXAMPLE.com</a>
-          TEXT
-        end
-
-        it 'does not add title attr (for trailing slash)' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
-            <a href="http://example.com/" class="abc">http://example.com</a>
-          HTML
-            <a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>
-          TEXT
-        end
-
-        it 'does not add title attr (for trailing slash and newline)' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
-            <a href="http://example.com/\n" class="abc">http://example.com</a>
-          HTML
-            <a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>
-          TEXT
-        end
-
-        it 'does not add title attr (for trailing slash, newline, and space)' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
-            <a href="http://example.com/\n " class="abc
-            ">http://example.com</a>
-          HTML
-            <a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>
           TEXT
         end
 
