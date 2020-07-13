@@ -208,28 +208,39 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   describe 'delete article', authenticated: -> { user } do
-    let(:admin_user)    { create :admin, groups: [Group.first] }
-    let(:agent_user)    { create :agent, groups: [Group.first] }
-    let(:customer_user) { create :customer }
-    let(:ticket)        { create :ticket, group: agent_user.groups.first, customer: customer_user }
-    let(:article)       { send(item) }
+    let(:admin)       { create :admin, groups: [Group.first] }
+    let(:agent)       { create :agent, groups: [Group.first] }
+    let(:other_agent) { create :agent, groups: [Group.first] }
+    let(:customer)    { create :customer }
+    let(:ticket)      { create :ticket, group: agent.groups.first, customer: customer }
+    let(:article)     { send(item) }
 
     def article_communication
-      create_ticket_article(sender_name: 'Agent', internal: false, type_name: 'email', updated_by: customer_user)
+      create_ticket_article(sender_name: 'Agent', internal: false, type_name: 'email', updated_by: customer)
     end
 
-    def article_note
-      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note', updated_by: agent_user)
+    def article_note_self
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note', updated_by: user)
+    end
+
+    def article_note_other
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note', updated_by: other_agent)
     end
 
     def article_note_customer
-      create_ticket_article(sender_name: 'Customer', internal: false, type_name: 'note', updated_by: customer_user)
+      create_ticket_article(sender_name: 'Customer', internal: false, type_name: 'note', updated_by: customer)
     end
 
-    def article_note_communication
+    def article_note_communication_self
       create(:ticket_article_type, name: 'note_communication', communication: true)
 
-      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note_communication', updated_by: agent_user)
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note_communication', updated_by: user)
+    end
+
+    def article_note_communication_other
+      create(:ticket_article_type, name: 'note_communication', communication: true)
+
+      create_ticket_article(sender_name: 'Agent', internal: true, type_name: 'note_communication', updated_by: other_agent)
     end
 
     def create_ticket_article(sender_name:, internal:, type_name:, updated_by:)
@@ -242,8 +253,8 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'going through full stack' do
       context 'as admin' do
-        let(:user)   { admin_user }
-        let(:item)   { 'article_communication' }
+        let(:user)   { admin }
+        let(:item)   { 'article_note_self' }
         let(:offset) { 0.minutes }
 
         it 'succeeds' do
@@ -294,47 +305,63 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'as admin' do
-        let(:user) { admin_user }
+        let(:user) { admin }
 
         include_examples 'deleting ticket article',
                          item: 'article_communication',
-                         now: true, later: true, much_later: true
+                         now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
-                         item: 'article_note',
-                         now: true, later: true, much_later: true
+                         item: 'article_note_self',
+                         now: true, later: true, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_other',
+                         now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
                          item: 'article_note_customer',
-                         now: true, later: true, much_later: true
+                         now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
-                         item: 'article_note_communication',
-                         now: true, later: true, much_later: true
+                         item: 'article_note_communication_self',
+                         now: false, later: false, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_communication_other',
+                         now: false, later: false, much_later: false
       end
 
       context 'as agent' do
-        let(:user) { agent_user }
+        let(:user) { agent }
 
         include_examples 'deleting ticket article',
                          item: 'article_communication',
                          now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
-                         item: 'article_note',
+                         item: 'article_note_self',
                          now: true, later: true, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_other',
+                         now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
                          item: 'article_note_customer',
                          now: false, later: false, much_later: false
 
         include_examples 'deleting ticket article',
-                         item: 'article_note_communication',
-                         now: true, later: true, much_later: false
+                         item: 'article_note_communication_self',
+                         now: false, later: false, much_later: false
+
+        include_examples 'deleting ticket article',
+                         item: 'article_note_communication_other',
+                         now: false, later: false, much_later: false
       end
 
       context 'as customer' do
-        let(:user) { customer_user }
+        let(:user) { customer }
 
         include_examples 'deleting ticket article',
                          item: 'article_communication',
@@ -350,16 +377,17 @@ RSpec.describe 'Ticket zoom', type: :system do
         before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
 
         context 'as admin' do
-          let(:user) { admin_user }
+          let(:user) { admin }
 
-          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true, offset: 8000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
         end
 
         context 'as agent' do
-          let(:user) { agent_user }
+          let(:user) { agent }
 
-          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
-          include_examples 'according to permission matrix', item: 'article_note', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true,  offset: 5000.seconds, description: 'outside of delete timeframe'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: false, offset: 8000.seconds, description: 'outside of delete timeframe'
         end
       end
 
@@ -367,9 +395,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
 
         context 'as agent' do
-          let(:user) { agent_user }
+          let(:user) { agent }
 
-          include_examples 'according to permission matrix', item: 'article_note', expects_visible: true, offset: 99.days, description: 'long after'
+          include_examples 'according to permission matrix', item: 'article_note_self', expects_visible: true, offset: 99.days, description: 'long after'
         end
       end
     end
@@ -377,8 +405,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'button is hidden on the go' do
       before         { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 5 }
 
-      let(:user)     { agent_user }
-      let(:item)     { 'article_note' }
+      let(:user)     { agent }
+      let(:item)     { 'article_note_self' }
       let!(:article) { send(item) }
       let(:offset)   { 0.seconds }
 
