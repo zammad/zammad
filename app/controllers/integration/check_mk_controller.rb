@@ -39,11 +39,11 @@ class Integration::CheckMkController < ApplicationController
     title = "#{params[:host]} is #{params[:state]}"
     body = "EventID: #{params[:event_id]}
 Host: #{params[:host]}
-Service: #{params[:service]}
+Service: #{params[:service] || '-'}
 State: #{params[:state]}
-Text: #{params[:text]}
+Text: #{params[:text] || '-'}
 RemoteIP: #{request.remote_ip}
-UserAgent: #{request.env['HTTP_USER_AGENT']}
+UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
 "
 
     # add article

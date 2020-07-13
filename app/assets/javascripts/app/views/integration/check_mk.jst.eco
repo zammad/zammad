@@ -1,0 +1,56 @@
+<hr>
+
+<h2><%- @T('Usage') %></h2>
+
+<p><%- @T('To enable %s for sending http requests to %s, you need create a own "notification rule" in %s.', 'Checkmk', 'Zammad', 'Checkmk') %></p>
+
+<div class="settings-entry">
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th width="20%"><%- @T('Type') %>
+        <th width="80%"><%- @T('URL') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Endpoint') %>
+        <td class="settings-list-control-cell">
+          <form>
+            <input type="url" class="form-control form-control--small js-select" readonly value="<%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>">
+          </form>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+<h2><%- @T('Examples') %></h2>
+
+<p><%- @T('You can use the following script to post the data to %s.', 'Zammad') %></p>
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a role="tab" data-toggle="tab" aria-expanded="true" class="js-tabItem" data-tablist="service"><%- @T('Service Notification') %></a></li>
+  <li><a role="tab" data-toggle="tab" class="js-tabItem" data-tablist="host"><%- @T('Host Notification') %></a></li>
+</ul>
+
+<div class="js-tablist settings-entry">
+  <div class="js-tablistItem js-service">
+    <p><%- @T('Script can be located under: ||%s|| and needs to be executable.', '/opt/omd/sites/{SITENAME}/local/share/check_mk/notifications/zammad-service') %></p>
+
+    <pre><code class="language-bash js-code hljs">
+#!/bin/bash
+
+curl -X POST -F "event_id=$NOTIFY_SERVICEPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "service=$NOTIFY_SERVICEDESC" -F "state=$NOTIFY_SERVICESTATE" -F "text=$NOTIFY_SERVICEOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>
+    </code></pre>
+  </div>
+
+  <div class="js-tablistItem js-host hidden">
+    <p><%- @T('Script can be located under: ||%s|| and needs to be executable.', '/opt/omd/sites/{SITENAME}/local/share/check_mk/notifications/zammad-host') %></p>
+
+    <pre><code class="language-bash js-code hljs">
+#!/bin/bash
+
+curl -X POST -F "event_id=$NOTIFY_HOSTPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "state=$NOTIFY_HOSTSTATE" -F "text=$NOTIFY_HOSTOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>
+    </code></pre>
+  </div>
+</div>

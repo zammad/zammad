@@ -3681,10 +3681,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Check_MK integration',
+  title:       'Checkmk integration',
   name:        'check_mk_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Check_MK (http://mathias-kettner.com/check_mk.html) is enabled or not.',
+  description: 'Defines if Checkmk (https://checkmk.com/) is enabled or not.',
   options:     {
     form: [
       {
@@ -3739,7 +3739,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null:    true,
-        name:    'check_mk_auto_close',
+        name:    'checkmk_auto_close',
         tag:     'boolean',
         options: {
           true  => 'yes',
@@ -3779,10 +3779,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Check_MK tolen',
+  title:       'Checkmk token',
   name:        'check_mk_token',
   area:        'Core',
-  description: 'Defines the Check_MK token for allowing updates.',
+  description: 'Defines the Checkmk token for allowing updates.',
   options:     {},
   state:       ENV['CHECK_MK_TOKEN'] || SecureRandom.hex(16),
   preferences: {
