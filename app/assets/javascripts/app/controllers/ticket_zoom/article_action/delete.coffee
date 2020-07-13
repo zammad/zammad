@@ -18,7 +18,6 @@ class Delete
     actions
 
   @isDeletable: (actions, ticket, article, ui) ->
-    return { isDeletable: true }  if ui.permissionCheck('admin')
     return { isDeletable: false } if !@deletableForAgent(actions, ticket, article, ui)
     return { isDeletable: true }  if !@hasDeletableTimeframe()
 
@@ -44,7 +43,7 @@ class Delete
   @deletableForAgent: (actions, ticket, article, ui) ->
     return false if !ui.permissionCheck('ticket.agent')
     return false if article.created_by_id != App.User.current()?.id
-    return false if article.type.communication and !article.internal
+    return false if article.type.communication
 
     true
 

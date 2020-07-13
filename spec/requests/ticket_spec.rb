@@ -894,7 +894,7 @@ RSpec.describe 'Ticket', type: :request do
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+      expect(json_response['error']).to eq('Not authorized (communication articles cannot be deleted)!')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
@@ -991,7 +991,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:unauthorized)
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -1237,7 +1237,7 @@ RSpec.describe 'Ticket', type: :request do
       delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+      expect(json_response['error']).to eq('Not authorized (agent permission required)!')
 
       params = {
         ticket_id: ticket.id,
@@ -1261,7 +1261,7 @@ RSpec.describe 'Ticket', type: :request do
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Not authorized (admin permission required)!')
+      expect(json_response['error']).to eq('Not authorized (agent permission required)!')
 
       params = {
         from:      'something which should not be changed on server side',

@@ -481,6 +481,8 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   describe 'DELETE /api/v1/ticket_articles/:id', authenticated_as: -> { user } do
+    let(:other_agent) { create(:agent, groups: [Group.first]) }
+
     let(:ticket) do
       create(:ticket, group: Group.first)
     end
@@ -491,10 +493,16 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
              updated_by_id: agent.id, created_by_id: agent.id )
     end
 
-    let(:article_note) do
+    let(:article_note_self) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id )
+             updated_by_id: user.id, created_by_id: user.id )
+    end
+
+    let(:article_note_other) do
+      create(:ticket_article,
+             sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
+             updated_by_id: other_agent.id, created_by_id: other_agent.id )
     end
 
     let(:article_note_customer) do
@@ -503,12 +511,20 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
              updated_by_id: customer.id, created_by_id: customer.id )
     end
 
-    let(:article_note_communication) do
+    let(:article_note_communication_self) do
       create(:ticket_article_type, name: 'note_communication', communication: true)
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id )
+             updated_by_id: user.id, created_by_id: user.id )
+    end
+
+    let(:article_note_communication_other) do
+      create(:ticket_article_type, name: 'note_communication', communication: true)
+
+      create(:ticket_article,
+             sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
+             updated_by_id: other_agent.id, created_by_id: other_agent.id )
     end
 
     def delete_article_via_rest(article)
@@ -552,19 +568,27 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       include_examples 'deleting',
                        item: 'article_communication',
-                       now: true, later: true, much_later: true
+                       now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note',
-                       now: true, later: true, much_later: true
+                       item: 'article_note_self',
+                       now: true, later: true, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_other',
+                       now: false, later: false, much_later: false
 
       include_examples 'deleting',
                        item: 'article_note_customer',
-                       now: true, later: true, much_later: true
+                       now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note_communication',
-                       now: true, later: true, much_later: true
+                       item: 'article_note_communication_self',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_communication_other',
+                       now: false, later: false, much_later: false
     end
 
     context 'as agent' do
@@ -575,17 +599,24 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
                        now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note',
+                       item: 'article_note_self',
                        now: true, later: true, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_other',
+                       now: false, later: false, much_later: false
 
       include_examples 'deleting',
                        item: 'article_note_customer',
                        now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note_communication',
-                       now: true, later: true, much_later: false
+                       item: 'article_note_communication_self',
+                       now: false, later: false, much_later: false
 
+      include_examples 'deleting',
+                       item: 'article_note_communication_other',
+                       now: false, later: false, much_later: false
     end
 
     context 'as customer' do
@@ -596,7 +627,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
                        now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note',
+                       item: 'article_note_other',
                        now: false, later: false, much_later: false
 
       include_examples 'deleting',
@@ -604,7 +635,11 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
                        now: false, later: false, much_later: false
 
       include_examples 'deleting',
-                       item: 'article_note_communication',
+                       item: 'article_note_communication_self',
+                       now: false, later: false, much_later: false
+
+      include_examples 'deleting',
+                       item: 'article_note_communication_other',
                        now: false, later: false, much_later: false
 
     end
@@ -612,15 +647,21 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     context 'with custom timeframe' do
       before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
 
-      let(:article) { article_note }
+      let(:article) { article_note_self }
 
       context 'as admin' do
         let(:user) { admin }
 
+        context 'deleting before timeframe' do
+          before { article && travel(5000.seconds) }
+
+          include_examples 'succeeds'
+        end
+
         context 'deleting after timeframe' do
           before { article && travel(8000.seconds) }
 
-          include_examples 'succeeds'
+          include_examples 'fails'
         end
       end
 
@@ -644,7 +685,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     context 'with timeframe as 0' do
       before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
 
-      let(:article) { article_note }
+      let(:article) { article_note_self }
 
       context 'as agent' do
         let(:user) { agent }
