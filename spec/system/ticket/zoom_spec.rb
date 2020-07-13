@@ -542,13 +542,15 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
 
-    context 'replying' do
+    context 'replying', authenticated_as: :setup_and_authenticate do
 
-      before do
+      def setup_and_authenticate
         create(:ticket_article, ticket: ticket, from: customer.email)
 
         create(:smime_certificate, :with_private, fixture: system_email_address)
         create(:smime_certificate, fixture: sender_email_address)
+
+        authenticate
       end
 
       it 'plain' do
