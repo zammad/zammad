@@ -46,15 +46,16 @@ returns
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
     result_es = SearchIndexBackend.selectors('Ticket', selector, {}, aggs_interval)
-    if params[:interval] == 'month'
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
+    when 'day'
       stop_interval = ((params[:range_end] - params[:range_start]) / 86_400).to_i + 1
-    elsif params[:interval] == 'hour'
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
+    when 'minute'
       stop_interval = 60
     end
     result = []
@@ -80,9 +81,10 @@ returns
 
         # only compare date - in certain cases elasticsearch timezone offset will not match
         replace = ':\d\dZ$'
-        if params[:interval] == 'month'
+        case params[:interval]
+        when 'month'
           replace = '\d\dT\d\d:\d\d:\d\dZ$'
-        elsif params[:interval] == 'day' || params[:interval] == 'week'
+        when 'day', 'week'
           replace = '\d\d:\d\d:\d\dZ$'
         end
 
@@ -91,30 +93,32 @@ returns
 
         match = true
         result.push item['doc_count']
-        if params[:interval] == 'month'
+        case params[:interval]
+        when 'month'
           params[:range_start] = params[:range_start].next_month
-        elsif params[:interval] == 'week'
+        when 'week'
           params[:range_start] = params[:range_start].next_day
-        elsif params[:interval] == 'day'
+        when 'day'
           params[:range_start] = params[:range_start].next_day
-        elsif params[:interval] == 'hour'
+        when 'hour'
           params[:range_start] = params[:range_start] + 1.hour
-        elsif params[:interval] == 'minute'
+        when 'minute'
           params[:range_start] = params[:range_start] + 1.minute
         end
       end
       next if match
 
       result.push 0
-      if params[:interval] == 'month'
+      case params[:interval]
+      when 'month'
         params[:range_start] = params[:range_start].next_month
-      elsif params[:interval] == 'week'
+      when 'week'
         params[:range_start] = params[:range_start].next_day
-      elsif params[:interval] == 'day'
+      when 'day'
         params[:range_start] = params[:range_start] + 1.day
-      elsif params[:interval] == 'hour'
+      when 'hour'
         params[:range_start] = params[:range_start] + 1.hour
-      elsif params[:interval] == 'minute'
+      when 'minute'
         params[:range_start] = params[:range_start] + 1.minute
       end
     end

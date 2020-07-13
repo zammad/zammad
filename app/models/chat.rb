@@ -66,7 +66,8 @@ reconnect - chat session already exists, serve agent and session chat messages (
       chat_session = Chat::Session.find_by(session_id: session_id, state: %w[waiting running])
 
       if chat_session
-        if chat_session.state == 'running'
+        case chat_session.state
+        when 'running'
           user = chat_session.agent_user
           if user
 
@@ -80,7 +81,7 @@ reconnect - chat session already exists, serve agent and session chat messages (
               }
             end
           end
-        elsif chat_session.state == 'waiting'
+        when 'waiting'
           return {
             state:    'reconnect',
             position: chat_session.position,

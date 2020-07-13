@@ -677,21 +677,23 @@ to send no browser reload event, pass false
       end
 
       data_type = nil
-      if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
+      case attribute.data_type
+      when /^input|select|tree_select|richtext|textarea|checkbox$/
         data_type = :string
-      elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
+      when /^integer|user_autocompletion$/
         data_type = :integer
-      elsif attribute.data_type.match?(/^boolean|active$/)
+      when /^boolean|active$/
         data_type = :boolean
-      elsif attribute.data_type.match?(/^datetime$/)
+      when /^datetime$/
         data_type = :datetime
-      elsif attribute.data_type.match?(/^date$/)
+      when /^date$/
         data_type = :date
       end
 
       # change field
       if model.column_names.include?(attribute.name)
-        if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
+        case attribute.data_type
+        when /^input|select|tree_select|richtext|textarea|checkbox$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -699,7 +701,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        elsif attribute.data_type.match?(/^integer|user_autocompletion|datetime|date$/)
+        when /^integer|user_autocompletion|datetime|date$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -707,7 +709,7 @@ to send no browser reload event, pass false
             default: attribute.data_option[:default],
             null:    true
           )
-        elsif attribute.data_type.match?(/^boolean|active$/)
+        when /^boolean|active$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -730,7 +732,8 @@ to send no browser reload event, pass false
       end
 
       # create field
-      if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
+      case attribute.data_type
+      when /^input|select|tree_select|richtext|textarea|checkbox$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -738,7 +741,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
+      when /^integer|user_autocompletion$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -746,7 +749,7 @@ to send no browser reload event, pass false
           default: attribute.data_option[:default],
           null:    true
         )
-      elsif attribute.data_type.match?(/^boolean|active$/)
+      when /^boolean|active$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -754,7 +757,7 @@ to send no browser reload event, pass false
           default: attribute.data_option[:default],
           null:    true
         )
-      elsif attribute.data_type.match?(/^datetime|date$/)
+      when /^datetime|date$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,

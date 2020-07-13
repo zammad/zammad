@@ -794,9 +794,10 @@ returns
   # we use it in rails and non rails context
   def self.log(level, message)
     if defined?(Rails)
-      if level == 'debug'
+      case level
+      when 'debug'
         Rails.logger.debug { message }
-      elsif level == 'notice'
+      when 'notice'
         Rails.logger.notice message
       else
         Rails.logger.error message

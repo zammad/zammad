@@ -60,17 +60,18 @@ class Transaction::Slack
     # if create, send create message / block update messages
     template = nil
     sent_value = nil
-    if @item[:type] == 'create'
+    case @item[:type]
+    when 'create'
       template = 'ticket_create'
-    elsif @item[:type] == 'update'
+    when 'update'
       template = 'ticket_update'
-    elsif @item[:type] == 'reminder_reached'
+    when 'reminder_reached'
       template = 'ticket_reminder_reached'
       sent_value = ticket.pending_time
-    elsif @item[:type] == 'escalation'
+    when 'escalation'
       template = 'ticket_escalation'
       sent_value = ticket.escalation_at
-    elsif @item[:type] == 'escalation_warning'
+    when 'escalation_warning'
       template = 'ticket_escalation_warning'
       sent_value = ticket.escalation_at
     else

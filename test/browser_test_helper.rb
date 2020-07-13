@@ -41,7 +41,8 @@ class TestCase < ActiveSupport::TestCase
 
   def profile
     browser_profile = nil
-    if browser == 'firefox'
+    case browser
+    when 'firefox'
       browser_profile = Selenium::WebDriver::Firefox::Profile.new
 
       browser_profile['intl.locale.matchOS']      = false
@@ -50,7 +51,7 @@ class TestCase < ActiveSupport::TestCase
       # currently console log not working for firefox
       # https://github.com/SeleniumHQ/selenium/issues/1161
       #browser_profile['loggingPref']              = { browser: :all }
-    elsif browser == 'chrome'
+    when 'chrome'
 
       # profile are only working on remote selenium
       if ENV['REMOTE_URL']
@@ -89,10 +90,11 @@ class TestCase < ActiveSupport::TestCase
         profile: profile,
       }
       if ENV['BROWSER_HEADLESS'].present?
-        if browser == 'firefox'
+        case browser
+        when 'firefox'
           params[:options] = Selenium::WebDriver::Firefox::Options.new
           params[:options].add_argument('-headless')
-        elsif browser == 'chrome'
+        when 'chrome'
           params[:options] = Selenium::WebDriver::Chrome::Options.new
           params[:options].add_argument('-headless')
         end
@@ -3084,17 +3086,18 @@ wait untill text in selector disabppears
     end
 
     if data[:role]
-      if data[:role] == 'Admin'
+      case data[:role]
+      when 'Admin'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=1]',
         )
-      elsif data[:role] == 'Customer'
+      when 'Customer'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=3]',
         )
-      elsif data[:role] == 'Agent'
+      when 'Agent'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=2]',
@@ -3251,17 +3254,18 @@ wait untill text in selector disabppears
     end
 
     if data[:role]
-      if data[:role] == 'Admin'
+      case data[:role]
+      when 'Admin'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=1]',
         )
-      elsif data[:role] == 'Customer'
+      when 'Customer'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=3]',
         )
-      elsif data[:role] == 'Agent'
+      when 'Agent'
         check(
           browser: instance,
           css:     '.modal input[name=role_ids][value=2]',
@@ -4718,7 +4722,8 @@ wait untill text in selector disabppears
 
     if data[:data_option]
       if data[:data_option][:options]
-        if data[:data_type] == 'Boolean'
+        case data[:data_type]
+        when 'Boolean'
           # rubocop:disable Lint/BooleanSymbol
           element = instance.find_elements(css: '.modal .js-valueTrue').first
           element.clear
@@ -4727,7 +4732,7 @@ wait untill text in selector disabppears
           element.clear
           element.send_keys(data[:data_option][:options][:false])
           # rubocop:enable Lint/BooleanSymbol
-        elsif data[:data_type] == 'Tree Select'
+        when 'Tree Select'
           add_tree_options(
             instance: instance,
             options:  data[:data_option][:options],

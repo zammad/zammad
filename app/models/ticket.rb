@@ -547,19 +547,20 @@ condition example
       if query != ''
         query += ' AND '
       end
-      if selector[0] == 'customer'
+      case selector[0]
+      when 'customer'
         tables += ', users customers'
         query += 'tickets.customer_id = customers.id'
-      elsif selector[0] == 'organization'
+      when 'organization'
         tables += ', organizations'
         query += 'tickets.organization_id = organizations.id'
-      elsif selector[0] == 'owner'
+      when 'owner'
         tables += ', users owners'
         query += 'tickets.owner_id = owners.id'
-      elsif selector[0] == 'article'
+      when 'article'
         tables += ', ticket_articles articles'
         query += 'tickets.id = articles.ticket_id'
-      elsif selector[0] == 'ticket_state'
+      when 'ticket_state'
         tables += ', ticket_states'
         query += 'tickets.state_id = ticket_states.id'
       else
@@ -786,15 +787,16 @@ condition example
       elsif selector['operator'] == 'within last (relative)'
         query += "#{attribute} >= ?"
         time = nil
-        if selector['range'] == 'minute'
+        case selector['range']
+        when 'minute'
           time = Time.zone.now - selector['value'].to_i.minutes
-        elsif selector['range'] == 'hour'
+        when 'hour'
           time = Time.zone.now - selector['value'].to_i.hours
-        elsif selector['range'] == 'day'
+        when 'day'
           time = Time.zone.now - selector['value'].to_i.days
-        elsif selector['range'] == 'month'
+        when 'month'
           time = Time.zone.now - selector['value'].to_i.months
-        elsif selector['range'] == 'year'
+        when 'year'
           time = Time.zone.now - selector['value'].to_i.years
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
@@ -803,15 +805,16 @@ condition example
       elsif selector['operator'] == 'within next (relative)'
         query += "#{attribute} <= ?"
         time = nil
-        if selector['range'] == 'minute'
+        case selector['range']
+        when 'minute'
           time = Time.zone.now + selector['value'].to_i.minutes
-        elsif selector['range'] == 'hour'
+        when 'hour'
           time = Time.zone.now + selector['value'].to_i.hours
-        elsif selector['range'] == 'day'
+        when 'day'
           time = Time.zone.now + selector['value'].to_i.days
-        elsif selector['range'] == 'month'
+        when 'month'
           time = Time.zone.now + selector['value'].to_i.months
-        elsif selector['range'] == 'year'
+        when 'year'
           time = Time.zone.now + selector['value'].to_i.years
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
@@ -820,15 +823,16 @@ condition example
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
         time = nil
-        if selector['range'] == 'minute'
+        case selector['range']
+        when 'minute'
           time = Time.zone.now - selector['value'].to_i.minutes
-        elsif selector['range'] == 'hour'
+        when 'hour'
           time = Time.zone.now - selector['value'].to_i.hours
-        elsif selector['range'] == 'day'
+        when 'day'
           time = Time.zone.now - selector['value'].to_i.days
-        elsif selector['range'] == 'month'
+        when 'month'
           time = Time.zone.now - selector['value'].to_i.months
-        elsif selector['range'] == 'year'
+        when 'year'
           time = Time.zone.now - selector['value'].to_i.years
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
@@ -837,15 +841,16 @@ condition example
       elsif selector['operator'] == 'after (relative)'
         query += "#{attribute} >= ?"
         time = nil
-        if selector['range'] == 'minute'
+        case selector['range']
+        when 'minute'
           time = Time.zone.now + selector['value'].to_i.minutes
-        elsif selector['range'] == 'hour'
+        when 'hour'
           time = Time.zone.now + selector['value'].to_i.hours
-        elsif selector['range'] == 'day'
+        when 'day'
           time = Time.zone.now + selector['value'].to_i.days
-        elsif selector['range'] == 'month'
+        when 'month'
           time = Time.zone.now + selector['value'].to_i.months
-        elsif selector['range'] == 'year'
+        when 'year'
           time = Time.zone.now + selector['value'].to_i.years
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
@@ -944,11 +949,12 @@ perform changes on ticket
         next if value['value'].blank?
 
         tags = value['value'].split(/,/)
-        if value['operator'] == 'add'
+        case value['operator']
+        when 'add'
           tags.each do |tag|
             tag_add(tag, current_user_id || 1)
           end
-        elsif value['operator'] == 'remove'
+        when 'remove'
           tags.each do |tag|
             tag_remove(tag, current_user_id || 1)
           end
@@ -1365,7 +1371,8 @@ result
 
     recipients_raw = []
     value_recipient.each do |recipient|
-      if recipient == 'article_last_sender'
+      case recipient
+      when 'article_last_sender'
         if article.present?
           if article.reply_to.present?
             recipients_raw.push(article.reply_to)
@@ -1379,17 +1386,17 @@ result
             recipients_raw.push(email)
           end
         end
-      elsif recipient == 'ticket_customer'
+      when 'ticket_customer'
         email = User.find_by(id: customer_id).email
         recipients_raw.push(email)
-      elsif recipient == 'ticket_owner'
+      when 'ticket_owner'
         email = User.find_by(id: owner_id).email
         recipients_raw.push(email)
-      elsif recipient == 'ticket_agents'
+      when 'ticket_agents'
         User.group_access(group_id, 'full').sort_by(&:login).each do |user|
           recipients_raw.push(user.email)
         end
-      elsif recipient =~ /\Auserid_(\d+)\z/
+      when /\Auserid_(\d+)\z/
         user = User.lookup(id: $1)
         if !user
           logger.warn "Can't find configured Trigger Email recipient User with ID '#{$1}'"

@@ -84,9 +84,9 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         body:         'some body',
         type:         'note',
         attachments:  [
-          'filename'  => 'some_file.txt',
-          'data'      => 'dGVzdCAxMjM=',
-          'mime-type' => 'text/plain',
+          { 'filename'  => 'some_file.txt',
+            'data'      => 'dGVzdCAxMjM=',
+            'mime-type' => 'text/plain' },
         ],
       }
       post '/api/v1/ticket_articles', params: params, as: :json

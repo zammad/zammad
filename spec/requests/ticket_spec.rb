@@ -429,9 +429,9 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename'  => 'some_file.txt',
-            'data'      => 'dGVzdCAxMjM=',
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => 'dGVzdCAxMjM=',
+              'mime-type' => 'text/plain' },
           ],
         },
       }
@@ -506,9 +506,9 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename'  => 'some_file.txt',
-            'data'      => 'ABC_INVALID_BASE64',
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => 'ABC_INVALID_BASE64',
+              'mime-type' => 'text/plain' },
           ],
         },
       }
@@ -528,9 +528,9 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename'  => 'some_file.txt',
-            'data'      => "LARGE_INVALID_BASE64_#{'#' * 20_000_000}",
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => "LARGE_INVALID_BASE64_#{'#' * 20_000_000}",
+              'mime-type' => 'text/plain' },
           ],
         },
       }
@@ -550,9 +550,9 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename'  => 'some_file.txt',
-            'data'      => Base64.encode64('a' * 1_000),
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => Base64.encode64('a' * 1_000),
+              'mime-type' => 'text/plain' },
           ],
         },
       }
@@ -576,9 +576,9 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename'  => 'some_file.txt',
-            'data'      => Base64.strict_encode64('a' * 1_000),
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => Base64.strict_encode64('a' * 1_000),
+              'mime-type' => 'text/plain' },
           ],
         },
       }
@@ -602,8 +602,8 @@ RSpec.describe 'Ticket', type: :request do
           subject:     'some test 123',
           body:        'some test 123',
           attachments: [
-            'filename' => 'some_file.txt',
-            'data'     => 'dGVzdCAxMjM=',
+            { 'filename' => 'some_file.txt',
+              'data'     => 'dGVzdCAxMjM=' },
           ],
         },
       }
@@ -665,9 +665,9 @@ RSpec.describe 'Ticket', type: :request do
           body:         'some test 123 <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAJAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzJCOTE2NzlGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzJCOTE2N0FGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMkI5MTY3N0ZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMkI5MTY3OEZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQRERoTGioZGSo1KCEoNTEpKCgpMUE4ODg4OEFEREREREREREREREREREREREREREREREREREREREREREREREQBFhoaIh0iKRoaKTkpIik5RDktLTlEREREOERERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABAADAMBIgACEQEDEQH/xABbAAEBAAAAAAAAAAAAAAAAAAAEBQEBAQAAAAAAAAAAAAAAAAAABAUQAAEEAgMAAAAAAAAAAAAAAAABAhIDESIxBAURAAICAwAAAAAAAAAAAAAAAAESABNRoQP/2gAMAwEAAhEDEQA/AJDq1rfF3Imeg/1+lFy2oR564DKWWWbweV+Buf/Z"
   >',
           attachments:  [
-            'filename'  => 'some_file.txt',
-            'data'      => 'dGVzdCAxMjM=',
-            'mime-type' => 'text/plain',
+            { 'filename'  => 'some_file.txt',
+              'data'      => 'dGVzdCAxMjM=',
+              'mime-type' => 'text/plain' },
           ],
         },
       }

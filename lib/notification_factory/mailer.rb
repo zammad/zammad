@@ -48,9 +48,10 @@ returns
 
     owned_by_nobody = false
     owned_by_me = false
-    if ticket.owner_id == 1
+    case ticket.owner_id
+    when 1
       owned_by_nobody = true
-    elsif ticket.owner_id == user.id
+    when user.id
       owned_by_me = true
     else
       # check the replacement chain of max 10

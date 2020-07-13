@@ -85,9 +85,10 @@ class ObjectManagerAttributesController < ApplicationController
           if permitted[:data_option][:options][:true]
             permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
           end
-          if permitted[:data_option][:default] == 'true'
+          case permitted[:data_option][:default]
+          when 'true'
             permitted[:data_option][:default] = true
-          elsif permitted[:data_option][:default] == 'false'
+          when 'false'
             permitted[:data_option][:default] = false
           end
           # rubocop:enable Lint/BooleanSymbol

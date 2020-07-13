@@ -408,9 +408,10 @@ execute all pending package migrations at once
   end
 
   def self._read_file(file, fullpath = false)
-    location = if fullpath == false
+    location = case fullpath
+               when false
                  @@root + '/' + file
-               elsif fullpath == true
+               when true
                  file
                else
                  fullpath + '/' + file

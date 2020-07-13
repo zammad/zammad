@@ -77,10 +77,10 @@ RSpec.describe Sessions::Event::ChatSessionStart do
         messages = Sessions.queue(client_id)
         expect(messages.count).to eq(1)
         expect(messages).to eq([
-                                 'event' => 'chat_error',
-                                 'data'  => {
-                                   'state' => 'no_permission'
-                                 }
+                                 { 'event' => 'chat_error',
+                                   'data'  => {
+                                     'state' => 'no_permission'
+                                   } }
                                ])
       end
     end

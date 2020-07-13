@@ -23,11 +23,12 @@ module Import
 
       def booleanize_values(properties)
         properties.each do |key, value|
-          if value.is_a?(String)
+          case value
+          when String
             next if !%w[true false].include?(value)
 
             properties[key] = value == 'true'
-          elsif value.is_a?(Hash)
+          when Hash
             properties[key] = booleanize_values(value)
           end
         end

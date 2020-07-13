@@ -1058,9 +1058,10 @@ try to find correct name
     return true if !preferences[:notification_sound]
     return true if !preferences[:notification_sound][:enabled]
 
-    if preferences[:notification_sound][:enabled] == 'true'
+    case preferences[:notification_sound][:enabled]
+    when 'true'
       preferences[:notification_sound][:enabled] = true
-    elsif preferences[:notification_sound][:enabled] == 'false'
+    when 'false'
       preferences[:notification_sound][:enabled] = false
     end
     class_name = preferences[:notification_sound][:enabled].class.to_s

@@ -170,15 +170,16 @@ class Transaction::Notification
       # get user based notification template
       # if create, send create message / block update messages
       template = nil
-      if @item[:type] == 'create'
+      case @item[:type]
+      when 'create'
         template = 'ticket_create'
-      elsif @item[:type] == 'update'
+      when 'update'
         template = 'ticket_update'
-      elsif @item[:type] == 'reminder_reached'
+      when 'reminder_reached'
         template = 'ticket_reminder_reached'
-      elsif @item[:type] == 'escalation'
+      when 'escalation'
         template = 'ticket_escalation'
-      elsif @item[:type] == 'escalation_warning'
+      when 'escalation_warning'
         template = 'ticket_escalation_warning'
       else
         raise "unknown type for notification #{@item[:type]}"

@@ -480,7 +480,8 @@ create a tweet or direct message from an article
   def from_article(article)
 
     tweet = nil
-    if article[:type] == 'twitter direct-message'
+    case article[:type]
+    when 'twitter direct-message'
 
       Rails.logger.debug { "Create twitter direct message from article to '#{article[:to]}'..." }
 
@@ -509,7 +510,7 @@ create a tweet or direct message from an article
 
       tweet = Twitter::REST::Request.new(@client, :json_post, '/1.1/direct_messages/events/new.json', data).perform
 
-    elsif article[:type] == 'twitter status'
+    when 'twitter status'
 
       Rails.logger.debug { 'Create tweet from article...' }
 

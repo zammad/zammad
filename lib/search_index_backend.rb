@@ -524,33 +524,36 @@ example for aggregations within one year
         end
 
         # is/is not/contains/contains not
-        if data['operator'] == 'is' || data['operator'] == 'is not' || data['operator'] == 'contains' || data['operator'] == 'contains not'
+        case data['operator']
+        when 'is', 'is not', 'contains', 'contains not'
           t[wildcard_or_term] = {}
           t[wildcard_or_term][key_tmp] = data['value']
-          if data['operator'] == 'is' || data['operator'] == 'contains'
+          case data['operator']
+          when 'is', 'contains'
             query_must.push t
-          elsif data['operator'] == 'is not' || data['operator'] == 'contains not'
+          when 'is not', 'contains not'
             query_must_not.push t
           end
-        elsif data['operator'] == 'contains all' || data['operator'] == 'contains one' || data['operator'] == 'contains all not' || data['operator'] == 'contains one not'
+        when 'contains all', 'contains one', 'contains all not', 'contains one not'
           values = data['value'].split(',').map(&:strip)
           t[:query_string] = {}
-          if data['operator'] == 'contains all'
+          case data['operator']
+          when 'contains all'
             t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
             query_must.push t
-          elsif data['operator'] == 'contains one not'
+          when 'contains one not'
             t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
             query_must_not.push t
-          elsif data['operator'] == 'contains one'
+          when 'contains one'
             t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
             query_must.push t
-          elsif data['operator'] == 'contains all not'
+          when 'contains all not'
             t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
             query_must_not.push t
           end
 
         # within last/within next (relative)
-        elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
+        when 'within last (relative)', 'within next (relative)'
           range = relative_map[data['range'].to_sym]
           if range.blank?
             raise "Invalid relative_map for range '#{data['range']}'."
@@ -566,7 +569,7 @@ example for aggregations within one year
           query_must.push t
 
         # before/after (relative)
-        elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
+        when 'before (relative)', 'after (relative)'
           range = relative_map[data['range'].to_sym]
           if range.blank?
             raise "Invalid relative_map for range '#{data['range']}'."
@@ -582,7 +585,7 @@ example for aggregations within one year
           query_must.push t
 
         # before/after (absolute)
-        elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
+        when 'before (absolute)', 'after (absolute)'
           t[:range] = {}
           t[:range][key_tmp] = {}
           if data['operator'] == 'before (absolute)'

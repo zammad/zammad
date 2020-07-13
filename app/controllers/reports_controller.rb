@@ -138,22 +138,23 @@ class ReportsController < ApplicationController
 
     metric = local_config[:metric][params[:metric].to_sym]
 
-    if params[:timeRange] == 'realtime'
+    case params[:timeRange]
+    when 'realtime'
       start_at = (Time.zone.now - 60.minutes)
       stop_at = Time.zone.now
       range = 'minute'
-    elsif params[:timeRange] == 'day'
+    when 'day'
       date = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_s
       start_at = Time.zone.parse("#{date}T00:00:00Z")
       stop_at = Time.zone.parse("#{date}T23:59:59Z")
       range = 'hour'
-    elsif params[:timeRange] == 'week'
+    when 'week'
       start_week_at = Date.commercial(params[:year].to_i, params[:week].to_i)
       stop_week_at = start_week_at.end_of_week
       start_at = Time.zone.parse("#{start_week_at.year}-#{start_week_at.month}-#{start_week_at.day}T00:00:00Z")
       stop_at = Time.zone.parse("#{stop_week_at.year}-#{stop_week_at.month}-#{stop_week_at.day}T23:59:59Z")
       range = 'week'
-    elsif params[:timeRange] == 'month'
+    when 'month'
       start_at = Time.zone.parse("#{params[:year]}-#{params[:month]}-01T00:00:00Z")
       stop_at = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{start_at.end_of_month.day}T23:59:59Z")
       range = 'day'

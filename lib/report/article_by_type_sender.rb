@@ -23,32 +23,36 @@ returns
     params = params_origin.dup
 
     result = []
-    if params[:interval] == 'month'
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
+    when 'day'
       stop_interval = 31
-    elsif params[:interval] == 'hour'
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
+    when 'minute'
       stop_interval = 60
     end
+
+    query, bind_params, tables = Ticket.selector2sql(params[:selector])
+    sender = Ticket::Article::Sender.lookup(name: params[:params][:sender])
+    type   = Ticket::Article::Type.lookup(name: params[:params][:type])
+
     (1..stop_interval).each do |_counter|
-      if params[:interval] == 'month'
+      case params[:interval]
+      when 'month'
         params[:range_end] = params[:range_start].next_month
-      elsif params[:interval] == 'week'
+      when 'week'
         params[:range_end] = params[:range_start].next_day
-      elsif params[:interval] == 'day'
+      when 'day'
         params[:range_end] = params[:range_start].next_day
-      elsif params[:interval] == 'hour'
+      when 'hour'
         params[:range_end] = params[:range_start] + 1.hour
-      elsif params[:interval] == 'minute'
+      when 'minute'
         params[:range_end] = params[:range_start] + 1.minute
       end
-      query, bind_params, tables = Ticket.selector2sql(params[:selector])
-      sender = Ticket::Article::Sender.lookup(name: params[:params][:sender])
-      type   = Ticket::Article::Type.lookup(name: params[:params][:type])
       count = Ticket::Article.joins('INNER JOIN tickets ON tickets.id = ticket_articles.ticket_id')
                              .where(query, *bind_params).joins(tables)
                              .where(

@@ -89,12 +89,13 @@ class EmailBuildTest < ActiveSupport::TestCase
 
     # check attachments
     data[:attachments]&.each do |attachment|
-      if attachment[:filename] == 'message.html'
+      case attachment[:filename]
+      when 'message.html'
         assert_nil(attachment[:preferences]['Content-ID'])
         assert_equal(true, attachment[:preferences]['content-alternative'])
         assert_equal('text/html', attachment[:preferences]['Mime-Type'])
         assert_equal('UTF-8', attachment[:preferences]['Charset'])
-      elsif attachment[:filename] == 'somename.png'
+      when 'somename.png'
         assert_nil(attachment[:preferences]['Content-ID'])
         assert_nil(attachment[:preferences]['content-alternative'])
         assert_equal('image/png', attachment[:preferences]['Mime-Type'])

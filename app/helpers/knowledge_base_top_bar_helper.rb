@@ -12,16 +12,13 @@ module KnowledgeBaseTopBarHelper
   end
 
   def kb_answer_top_bar_color(answer)
-    case answer.can_be_published_aasm.current_state
-    when :draft
-      'yellow'
-    when :internal
-      'blue'
-    when :published
-      'green'
-    when :archived
-      'grey'
-    end
+    state_color_map = {
+      draft:     'yellow',
+      internal:  'blue',
+      published: 'green',
+      archived:  'grey',
+    }
+    state_color_map[answer.can_be_published_aasm.current_state]
   end
 
   def kb_top_bar_tag(object)
