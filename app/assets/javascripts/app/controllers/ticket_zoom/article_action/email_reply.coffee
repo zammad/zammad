@@ -148,7 +148,7 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      quote_header = @fullQuoteHeader(article)
+      quote_header = @replyQuoteHeader(article)
 
       selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
 
@@ -196,7 +196,7 @@ class EmailReply extends App.Controller
       body = App.Utils.textCleanup(article.body)
       body = App.Utils.text2html(body)
 
-    quote_header = @fullQuoteHeader(article)
+    quote_header = App.FullQuoteHeader.fullQuoteHeaderForward(article)
 
     body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
@@ -339,7 +339,7 @@ class EmailReply extends App.Controller
 
     true
 
-  @fullQuoteHeader: (article) ->
+  @replyQuoteHeader: (article) ->
     if !App.Config.get('ui_ticket_zoom_article_email_full_quote_header')
       return ''
 
@@ -347,5 +347,6 @@ class EmailReply extends App.Controller
     name = article.updated_by.displayName()
 
     App.i18n.translateInline('On %s, %s wrote:', date, name) + '<br><br>'
+
 
 App.Config.set('200-EmailReply', EmailReply, 'TicketZoomArticleAction')
