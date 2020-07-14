@@ -17,7 +17,12 @@ class SearchKnowledgeBaseBackend
 
   def search(query, user: nil)
     raw_results = if SearchIndexBackend.enabled?
-                    SearchIndexBackend.search(query, indexes, options)
+                    SearchIndexBackend
+                      .search(query, indexes, options)
+                      .map do |hash|
+                        hash[:id] = hash[:id].to_i
+                        hash
+                      end
                   else
                     search_fallback(query, indexes, user)
                   end
@@ -26,7 +31,6 @@ class SearchKnowledgeBaseBackend
       raw_results = raw_results[0, limit]
     end
 
-    #raw_results
     filter_results raw_results, user
   end
 

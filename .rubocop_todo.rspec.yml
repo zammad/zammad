@@ -620,6 +620,7 @@ RSpec/NestedGroups:
     - 'spec/lib/notification_factory/template_spec.rb'
     - 'spec/lib/notification_factory_spec.rb'
     - 'spec/lib/search_index_backend_spec.rb'
+    - 'spec/lib/search_knowledge_base_backend_spec.rb'
     - 'spec/lib/secure_mailing/smime_spec.rb'
     - 'spec/lib/sessions/backend/base_spec.rb'
     - 'spec/lib/sessions/backend/ticket_overview_list_spec.rb'
