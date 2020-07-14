@@ -23,7 +23,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
         click_forward
 
         within(:richtext) do
-          expect(page).to contain_full_quote(ticket_article)
+          expect(page).to contain_full_quote(ticket_article).formatted_for(:forward)
         end
       end
     end
@@ -33,7 +33,21 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
         highlight_and_click_reply
 
         within(:richtext) do
-          expect(page).to contain_full_quote(ticket_article)
+          expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
+        end
+      end
+    end
+
+    context 'when customer is agent' do
+      let(:customer) { create(:agent) }
+
+      it 'includes OP without email when forwarding' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to contain_full_quote(ticket_article).formatted_for(:forward).ensuring_privacy(true)
+          end
         end
       end
     end
@@ -47,7 +61,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
         click_forward
 
         within(:richtext) do
-          expect(page).not_to contain_full_quote(ticket_article)
+          expect(page).not_to contain_full_quote(ticket_article).formatted_for(:forward)
         end
       end
     end
@@ -57,7 +71,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
         highlight_and_click_reply
 
         within(:richtext) do
-          expect(page).not_to contain_full_quote(ticket_article)
+          expect(page).not_to contain_full_quote(ticket_article).formatted_for(:reply)
         end
       end
     end
@@ -82,11 +96,65 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
   define :contain_full_quote do
     match do
-      citation.has_text?(name) && citation.has_no_text?(email) && citation.has_text?(timestamp)
+      confirm_content && confirm_style
     end
 
     match_when_negated do
-      citation.has_no_text?(name) && citation.has_no_text?(email) && citation.has_no_text?(timestamp)
+      confirm_no_content
+    end
+
+    # sets expected quote format
+    # @param [Symbol] :forward or :reply, defaults to :reply if not set
+    chain :formatted_for do |style|
+      @style = style
+    end
+
+    def style
+      @style || :reply # rubocop:disable RSpec/InstanceVariable
+    end
+
+    # sets expected privacy level
+    # @param [Boolean] defaults to false if not set
+    chain :ensuring_privacy do |flag|
+      @ensuring_privacy = flag
+    end
+
+    def ensure_privacy?
+      @ensuring_privacy || false # rubocop:disable RSpec/InstanceVariable
+    end
+
+    def confirm_content
+      case style
+      when :reply
+        confirm_content_reply
+      when :forward
+        confirm_content_forward
+      end
+    end
+
+    def confirm_content_reply
+      citation.has_text?(name) && citation.has_no_text?(email) && citation.has_text?(timestamp_reply)
+    end
+
+    def confirm_content_forward
+      if ensure_privacy?
+        citation.has_text?(name) && citation.has_no_text?(email) && citation.has_text?(timestamp_forward)
+      else
+        citation.has_text?(name) && citation.has_text?(email) && citation.has_text?(timestamp_forward)
+      end
+    end
+
+    def confirm_no_content
+      citation.has_no_text?(name) && citation.has_no_text?(email) && citation.has_no_text?(timestamp_reply) && citation.has_no_text?(timestamp_forward)
+    end
+
+    def confirm_style
+      case style
+      when :forward
+        citation.text.match?(/Subject(.+)\nDate(.+)/)
+      when :reply
+        citation.text.match?(/^On(.+)wrote:$/)
+      end
     end
 
     def citation
@@ -101,11 +169,18 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
       expected.created_by.email
     end
 
-    def timestamp
+    def timestamp_reply
       expected
         .created_at
         .in_time_zone('Europe/London')
         .strftime('%A, %B %1d, %Y, %1I:%M:%S %p')
+    end
+
+    def timestamp_forward
+      expected
+        .created_at
+        .in_time_zone('Europe/London')
+        .strftime('%m/%d/%Y %H:%M')
     end
   end
 end
