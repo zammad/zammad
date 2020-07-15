@@ -1575,39 +1575,43 @@ class BulkForm extends App.Controller
       if _.isEmpty(ticket.title)
         ticket.title = '-'
 
-      ticket.save(
-        done: (r) =>
-          @bulkCountIndex++
-
-          # reset form after save
-          if article
-            article.save(
-              fail: (r) =>
-                @log 'error', 'update article', r
-            )
-
-          # refresh view after all tickets are proceeded
-          if @bulkCountIndex == @bulkCount
-            @render()
-            @hide()
-
-            # fetch overview data again
-            App.Event.trigger('overview:fetch')
-
-        fail: (r) =>
-          @bulkCountIndex++
-          @log 'error', 'update ticket', r
-          App.Event.trigger 'notify', {
-            type: 'error'
-            msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
-          }
-      )
+      @saveTicketArticle(ticket, article)
 
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'
       msg: App.i18n.translateContent('Bulk action executed!')
     }
+
+  saveTicketArticle: (ticket, article) =>
+    ticket.save(
+      done: (r) =>
+        @bulkCountIndex++
+
+        # reset form after save
+        if article
+          article.save(
+            fail: (r) =>
+              @log 'error', 'update article', r
+          )
+
+        # refresh view after all tickets are proceeded
+        if @bulkCountIndex == @bulkCount
+          @render()
+          @hide()
+
+          # fetch overview data again
+          App.Event.trigger('overview:fetch')
+
+      fail: (r) =>
+        @bulkCountIndex++
+        @log 'error', 'update ticket', r
+        App.Event.trigger 'notify', {
+          type: 'error'
+          msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
+        }
+    )
+
 
 class App.OverviewSettings extends App.ControllerModal
   buttonClose: true
