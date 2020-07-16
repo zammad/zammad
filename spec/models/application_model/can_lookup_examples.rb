@@ -64,6 +64,13 @@ RSpec.shared_examples 'ApplicationModel::CanLookup' do
             end
           end
 
+          if described_class.type_for_attribute(attribute).type == :string
+            # https://github.com/zammad/zammad/issues/3121
+            it 'retrieves results from cache with value as symbol' do
+              expect(described_class.lookup(attribute => instance.send(attribute).to_sym)).to be_present
+            end
+          end
+
           context 'when called a second time' do
             before { described_class.lookup(attribute => instance.send(attribute)) }
 
