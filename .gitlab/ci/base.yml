@@ -59,7 +59,7 @@
 
 # selenium docker
 .docker_selenium: &docker_selenium
-  name: docker.io/elgalu/selenium:3.141.59-p32
+  name: docker.io/elgalu/selenium:latest
   alias: selenium
 
 # selenium docker
