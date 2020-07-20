@@ -116,6 +116,14 @@ RSpec.describe Ticket, type: :model do
           expect(origin_history['id_to']).to eq target_ticket.id
           expect(origin_history['id_from']).to eq ticket.id
         end
+
+        it 'sends ExternalSync.migrate' do
+          allow(ExternalSync).to receive(:migrate)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+
+          expect(ExternalSync).to have_received(:migrate).with('Ticket', ticket.id, target_ticket.id)
+        end
       end
     end
 
