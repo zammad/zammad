@@ -356,6 +356,9 @@ returns
         link_object_target_value: id
       )
 
+      # external sync references
+      ExternalSync.migrate('Ticket', id, target_ticket.id)
+
       # set state to 'merged'
       self.state_id = Ticket::State.lookup(name: 'merged').id
 

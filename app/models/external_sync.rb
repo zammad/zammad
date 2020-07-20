@@ -46,6 +46,15 @@ class ExternalSync < ApplicationModel
       result
     end
 
+    def migrate(object, from_id, to_id)
+      where(
+        object: object,
+        o_id:   from_id,
+      ).update_all( # rubocop:disable Rails/SkipsModelValidations
+        o_id: to_id,
+      )
+    end
+
     private
 
     def extract(remote_key, structure)

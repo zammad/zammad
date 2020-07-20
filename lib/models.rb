@@ -266,6 +266,9 @@ returns
         items_to_update.each_value(&:save!)
       end
     end
+
+    ExternalSync.migrate(object_name, object_id_primary, object_id_to_merge)
+
     true
   end
 end
