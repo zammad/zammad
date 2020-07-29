@@ -126,6 +126,24 @@ RSpec.describe Ticket::Article, type: :model do
             <a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com">foo</a>
           SANITIZED
         end
+
+        context 'when a sanitization attribute is present' do
+          # ATTENTION: We use `target` here because re-sanitization would change the order of attributes
+          let(:body) { '<a href="https://example.com" target="_blank">foo</a>' }
+
+          it 'adds sanitization attributes' do
+            expect(article.body).to eq(<<~SANITIZED.chomp)
+              <a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com">foo</a>
+            SANITIZED
+          end
+
+          context 'when changing an unrelated attribute' do
+
+            it "doesn't re-sanitizes the body" do
+              expect { article.update!(message_id: 'test') }.not_to change { article.reload.body }
+            end
+          end
+        end
       end
 
       context 'for all cases above, combined' do
