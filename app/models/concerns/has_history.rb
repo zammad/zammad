@@ -159,7 +159,7 @@ returns
 get history log for this object
 
   organization = Organization.find(123)
-  result = organization.history_get()
+  result = organization.history_get
 
 returns
 
