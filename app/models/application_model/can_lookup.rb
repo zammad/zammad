@@ -46,17 +46,42 @@ returns
 
     private
 
-    def find_and_save_to_cache_by(attr)
-      record = find_by(attr)
-      return nil if string_key?(attr.keys.first) && (record&.send(attr.keys.first) != attr.values.first.to_s) # enforce case-sensitivity on MySQL
-      return record if ActiveRecord::Base.connection.transaction_open? # rollbacks can invalidate cache entries
+    def find_and_save_to_cache_by(args)
+      attribute    = args.keys.first
+      lookup_value = args.values.first.to_s
 
-      cache_set(attr.values.first, record)
-      record
+      # rollbacks can invalidate cache entry
+      # therefore we don't write it
+      if ActiveRecord::Base.connection.transaction_open?
+        result = find_by(attribute => lookup_value)
+        # enforce case-sensitivity on MySQL
+        result = nil if !key_sensitive_match?(result, attribute, lookup_value)
+      else
+        # get the record via an `FOR UPDATE` DB lock inside of
+        # a transaction to ensure that we don't write obsolete
+        # data into the cache
+        transaction do
+          result = lock.find_by(attribute => lookup_value)
+          # enforce case-sensitivity on MySQL
+          if key_sensitive_match?(result, attribute, lookup_value)
+            # cache only if we got a key-sensitive match
+            cache_set(lookup_value, result)
+          else
+            # no key-sensitive match - no result
+            result = nil
+          end
+        end
+      end
+
+      result
     end
 
-    def string_key?(key)
-      type_for_attribute(key.to_s).type == :string
+    def key_sensitive_match?(record, attribute, lookup_value)
+      return false if record.blank?
+      return true if type_for_attribute(attribute.to_s).type != :string
+
+      record[attribute] == lookup_value
     end
+
   end
 end

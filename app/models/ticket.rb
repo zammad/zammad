@@ -1680,7 +1680,7 @@ result
   def build_sms_recipients_list(value, article)
     Array(value['recipient'])
       .each_with_object([]) { |recipient_type, sum| sum.concat(Array(sms_recipients_by_type(recipient_type, article))) }
-      .map { |user_or_id| User.lookup(id: user_or_id) }
+      .map { |user_or_id| user_or_id.is_a?(User) ? user_or_id : User.lookup(id: user_or_id) }
       .uniq(&:id)
       .select { |user| user.mobile.present? }
   end
