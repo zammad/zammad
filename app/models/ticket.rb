@@ -1308,6 +1308,9 @@ result
   def check_owner_active
     return true if Setting.get('import_mode')
 
+    # only change the owner for non closed Tickets for historical/reporting reasons
+    return true if state.present? && Ticket::StateType.lookup(id: state.state_type_id)&.name == 'closed'
+
     # return when ticket is unassigned
     return true if owner_id.blank?
     return true if owner_id == 1
