@@ -7,10 +7,12 @@
 # DB ForeignKey violation errors.
 # If a `:current_user_id` metadata argument is set the initial value for
 # UserInfo.current_user_id will be set to the arguments given value
+# if it's a Proc it will get evaluated
 RSpec.configure do |config|
 
   config.before(:each) do |example|
-    UserInfo.current_user_id = example.metadata[:current_user_id]
+    current_user_id = example.metadata[:current_user_id]
+    UserInfo.current_user_id = current_user_id.is_a?(Proc) ? instance_exec(&current_user_id) : current_user_id
   end
 
   config.after(:each) do |_example|
