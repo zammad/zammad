@@ -537,6 +537,47 @@ RSpec.describe Ticket, type: :model do
               .to change { ticket.reload.owner }.to(User.first)
           end
         end
+
+        context 'when the Ticket is closed' do
+
+          before do
+            ticket.update!(state: Ticket::State.lookup(name: 'closed'))
+          end
+
+          context 'if original owner is still an active agent belonging to ticket.group' do
+            it 'does not change' do
+              expect { create(:ticket_article, ticket: ticket) }
+                .not_to change { ticket.reload.owner }
+            end
+          end
+
+          context 'if original owner has left ticket.group' do
+            before { original_owner.groups = [] }
+
+            it 'does not change' do
+              expect { create(:ticket_article, ticket: ticket) }
+                .not_to change { ticket.reload.owner }
+            end
+          end
+
+          context 'if original owner has become inactive' do
+            before { original_owner.update(active: false) }
+
+            it 'does not change' do
+              expect { create(:ticket_article, ticket: ticket) }
+                .not_to change { ticket.reload.owner }
+            end
+          end
+
+          context 'if original owner has lost agent status' do
+            before { original_owner.roles = [create(:role)] }
+
+            it 'does not change' do
+              expect { create(:ticket_article, ticket: ticket) }
+                .not_to change { ticket.reload.owner }
+            end
+          end
+        end
       end
     end
 
