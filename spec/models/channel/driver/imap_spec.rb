@@ -23,4 +23,51 @@ RSpec.describe Channel::Driver::Imap do
       expect(result.dig(:result)).to eq 'ok'
     end
   end
+
+  describe '.parse_rfc822_headers' do
+    it 'parses simple header' do
+      expect(described_class.parse_rfc822_headers('Key: Value')).to have_key('Key').and(have_value('Value'))
+    end
+
+    it 'parses header with no white space' do
+      expect(described_class.parse_rfc822_headers('Key:Value')).to have_key('Key').and(have_value('Value'))
+    end
+
+    it 'parses multiline header' do
+      expect(described_class.parse_rfc822_headers("Key: Value\r\n2nd-key: 2nd-value"))
+        .to have_key('Key').and(have_value('Value')).and(have_key('2nd-key')).and(have_value('2nd-value'))
+    end
+
+    it 'parses value with semicolons' do
+      expect(described_class.parse_rfc822_headers('Key: Val:ue')).to have_key('Key').and(have_value('Val:ue'))
+    end
+
+    it 'parses key-only lines' do
+      expect(described_class.parse_rfc822_headers('Key')).to have_key('Key')
+    end
+
+    it 'handles empty line' do
+      expect { described_class.parse_rfc822_headers("Key: Value\r\n") }.not_to raise_error
+    end
+
+    it 'handles tabbed value' do
+      expect(described_class.parse_rfc822_headers("Key: \r\n\tValue")).to have_key('Key').and(have_value('Value'))
+    end
+  end
+
+  describe '.extract_rfc822_headers' do
+    it 'extracts header' do
+      object = Net::IMAP::FetchData.new :id, { 'RFC822.HEADER' => 'Key: Value' }
+      expect(described_class.extract_rfc822_headers(object)).to have_key('Key').and(have_value('Value'))
+    end
+
+    it 'returns nil when header attribute is missing' do
+      object = Net::IMAP::FetchData.new :id, { 'Another' => 'Key: Value' }
+      expect(described_class.extract_rfc822_headers(object)).to be_nil
+    end
+
+    it 'does not raise error when given nil' do
+      expect { described_class.extract_rfc822_headers(nil) }.not_to raise_error
+    end
+  end
 end
