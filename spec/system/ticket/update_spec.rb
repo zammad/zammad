@@ -170,14 +170,17 @@ RSpec.describe 'Ticket Update', type: :system do
     end
   end
 
-  # Issue #2469 - Add information "Ticket merged" to History
   context 'when merging tickets' do
-    it 'tickets history of both tickets should show the merge event' do
-      user = create :user
-      origin_ticket = create :ticket, group: group
-      target_ticket = create :ticket, group: group
-      origin_ticket.merge_to(ticket_id: target_ticket.id, user_id: user.id)
+    let!(:user) { create(:user) }
+    let!(:origin_ticket) { create :ticket, group: group }
+    let!(:target_ticket) { create :ticket, group: group }
 
+    before do
+      origin_ticket.merge_to(ticket_id: target_ticket.id, user_id: user.id)
+    end
+
+    # Issue #2469 - Add information "Ticket merged" to History
+    it 'tickets history of both tickets should show the merge event' do
       visit "#ticket/zoom/#{origin_ticket.id}"
       within(:active_content) do
         expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
@@ -198,6 +201,50 @@ RSpec.describe 'Ticket Update', type: :system do
         modal = find('.modal')
         expect(modal).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
         expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
+      end
+    end
+
+    # Issue #2960 - Ticket removal of merged / linked tickets doesn't remove references
+    context 'when the merged origin ticket is deleted' do
+      before do
+        origin_ticket.destroy
+      end
+
+      it 'shows the target ticket history' do
+        visit "#ticket/zoom/#{target_ticket.id}"
+        within(:active_content) do
+          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          click '.js-actions .dropdown-toggle'
+          click '.js-actions .dropdown-menu [data-type="ticket-history"]'
+        end
+
+        modal_ready
+
+        within('.modal-body') do
+          expect(page).to have_text "##{origin_ticket.number} #{origin_ticket.title}"
+        end
+      end
+    end
+
+    # Issue #2960 - Ticket removal of merged / linked tickets doesn't remove references
+    context 'when the merged target ticket is deleted' do
+      before do
+        target_ticket.destroy
+      end
+
+      it 'shows the origin history' do
+        visit "#ticket/zoom/#{origin_ticket.id}"
+        within(:active_content) do
+          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          click '.js-actions .dropdown-toggle'
+          click '.js-actions .dropdown-menu [data-type="ticket-history"]'
+        end
+
+        modal_ready
+
+        within('.modal-body') do
+          expect(page).to have_text "##{target_ticket.number} #{target_ticket.title}"
+        end
       end
     end
   end

@@ -20,6 +20,7 @@ class Ticket < ApplicationModel
   include Ticket::Assets
   include Ticket::SearchIndex
   include Ticket::Search
+  include Ticket::MergeHistory
 
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority

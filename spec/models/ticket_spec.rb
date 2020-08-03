@@ -81,7 +81,6 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
-      # Issue #2469 - Add information "Ticket merged" to History
       context 'when merging' do
         let(:merge_user) { create(:user) }
 
@@ -91,11 +90,12 @@ RSpec.describe Ticket, type: :model do
           # when creating the history entries
           target_ticket
           travel 5.minutes
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
         end
 
+        # Issue #2469 - Add information "Ticket merged" to History
         it 'creates history entries in both the origin ticket and the target ticket' do
-          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
-
           expect(target_ticket.history_get.size).to eq 2
 
           target_history = target_ticket.history_get.last
@@ -123,6 +123,24 @@ RSpec.describe Ticket, type: :model do
           ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
 
           expect(ExternalSync).to have_received(:migrate).with('Ticket', ticket.id, target_ticket.id)
+        end
+
+        # Issue #2960 - Ticket removal of merged / linked tickets doesn't remove references
+        context 'and deleting the origin ticket' do
+          it 'adds reference number and title to the target ticket' do
+            expect { ticket.destroy }
+              .to change { target_ticket.history_get.find { |elem| elem.fetch('type') == 'received_merge' }.dig('value_from') }
+              .to("##{ticket.number} #{ticket.title}")
+          end
+        end
+
+        # Issue #2960 - Ticket removal of merged / linked tickets doesn't remove references
+        context 'and deleting the target ticket' do
+          it 'adds reference number and title to the origin ticket' do
+            expect { target_ticket.destroy }
+              .to change { ticket.history_get.find { |elem| elem.fetch('type') == 'merged_into' }.dig('value_to') }
+              .to("##{target_ticket.number} #{target_ticket.title}")
+          end
         end
       end
     end
