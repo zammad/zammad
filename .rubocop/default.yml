@@ -5,6 +5,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - ./rubocop_zammad.rb
 
 inherit_from:
   - todo.yml

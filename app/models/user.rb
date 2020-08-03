@@ -1046,7 +1046,7 @@ try to find correct name
     raise Exceptions::UnprocessableEntity, 'out of office end is required' if out_of_office_end_at.blank?
     raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
     raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
-    raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+    raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.exists?(id: out_of_office_replacement_id)
 
     true
   end

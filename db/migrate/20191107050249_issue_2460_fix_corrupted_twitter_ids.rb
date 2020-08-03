@@ -1,6 +1,6 @@
 class Issue2460FixCorruptedTwitterIds < ActiveRecord::Migration[5.2]
   def up
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Channel.where(area: 'Twitter::Account').each do |channel|
 

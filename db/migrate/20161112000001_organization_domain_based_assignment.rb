@@ -1,7 +1,7 @@
 class OrganizationDomainBasedAssignment < ActiveRecord::Migration[4.2]
   def up
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     add_column :organizations, :domain, :string, limit: 250, null: true, default: ''
     add_column :organizations, :domain_assignment, :boolean, null: false, default: false

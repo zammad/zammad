@@ -4,7 +4,7 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
   def change
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     # remove wrong plural of ID columns
     ActiveRecord::Migration.rename_column :ticket_flags, :tickets_id, :ticket_id

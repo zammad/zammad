@@ -360,7 +360,7 @@ returns
 
   # check if min one is set to default true
   def min_one_check
-    if !Calendar.find_by(default: true)
+    if !Calendar.exists?(default: true)
       first = Calendar.order(:created_at, :id).limit(1).first
       return true if !first
 
@@ -376,7 +376,7 @@ returns
         sla.save!
         next
       end
-      if !Calendar.find_by(id: sla.calendar_id)
+      if !Calendar.exists?(id: sla.calendar_id)
         sla.calendar_id = default_calendar.id
         sla.save!
       end

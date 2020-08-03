@@ -693,7 +693,7 @@ process webhook messages from twitter
       @payload['direct_message_events'].each do |item|
         next if item['type'] != 'message_create'
 
-        next if Ticket::Article.find_by(message_id: item['id'])
+        next if Ticket::Article.exists?(message_id: item['id'])
 
         user = to_user_webhook(item['message_create']['sender_id'])
         ticket = to_ticket(item, user, channel.options[:sync][:direct_messages][:group_id], channel)
@@ -703,7 +703,7 @@ process webhook messages from twitter
 
     if @payload['tweet_create_events'].present?
       @payload['tweet_create_events'].each do |item|
-        next if Ticket::Article.find_by(message_id: item['id'])
+        next if Ticket::Article.exists?(message_id: item['id'])
 
         # check if it's mention
         group_id = nil

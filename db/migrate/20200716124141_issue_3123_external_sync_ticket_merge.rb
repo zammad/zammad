@@ -2,7 +2,7 @@ class Issue3123ExternalSyncTicketMerge < ActiveRecord::Migration[5.2]
   def change
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     merged_ticket_ids_with_external_sync.each do |id_from|
       id_to = merged_ticket_ids_map[id_from]

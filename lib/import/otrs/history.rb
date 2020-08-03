@@ -41,7 +41,7 @@ module Import
         # we perform further import
         # otherwise the following import logic (add) will
         # try to add the history attribute, too
-        sleep 1 until ::History::Attribute.find_by(name: name)
+        sleep 1 until ::History::Attribute.exists?(name: name)
         true
       end
     end

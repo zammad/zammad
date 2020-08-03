@@ -33,7 +33,7 @@ class Channel::Driver::Sms::Twilio
     Rails.logger.info "Receiving SMS frim recipient #{attr[:From]}"
 
     # prevent already created articles
-    if Ticket::Article.find_by(message_id: attr[:SmsMessageSid])
+    if Ticket::Article.exists?(message_id: attr[:SmsMessageSid])
       return ['application/xml; charset=UTF-8;', Twilio::TwiML::MessagingResponse.new.to_s]
     end
 

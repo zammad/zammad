@@ -2,7 +2,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     UserInfo.current_user_id = 1
     ObjectManager::Attribute.add(

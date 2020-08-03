@@ -2,7 +2,7 @@ class MaintenanceCheckmkWordingsOnSettings < ActiveRecord::Migration[5.2]
   def change
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.find_by(name: 'check_mk_integration').update!(
       title:       'Checkmk integration',

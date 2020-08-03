@@ -1,6 +1,6 @@
 class Issue2368AddIndicesToHistoriesAndTickets < ActiveRecord::Migration[5.1]
   def up
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     add_index :histories, :related_o_id if !index_exists?(:histories, :related_o_id)
     add_index :histories, :related_history_object_id if !index_exists?(:histories, :related_history_object_id)

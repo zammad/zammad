@@ -271,7 +271,7 @@ result
     end
 
     articles.each do |article|
-      next if Ticket::Article.find_by(message_id: article[:message_id])
+      next if Ticket::Article.exists?(message_id: article[:message_id])
 
       # set ticket state to open if not new
       ticket_state = get_state(page, post, ticket)

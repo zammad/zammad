@@ -2,7 +2,7 @@ class OutOfOffice2 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     if !ActiveRecord::Base.connection.column_exists?(:overviews, :out_of_office)
       add_column :overviews, :out_of_office, :boolean, null: false, default: false

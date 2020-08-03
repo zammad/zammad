@@ -705,7 +705,7 @@ returns
 
     # prevent multiple update
     if !params[:edited_message]
-      return if Ticket::Article.find_by(message_id: Telegram.message_id(params))
+      return if Ticket::Article.exists?(message_id: Telegram.message_id(params))
     end
 
     # update article

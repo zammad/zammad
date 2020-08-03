@@ -2,7 +2,7 @@ class Issue2541FixNotificationEmailWithoutBody < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     # there might be Job/Trigger selectors referencing the current user
     # that get e.g. validated in callbacks

@@ -1,6 +1,6 @@
 class Issue2608MissingTriggerPermission < ActiveRecord::Migration[5.2]
   def up
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Permission.create_if_not_exists(
       name:        'admin.trigger',

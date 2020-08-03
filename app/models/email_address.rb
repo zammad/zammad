@@ -63,7 +63,7 @@ check and if channel not exists reset configured channels for email addresses
   def check_if_channel_exists_set_inactive
 
     # set to active if channel exists
-    if channel_id && Channel.find_by(id: channel_id)
+    if channel_id && Channel.exists?(id: channel_id)
       self.active = true
       return true
     end

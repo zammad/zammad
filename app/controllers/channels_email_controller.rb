@@ -31,7 +31,7 @@ class ChannelsEmailController < ApplicationController
 
       email_address_ids.push email_address.id
       assets = email_address.assets(assets)
-      if !email_address.channel_id || !email_address.active || !Channel.find_by(id: email_address.channel_id)
+      if !email_address.channel_id || !email_address.active || !Channel.exists?(id: email_address.channel_id)
         not_used_email_address_ids.push email_address.id
       end
     end

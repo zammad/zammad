@@ -4,7 +4,7 @@
 class AddCountryAttributeToUsers < ActiveRecord::Migration[5.1]
   def up
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     # return if the country attribute already exists
     current_country_attribute = ObjectManager::Attribute.find_by(object_lookup_id: ObjectLookup.by_name('User'), name: 'country')

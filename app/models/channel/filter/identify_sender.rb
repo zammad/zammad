@@ -35,7 +35,7 @@ module Channel::Filter::IdentifySender
             items.each do |item|
 
               # skip if recipient is system email
-              next if EmailAddress.find_by(email: item.address.downcase)
+              next if EmailAddress.exists?(email: item.address.downcase)
 
               customer_user = user_create(
                 login:     item.address,

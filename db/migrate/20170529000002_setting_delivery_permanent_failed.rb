@@ -2,7 +2,7 @@ class SettingDeliveryPermanentFailed < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     setting = Setting.find_by(name: '0900_postmaster_filter_bounce_check')
     if setting

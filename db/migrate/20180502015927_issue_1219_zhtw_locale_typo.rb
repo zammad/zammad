@@ -3,7 +3,7 @@ class Issue1219ZhtwLocaleTypo < ActiveRecord::Migration[5.1]
   APPLICABLE_VERSION = Gem::Version.new('2.5.0')
 
   def up
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
     return if CURRENT_VERSION < APPLICABLE_VERSION
 
     if Locale.exists?(locale: 'zh-tw')
@@ -20,7 +20,7 @@ class Issue1219ZhtwLocaleTypo < ActiveRecord::Migration[5.1]
   end
 
   def down
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
     return if CURRENT_VERSION >= APPLICABLE_VERSION
 
     if Locale.exists?(locale: 'zj-tw')
