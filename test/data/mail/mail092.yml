@@ -1,0 +1,45 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: MAILER-DAEMON <postmaster@example.com> (Mail Delivery System)
+from_email: postmaster@example.com
+from_display_name: MAILER-DAEMON
+to: receiver@example.org
+subject: Undelivered Mail Returned to Sender
+body: |
+  This is the mail system at Centrum Holdings
+
+  I'm sorry to have to inform you that your message could not
+  be delivered to one or more recipients. It's attached below.
+
+  For further assistance, please contact your system administrator.
+
+  If you do so, please include this problem report. You can
+  delete your own text from the attached returned message.
+
+                     The mail system
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; mail.example.com
+    X-Postfix-Queue-ID: 242788039D8C
+    X-Postfix-Sender: rfc822; receiver@example.org
+    Arrival-Date: Wed, 22 Jul 2020 13:43:06 +0200 (CEST)
+
+    Final-Recipient: rfc822; receiver@example.org
+    Action: failed
+    Status: 5.2.2
+    Diagnostic-Code: X-Postfix; Mailbox is full
+  filename: Delivery report.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Content-Description: Delivery report
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: ''
+  filename: Undelivered Message.eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Content-Description: Undelivered Message
+    Mime-Type: message/rfc822
+    Charset: UTF-8

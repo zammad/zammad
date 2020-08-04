@@ -709,11 +709,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       end
     end
 
+    file_body = String.new(file.body.to_s)
+
     # generate file name based on content type
     if filename.blank? && headers_store['Content-Type'].present? && headers_store['Content-Type'].match?(%r{^message/rfc822}i)
       begin
         parser = Channel::EmailParser.new
-        mail_local = parser.parse(file.body.to_s)
+        mail_local = parser.parse(file_body)
         filename = if mail_local[:subject].present?
                      "#{mail_local[:subject]}.eml"
                    elsif headers_store['Content-Description'].present?
@@ -813,7 +815,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     headers_store.delete('Content-Disposition')
 
     attach = {
-      data:        file.body.to_s,
+      data:        file_body,
       filename:    filename,
       preferences: headers_store,
     }
