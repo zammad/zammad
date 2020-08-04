@@ -230,8 +230,9 @@ jQuery.fn.extend( {
     var rcheckableType = ( /^(?:checkbox|radio)$/i );
     return this.map( function() {
 
-      // Can add propHook for "elements" to filter or add form elements
-      var elements = jQuery.prop( this, "elements" );
+      // We dont use jQuery.prop( this, "elements" ); here anymore
+      // because it did not work out for IE 11
+      var elements = $(this).find('*').filter(':input');
       return elements ? jQuery.makeArray( elements ) : this;
     } )
     .filter( function() {
