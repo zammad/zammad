@@ -11,4 +11,37 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
 
   it { is_expected.to belong_to(:answer) }
   it { is_expected.to belong_to(:kb_locale) }
+
+  describe '.search' do
+    include_context 'basic Knowledge Base'
+
+    shared_examples 'verify given search backend' do |trait:, user_id:, is_visible:, elasticsearch:|
+      prefix = is_visible ? 'lists' : 'does not list'
+
+      it "#{prefix} #{trait} answer to #{user_id} when ES=#{elasticsearch}", searchindex: elasticsearch do
+        user   = create(user_id)
+        object = create(:knowledge_base_answer, trait, knowledge_base: knowledge_base)
+        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+
+        expect(described_class.search({ query: object.translations.first.title, current_user: user }))
+          .to is_visible ? be_present : be_blank
+      end
+    end
+
+    shared_examples 'verify given user' do |trait:, user_id:, is_visible:|
+      include_examples 'verify given search backend', trait: trait, user_id: user_id, is_visible: is_visible, elasticsearch: true
+      include_examples 'verify given search backend', trait: trait, user_id: user_id, is_visible: is_visible, elasticsearch: false
+    end
+
+    shared_examples 'verify given permissions' do |trait:, admin:, agent:, customer:|
+      include_examples 'verify given user', trait: trait, user_id: :admin,    is_visible: admin
+      include_examples 'verify given user', trait: trait, user_id: :agent,    is_visible: agent
+      include_examples 'verify given user', trait: trait, user_id: :customer, is_visible: customer
+    end
+
+    include_examples 'verify given permissions', trait: :published, admin: true, agent: true,  customer: false
+    include_examples 'verify given permissions', trait: :internal,  admin: true, agent: true,  customer: false
+    include_examples 'verify given permissions', trait: :draft,     admin: true, agent: false, customer: false
+    include_examples 'verify given permissions', trait: :archived,  admin: true, agent: false, customer: false
+  end
 end

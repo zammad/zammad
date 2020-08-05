@@ -292,6 +292,9 @@ Layout/MultilineMethodCallIndentation:
   Include:
     - "**/*_spec.rb"
 
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'
