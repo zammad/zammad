@@ -3,14 +3,29 @@ FactoryBot.define do
     transient do
       add_translation { true }
       translation_traits { [] }
+      knowledge_base { nil }
     end
 
-    category { create(:knowledge_base_category) }
+    category { create(:knowledge_base_category, { knowledge_base: knowledge_base }.compact) }
 
     before(:create) do |answer, context|
       next if answer.translations.present?
 
       answer.translations << build('knowledge_base/answer/translation', *context.translation_traits, answer: answer)
+    end
+
+    trait :draft # empty placeholder for better readability
+
+    trait :internal do
+      internal_at { 1.week.ago }
+    end
+
+    trait :published do
+      published_at { 1.week.ago }
+    end
+
+    trait :archived do
+      archived_at { 1.week.ago }
     end
 
     trait :with_video do

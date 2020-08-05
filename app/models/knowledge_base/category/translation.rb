@@ -39,7 +39,7 @@ class KnowledgeBase::Category::Translation < ApplicationModel
   end
 
   class << self
-    def search_fallback(query, scope = nil)
+    def search_fallback(query, scope = nil, options: {})
       fields = %w[title]
 
       output = where_or_cis(fields, query)

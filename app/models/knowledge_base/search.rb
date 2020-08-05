@@ -16,7 +16,8 @@ class KnowledgeBase
           limit:    params[:limit] || 10,
           from:     params[:offset] || 0,
           sort_by:  search_get_sort_by(params, 'updated_at'),
-          order_by: search_get_order_by(params, 'desc')
+          order_by: search_get_order_by(params, 'desc'),
+          user:     current_user
         }
 
         kb_locale = KnowledgeBase::Locale.preferred(current_user, KnowledgeBase.first)
@@ -33,10 +34,10 @@ class KnowledgeBase
       def search_es(query, kb_locale, options)
         options[:query_extension] = { bool: { filter: { term: { kb_locale_id: kb_locale.id } } } }
 
-        SearchIndexBackend
-          .search(query, name, options)
-          .map { |item| lookup(id: item[:id]) }
-          .compact
+        es_response = SearchIndexBackend.search(query, name, options)
+        es_response = search_es_filter(es_response, query, kb_locale, options) if defined? :search_es_filter
+
+        es_response.map { |item| lookup(id: item[:id]) }.compact
       end
 
       def search_sql(query, kb_locale, options)
@@ -46,9 +47,9 @@ class KnowledgeBase
         # - stip out * we already search for *query* -
         query.delete! '*'
 
-        search_fallback("%#{query}%")
+        search_fallback("%#{query}%", options: options)
           .where(kb_locale: kb_locale)
-          .order(order_sql)
+          .order(Arel.sql(order_sql))
           .offset(options[:from])
           .limit(options[:limit])
           .to_a

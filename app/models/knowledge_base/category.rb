@@ -93,7 +93,7 @@ class KnowledgeBase::Category < ApplicationModel
   def internal_content?(kb_locale = nil)
     scope = self_with_children_answers.internal
 
-    scope = scope.localed(kb_locale) if kb_locale
+    scope = scope.localed(kb_locale.system_locale) if kb_locale
 
     scope.any?
   end
