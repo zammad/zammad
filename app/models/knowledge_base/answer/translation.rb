@@ -96,12 +96,32 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
       }
     end
 
-    def search_fallback(query, scope = nil)
+    def search_es_filter(es_response, _query, kb_locale, options)
+      return es_response if options[:user]&.permissions?('knowledge_base.editor')
+
+      answer_translations_id = es_response.pluck(:id)
+
+      allowed_answer_translation_ids = KnowledgeBase::Answer
+        .internal
+        .joins(:translations)
+        .where(knowledge_base_answer_translations: { id: answer_translations_id, kb_locale_id: kb_locale.id })
+        .pluck('knowledge_base_answer_translations.id')
+
+      es_response.filter { |elem| allowed_answer_translation_ids.include? elem[:id].to_i }
+    end
+
+    def search_fallback(query, scope = nil, options: {})
       fields = %w[title]
       fields << KnowledgeBase::Answer::Translation::Content.arel_table[:body]
 
       output = where_or_cis(fields, query)
                .joins(:content)
+
+      if !options[:user]&.permissions?('knowledge_base.editor')
+        answer_ids = KnowledgeBase::Answer.internal.pluck(:id)
+
+        output = output.where(answer_id: answer_ids)
+      end
 
       if scope.present?
         output = output

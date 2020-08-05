@@ -12,6 +12,18 @@ FactoryBot.define do
 
       category.translations << create('knowledge_base/category/translation', category: category)
     end
+
+    trait :empty # empty placeholder for better readability
+
+    %i[published internal draft archived].each do |state|
+      trait "containing_#{state}" do
+        after(:create) do |obj|
+          create(:knowledge_base_answer, state, parent: obj)
+
+          obj.reload
+        end
+      end
+    end
   end
 
   factory 'kb_category_with_tree', parent: 'knowledge_base/category' do

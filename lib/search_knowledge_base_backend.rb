@@ -19,7 +19,7 @@ class SearchKnowledgeBaseBackend
     raw_results = if SearchIndexBackend.enabled?
                     SearchIndexBackend.search(query, indexes, options)
                   else
-                    search_fallback(query, indexes, user)
+                    search_fallback(query, indexes, { user: user })
                   end
 
     if (limit = @params.fetch(:limit, nil))
@@ -36,10 +36,10 @@ class SearchKnowledgeBaseBackend
       .flatten
   end
 
-  def search_fallback_for_index(query, index, _options)
+  def search_fallback_for_index(query, index, options)
     index
       .constantize
-      .search_fallback("%#{query}%", @cached_scope_ids)
+      .search_fallback("%#{query}%", @cached_scope_ids, options: options)
       .where(kb_locale: kb_locales)
       .pluck(:id)
       .map { |id| { id: id, type: index } }

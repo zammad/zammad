@@ -277,3 +277,6 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   Include:
     - "**/*_spec.rb"
+
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
