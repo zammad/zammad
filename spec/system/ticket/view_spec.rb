@@ -87,7 +87,7 @@ RSpec.describe 'Ticket views', type: :system do
     end
   end
 
-  context 'bulk note', authenticated_as: :user do
+  context 'bulk note', authenticated: -> { user } do
     let(:group)    { create :group }
     let(:user)     { create :admin, groups: [group] }
     let!(:ticket1) { create(:ticket, state_name: 'open', owner: user, group: group) }
