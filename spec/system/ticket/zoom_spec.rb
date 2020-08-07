@@ -2,19 +2,20 @@ require 'rails_helper'
 
 RSpec.describe 'Ticket zoom', type: :system do
 
-  describe 'owner auto-assignment' do
+  describe 'owner auto-assignment', authenticated_as: :authenticate do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), state: Ticket::State.find_by(name: 'new')) }
     let!(:session_user) { User.find_by(login: 'master@example.com') }
 
     context 'for agent disabled' do
-      before do
+      def authenticate
         Setting.set('ticket_auto_assignment', false)
         Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
         Setting.set('ticket_auto_assignment_user_ids_ignore', [])
+
+        true
       end
 
       it 'do not assign ticket to current session user' do
-        refresh
         visit "#ticket/zoom/#{ticket.id}"
 
         within(:active_content) do
@@ -27,14 +28,16 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'for agent enabled' do
-      before do
+      def authenticate
         Setting.set('ticket_auto_assignment', true)
         Setting.set('ticket_auto_assignment_selector', { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } })
+        Setting.set('ticket_auto_assignment_user_ids_ignore', setting_user_ids_ignore) if defined?(setting_user_ids_ignore)
+
+        true
       end
 
       context 'with empty "ticket_auto_assignment_user_ids_ignore"' do
         it 'assigns ticket to current session user' do
-          refresh
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -47,10 +50,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with "ticket_auto_assignment_user_ids_ignore" (as integer)' do
-        it 'assigns ticket not to current session user' do
-          Setting.set('ticket_auto_assignment_user_ids_ignore', session_user.id)
+        let(:setting_user_ids_ignore) { session_user.id }
 
-          refresh
+        it 'assigns ticket not to current session user' do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -63,10 +65,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with "ticket_auto_assignment_user_ids_ignore" (as string)' do
-        it 'assigns ticket not to current session user' do
-          Setting.set('ticket_auto_assignment_user_ids_ignore', session_user.id.to_s)
+        let(:setting_user_ids_ignore) { session_user.id.to_s }
 
-          refresh
+        it 'assigns ticket not to current session user' do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -79,10 +80,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with "ticket_auto_assignment_user_ids_ignore" (as [integer])' do
-        it 'assigns ticket not to current session user' do
-          Setting.set('ticket_auto_assignment_user_ids_ignore', [session_user.id])
+        let(:setting_user_ids_ignore) { [session_user.id] }
 
-          refresh
+        it 'assigns ticket not to current session user' do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -95,10 +95,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with "ticket_auto_assignment_user_ids_ignore" (as [string])' do
-        it 'assigns ticket not to current session user' do
-          Setting.set('ticket_auto_assignment_user_ids_ignore', [session_user.id.to_s])
+        let(:setting_user_ids_ignore) { [session_user.id.to_s] }
 
-          refresh
+        it 'assigns ticket not to current session user' do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -111,10 +110,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with "ticket_auto_assignment_user_ids_ignore" and other user ids' do
-        it 'assigns ticket to current session user' do
-          Setting.set('ticket_auto_assignment_user_ids_ignore', [99_999, 999_999])
+        let(:setting_user_ids_ignore) { [99_999, 999_999] }
 
-          refresh
+        it 'assigns ticket to current session user' do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
@@ -207,13 +205,19 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'delete article', authenticated_as: :user do
-    let(:admin)       { create :admin, groups: [Group.first] }
-    let(:agent)       { create :agent, groups: [Group.first] }
-    let(:other_agent) { create :agent, groups: [Group.first] }
+  describe 'delete article', authenticated_as: :authenticate do
+    let(:group)       { Group.first }
+    let(:admin)       { create :admin, groups: [group] }
+    let(:agent)       { create :agent, groups: [group] }
+    let(:other_agent) { create :agent, groups: [group] }
     let(:customer)    { create :customer }
-    let(:ticket)      { create :ticket, group: agent.groups.first, customer: customer }
     let(:article)     { send(item) }
+
+    def authenticate
+      Setting.set('ui_ticket_zoom_article_delete_timeframe', setting_delete_timeframe) if defined?(setting_delete_timeframe)
+      article
+      user
+    end
 
     def article_communication
       create_ticket_article(sender_name: 'Agent', internal: false, type_name: 'email', updated_by: customer)
@@ -244,10 +248,13 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     def create_ticket_article(sender_name:, internal:, type_name:, updated_by:)
+      UserInfo.current_user_id = updated_by.id
+
+      ticket = create :ticket, group: group, customer: customer
+
       create(:ticket_article,
              sender_name: sender_name, internal: internal, type_name: type_name, ticket: ticket,
              body: "to be deleted #{offset} #{item}",
-             updated_by_id: updated_by.id, created_by_id: updated_by.id,
              created_at: offset.ago, updated_at: offset.ago)
     end
 
@@ -258,13 +265,11 @@ RSpec.describe 'Ticket zoom', type: :system do
         let(:offset) { 0.minutes }
 
         it 'succeeds' do
-          refresh # make sure user roles are loaded
-
           ensure_websocket do
-            visit "ticket/zoom/#{ticket.id}"
+            visit "ticket/zoom/#{article.ticket.id}"
           end
 
-          within :active_ticket_article, article, wait: 15 do
+          within :active_ticket_article, article do
             click '.js-ArticleAction[data-type=delete]'
           end
 
@@ -280,18 +285,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'verifying permissions matrix' do
       shared_examples 'according to permission matrix' do |item:, expects_visible:, offset:, description:|
         context "looking at #{description} #{item}" do
-          let(:item) { item }
-          let!(:article) {  send(item) }
-
-          let(:offset) { offset }
+          let(:item)    { item }
+          let(:offset)  { offset }
           let(:matcher) { expects_visible ? :have_css : :have_no_css }
 
           it expects_visible ? 'delete button is visible' : 'delete button is not visible' do
-            refresh # make sure user roles are loaded
+            visit "ticket/zoom/#{article.ticket.id}"
 
-            visit "ticket/zoom/#{ticket.id}"
-
-            within :active_ticket_article, article, wait: 15 do
+            within :active_ticket_article, article do
               expect(page).to send(matcher, '.js-ArticleAction[data-type=delete]', wait: 0)
             end
           end
@@ -374,7 +375,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with custom offset' do
-        before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 6000 }
+        let(:setting_delete_timeframe) { 6_000 }
 
         context 'as admin' do
           let(:user) { admin }
@@ -392,7 +393,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'with timeframe as 0' do
-        before { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 0 }
+        let(:setting_delete_timeframe) { 0 }
 
         context 'as agent' do
           let(:user) { agent }
@@ -403,7 +404,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'button is hidden on the go' do
-      before         { Setting.set 'ui_ticket_zoom_article_delete_timeframe', 5 }
+      let(:setting_delete_timeframe) { 5 }
 
       let(:user)     { agent }
       let(:item)     { 'article_note_self' }
@@ -411,13 +412,11 @@ RSpec.describe 'Ticket zoom', type: :system do
       let(:offset)   { 0.seconds }
 
       it 'successfully' do
-        refresh # make sure user roles are loaded
-
-        visit "ticket/zoom/#{ticket.id}"
+        visit "ticket/zoom/#{article.ticket.id}"
 
         within :active_ticket_article, article do
           find '.js-ArticleAction[data-type=delete]' # make sure delete button did show up
-          expect(page).to have_no_css('.js-ArticleAction[data-type=delete]', wait: 15)
+          expect(page).to have_no_css('.js-ArticleAction[data-type=delete]')
         end
       end
     end
