@@ -164,6 +164,43 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
       end
+
+      context 'when email contains x-headers' do
+        let(:raw_mail) { <<~RAW.chomp }
+          From: foo@bar.com
+          To: baz@qux.net
+          Subject: Foo
+          X-Zammad-Ticket-priority: 3 high
+
+          Lorem ipsum dolor
+        RAW
+
+        context 'when channel is not trusted' do
+          let(:channel) { create(:channel, options: { inbound: { trusted: false } }) }
+
+          it 'does not change the priority of the ticket (no channel)' do
+            described_class.new.process({}, raw_mail)
+
+            expect(Ticket.last.priority.name).to eq('2 normal')
+          end
+
+          it 'does not change the priority of the ticket (untrusted)' do
+            described_class.new.process(channel, raw_mail)
+
+            expect(Ticket.last.priority.name).to eq('2 normal')
+          end
+        end
+
+        context 'when channel is trusted' do
+          let(:channel) { create(:channel, options: { inbound: { trusted: true } }) }
+
+          it 'does not change the priority of the ticket' do
+            described_class.new.process(channel, raw_mail)
+
+            expect(Ticket.last.priority.name).to eq('3 high')
+          end
+        end
+      end
     end
 
     describe 'associating emails to existing tickets' do

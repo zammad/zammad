@@ -6,7 +6,7 @@ module Channel::Filter::Trusted
   def self.run(channel, mail)
 
     # check if trust x-headers
-    if !channel[:trusted]
+    if !trusted(channel)
       mail.each_key do |key|
         next if !key.match?(/^x-zammad/i)
 
@@ -25,5 +25,12 @@ module Channel::Filter::Trusted
       mail.delete(key.to_sym)
     end
 
+  end
+
+  def self.trusted(channel)
+    return true if channel[:trusted]
+    return true if channel.instance_of?(Channel) && channel.options[:inbound][:trusted]
+
+    false
   end
 end
