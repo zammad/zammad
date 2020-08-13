@@ -17,12 +17,14 @@ RSpec.describe SecureMailing::SMIME do
 
   let(:ca_certificate_subject) { '/emailAddress=ca@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com' }
 
+  let(:content_type) { 'text/plain' }
+
   def build_mail
     Channel::EmailBuild.build(
       from:         sender_email_address,
       to:           recipient_email_address,
       body:         raw_body,
-      content_type: 'text/plain',
+      content_type: content_type,
       security:     security_preferences
     )
   end
@@ -91,6 +93,35 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           it_behaves_like 'HttpLog writer', 'failed'
+        end
+
+        context 'when message is 7bit or 8bit encoded' do
+
+          let(:mail) do
+            smime_mail = build_mail
+
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          context 'when Content-Type is text/plain' do
+            let(:raw_body) { "\r\n\r\n@john.doe, now known as John Dóe has accepted your invitation to join the Administrator / htmltest project.\r\n\r\nhttp://169.254.169.254:3000/root/htmltest\r\n\r\n-- \r\nYou're receiving this email because of your account on 169.254.169.254.\r\n\r\n\r\n\r\n" }
+
+            it 'verifies' do
+              expect(mail['x-zammad-article-preferences']['security']['sign']['success']).to be true
+            end
+          end
+
+          context 'when Content-Type is text/html' do
+            let(:content_type) { 'text/html' }
+            let(:raw_body) { "<div><ul><li><p>an \nexample „Text“ with ümläütß. </p></li></ul></div>" }
+
+            it 'verifies' do
+              expect(mail['x-zammad-article-preferences']['security']['sign']['success']).to be true
+            end
+          end
         end
       end
 

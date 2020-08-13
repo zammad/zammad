@@ -8,6 +8,8 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
   def process
     return if !process?
 
+    @mail = workaround_mail_bit_encoding_issue(@mail)
+
     if @security[:sign][:success] && @security[:encryption][:success]
       processed = encrypt(signed)
       log('sign', 'success')
@@ -28,6 +30,24 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
     return false if @security[:type] != 'S/MIME'
 
     @security[:sign][:success] || @security[:encryption][:success]
+  end
+
+  # S/MIME signing fails because of message encoding #3147
+  # workaround for https://github.com/mikel/mail/issues/1190
+  def workaround_mail_bit_encoding_issue(mail)
+
+    # change 7bit/8bit encoding to binary so that
+    # base64 will be used to encode the content
+    if mail.body.encoding.include?('bit')
+      mail.body.encoding = :binary
+    end
+
+    # go into recursion for nested parts
+    mail.parts&.each do |part|
+      workaround_mail_bit_encoding_issue(part)
+    end
+
+    mail
   end
 
   def overwrite_mail(processed)
