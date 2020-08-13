@@ -812,4 +812,69 @@ RSpec.describe 'Ticket zoom', type: :system do
       include_examples 'verify linking'
     end
   end
+
+  describe 'forwarding article with an image' do
+    let(:ticket_article_body) do
+      filename = 'squares.png'
+      file     = File.binread(Rails.root.join("spec/fixtures/image/#{filename}"))
+      ext      = File.extname(filename)[1...]
+      base64   = Base64.encode64(file).delete("\n")
+
+      "<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/#{ext};base64,#{base64}\\\"><br>"
+    end
+
+    def current_ticket
+      Ticket.find current_url.split('/').last
+    end
+
+    def create_ticket
+      visit '#ticket/create'
+
+      within :active_content do
+        find('[data-type=email-out]').click
+
+        find('[name=title]').fill_in with: 'Title'
+        find('[name=customer_id_completion]').fill_in with: 'customer@example.com'
+        find('[name=group_id]').select 'Users'
+        find(:richtext).execute_script "this.innerHTML = \"#{ticket_article_body}\""
+        find('.js-submit').click
+      end
+
+      await_empty_ajax_queue
+    end
+
+    def forward
+      within :active_content do
+        click '.js-ArticleAction[data-type=emailForward]'
+        fill_in 'To', with: 'customer@example.com'
+        find('.js-submit').click
+      end
+
+      await_empty_ajax_queue
+    end
+
+    def images_identical?(image_a, image_b)
+      return false if image_a.height != image_b.height
+      return false if image_a.width != image_b.width
+
+      image_a.height.times do |y|
+        image_a.row(y).each_with_index do |pixel, x|
+          return false unless pixel == image_b[x, y]
+        end
+      end
+
+      true
+    end
+
+    it 'keeps image intact' do
+      create_ticket
+      forward
+
+      images = current_ticket.articles.map do |article|
+        ChunkyPNG::Image.from_string article.attachments.first.content
+      end
+
+      expect(images_identical?(images.first, images.second)).to be(true)
+    end
+  end
 end

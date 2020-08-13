@@ -203,6 +203,9 @@ group :development, :test do
 
   # handle deprecations in core and addons
   gem 'deprecation_toolkit'
+
+  # image comparison in tests
+  gem 'chunky_png'
 end
 
 # Want to extend Zammad with additional gems?

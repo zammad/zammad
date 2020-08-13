@@ -1222,7 +1222,7 @@ class App.Utils
     canvas.width = img.width
     canvas.height = img.height
     ctx = canvas.getContext('2d')
-    ctx.drawImage(img, 0, 0)
+    ctx.drawImage(img, 0, 0, img.width, img.height)
     try
       data = canvas.toDataURL('image/png')
       params.success(img, data) if params.success
@@ -1242,12 +1242,11 @@ class App.Utils
       return if !src? or src.match(/^(data|cid):/i)
       App.Utils._htmlImage2DataUrlAsync(@,
         success: (img, data) ->
-          $img = $(img)
-          $img.attr('src', data)
-          $img.css('max-width','100%')
-          params.success(img, data) if params.success
+          element.attr('src', data)
+          element.css('max-width','100%')
+          params.success(element, data) if params.success
         fail: (img) ->
-          img.remove()
+          element.remove()
           params.fail(img) if params.fail
       )
     )
@@ -1283,7 +1282,7 @@ class App.Utils
     imageCache = new Image()
     imageCache.crossOrigin = 'anonymous'
     imageCache.onload = ->
-      App.Utils._htmlImage2DataUrl(originalImage, params)
+      App.Utils._htmlImage2DataUrl(imageCache, params)
     imageCache.onerror = ->
       App.Log.notice('Utils', "Unable to load image from #{originalImage.src}")
       params.fail(originalImage) if params.fail
