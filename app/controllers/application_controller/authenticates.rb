@@ -146,11 +146,11 @@ module ApplicationController::Authenticates
               login = request.env['REMOTE_USER'] ||
                       request.env['HTTP_REMOTE_USER'] ||
                       request.headers['X-Forwarded-User']
-
               User.lookup(login: login&.downcase)
             end
 
-    raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER' if !user
+    raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER' if login.blank?
+    raise Exceptions::NotAuthorized, "No such user #{login} from ENV REMOTE_USER" if !user
 
     session.delete(:switched_from_user_id)
     authentication_check_prerequesits(user, 'SSO', {})
