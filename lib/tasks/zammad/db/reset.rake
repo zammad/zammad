@@ -7,7 +7,7 @@ namespace :zammad do
 
       # we loop over each dependent task to be able to
       # execute them and their prerequisites multiple times (in tests)
-      # there is no way in rake to achive that
+      # there is no way in rake to achieve that
       %w[db:drop:_unsafe db:create db:schema:load db:seed].each do |task|
 
         $stdout = StringIO.new if task == 'db:schema:load'.freeze
@@ -16,10 +16,10 @@ namespace :zammad do
         Rake::Task[task].invoke
       ensure
         $stdout = STDOUT
-
       end
 
       ActiveRecord::Base.connection.reconnect!
+      ActiveRecord::Base.descendants.each(&:reset_column_information)
       Cache.clear
       Setting.reload
     end
