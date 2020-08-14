@@ -135,7 +135,7 @@ module ApplicationController::Authenticates
 
   def authenticate_with_password
     user = User.authenticate(params[:username], params[:password])
-    raise Exceptions::NotAuthorized, 'Wrong Username or Password combination.' if !user
+    raise_unified_login_error if !user
 
     session.delete(:switched_from_user_id)
     authentication_check_prerequesits(user, 'session', {})
@@ -158,7 +158,8 @@ module ApplicationController::Authenticates
 
   def authentication_check_prerequesits(user, auth_type, auth_param)
     raise Exceptions::NotAuthorized, 'Maintenance mode enabled!' if in_maintenance_mode?(user)
-    raise Exceptions::NotAuthorized, 'User is inactive!' if !user.active
+
+    raise_unified_login_error if !user.active
 
     if auth_param[:permission]
       ActiveSupport::Deprecation.warn("Parameter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
@@ -172,5 +173,9 @@ module ApplicationController::Authenticates
     user_device_log(user, auth_type)
     logger.debug { "#{auth_type} for '#{user.login}'" }
     user
+  end
+
+  def raise_unified_login_error
+    raise Exceptions::NotAuthorized, 'Login failed. Have you double-checked your credentials and completed the email verification step?'
   end
 end
