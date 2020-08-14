@@ -515,7 +515,7 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => $(window).on 'click.ticket-zoom-textarea', @closeTextarea
+        complete: => $(window).off 'click.ticket-zoom-textarea'.on 'click.ticket-zoom-textarea', @closeTextarea
 
     @textBubble.velocity
       properties:
