@@ -2,6 +2,7 @@
 require_dependency 'karma/user'
 
 class User < ApplicationModel
+  include CanBeAuthorized
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
@@ -22,6 +23,7 @@ class User < ApplicationModel
   has_many                :tokens,         after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
   belongs_to              :organization,   inverse_of: :members, optional: true
+  has_many                :permissions,    -> { where(roles: { active: true }, active: true) }, through: :roles
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_validation :check_mail_delivery_failed, on: :update
@@ -41,6 +43,8 @@ class User < ApplicationModel
                                      :image,
                                      :image_source,
                                      :preferences
+
+  association_attributes_ignored :permissions
 
   history_attributes_ignored :password,
                              :last_login,
@@ -377,69 +381,6 @@ returns
 
 =begin
 
-get all permissions of user
-
-  user = User.find(123)
-  user.permissions
-
-returns
-
-  {
-    'permission.key' => true,
-    # ...
-  }
-
-=end
-
-  def permissions
-    ::Permission.joins(roles: :users)
-                .where(users: { id: id }, roles: { active: true }, active: true)
-                .pluck(:name, :preferences)
-                .each_with_object({}) do |(name, preferences), hash|
-                  hash[name] = true if preferences['selectable'] != false
-                end
-  end
-
-=begin
-
-true or false for permission
-
-  user = User.find(123)
-  user.permissions?('permission.key') # access to certain permission.key
-  user.permissions?(['permission.key1', 'permission.key2']) # access to permission.key1 or permission.key2
-
-  user.permissions?('permission') # access to all sub keys
-
-  user.permissions?('permission.*') # access if one sub key access exists
-
-returns
-
-  true|false
-
-=end
-
-  def permissions?(names)
-    base_query = ::Permission.joins(roles: :users)
-                             .where(users: { id: id })
-                             .where(roles: { active: true })
-                             .where(active: true)
-
-    permission_names = Array(names).reject { |name| ::Permission.lookup(name: name)&.active == false }
-    verbatim_names   = permission_names.flat_map { |name| ::Permission.with_parents(name) }.uniq
-    wildcard_names   = permission_names.select { |name| name.end_with?('.*') }
-                                       .map { |name| name.sub('.*', '.%') }
-
-    permissions = base_query.where(name: verbatim_names)
-
-    wildcard_names.each do |name|
-      permissions = permissions.or(base_query.where('permissions.name LIKE ?', name))
-    end
-
-    permissions.exists?
-  end
-
-=begin
-
 returns all accessable permission ids of user
 
   user = User.find(123)
@@ -454,7 +395,7 @@ returns
   def permissions_with_child_ids
     where = ''
     where_bind = [true]
-    permissions.each_key do |permission_name|
+    permissions.pluck(:name).each do |permission_name|
       where += ' OR ' if where != ''
       where += 'permissions.name = ? OR permissions.name LIKE ?'
       where_bind.push permission_name

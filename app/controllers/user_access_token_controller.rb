@@ -32,7 +32,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
                   .order(updated_at: :desc, label: :asc)
 
     base_query       = Permission.order(:name).where(active: true)
-    permission_names = current_user.permissions.keys
+    permission_names = current_user.permissions.pluck(:name)
     ancestor_names   = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq -
                        permission_names
     descendant_names = permission_names.map { |name| "#{name}.%" }

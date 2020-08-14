@@ -374,44 +374,24 @@ RSpec.describe User, type: :model do
       let(:role) { user.roles.first }
       let(:permissions) { role.permissions }
 
-      it 'returns a hash of <permissions> => true' do
-        expect(user.permissions).to eq(permissions.each.with_object({}) { |p, hash| hash[p.name] = true })
-      end
-
-      shared_examples 'for omissions' do
-        it 'omits them from the returned hash' do
-          expect(user.permissions.keys).not_to include(*omitted_permissions.map(&:name))
-        end
-      end
-
-      context 'for permissions that do not belong to this user' do
-        let(:omitted_permissions) { Permission.all - permissions }
-
-        include_examples 'for omissions'
+      it 'is a simple association getter' do
+        expect(user.permissions).to match_array(permissions)
       end
 
       context 'for inactive permissions' do
-        before { omitted_permissions.each { |p| p.update(active: false) } }
+        before { permissions.first.update(active: false) }
 
-        let!(:omitted_permissions) { permissions.first(1) }
-
-        include_examples 'for omissions'
+        it 'omits them from the returned hash' do
+          expect(user.permissions).not_to include(permissions.first)
+        end
       end
 
       context 'for permissions on inactive roles' do
         before { role.update(active: false) }
 
-        let(:omitted_permissions) { permissions }
-
-        include_examples 'for omissions'
-      end
-
-      context 'for permissions with !preferences["selectable"]' do
-        before { omitted_permissions.each { |p| p.update(preferences: { selectable: false }) } }
-
-        let(:omitted_permissions) { permissions.first(1) }
-
-        include_examples 'for omissions'
+        it 'omits them from the returned hash' do
+          expect(user.permissions).not_to include(*role.permissions)
+        end
       end
     end
 
@@ -430,28 +410,28 @@ RSpec.describe User, type: :model do
           end
         end
 
-        context 'when given a sub-permission (i.e., child permission)' do
-          let(:subpermission) { create(:permission, name: 'foo.bar') }
+        context 'when given an active sub-permission' do
+          before { create(:permission, name: 'foo.bar') }
 
-          context 'that exists' do
-            before { subpermission }
+          it 'returns true' do
+            expect(user.permissions?('foo.bar')).to be(true)
+          end
+        end
 
-            it 'returns true' do
-              expect(user.permissions?('foo.bar')).to be(true)
+        describe 'chain-of-ancestry quirk' do
+          context 'when given an inactive sub-permission' do
+            before { create(:permission, name: 'foo.bar.baz', active: false) }
+
+            it 'returns false, even with active ancestors' do
+              expect(user.permissions?('foo.bar.baz')).to be(false)
             end
           end
 
-          context 'that is inactive' do
-            before { subpermission.update(active: false) }
+          context 'when given a sub-permission that does not exist' do
+            before { create(:permission, name: 'foo.bar', active: false) }
 
-            it 'returns false' do
-              expect(user.permissions?('foo.bar')).to be(false)
-            end
-          end
-
-          context 'that does not exist' do
-            it 'returns true' do
-              expect(user.permissions?('foo.bar')).to be(true)
+            it 'can return true, even with inactive ancestors' do
+              expect(user.permissions?('foo.bar.baz')).to be(true)
             end
           end
         end
@@ -522,7 +502,7 @@ RSpec.describe User, type: :model do
               before { permission.update(active: false) }
 
               it 'returns false' do
-                expect(user.permissions?('foo.bar')).to be(false)
+                expect(user.permissions?('foo.*')).to be(false)
               end
             end
           end
