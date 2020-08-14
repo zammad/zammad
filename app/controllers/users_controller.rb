@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   prepend_before_action -> { authorize! }, only: %i[import_example import_start search history]
   prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]
-  prepend_before_action :authentication_check_only, only: [:create]
+  prepend_before_action :authentication_check_only, only: %i[create]
 
   # @path       [GET] /users
   #
@@ -99,161 +99,16 @@ class UsersController < ApplicationController
 
   # @path      [POST] /users
   #
-  # @summary          Creates a User record with the provided attribute values.
-  # @notes            TODO.
-  #
-  # @parameter        User(required,body) [User] The attribute value structure needed to create a User record.
-  #
-  # @response_message 200 [User] Created User record.
-  # @response_message 401        Invalid session.
+  # @summary processes requests as CRUD-like record creation, admin creation or user signup depending on circumstances
+  # @see #create_internal #create_admin #create_signup
   def create
-    clean_params = User.association_name_to_id_convert(params)
-    clean_params = User.param_cleanup(clean_params, true)
-
-    # check if it's first user, the admin user
-    # initial admin account
-    count = User.all.count
-    admin_account_exists = true
-    if count <= 2
-      admin_account_exists = false
-    end
-
-    # if it's a signup, add user to customer role
-    if !current_user
-
-      # check if feature is enabled
-      if admin_account_exists && !Setting.get('user_create_account')
-        raise Exceptions::UnprocessableEntity, 'Feature not enabled!'
-      end
-
-      # check signup option only after admin account is created
-      if admin_account_exists && !params[:signup]
-        raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
-      end
-
-      # check if user already exists
-      if clean_params[:email].blank?
-        raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
-      end
-
-      # check if user already exists
-      exists = User.exists?(email: clean_params[:email].downcase.strip)
-      raise Exceptions::UnprocessableEntity, "Email address '#{clean_params[:email].downcase.strip}' is already used for other user." if exists
-
-      # check password policy
-      if clean_params[:password].present?
-        result = password_policy(clean_params[:password])
-        if result != true
-          render json: { error: result }, status: :unprocessable_entity
-          return
-        end
-      end
-
-      user = User.new(clean_params)
-      user.associations_from_param(params)
-      user.updated_by_id = 1
-      user.created_by_id = 1
-
-      # add first user as admin/agent and to all groups
-      group_ids = []
-      role_ids  = []
-      if count <= 2
-        Role.where(name: %w[Admin Agent]).each do |role|
-          role_ids.push role.id
-        end
-        Group.all.each do |group|
-          group_ids.push group.id
-        end
-
-        # everybody else will go as customer per default
-      else
-        role_ids = Role.signup_role_ids
-      end
-      user.role_ids  = role_ids
-      user.group_ids = group_ids
-
-      # remember source (in case show email verify banner)
-      # if not initial user creation
-      if admin_account_exists
-        user.source = 'signup'
-      end
-
-    # else do assignment as defined
+    if current_user
+      create_internal
+    elsif params[:signup]
+      create_signup
     else
-
-      # permission check
-      check_attributes_by_current_user_permission(params)
-
-      user = User.new(clean_params)
-      user.associations_from_param(params)
+      create_admin
     end
-
-    user.save!
-
-    # if first user was added, set system init done
-    if !admin_account_exists
-      Setting.set('system_init_done', true)
-
-      # fetch org logo
-      if user.email.present?
-        Service::Image.organization_suggest(user.email)
-      end
-
-      # load calendar
-      Calendar.init_setup(request.remote_ip)
-
-      # load text modules
-      begin
-        TextModule.load(request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us')
-      rescue => e
-        logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
-      end
-    end
-
-    # send invitation if needed / only if session exists
-    if params[:invite].present? && current_user
-      sleep 5 if ENV['REMOTE_URL'].present?
-      token = Token.create(action: 'PasswordReset', user_id: user.id)
-      NotificationFactory::Mailer.notification(
-        template: 'user_invite',
-        user:     user,
-        objects:  {
-          token:        token,
-          user:         user,
-          current_user: current_user,
-        }
-      )
-    end
-
-    # send email verify
-    if params[:signup].present? && !current_user
-      result = User.signup_new_token(user)
-      NotificationFactory::Mailer.notification(
-        template: 'signup',
-        user:     user,
-        objects:  result,
-      )
-    end
-
-    if response_expand?
-      user = user.reload.attributes_with_association_names
-      user.delete('password')
-      render json: user, status: :created
-      return
-    end
-
-    if response_full?
-      result = {
-        id:     user.id,
-        assets: user.assets({}),
-      }
-      render json: result, status: :created
-      return
-    end
-
-    user = user.reload.attributes_with_association_ids
-    user.delete('password')
-    render json: user, status: :created
   end
 
   # @path       [PUT] /users/{id}
@@ -1045,5 +900,174 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     true
+  end
+
+  def clean_user_params
+    User.param_cleanup(User.association_name_to_id_convert(params), true)
+  end
+
+  # @summary          Creates a User record with the provided attribute values.
+  # @notes            For creating a user via agent interface
+  #
+  # @parameter        User(required,body) [User] The attribute value structure needed to create a User record.
+  #
+  # @response_message 200 [User] Created User record.
+  # @response_message 401        Invalid session.
+  def create_internal
+    # permission check
+    check_attributes_by_current_user_permission(params)
+
+    user = User.new(clean_user_params)
+    user.associations_from_param(params)
+
+    user.save!
+
+    if params[:invite].present?
+      sleep 5 if ENV['REMOTE_URL'].present?
+      token = Token.create(action: 'PasswordReset', user_id: user.id)
+      NotificationFactory::Mailer.notification(
+        template: 'user_invite',
+        user:     user,
+        objects:  {
+          token:        token,
+          user:         user,
+          current_user: current_user,
+        }
+      )
+    end
+
+    if response_expand?
+      user = user.reload.attributes_with_association_names
+      user.delete('password')
+      render json: user, status: :created
+      return
+    end
+
+    if response_full?
+      result = {
+        id:     user.id,
+        assets: user.assets({}),
+      }
+      render json: result, status: :created
+      return
+    end
+
+    user = user.reload.attributes_with_association_ids
+    user.delete('password')
+    render json: user, status: :created
+  end
+
+  # @summary          Creates a User record with the provided attribute values.
+  # @notes            For creating a user via public signup form
+  #
+  # @parameter        User(required,body) [User] The attribute value structure needed to create a User record.
+  #
+  # @response_message 200 [User] Created User record.
+  # @response_message 401        Invalid session.
+  def create_signup
+    # check if feature is enabled
+    if !Setting.get('user_create_account')
+      raise Exceptions::UnprocessableEntity, 'Feature not enabled!'
+    end
+
+    # check signup option only after admin account is created
+    if !params[:signup]
+      raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
+    end
+
+    # check if user already exists
+    if clean_user_params[:email].blank?
+      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+    end
+
+    email_taken_by = User.find_by email: clean_user_params[:email].downcase.strip
+
+    result = (password = clean_user_params[:password]) && password_policy(password)
+    raise Exceptions::UnprocessableEntity, 'Only signup with a password!' if result.nil?
+    raise Exceptions::UnprocessableEntity, result if result != true
+
+    user = User.new(clean_user_params)
+    user.associations_from_param(params)
+    user.role_ids      = Role.signup_role_ids
+    user.source        = 'signup'
+
+    if email_taken_by # show fake OK response to avoid leaking that email is already in use
+      User.without_callback :validation, :before, :ensure_uniq_email do # skip unique email validation
+        user.valid? # trigger errors raised in validations
+      end
+
+      result = User.password_reset_new_token(email_taken_by.email)
+      NotificationFactory::Mailer.notification(
+        template: 'signup_taken_reset',
+        user:     email_taken_by,
+        objects:  result,
+      )
+
+      render json: { message: 'ok' }, status: :created
+      return
+    end
+
+    UserInfo.ensure_current_user_id do
+      user.save!
+    end
+
+    result = User.signup_new_token(user)
+    NotificationFactory::Mailer.notification(
+      template: 'signup',
+      user:     user,
+      objects:  result,
+    )
+
+    render json: { message: 'ok' }, status: :created
+  end
+
+  # @summary          Creates a User record with the provided attribute values.
+  # @notes            For creating an administrator account when setting up the system
+  #
+  # @parameter        User(required,body) [User] The attribute value structure needed to create a User record.
+  #
+  # @response_message 200 [User] Created User record.
+  # @response_message 401        Invalid session.
+  def create_admin
+    if User.count > 2 # system and example users
+      raise Exceptions::UnprocessableEntity, 'Administrator account already created'
+    end
+
+    # check if user already exists
+    if clean_user_params[:email].blank?
+      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+    end
+
+    # check password policy
+    result = (password = clean_user_params[:password]) && password_policy(password)
+    raise Exceptions::UnprocessableEntity, result if result != true
+
+    user = User.new(clean_user_params)
+    user.associations_from_param(params)
+    user.role_ids  = Role.where(name: %w[Admin Agent]).pluck(:id)
+    user.group_ids = Group.all.pluck(:id)
+
+    UserInfo.ensure_current_user_id do
+      user.save!
+    end
+
+    Setting.set('system_init_done', true)
+
+    # fetch org logo
+    if user.email.present?
+      Service::Image.organization_suggest(user.email)
+    end
+
+    # load calendar
+    Calendar.init_setup(request.remote_ip)
+
+    # load text modules
+    begin
+      TextModule.load(request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us')
+    rescue => e
+      logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
+    end
+
+    render json: { message: 'ok' }, status: :created
   end
 end

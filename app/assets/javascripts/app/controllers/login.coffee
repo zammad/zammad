@@ -96,15 +96,12 @@ class Index extends App.ControllerContent
     if !_.isEmpty(detailsRaw)
       details = JSON.parse(detailsRaw)
 
-    # add notify
-    @notify
-      type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Wrong Username or Password combination.')
-      removeAll: true
+    errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
 
     # rerender login page
     @render(
-      username: @username
+      username:     @username
+      errorMessage: errorMessage
     )
 
     # login shake
