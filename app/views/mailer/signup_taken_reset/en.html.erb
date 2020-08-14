@@ -1,0 +1,15 @@
+Reset your #{config.product_name} password
+
+<div>Hi #{user.firstname},</div>
+<br>
+<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>
+<br>
+<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>This link takes you to a page where you can change your password.</div>
+<br>
+<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>
+<br>
+<div>Your #{config.product_name} Team</div>

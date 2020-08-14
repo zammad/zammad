@@ -394,6 +394,7 @@ Metrics/BlockLength:
     - 'config/environments/development.rb'
     - 'config/initializers/omniauth.rb'
     - 'config/routes/knowledge_base.rb'
+    - 'config/routes/user.rb'
     - 'config/routes/test.rb'
     - 'config/routes/ticket.rb'
     - 'db/migrate/20120101000001_create_base.rb'
