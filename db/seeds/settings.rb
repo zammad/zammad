@@ -4213,6 +4213,19 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       'cti customer last activity',
+  name:        'cti_customer_last_activity',
+  area:        'Integration::Cti',
+  description: 'Defines the range in seconds of customer activity to trigger the user profile dialog on call.',
+  options:     {},
+  state:       30.days,
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
   title:       'Placetel integration',
   name:        'placetel_integration',
   area:        'Integration::Switch',
