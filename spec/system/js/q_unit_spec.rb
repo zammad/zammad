@@ -121,6 +121,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
     it 'SLA times' do
       q_unit_tests('form_sla_times')
     end
+
+    it 'DateTime' do
+      q_unit_tests('form_datetime')
+    end
   end
 
   context 'Table' do

@@ -111,11 +111,13 @@
       }
 
       this.setDefaultTime(this.defaultTime);
+      this.blurElement()
     },
 
     blurElement: function() {
       this.highlightedUnit = null;
       this.updateFromElementVal();
+      this.$element.get(0).setSelectionRange(0,0)
     },
 
     clear: function() {
@@ -259,7 +261,7 @@
           switch (this.getCursorPosition()) {
             case 1:
               // highlight minutes but async because the newly typed character is not yet stored in the value (happens after this event)
-              setTimeout($.proxy(this.highlightMinute, this), 0);
+              setTimeout($.proxy(this.highlightMinute, this), 50);
               break;
           }
       }

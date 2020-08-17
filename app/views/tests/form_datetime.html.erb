@@ -1,0 +1,21 @@
+
+<link rel="stylesheet" href="/assets/tests/qunit-1.21.0.css">
+<%= javascript_include_tag "/assets/tests/qunit-1.21.0.js", "/assets/tests/form_datetime.js", nonce: true %>
+
+<style type="text/css">
+body {
+  padding-top: 0px;
+}
+</style>
+
+<%= javascript_tag nonce: true do -%>
+<% end -%>
+
+<div id="qunit" class="u-dontfold"></div>
+
+<div>
+  <form class="form-stacked pull-left">
+    <div id="forms"></div>
+    <button type="submit" class="btn btn-primary submit">Submit</button>
+  </form>
+</div>
