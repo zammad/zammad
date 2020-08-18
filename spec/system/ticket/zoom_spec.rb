@@ -859,7 +859,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       image_a.height.times do |y|
         image_a.row(y).each_with_index do |pixel, x|
-          return false unless pixel == image_b[x, y]
+          return false if pixel != image_b[x, y]
         end
       end
 

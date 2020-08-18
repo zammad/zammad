@@ -11,7 +11,7 @@ class KnowledgeBase
     end
 
     def perform!
-      raise_unprocessable unless all_ids_present?
+      raise_unprocessable if !all_ids_present?
 
       KnowledgeBase::MenuItem.transaction do
         KnowledgeBase::MenuItem.acts_as_list_no_update do

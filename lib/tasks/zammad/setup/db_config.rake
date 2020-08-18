@@ -9,7 +9,7 @@ namespace :zammad do
       template    = config_dir.join('database', 'database.yml')
       destination = config_dir.join('database.yml')
 
-      raise Errno::ENOENT, "#{template} not found" unless File.exist?(template)
+      raise Errno::ENOENT, "#{template} not found" if !File.exist?(template)
 
       if File.exist?(destination)
         next if FileUtils.identical?(template, destination)

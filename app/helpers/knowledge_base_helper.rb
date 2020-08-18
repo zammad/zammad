@@ -6,19 +6,15 @@ module KnowledgeBaseHelper
   end
 
   def custom_path_if_needed(path, knowledge_base, full: false)
-    return path unless knowledge_base.custom_address_matches? request
+    return path if !knowledge_base.custom_address_matches?(request)
 
     custom_address = knowledge_base.custom_address_uri
-    return path unless custom_address
+    return path if !custom_address
 
-    output = path.gsub(%r{^/help}, custom_address.path || '').presence || '/'
+    custom_path = path.gsub(%r{^/help}, custom_address.path || '').presence || '/'
+    prefix      = full ? knowledge_base.custom_path_prefix(request) : ''
 
-    if full
-      fqdn = request.headers.env['SERVER_NAME']
-      output = "#{custom_address.scheme}://#{custom_address.host || fqdn}#{output}"
-    end
-
-    output
+    "#{prefix}#{custom_path}"
   end
 
   def translation_locale_code(translation)

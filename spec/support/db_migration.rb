@@ -67,7 +67,7 @@ module DbMigrationHelper
   def without_column(from_table, column:)
     suppress_messages do
       Array(column).each do |elem|
-        next unless column_exists?(from_table, elem)
+        next if !column_exists?(from_table, elem)
 
         remove_column(from_table, elem)
       end

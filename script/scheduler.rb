@@ -3,7 +3,7 @@
 begin
   load File.expand_path('../bin/spring', __dir__)
 rescue LoadError => e
-  raise unless e.message.include?('spring')
+  raise if !e.message.include?('spring')
 end
 
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))

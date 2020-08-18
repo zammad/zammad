@@ -378,7 +378,7 @@ returns
   def self.extract_rfc822_headers(message_meta)
     blob = message_meta&.attr&.dig 'RFC822.HEADER'
 
-    return unless blob
+    return if !blob
 
     parse_rfc822_headers blob
   end

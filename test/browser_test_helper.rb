@@ -514,7 +514,7 @@ class TestCase < ActiveSupport::TestCase
 
     begin
       elements = instance.find_elements(find_element_key => params[param_key])
-                         .tap { |e| e.slice!(1..-1) unless params[:all] }
+                         .tap { |e| e.slice!(1..-1) if !params[:all] }
 
       if elements.empty?
         return if params[:only_if_exists] == true

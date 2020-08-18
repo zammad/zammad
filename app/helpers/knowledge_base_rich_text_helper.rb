@@ -42,7 +42,7 @@ module KnowledgeBaseRichTextHelper
               "https://player.vimeo.com/video/#{settings[:id]}"
             end
 
-      return match unless url
+      return match if !url
 
       "<div class='videoWrapper'><iframe id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
     end

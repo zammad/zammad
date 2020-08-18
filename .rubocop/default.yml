@@ -291,3 +291,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   Include:
     - "**/*_spec.rb"
+
+Zammad/PreferNegatedIfOverUnless:
+  Exclude:
+    - 'bin/rspec'

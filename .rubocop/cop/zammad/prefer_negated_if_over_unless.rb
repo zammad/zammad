@@ -1,0 +1,30 @@
+module RuboCop
+  module Cop
+    module Zammad
+      # This cop is used to identify usages of `unless` conditionals
+      #
+      # @example
+      #   # bad
+      #   unless statement
+      #   return unless statement
+      #
+      #   # good
+      #   if !statement
+      #   return if !statement
+      class PreferNegatedIfOverUnless < Cop
+        include ConfigurableEnforcedStyle
+        include NegativeConditional
+        extend AutoCorrector
+
+        MSG = 'Favor `if !foobar` over `unless foobar` for ' \
+              'negative conditions.'.freeze
+
+        def on_if(node)
+          return unless node.unless?
+
+          add_offense(node, message: MSG)
+        end
+      end
+    end
+  end
+end

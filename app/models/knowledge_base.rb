@@ -93,6 +93,11 @@ class KnowledgeBase < ApplicationModel
     false
   end
 
+  def custom_address_prefix(request)
+    host = custom_address.host || request.headers.env['SERVER_NAME']
+    "#{custom_address.scheme}://#{host}"
+  end
+
   def full_destroy!
     ChecksKbClientNotification.disable_in_all_classes!
 
