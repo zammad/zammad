@@ -18,6 +18,7 @@ namespace :zammad do
         $stdout = STDOUT
       end
 
+      Package::Migration.linked
       ActiveRecord::Base.connection.reconnect!
       ActiveRecord::Base.descendants.each(&:reset_column_information)
       Cache.clear
