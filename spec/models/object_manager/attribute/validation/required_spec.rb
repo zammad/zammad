@@ -13,9 +13,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
   let(:record) { build(:user) }
   let(:attribute) { build(:object_manager_attribute_date) }
 
-  before do
-    allow(subject).to receive(:value).and_return(value)
-  end
+  it_behaves_like 'validate backend'
 
   context 'when validation should be performed' do
 

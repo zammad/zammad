@@ -2,13 +2,6 @@ require 'rails_helper'
 
 RSpec.describe ObjectManager::Attribute::Validation::Backend do
 
-  it 'registers inheriting classes as ObjectManager::Attribute::Validation backends' do
-    backends = spy
-    expect(ObjectManager::Attribute::Validation).to receive(:backends).and_return(backends)
-    backend = Class.new(described_class)
-    expect(backends).to have_received(:add).with(backend)
-  end
-
   describe 'backend interface' do
 
     subject do

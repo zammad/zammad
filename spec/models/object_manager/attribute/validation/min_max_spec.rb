@@ -13,9 +13,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::MinMax do
   let(:record) { build(:user) }
   let(:attribute) { build(:object_manager_attribute_integer) }
 
-  before do
-    allow(subject).to receive(:value).and_return(value) # rubocop:disable RSpec/SubjectStub, RSpec/NamedSubject
-  end
+  it_behaves_like 'validate backend'
 
   context 'when validation should not be performed' do
 

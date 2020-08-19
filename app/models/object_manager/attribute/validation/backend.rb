@@ -1,10 +1,4 @@
 class ObjectManager::Attribute::Validation::Backend
-  include Mixin::IsBackend
-
-  def self.inherited(subclass)
-    subclass.is_backend_of(::ObjectManager::Attribute::Validation)
-  end
-
   def self.validate(*args)
     new(*args).validate
   end
@@ -22,5 +16,3 @@ class ObjectManager::Attribute::Validation::Backend
     record.errors.add attribute.name.to_sym, message
   end
 end
-
-Mixin::RequiredSubPaths.eager_load_recursive(__dir__)

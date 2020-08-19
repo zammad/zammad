@@ -13,9 +13,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::FuturePast do
   let(:record) { build(:user) }
   let(:attribute) { build(:object_manager_attribute_datetime) }
 
-  before do
-    allow(subject).to receive(:value).and_return(value)
-  end
+  it_behaves_like 'validate backend'
 
   shared_examples 'data_option validator' do |data_option:, value:|
     context "for data_option '#{data_option}'" do
