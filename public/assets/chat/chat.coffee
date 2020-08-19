@@ -577,7 +577,7 @@ do($ = window.jQuery, window) ->
         @renderBase()
 
       # disable open button
-      $(".#{ @options.buttonClass }").addClass @inactiveClass
+      $(".#{ @options.buttonClass }").addClass @options.inactiveClass
 
       @setAgentOnlineState 'online'
 
@@ -887,7 +887,7 @@ do($ = window.jQuery, window) ->
 
     onReady: ->
       @log.debug 'widget ready for use'
-      $(".#{ @options.buttonClass }").click(@open).removeClass(@inactiveClass)
+      $(".#{ @options.buttonClass }").click(@open).removeClass(@options.inactiveClass)
 
       @options.onReady?()
 

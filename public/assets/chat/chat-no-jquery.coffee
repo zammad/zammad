@@ -581,7 +581,7 @@ do(window) ->
       # disable open button
       btn = document.querySelector(".#{ @options.buttonClass }")
       if btn
-        btn.classList.add @inactiveClass
+        btn.classList.add @options.inactiveClass
 
       @setAgentOnlineState 'online'
 
@@ -876,7 +876,7 @@ do(window) ->
       btn = document.querySelector(".#{ @options.buttonClass }")
       if btn
         btn.addEventListener('click', @open)
-        btn.classList.remove(@inactiveClass)
+        btn.classList.remove(@options.inactiveClass)
 
       @options.onReady?()
 
