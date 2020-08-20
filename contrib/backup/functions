@@ -159,6 +159,14 @@ function restore_zammad () {
   fi
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
+    echo "# Checking requirements"
+
+    if ! id "zammad" &> /dev/null; then
+      echo "# ERROR: User 'zammad' is not present, but should be by default! #"
+      echo "# Restoration was NOT successfull, exitting ..."
+      exit 1
+    fi
+    
     echo "# ... Dropping current database ${DB_NAME}"
 
     # This step is only needed for some pgsql dumps, as they don't provide a drop table statement which will cause
