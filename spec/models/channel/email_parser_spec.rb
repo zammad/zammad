@@ -140,6 +140,24 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
 
+        context 'when from address matches an existing agent customer' do
+          let!(:agent_customer) { create(:agent_and_customer, email: 'foo@bar.com') }
+          let!(:ticket) { create(:ticket, customer: agent_customer) }
+          let!(:raw_email) { <<~RAW.chomp }
+            From: foo@bar.com
+            To: myzammad@example.com
+            Subject: [#{Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number}] test
+            
+            Lorem ipsum dolor
+          RAW
+
+          it 'sets article.sender to "Customer"' do
+            described_class.new.process({}, raw_email)
+
+            expect(Ticket::Article.last.sender.name).to eq('Customer')
+          end
+        end
+
         context 'when from address matches an existing customer' do
           let!(:customer) { create(:customer, email: 'foo@bar.com') }
 

@@ -38,7 +38,19 @@ module Channel::Filter::SenderIsSystemAddress
       return if !user.permissions?('ticket.agent')
 
       mail['x-zammad-ticket-create-article-sender'.to_sym] = 'Agent'
-      mail['x-zammad-article-sender'.to_sym] = 'Agent'
+      mail['x-zammad-article-sender'.to_sym]               = 'Agent'
+
+      # if the agent is also customer of the ticket then
+      # we need to set the sender as customer.
+      ticket_id = mail['x-zammad-ticket-id'.to_sym]
+      if ticket_id.present?
+        ticket = Ticket.lookup(id: ticket_id)
+
+        if ticket.present? && ticket.customer_id == user.id
+          mail['x-zammad-ticket-create-article-sender'.to_sym] = 'Customer'
+          mail['x-zammad-article-sender'.to_sym]               = 'Customer'
+        end
+      end
       return true
     rescue => e
       Rails.logger.error 'SenderIsSystemAddress: ' + e.inspect

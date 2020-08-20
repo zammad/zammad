@@ -1,6 +1,6 @@
 class TwitterReply
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if ticket.currentView() is 'customer'
 
     if article.type.name is 'twitter status'
       actions.push {
@@ -126,7 +126,7 @@ class TwitterReply
     })
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
 
     return articleTypes if !ticket || !ticket.create_article_type_id
 

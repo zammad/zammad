@@ -19,10 +19,10 @@ class Edit extends App.ObserverController
 
     if followUpPossible == 'new_ticket' && ticketState != 'closed' ||
        followUpPossible != 'new_ticket' ||
-       @permissionCheck('admin') || @permissionCheck('ticket.agent')
+       @permissionCheck('admin') || ticket.currentView() is 'agent'
       new App.ControllerForm(
         elReplace:      @el
-        model:          App.Ticket
+        model:          { configure_attributes: @formMeta.configure_attributes }
         screen:         'edit'
         handlersConfig: handlers
         filter:         @formMeta.filter
@@ -35,7 +35,7 @@ class Edit extends App.ObserverController
     else
       new App.ControllerForm(
         elReplace:      @el
-        model:          App.Ticket
+        model:          { configure_attributes: @formMeta.configure_attributes }
         screen:         'edit'
         handlersConfig: handlers
         filter:         @formMeta.filter
@@ -76,7 +76,7 @@ class SidebarTicket extends App.Controller
       sidebarHead: 'Ticket'
       sidebarCallback: @editTicket
     }
-    if @permissionCheck('ticket.agent')
+    if @ticket.currentView() is 'agent'
       @item.sidebarActions = [
         {
           title:    'History'
@@ -127,7 +127,7 @@ class SidebarTicket extends App.Controller
       taskKey:   @taskKey
     )
 
-    if @permissionCheck('ticket.agent')
+    if @ticket.currentView() is 'agent'
       @tagWidget = new App.WidgetTag(
         el:          localEl.filter('.tags')
         object_type: 'Ticket'

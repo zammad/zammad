@@ -46,7 +46,7 @@ class App.TicketZoomAttributeBar extends App.Controller
     @macroLastUpdated = App.Macro.lastUpdatedAt()
     @possibleMacros   = []
 
-    if _.isEmpty(macros) || !@permissionCheck('ticket.agent')
+    if _.isEmpty(macros) || @ticket.currentView() is 'customer'
       macroDisabled = true
     else
       for macro in macros
@@ -63,7 +63,7 @@ class App.TicketZoomAttributeBar extends App.Controller
     ))
     @setSecondaryAction(@secondaryAction, localeEl)
 
-    if @permissionCheck('ticket.agent')
+    if @ticket.currentView() is 'agent'
       @taskbarWatcher = new App.TaskbarWatcher(
         taskKey: @taskKey
         el:      localeEl.filter('.js-avatars')

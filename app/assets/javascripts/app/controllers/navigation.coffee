@@ -361,6 +361,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   filterNavbarPermissionOk: (item) ->
     return true unless item.permission
+    return item.permission(@) if typeof item.permission is 'function'
 
     return _.any item.permission, (permissionName) =>
       return @permissionCheck(permissionName)

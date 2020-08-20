@@ -3306,11 +3306,38 @@ Setting.create_if_not_exists(
 
 Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
-  name:        '0010_postmaster_filter_trusted',
+  name:        '0005_postmaster_filter_trusted',
   area:        'Postmaster::PreFilter',
   description: 'Defines postmaster filter to remove X-Zammad headers from not trusted sources.',
   options:     {},
   state:       'Channel::Filter::Trusted',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '0006_postmaster_filter_auto_response_check',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.',
+  options:     {},
+  state:       'Channel::Filter::AutoResponseCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '0007_postmaster_filter_follow_up_check',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify follow-ups (based on admin settings).',
+  options:     {},
+  state:       'Channel::Filter::FollowUpCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '0008_postmaster_filter_follow_up_merged',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify follow-up ticket for merged tickets.',
+  options:     {},
+  state:       'Channel::Filter::FollowUpMerged',
   frontend:    false
 )
 Setting.create_if_not_exists(
@@ -3360,38 +3387,11 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
-  name:        '0020_postmaster_filter_auto_response_check',
-  area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.',
-  options:     {},
-  state:       'Channel::Filter::AutoResponseCheck',
-  frontend:    false
-)
-Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
   name:        '0030_postmaster_filter_out_of_office_check',
   area:        'Postmaster::PreFilter',
   description: 'Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.',
   options:     {},
   state:       'Channel::Filter::OutOfOfficeCheck',
-  frontend:    false
-)
-Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
-  name:        '0100_postmaster_filter_follow_up_check',
-  area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify follow-ups (based on admin settings).',
-  options:     {},
-  state:       'Channel::Filter::FollowUpCheck',
-  frontend:    false
-)
-Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
-  name:        '0110_postmaster_filter_follow_up_merged',
-  area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify follow-up ticket for merged tickets.',
-  options:     {},
-  state:       'Channel::Filter::FollowUpMerged',
   frontend:    false
 )
 Setting.create_if_not_exists(

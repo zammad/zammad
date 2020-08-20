@@ -6,7 +6,7 @@ class PhoneReply
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
     articleTypes.push {
       name:       'phone'
       icon:       'phone'

@@ -31,12 +31,12 @@ class App.TicketZoomArticleNew extends App.Controller
   constructor: ->
     super
 
-    @internalSelector = true
+    @internalSelector = false
     @type = @defaults['type'] || 'note'
     @setPossibleArticleTypes()
 
-    if @permissionCheck('ticket.customer')
-      @internalSelector = false
+    if @ticket.currentView() is 'agent'
+      @internalSelector = true
 
     @textareaHeight =
       open:   148
@@ -165,7 +165,7 @@ class App.TicketZoomArticleNew extends App.Controller
       articleTypes:     @articleTypes
       article:          @defaults
       form_id:          @form_id
-      isCustomer:       @permissionCheck('ticket.customer')
+      isCustomer:       ticket.currentView() is 'customer'
       internalSelector: @internalSelector
     )
     @setArticleTypePre(@type)
@@ -246,7 +246,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @bindAttachmentDelete()
 
     # show text module UI
-    if !@permissionCheck('ticket.customer')
+    if ticket.currentView() is 'agent'
       textModule = new App.WidgetTextModule(
         el: @$('.js-textarea').parent()
         data:
@@ -272,16 +272,18 @@ class App.TicketZoomArticleNew extends App.Controller
       params.form_id      = @form_id
       params.content_type = 'text/html'
 
-      if @permissionCheck('ticket.customer')
-        sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
-        type             = App.TicketArticleType.findByAttribute('name', 'web')
-        params.type_id   = type.id
-        params.sender_id = sender.id
-      else
+      ticket = App.Ticket.find(@ticket_id)
+
+      if ticket.currentView() is 'agent'
         sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
         type             = App.TicketArticleType.findByAttribute('name', params['type'])
         params.sender_id = sender.id
         params.type_id   = type.id
+      else
+        sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
+        type             = App.TicketArticleType.findByAttribute('name', 'web')
+        params.type_id   = type.id
+        params.sender_id = sender.id
 
     if params.internal
       params.internal = true

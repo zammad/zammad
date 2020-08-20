@@ -65,6 +65,48 @@ window.onload = function() {
     active: true,
   }])
 
+  App.Role.refresh([
+    {
+      "name":"Agent",
+      "permission_ids":[
+        48,
+      ],
+      "group_ids":{},
+      "default_at_signup":false,
+      "note":"To work on Tickets.",
+      "active":true,
+      "updated_at":"2020-07-29T14:57:27.304Z",
+      "id":2
+    },
+    {
+      "name":"Customer",
+      "permission_ids":[
+        49
+      ],
+      "group_ids":{},
+      "default_at_signup":true,
+      "note":"People who create Tickets ask for help.",
+      "active":true,
+      "updated_at":"2020-07-29T14:57:27.314Z",
+      "id":3
+    }
+  ])
+
+  App.Permission.refresh([
+    {
+      "name":"ticket.agent",
+      "note":"Access to Agent Tickets based on Group Access",
+      "active":true,
+      "id":48
+    },
+    {
+      "name":"ticket.customer",
+      "note":"Access to Customer Tickets based on current_user and organization",
+      "active":true,
+      "id":49
+    },
+  ])
+
   test('ticket.editabe customer user #1', function() {
     App.Session.set(33)
     ticket1 = App.Ticket.find(1);

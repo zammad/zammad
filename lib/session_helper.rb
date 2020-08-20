@@ -31,7 +31,7 @@ module SessionHelper
     models = {}
     objects = ObjectManager.list_objects
     objects.each do |object|
-      attributes = ObjectManager::Attribute.by_object(object, user)
+      attributes = ObjectManager::Object.new(object).attributes(user)
       models[object] = attributes
     end
     models

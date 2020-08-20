@@ -1,6 +1,6 @@
 class Split
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if ticket.currentView() is 'customer'
 
     actions.push {
       name: 'split'

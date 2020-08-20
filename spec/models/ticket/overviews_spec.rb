@@ -2,7 +2,48 @@ require 'rails_helper'
 
 RSpec.describe Ticket::Overviews do
 
-  describe '#index' do
+  describe '.all' do
+
+    let(:views) { described_class.all(current_user: current_user).map(&:name) }
+
+    shared_examples 'containing' do |overview|
+      it "returns #{overview}" do
+        expect(views).to include(overview)
+      end
+    end
+
+    shared_examples 'not containing' do |overview|
+      it "doesn't return #{overview}" do
+        expect(views).not_to include(overview)
+      end
+    end
+
+    context 'when Agent' do
+      let(:current_user) { create(:agent) }
+
+      it_behaves_like 'containing', 'Open'
+      it_behaves_like 'not containing', 'My Tickets'
+      it_behaves_like 'not containing', 'My Organization Tickets'
+    end
+
+    context 'when Agent is also Customer' do
+      let(:current_user) { create(:agent_and_customer, :with_org) }
+
+      it_behaves_like 'containing', 'Open'
+      it_behaves_like 'containing', 'My Tickets'
+      it_behaves_like 'containing', 'My Organization Tickets'
+    end
+
+    context 'when Customer' do
+      let(:current_user) { create(:customer, :with_org) }
+
+      it_behaves_like 'not containing', 'Open'
+      it_behaves_like 'containing', 'My Tickets'
+      it_behaves_like 'containing', 'My Organization Tickets'
+    end
+  end
+
+  describe '.index' do
 
     # https://github.com/zammad/zammad/issues/1769
     it 'does not return multiple results for a single ticket' do

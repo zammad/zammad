@@ -877,4 +877,151 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(images_identical?(images.first, images.second)).to be(true)
     end
   end
+
+  context 'object manager attribute permission view' do
+    let!(:group_users) { Group.find_by(name: 'Users') }
+
+    shared_examples 'shows attributes and values for agent view and editable' do
+      it 'shows attributes and values for agent view and editable', authenticated_as: :current_user do
+        visit "ticket/zoom/#{ticket.id}"
+        refresh # refresh to have assets generated for ticket
+
+        expect(page).to have_select('state_id', options: ['new', 'open', 'pending reminder', 'pending close', 'closed'])
+        expect(page).to have_select('priority_id')
+        expect(page).to have_select('owner_id')
+        expect(page).to have_css('div.tabsSidebar-tab[data-tab=customer]')
+      end
+    end
+
+    shared_examples 'shows attributes and values for agent view but disabled' do
+      it 'shows attributes and values for agent view but disabled', authenticated_as: :current_user do
+        visit "ticket/zoom/#{ticket.id}"
+        refresh # refresh to have assets generated for ticket
+
+        expect(page).to have_css('select[name=state_id][disabled]')
+        expect(page).to have_css('select[name=priority_id][disabled]')
+        expect(page).to have_css('select[name=owner_id][disabled]')
+        expect(page).to have_css('div.tabsSidebar-tab[data-tab=customer]')
+      end
+    end
+
+    shared_examples 'shows attributes and values for customer view' do
+      it 'shows attributes and values for customer view', authenticated_as: :current_user do
+        visit "ticket/zoom/#{ticket.id}"
+        refresh # refresh to have assets generated for ticket
+
+        expect(page).to have_select('state_id', options: %w[new open closed])
+        expect(page).not_to have_select('priority_id')
+        expect(page).not_to have_select('owner_id')
+        expect(page).not_to have_css('div.tabsSidebar-tab[data-tab=customer]')
+      end
+    end
+
+    context 'as customer' do
+      let!(:current_user) { create(:customer) }
+      let(:ticket) { create(:ticket, customer: current_user) }
+
+      include_examples 'shows attributes and values for customer view'
+    end
+
+    context 'as agent with full permissions' do
+      let(:current_user) { create(:agent, groups: [ group_users ] ) }
+      let(:ticket) { create(:ticket, group: group_users ) }
+
+      include_examples 'shows attributes and values for agent view and editable'
+    end
+
+    context 'as agent with change permissions' do
+      let!(:current_user) { create(:agent) }
+      let(:ticket) { create(:ticket, group: group_users) }
+
+      before do
+        current_user.group_names_access_map = {
+          group_users.name => %w[read change],
+        }
+      end
+
+      include_examples 'shows attributes and values for agent view and editable'
+    end
+
+    context 'as agent with read permissions' do
+      let!(:current_user) { create(:agent) }
+      let(:ticket) { create(:ticket, group: group_users) }
+
+      before do
+        current_user.group_names_access_map = {
+          group_users.name => 'read',
+        }
+      end
+
+      include_examples 'shows attributes and values for agent view but disabled'
+    end
+
+    context 'as agent+customer with full permissions' do
+      let!(:current_user) { create(:agent_and_customer, groups: [ group_users ] ) }
+
+      context 'normal ticket' do
+        let(:ticket) { create(:ticket, group: group_users ) }
+
+        include_examples 'shows attributes and values for agent view and editable'
+      end
+
+      context 'ticket where current_user is also customer' do
+        let(:ticket) { create(:ticket, customer: current_user, group: group_users ) }
+
+        include_examples 'shows attributes and values for agent view and editable'
+      end
+    end
+
+    context 'as agent+customer with change permissions' do
+      let!(:current_user) { create(:agent_and_customer) }
+
+      before do
+        current_user.group_names_access_map = {
+          group_users.name => %w[read change],
+        }
+      end
+
+      context 'normal ticket' do
+        let(:ticket) { create(:ticket, group: group_users) }
+
+        include_examples 'shows attributes and values for agent view and editable'
+      end
+
+      context 'ticket where current_user is also customer' do
+        let(:ticket) { create(:ticket, customer: current_user, group: group_users) }
+
+        include_examples 'shows attributes and values for agent view and editable'
+      end
+    end
+
+    context 'as agent+customer with read permissions' do
+      let!(:current_user) { create(:agent_and_customer) }
+
+      before do
+        current_user.group_names_access_map = {
+          group_users.name => 'read',
+        }
+      end
+
+      context 'normal ticket' do
+        let(:ticket) { create(:ticket, group: group_users) }
+
+        include_examples 'shows attributes and values for agent view but disabled'
+      end
+
+      context 'ticket where current_user is also customer' do
+        let(:ticket) { create(:ticket, customer: current_user, group: group_users) }
+
+        include_examples 'shows attributes and values for agent view but disabled'
+      end
+    end
+
+    context 'as agent+customer but only customer for the ticket (no agent access)' do
+      let!(:current_user) { create(:agent_and_customer) }
+      let(:ticket) { create(:ticket, customer: current_user) }
+
+      include_examples 'shows attributes and values for customer view'
+    end
+  end
 end

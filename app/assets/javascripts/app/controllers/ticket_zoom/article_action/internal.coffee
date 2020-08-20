@@ -1,6 +1,6 @@
 class Internal
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if ticket.currentView() is 'customer'
 
     if article.internal is true
       actions.push {

@@ -1,6 +1,6 @@
 class SmsReply
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if ticket.currentView() is 'customer'
 
     if article.sender.name is 'Customer' && article.type.name is 'sms'
       actions.push {
@@ -43,7 +43,7 @@ class SmsReply
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
 
     return articleTypes if !ticket || !ticket.create_article_type_id
 

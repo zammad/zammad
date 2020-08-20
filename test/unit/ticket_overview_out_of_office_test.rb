@@ -123,7 +123,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
       link:          'my_tickets',
       prio:          1100,
       role_ids:      [overview_role.id],
-      out_of_office: true,
+      out_of_office: false,
       condition:     {
         'ticket.state_id'                     => {
           operator: 'is',

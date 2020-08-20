@@ -38,26 +38,26 @@ class TicketPolicy < ApplicationPolicy
 
   def access?(access)
 
-    # check customer
-    if user.permissions?('ticket.customer')
-
-      # access ok if its own ticket
-      return true if record.customer_id == user.id
-
-      # check organization ticket access
-      return false if record.organization_id.blank?
-      return false if user.organization_id.blank?
-      return false if record.organization_id != user.organization_id
-
-      return record.organization.shared?
-    end
-
-    # check agent
-
-    # access if requester is owner
+    # agent - access if requester is owner
     return true if record.owner_id == user.id
 
-    # access if requester is in group
-    user.group_access?(record.group.id, access)
+    # agent - access if requester is in group
+    return true if user.group_access?(record.group.id, access)
+
+    # check customer
+    return false if !user.permissions?('ticket.customer')
+
+    # access ok if its own ticket
+    return true if record.customer_id == user.id
+
+    organization_access?
+  end
+
+  def organization_access?
+    return false if record.organization_id.blank?
+    return false if user.organization_id.blank?
+    return false if record.organization_id != user.organization_id
+
+    record.organization.shared?
   end
 end

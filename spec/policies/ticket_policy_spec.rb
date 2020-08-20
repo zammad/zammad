@@ -11,6 +11,12 @@ describe TicketPolicy do
     it { is_expected.to permit_actions(%i[show full]) }
   end
 
+  context 'when given user that is agent and customer' do
+    let(:user) { create(:agent_and_customer, groups: [record.group]) }
+
+    it { is_expected.to permit_actions(%i[show full]) }
+  end
+
   context 'when given a user that is neither owner nor customer' do
     let(:user) { create(:agent) }
 

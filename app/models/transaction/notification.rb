@@ -239,7 +239,7 @@ class Transaction::Notification
     locale = user.locale
 
     # only show allowed attributes
-    attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
+    attribute_list = ObjectManager::Object.new('Ticket').attributes(user).index_by { |item| item[:name] }
 
     user_related_changes = {}
     @item[:changes].each do |key, value|

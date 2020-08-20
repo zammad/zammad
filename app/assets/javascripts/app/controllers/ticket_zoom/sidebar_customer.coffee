@@ -1,6 +1,6 @@
 class SidebarCustomer extends App.Controller
   sidebarItem: =>
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
     @item = {
       name: 'customer'
       badgeCallback: @badgeRender

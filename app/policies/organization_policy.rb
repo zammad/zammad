@@ -2,15 +2,15 @@ class OrganizationPolicy < ApplicationPolicy
 
   def show?
     return true if user.permissions?(['admin', 'ticket.agent'])
-    return false if !user.permissions?('ticket.customer')
+    return true if record.id == user.organization_id
 
-    record.id == user.organization_id
+    false
   end
 
   def update?
-    return false if user.permissions?('ticket.customer')
+    return true if user.permissions?(['admin', 'ticket.agent'])
 
-    user.permissions?(['admin', 'ticket.agent'])
+    false
   end
 
   class Scope < ApplicationPolicy::Scope

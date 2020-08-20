@@ -212,4 +212,15 @@ class Index extends App.ControllerContent
     @formEnable(@$('.js-submit'), 'button')
 
 App.Config.set('customer_ticket_new', Index, 'Routes')
-App.Config.set('CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', permission: ['ticket.customer'], setting: ['customer_ticket_create'], divider: true }, 'NavBarRight')
+App.Config.set('CustomerTicketNew', {
+  prio: 8003,
+  parent: '#new',
+  name: 'New Ticket',
+  translate: true,
+  target: '#customer_ticket_new',
+  permission: (navigation) ->
+    return false if navigation.permissionCheck('ticket.agent')
+    return navigation.permissionCheck('ticket.customer')
+  setting: ['customer_ticket_create'],
+  divider: true
+}, 'NavBarRight')

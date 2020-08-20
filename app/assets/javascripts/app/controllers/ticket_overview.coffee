@@ -1049,7 +1049,7 @@ class Table extends App.Controller
       ticketListShow.push App.Ticket.find(ticket.id)
 
     # if customer and no ticket exists, show the following message only
-    if !ticketListShow[0] && @permissionCheck('ticket.customer')
+    if !ticketListShow[0] && !@permissionCheck('ticket.agent')
       @html App.view('customer_not_ticket_exists')()
       return
 
@@ -1057,27 +1057,26 @@ class Table extends App.Controller
     @overview = App.Overview.find(overview.id)
 
     # render init page
-    checkbox = true
+    checkbox = false
     edit     = false
     if @permissionCheck('admin.overview')
       edit = true
-    if @permissionCheck('ticket.customer')
-      checkbox = false
-      edit     = false
-    view_modes = [
-      {
-        name:  'S'
-        type:  's'
-        class: 'active' if @view_mode is 's'
-      },
-      {
-        name:  'M'
-        type:  'm'
-        class: 'active' if @view_mode is 'm'
-      }
-    ]
-    if @permissionCheck('ticket.customer')
-      view_modes = []
+    if @permissionCheck('ticket.agent')
+      checkbox = true
+    view_modes = []
+    if @permissionCheck('ticket.agent')
+      view_modes = [
+        {
+          name:  'S'
+          type:  's'
+          class: 'active' if @view_mode is 's'
+        },
+        {
+          name:  'M'
+          type:  'm'
+          class: 'active' if @view_mode is 'm'
+        }
+      ]
     html = App.view('agent_ticket_view/content')(
       overview:   @overview
       view_modes: view_modes

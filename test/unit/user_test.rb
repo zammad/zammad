@@ -651,12 +651,6 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_raises(RuntimeError) do
-      customer3.roles = Role.where(name: %w[Customer Admin])
-    end
-    assert_raises(RuntimeError) do
-      customer3.roles = Role.where(name: %w[Customer Agent])
-    end
     customer3.roles = Role.where(name: %w[Admin Agent])
     customer3.roles.each do |role|
       assert_not_equal(role.name, 'Customer')

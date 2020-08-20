@@ -131,26 +131,18 @@ returns
       end
 
     end
-=begin
-    # for performance reasons we moved from api calls to optimized sql queries
-    groups.each do |group|
-      filter[:group_id].push group.id
-      assets = group.assets(assets)
-      dependencies[:group_id][group.id] = { owner_id: [] }
 
-      User.group_access(group.id, 'full').each do |user|
-        dependencies[:group_id][ group.id ][:owner_id].push user.id
-        next if agents[user.id]
-        agents[user.id] = true
-        assets = user.assets(assets)
-      end
+    configure_attributes = nil
+    if params[:ticket].present?
+      configure_attributes = ObjectManager::Object.new('Ticket').attributes(params[:current_user], params[:ticket])
     end
-=end
+
     {
       assets:    assets,
       form_meta: {
-        filter:       filter,
-        dependencies: dependencies,
+        filter:               filter,
+        dependencies:         dependencies,
+        configure_attributes: configure_attributes,
       }
     }
   end

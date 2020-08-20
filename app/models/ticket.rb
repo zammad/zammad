@@ -90,13 +90,28 @@ returns
 =end
 
   def self.access_condition(user, access)
+    sql  = []
+    bind = []
+
     if user.permissions?('ticket.agent')
-      ['group_id IN (?)', user.group_ids_access(access)]
-    elsif !user.organization || ( !user.organization.shared || user.organization.shared == false )
-      ['tickets.customer_id = ?', user.id]
-    else
-      ['(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id]
+      sql.push('group_id IN (?)')
+      bind.push(user.group_ids_access(access))
     end
+
+    if user.permissions?('ticket.customer')
+      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
+        sql.push('tickets.customer_id = ?')
+        bind.push(user.id)
+      else
+        sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
+        bind.push(user.id)
+        bind.push(user.organization.id)
+      end
+    end
+
+    return if sql.blank?
+
+    [ sql.join(' OR ') ].concat(bind)
   end
 
 =begin

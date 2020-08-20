@@ -29,6 +29,14 @@ FactoryBot.define do
       end
     end
 
+    factory :agent_and_customer do
+      role_ids { Role.signup_role_ids.push( Role.find_by(name: 'Agent').id ).sort }
+
+      trait :with_org do
+        organization
+      end
+    end
+
     factory :agent do
       roles { Role.where(name: 'Agent') }
     end

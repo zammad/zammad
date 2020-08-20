@@ -36,7 +36,7 @@ class App.TicketZoomHighlighter extends App.Controller
   constructor: ->
     super
 
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
 
     @currentHighlights = {}
 
@@ -93,7 +93,7 @@ class App.TicketZoomHighlighter extends App.Controller
 
   # for testing purposes the highlights get stored in article preferences
   loadHighlights: (ticket_article_id) ->
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
     article = App.TicketArticle.find(ticket_article_id)
     return if !article.preferences
     return if !article.preferences.highlight

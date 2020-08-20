@@ -861,6 +861,123 @@ RSpec.describe Ticket, type: :model do
     end
   end
 
+  describe '.search' do
+
+    shared_examples 'search permissions' do
+      let(:group) { create(:group) }
+
+      before do
+        ticket
+      end
+
+      shared_examples 'permitted' do
+        it 'finds Ticket' do
+          expect( described_class.search(query: ticket.number, current_user: current_user).count ).to eq(1)
+        end
+      end
+
+      shared_examples 'no permission' do
+        it "doesn't find Ticket" do
+          expect( described_class.search(query: ticket.number, current_user: current_user) ).to be_blank
+        end
+      end
+
+      context 'Agent with Group access' do
+
+        let(:ticket) do
+          ticket = create(:ticket, group: group)
+          create(:ticket_article, ticket: ticket)
+          ticket
+        end
+
+        let(:current_user) { create(:agent, groups: [group]) }
+
+        it_behaves_like 'permitted'
+      end
+
+      context 'when Agent is Customer of Ticket' do
+
+        let(:ticket) do
+          ticket = create(:ticket, customer: current_user)
+          create(:ticket_article, ticket: ticket)
+          ticket
+        end
+
+        let(:current_user) { create(:agent_and_customer) }
+
+        it_behaves_like 'permitted'
+      end
+
+      context 'for Organization access' do
+
+        let(:ticket) do
+          ticket = create(:ticket, customer: customer)
+          create(:ticket_article, ticket: ticket)
+          ticket
+        end
+
+        let(:customer) { create(:customer, organization: organization) }
+
+        context 'when Organization is shared' do
+          let(:organization) { create(:organization, shared: true) }
+
+          context 'for unrelated Agent' do
+            let(:current_user) { create(:agent) }
+
+            it_behaves_like 'no permission'
+          end
+
+          context 'for Agent in same Organization' do
+            let(:current_user) { create(:agent_and_customer, organization: organization) }
+
+            it_behaves_like 'permitted'
+          end
+
+          context 'for Customer of Ticket' do
+            let(:current_user) { customer }
+
+            it_behaves_like 'permitted'
+          end
+        end
+
+        context 'when Organization is not shared' do
+          let(:organization) { create(:organization, shared: false) }
+
+          context 'for unrelated Agent' do
+            let(:current_user) { create(:agent) }
+
+            it_behaves_like 'no permission'
+          end
+
+          context 'for Agent in same Organization' do
+            let(:current_user) { create(:agent_and_customer, organization: organization) }
+
+            it_behaves_like 'no permission'
+          end
+
+          context 'for Customer of Ticket' do
+            let(:current_user) { customer }
+
+            it_behaves_like 'permitted'
+          end
+        end
+      end
+    end
+
+    context 'with searchindex', searchindex: true do
+
+      include_examples 'search permissions' do
+        before do
+          configure_elasticsearch(required: true, rebuild: true)
+        end
+      end
+    end
+
+    context 'without searchindex' do
+      include_examples 'search permissions'
+    end
+  end
+
   describe 'Callbacks & Observers -' do
     describe 'NULL byte handling (via ChecksAttributeValuesAndLength concern):' do
       it 'removes them from title on creation, if necessary (postgres doesn’t like them)' do

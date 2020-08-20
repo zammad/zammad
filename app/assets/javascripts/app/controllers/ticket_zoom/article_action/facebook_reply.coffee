@@ -1,6 +1,6 @@
 class FacebookReply
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if ticket.currentView() is 'customer'
 
     if article.type.name is 'facebook feed post' || article.type.name is 'facebook feed comment'
       actions.push {
@@ -35,7 +35,7 @@ class FacebookReply
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
 
     return articleTypes if !ticket || !ticket.create_article_type_id
 

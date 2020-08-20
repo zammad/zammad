@@ -1,6 +1,6 @@
 class EmailReply extends App.Controller
   @action: (actions, ticket, article, ui) ->
-    return actions if !ui.permissionCheck('ticket.agent')
+    return actions if ticket.currentView() is 'customer'
     group = ticket.group
     return actions if !group.email_address_id
 
@@ -241,7 +241,7 @@ class EmailReply extends App.Controller
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
     group = ticket.group
     return articleTypes if !group.email_address_id
 
