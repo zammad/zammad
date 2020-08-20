@@ -153,10 +153,10 @@ function stop_zammad () {
 }
 
 function restore_zammad () {
-  echo "# Restoring Files"
-  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
-  echo "# Ensuring correct file rights ..."
-  chown -R zammad:zammad ${ZAMMAD_DIR}
+  if ! command -v zammad > /dev/null; then
+    # See #3160 for the reasons of this :>
+    restore_files
+  fi
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "# ... Dropping current database ${DB_NAME}"
@@ -185,6 +185,18 @@ function restore_zammad () {
     echo "# Restoring MySQL DB"
     zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
   fi
+
+  if command -v zammad > /dev/null; then
+    # See #3160 for the reasons of this :>
+    restore_files
+  fi
+}
+
+function restore_files () {
+  echo "# Restoring Files"
+  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  echo "# Ensuring correct file rights ..."
+  chown -R zammad:zammad ${ZAMMAD_DIR}
 }
 
 function start_backup_message () {
