@@ -51,7 +51,8 @@ function backup_db () {
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
-    su -c "pg_dump -c ${DB_NAME} | gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
+    su -c "pg_dump --no-privileges --no-owner -c ${DB_NAME} | \
+      gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
     mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
   else
