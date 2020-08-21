@@ -65,7 +65,7 @@ module RuboCop
         end
 
         def check_node(node)
-          return unless node
+          return if !node
 
           if keyword_bang?(node)
             receiver, = *node

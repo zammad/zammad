@@ -20,7 +20,7 @@ module RuboCop
               'negative conditions.'.freeze
 
         def on_if(node)
-          return unless node.unless?
+          return if !node.unless?
 
           add_offense(node, message: MSG)
         end
