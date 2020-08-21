@@ -4,7 +4,7 @@ module Channel::Filter::IdentifySender
 
   def self.run(_channel, mail)
 
-    customer_user_id = mail[ 'x-zammad-ticket-customer_id'.to_sym ]
+    customer_user_id = mail[ :'x-zammad-ticket-customer_id' ]
     customer_user = nil
     if customer_user_id.present?
       customer_user = User.lookup(id: customer_user_id)
@@ -16,20 +16,20 @@ module Channel::Filter::IdentifySender
     end
 
     # check if sender exists in database
-    if !customer_user && mail[ 'x-zammad-customer-login'.to_sym ].present?
-      customer_user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
+    if !customer_user && mail[ :'x-zammad-customer-login' ].present?
+      customer_user = User.find_by(login: mail[ :'x-zammad-customer-login' ])
     end
-    if !customer_user && mail[ 'x-zammad-customer-email'.to_sym ].present?
-      customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
+    if !customer_user && mail[ :'x-zammad-customer-email' ].present?
+      customer_user = User.find_by(email: mail[ :'x-zammad-customer-email' ])
     end
 
     # get correct customer
     if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true
-      if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] == 'Agent'
+      if mail[ :'x-zammad-ticket-create-article-sender' ] == 'Agent'
 
         # get first recipient and set customer
         begin
-          to = 'raw-to'.to_sym
+          to = :'raw-to'
           if mail[to]&.addrs
             items = mail[to].addrs
             items.each do |item|
@@ -54,18 +54,18 @@ module Channel::Filter::IdentifySender
     # take regular from as customer
     if !customer_user
       customer_user = user_create(
-        login:     mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-        firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-        lastname:  mail[ 'x-zammad-customer-lastname'.to_sym ],
-        email:     mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+        login:     mail[ :'x-zammad-customer-login' ] || mail[ :'x-zammad-customer-email' ] || mail[:from_email],
+        firstname: mail[ :'x-zammad-customer-firstname' ] || mail[:from_display_name],
+        lastname:  mail[ :'x-zammad-customer-lastname' ],
+        email:     mail[ :'x-zammad-customer-email' ] || mail[:from_email],
       )
     end
 
     create_recipients(mail)
-    mail[ 'x-zammad-ticket-customer_id'.to_sym ] = customer_user.id
+    mail[ :'x-zammad-ticket-customer_id' ] = customer_user.id
 
     # find session user
-    session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+    session_user_id = mail[ :'x-zammad-session-user-id' ]
     session_user = nil
     if session_user_id.present?
       session_user = User.lookup(id: session_user_id)
@@ -84,7 +84,7 @@ module Channel::Filter::IdentifySender
       )
     end
     if session_user
-      mail[ 'x-zammad-session-user-id'.to_sym ] = session_user.id
+      mail[ :'x-zammad-session-user-id' ] = session_user.id
     end
 
     true

@@ -87,7 +87,7 @@ module Import
             result_key = if %i[text id].include?(key) && ( !result[result_key] || result[result_key] == value )
                            prefix
                          else
-                           "#{prefix}.#{key}".to_sym
+                           :"#{prefix}.#{key}"
                          end
           end
           result_key = result_key.to_s.downcase

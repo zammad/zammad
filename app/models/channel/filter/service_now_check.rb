@@ -80,6 +80,6 @@ returns:
     )
     return if sync_entry.blank?
 
-    mail[ 'x-zammad-ticket-id'.to_sym ] = sync_entry.o_id
+    mail[ :'x-zammad-ticket-id' ] = sync_entry.o_id
   end
 end

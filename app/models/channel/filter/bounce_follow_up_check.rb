@@ -7,7 +7,7 @@ module Channel::Filter::BounceFollowUpCheck
     return if !mail[:mail_instance]
     return if !mail[:mail_instance].bounced?
     return if !mail[:attachments]
-    return if mail[ 'x-zammad-ticket-id'.to_sym ]
+    return if mail[ :'x-zammad-ticket-id' ]
 
     mail[:attachments].each do |attachment|
       next if !attachment[:preferences]
@@ -22,8 +22,8 @@ module Channel::Filter::BounceFollowUpCheck
       next if !article
 
       Rails.logger.debug { "Follow-up for '##{article.ticket.number}' in bounce email." }
-      mail[ 'x-zammad-ticket-id'.to_sym ] = article.ticket_id
-      mail[ 'x-zammad-is-auto-response'.to_sym ] = true
+      mail[ :'x-zammad-ticket-id' ] = article.ticket_id
+      mail[ :'x-zammad-is-auto-response' ] = true
 
       return true
     end

@@ -59,7 +59,7 @@ module HasGroupRelationDefinition
     end
 
     def ref_key
-      @ref_key ||= "#{group_relation_model_identifier}_id".to_sym
+      @ref_key ||= :"#{group_relation_model_identifier}_id"
     end
   end
 end

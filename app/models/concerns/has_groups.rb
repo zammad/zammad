@@ -355,7 +355,7 @@ module HasGroups
     #
     # @return [Symbol] The relation identifier
     def group_through_identifier
-      "#{name.downcase}_groups".to_sym
+      :"#{name.downcase}_groups"
     end
 
     def ensure_group_id_parameter(group_or_id)

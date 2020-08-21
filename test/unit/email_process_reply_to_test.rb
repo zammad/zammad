@@ -20,12 +20,12 @@ Some Text"
     assert_equal('marketing_tool@example.com', ticket_p.customer.email)
     assert_equal('Bob', ticket_p.customer.firstname)
     assert_equal('Smith', ticket_p.customer.lastname)
-    assert_nil(mail['raw-origin_from'.to_sym])
-    assert_nil(mail['origin_from'.to_sym])
-    assert_nil(mail['origin_from_email'.to_sym])
-    assert_nil(mail['origin_from_local'.to_sym])
-    assert_nil(mail['origin_from_domain'.to_sym])
-    assert_nil(mail['origin_from_display_name'.to_sym])
+    assert_nil(mail[:'raw-origin_from'])
+    assert_nil(mail[:origin_from])
+    assert_nil(mail[:origin_from_email])
+    assert_nil(mail[:origin_from_local])
+    assert_nil(mail[:origin_from_domain])
+    assert_nil(mail[:origin_from_display_name])
   end
 
   test 'normal processing - take reply to as customer' do
@@ -60,12 +60,12 @@ Some Text"
     assert_equal('replay_to_customer_process2-1@example.com', ticket_p.customer.email)
     assert_equal('Some', ticket_p.customer.firstname)
     assert_equal('Name', ticket_p.customer.lastname)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['raw-origin_from'.to_sym].to_s)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['origin_from'.to_sym])
-    assert_equal('marketing_tool@example.com', mail['origin_from_email'.to_sym])
-    assert_equal('marketing_tool', mail['origin_from_local'.to_sym])
-    assert_equal('example.com', mail['origin_from_domain'.to_sym])
-    assert_equal('Bob Smith', mail['origin_from_display_name'.to_sym])
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:'raw-origin_from'].to_s)
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:origin_from])
+    assert_equal('marketing_tool@example.com', mail[:origin_from_email])
+    assert_equal('marketing_tool', mail[:origin_from_local])
+    assert_equal('example.com', mail[:origin_from_domain])
+    assert_equal('Bob Smith', mail[:origin_from_display_name])
   end
 
   test 'normal processing - take reply to as customer and use from as realname' do
@@ -84,12 +84,12 @@ Some Text"
     assert_equal('replay_to_customer_process3@example.com', ticket_p.customer.email)
     assert_equal('Bob', ticket_p.customer.firstname)
     assert_equal('Smith', ticket_p.customer.lastname)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['raw-origin_from'.to_sym].to_s)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['origin_from'.to_sym])
-    assert_equal('marketing_tool@example.com', mail['origin_from_email'.to_sym])
-    assert_equal('marketing_tool', mail['origin_from_local'.to_sym])
-    assert_equal('example.com', mail['origin_from_domain'.to_sym])
-    assert_equal('Bob Smith', mail['origin_from_display_name'.to_sym])
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:'raw-origin_from'].to_s)
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:origin_from])
+    assert_equal('marketing_tool@example.com', mail[:origin_from_email])
+    assert_equal('marketing_tool', mail[:origin_from_local])
+    assert_equal('example.com', mail[:origin_from_domain])
+    assert_equal('Bob Smith', mail[:origin_from_display_name])
 
     email = "From: Bob Smith <marketing_tool@example.com>
 To: zammad@example.com
@@ -106,12 +106,12 @@ Some Text"
     assert_equal('replay_to_customer_process3-1@example.com', ticket_p.customer.email)
     assert_equal('Bob', ticket_p.customer.firstname)
     assert_equal('Smith', ticket_p.customer.lastname)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['raw-origin_from'.to_sym].to_s)
-    assert_equal('Bob Smith <marketing_tool@example.com>', mail['origin_from'.to_sym])
-    assert_equal('marketing_tool@example.com', mail['origin_from_email'.to_sym])
-    assert_equal('marketing_tool', mail['origin_from_local'.to_sym])
-    assert_equal('example.com', mail['origin_from_domain'.to_sym])
-    assert_equal('Bob Smith', mail['origin_from_display_name'.to_sym])
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:'raw-origin_from'].to_s)
+    assert_equal('Bob Smith <marketing_tool@example.com>', mail[:origin_from])
+    assert_equal('marketing_tool@example.com', mail[:origin_from_email])
+    assert_equal('marketing_tool', mail[:origin_from_local])
+    assert_equal('example.com', mail[:origin_from_domain])
+    assert_equal('Bob Smith', mail[:origin_from_display_name])
   end
 
   test 'normal processing - take reply to as customer and sender is system address' do
@@ -141,12 +141,12 @@ Some Text"
     assert_equal('replay_to_customer_process2@example.com', ticket_p.customer.email)
     assert_equal('', ticket_p.customer.firstname)
     assert_equal('', ticket_p.customer.lastname)
-    assert_equal('Marketing Tool <marketing_tool@example.com>', mail['raw-origin_from'.to_sym].to_s)
-    assert_equal('Marketing Tool <marketing_tool@example.com>', mail['origin_from'.to_sym])
-    assert_equal('marketing_tool@example.com', mail['origin_from_email'.to_sym])
-    assert_equal('marketing_tool', mail['origin_from_local'.to_sym])
-    assert_equal('example.com', mail['origin_from_domain'.to_sym])
-    assert_equal('Marketing Tool', mail['origin_from_display_name'.to_sym])
+    assert_equal('Marketing Tool <marketing_tool@example.com>', mail[:'raw-origin_from'].to_s)
+    assert_equal('Marketing Tool <marketing_tool@example.com>', mail[:origin_from])
+    assert_equal('marketing_tool@example.com', mail[:origin_from_email])
+    assert_equal('marketing_tool', mail[:origin_from_local])
+    assert_equal('example.com', mail[:origin_from_domain])
+    assert_equal('Marketing Tool', mail[:origin_from_display_name])
   end
 
 end

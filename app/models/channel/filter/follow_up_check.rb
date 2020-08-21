@@ -4,13 +4,13 @@ module Channel::Filter::FollowUpCheck
 
   def self.run(_channel, mail)
 
-    return if mail['x-zammad-ticket-id'.to_sym]
+    return if mail[:'x-zammad-ticket-id']
 
     # get ticket# from subject
     ticket = Ticket::Number.check(mail[:subject])
     if ticket
       Rails.logger.debug { "Follow-up for '##{ticket.number}' in subject." }
-      mail['x-zammad-ticket-id'.to_sym] = ticket.id
+      mail[:'x-zammad-ticket-id'] = ticket.id
       return true
     end
 
@@ -21,7 +21,7 @@ module Channel::Filter::FollowUpCheck
       ticket = Ticket::Number.check(mail[:body].html2text)
       if ticket
         Rails.logger.debug { "Follow-up for '##{ticket.number}' in body." }
-        mail['x-zammad-ticket-id'.to_sym] = ticket.id
+        mail[:'x-zammad-ticket-id'] = ticket.id
         return true
       end
     end
@@ -49,24 +49,24 @@ module Channel::Filter::FollowUpCheck
         next if !ticket
 
         Rails.logger.debug { "Follow-up for '##{ticket.number}' in attachment." }
-        mail['x-zammad-ticket-id'.to_sym] = ticket.id
+        mail[:'x-zammad-ticket-id'] = ticket.id
         return true
       end
     end
 
     # get ticket# from references
-    if setting.include?('references') || (mail['x-zammad-is-auto-response'.to_sym] == true || Setting.get('ticket_hook_position') == 'none')
+    if setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none')
 
       # get all references 'References' + 'In-Reply-To'
       references = ''
       if mail[:references]
         references += mail[:references]
       end
-      if mail['in-reply-to'.to_sym]
+      if mail[:'in-reply-to']
         if references != ''
           references += ' '
         end
-        references += mail['in-reply-to'.to_sym]
+        references += mail[:'in-reply-to']
       end
       if references != ''
         message_ids = references.split(/\s+/)
@@ -76,7 +76,7 @@ module Channel::Filter::FollowUpCheck
           next if !article
 
           Rails.logger.debug { "Follow-up for '##{article.ticket.number}' in references." }
-          mail['x-zammad-ticket-id'.to_sym] = article.ticket_id
+          mail[:'x-zammad-ticket-id'] = article.ticket_id
           return true
         end
       end
@@ -90,11 +90,11 @@ module Channel::Filter::FollowUpCheck
       if mail[:references]
         references += mail[:references]
       end
-      if mail['in-reply-to'.to_sym]
+      if mail[:'in-reply-to']
         if references != ''
           references += ' '
         end
-        references += mail['in-reply-to'.to_sym]
+        references += mail[:'in-reply-to']
       end
       if references != ''
         message_ids = references.split(/\s+/)
@@ -117,7 +117,7 @@ module Channel::Filter::FollowUpCheck
           next if subject_to_check != article_first.subject
 
           Rails.logger.debug { "Follow-up for '##{article.ticket.number}' in references with same subject as inital article." }
-          mail['x-zammad-ticket-id'.to_sym] = article_first.ticket_id
+          mail[:'x-zammad-ticket-id'] = article_first.ticket_id
           return true
         end
       end

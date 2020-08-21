@@ -3,7 +3,7 @@
 module Channel::Filter::FollowUpPossibleCheck
 
   def self.run(_channel, mail)
-    ticket_id = mail['x-zammad-ticket-id'.to_sym]
+    ticket_id = mail[:'x-zammad-ticket-id']
     return true if !ticket_id
 
     ticket = Ticket.lookup(id: ticket_id)
@@ -13,9 +13,9 @@ module Channel::Filter::FollowUpPossibleCheck
     # in case of closed tickets, remove follow-up information
     case ticket.group.follow_up_possible
     when 'new_ticket'
-      mail[:subject]                        = ticket.subject_clean(mail[:subject])
-      mail['x-zammad-ticket-id'.to_sym]     = nil
-      mail['x-zammad-ticket-number'.to_sym] = nil
+      mail[:subject] = ticket.subject_clean(mail[:subject])
+      mail[:'x-zammad-ticket-id']     = nil
+      mail[:'x-zammad-ticket-number'] = nil
     end
 
     true

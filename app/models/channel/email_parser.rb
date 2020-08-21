@@ -158,7 +158,7 @@ returns
     end
 
     # check ignore header
-    if mail['x-zammad-ignore'.to_sym] == 'true' || mail['x-zammad-ignore'.to_sym] == true
+    if mail[:'x-zammad-ignore'] == 'true' || mail[:'x-zammad-ignore'] == true
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
       return
     end
@@ -174,7 +174,7 @@ returns
     Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
 
       # get sender user
-      session_user_id = mail['x-zammad-session-user-id'.to_sym]
+      session_user_id = mail[:'x-zammad-session-user-id']
       if !session_user_id
         raise 'No x-zammad-session-user-id, no sender set!'
       end
@@ -188,11 +188,11 @@ returns
       UserInfo.current_user_id = session_user.id
 
       # get ticket# based on email headers
-      if mail['x-zammad-ticket-id'.to_sym]
-        ticket = Ticket.find_by(id: mail['x-zammad-ticket-id'.to_sym])
+      if mail[:'x-zammad-ticket-id']
+        ticket = Ticket.find_by(id: mail[:'x-zammad-ticket-id'])
       end
-      if mail['x-zammad-ticket-number'.to_sym]
-        ticket = Ticket.find_by(number: mail['x-zammad-ticket-number'.to_sym])
+      if mail[:'x-zammad-ticket-number']
+        ticket = Ticket.find_by(number: mail[:'x-zammad-ticket-number'])
       end
 
       # set ticket state to open if not new
@@ -203,9 +203,9 @@ returns
         ticket.save! if ticket.has_changes_to_save?
 
         # set ticket to open again or keep create state
-        if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
+        if !mail[:'x-zammad-ticket-followup-state'] && !mail[:'x-zammad-ticket-followup-state_id']
           new_state = Ticket::State.find_by(default_create: true)
-          if ticket.state_id != new_state.id && !mail['x-zammad-out-of-office'.to_sym]
+          if ticket.state_id != new_state.id && !mail[:'x-zammad-out-of-office']
             ticket.state = Ticket::State.find_by(default_follow_up: true)
             ticket.save!
           end
@@ -250,8 +250,8 @@ returns
       end
 
       # apply tags to ticket
-      if mail['x-zammad-ticket-tags'.to_sym].present?
-        mail['x-zammad-ticket-tags'.to_sym].each do |tag|
+      if mail[:'x-zammad-ticket-tags'].present?
+        mail[:'x-zammad-ticket-tags'].each do |tag|
           ticket.tag_add(tag)
         end
       end

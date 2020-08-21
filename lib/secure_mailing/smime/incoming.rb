@@ -35,7 +35,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
 
   def article_preferences
     @article_preferences ||= begin
-      key = 'x-zammad-article-preferences'.to_sym
+      key = :'x-zammad-article-preferences'
       @mail[ key ] ||= {}
       @mail[ key ]
     end

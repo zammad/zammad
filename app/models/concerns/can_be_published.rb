@@ -32,7 +32,7 @@ module CanBePublished
     after_touch   :update_active_publicly
 
     %i[archived published internal].each do |scope_name|
-      local  = "#{scope_name}_by".to_sym
+      local  = :"#{scope_name}_by"
       remote = inverse_relation_name(scope_name).to_sym
 
       belongs_to local, class_name: 'User', inverse_of: remote, optional: true

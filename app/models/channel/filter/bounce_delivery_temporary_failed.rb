@@ -10,7 +10,7 @@ module Channel::Filter::BounceDeliveryTemporaryFailed
     return if mail[:mail_instance].error_status != '4.4.1'
 
     # if header is available, do change current ticket state
-    mail['x-zammad-out-of-office'.to_sym] = true
+    mail[:'x-zammad-out-of-office'] = true
 
     true
   end

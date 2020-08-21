@@ -19,7 +19,7 @@ module HasAgentAllowedParams
       return [] if !const_defined?(:AGENT_ALLOWED_NESTED_RELATIONS)
 
       const_get(:AGENT_ALLOWED_NESTED_RELATIONS).map do |relation_identifier|
-        key = "#{relation_identifier}_attributes".to_sym
+        key = :"#{relation_identifier}_attributes"
         value = reflect_on_association(relation_identifier).klass.agent_allowed_params
 
         if reflect_on_association(relation_identifier).is_a? ActiveRecord::Reflection::HasManyReflection

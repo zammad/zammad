@@ -24,7 +24,7 @@ class Channel::Filter::MonitoringBase
     return if mail[:from].blank?
     return if mail[:body].blank?
 
-    session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+    session_user_id = mail[ :'x-zammad-session-user-id' ]
     return if !session_user_id
 
     # check if sender is monitoring
@@ -94,40 +94,40 @@ class Channel::Filter::MonitoringBase
       next if ticket.preferences[integration]['service'] != result['service']
 
       # found open ticket for service+host
-      mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
+      mail[ :'x-zammad-ticket-id' ] = ticket.id
 
       # check if service is recovered
       if auto_close && result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
         Rails.logger.info "MonitoringBase.#{integration} set autoclose to state_id #{auto_close_state_id}"
         state = Ticket::State.lookup(id: auto_close_state_id)
         if state
-          mail[ 'x-zammad-ticket-followup-state'.to_sym ] = state.name
+          mail[ :'x-zammad-ticket-followup-state' ] = state.name
         end
       end
       return true
     end
 
     # new ticket, set meta data
-    if !mail[ 'x-zammad-ticket-id'.to_sym ]
-      if !mail[ 'x-zammad-ticket-preferences'.to_sym ]
-        mail[ 'x-zammad-ticket-preferences'.to_sym ] = {}
+    if !mail[ :'x-zammad-ticket-id' ]
+      if !mail[ :'x-zammad-ticket-preferences' ]
+        mail[ :'x-zammad-ticket-preferences' ] = {}
       end
       preferences = {}
       preferences[integration] = result
       preferences.each do |key, value|
-        mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value
+        mail[ :'x-zammad-ticket-preferences' ][key] = value
       end
     end
 
     # ignore states
     if state_ignore_match.present? && result['state'].present? && result['state'].match(/#{state_ignore_match}/i)
-      mail[ 'x-zammad-ignore'.to_sym ] = true
+      mail[ :'x-zammad-ignore' ] = true
       return true
     end
 
     # if now problem exists, just ignore the email
     if result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
-      mail[ 'x-zammad-ignore'.to_sym ] = true
+      mail[ :'x-zammad-ignore' ] = true
       return true
     end
 

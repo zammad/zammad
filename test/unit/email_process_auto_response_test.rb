@@ -57,7 +57,7 @@ Subject: some new subject
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(2, article_p.ticket.articles.count)
 
@@ -69,7 +69,7 @@ X-Loop: yes
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -81,7 +81,7 @@ Precedence: Bulk
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
 
     email_raw_string = "From: me@example.com
 To: customer@example.com
@@ -93,7 +93,7 @@ Some Text"
     assert_equal(1, article_p.ticket.articles.count)
 
     _ticket_p, _article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
 
     email_raw_string = "From: me@example.com
 To: customer@example.com
@@ -104,7 +104,7 @@ X-Auto-Response-Suppress: All
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -117,7 +117,7 @@ Message-ID: <1234@#{fqdn}>
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -130,7 +130,7 @@ Message-ID: <1234@not_matching.#{fqdn}>
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(2, article_p.ticket.articles.count)
 
@@ -180,7 +180,7 @@ Content-Disposition: inline
 test"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -221,7 +221,7 @@ X-Loop: yes
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -247,7 +247,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -279,7 +279,7 @@ Subject: some new subject
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -310,7 +310,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     tags = ticket_p.tag_list
     assert_equal('new', ticket_p.state.name)
@@ -394,7 +394,7 @@ Subject: some new subject
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(2, article_p.ticket.articles.count)
 
@@ -406,7 +406,7 @@ X-Loop: yes
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -418,7 +418,7 @@ Precedence: Bulk
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
 
     email_raw_string = "From: me@example.com
 To: customer@example.com
@@ -430,7 +430,7 @@ Some Text"
     assert_equal(1, article_p.ticket.articles.count)
 
     _ticket_p, _article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
 
     email_raw_string = "From: me@example.com
 To: customer@example.com
@@ -441,7 +441,7 @@ X-Auto-Response-Suppress: All
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -454,7 +454,7 @@ Message-ID: <1234@#{fqdn}>
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -467,7 +467,7 @@ Message-ID: <1234@not_matching.#{fqdn}>
 Some Text"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(2, article_p.ticket.articles.count)
 
@@ -517,7 +517,7 @@ Content-Disposition: inline
 test"
 
     _ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     assert_equal(1, article_p.ticket.articles.count)
 
@@ -558,7 +558,7 @@ X-Loop: yes
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -584,7 +584,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -616,7 +616,7 @@ Subject: some new subject
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -647,7 +647,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     tags = ticket_p.tag_list
     assert_equal('new', ticket_p.state.name)
@@ -764,7 +764,7 @@ X-Loop: yes
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -790,7 +790,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(false, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -822,7 +822,7 @@ Subject: some new subject
 Some Text"
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
 
     tags = ticket_p.tag_list
@@ -847,7 +847,7 @@ Some Text"
     Setting.set('ticket_trigger_recursive', true)
 
     ticket_p, article_p, _user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
+    assert_equal(true, mail[:'x-zammad-send-auto-response'])
     Scheduler.worker(true)
     tags = ticket_p.tag_list
     assert_equal('open', ticket_p.state.name)

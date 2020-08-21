@@ -23,7 +23,7 @@ class Sequencer
             end
 
             def indirect_map(channel)
-              method_name = "remote_name_#{channel}".to_sym
+              method_name = :"remote_name_#{channel}"
               send(method_name) if respond_to?(method_name, true)
             end
 

@@ -14,6 +14,6 @@ RSpec.configure do |config|
 
     # set custom Zammad driver (e.g. zammad_chrome) for special
     # functionalities and CI requirements
-    driven_by("zammad_#{ENV.fetch('BROWSER', 'firefox')}".to_sym)
+    driven_by(:"zammad_#{ENV.fetch('BROWSER', 'firefox')}")
   end
 end
