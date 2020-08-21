@@ -20,7 +20,7 @@ module RuboCop
       #   if exists?(name: 'Rubocop')
       #   if !exists?(name: 'Rubocop')
       #   unless exists?(name: 'Rubocop')
-      class ExistsCondition < Cop
+      class ExistsCondition < Base
 
         def_node_matcher :find_by_condition?, <<-PATTERN
           {

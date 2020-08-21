@@ -11,7 +11,7 @@ module RuboCop
       #   # good
       #   if !statement
       #   return if !statement
-      class PreferNegatedIfOverUnless < Cop
+      class PreferNegatedIfOverUnless < Base
         include ConfigurableEnforcedStyle
         include NegativeConditional
         extend AutoCorrector
