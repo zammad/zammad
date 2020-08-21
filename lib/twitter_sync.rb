@@ -704,6 +704,7 @@ process webhook messages from twitter
     if @payload['tweet_create_events'].present?
       @payload['tweet_create_events'].each do |item|
         next if Ticket::Article.exists?(message_id: item['id'])
+        next if item.key?('retweeted_status') && !channel.options.dig('sync', 'track_retweets')
 
         # check if it's mention
         group_id = nil
