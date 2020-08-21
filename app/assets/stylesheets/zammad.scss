@@ -1247,8 +1247,13 @@ th.align-right {
   }
 
   .avatar {
+    opacity: 0.5;
+  }
+
+  .avatar--unique {
     background: hsl(120,1%,86%);
     text-shadow: none;
+    opacity: initial;
   }
 }
 
