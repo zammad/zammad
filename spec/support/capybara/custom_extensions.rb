@@ -18,7 +18,7 @@ class Capybara::Node::Element
   # @return [Capybara::Node::Element] the element/node
   def in_fixed_postion(checks: 100)
 
-    previous = native.location
+    previous = nil
     (checks + 1).times do |check|
       raise "Element still moving after #{checks} checks" if check == checks
 
