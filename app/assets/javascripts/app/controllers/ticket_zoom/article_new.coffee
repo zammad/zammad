@@ -60,7 +60,6 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
 
-      @openTextarea(null, true)
       for key, value of data.article
         if key is 'body'
           @$("[data-name=\"#{key}\"]").html(value)
@@ -150,14 +149,9 @@ class App.TicketZoomArticleNew extends App.Controller
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
-    @releaseGlobalClickEvents()
-
-  releaseGlobalClickEvents: ->
-    $(window).off 'click.ticket-zoom-select-type'
-    $(window).off 'click.ticket-zoom-textarea'
+    $(window).off('click.ticket-zoom-select-type')
 
   render: ->
-    @releaseGlobalClickEvents()
     ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(
@@ -517,7 +511,7 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => $(window).off('click.ticket-zoom-textarea').on('click.ticket-zoom-textarea', @closeTextarea)
+        complete: => @textarea.off('focusout.ticket-zoom-textarea').on('focusout.ticket-zoom-textarea', @closeTextarea)
 
     @textBubble.velocity
       properties:
@@ -562,7 +556,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   closeTextarea: =>
     if !@textarea.text().trim() && !@attachments.length && not @isIE10()
-      $(window).off 'click.ticket-zoom-textarea'
+      @textarea.off('focusout.ticket-zoom-textarea')
 
       @textarea.velocity
         properties:
