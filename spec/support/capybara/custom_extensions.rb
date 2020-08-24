@@ -17,18 +17,18 @@ class Capybara::Node::Element
   #
   # @return [Capybara::Node::Element] the element/node
   def in_fixed_position(checks: 100)
+    previous = native.location
 
-    previous = nil
-    (checks + 1).times do |check|
-      raise "Element still moving after #{checks} checks" if check == checks
+    (checks + 1).times do
+      sleep 0.2
 
       current = native.location
-      sleep 0.2
-      break if previous == current
+
+      return self if previous == current
 
       previous = current
     end
 
-    self
+    raise "Element still moving after #{checks} checks"
   end
 end
