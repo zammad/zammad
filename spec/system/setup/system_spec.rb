@@ -96,7 +96,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     # expect Dashboard of a fresh system
     expect(page).to have_css('body', text: 'My Stats')
     expect_current_route 'clues'
-    find(:clues_close, wait: 4).in_fixed_postion.click
+    find(:clues_close, wait: 4).in_fixed_position.click
 
     # verify organization and fqdn
     click(:manage)

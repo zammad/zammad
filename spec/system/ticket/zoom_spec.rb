@@ -193,7 +193,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           all('a[data-type=emailReply]').last.click
 
           # wait till input box expands completely
-          find('.attachmentPlaceholder-label').in_fixed_postion
+          find('.attachmentPlaceholder-label').in_fixed_position
           expect(page).not_to have_css('.attachmentPlaceholder-hint', wait: 0)
 
           find('.articleNewEdit-body').send_keys('Some reply')

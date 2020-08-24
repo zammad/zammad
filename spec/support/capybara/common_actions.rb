@@ -184,7 +184,7 @@ module CommonActions
 
     wrapper.find('.article-content .textBubble').click
     wait(3).until do
-      wrapper.find('.article-content-meta .article-meta.top').in_fixed_postion
+      wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
     end
   end
 
