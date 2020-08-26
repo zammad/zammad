@@ -3193,6 +3193,10 @@ ol.tabs li {
     background: hsl(0,0%,27%);
   }
 
+  &.auth-provider--sso {
+    background: #454545;
+  }
+
   .provider-name {
     flex: 1;
   }
@@ -3390,6 +3394,10 @@ ol.tabs li {
 .icon-checkbox,
 .icon-checkbox-checked,
 .icon-checkbox-indeterminate {
+  fill: white;
+}
+
+.icon-sso-button {
   fill: white;
 }
 

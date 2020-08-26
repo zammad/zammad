@@ -141,21 +141,6 @@ module ApplicationController::Authenticates
     authentication_check_prerequesits(user, 'session', {})
   end
 
-  def authenticate_with_sso
-    user = begin
-              login = request.env['REMOTE_USER'] ||
-                      request.env['HTTP_REMOTE_USER'] ||
-                      request.headers['X-Forwarded-User']
-
-              User.lookup(login: login&.downcase)
-            end
-
-    raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER' if !user
-
-    session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(user, 'SSO', {})
-  end
-
   def authentication_check_prerequesits(user, auth_type, auth_param)
     raise Exceptions::NotAuthorized, 'Maintenance mode enabled!' if in_maintenance_mode?(user)
 

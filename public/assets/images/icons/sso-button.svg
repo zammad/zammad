@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   clip-rule="evenodd"
+   fill-rule="evenodd"
+   y="0px"
+   x="0px"
+   viewBox="0 0 96.57 79.92"
+   style="image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   version="1.1"
+   xml:space="preserve"
+   fill="#50e3c2"
+   width="29"
+   height="24">
+   <defs
+     id="defs24" />
+     <g
+     transform="matrix(0.33139046,0,0,0.33139046,-6.8223822,-15.05759)"
+     id="g30"
+     fill="#50e3c2">
+     <path
+       id="path26"
+       d="m 52,172 c 0,-5 4,-9 10,-9 5,0 9,4 9,9 0,5 -4,9 -9,9 -6,0 -10,-4 -10,-9 z m 66,-14 c 0,-4 3,-7 7,-7 4,0 7,3 7,7 0,4 -3,6 -7,6 -4,0 -7,-2 -7,-6 z m -23,0 c 0,-2 2,-4 5,-4 2,0 4,2 4,4 0,2 -2,4 -4,4 -3,0 -5,-2 -5,-4 z m 55,6 c -3,0 -6,-2 -6,-6 0,-4 3,-7 6,-7 4,0 7,3 7,7 0,4 -3,6 -7,6 z m -25,17 c -2,0 -4,-2 -4,-4 0,-3 2,-5 4,-5 2,0 4,2 4,5 0,2 -2,4 -4,4 z m 62,-14 c 0,-8 2,-16 4,-23 2,-4 3,-8 5,-11 h -26 c -2,0 -3,2 -3,4 v 7 H 60 c -15,0 -29,8 -38,23 9,14 23,22 38,22 h 107 v 8 c 0,2 1,3 3,3 h 26 c -2,-3 -3,-7 -5,-11 -2,-7 -4,-14 -4,-22 z" />
+       <path
+       id="path28"
+       d="m 282,167 c 0,7 -7,14 -14,14 -8,0 -15,-7 -15,-14 0,-8 7,-14 15,-14 7,0 14,6 14,14 z m 29,0 c 0,-33 -26,-59 -58,-59 -22,0 -41,12 -51,29 -5,9 -8,19 -8,30 0,10 3,20 8,29 10,17 29,29 51,29 32,0 58,-26 58,-58 z" />
+   </g>
+</svg>
+
