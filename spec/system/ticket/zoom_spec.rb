@@ -194,7 +194,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
           # wait till input box expands completely
           find('.attachmentPlaceholder-label').in_fixed_position
-          expect(page).not_to have_css('.attachmentPlaceholder-hint', wait: 0)
+          expect(page).to have_no_css('.attachmentPlaceholder-hint')
 
           find('.articleNewEdit-body').send_keys('Some reply')
           click '.js-submit'
@@ -534,7 +534,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           create(:smime_certificate, :with_private, fixture: system_email_address)
 
           visit "#ticket/zoom/#{ticket.id}"
-          expect(page).not_to have_css('.article-content', text: 'somebody with some text')
+          expect(page).to have_no_css('.article-content', text: 'somebody with some text')
           click '.js-securityRetryProcess'
           expect(page).to have_css('.article-content', text: 'somebody with some text')
         end
@@ -911,9 +911,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         refresh # refresh to have assets generated for ticket
 
         expect(page).to have_select('state_id', options: %w[new open closed])
-        expect(page).not_to have_select('priority_id')
-        expect(page).not_to have_select('owner_id')
-        expect(page).not_to have_css('div.tabsSidebar-tab[data-tab=customer]')
+        expect(page).to have_no_select('priority_id')
+        expect(page).to have_no_select('owner_id')
+        expect(page).to have_no_css('div.tabsSidebar-tab[data-tab=customer]')
       end
     end
 

@@ -23,7 +23,7 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated_a
 
     it 'does not show answer' do
       within '.main' do
-        expect(page).not_to have_selector(:link_containing, published_answer.translation.title)
+        expect(page).to have_no_selector(:link_containing, published_answer.translation.title)
       end
     end
   end
@@ -41,13 +41,13 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated_a
 
     it 'does not show draft answer' do
       within '.main' do
-        expect(page).not_to have_selector(:link_containing, draft_answer.translation.title)
+        expect(page).to have_no_selector(:link_containing, draft_answer.translation.title)
       end
     end
 
     it 'does not show internal answer' do
       within '.main' do
-        expect(page).not_to have_selector(:link_containing, internal_answer.translation.title)
+        expect(page).to have_no_selector(:link_containing, internal_answer.translation.title)
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe 'Public Knowledge Base for guest', type: :system, authenticated_a
 
     it { expect(page).to have_text(published_answer.translation_primary.title) }
     it { expect(page).to have_text('only available in these languages') }
-    it { expect(page).not_to have_selector('h1', text: published_answer.translation_primary.title) }
+    it { expect(page).to have_no_selector('h1', text: published_answer.translation_primary.title) }
 
     context 'follow primary locale' do
       before { click_on published_answer.translation_primary.title }

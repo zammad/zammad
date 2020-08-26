@@ -16,7 +16,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
       expect(page).to have_css('#c-account h3', text: 'Inbound')
       expect(page).to have_css('#c-account h3', text: 'Outbound')
 
-      expect(page).not_to have_css('.js-editInbound, .js-editOutbound', text: 'Edit')
+      expect(page).to have_no_css('.js-editInbound, .js-editOutbound', text: 'Edit')
     end
   end
 end

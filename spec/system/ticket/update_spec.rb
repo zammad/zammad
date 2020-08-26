@@ -105,7 +105,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
           click('.js-openDropdownMacro')
           click(".js-dropdownActionMacro[data-id=\"#{macro.id}\"]")
-          expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+          expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
         end
 
         expect(page).to have_field(attribute.name, with: attribute_value, visible: :hidden)
@@ -150,7 +150,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
           click('.js-openDropdownMacro')
           click(".js-dropdownActionMacro[data-id=\"#{macro.id}\"]")
-          expect(page).not_to have_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+          expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
         end
 
         expect(page).to have_selector('.content.active .article-content', text: 'test body')

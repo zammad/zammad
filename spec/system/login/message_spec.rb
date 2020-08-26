@@ -39,7 +39,7 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
       it 'does not show message' do
         open_login_page
 
-        expect(page).not_to have_text(message)
+        expect(page).to have_no_text(message)
       end
 
       it 'shows message on the go' do

@@ -19,7 +19,7 @@ RSpec.describe 'Public Knowledge Base menu items', type: :system, authenticated_
   end
 
   it "doesn't show footer link in header" do
-    expect(page).not_to have_css('header .menu-item', text: menu_item_3.title)
+    expect(page).to have_no_css('header .menu-item', text: menu_item_3.title)
   end
 
   it 'shows footer public link' do
@@ -27,7 +27,7 @@ RSpec.describe 'Public Knowledge Base menu items', type: :system, authenticated_
   end
 
   it "doesn't show footer link of another locale" do
-    expect(page).not_to have_css('footer .menu-item', text: menu_item_4.title)
+    expect(page).to have_no_css('footer .menu-item', text: menu_item_4.title)
   end
 
   it 'shows public links in given order' do

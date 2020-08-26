@@ -14,7 +14,7 @@ RSpec.describe 'Ticket Create', type: :system do
       visit 'ticket/create'
 
       use_template(template)
-      expect(page).not_to have_selector 'select[name="group_id"]'
+      expect(page).to have_no_selector 'select[name="group_id"]'
     end
   end
 
@@ -38,16 +38,16 @@ RSpec.describe 'Ticket Create', type: :system do
         within(:active_content) do
           use_template(template)
 
-          expect(page).not_to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-          expect(page).not_to have_css('div.js-securitySign.btn--active', wait: 5)
+          expect(page).to have_no_css('div.js-securityEncrypt.btn--active')
+          expect(page).to have_no_css('div.js-securitySign.btn--active')
           click '.js-submit'
 
           expect(page).to have_css('.ticket-article-item', count: 1)
 
           open_article_meta
 
-          expect(page).not_to have_css('span', text: 'Signed')
-          expect(page).not_to have_css('span', text: 'Encrypted')
+          expect(page).to have_no_css('span', text: 'Signed')
+          expect(page).to have_no_css('span', text: 'Encrypted')
 
           security_result = Ticket::Article.last.preferences['security']
           expect(security_result['encryption']['success']).to be nil
@@ -99,8 +99,8 @@ RSpec.describe 'Ticket Create', type: :system do
 
             open_article_meta
 
-            expect(page).not_to have_css('span', text: 'Signed')
-            expect(page).not_to have_css('span', text: 'Encrypted')
+            expect(page).to have_no_css('span', text: 'Signed')
+            expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
             expect(security_result['encryption']['success']).to be nil
@@ -128,7 +128,7 @@ RSpec.describe 'Ticket Create', type: :system do
             open_article_meta
 
             expect(page).to have_css('span', text: 'Signed')
-            expect(page).not_to have_css('span', text: 'Encrypted')
+            expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
             expect(security_result['encryption']['success']).to be nil
@@ -155,7 +155,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
             open_article_meta
 
-            expect(page).not_to have_css('span', text: 'Signed')
+            expect(page).to have_no_css('span', text: 'Signed')
             expect(page).to have_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
