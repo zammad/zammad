@@ -30,6 +30,27 @@ RSpec.describe 'Sessions endpoints', type: :request do
   end
 
   describe 'GET /auth/sso (single sign-on)' do
+
+    before do
+      Setting.set('auth_sso', true)
+    end
+
+    context 'when SSO is disabled' do
+
+      before do
+        Setting.set('auth_sso', false)
+      end
+
+      let(:headers) { { 'X-Forwarded-User' => login } }
+      let(:login) { User.last.login }
+
+      it 'returns a new user-session response' do
+        get '/auth/sso', as: :json, headers: headers
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
     context 'with invalid user login' do
       let(:login) { User.pluck(:login).max.next }
 
