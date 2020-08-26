@@ -254,10 +254,7 @@
       var $tokenLabel = $token.find('.token-label')
         , $closeButton = $token.find('.close')
 
-      if (this.options.html)
-        $tokenLabel.html(attrs.label)
-      else
-        $tokenLabel.text(attrs.label)
+      $tokenLabel.text(attrs.label)
 
       // Listen to events on token
       $token
@@ -998,7 +995,6 @@
   $.fn.tokenfield.defaults = {
     minWidth: 60,
     minLength: 0,
-    html: true,
     allowEditing: true,
     allowPasting: true,
     limit: 0,
