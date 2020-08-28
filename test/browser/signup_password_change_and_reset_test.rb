@@ -23,11 +23,11 @@ class SignupPasswordChangeAndResetTest < TestCase
     )
     set(
       css:   'input[name="password"]',
-      value: 'some-pass-123',
+      value: 'SOme-pass1',
     )
     set(
       css:   'input[name="password_confirm"]',
-      value: 'some-pass-123',
+      value: 'SOme-pass1',
     )
     click(css: 'button.js-submit')
 
@@ -70,7 +70,7 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password_old"]',
-      value: 'some-pass-123',
+      value: 'SOme-pass1',
     )
     set(
       css:   'input[name="password_new_confirm"]',
@@ -84,11 +84,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password_new"]',
-      value: 'some',
+      value: 'SOme-1',
     )
     set(
       css:   'input[name="password_new_confirm"]',
-      value: 'some',
+      value: 'SOme-1',
     )
     click(css: '.content .btn--primary')
 
@@ -99,11 +99,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password_new"]',
-      value: 'some-pass-new',
+      value: 'SOme-pass-new',
     )
     set(
       css:   'input[name="password_new_confirm"]',
-      value: 'some-pass-new',
+      value: 'SOme-pass-new',
     )
     click(css: '.content .btn--primary')
 
@@ -114,11 +114,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password_new"]',
-      value: 'some-pass-new2',
+      value: 'SOme-pass-new2',
     )
     set(
       css:   'input[name="password_new_confirm"]',
-      value: 'some-pass-new2',
+      value: 'SOme-pass-new2',
     )
     click(css: '.content .btn--primary')
 
@@ -131,7 +131,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     # check login with new pw
     login(
       username: signup_user_email,
-      password: 'some-pass-new2',
+      password: 'SOme-pass-new2',
     )
     logout()
 
@@ -146,7 +146,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     # reset password (with valid session - should not be possible)
     login(
       username: signup_user_email,
-      password: 'some-pass-new2',
+      password: 'SOme-pass-new2',
       url:      browser_url,
     )
 
@@ -207,11 +207,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password"]',
-      value: 'some',
+      value: 'SOme-1',
     )
     set(
       css:   'input[name="password_confirm"]',
-      value: 'some',
+      value: 'SOme-1',
     )
     click(css: '.content .btn--primary')
     watch_for(
@@ -221,11 +221,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password"]',
-      value: 'some-pass-new',
+      value: 'SOme-pass-new',
     )
     set(
       css:   'input[name="password_confirm"]',
-      value: 'some-pass-new',
+      value: 'SOme-pass-new',
     )
     click(css: '.content .btn--primary')
     watch_for(
@@ -235,11 +235,11 @@ class SignupPasswordChangeAndResetTest < TestCase
 
     set(
       css:   'input[name="password"]',
-      value: 'some-pass-new2',
+      value: 'SOme-pass-new2',
     )
     set(
       css:   'input[name="password_confirm"]',
-      value: 'some-pass-new2',
+      value: 'SOme-pass-new2',
     )
     click(css: '.content .btn--primary')
     watch_for(

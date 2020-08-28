@@ -64,7 +64,12 @@ class App.ControllerForm extends App.Controller
         handler(params, attribute, @attributes, @idPrefix, @form, @)
 
   showAlert: (message) =>
-    @form.find('.alert--danger').first().removeClass('hide').html(App.i18n.translateInline(message))
+    if Array.isArray(message)
+      translated = App.i18n.translateInline(message[0], message.slice(1))
+    else
+      translated = App.i18n.translateInline(message)
+
+    @form.find('.alert--danger').first().removeClass('hide').html(translated)
 
   hideAlert: =>
     @form.find('.alert--danger').addClass('hide').html()

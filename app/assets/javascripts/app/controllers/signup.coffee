@@ -75,10 +75,7 @@ class Index extends App.ControllerContent
         )
       fail: (settings, details) =>
         @formEnable(e)
-        if _.isArray(details.error)
-          @form.showAlert( App.i18n.translateInline( details.error[0], details.error[1] ) )
-        else
-          @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
   resend: (e) =>

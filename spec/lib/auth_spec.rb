@@ -32,6 +32,20 @@ RSpec.describe Auth do
         expect(result).to be false
       end
     end
+
+    context 'given default password_max_login_failed' do
+      it 'passes with 5 attempts' do
+        user   = create(:user, login_failed: 5)
+        result = described_class.can_login?(user)
+        expect(result).to be true
+      end
+
+      it 'fails with 6 attempts' do
+        user   = create(:user, login_failed: 6)
+        result = described_class.can_login?(user)
+        expect(result).to be false
+      end
+    end
   end
 
   describe '.valid?' do

@@ -97,10 +97,9 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Only signup with a password!')
 
       # already existing user with enabled feature, pretend signup is successful
-      params = { email: 'rest-customer1@example.com', password: 'asd1ASD', signup: true }
+      params = { email: 'rest-customer1@example.com', password: 'asd1ASDasd!', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
@@ -120,7 +119,7 @@ RSpec.describe 'User', type: :request do
       expect(json_response['error']).to eq('Attribute \'email\' required!')
 
       # create user with enabled feature (take customer role)
-      params = { firstname: 'Me First', lastname: 'Me Last', password: 'asd1ASD', email: 'new_here@example.com', signup: true }
+      params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', password: '1asdASDasd', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
@@ -133,7 +132,7 @@ RSpec.describe 'User', type: :request do
 
       # create user with admin role (not allowed for signup, take customer role)
       role = Role.lookup(name: 'Admin')
-      params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', password: 'asd1ASD', role_ids: [ role.id ], signup: true }
+      params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ], signup: true, password: '1asdASDasd' }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
@@ -144,7 +143,7 @@ RSpec.describe 'User', type: :request do
 
       # create user with agent role (not allowed for signup, take customer role)
       role = Role.lookup(name: 'Agent')
-      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', password: 'asd1ASD', role_ids: [ role.id ], signup: true }
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ], signup: true, password: '1asdASDasd' }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
@@ -162,6 +161,22 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, headers: headers, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('authentication failed')
+    end
+
+    context 'password security' do
+      it 'verified with no current user' do
+        params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
+        post '/api/v1/users', params: params, headers: headers, as: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to be_truthy
+        expect(json_response['error']).to include('Invalid password')
+      end
+
+      it 'verified with no current user', authenticated_as: :admin do
+        params = { email: 'some_new_customer@example.com', password: 'asd' }
+        post '/api/v1/users', params: params, headers: headers, as: :json
+        expect(response).to have_http_status(:created)
+      end
     end
 
     it 'does auth tests - not existing user' do
@@ -1078,7 +1093,7 @@ RSpec.describe 'User', type: :request do
 
       context 'for user with email address' do
         it 'return ok' do
-          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'TEst1234#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
@@ -1108,7 +1123,7 @@ RSpec.describe 'User', type: :request do
         let(:user) { create(:customer, login: 'somebody', email: '', password: 'Test1234#.') }
 
         it 'return ok' do
-          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'TEst12345#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
@@ -1118,7 +1133,7 @@ RSpec.describe 'User', type: :request do
 
       context 'user with email address' do
         it 'return ok' do
-          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'TEst12345#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
@@ -1133,7 +1148,7 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, as: :json
     end
 
-    let(:successful_params)  { { email: 'non_existant@example.com' } }
+    let(:successful_params)  { { email: attributes_for(:admin)[:email] } }
     let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] } ) }
     let(:params_with_invite) { successful_params.merge({ invite: true } ) }
 
@@ -1215,7 +1230,7 @@ RSpec.describe 'User', type: :request do
     end
   end
 
-  describe 'POST /api/v1/users processed by #create_admin' do
+  describe 'POST /api/v1/users processed by #create_admin', authenticated_as: false do
     before do
       User.all[2...].each(&:destroy) # destroy previously created users
     end
@@ -1224,7 +1239,11 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, as: :json
     end
 
-    let(:successful_params) { { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', password: 'asd1ASD' } }
+    let(:successful_params) do
+      email = attributes_for(:admin)[:email]
+
+      { firstname: 'Admin First', lastname: 'Admin Last', email: email, password: 'asd1ASDasd!' }
+    end
 
     it 'succeds' do
       make_request successful_params
@@ -1276,7 +1295,11 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, as: :json
     end
 
-    let(:successful_params) { { firstname: 'Customer First', lastname: 'Customer Last', email: 'new_customer@example.com', password: 'asd1ASD', signup: true } }
+    let(:successful_params) do
+      email = attributes_for(:admin)[:email]
+
+      { firstname: 'Customer First', lastname: 'Customer Last', email: email, password: 'gsd1ASDasd!', signup: true }
+    end
 
     before do
       create(:admin) # simulate functional system with admin created
