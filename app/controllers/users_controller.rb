@@ -515,10 +515,9 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
       return
     end
 
-    # check password policy
-    result = password_policy(params[:password])
-    if result != true
-      render json: { message: 'failed', notice: result }, status: :ok
+    result = PasswordPolicy.new(params[:password])
+    if !result.valid?
+      render json: { message: 'failed', notice: result.error }, status: :ok
       return
     end
 
@@ -583,10 +582,9 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       return
     end
 
-    # check password policy
-    result = password_policy(params[:password_new])
-    if result != true
-      render json: { message: 'failed', notice: result }, status: :ok
+    result = PasswordPolicy.new(params[:password_new])
+    if !result.valid?
+      render json: { message: 'failed', notice: result.error }, status: :ok
       return
     end
 
@@ -888,20 +886,6 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   private
 
-  def password_policy(password)
-    if Setting.get('password_min_size').to_i > password.length
-      return ['Invalid password, it must be at least %s characters long!', Setting.get('password_min_size')]
-    end
-    if Setting.get('password_need_digit').to_i == 1 && password !~ /\d/
-      return ['Invalid password, it must contain at least 1 digit!']
-    end
-    if Setting.get('password_min_2_lower_2_upper_characters').to_i == 1 && ( password !~ /[A-Z].*[A-Z]/ || password !~ /[a-z].*[a-z]/ )
-      return ['Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!']
-    end
-
-    true
-  end
-
   def clean_user_params
     User.param_cleanup(User.association_name_to_id_convert(params), true)
   end
@@ -982,9 +966,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     email_taken_by = User.find_by email: clean_user_params[:email].downcase.strip
 
-    result = (password = clean_user_params[:password]) && password_policy(password)
-    raise Exceptions::UnprocessableEntity, 'Only signup with a password!' if result.nil?
-    raise Exceptions::UnprocessableEntity, result if result != true
+    result = PasswordPolicy.new(clean_user_params[:password])
+    if !result.valid?
+      raise Exceptions::UnprocessableEntity, result.error
+    end
 
     user = User.new(clean_user_params)
     user.associations_from_param(params)
@@ -1039,8 +1024,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     # check password policy
-    result = (password = clean_user_params[:password]) && password_policy(password)
-    raise Exceptions::UnprocessableEntity, result if result != true
+    result = PasswordPolicy.new(clean_user_params[:password])
+    if !result.valid?
+      raise Exceptions::UnprocessableEntity, result.error
+    end
 
     user = User.new(clean_user_params)
     user.associations_from_param(params)

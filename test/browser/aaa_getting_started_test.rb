@@ -39,11 +39,11 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="password"]',
-      value: 'test1234äöüß',
+      value: 'TEst1234äöüß',
     )
     set(
       css:   '.js-admin input[name="password_confirm"]',
-      value: 'test1234äöüß',
+      value: 'TEst1234äöüß',
     )
     click(css: '.js-admin .btn--success')
 

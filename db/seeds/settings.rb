@@ -1773,7 +1773,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       6,
+  state:       10,
   preferences: {
     permission: ['admin.security'],
   },
@@ -1798,7 +1798,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       0,
+  state:       1,
   preferences: {
     permission: ['admin.security'],
   },
@@ -1824,6 +1824,31 @@ Setting.create_if_not_exists(
     ],
   },
   state:       1,
+  preferences: {
+    permission: ['admin.security'],
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Special character required',
+  name:        'password_need_special_character',
+  area:        'Security::Password',
+  description: 'Password needs to contain at least one special character.',
+  options:     {
+    form: [
+      {
+        display: 'Needed',
+        null:    true,
+        name:    'password_need_special_character',
+        tag:     'select',
+        options: {
+          1 => 'yes',
+          0 => 'no',
+        },
+      },
+    ],
+  },
+  state:       0,
   preferences: {
     permission: ['admin.security'],
   },
@@ -1862,7 +1887,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       10,
+  state:       5,
   preferences: {
     permission: ['admin.security'],
   },
