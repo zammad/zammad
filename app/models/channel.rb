@@ -346,8 +346,16 @@ get instance of channel driver
     options[:inbound][:options][:password]  = result[:access_token]
     options[:outbound][:options][:password] = result[:access_token]
 
-    save!
-  rescue StandardError => e
+    return if new_record?
+
+    # ATTENTION: We don't want to execute any other callbacks here
+    # because `after_initialize` leaks the current scope of the Channel class
+    # as described here: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-new
+    # which leads to unexpected effects like:
+    # Channel.where(area: 'Google::Account').limit(1).find_each { |c| puts Channel.all.to_sql }
+    # => "SELECT "channels".* FROM "channels" WHERE "channels"."area" = 'Google::Account'"
+    update_column(:options, options) # rubocop:disable Rails/SkipsModelValidations
+  rescue => e
     logger.error e
     raise "Failed to refresh XOAUTH2 access_token of provider '#{options[:auth][:provider]}'! #{e.inspect}"
   end
