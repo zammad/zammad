@@ -62,4 +62,17 @@ RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
       expect(result[:result]).to eq('ok')
     end
   end
+
+  context 'when non-Google channels are present' do
+
+    let!(:email_address) { create(:email_address, channel: create(:channel, area: 'Some::Other')) }
+
+    before do
+      channel
+    end
+
+    it "doesn't remove email address assignments" do
+      expect { Channel.where(area: 'Google::Account').find_each {} }.not_to change { email_address.reload.channel_id }
+    end
+  end
 end
