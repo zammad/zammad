@@ -56,7 +56,7 @@ class ExcelSheet::Ticket < ExcelSheet
     objects.each do |object|
       already_exists = false
       header.each do |local_header|
-        next if local_header[:name] != object[:name]
+        next if local_header[:display] != object[:display]
 
         already_exists = true
         break
