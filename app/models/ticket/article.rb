@@ -21,6 +21,7 @@ class Ticket::Article < ApplicationModel
 
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
+  before_save   :touch_ticket_if_needed
   after_destroy :store_delete
 
   store :preferences
@@ -338,4 +339,9 @@ returns
     )
   end
 
+  def touch_ticket_if_needed
+    return if !internal_changed?
+
+    ticket&.touch # rubocop:disable Rails/SkipsModelValidations
+  end
 end

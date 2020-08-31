@@ -1024,4 +1024,31 @@ RSpec.describe 'Ticket zoom', type: :system do
       include_examples 'shows attributes and values for customer view'
     end
   end
+
+  describe 'note visibility', authenticated_as: :customer do
+    context 'when logged in as a customer' do
+      let(:customer)        { create(:customer) }
+      let(:ticket)          { create(:ticket, customer: customer) }
+      let!(:ticket_article) { create(:ticket_article, ticket: ticket) }
+      let!(:ticket_note)    { create(:ticket_article, ticket: ticket, internal: true, type_name: 'note') }
+
+      it 'previously created private note is not visible' do
+        visit "ticket/zoom/#{ticket_article.ticket.id}"
+
+        expect(page).to have_no_selector(:active_ticket_article, ticket_note)
+      end
+
+      it 'previously created private note shows up via WS push' do
+        visit "ticket/zoom/#{ticket_article.ticket.id}"
+
+        # make sure ticket is done loading and change will be pushed via WS
+        find(:active_ticket_article, ticket_article)
+        await_empty_ajax_queue
+
+        ticket_note.update!(internal: false)
+
+        expect(page).to have_selector(:active_ticket_article, ticket_note)
+      end
+    end
+  end
 end
