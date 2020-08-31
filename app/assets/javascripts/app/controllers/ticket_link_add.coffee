@@ -82,9 +82,9 @@ class App.TicketLinkAdd extends App.ControllerModal
     # get data
     @ajax(
       id:    "links_add_#{@object.id}_#{@object_type}"
-      type:  'GET'
+      type:  'POST'
       url:   "#{@apiPath}/links/add"
-      data:
+      data: JSON.stringify
         link_type:                params['link_type']
         link_object_target:       @link_object
         link_object_target_value: @object.id

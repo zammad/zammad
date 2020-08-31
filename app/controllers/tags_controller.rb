@@ -31,7 +31,7 @@ class TagsController < ApplicationController
     }
   end
 
-  # POST /api/v1/tag/add
+  # POST /api/v1/tags/add
   def add
     success = Tag.tag_add(
       object: params[:object],
@@ -45,7 +45,7 @@ class TagsController < ApplicationController
     end
   end
 
-  # DELETE /api/v1/tag/remove
+  # DELETE /api/v1/tags/remove
   def remove
     success = Tag.tag_remove(
       object: params[:object],

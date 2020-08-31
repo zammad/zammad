@@ -60,9 +60,9 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
     # get data
     @ajax(
       id:   "links_remove_#{@object.id}_#{@object_type}"
-      type: 'GET'
+      type: 'DELETE'
       url:  "#{@apiPath}/links/remove"
-      data: data
+      data: JSON.stringify(data)
       processData: true
       success: @fetch
     )
