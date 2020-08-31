@@ -52,9 +52,9 @@ class App.WidgetLink extends App.Controller
     # get data
     @ajax(
       id:   "links_remove_#{@object.id}_#{@object_type}"
-      type: 'GET'
+      type: 'DELETE'
       url:  "#{@apiPath}/links/remove"
-      data:
+      data: JSON.stringify
         link_type:                link_type
         link_object_source:       link_object_source
         link_object_source_value: link_object_source_value

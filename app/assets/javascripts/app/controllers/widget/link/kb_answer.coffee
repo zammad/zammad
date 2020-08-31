@@ -83,9 +83,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   saveToServer: (id) ->
     @ajax(
       id:    "links_add_#{@object.id}_#{@object_type}"
-      type:  'GET'
+      type:  'POST'
       url:   "#{@apiPath}/links/add"
-      data:
+      data: JSON.stringify
         link_type:                'normal'
         link_object_target:       'Ticket'
         link_object_target_value: @object.id
