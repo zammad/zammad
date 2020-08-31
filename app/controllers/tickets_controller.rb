@@ -372,7 +372,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/v1/ticket_merge/1/1
+  # PUT /api/v1/ticket_merge/1/1
   def ticket_merge
 
     # check master ticket
