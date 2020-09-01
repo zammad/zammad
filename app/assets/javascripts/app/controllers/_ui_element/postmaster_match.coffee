@@ -108,6 +108,10 @@ class App.UiElement.postmaster_match
             name:     'List-Id'
           },
           {
+            value:    'list-unsubscribe'
+            name:     'List-Unsubscribe'
+          },
+          {
             value:    'list-archive'
             name:     'List-Archive'
           },
