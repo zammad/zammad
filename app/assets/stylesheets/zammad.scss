@@ -9616,6 +9616,7 @@ output {
 
   th {
     background: none;
+    font-weight: bold;
   }
 
   th, td {
@@ -9645,6 +9646,7 @@ output {
     font-size: 12px;
     padding: 5px 5px 0;
     text-align: center;
+    vertical-align: inherit;
   }
 
   .day {
@@ -9652,6 +9654,8 @@ output {
     height: 26px;
     border-radius: 14px;
     padding: 1px 0 0 !important;
+    background-color: inherit;
+    vertical-align: inherit;
   }
 
   .month,
