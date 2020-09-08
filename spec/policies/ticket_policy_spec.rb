@@ -8,7 +8,18 @@ describe TicketPolicy do
   context 'when given ticket’s owner' do
     let(:user) { record.owner }
 
-    it { is_expected.to permit_actions(%i[show full]) }
+    it { is_expected.not_to permit_actions(%i[show full]) }
+
+    context 'when owner has ticket.agent permission' do
+
+      let(:user) do
+        create(:agent, groups: [record.group]).tap do |user|
+          record.update!(owner: user)
+        end
+      end
+
+      it { is_expected.to permit_actions(%i[show full]) }
+    end
   end
 
   context 'when given user that is agent and customer' do
@@ -44,5 +55,26 @@ describe TicketPolicy do
         it { is_expected.not_to permit_actions(%i[show full]) }
       end
     end
+
+    context 'when user is admin with group access' do
+      let(:user) { create(:user, roles: Role.where(name: %w[Admin])) }
+
+      it { is_expected.not_to permit_actions(%i[show full]) }
+    end
+  end
+
+  context 'when user is agent' do
+
+    context 'when owner has ticket.agent permission' do
+
+      let(:user) do
+        create(:agent, groups: [record.group]).tap do |user|
+          record.update!(owner: user)
+        end
+      end
+
+      it { is_expected.to permit_actions(%i[show full]) }
+    end
+
   end
 end
