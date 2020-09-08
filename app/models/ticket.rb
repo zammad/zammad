@@ -14,6 +14,7 @@ class Ticket < ApplicationModel
   include HasKarmaActivityLog
   include HasLinks
   include HasObjectManagerAttributesValidation
+  include HasTaskbars
 
   include Ticket::Escalation
   include Ticket::Subject
@@ -64,6 +65,7 @@ class Ticket < ApplicationModel
   belongs_to    :organization, optional: true
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
+  has_many      :flags,                  class_name: 'Ticket::Flag', dependent: :destroy
   belongs_to    :state,                  class_name: 'Ticket::State', optional: true
   belongs_to    :priority,               class_name: 'Ticket::Priority', optional: true
   belongs_to    :owner,                  class_name: 'User', optional: true
@@ -72,6 +74,8 @@ class Ticket < ApplicationModel
   belongs_to    :updated_by,             class_name: 'User', optional: true
   belongs_to    :create_article_type,    class_name: 'Ticket::Article::Type', optional: true
   belongs_to    :create_article_sender,  class_name: 'Ticket::Article::Sender', optional: true
+
+  association_attributes_ignored :flags
 
   self.inheritance_column = nil
 

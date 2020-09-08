@@ -7,5 +7,6 @@ FactoryBot.define do
     state                    {}
     prio                     { 1 }
     notify                   { false }
+    user_id                  { 1 }
   end
 end

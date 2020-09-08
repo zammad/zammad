@@ -9,12 +9,14 @@ class Organization < ApplicationModel
   include CanCsvImport
   include ChecksHtmlSanitized
   include HasObjectManagerAttributesValidation
+  include HasTaskbars
 
   include Organization::Assets
   include Organization::Search
   include Organization::SearchIndex
 
-  has_many :members, class_name: 'User'
+  has_many :members, class_name: 'User', dependent: :destroy
+  has_many :tickets, class_name: 'Ticket', dependent: :destroy
 
   before_create :domain_cleanup
   before_update :domain_cleanup

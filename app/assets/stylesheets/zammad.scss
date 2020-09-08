@@ -4,6 +4,7 @@ $ok-color:        hsl(41,100%,49%);
 $bad-color:       hsl(30,93%,50%);
 $superbad-color:  hsl(19,90%,51%);
 $ghost-color:     hsl(0,0%,80%);
+$danger-color:    hsl(0,65%,55%);
 
 $task-state-closed-color: $supergood-color;
 $task-state-pending-color: hsl(206,7%,28%);
@@ -584,15 +585,15 @@ pre code.hljs {
 
   &--danger {
     color: white;
-    background: hsl(0,65%,55%);
+    background: $danger-color;
 
     &:active {
-      background: hsl(0,65%,45%);
+      background: darken($danger-color, 10%);
     }
 
     &.btn--secondary {
       background: white;
-      color: hsl(0,65%,55%);
+      color: $danger-color;
 
       &:active {
         background: hsl(0,0%,98%);
@@ -658,7 +659,7 @@ pre code.hljs {
     }
 
     &.btn--danger {
-      color: hsl(0,65%,55%);
+      color: $danger-color;
 
       &:active {
         color: hsl(0,65%,40%);
@@ -5092,6 +5093,7 @@ footer {
 .ok-color        { fill: $ok-color; }
 .bad-color       { fill: $bad-color; }
 .superbad-color  { fill: $superbad-color; }
+.danger-color    { color: $danger-color; }
 
 .stat-widgets {
   margin: -7px -7px 20px;
@@ -7563,7 +7565,7 @@ footer {
 
   .dropdown-menu > li.danger:hover,
   .dropdown-menu > li.danger.is-active {
-    background: hsl(0,65%,55%);
+    background: $danger-color;
   }
 
   .dropdown-menu > li.create:hover,
@@ -9470,7 +9472,7 @@ output {
   flex-wrap: wrap;
   padding: 10px;
   margin-bottom: 17px;
-
+  
   &.is-inactive {
     background: none;
     box-shadow: none;
@@ -9481,6 +9483,17 @@ output {
     & > *:not(.action-controls) {
       opacity: 0.33;
     }
+  }
+
+  &--placeholder {
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+    color: hsl(206,9%,69%);
+    box-shadow: none;
+    background: none;
+    border-style: dashed;
+    font-style: italic;
   }
 
   &-alert {

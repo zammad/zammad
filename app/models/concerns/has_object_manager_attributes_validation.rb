@@ -3,7 +3,6 @@ module HasObjectManagerAttributesValidation
   extend ActiveSupport::Concern
 
   included do
-    include ActiveModel::Validations
     validates_with ObjectManager::Attribute::Validation, on: %i[create update]
   end
 end

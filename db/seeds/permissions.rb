@@ -228,6 +228,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.data_privacy',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Data Privacy']
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.maintenance',
   note:        'Manage %s',
   preferences: {

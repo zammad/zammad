@@ -3,8 +3,13 @@ module ApplicationModel::ChecksUserColumnsFillup
   extend ActiveSupport::Concern
 
   included do
-    before_create :fill_up_user_create
-    before_update :fill_up_user_update
+    before_validation :fill_up_user_validate
+  end
+
+  def fill_up_user_validate
+    return fill_up_user_create if new_record?
+
+    fill_up_user_update
   end
 
 =begin

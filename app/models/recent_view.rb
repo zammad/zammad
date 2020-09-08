@@ -6,6 +6,7 @@ class RecentView < ApplicationModel
   # rubocop:disable Rails/InverseOf
   belongs_to :ticket, foreign_key: 'o_id', optional: true
   belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id', optional: true
+  belongs_to :created_by, class_name: 'User'
   # rubocop:enable Rails/InverseOf
 
   after_create  :notify_clients

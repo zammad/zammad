@@ -1,0 +1,20 @@
+<div class="js-preview" data-userid="<%= @user_id %>">
+  <div class="form-group js-deleteOrganzation">
+    <%- @delete_organization_html %>
+  </div>
+  <div class="form-group">
+      <h3><%- @T('Preview customer tickets') %> <span class="subtitle js-previewCounterContainer">(<span class="js-previewCounter"><%= @customer_count %></span> <%- @T('matches') %>)</span></h3>
+      <p><%- @T('Customer tickets of the user will get deleted on execution of the task. No rollback possible.') %></p>
+      <div class="js-previewTableCustomer"></div>
+    <% if @owner_count > 0: %>
+      <h3><%- @T('Preview owner tickets') %><span class="subtitle js-previewCounterContainer"> <span class="u-highlight js-previewCounter"><%= @owner_count %></span> <%- @T('matches') %></span></h3>
+      <p><%- @T('Owner tickets of the user will not get deleted. The owner will be mapped to the system user (ID 1).') %></p>
+      <div class="js-previewTableOwner"></div>
+    <% end %>
+  </div>
+  <div class="form-group js-sure">
+    <h3 class="danger-color"><%- @T('Warning') %></h3>
+    <p class="danger-color"><%- @T('There is no rollback of this deletion possible. If you are absolutely sure to do this, then type in "%s" into the input.', App.i18n.translateInline('delete').toUpperCase()) %></p>
+    <%- @sure_html %>
+  </div>
+</div>

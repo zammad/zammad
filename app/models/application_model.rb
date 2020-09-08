@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ActiveModel::Validations
+
   include ApplicationModel::CanActivityStreamLog
   include ApplicationModel::HasCache
   include ApplicationModel::CanLookup
