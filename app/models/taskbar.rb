@@ -1,14 +1,23 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Taskbar < ApplicationModel
+  include ChecksClientNotification
+
   store           :state
   store           :params
   store           :preferences
+
+  belongs_to :user
+
   before_create   :update_last_contact, :set_user, :update_preferences_infos
   before_update   :update_last_contact, :set_user, :update_preferences_infos
 
   after_update    :notify_clients
   after_destroy   :update_preferences_infos, :notify_clients
+
+  client_notification_events_ignored :create, :update, :touch
+
+  client_notification_send_to :user_id
 
   attr_accessor :local_update
 

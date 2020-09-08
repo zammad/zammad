@@ -116,7 +116,7 @@ RSpec.describe Taskbar do
     end
   end
 
-  context 'multible creation' do
+  context 'multiple creation' do
 
     it 'create tasks' do
 
@@ -132,6 +132,7 @@ RSpec.describe Taskbar do
         state:     {},
         prio:      1,
         notify:    false,
+        user_id:   1,
       )
 
       UserInfo.current_user_id = 2
@@ -145,6 +146,7 @@ RSpec.describe Taskbar do
         state:     {},
         prio:      2,
         notify:    false,
+        user_id:   1,
       )
 
       taskbar1.reload
@@ -171,6 +173,7 @@ RSpec.describe Taskbar do
         state:     {},
         prio:      2,
         notify:    false,
+        user_id:   1,
       )
 
       taskbar1.reload
@@ -205,6 +208,7 @@ RSpec.describe Taskbar do
         state:     {},
         prio:      4,
         notify:    false,
+        user_id:   1,
       )
 
       taskbar1.reload

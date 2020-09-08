@@ -23,6 +23,9 @@ class SwitchToUserTest < TestCase
 
     sleep 0.5
     click(
+      css: '.content.active .dropdown--actions',
+    )
+    click(
       css: '.content.active .icon-switchView',
     )
     sleep 3

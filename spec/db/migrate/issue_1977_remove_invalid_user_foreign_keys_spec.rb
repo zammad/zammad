@@ -23,7 +23,8 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
         without_foreign_key(:online_notifications, column: :user_id)
         without_foreign_key(:recent_views, column: :created_by_id)
 
-        create(:recent_view, created_by_id: 1337)
+        record = build(:recent_view, created_by_id: 1337)
+        record.save(validate: false)
         create(:recent_view, created_by_id: existing_user_id)
 
         expect do

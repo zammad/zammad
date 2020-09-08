@@ -162,6 +162,11 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       issues.push "Stuck import backend '#{backend}' detected. Last update: #{job.updated_at}"
     end
 
+    # stuck data privacy tasks
+    DataPrivacyTask.where.not(state: 'completed').where('updated_at <= ?', 30.minutes.ago).find_each do |task|
+      issues.push "Stuck data privacy task (ID #{task.id}) detected. Last update: #{task.updated_at}"
+    end
+
     token = Setting.get('monitoring_token')
 
     if issues.blank?

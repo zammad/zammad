@@ -9,6 +9,7 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 require 'models/user/has_ticket_create_screen_impact_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
+require 'models/concerns/has_taskbars_examples'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
@@ -27,6 +28,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasObjectManagerAttributesValidation'
   it_behaves_like 'HasTicketCreateScreenImpact'
   it_behaves_like 'CanLookupSearchIndexAttributes'
+  it_behaves_like 'HasTaskbars'
 
   describe 'Class methods:' do
     describe '.authenticate' do
@@ -812,6 +814,144 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Associations:' do
+    subject(:user) { create(:agent, groups: [group_subject]) }
+
+    let!(:group_subject) { create(:group) }
+
+    it 'does remove references before destroy' do
+      refs_known = { 'Group'                              => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+                     'Token'                              => { 'user_id' => 1 },
+                     'Ticket::Article'                    =>
+                                                             { 'created_by_id' => 0, 'updated_by_id' => 0, 'origin_by_id' => 1 },
+                     'Ticket::StateType'                  => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::Article::Sender'            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::Article::Type'              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::Article::Flag'              => { 'created_by_id' => 0 },
+                     'Ticket::Priority'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
+                     'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::Flag'                       => { 'created_by_id' => 0 },
+                     'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'OnlineNotification'                 => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket'                             =>
+                                                             { 'created_by_id' => 0, 'updated_by_id' => 0, 'owner_id' => 1, 'customer_id' => 3 },
+                     'Template'                           => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Avatar'                             => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Scheduler'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Chat'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'HttpLog'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'EmailAddress'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Taskbar'                            => { 'user_id' => 1 },
+                     'Sla'                                => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'UserDevice'                         => { 'user_id' => 1 },
+                     'Chat::Message'                      => { 'created_by_id' => 0 },
+                     'Chat::Agent'                        => { 'created_by_id' => 1, 'updated_by_id' => 1 },
+                     'Chat::Session'                      => { 'user_id' => 0, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Tag'                                => { 'created_by_id' => 0 },
+                     'Karma::User'                        => { 'user_id' => 0 },
+                     'Karma::ActivityLog'                 => { 'user_id' => 1 },
+                     'RecentView'                         => { 'created_by_id' => 1 },
+                     'KnowledgeBase::Answer::Translation' =>
+                                                             { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'KnowledgeBase::Answer'              =>
+                                                             { 'archived_by_id' => 1, 'published_by_id' => 1, 'internal_by_id' => 1 },
+                     'Report::Profile'                    => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Package'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Job'                                => { 'created_by_id' => 0, 'updated_by_id' => 1 },
+                     'Store'                              => { 'created_by_id' => 0 },
+                     'Cti::CallerId'                      => { 'user_id' => 1 },
+                     'DataPrivacyTask'                    => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Trigger'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Translation'                        => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'ObjectManager::Attribute'           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'User'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'History'                            => { 'created_by_id' => 1 },
+                     'Overview'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'ActivityStream'                     => { 'created_by_id' => 0 },
+                     'StatsStore'                         => { 'created_by_id' => 0 },
+                     'TextModule'                         => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Calendar'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'UserGroup'                          => { 'user_id' => 1 },
+                     'Signature'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Authorization'                      => { 'user_id' => 1 } }
+
+      # delete objects
+      token               = create(:token, user: user)
+      online_notification = create(:online_notification, user: user)
+      template            = create(:template, :dummy_data, user: user)
+      taskbar             = create(:taskbar, user: user)
+      user_device         = create(:user_device, user: user)
+      karma_activity_log  = create(:karma_activity_log, user: user)
+      cti_caller_id       = create(:cti_caller_id, user: user)
+      text_module         = create(:text_module, user: user)
+      authorization       = create(:twitter_authorization, user: user)
+      recent_view         = create(:recent_view, created_by: user)
+      avatar              = create(:avatar, o_id: user.id)
+
+      # create a chat agent for admin user (id=1) before agent user
+      # to be sure that the data gets removed and not mapped which
+      # would result in a foreign key because of the unique key on the
+      # created_by_id and updated_by_id.
+      create(:'chat/agent')
+      chat_agent_user = create(:'chat/agent', created_by_id: user.id, updated_by_id: user.id)
+
+      # move ownership objects
+      group                 = create(:group, created_by_id: user.id)
+      job                   = create(:job, updated_by_id: user.id)
+      ticket                = create(:ticket, group: group_subject, owner: user)
+      ticket_article        = create(:ticket_article, ticket: ticket, origin_by_id: user.id)
+      customer_ticket1      = create(:ticket, group: group_subject, customer: user)
+      customer_ticket2      = create(:ticket, group: group_subject, customer: user)
+      customer_ticket3      = create(:ticket, group: group_subject, customer: user)
+      knowledge_base_answer = create(:knowledge_base_answer, archived_by_id: user.id, published_by_id: user.id, internal_by_id: user.id)
+
+      refs_user = Models.references('User', user.id, true)
+      expect(refs_user).to eq(refs_known)
+
+      user.destroy
+
+      expect { token.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { online_notification.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { template.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { taskbar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { user_device.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { karma_activity_log.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { cti_caller_id.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { text_module.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { authorization.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { recent_view.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { avatar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { customer_ticket1.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { customer_ticket2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { customer_ticket3.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { chat_agent_user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+
+      # move ownership objects
+      expect { group.reload }.to change(group, :created_by_id).to(1)
+      expect { job.reload }.to change(job, :updated_by_id).to(1)
+      expect { ticket.reload }.to change(ticket, :owner_id).to(1)
+      expect { ticket_article.reload }.to change(ticket_article, :origin_by_id).to(1)
+      expect { knowledge_base_answer.reload }
+        .to change(knowledge_base_answer, :archived_by_id).to(1)
+        .and change(knowledge_base_answer, :published_by_id).to(1)
+        .and change(knowledge_base_answer, :internal_by_id).to(1)
+    end
+
+    it 'does delete cache after user deletion' do
+      online_notification = create(:online_notification, created_by_id: user.id)
+      online_notification.attributes_with_association_ids
+      user.destroy
+      expect(online_notification.reload.attributes_with_association_ids['created_by_id']).to eq(1)
+    end
+
+    it 'does return an exception on blocking dependencies' do
+      expect { user.send(:destroy_move_dependency_ownership) }.to raise_error(RuntimeError, 'Failed deleting references! Check logic for UserGroup->user_id.')
+    end
+
     describe '#organization' do
       describe 'email domain-based assignment' do
         subject(:user) { build(:user) }

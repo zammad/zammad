@@ -740,5 +740,17 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :smime_certificates, [:fingerprint], unique: true
     add_index :smime_certificates, [:modulus]
     add_index :smime_certificates, [:subject]
+
+    create_table :data_privacy_tasks do |t|
+      t.column :name,                 :string, limit: 150,                        null: true
+      t.column :state,                :string, limit: 150, default: 'in process', null: true
+      t.references :deletable,        polymorphic: true
+      t.string :preferences,          limit: 8000,                                null: true
+      t.column :updated_by_id,        :integer,                                   null: false
+      t.column :created_by_id,        :integer,                                   null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :data_privacy_tasks, [:name]
+    add_index :data_privacy_tasks, [:state]
   end
 end

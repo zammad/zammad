@@ -4,6 +4,7 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_tags_examples'
+require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 
@@ -13,6 +14,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory', history_relation_object: 'Ticket::Article'
   it_behaves_like 'HasTags'
+  it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
 
@@ -1112,6 +1114,27 @@ RSpec.describe Ticket, type: :model do
         expect { ticket.destroy }
           .to change { RecentView.exists?(recent_view_object_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
           .to(false)
+      end
+
+      it 'destroys all related dependencies' do
+        refs_known = { 'Ticket::Article'        => { 'ticket_id'=>1 },
+                       'Ticket::TimeAccounting' => { 'ticket_id'=>1 },
+                       'Ticket::Flag'           => { 'ticket_id'=>1 } }
+
+        ticket     = create(:ticket)
+        article    = create(:ticket_article, ticket: ticket)
+        accounting = create(:ticket_time_accounting, ticket: ticket)
+        flag       = create(:ticket_flag, ticket: ticket)
+
+        refs_ticket = Models.references('Ticket', ticket.id, true)
+        expect(refs_ticket).to eq(refs_known)
+
+        ticket.destroy
+
+        expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { article.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { accounting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { flag.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       end
 
       context 'when ticket is generated from email (with attachments)' do

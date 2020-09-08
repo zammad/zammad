@@ -509,6 +509,20 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['healthy']).to eq(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}")
 
+      privacy_stuck_updated_at_timestamp = 30.minutes.ago
+      task = create(:data_privacy_task, deletable: customer)
+      task.update(updated_at: privacy_stuck_updated_at_timestamp)
+
+      # health_check
+      get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['message']).to be_truthy
+      expect(json_response['issues']).to be_truthy
+      expect(json_response['healthy']).to eq(false)
+      expect(json_response['message']).to eq("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp};Stuck data privacy task (ID #{task.id}) detected. Last update: #{privacy_stuck_updated_at_timestamp}")
+
       Setting.set('ldap_integration', false)
     end
 

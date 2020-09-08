@@ -2,6 +2,7 @@
 
 class Karma::ActivityLog < ApplicationModel
   belongs_to :object_lookup, optional: true
+  belongs_to :user, class_name: '::User'
 
   self.table_name = 'karma_activity_logs'
 

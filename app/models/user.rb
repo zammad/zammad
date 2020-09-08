@@ -14,16 +14,32 @@ class User < ApplicationModel
   include HasRoles
   include HasObjectManagerAttributesValidation
   include HasTicketCreateScreenImpact
+  include HasTaskbars
   include User::HasTicketCreateScreenImpact
   include User::Assets
   include User::Search
   include User::SearchIndex
 
-  has_and_belongs_to_many :organizations,  after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
-  has_many                :tokens,         after_add: :cache_update, after_remove: :cache_update
-  has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
-  belongs_to              :organization,   inverse_of: :members, optional: true
-  has_many                :permissions,    -> { where(roles: { active: true }, active: true) }, through: :roles
+  has_and_belongs_to_many :organizations,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
+  has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
+  has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
+  has_many                :online_notifications,   dependent: :destroy
+  has_many                :templates,              dependent: :destroy
+  has_many                :taskbars,               dependent: :destroy
+  has_many                :user_devices,           dependent: :destroy
+  has_one                 :chat_agent_created_by,  class_name: 'Chat::Agent', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
+  has_one                 :chat_agent_updated_by,  class_name: 'Chat::Agent', foreign_key: :updated_by_id, dependent: :destroy, inverse_of: :updated_by
+  has_many                :chat_sessions,          class_name: 'Chat::Session', dependent: :destroy
+  has_many                :karma_user,             class_name: 'Karma::User', dependent: :destroy
+  has_many                :karma_activity_logs,    class_name: 'Karma::ActivityLog', dependent: :destroy
+  has_many                :cti_caller_ids,         class_name: 'Cti::CallerId', dependent: :destroy
+  has_many                :text_modules,           dependent: :destroy
+  has_many                :customer_tickets,       class_name: 'Ticket', foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer
+  has_many                :owner_tickets,          class_name: 'Ticket', foreign_key: :owner_id, inverse_of: :owner
+  has_many                :created_recent_views,   class_name: 'RecentView', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
+  has_many                :permissions,            -> { where(roles: { active: true }, active: true) }, through: :roles
+  has_many                :data_privacy_tasks,     as: :deletable
+  belongs_to              :organization,           inverse_of: :members, optional: true
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_validation :check_mail_delivery_failed, on: :update
@@ -32,9 +48,11 @@ class User < ApplicationModel
   after_create      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
   after_update      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
   after_commit      :update_caller_id
-  before_destroy    :destroy_longer_required_objects
+  before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
 
   store :preferences
+
+  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :karma_activity_logs, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks
 
   activity_stream_permission 'admin.user'
 
@@ -1147,20 +1165,39 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def destroy_longer_required_objects
-    ::Authorization.where(user_id: id).destroy_all
-    ::Avatar.remove('User', id)
-    ::Cti::CallerId.where(user_id: id).destroy_all
-    ::Taskbar.where(user_id: id).destroy_all
-    ::Karma::ActivityLog.where(user_id: id).destroy_all
-    ::Karma::User.where(user_id: id).destroy_all
-    ::OnlineNotification.where(user_id: id).destroy_all
-    ::RecentView.where(created_by_id: id).destroy_all
+    ::Avatar.remove(self.class.to_s, id)
     ::UserDevice.remove(id)
-    ::Token.where(user_id: id).destroy_all
     ::StatsStore.remove(
-      object: 'User',
+      object: self.class.to_s,
       o_id:   id,
     )
+  end
+
+  def destroy_move_dependency_ownership
+    result = Models.references(self.class.to_s, id)
+
+    result.each do |class_name, references|
+      next if class_name.blank?
+      next if references.blank?
+
+      ref_class = class_name.constantize
+      references.each do |column, reference_found|
+        next if !reference_found
+
+        if %w[created_by_id updated_by_id origin_by_id owner_id archived_by_id published_by_id internal_by_id].include?(column)
+          ref_class.where(column => id).find_in_batches(batch_size: 1000) do |batch_list|
+            batch_list.each do |record|
+              record.update!(column => 1)
+            rescue => e
+              Rails.logger.error e
+            end
+          end
+        elsif ref_class.exists?(column => id)
+          raise "Failed deleting references! Check logic for #{class_name}->#{column}."
+        end
+      end
+    end
+
     true
   end
 

@@ -12,6 +12,7 @@ class App.ControllerGenericNew extends App.ControllerModal
       params:    @item
       screen:    @screen || 'edit'
       autofocus: true
+      handlers: @handlers
     )
     @controller.form
 
@@ -57,10 +58,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @head = @pageData.head || @pageData.object
 
     @controller = new App.ControllerForm(
-      model:      App[ @genericObject ]
-      params:     @item
-      screen:     @screen || 'edit'
-      autofocus:  true
+      model:     App[ @genericObject ]
+      params:    @item
+      screen:    @screen || 'edit'
+      autofocus: true
+      handlers:  @handlers
     )
     @controller.form
 
