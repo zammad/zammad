@@ -60,7 +60,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
 
-      @openTextarea(null, true)
+      @openTextarea(null, true, true)
       for key, value of data.article
         if key is 'body'
           @$("[data-name=\"#{key}\"]").html(value)
@@ -78,8 +78,6 @@ class App.TicketZoomArticleNew extends App.Controller
       if data.position is 'end'
         @placeCaretAtEnd(@textarea.get(0))
         return
-
-      @textarea.focus()
     )
 
     # add article attachment
@@ -92,6 +90,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # reset new article screen
     @bind('ui::ticket::taskReset', (data) =>
+      @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
       @type     = 'note'
       @defaults = {}
@@ -498,11 +497,13 @@ class App.TicketZoomArticleNew extends App.Controller
       value = "/#{App.User.find(@Session.get('id')).initials()}"
     @signature.text(value)
 
-  openTextarea: (event, withoutAnimation) =>
+  openTextarea: (event, withoutAnimation, focus) =>
     if event
       event.stopPropagation()
     if @articleNewEdit.hasClass('is-open')
       return
+
+    $(window).off('click.ticket-zoom-textarea')
 
     duration = 300
 
@@ -517,7 +518,9 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => $(window).off('click.ticket-zoom-textarea').on('click.ticket-zoom-textarea', @closeTextarea)
+        complete: =>
+          $(window).on('click.ticket-zoom-textarea', @closeTextarea)
+          @textarea.focus() if focus
 
     @textBubble.velocity
       properties:
