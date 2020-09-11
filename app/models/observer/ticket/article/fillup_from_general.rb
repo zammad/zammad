@@ -37,8 +37,9 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
         record.sender_id = Ticket::Article::Sender.lookup(name: 'Customer').id
       end
 
-      # in case origin_by_id is customer, force it to set sender to Customer
-      if record.origin_by != record.created_by_id && !record.origin_by.permissions?('ticket.agent')
+      # in case origin_by is different than created_by, set sender to Customer
+      # Customer in context of this conversation, not as a permission
+      if record.origin_by != record.created_by_id
         record.sender_id = Ticket::Article::Sender.lookup(name: 'Customer').id
         user_id = record.origin_by_id
       end
