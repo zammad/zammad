@@ -10,12 +10,14 @@ class AgentNavigationAndTitleTest < TestCase
     )
     tasks_close_all()
 
-    # since we run the basic functionality tests via Capybara the clues are shown
-    # and skipped after the login. This removes the 'is-active' class from the
-    # dashboard link causing the following tests to fail. As the browser tests are
-    # deprecated and there is no easy fix to change that we refresh the page as
-    # a workaround. This will cause the 'is-active' class to be set on the menu item again
+    # since we run the basic functionality tests via Capybara now the clues are shown
+    # and closed after the login. This unfortunately removes the 'is-active' class from the
+    # dashboard link causing the following tests to fail.
+    # Because the browser tests are deprecated and there is no easy fix to change the
+    # behavior we refresh the page and wait for it to finish loading the app as a workaround.
+    # This will cause the 'is-active' class to be set on the menu item again
     reload()
+    sleep 4
 
     # dashboard after login
     verify_title(value: 'dashboard')
