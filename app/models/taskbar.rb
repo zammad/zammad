@@ -15,6 +15,8 @@ class Taskbar < ApplicationModel
   after_update    :notify_clients
   after_destroy   :update_preferences_infos, :notify_clients
 
+  association_attributes_ignored :user
+
   client_notification_events_ignored :create, :update, :touch
 
   client_notification_send_to :user_id
