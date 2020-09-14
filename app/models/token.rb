@@ -100,7 +100,7 @@ cleanup old token
   end
 
   def permissions?(permissions)
-    return false if !user.permissions?(permissions)
+    return false if !effective_user.permissions?(permissions)
     return false if preferences[:permission].blank?
 
     Array(permissions).any? do |parentless|
@@ -108,6 +108,17 @@ cleanup old token
         preferences[:permission].include?(permission)
       end
     end
+  end
+
+  # allows to evaluate token permissions in context of given user instead of owner
+  # @param [User] user to use as context for the given block
+  # @param block to evaluate in given context
+  def with_context(user:, &block)
+    @effective_user = user
+
+    instance_eval(&block) if block_given?
+  ensure
+    @effective_user = nil
   end
 
   private
@@ -118,5 +129,10 @@ cleanup old token
       break if !Token.exists?(name: name)
     end
     true
+  end
+
+  # token owner or user set by #with_context
+  def effective_user
+    @effective_user || user
   end
 end
