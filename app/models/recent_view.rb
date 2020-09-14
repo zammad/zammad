@@ -13,6 +13,8 @@ class RecentView < ApplicationModel
   after_update  :notify_clients
   after_destroy :notify_clients
 
+  association_attributes_ignored :created_by
+
   def self.log(object, o_id, user)
     return if !access(object, o_id, user)
 

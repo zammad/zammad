@@ -24,6 +24,8 @@ class Organization < ApplicationModel
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
 
+  association_attributes_ignored :tickets
+
   activity_stream_permission 'admin.role'
 
   sanitized_html :note
