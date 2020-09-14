@@ -10,6 +10,13 @@ class AgentNavigationAndTitleTest < TestCase
     )
     tasks_close_all()
 
+    # since we run the basic functionality tests via Capybara the clues are shown
+    # and skipped after the login. This removes the 'is-active' class from the
+    # dashboard link causing the following tests to fail. As the browser tests are
+    # deprecated and there is no easy fix to change that we refresh the page as
+    # a workaround. This will cause the 'is-active' class to be set on the menu item again
+    reload()
+
     # dashboard after login
     verify_title(value: 'dashboard')
     exists(css: '#navigation .js-menu .js-dashboardMenuItem.is-active')

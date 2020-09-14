@@ -10,9 +10,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/aaa_getting_started_test.rb
   cp contrib/auto_wizard_test.json auto_wizard.json
   cp test/integration/aaa_auto_wizard_base_setup_test.rb test/browser/aaa_auto_wizard_base_setup_test.rb
-  # test/browser/aab_basic_urls_test.rb
-  # test/browser/aab_unit_test.rb
-  # test/browser/aac_basic_richtext_test.rb
   rm test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_calendar_sla_test.rb
@@ -90,9 +87,6 @@ elif [ "$LEVEL" == '2' ]; then
 
   # only ticket action 2/3
   # test/browser/aaa_getting_started_test.rb
-  rm test/browser/aab_basic_urls_test.rb
-  rm test/browser/aab_unit_test.rb
-  rm test/browser/aac_basic_richtext_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_calendar_sla_test.rb
@@ -170,9 +164,6 @@ elif [ "$LEVEL" == '3' ]; then
 
   # only ticket action 2/3
   # test/browser/aaa_getting_started_test.rb
-  rm test/browser/aab_basic_urls_test.rb
-  rm test/browser/aab_unit_test.rb
-  rm test/browser/aac_basic_richtext_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_calendar_sla_test.rb
@@ -250,9 +241,6 @@ elif [ "$LEVEL" == '4' ]; then
 
   # only ticket action 3/3
   # test/browser/aaa_getting_started_test.rb
-  rm test/browser/aab_basic_urls_test.rb
-  rm test/browser/aab_unit_test.rb
-  rm test/browser/aac_basic_richtext_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_calendar_sla_test.rb
@@ -329,9 +317,6 @@ elif [ "$LEVEL" == '5' ]; then
   echo "slicing level 5"
 
   # only profile action & admin
-  rm test/browser/aab_basic_urls_test.rb
-  rm test/browser/aab_unit_test.rb
-  rm test/browser/aac_basic_richtext_test.rb
   # test/browser/abb_one_group_test.rb
   # test/browser/admin_channel_email_test.rb
   # test/browser/admin_calendar_sla_test.rb
@@ -411,9 +396,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/aaa_getting_started_test.rb
   cp contrib/auto_wizard_test.json auto_wizard.json
   cp test/integration/aaa_auto_wizard_base_setup_test.rb test/browser/aaa_auto_wizard_base_setup_test.rb
-  rm test/browser/aab_basic_urls_test.rb
-  rm test/browser/aab_unit_test.rb
-  rm test/browser/aac_basic_richtext_test.rb
   rm test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_calendar_sla_test.rb
