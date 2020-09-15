@@ -1,5 +1,5 @@
 class App.DataPrivacyTask extends App.Model
-  @configure 'DataPrivacyTask', 'name', 'state', 'deletable_id', 'deletable_type', 'preferences'
+  @configure 'DataPrivacyTask', 'state', 'deletable_id', 'deletable_type', 'preferences'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/data_privacy_tasks'
   @configure_attributes = [
