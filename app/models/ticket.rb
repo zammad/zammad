@@ -14,6 +14,7 @@ class Ticket < ApplicationModel
   include HasKarmaActivityLog
   include HasLinks
   include HasObjectManagerAttributesValidation
+  include Webhooks::Notify
 
   include Ticket::Escalation
   include Ticket::Subject

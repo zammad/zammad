@@ -1,5 +1,5 @@
-git FactoryBot.define do
+FactoryBot.define do
   factory :webhook do
-    url { "MyString" }
+    url { "http://api.mycompany.com/webhook/support" }
   end
 end
