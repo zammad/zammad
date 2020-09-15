@@ -4,8 +4,8 @@ module Webhooks
     extend ActiveSupport::Concern
 
     included do
-      after_create   :schedule_webhook_notification_create
-      after_update   :schedule_webhook_notification_update
+      after_create :schedule_webhook_notification_create
+      after_update :schedule_webhook_notification_update
       after_destroy :schedule_webhook_notification_destroy
     end
 

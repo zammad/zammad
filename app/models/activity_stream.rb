@@ -9,14 +9,6 @@ class ActivityStream < ApplicationModel
   belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'activity_stream_type_id', optional: true
   # rubocop:enable Rails/InverseOf
 
-  after_create :notify_webhook
-
-  def notify_webhook
-    Webhook.where(active: true).find_each do |webhook|
-      WebhookNotifyJob.perform_later(webhook, self)
-    end
-  end
-
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of
   # the wanted indentation of the rubocop re-enabling above
