@@ -14,6 +14,17 @@ class App.TaskbarWidget extends App.CollectionController
   constructor: ->
     super
 
+    App.Event.bind(
+      'Taskbar:destroy'
+      (data, event) =>
+        task = App.Taskbar.find(data.id)
+        return if !task
+        return if !task.key
+
+        @removeTask(task.key)
+      'Collection::Subscribe::Taskbar'
+    )
+
     dndOptions =
       tolerance:            'pointer'
       distance:             15
@@ -80,6 +91,10 @@ class App.TaskbarWidget extends App.CollectionController
           event: e
         )
         return
+    @removeTask(key)
+
+  removeTask: (key = false) =>
+    return if !key
 
     # check if active task is closed
     currentTask    = App.TaskManager.get(key)

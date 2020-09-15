@@ -149,6 +149,14 @@ class ActionRow extends App.ObserverActionRow
           callback: @resendVerificationEmail
         })
 
+    if @permissionCheck('admin.data_privacy')
+      actions.push {
+        title:    'Delete'
+        name:     'delete'
+        callback: =>
+          @navigate "#system/data_privacy/#{user.id}"
+      }
+
     actions
 
 class Object extends App.ObserverController

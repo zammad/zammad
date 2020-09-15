@@ -55,28 +55,6 @@ class Index extends App.ControllerSubContent
   renderResult: (user_ids = []) ->
     @stopLoading()
 
-    callbackHeader = (header) ->
-      attribute =
-        name:         'switch_to'
-        display:      'Action'
-        className:    'actionCell'
-        translation:  true
-        width:        '250px'
-        displayWidth: 250
-        unresizable:  true
-      header.push attribute
-      header
-
-    callbackAttributes = (value, object, attribute, header) ->
-      text                  = App.i18n.translateInline('View from user\'s perspective')
-      value                 = ' '
-      attribute.raw         = ' <span class="btn btn--primary btn--small btn--slim switchView" title="' + text + '">' + App.Utils.icon('switchView') + '<span>' + text + '</span></span>'
-      attribute.class       = ''
-      attribute.parentClass = 'actionCell no-padding'
-      attribute.link        = ''
-      attribute.title       = App.i18n.translateInline('Switch to')
-      value
-
     switchTo = (id,e) =>
       e.preventDefault()
       e.stopPropagation()
@@ -129,15 +107,38 @@ class Index extends App.ControllerSubContent
       model:   App.User
       objects: users
       class:   'user-list'
-      callbackHeader: [callbackHeader]
-      callbackAttributes:
-        switch_to: [
-          callbackAttributes
-        ]
-      bindCol:
-        switch_to:
-          events:
-            'click': switchTo
+      customActions: [
+        {
+          name: 'switchTo'
+          display: 'View from user\'s perspective'
+          icon: 'switchView '
+          class: 'create js-switchTo'
+          callback: (id) =>
+            @disconnectClient()
+            $('#app').hide().attr('style', 'display: none!important')
+            @delay(
+              =>
+                App.Auth._logout(false)
+                @ajax(
+                  id:          'user_switch'
+                  type:        'GET'
+                  url:         "#{@apiPath}/sessions/switch/#{id}"
+                  success:     (data, status, xhr) =>
+                    location = "#{window.location.protocol}//#{window.location.host}#{data.location}"
+                    @windowReload(undefined, location)
+                )
+              800
+            )
+        }
+        {
+          name: 'delete'
+          display: 'Delete'
+          icon: 'trash'
+          class: 'delete'
+          callback: (id) =>
+            @navigate "#system/data_privacy/#{id}"
+        },
+      ]
       bindRow:
         events:
           'click': edit

@@ -25,6 +25,8 @@ RSpec.describe 'Ticket Create', type: :system do
   context 'S/MIME', authenticated_as: :authenticate do
     def authenticate
       Setting.set('smime_integration', true)
+      Setting.set('smime_config', smime_config) if defined?(smime_config)
+
       current_user
     end
 
@@ -192,10 +194,6 @@ RSpec.describe 'Ticket Create', type: :system do
         context 'Group default behavior' do
 
           let(:smime_config) { {} }
-
-          before do
-            Setting.set('smime_config', smime_config)
-          end
 
           shared_examples 'security defaults example' do |sign:, encrypt:|
 

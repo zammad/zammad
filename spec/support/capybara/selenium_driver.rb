@@ -6,8 +6,13 @@ Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    loggingPrefs: {
+    loggingPrefs:  {
       browser: 'ALL'
+    },
+    chromeOptions: {
+      prefs: {
+        'intl.accept_languages' => 'en-US'
+      },
     },
   )
 

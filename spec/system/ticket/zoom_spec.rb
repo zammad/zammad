@@ -203,6 +203,48 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
       end
     end
+
+    context 'to inbound phone call', current_user_id: -> { agent.id }, authenticated_as: -> { agent } do
+      let(:agent)    { create(:agent, groups: [Group.first]) }
+      let(:customer) { create(:agent) }
+      let(:ticket)   { create(:ticket, customer: customer, group: agent.groups.first) }
+      let!(:article) { create(:ticket_article, :inbound_phone, ticket: ticket) }
+
+      it 'goes to customer email' do
+        visit "ticket/zoom/#{ticket.id}"
+
+        within :active_ticket_article, article do
+          click '.js-ArticleAction[data-type=emailReply]'
+        end
+
+        within :active_content do
+          within '.article-new' do
+            expect(find('[name=to]', visible: :all).value).to eq customer.email
+          end
+        end
+      end
+    end
+
+    context 'to outbound phone call', current_user_id: -> { agent.id }, authenticated_as: -> { agent } do
+      let(:agent)    { create(:agent, groups: [Group.first]) }
+      let(:customer) { create(:agent) }
+      let(:ticket)   { create(:ticket, customer: customer, group: agent.groups.first) }
+      let!(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
+
+      it 'goes to customer email' do
+        visit "ticket/zoom/#{ticket.id}"
+
+        within :active_ticket_article, article do
+          click '.js-ArticleAction[data-type=emailReply]'
+        end
+
+        within :active_content do
+          within '.article-new' do
+            expect(find('[name=to]', visible: :all).value).to eq customer.email
+          end
+        end
+      end
+    end
   end
 
   describe 'delete article', authenticated_as: :authenticate do

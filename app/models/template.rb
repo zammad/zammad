@@ -3,6 +3,10 @@
 class Template < ApplicationModel
   include ChecksClientNotification
 
+  belongs_to :user, optional: true
+
   store     :options
   validates :name, presence: true
+
+  association_attributes_ignored :user
 end

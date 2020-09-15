@@ -5,6 +5,8 @@ class TextModule < ApplicationModel
   include ChecksHtmlSanitized
   include CanCsvImport
 
+  belongs_to :user, optional: true
+
   validates :name,    presence: true
   validates :content, presence: true
 
@@ -16,6 +18,8 @@ class TextModule < ApplicationModel
   csv_delete_possible true
 
   has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
+
+  association_attributes_ignored :user
 
 =begin
 

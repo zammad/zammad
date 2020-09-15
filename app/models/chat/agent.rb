@@ -1,5 +1,8 @@
 class Chat::Agent < ApplicationModel
 
+  belongs_to :created_by, class_name: 'User'
+  belongs_to :updated_by, class_name: 'User'
+
   def seads_available
     concurrent - active_chat_count
   end

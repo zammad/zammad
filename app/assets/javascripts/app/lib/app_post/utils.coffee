@@ -1086,7 +1086,7 @@ class App.Utils
       # the article we are replying to is an outbound call
       if article.sender.name is 'Agent'
         if article.to?.match(/@/)
-          articleNew.to = article.to
+          articleNew.to = App.Utils.parseAddressListLocal(article.to).join(', ')
 
       # the article we are replying to is an incoming call
       else if article.from?.match(/@/)

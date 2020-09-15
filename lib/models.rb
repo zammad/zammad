@@ -114,7 +114,7 @@ returns
 
 =end
 
-  def self.references(object_name, object_id)
+  def self.references(object_name, object_id, include_zero = false)
     object_name = object_name.to_s
 
     # check if model exists
@@ -143,7 +143,7 @@ returns
         next if !model_attributes[:attributes].include?(item)
 
         count = model_class.where("#{item} = ?", object_id).count
-        next if count.zero?
+        next if count.zero? && !include_zero
 
         if !references[model_class.to_s][item]
           references[model_class.to_s][item] = 0
@@ -166,7 +166,7 @@ returns
 
         if reflection_value.options[:class_name] == object_name
           count = model_class.where("#{col_name} = ?", object_id).count
-          next if count.zero?
+          next if count.zero? && !include_zero
 
           if !references[model_class.to_s][col_name]
             references[model_class.to_s][col_name] = 0
@@ -179,7 +179,7 @@ returns
         next if reflection_value.name != object_name.downcase.to_sym
 
         count = model_class.where("#{col_name} = ?", object_id).count
-        next if count.zero?
+        next if count.zero? && !include_zero
 
         if !references[model_class.to_s][col_name]
           references[model_class.to_s][col_name] = 0

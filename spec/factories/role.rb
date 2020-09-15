@@ -7,5 +7,9 @@ FactoryBot.define do
     factory :agent_role do
       permissions { Permission.where(name: 'ticket.agent') }
     end
+
+    trait :admin do
+      permissions { Permission.where(name: 'admin') }
+    end
   end
 end

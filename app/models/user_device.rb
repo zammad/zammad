@@ -5,8 +5,12 @@ class UserDevice < ApplicationModel
   store     :location_details
   validates :name, presence: true
 
+  belongs_to :user
+
   before_create  :fingerprint_validation
   before_update  :fingerprint_validation
+
+  association_attributes_ignored :user
 
 =begin
 

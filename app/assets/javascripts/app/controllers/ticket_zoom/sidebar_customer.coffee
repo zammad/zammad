@@ -25,6 +25,15 @@ class SidebarCustomer extends App.Controller
           name:     'customer-edit'
           callback: @editCustomer
         }
+
+    if @permissionCheck('admin.data_privacy')
+      @item.sidebarActions.push {
+        title:    'Delete Customer'
+        name:     'customer-delete'
+        callback: =>
+          @navigate "#system/data_privacy/#{@ticket.customer_id}"
+      }
+
     @item
 
   metaBadge: (user) =>
