@@ -3,3 +3,9 @@ rspec:postgresql:
   extends:
     - .services_postgresql
     - .template_rspec
+
+rspec:postgresql:db_reset:
+  stage: test
+  extends:
+    - .services_postgresql
+    - .template_rspec_db_reset
