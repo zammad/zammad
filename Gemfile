@@ -48,6 +48,9 @@ gem 'dalli'
 gem 'coffee-rails'
 gem 'coffee-script-source'
 
+# file persistence
+gem 'aws-sdk-s3', '~> 1'
+
 # asset handling - frontend templating
 gem 'eco'
 
