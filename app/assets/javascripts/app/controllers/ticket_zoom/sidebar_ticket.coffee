@@ -22,7 +22,7 @@ class Edit extends App.ObserverController
        @permissionCheck('admin') || ticket.currentView() is 'agent'
       new App.ControllerForm(
         elReplace:      @el
-        model:          { configure_attributes: @formMeta.configure_attributes }
+        model:          { configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
         screen:         'edit'
         handlersConfig: handlers
         filter:         @formMeta.filter
@@ -35,7 +35,7 @@ class Edit extends App.ObserverController
     else
       new App.ControllerForm(
         elReplace:      @el
-        model:          { configure_attributes: @formMeta.configure_attributes }
+        model:          { configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
         screen:         'edit'
         handlersConfig: handlers
         filter:         @formMeta.filter
