@@ -1,57 +1,51 @@
 require 'rails_helper'
 
 RSpec.describe Webhooks::NotificationJob, type: :job do
-
   describe '#perform' do
-    it 'sends a post request to webhook URL' do
+    let(:webhook) { create(:webhook) }
+    let!(:ticket) { create(:ticket) }
+    let(:webhook_status) { 200 }
 
-      described_class.perform_now
-      
+    before do
+      stub_request(:post, webhook.url).to_return(status: webhook_status)
     end
 
-    # before do
-    #   Setting.set('system_init_done', true)
-    # end
+    it 'sends a post request to webhook URL' do
+      described_class.perform_now(
+        webhook_id:    webhook.id,
+        resource_type: 'ticket',
+        resource_id:   ticket.id,
+        event:         'created'
+      )
 
-    # let!(:organization) { create(:organization, name: 'test') }
-    # let!(:admin) { create(:admin) }
-    # let!(:user) { create(:customer, organization: organization) }
+      expect(WebMock).to have_requested(:post, webhook.url)
+        .with(
+          body:    {
+            webhook_id:    webhook.id,
+            event:         'created',
+            resource_type: 'ticket',
+            resource_id:   ticket.id
+          },
+          headers: {
+            'Content-Type' => 'application/json',
+            'User-Agent'   => "Zammad/#{Version.get}"
+          }
+        )
+    end
 
-    # it 'checks if the user is deleted' do
-    #   create(:data_privacy_task, deletable: user)
-    #   described_class.perform_now
-    #   expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
-    # end
+    context 'when the webhook endpoint fail' do
+      let(:webhook_status) { 404 }
 
-    # it 'checks if the organization is deleted' do
-    #   create(:data_privacy_task, deletable: user)
-    #   described_class.perform_now
-    #   expect(organization.reload).to be_a_kind_of(Organization)
-    # end
+      it 'retries on exception' do
+        described_class.perform_now(
+          webhook_id:    webhook.id,
+          resource_type: 'ticket',
+          resource_id:   ticket.id,
+          event:         'created'
+        )
 
-    # it 'checks if the state is completed' do
-    #   task = create(:data_privacy_task, deletable: user)
-    #   described_class.perform_now
-    #   expect(task.reload.state).to eq('completed')
-    # end
-
-    # it 'checks if the user is deleted (delete_organization=true)' do
-    #   create(:data_privacy_task, deletable: user, preferences: { delete_organization: 'true' })
-    #   described_class.perform_now
-    #   expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
-    # end
-
-    # it 'checks if the organization is deleted (delete_organization=true)' do
-    #   create(:data_privacy_task, deletable: user, preferences: { delete_organization: 'true' })
-    #   described_class.perform_now
-    #   expect { organization.reload }.to raise_error(ActiveRecord::RecordNotFound)
-    # end
-
-    # it 'checks creation of activity stream log' do
-    #   create(:data_privacy_task, deletable: user, created_by: admin)
-    #   travel 15.minutes
-    #   described_class.perform_now
-    #   expect(admin.activity_stream(20).any? { |entry| entry.type.name == 'completed' }).to be true
-    # end
+        expect(described_class).to have_been_enqueued
+      end
+    end
   end
 end

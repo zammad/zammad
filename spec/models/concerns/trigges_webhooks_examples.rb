@@ -6,7 +6,7 @@ RSpec.shared_examples 'TriggesWebhooks' do
 
     context 'on creation', performs_jobs: true do
       it 'schedules the webhooks notification job' do
-        expect { subject }.to have_enqueued_job(Webhooks::NotificationJob).with(resource_type: described_class.name.underscore, resource_id: anything, webhook_id: webhook.id, event: 'created')
+        expect { subject }.to have_enqueued_job(Webhooks::NotificationJob).with(object: described_class.name, o_id: anything, webhook_id: webhook.id, event: 'created', notification_id: anything, occurred_at: anything)
       end
     end
 
@@ -14,7 +14,7 @@ RSpec.shared_examples 'TriggesWebhooks' do
       it 'schedules the webhooks notification job' do
         subject
 
-        expect { subject.update(title: 'My new title') }.to have_enqueued_job(Webhooks::NotificationJob).with(resource_type: described_class.name.underscore, resource_id: subject.id, webhook_id: webhook.id, event: 'updated')
+        expect { subject.update(title: 'My new title') }.to have_enqueued_job(Webhooks::NotificationJob).with(object: described_class.name, o_id: subject.id, webhook_id: webhook.id, event: 'updated', notification_id: anything, occurred_at: anything)
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.shared_examples 'TriggesWebhooks' do
       it 'schedules the webhooks notification job' do
         subject
 
-        expect { subject.destroy }.to have_enqueued_job(Webhooks::NotificationJob).with(resource_type: described_class.name.underscore, resource_id: subject.id, webhook_id: webhook.id, event: 'destroyed')
+        expect { subject.destroy }.to have_enqueued_job(Webhooks::NotificationJob).with(o_id: subject.id, object: described_class.name, event: 'destroyed', webhook_id: webhook.id, notification_id: anything, occurred_at: anything)
       end
     end
   end

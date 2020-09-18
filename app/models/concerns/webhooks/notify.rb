@@ -24,12 +24,16 @@ module Webhooks
     private
 
     def schedule_webhook_notification(type)
+      notification_id = SecureRandom.uuid
+
       Webhook.find_each do |webhook|
         Webhooks::NotificationJob.perform_later(
-          resource_type: self.class.name.underscore,
-          resource_id:   id,
-          webhook_id:    webhook.id,
-          event:         type
+          o_id:            id,
+          object:          self.class.name,
+          event:           type,
+          webhook_id:      webhook.id,
+          notification_id: notification_id,
+          occurred_at:     Time.zone.now.as_json
         )
       end
     end

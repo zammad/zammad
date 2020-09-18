@@ -1,18 +1,32 @@
 module Webhooks
+  class NotificationFailed < StandardError; end
+
   class NotificationJob < ApplicationJob
-    def perform(webhook_id:)
-      # resource_type: described_class.name.underscore, resource_id: subject.id, webhook_id: webhook.id, event: 'updated'
-      webhook = webhook.find(webhook_id)
 
-      resp = Faraday.post(webhook.url,
-                          {},
-                          default_headers)
+    retry_on NotificationFailed, attempts: 5, wait: lambda { |executions|
+      executions * 10.seconds
+    }
 
+    def perform(payload)
+      webhook = Webhook.find(payload.fetch(:webhook_id))
+
+      response = Faraday.post(
+        webhook.url,
+        payload.to_json,
+        default_headers
+      )
+
+      if !response.success?
+        raise NotificationFailed
+      end
     end
+
+    private
 
     def default_headers
       {
-        'Content-Type' => 'application/json'
+        'Content-Type' => 'application/json',
+        'User-Agent'   => "Zammad/#{Version.get}"
       }
     end
   end
