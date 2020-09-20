@@ -17,7 +17,7 @@ class Ticket < ApplicationModel
   include HasTaskbars
 
   include Webhooks::Notify
-  
+
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Assets

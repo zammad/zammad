@@ -16,9 +16,7 @@ module Webhooks
         default_headers
       )
 
-      if !response.success?
-        raise NotificationFailed
-      end
+      raise NotificationFailed if !response.success?
     end
 
     private

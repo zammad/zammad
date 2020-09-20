@@ -1,16 +1,16 @@
 RSpec.shared_examples 'TriggesWebhooks' do
   subject { create(described_class.name.underscore) }
 
-  context 'when a webhook are created' do
+  context 'when there is a webhook created' do
     let(:webhook) { create(:webhook) }
 
-    context 'on creation', performs_jobs: true do
+    context 'when the record is created', performs_jobs: true do
       it 'schedules the webhooks notification job' do
         expect { subject }.to have_enqueued_job(Webhooks::NotificationJob).with(object: described_class.name, o_id: anything, webhook_id: webhook.id, event: 'created', notification_id: anything, occurred_at: anything)
       end
     end
 
-    context 'on updation', performs_jobs: true do
+    context 'when the record is updated', performs_jobs: true do
       it 'schedules the webhooks notification job' do
         subject
 
@@ -18,7 +18,7 @@ RSpec.shared_examples 'TriggesWebhooks' do
       end
     end
 
-    context 'on destroyng', performs_jobs: true do
+    context 'when the record is destroyed', performs_jobs: true do
       it 'schedules the webhooks notification job' do
         subject
 
@@ -27,14 +27,14 @@ RSpec.shared_examples 'TriggesWebhooks' do
     end
   end
 
-  context 'when no webhook are created' do
-    context 'on creation', performs_jobs: true do
+  context 'when there is no webhook created' do
+    context 'when the record is created', performs_jobs: true do
       it 'does not schedule webhooks notification job' do
         expect { subject }.not_to have_enqueued_job(Webhooks::NotificationJob)
       end
     end
 
-    context 'on updation', performs_jobs: true do
+    context 'when the record is updated', performs_jobs: true do
       it 'does not schedule webhooks notification job' do
         subject
 
@@ -42,7 +42,7 @@ RSpec.shared_examples 'TriggesWebhooks' do
       end
     end
 
-    context 'on destroyng', performs_jobs: true do
+    context 'when the record is destroyed', performs_jobs: true do
       it 'does not schedule webhooks notification job' do
         subject
 
