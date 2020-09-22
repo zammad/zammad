@@ -1,5 +1,29 @@
 # Change Log
 
+## [3.4.1](https://github.com/zammad/zammad/tree/3.4.1) (2020-09-22)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.4.0...3.4.1)
+
+**Implemented enhancements:**
+- Implement generic SSO button on login page [3128](https://github.com/zammad/zammad/issues/3128) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Attribute changes remove Owner of closed Ticket [3136](https://github.com/zammad/zammad/issues/3136) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Enhance/rework message header of forwarded mails [3091](https://github.com/zammad/zammad/issues/3091) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Allow uploaded S/MIME certificates to download in admin interface (like in other certificate managers) [3108](https://github.com/zammad/zammad/issues/3108) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+
+**Fixed bugs:**
+- Endpoint api/v1/ticket_articles/by_ticket ignores X-On-Behalf-Of  [3186](https://github.com/zammad/zammad/issues/3186) [[API](https://github.com/zammad/zammad/labels/API)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Active Google channels cause Email channels to loose email address every 86400s [3167](https://github.com/zammad/zammad/issues/3167) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+- Adding a note during bulk operation only works for one ticket [2985](https://github.com/zammad/zammad/issues/2985) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[bulk](https://github.com/zammad/zammad/labels/bulk)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Article body gets updated/re-sanitized when updating other Article attribute [3138](https://github.com/zammad/zammad/issues/3138) [[bug](https://github.com/zammad/zammad/labels/bug)] [[trigger](https://github.com/zammad/zammad/labels/trigger)]
+- Merging Tickets/Users/... does not update ExternalSync references [3123](https://github.com/zammad/zammad/issues/3123) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Deletion of communication article works for admins [3086](https://github.com/zammad/zammad/issues/3086) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Plus characters are stripped from email addresses and urls in ticket body [2494](https://github.com/zammad/zammad/issues/2494) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Not all attributes if chats are indexed by elasticsearch (chat.name and tags are missing) [3095](https://github.com/zammad/zammad/issues/3095) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- ServiceNow mails from other service providers are not detected [3110](https://github.com/zammad/zammad/issues/3110) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Search taskbars cause DeadLocks [3087](https://github.com/zammad/zammad/issues/3087) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[performance](https://github.com/zammad/zammad/labels/performance)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Failed to run import backend 'Import::Exchange'. Cause: Missing implementation of 'mapping' method for 'Sequencer::Unit::Import::Exchange::FolderContact::Mapping::Login' [3090](https://github.com/zammad/zammad/issues/3090) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Required Doorkeeper scope is missing and fails authentication [3085](https://github.com/zammad/zammad/issues/3085) [[API](https://github.com/zammad/zammad/labels/API)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+
+
 ## [3.4.0](https://github.com/zammad/zammad/tree/3.4.0) (2020-06-15)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.3.0...3.4.0)
 
