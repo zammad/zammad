@@ -180,11 +180,13 @@ module CommonActions
   end
 
   def open_article_meta
-    wrapper = all(%(div.ticket-article-item)).last
+    retry_on_stale do
+      wrapper = all('div.ticket-article-item').last
 
-    wrapper.find('.article-content .textBubble').click
-    wait(3).until do
-      wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
+      wrapper.find('.article-content .textBubble').click
+      wait(3).until do
+        wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
+      end
     end
   end
 

@@ -1,5 +1,35 @@
 module BrowserTestHelper
 
+  # Sometimes tests refer to elements that get removed/re-added to the DOM when
+  # updating the UI. This causes Selenium to throw a StaleElementReferenceError exception.
+  # This method catches this error and retries the given amount of times re-raising
+  # the exception if the element is still stale.
+  # @see https://developer.mozilla.org/en-US/docs/Web/WebDriver/Errors/StaleElementReference WebDriver definition
+  #
+  # @example
+  #  retry_on_stale do
+  #    find('.now-here-soon-gone').click
+  #  end
+  #
+  #  retry_on_stale(retries: 10) do
+  #    find('.now-here-soon-gone').click
+  #  end
+  #
+  # @raise [Selenium::WebDriver::Error::StaleElementReferenceError] If element is still stale after given number of retries
+  def retry_on_stale(retries: 3)
+    tries ||= 0
+
+    yield
+  rescue Selenium::WebDriver::Error::StaleElementReferenceError
+    raise if tries == retries
+
+    wait_time = tries
+    tries += 1
+
+    Rails.logger.info "Stale element found. Retry #{tries}/retries (sleeping: #{wait_time})"
+    sleep wait_time
+  end
+
   # Finds an element and clicks it - wrapped in one method.
   #
   # @example
