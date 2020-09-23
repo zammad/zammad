@@ -11,7 +11,7 @@ rubocop:
   <<: *template_pre
   script:
     - bundle install -j $(nproc) --path vendor
-    - bundle exec rubocop
+    - bundle exec rubocop --parallel
 
 coffeelint:
   <<: *template_pre
