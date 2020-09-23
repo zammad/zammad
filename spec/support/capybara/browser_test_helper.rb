@@ -122,9 +122,16 @@ module BrowserTestHelper
     #
     def until_constant
       previous = nil
-      loop do
-        sleep __getobj__.instance_variable_get(:@interval)
+      timeout  = __getobj__.instance_variable_get(:@timeout)
+      interval = __getobj__.instance_variable_get(:@interval)
+      rounds   = (timeout / interval).to_i
+
+      rounds.times do
+        sleep interval
+
         latest = yield
+
+        next if latest.nil?
         break if latest == previous
 
         previous = latest
