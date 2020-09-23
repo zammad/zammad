@@ -96,7 +96,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
       }
     end
 
-    def search_es_filter(es_response, _query, kb_locale, options)
+    def search_es_filter(es_response, _query, kb_locales, options)
       return es_response if options[:user]&.permissions?('knowledge_base.editor')
 
       answer_translations_id = es_response.pluck(:id)
@@ -104,7 +104,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
       allowed_answer_translation_ids = KnowledgeBase::Answer
         .internal
         .joins(:translations)
-        .where(knowledge_base_answer_translations: { id: answer_translations_id, kb_locale_id: kb_locale.id })
+        .where(knowledge_base_answer_translations: { id: answer_translations_id, kb_locale_id: kb_locales.map(&:id) })
         .pluck('knowledge_base_answer_translations.id')
 
       es_response.filter { |elem| allowed_answer_translation_ids.include? elem[:id].to_i }

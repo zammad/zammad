@@ -43,5 +43,20 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
     include_examples 'verify given permissions', trait: :internal,  admin: true, agent: true,  customer: false
     include_examples 'verify given permissions', trait: :draft,     admin: true, agent: false, customer: false
     include_examples 'verify given permissions', trait: :archived,  admin: true, agent: false, customer: false
+
+    shared_examples 'verify multiple KBs support' do |elasticsearch:|
+      it 'searches in multiple KBs', searchindex: elasticsearch do
+        title = Faker::Appliance.equipment
+        user  = create(:admin)
+
+        create_list(:knowledge_base_answer, 2, :published, translation_attributes: { title: title })
+
+        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+        expect(described_class.search({ query: title, current_user: user }).count).to be 2
+      end
+    end
+
+    include_examples 'verify multiple KBs support', elasticsearch: true
+    include_examples 'verify multiple KBs support', elasticsearch: false
   end
 end

@@ -3,6 +3,7 @@ FactoryBot.define do
     transient do
       add_translation { true }
       translation_traits { [] }
+      translation_attributes { {} }
       knowledge_base { nil }
     end
 
@@ -11,7 +12,7 @@ FactoryBot.define do
     before(:create) do |answer, context|
       next if answer.translations.present?
 
-      answer.translations << build('knowledge_base/answer/translation', *context.translation_traits, answer: answer)
+      answer.translations << build('knowledge_base/answer/translation', *context.translation_traits, answer: answer, **context.translation_attributes)
     end
 
     trait :draft # empty placeholder for better readability

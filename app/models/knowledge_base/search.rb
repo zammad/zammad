@@ -20,27 +20,27 @@ class KnowledgeBase
           user:     current_user
         }
 
-        kb_locale = KnowledgeBase::Locale.preferred(current_user, KnowledgeBase.first)
+        kb_locales = KnowledgeBase.active.map { |elem| KnowledgeBase::Locale.preferred(current_user, elem) }
 
         # try search index backend
         if SearchIndexBackend.enabled?
-          search_es(params[:query], kb_locale, options)
+          search_es(params[:query], kb_locales, options)
         else
           # fallback do sql query
-          search_sql(params[:query], kb_locale, options)
+          search_sql(params[:query], kb_locales, options)
         end
       end
 
-      def search_es(query, kb_locale, options)
-        options[:query_extension] = { bool: { filter: { term: { kb_locale_id: kb_locale.id } } } }
+      def search_es(query, kb_locales, options)
+        options[:query_extension] = { bool: { filter: { terms: { kb_locale_id: kb_locales.map(&:id) } } } }
 
         es_response = SearchIndexBackend.search(query, name, options)
-        es_response = search_es_filter(es_response, query, kb_locale, options) if defined? :search_es_filter
+        es_response = search_es_filter(es_response, query, kb_locales, options) if defined? :search_es_filter
 
         es_response.map { |item| lookup(id: item[:id]) }.compact
       end
 
-      def search_sql(query, kb_locale, options)
+      def search_sql(query, kb_locales, options)
         table_name       = arel_table.name
         order_sql        = search_get_order_sql(options[:sort_by], options[:order_by], "#{table_name}.updated_at ASC")
 
@@ -48,7 +48,7 @@ class KnowledgeBase
         query.delete! '*'
 
         search_fallback("%#{query}%", options: options)
-          .where(kb_locale: kb_locale)
+          .where(kb_locale: kb_locales)
           .order(Arel.sql(order_sql))
           .offset(options[:from])
           .limit(options[:limit])
