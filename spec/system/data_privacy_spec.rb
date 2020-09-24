@@ -57,6 +57,22 @@ RSpec.describe 'Data Privacy', type: :system, searchindex: true, authenticated_a
         DataPrivacyTaskJob.perform_now
         expect(page).to have_text('completed', wait: 5)
       end
+
+      it 'deletes customer by email' do
+        visit 'system/data_privacy'
+        click '.js-new'
+
+        find(:css, '.js-input').send_keys(customer.email)
+        expect(page).to have_css('.searchableSelect-option-text', wait: 5)
+        click '.searchableSelect-option-text'
+        fill_in 'Are you sure?', with: 'DELETE'
+        expect(page).to have_text('DELETE ORGANIZATION?', wait: 5)
+        click '.js-submit'
+
+        expect(page).to have_text('in process', wait: 5)
+        DataPrivacyTaskJob.perform_now
+        expect(page).to have_text('completed', wait: 5)
+      end
     end
   end
 

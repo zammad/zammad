@@ -19,6 +19,7 @@ Zammad::Application.routes.draw do
   match '/tests_form_validation',             to: 'tests#form_validation',            via: :get
   match '/tests_form_column_select',          to: 'tests#form_column_select',         via: :get
   match '/tests_form_searchable_select',      to: 'tests#form_searchable_select',     via: :get
+  match '/tests_form_autocompletion_ajax',    to: 'tests#form_autocompletion_ajax',   via: :get
   match '/tests_form_ticket_perform_action',  to: 'tests#form_ticket_perform_action', via: :get
   match '/tests_form_sla_times',              to: 'tests#form_sla_times',             via: :get
   match '/tests_form_skip_rendering',         to: 'tests#form_skip_rendering',        via: :get
