@@ -5,7 +5,7 @@
     - .tags_docker
     - .rules_singletest
   before_script:
-    - '' # disable before_script for pre "non-application" env
+    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
 
 rubocop:
   <<: *template_pre
@@ -29,5 +29,7 @@ github:
   <<: *template_pre
   tags:
     - deploy
+  before_script:
+    - "" # no RVM present in deploy ENV
   script:
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git

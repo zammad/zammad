@@ -1,5 +1,5 @@
 default:
-  image: registry.znuny.com/docker/zammad-ruby:2.6.6
+  image: registry.znuny.com/docker/zammad-ci:stable
 
 include:
   - local: '/.gitlab/ci/base.yml'
@@ -39,12 +39,13 @@ variables:
 # as a key for the cache to avoid cache growth and incompatibilities between
 # the gems. Search hook: 2.6.6 (change it when updating the Ruby version too)
 cache:
-  key: "ruby266"
+  key: "centos7ruby266"
   paths:
     - vendor/ruby
 
 # Initialize application env
 before_script:
+  - source /etc/profile.d/rvm.sh
   - bundle install -j $(nproc) --path vendor
   - bundle exec ruby script/build/database_config.rb
 
