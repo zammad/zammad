@@ -4,40 +4,59 @@ RSpec.describe Webhooks::NotificationJob, type: :job do
   describe '#perform' do
     subject(:perform!) do
       described_class.perform_now(
-        webhook_id:    webhook.id,
-        resource_type: 'ticket',
-        resource_id:   ticket.id,
-        event:         'created'
+        ticket_id:   ticket.id,
+        trigger_id:  trigger.id,
+        delivery_id: delivery_id
       )
     end
 
     let!(:ticket) { create(:ticket) }
-    let(:webhook) { create(:webhook) }
-    let(:webhook_status) { 200 }
-    let(:webhook_body) do
-      {
-        webhook_id:    webhook.id,
-        event:         'created',
-        resource_type: 'ticket',
-        resource_id:   ticket.id
-      }
+    let(:trigger) do
+      create(:trigger,
+             perform: {
+               'notification.webhook' => {
+                 endpoint: 'http://api.mycompany.com/webhook/support',
+                 token:    token
+               }
+             })
     end
+
+    let(:delivery_id) { 'de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9' }
+    let(:token) { 's3cr3t-t0k3n' }
+
+    let(:webhook_status) { 200 }
     let(:webhook_headers) do
       {
-        'Content-Type' => 'application/json',
-        'User-Agent'   => "Zammad/#{Version.get}"
+        'Content-Type'      => 'application/json',
+        'User-Agent'        => "Zammad/#{Version.get}",
+        'X-Zammad-Trigger'  => trigger.name,
+        'X-Zammad-Delivery' => delivery_id
       }
     end
 
     before do
-      stub_request(:post, webhook.url).to_return(status: webhook_status)
+      stub_request(:post, 'http://api.mycompany.com/webhook/support').to_return(status: webhook_status)
     end
 
-    it 'sends a post request to webhook URL' do
-      perform!
+    context 'with trigger token configured' do
 
-      expect(WebMock).to have_requested(:post, webhook.url)
-        .with(body: webhook_body, headers: webhook_headers)
+      it 'sends a post request to webhook URL with signature in header' do
+        perform!
+
+        expect(WebMock).to have_requested(:post, 'http://api.mycompany.com/webhook/support')
+          .with(body: hash_including(ticket.as_json), headers: webhook_headers.merge( 'X-Hub-Signature' => OpenSSL::HMAC.hexdigest('sha1', token, 'verified'), 'X-Zammad-Delivery' => delivery_id))
+      end
+    end
+
+    context 'without trigger token configured' do
+      let(:token) { nil }
+
+      it 'sends a post request to webhook URL without signature in header' do
+        perform!
+
+        expect(WebMock).to have_requested(:post, 'http://api.mycompany.com/webhook/support')
+          .with(body: hash_including(ticket.as_json), headers: webhook_headers)
+      end
     end
 
     context 'when the webhook endpoint fail' do

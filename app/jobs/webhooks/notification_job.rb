@@ -7,13 +7,20 @@ module Webhooks
       executions * 10.seconds
     }
 
-    def perform(payload)
-      webhook = Webhook.find(payload.fetch(:webhook_id))
+    def perform(ticket_id:, trigger_id:, delivery_id:)
+      ticket = Ticket.lookup(id: ticket_id)
+      trigger = Trigger.find(trigger_id)
+      webhook = trigger.perform['notification.webhook']
 
       response = Faraday.post(
-        webhook.url,
-        payload.to_json,
-        default_headers
+        webhook['endpoint'],
+        build_payload(ticket),
+        {
+          'Content-Type'      => 'application/json',
+          'User-Agent'        => "Zammad/#{Version.get}",
+          'X-Zammad-Trigger'  => trigger.name,
+          'X-Zammad-Delivery' => delivery_id
+        }.merge(signature(webhook))
       )
 
       raise NotificationFailed if !response.success?
@@ -21,11 +28,34 @@ module Webhooks
 
     private
 
-    def default_headers
-      {
-        'Content-Type' => 'application/json',
-        'User-Agent'   => "Zammad/#{Version.get}"
-      }
+    def signature(webhook)
+      if webhook['token'].present?
+        {
+          'X-Hub-Signature' => OpenSSL::HMAC.hexdigest('sha1', webhook['token'], 'verified')
+        }
+      else
+        {}
+      end
+    end
+
+    def build_payload(ticket)
+      ticket.as_json(include: [
+                       :group,
+                       :organization,
+                       { articles: { include: [
+                         { created_by: { include: %i[organization organizations roles] } },
+                         { updated_by: { include: %i[organization organizations roles] } },
+                         { origin_by: { include: %i[organization organizations roles] } },
+                         { sender: { include: %i[organization organizations roles] } }
+                       ] } },
+                       :ticket_time_accounting,
+                       :flags,
+                       :state,
+                       :priority,
+                       { customer: { include: %i[organization organizations roles] } },
+                       { created_by: { include: %i[organization organizations roles] } },
+                       { updated_by: { include: %i[organization organizations roles] } }
+                     ])
     end
   end
 end

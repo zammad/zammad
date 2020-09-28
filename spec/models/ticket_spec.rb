@@ -394,6 +394,30 @@ RSpec.describe Ticket, type: :model do
 
           include_examples 'verify log visibility status'
         end
+
+        context 'dispatching Webhook' do
+          let(:notification_type) { :webhook }
+
+          before { create(:channel, area: 'Sms::Notification') }
+
+          include_examples 'verify log visibility status'
+        end
+      end
+
+      context 'with a "notification.webhook" trigger', performs_jobs: true do
+        let(:trigger) do
+          build(:trigger,
+                perform: {
+                  'notification.webhook' => {
+                    endpoint: 'http://api.mycompany.com/webhook/support',
+                    token:    '3123123'
+                  }
+                })
+        end
+
+        it 'schedules the webhooks notification job' do
+          expect { ticket.perform_changes(trigger.perform, 'trigger', {}, 1, trigger.id) }.to have_enqueued_job(Webhooks::NotificationJob).with(ticket_id: ticket.id, trigger_id: trigger.id, delivery_id: anything)
+        end
       end
     end
 

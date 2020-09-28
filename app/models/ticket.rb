@@ -16,8 +16,6 @@ class Ticket < ApplicationModel
   include HasObjectManagerAttributesValidation
   include HasTaskbars
 
-  include Webhooks::Notify
-
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Assets
@@ -895,11 +893,11 @@ condition example
 
 perform changes on ticket
 
-  ticket.perform_changes({}, 'trigger', item, current_user_id)
+  ticket.perform_changes({}, 'trigger', item, current_user_id, '2')
 
 =end
 
-  def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
+  def perform_changes(perform, perform_origin, item = nil, current_user_id = nil, perform_origin_id = nil)
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
     article = begin
@@ -1051,6 +1049,8 @@ perform changes on ticket
         next
       when 'notification.email'
         send_email_notification(value, article, perform_origin)
+      when 'notification.webhook'
+        send_webhook_notification(perform_origin_id)
       end
     end
 
@@ -1233,7 +1233,7 @@ perform active triggers on ticket
         local_options[:trigger_ids][ticket.id].push trigger.id
         logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
 
-        ticket.perform_changes(trigger.perform, 'trigger', item, user_id)
+        ticket.perform_changes(trigger.perform, 'trigger', item, user_id, trigger.id)
 
         if recursive == true
           Observer::Transaction.commit(local_options)
@@ -1749,6 +1749,13 @@ result
       updated_by_id: 1,
       created_by_id: 1,
     )
+  end
 
+  def send_webhook_notification(perform_origin_id)
+    Webhooks::NotificationJob.perform_later(
+      ticket_id:   id,
+      trigger_id:  perform_origin_id,
+      delivery_id: SecureRandom.uuid
+    )
   end
 end
