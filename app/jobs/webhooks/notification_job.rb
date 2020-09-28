@@ -7,26 +7,29 @@ module Webhooks
       executions * 10.seconds
     }
 
-    def perform(ticket_id:, trigger_id:, delivery_id:)
-      ticket = Ticket.lookup(id: ticket_id)
-      trigger = Trigger.find(trigger_id)
+    def perform(params)
+      trigger = Trigger.find(params.fetch(:trigger_id))
       webhook = trigger.perform['notification.webhook']
 
       response = Faraday.post(
         webhook['endpoint'],
-        ticket.attributes_with_association_names.to_json,
-        {
-          'Content-Type'      => 'application/json',
-          'User-Agent'        => "Zammad/#{Version.get}",
-          'X-Zammad-Trigger'  => trigger.name,
-          'X-Zammad-Delivery' => delivery_id
-        }.merge(signature(webhook))
+        payload(params.fetch(:ticket_id)),
+        headers(trigger, webhook, params.fetch(:delivery_id))
       )
 
       raise NotificationFailed if !response.success?
     end
 
     private
+
+    def headers(trigger, webhook, delivery_id)
+      {
+        'Content-Type'      => 'application/json',
+        'User-Agent'        => "Zammad/#{Version.get}",
+        'X-Zammad-Trigger'  => trigger.name,
+        'X-Zammad-Delivery' => delivery_id
+      }.merge(signature(webhook))
+    end
 
     def signature(webhook)
       if webhook['token'].present?
@@ -36,6 +39,11 @@ module Webhooks
       else
         {}
       end
+    end
+
+    def payload(ticket_id)
+      ticket = Ticket.lookup(id: ticket_id)
+      ticket.attributes_with_association_names.to_json
     end
   end
 end
