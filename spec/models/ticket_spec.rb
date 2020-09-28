@@ -7,7 +7,6 @@ require 'models/concerns/has_tags_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
-require 'models/concerns/trigges_webhooks_examples'
 
 RSpec.describe Ticket, type: :model do
   it_behaves_like 'ApplicationModel'
@@ -18,7 +17,6 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
-  it_behaves_like 'TriggesWebhooks'
 
   subject(:ticket) { create(:ticket) }
 
