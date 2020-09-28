@@ -39,12 +39,11 @@ RSpec.describe Webhooks::NotificationJob, type: :job do
     end
 
     context 'with trigger token configured' do
-
       it 'sends a post request to webhook URL with signature in header' do
         perform!
 
         expect(WebMock).to have_requested(:post, 'http://api.mycompany.com/webhook/support')
-          .with(body: hash_including(ticket.as_json), headers: webhook_headers.merge( 'X-Hub-Signature' => OpenSSL::HMAC.hexdigest('sha1', token, 'verified'), 'X-Zammad-Delivery' => delivery_id))
+          .with(body: ticket.attributes_with_association_names, headers: webhook_headers.merge( 'X-Hub-Signature' => OpenSSL::HMAC.hexdigest('sha1', token, 'verified'), 'X-Zammad-Delivery' => delivery_id))
       end
     end
 
@@ -55,7 +54,7 @@ RSpec.describe Webhooks::NotificationJob, type: :job do
         perform!
 
         expect(WebMock).to have_requested(:post, 'http://api.mycompany.com/webhook/support')
-          .with(body: hash_including(ticket.as_json), headers: webhook_headers)
+          .with(body: ticket.attributes_with_association_names, headers: webhook_headers)
       end
     end
 

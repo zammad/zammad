@@ -14,7 +14,7 @@ module Webhooks
 
       response = Faraday.post(
         webhook['endpoint'],
-        build_payload(ticket),
+        ticket.attributes_with_association_names.to_json,
         {
           'Content-Type'      => 'application/json',
           'User-Agent'        => "Zammad/#{Version.get}",
@@ -36,26 +36,6 @@ module Webhooks
       else
         {}
       end
-    end
-
-    def build_payload(ticket)
-      ticket.as_json(include: [
-                       :group,
-                       :organization,
-                       { articles: { include: [
-                         { created_by: { include: %i[organization organizations roles] } },
-                         { updated_by: { include: %i[organization organizations roles] } },
-                         { origin_by: { include: %i[organization organizations roles] } },
-                         { sender: { include: %i[organization organizations roles] } }
-                       ] } },
-                       :ticket_time_accounting,
-                       :flags,
-                       :state,
-                       :priority,
-                       { customer: { include: %i[organization organizations roles] } },
-                       { created_by: { include: %i[organization organizations roles] } },
-                       { updated_by: { include: %i[organization organizations roles] } }
-                     ])
     end
   end
 end
