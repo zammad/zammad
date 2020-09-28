@@ -392,14 +392,6 @@ RSpec.describe Ticket, type: :model do
 
           include_examples 'verify log visibility status'
         end
-
-        context 'dispatching Webhook' do
-          let(:notification_type) { :webhook }
-
-          before { create(:channel, area: 'Sms::Notification') }
-
-          include_examples 'verify log visibility status'
-        end
       end
 
       context 'with a "notification.webhook" trigger', performs_jobs: true do
