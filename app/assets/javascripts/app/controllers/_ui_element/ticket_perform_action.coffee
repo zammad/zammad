@@ -23,6 +23,7 @@ class App.UiElement.ticket_perform_action
         if groupKey is 'notification'
           elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
           elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
+          elements["#{groupKey}.webhook"] = { name: 'webhook', display: 'Webhook' }
         else if groupKey is 'article'
           elements["#{groupKey}.note"] = { name: 'note', display: 'Note' }
       else
