@@ -59,6 +59,9 @@ returns
     # set params
     request = set_params(request, params, options)
 
+    # add signature
+    request = set_signature(request, options)
+
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
@@ -118,6 +121,9 @@ returns
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
 
+    # add signature
+    request = set_signature(request, options)
+
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
@@ -176,6 +182,9 @@ returns
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
 
+    # add signature
+    request = set_signature(request, options)
+
     # start http call
     begin
       total_timeout = options[:total_timeout] || 60
@@ -226,6 +235,9 @@ returns
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
+
+    # add signature
+    request = set_signature(request, options)
 
     # start http call
     begin
@@ -355,6 +367,16 @@ returns
     headers.each do |header, value|
       request[header] = value
     end
+
+    request
+  end
+
+  def self.set_signature(request, options)
+    return request if options[:signature_token].blank?
+    return request if request.body.blank?
+
+    signature = OpenSSL::HMAC.hexdigest('sha1', options[:signature_token], request.body)
+    request['X-Hub-Signature'] = "sha1=#{signature}"
 
     request
   end
