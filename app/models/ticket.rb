@@ -1019,12 +1019,15 @@ perform changes on ticket
 
     perform_article.each do |key, value|
       raise 'Unable to create article, we only support article.note' if key != 'article.note'
+      # @TODO identify where to get the relevant locals fields
+      rendered_subject = ActionController::Renderer.render plain: value[:subject], locals: {}
+      rendered_body = ActionController::Renderer.render plain: value[:body], locals: {}
 
       Ticket::Article.create!(
         ticket_id:     id,
-        subject:       value[:subject],
+        subject:       rendered_subject,
         content_type:  'text/html',
-        body:          value[:body],
+        body:          rendered_body,
         internal:      value[:internal],
         sender:        Ticket::Article::Sender.find_by(name: 'System'),
         type:          Ticket::Article::Type.find_by(name: 'note'),
