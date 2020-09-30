@@ -15,7 +15,7 @@ class KnowledgeBase < ApplicationModel
 
   accepts_nested_attributes_for :kb_locales, allow_destroy: true
   validates                     :kb_locales, presence: true
-  validates                     :kb_locales, length: { maximum: 1 }, unless: :multi_lingual_support?
+  validates                     :kb_locales, length: { maximum: 1, message: 'System supports only one locale for knowledge base. Upgrade your plan to use more locales.' }, unless: :multi_lingual_support?
 
   has_many :categories, class_name: 'KnowledgeBase::Category',
                         inverse_of: :knowledge_base,
