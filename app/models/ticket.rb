@@ -889,11 +889,17 @@ condition example
 
 perform changes on ticket
 
-  ticket.perform_changes({}, 'trigger', item, current_user_id)
+  ticket.perform_changes(trigger, 'trigger', item, current_user_id)
+
+  # or
+
+  ticket.perform_changes(job, 'job', item, current_user_id)
 
 =end
 
-  def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
+  def perform_changes(performable, perform_origin, item = nil, current_user_id = nil)
+
+    perform = performable.perform
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
     article = begin
@@ -1253,7 +1259,7 @@ perform active triggers on ticket
         local_options[:trigger_ids][ticket.id.to_s].push trigger.id
         logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
 
-        ticket.perform_changes(trigger.perform, 'trigger', item, user_id)
+        ticket.perform_changes(trigger, 'trigger', item, user_id)
 
         if recursive == true
           Observer::Transaction.commit(local_options)

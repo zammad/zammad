@@ -86,7 +86,7 @@ job.run(true)
 
     tickets&.each do |ticket|
       Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
-        ticket.perform_changes(perform, 'job')
+        ticket.perform_changes(self, 'job')
       end
     end
 

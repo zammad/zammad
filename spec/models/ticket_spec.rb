@@ -148,6 +148,12 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#perform_changes' do
+
+      # a `performable` can be a Trigger or a Job
+      # we use DuckTyping and expect that a performable
+      # implements the following interface
+      let(:performable) { OpenStruct.new(id: 1, perform: perform) }
+
       # Regression test for https://github.com/zammad/zammad/issues/2001
       describe 'argument handling' do
         let(:perform) do
@@ -161,7 +167,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'does not mutate contents of "perform" hash' do
-          expect { ticket.perform_changes(perform, 'trigger', {}, 1) }
+          expect { ticket.perform_changes(performable, 'trigger', {}, 1) }
             .not_to change { perform }
         end
       end
@@ -176,7 +182,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'changes #state to specified value' do
-          expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+          expect { ticket.perform_changes(performable, 'trigger', ticket, User.first) }
             .to change { ticket.reload.state.name }.to('closed')
         end
       end
@@ -198,7 +204,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'changes pending date to given date' do
           freeze_time do
-            expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+            expect { ticket.perform_changes(performable, 'trigger', ticket, User.first) }
               .to change(ticket, :pending_time).to(be_within(1.minute).of(timestamp))
           end
         end
@@ -211,7 +217,7 @@ RSpec.describe Ticket, type: :model do
             freeze_time do
               interval = relative_value.send(relative_range).from_now
 
-              expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+              expect { ticket.perform_changes(performable, 'trigger', ticket, User.first) }
                 .to change(ticket, :pending_time).to(be_within(1.minute).of(interval))
             end
           end
@@ -256,7 +262,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'performs a ticket deletion on a ticket' do
-          expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+          expect { ticket.perform_changes(performable, 'trigger', ticket, User.first) }
             .to change(ticket, :destroyed?).to(true)
         end
       end
@@ -300,7 +306,7 @@ RSpec.describe Ticket, type: :model do
               .not_to receive(:template)
               .with(hash_including(objects: { ticket: ticket, article: new_article }))
 
-            ticket.perform_changes(trigger.perform, 'trigger', { article_id: article.id }, 1)
+            ticket.perform_changes(trigger, 'trigger', { article_id: article.id }, 1)
           end
         end
       end
@@ -329,12 +335,12 @@ RSpec.describe Ticket, type: :model do
         shared_examples 'verify log visibility status' do
           shared_examples 'notification trigger' do
             it 'adds Ticket::Article' do
-              expect { ticket.perform_changes(perform, 'trigger', ticket, user) }
+              expect { ticket.perform_changes(performable, 'trigger', ticket, user) }
                 .to change { ticket.articles.count }.by(1)
             end
 
             it 'new Ticket::Article visibility reflects setting' do
-              ticket.perform_changes(perform, 'trigger', ticket, User.first)
+              ticket.perform_changes(performable, 'trigger', ticket, User.first)
               new_article = ticket.articles.reload.last
               expect(new_article.internal).to be target_internal_value
             end
