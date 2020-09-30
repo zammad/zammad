@@ -318,8 +318,10 @@ returns
 
     if uri.scheme.match?(/https/i)
       http.use_ssl = true
-      # @TODO verify_mode should be configurable
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      if !options.fetch(:verify_ssl, false)
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
     end
 
     http
