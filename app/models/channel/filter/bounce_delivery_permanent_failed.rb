@@ -9,6 +9,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
     return if !mail[:attachments]
 
     # remember, do not send notifications to certain recipients again if failed permanent
+    lines = %w[to cc]
     mail[:attachments].each do |attachment|
       next if !attachment[:preferences]
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
@@ -29,7 +30,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient of origin article, if only one - mark this user to not sent notifications anymore
       recipients = []
       if article.sender.name == 'System' || article.sender.name == 'Agent'
-        %w[to cc].each do |line|
+        lines.each do |line|
           next if article[line].blank?
 
           recipients = []

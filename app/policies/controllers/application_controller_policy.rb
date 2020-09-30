@@ -2,6 +2,8 @@ class Controllers::ApplicationControllerPolicy < ApplicationPolicy
   class_attribute(:action_permissions_map, default: {})
 
   def self.inherited(subclass)
+    super
+
     subclass.action_permissions_map = action_permissions_map.deep_dup
   end
 

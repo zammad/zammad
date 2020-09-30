@@ -84,7 +84,7 @@ module ApplicationController::HasUser
 
     # check if remote ip need to be updated
     if session[:user_id]
-      if !session[:remote_ip] || session[:remote_ip] != request.remote_ip
+      if !session[:remote_ip] || session[:remote_ip] != request.remote_ip # rubocop:disable Style/SoleNestedConditional
         session[:remote_ip] = request.remote_ip
         session[:geo]       = Service::GeoIp.location(request.remote_ip)
       end

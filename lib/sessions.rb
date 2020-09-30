@@ -399,9 +399,8 @@ broadcase also not to sender
         next if session[:user]['id'].blank?
       end
 
-      if sender_user_id
-        next if session[:user] && session[:user]['id'] && session[:user]['id'].to_i == sender_user_id.to_i
-      end
+      next if sender_user_id && session[:user] && session[:user]['id'] && session[:user]['id'].to_i == sender_user_id.to_i
+
       Sessions.send(client_id, data)
       recipients.push client_id
     end
@@ -634,7 +633,7 @@ delete spool messages
 
           ::Sessions.jobs(worker_node_id)
           sleep node_count
-        rescue Interrupt # rubocop:disable Layout/RescueEnsureAlignment
+        rescue Interrupt
           nil
         end
       end

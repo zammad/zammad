@@ -80,7 +80,7 @@ class SearchController < ApplicationController
       objects_without_direct_search_index.each do |object|
         object_result = search_generic_backend(object.constantize, assets, generic_search_params)
         if object_result.present?
-          result = result.concat(object_result)
+          result.concat(object_result)
         end
       end
 
@@ -102,7 +102,7 @@ class SearchController < ApplicationController
       objects_in_order.each do |object|
         object_result = search_generic_backend(object, assets, generic_search_params)
         if object_result.present?
-          result = result.concat(object_result)
+          result.concat(object_result)
         end
       end
     end

@@ -122,7 +122,7 @@ returns
         local_caller_ids = Cti::CallerId.extract_numbers(value)
         next if local_caller_ids.blank?
 
-        caller_ids = caller_ids.concat(local_caller_ids)
+        caller_ids.concat(local_caller_ids)
       end
 
       # search for caller ids to keep

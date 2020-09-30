@@ -41,7 +41,7 @@ class Observer::Ticket::LastOwnerUpdate < ActiveRecord::Observer
     # check if state is not new/open
     if record.changes_to_save['state_id'].present?
       state_ids = Ticket::State.by_category(:work_on).pluck(:id)
-      if !state_ids.include?(record.changes_to_save['state_id'][1])
+      if state_ids.exclude?(record.changes_to_save['state_id'][1])
         record.last_owner_update_at = nil
         return true
       end

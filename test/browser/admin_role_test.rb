@@ -11,10 +11,10 @@ class AdminRoleTest < TestCase
     tasks_close_all()
 
     rand      = rand(99_999_999).to_s
-    login     = 'agent-role-' + rand
-    firstname = 'Role' + rand
-    lastname  = 'Module' + rand
-    email     = 'agent-role-' + rand + '@example.com'
+    login     = "agent-role-#{rand}"
+    firstname = "Role#{rand}"
+    lastname  = "Module#{rand}"
+    email     = "agent-role-#{rand}@example.com"
     password  = 'agentpw'
 
     user_create(

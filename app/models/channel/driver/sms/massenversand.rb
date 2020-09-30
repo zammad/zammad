@@ -12,13 +12,20 @@ class Channel::Driver::Sms::Massenversand
 
       if Setting.get('developer_mode') != true
         response = Faraday.get(url).body
-        raise response if !response.match?('OK')
+
+        if !response.match?('OK')
+          message = "Received non-OK response from gateway URL '#{url}'"
+          Rails.logger.error "#{message}: #{response.inspect}"
+          raise message
+        end
       end
 
       true
     rescue => e
-      Rails.logger.debug "Massenversand error: #{e.inspect}"
-      raise e
+      message = "Error while performing request to gateway URL '#{url}'"
+      Rails.logger.error message
+      Rails.logger.error e
+      raise message
     end
   end
 
@@ -46,6 +53,6 @@ class Channel::Driver::Sms::Massenversand
       sender:    options[:sender]
     }
 
-    options[:gateway] + '?' + URI.encode_www_form(params)
+    "#{options[:gateway]}?#{URI.encode_www_form(params)}"
   end
 end

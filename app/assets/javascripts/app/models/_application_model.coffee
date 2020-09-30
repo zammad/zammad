@@ -802,9 +802,9 @@ set new attributes of model (remove already available attributes)
 
   @tagGet: (id, key, callback) ->
     App.Ajax.request(
-      id:    key
-      type:  'GET'
-      url:   "#{@apiPath}/tags"
+      id:   key
+      type: 'GET'
+      url:  "#{@apiPath}/tags"
       data:
         object: @serverClassName || @className
         o_id:   id
@@ -815,9 +815,9 @@ set new attributes of model (remove already available attributes)
 
   @tagAdd: (id, item) ->
     App.Ajax.request(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/add"
-      data:
+      type: 'POST'
+      url:  "#{@apiPath}/tags/add"
+      data: JSON.stringify
         object: @serverClassName || @className
         o_id:   id
         item:   item
@@ -826,9 +826,9 @@ set new attributes of model (remove already available attributes)
 
   @tagRemove: (id, item) ->
     App.Ajax.request(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/remove"
-      data:
+      type: 'DELETE'
+      url:  "#{@apiPath}/tags/remove"
+      data: JSON.stringify
         object: @serverClassName || @className
         o_id:   id
         item:   item

@@ -9,6 +9,8 @@ require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 
 RSpec.describe Ticket, type: :model do
+  subject(:ticket) { create(:ticket) }
+
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
@@ -17,8 +19,6 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
-
-  subject(:ticket) { create(:ticket) }
 
   describe 'Class methods:' do
     describe '.selectors' do
@@ -131,7 +131,7 @@ RSpec.describe Ticket, type: :model do
         context 'and deleting the origin ticket' do
           it 'adds reference number and title to the target ticket' do
             expect { ticket.destroy }
-              .to change { target_ticket.history_get.find { |elem| elem.fetch('type') == 'received_merge' }.dig('value_from') }
+              .to change { target_ticket.history_get.find { |elem| elem.fetch('type') == 'received_merge' }['value_from'] }
               .to("##{ticket.number} #{ticket.title}")
           end
         end
@@ -140,7 +140,7 @@ RSpec.describe Ticket, type: :model do
         context 'and deleting the target ticket' do
           it 'adds reference number and title to the origin ticket' do
             expect { target_ticket.destroy }
-              .to change { ticket.history_get.find { |elem| elem.fetch('type') == 'merged_into' }.dig('value_to') }
+              .to change { ticket.history_get.find { |elem| elem.fetch('type') == 'merged_into' }['value_to'] }
               .to("##{target_ticket.number} #{target_ticket.title}")
           end
         end

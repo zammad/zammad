@@ -2,8 +2,8 @@ require 'browser_test_helper'
 
 class AgentTicketTextModuleTest < TestCase
   def test_text_modules
-    random  = 'text_module_test_' + rand(99_999_999).to_s
-    random2 = 'text_module_test_' + rand(99_999_999).to_s
+    random  = "text_module_test_#{rand(99_999_999)}"
+    random2 = "text_module_test_#{rand(99_999_999)}"
 
     @browser = browser_instance
     login(
@@ -16,16 +16,16 @@ class AgentTicketTextModuleTest < TestCase
     # create new text modules
     text_module_create(
       data: {
-        name:     'some name' + random,
+        name:     "some name#{random}",
         keywords: random,
-        content:  'some content' + random,
+        content:  "some content#{random}",
       },
     )
     text_module_create(
       data: {
-        name:     'some name' + random2,
+        name:     "some name#{random2}",
         keywords: random2,
-        content:  'some content' + random2,
+        content:  "some content#{random2}",
       },
     )
 
@@ -36,7 +36,7 @@ class AgentTicketTextModuleTest < TestCase
 
     set(
       css:   '.active div[data-name=body]',
-      value: 'test ::' + random,
+      value: "test ::#{random}",
     )
     watch_for(
       css:   '.active .shortcut',
@@ -50,18 +50,18 @@ class AgentTicketTextModuleTest < TestCase
 
     watch_for(
       css:   '.active div[data-name=body]',
-      value: 'some content' + random,
+      value: "some content#{random}",
     )
     tasks_close_all()
 
     # test with two browser windows
-    random = 'text_II_module_test_' + rand(99_999_999).to_s
+    random = "text_II_module_test_#{rand(99_999_999)}"
 
     user_rand = rand(99_999_999).to_s
-    login     = 'agent-text-module-' + user_rand
-    firstname = 'Text' + user_rand
-    lastname  = 'Module' + user_rand
-    email     = 'agent-text-module-' + user_rand + '@example.com'
+    login     = "agent-text-module-#{user_rand}"
+    firstname = "Text#{user_rand}"
+    lastname  = "Module#{user_rand}"
+    email     = "agent-text-module-#{user_rand}@example.com"
     password  = 'agentpw'
 
     # use current session
@@ -98,7 +98,7 @@ class AgentTicketTextModuleTest < TestCase
     text_module_create(
       browser: browser1,
       data:    {
-        name:     'some name' + random,
+        name:     "some name#{random}",
         keywords: random,
         content:  "some content \#{ticket.customer.lastname}#{random}",
       },
@@ -120,7 +120,7 @@ class AgentTicketTextModuleTest < TestCase
     set(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   'test ::' + random,
+      value:   "test ::#{random}",
     )
     watch_for(
       browser: browser2,
@@ -139,7 +139,7 @@ class AgentTicketTextModuleTest < TestCase
     watch_for(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   'some content -' + random,
+      value:   "some content -#{random}",
     )
 
     ticket_customer_select(
@@ -151,7 +151,7 @@ class AgentTicketTextModuleTest < TestCase
     set(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   '::' + random,
+      value:   "::#{random}",
     )
     sendkey(
       browser: browser2,
@@ -165,7 +165,7 @@ class AgentTicketTextModuleTest < TestCase
     watch_for(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   'some content Braun' + random,
+      value:   "some content Braun#{random}",
     )
 
     # verify zoom
@@ -194,7 +194,7 @@ class AgentTicketTextModuleTest < TestCase
     set(
       browser:  browser2,
       css:      '.active div[data-name=body]',
-      value:    '::' + random,
+      value:    "::#{random}",
       no_click: true,
     )
     sendkey(
@@ -210,7 +210,7 @@ class AgentTicketTextModuleTest < TestCase
     watch_for(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   'some content Braun' + random,
+      value:   "some content Braun#{random}",
     )
 
     # change customer
@@ -245,7 +245,7 @@ class AgentTicketTextModuleTest < TestCase
     set(
       browser:  browser2,
       css:      '.active div[data-name=body]',
-      value:    '::' + random,
+      value:    "::#{random}",
       no_click: true,
     )
 
@@ -262,7 +262,7 @@ class AgentTicketTextModuleTest < TestCase
     watch_for(
       browser: browser2,
       css:     '.active div[data-name=body]',
-      value:   'some content ' + lastname,
+      value:   "some content #{lastname}",
     )
   end
 end

@@ -75,10 +75,7 @@ class Index extends App.ControllerContent
         )
       fail: (settings, details) =>
         @formEnable(e)
-        if _.isArray(details.error)
-          @form.showAlert( App.i18n.translateInline( details.error[0], details.error[1] ) )
-        else
-          @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
   resend: (e) =>
@@ -114,7 +111,7 @@ class Index extends App.ControllerContent
 
     @notify
       type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Wrong Username or Password combination.')
+      msg:       App.i18n.translateContent(details.error || 'Could not process your request')
       removeAll: true
 
 App.Config.set('signup', Index, 'Routes')

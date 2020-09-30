@@ -35,6 +35,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
   def change
 
     # correct all entries
+    directions = %w[from to]
     Cti::Log.all.pluck(:id).each do |item_id|
       item = Cti::Log.find(item_id)
       next if !item.preferences
@@ -42,7 +43,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
 
       # check from and to keys which hold the instances
       preferences = {}
-      %w[from to].each do |direction|
+      directions.each do |direction|
         next if item.preferences[direction].blank?
 
         # loop over all instances and covert them

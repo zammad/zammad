@@ -20,7 +20,7 @@ RSpec.describe Channel::Driver::Imap do
 
       result = described_class.new.fetch(params, nil, 'check')
 
-      expect(result.dig(:result)).to eq 'ok'
+      expect(result[:result]).to eq 'ok'
     end
   end
 

@@ -75,9 +75,6 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     # refresh elements
     @refreshElements()
 
-    # execute filter
-    @filterByQuery originalQuery
-
   renderResponseItemAjax: (elem, data) ->
     result = _.find(data.details, (detailElem) -> detailElem.type == elem.type and detailElem.id == elem.id)
 

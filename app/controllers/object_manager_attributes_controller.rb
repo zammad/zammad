@@ -76,23 +76,23 @@ class ObjectManagerAttributesController < ApplicationController
     @permitted_params ||= begin
       permitted = params.permit!.to_h
 
-      if permitted[:data_type].match?(/^(boolean)$/)
-        if permitted[:data_option][:options]
-          # rubocop:disable Lint/BooleanSymbol
-          if permitted[:data_option][:options][:false]
-            permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
-          end
-          if permitted[:data_option][:options][:true]
-            permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
-          end
-          case permitted[:data_option][:default]
-          when 'true'
-            permitted[:data_option][:default] = true
-          when 'false'
-            permitted[:data_option][:default] = false
-          end
-          # rubocop:enable Lint/BooleanSymbol
+      if permitted[:data_type].match?(/^(boolean)$/) && permitted[:data_option][:options]
+        # rubocop:disable Lint/BooleanSymbol
+        if permitted[:data_option][:options][:false]
+          permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
         end
+
+        if permitted[:data_option][:options][:true]
+          permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
+        end
+
+        case permitted[:data_option][:default]
+        when 'true'
+          permitted[:data_option][:default] = true
+        when 'false'
+          permitted[:data_option][:default] = false
+        end
+        # rubocop:enable Lint/BooleanSymbol
       end
 
       if permitted[:data_option]

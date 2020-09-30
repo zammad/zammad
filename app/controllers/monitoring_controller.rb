@@ -35,12 +35,13 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
 
     # channel check
     last_run_tolerance = Time.zone.now - 1.hour
+    options_keys = %w[host user uid]
     Channel.where(active: true).each do |channel|
 
       # inbound channel
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
-        %w[host user uid].each do |key|
+        options_keys.each do |key|
           next if channel.options[key].blank?
 
           message += "key:#{channel.options[key]};"
@@ -56,7 +57,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       next if channel.status_out != 'error'
 
       message = "Channel: #{channel.area} out "
-      %w[host user uid].each do |key|
+      options_keys.each do |key|
         next if channel.options[key].blank?
 
         message += "key:#{channel.options[key]};"
@@ -149,7 +150,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     end
 
     # stuck import jobs
-    import_backends.each do |backend|
+    import_backends.each do |backend| # rubocop:disable Style/CombinableLoops
 
       job = ImportJob.where(
         name:        backend,
@@ -218,7 +219,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
 
   def status
     last_login = nil
-    last_login_user = User.where('last_login IS NOT NULL').order(last_login: :desc).limit(1).first
+    last_login_user = User.where.not(last_login: nil).order(last_login: :desc).limit(1).first
     if last_login_user
       last_login = last_login_user.last_login
     end

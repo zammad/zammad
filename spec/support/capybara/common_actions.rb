@@ -180,11 +180,13 @@ module CommonActions
   end
 
   def open_article_meta
-    wrapper = all(%(div.ticket-article-item)).last
+    retry_on_stale do
+      wrapper = all('div.ticket-article-item').last
 
-    wrapper.find('.article-content .textBubble').click
-    wait(3).until do
-      wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
+      wrapper.find('.article-content .textBubble').click
+      wait(3).until do
+        wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
+      end
     end
   end
 
@@ -225,12 +227,10 @@ module CommonActions
   # Executes action inside of modal. Makes sure modal has opened and closes
   #
   # @param timeout [Integer] seconds to wait
-  def in_modal(timeout: 4)
+  def in_modal(timeout: 4, &block)
     modal_ready(timeout: timeout)
 
-    within '.modal' do
-      yield
-    end
+    within('.modal', &block)
 
     modal_disappear(timeout: timeout)
   end

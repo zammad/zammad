@@ -8,7 +8,7 @@ class KnowledgeBase
       raise Exceptions::UnprocessableEntity, 'Custom address is not set' if @kb.custom_address_uri.nil?
 
       template_rewrite = host.present? ? template_full : template_path
-      template_rewrite + "\n" + template_original_url
+      "#{template_rewrite}\n#{template_original_url}"
     end
 
     def host

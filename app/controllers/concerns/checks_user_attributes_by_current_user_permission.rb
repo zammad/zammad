@@ -10,9 +10,10 @@ module ChecksUserAttributesByCurrentUserPermission
     return true if current_user.permissions?('admin.user')
 
     # regular agents are not allowed to set Groups and Roles
+    suffixes = %w[_ids s]
     %w[Role Group].each do |model|
 
-      %w[_ids s].each do |suffix|
+      suffixes.each do |suffix|
         attribute = "#{model.downcase}#{suffix}"
         values    = params[attribute]
 

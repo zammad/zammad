@@ -3,7 +3,7 @@ require 'browser_test_helper'
 class ManageTest < TestCase
   def test_user
     random     = "manage-test-#{rand(999_999)}"
-    user_email = random + '@example.com'
+    user_email = "#{random}@example.com"
 
     # user management
     @browser = browser_instance

@@ -44,25 +44,25 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
     )
     click(
-      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     exists(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"][type="checkbox"]:checked),
     )
     exists(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"][type="checkbox"]:checked),
     )
 
     # select close state & submit
@@ -78,15 +78,15 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     watch_for_disappear(
-      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css:     %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       timeout: 6,
     )
 
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"]),
     )
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
 
     # remember current overview count
@@ -261,25 +261,25 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
     )
     click(
-      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     exists(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"][type="checkbox"]:checked),
     )
     exists(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"][type="checkbox"]:checked),
     )
 
     exists(
@@ -320,15 +320,15 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     watch_for_disappear(
-      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css:     %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       timeout: 12,
     )
 
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"]),
     )
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
 
     # get new overview count
@@ -410,25 +410,25 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
     )
     click(
-      css:  '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
       fast: true,
     )
 
     exists(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"][type="checkbox"]:checked),
     )
     exists(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"][type="checkbox"]:checked),
     )
 
     select(
@@ -449,15 +449,15 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     watch_for_disappear(
-      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css:     %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       timeout: 12,
     )
 
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket1[:id]}"]),
     )
     exists_not(
-      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
 
     # get new overview count
@@ -562,7 +562,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # first select the ticket that we have change rights to
     check(
-      css: '.content.active table tr td input[value="' + can_change_ticket[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{can_change_ticket[:id]}"]),
     )
 
     # check that the bulk action form appears
@@ -574,10 +574,10 @@ class AgentTicketOverviewLevel0Test < TestCase
     # then select the ticket that we do not have change rights to
     scroll_to(
       position: 'top',
-      css:      '.content.active table tr td input[value="' + cannot_change_ticket[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:      %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"] + .icon-checkbox.icon-unchecked),
     )
     check(
-      css: '.content.active table tr td input[value="' + cannot_change_ticket[:id] + '"]',
+      css: %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"]),
     )
 
     # check that the bulk action form disappears
@@ -588,7 +588,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # de-select the ticket that we do not have change rights to
     uncheck(
-      css:  '.content.active table tr td input[value="' + cannot_change_ticket[:id] + '"]',
+      css:  %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"]),
       fast: true,
     )
 
@@ -600,7 +600,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # de-select the ticket that we have change rights to
     uncheck(
-      css:  '.content.active table tr td input[value="' + can_change_ticket[:id] + '"]',
+      css:  %(.content.active table tr td input[value="#{can_change_ticket[:id]}"]),
       fast: true,
     )
 

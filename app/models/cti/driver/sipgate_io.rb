@@ -76,11 +76,12 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
     end
 
     list = {}
+    items = %w[firstname lastname email]
     result['items'].each do |entry|
       next if entry['id'].blank?
 
       name = ''
-      %w[firstname lastname email].each do |item|
+      items.each do |item|
         next if entry[item].blank?
 
         name += ' ' if name.present?

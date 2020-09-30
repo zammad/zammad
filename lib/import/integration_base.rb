@@ -11,6 +11,8 @@ module Import
   class IntegrationBase < Import::Base
 
     def self.inherited(subclass)
+      super
+
       subclass.extend(Forwardable)
 
       # delegate instance methods to the generic class implementations

@@ -3,7 +3,7 @@ module Mixin
     extend ActiveSupport::Concern
 
     included do
-      cattr_accessor :backends do
+      class_attribute :backends do
         Set.new
       end
 

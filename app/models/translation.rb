@@ -492,17 +492,17 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
   end
 
   def cache_clear
-    Cache.delete('TranslationMapOnlyContent::' + locale.downcase)
+    Cache.delete("TranslationMapOnlyContent::#{locale.downcase}")
     true
   end
 
   def self.cache_set(locale, data)
-    Cache.write('TranslationMapOnlyContent::' + locale.downcase, data)
+    Cache.write("TranslationMapOnlyContent::#{locale.downcase}", data)
   end
   private_class_method :cache_set
 
   def self.cache_get(locale)
-    Cache.get('TranslationMapOnlyContent::' + locale.downcase)
+    Cache.get("TranslationMapOnlyContent::#{locale.downcase}")
   end
   private_class_method :cache_get
 end

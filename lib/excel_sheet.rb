@@ -1,6 +1,6 @@
 class ExcelSheet
 
-  def initialize(title:, header:, records:, timezone: nil, locale:)
+  def initialize(title:, header:, records:, locale:, timezone: nil)
     @title           = title
     @header          = header
     @records         = records

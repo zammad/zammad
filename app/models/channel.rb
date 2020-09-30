@@ -8,11 +8,10 @@ class Channel < ApplicationModel
   store :options
   store :preferences
 
+  after_initialize :refresh_xoaut2!
   after_create   :email_address_check
   after_update   :email_address_check
   after_destroy  :email_address_check
-
-  after_initialize :refresh_xoaut2!
 
   # rubocop:disable Style/ClassVars
   @@channel_stream = {}

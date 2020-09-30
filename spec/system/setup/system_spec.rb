@@ -31,8 +31,8 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
       fill_in 'firstname',        with: 'Test Master'
       fill_in 'lastname',         with: 'Agent'
       fill_in 'email',            with: 'master@example.com'
-      fill_in 'password',         with: 'test1234äöüß'
-      fill_in 'password_confirm', with: 'test1234äöüß'
+      fill_in 'password',         with: 'TEst1234äöüß'
+      fill_in 'password_confirm', with: 'TEst1234äöüß'
 
       click_on('Create')
     end
@@ -126,7 +126,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
 
       click_on('Create')
 
-      expect(page).to have_text 'Invalid password,'
+      expect(page).to have_text 'Invalid password'
     end
   end
 end

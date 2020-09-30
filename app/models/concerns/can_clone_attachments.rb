@@ -34,12 +34,10 @@ returns
       next if new_attachment.preferences['content-alternative'] == true
 
       # only_attached_attachments mode is used by apply attached attachments to forwared article
-      if options[:only_attached_attachments] == true
-        if is_html_content == true
+      if options[:only_attached_attachments] == true && is_html_content == true
 
-          content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
-          next if content_id.present? && body.present? && body.match?(/#{Regexp.quote(content_id)}/i)
-        end
+        content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
+        next if content_id.present? && body.present? && body.match?(/#{Regexp.quote(content_id)}/i)
       end
 
       # only_inline_attachments mode is used when quoting HTML mail with #{article.body_as_html}

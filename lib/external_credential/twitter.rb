@@ -160,7 +160,7 @@ class ExternalCredential::Twitter
     rescue
       begin
         webhooks = client.webhooks
-        raise "Dev Environment Label invalid. Please use an existing one #{webhooks[:environments].map { |e| e[:environment_name] }}, or create a new one."
+        raise "Dev Environment Label invalid. Please use an existing one #{webhooks[:environments].pluck(:environment_name)}, or create a new one."
       rescue Twitter::Error => e
         raise "#{e.message} Are you sure you created a development environment on developer.twitter.com?"
       end

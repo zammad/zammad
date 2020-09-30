@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
-  include_context 'basic Knowledge Base'
-
   subject { described_class.new(user, record) }
+
+  include_context 'basic Knowledge Base'
 
   let(:record_class) { KnowledgeBase::CategoriesController }
 

@@ -347,7 +347,7 @@ class Scheduler < ApplicationModel
       loop do
         success, failure = Delayed::Worker.new.work_off
         if failure.nonzero?
-          raise "#{failure} failed background jobs: #{Delayed::Job.where('last_error IS NOT NULL').inspect}"
+          raise "#{failure} failed background jobs: #{Delayed::Job.where.not(last_error: nil).inspect}"
         end
         break if success.zero?
       end

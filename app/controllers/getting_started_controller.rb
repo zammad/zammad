@@ -36,9 +36,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     return if auto_wizard_enabled_response
 
     # if master user already exists, we need to be authenticated
-    if setup_done
-      return if !authentication_check
-    end
+    return if setup_done && !authentication_check
 
     # return result
     render json: {

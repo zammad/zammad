@@ -33,7 +33,7 @@ class KnowledgeBase
       params
         .map { |location_params| update_location_using_params! knowledge_base, location_params }
         .map(&:reload)
-        .reduce(:+)
+        .sum
     end
 
     # Mass-update KB menu items in a given location
@@ -77,8 +77,8 @@ class KnowledgeBase
     def remove_deleted
       @menu_items_data
         .select { |elem| elem[:_destroy] }
-        .map    { |elem| elem[:id] }
-        .tap    { |array| @kb_locale.menu_items.where(id: array).destroy_all }
+        .pluck(:id)
+        .tap { |array| @kb_locale.menu_items.where(id: array).destroy_all }
     end
 
     def all_ids_present?

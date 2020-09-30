@@ -350,8 +350,9 @@ result
     # no changes in post is from page user it self
     if post['from'] && post['from']['id'].to_s == page['id'].to_s
       if !ticket
-        return Ticket::State.find_by(name: 'closed') if !ticket
+        return Ticket::State.find_by(name: 'closed')
       end
+
       return ticket.state
     end
 

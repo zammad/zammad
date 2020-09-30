@@ -102,7 +102,7 @@ module Import
           permissions ||= user['GroupIDs'][ queue['GroupID'].to_s ]
 
           next if !permissions
-          next if !permissions.include?('rw')
+          next if permissions.exclude?('rw')
 
           result.push queue['QueueID']
         end
@@ -172,7 +172,7 @@ module Import
         result = []
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
-          next if !user['RoleIDs'].include?(role['ID'])
+          next if user['RoleIDs'].exclude?(role['ID'])
 
           result += groups_from_otrs_groups(role)
         end

@@ -277,7 +277,7 @@ returns
     proxy_no = options['proxy_no'] || Setting.get('proxy_no') || ''
     proxy_no = proxy_no.split(',').map(&:strip) || []
     proxy_no.push('localhost', '127.0.0.1', '::1')
-    if proxy.present? && !proxy_no.include?(uri.host.downcase)
+    if proxy.present? && proxy_no.exclude?(uri.host.downcase)
       if proxy =~ /^(.+?):(.+?)$/
         proxy_host = $1
         proxy_port = $2
@@ -349,7 +349,7 @@ returns
     end
     body = request.body
     if body
-      request_data[:content] += "\n" + body
+      request_data[:content] += "\n#{body}"
     end
     request_data[:content] = request_data[:content].slice(0, 8000)
 
@@ -371,7 +371,7 @@ returns
       end
       body = response.body
       if body
-        response_data[:content] += "\n" + body
+        response_data[:content] += "\n#{body}"
       end
       response_data[:content] = response_data[:content].slice(0, 8000)
     end

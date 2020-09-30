@@ -119,7 +119,7 @@ class KnowledgeBase::Answer < ApplicationModel
       {
         id:          attachment.id,
         url:         url,
-        preview_url: url + '?preview=1',
+        preview_url: "#{url}?preview=1",
         filename:    attachment.filename,
         size:        attachment.size,
         preferences: attachment.preferences

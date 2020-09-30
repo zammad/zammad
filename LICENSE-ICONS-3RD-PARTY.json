@@ -688,5 +688,10 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
+    },
+    "sso-button.svg": {
+        "author": "Tanu Doank",
+        "url": "https://thenounproject.com/term/key/1247931/",
+        "license": "CC 3.0 Attribution"
     }
 }

@@ -6,8 +6,8 @@ class Setting < ApplicationModel
   store         :state_initial
   store         :preferences
   before_create :state_check, :set_initial, :check_broadcast
-  before_update :state_check, :check_broadcast
   after_create  :reset_change_id, :reset_cache
+  before_update :state_check, :check_broadcast
   after_update  :reset_change_id, :reset_cache
 
   attr_accessor :state

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Issue2641KbColorChangeLimit, type: :db_migration do
+RSpec.describe Issue2641KbColorChangeLimit, type: :db_migration, db_strategy: :reset do
   subject(:knowledge_base) { create(:knowledge_base) }
 
   before do

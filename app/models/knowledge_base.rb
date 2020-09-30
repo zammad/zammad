@@ -15,7 +15,7 @@ class KnowledgeBase < ApplicationModel
 
   accepts_nested_attributes_for :kb_locales, allow_destroy: true
   validates                     :kb_locales, presence: true
-  validates                     :kb_locales, length: { maximum: 1 }, unless: :multi_lingual_support?
+  validates                     :kb_locales, length: { maximum: 1, message: 'System supports only one locale for knowledge base. Upgrade your plan to use more locales.' }, unless: :multi_lingual_support?
 
   has_many :categories, class_name: 'KnowledgeBase::Category',
                         inverse_of: :knowledge_base,
@@ -148,13 +148,14 @@ class KnowledgeBase < ApplicationModel
     end
   end
 
+  before_validation :patch_custom_address
   after_create :set_defaults
 
   def validate_custom_address
     return if custom_address.nil?
 
     # not domain, but no leading slash
-    if !custom_address.include?('.') && custom_address[0] != '/'
+    if custom_address.exclude?('.') && custom_address[0] != '/'
       errors.add(:custom_address, 'must begin with a slash ("/").')
     end
 
@@ -177,8 +178,6 @@ class KnowledgeBase < ApplicationModel
     self.custom_address = nil if custom_address == ''
   end
 
-  before_validation :patch_custom_address
-
   def multi_lingual_support?
     Setting.get 'kb_multi_lingual_support'
   end
@@ -188,6 +187,6 @@ class KnowledgeBase < ApplicationModel
     CanBePublished.update_active_publicly!
   end
 
-  after_save    :set_kb_active_setting
   after_destroy :set_kb_active_setting
+  after_save    :set_kb_active_setting
 end

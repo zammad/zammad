@@ -15,7 +15,7 @@
   <p class="help-text"><%- @T('Password for proxy connection.') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
-      <input type="text" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
+      <input type="password" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
     </div>
   </div>
   <p class="help-text"><%- @T('No proxy for the following hosts.') %></p>

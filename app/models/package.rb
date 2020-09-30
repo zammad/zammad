@@ -91,7 +91,7 @@ note: will not take down package migrations, use Package.unlink instead
         logger.info "unlink: #{entry}"
         File.delete(entry)
       end
-      backup_file = entry + '.link_backup'
+      backup_file = "#{entry}.link_backup"
       if File.exist?(backup_file)
         logger.info "Restore backup file of #{backup_file} -> #{entry}."
         File.rename(backup_file, entry)
@@ -102,7 +102,7 @@ note: will not take down package migrations, use Package.unlink instead
   # check if zpm is a package source repo
   def self._package_base_dir?(package_base_dir)
     package = false
-    Dir.glob(package_base_dir + '/*.szpm') do |entry|
+    Dir.glob("#{package_base_dir}/*.szpm") do |entry|
       package = entry.sub(%r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
@@ -130,18 +130,18 @@ execute migration down + unlink files
     Package::Migration.migrate(package, 'reverse')
 
     # link files
-    Dir.glob(package_base_dir + '/**/*') do |entry|
+    Dir.glob("#{package_base_dir}/**/*") do |entry|
       entry = entry.sub('//', '/')
       file = entry
       file = file.sub(/#{package_base_dir}/, '')
-      dest = @@root + '/' + file
+      dest = "#{@@root}/#{file}"
 
       if File.symlink?(dest.to_s)
         logger.info "Unlink file: #{dest}"
         File.delete(dest.to_s)
       end
 
-      backup_file = dest.to_s + '.link_backup'
+      backup_file = "#{dest}.link_backup"
       if File.exist?(backup_file)
         logger.info "Restore backup file of #{backup_file} -> #{dest}."
         File.rename(backup_file, dest.to_s)
@@ -163,7 +163,7 @@ link files + execute migration up
     package = _package_base_dir?(package_base_dir)
 
     # link files
-    Dir.glob(package_base_dir + '/**/*') do |entry|
+    Dir.glob("#{package_base_dir}/**/*") do |entry|
       entry = entry.sub('//', '/')
       file = entry
       file = file.sub(/#{package_base_dir}/, '')
@@ -176,17 +176,15 @@ link files + execute migration up
       end
 
       # get new file destination
-      dest = @@root + '/' + file
+      dest = "#{@@root}/#{file}"
 
-      if File.directory?(entry.to_s)
-        if !File.exist?(dest.to_s)
-          logger.info "Create dir: #{dest}"
-          FileUtils.mkdir_p(dest.to_s)
-        end
+      if File.directory?(entry.to_s) && !File.exist?(dest.to_s)
+        logger.info "Create dir: #{dest}"
+        FileUtils.mkdir_p(dest.to_s)
       end
 
       if File.file?(entry.to_s) && (File.file?(dest.to_s) && !File.symlink?(dest.to_s))
-        backup_file = dest.to_s + '.link_backup'
+        backup_file = "#{dest}.link_backup"
         if File.exist?(backup_file)
           raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         end
@@ -410,11 +408,11 @@ execute all pending package migrations at once
   def self._read_file(file, fullpath = false)
     location = case fullpath
                when false
-                 @@root + '/' + file
+                 "#{@@root}/#{file}"
                when true
                  file
                else
-                 fullpath + '/' + file
+                 "#{fullpath}/#{file}"
                end
 
     begin
@@ -436,7 +434,7 @@ execute all pending package migrations at once
         logger.debug { "NOTICE: file '#{location}' already exists, skip install" }
         return true
       end
-      backup_location = location + '.save'
+      backup_location = "#{location}.save"
       logger.info "NOTICE: backup old file '#{location}' to #{backup_location}"
       File.rename(location, backup_location)
     end
@@ -478,7 +476,7 @@ execute all pending package migrations at once
     end
 
     # rename existing file
-    backup_location = location + '.save'
+    backup_location = "#{location}.save"
     if File.exist?(backup_location)
       logger.info "NOTICE: restore old file '#{backup_location}' to #{location}"
       File.rename(backup_location, location)

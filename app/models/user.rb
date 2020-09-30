@@ -44,11 +44,11 @@ class User < ApplicationModel
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_validation :check_mail_delivery_failed, on: :update
   before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
+  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_update      :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
-  after_commit      :update_caller_id
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
+  after_commit      :update_caller_id
 
   store :preferences
 
@@ -782,13 +782,12 @@ returns
   end
 
   def check_preferences_default
-    if @preferences_default.blank?
-      if id
-        roles.each do |role|
-          check_notifications(role, false)
-        end
+    if @preferences_default.blank? && id
+      roles.each do |role|
+        check_notifications(role, false)
       end
     end
+
     return if @preferences_default.blank?
 
     preferences_tmp = @preferences_default.merge(preferences)
@@ -930,10 +929,8 @@ try to find correct name
     end
 
     # if email has changed, login is old email, change also login
-    if changes && changes['email']
-      if changes['email'][0] == login
-        self.login = email
-      end
+    if changes && changes['email'] && changes['email'][0] == login
+      self.login = email
     end
 
     # generate auto login
@@ -1089,7 +1086,7 @@ raise 'Minimum one user need to have admin permissions'
       # if user already has a ticket.agent role
       hint = false
       role_ids.each do |locale_role_id|
-        next if !ticket_agent_role_ids.include?(locale_role_id)
+        next if ticket_agent_role_ids.exclude?(locale_role_id)
 
         hint = true
         break
@@ -1176,6 +1173,7 @@ raise 'Minimum one user need to have admin permissions'
   def destroy_move_dependency_ownership
     result = Models.references(self.class.to_s, id)
 
+    user_columns = %w[created_by_id updated_by_id origin_by_id owner_id archived_by_id published_by_id internal_by_id]
     result.each do |class_name, references|
       next if class_name.blank?
       next if references.blank?
@@ -1184,7 +1182,7 @@ raise 'Minimum one user need to have admin permissions'
       references.each do |column, reference_found|
         next if !reference_found
 
-        if %w[created_by_id updated_by_id origin_by_id owner_id archived_by_id published_by_id internal_by_id].include?(column)
+        if user_columns.include?(column)
           ref_class.where(column => id).find_in_batches(batch_size: 1000) do |batch_list|
             batch_list.each do |record|
               record.update!(column => 1)

@@ -14,8 +14,8 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
 
   def async_q_unit_tests(*args)
     q_unit_tests(*args) do
-      wait(10, interval: 4).until_constant do
-        find('.total').text
+      wait(120, interval: 3).until_constant do
+        page.has_css?('.total', wait: 0) ? find('.total').text : nil
       end
     end
   end
@@ -128,6 +128,17 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
 
     it 'DateTime' do
       q_unit_tests('form_datetime')
+    end
+  end
+
+  context 'Form AJAX', searchindex: true do
+    before do
+      configure_elasticsearch
+      rebuild_searchindex
+    end
+
+    it 'autocompletion ajax' do
+      async_q_unit_tests('form_autocompletion_ajax')
     end
   end
 

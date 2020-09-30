@@ -22,10 +22,8 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
 
     # touch old customer if changed
     cutomer_id_changed = record.saved_changes['customer_id']
-    if cutomer_id_changed && cutomer_id_changed[0] != cutomer_id_changed[1]
-      if cutomer_id_changed[0]
-        User.find(cutomer_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
-      end
+    if cutomer_id_changed && cutomer_id_changed[0] != cutomer_id_changed[1] && cutomer_id_changed[0]
+      User.find(cutomer_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
     end
 
     # touch new/current customer
@@ -33,10 +31,8 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
 
     # touch old organization if changed
     organization_id_changed = record.saved_changes['organization_id']
-    if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
-      if organization_id_changed[0]
-        Organization.find(organization_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
-      end
+    if organization_id_changed && organization_id_changed[0] != organization_id_changed[1] && organization_id_changed[0]
+      Organization.find(organization_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
     end
 
     # touch new/current organization

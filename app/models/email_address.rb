@@ -11,8 +11,8 @@ class EmailAddress < ApplicationModel
 
   before_validation :check_email
   before_create   :check_if_channel_exists_set_inactive
-  before_update   :check_if_channel_exists_set_inactive
   after_create    :update_email_address_id
+  before_update   :check_if_channel_exists_set_inactive
   after_update    :update_email_address_id
   before_destroy  :delete_group_reference
 

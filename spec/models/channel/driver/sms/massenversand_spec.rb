@@ -1,72 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe Channel::Driver::Sms::Massenversand do
-  it 'passes' do
-    channel = create_channel
-
-    stub_request(:get, url_to_mock)
-      .to_return(body: 'OK')
-
-    api = channel.driver_instance.new
-    expect(api.send(channel.options, { recipient: receiver_number, message: message_body })).to be true
-  end
-
-  it 'fails' do
-    channel = create_channel
-
-    stub_request(:get, url_to_mock)
-      .to_return(body: 'blocked receiver ()')
-
-    api = channel.driver_instance.new
-    expect { api.send(channel.options, { recipient: receiver_number, message: message_body }) }.to raise_exception(RuntimeError)
-  end
-
-  private
-
-  def create_channel
-    FactoryBot.create(:channel,
-                      options:       {
-                        adapter: 'sms/massenversand',
-                        gateway: gateway,
-                        sender:  sender_number,
-                        token:   token
-                      },
-                      created_by_id: 1,
-                      updated_by_id: 1)
-  end
-
-  def url_to_mock
-    params = {
+  let(:gateway) { 'https://gate1.goyyamobile.com/sms/sendsms.asp' }
+  let(:message_body) { 'Test' }
+  let(:receiver_number) { '+37060010000' }
+  let(:sender_number) { '+491000000000' }
+  let(:token) { '00q1234123423r5rwefdfsfsfef' }
+  let(:url) { "#{gateway}?#{params}" }
+  let(:params) do
+    URI.encode_www_form(
       authToken: token,
       getID:     1,
       msg:       message_body,
       msgtype:   'c',
       receiver:  receiver_number,
       sender:    sender_number
-    }
+    )
+  end
+  let(:channel) do
+    create(:channel,
+           options:       {
+             adapter: 'sms/massenversand',
+             gateway: gateway,
+             sender:  sender_number,
+             token:   token
+           },
+           created_by_id: 1,
+           updated_by_id: 1)
+  end
+  let(:instance) { described_class.new }
 
-    gateway + '?' + URI.encode_www_form(params)
+  context 'when gateway returns OK' do
+
+    before do
+      stub_request(:get, url).to_return(body: 'OK')
+    end
+
+    it 'passes' do
+      expect(instance.send(channel.options, { recipient: receiver_number, message: message_body })).to be true
+    end
   end
 
-  # api parameters
+  context 'when gateway response is invalid' do
 
-  def gateway
-    'https://gate1.goyyamobile.com/sms/sendsms.asp'
-  end
+    before do
+      stub_request(:get, url).to_return(body: body)
+    end
 
-  def message_body
-    'Test'
-  end
+    context 'when receiver is blocked' do
+      let(:body) { 'blocked receiver ()' }
 
-  def receiver_number
-    '+37060010000'
-  end
-
-  def sender_number
-    '+491000000000'
-  end
-
-  def token
-    '00q1234123423r5rwefdfsfsfef'
+      it 'raises RuntimeError' do # rubocop:disable RSpec/MultipleExpectations
+        expect { instance.send(channel.options, { recipient: receiver_number, message: message_body }) }.to raise_error { |error|
+          expect(error.message).not_to include(body)
+        }
+      end
+    end
   end
 end

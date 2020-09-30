@@ -13,8 +13,8 @@ class Store < ApplicationModel
 
   store :preferences
 
-  after_create :generate_previews
   before_create :oversized_preferences_check
+  after_create :generate_previews
   before_update :oversized_preferences_check
 
 =begin

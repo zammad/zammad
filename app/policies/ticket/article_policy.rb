@@ -22,7 +22,7 @@ class Ticket::ArticlePolicy < ApplicationPolicy
     # which were created by themselves within the last x minutes
 
     if !user.permissions?('ticket.agent')
-      return not_authorized('agent permission required') if !user.permissions?('ticket.agent')
+      return not_authorized('agent permission required')
     end
 
     if record.created_by_id != user.id

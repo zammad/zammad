@@ -66,20 +66,16 @@ returns
     UserInfo.current_user_id = admin_user.id
 
     # set default calendar
-    if auto_wizard_hash['CalendarSetup']
-      if auto_wizard_hash['CalendarSetup']['Ip']
-        Calendar.init_setup(auto_wizard_hash['CalendarSetup']['Ip'])
-      end
+    if auto_wizard_hash['CalendarSetup'] && auto_wizard_hash['CalendarSetup']['Ip']
+      Calendar.init_setup(auto_wizard_hash['CalendarSetup']['Ip'])
     end
 
     # load text modules
-    if auto_wizard_hash['TextModuleLocale']
-      if auto_wizard_hash['TextModuleLocale']['Locale']
-        begin
-          TextModule.load(auto_wizard_hash['TextModuleLocale']['Locale'])
-        rescue => e
-          Rails.logger.error "Unable to load text modules #{auto_wizard_hash['TextModuleLocale']['Locale']}: #{e.message}"
-        end
+    if auto_wizard_hash['TextModuleLocale'] && auto_wizard_hash['TextModuleLocale']['Locale']
+      begin
+        TextModule.load(auto_wizard_hash['TextModuleLocale']['Locale'])
+      rescue => e
+        Rails.logger.error "Unable to load text modules #{auto_wizard_hash['TextModuleLocale']['Locale']}: #{e.message}"
       end
     end
 

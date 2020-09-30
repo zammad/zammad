@@ -35,7 +35,7 @@ returns
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
 
-      real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
+      real_ids = "#{assoc_name[0, assoc_name.length - 1]}_ids"
       real_ids = real_ids.to_sym
       next if !params.key?(real_ids)
 
@@ -64,10 +64,10 @@ returns
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
 
-      real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
+      real_ids = "#{assoc_name[0, assoc_name.length - 1]}_ids"
       next if !respond_to?(real_ids)
 
-      real_values = assoc_name[0, assoc_name.length - 1] + 's'
+      real_values = "#{assoc_name[0, assoc_name.length - 1]}s"
       real_values = real_values.to_sym
       next if !respond_to?(real_values)
       next if !params[real_values]

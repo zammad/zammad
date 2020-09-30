@@ -111,4 +111,9 @@ App.Config.set('auth_provider_all', {
     name:   'SAML'
     config: 'auth_saml'
     class:  'saml'
+  sso:
+    url:    '/auth/sso'
+    name:   'SSO'
+    config: 'auth_sso'
+    class:  'sso'
 })

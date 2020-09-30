@@ -9,7 +9,16 @@ include:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t ~type:system -t ~searchindex
+    - bundle exec rspec -t ~type:system -t ~searchindex -t ~db_strategy:reset
+
+.template_rspec_db_reset: &template_rspec_db_reset
+  extends:
+    - .env_base
+  variables:
+    RAILS_ENV: "test"
+  script:
+    - bundle exec rake zammad:db:init
+    - bundle exec rspec -t ~type:system -t ~searchindex -t db_strategy:reset
 
 # we need at least one job to store and include this template
 # $IGNORE is not defined

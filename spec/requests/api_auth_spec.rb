@@ -142,7 +142,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('User is inactive!')
+      expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
 
       admin_token.preferences[:permission] = ['admin.session']
       admin_token.save!
@@ -150,7 +150,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('User is inactive!')
+      expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
 
       admin.active = true
       admin.save!
@@ -344,7 +344,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(response).to have_http_status(:unauthorized)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('User is inactive!')
+      expect(json_response['error']).to eq('Login failed. Have you double-checked your credentials and completed the email verification step?')
     end
 
     it 'does token auth - expired' do

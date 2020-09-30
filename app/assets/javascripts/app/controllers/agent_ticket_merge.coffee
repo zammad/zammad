@@ -74,7 +74,7 @@ class App.TicketMerge extends App.ControllerModal
     # merge tickets
     @ajax(
       id:    'ticket_merge'
-      type:  'GET'
+      type:  'PUT'
       url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.master_ticket_number}"
       processData: true,
       success: (data, status, xhr) =>

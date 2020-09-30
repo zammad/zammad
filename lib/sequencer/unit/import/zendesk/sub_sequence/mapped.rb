@@ -11,6 +11,8 @@ class Sequencer
               end
 
               def inherited(base)
+                super
+
                 base.provides(base.resource_map)
 
                 base.extend(Forwardable)

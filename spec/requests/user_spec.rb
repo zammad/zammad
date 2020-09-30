@@ -1,82 +1,71 @@
 require 'rails_helper'
 
-RSpec.describe 'User', type: :request, searchindex: true do
+RSpec.describe 'User', type: :request do
 
-  let!(:admin) do
-    create(
-      :admin,
-      groups:    Group.all,
-      login:     'rest-admin',
-      firstname: 'Rest',
-      lastname:  'Agent',
-      email:     'rest-admin@example.com',
-    )
-  end
-  let!(:admin_with_pw) do
-    create(
-      :admin,
-      groups:    Group.all,
-      login:     'rest-admin-pw',
-      firstname: 'Rest',
-      lastname:  'Agent',
-      email:     'rest-admin-pw@example.com',
-      password:  'adminpw',
-    )
-  end
-  let!(:agent) do
-    create(
-      :agent,
-      groups:    Group.all,
-      login:     'rest-agent@example.com',
-      firstname: 'Rest',
-      lastname:  'Agent',
-      email:     'rest-agent@example.com',
-    )
-  end
-  let!(:customer) do
-    create(
-      :customer,
-      login:     'rest-customer1@example.com',
-      firstname: 'Rest',
-      lastname:  'Customer1',
-      email:     'rest-customer1@example.com',
-    )
-  end
-  let!(:organization) do
-    create(:organization, name: 'Rest Org')
-  end
-  let!(:organization2) do
-    create(:organization, name: 'Rest Org #2')
-  end
-  let!(:organization3) do
-    create(:organization, name: 'Rest Org #3')
-  end
-  let!(:customer2) do
-    create(
-      :customer,
-      organization: organization,
-      login:        'rest-customer2@example.com',
-      firstname:    'Rest',
-      lastname:     'Customer2',
-      email:        'rest-customer2@example.com',
-    )
-  end
-
-  before do
-    configure_elasticsearch do
-
-      travel 1.minute
-
-      rebuild_searchindex
-
-      # execute background jobs
-      Scheduler.worker(true)
-
-      sleep 6
+  describe 'request handling', searchindex: true do
+    let!(:admin) do
+      create(
+        :admin,
+        groups:    Group.all,
+        login:     'rest-admin',
+        firstname: 'Rest',
+        lastname:  'Agent',
+        email:     'rest-admin@example.com',
+      )
     end
-  end
+    let!(:admin_with_pw) do
+      create(
+        :admin,
+        groups:    Group.all,
+        login:     'rest-admin-pw',
+        firstname: 'Rest',
+        lastname:  'Agent',
+        email:     'rest-admin-pw@example.com',
+        password:  'adminpw',
+      )
+    end
+    let!(:agent) do
+      create(
+        :agent,
+        groups:    Group.all,
+        login:     'rest-agent@example.com',
+        firstname: 'Rest',
+        lastname:  'Agent',
+        email:     'rest-agent@example.com',
+      )
+    end
+    let!(:customer) do
+      create(
+        :customer,
+        login:     'rest-customer1@example.com',
+        firstname: 'Rest',
+        lastname:  'Customer1',
+        email:     'rest-customer1@example.com',
+      )
+    end
+    let!(:organization) do
+      create(:organization, name: 'Rest Org')
+    end
+    let!(:organization2) do
+      create(:organization, name: 'Rest Org #2')
+    end
+    let!(:organization3) do
+      create(:organization, name: 'Rest Org #3')
+    end
+    let!(:customer2) do
+      create(
+        :customer,
+        organization: organization,
+        login:        'rest-customer2@example.com',
+        firstname:    'Rest',
+        lastname:     'Customer2',
+        email:        'rest-customer2@example.com',
+      )
+    end
 
-  describe 'request handling' do
+    before do
+      configure_elasticsearch(rebuild: true)
+    end
 
     it 'does user create tests - no user' do
 
@@ -87,7 +76,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
       token = @response.headers['CSRF-TOKEN']
 
       # token based on form
-      params = { email: 'some_new_customer@example.com', authenticity_token: token }
+      params = { email: 'some_new_customer@example.com', signup: true, authenticity_token: token }
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
@@ -95,7 +84,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       # token based on headers
       headers = { 'X-CSRF-Token' => token }
-      params = { email: 'some_new_customer@example.com' }
+      params = { email: 'some_new_customer@example.com', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
@@ -103,19 +92,17 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       Setting.set('user_create_account', true)
 
-      # no signup param with enabled feature
-      params = { email: 'some_new_customer@example.com' }
+      # no signup param without password
+      params = { email: 'some_new_customer@example.com', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq('Only signup with not authenticate user possible!')
 
-      # already existing user with enabled feature
-      params = { email: 'rest-customer1@example.com', signup: true }
+      # already existing user with enabled feature, pretend signup is successful
+      params = { email: 'rest-customer1@example.com', password: 'asd1ASDasd!', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to be_truthy
-      expect(json_response['error']).to eq("Email address 'rest-customer1@example.com' is already used for other user.")
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_truthy
 
       # email missing with enabled feature
       params = { firstname: 'some firstname', signup: true }
@@ -132,38 +119,35 @@ RSpec.describe 'User', type: :request, searchindex: true do
       expect(json_response['error']).to eq('Attribute \'email\' required!')
 
       # create user with enabled feature (take customer role)
-      params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', signup: true }
+      params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', password: '1asdASDasd', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
+      expect(json_response['message']).to eq('ok')
 
-      expect(json_response['firstname']).to eq('Me First')
-      expect(json_response['lastname']).to eq('Me Last')
-      expect(json_response['login']).to eq('new_here@example.com')
-      expect(json_response['email']).to eq('new_here@example.com')
-      user = User.find(json_response['id'])
+      user = User.find_by email: 'new_here@example.com'
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
 
       # create user with admin role (not allowed for signup, take customer role)
       role = Role.lookup(name: 'Admin')
-      params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ], signup: true }
+      params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ], signup: true, password: '1asdASDasd' }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
-      user = User.find(json_response['id'])
+      user = User.find_by email: 'new_admin@example.com'
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
 
       # create user with agent role (not allowed for signup, take customer role)
       role = Role.lookup(name: 'Agent')
-      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ], signup: true }
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ], signup: true, password: '1asdASDasd' }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
-      user = User.find(json_response['id'])
+      user = User.find_by email: 'new_agent@example.com'
       expect(user).not_to be_role('Admin')
       expect(user).not_to be_role('Agent')
       expect(user).to be_role('Customer')
@@ -177,6 +161,22 @@ RSpec.describe 'User', type: :request, searchindex: true do
       get '/api/v1/users/me', params: {}, headers: headers, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response['error']).to eq('authentication failed')
+    end
+
+    context 'password security' do
+      it 'verified with no current user' do
+        params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
+        post '/api/v1/users', params: params, headers: headers, as: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to be_truthy
+        expect(json_response['error']).to include('Invalid password')
+      end
+
+      it 'verified with no current user', authenticated_as: :admin do
+        params = { email: 'some_new_customer@example.com', password: 'asd' }
+        post '/api/v1/users', params: params, headers: headers, as: :json
+        expect(response).to have_http_status(:created)
+      end
     end
 
     it 'does auth tests - not existing user' do
@@ -1093,7 +1093,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       context 'for user with email address' do
         it 'return ok' do
-          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'TEst1234#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
@@ -1123,7 +1123,7 @@ RSpec.describe 'User', type: :request, searchindex: true do
         let(:user) { create(:customer, login: 'somebody', email: '', password: 'Test1234#.') }
 
         it 'return ok' do
-          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'TEst12345#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
@@ -1133,13 +1133,239 @@ RSpec.describe 'User', type: :request, searchindex: true do
 
       context 'user with email address' do
         it 'return ok' do
-          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'Test12345#.' }, as: :json
+          post '/api/v1/users/password_change', params: { password_old: 'Test1234#.', password_new: 'TEst12345#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a_kind_of(Hash)
           expect(json_response['message']).to eq('ok')
         end
       end
+    end
+  end
+
+  describe 'POST /api/v1/users', authenticated_as: -> { create(:admin) }, searchindex: false do
+    def make_request(params)
+      post '/api/v1/users', params: params, as: :json
+    end
+
+    let(:successful_params)  { { email: attributes_for(:admin)[:email] } }
+    let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] } ) }
+    let(:params_with_invite) { successful_params.merge({ invite: true } ) }
+
+    it 'succeeds' do
+      make_request successful_params
+
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'returns user data' do
+      make_request successful_params
+
+      expect(json_response).to have_key('email').and(have_value(successful_params[:email]))
+    end
+
+    it 'no session treated as signup', authenticated_as: false do
+      make_request successful_params
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'does not accept requests from customers', authenticated_as: -> { create(:customer) } do
+      make_request successful_params
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'admins can give any role', authenticated_as: -> { create(:admin) } do
+      make_request params_with_role
+      expect(User.last).to be_role 'Admin'
+    end
+
+    it 'agents can not give roles', authenticated_as: -> { create(:agent) } do
+      make_request params_with_role
+      expect(User.last).not_to be_role 'Admin'
+    end
+
+    it 'does not send email verification notifications' do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request successful_params
+      expect(NotificationFactory::Mailer).not_to have_received(:notification) { |arguments| arguments[:template] == 'signup' }
+    end
+
+    it 'does not send invitation notification by default' do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request successful_params
+      expect(NotificationFactory::Mailer).not_to have_received(:notification) { |arguments| arguments[:template] == 'user_invite' }
+    end
+
+    it 'sends invitation notification when required' do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request params_with_invite
+      expect(NotificationFactory::Mailer).to have_received(:notification) { |arguments| arguments[:template] == 'user_invite' }
+    end
+
+    it 'requires at least one identifier' do
+      make_request({ web: 'example.com' })
+      expect(json_response['error']).to start_with('Minimum one identifier')
+    end
+
+    it 'takes first name as identifier' do
+      make_request({ firstname: 'name' })
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'takes last name as identifier' do
+      make_request({ lastname: 'name' })
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'takes login as identifier' do
+      make_request({ login: 'name' })
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'requires valid email if present' do
+      make_request({ email: 'not_valid_email' })
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
+  describe 'POST /api/v1/users processed by #create_admin', authenticated_as: false do
+    before do
+      User.all[2...].each(&:destroy) # destroy previously created users
+    end
+
+    def make_request(params)
+      post '/api/v1/users', params: params, as: :json
+    end
+
+    let(:successful_params) do
+      email = attributes_for(:admin)[:email]
+
+      { firstname: 'Admin First', lastname: 'Admin Last', email: email, password: 'asd1ASDasd!' }
+    end
+
+    it 'succeds' do
+      make_request successful_params
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'returns success message' do
+      make_request successful_params
+      expect(json_response).to have_key('message').and(have_value('ok'))
+    end
+
+    it 'does not allow to create 2nd administrator account' do
+      create(:admin)
+      make_request successful_params
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'requires email' do
+      make_request successful_params.merge(email: nil)
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'requires valid email' do
+      make_request successful_params.merge(email: 'invalid_email')
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'loads calendar' do
+      allow(Calendar).to receive(:init_setup)
+      make_request successful_params
+      expect(Calendar).to have_received(:init_setup)
+    end
+
+    it 'loads text module' do
+      allow(TextModule).to receive(:load)
+      make_request successful_params
+      expect(TextModule).to have_received(:load)
+    end
+
+    it 'does not send any notifications' do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request successful_params
+      expect(NotificationFactory::Mailer).not_to have_received(:notification)
+    end
+  end
+
+  describe 'POST /api/v1/users processed by #create_signup', authenticated_as: false do
+    def make_request(params)
+      post '/api/v1/users', params: params, as: :json
+    end
+
+    let(:successful_params) do
+      email = attributes_for(:admin)[:email]
+
+      { firstname: 'Customer First', lastname: 'Customer Last', email: email, password: 'gsd1ASDasd!', signup: true }
+    end
+
+    before do
+      create(:admin) # simulate functional system with admin created
+    end
+
+    it 'succeeds' do
+      make_request successful_params
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'requires csrf', allow_forgery_protection: true do
+      make_request successful_params
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'requires honeypot attribute' do
+      params = successful_params.clone
+      params.delete :signup
+
+      make_request params
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'requires signup to be enabled' do
+      Setting.set('user_create_account', false)
+      make_request successful_params
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'requires email' do
+      make_request successful_params.merge(email: nil)
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'requires valid email' do
+      make_request successful_params.merge(email: 'not_valid_email')
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns false positive when email already used' do
+      create(:customer, email: successful_params[:email])
+      make_request successful_params
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'sends email verification notifications' do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request successful_params
+      expect(NotificationFactory::Mailer).to have_received(:notification) { |arguments| arguments[:template] == 'signup' }
+    end
+
+    it 'sends password reset notification when email already used' do
+      create(:customer, email: successful_params[:email])
+      allow(NotificationFactory::Mailer).to receive(:notification)
+      make_request successful_params
+      expect(NotificationFactory::Mailer).to have_received(:notification) { |arguments| arguments[:template] == 'signup_taken_reset' }
+    end
+
+    it 'sets role to Customer' do
+      make_request successful_params
+      expect(User.last).to be_role('Customer')
+    end
+
+    it 'ignores given Agent role' do
+      make_request successful_params.merge(role_ids: [Role.find_by(name: 'Agent').id])
+      expect(User.last).not_to be_role('Agent')
     end
   end
 end

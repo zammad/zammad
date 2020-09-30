@@ -3,3 +3,9 @@ rspec:mysql:
   extends:
     - .services_mysql
     - .template_rspec
+
+rspec:mysql:db_reset:
+  stage: test
+  extends:
+    - .services_mysql
+    - .template_rspec_db_reset

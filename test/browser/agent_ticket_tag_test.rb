@@ -378,22 +378,22 @@ class AgentTicketTagTest < TestCase
 
     set(
       css:   '.content.active .js-create input[name="name"]',
-      value: tag_prefix + ' A',
+      value: "#{tag_prefix} A",
     )
     click(css: '.content.active .js-create .js-submit')
     set(
       css:   '.content.active .js-create input[name="name"]',
-      value: tag_prefix + ' a',
+      value: "#{tag_prefix} a",
     )
     click(css: '.content.active .js-create .js-submit')
     set(
       css:   '.content.active .js-create input[name="name"]',
-      value: tag_prefix + ' B',
+      value: "#{tag_prefix} B",
     )
     click(css: '.content.active .js-create .js-submit')
     set(
       css:   '.content.active .js-create input[name="name"]',
-      value: tag_prefix + ' C',
+      value: "#{tag_prefix} C",
     )
     click(css: '.content.active .js-create .js-submit')
 

@@ -65,10 +65,8 @@ returns
     # verify token
     bot = Telegram.check_token(token)
 
-    if !channel
-      if Telegram.bot_duplicate?(bot['id'])
-        raise Exceptions::UnprocessableEntity, 'Bot already exists!'
-      end
+    if !channel && Telegram.bot_duplicate?(bot['id'])
+      raise Exceptions::UnprocessableEntity, 'Bot already exists!'
     end
 
     if params[:group_id].blank?
@@ -704,9 +702,7 @@ returns
     end
 
     # prevent multiple update
-    if !params[:edited_message]
-      return if Ticket::Article.exists?(message_id: Telegram.message_id(params))
-    end
+    return if !params[:edited_message] && Ticket::Article.exists?(message_id: Telegram.message_id(params))
 
     # update article
     if params[:edited_message]

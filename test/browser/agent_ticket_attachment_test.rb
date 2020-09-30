@@ -219,13 +219,13 @@ class AgentTicketAttachmentTest < TestCase
       browser: browser2,
     )
 
-    random     = 'ticket-actions-6-test-' + rand(999_999).to_s
-    user_email = random + '@example.com'
+    random     = "ticket-actions-6-test-#{rand(999_999)}"
+    user_email = "#{random}@example.com"
     user_create(
       browser: browser2,
       data:    {
-        firstname: 'Action6 Firstname' + random,
-        lastname:  'Action6 Lastname' + random,
+        firstname: "Action6 Firstname#{random}",
+        lastname:  "Action6 Lastname#{random}",
         email:     user_email,
         password:  'some-pass',
       },

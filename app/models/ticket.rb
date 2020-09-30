@@ -412,11 +412,7 @@ returns
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
     # always to set unseen for ticket owner and users which did not the update
-    if state_type.name != 'merged'
-      if user_id_check
-        return false if user_id_check == owner_id && user_id_check != updated_by_id
-      end
-    end
+    return false if state_type.name != 'merged' && user_id_check && user_id_check == owner_id && user_id_check != updated_by_id
 
     # set all to seen if pending action state is a closed or merged state
     if state_type.name == 'pending action' && state.next_state_id
@@ -901,10 +897,10 @@ perform changes on ticket
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
     article = begin
-                Ticket::Article.find_by(id: item.try(:dig, :article_id))
-              rescue ArgumentError
-                nil
-              end
+      Ticket::Article.find_by(id: item.try(:dig, :article_id))
+    rescue ArgumentError
+      nil
+    end
 
     # if the configuration contains the deletion of the ticket then
     # we skip all other ticket changes because they does not matter

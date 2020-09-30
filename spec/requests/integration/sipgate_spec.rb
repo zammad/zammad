@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+# rubocop:disable Style/CombinableLoops
+
 RSpec.describe 'Integration Sipgate', type: :request do
 
   let(:agent) do
@@ -488,3 +490,5 @@ RSpec.describe 'Integration Sipgate', type: :request do
     end
   end
 end
+
+# rubocop:enable Style/CombinableLoops

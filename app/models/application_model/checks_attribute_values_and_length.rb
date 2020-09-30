@@ -30,10 +30,8 @@ module ApplicationModel::ChecksAttributeValuesAndLength
       next if value.blank?
 
       # strip null byte chars (postgresql will complain about it)
-      if column.type == :text
-        if Rails.application.config.db_null_byte == false
-          self[name].delete!("\u0000")
-        end
+      if column.type == :text && Rails.application.config.db_null_byte == false
+        self[name].delete!("\u0000")
       end
 
       # for varchar check length and replace null bytes

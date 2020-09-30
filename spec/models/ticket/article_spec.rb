@@ -6,13 +6,13 @@ require 'models/concerns/has_history_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
 
 RSpec.describe Ticket::Article, type: :model do
+  subject(:article) { create(:ticket_article) }
+
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasObjectManagerAttributesValidation'
-
-  subject(:article) { create(:ticket_article) }
 
   describe 'Callbacks, Observers, & Async Transactions -' do
     describe 'NULL byte handling (via ChecksAttributeValuesAndLength concern):' do
@@ -290,7 +290,7 @@ RSpec.describe Ticket::Article, type: :model do
           end
 
           context 'with NULL bytes' do
-            let(:body) { "\u0000" + 'a' * 2_000_000 }
+            let(:body) { "\u0000#{'a' * 2_000_000}" }
 
             it 'still removes them, if necessary (postgres doesn’t like them)' do
               expect(article).to be_persisted

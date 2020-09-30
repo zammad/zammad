@@ -13,6 +13,12 @@
       <div class="hero-unit">
         <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
         <form id="login">
+          <% if @item.errorMessage: %>
+            <div class="alert alert--danger" role="alert">
+              <%= @item.errorMessage %>
+            </div>
+          <% end %>
+
           <div class="form-group">
             <div class="formGroup-label">
               <label for="username"><%- @Ti('Username / email') %></label>

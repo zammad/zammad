@@ -25,61 +25,61 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: nil|
         end
       end
 
-      describe 'of #active' do
+      describe 'of #active', if: described_class.attribute_names.include?('active') do
         let(:attribute) { 'active' }
         let(:new_value) { !subject.active }
         let(:attributes) { { 'value_from' => old_value.to_s, 'value_to' => new_value.to_s } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('active')
+        include_examples 'attribute update'
       end
 
-      describe 'of #body' do
+      describe 'of #body', if: described_class.attribute_names.include?('body') do
         let(:attribute) { 'body' }
         let(:new_value) { 'Lorem ipsum dolor' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('body')
+        include_examples 'attribute update'
       end
 
-      describe 'of #email' do
+      describe 'of #email', if: described_class.attribute_names.include?('email') do
         let(:attribute) { 'email' }
         let(:new_value) { Faker::Internet.email }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('email')
+        include_examples 'attribute update'
       end
 
-      describe 'of #lastname' do
+      describe 'of #lastname', if: described_class.attribute_names.include?('lastname') do
         let(:attribute) { 'lastname' }
         let(:new_value) { 'Foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('lastname')
+        include_examples 'attribute update'
       end
 
-      describe 'of #name' do
+      describe 'of #name', if: described_class.attribute_names.include?('name') do
         let(:attribute) { 'name' }
         let(:new_value) { 'Foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('name')
+        include_examples 'attribute update'
       end
 
-      describe 'of #state' do
+      describe 'of #state', if: described_class.attribute_names.include?('state_id') do
         let(:attribute) { 'state' }
         let(:new_value) { state_class.where.not(id: old_value.id).first }
         let(:state_class) { "#{described_class.name}::State".constantize }
         let(:attributes) { { 'value_from' => old_value.name, 'value_to' => new_value.name } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('state_id')
+        include_examples 'attribute update'
       end
 
-      describe 'of #title' do
+      describe 'of #title', if: described_class.attribute_names.include?('title') do
         let(:attribute) { 'title' }
         let(:new_value) { 'foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
-        include_examples 'attribute update' if described_class.attribute_names.include?('title')
+        include_examples 'attribute update'
       end
 
       context 'when validations or callbacks prevent update' do
@@ -89,11 +89,11 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: nil|
           end
         end
 
-        describe 'of #owner' do
+        describe 'of #owner', if: described_class.attribute_names.include?('owner_id') do
           let(:attribute) { 'owner' }
           let(:new_value) { create(:customer) } # Ticket#owner is restricted to active agents of the same group
 
-          include_examples 'failed attribute update' if described_class.attribute_names.include?('owner_id')
+          include_examples 'failed attribute update'
         end
       end
     end

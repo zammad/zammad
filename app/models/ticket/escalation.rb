@@ -136,15 +136,15 @@ returns
       close_at_changed = false
     end
 
-    if !force && preferences[:escalation_calculation]
-      if first_response_at_changed == false &&
-         last_update_at_changed == false &&
-         close_at_changed == false &&
-         sla_changed == false &&
-         calendar_changed == false &&
-         escalation_calculation['escalation_disabled'] == escalation_disabled
-        return false
-      end
+    if !force &&
+       preferences[:escalation_calculation] &&
+       first_response_at_changed == false &&
+       last_update_at_changed == false &&
+       close_at_changed == false &&
+       sla_changed == false &&
+       calendar_changed == false &&
+       escalation_calculation['escalation_disabled'] == escalation_disabled
+      return false
     end
 
     # reset escalation attributes

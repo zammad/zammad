@@ -173,14 +173,12 @@ class WebsocketServer
         log 'notice', 'send data to client', client_id
         websocket_send(client_id, queue)
       rescue => e
-        log 'error', 'problem:' + e.inspect, client_id
+        log 'error', "problem:#{e.inspect}", client_id
 
         # disconnect client
         client[:error_count] += 1
-        if client[:error_count] > 20
-          if @clients.include? client_id
-            @clients.delete client_id
-          end
+        if client[:error_count] > 20 && @clients.include?(client_id)
+          @clients.delete client_id
         end
       end
     end
@@ -210,9 +208,8 @@ class WebsocketServer
   end
 
   def self.log(level, data, client_id = '-')
-    if !@options[:v]
-      return if level == 'debug'
-    end
+    return if !@options[:v] && level == 'debug'
+
     puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}" # rubocop:disable Rails/Output
     #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end

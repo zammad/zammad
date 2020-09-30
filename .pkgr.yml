@@ -29,17 +29,6 @@ targets:
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
-  debian-8:
-    dependencies:
-      - curl
-      - elasticsearch
-      - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
-      - libimlib2
-      - libimlib2-dev
-    build_dependencies:
-      - libimlib2
-      - libimlib2-dev
   debian-9:
     dependencies:
       - curl

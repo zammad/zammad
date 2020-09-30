@@ -13,7 +13,7 @@ module Import
       def backup
         # rename states to handle not uniq issues
         ::Ticket::State.all.each do |state|
-          state.name = state.name + '_tmp'
+          state.name = "#{state.name}_tmp"
           state.save
         end
       end

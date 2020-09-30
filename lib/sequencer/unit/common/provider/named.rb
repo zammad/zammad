@@ -11,6 +11,8 @@ class Sequencer
           end
 
           def self.inherited(base)
+            super
+
             base.extend(ClassMethods)
             base.provides(base.named_provide)
 

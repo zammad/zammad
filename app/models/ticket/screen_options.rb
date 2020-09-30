@@ -58,7 +58,7 @@ returns
       state_type = params[:ticket].state.state_type
     end
     state_types = ['open', 'closed', 'pending action', 'pending reminder']
-    if state_type && !state_types.include?(state_type.name)
+    if state_type && state_types.exclude?(state_type.name)
       state_ids.push params[:ticket].state_id
     end
     state_types.each do |type|

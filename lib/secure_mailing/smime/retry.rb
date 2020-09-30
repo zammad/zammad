@@ -1,6 +1,7 @@
 class SecureMailing::SMIME::Retry < SecureMailing::Backend::Handler
 
   def initialize(article)
+    super()
     @article = article
   end
 

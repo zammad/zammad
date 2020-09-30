@@ -333,6 +333,7 @@ RSpec/FilePath:
     - 'spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb'
     - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
     - 'spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb'
+    - 'spec/db/migrate/issue_2943_add_setting_enforce_special_character_spec.rb'
     - 'spec/jobs/issue_2715_fix_broken_twitter_urls_job_spec.rb'
     - 'spec/db/migrate/issue_2867_footer_header_public_link_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
@@ -627,12 +628,16 @@ RSpec/NestedGroups:
     - 'spec/lib/signature_detection_spec.rb'
     - 'spec/lib/stats/ticket_waiting_time_spec.rb'
     - 'spec/lib/twitter_sync_spec.rb'
+    - 'spec/models/application_model/can_lookup_examples.rb'
     - 'spec/models/calendar_spec.rb'
     - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/channel/filter/match/email_regex_spec.rb'
     - 'spec/models/channel/filter/out_of_office_check_spec.rb'
     - 'spec/models/concerns/has_collection_update_examples.rb'
+    - 'spec/models/concerns/has_groups_examples.rb'
+    - 'spec/models/concerns/has_history_examples.rb'
+    - 'spec/models/concerns/has_roles_examples.rb'
     - 'spec/models/concerns/has_ticket_create_screen_impact_examples.rb'
     - 'spec/models/cti/caller_id_spec.rb'
     - 'spec/models/cti/log_spec.rb'
@@ -736,3 +741,8 @@ RSpec/VerifiedDoubles:
     - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/source_based_spec.rb'
     - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/ticket/number_spec.rb'
+
+RSpec/MultipleMemoizedHelpers:
+  Description: Checks if example groups contain too many `let` and `subject` calls.
+  Enabled: false
+  StyleGuide: https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/MultipleMemoizedHelpers
