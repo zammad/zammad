@@ -2,8 +2,8 @@ require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_i
-    name1 = 'name_low_' + rand(999_999).to_s
-    name2 = 'name_high_' + rand(999_999).to_s
+    name1 = "name_low_#{rand(999_999)}"
+    name2 = "name_high_#{rand(999_999)}"
 
     browser1 = browser_instance
     login(

@@ -236,7 +236,7 @@ returns
           },
         },
       ]
-      inbounds = inbounds.concat(inbound)
+      inbounds.concat(inbound)
     end
     inbounds
   end
@@ -473,7 +473,7 @@ returns
           },
         },
       ]
-      outbounds = outbounds.concat(outbound)
+      outbounds.concat(outbound)
     end
     outbounds
   end

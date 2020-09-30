@@ -50,10 +50,11 @@ Checks if file is used inline
     parsed = Loofah.scrub_fragment(raw, scrubber).to_s
     parsed = HtmlSanitizer.strict(parsed)
 
+    line_breaks = ["\n", "\r", "\r\n"]
     scrubber_cleaner = Loofah::Scrubber.new(direction: :bottom_up) do |node|
       case node.name
       when 'span'
-        node.children.reject { |t| ["\n", "\r", "\r\n"].include?(t.text) }.each { |child| node.before child }
+        node.children.reject { |t| line_breaks.include?(t.text) }.each { |child| node.before child }
 
         node.remove
       when 'div'

@@ -137,7 +137,7 @@ class Cti::Driver::Base
     # open user profile if user has a ticket in the last 30 days
     if customer_id
       last_activity = Setting.get('cti_customer_last_activity')
-      if Ticket.where(customer_id: customer_id).where('updated_at > ?', last_activity.seconds.ago).exists?
+      if Ticket.where(customer_id: customer_id).exists?(['updated_at > ?', last_activity.seconds.ago])
         PushMessages.send_to(user.id, {
                                event: 'remote_task',
                                data:  {

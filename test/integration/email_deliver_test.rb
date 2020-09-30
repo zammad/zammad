@@ -209,7 +209,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
 
     assert(Delayed::Job.where(attempts: 1).none?)
     Scheduler.worker(true)
-    assert(Delayed::Job.where(attempts: 1).exists?)
+    assert(Delayed::Job.exists?(attempts: 1))
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -233,7 +233,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     travel 26.seconds
     assert(Delayed::Job.where(attempts: 2).none?)
     Scheduler.worker(true)
-    assert(Delayed::Job.where(attempts: 2).exists?)
+    assert(Delayed::Job.exists?(attempts: 2))
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -258,7 +258,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     travel 51.seconds
     assert(Delayed::Job.where(attempts: 3).none?)
     Scheduler.worker(true)
-    assert(Delayed::Job.where(attempts: 3).exists?)
+    assert(Delayed::Job.exists?(attempts: 3))
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)

@@ -207,7 +207,7 @@ class SearchKnowledgeBaseBackend
   end
 
   def visible_translation?(translation, visibility)
-    if !kb_locales_in(translation.category.knowledge_base_id).include? translation.kb_locale
+    if kb_locales_in(translation.category.knowledge_base_id).exclude?(translation.kb_locale)
       return false
     end
 

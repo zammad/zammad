@@ -56,7 +56,7 @@ class AgentTicketZoomHideTest < TestCase
 
     # Now go to a previous ticket and confirm that the modal disappears
     location(
-      url: browser_url + '/#ticket/zoom/1',
+      url: "#{browser_url}/#ticket/zoom/1",
     )
     sleep 2
     modal_disappear()

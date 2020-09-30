@@ -9,6 +9,8 @@ class Sequencer
             uses :resource, :instance, :user_id, :model_class, :action
 
             def self.inherited(subclass)
+              super
+
               subclass.prepend(::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action)
               subclass.skip_action(:skipped, :failed)
             end

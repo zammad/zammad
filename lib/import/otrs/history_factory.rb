@@ -25,7 +25,7 @@ module Import
       end
 
       def check_supported(history)
-        return if !supported_types.include?(history['HistoryType'])
+        return if supported_types.exclude?(history['HistoryType'])
 
         history['HistoryType']
       end

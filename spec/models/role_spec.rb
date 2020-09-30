@@ -6,13 +6,13 @@ require 'models/concerns/has_collection_update_examples'
 require 'models/concerns/has_ticket_create_screen_impact_examples'
 
 RSpec.describe Role do
+  subject(:role) { create(:role) }
+
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasGroups', group_access_factory: :role
   it_behaves_like 'HasCollectionUpdate', collection_factory: :role
   it_behaves_like 'HasTicketCreateScreenImpact', create_screen_factory: :role
-
-  subject(:role) { create(:role) }
 
   describe 'Default state' do
     describe 'of whole table:' do

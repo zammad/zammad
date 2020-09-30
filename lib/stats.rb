@@ -37,7 +37,7 @@ returns
 
         backend = stats_item.state_current[:value]
         if !backend
-          raise 'Dashboard::Stats backend ' + stats_item.name + ' is not defined'
+          raise "Dashboard::Stats backend #{stats_item.name} is not defined"
         end
 
         require_dependency backend.to_filename

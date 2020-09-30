@@ -6,7 +6,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
   describe '#assets (for supplying model data to front-end framework)' do
     shared_examples 'own asset attributes' do
       it 'returns a hash with own asset attributes' do
-        expect(subject.assets({}).dig(described_class.to_app_model))
+        expect(subject.assets({})[described_class.to_app_model])
           .to include(subject.id => hash_including(subject.attributes_with_association_ids))
       end
     end

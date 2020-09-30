@@ -40,7 +40,7 @@ class Stats::TicketChannelDistribution
       )
     end
 
-    if Channel.where(area: 'Sms::Account').exists?
+    if Channel.exists?(area: 'Sms::Account')
       channels.push(
         {
           sender: 'sms',
@@ -49,7 +49,7 @@ class Stats::TicketChannelDistribution
       )
     end
 
-    if Channel.where(area: 'Twitter::Account').exists?
+    if Channel.exists?(area: 'Twitter::Account')
       channels.push(
         {
           sender: 'twitter',
@@ -58,7 +58,7 @@ class Stats::TicketChannelDistribution
       )
     end
 
-    if Channel.where(area: 'Facebook::Account').exists?
+    if Channel.exists?(area: 'Facebook::Account')
       channels.push(
         {
           sender: 'facebook',
@@ -67,7 +67,7 @@ class Stats::TicketChannelDistribution
       )
     end
 
-    if Channel.where(area: 'Telegram::Account').exists?
+    if Channel.exists?(area: 'Telegram::Account')
       channels.push(
         {
           sender: 'telegram',
@@ -111,7 +111,7 @@ class Stats::TicketChannelDistribution
     end
 
     # append in percent
-    channels.each do |channel|
+    channels.each do |channel| # rubocop:disable Style/CombinableLoops
       count = result[channel[:sender].to_sym][:inbound]
       #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
       in_process_precent = if count.zero?

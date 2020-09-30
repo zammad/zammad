@@ -8,8 +8,8 @@ class Calendar < ApplicationModel
   store :public_holidays
 
   before_create  :validate_public_holidays, :validate_hours, :fetch_ical
-  before_update  :validate_public_holidays, :validate_hours, :fetch_ical
   after_create   :sync_default, :min_one_check
+  before_update  :validate_public_holidays, :validate_hours, :fetch_ical
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
 

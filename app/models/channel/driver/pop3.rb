@@ -142,27 +142,23 @@ returns
     mails.first(2000).each do |m|
       count += 1
 
-      if (count % active_check_interval).zero?
-        break if channel_has_changed?(channel)
-      end
+      break if (count % active_check_interval).zero? && channel_has_changed?(channel)
 
       Rails.logger.info " - message #{count}/#{count_all}"
       mail = m.pop
       next if !mail
 
       # ignore verify messages
-      if mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/)
-        if mail =~ /X-Zammad-Verify-Time:\s(.+?)\s/
-          begin
-            verify_time = Time.zone.parse($1)
-            if verify_time > Time.zone.now - 30.minutes
-              info = "  - ignore message #{count}/#{count_all} - because it's a verify message"
-              Rails.logger.info info
-              next
-            end
-          rescue => e
-            Rails.logger.error e
+      if mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/) && mail =~ /X-Zammad-Verify-Time:\s(.+?)\s/
+        begin
+          verify_time = Time.zone.parse($1)
+          if verify_time > Time.zone.now - 30.minutes
+            info = "  - ignore message #{count}/#{count_all} - because it's a verify message"
+            Rails.logger.info info
+            next
           end
+        rescue => e
+          Rails.logger.error e
         end
       end
 

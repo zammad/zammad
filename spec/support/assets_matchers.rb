@@ -13,12 +13,12 @@ RSpec::Matchers.define :include_assets_of do
 
   failure_message do |actual|
     list = expected_array.reject { |elem| find_assets_of(elem, actual) }
-    "Expected hash to include, but not included:\n" + items_for_message(list)
+    "Expected hash to include, but not included:\n#{items_for_message(list)}"
   end
 
   failure_message_when_negated do |actual|
     list = expected_array.select { |elem| find_assets_of(elem, actual) }
-    "Expected hash to not include, but was included:\n" + items_for_message(list)
+    "Expected hash to not include, but was included:\n#{items_for_message(list)}"
   end
 
   def items_for_message(items)

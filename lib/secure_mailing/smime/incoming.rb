@@ -6,6 +6,8 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
   OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
 
   def initialize(mail)
+    super()
+
     @mail = mail
     @content_type = @mail[:mail_instance].content_type
   end

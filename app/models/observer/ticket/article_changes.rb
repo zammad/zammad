@@ -48,7 +48,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
   def article_count_update(record)
     current_count = record.ticket.article_count
     sender = Ticket::Article::Sender.lookup(name: 'System')
-    count = Ticket::Article.where(ticket_id: record.ticket_id).where('sender_id NOT IN (?)', sender.id).count
+    count = Ticket::Article.where(ticket_id: record.ticket_id).where.not(sender_id: sender.id).count
     return false if current_count == count
 
     record.ticket.article_count = count

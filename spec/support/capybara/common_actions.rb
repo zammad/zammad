@@ -227,12 +227,10 @@ module CommonActions
   # Executes action inside of modal. Makes sure modal has opened and closes
   #
   # @param timeout [Integer] seconds to wait
-  def in_modal(timeout: 4)
+  def in_modal(timeout: 4, &block)
     modal_ready(timeout: timeout)
 
-    within '.modal' do
-      yield
-    end
+    within('.modal', &block)
 
     modal_disappear(timeout: timeout)
   end

@@ -45,7 +45,7 @@ class ExcelSheet::Ticket < ExcelSheet
       { display: 'Time Units Total', name: 'time_unit', width: 10, data_type: 'float' },
     ]
 
-    header = header.concat(@additional_attributes_header) if @additional_attributes_header
+    header.concat(@additional_attributes_header) if @additional_attributes_header
 
     # ObjectManager attributes
     objects = ObjectManager::Attribute.where(active:           true,

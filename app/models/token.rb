@@ -75,14 +75,10 @@ returns
     user = token.user
 
     # persistent token not valid if user is inactive
-    if !data[:inactive_user]
-      return if token.persistent && user.active == false
-    end
+    return if !data[:inactive_user] && token.persistent && user.active == false
 
     # add permission check
-    if data[:permission]
-      return if !token.permissions?(data[:permission])
-    end
+    return if data[:permission] && !token.permissions?(data[:permission])
 
     # return token user
     user

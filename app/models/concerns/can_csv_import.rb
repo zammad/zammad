@@ -60,8 +60,11 @@ returns
       end
 
       header, *rows = ::CSV.parse(data[:string], data[:parse_params])
-      header&.each { |column| column.try(:strip!) }
-      header&.each { |column| column.try(:downcase!) }
+
+      header&.each do |column|
+        column.try(:strip!)
+        column.try(:downcase!)
+      end
 
       begin
         raise "Delete is not possible for #{self}." if delete && !csv_delete_possible
@@ -237,7 +240,7 @@ returns
       if records.count < 20
         record_ids = records.pluck(:id).concat(csv_object_ids_ignored)
         local_records = where.not(id: record_ids).limit(20 - records.count)
-        records = records.concat(local_records)
+        records.concat(local_records)
       end
       records_attributes_with_association_names = []
       records.each do |record|

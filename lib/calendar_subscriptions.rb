@@ -11,7 +11,7 @@ class CalendarSubscriptions
 
       next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
 
-      object_name                 = $1
+      object_name                 = $1 # rubocop:disable Lint/OutOfRangeRegexpRef
       @preferences[ object_name ] = calendar_subscription.state_current[:value]
     end
 

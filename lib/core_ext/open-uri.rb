@@ -1,7 +1,8 @@
 # rubocop:disable Naming/FileName
 if Kernel.respond_to?(:open_uri_original_open)
   module Kernel
-    private
+
+    module_function
 
     # see: https://github.com/ruby/ruby/pull/1675
     def open(name, *rest, &block)
@@ -15,7 +16,6 @@ if Kernel.respond_to?(:open_uri_original_open)
         open_uri_original_open(name, *rest, &block)
       end
     end
-    module_function :open # rubocop:disable Style/AccessModifierDeclarations
   end
 end
 # rubocop:enable Naming/FileName

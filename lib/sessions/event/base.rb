@@ -21,6 +21,7 @@ class Sessions::Event::Base
   end
 
   def self.inherited(subclass)
+    super
     subclass.instance_variable_set(:@database_connection, @database_connection)
   end
 
@@ -131,9 +132,8 @@ class Sessions::Event::Base
   end
 
   def log(level, data, client_id = nil)
-    if !@options[:v]
-      return if level == 'debug'
-    end
+    return if !@options[:v] && level == 'debug'
+
     if !client_id
       client_id = @client_id
     end

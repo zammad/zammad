@@ -307,7 +307,7 @@ class PackageTest < ActiveSupport::TestCase
         begin
           package = Package.install(string: test[:zpm])
         rescue => e
-          puts 'ERROR: ' + e.inspect
+          puts "ERROR: #{e.inspect}"
         end
         if test[:result]
           assert(package, 'install package not successful')
@@ -350,10 +350,10 @@ class PackageTest < ActiveSupport::TestCase
         end
       when 'auto_install'
         if test[:zpm]
-          if !File.exist?(Rails.root.to_s + '/auto_install/')
-            Dir.mkdir(Rails.root.to_s + '/auto_install/', 0o755)
+          if !File.exist?(Rails.root.join('auto_install'))
+            Dir.mkdir(Rails.root.join('auto_install'), 0o755)
           end
-          location = Rails.root.to_s + '/auto_install/unittest.zpm'
+          location = Rails.root.join('auto_install/unittest.zpm')
           file = File.new(location, 'wb')
           file.write(test[:zpm])
           file.close

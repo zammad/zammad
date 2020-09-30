@@ -46,7 +46,7 @@ RSpec.describe SearchKnowledgeBaseBackend do
         published_answer
         configure_elasticsearch(required: true, rebuild: true) if elasticsearch
         first_result = instance.search(published_answer.translations.first.title, user: user).first
-        expect(first_result.dig(:id)).to be_a(Integer)
+        expect(first_result[:id]).to be_a(Integer)
       end
     end
 

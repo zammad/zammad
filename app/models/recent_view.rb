@@ -58,7 +58,7 @@ class RecentView < ApplicationModel
 
       viewable_ticket_ids = Ticket.where('id IN (?) AND state_id in (?)',
                                          recent_views.map(&:o_id),
-                                         Ticket::State.by_category(:viewable_agent_new).pluck(:id))
+                                         Ticket::State.by_category(:viewable_agent_new).pluck(:id)) # rubocop:disable Rails/PluckInWhere
                                   .pluck(:id)
 
       recent_views = recent_views.select { |rv| viewable_ticket_ids.include?(rv.o_id) }

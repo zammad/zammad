@@ -26,7 +26,7 @@ module Channel::Filter::SenderIsSystemAddress
         return true
       end
     rescue => e
-      Rails.logger.error 'SenderIsSystemAddress: ' + e.inspect
+      Rails.logger.error "SenderIsSystemAddress: #{e.inspect}"
     end
 
     # check if sender is agent
@@ -53,7 +53,7 @@ module Channel::Filter::SenderIsSystemAddress
       end
       return true
     rescue => e
-      Rails.logger.error 'SenderIsSystemAddress: ' + e.inspect
+      Rails.logger.error "SenderIsSystemAddress: #{e.inspect}"
     end
 
     true

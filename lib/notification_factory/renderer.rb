@@ -25,7 +25,7 @@ examples how to use
 
 =end
 
-  def initialize(objects:, locale: nil, timezone: nil, template:, escape: true)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')

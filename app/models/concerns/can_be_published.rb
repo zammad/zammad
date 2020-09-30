@@ -150,7 +150,6 @@ module CanBePublished
     KnowledgeBase::Answer
       .published
       .joins(category: :knowledge_base)
-      .where(knowledge_bases: { active: true })
-      .exists?
+      .exists?(knowledge_bases: { active: true })
   end
 end

@@ -106,8 +106,8 @@ module Import
         params[:Action] = 'ZammadMigrator'
         params[:Key]    = Setting.get('import_otrs_endpoint_key')
 
-        log 'POST: ' + url
-        log 'PARAMS: ' + params.inspect
+        log "POST: #{url}"
+        log "PARAMS: #{params.inspect}"
 
         response = UserAgent.post(
           url,

@@ -85,6 +85,8 @@ class Store::Provider::File
     length2 = 5
     length3 = 7
     last_position = 0
+
+    # rubocop:disable Style/CombinableLoops
     (0..1).each do |_count|
       end_position = last_position + length1
       parts.push sha[last_position, length1]
@@ -100,8 +102,9 @@ class Store::Provider::File
       parts.push sha[last_position, length3]
       last_position = end_position
     end
+    # rubocop:enable Style/CombinableLoops
 
-    path     = parts[ 0..6 ].join('/') + '/'
+    path     = "#{parts[ 0..6 ].join('/')}/"
     file     = sha[last_position, sha.length]
     location = "#{base}/#{path}"
 

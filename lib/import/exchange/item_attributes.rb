@@ -22,10 +22,11 @@ module Import
       private
 
       def booleanize_values(properties)
+        booleans = %w[true false]
         properties.each do |key, value|
           case value
           when String
-            next if !%w[true false].include?(value)
+            next if booleans.exclude?(value)
 
             properties[key] = value == 'true'
           when Hash
@@ -80,11 +81,12 @@ module Import
       end
 
       def flatten(properties, prefix: nil)
+        keys = %i[text id]
         properties.each_with_object({}) do |(key, value), result|
 
           result_key = key
           if prefix
-            result_key = if %i[text id].include?(key) && ( !result[result_key] || result[result_key] == value )
+            result_key = if keys.include?(key) && ( !result[result_key] || result[result_key] == value )
                            prefix
                          else
                            :"#{prefix}.#{key}"

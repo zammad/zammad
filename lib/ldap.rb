@@ -64,7 +64,7 @@ class Ldap
   #  #=> <Net::LDAP::Entry...>
   #
   # @return [true] Returns always true
-  def search(filter, base: nil, scope: nil, attributes: nil)
+  def search(filter, base: nil, scope: nil, attributes: nil, &block)
 
     base  ||= base_dn()
     scope ||= Net::LDAP::SearchScope_WholeSubtree
@@ -75,9 +75,8 @@ class Ldap
       scope:         scope,
       attributes:    attributes,
       return_result: false, # improves performance
-    ) do |entry|
-      yield entry
-    end
+      &block
+    )
   end
 
   # Checks if there are any entries for the given search criteria.

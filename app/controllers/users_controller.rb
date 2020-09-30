@@ -794,7 +794,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
         content:   file_resize[:content],
         mime_type: file_resize[:mime_type],
       },
-      source:    'upload ' + Time.zone.now.to_s,
+      source:    "upload #{Time.zone.now}",
       deletable: true,
     )
 

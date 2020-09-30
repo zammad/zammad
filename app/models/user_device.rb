@@ -110,9 +110,7 @@ store new device for user if device not already known
       fingerprint: fingerprint,
     )
 
-    if user_device
-      return action(user_device.id, user_agent, ip, user_id, type) if user_device
-    end
+    return action(user_device.id, user_agent, ip, user_id, type) if user_device
 
     # create new device
     user_device = create!(

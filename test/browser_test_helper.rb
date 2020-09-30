@@ -1320,7 +1320,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       if !fallback
         verify_task(params, true)
       end
-      raise 'ERROR: ' + e.inspect
+      raise "ERROR: #{e.inspect}"
     end
     true
   end
@@ -1757,7 +1757,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements(css: params[:css] + ' input[name="customer_id_completion"]')[0]
+    element = instance.find_elements(css: %(#{params[:css]} input[name="customer_id_completion"]))[0]
     element.click
     element.clear
 
@@ -2378,7 +2378,7 @@ wait untill text in selector disabppears
       #element.send_keys(:tab)
 
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").focus()')
-      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").text("' + data[:title] + '")')
+      instance.execute_script(%($(".content.active .ticketZoom-header .js-objectTitle").text("#{data[:title]}")))
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").blur()')
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").trigger("blur")')
       # {
@@ -3660,37 +3660,35 @@ wait untill text in selector disabppears
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times do
-      element = instance.find_elements(css: 'body')[0]
-      text = element.text
-      if text.match?(/#{Regexp.quote(data[:name])}/)
-        assert(true, 'group created')
-        modal_disappear(browser: instance) # wait until modal has gone
 
-        # add member
-        data[:member]&.each do |member|
-          instance.find_elements(css: 'a[href="#manage"]')[0].click
-          sleep 1
-          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-          sleep 3
-          element = instance.find_elements(css: '.content.active [name="search"]')[0]
-          element.clear
-          element.send_keys(member[:login])
-          sleep 3
-          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-          instance.execute_script('$(".content.active  table [data-id] td").first().click()')
-          modal_ready(browser: instance)
-          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-          instance.execute_script('$(".js-groupList tr:contains(\"' + data[:name] + '\") .js-groupListItem[value=' + member[:access] + ']").prop("checked", true)')
-          instance.find_elements(css: '.modal button.js-submit')[0].click
-          modal_disappear(browser: instance)
-        end
+    element = instance.find_elements(css: 'body')[0]
+    text = element.text
+    if text.match?(/#{Regexp.quote(data[:name])}/)
+      assert(true, 'group created')
+      modal_disappear(browser: instance) # wait until modal has gone
+
+      # add member
+      data[:member]&.each do |member|
+        instance.find_elements(css: 'a[href="#manage"]')[0].click
+        sleep 1
+        instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+        sleep 3
+        element = instance.find_elements(css: '.content.active [name="search"]')[0]
+        element.clear
+        element.send_keys(member[:login])
+        sleep 3
+        #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+        instance.execute_script('$(".content.active  table [data-id] td").first().click()')
+        modal_ready(browser: instance)
+        #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+        instance.execute_script(%($(".js-groupList tr:contains(\\"#{data[:name]}\\") .js-groupListItem[value=#{member[:access]}]").prop("checked", true)))
+        instance.find_elements(css: '.modal button.js-submit')[0].click
+        modal_disappear(browser: instance)
       end
-      sleep 1
-      return true
     end
-    screenshot(browser: instance, comment: 'group_create_failed')
-    raise 'group creation failed'
+
+    sleep 1
+    true
   end
 
 =begin
@@ -3866,37 +3864,35 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times do
-      element = instance.find_elements(css: 'body')[0]
-      text = element.text
-      if text.match?(/#{Regexp.quote(data[:name])}/)
-        assert(true, 'role created')
-        modal_disappear(browser: instance) # wait until modal has gone
 
-        # add member
-        data[:member]&.each do |login|
-          instance.find_elements(css: 'a[href="#manage"]')[0].click
-          sleep 1
-          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-          sleep 3
-          element = instance.find_elements(css: '.content.active  [name="search"]')[0]
-          element.clear
-          element.send_keys(login)
-          sleep 3
-          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-          instance.execute_script('$(".content.active table [data-id] td").first().click()')
-          sleep 3
-          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-          instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
-          instance.find_elements(css: '.modal button.js-submit')[0].click
-          modal_disappear(browser: instance)
-        end
+    element = instance.find_elements(css: 'body')[0]
+    text = element.text
+    if text.match?(/#{Regexp.quote(data[:name])}/)
+      assert(true, 'role created')
+      modal_disappear(browser: instance) # wait until modal has gone
+
+      # add member
+      data[:member]&.each do |login|
+        instance.find_elements(css: 'a[href="#manage"]')[0].click
+        sleep 1
+        instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+        sleep 3
+        element = instance.find_elements(css: '.content.active  [name="search"]')[0]
+        element.clear
+        element.send_keys(login)
+        sleep 3
+        #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+        instance.execute_script('$(".content.active table [data-id] td").first().click()')
+        sleep 3
+        #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+        instance.execute_script(%($('label:contains(" #{data[:name]}")').first().click()))
+        instance.find_elements(css: '.modal button.js-submit')[0].click
+        modal_disappear(browser: instance)
       end
-      sleep 1
-      return true
     end
-    screenshot(browser: instance, comment: 'role_create_failed')
-    raise 'role creation failed'
+
+    sleep 1
+    true
   end
 
 =begin
@@ -3935,7 +3931,7 @@ wait untill text in selector disabppears
       css:      '.content.active a[href="#manage/roles"]',
       mute_log: true,
     )
-    instance.execute_script('$(\'.content.active table tr td:contains(" ' + data[:name] + '")\').first().click()')
+    instance.execute_script(%($('.content.active table tr td:contains(" #{data[:name]}")').first().click()))
 
     modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
@@ -3991,37 +3987,35 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times do
-      element = instance.find_elements(css: 'body')[0]
-      text = element.text
-      if text.match?(/#{Regexp.quote(data[:name])}/)
-        assert(true, 'role created')
-        modal_disappear(browser: instance) # wait until modal has gone
 
-        # add member
-        data[:member]&.each do |login|
-          instance.find_elements(css: 'a[href="#manage"]')[0].click
-          sleep 1
-          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-          sleep 3
-          element = instance.find_elements(css: '.content.active [name="search"]')[0]
-          element.clear
-          element.send_keys(login)
-          sleep 3
-          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-          instance.execute_script('$(".content.active table [data-id] td").first().click()')
-          sleep 3
-          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-          instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
-          instance.find_elements(css: '.modal button.js-submit')[0].click
-          modal_disappear(browser: instance)
-        end
+    element = instance.find_elements(css: 'body')[0]
+    text = element.text
+    if text.match?(/#{Regexp.quote(data[:name])}/)
+      assert(true, 'role created')
+      modal_disappear(browser: instance) # wait until modal has gone
+
+      # add member
+      data[:member]&.each do |login|
+        instance.find_elements(css: 'a[href="#manage"]')[0].click
+        sleep 1
+        instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+        sleep 3
+        element = instance.find_elements(css: '.content.active [name="search"]')[0]
+        element.clear
+        element.send_keys(login)
+        sleep 3
+        #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+        instance.execute_script('$(".content.active table [data-id] td").first().click()')
+        sleep 3
+        #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+        instance.execute_script(%($('label:contains(" #{data[:name]}")').first().click()))
+        instance.find_elements(css: '.modal button.js-submit')[0].click
+        modal_disappear(browser: instance)
       end
-      sleep 1
-      return true
     end
-    screenshot(browser: instance, comment: 'role_edit_failed')
-    raise 'role edit failed'
+
+    sleep 1
+    true
   end
 
 =begin
@@ -4647,7 +4641,7 @@ wait untill text in selector disabppears
 
   def fetch_settings
     url = URI.parse(browser_url)
-    req = Net::HTTP::Get.new(browser_url + '/api/v1/settings/')
+    req = Net::HTTP::Get.new("#{browser_url}/api/v1/settings/")
     req.basic_auth('master@example.com', 'test')
 
     res = Net::HTTP.start(url.host, url.port) do |http|

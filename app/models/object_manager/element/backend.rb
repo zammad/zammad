@@ -54,12 +54,13 @@ class ObjectManager::Element::Backend
   end
 
   def screen_permission_options(permission_options)
+    booleans = [true, false]
     permission_options.each_with_object({}) do |(permission, options), result|
 
       next if !authorized?(permission)
 
       options.each do |key, value|
-        next if [true, false].include?(result[key]) && !value
+        next if booleans.include?(result[key]) && !value
 
         result[key] = value
       end

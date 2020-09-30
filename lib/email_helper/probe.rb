@@ -67,7 +67,7 @@ returns on fail
 
       # get mx records, try to find provider based on mx records
       mx_records = EmailHelper.mx_records(domain)
-      domains = domains.concat(mx_records)
+      domains.concat(mx_records)
       provider_map.each_value do |settings|
         domains.each do |domain_to_check|
 

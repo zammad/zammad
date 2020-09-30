@@ -42,7 +42,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #name' do
-        let(:name) { described_class.pluck(:name).max + 'foo' }
+        let(:name) { "#{described_class.pluck(:name).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)
@@ -68,7 +68,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #login' do
-        let(:login) { described_class.pluck(:login).max + 'foo' }
+        let(:login) { "#{described_class.pluck(:login).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)
@@ -94,7 +94,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #email' do
-        let(:email) { described_class.pluck(:email).max + 'foo' }
+        let(:email) { "#{described_class.pluck(:email).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)
@@ -121,7 +121,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #source or #locale' do
-        let(:source) { described_class.pluck(:source).max + 'foo' }
+        let(:source) { "#{described_class.pluck(:source).max}foo" }
         let(:locale) { record.locale }
 
         it 'attempts to create a new record' do
@@ -172,7 +172,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #name' do
-        let(:name) { described_class.pluck(:name).max + 'foo' }
+        let(:name) { "#{described_class.pluck(:name).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)
@@ -193,7 +193,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #login' do
-        let(:login) { described_class.pluck(:login).max + 'foo' }
+        let(:login) { "#{described_class.pluck(:login).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)
@@ -214,7 +214,7 @@ RSpec.shared_examples 'ApplicationModel::CanCreatesAndUpdates' do
       end
 
       context 'when given an invalid #email' do
-        let(:email) { described_class.pluck(:email).max + 'foo' }
+        let(:email) { "#{described_class.pluck(:email).max}foo" }
 
         it 'attempts to create a new record' do
           allow(described_class).to receive(:create)

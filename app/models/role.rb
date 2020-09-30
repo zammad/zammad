@@ -42,7 +42,7 @@ grant permission to role
     raise "Invalid permission #{key}" if !permission
     return true if permission_ids.include?(permission.id)
 
-    self.permission_ids = permission_ids.push permission.id
+    self.permission_ids = permission_ids.push permission.id # rubocop:disable Style/RedundantSelfAssignment
     true
   end
 
@@ -57,7 +57,7 @@ revoke permission of role
   def permission_revoke(key)
     permission = Permission.lookup(name: key)
     raise "Invalid permission #{key}" if !permission
-    return true if !permission_ids.include?(permission.id)
+    return true if permission_ids.exclude?(permission.id)
 
     self.permission_ids = self.permission_ids -= [permission.id]
     true

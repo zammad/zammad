@@ -76,17 +76,19 @@ module CreatesTicketArticles
 
     # add attachments as param
     if params[:attachments].present?
+      required_keys    = %w[mime-type filename data]
+      preferences_keys = %w[charset mime-type]
       params[:attachments].each_with_index do |attachment, index|
 
         # validation
-        %w[mime-type filename data].each do |key|
+        required_keys.each do |key|
           next if attachment[key]
 
           raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
         end
 
         preferences = {}
-        %w[charset mime-type].each do |key|
+        preferences_keys.each do |key|
           next if !attachment[key]
 
           store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')

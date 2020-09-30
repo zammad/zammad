@@ -22,7 +22,7 @@ e. g. if you want to process this mail by using a certain inbound channel
 
 =end
 
-  def initialize(params = {})
+  def initialize(params = {}) # rubocop:disable Lint/MissingSuper
     Rails.logger.info 'read main from STDIN'
 
     msg = ARGF.read

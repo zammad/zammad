@@ -143,7 +143,7 @@ class FacebookBrowserTest < TestCase
       value: 'Dashboard',
     )
 
-    select(css: '.content.active .modal [name="pages::' + page_id + '::group_id"]', value: 'Users')
+    select(css: %(.content.active .modal [name="pages::#{page_id}::group_id"]), value: 'Users')
     sleep 1
     click(css: '.content.active .modal .js-submit')
     sleep 5

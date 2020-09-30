@@ -8,6 +8,8 @@ require 'models/concerns/has_object_manager_attributes_validation_examples'
 require 'models/concerns/has_taskbars_examples'
 
 RSpec.describe Organization, type: :model do
+  subject(:organization) { create(:organization) }
+
   it_behaves_like 'ApplicationModel', can_assets: { associations: :members }
   it_behaves_like 'CanCsvImport', unique_attributes: 'name'
   it_behaves_like 'HasHistory'
@@ -15,8 +17,6 @@ RSpec.describe Organization, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :organization
   it_behaves_like 'HasObjectManagerAttributesValidation'
   it_behaves_like 'HasTaskbars'
-
-  subject(:organization) { create(:organization) }
 
   describe 'Class methods:' do
     describe '.where_or_cis' do

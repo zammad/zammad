@@ -136,7 +136,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     logout()
 
     # reset password (not possible)
-    location(url: browser_url + '/#password_reset_verify/not_existing_token')
+    location(url: "#{browser_url}/#password_reset_verify/not_existing_token")
 
     watch_for(
       css:   'body',
@@ -150,7 +150,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       url:      browser_url,
     )
 
-    location(url: browser_url + '/#password_reset')
+    location(url: "#{browser_url}/#password_reset")
     sleep 1
 
     match_not(

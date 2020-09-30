@@ -31,11 +31,11 @@ module Zammad
             alternate_dbs = %w[template0 template1 postgres]
 
             @connection ||= begin
-                              PG.connect(db_config)
-                            rescue PG::ConnectionBad
-                              db_config[:dbname] = alternate_dbs.pop
-                              retry if db_config[:dbname].present?
-                            end
+              PG.connect(db_config)
+            rescue PG::ConnectionBad
+              db_config[:dbname] = alternate_dbs.pop
+              retry if db_config[:dbname].present?
+            end
           end
 
           # Adapted from ActiveRecord::ConnectionHandling#postgresql_connection

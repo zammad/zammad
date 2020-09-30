@@ -7,8 +7,7 @@ FactoryBot.define do
       # (Faker::Verb.unique.exclude(:past_participle, [], Ticket::State.pluck(:name)),
       # but it's not available yet in the current release of Faker (1.9.1).
       Faker::Verb.unique
-                 .instance_variable_get(:@previous_results)
-                 .dig([:past_participle, []])
+                 .instance_variable_get(:@previous_results)[[:past_participle, []]]
                  .merge(Ticket::State.pluck(:name))
 
       Faker::Verb.unique.past_participle

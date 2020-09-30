@@ -107,7 +107,7 @@ module HasRoles
 
     def ensure_group_access_list_parameter(access)
       access = [access] if access.is_a?(String)
-      access.push('full') if !access.include?('full')
+      access.push('full') if access.exclude?('full')
       access
     end
   end

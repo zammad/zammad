@@ -229,9 +229,7 @@ example
     message_ids.each do |message_id|
       count += 1
 
-      if (count % active_check_interval).zero?
-        break if channel_has_changed?(channel)
-      end
+      break if (count % active_check_interval).zero? && channel_has_changed?(channel)
       break if max_process_count_has_reached?(channel, count, count_max)
 
       Rails.logger.info " - message #{count}/#{count_all}"
@@ -240,7 +238,7 @@ example
       timeout(FETCH_METADATA_TIMEOUT) do
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
       rescue Net::IMAP::ResponseParseError => e
-        raise if !e.message.include?('unknown token')
+        raise if e.message.exclude?('unknown token')
 
         result = 'error'
         notice += <<~NOTICE
@@ -444,9 +442,7 @@ returns
 
     # verify if message is already imported via same channel, if not, import it again
     ticket = article.ticket
-    if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
-      return false if ticket.preferences[:channel_id] != channel[:id]
-    end
+    return false if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present? && ticket.preferences[:channel_id] != channel[:id]
 
     timeout(1.minute) do
       @imap.store(message_id, '+FLAGS', [:Seen])
@@ -468,7 +464,7 @@ returns
 =end
 
   def deleted?(message_meta, count, count_all)
-    return false if !message_meta.attr['FLAGS'].include?(:Deleted)
+    return false if message_meta.attr['FLAGS'].exclude?(:Deleted)
 
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has already delete flag"
     true
@@ -539,10 +535,8 @@ returns
     true
   end
 
-  def timeout(seconds)
-    Timeout.timeout(seconds) do
-      yield
-    end
+  def timeout(seconds, &block)
+    Timeout.timeout(seconds, &block)
   end
 
 end

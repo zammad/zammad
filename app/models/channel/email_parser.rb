@@ -123,14 +123,14 @@ returns
 
     message = "Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
 
-    p 'ERROR: ' + message # rubocop:disable Rails/Output
-    p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
+    p "ERROR: #{message}" # rubocop:disable Rails/Output
+    p "ERROR: #{e.inspect}" # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error e
 
     return false if exception == false
 
-    raise e.inspect + "\n" + e.backtrace.join("\n")
+    raise %(#{e.inspect}\n#{e.backtrace.join("\n")})
   end
 
   def _process(channel, msg)
@@ -365,13 +365,13 @@ returns
 
     from = from.gsub('<>', '').strip
     mail_address = begin
-                     Mail::AddressList.new(from).addresses
-                                      .select { |a| a.address.present? }
-                                      .partition { |a| a.address.match?(EMAIL_REGEX) }
-                                      .flatten.first
-                   rescue Mail::Field::ParseError => e
-                     STDOUT.puts e
-                   end
+      Mail::AddressList.new(from).addresses
+                       .select { |a| a.address.present? }
+                       .partition { |a| a.address.match?(EMAIL_REGEX) }
+                       .flatten.first
+    rescue Mail::Field::ParseError => e
+      $stdout.puts e
+    end
 
     if mail_address&.address.present?
       data[:from_email]        = mail_address.address
@@ -569,10 +569,10 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def body_text(message, **options)
     body_text = begin
-                  message.body.to_s
-                rescue Mail::UnknownEncodingType # see test/data/mail/mail043.box / issue #348
-                  message.body.raw_source
-                end
+      message.body.to_s
+    rescue Mail::UnknownEncodingType # see test/data/mail/mail043.box / issue #348
+      message.body.raw_source
+    end
 
     body_text = body_text.utf8_encode(from: message.charset, fallback: :read_as_sanitized_binary)
     body_text = Mail::Utilities.to_lf(body_text)
@@ -703,10 +703,8 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     filename ||= file.header[:content_location].to_s.force_encoding('utf-8')
 
     # generate file name based on content-id
-    if filename.blank? && headers_store['Content-ID'].present?
-      if headers_store['Content-ID'] =~ /(.+?)@.+?/i
-        filename = $1
-      end
+    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?)@.+?/i
+      filename = $1
     end
 
     file_body = String.new(file.body.to_s)
@@ -845,7 +843,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     begin
       reply_mail = compose_postmaster_reply(msg)
     rescue NotificationFactory::FileNotFoundError => e
-      Rails.logger.error 'No valid postmaster email_oversized template found. Skipping postmaster reply. ' + e.inspect
+      Rails.logger.error "No valid postmaster email_oversized template found. Skipping postmaster reply. #{e.inspect}"
       return
     end
 

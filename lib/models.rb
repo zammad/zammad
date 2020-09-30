@@ -44,7 +44,7 @@ returns
         next if !model_class.respond_to? :table_name
 
         table_name = model_class.table_name # handle models where not table exists, pending migrations
-        next if !tables.include?(table_name)
+        next if tables.exclude?(table_name)
 
         model_object = model_class.new
         next if !model_object.respond_to? :attributes
@@ -140,7 +140,7 @@ returns
       next if !model_attributes[:attributes]
 
       ref_attributes.each do |item|
-        next if !model_attributes[:attributes].include?(item)
+        next if model_attributes[:attributes].exclude?(item)
 
         count = model_class.where("#{item} = ?", object_id).count
         next if count.zero? && !include_zero
@@ -154,7 +154,7 @@ returns
     end
 
     # find relations via reflections
-    list.each do |model_class, model_attributes|
+    list.each do |model_class, model_attributes| # rubocop:disable Style/CombinableLoops
       next if !model_attributes[:reflections]
 
       model_attributes[:reflections].each_value do |reflection_value|

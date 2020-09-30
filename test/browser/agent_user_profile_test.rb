@@ -2,7 +2,7 @@ require 'browser_test_helper'
 
 class AgentUserProfileTest < TestCase
   def test_user_profile
-    message = '1 ' + rand(99_999_999).to_s
+    message = "1 #{rand(99_999_999)}"
 
     @browser = browser_instance
     login(
@@ -93,8 +93,8 @@ class AgentUserProfileTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    'user profile check ' + message,
-        body:     'user profile check ' + message,
+        title:    "user profile check #{message}",
+        body:     "user profile check #{message}",
       },
     )
 
@@ -102,12 +102,12 @@ class AgentUserProfileTest < TestCase
     user_open_by_search(value: 'Braun')
     watch_for(
       css:   '.active .profile-window',
-      value: 'user profile check ' + message,
+      value: "user profile check #{message}",
     )
     tasks_close_all()
 
     # work with two browser windows
-    message = 'comment 1 ' + rand(99_999_999_999_999_999).to_s
+    message = "comment 1 #{rand(99_999_999_999_999_999)}"
 
     # use current session
     browser1 = @browser

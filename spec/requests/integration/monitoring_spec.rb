@@ -191,7 +191,7 @@ RSpec.describe 'Monitoring', type: :request do
       Store.add(
         object:        'User',
         o_id:          1,
-        data:          string + '123',
+        data:          "#{string}123",
         filename:      'filename2.txt',
         created_by_id: 1,
       )

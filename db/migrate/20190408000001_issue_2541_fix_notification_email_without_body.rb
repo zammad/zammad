@@ -9,11 +9,12 @@ class Issue2541FixNotificationEmailWithoutBody < ActiveRecord::Migration[5.1]
     UserInfo.current_user_id = 1
 
     # update jobs and triggers
+    actions = %w[notification.email notification.sms]
     [::Job, ::Trigger].each do |model|
       model.all.each do |record|
         next if record.perform.blank?
 
-        %w[notification.email notification.sms].each do |action|
+        actions.each do |action|
           next if record.perform[action].blank?
           next if record.perform[action]['body'].present?
 

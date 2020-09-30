@@ -5,7 +5,7 @@ class ExternalSync < ApplicationModel
 
   class << self
 
-    def changed?(object:, previous_changes: {}, current_changes:)
+    def changed?(object:, current_changes:, previous_changes: {})
       changed = false
       previous_changes ||= {}
       current_changes.each do |attribute, value|
@@ -23,7 +23,7 @@ class ExternalSync < ApplicationModel
       changed
     end
 
-    def map(mapping: {}, source:)
+    def map(source:, mapping: {})
 
       information_source = if source.is_a?(Hash)
                              source.deep_symbolize_keys
@@ -63,6 +63,7 @@ class ExternalSync < ApplicationModel
       information_source = structure.clone
       result             = nil
       information_path   = remote_key.split('.')
+      storable_classes   = %w[String Integer Float Bool Array]
       information_path.each do |segment|
 
         segment_sym = segment.to_sym
@@ -71,15 +72,14 @@ class ExternalSync < ApplicationModel
           value = information_source[segment_sym]
         elsif information_source.respond_to?(segment_sym)
           # prevent accessing non-attributes (e.g. destroy)
-          if information_source.respond_to?(:attributes)
-            break if !information_source.attributes.key?(segment)
-          end
+          break if information_source.respond_to?(:attributes) && !information_source.attributes.key?(segment)
+
           value = information_source.send(segment_sym)
         end
         break if !value
 
         storable = value.class.ancestors.any? do |ancestor|
-          %w[String Integer Float Bool Array].include?(ancestor.to_s)
+          storable_classes.include?(ancestor.to_s)
         end
 
         if storable

@@ -1,6 +1,8 @@
 class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
 
   def initialize(mail, security)
+    super()
+
     @mail     = mail
     @security = security
   end

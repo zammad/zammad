@@ -206,6 +206,13 @@ Rails/HasAndBelongsToMany:
 #  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
+Rails/MatchRoute:
+  Description: >-
+                  Don't use `match` to define any routes unless there is a need to map multiple request types
+                  among [:get, :post, :patch, :put, :delete] to a single action using the `:via` option.
+  StyleGuide: 'https://rails.rubystyle.guide/#no-match-routes'
+  Enabled: false
+
 Rails/SkipsModelValidations:
   Description: >-
                  Use methods that skips model validations with caution.
@@ -258,6 +265,13 @@ Lint/InterpolationCheck:
     - "test/unit/notification_factory_template_test.rb"
     - "test/unit/ticket_trigger_test.rb"
     - "test/unit/ticket_trigger_recursive_disabled_test.rb"
+
+Style/StringConcatenation:
+  Description: 'Checks for places where string concatenation can be replaced with string interpolation.'
+  StyleGuide: '#string-interpolation'
+  Enabled: true
+  Exclude:
+    - "config/routes/**/*"
 
 # RSpec tests
 Style/NumericPredicate:

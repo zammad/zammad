@@ -178,7 +178,7 @@ returns
 
         # ignore older messages
         if @sync[:import_older_tweets] != true
-          if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
+          if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max # rubocop:disable Style/SoleNestedConditional
             older_import += 1
             Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
             next

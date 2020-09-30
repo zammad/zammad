@@ -116,7 +116,7 @@ class Transaction::Notification
           history_type_id:   History.type_lookup('notification').id,
           history_object_id: History.object_lookup('Ticket').id,
           o_id:              ticket.id
-        ).where('created_at > ?', Time.zone.now.beginning_of_day).where('value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%").exists?
+        ).where('created_at > ?', Time.zone.now.beginning_of_day).exists?(['value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%"])
 
         next if already_notified
       end

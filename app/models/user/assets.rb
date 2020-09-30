@@ -92,7 +92,7 @@ returns
 
       # add organization
       if self.organization_id
-        if !data[:Organization] || !data[:Organization][self.organization_id]
+        if !data[:Organization] || !data[:Organization][self.organization_id] # rubocop:disable Style/SoleNestedConditional
           organization = Organization.lookup(id: self.organization_id)
           if organization
             data = organization.assets(data)

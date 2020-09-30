@@ -104,7 +104,7 @@ class LongPollingController < ApplicationController
     return if !params[:client_id]
 
     sessions = Sessions.sessions
-    return if !sessions.include?(params[:client_id].to_s)
+    return if sessions.exclude?(params[:client_id].to_s)
 
     params[:client_id].to_s
   end

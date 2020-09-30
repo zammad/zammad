@@ -556,7 +556,7 @@ RSpec.describe String do
 
     context 'performance tests' do
       let(:filler) do
-        %(<p>some word <a href="http://example.com?domain?example.com">some url</a> and the end.</p>\n) * 11 + "\n"
+        %(#{%(<p>some word <a href="http://example.com?domain?example.com">some url</a> and the end.</p>\n) * 11}\n)
       end
 
       it 'converts a 1076-byte unicode file in under 2s' do

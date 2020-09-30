@@ -549,8 +549,9 @@ create a tweet or direct message from an article
     # no changes in post is from page user it self
     if channel.options[:user][:id].to_s == user_id.to_s
       if !ticket
-        return Ticket::State.find_by(name: 'closed') if !ticket
+        return Ticket::State.find_by(name: 'closed')
       end
+
       return ticket.state
     end
 

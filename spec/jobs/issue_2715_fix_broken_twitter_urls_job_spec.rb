@@ -38,7 +38,7 @@ RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
     end
 
     def urls_of(article)
-      article.reload.preferences[:links].map { |link| link[:url] }
+      article.reload.preferences[:links].pluck(:url)
     end
   end
 end

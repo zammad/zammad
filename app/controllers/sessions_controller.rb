@@ -19,12 +19,12 @@ class SessionsController < ApplicationController
     raise Exceptions::NotAuthorized, 'SSO authentication disabled!' if !Setting.get('auth_sso')
 
     user = begin
-              login = request.env['REMOTE_USER'] ||
-                      request.env['HTTP_REMOTE_USER'] ||
-                      request.headers['X-Forwarded-User']
+      login = request.env['REMOTE_USER'] ||
+              request.env['HTTP_REMOTE_USER'] ||
+              request.headers['X-Forwarded-User']
 
-              User.lookup(login: login&.downcase)
-            end
+      User.lookup(login: login&.downcase)
+    end
 
     raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER or X-Forwarded-User header' if login.blank?
     raise Exceptions::NotAuthorized, "No such user '#{login}' found!" if user.blank?

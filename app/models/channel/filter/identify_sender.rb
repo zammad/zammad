@@ -24,30 +24,27 @@ module Channel::Filter::IdentifySender
     end
 
     # get correct customer
-    if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true
-      if mail[ :'x-zammad-ticket-create-article-sender' ] == 'Agent'
+    if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true && mail[ :'x-zammad-ticket-create-article-sender' ] == 'Agent'
+      # get first recipient and set customer
+      begin
+        to = :'raw-to'
+        if mail[to]&.addrs
+          items = mail[to].addrs
+          items.each do |item|
 
-        # get first recipient and set customer
-        begin
-          to = :'raw-to'
-          if mail[to]&.addrs
-            items = mail[to].addrs
-            items.each do |item|
+            # skip if recipient is system email
+            next if EmailAddress.exists?(email: item.address.downcase)
 
-              # skip if recipient is system email
-              next if EmailAddress.exists?(email: item.address.downcase)
-
-              customer_user = user_create(
-                login:     item.address,
-                firstname: item.display_name,
-                email:     item.address,
-              )
-              break
-            end
+            customer_user = user_create(
+              login:     item.address,
+              firstname: item.display_name,
+              email:     item.address,
+            )
+            break
           end
-        rescue => e
-          Rails.logger.error "SenderIsSystemAddress: ##{e.inspect}"
         end
+      rescue => e
+        Rails.logger.error "SenderIsSystemAddress: ##{e.inspect}"
       end
     end
 
@@ -194,7 +191,7 @@ module Channel::Filter::IdentifySender
   end
 
   def self.sanitize_email(string)
-    string += '@local' if !string.include?('@')
+    string += '@local' if string.exclude?('@')
 
     string.downcase
           .strip

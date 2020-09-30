@@ -3,8 +3,8 @@ require 'browser_test_helper'
 class AgentOrganizationProfileTest < TestCase
   def test_org_profile
     # work in one browser window
-    message = '1 ' + rand(99_999_999).to_s
-    note    = 'some note ' + rand(99_999_999).to_s
+    message = "1 #{rand(99_999_999)}"
+    note    = "some note #{rand(99_999_999)}"
 
     @browser = browser_instance
     login(
@@ -97,8 +97,8 @@ class AgentOrganizationProfileTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    'org profile check ' + message,
-        body:     'org profile check ' + message,
+        title:    "org profile check #{message}",
+        body:     "org profile check #{message}",
       },
     )
 
@@ -108,12 +108,12 @@ class AgentOrganizationProfileTest < TestCase
     )
     watch_for(
       css:   '.active .profile-window',
-      value: 'org profile check ' + message,
+      value: "org profile check #{message}",
     )
     tasks_close_all()
 
     # work with two browser windows
-    message = 'comment 1 ' + rand(99_999_999_999_999_999).to_s
+    message = "comment 1 #{rand(99_999_999_999_999_999)}"
 
     # use current session
     browser1 = @browser

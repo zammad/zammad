@@ -30,10 +30,8 @@ class Channel::Driver::Smtp
     if !options.key?(:port) || options[:port].blank?
       options[:port] = 25
     end
-    if !options.key?(:ssl)
-      if options[:port].to_i == 465
-        options[:ssl] = true
-      end
+    if !options.key?(:ssl) && options[:port].to_i == 465
+      options[:ssl] = true
     end
     if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender

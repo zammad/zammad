@@ -61,9 +61,7 @@ class ChannelsEmailController < ApplicationController
     )
 
     # verify if user+host already exists
-    if result[:result] == 'ok'
-      return if account_duplicate?(result)
-    end
+    return if result[:result] == 'ok' && account_duplicate?(result)
 
     render json: result
   end

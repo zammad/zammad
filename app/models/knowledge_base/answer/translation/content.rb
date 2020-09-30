@@ -51,6 +51,7 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     translation&.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
+  before_save :sanitize_body
   after_save  :touch_translation
   after_touch :touch_translation
 
@@ -58,5 +59,4 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     self.body = HtmlSanitizer.dynamic_image_size(body)
   end
 
-  before_save :sanitize_body
 end

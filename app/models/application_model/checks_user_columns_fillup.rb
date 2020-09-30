@@ -27,16 +27,14 @@ returns
 =end
 
   def fill_up_user_create
-    if self.class.column_names.include? 'updated_by_id'
-      if UserInfo.current_user_id
-        if updated_by_id && updated_by_id != UserInfo.current_user_id
-          logger.info "NOTICE create - self.updated_by_id is different: #{updated_by_id}/#{UserInfo.current_user_id}"
-        end
-        self.updated_by_id = UserInfo.current_user_id
+    if self.class.column_names.include?('updated_by_id') && UserInfo.current_user_id
+      if updated_by_id && updated_by_id != UserInfo.current_user_id
+        logger.info "NOTICE create - self.updated_by_id is different: #{updated_by_id}/#{UserInfo.current_user_id}"
       end
+      self.updated_by_id = UserInfo.current_user_id
     end
 
-    return true if !self.class.column_names.include? 'created_by_id'
+    return true if self.class.column_names.exclude?('created_by_id')
 
     return true if !UserInfo.current_user_id
 
@@ -62,7 +60,7 @@ returns
 =end
 
   def fill_up_user_update
-    return true if !self.class.column_names.include? 'updated_by_id'
+    return true if self.class.column_names.exclude?('updated_by_id')
     return true if !UserInfo.current_user_id
 
     self.updated_by_id = UserInfo.current_user_id

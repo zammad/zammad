@@ -728,7 +728,7 @@ generate url for index or document access (only for internal use)
     # prepare url params
     params_string = ''
     if url_params.present?
-      params_string = '?' + url_params.map { |key, value| "#{key}=#{value}" }.join('&')
+      params_string = "?#{URI.encode_www_form(url_params)}"
     end
 
     url = Setting.get('es_url')
@@ -755,7 +755,7 @@ generate url for index or document access (only for internal use)
     "#{url}#{params_string}"
   end
 
-  def self.humanized_error(verb:, url:, payload: nil, response:)
+  def self.humanized_error(verb:, url:, response:, payload: nil)
     prefix = "Unable to process #{verb} request to elasticsearch URL '#{url}'."
     suffix = "\n\nResponse:\n#{response.inspect}\n\n"
 
@@ -782,7 +782,7 @@ generate url for index or document access (only for internal use)
   # add * on simple query like "somephrase23"
   def self.append_wildcard_to_simple_query(query)
     query.strip!
-    query += '*' if !query.include?(':')
+    query += '*' if query.exclude?(':')
     query
   end
 
@@ -817,7 +817,7 @@ generate url for index or document access (only for internal use)
       }
     }
 
-    if (extension = options.dig(:query_extension))
+    if (extension = options[:query_extension])
       data[:query].deep_merge! extension.deep_dup
     end
 

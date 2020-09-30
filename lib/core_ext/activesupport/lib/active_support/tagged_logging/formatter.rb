@@ -21,7 +21,7 @@ module ActiveSupport
   module TaggedLogging
     module Formatter
       # This method is invoked when a log event occurs.
-      def call(severity, timestamp, progname, msg)
+      def call(severity, timestamp, progname, msg) # rubocop:disable Lint/UselessMethodDefinition
         # super(severity, timestamp, progname, "#{tags_text}#{msg}")
         super(severity, timestamp, progname, msg)
       end

@@ -108,7 +108,7 @@ module Import
           ActiveRecord::Base.connection.close
         end
       end
-      (1..thread_count).each do |thread|
+      (1..thread_count).each do |thread| # rubocop:disable Style/CombinableLoops
         threads[thread].join
       end
     end

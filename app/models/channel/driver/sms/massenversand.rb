@@ -53,6 +53,6 @@ class Channel::Driver::Sms::Massenversand
       sender:    options[:sender]
     }
 
-    options[:gateway] + '?' + URI.encode_www_form(params)
+    "#{options[:gateway]}?#{URI.encode_www_form(params)}"
   end
 end

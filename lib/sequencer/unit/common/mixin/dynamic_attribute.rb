@@ -9,6 +9,8 @@ class Sequencer
             class << base
 
               def inherited(base)
+                super
+
                 base.extend(Forwardable)
                 base.instance_delegate [:attribute] => base
               end

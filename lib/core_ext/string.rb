@@ -32,7 +32,7 @@ class String
     quote = split("\n")
     body_quote = ''
     quote.each do |line|
-      body_quote = body_quote + '> ' + line + "\n"
+      body_quote = "#{body_quote}> #{line}\n"
     end
     body_quote
   end
@@ -195,7 +195,7 @@ class String
 
     # blockquote handling
     string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) do
-      "\n" + $2.html2text(true).gsub(/^(.*)$/, '&gt; \1') + "\n"
+      "\n#{$2.html2text(true).gsub(/^(.*)$/, '&gt; \1')}\n" # rubocop:disable Lint/OutOfRangeRegexpRef
     end
 
     # pre/code handling 2/2
@@ -294,7 +294,7 @@ class String
 
     # add extracted links
     if link_list != ''
-      string += "\n\n\n" + link_list
+      string += "\n\n\n#{link_list}"
     end
 
     # remove double multiple empty lines
