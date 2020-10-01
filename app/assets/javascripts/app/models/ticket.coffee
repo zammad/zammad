@@ -1,8 +1,9 @@
 class App.Ticket extends App.Model
-  @configure 'Ticket', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'state_id', 'priority_id', 'article', 'tags', 'links', 'updated_at', 'preferences'
+  @configure 'Ticket', 'id', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'state_id', 'priority_id', 'article', 'tags', 'links', 'updated_at', 'preferences'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/tickets'
   @configure_attributes = [
+      { name: 'id',                       display: '#id',          tag: 'input',    type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
       { name: 'number',                   display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
       { name: 'title',                    display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false },
       { name: 'customer_id',              display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
