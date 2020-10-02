@@ -18,7 +18,7 @@ class App.EmailAddress extends App.Model
         if localChannel
           return channel if channel.area is localChannel.area
         else
-          return channel if channel.area is 'Google::Account' || channel.area is 'Email::Account'
+          return channel if channel.area is 'Google::Account' || channel.area is 'Office365::Account' || channel.area is 'Email::Account'
     )
 
   @configure_attributes = [

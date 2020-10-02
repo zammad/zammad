@@ -56,6 +56,19 @@
       <% end %>
     </div>
     <% end %>
+    <% if channel.active is true && channel.options.inbound && channel.options.inbound.options && channel.options.inbound.options.host == 'outlook.office365.com' && channel.options.outbound && channel.options.outbound.options && channel.options.outbound.options.host == 'smtp.office365.com': %>
+    <div class="action-alert alert alert--danger alert--square horizontal centered" role="alert">
+      <% date_migration_string = '2020-10-13' %>
+      <% date_migration_string_local = App.i18n.translateDate(date_migration_string, 0) %>
+      <% date_migration = new Date("#{date_migration_string}T00:00:00") %>
+      <% date_now = new Date() %>
+      <% if date_now > date_migration: %>
+        <%- @T('%s will only allow access via OAuth. Password-based access is no longer supported since %s.', 'Office 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
+      <% else: %>
+        <%- @T('%s will only allow access via OAuth. Password-based access will no longer be supported on %s.', 'Office 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
+      <% end %>
+    </div>
+    <% end %>
     -->
     <div class="action-flow" style="width: 100%;">
       <div class="action-block action-block--flex">
