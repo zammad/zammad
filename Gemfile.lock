@@ -259,7 +259,7 @@ GEM
     inflection (1.0.0)
     interception (0.5)
     json (2.3.0)
-    jwt (2.2.1)
+    jwt (2.2.2)
     kgio (2.11.2)
     koala (3.0.0)
       addressable
@@ -293,7 +293,7 @@ GEM
       libv8 (>= 6.9.411)
     minitest (5.14.2)
     msgpack (1.2.4)
-    multi_json (1.14.1)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     mysql2 (0.4.10)
@@ -318,8 +318,8 @@ GEM
       rack (>= 1.2, < 3)
     octokit (4.13.0)
       sawyer (~> 0.8.0, >= 0.5.3)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth-facebook (5.0.0)
       omniauth-oauth2 (~> 1.2)
@@ -335,14 +335,14 @@ GEM
       omniauth-oauth2 (>= 1.5)
     omniauth-linkedin-oauth2 (1.0.0)
       omniauth-oauth2
-    omniauth-microsoft-office365 (0.0.7)
+    omniauth-microsoft-office365 (0.0.8)
       omniauth
       omniauth-oauth2
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
-    omniauth-oauth2 (1.6.0)
-      oauth2 (~> 1.1)
+    omniauth-oauth2 (1.7.0)
+      oauth2 (~> 1.4)
       omniauth (~> 1.9)
     omniauth-rails_csrf_protection (0.1.2)
       actionpack (>= 4.2)
