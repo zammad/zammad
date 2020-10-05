@@ -1048,12 +1048,12 @@ perform changes on ticket
 
   def add_trigger_note(ticket_id, note, objects, perform_origin)
     rendered_subject = NotificationFactory::Mailer.template(
-      templateInline: note['subject'],
+      templateInline: note[:subject],
       objects:        objects,
       quote:          true,
     )
     rendered_body = NotificationFactory::Mailer.template(
-      templateInline: note['body'],
+      templateInline: note[:body],
       objects:        objects,
       quote:          true,
     )

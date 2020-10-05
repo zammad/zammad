@@ -261,6 +261,26 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      context 'new note trigger ensure subject and body have rendered values' do
+        let(:perform) do
+          {
+            'article.note'     => { 
+              'internal' => 'true', 
+              'subject' => 'foo #{ticket.id}', 
+              'body' => 'I can integrate with 3rd party services at https://my.saas/foo/#{ticket.id}' }
+          }
+        end
+
+        let(:timestamp) { Time.zone.now }
+
+        it 'changes pending date to given date' do
+          freeze_time do
+            expect { ticket.perform_changes(perform, 'trigger', ticket, User.first) }
+              .to change(ticket, :pending_time).to(be_within(1.minute).of(timestamp))
+          end
+        end
+      end
+
       context 'with a "notification.email" trigger' do
         # Regression test for https://github.com/zammad/zammad/issues/1543
         #
