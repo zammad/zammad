@@ -227,7 +227,7 @@ returns on fail
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
       rescue => e
-        Rails.logger.error e
+        Rails.logger.debug { e }
 
         return {
           result:        'invalid',
@@ -333,6 +333,8 @@ returns on fail
           mail,
         )
       rescue => e
+        Rails.logger.debug { e }
+
         # check if sending email was ok, but mailserver rejected
         if !subject
           white_map = {
@@ -343,8 +345,6 @@ returns on fail
 
             next if !e.message.match?(/#{Regexp.escape(key)}/i)
 
-            Rails.logger.info e
-
             return {
               result:   'ok',
               settings: params,
@@ -352,8 +352,6 @@ returns on fail
             }
           end
         end
-
-        Rails.logger.error e
 
         return {
           result:        'invalid',
