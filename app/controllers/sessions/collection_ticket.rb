@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 module ExtraCollection
+
+  module_function
+
   def session( collections, assets, user )
 
     # all ticket stuff
@@ -47,5 +50,4 @@ module ExtraCollection
     end
     [collections, assets]
   end
-  module_function :session # rubocop:disable Style/AccessModifierDeclarations
 end
