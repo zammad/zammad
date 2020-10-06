@@ -238,10 +238,7 @@ class Admin extends App.WizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        if _.isArray(details.error)
-          @form.showAlert( App.i18n.translateInline( details.error[0], details.error[1] ) )
-        else
-          @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || 'Unable to create user!')
     )
 
   relogin: (data, status, xhr) =>
@@ -965,7 +962,7 @@ class Agent extends App.WizardFullScreen
 
     @html App.view('getting_started/agent')()
 
-    new App.ControllerForm(
+    @form = new App.ControllerForm(
       el:        @$('.js-agent-form')
       model:     App.User
       screen:    'invite_agent'
@@ -1012,11 +1009,7 @@ class Agent extends App.WizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        App.Event.trigger 'notify', {
-          type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || 'Can\'t create user!')
-          timeout: 2500
-        }
+        @form.showAlert details.error_human || 'Can\'t create user!'
     )
 
 App.Config.set('getting_started/agents', Agent, 'Routes')

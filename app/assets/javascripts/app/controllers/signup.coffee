@@ -75,7 +75,7 @@ class Index extends App.ControllerContent
         )
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || 'Unable to update object!')
+        @form.showAlert(details.error_human || details.error || 'Unable to create user!')
     )
 
   resend: (e) =>

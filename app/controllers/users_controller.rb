@@ -968,7 +968,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     result = PasswordPolicy.new(clean_user_params[:password])
     if !result.valid?
-      raise Exceptions::UnprocessableEntity, result.error
+      render json: { error: result.error }, status: :unprocessable_entity
+      return
     end
 
     user = User.new(clean_user_params)
@@ -1026,7 +1027,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     # check password policy
     result = PasswordPolicy.new(clean_user_params[:password])
     if !result.valid?
-      raise Exceptions::UnprocessableEntity, result.error
+      render json: { error: result.error }, status: :unprocessable_entity
+      return
     end
 
     user = User.new(clean_user_params)
