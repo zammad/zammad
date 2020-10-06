@@ -12,7 +12,7 @@ module KnowledgeBaseHelper
     return path if !custom_address
 
     custom_path = path.gsub(%r{^/help}, custom_address.path || '').presence || '/'
-    prefix      = full ? knowledge_base.custom_path_prefix(request) : ''
+    prefix      = full ? knowledge_base.custom_address_prefix(request) : ''
 
     "#{prefix}#{custom_path}"
   end

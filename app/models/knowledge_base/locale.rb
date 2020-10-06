@@ -27,7 +27,7 @@ class KnowledgeBase::Locale < ApplicationModel
                                          dependent:   :destroy
 
   def self.system_with_kb_locales(knowledge_base)
-    Locale
+    ::Locale
       .joins(:knowledge_base_locales)
       .where(knowledge_base_locales: { knowledge_base: knowledge_base })
       .select('locales.*, knowledge_base_locales.id as kb_locale_id, knowledge_base_locales.primary as primary_locale')
