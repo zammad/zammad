@@ -1194,5 +1194,28 @@ RSpec.describe Ticket, type: :model do
         end
       end
     end
+
+    describe 'Ticket lifecycle order-of-operations:' do
+      subject!(:ticket) { create(:ticket) }
+
+      let!(:agent) { create(:agent, groups: [group]) }
+      let(:group) { create(:group) }
+
+      before do
+        create(
+          :trigger,
+          condition: { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } },
+          perform:   { 'ticket.group_id' => { 'value' => group.id } }
+        )
+      end
+
+      it 'fires triggers before new ticket notifications are sent' do
+        expect { Observer::Transaction.commit }
+          .to change { ticket.reload.group }.to(group)
+
+        expect { Scheduler.worker(true) }
+          .to change { NotificationFactory::Mailer.already_sent?(ticket, agent, 'email') }.to(1)
+      end
+    end
   end
 end

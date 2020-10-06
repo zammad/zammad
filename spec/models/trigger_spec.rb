@@ -581,4 +581,189 @@ RSpec.describe Trigger, type: :model do
     it_behaves_like 'successful trigger', attribute: 'ticket.updated_by_id'
     it_behaves_like 'successful trigger', attribute: 'ticket.owner_id'
   end
+
+  describe 'Multi-trigger interactions:' do
+    let(:ticket) { create(:ticket) }
+
+    context 'cascading (i.e., trigger A satisfies trigger B satisfies trigger C)' do
+      subject!(:triggers) do
+        [
+          create(:trigger, condition: initial_state, perform: first_change, name: 'A'),
+          create(:trigger, condition: first_change, perform: second_change, name: 'B'),
+          create(:trigger, condition: second_change, perform: third_change, name: 'C')
+        ]
+      end
+
+      context 'in a chain' do
+        let(:initial_state) do
+          {
+            'ticket.state_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::State.lookup(name: 'new').id.to_s,
+            }
+          }
+        end
+
+        let(:first_change) do
+          {
+            'ticket.state_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::State.lookup(name: 'open').id.to_s,
+            }
+          }
+        end
+
+        let(:second_change) do
+          {
+            'ticket.state_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::State.lookup(name: 'closed').id.to_s,
+            }
+          }
+        end
+
+        let(:third_change) do
+          {
+            'ticket.state_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::State.lookup(name: 'merged').id.to_s,
+            }
+          }
+        end
+
+        context 'in alphabetical order (by name)' do
+          it 'fires all triggers in sequence' do
+            expect { Observer::Transaction.commit }
+              .to change { ticket.reload.state.name }.to('merged')
+          end
+        end
+
+        context 'out of alphabetical order (by name)' do
+          before do
+            triggers.first.update(name: 'E')
+            triggers.second.update(name: 'F')
+            triggers.third.update(name: 'D')
+          end
+
+          context 'with Setting ticket_trigger_recursive: true' do
+            before { Setting.set('ticket_trigger_recursive', true) }
+
+            it 'evaluates triggers in sequence, then loops back to the start and re-evalutes skipped triggers' do
+              expect { Observer::Transaction.commit }
+                .to change { ticket.reload.state.name }.to('merged')
+            end
+          end
+
+          context 'with Setting ticket_trigger_recursive: false' do
+            before { Setting.set('ticket_trigger_recursive', false) }
+
+            it 'evaluates triggers in sequence, firing only the ones that match' do
+              expect { Observer::Transaction.commit }
+                .to change { ticket.reload.state.name }.to('closed')
+            end
+          end
+        end
+      end
+
+      context 'in circular reference (i.e., trigger A satisfies trigger B satisfies trigger C satisfies trigger A...)' do
+        let(:initial_state) do
+          {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Priority.lookup(name: '2 normal').id.to_s,
+            }
+          }
+        end
+
+        let(:first_change) do
+          {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Priority.lookup(name: '3 high').id.to_s,
+            }
+          }
+        end
+
+        let(:second_change) do
+          {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Priority.lookup(name: '1 low').id.to_s,
+            }
+          }
+        end
+
+        let(:third_change) do
+          {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => Ticket::Priority.lookup(name: '2 normal').id.to_s,
+            }
+          }
+        end
+
+        context 'with Setting ticket_trigger_recursive: true' do
+          before { Setting.set('ticket_trigger_recursive', true) }
+
+          it 'fires each trigger once, without being caught in an endless loop' do
+            expect { Timeout.timeout(2) { Observer::Transaction.commit } }
+              .to not_change { ticket.reload.priority.name }
+              .and not_raise_error
+          end
+        end
+
+        context 'with Setting ticket_trigger_recursive: false' do
+          before { Setting.set('ticket_trigger_recursive', false) }
+
+          it 'fires each trigger once, without being caught in an endless loop' do
+            expect { Timeout.timeout(2) { Observer::Transaction.commit } }
+              .to not_change { ticket.reload.priority.name }
+              .and not_raise_error
+          end
+        end
+      end
+    end
+
+    context 'competing (i.e., trigger A un-satisfies trigger B)' do
+      subject!(:triggers) do
+        [
+          create(:trigger, condition: initial_state, perform: change_a, name: 'A'),
+          create(:trigger, condition: initial_state, perform: change_b, name: 'B')
+        ]
+      end
+
+      let(:initial_state) do
+        {
+          'ticket.state_id' => {
+            'operator' => 'is',
+            'value'    => Ticket::State.lookup(name: 'new').id.to_s,
+          }
+        }
+      end
+
+      let(:change_a) do
+        {
+          'ticket.state_id' => {
+            'operator' => 'is',
+            'value'    => Ticket::State.lookup(name: 'open').id.to_s,
+          }
+        }
+      end
+
+      let(:change_b) do
+        {
+          'ticket.priority_id' => {
+            'operator' => 'is',
+            'value'    => Ticket::Priority.lookup(name: '3 high').id.to_s,
+          }
+        }
+      end
+
+      it 'evaluates triggers in sequence, firing only the ones that match' do
+        expect { Observer::Transaction.commit }
+          .to change { ticket.reload.state.name }.to('open')
+          .and not_change { ticket.reload.priority.name }
+      end
+    end
+  end
 end
