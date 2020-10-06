@@ -682,17 +682,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :cti_caller_ids, :users
 
     create_table :stats_stores do |t|
-      t.references :stats_store_object,             null: false
-      t.integer :o_id,                              null: false
+      t.references :stats_storable, polymorphic: true, index: true
       t.string  :key,                   limit: 250, null: true
-      t.integer :related_stats_store_object_id,     null: true
       t.string  :data,                 limit: 5000, null: true
       t.integer :created_by_id,                     null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :stats_stores, [:o_id]
     add_index :stats_stores, [:key]
-    add_index :stats_stores, [:stats_store_object_id]
     add_index :stats_stores, [:created_by_id]
     add_index :stats_stores, [:created_at]
     add_foreign_key :stats_stores, :users, column: :created_by_id

@@ -108,12 +108,17 @@ returns
       next if local_object.to_s == 'Ticket'
 
       local_object.new.attributes.each do |key, _value|
-        attribute_name     = key.to_s
-        attribute_ref_name = local_object.search_index_attribute_ref_name(attribute_name)
-        attribute_class    = local_object.reflect_on_association(attribute_ref_name)&.klass
-
+        attribute_name = key.to_s
         next if attribute_name.blank?
+
+        attribute_ref_name = local_object.search_index_attribute_ref_name(attribute_name)
         next if attribute_ref_name.blank?
+
+        association = local_object.reflect_on_association(attribute_ref_name)
+        next if association.blank?
+        next if association.options[:polymorphic]
+
+        attribute_class = association.klass
         next if attribute_class.blank?
         next if attribute_class != self.class
 

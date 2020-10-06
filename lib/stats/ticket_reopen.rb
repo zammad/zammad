@@ -11,13 +11,10 @@ class Stats::TicketReopen
     ).count
 
     # get count of reopens
-    count = StatsStore.count_by_search(
-      object: 'User',
-      o_id:   user.id,
-      key:    'ticket:reopen',
-      start:  Time.zone.now - 7.days,
-      end:    Time.zone.now,
-    )
+    count = StatsStore.where(
+      stats_storable: user,
+      key:            'ticket:reopen',
+    ).where('created_at > ? AND created_at < ?', 7.days.ago, Time.zone.now).count
 
     if count > total
       total = count
@@ -89,14 +86,12 @@ class Stats::TicketReopen
     state_type_now = Ticket::StateType.lookup(id: state_now.state_type_id)
     return if state_type_now.name == 'closed'
 
-    StatsStore.add(
-      object:        'User',
-      o_id:          ticket.owner_id,
-      key:           'ticket:reopen',
-      data:          { ticket_id: ticket.id },
-      created_at:    Time.zone.now,
-      created_by_id: updated_by_id,
-      updated_by_id: updated_by_id,
+    StatsStore.create(
+      stats_storable: ticket.owner,
+      key:            'ticket:reopen',
+      data:           { ticket_id: ticket.id },
+      created_at:     Time.zone.now,
+      created_by_id:  updated_by_id,
     )
   end
 

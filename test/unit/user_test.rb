@@ -1257,18 +1257,16 @@ class UserTest < ActiveSupport::TestCase
 
     Token.create!(action: 'api', user_id: agent1_id)
 
-    StatsStore.add(
-      object:        'User',
-      o_id:          agent1_id,
-      key:           'some_key',
-      data:          { A: 1, B: 2 },
-      created_at:    Time.zone.now,
-      created_by_id: 1,
+    StatsStore.create(
+      stats_storable: agent1,
+      key:            'some_key',
+      data:           { A: 1, B: 2 },
+      created_at:     Time.zone.now,
+      created_by_id:  1,
     )
-    item = StatsStore.search(
-      object: 'User',
-      o_id:   agent1_id,
-      key:    'some_key',
+    item = StatsStore.find_by(
+      stats_storable: agent1,
+      key:            'some_key',
     )
     assert(item)
 
@@ -1284,10 +1282,9 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(0, RecentView.where(created_by_id: agent1_id).count)
     assert_equal(0, Token.where(user_id: agent1_id).count)
     assert_equal(0, Token.where(user_id: agent1_id).count)
-    item = StatsStore.search(
-      object: 'User',
-      o_id:   agent1_id,
-      key:    'some_key',
+    item = StatsStore.find_by(
+      stats_storable: agent1,
+      key:            'some_key',
     )
     assert_nil(item)
   end

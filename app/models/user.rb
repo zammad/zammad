@@ -1164,10 +1164,7 @@ raise 'Minimum one user need to have admin permissions'
   def destroy_longer_required_objects
     ::Avatar.remove(self.class.to_s, id)
     ::UserDevice.remove(id)
-    ::StatsStore.remove(
-      object: self.class.to_s,
-      o_id:   id,
-    )
+    ::StatsStore.where(stats_storable: self).destroy_all
   end
 
   def destroy_move_dependency_ownership

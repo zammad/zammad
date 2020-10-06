@@ -45,7 +45,7 @@ returns
 
         data[backend] = backend.generate(user)
       end
-      user_result[user.id] = data
+      user_result[user] = data
     end
 
     # calculate average
@@ -64,27 +64,26 @@ returns
     # generate average param and icon state
     backend_average_sum.each do |backend_model_average, result|
       average = ( result.to_f / agent_count ).round(1)
-      user_result.each do |user_id, data|
+      user_result.each do |user, data|
         next if !data[backend_model_average]
         next if !data[backend_model_average].key?(:used_for_average)
 
         data[backend_model_average][:average_per_agent] = average
 
         # generate icon state
-        backend_model_average.to_s.constantize.average_state(data[backend_model_average], user_id)
+        backend_model_average.to_s.constantize.average_state(data[backend_model_average], user.id)
       end
     end
 
-    user_result.each do |user_id, data|
+    user_result.each do |user, data|
       data_for_user = {}
       data.each do |backend, result|
         data_for_user[backend.to_app_model] = result
       end
       state_store = StatsStore.sync(
-        object: 'User',
-        o_id:   user_id,
-        key:    'dashboard',
-        data:   data_for_user,
+        stats_storable: user,
+        key:            'dashboard',
+        data:           data_for_user,
       )
 
       message = {
@@ -93,11 +92,11 @@ returns
           state_store.class.to_app_model => [state_store],
         },
       }
-      Sessions.send_to(user_id, message)
+      Sessions.send_to(user.id, message)
       event = {
         event: 'dashboard_stats_rebuild',
       }
-      Sessions.send_to(user_id, event)
+      Sessions.send_to(user.id, event)
     end
 
     true

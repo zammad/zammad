@@ -7,10 +7,9 @@ module ExtraCollection
   def session( collections, assets, user )
     return [collections, assets] if !user
 
-    item = StatsStore.search(
-      object: 'User',
-      o_id:   user.id,
-      key:    'dashboard',
+    item = StatsStore.find_by(
+      stats_storable: user,
+      key:            'dashboard',
     )
     return [collections, assets] if !item
 
