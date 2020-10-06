@@ -336,16 +336,13 @@ Permission.create_if_not_exists(
   name:        'ticket.agent',
   note:        'Access to Agent Tickets based on Group Access',
   preferences: {
-    not:    ['ticket.customer'],
     plugin: ['groups']
   },
 )
 Permission.create_if_not_exists(
   name:        'ticket.customer',
   note:        'Access to Customer Tickets based on current_user and organization',
-  preferences: {
-    not: ['ticket.agent'],
-  },
+  preferences: {},
 )
 Permission.create_if_not_exists(
   name:        'chat',
@@ -359,7 +356,6 @@ Permission.create_if_not_exists(
   note:        'Access to %s',
   preferences: {
     translations: ['Chat'],
-    not:          ['chat.customer'],
   },
 )
 Permission.create_if_not_exists(
@@ -374,7 +370,6 @@ Permission.create_if_not_exists(
   note:        'Access to %s',
   preferences: {
     translations: ['CTI'],
-    not:          ['cti.customer'],
   },
 )
 
