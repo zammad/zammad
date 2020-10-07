@@ -222,13 +222,12 @@ returns
   end
 
   def check_default_at_signup_permissions
-    all_permissions = Permission.all.pluck(:id)
-    admin_permissions = Permission.where('name LIKE ? OR name = ?', 'admin%', 'ticket.agent').pluck(:id) # admin.*/ticket.agent permissions
-    normal_permissions = (all_permissions - admin_permissions) | (admin_permissions - all_permissions) # all other permissions besides admin.*/ticket.agent
-    return true if default_at_signup != true # means if default_at_signup = false, no need further checks
-    return true if self.permission_ids.all? { |i| normal_permissions.include? i } # allow user to choose only normal permissions
+    return true if !default_at_signup
 
-    raise Exceptions::UnprocessableEntity, 'Cannot set default at signup when role has admin or ticket.agent permissions.'
+    forbidden_permissions = permissions.reject(&:allow_signup)
+    return true if forbidden_permissions.blank?
+
+    raise Exceptions::UnprocessableEntity, "Cannot set default at signup when role has #{forbidden_permissions.join(', ')} permissions."
   end
 
 end
