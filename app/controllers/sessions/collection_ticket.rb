@@ -47,5 +47,4 @@ module ExtraCollection
     end
     [collections, assets]
   end
-  module_function :session
 end
