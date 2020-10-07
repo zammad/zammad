@@ -107,16 +107,17 @@ class ExternalCredential::Office365
       return migrate_channel
     end
 
-    email_addresses = user_aliases(response)
-    email_addresses.unshift({
-                              realname: "#{Setting.get('product_name')} Support",
-                              email:    user_data[:preferred_username],
-                            })
+    email_addresses = [
+      {
+        realname: "#{Setting.get('product_name')} Support",
+        email:    user_data[:preferred_username],
+      },
+    ]
 
     email_addresses.each do |email|
-      next if !EmailAddress.exists?(email: email[:preferred_username])
+      next if !EmailAddress.exists?(email: email[:email])
 
-      raise Exceptions::UnprocessableEntity, "Duplicate email address or email alias #{email[:preferred_username]} found!"
+      raise Exceptions::UnprocessableEntity, "Duplicate email address or email alias #{email[:email]} found!"
     end
 
     # create channel
@@ -224,37 +225,6 @@ class ExternalCredential::Office365
       created_at:   Time.zone.now,
       access_token: result['access_token'],
     ).symbolize_keys
-  end
-
-  def self.user_aliases(_token)
-    # uri = URI.parse('https://www.office365apis.com/gmail/v1/users/me/settings/sendAs')
-    # http = Net::HTTP.new(uri.host, uri.port)
-    # http.use_ssl = true
-    # response = http.get(uri.request_uri, { 'Authorization' => "#{token[:token_type]} #{token[:access_token]}" })
-    # if response.code != 200 && response.body.blank?
-    #   Rails.logger.error "Request failed! (code: #{response.code})"
-    #   raise "Request failed! (code: #{response.code})"
-    # end
-
-    # result = JSON.parse(response.body)
-    # if result['error'] && response.code != 200
-    #   Rails.logger.error "Request failed! ERROR: #{result['error']['message']}"
-    #   raise "Request failed! ERROR: #{result['error']['message']}"
-    # end
-
-    # aliases = []
-    # result['sendAs'].each do |row|
-    #   next if row['isPrimary']
-    #   next if !row['verificationStatus']
-    #   next if row['verificationStatus'] != 'accepted'
-
-    #   aliases.push({
-    #                  realname: row['displayName'],
-    #                  email:    row['sendAsEmail'],
-    #                })
-    # end
-
-    []
   end
 
   def self.user_info(id_token)

@@ -10,7 +10,7 @@ class App.ChannelGoogle extends App.ControllerTabs
       {
         name:       'Accounts',
         target:     'c-account',
-        controller: ChannelGoogleAccountOverview,
+        controller: ChannelAccountOverview,
       },
       {
         name:       'Filter',
@@ -32,7 +32,7 @@ class App.ChannelGoogle extends App.ControllerTabs
 
     @render()
 
-class ChannelGoogleAccountOverview extends App.ControllerSubContent
+class ChannelAccountOverview extends App.ControllerSubContent
   requiredPermission: 'admin.channel_google'
   events:
     'click .js-new':                'new'
@@ -50,7 +50,7 @@ class ChannelGoogleAccountOverview extends App.ControllerSubContent
   constructor: ->
     super
 
-    #@interval(@load, 60000)
+    @interval(@load, 30000)
     @load()
 
   load: (reset_channel_id = false) =>
@@ -189,7 +189,7 @@ class ChannelGoogleAccountOverview extends App.ControllerSubContent
       e.preventDefault()
       channel_id = $(e.target).closest('.action').data('id')
     item = App.Channel.find(channel_id)
-    new App.ChannelInboundEdit(
+    new ChannelInboundEdit(
       container: @el.closest('.content')
       item: item
       callback: @load
@@ -220,7 +220,7 @@ class ChannelGoogleAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
-    new App.ChannelGroupEdit(
+    new ChannelGroupEdit(
       container: @el.closest('.content')
       item: item
       callback: @load
@@ -261,7 +261,7 @@ class ChannelGoogleAccountOverview extends App.ControllerSubContent
       callback: @load
     )
 
-class App.ChannelInboundEdit extends App.ControllerModal
+class ChannelInboundEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -321,7 +321,7 @@ class App.ChannelInboundEdit extends App.ControllerModal
           timeout: 6000
     )
 
-class App.ChannelGroupEdit extends App.ControllerModal
+class ChannelGroupEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
