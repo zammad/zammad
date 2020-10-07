@@ -45,7 +45,7 @@ returns
     end
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
-    result_es = SearchIndexBackend.selectors('Ticket', selector, {}, aggs_interval)
+    result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user] }, aggs_interval)
     case params[:interval]
     when 'month'
       stop_interval = 12
@@ -170,7 +170,7 @@ returns
     end
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
-    result = SearchIndexBackend.selectors('Ticket', selector, { limit: limit }, aggs_interval)
+    result = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user], limit: limit }, aggs_interval)
     return result if params[:sheet].present?
 
     assets = {}

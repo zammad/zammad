@@ -39,6 +39,7 @@ class ReportsController < ApplicationController
         params:          backend[:params],
         timezone:        get_params[:timezone],
         timezone_offset: get_params[:timezone_offset],
+        current_user:    current_user
       )
     end
 
@@ -83,6 +84,7 @@ class ReportsController < ApplicationController
         sheet:           params[:sheet],
         timezone:        get_params[:timezone],
         timezone_offset: get_params[:timezone_offset],
+        current_user:    current_user
       )
 
       result = { count: 0, ticket_ids: [] } if result.nil?

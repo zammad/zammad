@@ -164,14 +164,17 @@ RSpec.describe SearchIndexBackend, searchindex: true do
 
   describe '.selectors' do
 
-    let(:ticket1) { create :ticket, title: 'some-title1', state_id: 1 }
+    let(:organization1) { create :organization }
+    let(:agent1) { create :agent, organization: organization1 }
+    let(:customer1) { create :customer, organization: organization1 }
+    let(:ticket1) { create :ticket, title: 'some-title1', state_id: 1, created_by: agent1 }
     let(:ticket2) { create :ticket, title: 'some_title2', state_id: 4 }
     let(:ticket3) { create :ticket, title: 'some::title3', state_id: 1 }
     let(:ticket4) { create :ticket, title: 'phrase some-title4', state_id: 1 }
     let(:ticket5) { create :ticket, title: 'phrase some_title5', state_id: 1 }
     let(:ticket6) { create :ticket, title: 'phrase some::title6', state_id: 1 }
     let(:ticket7) { create :ticket, title: 'some title7', state_id: 1 }
-    let(:ticket8) { create :ticket, title: 'sometitle', state_id: 1 }
+    let(:ticket8) { create :ticket, title: 'sometitle', state_id: 1, owner: agent1, customer: customer1 }
 
     before do
       Ticket.destroy_all # needed to remove not created tickets
@@ -194,6 +197,51 @@ RSpec.describe SearchIndexBackend, searchindex: true do
     end
 
     context 'query with contains' do
+      it 'finds records with pre_condition not_set' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'created_by_id' => {
+                                               'pre_condition' => 'not_set',
+                                               'operator'      => 'is',
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with pre_condition current_user.id' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'owner_id' => {
+                                               'pre_condition' => 'current_user.id',
+                                               'operator'      => 'is',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+      end
+
+      it 'finds records with pre_condition current_user.organization_id' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'organization_id' => {
+                                               'pre_condition' => 'current_user.organization_id',
+                                               'operator'      => 'is',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
+      end
+
       it 'finds records with containing phrase' do
         result = described_class.selectors('Ticket',
                                            {
