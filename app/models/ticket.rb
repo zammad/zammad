@@ -1017,9 +1017,10 @@ perform changes on ticket
       save!
     end
 
+    objects = build_notification_template_objects(article)
+
     perform_article.each do |key, value|
       raise 'Unable to create article, we only support article.note' if key != 'article.note'
-
       add_trigger_note(id, value, objects, perform_origin)
     end
 
@@ -1052,6 +1053,7 @@ perform changes on ticket
       objects:        objects,
       quote:          true,
     )
+
     rendered_body = NotificationFactory::Mailer.template(
       templateInline: note[:body],
       objects:        objects,
