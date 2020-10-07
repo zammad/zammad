@@ -348,7 +348,8 @@ Permission.create_if_not_exists(
   name:        'chat',
   note:        'Access to %s',
   preferences: {
-    translations: ['Chat']
+    translations: ['Chat'],
+    disabled:     true,
   },
 )
 Permission.create_if_not_exists(
