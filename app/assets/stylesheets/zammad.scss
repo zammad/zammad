@@ -2822,7 +2822,7 @@ kbd {
 }
 
 .login {
-  padding: 24px 24px 97px;
+  padding: 24px;
   color: hsl(212,8%,40%);
 
   a {
@@ -2888,13 +2888,9 @@ kbd {
   align-items: center;
   justify-content: center;
   color: hsl(233,7%,26%);
-  margin: auto 0 34px -16px;
-  @include rtl(margin, auto -16px 34px 0);
+  margin: 34px 0 10px -16px;
+  @include rtl(margin, 34px -16px 10px 0);
   cursor: default;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
 
   .icon-logo {
     @include bidi-style(margin-right, 8px, margin-left, 0);
@@ -2910,10 +2906,14 @@ kbd {
 
 .fullscreen {
   @extend .fit;
-  display: table;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   min-height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .fullscreen p {
@@ -2921,9 +2921,7 @@ kbd {
 }
 
 .fullscreen-center {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  margin: auto;
 }
 
 .fullscreen-body {
