@@ -1021,6 +1021,7 @@ perform changes on ticket
 
     perform_article.each do |key, value|
       raise 'Unable to create article, we only support article.note' if key != 'article.note'
+
       add_trigger_note(id, value, objects, perform_origin)
     end
 
