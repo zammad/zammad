@@ -117,11 +117,11 @@ class Graph extends App.ControllerContent
         dataNew[key] = value
       @ui.storeParams()
 
-    if !@lastNewData
-      @lastNewData = {}
+    if !@lastParams
+      @lastParams = {}
 
-    return if @lastNewData && JSON.stringify(dataNew) is JSON.stringify(@lastNewData)
-    @lastNewData = dataNew
+    return if @lastParams && JSON.stringify(@params) is JSON.stringify(@lastParams)
+    @lastParams = $.extend(true, {}, @params)
 
     @draw(dataNew)
     t = new Date
