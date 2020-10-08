@@ -118,8 +118,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         content_type: 'text/plain',
         body:         'some body',
         type:         'note',
+        internal:     false,
         preferences:  {
           some_key1: 123,
+          highlight: '123',
         },
       }
       post '/api/v1/ticket_articles', params: params, as: :json
@@ -127,28 +129,34 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
+      expect(json_response['internal']).to eq(false)
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['preferences']['some_key1']).to eq(123)
+      expect(json_response['preferences']['highlight']).to eq('123')
       expect(ticket.articles.count).to eq(5)
 
       params = {
         body:        'some body 2',
+        internal:    true,
         preferences: {
           some_key2: 'abc',
+          highlight: '234',
         },
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
-      expect(json_response['body']).to eq('some body 2')
+      expect(json_response['body']).not_to eq('some body 2')
+      expect(json_response['internal']).to eq(true)
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['preferences']['some_key1']).to eq(123)
-      expect(json_response['preferences']['some_key2']).to eq('abc')
+      expect(json_response['preferences']['some_key2']).not_to eq('abc')
+      expect(json_response['preferences']['highlight']).to eq('234')
 
     end
 
