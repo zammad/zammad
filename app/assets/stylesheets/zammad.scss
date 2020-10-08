@@ -11525,6 +11525,7 @@ span.is-disabled {
   }
 
   &-main {
+    width: 100%;
     @include ltr(transition, margin-right 500ms);
     @include ltr(margin-right, 280px);
     @include rtl(transition, margin-left 500ms);
