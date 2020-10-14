@@ -68,7 +68,7 @@ class Index extends App.ControllerSubContent
     )
 
     # show description button, only if content exists
-    description = marked(App.DataPrivacyTask.description)
+    description = marked(App.i18n.translateContent(App.DataPrivacyTask.description))
 
     @html App.view('data_privacy/index')(
       taskCount: ( runningTasks.length + failedTasks.length + completedTasks.length )

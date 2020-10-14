@@ -21,7 +21,7 @@
         <%- @humanTime(task.created_at) %>
         <br><br>
         <div class="label"><%- @T('State') %></div>
-        <% if task.state: %><%= task.state %><% else: %><%- @T('in process') %><% end %>
+        <% if task.state: %><%= @T(task.state) %><% else: %><%- @T('in process') %><% end %>
         <% if task.preferences.error: %> (<%= task.preferences.error %>)<% end %>
       </div>
       <div class="action-block action-block--flex">
