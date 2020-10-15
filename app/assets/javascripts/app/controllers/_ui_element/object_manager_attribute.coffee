@@ -210,6 +210,15 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find('.js-inputMaxlength').html(inputMaxlength.form)
     item.find('.js-inputLinkTemplate').html(inputLinkTemplate.form)
 
+    item.find("select[name='data_option::type']").on('change', (e) ->
+      value = $(e.target).val()
+      if value is 'url'
+        item.find('.js-inputLinkTemplate').hide()
+      else
+        item.find('.js-inputLinkTemplate').show()
+    )
+    item.find("select[name='data_option::type']").trigger('change')
+
   @datetime: (item, localParams, params) ->
     configureAttributes = [
       { name: 'data_option::future', display: 'Allow future', tag: 'boolean', null: false, default: true },
