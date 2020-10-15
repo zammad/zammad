@@ -2014,6 +2014,10 @@ input[type=url] {
   min-width: 400px;
 }
 
+.sidebar-content input[type=url] {
+  min-width: inherit;
+}
+
 .user-select.form-control {
   padding-right: 35px;
   min-width: 300px;
@@ -9480,7 +9484,7 @@ output {
   flex-wrap: wrap;
   padding: 10px;
   margin-bottom: 17px;
-  
+
   &.is-inactive {
     background: none;
     box-shadow: none;
@@ -10067,10 +10071,10 @@ output {
 .browser {
   margin: 0 0 20px;
   position: relative;
-  
+
   &[data-size] {
     padding-bottom: 65%; // 16:10 aspect ratio;
-    
+
     .browser-ratio {
       width: 100%;
       height: 100%;
@@ -10086,11 +10090,11 @@ output {
       padding: 0;
     }
   }
-    
+
   &[data-size="mobile"] .browser-ratio {
     width: 375px;
   }
-  
+
   &-ratio {
     border: 1px solid hsl(0,0%,90%);
     border-radius: 5px;
