@@ -870,7 +870,7 @@ RSpec.describe User, type: :model do
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'History'                            => { 'created_by_id' => 1 },
-                     'Overview'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
                      'StatsStore'                         => { 'created_by_id' => 0 },
                      'TextModule'                         => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -891,6 +891,8 @@ RSpec.describe User, type: :model do
       authorization       = create(:twitter_authorization, user: user)
       recent_view         = create(:recent_view, created_by: user)
       avatar              = create(:avatar, o_id: user.id)
+      overview            = create(:overview, created_by_id: user.id, user_ids: [user.id])
+      expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
       # to be sure that the data gets removed and not mapped which
@@ -929,6 +931,7 @@ RSpec.describe User, type: :model do
       expect { customer_ticket2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { customer_ticket3.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_agent_user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect(overview.reload.user_ids).to eq([])
 
       # move ownership objects
       expect { group.reload }.to change(group, :created_by_id).to(1)

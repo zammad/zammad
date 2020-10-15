@@ -21,6 +21,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   has_and_belongs_to_many :organizations,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
+  has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :online_notifications,   dependent: :destroy
@@ -52,7 +53,7 @@ class User < ApplicationModel
 
   store :preferences
 
-  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :karma_activity_logs, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks
+  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :karma_activity_logs, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks, :overviews
 
   activity_stream_permission 'admin.user'
 
