@@ -22,6 +22,11 @@ class App.ControllerGenericNew extends App.ControllerModal
     object = new App[ @genericObject ]
     object.load(params)
 
+    # validate form using HTML5 validity check
+    element = $(e.target).closest('form').get(0)
+    if element && element.reportValidity && !element.reportValidity()
+      return false
+
     # validate
     errors = object.validate()
     if errors
@@ -69,6 +74,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
   onSubmit: (e) ->
     params = @formParam(e.target)
     @item.load(params)
+
+    # validate form using HTML5 validity check
+    element = $(e.target).closest('form').get(0)
+    if element && element.reportValidity && !element.reportValidity()
+      return false
 
     # validate
     errors = @item.validate()
