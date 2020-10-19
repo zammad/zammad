@@ -1,7 +1,7 @@
 <% if @tasks.length > 0: %>
 <% for task in @tasks: %>
   <% if task.preferences.user: %>
-  <div class="action" data-id="<%- task.id %>">
+  <div class="action <% if task.state is 'completed': %>is-inactive<% end %>" data-id="<%- task.id %>">
     <div class="action-row">
       <div class="action-flow action-flow--noWrap">
         <h2><%- @T('Delete User') %></h2>
