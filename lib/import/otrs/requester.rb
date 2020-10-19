@@ -18,6 +18,9 @@ module Import
       # @option opts [Boolean] :diff request only changed/added entries since the last import
       #
       # @example
+      #   Import::OTRS::Requester.load('Ticket', offset: '208', limit: '1')
+      #   #=> [{'TicketNumber':'1234', ...}, ...]
+      #
       #   Import::OTRS::Requester.load('State', offset: '0', limit: '50')
       #   #=> [{'Name':'pending reminder', ...}, ...]
       #
@@ -95,7 +98,7 @@ module Import
       end
 
       def handle_response(response)
-        encoded_body = response.body.to_utf8
+        encoded_body = response.body.to_utf8(fallback: :read_as_sanitized_binary)
         # remove null bytes otherwise PostgreSQL will fail
         encoded_body.delete('\u0000')
         JSON.parse(encoded_body)
