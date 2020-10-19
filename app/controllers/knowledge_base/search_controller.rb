@@ -1,6 +1,6 @@
 class KnowledgeBase::SearchController < ApplicationController
   skip_before_action :verify_csrf_token
-  #skip_before_action :verify_authenticity_token
+  prepend_before_action :authentication_check_only
 
   include KnowledgeBaseHelper
   include ActionView::Helpers::SanitizeHelper
@@ -74,7 +74,7 @@ class KnowledgeBase::SearchController < ApplicationController
   end
 
   def public_item_details_answer(meta, object)
-    category_translation = object.answer.category.translation_to(object.kb_locale)
+    category_translation = object.answer.category.translation_preferred(object.kb_locale)
     path = help_answer_path(category_translation, object, locale: object.kb_locale.system_locale.locale)
 
     url = case url_type
@@ -97,7 +97,7 @@ class KnowledgeBase::SearchController < ApplicationController
   end
 
   def public_item_details_category(meta, object)
-    parent_category_translation = object.category.parent&.translation_to(object.kb_locale)
+    parent_category_translation = object.category.parent&.translation_preferred(object.kb_locale)
     path = help_category_path(object, locale: object.kb_locale.system_locale.locale)
 
     url = case url_type
