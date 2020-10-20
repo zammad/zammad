@@ -29,7 +29,15 @@ module Import
     extend Import::OTRS::Diff
     extend self
 
-    def start
+    # Start import with specific parameters.
+    # Useful for debug and continuing from breakpoint of last not success import
+    #
+    # @example
+    #   Import::OTRS::start() - Nomrmal usage
+    #
+    #   Import::OTRS::start({thread: 1, offset: 1000) - Run the task in Single-Thread and start from offset 1000 
+
+    def start(args = {})
       log 'Start import...'
 
       checks
@@ -42,7 +50,7 @@ module Import
 
       customer_user
 
-      threaded_import('Ticket')
+      threaded_import('Ticket', args)
 
       true
     end
@@ -74,6 +82,7 @@ module Import
     def threaded_import(remote_object, args = {})
       thread_count = args[:threads] || 8
       limit        = args[:limit]   || 20
+      start_offset_base = args[:offset] || 0
 
       Thread.abort_on_exception = true
       threads                   = {}
@@ -94,7 +103,7 @@ module Import
             # get the offset for the current thread and loop count
             thread_offset_base = (Thread.current[:thread_no] - 1) * limit
             thread_step        = thread_count * limit
-            offset             = Thread.current[:loop_count] * thread_step + thread_offset_base
+            offset             = Thread.current[:loop_count] * thread_step + thread_offset_base + start_offset_base
 
             break if !imported?(
               remote_object: remote_object,
