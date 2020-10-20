@@ -35,7 +35,7 @@ module Import
     # @example
     #   Import::OTRS::start() - Nomrmal usage
     #
-    #   Import::OTRS::start({thread: 1, offset: 1000) - Run the task in Single-Thread and start from offset 1000 
+    #   Import::OTRS::start({thread: 1, offset: 1000) - Run the task in Single-Thread and start from offset 1000
 
     def start(args = {})
       log 'Start import...'
