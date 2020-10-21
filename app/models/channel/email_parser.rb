@@ -512,13 +512,27 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   def force_single_part_encoding_if_needed(part)
     return if part.charset != 'iso-2022-jp'
 
-    part.body = part.body.encoded.unpack1('M').tr('_', ' ').force_encoding('ISO-2022-JP').encode('UTF-8')
+    part.body = part.body.encoded.unpack1('M').force_encoding('ISO-2022-JP').encode('UTF-8')
+  end
+
+  ISO2022JP_REGEXP = /=\?ISO-2022-JP\?B\?(.+?)\?=/.freeze
+
+  # https://github.com/zammad/zammad/issues/3115
+  def header_field_unpack_japanese(field)
+    field.value.gsub ISO2022JP_REGEXP do
+      Base64.decode64($1).force_encoding('SJIS').encode('UTF-8')
+    end
   end
 
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
       begin
-        value = f.to_utf8
+        value = if f.value.match?(ISO2022JP_REGEXP)
+                  header_field_unpack_japanese(f)
+                else
+                  f.to_utf8
+                end
+
         if value.blank?
           value = f.decoded.to_utf8
         end
