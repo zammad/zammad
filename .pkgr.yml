@@ -12,7 +12,6 @@ targets:
       - which
       - epel-release
       - imlib2
-      - imlib2-devel
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.5-9.el7.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.5-9.el7.x86_64.rpm
@@ -25,7 +24,6 @@ targets:
       - which
       - epel-release
       - imlib2
-      - imlib2-devel
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
@@ -36,7 +34,6 @@ targets:
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
-      - libimlib2-dev
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -47,7 +44,6 @@ targets:
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
-      - libimlib2-dev
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -58,7 +54,6 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
-      - libimlib2-dev
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -69,7 +64,6 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
-      - libimlib2-dev
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -80,7 +74,6 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
-      - libimlib2-dev
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -90,10 +83,8 @@ targets:
       - elasticsearch
       - nginx
       - postgresql-server
-      - imlib2
       - libImlib2-1
       - imlib2
-      - imlib2-devel
     build_dependencies:
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-devel-1.4.5-12.1.1.x86_64.rpm
