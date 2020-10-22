@@ -11,4 +11,12 @@ body {
 <script type="text/javascript">
 </script>
 
+<%- date = Time.current.in_time_zone('Europe/London')  %>
+
+<data
+     data-offset-5-days=<%= date.utc_offset - (date + 5.days).utc_offset %>
+     data-offset-3-minutes=<%= date.utc_offset - (date + 3.minutes).utc_offset %>
+     data-offset-10-hours=<%= date.utc_offset - (date + 10.hours).utc_offset %>
+>
+
 <div id="qunit" class="u-dontfold"></div>
