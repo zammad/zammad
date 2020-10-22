@@ -14,8 +14,8 @@ RSpec.describe ObjectManagerAttributeDateRemoveFuturePast, type: :db_migration d
 
       # mock interfaces to save time
       # otherwise we would have to reseed the database
-      expect(ObjectManager::Attribute).to receive(:where).and_return([subject])
-      expect(subject).to receive(:save!)
+      allow(ObjectManager::Attribute).to receive(:where).and_return([subject])
+      allow(subject).to receive(:save!)
 
       migrate
 
@@ -39,7 +39,7 @@ RSpec.describe ObjectManagerAttributeDateRemoveFuturePast, type: :db_migration d
 
         # mock interfaces to save time
         # otherwise we would have to reseed the database
-        expect(ObjectManager::Attribute).to receive(:where).and_return([subject])
+        allow(ObjectManager::Attribute).to receive(:where).and_return([subject])
         # expect(subject).to receive(:save!)
 
         expect { migrate }.not_to raise_error

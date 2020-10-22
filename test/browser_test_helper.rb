@@ -983,7 +983,7 @@ class TestCase < ActiveSupport::TestCase
     if params[:css]
       element = instance.find_elements(css: params[:css])[0]
     end
-    if params[:value].class == Array
+    if params[:value].instance_of?(Array)
       params[:value].each do |key|
         if element
           element.send_keys(key)

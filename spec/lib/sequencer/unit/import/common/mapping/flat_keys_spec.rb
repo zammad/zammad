@@ -25,7 +25,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Mapping::FlatKeys, sequencer: :u
     }
 
     provided = process(parameters) do |instance|
-      expect(instance).to receive(:mapping).and_return(mapping)
+      allow(instance).to receive(:mapping).and_return(mapping)
     end
 
     expect(provided).to eq(

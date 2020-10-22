@@ -68,7 +68,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
       end
 
       it 'is skipped because of import_mode is active' do
-        expect(Setting).to receive(:get).with('import_mode').and_return(true)
+        allow(Setting).to receive(:get).with('import_mode').and_return(true)
         subject.validate(record)
         expect(backend).not_to have_received(:validate)
       end

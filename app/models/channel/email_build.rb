@@ -88,7 +88,7 @@ generate email with S/MIME
 
       # place to add inline attachments related to html alternative
       attr[:attachments]&.each do |attachment|
-        next if attachment.class == Hash
+        next if attachment.instance_of?(Hash)
         next if attachment.preferences['Content-ID'].blank?
 
         attachment = Mail::Part.new do
@@ -107,7 +107,7 @@ generate email with S/MIME
 
     # add attachments
     attr[:attachments]&.each do |attachment|
-      if attachment.class == Hash
+      if attachment.instance_of?(Hash)
         attachment['content-id'] = nil
         mail.attachments[attachment[:filename]] = attachment
       else

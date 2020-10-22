@@ -67,7 +67,7 @@ RSpec.describe Scheduler do
   describe '.cleanup' do
 
     it 'gets called by .threads' do
-      expect(described_class).to receive(:cleanup).and_throw(:called)
+      allow(described_class).to receive(:cleanup).and_throw(:called)
       expect do
         described_class.threads
       end.to throw_symbol(:called)

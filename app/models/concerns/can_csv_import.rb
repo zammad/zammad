@@ -247,8 +247,8 @@ returns
         record_attributes_with_association_names = record.attributes_with_association_names
         records_attributes_with_association_names.push record_attributes_with_association_names
         record_attributes_with_association_names.each do |key, value|
-          next if value.class == ActiveSupport::HashWithIndifferentAccess
-          next if value.class == Hash
+          next if value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
+          next if value.instance_of?(Hash)
           next if csv_attributes_ignored&.include?(key.to_sym)
           next if key.end_with?('_id')
           next if key.end_with?('_ids')
@@ -269,11 +269,11 @@ returns
         position = -1
         header.each do |key|
           position += 1
-          if record[key].class == ActiveSupport::TimeWithZone
+          if record[key].instance_of?(ActiveSupport::TimeWithZone)
             row.push record[key].iso8601
             next
           end
-          if record[key].class == Array
+          if record[key].instance_of?(Array)
             entry_count = -2
             record[key].each do |entry|
               entry_count += 1

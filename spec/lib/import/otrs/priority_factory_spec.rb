@@ -9,8 +9,10 @@ RSpec.describe Import::OTRS::PriorityFactory do
     import_data = {
       name: 'test',
     }
-    expect(::Import::OTRS::Priority).to receive(:new).with(import_data)
+    allow(::Import::OTRS::Priority).to receive(:new)
     described_class.import([import_data])
+
+    expect(::Import::OTRS::Priority).to have_received(:new).with(import_data)
   end
 
   it 'sets default create Priority' do
@@ -19,7 +21,7 @@ RSpec.describe Import::OTRS::PriorityFactory do
     priority.callback_loop  = true
     priority.save
 
-    expect(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:priority_default_create).and_return(priority.name)
+    allow(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:priority_default_create).and_return(priority.name)
 
     described_class.update_attribute_settings
     priority.reload
@@ -33,7 +35,7 @@ RSpec.describe Import::OTRS::PriorityFactory do
     priority.callback_loop  = true
     priority.save
 
-    expect(Import::OTRS).to receive(:diff?).and_return(true)
+    allow(Import::OTRS).to receive(:diff?).and_return(true)
 
     described_class.update_attribute_settings
     priority.reload

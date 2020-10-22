@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable Style/CombinableLoops
-
 RSpec.describe 'Integration Placetel', type: :request do
 
   let(:agent) do
@@ -618,5 +616,3 @@ RSpec.describe 'Integration Placetel', type: :request do
     end
   end
 end
-
-# rubocop:enable Style/CombinableLoops

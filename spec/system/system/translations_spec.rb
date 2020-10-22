@@ -8,8 +8,8 @@ RSpec.describe 'System > Translations', type: :system do
   it 'when clicking "Get latest translations" fetches all translations' do
     visit 'system/translation'
 
-    expect(Translation).to receive(:load).with('de-de').and_return(true)
-    expect(Translation).to receive(:load).with('en-us').and_return(true)
+    allow(Translation).to receive(:load).with('de-de').and_return(true)
+    allow(Translation).to receive(:load).with('en-us').and_return(true)
 
     click '.js-syncChanges'
 

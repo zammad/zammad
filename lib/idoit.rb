@@ -128,7 +128,7 @@ or with filter:
     raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
 
     # add link to idoit
-    if result.data['result'].class == Array
+    if result.data['result'].instance_of?(Array)
       result.data['result'].each do |item|
         next if !item['id']
 

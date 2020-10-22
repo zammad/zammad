@@ -22,7 +22,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Attributes::RemoteId, seq
     }
 
     provided = process(parameters) do |instance|
-      expect(instance).to receive(:attribute).and_return(:other_attribute)
+      allow(instance).to receive(:attribute).and_return(:other_attribute)
     end
 
     expect(provided).to include(remote_id: '123abc')

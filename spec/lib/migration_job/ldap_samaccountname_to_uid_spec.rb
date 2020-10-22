@@ -3,27 +3,29 @@ require 'rails_helper'
 RSpec.describe MigrationJob::LdapSamaccountnameToUid do
 
   it 'performs no changes if no LDAP config present' do
-    expect(Setting).not_to receive(:set)
-    expect(Import::Ldap).to receive(:config).and_return(nil)
+    allow(Setting).to receive(:set)
+    allow(Import::Ldap).to receive(:config).and_return(nil)
 
     described_class.new.perform
+    expect(Setting).not_to have_received(:set)
   end
 
   it 'performs no changes if uid attributes equals' do
-    expect(Setting).not_to receive(:set)
+    allow(Setting).to receive(:set)
 
     ldap_config = {
       'user_uid' => 'samaccountname'
     }
-    expect(Import::Ldap).to receive(:config).and_return(ldap_config)
+    allow(Import::Ldap).to receive(:config).and_return(ldap_config)
 
     ldap_user = double()
-    expect(ldap_user).to receive(:uid_attribute).and_return('samaccountname')
-    expect(::Ldap::User).to receive(:new).and_return(ldap_user)
+    allow(ldap_user).to receive(:uid_attribute).and_return('samaccountname')
+    allow(::Ldap::User).to receive(:new).and_return(ldap_user)
 
     allow(::Ldap).to receive(:new)
 
     described_class.new.perform
+    expect(Setting).not_to have_received(:set)
   end
 
   it 'performs Setting change if uid attribute differ' do
@@ -34,16 +36,18 @@ RSpec.describe MigrationJob::LdapSamaccountnameToUid do
       'user_uid' => 'samaccountname'
     }
 
-    expect(Setting).to receive(:set).with('ldap_config', ldap_config_new)
+    allow(Setting).to receive(:set)
 
-    expect(Import::Ldap).to receive(:config).and_return(ldap_config_obsolete)
+    allow(Import::Ldap).to receive(:config).and_return(ldap_config_obsolete)
 
     ldap_user = double()
-    expect(ldap_user).to receive(:uid_attribute).and_return('objectguid')
-    expect(::Ldap::User).to receive(:new).and_return(ldap_user)
+    allow(ldap_user).to receive(:uid_attribute).and_return('objectguid')
+    allow(::Ldap::User).to receive(:new).and_return(ldap_user)
 
     allow(::Ldap).to receive(:new)
 
     described_class.new.perform
+
+    expect(Setting).to have_received(:set).with('ldap_config', ldap_config_new)
   end
 end

@@ -16,12 +16,12 @@ RSpec.describe Sequencer::Unit::Common::AttributeMapper, sequencer: :unit do
   end
 
   it 'declares uses from map keys' do
-    expect(described_class).to receive(:map).and_return(map)
+    allow(described_class).to receive(:map).and_return(map)
     expect(described_class.uses).to eq(map.keys)
   end
 
   it 'declares provides from map values' do
-    expect(described_class).to receive(:map).and_return(map)
+    allow(described_class).to receive(:map).and_return(map)
     expect(described_class.provides).to eq(map.values)
   end
 

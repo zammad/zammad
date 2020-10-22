@@ -10,7 +10,7 @@ module ActiveRecord
           index_name, index_type, index_columns, index_options, index_algorithm, index_using = add_index_options(table_name, column_name, options)
 
           column_names = index_columns.split ', '
-          if column_names.class == Array
+          if column_names.instance_of?(Array)
             index_columns_new = []
             column_names.each do |i|
               if i =~ /^"(name|login|locale|alias)"$/ || i.end_with?('name"')

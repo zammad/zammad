@@ -601,7 +601,7 @@ condition example
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
-         (selector['value'].class == Array && selector['value'].respond_to?(:blank?) && selector['value'].blank?) ||
+         (selector['value'].instance_of?(Array) && selector['value'].respond_to?(:blank?) && selector['value'].blank?) ||
          (selector['operator'].start_with?('contains') && selector['value'].respond_to?(:blank?) && selector['value'].blank?)
         return nil if selector['pre_condition'].nil?
         return nil if selector['pre_condition'].respond_to?(:blank?) && selector['pre_condition'].blank?

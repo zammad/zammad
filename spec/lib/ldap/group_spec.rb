@@ -81,7 +81,7 @@ RSpec.describe Ldap::Group do
 
       it 'returns a Hash of groups' do
         ldap_entry = build(:ldap_entry)
-        expect(mocked_ldap).to receive(:search).and_return(ldap_entry)
+        allow(mocked_ldap).to receive(:search).and_return(ldap_entry)
         expect(instance.list).to be_a(Hash)
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe Ldap::Group do
       end
 
       it 'tries filters and returns first one with entries' do
-        expect(mocked_ldap).to receive(:entries?).and_return(true)
+        allow(mocked_ldap).to receive(:entries?).and_return(true)
         expect(instance.filter).to be_a(String)
       end
 

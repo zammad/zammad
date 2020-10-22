@@ -678,11 +678,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       filename = file.header[:content_disposition].try(:filename)
     rescue
       begin
-        if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+        case file.header[:content_disposition].to_s
+        when /(filename|name)(\*{0,1})="(.+?)"/i
           filename = $3
-        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+        when /(filename|name)(\*{0,1})='(.+?)'/i
           filename = $3
-        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+        when /(filename|name)(\*{0,1})=(.+?);/i
           filename = $3
         end
       rescue
@@ -691,11 +692,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     begin
-      if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+      case file.header[:content_disposition].to_s
+      when /(filename|name)(\*{0,1})="(.+?)"/i
         filename = $3
-      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+      when /(filename|name)(\*{0,1})='(.+?)'/i
         filename = $3
-      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+      when /(filename|name)(\*{0,1})=(.+?);/i
         filename = $3
       end
     rescue
@@ -704,11 +706,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     # as fallback, use raw values
     if filename.blank?
-      if headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+      case headers_store['Content-Disposition'].to_s
+      when /(filename|name)(\*{0,1})="(.+?)"/i
         filename = $3
-      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+      when /(filename|name)(\*{0,1})='(.+?)'/i
         filename = $3
-      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+      when /(filename|name)(\*{0,1})=(.+?);/i
         filename = $3
       end
     end

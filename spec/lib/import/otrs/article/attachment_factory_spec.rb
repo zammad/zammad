@@ -31,7 +31,7 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   end
 
   def article_attachment_expectations(article_attachments)
-    expect(local_article).to receive(:attachments).and_return(article_attachments)
+    allow(local_article).to receive(:attachments).and_return(article_attachments)
   end
 
   it_behaves_like 'Import factory'

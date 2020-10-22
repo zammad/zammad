@@ -173,8 +173,8 @@ examples how to use
   private
 
   def convert_to_timezone(value)
-    return Translation.timestamp(@locale, @timezone, value) if value.class == ActiveSupport::TimeWithZone
-    return Translation.date(@locale, value) if value.class == Date
+    return Translation.timestamp(@locale, @timezone, value) if value.instance_of?(ActiveSupport::TimeWithZone)
+    return Translation.date(@locale, value) if value.instance_of?(Date)
 
     value
   end

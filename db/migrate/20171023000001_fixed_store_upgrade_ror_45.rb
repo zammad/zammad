@@ -34,7 +34,7 @@ class FixedStoreUpgradeRor45 < ActiveRecord::Migration[5.0]
   end
 
   def cleanup(value)
-    if value.class == ActionController::Parameters
+    if value.instance_of?(ActionController::Parameters)
       value = value.permit!.to_h
     end
     return value if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash

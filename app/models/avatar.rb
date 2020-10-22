@@ -105,7 +105,7 @@ add avatar by url
 
     # fetch image based on http url
     if data[:url].present?
-      if data[:url].class == Tempfile
+      if data[:url].instance_of?(Tempfile)
         logger.info "Reading image from tempfile '#{data[:url].inspect}'"
         content = data[:url].read
         filename = data[:url].path

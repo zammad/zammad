@@ -72,7 +72,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       end
 
     # regular tweet
-    elsif tweet.class == Twitter::Tweet
+    elsif tweet.instance_of?(Twitter::Tweet)
       tweet_type = 'Tweet'
       article.from = "@#{tweet.user.screen_name}"
       if tweet.user_mentions

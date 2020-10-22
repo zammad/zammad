@@ -356,7 +356,7 @@ Cti::Log.process(
       user    = params['user']
       queue   = params['queue']
       call_id = params['callId'] || params['call_id']
-      if user.class == Array
+      if user.instance_of?(Array)
         user = user.join(', ')
       end
 

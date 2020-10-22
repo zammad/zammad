@@ -324,7 +324,7 @@ cleanup html string:
       end
 
       # remove not needed new lines
-      if node.class == Nokogiri::XML::Text
+      if node.instance_of?(Nokogiri::XML::Text)
         if !node.parent || (node.parent.name != 'pre' && node.parent.name != 'code') # rubocop:disable Style/SoleNestedConditional
           content = node.content
           if content

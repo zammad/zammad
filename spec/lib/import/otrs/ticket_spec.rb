@@ -3,15 +3,17 @@ require 'rails_helper'
 RSpec.describe Import::OTRS::Ticket do
 
   def creates_with(zammad_structure)
-    expect(import_object).to receive(:new).with(zammad_structure).and_call_original
+    allow(import_object).to receive(:new).with(zammad_structure).and_call_original
+
     expect_any_instance_of(import_object).to receive(:save)
     expect_any_instance_of(described_class).to receive(:reset_primary_key_sequence)
     start_import_test
   end
 
   def updates_with(zammad_structure)
-    expect(import_object).to receive(:find_by).and_return(existing_object)
-    expect(existing_object).to receive(:update!).with(zammad_structure)
+    allow(import_object).to receive(:find_by).and_return(existing_object)
+    allow(existing_object).to receive(:update!).with(zammad_structure)
+
     expect(import_object).not_to receive(:new)
     start_import_test
   end

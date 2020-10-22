@@ -57,7 +57,7 @@ RSpec.describe Import::OTRS::StateFactory do
       name:   'pending_time',
     )
 
-    expect(Import::OTRS).to receive(:diff?).and_return(true)
+    allow(Import::OTRS).to receive(:diff?).and_return(true)
 
     expect do
       described_class.update_attribute_settings
@@ -81,8 +81,8 @@ RSpec.describe Import::OTRS::StateFactory do
     state.callback_loop     = true
     state.save
 
-    expect(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:state_default_create).and_return(state.name)
-    expect(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:state_default_follow_up).and_return(state.name)
+    allow(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:state_default_create).and_return(state.name)
+    allow(Import::OTRS::SysConfigFactory).to receive(:postmaster_default_lookup).with(:state_default_follow_up).and_return(state.name)
 
     described_class.update_attribute
     state.reload
@@ -98,7 +98,7 @@ RSpec.describe Import::OTRS::StateFactory do
     state.callback_loop     = true
     state.save
 
-    expect(Import::OTRS).to receive(:diff?).and_return(true)
+    allow(Import::OTRS).to receive(:diff?).and_return(true)
 
     described_class.update_attribute_settings
     state.reload

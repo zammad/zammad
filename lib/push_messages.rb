@@ -1,7 +1,7 @@
 module PushMessages
 
   def self.enabled?
-    return true if Thread.current[:push_messages].class == Array
+    return true if Thread.current[:push_messages].instance_of?(Array)
 
     false
   end

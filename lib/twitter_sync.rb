@@ -122,7 +122,7 @@ class TwitterSync
     # normalize message
     message = {}
 
-    if tweet.class == Twitter::Tweet
+    if tweet.instance_of?(Twitter::Tweet)
       message = {
         type: 'tweet',
         text: tweet.text,
@@ -610,11 +610,11 @@ or
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each do |key, value|
 
-      if value.class == Twitter::Place || value.class == Twitter::Geo
+      if value.instance_of?(Twitter::Place) || value.instance_of?(Twitter::Geo)
         preferences[key] = value.to_h
         next
       end
-      if value.class == Twitter::NullObject
+      if value.instance_of?(Twitter::NullObject)
         preferences[key] = nil
         next
       end
@@ -622,11 +622,11 @@ or
       next if !value.is_a?(Hash)
 
       value.each do |sub_key, sub_level|
-        if sub_level.class == NilClass
+        if sub_level.instance_of?(NilClass)
           value[sub_key] = nil
           next
         end
-        if sub_level.class == Twitter::Place || sub_level.class == Twitter::Geo
+        if sub_level.instance_of?(Twitter::Place) || sub_level.instance_of?(Twitter::Geo)
           value[sub_key] = sub_level.to_h
           next
         end

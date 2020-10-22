@@ -94,24 +94,24 @@ RSpec.describe Ldap::User do
 
       it 'validates username and password' do
         connection = double()
-        expect(mocked_ldap).to receive(:connection).and_return(connection)
+        allow(mocked_ldap).to receive(:connection).and_return(connection)
 
         build(:ldap_entry)
 
-        expect(mocked_ldap).to receive(:base_dn)
-        expect(connection).to receive(:bind_as).and_return(true)
+        allow(mocked_ldap).to receive(:base_dn)
+        allow(connection).to receive(:bind_as).and_return(true)
 
         expect(instance.valid?('example_username', 'password')).to be true
       end
 
       it 'fails for invalid credentials' do
         connection = double()
-        expect(mocked_ldap).to receive(:connection).and_return(connection)
+        allow(mocked_ldap).to receive(:connection).and_return(connection)
 
         build(:ldap_entry)
 
-        expect(mocked_ldap).to receive(:base_dn)
-        expect(connection).to receive(:bind_as).and_return(false)
+        allow(mocked_ldap).to receive(:base_dn)
+        allow(connection).to receive(:bind_as).and_return(false)
 
         expect(instance.valid?('example_username', 'wrong_password')).to be false
       end
@@ -132,7 +132,7 @@ RSpec.describe Ldap::User do
         # blacklisted attribute
         ldap_entry['lastlogon'] = DateTime.current
 
-        expect(mocked_ldap).to receive(:search).and_yield(ldap_entry)
+        allow(mocked_ldap).to receive(:search).and_yield(ldap_entry)
 
         attributes = instance.attributes
 
@@ -159,7 +159,7 @@ RSpec.describe Ldap::User do
       end
 
       it 'tries filters and returns first one with entries' do
-        expect(mocked_ldap).to receive(:entries?).and_return(true)
+        allow(mocked_ldap).to receive(:entries?).and_return(true)
         expect(instance.filter).to be_a(String)
       end
 
@@ -187,7 +187,7 @@ RSpec.describe Ldap::User do
         # selectable attribute
         ldap_entry['objectguid'] = 'f742b361-32c6-4a92-baaa-eaae7df657ee'
 
-        expect(mocked_ldap).to receive(:search).and_yield(ldap_entry)
+        allow(mocked_ldap).to receive(:search).and_yield(ldap_entry)
 
         expect(instance.uid_attribute).to be_a(String)
       end

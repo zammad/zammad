@@ -13,7 +13,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
     it 'replaces whitespaces' do
       provided = process do |instance|
-        expect(instance).to receive(:unsanitized_name).and_return('model name')
+        allow(instance).to receive(:unsanitized_name).and_return('model name')
       end
 
       expect(provided[:sanitized_name]).to eq('model_name')
@@ -21,7 +21,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
     it 'replaces dashes' do
       provided = process do |instance|
-        expect(instance).to receive(:unsanitized_name).and_return('model-name')
+        allow(instance).to receive(:unsanitized_name).and_return('model-name')
       end
 
       expect(provided[:sanitized_name]).to eq('model_name')
@@ -29,7 +29,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
     it 'replaces ids suffix' do
       provided = process do |instance|
-        expect(instance).to receive(:unsanitized_name).and_return('Model Ids')
+        allow(instance).to receive(:unsanitized_name).and_return('Model Ids')
       end
 
       expect(provided[:sanitized_name]).to eq('model_nos')
@@ -37,7 +37,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
     it 'replaces id suffix' do
       provided = process do |instance|
-        expect(instance).to receive(:unsanitized_name).and_return('Model Id')
+        allow(instance).to receive(:unsanitized_name).and_return('Model Id')
       end
 
       expect(provided[:sanitized_name]).to eq('model_no')
@@ -45,7 +45,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
     it 'replaces non-ASCII characters' do
       provided = process do |instance|
-        expect(instance).to receive(:unsanitized_name).and_return('Ærøskøbing Ät Mödél')
+        allow(instance).to receive(:unsanitized_name).and_return('Ærøskøbing Ät Mödél')
       end
 
       expect(provided[:sanitized_name]).to eq('a_eroskobing_at_model')

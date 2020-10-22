@@ -12,7 +12,7 @@ RSpec.describe Auth::Developer do
     it "authenticates users with password 'test'" do
 
       allow(Setting).to receive(:get)
-      expect(Setting).to receive(:get).with('developer_mode').and_return(true)
+      allow(Setting).to receive(:get).with('developer_mode').and_return(true)
 
       result = instance.valid?(user, 'test')
 
@@ -26,7 +26,7 @@ RSpec.describe Auth::Developer do
       it "doesn't authenticate if developer mode is off" do
 
         allow(Setting).to receive(:get)
-        expect(Setting).to receive(:get).with('developer_mode').and_return(false)
+        allow(Setting).to receive(:get).with('developer_mode').and_return(false)
 
         result = instance.valid?(user, password)
 
@@ -36,7 +36,7 @@ RSpec.describe Auth::Developer do
       it "doesn't authenticate with correct password" do
 
         allow(Setting).to receive(:get)
-        expect(Setting).to receive(:get).with('developer_mode').and_return(true)
+        allow(Setting).to receive(:get).with('developer_mode').and_return(true)
 
         result = instance.valid?(user, password)
 

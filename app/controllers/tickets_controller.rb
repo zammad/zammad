@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
   # POST /api/v1/tickets
   def create
     customer = {}
-    if params[:customer].class == ActionController::Parameters
+    if params[:customer].instance_of?(ActionController::Parameters)
       customer = params[:customer]
       params.delete(:customer)
     end

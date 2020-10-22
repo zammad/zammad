@@ -3,19 +3,21 @@ require 'rails_helper'
 RSpec.describe Import::OTRS::User do
 
   def creates_with(zammad_structure)
-    expect(import_object).to receive(:find_by).and_return(nil)
-    expect(import_object).to receive(:new).with(zammad_structure).and_call_original
+    allow(import_object).to receive(:find_by).and_return(nil)
+    allow(import_object).to receive(:new).with(zammad_structure).and_call_original
+
     expect_any_instance_of(import_object).to receive(:save)
     expect_any_instance_of(described_class).to receive(:reset_primary_key_sequence)
     start_import_test
   end
 
   def updates_with(zammad_structure)
-    expect(import_object).to receive(:find_by).and_return(existing_object)
+    allow(import_object).to receive(:find_by).and_return(existing_object)
     # we delete the :role_ids from the zammad_structure to make sure that
     # a) role_ids call returns the initial role_ids
     # b) and update! gets called without them
-    expect(existing_object).to receive(:role_ids).and_return(zammad_structure.delete(:role_ids))
+    allow(existing_object).to receive(:role_ids).and_return(zammad_structure.delete(:role_ids))
+
     expect(existing_object).to receive(:update!).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
@@ -33,7 +35,7 @@ RSpec.describe Import::OTRS::User do
   end
 
   def user_expectations
-    expect(User).to receive(:where).and_return([])
+    allow(User).to receive(:where).and_return([])
   end
 
   # this is really bad and should get improved!

@@ -226,7 +226,7 @@ or
 
   def self.timestamp(locale, timezone, timestamp)
 
-    if timestamp.class == String
+    if timestamp.instance_of?(String)
       begin
         timestamp_parsed = Time.zone.parse(timestamp)
         return timestamp.to_s if !timestamp_parsed
@@ -272,7 +272,7 @@ or
 
   def self.date(locale, date)
 
-    if date.class == String
+    if date.instance_of?(String)
       begin
         date_parsed = Date.parse(date)
         return date.to_s if !date_parsed

@@ -134,7 +134,7 @@ class Transaction::Slack
       end
 
       # check action
-      if local_config['types'].class == Array
+      if local_config['types'].instance_of?(Array)
         hit = false
         local_config['types'].each do |type|
           next if type.to_s != @item[:type].to_s
@@ -148,7 +148,7 @@ class Transaction::Slack
       end
 
       # check group
-      if local_config['group_ids'].class == Array
+      if local_config['group_ids'].instance_of?(Array)
         hit = false
         local_config['group_ids'].each do |group_id|
           next if group_id.to_s != ticket.group_id.to_s
