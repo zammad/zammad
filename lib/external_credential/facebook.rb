@@ -31,7 +31,7 @@ class ExternalCredential::Facebook
     {
       request_token: state,
       #authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages, user_posts', state: state),
-      authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages', state: state),
+      authorize_url: oauth.url_for_oauth_code(permissions: 'pages_manage_posts, pages_manage_engagement, pages_manage_metadata, pages_read_engagement, pages_read_user_content', state: state),
     }
   end
 
