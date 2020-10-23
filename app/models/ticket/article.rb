@@ -22,7 +22,7 @@ class Ticket::Article < ApplicationModel
   before_save   :touch_ticket_if_needed
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
-  after_destroy :store_delete
+  after_destroy :store_delete, :update_time_units
 
   store :preferences
 
@@ -337,6 +337,11 @@ returns
       object: 'Ticket::Article::Mail',
       o_id:   id,
     )
+  end
+
+  # recalculate time accounting
+  def update_time_units
+    Ticket::TimeAccounting.update_ticket(ticket)
   end
 
   def touch_ticket_if_needed

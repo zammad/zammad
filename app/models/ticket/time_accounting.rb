@@ -4,25 +4,22 @@ class Ticket::TimeAccounting < ApplicationModel
   belongs_to :ticket, optional: true
   belongs_to :ticket_article, class_name: 'Ticket::Article', inverse_of: :ticket_time_accounting, optional: true
 
-  after_create :ticket_time_unit_update
-  after_update :ticket_time_unit_update
+  after_create :update_time_units
+  after_update :update_time_units
 
-  def ticket_time_unit_update
-    exists = false
-    time_units = 0
-    Ticket::TimeAccounting.where(ticket_id: ticket_id).each do |record|
-      time_units += record.time_unit
-      exists = true
-    end
-    return false if exists == false
+  def update_time_units
+    self.class.update_ticket(ticket)
+  end
 
-    ticket = Ticket.lookup(id: ticket_id)
-    return false if !ticket
-    return false if ticket.time_unit == time_units
+  def self.update_ticket(ticket)
+    time_units = total(ticket)
+    return if ticket.time_unit.to_d == time_units
 
     ticket.time_unit = time_units
     ticket.save!
-    true
   end
 
+  def self.total(ticket)
+    ticket.ticket_time_accounting.sum(:time_unit)
+  end
 end
