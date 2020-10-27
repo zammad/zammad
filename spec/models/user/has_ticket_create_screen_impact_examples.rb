@@ -1,4 +1,4 @@
-RSpec.shared_examples 'HasTicketCreateScreenImpact' do
+RSpec.shared_examples 'User::HasTicketCreateScreenImpact' do
 
   describe '#push_ticket_create_screen', performs_jobs: true do
     shared_examples 'relevant User Role' do |role|

@@ -26,7 +26,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasObjectManagerAttributesValidation'
-  it_behaves_like 'HasTicketCreateScreenImpact'
+  it_behaves_like 'User::HasTicketCreateScreenImpact'
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
 
