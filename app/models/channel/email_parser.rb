@@ -226,6 +226,11 @@ returns
         group = nil
         if channel[:group_id]
           group = Group.lookup(id: channel[:group_id])
+        else
+          mail_to_group = self.class.mail_to_group(mail[:to])
+          if mail_to_group.present?
+            group = mail_to_group
+          end
         end
         if group.blank? || group.active == false
           group = Group.where(active: true).order(id: :asc).first
@@ -320,6 +325,20 @@ returns
 
     # return new objects
     [ticket, article, session_user, mail]
+  end
+
+  def self.mail_to_group(to)
+    begin
+      to = Mail::AddressList.new(to)&.addresses&.first&.address
+    rescue
+      Rails.logger.error 'Can not parse :to field for group destination!'
+    end
+    return if to.blank?
+
+    email = EmailAddress.find_by(email: to)
+    return if email&.channel.blank?
+
+    email.channel&.group
   end
 
   def self.check_attributes_by_x_headers(header_name, value)

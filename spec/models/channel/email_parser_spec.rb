@@ -124,6 +124,21 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect(Ticket.last.state.name).to eq('new')
         end
 
+        context 'when no channel is given but a group with the :to address exists' do
+          let!(:email_address) { create(:email_address, email: 'baz@qux.net', channel: nil) }
+          let!(:group) { create(:group, name: 'baz headquarter', email_address: email_address) }
+          let!(:channel) do
+            channel = create(:email_channel, group: group)
+            email_address.update(channel: channel)
+            channel
+          end
+
+          it 'sets the group based on the :to field' do
+            described_class.new.process({}, raw_mail)
+            expect(Ticket.last.group.id).to eq(group.id)
+          end
+        end
+
         context 'when from address matches an existing agent' do
           let!(:agent) { create(:agent, email: 'foo@bar.com') }
 
@@ -147,7 +162,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             From: foo@bar.com
             To: myzammad@example.com
             Subject: [#{Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number}] test
-            
+
             Lorem ipsum dolor
           RAW
 
