@@ -1,4 +1,4 @@
-class ExternalCredential::Office365
+class ExternalCredential::Microsoft365
 
   def self.app_verify(params)
     request_account_to_link(params, false)
@@ -6,8 +6,8 @@ class ExternalCredential::Office365
   end
 
   def self.request_account_to_link(credentials = {}, app_required = true)
-    external_credential = ExternalCredential.find_by(name: 'office365')
-    raise Exceptions::UnprocessableEntity, 'No Office365 app configured!' if !external_credential && app_required
+    external_credential = ExternalCredential.find_by(name: 'microsoft365')
+    raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential && app_required
 
     if external_credential
       if credentials[:client_id].blank?
@@ -29,8 +29,8 @@ class ExternalCredential::Office365
   end
 
   def self.link_account(_request_token, params)
-    external_credential = ExternalCredential.find_by(name: 'office365')
-    raise Exceptions::UnprocessableEntity, 'No office365 app configured!' if !external_credential
+    external_credential = ExternalCredential.find_by(name: 'microsoft365')
+    raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential
     raise Exceptions::UnprocessableEntity, 'No code for session found!' if !params[:code]
 
     response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])
@@ -74,7 +74,7 @@ class ExternalCredential::Office365
         },
       },
       auth:     response.merge(
-        provider:      'office365',
+        provider:      'microsoft365',
         type:          'XOAUTH2',
         client_id:     external_credential.credentials[:client_id],
         client_secret: external_credential.credentials[:client_secret],
@@ -98,7 +98,7 @@ class ExternalCredential::Office365
       }
 
       migrate_channel.update(
-        area:         'Office365::Account',
+        area:         'Microsoft365::Account',
         options:      channel_options.merge(backup_imap_classic: backup),
         last_log_in:  nil,
         last_log_out: nil,
@@ -122,7 +122,7 @@ class ExternalCredential::Office365
 
     # create channel
     channel = Channel.create!(
-      area:          'Office365::Account',
+      area:          'Microsoft365::Account',
       group_id:      Group.first.id,
       options:       channel_options,
       active:        false,
@@ -148,7 +148,7 @@ class ExternalCredential::Office365
 
     params = {
       'client_id'     => client_id,
-      'redirect_uri'  => ExternalCredential.callback_url('office365'),
+      'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
       'scope'         => scope,
       'response_type' => 'code',
       'access_type'   => 'offline',
@@ -170,7 +170,7 @@ class ExternalCredential::Office365
       'code'          => authorization_code,
       'grant_type'    => 'authorization_code',
       'client_id'     => client_id,
-      'redirect_uri'  => ExternalCredential.callback_url('office365'),
+      'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
     }
 
     uri = URI::HTTPS.build(

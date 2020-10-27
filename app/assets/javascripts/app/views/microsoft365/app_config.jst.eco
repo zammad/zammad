@@ -1,9 +1,9 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our online documentation %l.', 'Office 365 App', 'https://admin-docs.zammad.org/en/latest/channels/office365.html') %>
+  <%- @T('The tutorial on how to manage a %s is hosted on our online documentation %l.', 'Microsoft 365 App', 'https://admin-docs.zammad.org/en/latest/channels/microsoft365.html') %>
 </p>
 <fieldset>
-  <h2><%- @T('Enter your %s App Keys', 'Office 365') %></h2>
+  <h2><%- @T('Enter your %s App Keys', 'Microsoft 365') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
       <label for="client_id">Client ID <span>*</span></label>

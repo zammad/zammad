@@ -361,7 +361,7 @@ returns
   # @return [Hash<String=>String>]
   def self.parse_rfc822_headers(string)
     array = string
-              .gsub("\r\n\t", ' ') # Some servers (e.g. office365) may put attribute value on a separate line and tab it
+              .gsub("\r\n\t", ' ') # Some servers (e.g. microsoft365) may put attribute value on a separate line and tab it
               .lines(chomp: true)
               .map { |line| line.split(/:\s*/, 2).map(&:strip) }
 

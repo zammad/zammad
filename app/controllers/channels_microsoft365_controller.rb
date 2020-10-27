@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-class ChannelsOffice365Controller < ApplicationController
+class ChannelsMicrosoft365Controller < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }
 
   def index
@@ -8,13 +8,13 @@ class ChannelsOffice365Controller < ApplicationController
 
     assets = {}
     external_credential_ids = []
-    ExternalCredential.where(name: 'office365').each do |external_credential|
+    ExternalCredential.where(name: 'microsoft365').each do |external_credential|
       assets = external_credential.assets(assets)
       external_credential_ids.push external_credential.id
     end
 
     channel_ids = []
-    Channel.where(area: 'Office365::Account').order(:id).each do |channel|
+    Channel.where(area: 'Microsoft365::Account').order(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end
@@ -34,26 +34,26 @@ class ChannelsOffice365Controller < ApplicationController
       not_used_email_address_ids: not_used_email_address_ids,
       channel_ids:                channel_ids,
       external_credential_ids:    external_credential_ids,
-      callback_url:               ExternalCredential.callback_url('office365'),
+      callback_url:               ExternalCredential.callback_url('microsoft365'),
     }
   end
 
   def enable
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     channel.active = true
     channel.save!
     render json: {}
   end
 
   def disable
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     channel.active = false
     channel.save!
     render json: {}
   end
 
   def destroy
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     email   = EmailAddress.find_by(channel_id: channel.id)
     email.destroy!
     channel.destroy!
@@ -61,14 +61,14 @@ class ChannelsOffice365Controller < ApplicationController
   end
 
   def group
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     channel.group_id = params[:group_id]
     channel.save!
     render json: {}
   end
 
   def inbound
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     %w[folder keep_on_server].each do |key|
       channel.options[:inbound][:options][key] = params[:options][key]
     end
@@ -90,7 +90,7 @@ class ChannelsOffice365Controller < ApplicationController
   end
 
   def rollback_migration
-    channel = Channel.find_by(id: params[:id], area: 'Office365::Account')
+    channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     raise 'Failed to find backup on channel!' if !channel.options[:backup_imap_classic]
 
     channel.update!(channel.options[:backup_imap_classic][:attributes])

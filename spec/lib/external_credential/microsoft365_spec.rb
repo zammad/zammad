@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ExternalCredential::Office365 do
+RSpec.describe ExternalCredential::Microsoft365 do
 
   let(:token_url) { 'https://login.microsoftonline.com/common/oauth2/v2.0/token' }
-  let(:authorize_url) { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&prompt=consent&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Foffice365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email" }
+  let(:authorize_url) { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&prompt=consent&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email" }
 
   let(:id_token) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIyMTk4NTFhYS0wMDAwLTRhNDctMTExMS0zMmQwNzAyZTAxMjM0IiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnRvbmxpbmUuY29tLzM2YTlhYjU1LWZpZmEtMjAyMC04YTc4LTkwcnM0NTRkYmNmZDJkL3YyLjAiLCJpYXQiOjEzMDE1NTE4MzUsIm5iZiI6MTMwMTU1MTgzNSwiZXhwIjoxNjAxNTU5NzQ0LCJuYW1lIjoiRXhhbXBsZSBVc2VyIiwib2lkIjoiMTExYWIyMTQtMTJzNy00M2NnLThiMTItM2ozM2UydDBjYXUyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInJoIjoiMC40MjM0LWZmZnNmZGdkaGRLZUpEU1hiejlMYXBSbUNHZGdmZ2RmZ0kwZHkwSEF1QlhaSEFNYy4iLCJzdWIiOiJYY0VlcmVyQkVnX0EzNWJlc2ZkczNMTElXNjU1NFQtUy0ycGRnZ2R1Z3c1NDNXT2xJIiwidGlkIjoiMzZhOWFiNTUtZmlmYS0yMDIwLThhNzgtOTByczQ1NGRiY2ZkMmQiLCJ1dGkiOiJEU0dGZ3Nhc2RkZmdqdGpyMzV3cWVlIiwidmVyIjoiMi4wIn0=.l0nglq4rIlkR29DFK3PQFQTjE-VeHdgLmcnXwGvT8Z-QBaQjeTAcoMrVpr0WdL6SRYiyn2YuqPnxey6N0IQdlmvTMBv0X_dng_y4CiQ8ABdZrQK0VSRWZViboJgW5iBvJYFcMmVoilHChueCzTBnS1Wp2KhirS2ymUkPHS6AB98K0tzOEYciR2eJsJ2JOdo-82oOW4w6tbbqMvzT3DzsxqPQRGe2hUbNqo6gcwJLqq4t0bNf5XiYThw1sv4IivERmqW_pfybXEseKyZGd4NnJ6WwwOgTz5tkoLwls_YeDZVcp_Fpw9XR7J0UlyPqLtoUEjVihdyrJjAbdtHFKdOjrw' }
   let(:access_token) { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
@@ -18,7 +18,7 @@ RSpec.describe ExternalCredential::Office365 do
   let(:authorization_code) { '567' }
 
   let(:email_address) { 'test@example.com' }
-  let(:provider) { 'office365' }
+  let(:provider) { 'microsoft365' }
   let(:token_ttl) { 3599 }
 
   let!(:token_response_payload) do
@@ -277,8 +277,8 @@ RSpec.describe ExternalCredential::Office365 do
 
   describe '.request_account_to_link' do
     it 'generates authorize_url from credentials' do
-      office365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
-      request   = described_class.request_account_to_link(office365.credentials)
+      microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      request      = described_class.request_account_to_link(microsoft365.credentials)
 
       expect(request[:authorize_url]).to eq(authorize_url)
     end
@@ -296,7 +296,7 @@ RSpec.describe ExternalCredential::Office365 do
       context 'missing credentials' do
         let(:credentials) { nil }
         let(:app_required) { true }
-        let(:exception_message) { 'No Office365 app configured!' }
+        let(:exception_message) { 'No Microsoft365 app configured!' }
 
         include_examples 'failed attempt'
       end

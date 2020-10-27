@@ -63,9 +63,9 @@
       <% date_migration = new Date("#{date_migration_string}T00:00:00") %>
       <% date_now = new Date() %>
       <% if date_now > date_migration: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access is no longer supported since %s.', 'Office 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
+        <%- @T('%s will only allow access via OAuth. Password-based access is no longer supported since %s.', 'Microsoft 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
       <% else: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access will no longer be supported on %s.', 'Office 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
+        <%- @T('%s will only allow access via OAuth. Password-based access will no longer be supported on %s.', 'Microsoft 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
       <% end %>
     </div>
     <% end %>

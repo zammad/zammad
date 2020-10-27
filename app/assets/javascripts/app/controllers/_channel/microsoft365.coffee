@@ -1,10 +1,10 @@
-class App.ChannelOffice365 extends App.ControllerTabs
-  requiredPermission: 'admin.channel_office365'
-  header: 'Office 365'
+class App.ChannelMicrosoft365 extends App.ControllerTabs
+  requiredPermission: 'admin.channel_microsoft365'
+  header: 'Microsoft 365'
   constructor: ->
     super
 
-    @title 'Office 365', true
+    @title 'Microsoft 365', true
 
     @tabs = [
       {
@@ -33,7 +33,7 @@ class App.ChannelOffice365 extends App.ControllerTabs
     @render()
 
 class ChannelAccountOverview extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_office365'
+  requiredPermission: 'admin.channel_microsoft365'
   events:
     'click .js-new':                'new'
     'click .js-delete':             'delete'
@@ -56,13 +56,13 @@ class ChannelAccountOverview extends App.ControllerSubContent
   load: (reset_channel_id = false) =>
     if reset_channel_id
       @channel_id = undefined
-      @navigate '#channels/office365'
+      @navigate '#channels/microsoft365'
 
     @startLoading()
     @ajax(
-      id:   'office365_index'
+      id:   'microsoft365_index'
       type: 'GET'
-      url:  "#{@apiPath}/channels_office365"
+      url:  "#{@apiPath}/channels_microsoft365"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -73,10 +73,10 @@ class ChannelAccountOverview extends App.ControllerSubContent
 
   render: (data) =>
 
-    # if no office365 app is registered, show intro
-    external_credential = App.ExternalCredential.findByAttribute('name', 'office365')
+    # if no microsoft365 app is registered, show intro
+    external_credential = App.ExternalCredential.findByAttribute('name', 'microsoft365')
     if !external_credential
-      @html App.view('office365/index')()
+      @html App.view('microsoft365/index')()
       if @channel_id
         @configApp()
       return
@@ -104,7 +104,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     for email_address_id in data.not_used_email_address_ids
       not_used_email_addresses.push App.EmailAddress.find(email_address_id)
 
-    @html App.view('office365/list')(
+    @html App.view('microsoft365/list')(
       channels: channels
       external_credential: external_credential
       not_used_email_addresses: not_used_email_addresses
@@ -129,7 +129,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     )
 
   new: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/office365/link_account"
+    window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account"
 
   delete: (e) =>
     e.preventDefault()
@@ -138,9 +138,9 @@ class ChannelAccountOverview extends App.ControllerSubContent
       message: 'Sure?'
       callback: =>
         @ajax(
-          id:   'office365_delete'
+          id:   'microsoft365_delete'
           type: 'DELETE'
-          url:  "#{@apiPath}/channels_office365"
+          url:  "#{@apiPath}/channels_microsoft365"
           data: JSON.stringify(id: id)
           processData: true
           success: =>
@@ -153,9 +153,9 @@ class ChannelAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     @ajax(
-      id:   'office365_disable'
+      id:   'microsoft365_disable'
       type: 'POST'
-      url:  "#{@apiPath}/channels_office365_disable"
+      url:  "#{@apiPath}/channels_microsoft365_disable"
       data: JSON.stringify(id: id)
       processData: true
       success: =>
@@ -166,9 +166,9 @@ class ChannelAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     @ajax(
-      id:   'office365_enable'
+      id:   'microsoft365_enable'
       type: 'POST'
-      url:  "#{@apiPath}/channels_office365_enable"
+      url:  "#{@apiPath}/channels_microsoft365_enable"
       data: JSON.stringify(id: id)
       processData: true
       success: =>
@@ -191,9 +191,9 @@ class ChannelAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     @ajax(
-      id:   'office365_rollback_migration'
+      id:   'microsoft365_rollback_migration'
       type: 'POST'
-      url:  "#{@apiPath}/channels_office365_rollback_migration"
+      url:  "#{@apiPath}/channels_microsoft365_rollback_migration"
       data: JSON.stringify(id: id)
       processData: true
       success: =>
@@ -296,7 +296,7 @@ class ChannelInboundEdit extends App.ControllerModal
     @ajax(
       id:   'channel_email_inbound'
       type: 'POST'
-      url:  "#{@apiPath}/channels_office365_inbound/#{@item.id}"
+      url:  "#{@apiPath}/channels_microsoft365_inbound/#{@item.id}"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -351,7 +351,7 @@ class ChannelGroupEdit extends App.ControllerModal
     @ajax(
       id:   'channel_email_group'
       type: 'POST'
-      url:  "#{@apiPath}/channels_office365_group/#{@item.id}"
+      url:  "#{@apiPath}/channels_microsoft365_group/#{@item.id}"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -364,15 +364,15 @@ class ChannelGroupEdit extends App.ControllerModal
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Office 365 App'
+  head: 'Connect Microsoft 365 App'
   shown: true
   button: 'Connect'
   buttonCancel: true
   small: true
 
   content: ->
-    @external_credential = App.ExternalCredential.findByAttribute('name', 'office365')
-    content = $(App.view('office365/app_config')(
+    @external_credential = App.ExternalCredential.findByAttribute('name', 'microsoft365')
+    content = $(App.view('microsoft365/app_config')(
       external_credential: @external_credential
       callbackUrl: @callbackUrl
     ))
@@ -391,16 +391,16 @@ class AppConfig extends App.ControllerModal
 
     # verify app credentials
     @ajax(
-      id:   'office365_app_verify'
+      id:   'microsoft365_app_verify'
       type: 'POST'
-      url:  "#{@apiPath}/external_credentials/office365/app_verify"
+      url:  "#{@apiPath}/external_credentials/microsoft365/app_verify"
       data: JSON.stringify(@formParams())
       processData: true
       success: (data, status, xhr) =>
         if data.attributes
           if !@external_credential
             @external_credential = new App.ExternalCredential
-          @external_credential.load(name: 'office365', credentials: data.attributes)
+          @external_credential.load(name: 'microsoft365', credentials: data.attributes)
           @external_credential.save(
             done: =>
               @isChanged = true
@@ -413,4 +413,4 @@ class AppConfig extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
     )
 
-App.Config.set('office365', { prio: 5000, name: 'Office 365', parent: '#channels', target: '#channels/office365', controller: App.ChannelOffice365, permission: ['admin.channel_office365'] }, 'NavBarAdmin')
+App.Config.set('microsoft365', { prio: 5000, name: 'Microsoft 365', parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')

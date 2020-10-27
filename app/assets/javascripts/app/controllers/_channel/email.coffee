@@ -188,7 +188,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     'click .js-emailAddressDelete': 'emailAddressDelete',
     'click .js-editNotificationOutbound': 'editNotificationOutbound'
     'click .js-migrateGoogleMail': 'migrateGoogleMail'
-    'click .js-migrateOffice365Mail': 'migrateOffice365Mail'
+    'click .js-migrateMicrosoft365Mail': 'migrateMicrosoft365Mail'
 
   constructor: ->
     super
@@ -386,10 +386,10 @@ class App.ChannelEmailAccountOverview extends App.Controller
     id = $(e.target).closest('.action').data('id')
     @navigate "#channels/google/#{id}"
 
-  migrateOffice365Mail: (e) =>
+  migrateMicrosoft365Mail: (e) =>
     e.preventDefault()
     id = $(e.target).closest('.action').data('id')
-    @navigate "#channels/office365/#{id}"
+    @navigate "#channels/microsoft365/#{id}"
 
 class App.ChannelEmailEdit extends App.ControllerModal
   buttonClose: true

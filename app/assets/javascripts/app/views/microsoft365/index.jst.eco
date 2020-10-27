@@ -1,0 +1,12 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Microsoft 365') %> <small><%- @T('Accounts') %></small></h1>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="page-description">
+    <p><%- @T('You can connect %s with Zammad. You need to connect your Zammad with %s first.', 'Microsoft 365 Accounts', 'Microsoft 365') %></p>
+    <div class="btn btn--success js-configApp"><%- @T('Connect Microsoft 365 App') %></div>
+  </div>
+</div>
