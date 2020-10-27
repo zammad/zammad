@@ -28,9 +28,6 @@ satinize html string based on whiltelist
       classes_whitelist = %w[js-signatureMarker yahoo_quoted]
       attributes_2_css = %w[width height]
 
-      # remove html comments
-      string.gsub!(/<!--.+?-->/m, '')
-
       scrubber_link = Loofah::Scrubber.new do |node|
 
         # wrap plain-text URLs in <a> tags
@@ -199,6 +196,15 @@ satinize html string based on whiltelist
         end
         string = new_string
       end
+
+      scrubber_tag_remove = Loofah::Scrubber.new do |node|
+        # remove tags with subtree
+        next if tags_remove_content.exclude?(node.name)
+
+        node.remove
+        Loofah::Scrubber::STOP
+      end
+      string = Loofah.fragment(string).scrub!(scrubber_tag_remove).to_s
 
       Loofah.fragment(string).scrub!(scrubber_link).to_s
     end

@@ -104,6 +104,21 @@ style="BORDER-LEFT: #000000 2px solid; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; MA
 test 123
 <blockquote></blockquote>
 </div>')
+    assert_equal(HtmlSanitizer.strict('<style><!--
+/* Font Definitions */
+@font-face
+  {font-family:"Cambria Math";
+  panose-1:2 4 5 3 5 4 6 3 2 4;}
+  {page:WordSection1;}</style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+<div>123</div>
+<a href="#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2" width="1" height="1">abc</a></div>'), '
+<div>123</div>
+<a href="#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2">abc</a>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0px"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
