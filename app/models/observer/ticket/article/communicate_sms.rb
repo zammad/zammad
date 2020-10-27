@@ -20,6 +20,6 @@ class Observer::Ticket::Article::CommunicateSms < ActiveRecord::Observer
     return true if type.nil?
     return true if type.name != 'sms'
 
-    Delayed::Job.enqueue(Observer::Ticket::Article::CommunicateSms::BackgroundJob.new(record.id))
+    CommunicateSmsJob.perform_later(record.id)
   end
 end

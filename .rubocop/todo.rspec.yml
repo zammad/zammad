@@ -31,6 +31,7 @@ RSpec/ContextWording:
     - 'spec/db/migrate/issue_2345_es_attachment_max_size_in_mb_setting_lower_default_spec.rb'
     - 'spec/db/migrate/issue_2368_add_indices_to_histories_and_tickets_spec.rb'
     - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_active_job_lock_spec.rb'
     - 'spec/jobs/concerns/has_collection_update_spec.rb'
     - 'spec/jobs/concerns/has_ticket_create_screen_impact_spec.rb'
@@ -116,7 +117,6 @@ RSpec/ContextWording:
     - 'spec/models/object_manager/attribute/validation/required_spec.rb'
     - 'spec/models/object_manager/attribute/validation_spec.rb'
     - 'spec/models/object_manager/attribute_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/observer/ticket/article/communicate_twitter_spec.rb'
     - 'spec/models/overview_spec.rb'
     - 'spec/models/role_spec.rb'
@@ -170,7 +170,9 @@ RSpec/ExampleLength:
     - 'spec/db/migrate/issue_2867_footer_header_public_link_spec.rb'
     - 'spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb'
     - 'spec/db/migrate/rename_locale_on_users_spec.rb'
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_active_job_lock_spec.rb'
+    - 'spec/jobs/migrate_ldap_samaccountname_to_uid_job_spec.rb'
     - 'spec/jobs/ticket_user_ticket_counter_job_spec.rb'
     - 'spec/jobs/user_device_log_job_spec.rb'
     - 'spec/lib/auth/internal_spec.rb'
@@ -209,7 +211,6 @@ RSpec/ExampleLength:
     - 'spec/lib/ldap/group_spec.rb'
     - 'spec/lib/ldap/user_spec.rb'
     - 'spec/lib/ldap_spec.rb'
-    - 'spec/lib/migration_job/ldap_samaccountname_to_uid_spec.rb'
     - 'spec/lib/notification_factory/mailer_spec.rb'
     - 'spec/lib/notification_factory/renderer_spec.rb'
     - 'spec/lib/notification_factory/slack_spec.rb'
@@ -249,7 +250,6 @@ RSpec/ExampleLength:
     - 'spec/models/history_spec.rb'
     - 'spec/models/import_job_spec.rb'
     - 'spec/models/object_manager/attribute_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/overview_spec.rb'
     - 'spec/models/recent_view_spec.rb'
     - 'spec/models/role_group_spec.rb'
@@ -357,6 +357,7 @@ RSpec/InstanceVariable:
 
 RSpec/LetSetup:
   Exclude:
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/ticket_online_notification_seen_job_spec.rb'
     - 'spec/lib/external_credential/google_spec.rb'
     - 'spec/lib/external_credential/office365_spec.rb'
@@ -367,7 +368,6 @@ RSpec/LetSetup:
     - 'spec/models/cti/caller_id_spec.rb'
     - 'spec/models/cti/driver/base_spec.rb'
     - 'spec/models/cti/log_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/organization_spec.rb'
     - 'spec/models/role_group_spec.rb'
     - 'spec/models/tag_spec.rb'
@@ -431,7 +431,6 @@ RSpec/MessageSpies:
     - 'spec/lib/ldap/guid_spec.rb'
     - 'spec/lib/ldap/user_spec.rb'
     - 'spec/lib/ldap_spec.rb'
-    - 'spec/lib/migration_job/ldap_samaccountname_to_uid_spec.rb'
     - 'spec/lib/sequencer/sequence/import/ldap/users_spec.rb'
     - 'spec/lib/sequencer/unit/common/attribute_mapper_spec.rb'
     - 'spec/lib/sequencer/unit/import/common/mapping/flat_keys_spec.rb'
@@ -468,7 +467,9 @@ RSpec/MultipleExpectations:
     - 'spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb'
     - 'spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb'
     - 'spec/db/migrate/rename_locale_on_users_spec.rb'
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_active_job_lock_spec.rb'
+    - 'spec/jobs/migrate_ldap_samaccountname_to_uid_job_spec.rb'
     - 'spec/jobs/search_index_job_spec.rb'
     - 'spec/jobs/ticket_user_ticket_counter_job_spec.rb'
     - 'spec/lib/auth/developer_spec.rb'
@@ -505,7 +506,6 @@ RSpec/MultipleExpectations:
     - 'spec/lib/ldap/guid_spec.rb'
     - 'spec/lib/ldap/user_spec.rb'
     - 'spec/lib/ldap_spec.rb'
-    - 'spec/lib/migration_job/ldap_samaccountname_to_uid_spec.rb'
     - 'spec/lib/notification_factory/mailer_spec.rb'
     - 'spec/lib/password_hash_spec.rb'
     - 'spec/lib/secure_mailing/smime_spec.rb'
@@ -538,7 +538,6 @@ RSpec/MultipleExpectations:
     - 'spec/models/object_manager/attribute/validation/backend_spec.rb'
     - 'spec/models/object_manager/attribute/validation_spec.rb'
     - 'spec/models/object_manager/attribute_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/overview_spec.rb'
     - 'spec/models/scheduler_spec.rb'
     - 'spec/models/smime_certificate_spec.rb'
@@ -613,6 +612,7 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Exclude:
     - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_collection_update_spec.rb'
     - 'spec/jobs/concerns/has_ticket_create_screen_impact_spec.rb'
     - 'spec/lib/application_handle_info_spec.rb'
@@ -656,7 +656,6 @@ RSpec/NestedGroups:
     - 'spec/models/object_manager/attribute/validation/required_spec.rb'
     - 'spec/models/object_manager/attribute/validation_spec.rb'
     - 'spec/models/object_manager/attribute_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/organization_spec.rb'
     - 'spec/models/recent_view_spec.rb'
     - 'spec/models/role_spec.rb'
@@ -727,6 +726,7 @@ RSpec/SubjectStub:
 RSpec/VerifiedDoubles:
   Exclude:
     - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
+    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/lib/auth/ldap_spec.rb'
     - 'spec/lib/external_sync_spec.rb'
     - 'spec/lib/import/zendesk/object_attribute/base_examples.rb'
@@ -744,7 +744,6 @@ RSpec/VerifiedDoubles:
     - 'spec/lib/sequencer/unit/import/zendesk/sub_sequence/base_examples.rb'
     - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/attachment/request_spec.rb'
     - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/source_based_spec.rb'
-    - 'spec/models/observer/ticket/article/communicate_twitter/background_job_spec.rb'
     - 'spec/models/ticket/number_spec.rb'
 
 RSpec/MultipleMemoizedHelpers:

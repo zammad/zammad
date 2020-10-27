@@ -179,7 +179,7 @@ returns
         end
 
         # send notification
-        Transaction::BackgroundJob.run(
+        TransactionJob.perform_now(
           object:     'Ticket',
           type:       'reminder_reached',
           object_id:  ticket.id,
@@ -220,7 +220,7 @@ returns
 
       # send escalation
       if ticket.escalation_at < Time.zone.now
-        Transaction::BackgroundJob.run(
+        TransactionJob.perform_now(
           object:     'Ticket',
           type:       'escalation',
           object_id:  ticket.id,
@@ -232,7 +232,7 @@ returns
       end
 
       # check if warning need to be sent
-      Transaction::BackgroundJob.run(
+      TransactionJob.perform_now(
         object:     'Ticket',
         type:       'escalation_warning',
         object_id:  ticket.id,
@@ -1067,7 +1067,7 @@ perform active triggers on ticket
     local_options[:reset_user_id] = true
     local_options[:disable] = ['Transaction::Notification']
     local_options[:trigger_ids] ||= {}
-    local_options[:trigger_ids][ticket.id] ||= []
+    local_options[:trigger_ids][ticket.id.to_s] ||= []
     local_options[:loop_count] ||= 0
     local_options[:loop_count] += 1
 
@@ -1220,11 +1220,11 @@ perform active triggers on ticket
           end
         end
 
-        if local_options[:trigger_ids][ticket.id].include?(trigger.id)
+        if local_options[:trigger_ids][ticket.id.to_s].include?(trigger.id)
           logger.info { "Skip trigger (#{trigger.name}/#{trigger.id}) because was already executed for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
           next
         end
-        local_options[:trigger_ids][ticket.id].push trigger.id
+        local_options[:trigger_ids][ticket.id.to_s].push trigger.id
         logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
 
         ticket.perform_changes(trigger.perform, 'trigger', item, user_id)

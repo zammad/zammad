@@ -677,7 +677,7 @@ RSpec.describe Channel::Driver::Twitter do
   describe '#send', :use_vcr do
     shared_examples 'for #send' do
       # Channel#deliver takes a hash in the following format
-      # (see Observer::Ticket::Article::CommunicateTwitter::BackgroundJob#perform)
+      # (see CommunicateTwitterJob#perform)
       #
       # Why not just accept the whole article?
       # Presumably so all channels have a consistent interface...
@@ -990,10 +990,7 @@ RSpec.describe Channel::Driver::Twitter do
               # and then manually copied into the existing VCR cassette for this example.
 
               context '…but before the BG job has "synced" article.message_id with tweet.id)' do
-                let(:twitter_job) { Delayed::Job.find_by(handler: <<~YML) }
-                  --- !ruby/object:Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
-                  article_id: #{tweet.id}
-                YML
+                let(:twitter_job) { Delayed::Job.where("handler LIKE '%job_class: CommunicateTwitterJob%#{tweet.id}%'").first }
 
                 around do |example|
                   # Run BG job (Why not use Scheduler.worker?

@@ -21,7 +21,7 @@ class Observer::Ticket::Article::CommunicateTelegram < ActiveRecord::Observer
     type = Ticket::Article::Type.lookup(id: record.type_id)
     return true if !type.name.match?(/\Atelegram/i)
 
-    Delayed::Job.enqueue(Observer::Ticket::Article::CommunicateTelegram::BackgroundJob.new(record.id))
+    CommunicateTelegramJob.perform_later(record.id)
   end
 
 end

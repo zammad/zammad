@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, type: :job do
+RSpec.describe CommunicateTwitterJob, type: :job do
+
   let(:article) { create(:twitter_article, **(try(:factory_options) || {})) }
 
   describe 'core behavior', :use_vcr do
@@ -37,12 +38,12 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
       end
 
       it 'increments the "delivery_retry" preference' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.preferences[:delivery_retry] }.to(1)
       end
 
       it 'dispatches the tweet' do
-        described_class.new(article.id).perform
+        described_class.perform_now(article.id)
 
         expect(WebMock)
           .to have_requested(:post, 'https://api.twitter.com/1.1/statuses/update.json')
@@ -50,14 +51,14 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
       end
 
       it 'updates the article with tweet attributes' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.message_id }.to('1244937367435108360')
           .and change { article.reload.preferences[:twitter] }.to(hash_including(tweet_attributes))
           .and change { article.reload.preferences[:links] }.to(links_array)
       end
 
       it 'sets the appropriate delivery status attributes' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.preferences[:delivery_status] }.to('success')
           .and change { article.reload.preferences[:delivery_status_date] }.to(an_instance_of(ActiveSupport::TimeWithZone))
           .and not_change { article.reload.preferences[:delivery_status_message] }.from(nil)
@@ -67,7 +68,7 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
         let(:factory_options) { { body: '@twitter @twitterlive Don’t mind me, just testing the API' } }
 
         it 'updates the article with tweet recipients' do
-          expect { described_class.new(article.id).perform }
+          expect { described_class.perform_now(article.id) }
             .to change { article.reload.to }.to('@Twitter @TwitterLive')
         end
       end
@@ -105,12 +106,12 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
       end
 
       it 'increments the "delivery_retry" preference' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.preferences[:delivery_retry] }.to(1)
       end
 
       it 'dispatches the DM' do
-        described_class.new(article.id).perform
+        described_class.perform_now(article.id)
 
         expect(WebMock)
           .to have_requested(:post, 'https://api.twitter.com/1.1/direct_messages/events/new.json')
@@ -118,14 +119,14 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
       end
 
       it 'updates the article with DM attributes' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.message_id }.to('1244953398509617156')
           .and change { article.reload.preferences[:twitter] }.to(hash_including(dm_attributes))
           .and change { article.reload.preferences[:links] }.to(links_array)
       end
 
       it 'sets the appropriate delivery status attributes' do
-        expect { described_class.new(article.id).perform }
+        expect { described_class.perform_now(article.id) }
           .to change { article.reload.preferences[:delivery_status] }.to('success')
           .and change { article.reload.preferences[:delivery_status_date] }.to(an_instance_of(ActiveSupport::TimeWithZone))
           .and not_change { article.reload.preferences[:delivery_status_message] }.from(nil)
@@ -135,9 +136,8 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
     describe 'failure cases' do
       shared_examples 'for failure cases' do
         it 'raises an error and sets the appropriate delivery status messages' do
-          expect { described_class.new(article.id).perform }
-            .to raise_error(error_message)
-            .and change { article.reload.preferences[:delivery_status] }.to('fail')
+          expect { described_class.perform_now(article.id) }
+            .to change { article.reload.preferences[:delivery_status] }.to('fail')
             .and change { article.reload.preferences[:delivery_status_date] }.to(an_instance_of(ActiveSupport::TimeWithZone))
             .and change { article.reload.preferences[:delivery_status_message] }.to(error_message)
         end
@@ -166,7 +166,7 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
           let!(:new_channel) { create(:twitter_channel, custom_options: { user: { screen_name: channel.options[:user][:screen_name] } }) }
 
           it 'uses that channel' do
-            described_class.new(article.id).perform
+            described_class.perform_now(article.id)
 
             expect(WebMock)
               .to have_requested(:post, 'https://api.twitter.com/1.1/statuses/update.json')
@@ -216,9 +216,8 @@ RSpec.describe Observer::Ticket::Article::CommunicateTwitter::BackgroundJob, typ
         let(:factory_options) { { preferences: { delivery_retry: 3 } } }
 
         it 'adds a delivery failure note (article) to the ticket' do
-          expect { described_class.new(article.id).perform }
-            .to raise_error(error_message)
-            .and change { article.ticket.reload.articles.count }.by(1)
+          expect { described_class.perform_now(article.id) }
+            .to change { article.ticket.reload.articles.count }.by(1)
 
           expect(Ticket::Article.last.attributes).to include(
             'content_type' => 'text/plain',

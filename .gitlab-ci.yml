@@ -48,4 +48,3 @@ before_script:
   - source /etc/profile.d/rvm.sh
   - bundle install -j $(nproc) --path vendor
   - bundle exec ruby script/build/database_config.rb
-

@@ -6,12 +6,7 @@ class Sessions::Event::ChatSessionLeaveTemporary < Sessions::Event::ChatBase
 
     chat_session = current_chat_session
 
-    Delayed::Job.enqueue(
-      Observer::Chat::Leave::BackgroundJob.new(chat_session.id, @client_id, @session),
-      {
-        run_at: Time.zone.now + 0.5.minutes
-      }
-    )
+    ChatLeaveJob.set(wait: 0.5.minutes).perform_later(chat_session.id, @client_id, @session)
 
     false
   end

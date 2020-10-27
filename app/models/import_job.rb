@@ -75,12 +75,12 @@ class ImportJob < ApplicationModel
     return if exists?(name: params[:name], dry_run: true, finished_at: nil)
 
     params[:dry_run] = true
-    instance = create(params.except(:delay))
+    job = create(params.except(:delay))
 
     if params.fetch(:delay, true)
-      instance.delay.start
+      AsyncImportJob.perform_later(job)
     else
-      instance.start
+      job.start
     end
   end
 

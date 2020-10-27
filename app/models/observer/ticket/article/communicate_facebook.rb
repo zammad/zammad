@@ -25,7 +25,7 @@ class Observer::Ticket::Article::CommunicateFacebook < ActiveRecord::Observer
     return true if type.nil?
     return true if !type.name.start_with?('facebook')
 
-    Delayed::Job.enqueue(Observer::Ticket::Article::CommunicateFacebook::BackgroundJob.new(record.id))
+    CommunicateFacebookJob.perform_later(record.id)
   end
 
 end

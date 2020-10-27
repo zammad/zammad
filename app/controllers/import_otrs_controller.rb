@@ -115,7 +115,7 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    Import::OTRS.delay.start_bg
+    AsyncOtrsImportJob.perform_later
 
     render json: {
       result: 'ok',

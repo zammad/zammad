@@ -1,27 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe Observer::Ticket::Article::CommunicateTwitter do
+RSpec.describe Observer::Ticket::Article::CommunicateTwitter, performs_jobs: true do
   before { allow(Delayed::Job).to receive(:enqueue).and_call_original }
 
   let(:article) { create(:ticket_article, **(try(:factory_options) || {})) }
 
   shared_examples 'for no-op' do
     it 'is a no-op' do
-      expect(Delayed::Job)
-        .not_to receive(:enqueue)
-        .with(instance_of(Observer::Ticket::Article::CommunicateTwitter::BackgroundJob))
-
-      article
+      expect { article }.not_to have_enqueued_job(CommunicateTwitterJob)
     end
   end
 
   shared_examples 'for success' do
     it 'enqueues the Twitter background job' do
-      expect(Delayed::Job)
-        .to receive(:enqueue)
-        .with(an_instance_of(Observer::Ticket::Article::CommunicateTwitter::BackgroundJob))
-
-      article
+      expect { article }.to have_enqueued_job(CommunicateTwitterJob)
     end
   end
 
