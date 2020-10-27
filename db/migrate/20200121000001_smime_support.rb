@@ -59,8 +59,8 @@ class SMIMESupport < ActiveRecord::Migration[5.2]
       t.string :doc_hash,           limit: 250,  null: false
       t.string :fingerprint,        limit: 250,  null: false
       t.string :modulus,            limit: 1024, null: false
-      t.datetime :not_before_at,                 null: true
-      t.datetime :not_after_at,                  null: true
+      t.datetime :not_before_at,                 null: true # rubocop:disable Zammad/ExistsDateTimePrecision
+      t.datetime :not_after_at,                  null: true # rubocop:disable Zammad/ExistsDateTimePrecision
       t.binary :raw,                limit: 10.megabytes,  null: false
       t.binary :private_key,        limit: 10.megabytes,  null: true
       t.string :private_key_secret, limit: 500, null: true

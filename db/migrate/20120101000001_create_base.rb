@@ -8,7 +8,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :session_id,  null: false
       t.boolean :persistent, null: true
       t.text :data
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
@@ -287,7 +287,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
     create_table :taskbars do |t|
       t.references :user,                           null: false
-      t.datetime :last_contact,                     null: false
+      t.datetime :last_contact,                     null: false, limit: 3
       t.string :client_id,                          null: false
       t.string :key,                   limit: 100,  null: false
       t.string :callback,              limit: 100,  null: false
@@ -601,13 +601,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :object_manager_attributes, :users, column: :updated_by_id
 
     create_table :delayed_jobs, force: true do |t|
-      t.integer  :priority, default: 0      # Allows some jobs to jump to the front of the queue
-      t.integer  :attempts, default: 0      # Provides for retries, but still fail eventually.
+      t.integer  :priority, default: 0         # Allows some jobs to jump to the front of the queue
+      t.integer  :attempts, default: 0         # Provides for retries, but still fail eventually.
       t.text     :handler                      # YAML-encoded string of the object that will do work
       t.text     :last_error                   # reason for last failure (See Note below)
-      t.datetime :run_at                       # When to run. Could be Time.zone.now for immediately, or sometime in the future.
-      t.datetime :locked_at                    # Set when a client is working on this object
-      t.datetime :failed_at                    # Set when all retries have failed (actually, by default, the record is deleted instead)
+      t.datetime :run_at, limit: 3             # When to run. Could be Time.zone.now for immediately, or sometime in the future.
+      t.datetime :locked_at, limit: 3          # Set when a client is working on this object
+      t.datetime :failed_at, limit: 3          # Set when all retries have failed (actually, by default, the record is deleted instead)
       t.string   :locked_by                    # Who is working on this object (if locked)
       t.string   :queue                        # The name of the queue this job is in
       t.timestamps limit: 3, null: false
@@ -635,10 +635,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text :payload, limit: 80_000
       t.text :result, limit: 80_000
 
-      t.datetime :started_at
-      t.datetime :finished_at
+      t.datetime :started_at, limit: 3
+      t.datetime :finished_at, limit: 3
 
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
 
     create_table :cti_logs do |t|
@@ -716,7 +716,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :lock_key
       t.string :active_job_id
 
-      t.timestamps
+      t.timestamps limit: 3
     end
     add_index :active_job_locks, :lock_key, unique: true
     add_index :active_job_locks, :active_job_id, unique: true
@@ -726,8 +726,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :doc_hash,           limit: 250,  null: false
       t.string :fingerprint,        limit: 250,  null: false
       t.string :modulus,            limit: 1024, null: false
-      t.datetime :not_before_at,                 null: true
-      t.datetime :not_after_at,                  null: true
+      t.datetime :not_before_at,                 null: true, limit: 3
+      t.datetime :not_after_at,                  null: true, limit: 3
       t.binary :raw,                limit: 10.megabytes,  null: false
       t.binary :private_key,        limit: 10.megabytes,  null: true
       t.string :private_key_secret, limit: 500,  null: true

@@ -7,7 +7,7 @@ class CreateActiveJobLocks < ActiveRecord::Migration[5.2]
       t.string :lock_key
       t.string :active_job_id
 
-      t.timestamps
+      t.timestamps # rubocop:disable Zammad/ExistsDateTimePrecision
     end
     add_index :active_job_locks, :lock_key, unique: true
     add_index :active_job_locks, :active_job_id, unique: true
