@@ -42,15 +42,22 @@ class App.UiElement.ApplicationUiElement
     else
       attribute.options[''] = '-'
 
-  @getConfigOptionList: (attribute) ->
+  @getConfigOptionListArray: (attribute, selection) ->
+    result = []
+    for row in selection
+      if attribute.translate
+        row.name = App.i18n.translateInline(row.name)
+        if !_.isEmpty(row.children)
+          row.children = @getConfigOptionListArray(attribute, row.children)
+      result.push row
+    result
+
+  @getConfigOptionList: (attribute, children = false) ->
     return if _.isEmpty(attribute.options)
     selection = attribute.options
     attribute.options = []
     if _.isArray(selection)
-      for row in selection
-        if attribute.translate
-          row.name = App.i18n.translateInline(row.name)
-        attribute.options.push row
+      attribute.options = @getConfigOptionListArray(attribute, selection)
     else
       forceString = (s) ->
         return if !selection[s] || !selection[s].toString then '' else selection[s].toString()
