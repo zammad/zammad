@@ -144,6 +144,20 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.channel_google',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Channel - Google']
+  },
+)
+Permission.create_if_not_exists(
+  name:        'admin.channel_microsoft365',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Channel - Microsoft 365']
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.channel_sms',
   note:        'Manage %s',
   preferences: {
