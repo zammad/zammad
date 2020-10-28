@@ -83,6 +83,8 @@ class Index extends App.ControllerSubContent
             config['group_ids'] = []
           config['group_ids'].push group_id.toString()
 
+    groups = _.sortBy(groups, (item) -> return item.name)
+
     for sound in @sounds
       sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
 
