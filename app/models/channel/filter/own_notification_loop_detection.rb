@@ -2,7 +2,7 @@
 
 module Channel::Filter::OwnNotificationLoopDetection
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     message_id = mail[:'message-id']
     return if !message_id

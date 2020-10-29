@@ -91,9 +91,11 @@ returns on fail
           next if result_outbound[:result] != 'ok'
 
           return {
-            result:           'ok',
-            content_messages: result_inbound[:content_messages],
-            setting:          settings,
+            result:             'ok',
+            content_messages:   result_inbound[:content_messages],
+            archive_possible:   result_inbound[:archive_possible],
+            archive_week_range: result_inbound[:archive_week_range],
+            setting:            settings,
           }
         end
       end
@@ -122,9 +124,11 @@ returns on fail
 
         next if result_inbound[:result] != 'ok'
 
-        success                    = true
-        result[:setting][:inbound] = config
-        result[:content_messages]  = result_inbound[:content_messages]
+        success                     = true
+        result[:setting][:inbound]  = config
+        result[:content_messages]   = result_inbound[:content_messages]
+        result[:archive_possible]   = result_inbound[:archive_possible]
+        result[:archive_week_range] = result_inbound[:archive_week_range]
 
         break
       end

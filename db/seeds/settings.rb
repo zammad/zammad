@@ -3375,6 +3375,15 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       'Define postmaster filter.',
+  name:        '0018_postmaster_import_archive',
+  area:        'Postmaster::PreFilter',
+  description: 'Define postmaster filter to import archive mailboxes.',
+  options:     {},
+  state:       'Channel::Filter::ImportArchive',
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
   name:        '0012_postmaster_filter_sender_is_system_address',
   area:        'Postmaster::PreFilter',

@@ -695,6 +695,7 @@ RSpec/NestedGroups:
     - 'spec/system/manage/organizations_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
     - 'spec/system/ticket/zoom_spec.rb'
+    - 'spec/models/channel/filter/import_archive_spec.rb'
 
 RSpec/RepeatedDescription:
   Exclude:

@@ -3,7 +3,7 @@
 # process all database filter
 module Channel::Filter::Database
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     # process postmaster filter
     filters = PostmasterFilter.where(active: true, channel: 'email').order(:name, :created_at)

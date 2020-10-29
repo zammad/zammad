@@ -3,7 +3,7 @@
 # delete all X-Zammad header if channel is not trusted
 module Channel::Filter::Trusted
 
-  def self.run(channel, mail)
+  def self.run(channel, mail, _transaction_params)
 
     # check if trust x-headers
     if !trusted(channel)
@@ -29,7 +29,7 @@ module Channel::Filter::Trusted
 
   def self.trusted(channel)
     return true if channel[:trusted]
-    return true if channel.instance_of?(Channel) && channel.options[:inbound][:trusted]
+    return true if channel.instance_of?(Channel) && channel.options[:inbound] && channel.options[:inbound][:trusted]
 
     false
   end

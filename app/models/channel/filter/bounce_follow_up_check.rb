@@ -2,7 +2,7 @@
 
 module Channel::Filter::BounceFollowUpCheck
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     return if !mail[:mail_instance]
     return if !mail[:mail_instance].bounced?

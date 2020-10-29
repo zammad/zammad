@@ -2,7 +2,7 @@
 
 module Channel::Filter::AutoResponseCheck
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     # if header is available, do not generate auto response
     mail[ :'x-zammad-send-auto-response' ] = false

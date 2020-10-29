@@ -2,7 +2,7 @@
 
 module Channel::Filter::FollowUpPossibleCheck
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
     ticket_id = mail[:'x-zammad-ticket-id']
     return true if !ticket_id
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Channel::Filter::OutOfOfficeCheck do
+RSpec.describe Channel::Filter::OutOfOfficeCheck, type: :channel_filter do
   describe '.run' do
     let(:mail_hash) { Channel::EmailParser.new.parse(<<~RAW.chomp) }
       From: me@example.com
@@ -15,14 +15,14 @@ RSpec.describe Channel::Filter::OutOfOfficeCheck do
 
     shared_examples 'regular message' do
       it 'sets x-zammad-out-of-office header to false' do
-        expect { described_class.run({}, mail_hash) }
+        expect { filter(mail_hash) }
           .to change { mail_hash[:'x-zammad-out-of-office'] }.to(false)
       end
     end
 
     shared_examples 'auto-response' do
       it 'sets x-zammad-out-of-office header to true' do
-        expect { described_class.run({}, mail_hash) }
+        expect { filter(mail_hash) }
           .to change { mail_hash[:'x-zammad-out-of-office'] }.to(true)
       end
     end

@@ -11,7 +11,7 @@ class Channel::Filter::MonitoringBase
   # Nagios
   # https://github.com/NagiosEnterprises/nagioscore/blob/754218e67653929a58938b99ef6b6039b6474fe4/sample-config/template-object/commands.cfg.in#L35
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
     integration = integration_name
     return if !Setting.get("#{integration}_integration")
 

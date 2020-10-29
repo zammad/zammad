@@ -2,7 +2,7 @@
 
 module Channel::Filter::IdentifySender
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     customer_user_id = mail[ :'x-zammad-ticket-customer_id' ]
     customer_user = nil

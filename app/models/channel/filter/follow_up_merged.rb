@@ -2,7 +2,7 @@
 
 module Channel::Filter::FollowUpMerged
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
     return if mail[:'x-zammad-ticket-id'].blank?
 
     ticket = Ticket.find_by(id: mail[:'x-zammad-ticket-id'])

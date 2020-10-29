@@ -142,6 +142,11 @@ returns
 
     # run postmaster pre filter
     UserInfo.current_user_id = 1
+
+    # set interface handle
+    original_interface_handle = ApplicationHandleInfo.current
+    transaction_params = { interface_handle: "#{original_interface_handle}.postmaster", disable: [] }
+
     filters = {}
     Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
       filters[setting.name] = Setting.get(setting.name).constantize
@@ -149,7 +154,7 @@ returns
     filters.each do |key, backend|
       Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
       begin
-        backend.run(channel, mail)
+        backend.run(channel, mail, transaction_params)
       rescue => e
         Rails.logger.error "can't run postmaster pre filter #{key}: #{backend}"
         Rails.logger.error e.inspect
@@ -163,15 +168,12 @@ returns
       return
     end
 
-    # set interface handle
-    original_interface_handle = ApplicationHandleInfo.current
-
     ticket       = nil
     article      = nil
     session_user = nil
 
     # use transaction
-    Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
+    Transaction.execute(transaction_params) do
 
       # get sender user
       session_user_id = mail[:'x-zammad-session-user-id']

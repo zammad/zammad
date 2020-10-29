@@ -174,10 +174,45 @@ example
       if content_messages >= content_max_check
         content_messages = message_ids.count
       end
+
+      archive_possible   = false
+      archive_check      = 0
+      archive_max_check  = 500
+      archive_days_range = 14
+      archive_week_range = archive_days_range / 7
+      message_ids.reverse_each do |message_id|
+        message_meta = nil
+        timeout(1.minute) do
+          message_meta = @imap.fetch(message_id, ['RFC822.HEADER'])[0]
+        end
+
+        headers = self.class.extract_rfc822_headers(message_meta)
+        next if messages_is_verify_message?(headers)
+        next if messages_is_ignore_message?(headers)
+        next if headers['Date'].blank?
+
+        archive_check += 1
+        break if archive_check >= archive_max_check
+
+        begin
+          date = Time.zone.parse(headers['Date'])
+        rescue => e
+          Rails.logger.error e
+          next
+        end
+        break if date >= Time.zone.now - archive_days_range.days
+
+        archive_possible = true
+
+        break
+      end
+
       disconnect
       return {
-        result:           'ok',
-        content_messages: content_messages,
+        result:             'ok',
+        content_messages:   content_messages,
+        archive_possible:   archive_possible,
+        archive_week_range: archive_week_range,
       }
     end
 

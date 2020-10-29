@@ -3,7 +3,7 @@
 module Channel::Filter::ServiceNowCheck
 
   # This filter will run pre and post
-  def self.run(_channel, mail, ticket = nil, _article = nil, _session_user = nil)
+  def self.run(_channel, mail, ticket_or_transaction_params = nil, _article = nil, _session_user = nil)
     return if mail['x-servicenow-generated'].blank?
 
     source_id = self.source_id(subject: mail[:subject])
@@ -13,7 +13,7 @@ module Channel::Filter::ServiceNowCheck
     return if source_name.blank?
 
     # check if we can followup by existing service now relation
-    if ticket.blank?
+    if ticket_or_transaction_params.blank? || ticket_or_transaction_params.is_a?(Hash)
       from_sync_entry(
         mail:        mail,
         source_name: source_name,
@@ -22,7 +22,7 @@ module Channel::Filter::ServiceNowCheck
       return
     end
 
-    ExternalSync.create_with(source_id: source_id).find_or_create_by(source: source_name, object: 'Ticket', o_id: ticket.id)
+    ExternalSync.create_with(source_id: source_id).find_or_create_by(source: source_name, object: 'Ticket', o_id: ticket_or_transaction_params.id)
   end
 
 =begin

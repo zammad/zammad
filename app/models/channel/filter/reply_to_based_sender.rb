@@ -2,7 +2,7 @@
 
 module Channel::Filter::ReplyToBasedSender
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     reply_to = mail[:'reply-to']
     return if reply_to.blank?

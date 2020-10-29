@@ -1242,7 +1242,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       it 'applies the OutOfOfficeCheck filter to given message' do
         expect(Channel::Filter::OutOfOfficeCheck)
           .to receive(:run)
-          .with(kind_of(Hash), hash_including(subject: subject_line))
+          .with(kind_of(Hash), hash_including(subject: subject_line), kind_of(Hash))
 
         described_class.new.process({}, raw_mail)
       end
