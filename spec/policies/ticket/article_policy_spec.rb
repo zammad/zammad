@@ -29,6 +29,15 @@ describe Ticket::ArticlePolicy do
       it { is_expected.to permit_actions(%i[show]) }
     end
 
+    context 'when agent and customer but no agent group access' do
+      let(:user) do
+        customer_role = create(:role, :customer)
+        create(:agent_and_customer, roles: [customer_role])
+      end
+
+      it { is_expected.not_to permit_actions(%i[show]) }
+    end
+
     context 'when customer' do
       let(:user) { ticket_customer }
 
