@@ -1017,23 +1017,12 @@ perform changes on ticket
       save!
     end
 
+    objects = build_notification_template_objects(article)
+
     perform_article.each do |key, value|
       raise 'Unable to create article, we only support article.note' if key != 'article.note'
 
-      Ticket::Article.create!(
-        ticket_id:     id,
-        subject:       value[:subject],
-        content_type:  'text/html',
-        body:          value[:body],
-        internal:      value[:internal],
-        sender:        Ticket::Article::Sender.find_by(name: 'System'),
-        type:          Ticket::Article::Type.find_by(name: 'note'),
-        preferences:   {
-          perform_origin: perform_origin,
-        },
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
+      add_trigger_note(id, value, objects, perform_origin)
     end
 
     perform_notification.each do |key, value|
@@ -1049,6 +1038,43 @@ perform changes on ticket
     end
 
     true
+  end
+
+=begin
+
+perform changes on ticket
+
+  ticket.add_trigger_note(ticket_id, note, objects, perform_origin)
+
+=end
+
+  def add_trigger_note(ticket_id, note, objects, perform_origin)
+    rendered_subject = NotificationFactory::Mailer.template(
+      templateInline: note[:subject],
+      objects:        objects,
+      quote:          true,
+    )
+
+    rendered_body = NotificationFactory::Mailer.template(
+      templateInline: note[:body],
+      objects:        objects,
+      quote:          true,
+    )
+
+    Ticket::Article.create!(
+      ticket_id:     ticket_id,
+      subject:       rendered_subject,
+      content_type:  'text/html',
+      body:          rendered_body,
+      internal:      note[:internal],
+      sender:        Ticket::Article::Sender.find_by(name: 'System'),
+      type:          Ticket::Article::Type.find_by(name: 'note'),
+      preferences:   {
+        perform_origin: perform_origin,
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
   end
 
 =begin

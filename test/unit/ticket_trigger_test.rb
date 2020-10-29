@@ -4446,8 +4446,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
       },
       perform:              {
         'article.note'       => {
-          'body'     => 'some note',
-          'subject'  => 'some subject!',
+          'subject'  => 'some subject! #{ticket.id}',
+          'body'     => 'I can integrate with 3rd party services at https://my.saas/foo/#{ticket.id}',
           'internal' => 'true',
         },
         'notification.email' => {
@@ -4508,8 +4508,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
     article_note1 = ticket1.articles[1]
     assert_match('- ', article_note1.from)
     assert_nil(article_note1.to)
-    assert_match('some subject!', article_note1.subject)
-    assert_match('some note', article_note1.body)
+    assert_match("some subject! #{ticket1.id}", article_note1.subject)
+    assert_match("I can integrate with 3rd party services at <a href=\"https://my.saas/foo/#{ticket1.id}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">https://my.saas/foo/#{ticket1.id}</a>", article_note1.body)
     assert_equal('text/html', article_note1.content_type)
     assert_equal(true, article_note1.internal)
 
