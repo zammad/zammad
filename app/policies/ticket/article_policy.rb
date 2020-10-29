@@ -55,9 +55,9 @@ class Ticket::ArticlePolicy < ApplicationPolicy
   end
 
   def access?(query)
-    return false if record.internal == true && !user.permissions?('ticket.agent')
-
     ticket = Ticket.lookup(id: record.ticket_id)
+    return false if record.internal == true && !TicketPolicy.new(user, ticket).agent_read_access?
+
     Pundit.authorize(user, ticket, query)
   end
 end
