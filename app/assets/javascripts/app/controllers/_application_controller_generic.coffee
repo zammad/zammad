@@ -735,8 +735,10 @@ class App.GenericHistory extends App.ControllerModal
 
         if item.value_to
           if item.value_from
-            content += " #{ @T( 'to' ) }"
+            content += ' 🡒'
           content += " '#{ App.Utils.htmlEscape(item.value_to) }'"
+        else if item.value_from
+          content += " 🡒 '-'"
 
       newItem.records.push content
 
