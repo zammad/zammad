@@ -41,6 +41,10 @@ class TicketPolicy < ApplicationPolicy
     raise Exceptions::UnprocessableEntity, 'Cannot follow-up on a closed ticket. Please create a new ticket.'
   end
 
+  def agent_read_access?
+    agent_access?('read')
+  end
+
   private
 
   def access?(access)

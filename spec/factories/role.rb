@@ -8,6 +8,10 @@ FactoryBot.define do
       permissions { Permission.where(name: 'ticket.agent') }
     end
 
+    trait :customer do
+      permissions { Permission.where(name: 'ticket.customer') }
+    end
+
     trait :admin do
       permissions { Permission.where(name: 'admin') }
     end
