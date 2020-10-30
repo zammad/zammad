@@ -105,7 +105,12 @@ module ApplicationController::RendersModels
     per_page = (params[:per_page] || 500).to_i
     offset = (page - 1) * per_page
 
-    generic_objects = object.order(id: :asc).offset(offset).limit(per_page)
+    sql_helper = ::SqlHelper.new(object: object)
+    sort_by    = sql_helper.get_sort_by(params, 'id')
+    order_by   = sql_helper.get_order_by(params, 'ASC')
+    order_sql  = sql_helper.get_order(sort_by, order_by)
+
+    generic_objects = object.order(Arel.sql(order_sql)).offset(offset).limit(per_page)
 
     if response_expand?
       list = []
@@ -124,8 +129,9 @@ module ApplicationController::RendersModels
         assets = item.assets(assets)
       end
       render json: {
-        record_ids: item_ids,
-        assets:     assets,
+        record_ids:  item_ids,
+        assets:      assets,
+        total_count: object.count
       }, status: :ok
       return
     end

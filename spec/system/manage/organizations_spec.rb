@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Organizations', type: :system do
 
@@ -47,5 +48,9 @@ RSpec.describe 'Manage > Organizations', type: :system do
         end
       end
     end
+  end
+
+  context 'ajax pagination' do
+    include_examples 'pagination', model: :organization, klass: Organization, path: 'manage/organizations'
   end
 end

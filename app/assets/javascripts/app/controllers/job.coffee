@@ -13,6 +13,10 @@ class Index extends App.ControllerSubContent
         home: 'Jobs'
         object: 'Scheduler'
         objects: 'Schedulers'
+        pagerAjax: true
+        pagerBaseUrl: '#manage/job/'
+        pagerSelected: ( @page || 1 )
+        pagerPerPage: 150
         navupdate: '#Jobs'
         notes: [
           'Scheduler are ...'
@@ -23,5 +27,12 @@ class Index extends App.ControllerSubContent
       container: @el.closest('.content')
       large: true
     )
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate( @page || 1 )
 
 App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Index, permission: ['admin.scheduler'] }, 'NavBarAdmin')

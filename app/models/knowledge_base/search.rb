@@ -2,21 +2,19 @@ class KnowledgeBase
   module Search
     extend ActiveSupport::Concern
 
-    included do
-      include HasSearchSortable
-    end
-
     class_methods do
       def search(params)
         current_user = params[:current_user]
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
 
+        sql_helper = ::SqlHelper.new(object: self)
+
         options = {
           limit:    params[:limit] || 10,
           from:     params[:offset] || 0,
-          sort_by:  search_get_sort_by(params, 'updated_at'),
-          order_by: search_get_order_by(params, 'desc'),
+          sort_by:  sql_helper.get_sort_by(params, 'updated_at'),
+          order_by: sql_helper.get_order_by(params, 'desc'),
           user:     current_user
         }
 
@@ -41,8 +39,9 @@ class KnowledgeBase
       end
 
       def search_sql(query, kb_locales, options)
-        table_name       = arel_table.name
-        order_sql        = search_get_order_sql(options[:sort_by], options[:order_by], "#{table_name}.updated_at ASC")
+        table_name = arel_table.name
+        sql_helper = ::SqlHelper.new(object: self)
+        order_sql  = sql_helper.get_order(options[:sort_by], options[:order_by], "#{table_name}.updated_at ASC")
 
         # - stip out * we already search for *query* -
         query.delete! '*'

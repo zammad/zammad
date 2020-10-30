@@ -8,10 +8,15 @@ class Index extends App.ControllerSubContent
       el: @el
       id: @id
       genericObject: 'Group'
+      defaultSortBy: 'name'
       pageData:
         home:      'groups'
         object:    'Group'
         objects:   'Groups'
+        pagerAjax: true
+        pagerBaseUrl: '#manage/groups/'
+        pagerSelected: ( @page || 1 )
+        pagerPerPage: 150
         navupdate: '#groups'
         notes:     [
           'Groups are ...'
@@ -21,5 +26,12 @@ class Index extends App.ControllerSubContent
         ]
       container: @el.closest('.content')
     )
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate( @page || 1 )
 
 App.Config.set('Group', { prio: 1500, name: 'Groups', parent: '#manage', target: '#manage/groups', controller: Index, permission: ['admin.group'] }, 'NavBarAdmin')

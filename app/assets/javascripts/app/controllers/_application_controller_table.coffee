@@ -196,6 +196,29 @@ class App.ControllerTable extends App.Controller
     App.QueueManager.run('tableRender')
 
   renderPager: (el, find = false) =>
+    if @pagerAjax
+      @renderPagerAjax(el, find)
+    else
+      @renderPagerStatic(el, find)
+
+  renderPagerAjax: (el, find = false) =>
+    pages = parseInt((@pagerTotalCount - 1)  / @pagerPerPage)
+    if pages < 1
+      if find
+        el.find('.js-pager').html('')
+      else
+        el.filter('.js-pager').html('')
+      return
+    pager = App.view('generic/table_pager')(
+      page:  @pagerSelected - 1
+      pages: pages
+    )
+    if find
+      el.find('.js-pager').html(pager)
+    else
+      el.filter('.js-pager').html(pager)
+
+  renderPagerStatic: (el, find = false) =>
     pages = parseInt(((@objects.length - 1)  / @shownPerPage))
     if pages < 1
       if find
@@ -214,6 +237,11 @@ class App.ControllerTable extends App.Controller
 
   render: =>
     @setMaxPage()
+
+    # always render pager in case of ajax pagination
+    if @pagerTotalCount
+      @renderPager(@el, true)
+
     if @renderState is undefined
 
       # check if table is empty
@@ -451,11 +479,14 @@ class App.ControllerTable extends App.Controller
     container.delegate('.js-page', 'click', (e) =>
       e.stopPropagation()
       page = $(e.currentTarget).attr 'data-page'
-      render = =>
-        @shownPage = page
-        @renderTableFull()
-      App.QueueManager.add('tableRender', render)
-      App.QueueManager.run('tableRender')
+      if @pagerAjax
+        @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
+      else
+        render = =>
+          @shownPage = page
+          @renderTableFull()
+        App.QueueManager.add('tableRender', render)
+        App.QueueManager.run('tableRender')
     )
 
     @el.html(container)
@@ -659,6 +690,19 @@ class App.ControllerTable extends App.Controller
     return if @lastSortedobjects is @objects && @lastOrderDirection is orderDirection && @lastOrderBy is orderBy
     @lastOrderDirection = orderDirection
     @lastOrderBy = orderBy
+
+    # sorting for ajax pagination will be made in the backend
+    # so we only set the arrow for the sort direction
+    if @pagerAjax
+      for header in @headers
+        if header.name is orderBy || "#{header.name}_id" is orderBy || header.name is "#{orderBy}_id"
+          if orderDirection is 'DESC'
+            header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
+          else
+            header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
+        else
+          header.sortOrderIcon = undefined
+      return
 
     # Underscore's sortBy cannot deal with null values, so we replace null values with a place holder string
     sortBy = (list, iteratee) ->
@@ -964,6 +1008,10 @@ class App.ControllerTable extends App.Controller
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
 
+    # for ajax pagination we only accept valid attributes for sorting
+    if @model && @pagerAjax
+      return if !@attributesList[column]
+
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
@@ -988,6 +1036,10 @@ class App.ControllerTable extends App.Controller
     render = =>
       @renderTableFull(false, skipHeadersResize: true)
     App.QueueManager.add('tableRender', render)
+
+    if @sortRenderCallback
+      App.QueueManager.add('tableRender', @sortRenderCallback)
+
     App.QueueManager.run('tableRender')
 
   preferencesStore: (type, key, value) ->

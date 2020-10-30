@@ -4,10 +4,6 @@ class Organization
   module Search
     extend ActiveSupport::Concern
 
-    included do
-      include HasSearchSortable
-    end
-
     # methods defined here are going to extend the class, not the instance of it
     class_methods do
 
@@ -72,11 +68,13 @@ returns
         offset = params[:offset] || 0
         current_user = params[:current_user]
 
+        sql_helper = ::SqlHelper.new(object: self)
+
         # check sort - positions related to order by
-        sort_by = search_get_sort_by(params, %w[active updated_at])
+        sort_by = sql_helper.get_sort_by(params, %w[active updated_at])
 
         # check order - positions related to sort by
-        order_by = search_get_order_by(params, %w[desc desc])
+        order_by = sql_helper.get_order_by(params, %w[desc desc])
 
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
@@ -97,8 +95,8 @@ returns
           return organizations
         end
 
-        order_select_sql = search_get_order_select_sql(sort_by, order_by, 'organizations.updated_at')
-        order_sql        = search_get_order_sql(sort_by, order_by, 'organizations.updated_at ASC')
+        order_select_sql = sql_helper.get_order_select(sort_by, order_by, 'organizations.updated_at')
+        order_sql        = sql_helper.get_order(sort_by, order_by, 'organizations.updated_at ASC')
 
         # fallback do sql query
         # - stip out * we already search for *query* -

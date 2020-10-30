@@ -13,10 +13,15 @@ class Index extends App.ControllerSubContent
           baseUrl: '/api/v1/organizations'
           container: @el.closest('.content')
         )
+      defaultSortBy: 'name'
       pageData:
         home: 'organizations'
         object: 'Organization'
         objects: 'Organizations'
+        pagerAjax: true
+        pagerBaseUrl: '#manage/organizations/'
+        pagerSelected: ( @page || 1 )
+        pagerPerPage: 150
         navupdate: '#organizations'
         notes: [
           'Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.'
@@ -27,5 +32,13 @@ class Index extends App.ControllerSubContent
         ]
       container: @el.closest('.content')
     )
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate( @page || 1 )
+
 
 App.Config.set('Organization', { prio: 2000, name: 'Organizations', parent: '#manage', target: '#manage/organizations', controller: Index, permission: ['admin.organization'] }, 'NavBarAdmin')

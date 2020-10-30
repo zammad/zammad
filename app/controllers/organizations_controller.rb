@@ -48,48 +48,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 =end
 
   def index
-    offset = 0
-    per_page = 500
-
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      per_page = params[:per_page].to_i
-    end
-
-    if per_page > 500
-      per_page = 500
-    end
-
-    organizations = policy_scope(Organization).order(id: :asc).offset(offset).limit(per_page)
-
-    if response_expand?
-      list = []
-      organizations.each do |organization|
-        list.push organization.attributes_with_association_names
-      end
-      render json: list, status: :ok
-      return
-    end
-
-    if response_full?
-      assets = {}
-      item_ids = []
-      organizations.each do |item|
-        item_ids.push item.id
-        assets = item.assets(assets)
-      end
-      render json: {
-        record_ids: item_ids,
-        assets:     assets,
-      }, status: :ok
-      return
-    end
-
-    list = []
-    organizations.each do |organization|
-      list.push organization.attributes_with_association_ids
-    end
-    render json: list
+    model_index_render(policy_scope(Organization), params)
   end
 
 =begin

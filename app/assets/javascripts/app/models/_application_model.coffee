@@ -621,6 +621,74 @@ set new attributes of model (remove already available attributes)
         App.Log.error('Model', statusText, error, url)
     )
 
+  ###
+
+  index full collection (with assets)
+
+  App.Model.indexFull(@callback)
+
+  App.Model.indexFull(
+    @callback
+    page: 1
+    per_page: 10
+    sort_by: 'name'
+    order_by: 'ASC'
+  )
+
+
+  ###
+  @indexFull: (callback, params = {}) ->
+    url = "#{@url}?full=true"
+    for key in ['page', 'per_page', 'sort_by', 'order_by']
+      continue if !params[key]
+      url += "&#{key}=#{params[key]}"
+
+    App.Log.debug('Model', "indexFull collection #{@className}", url)
+
+    # request already active, queue callback
+    queueManagerName = "#{@className}::indexFull"
+
+    if params.refresh is undefined
+      params.refresh = true
+
+    App.Ajax.request(
+      type:  'GET'
+      url:   url
+      processData: true,
+      success: (data, status, xhr) =>
+        App.Log.debug('Model', "got indexFull collection #{@className}", data)
+
+        recordIds = data.record_ids
+        if data.record_ids is undefined
+          recordIds = data[ @className.toLowerCase() + '_ids' ]
+
+        # full / load assets
+        if data.assets
+          App.Collection.loadAssets(data.assets, targetModel: @className)
+
+          # if no record_ids are found, no initial render is fired
+          if data.record_ids && _.isEmpty(data.record_ids) && params.refresh
+            App[@className].trigger('refresh', [])
+
+        # find / load object
+        else if params.refresh
+          App[@className].refresh(data)
+
+        if callback
+          localCallback = =>
+            collection = []
+            for id in recordIds
+              collection.push App[@className].find(id)
+            callback(collection, data)
+          App.QueueManager.add(queueManagerName, localCallback)
+
+        App.QueueManager.run(queueManagerName)
+
+      error: (xhr, statusText, error) =>
+        @indexFullActive = false
+        App.Log.error('Model', statusText, error, url)
+    )
+
   @_bindsEmpty: ->
     if @SUBSCRIPTION_ITEM
       for id, keys of @SUBSCRIPTION_ITEM
@@ -667,8 +735,9 @@ set new attributes of model (remove already available attributes)
 
       # just show this values in result, all filters need to match to get shown
       filter:
-        some_attribute1: ['only_this_value1', 'only_that_value1']
-        some_attribute2: ['only_this_value2', 'only_that_value2']
+
+        # check single value
+        some_attribute1: 'only_this_value1'
 
       # just show this values in result, all filters need to match to get shown
       filterExtended:

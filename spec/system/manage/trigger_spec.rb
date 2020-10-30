@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Trigger', type: :system do
 
@@ -56,5 +57,9 @@ RSpec.describe 'Manage > Trigger', type: :system do
         expect(page).to have_css('.ui-autocomplete.ui-widget-content') { |elem| !elem.obscured? }
       end
     end
+  end
+
+  context 'ajax pagination' do
+    include_examples 'pagination', model: :trigger, klass: Trigger, path: 'manage/trigger'
   end
 end
