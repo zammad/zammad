@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :'ticket/time_accounting', aliases: %i[ticket_time_accounting] do
     ticket
-    time_unit     { rand(100) }
+    time_unit     { rand(1..100) }
     created_by_id { 1 }
 
     trait :for_article do
