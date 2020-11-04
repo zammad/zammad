@@ -134,19 +134,12 @@ example
       @imap.select(folder)
     end
 
-    # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
-    filter = ['ALL']
-    if keep_on_server && check_type != 'check' && check_type != 'verify'
-      filter = %w[NOT SEEN]
-    end
-
-    message_ids = nil
-    timeout(6.minutes) do
-
-      message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
-    rescue
-      message_ids = @imap.search(filter)
-
+    message_ids = timeout(6.minutes) do
+      if keep_on_server && check_type != 'check' && check_type != 'verify'
+        fetch_unread_message_ids
+      else
+        fetch_all_message_ids
+      end
     end
 
     # check mode only
@@ -367,6 +360,22 @@ example
       fetched: count_fetched,
       notice:  notice,
     }
+  end
+
+  def fetch_all_message_ids
+    fetch_message_ids %w[ALL]
+  end
+
+  def fetch_unread_message_ids
+    fetch_message_ids %w[NOT SEEN]
+  rescue
+    fetch_message_ids %w[UNSEEN]
+  end
+
+  def fetch_message_ids(filter)
+    @imap.sort(['DATE'], filter, 'US-ASCII')
+  rescue
+    @imap.search(filter)
   end
 
   def disconnect
