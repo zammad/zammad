@@ -33,7 +33,7 @@
     <button class="btn btn--primary btn--slim btn--split--last js-openDropdownMacro"><%- @Icon('arrow-up') %></button>
     <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
       <% for macro in @macros: %>
-        <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @T(macro.displayName()) %>
+        <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- macro.displayName() %>
       <% end %>
     </ul>
   </div>
