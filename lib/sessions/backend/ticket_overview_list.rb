@@ -160,13 +160,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
       data[:assets] = assets.to_h
 
-      if !@client
-        result = {
-          event: 'ticket_overview_list',
-          data:  data,
-        }
-        results.push result
-      else
+      if @client
         @client.log "push overview_list #{overview.link} for user #{@user.id}"
 
         # send update to browser
@@ -174,6 +168,12 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
           event: 'ticket_overview_list',
           data:  data,
         )
+      else
+        result = {
+          event: 'ticket_overview_list',
+          data:  data,
+        }
+        results.push result
       end
 
       assets.flush

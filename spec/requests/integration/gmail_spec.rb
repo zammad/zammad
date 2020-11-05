@@ -72,7 +72,7 @@ RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
     end
 
     it "doesn't remove email address assignments" do
-      expect { Channel.where(area: 'Google::Account').find_each {} }.not_to change { email_address.reload.channel_id }
+      expect { Channel.where(area: 'Google::Account').find_each { nil } }.not_to change { email_address.reload.channel_id }
     end
   end
 end

@@ -31,7 +31,7 @@ RSpec.describe ApplicationHandleInfo do
       end
 
       it 'resets ApplicationHandleInfo to its original value' do
-        described_class.use('bar') {}
+        described_class.use('bar') { nil }
 
         expect(described_class.current).to eq('foo')
       end

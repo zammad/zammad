@@ -943,12 +943,11 @@ module Mail
   # https://github.com/zammad/zammad/issues/348
   class Body
     def decoded
-      if !Encodings.defined?(encoding)
-        #raise UnknownEncodingType, "Don't know how to decode #{encoding}, please call #encoded and decode it yourself."
+      if Encodings.defined?(encoding)
+        Encodings.get_encoding(encoding).decode(raw_source)
+      else
         Rails.logger.info "UnknownEncodingType: Don't know how to decode #{encoding}!"
         raw_source
-      else
-        Encodings.get_encoding(encoding).decode(raw_source)
       end
     end
   end

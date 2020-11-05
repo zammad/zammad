@@ -26,10 +26,10 @@ class Sessions::Event::Base
   end
 
   def websocket_send(recipient_client_id, data)
-    msg = if data.class != Array
-            "[#{data.to_json}]"
-          else
+    msg = if data.instance_of?(Array)
             data.to_json
+          else
+            "[#{data.to_json}]"
           end
     if @clients[recipient_client_id]
       log 'debug', "ws send #{msg}", recipient_client_id

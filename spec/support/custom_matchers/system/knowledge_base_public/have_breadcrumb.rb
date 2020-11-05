@@ -6,7 +6,7 @@ module KnowledgeBasePublicMatchers
       match { breadcrumb_found? && of_specified_length? }
 
       chain(:with, :length)
-      chain(:items) {}
+      chain(:items) { nil }
 
       description do
         if @length.present?

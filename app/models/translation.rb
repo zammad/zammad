@@ -470,13 +470,13 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
 
   private_class_method def self.locals_to_sync(dedicated_locale = nil)
     locales_list = []
-    if !dedicated_locale
+    if dedicated_locale
+      locales_list = [dedicated_locale]
+    else
       locales = Locale.to_sync
       locales.each do |locale|
         locales_list.push locale.locale
       end
-    else
-      locales_list = [dedicated_locale]
     end
     locales_list
   end

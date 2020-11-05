@@ -33,7 +33,10 @@ class SettingAddPlacetel1 < ActiveRecord::Migration[5.1]
       frontend:    true
     )
     placetel_config = Setting.find_by(name: 'placetel_config')
-    if !placetel_config
+    if placetel_config
+      placetel_config.preferences[:cache] = ['placetelGetVoipUsers']
+      placetel_config.save!
+    else
       Setting.create!(
         title:       'Placetel config',
         name:        'placetel_config',
@@ -48,9 +51,6 @@ class SettingAddPlacetel1 < ActiveRecord::Migration[5.1]
         },
         frontend:    false,
       )
-    else
-      placetel_config.preferences[:cache] = ['placetelGetVoipUsers']
-      placetel_config.save!
     end
     Setting.create_if_not_exists(
       title:       'PLACETEL Token',

@@ -139,11 +139,7 @@ examples how to use
         break
       end
     end
-    placeholder = if !value
-                    object_refs
-                  else
-                    value
-                  end
+    placeholder = value || object_refs
 
     escaping(convert_to_timezone(placeholder), escape)
   end

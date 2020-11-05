@@ -16,10 +16,10 @@ class SearchController < ApplicationController
 
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
-    objects = if !params[:objects]
-                Setting.get('models_searchable')
-              else
+    objects = if params[:objects]
                 params[:objects].split('-').map(&:camelize)
+              else
+                Setting.get('models_searchable')
               end
 
     # get priorities of result

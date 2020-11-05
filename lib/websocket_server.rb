@@ -115,10 +115,10 @@ class WebsocketServer
   end
 
   def self.websocket_send(client_id, data)
-    msg = if data.class != Array
-            "[#{data.to_json}]"
-          else
+    msg = if data.instance_of?(Array)
             data.to_json
+          else
+            "[#{data.to_json}]"
           end
     log 'debug', "send #{msg}", client_id
     if !@clients[client_id]

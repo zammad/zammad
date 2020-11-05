@@ -73,23 +73,23 @@ class SMIMECertificate < ApplicationModel
     @email_addresses ||= begin
       subject_alt_name = parsed.extensions.detect { |extension| extension.oid == 'subjectAltName' }
       if subject_alt_name.blank?
-        warning = <<~TEXT.squish
+        Rails.logger.warn <<~TEXT.squish
           SMIMECertificate with ID #{id} has no subjectAltName
           extension and therefore no email addresses assigned.
           This makes it useless in terms of S/MIME. Please check.
         TEXT
-        Rails.logger.warn warning
-        return []
-      end
 
-      # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
-      entries = subject_alt_name.value.split(/,\s?/)
-      # ["email:jd@example.com", "email:John.Doe@example.com"]
-      email_address_entries = entries.select { |entry| entry.start_with?('email') }
-      # ["jd@example.com", "John.Doe@example.com"]
-      email_address_entries.map! { |entry| entry.split(':')[1] }
-      # ["jd@example.com", "john.doe@example.com"]
-      email_address_entries.map!(&:downcase)
+        []
+      else
+        # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
+        entries = subject_alt_name.value.split(/,\s?/)
+        # ["email:jd@example.com", "email:John.Doe@example.com"]
+        email_address_entries = entries.select { |entry| entry.start_with?('email') }
+        # ["jd@example.com", "John.Doe@example.com"]
+        email_address_entries.map! { |entry| entry.split(':')[1] }
+        # ["jd@example.com", "john.doe@example.com"]
+        email_address_entries.map!(&:downcase)
+      end
     end
   end
 

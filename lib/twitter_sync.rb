@@ -253,10 +253,10 @@ class TwitterSync
       if item['entities']
 
         item['entities']['user_mentions']&.each do |local_user|
-          if !to
-            to = ''
-          else
+          if to
             to += ', '
+          else
+            to = ''
           end
           to += "@#{local_user['screen_name']}"
           mention_ids.push local_user['id']
@@ -380,10 +380,10 @@ class TwitterSync
     from = "@#{tweet.user.screen_name}"
     mention_ids = []
     tweet.user_mentions&.each do |local_user|
-      if !to
-        to = ''
-      else
+      if to
         to += ', '
+      else
+        to = ''
       end
       to += "@#{local_user.screen_name}"
       mention_ids.push local_user.id

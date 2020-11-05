@@ -241,10 +241,10 @@ result
     to = nil
     if post['to'] && post['to']['data']
       post['to']['data'].each do |to_entry|
-        if !to
-          to = ''
-        else
+        if to
           to += ', '
+        else
+          to = ''
         end
         to += to_entry['name']
       end

@@ -265,13 +265,13 @@ class TestCase < ActiveSupport::TestCase
 
     sleep 4
     login_failed = false
-    if !instance.find_elements(css: '.user-menu .user a')[0]
-      login_failed = true
-    else
+    if instance.find_elements(css: '.user-menu .user a')[0]
       login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
       if login != params[:username]
         login_failed = true
       end
+    else
+      login_failed = true
     end
     if login_failed
       if params[:success] == false
@@ -784,14 +784,14 @@ class TestCase < ActiveSupport::TestCase
     end
 
     begin
-      if !params[:slow]
-        element.send_keys(params[:value])
-      else
+      if params[:slow]
         element.send_keys('')
         keys = params[:value].to_s.split('')
         keys.each do |key|
           instance.action.send_keys(key).perform
         end
+      else
+        element.send_keys(params[:value])
       end
     rescue
       sleep 0.5
@@ -801,14 +801,14 @@ class TestCase < ActiveSupport::TestCase
       element = instance.find_elements(css: params[:css])[0]
       raise "No such element '#{params[:css]}'" if !element
 
-      if !params[:slow]
-        element.send_keys(params[:value])
-      else
+      if params[:slow]
         element.send_keys('')
         keys = params[:value].to_s.split('')
         keys.each do |key|
           instance.action.send_keys(key).perform
         end
+      else
+        element.send_keys(params[:value])
       end
     end
 

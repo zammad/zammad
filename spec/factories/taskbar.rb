@@ -4,7 +4,7 @@ FactoryBot.define do
     key                      { 'Ticket-1234' }
     add_attribute(:callback) { 'TicketZoom' }
     params                   { {} }
-    state                    {}
+    state                    { nil }
     prio                     { 1 }
     notify                   { false }
     user_id                  { 1 }

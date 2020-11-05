@@ -185,7 +185,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
-  gem 'rubocop-rspec'
+  gem 'rubocop-rspec', '2.0.0.pre' # see: https://github.com/rubocop-hq/rubocop-rspec/issues/1051
 
   # changelog generation
   gem 'github_changelog_generator'

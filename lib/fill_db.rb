@@ -45,21 +45,24 @@ or if you only want to create 100 tickets
 
     # organizations
     organization_pool = []
-    if !organizations.zero?
+    if organizations.zero?
+      organization_pool = Organization.where(active: true)
+      puts " take #{organization_pool.length} organizations"
+    else
       (1..organizations).each do
         ActiveRecord::Base.transaction do
           organization = Organization.create!(name: "FillOrganization::#{rand(999_999)}", active: true)
           organization_pool.push organization
         end
       end
-    else
-      organization_pool = Organization.where(active: true)
-      puts " take #{organization_pool.length} organizations"
     end
 
     # create agents
     agent_pool = []
-    if !agents.zero?
+    if agents.zero?
+      agent_pool = Role.where(name: 'Agent').first.users.where(active: true)
+      puts " take #{agent_pool.length} agents"
+    else
       roles = Role.where(name: [ 'Agent'])
       groups_all = Group.all
 
@@ -80,14 +83,14 @@ or if you only want to create 100 tickets
           agent_pool.push user
         end
       end
-    else
-      agent_pool = Role.where(name: 'Agent').first.users.where(active: true)
-      puts " take #{agent_pool.length} agents"
     end
 
     # create customer
     customer_pool = []
-    if !customers.zero?
+    if customers.zero?
+      customer_pool = Role.where(name: 'Customer').first.users.where(active: true)
+      puts " take #{customer_pool.length} customers"
+    else
       roles = Role.where(name: [ 'Customer'])
       groups_all = Group.all
 
@@ -112,15 +115,15 @@ or if you only want to create 100 tickets
           customer_pool.push user
         end
       end
-    else
-      customer_pool = Role.where(name: 'Customer').first.users.where(active: true)
-      puts " take #{customer_pool.length} customers"
     end
 
     # create groups
     group_pool = []
-    if !groups.zero?
+    if groups.zero?
 
+      group_pool = Group.where(active: true)
+      puts " take #{group_pool.length} groups"
+    else
       (1..groups).each do
         ActiveRecord::Base.transaction do
           group = Group.create!(name: "FillGroup::#{rand(999_999)}", active: true)
@@ -134,9 +137,6 @@ or if you only want to create 100 tickets
           sleep nice
         end
       end
-    else
-      group_pool = Group.where(active: true)
-      puts " take #{group_pool.length} groups"
     end
 
     # create overviews

@@ -113,10 +113,10 @@ satinize html string based on whiltelist
             end
             class_new += local_class
           end
-          if class_new != ''
-            node['class'] = class_new
-          else
+          if class_new == ''
             node.delete('class')
+          else
+            node['class'] = class_new
           end
         end
 

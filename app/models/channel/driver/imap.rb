@@ -329,10 +329,10 @@ example
 
       begin
         timeout(FETCH_MSG_TIMEOUT) do
-          if !keep_on_server
-            @imap.store(message_id, '+FLAGS', [:Deleted])
-          else
+          if keep_on_server
             @imap.store(message_id, '+FLAGS', [:Seen])
+          else
+            @imap.store(message_id, '+FLAGS', [:Deleted])
           end
         end
       rescue Timeout::Error => e

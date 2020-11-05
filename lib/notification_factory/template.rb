@@ -20,7 +20,7 @@ examples how to use
     @template.gsub(/\#{\s*(.*?)\s*}/m) do
       # some browsers start adding HTML tags
       # fixes https://github.com/zammad/zammad/issues/385
-      input_template = $1.gsub(/\A<.+?>\s*|\s*<.+?>\z/, '') # rubocop:disable Lint/OutOfRangeRegexpRef
+      input_template = $1.gsub(/\A<.+?>\s*|\s*<.+?>\z/, '')
 
       case input_template
       when /\At\('(.+?)'\)\z/m
