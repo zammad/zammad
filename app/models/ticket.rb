@@ -357,12 +357,21 @@ returns
 
       # reassign links to the new ticket
       # rubocop:disable Rails/SkipsModelValidations
+      ticket_source_id = Link::Object.find_by(name: 'Ticket').id
+
+      # search for all duplicate source and target links and destroy them
+      # before link merging
+      Link.duplicates(
+        object1_id:    ticket_source_id,
+        object1_value: id,
+        object2_value: data[:ticket_id]
+      ).destroy_all
       Link.where(
-        link_object_source_id:    Link::Object.find_by(name: 'Ticket').id,
+        link_object_source_id:    ticket_source_id,
         link_object_source_value: id,
       ).update_all(link_object_source_value: data[:ticket_id])
       Link.where(
-        link_object_target_id:    Link::Object.find_by(name: 'Ticket').id,
+        link_object_target_id:    ticket_source_id,
         link_object_target_value: id,
       ).update_all(link_object_target_value: data[:ticket_id])
       # rubocop:enable Rails/SkipsModelValidations

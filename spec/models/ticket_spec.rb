@@ -83,6 +83,105 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      context 'when both tickets are linked with the same parent (parent->child)' do
+        let(:parent) { create(:ticket) }
+
+        before do
+          create(:link,
+                 link_type:                'child',
+                 link_object_source_value: ticket.id,
+                 link_object_target_value: parent.id)
+          create(:link,
+                 link_type:                'child',
+                 link_object_source_value: target_ticket.id,
+                 link_object_target_value: parent.id)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        it 'does remove the link from the merged ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: ticket.id
+          )
+          expect(links.count).to eq(1) # one link to the source ticket (no parent link)
+        end
+
+        it 'does not remove the link from the target ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: target_ticket.id
+          )
+          expect(links.count).to eq(2) # one link to the merged ticket + parent link
+        end
+      end
+
+      context 'when both tickets are linked with the same parent (child->parent)' do
+        let(:parent) { create(:ticket) }
+
+        before do
+          create(:link,
+                 link_type:                'child',
+                 link_object_source_value: parent.id,
+                 link_object_target_value: ticket.id)
+          create(:link,
+                 link_type:                'child',
+                 link_object_source_value: parent.id,
+                 link_object_target_value: target_ticket.id)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        it 'does remove the link from the merged ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: ticket.id
+          )
+          expect(links.count).to eq(1) # one link to the source ticket (no parent link)
+        end
+
+        it 'does not remove the link from the target ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: target_ticket.id
+          )
+          expect(links.count).to eq(2) # one link to the merged ticket + parent link
+        end
+      end
+
+      context 'when both tickets are linked with the same parent (different link types)' do
+        let(:parent) { create(:ticket) }
+
+        before do
+          create(:link,
+                 link_type:                'normal',
+                 link_object_source_value: parent.id,
+                 link_object_target_value: ticket.id)
+          create(:link,
+                 link_type:                'child',
+                 link_object_source_value: parent.id,
+                 link_object_target_value: target_ticket.id)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        it 'does remove the link from the merged ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: ticket.id
+          )
+          expect(links.count).to eq(1) # one link to the source ticket (no normal link)
+        end
+
+        it 'does not remove the link from the target ticket' do
+          links = Link.list(
+            link_object:       'Ticket',
+            link_object_value: target_ticket.id
+          )
+          expect(links.count).to eq(3) # one lin to the merged ticket + parent link + normal link
+        end
+      end
+
       context 'when merging' do
         let(:merge_user) { create(:user) }
 

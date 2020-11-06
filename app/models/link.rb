@@ -244,4 +244,32 @@ class Link < ApplicationModel
     end
   end
 
+  def self.duplicates(object1_id:, object1_value:, object2_value:, object2_id: nil)
+    if !object2_id
+      object2_id = object1_id
+    end
+
+    Link.joins(', links as linksb').where('
+       (
+         links.link_type_id = linksb.link_type_id
+         AND links.link_object_source_id = linksb.link_object_source_id
+         AND links.link_object_source_value = linksb.link_object_source_value
+         AND links.link_object_target_id = ?
+         AND linksb.link_object_target_id = ?
+         AND links.link_object_target_value = ?
+         AND linksb.link_object_target_value = ?
+       )
+       OR
+       (
+         links.link_type_id = linksb.link_type_id
+         AND links.link_object_target_id = linksb.link_object_target_id
+         AND links.link_object_target_value = linksb.link_object_target_value
+         AND links.link_object_source_id = ?
+         AND linksb.link_object_source_id = ?
+         AND links.link_object_source_value = ?
+         AND linksb.link_object_source_value = ?
+       )
+    ', object1_id, object2_id, object1_value, object2_value, object1_id, object2_id, object1_value, object2_value)
+  end
+
 end
