@@ -457,7 +457,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains all",
-          "value": ["tag a", "not existing"],
+          "value": "tag a, not existing",
         },
       }
     };
@@ -479,7 +479,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains all not",
-          "value": ["tag a", "tag b"],
+          "value": "tag a, tag b",
         },
       }
     };
@@ -490,7 +490,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains all not",
-          "value": ["tag a", "tag b", "tag c"],
+          "value": "tag a, tag b, tag c",
         },
       }
     };
@@ -501,7 +501,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains all not",
-          "value": ["tag c", "tag d"],
+          "value": "tag c, tag d",
         },
       }
     };
@@ -516,7 +516,6 @@ window.onload = function() {
         },
       }
     };
-
     result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
@@ -524,7 +523,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains one not",
-          "value": ["tag a", "tag b"],
+          "value": "tag a, tag b",
         },
       }
     };
@@ -535,7 +534,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains one not",
-          "value": ["tag a", "tag c"],
+          "value": "tag a, tag c",
         },
       }
     };
@@ -546,7 +545,7 @@ window.onload = function() {
       "condition": {
         "ticket.tags": {
           "operator": "contains one not",
-          "value": ["tag c"],
+          "value": "tag c",
         },
       }
     };

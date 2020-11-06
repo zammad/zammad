@@ -120,7 +120,7 @@ class App.Ticket extends App.Model
 
         # apply tag changes
         if attributes[1] is 'tags'
-          tags = content.value.split(',')
+          tags = content.value.split(/\s*,\s*/)
           for tag in tags
             if content.operator is 'remove'
               if params.callback && params.callback.tagRemove
@@ -244,6 +244,9 @@ class App.Ticket extends App.Model
     contains_regex = new RegExp(App.Utils.escapeRegExp(conditionValue.toString()), 'i')
 
     # move value to array if it is not already
+    if objectName is 'ticket' && attributeName is 'tags'
+      conditionValue = conditionValue.split(/\s*,\s*/)
+
     if !_.isArray(objectValue)
       objectValue = [objectValue]
     # move value to array if it is not already
