@@ -75,5 +75,28 @@ FactoryBot.define do
         }
       end
     end
+
+    trait '23:59/7' do
+      business_hours_generated
+
+      timeframe_alldays { ['00:00', '23:59'] }
+    end
+
+    trait :business_hours_generated do
+      transient do
+        timeframe_alldays  { nil }
+        timeframe_workdays { timeframe_alldays }
+        timeframe_weekends { timeframe_alldays }
+        config_workdays    { timeframe_workdays ? { active: true, timeframes: [timeframe_workdays] } : {} }
+        config_weekends    { timeframe_weekends ? { active: true, timeframes: [timeframe_weekends] } : {} }
+      end
+
+      business_hours do
+        hash = {}
+        %i[mon tue wed thu fri].each_with_object(hash) { |elem, memo| memo[elem] = config_workdays }
+        %i[sat sun].each_with_object(hash)             { |elem, memo| memo[elem] = config_weekends }
+        hash
+      end
+    end
   end
 end

@@ -220,4 +220,41 @@ RSpec.describe Calendar, type: :model do
       end
     end
   end
+
+  describe '#biz' do
+    it 'overnight minutes are counted correctly' do
+      travel_to Time.current.noon
+
+      calendar = create(:calendar, '23:59/7')
+      biz      = calendar.biz
+
+      expect(biz.time(24, :hours).after(Time.current)).to eq 1.day.from_now
+    end
+  end
+
+  describe '#business_hours_to_hash' do
+    it 'returns a hash with all weekdays' do
+      calendar = create(:calendar, '23:59/7')
+      hash     = calendar.business_hours_to_hash
+
+      expect(hash.keys).to eq %i[mon tue wed thu fri sat sun]
+    end
+
+    context 'with mocked hours' do
+      let(:calendar) { create(:calendar, '23:59/7') }
+      let(:result)   { calendar.business_hours_to_hash }
+
+      before do
+        calendar.business_hours = {
+          day_1: { active: true, timeframes: [['09:00', '17:00']] },
+          day_2: { active: true, timeframes: [['00:01', '02:00'], ['09:00', '17:00']] },
+          day_3: { active: false, timeframes: [['09:00', '17:00']] }
+        }
+      end
+
+      it { expect(result.keys).to eq %i[day_1 day_2] }
+      it { expect(result[:day_1]).to eq({ '09:00' => '17:00' }) }
+      it { expect(result[:day_2]).to eq({ '09:00' => '17:00', '00:01' => '02:00' }) }
+    end
+  end
 end
