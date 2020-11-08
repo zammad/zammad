@@ -141,18 +141,20 @@ class SidebarTicket extends App.Controller
         links:       @links
       )
 
-      if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
-        @linkKbAnswerWidget = new App.WidgetLinkKbAnswer(
-          el:          localEl.filter('.link_kb_answers')
-          object_type: 'Ticket'
-          object:      @ticket
-          links:       @links
-        )
-
       @timeUnitWidget = new App.TicketZoomTimeUnit(
         el:        localEl.filter('.js-timeUnit')
         object_id: @ticket.id
       )
+
+    if (@ticket.currentView() is 'agent' or @ticket.currentView() is 'customer') and @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
+      @linkKbAnswerWidget = new App.WidgetLinkKbAnswer(
+        el:          localEl.filter('.link_kb_answers')
+        object_type: 'Ticket'
+        object:      @ticket
+        links:       @links
+        isAgent: @ticket.currentView() is 'agent'
+      )
+
     @html localEl
 
   showTicketHistory: =>
