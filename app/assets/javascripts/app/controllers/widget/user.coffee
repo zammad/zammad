@@ -14,6 +14,9 @@ class App.WidgetUser extends App.Controller
   release: =>
     App.User.unsubscribe(@subscribeId)
 
+  getAdvancedSearchUrl: (customer_id, state_id) =>
+    return "/#search/customer_id: #{customer_id} and state_id: #{state_id}"
+
   render: (user) =>
 
     # execute callback on render/rerender
@@ -46,10 +49,12 @@ class App.WidgetUser extends App.Controller
       userData.push attributeConfig
 
     if user.preferences
+      console.log(user)
       items = []
       if user.preferences.tickets_open > 0
+        ticket_open_id = App.TicketState.findByAttribute( 'name', 'new' ).id
         item =
-          url: ''
+          url: @getAdvancedSearchUrl(@user_id, ticket_open_id)
           name: 'open'
           count: user.preferences.tickets_open
           title: 'Open Tickets'
@@ -57,8 +62,9 @@ class App.WidgetUser extends App.Controller
           data:  'open'
         items.push item
       if user.preferences.tickets_closed > 0
+        ticket_close_id = App.TicketState.findByAttribute( 'name', 'closed' ).id
         item =
-          url: ''
+          url: @getAdvancedSearchUrl(@user_id, ticket_close_id)
           name: 'closed'
           count: user.preferences.tickets_closed
           title: 'Closed Tickets'
