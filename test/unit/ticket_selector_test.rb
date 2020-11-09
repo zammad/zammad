@@ -415,29 +415,6 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    @group.id,
       },
       'ticket.created_at' => {
-        operator: 'within next (relative)',
-        range:    'year', # minute|hour|day|month|
-        value:    '10',
-      },
-    }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
-    assert_equal(ticket_count, 3)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
-    assert_equal(ticket_count, 0)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
-    assert_equal(ticket_count, 1)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
-    assert_equal(ticket_count, 2)
-
-    condition = {
-      'ticket.group_id'   => {
-        operator: 'is',
-        value:    @group.id,
-      },
-      'ticket.created_at' => {
         operator: 'within last (relative)',
         range:    'year', # minute|hour|day|month|
         value:    '10',
@@ -566,29 +543,6 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
-
-    condition = {
-      'ticket.group_id'   => {
-        operator: 'is',
-        value:    @group.id,
-      },
-      'ticket.updated_at' => {
-        operator: 'within next (relative)',
-        range:    'year', # minute|hour|day|month|
-        value:    '10',
-      },
-    }
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
-    assert_equal(ticket_count, 3)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
-    assert_equal(ticket_count, 0)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
-    assert_equal(ticket_count, 1)
-
-    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
-    assert_equal(ticket_count, 2)
 
     condition = {
       'ticket.group_id'   => {

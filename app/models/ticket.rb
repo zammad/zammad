@@ -813,7 +813,7 @@ condition example
         query += "#{attribute} >= ?"
         bind_params.push selector['value']
       elsif selector['operator'] == 'within last (relative)'
-        query += "#{attribute} >= ?"
+        query += "#{attribute} BETWEEN ? AND ?"
         time = nil
         case selector['range']
         when 'minute'
@@ -830,8 +830,9 @@ condition example
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
+        bind_params.push Time.zone.now
       elsif selector['operator'] == 'within next (relative)'
-        query += "#{attribute} <= ?"
+        query += "#{attribute} BETWEEN ? AND ?"
         time = nil
         case selector['range']
         when 'minute'
@@ -847,6 +848,7 @@ condition example
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
+        bind_params.push Time.zone.now
         bind_params.push time
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
