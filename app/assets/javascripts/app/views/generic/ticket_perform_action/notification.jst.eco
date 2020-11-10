@@ -17,7 +17,7 @@
   <div class="formGroup-label">
     <label><%- @T('Subject') %></label>
   </div>
-  <div class="controls js-subject"><input type="text" name="<%= @name %>::subject" value="<%= @meta.subject %>" style="width: 100%;" placeholder="<%- @T('Subject') %>"></div>
+  <div class="controls js-subject"><input type="text" name="<%= @name %>::subject" value="<%= @meta.subject %>" style="width: 100%;" placeholder="<%- @T('Subject') %>" class="form-control"></div>
 </div>
 <% end %>
 <div class="form-group">

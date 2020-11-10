@@ -399,6 +399,22 @@ RSpec.describe Ticket, type: :model do
           include_examples 'verify log visibility status'
         end
       end
+
+      context 'with a "notification.webhook" trigger', performs_jobs: true do
+        let(:trigger) do
+          create(:trigger,
+                 perform: {
+                   'notification.webhook' => {
+                     endpoint: 'http://api.example.com/webhook',
+                     token:    '53CR3t'
+                   }
+                 })
+        end
+
+        it 'schedules the webhooks notification job' do
+          expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(trigger, ticket, nil)
+        end
+      end
     end
 
     describe '#subject_build' do

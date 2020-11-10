@@ -1040,6 +1040,8 @@ perform changes on ticket
         next
       when 'notification.email'
         send_email_notification(value, article, perform_origin)
+      when 'notification.webhook'
+        TriggerWebhookJob.perform_later(performable, self, article)
       end
     end
 
@@ -1775,6 +1777,5 @@ result
       updated_by_id: 1,
       created_by_id: 1,
     )
-
   end
 end

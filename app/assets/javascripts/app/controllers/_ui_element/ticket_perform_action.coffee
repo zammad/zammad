@@ -23,6 +23,7 @@ class App.UiElement.ticket_perform_action
         if groupKey is 'notification'
           elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
           elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
+          elements["#{groupKey}.webhook"] = { name: 'webhook', display: 'Webhook' }
         else if groupKey is 'article'
           elements["#{groupKey}.note"] = { name: 'note', display: 'Note' }
       else
@@ -395,12 +396,17 @@ class App.UiElement.ticket_perform_action
 
     selectionRecipient = columnSelectRecipient.element()
 
-    notificationElement = $( App.view('generic/ticket_perform_action/notification')(
+    elementTemplate = 'notification'
+    if notificationType is 'webhook'
+      elementTemplate =  'webhook'
+
+    notificationElement = $( App.view("generic/ticket_perform_action/#{elementTemplate}")(
       attribute: attribute
       name: name
       notificationType: notificationType
       meta: meta || {}
     ))
+
     notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
 
     visibilitySelection = App.UiElement.select.render(
