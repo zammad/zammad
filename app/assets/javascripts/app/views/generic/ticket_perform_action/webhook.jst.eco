@@ -1,0 +1,24 @@
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Endpoint') %></label>
+  </div>
+  <div class="controls">
+    <input type="url" name="<%= @name %>::endpoint" value="<%= @meta.endpoint %>" class="form-control" style="width: 100%;" placeholder="https://target.example.com/webhook">
+  </div>
+</div>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('%s Signature Token', 'HMAC-SHA1')%></label>
+  </div>
+  <div class="controls">
+    <input type="text" name="<%= @name %>::token" value="<%= @meta.token %>" class="form-control" style="width: 100%;" placeholder="<%- @T('some token') %>">
+  </div>
+</div>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Verify SSL')%></label>
+  </div>
+  <div class="controls">
+    <input type="checkbox" name="<%= @name %>::verify_ssl" <% if @meta.verify_ssl: %>checked<% end %>>
+  </div>
+</div>

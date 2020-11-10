@@ -12,9 +12,10 @@ module ChecksPerformValidation
     validate_perform = Marshal.load(Marshal.dump(perform))
 
     check_present = {
-      'article.note'       => %w[body subject internal],
-      'notification.email' => %w[body recipient subject],
-      'notification.sms'   => %w[body recipient],
+      'article.note'         => %w[body subject internal],
+      'notification.email'   => %w[body recipient subject],
+      'notification.sms'     => %w[body recipient],
+      'notification.webhook' => %w[endpoint],
     }
 
     check_present.each do |key, values|
