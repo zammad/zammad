@@ -5,8 +5,6 @@ class TextModule < ApplicationModel
   include ChecksHtmlSanitized
   include CanCsvImport
 
-  belongs_to :user, optional: true
-
   validates :name,    presence: true
   validates :content, presence: true
 

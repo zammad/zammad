@@ -25,7 +25,6 @@ class User < ApplicationModel
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :online_notifications,   dependent: :destroy
-  has_many                :templates,              dependent: :destroy
   has_many                :taskbars,               dependent: :destroy
   has_many                :user_devices,           dependent: :destroy
   has_one                 :chat_agent_created_by,  class_name: 'Chat::Agent', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
@@ -34,7 +33,6 @@ class User < ApplicationModel
   has_many                :karma_user,             class_name: 'Karma::User', dependent: :destroy
   has_many                :karma_activity_logs,    class_name: 'Karma::ActivityLog', dependent: :destroy
   has_many                :cti_caller_ids,         class_name: 'Cti::CallerId', dependent: :destroy
-  has_many                :text_modules,           dependent: :destroy
   has_many                :customer_tickets,       class_name: 'Ticket', foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer
   has_many                :owner_tickets,          class_name: 'Ticket', foreign_key: :owner_id, inverse_of: :owner
   has_many                :created_recent_views,   class_name: 'RecentView', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by

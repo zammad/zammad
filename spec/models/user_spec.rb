@@ -835,7 +835,7 @@ RSpec.describe User, type: :model do
                      'OnlineNotification'                 => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket'                             =>
                                                              { 'created_by_id' => 0, 'updated_by_id' => 0, 'owner_id' => 1, 'customer_id' => 3 },
-                     'Template'                           => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Template'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Avatar'                             => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Scheduler'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Chat'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -873,7 +873,7 @@ RSpec.describe User, type: :model do
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
                      'StatsStore'                         => { 'created_by_id' => 0 },
-                     'TextModule'                         => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'TextModule'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Calendar'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'UserGroup'                          => { 'user_id' => 1 },
                      'Signature'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -882,12 +882,10 @@ RSpec.describe User, type: :model do
       # delete objects
       token               = create(:token, user: user)
       online_notification = create(:online_notification, user: user)
-      template            = create(:template, :dummy_data, user: user)
       taskbar             = create(:taskbar, user: user)
       user_device         = create(:user_device, user: user)
       karma_activity_log  = create(:karma_activity_log, user: user)
       cti_caller_id       = create(:cti_caller_id, user: user)
-      text_module         = create(:text_module, user: user)
       authorization       = create(:twitter_authorization, user: user)
       recent_view         = create(:recent_view, created_by: user)
       avatar              = create(:avatar, o_id: user.id)
@@ -918,12 +916,10 @@ RSpec.describe User, type: :model do
 
       expect { token.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { online_notification.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect { template.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { taskbar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { user_device.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { karma_activity_log.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { cti_caller_id.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect { text_module.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { authorization.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { recent_view.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { avatar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
