@@ -1,5 +1,5 @@
 class App.Organization extends App.Model
-  @configure 'Organization', 'name', 'shared', 'note', 'member_ids', 'active', 'updated_at'
+  @configure 'Organization', 'name', 'shared', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
