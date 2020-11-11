@@ -32,6 +32,8 @@ App.TicketNavigable =
     if nextTicket
       @taskCloseTicket()
       @taskLoadTicket(nextTicket.id)
+
+      @navigate "#ticket/zoom/#{nextTicket.id}"
       return
 
     @taskCloseTicket(true)
