@@ -47,6 +47,18 @@ RSpec.describe Organization, type: :model do
         organization.destroy
         expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       end
+
+      describe 'when changes for member_ids' do
+        let(:agent1) { create(:agent) }
+        let(:agent2) { create(:agent) }
+        let(:agent3) { create(:agent) }
+        let(:organization_agents) { create(:organization, member_ids: [agent1.id, agent2.id, agent3.id]) }
+
+        it 'does not delete users' do
+          organization_agents.update(member_ids: [agent1.id, agent2.id])
+          expect { agent3.reload }.not_to raise_error
+        end
+      end
     end
   end
 

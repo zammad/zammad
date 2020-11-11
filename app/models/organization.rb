@@ -15,11 +15,12 @@ class Organization < ApplicationModel
   include Organization::Search
   include Organization::SearchIndex
 
-  has_many :members, class_name: 'User', dependent: :destroy
-  has_many :tickets, class_name: 'Ticket', dependent: :destroy
+  has_many :members, class_name: 'User'
+  has_many :tickets, class_name: 'Ticket'
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+  before_destroy :delete_associations
 
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
@@ -42,4 +43,8 @@ class Organization < ApplicationModel
     true
   end
 
+  def delete_associations
+    User.where(organization_id: id).find_each(&:destroy)
+    Ticket.where(organization_id: id).find_each(&:destroy)
+  end
 end
