@@ -1,10 +1,14 @@
-class RoleSignupColumn < ActiveRecord::Migration[5.2]
+class RoleSignupColumnFix < ActiveRecord::Migration[5.2]
   def change
 
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    add_column :permissions, :allow_signup, :boolean, null: false, default: false
+    if !column_exists?(:permissions, :allow_signup)
+      add_column :permissions, :allow_signup, :boolean, null: false, default: false
+    end
+
+    Permission.reset_column_information
 
     signup_permissions = [
       'user_preferences',
