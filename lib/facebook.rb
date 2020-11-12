@@ -137,19 +137,6 @@ result
     }
     if auth
       user = User.find(auth.user_id)
-      map = {
-        #note: 'description',
-      }
-
-      # ignore if value is already set
-      map.each do |target, source|
-        next if user[target].present?
-
-        new_value = tweet_user.send(source).to_s
-        next if new_value.blank?
-
-        user_data[target] = new_value
-      end
       user.update!(user_data)
     else
       user_data[:login] = item_user['id']

@@ -700,11 +700,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     rescue
       begin
         case file.header[:content_disposition].to_s
-        when /(filename|name)(\*{0,1})="(.+?)"/i
-          filename = $3
-        when /(filename|name)(\*{0,1})='(.+?)'/i
-          filename = $3
-        when /(filename|name)(\*{0,1})=(.+?);/i
+        when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
           filename = $3
         end
       rescue
@@ -714,11 +710,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     begin
       case file.header[:content_disposition].to_s
-      when /(filename|name)(\*{0,1})="(.+?)"/i
-        filename = $3
-      when /(filename|name)(\*{0,1})='(.+?)'/i
-        filename = $3
-      when /(filename|name)(\*{0,1})=(.+?);/i
+      when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
         filename = $3
       end
     rescue
@@ -728,11 +720,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # as fallback, use raw values
     if filename.blank?
       case headers_store['Content-Disposition'].to_s
-      when /(filename|name)(\*{0,1})="(.+?)"/i
-        filename = $3
-      when /(filename|name)(\*{0,1})='(.+?)'/i
-        filename = $3
-      when /(filename|name)(\*{0,1})=(.+?);/i
+      when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
         filename = $3
       end
     end

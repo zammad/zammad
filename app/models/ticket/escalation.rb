@@ -98,6 +98,7 @@ returns
     end
 
     # get last_update_at
+    # rubocop:disable Lint/DuplicateBranch
     if !last_contact_customer_at && !last_contact_agent_at
       last_update_at = created_at
     elsif !last_contact_customer_at && last_contact_agent_at
@@ -109,6 +110,7 @@ returns
     elsif last_contact_agent_at < last_contact_customer_at
       last_update_at = last_contact_customer_at
     end
+    # rubocop:enable Lint/DuplicateBranch
 
     # check if calculation need be done
     escalation_calculation = preferences[:escalation_calculation] || {}

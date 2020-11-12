@@ -66,9 +66,7 @@ class Channel::Filter::MonitoringBase
     # possible event types https://mmonit.com/monit/documentation/#Setting-an-event-filter
     if result['state'].blank?
       result['state'] = case mail[:body]
-                        when /\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/
-                          'OK'
-                        when /(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/
+                        when /\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/, /(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/
                           'OK'
                         else
                           'CRITICAL'

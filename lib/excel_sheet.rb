@@ -74,9 +74,7 @@ class ExcelSheet
     @current_column = 0
     record.each do |item|
       begin
-        if item.acts_like?(:time)
-          value_convert(item, nil, { data_type: 'datetime' })
-        elsif item.acts_like?(:date)
+        if item.acts_like?(:time) || item.acts_like?(:date)
           value_convert(item, nil, { data_type: 'datetime' })
         elsif item.is_a?(Integer) || item.is_a?(Float)
           value_convert(item, nil, { data_type: 'integer' })

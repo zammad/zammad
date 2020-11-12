@@ -77,9 +77,7 @@ module ApplicationController::HandlesErrors
       data[:error_human] = $1
     elsif e.message.match?(/(already exists|duplicate key|duplicate entry)/i)
       data[:error_human] = 'Object already exists!'
-    elsif e.message =~ /null value in column "(.+?)" violates not-null constraint/i
-      data[:error_human] = "Attribute '#{$1}' required!"
-    elsif e.message =~ /Field '(.+?)' doesn't have a default value/i
+    elsif e.message =~ /null value in column "(.+?)" violates not-null constraint/i || e.message =~ /Field '(.+?)' doesn't have a default value/i
       data[:error_human] = "Attribute '#{$1}' required!"
     elsif e.message == 'Exceptions::NotAuthorized'
       data[:error]       = 'Not authorized'

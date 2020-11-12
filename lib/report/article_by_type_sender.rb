@@ -44,9 +44,7 @@ returns
       case params[:interval]
       when 'month'
         params[:range_end] = params[:range_start].next_month
-      when 'week'
-        params[:range_end] = params[:range_start].next_day
-      when 'day'
+      when 'week', 'day'
         params[:range_end] = params[:range_start].next_day
       when 'hour'
         params[:range_end] = params[:range_start] + 1.hour

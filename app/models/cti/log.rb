@@ -426,9 +426,7 @@ Cti::Log.process(
         log.with_lock do
           log.done = done
           if params['direction'] == 'in'
-            if log.state == 'newCall' && cause != 'forwarded'
-              log.done = false
-            elsif log.to_comment == 'voicemail'
+            if (log.state == 'newCall' && cause != 'forwarded') || log.to_comment == 'voicemail' # rubocop:disable Style/SoleNestedConditional
               log.done = false
             end
           end

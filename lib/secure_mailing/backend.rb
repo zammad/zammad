@@ -1,2 +1,2 @@
-class SecureMailing::Backend
+class SecureMailing::Backend # rubocop:disable Lint/EmptyClass
 end

@@ -20,13 +20,7 @@ module Import
 
       def active?(record)
         case record['ValidID'].to_s
-        when '3'
-          false
-        when '2'
-          false
-        when '1'
-          true
-        when '0'
+        when '3', '2', '0'
           false
         else
           true

@@ -19,7 +19,7 @@ class EmailAddressValidation
   # @return [true]  if email address has valid format
   # @return [false] if email address has no valid format
   def valid_format?
-    # Note: Don't use ValidEmail2::Address.valid? here because it requires the
+    # NOTE: Don't use ValidEmail2::Address.valid? here because it requires the
     # email address to have a dot in its domain.
     @valid_format ||= email_address.match?(URI::MailTo::EMAIL_REGEXP)
   end

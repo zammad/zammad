@@ -605,7 +605,7 @@ returns
     if params[:channel_post]
       return if params[:channel_post][:new_chat_title] # happens when channel title is renamed, we use [:chat][:title] already, safely ignore this.
 
-      # note: used .blank? which is a rails method. empty? does not work on integers (values like date, width, height)  to check.
+      # NOTE: used .blank? which is a rails method. empty? does not work on integers (values like date, width, height)  to check.
       # need delete_if to remove any empty hashes, .compact only removes keys with nil values.
       params[:message] = {
         document:   {

@@ -1,4 +1,4 @@
 class Channel
-  class Driver
+  class Driver # rubocop:disable Lint/EmptyClass
   end
 end

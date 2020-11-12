@@ -220,21 +220,7 @@ class FirstStepsController < ApplicationController
   end
 
   def check_availability(result)
-    test_ticket_active = true
-    overview = test_overview
-
-    if !overview
-      test_ticket_active = false
-    elsif overview.updated_by_id != 1
-      test_ticket_active = false
-    end
-    if !test_customer
-      test_ticket_active = false
-    end
-    if Group.where(active: true, name: 'Users').count.zero?
-      test_ticket_active = false
-    end
-    return result if test_ticket_active
+    return result if test_ticket_active?
 
     result.each do |item|
       items = []
@@ -248,4 +234,14 @@ class FirstStepsController < ApplicationController
     result
   end
 
+  def test_ticket_active?
+    overview = test_overview
+
+    return false if !overview
+    return false if overview.updated_by_id != 1
+    return false if !test_customer
+    return false if Group.where(active: true, name: 'Users').count.zero?
+
+    true
+  end
 end

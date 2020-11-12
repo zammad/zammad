@@ -591,15 +591,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        when /^integer|user_autocompletion|datetime|date$/
-          ActiveRecord::Migration.change_column(
-            model.table_name,
-            attribute.name,
-            data_type,
-            default: attribute.data_option[:default],
-            null:    true
-          )
-        when /^boolean|active$/
+        when /^integer|user_autocompletion|datetime|date$/, /^boolean|active$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -631,23 +623,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      when /^integer|user_autocompletion$/
-        ActiveRecord::Migration.add_column(
-          model.table_name,
-          attribute.name,
-          data_type,
-          default: attribute.data_option[:default],
-          null:    true
-        )
-      when /^boolean|active$/
-        ActiveRecord::Migration.add_column(
-          model.table_name,
-          attribute.name,
-          data_type,
-          default: attribute.data_option[:default],
-          null:    true
-        )
-      when /^datetime|date$/
+      when /^integer|user_autocompletion$/, /^boolean|active$/, /^datetime|date$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,

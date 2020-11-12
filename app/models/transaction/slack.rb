@@ -214,11 +214,8 @@ class Transaction::Slack
     @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
-      if attribute_list.blank?
-        user_related_changes[key] = value
-
-      # if config exists, just use existing attributes for user
-      elsif attribute_list[key.to_s]
+      # or if config exists, just use existing attributes for user
+      if attribute_list.blank? || attribute_list[key.to_s]
         user_related_changes[key] = value
       end
     end

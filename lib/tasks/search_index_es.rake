@@ -250,7 +250,7 @@ def get_mapping_properties_object(object)
       result[name][:properties][key] = {
         type: 'integer',
       }
-    elsif value.type == :datetime
+    elsif value.type == :datetime || value.type == :date
       result[name][:properties][key] = {
         type: 'date',
       }
@@ -272,10 +272,6 @@ def get_mapping_properties_object(object)
     elsif value.type == :decimal
       result[name][:properties][key] = {
         type: 'float',
-      }
-    elsif value.type == :date
-      result[name][:properties][key] = {
-        type: 'date',
       }
     end
   end
