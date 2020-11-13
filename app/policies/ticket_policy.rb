@@ -5,6 +5,7 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def create?
+    ensure_group!
     access?('create')
   end
 
@@ -24,6 +25,12 @@ class TicketPolicy < ApplicationPolicy
 
   def full?
     access?('full')
+  end
+
+  def ensure_group!
+    return if record.group_id
+
+    raise Exceptions::UnprocessableEntity, "Group can't be blank"
   end
 
   def follow_up?

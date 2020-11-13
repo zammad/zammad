@@ -143,6 +143,7 @@ class TicketsController < ApplicationController
 
     clean_params = Ticket.param_cleanup(clean_params, true)
     ticket = Ticket.new(clean_params)
+    authorize!(ticket, :create?)
 
     # check if article is given
     if !params[:article]
@@ -432,6 +433,7 @@ class TicketsController < ApplicationController
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
+      view:         'ticket_create',
       current_user: current_user,
     )
     render json: attributes_to_change

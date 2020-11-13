@@ -100,7 +100,11 @@ returns
 
     filter[:group_id] = []
     groups = if params[:current_user].permissions?('ticket.agent')
-               params[:current_user].groups_access(%w[create change])
+               if params[:view] == 'ticket_create'
+                 params[:current_user].groups_access(%w[create])
+               else
+                 params[:current_user].groups_access(%w[create change])
+               end
              else
                Group.where(active: true)
              end

@@ -5,11 +5,21 @@ RSpec.describe 'Ticket', type: :request do
   let!(:ticket_group) do
     create(:group, email_address: create(:email_address) )
   end
+  let!(:ticket_group_without_create) do
+    create(:group, email_address: create(:email_address) )
+  end
   let(:admin) do
     create(:admin, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')
   end
   let!(:agent) do
     create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+  end
+  let!(:agent_change_only) do
+    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+    user.group_names_access_map = {
+      ticket_group_without_create.name => %w[read change],
+    }
+    user
   end
   let!(:customer) do
     create(
@@ -56,6 +66,27 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "not_existing"')
+    end
+
+    it 'does ticket create with agent - valid group but no create permissions (01.02a)' do
+      params = {
+        title:       'a new ticket #1',
+        group:       ticket_group_without_create.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id,
+        article:     {
+          content_type: 'text/plain', # or text/html
+          body:         'some body',
+          sender:       'Customer',
+          type:         'note',
+        },
+      }
+      authenticated_as(agent_change_only)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:unauthorized)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to eq('Not authorized')
     end
 
     it 'does ticket create with agent - missing article.body (01.03)' do
