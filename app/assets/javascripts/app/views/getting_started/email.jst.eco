@@ -89,7 +89,7 @@
           <p><%- @T('Should the emails from this mailbox be imported as an archive or as regular emails?') %></p>
 
           <ul>
-            <li><%- @T('Import as archive: |No notifications are sent|, the |tickets are closed| and timestamps are removed. You can still find them in Zammad using the search.') %></li>
+            <li><%- @T('Import as archive: |No notifications are sent|, the |tickets are closed| and original timestamps are used. You can still find them in Zammad using the search.') %></li>
             <li><%- @T('Import as regular: |Notifications are sent| and the |tickets are open| - you can find the tickets in the overview of open tickets.') %></li>
           </ul>
 
