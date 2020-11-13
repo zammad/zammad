@@ -3,7 +3,7 @@ module RuboCop
     module Zammad
       class ExistsDateTimePrecision < Cop
         def_node_matcher :column?, <<-PATTERN
-          $(send _ {:create_column :change_column} (sym _) (sym _) (sym :datetime) ... )
+          $(send _ {:add_column :change_column} (sym _) (sym _) (sym :datetime) ... )
         PATTERN
 
         def_node_matcher :column_limit?, <<-PATTERN
@@ -25,7 +25,7 @@ module RuboCop
 
 =begin
 
-This rubocop will match all change_column/create_column/create_table/alter_table statements
+This rubocop will match all change_column/add_column/create_table/alter_table statements
 and check if there are :datetime or :timestamps column which do not have the limit: 3 setting.
 
   good:

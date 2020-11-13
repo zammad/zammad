@@ -312,3 +312,11 @@ Lint/UnusedMethodArgument:
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'
+
+Zammad/ExistsDateTimePrecision:
+  Include:
+    - "db/migrate/*.rb"
+
+Zammad/ExistsResetColumnInformation:
+  Include:
+    - "db/migrate/*.rb"
