@@ -87,11 +87,25 @@
   }
 
   Editor.prototype.onKeydown = function (event) {
+    var elem = this.$element.closest('[contenteditable=true]')
+    var previous = this.$element.parent().parent().prev()
     this.destroy()
 
     switch (event.keyCode) {
       case 8: // backspace
         this.$element.remove()
+        event.preventDefault()
+
+        if(previous[0]){
+          range = document.createRange()
+          range.selectNode(previous[0])
+          range.setStart(range.endContainer, range.endOffset)
+          document.getSelection().removeAllRanges()
+          document.getSelection().addRange(range)
+        }
+
+        elem.focus()
+
         break
       default:
         event.stopPropagation()
