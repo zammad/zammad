@@ -19,7 +19,7 @@ class App.TicketZoom extends App.Controller
     @authenticateCheckRedirect()
 
     @formMeta     = undefined
-    @ticket_id    = params.ticket_id
+    @ticket_id    = parseInt(params.ticket_id)
     @article_id   = params.article_id
     @sidebarState = {}
 
@@ -254,6 +254,11 @@ class App.TicketZoom extends App.Controller
     return if !@attributeBar
     @attributeBar.start()
 
+    if @renderDone && params.overview_id? && @overview_id != params.overview_id
+      @overview_id = params.overview_id
+
+      @renderOverviewNavigator(@el)
+
   # scroll to article if given
   scrollToPosition: (position, delay, article_id) =>
     scrollToDelay = =>
@@ -429,11 +434,7 @@ class App.TicketZoom extends App.Controller
         dir:            App.i18n.dir()
       )
 
-      new App.TicketZoomOverviewNavigator(
-        el:          elLocal.find('.js-overviewNavigatorContainer')
-        ticket_id:   @ticket_id
-        overview_id: @overview_id
-      )
+      @renderOverviewNavigator(elLocal)
 
       new App.TicketZoomTitle(
         object_id:   @ticket_id
@@ -1034,6 +1035,13 @@ class App.TicketZoom extends App.Controller
       ticket:  {}
       article: {}
     App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+
+  renderOverviewNavigator: (parentEl) ->
+    new App.TicketZoomOverviewNavigator(
+      el:          parentEl.find('.js-overviewNavigatorContainer')
+      ticket_id:   @ticket_id
+      overview_id: @overview_id
+    )
 
 class TicketZoomRouter extends App.ControllerPermanent
   requiredPermission: ['ticket.agent', 'ticket.customer']

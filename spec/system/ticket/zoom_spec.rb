@@ -1094,6 +1094,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+<<<<<<< HEAD
   # https://github.com/zammad/zammad/issues/3260
   describe 'next in overview macro changes URL', authenticated_as: :authenticate do
     let(:ticket_a) { create(:ticket, title: 'ticket a', group: Group.first) }
@@ -1164,6 +1165,41 @@ RSpec.describe 'Ticket zoom', type: :system do
     def open_nth_item(nth)
       within :active_content do
         find_all('.table tr.item .user-popover')[nth].click
+      end
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/3267
+  describe 'previous/next buttons are added when open ticket is opened from overview' do
+    let(:ticket_a)          { create(:ticket, title: 'ticket a', group: Group.first) }
+    let(:ticket_b)          { create(:ticket, title: 'ticket b', group: Group.first) }
+
+    # prepare an opened ticket and go to overview
+    before do
+      ticket_a && ticket_b
+
+      visit "ticket/zoom/#{ticket_a.id}"
+
+      await_empty_ajax_queue
+
+      visit 'ticket/view/all_unassigned'
+    end
+
+    it 'adds previous/next buttons to existing ticket' do
+      within :active_content do
+        click_on ticket_a.title
+
+        expect(page).to have_css('.pagination-counter')
+      end
+    end
+
+    it 'keeps previous/next buttons when navigating to overview ticket from elsewhere' do
+      within :active_content do
+        click_on ticket_a.title
+        visit 'dashboard'
+        visit "ticket/zoom/#{ticket_a.id}"
+
+        expect(page).to have_css('.pagination-counter')
       end
     end
   end
