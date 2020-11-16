@@ -1094,7 +1094,6 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-<<<<<<< HEAD
   # https://github.com/zammad/zammad/issues/3260
   describe 'next in overview macro changes URL', authenticated_as: :authenticate do
     let(:ticket_a) { create(:ticket, title: 'ticket a', group: Group.first) }
