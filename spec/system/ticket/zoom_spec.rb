@@ -1112,6 +1112,59 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       expect { find(:element_containing, macro.name).click }.to change { current_url }
     end
+  end
 
+  # https://github.com/zammad/zammad/issues/3279
+  describe 'previous/next clickability when at last or first ticket' do
+    let(:ticket_a)          { create(:ticket, title: 'ticket a', group: Group.first) }
+    let(:ticket_b)          { create(:ticket, title: 'ticket b', group: Group.first) }
+
+    before do
+      ticket_a && ticket_b
+
+      visit 'ticket/view/all_unassigned'
+    end
+
+    it 'previous is not clickable for the first item' do
+      open_nth_item(0)
+
+      expect { click '.pagination .previous' }.not_to change { current_url }
+    end
+
+    it 'next is clickable for the first item' do
+      open_nth_item(0)
+
+      expect { click '.pagination .next' }.to change { current_url }
+    end
+
+    it 'previous is clickable for the middle item' do
+      open_nth_item(1)
+
+      expect { click '.pagination .previous' }.to change { current_url }
+    end
+
+    it 'next is clickable for the middle item' do
+      open_nth_item(1)
+
+      expect { click '.pagination .next' }.to change { current_url }
+    end
+
+    it 'previous is clickable for the last item' do
+      open_nth_item(2)
+
+      expect { click '.pagination .previous' }.to change { current_url }
+    end
+
+    it 'next is not clickable for the last item' do
+      open_nth_item(2)
+
+      expect { click '.pagination .next' }.not_to change { current_url }
+    end
+
+    def open_nth_item(nth)
+      within :active_content do
+        find_all('.table tr.item .user-popover')[nth].click
+      end
+    end
   end
 end

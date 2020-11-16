@@ -3,7 +3,7 @@
 </div>
 <ul class="pagination">
   <li <% if !@previous: %>class="disabled"<% end %> title="<%- @Ti( 'Previous in overview' ) %>">
-    <a class="centered previous" href="<% if @previous: %><%- @previous.uiUrl() %><% end %>" data-id="<% if @previous: %><%- @previous.id %><% end %>">
+    <a class="centered previous" href="<% if @previous: %><%- @previous.uiUrl() %><% end %>" <% if @previous: %>data-id="<%- @previous.id %>"<% end %>>
       <% if @previous: %>
         <%- @Icon('arrow-left') %>
       <% else: %>
@@ -11,7 +11,7 @@
       <% end %>
     </a>
   <li <% if !@next: %>class="disabled"<% end %> title="<%- @Ti( 'Next in overview' ) %>">
-    <a class="centered next" href="<% if @next: %><%- @next.uiUrl() %><% end %>" data-id="<% if @next: %><%- @next.id %><% end %>">
+    <a class="centered next" href="<% if @next: %><%- @next.uiUrl() %><% end %>" <% if @next: %>data-id="<%- @next.id %>"<% end %>>
       <% if @next: %>
         <%- @Icon('arrow-right') %>
       <% else: %>
