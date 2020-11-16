@@ -1,5 +1,24 @@
 # Change Log
 
+## [3.5.1](https://github.com/zammad/zammad/tree/3.5.1) (2020-11-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/3.5.0...3.5.1)
+
+**Implemented enhancements:**
+- Error: Kb locales is too long (maximum is 1 character) [3223](https://github.com/zammad/zammad/issues/3223) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Finding a user by email address not possible [3190](https://github.com/zammad/zammad/issues/3190) [[data privacy](https://github.com/zammad/zammad/labels/data privacy)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+
+**Fixed bugs:**
+- In certain cases not all content of an html email is shown (HTML sanitizer will remove to much) [3255](https://github.com/zammad/zammad/issues/3255) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- StatusCode: 500  When searching for an article in a ticket and enter one digit [3148](https://github.com/zammad/zammad/issues/3148) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[search](https://github.com/zammad/zammad/labels/search)]
+- Migration from OTRS error - could not find a valid input encoding (EncodingError) [3250](https://github.com/zammad/zammad/issues/3250) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- link_template for ticket no longer shows a button after update to 3.5 [3214](https://github.com/zammad/zammad/issues/3214) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- DataPrivacyTask - Can't remove user if still referenced in Overview(s) [3220](https://github.com/zammad/zammad/issues/3220) [[bug](https://github.com/zammad/zammad/labels/bug)] [[data privacy](https://github.com/zammad/zammad/labels/data privacy)]
+- Knowldge Base internal answer view goes out of screen if previous or next answer title is very long [3246](https://github.com/zammad/zammad/issues/3246) [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- KnowledgeBase Broken 500 [3231](https://github.com/zammad/zammad/issues/3231) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- In the role settings a role can not be agent and customer at the same time [3226](https://github.com/zammad/zammad/issues/3226) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Hybrid Office-Accounts can't authenticate via Office 365 login [3230](https://github.com/zammad/zammad/issues/3230) [[authentication](https://github.com/zammad/zammad/labels/authentication)] [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[third party issue](https://github.com/zammad/zammad/labels/third party issue)]
+
+
 ## [3.5.0](https://github.com/zammad/zammad/tree/3.5.0) (2020-09-22)
 [Full Changelog](https://github.com/zammad/zammad/compare/3.4.0...3.5.0)
 
