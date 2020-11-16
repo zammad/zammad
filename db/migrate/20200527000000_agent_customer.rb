@@ -5,7 +5,7 @@ class AgentCustomer < ActiveRecord::Migration[5.2]
 
     Role.where(name: %w[Admin Agent Customer]).each do |role|
       role.preferences.delete(:not)
-      role.save!
+      role.update_column(:preferences, role.preferences) # rubocop:disable Rails/SkipsModelValidations
     end
 
     move_filter
