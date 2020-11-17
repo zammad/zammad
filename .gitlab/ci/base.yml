@@ -86,6 +86,12 @@
     - <<: *docker_postgresql
     - <<: *docker_selenium
 
+.services_mysql_postgresql_imap: &services_mysql_postgresql_imap
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_imap
+
 .services_mysql_postgresql_elasticsearch: &services_mysql_postgresql_elasticsearch
   variables:
     ELASTICSEARCH_TAG: 'stable'

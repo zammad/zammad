@@ -33,6 +33,12 @@ variables:
   MAILBOX_INIT: "zammad@mail.test.dc.zammad.com:zammad"
   MAIL_ADDRESS: "zammad@mail.test.dc.zammad.com"
   MAIL_PASS: "zammad"
+  # docker-imap-devel variables required for integration tests
+  MAIL_SERVER: "mail"
+  MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
+  MAIL_SERVER_EMAIL: "zammad@mail.test.dc.zammad.com"
+  KEEP_ON_MAIL_SERVER: "mail"
+  KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
 
 # Cache gems in between jobs and pipelines
 # ATTENTION: We use a combination of the Ruby major and minor version number
