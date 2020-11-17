@@ -15,7 +15,7 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
     steps:
       - name: Extract REPO_USER from GITHUB_REPOSITORY ENV
-        run: echo "::set-env name=REPO_USER::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')"
+        run: echo "REPO_USER=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@master
       - name: Fetch all history for all tags and branches
