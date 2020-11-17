@@ -2,6 +2,7 @@ email_helper_deliver:
   extends:
     - .template_integration
     - .tags_mail
+    - .services_mysql_postgresql_imap
   script:
     - bundle exec rake zammad:db:unseeded
     - bundle exec rails test test/integration/email_helper_test.rb
