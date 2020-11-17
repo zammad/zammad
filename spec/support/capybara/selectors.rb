@@ -43,7 +43,3 @@ end
 Capybara.add_selector(:link_containing) do
   xpath { |text| ".//a//*[text()[contains(.,\"#{text}\")]]" }
 end
-
-Capybara.add_selector(:element_containing) do
-  xpath { |text| ".//*[text()[contains(.,\"#{text}\")]]" }
-end

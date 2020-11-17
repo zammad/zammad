@@ -1096,21 +1096,23 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   # https://github.com/zammad/zammad/issues/3260
   describe 'next in overview macro changes URL', authenticated_as: :authenticate do
-    let(:ticket_a) { create(:ticket, title: 'ticket a', group: Group.first) }
-    let(:macro)    { create(:macro, name: 'next macro', ux_flow_next_up: 'next_from_overview') }
+    let(:next_ticket) { create(:ticket, title: 'next Ticket', group: Group.first) }
+    let(:macro)       { create(:macro, name: 'next macro', ux_flow_next_up: 'next_from_overview') }
 
     def authenticate
-      ticket_a && macro
+      next_ticket && macro
 
       true
     end
 
-    it 'works' do
+    it 'to next Ticket ID' do
       visit 'ticket/view/all_unassigned'
       click_on 'Welcome to Zammad!'
       click '.js-openDropdownMacro'
+      find(:macro, macro.id).click
+      wait(5, interval: 1).until_constant { current_url }
 
-      expect { find(:element_containing, macro.name).click }.to change { current_url }
+      expect(current_url).to include("ticket/zoom/#{next_ticket.id}")
     end
   end
 
