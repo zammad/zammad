@@ -1,6 +1,6 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our online documentation %l.', 'Google App', 'https://admin-docs.zammad.org/en/latest/channels/google.html') %>
+  <%- @T('The tutorial on how to manage a %s is hosted on our online documentation %l.', 'Google App', 'https://admin-docs.zammad.org/en/latest/channels/google/index.html') %>
 </p>
 <fieldset>
   <h2><%- @T('Enter your %s App Keys', 'Google') %></h2>
