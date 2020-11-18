@@ -323,22 +323,8 @@ RSpec/ExpectInHook:
 RSpec/FilePath:
   Exclude:
     - 'spec/db/migrate/20171023000001_fixed_store_upgrade_ror_45_spec.rb'
-    - 'spec/db/migrate/issue_1219_zhtw_locale_typo_spec.rb'
-    - 'spec/db/migrate/issue_1660_fix_tree_select_configurations_spec.rb'
-    - 'spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb'
-    - 'spec/db/migrate/issue_1977_remove_invalid_user_foreign_keys_spec.rb'
-    - 'spec/db/migrate/issue_2019_fix_double_domain_links_in_trigger_emails_spec.rb'
-    - 'spec/db/migrate/issue_2140_reset_ldap_config_spec.rb'
-    - 'spec/db/migrate/issue_2333_object_country_already_exists_spec.rb'
-    - 'spec/db/migrate/issue_2345_es_attachment_max_size_in_mb_setting_lower_default_spec.rb'
-    - 'spec/db/migrate/issue_2368_add_indices_to_histories_and_tickets_spec.rb'
-    - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
-    - 'spec/db/migrate/issue_2608_missing_trigger_permission_spec.rb'
-    - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
-    - 'spec/db/migrate/issue_2715_fix_broken_twitter_urls_spec.rb'
-    - 'spec/db/migrate/issue_2943_add_setting_enforce_special_character_spec.rb'
-    - 'spec/jobs/issue_2715_fix_broken_twitter_urls_job_spec.rb'
-    - 'spec/db/migrate/issue_2867_footer_header_public_link_spec.rb'
+    - 'spec/db/migrate/issue_*_spec.rb'
+    - 'spec/jobs/issue_*_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
 
 RSpec/InstanceVariable:

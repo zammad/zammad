@@ -1250,4 +1250,19 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/2671
+  describe 'Pending time field in ticket sidebar', authenticated_as: :customer do
+    let(:customer) { create(:customer) }
+    let(:ticket)   { create(:ticket, customer: customer, pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder')) }
+
+    it 'not shown to customer' do
+      visit "ticket/zoom/#{ticket.id}"
+      await_empty_ajax_queue
+
+      within :active_content do
+        expect(page).to have_no_css('.controls[data-name=pending_time]')
+      end
+    end
+  end
 end

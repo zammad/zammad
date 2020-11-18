@@ -239,6 +239,7 @@ ObjectManager::Attribute.add(
     shown_if:    {
       state_id: Ticket::State.by_category(:pending).pluck(:id),
     },
+    permission:  %w[ticket.agent],
   },
   editable:    false,
   active:      true,
