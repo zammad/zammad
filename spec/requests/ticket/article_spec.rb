@@ -592,7 +592,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       include_examples 'deleting',
                        item: 'article_note_communication_self',
-                       now: false, later: false, much_later: false
+                       now: true, later: true, much_later: false
 
       include_examples 'deleting',
                        item: 'article_note_communication_other',
@@ -620,7 +620,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       include_examples 'deleting',
                        item: 'article_note_communication_self',
-                       now: false, later: false, much_later: false
+                       now: true, later: true, much_later: false
 
       include_examples 'deleting',
                        item: 'article_note_communication_other',

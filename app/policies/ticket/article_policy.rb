@@ -29,7 +29,7 @@ class Ticket::ArticlePolicy < ApplicationPolicy
       return not_authorized('you can only delete your own notes')
     end
 
-    if record.type.communication?
+    if record.type.communication? && !record.internal?
       return not_authorized('communication articles cannot be deleted')
     end
 
