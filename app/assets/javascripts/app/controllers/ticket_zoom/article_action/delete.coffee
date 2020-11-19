@@ -43,7 +43,7 @@ class Delete
   @deletableForAgent: (actions, ticket, article, ui) ->
     return false if ticket.currentView() is 'customer'
     return false if article.created_by_id != App.User.current()?.id
-    return false if article.type.communication
+    return false if article.type.communication && !article.internal
 
     true
 

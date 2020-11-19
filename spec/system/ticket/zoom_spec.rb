@@ -368,7 +368,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         include_examples 'deleting ticket article',
                          item: 'article_note_communication_self',
-                         now: false, later: false, much_later: false
+                         now: true, later: true, much_later: false
 
         include_examples 'deleting ticket article',
                          item: 'article_note_communication_other',
@@ -396,7 +396,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         include_examples 'deleting ticket article',
                          item: 'article_note_communication_self',
-                         now: false, later: false, much_later: false
+                         now: true, later: true, much_later: false
 
         include_examples 'deleting ticket article',
                          item: 'article_note_communication_other',
