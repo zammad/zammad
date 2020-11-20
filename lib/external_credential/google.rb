@@ -41,18 +41,6 @@ class ExternalCredential::Google
     user_data = user_info(response[:id_token])
     raise Exceptions::UnprocessableEntity, 'Unable to extract user email from id_token!' if user_data[:email].blank?
 
-    migrate_channel = nil
-    Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:inbound, :options, :host) != 'imap.gmail.com'
-      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:outbound, :options, :host) != 'smtp.gmail.com'
-
-      migrate_channel = channel
-
-      break
-    end
-
     channel_options = {
       inbound:  {
         adapter: 'imap',
@@ -81,6 +69,30 @@ class ExternalCredential::Google
         client_secret: external_credential.credentials[:client_secret],
       ),
     }
+
+    if params[:channel_id]
+      existing_channel = Channel.where(area: 'Google::Account').find(params[:channel_id])
+
+      existing_channel.update!(
+        options: channel_options,
+      )
+
+      existing_channel.refresh_xoauth2!
+
+      return existing_channel
+    end
+
+    migrate_channel = nil
+    Channel.where(area: 'Email::Account').find_each do |channel|
+      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
+      next if channel.options.dig(:inbound, :options, :host) != 'imap.gmail.com'
+      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
+      next if channel.options.dig(:outbound, :options, :host) != 'smtp.gmail.com'
+
+      migrate_channel = channel
+
+      break
+    end
 
     if migrate_channel
       channel_options[:inbound][:options][:folder]         = migrate_channel.options[:inbound][:options][:folder]
