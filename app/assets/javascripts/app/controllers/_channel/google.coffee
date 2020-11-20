@@ -37,6 +37,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
   events:
     'click .js-new':                'new'
     'click .js-delete':             'delete'
+    'click .js-reauthenticate':     'reauthenticate'
     'click .js-configApp':          'configApp'
     'click .js-disable':            'disable'
     'click .js-enable':             'enable'
@@ -157,6 +158,11 @@ class ChannelAccountOverview extends App.ControllerSubContent
         )
       container: @el.closest('.content')
     )
+
+  reauthenticate: (e) =>
+    e.preventDefault()
+    id                   = $(e.target).closest('.action').data('id')
+    window.location.href = "#{@apiPath}/external_credentials/google/link_account?channel_id=#{id}"
 
   disable: (e) =>
     e.preventDefault()

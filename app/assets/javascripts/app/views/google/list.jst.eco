@@ -110,6 +110,7 @@
         <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
       <% end %>
       <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <div class="btn btn--secondary js-reauthenticate"><%- @T('Reauthenticate') %></div>
     </div>
   </div>
 <% end %>

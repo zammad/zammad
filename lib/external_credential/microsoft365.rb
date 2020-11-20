@@ -41,18 +41,6 @@ class ExternalCredential::Microsoft365
     user_data = user_info(response[:id_token])
     raise Exceptions::UnprocessableEntity, 'Unable to extract user preferred_username from id_token!' if user_data[:preferred_username].blank?
 
-    migrate_channel = nil
-    Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:inbound, :options, :host) != 'outlook.office365.com'
-      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:outbound, :options, :host) != 'smtp.office365.com'
-
-      migrate_channel = channel
-
-      break
-    end
-
     channel_options = {
       inbound:  {
         adapter: 'imap',
@@ -80,6 +68,30 @@ class ExternalCredential::Microsoft365
         client_secret: external_credential.credentials[:client_secret],
       ),
     }
+
+    if params[:channel_id]
+      existing_channel = Channel.where(area: 'Microsoft365::Account').find(params[:channel_id])
+
+      existing_channel.update!(
+        options: channel_options,
+      )
+
+      existing_channel.refresh_xoauth2!
+
+      return existing_channel
+    end
+
+    migrate_channel = nil
+    Channel.where(area: 'Email::Account').find_each do |channel|
+      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
+      next if channel.options.dig(:inbound, :options, :host) != 'outlook.office365.com'
+      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
+      next if channel.options.dig(:outbound, :options, :host) != 'smtp.office365.com'
+
+      migrate_channel = channel
+
+      break
+    end
 
     if migrate_channel
       channel_options[:inbound][:options][:folder]         = migrate_channel.options[:inbound][:options][:folder]
