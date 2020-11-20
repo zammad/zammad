@@ -8,7 +8,7 @@ class Channel < ApplicationModel
   store :options
   store :preferences
 
-  after_initialize :refresh_xoaut2!
+  after_initialize :refresh_xoauth2!
   after_create   :email_address_check
   after_update   :email_address_check
   after_destroy  :email_address_check
@@ -336,7 +336,7 @@ get instance of channel driver
     self.class.driver_class(options[:adapter])
   end
 
-  def refresh_xoaut2!
+  def refresh_xoauth2!
     return if options.dig(:auth, :type) != 'XOAUTH2'
 
     result = ExternalCredential.refresh_token(options[:auth][:provider], options[:auth])

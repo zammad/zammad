@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :channel do
-    # ensure the `refresh_xoaut2!` `after_initialize` callback gets executed
+    # ensure the `refresh_xoauth2!` `after_initialize` callback gets executed
     # https://stackoverflow.com/questions/5916162/problem-with-factory-girl-association-and-after-initialize#comment51639005_28057070
     initialize_with { new(attributes) }
 
