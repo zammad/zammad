@@ -1,6 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
-  let(:channel) { create(:google_channel) }
+  let(:channel) do
+    create(:google_channel).tap(&:refresh_xoauth2!)
+  end
 
   before do
     required_envs = %w[GMAIL_REFRESH_TOKEN GMAIL_CLIENT_ID GMAIL_CLIENT_SECRET GMAIL_USER]
