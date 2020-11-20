@@ -8,7 +8,6 @@ class Channel < ApplicationModel
   store :options
   store :preferences
 
-  after_initialize :refresh_xoauth2!
   after_create   :email_address_check
   after_update   :email_address_check
   after_destroy  :email_address_check
@@ -48,27 +47,27 @@ fetch one account
       adapter_options = options[:inbound][:options]
     end
 
-    begin
-      driver_class    = self.class.driver_class(adapter)
-      driver_instance = driver_class.new
-      return if !force && !driver_instance.fetchable?(self)
+    refresh_xoauth2!
 
-      result = driver_instance.fetch(adapter_options, self)
-      self.status_in   = result[:result]
-      self.last_log_in = result[:notice]
-      preferences[:last_fetch] = Time.zone.now
-      save!
-      true
-    rescue => e
-      error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
-      logger.error error
-      logger.error e
-      self.status_in = 'error'
-      self.last_log_in = error
-      preferences[:last_fetch] = Time.zone.now
-      save!
-      false
-    end
+    driver_class    = self.class.driver_class(adapter)
+    driver_instance = driver_class.new
+    return if !force && !driver_instance.fetchable?(self)
+
+    result = driver_instance.fetch(adapter_options, self)
+    self.status_in   = result[:result]
+    self.last_log_in = result[:notice]
+    preferences[:last_fetch] = Time.zone.now
+    save!
+    true
+  rescue => e
+    error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
+    logger.error error
+    logger.error e
+    self.status_in = 'error'
+    self.last_log_in = error
+    preferences[:last_fetch] = Time.zone.now
+    save!
+    false
   end
 
 =begin
@@ -250,24 +249,25 @@ send via account
       adapter         = options[:outbound][:adapter]
       adapter_options = options[:outbound][:options]
     end
-    result = nil
-    begin
-      driver_class    = self.class.driver_class(adapter)
-      driver_instance = driver_class.new
-      result = driver_instance.send(adapter_options, params, notification)
-      self.status_out   = 'ok'
-      self.last_log_out = ''
-      save!
-    rescue => e
-      error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
-      logger.error error
-      logger.error e
-      self.status_out = 'error'
-      self.last_log_out = error
-      save!
-      raise error
-    end
+
+    refresh_xoauth2!
+
+    driver_class    = self.class.driver_class(adapter)
+    driver_instance = driver_class.new
+    result = driver_instance.send(adapter_options, params, notification)
+    self.status_out   = 'ok'
+    self.last_log_out = ''
+    save!
+
     result
+  rescue => e
+    error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
+    logger.error error
+    logger.error e
+    self.status_out = 'error'
+    self.last_log_out = error
+    save!
+    raise error
   end
 
 =begin
@@ -338,6 +338,7 @@ get instance of channel driver
 
   def refresh_xoauth2!
     return if options.dig(:auth, :type) != 'XOAUTH2'
+    return if ApplicationHandleInfo.current == 'application_server'
 
     result = ExternalCredential.refresh_token(options[:auth][:provider], options[:auth])
 
@@ -347,16 +348,10 @@ get instance of channel driver
 
     return if new_record?
 
-    # ATTENTION: We don't want to execute any other callbacks here
-    # because `after_initialize` leaks the current scope of the Channel class
-    # as described here: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-new
-    # which leads to unexpected effects like:
-    # Channel.where(area: 'Google::Account').limit(1).find_each { |c| puts Channel.all.to_sql }
-    # => "SELECT "channels".* FROM "channels" WHERE "channels"."area" = 'Google::Account'"
-    update_column(:options, options) # rubocop:disable Rails/SkipsModelValidations
+    save!
   rescue => e
     logger.error e
-    raise "Failed to refresh XOAUTH2 access_token of provider '#{options[:auth][:provider]}'! #{e.inspect}"
+    raise "Failed to refresh XOAUTH2 access_token of provider '#{options[:auth][:provider]}': #{e.message}"
   end
 
   private

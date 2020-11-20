@@ -1,6 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'Microsoft365 XOAUTH2' do # rubocop:disable RSpec/DescribeClass
-  let(:channel) { create(:microsoft365_channel) }
+  let(:channel) do
+    create(:microsoft365_channel).tap(&:refresh_xoauth2!)
+  end
 
   before do
     required_envs = %w[MICROSOFT365_REFRESH_TOKEN MICROSOFT365_CLIENT_ID MICROSOFT365_CLIENT_SECRET MICROSOFT365_USER]

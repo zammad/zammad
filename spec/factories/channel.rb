@@ -1,9 +1,5 @@
 FactoryBot.define do
   factory :channel do
-    # ensure the `refresh_xoauth2!` `after_initialize` callback gets executed
-    # https://stackoverflow.com/questions/5916162/problem-with-factory-girl-association-and-after-initialize#comment51639005_28057070
-    initialize_with { new(attributes) }
-
     area          { 'Email::Dummy' }
     group         { ::Group.find(1) }
     active        { true }
@@ -16,13 +12,23 @@ FactoryBot.define do
       area { 'Email::Account' }
       options do
         {
-          inbound:  {
+          inbound:  inbound,
+          outbound: outbound,
+        }
+      end
+
+      transient do
+        inbound do
+          {
             adapter: 'null', options: {}
-          },
-          outbound: {
+          }
+        end
+
+        outbound do
+          {
             adapter: 'sendmail'
           }
-        }
+        end
       end
     end
 
