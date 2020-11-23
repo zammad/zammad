@@ -1357,4 +1357,61 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
   end
+
+  describe '#mail_to_group' do
+
+    context 'when EmailAddress exists' do
+
+      context 'when gives address matches exactly' do
+
+        let(:group) { create(:group) }
+        let(:channel) { create(:email_channel, group: group) }
+        let!(:email_address) { create(:email_address, channel: channel) }
+
+        it 'returns the Channel Group' do
+          expect(described_class.mail_to_group(email_address.email)).to eq(group)
+        end
+      end
+
+      context 'when gives address matches key insensitive' do
+
+        let(:group) { create(:group) }
+        let(:channel) { create(:email_channel, group: group) }
+        let(:address) { 'KeyInsensitive@example.COM' }
+        let!(:email_address) { create(:email_address, email: address, channel: channel) }
+
+        it 'returns the Channel Group' do
+          expect(described_class.mail_to_group(address)).to eq(group)
+        end
+      end
+
+      context 'when no Channel is assigned' do
+
+        let!(:email_address) { create(:email_address, channel: nil) }
+
+        it 'returns nil' do
+          expect(described_class.mail_to_group(email_address.email)).to be_nil
+        end
+      end
+
+      context 'when Channel has no Group assigned' do
+
+        let(:channel) { create(:email_channel, group: nil) }
+        let!(:email_address) { create(:email_address, channel: channel) }
+
+        it 'returns nil' do
+          expect(described_class.mail_to_group(email_address.email)).to be_nil
+        end
+      end
+    end
+
+    context 'when given address is not parse-able' do
+
+      let(:address) { 'this_is_not_a_valid_email_address' }
+
+      it 'returns nil' do
+        expect(described_class.mail_to_group(address)).to be_nil
+      end
+    end
+  end
 end
