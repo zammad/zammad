@@ -44,7 +44,7 @@ module KnowledgeBaseRichTextHelper
 
       return match if !url
 
-      "<div class='videoWrapper'><iframe id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
+      "<div class='videoWrapper'><iframe allowfullscreen id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
     end
   end
 end

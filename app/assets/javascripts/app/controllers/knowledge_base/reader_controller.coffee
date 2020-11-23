@@ -122,7 +122,7 @@ class App.KnowledgeBaseReaderController extends App.Controller
 
       return match unless url
 
-      "<div class='videoWrapper'><iframe id='#{settings.provider}#{settings.id}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
+      "<div class='videoWrapper'><iframe allowfullscreen id='#{settings.provider}#{settings.id}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
 
   renderAttachments: (attachments) ->
     @answerAttachments.html App.view('generic/attachments')(
