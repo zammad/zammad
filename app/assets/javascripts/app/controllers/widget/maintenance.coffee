@@ -64,14 +64,14 @@ class Widget extends App.Controller
   maintanaceRestartManual: (data) =>
     return if @messageRestartManual
     @messageRestartManual = new App.SessionMessage(
-      head:         App.i18n.translateContent('Zammad need a restart!')
-      message:      App.i18n.translateContent('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP___RESTART___CMD="/path/to/your___app___script.sh restart".')
-      keyboard:     false
-      backdrop:     false
-      buttonClose:  false
-      buttonSubmit: false
-      small:        true
-      forceReload:  true
+      head:          App.i18n.translateInline('Zammad need a restart!')
+      contentInline: App.i18n.translateInline('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
+      keyboard:      false
+      backdrop:      false
+      buttonClose:   false
+      buttonSubmit:  false
+      small:         true
+      forceReload:   true
     )
     @disconnectClient()
     @checkAvailability()
