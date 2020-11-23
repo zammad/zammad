@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Gmail XOAUTH2', type: :integration do # rubocop:disable RSpec/DescribeClass
   let(:channel) do
     create(:google_channel).tap(&:refresh_xoauth2!)
   end
@@ -11,14 +11,14 @@ RSpec.describe 'Gmail XOAUTH2' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  context 'inbound' do
+  context 'when probing inbound' do
     it 'succeeds' do
       result = EmailHelper::Probe.inbound(channel.options[:inbound])
       expect(result[:result]).to eq('ok')
     end
   end
 
-  context 'outbound' do
+  context 'when probing outbound' do
     it 'succeeds' do
       result = EmailHelper::Probe.outbound(channel.options[:outbound], ENV['GMAIL_USER'], "test gmail oauth unittest #{Random.new_seed}")
       expect(result[:result]).to eq('ok')

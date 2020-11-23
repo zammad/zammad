@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe 'Microsoft365 XOAUTH2' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Microsoft365 XOAUTH2', type: :integration do # rubocop:disable RSpec/DescribeClass
   let(:channel) do
     create(:microsoft365_channel).tap(&:refresh_xoauth2!)
   end
@@ -11,14 +11,14 @@ RSpec.describe 'Microsoft365 XOAUTH2' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  context 'inbound' do
+  context 'when probing inbound' do
     it 'succeeds' do
       result = EmailHelper::Probe.inbound(channel.options[:inbound])
       expect(result[:result]).to eq('ok')
     end
   end
 
-  context 'outbound' do
+  context 'when probing outbound' do
     it 'succeeds' do
       result = EmailHelper::Probe.outbound(channel.options[:outbound], ENV['MICROSOFT365_USER'], "test microsoft365 oauth unittest #{Random.new_seed}")
       expect(result[:result]).to eq('ok')
