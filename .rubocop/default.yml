@@ -316,7 +316,9 @@ Zammad/PreferNegatedIfOverUnless:
 Zammad/ExistsDateTimePrecision:
   Include:
     - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"
 
 Zammad/ExistsResetColumnInformation:
   Include:
     - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"

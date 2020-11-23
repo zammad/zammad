@@ -3,7 +3,7 @@ module RuboCop
     module Zammad
       class ExistsResetColumnInformation < Cop
         def_node_matcher :table?, <<-PATTERN
-          $(send _ {:create_table :change_table} ... )
+          $(send _ :change_table ... )
         PATTERN
 
         def_node_matcher :column?, <<-PATTERN
