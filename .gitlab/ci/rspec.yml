@@ -9,7 +9,7 @@ include:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t ~type:system -t ~searchindex -t ~db_strategy:reset
+    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t ~db_strategy:reset
 
 .template_rspec_db_reset: &template_rspec_db_reset
   extends:
@@ -18,14 +18,25 @@ include:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t ~type:system -t ~searchindex -t db_strategy:reset
+    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t db_strategy:reset
 
-# we need at least one job to store and include this template
-# $IGNORE is not defined
-ignore:
+# RSpec 3rd party integration tests are independent of the database
+# therefore we need only one job and choose a random database for each run
+
+rspec:mysql:integration:
   stage: test
-  only:
-    variables:
-      - $IGNORE
+  extends:
+    - .env_base
+    - .services_mysql_postgresql
+  variables:
+    RAILS_ENV: "test"
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/'
+      when: manual
+      allow_failure: true
+    - when: always
   script:
-    - ''
+    - bundle exec rake zammad:db:init
+    - bundle exec rspec -t type:integration
