@@ -337,7 +337,7 @@ returns
     end
     return if to.blank?
 
-    email = EmailAddress.find_by(email: to)
+    email = EmailAddress.find_by(email: to.downcase)
     return if email&.channel.blank?
 
     email.channel&.group
