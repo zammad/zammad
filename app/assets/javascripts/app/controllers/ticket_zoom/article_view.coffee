@@ -61,6 +61,8 @@ class App.TicketZoomArticleView extends App.Controller
     false
 
   updateFormId: (newFormId) ->
+    @form_id = newFormId
+
     for id, viewItem of @articleController
       viewItem.updateFormId(newFormId)
 

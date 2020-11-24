@@ -1204,4 +1204,50 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/2942
+  describe 'attachemts are lost in specific conditions' do
+    let(:ticket) { create(:ticket, group: Group.first) }
+
+    it 'attachment is retained when forwarding a fresh article' do
+      ensure_websocket do
+        visit "ticket/zoom/#{ticket.id}"
+      end
+
+      # add an article, forcing reset of form_id
+      find('.articleNewEdit-body').send_keys('Note here')
+      click '.js-submit'
+
+      # create a on-the-fly article with attachment that will get pushed to open browser
+      article1 = create(:ticket_article, ticket: ticket)
+
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'some content',
+        filename:      'some_file.txt',
+        preferences:   {
+          'Content-Type' => 'text/plain',
+        },
+        created_by_id: 1,
+      )
+
+      within :active_ticket_article, article1 do
+        find('a[data-type=emailForward]').click
+      end
+
+      fill_in 'To', with: 'forward@example.org'
+      find('.articleNewEdit-body').send_keys('Forwarding with the attachment')
+      click '.js-submit'
+
+      await_empty_ajax_queue
+
+      # check if attachment was forwarded successfully
+      within :active_ticket_article, ticket.reload.articles.last do
+        within '.attachments--list' do
+          expect(page).to have_text('some_file.txt')
+        end
+      end
+    end
+  end
 end
