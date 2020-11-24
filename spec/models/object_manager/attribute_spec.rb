@@ -107,4 +107,43 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end.not_to raise_error
     end
   end
+
+  describe 'validate that referenced attributes are not set as inactive' do
+    subject(:attr) { create(:object_manager_attribute_text) }
+
+    before do
+      allow(described_class)
+        .to receive(:attribute_used_by_references?)
+        .with(attr.object_lookup.name, attr.name)
+        .and_return(is_referenced)
+
+      attr.active = active
+    end
+
+    context 'when is used and changing to inactive' do
+      let(:active)        { false }
+      let(:is_referenced) { true }
+
+      it { is_expected.not_to be_valid }
+
+      it do
+        attr.valid?
+        expect(attr.errors).not_to be_blank
+      end
+    end
+
+    context 'when is not used and changing to inactive' do
+      let(:active)        { false }
+      let(:is_referenced) { false }
+
+      it { is_expected.to be_valid }
+    end
+
+    context 'when is used and staying active and chan' do
+      let(:active)        { true }
+      let(:is_referenced) { true }
+
+      it { is_expected.to be_valid }
+    end
+  end
 end
