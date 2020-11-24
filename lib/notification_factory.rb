@@ -44,7 +44,7 @@ returns
       .map { |filename| data.merge(filename: filename) }
       .map { |data_hash| TEMPLATE_PATH_STRING % data_hash }
 
-    found = candidates.find(&File.method(:exist?))
+    found = candidates.find { |candidate| File.exist?(candidate) }
 
     raise FileNotFoundError, "Missing template files #{candidates}!" if !found
 

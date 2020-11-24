@@ -95,7 +95,7 @@ class String
       end
       c
     end
-             .join('')
+             .join
   end
 
 =begin

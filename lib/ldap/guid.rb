@@ -92,7 +92,7 @@ class Ldap
 
       # re-order according to oracle format index and join
       oracle_format_indices = [3, 2, 1, 0, 5, 4, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15]
-      result                = oracle_format_indices.map { |index| parts[index] }.join('')
+      result                = oracle_format_indices.map { |index| parts[index] }.join
 
       # add dashes if requested
       return result if !dashify

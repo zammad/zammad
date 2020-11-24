@@ -31,10 +31,10 @@ FactoryBot.define do
       create(:knowledge_base_category, parent: obj)
 
       level2 = create(:knowledge_base_category, parent: obj)
-      2.times { create(:knowledge_base_category, parent: level2) }
+      create_list(:knowledge_base_category, 2, parent: level2)
 
       level3 = level2.children.reload.first
-      2.times { create(:knowledge_base_category, parent: level3) }
+      create_list(:knowledge_base_category, 2, parent: level3)
 
       obj.reload
     end

@@ -18,7 +18,7 @@ class Sequencer
               end
 
               def not_synced(entries)
-                entries.find(&method(:not_synced?))
+                entries.find { |entry| not_synced?(entry) }
               end
 
               def not_synced?(entry)

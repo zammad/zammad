@@ -36,7 +36,7 @@ class Pseudonymisation
     return '*' if source.length == 1
     return "#{source.first}*#{source.last}" if source.exclude?(' ')
 
-    source.split(' ').map do |sub_string|
+    source.split.map do |sub_string|
       of_string(sub_string)
     end.join(' ')
   end

@@ -92,6 +92,10 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each, use_vcr: true, &RSpec::Support::VCRHelper.method(:inject_advisory))
-  config.around(:each, use_vcr: true, &RSpec::Expectations::VCRHelper.method(:inject_advisory))
+  config.around(:each, use_vcr: true) do |example|
+    RSpec::Support::VCRHelper.inject_advisory(example)
+  end
+  config.around(:each, use_vcr: true) do |example|
+    RSpec::Expectations::VCRHelper.inject_advisory(example)
+  end
 end

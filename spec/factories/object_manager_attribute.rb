@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :object_manager_attribute, class: ObjectManager::Attribute do
+  factory :object_manager_attribute, class: 'ObjectManager::Attribute' do
     transient do
       object_name { 'Ticket' }
       additional_data_options { nil }

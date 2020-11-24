@@ -19,6 +19,7 @@ module ActiveRecord
     end
   end
 end
+
 module ActiveRecord
   module ConnectionAdapters
     module PostgreSQL

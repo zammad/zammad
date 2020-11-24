@@ -20,7 +20,7 @@ module Import
         #   Import::Helper::AttributesExamples.new do |extractor|
         #     extractor.extract(attributes)
         #   end
-        return if !block_given?
+        return if !block
 
         if block.arity.zero?
           instance_eval(&block)

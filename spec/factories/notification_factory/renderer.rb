@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :notification_factory_renderer, class: NotificationFactory::Renderer do
+  factory :notification_factory_renderer, class: 'NotificationFactory::Renderer' do
     objects  { nil }
     locale   { 'en-en' }
     template { '' }

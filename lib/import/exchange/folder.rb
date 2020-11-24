@@ -33,7 +33,7 @@ module Import
       def children(*parents)
         return [] if parents.empty?
 
-        direct_descendants = parents.map(&method(:request_children))
+        direct_descendants = parents.map { |parent| request_children(parent) }
                                     .flatten.uniq.compact
 
         direct_descendants | children(*direct_descendants)

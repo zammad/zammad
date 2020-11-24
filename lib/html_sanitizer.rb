@@ -103,7 +103,7 @@ satinize html string based on whiltelist
 
         # clean class / only use allowed classes
         if node['class']
-          classes = node['class'].gsub(/\t|\n|\r/, '').split(' ')
+          classes = node['class'].gsub(/\t|\n|\r/, '').split
           class_new = ''
           classes.each do |local_class|
             next if classes_whitelist.exclude?(local_class.to_s.strip)

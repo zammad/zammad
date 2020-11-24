@@ -44,17 +44,17 @@ class Sequencer
               # Because it doesn't include associations
               # stored on OTHER TABLES (has-one, has-many, HABTM)
               def changes
-                @changes ||= unfiltered_changes.reject(&method(:no_diff?))
+                @changes ||= unfiltered_changes.reject { |_attribute, values| no_diff?(values) }
               end
 
               def unfiltered_changes
                 attrs  = associations.keys
-                before = attrs.map(&instance.method(:send))
+                before = attrs.map { |attribute| instance.send(attribute) }
                 after  = associations.values
                 attrs.zip(before.zip(after)).to_h.with_indifferent_access
               end
 
-              def no_diff?(_, values)
+              def no_diff?(values)
                 values.map!(&:sort) if values.all? { |val| val.respond_to?(:sort) }
                 values.map!(&:presence) # [nil, []] -> [nil, nil]
                 values.uniq.length == 1

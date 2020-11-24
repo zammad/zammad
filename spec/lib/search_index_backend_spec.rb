@@ -75,7 +75,7 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       QUERIES
 
       it 'appends a * to the original query' do
-        expect(queries.map(&described_class.method(:append_wildcard_to_simple_query)))
+        expect(queries.map { |query| described_class.append_wildcard_to_simple_query(query) })
           .to eq(queries.map { |q| "#{q}*" })
       end
     end
@@ -117,7 +117,7 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       QUERIES
 
       it 'returns the original query verbatim' do
-        expect(queries.map(&described_class.method(:append_wildcard_to_simple_query)))
+        expect(queries.map { |query| described_class.append_wildcard_to_simple_query(query) })
           .to eq(queries)
       end
     end

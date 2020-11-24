@@ -116,7 +116,7 @@ cleanup old token
   def with_context(user:, &block)
     @effective_user = user
 
-    instance_eval(&block) if block_given?
+    instance_eval(&block) if block
   ensure
     @effective_user = nil
   end
