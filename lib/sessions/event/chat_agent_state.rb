@@ -23,14 +23,7 @@ return is sent as message back to peer
     # check if user has permissions
     return if !permission_check('chat.agent', 'chat')
 
-    chat_user = User.lookup(id: @session['id'])
-
-    Chat::Agent.state(@session['id'], @payload['data']['active'])
-
-    chat_ids = Chat.agent_active_chat_ids(chat_user)
-
-    # broadcast new state to agents
-    Chat.broadcast_agent_state_update(chat_ids, @session['id'])
+    update_state
 
     {
       event: 'chat_agent_state',
@@ -39,6 +32,19 @@ return is sent as message back to peer
         active: @payload['data']['active'],
       },
     }
+  end
+
+  private
+
+  def update_state
+    chat_user = User.lookup(id: @session['id'])
+
+    return if !Chat::Agent.state(@session['id'], @payload['data']['active'])
+
+    chat_ids = Chat.agent_active_chat_ids(chat_user)
+
+    # broadcast new state to agents
+    Chat.broadcast_agent_state_update(chat_ids, @session['id'])
   end
 
 end

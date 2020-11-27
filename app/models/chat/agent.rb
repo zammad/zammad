@@ -20,10 +20,16 @@ class Chat::Agent < ApplicationModel
 
       return chat_agent.active
     end
+
+    # ATTENTION: setter return value indicates whether `active` state has changed
     if chat_agent
       chat_agent.active = state
+      # always update `updated_at` to inform other Agent sessions
+      # that this Agent session is still active
       chat_agent.updated_at = Time.zone.now
       chat_agent.save
+
+      chat_agent.active_previously_changed?
     else
       Chat::Agent.create(
         active:        state,
