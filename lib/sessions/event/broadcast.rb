@@ -16,7 +16,7 @@ To execute this manually, just paste the following into the browser console
     client_list = Sessions.list
     client_list.each do |local_client_id, local_client|
       if local_client_id == @client_id
-        log 'notice', 'do not send broadcast to it self'
+        log 'info', 'do not send broadcast to it self'
         next
       end
 
@@ -33,14 +33,14 @@ To execute this manually, just paste the following into the browser console
 
             next if local_client[:user]['id'].to_i != user_id.to_i
 
-            log 'notice', "send broadcast from (#{@client_id}) to (user_id=#{user_id})", local_client_id
+            log 'info', "send broadcast from (#{@client_id}) to (user_id=#{user_id})", local_client_id
             websocket_send(local_client_id, @payload['data'])
           end
         end
 
         # broadcast every client
       else
-        log 'notice', "send broadcast from (#{@client_id})", local_client_id
+        log 'info', "send broadcast from (#{@client_id})", local_client_id
         websocket_send(local_client_id, @payload['data'])
       end
     end

@@ -14,9 +14,9 @@ To execute this manually, just paste the following into the browser console
 
     # error handling
     if @payload['timestamp']
-      log 'notice', "request spool data > '#{Time.at(@payload['timestamp']).utc.iso8601}'"
+      log 'info', "request spool data > '#{Time.at(@payload['timestamp']).utc.iso8601}'"
     else
-      log 'notice', 'request spool with init data'
+      log 'info', 'request spool with init data'
     end
 
     if !@session || !@session['id']
@@ -34,15 +34,15 @@ To execute this manually, just paste the following into the browser console
 
       # create new msg to push to client
       if item[:type] == 'direct'
-        log 'notice', "send spool to (user_id=#{@session['id']})"
+        log 'info', "send spool to (user_id=#{@session['id']})"
       else
-        log 'notice', 'send spool'
+        log 'info', 'send spool'
       end
       websocket_send(@client_id, item[:message])
     end
 
     # send spool:sent event to client
-    log 'notice', 'send spool:sent event'
+    log 'info', 'send spool:sent event'
     {
       event: 'spool:sent',
       data:  {

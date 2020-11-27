@@ -802,8 +802,8 @@ returns
       case level
       when 'debug'
         Rails.logger.debug { message }
-      when 'notice'
-        Rails.logger.notice message
+      when 'info'
+        Rails.logger.info message
       else
         Rails.logger.error message
       end
