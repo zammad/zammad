@@ -621,6 +621,12 @@ delete spool messages
     # dispatch sessions
     if node_id.blank? && ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i.positive?
 
+      previous_nodes_sessions = Sessions::Node.stats
+      if previous_nodes_sessions.present?
+        log('info', "Cleaning up previous Sessions::Node sessions: #{previous_nodes_sessions}")
+        Sessions::Node.cleanup
+      end
+
       dispatcher_pid = Process.pid
       node_count     = ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i
       node_pids      = []
@@ -649,7 +655,7 @@ delete spool messages
         raise SignalException, 'SIGTERM'
       end
 
-      # displatch client_ids to nodes
+      # dispatch client_ids to nodes
       loop do
 
         # nodes
@@ -661,7 +667,7 @@ delete spool messages
           # ask nodes for nodes
           next if nodes_stats[client_id]
 
-          # assigne to node
+          # assign to node
           Sessions::Node.session_assigne(client_id)
           sleep 1
         end
