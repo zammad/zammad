@@ -906,6 +906,16 @@ pre code.hljs {
   }
 }
 
+.dropdown-menu-right {
+  @include rtl(right, auto);
+  @include rtl(left, 0);
+}
+
+.dropdown-menu-left {
+  @include rtl(left, auto);
+  @include rtl(right, 0);
+}
+
 .status-fields {
   display: flex;
   max-width: 100%;
@@ -11011,7 +11021,8 @@ output {
     width: 200px;
     height: 150px;
     margin: 14px;
-    margin-right: 0;
+    @include ltr(margin-right, 0);
+    @include rtl(margin-left, 0);
     $i: 0;
     $rainbow: ();
     @while $i <= 360 {
