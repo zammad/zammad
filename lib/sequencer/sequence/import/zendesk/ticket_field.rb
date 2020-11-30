@@ -8,8 +8,9 @@ class Sequencer
             [
               'Common::ModelClass::Ticket',
               'Import::Zendesk::TicketField::CheckCustom',
+              'Import::Zendesk::ObjectAttribute::SanitizedType',
               'Import::Zendesk::TicketField::SanitizedName',
-              'Import::Zendesk::TicketField::Add',
+              'Import::Zendesk::ObjectAttribute::Add',
             ]
           end
         end

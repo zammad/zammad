@@ -7,6 +7,7 @@ class Sequencer
           def self.sequence
             [
               'Common::ModelClass::User',
+              'Import::Zendesk::ObjectAttribute::SanitizedType',
               'Import::Zendesk::ObjectAttribute::SanitizedName',
               'Import::Zendesk::ObjectAttribute::Add',
             ]
