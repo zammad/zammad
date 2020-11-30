@@ -340,7 +340,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           organization_id:          2,
           test_checkbox:            true,
           custom_integer:           999,
-          custom_drop_down:         'key2',
+          custom_dropdown:          'key2',
           custom_decimal:           '1.6',
           not_existing:             nil,
         },
@@ -361,7 +361,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           organization_id:          nil,
           test_checkbox:            false,
           custom_integer:           nil,
-          custom_drop_down:         '',
+          custom_dropdown:          '',
           custom_decimal:           nil,
           not_existing:             nil,
         },
@@ -538,7 +538,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       custom_date
       custom_integer
       custom_regex
-      custom_drop_down
+      custom_dropdown
     ]
 
     assert_equal(copmare_fields, local_fields, 'ticket fields')

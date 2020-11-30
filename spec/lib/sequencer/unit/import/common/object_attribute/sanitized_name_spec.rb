@@ -48,7 +48,23 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
         allow(instance).to receive(:unsanitized_name).and_return('Ærøskøbing Ät Mödél')
       end
 
-      expect(provided[:sanitized_name]).to eq('a_eroskobing_at_model')
+      expect(provided[:sanitized_name]).to eq('aeroskobing_at_model')
+    end
+
+    it 'replaces questionmark characters' do
+      provided = process do |instance|
+        allow(instance).to receive(:unsanitized_name).and_return('model?')
+      end
+
+      expect(provided[:sanitized_name]).to eq('model_')
+    end
+
+    it 'replaces colon characters' do
+      provided = process do |instance|
+        allow(instance).to receive(:unsanitized_name).and_return('mo::del')
+      end
+
+      expect(provided[:sanitized_name]).to eq('mo_del')
     end
   end
 end
