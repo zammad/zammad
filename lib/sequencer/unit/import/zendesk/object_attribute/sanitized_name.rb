@@ -14,6 +14,8 @@ class Sequencer
               # Model IDs
               # Model / Name
               # Model Name
+              # Model Name?
+              # Model::Name
               resource['key']
             end
           end

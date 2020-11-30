@@ -17,6 +17,8 @@ class Sequencer
               # Model IDs
               # Model / Name
               # Model Name
+              # Model Name?
+              # Model::Name
               resource.title
             end
           end
