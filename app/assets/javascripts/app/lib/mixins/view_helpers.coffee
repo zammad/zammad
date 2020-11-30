@@ -155,6 +155,10 @@ App.ViewHelpers =
       return marked(string)
     App.i18n.translateContent(string)
 
+  ContentOrMimeType: (attachment) ->
+    types = ['Content-Type', 'content_type', 'Mime-Type', 'mime_type']
+    _.values(_.pick(attachment?.preferences, types))[0]
+
   ContentTypeIcon: (contentType) ->
     contentType = App.Utils.contentTypeCleanup(contentType)
     icons =

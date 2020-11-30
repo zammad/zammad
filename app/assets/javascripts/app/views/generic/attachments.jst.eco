@@ -9,7 +9,7 @@
           <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
         </div>
       <% else: %>
-        <% content_type = attachment.preferences['Content-Type'] || attachment.preferences['content_type'] %>
+        <% content_type = @ContentOrMimeType(attachment) %>
         <a class="attachment attachment--preview" href="<%= attachment.url %>" data-type="attachment"<% if @canDownload(content_type): %> download<% else: %>target="_blank"<% end %>>
           <div class="attachment-icon">
           <% if attachment.preferences && content_type && @ContentTypeIcon(content_type): %>
