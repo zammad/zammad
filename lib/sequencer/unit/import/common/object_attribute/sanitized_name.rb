@@ -4,6 +4,9 @@ class Sequencer
       module Common
         module ObjectAttribute
           class SanitizedName < Sequencer::Unit::Common::Provider::Named
+            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+            skip_action :skipped, :failed
 
             private
 

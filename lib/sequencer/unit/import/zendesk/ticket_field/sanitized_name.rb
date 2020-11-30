@@ -4,11 +4,8 @@ class Sequencer
       module Zendesk
         module TicketField
           class SanitizedName < Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName
-            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-            skip_action :skipped
-
-            uses :resource, :action
+            uses :resource
 
             private
 
