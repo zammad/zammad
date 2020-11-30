@@ -18,7 +18,7 @@ module Import
         private
 
         def data_type(_attribute)
-          'input'
+          'textarea'
         end
       end
     end
