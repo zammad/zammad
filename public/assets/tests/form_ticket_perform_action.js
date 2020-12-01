@@ -1,5 +1,5 @@
 // ticket_perform_action
-test( "ticket_perform_action check", function() {
+test( "ticket_perform_action check", function(assert) {
 
   App.TicketPriority.refresh([
     {
@@ -251,7 +251,6 @@ test( "ticket_perform_action check", function() {
   row.find('.js-datepicker').datepicker('setDate')
   row.find('.js-timepicker').val(date_parsed.getHours() + ':' + date_parsed.getMinutes()).trigger('blur')
 
-  params = App.ControllerForm.params(el)
   test_params = {
     ticket_perform_action1: {
       'ticket.state_id': {
@@ -288,7 +287,14 @@ test( "ticket_perform_action check", function() {
       }
     }
   }
-  deepEqual(params, test_params, 'form param check')
+
+  var done = assert.async()
+
+  setTimeout(function(){
+    params = App.ControllerForm.params(el)
+    deepEqual(params, test_params, 'form param check')
+    done()
+  }, 0);
 
   // switch pending time to relative
 
@@ -503,4 +509,40 @@ test( "ticket_perform_action backwards check after PR#2862", function() {
   }
 
   deepEqual(params, test_params, 'form param check')
+});
+
+test( "ticket_perform_action orphan time fields", function() {
+  $('#forms').append('<hr><h1>ticket_perform_action orphan time fields</h1><form id="form4"></form>')
+
+  var el = $('#form4')
+
+  var defaults = {
+    ticket_perform_action4: {
+      'ticket.pending_time': {
+        operator: 'relative',
+        value: '1'
+      }
+    }
+  }
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'ticket_perform_action4',
+          display: 'TicketPerformAction4',
+          tag:     'ticket_perform_action',
+          null:    true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  // change to another attribute
+  el.find('select:first').val('ticket.tags').trigger('change')
+
+  equal(el.find('.js-valueRangeSelector').length, 0)
 });

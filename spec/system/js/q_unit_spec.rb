@@ -107,7 +107,7 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
     end
 
     it 'Ticket perform action' do
-      q_unit_tests('form_ticket_perform_action')
+      async_q_unit_tests('form_ticket_perform_action')
     end
 
     it 'Ticket macro' do

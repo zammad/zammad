@@ -333,7 +333,15 @@ class App.UiElement.ticket_perform_action
       'relative'
     ]
 
-    if _.include(relative_operators, meta.operator)
+    upcoming_operator = meta.operator
+
+    if !_.include(config.operator, upcoming_operator)
+      if Array.isArray(config.operator)
+        upcoming_operator = config.operator[0]
+      else
+        upcoming_operator = null
+
+    if _.include(relative_operators, upcoming_operator)
       config['name'] = "#{attribute.name}::#{groupAndAttribute}"
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute])
