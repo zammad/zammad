@@ -83,7 +83,8 @@ App.Config.set(
   {
     name: 'Slack'
     target: '#system/integration/slack'
-    description: 'A team communication tool for the 21st century.'
+    description: 'A team communication tool for the 21st century. Compatible with tools like %s.'
+    descriptionSubstitute: 'Mattermost, RocketChat'
     controller: Index
     state: State
   }
