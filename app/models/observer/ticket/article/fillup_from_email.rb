@@ -59,6 +59,10 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
       sender      = User.find(record.created_by_id)
       realname    = "#{sender.firstname} #{sender.lastname} #{separator} #{email_address.realname}"
       record.from = Channel::EmailBuild.recipient_line(realname, email_address.email)
+    elsif Setting.get('ticket_define_email_from') == 'AgentName'
+      sender      = User.find(record.created_by_id)
+      realname    = "#{sender.firstname} #{sender.lastname}"
+      record.from = Channel::EmailBuild.recipient_line(realname, email_address.email)
     else
       record.from = Channel::EmailBuild.recipient_line(email_address.realname, email_address.email)
     end
