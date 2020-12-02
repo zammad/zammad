@@ -546,3 +546,62 @@ test( "ticket_perform_action orphan time fields", function() {
 
   equal(el.find('.js-valueRangeSelector').length, 0)
 });
+
+test( "ticket_perform_action check possible owner selection", function() {
+  $('#forms').append('<hr><h1>ticket_perform_action check possible owner selection</h1><form id="form5"></form>')
+
+  var el = $('#form5')
+
+  var defaults = {
+    ticket_perform_action5: {
+      'ticket.owner_id': {
+        pre_condition: 'not_set',
+      }
+    }
+  }
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'ticket_perform_action5',
+          display: 'TicketPerformAction5',
+          tag:     'ticket_perform_action',
+          null:    true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    ticket_perform_action5: {
+      'ticket.owner_id': {
+        pre_condition: 'not_set',
+        value: '',
+        value_completion: ''
+      }
+    }
+  }
+
+  deepEqual(params, test_params, 'form param check')
+
+  el.find('[name="ticket_perform_action5::ticket.owner_id::pre_condition"]').val('specific').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    ticket_perform_action5: {
+      'ticket.owner_id': {
+        pre_condition: 'specific',
+        value: '',
+        value_completion: ''
+      }
+    }
+  }
+
+  deepEqual(params, test_params, 'form param check')
+
+});
