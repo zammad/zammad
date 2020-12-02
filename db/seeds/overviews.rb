@@ -68,7 +68,7 @@ Overview.create_if_not_exists(
       pre_condition: 'current_user.id',
     },
     'ticket.pending_time' => {
-      operator: 'within next (relative)',
+      operator: 'before (relative)',
       value:    0,
       range:    'minute',
     },
@@ -119,7 +119,7 @@ Overview.create_if_not_exists(
       value:    Ticket::State.by_category(:pending_reminder).pluck(:id),
     },
     'ticket.pending_time' => {
-      operator: 'within next (relative)',
+      operator: 'before (relative)',
       value:    0,
       range:    'minute',
     },
@@ -143,7 +143,7 @@ Overview.create_if_not_exists(
   role_ids:  [overview_role.id],
   condition: {
     'ticket.escalation_at' => {
-      operator: 'within next (relative)',
+      operator: 'before (relative)',
       value:    '10',
       range:    'minute',
     },
