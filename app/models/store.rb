@@ -322,12 +322,10 @@ returns
   end
 
   def oversized_preferences_check
-    return true if oversized_preferences_removed_by_content?(600)
-    return true if oversized_preferences_removed_by_key?(100)
-    return true if oversized_preferences_removed_by_content?(300)
-    return true if oversized_preferences_removed_by_key?(60)
-    return true if oversized_preferences_removed_by_content?(150)
-    return true if oversized_preferences_removed_by_key?(30)
+    [[600, 100], [300, 60], [150, 30], [75, 15]].each do |row|
+      return true if oversized_preferences_removed_by_content?(row[0])
+      return true if oversized_preferences_removed_by_key?(row[1])
+    end
 
     true
   end
