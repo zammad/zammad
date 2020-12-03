@@ -199,6 +199,14 @@ function restore_zammad () {
     # See #3160 for the reasons of this :>
     restore_files
   fi
+
+  # Ensure all data is loaded from the restored database and not the cache of the previous system state
+  echo "# Clearing Cache ..."
+  if command -v zammad > /dev/null; then
+    zammad run rails r "Cache.clear"
+  else
+    ${ZAMMAD_DIR}/bin/rails r "Cache.clear"
+  fi
 }
 
 function restore_files () {
