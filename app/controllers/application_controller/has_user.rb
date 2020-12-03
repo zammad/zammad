@@ -47,8 +47,7 @@ module ApplicationController::HasUser
 
     # find user for execution based on the header
     %i[id login email].each do |field|
-      search_attributes = {}
-      search_attributes[field] = request.headers['X-On-Behalf-Of']
+      search_attributes = search_attributes(field)
       @_user_on_behalf = User.find_by(search_attributes)
       next if !@_user_on_behalf
 
@@ -57,6 +56,15 @@ module ApplicationController::HasUser
 
     # no behalf of user found
     raise Exceptions::NotAuthorized, "No such user '#{request.headers['X-On-Behalf-Of']}'"
+  end
+
+  def search_attributes(field)
+    search_attributes = {}
+    search_attributes[field] = request.headers['X-On-Behalf-Of']
+    if %i[login email].include?(field)
+      search_attributes[field] = search_attributes[field].to_s.downcase.strip
+    end
+    search_attributes
   end
 
   def current_user_set(user, auth_type = 'session')

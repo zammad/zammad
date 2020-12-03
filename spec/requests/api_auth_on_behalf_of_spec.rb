@@ -32,6 +32,24 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       expect(customer.id).to eq(json_response['created_by_id'])
     end
 
+    it 'does X-On-Behalf-Of auth - ticket create admin for customer by login (upcase)' do
+      params = {
+        title:       'a new ticket #3',
+        group:       'Users',
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id,
+        article:     {
+          body: 'some test 123',
+        },
+      }
+      authenticated_as(admin, on_behalf_of: customer.login.upcase)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(customer.id).to eq(json_response['created_by_id'])
+    end
+
     it 'does X-On-Behalf-Of auth - ticket create admin for customer by login' do
       ActivityStream.cleanup(1.year)
 
