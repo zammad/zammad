@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# zammad backup script functions
+# Zammad backup script functions
 #
 
 function get_zammad_dir () {
@@ -64,7 +64,7 @@ function check_database_config_exists () {
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     get_db_credentials
   else
-    echo -e "${ZAMMAD_DIR}/config/database.yml is missing. is zammad configured yet? \nAborting..."
+    echo -e "${ZAMMAD_DIR}/config/database.yml is missing. is Zammad configured yet? \nAborting..."
     exit 1
   fi
 }
@@ -164,14 +164,14 @@ function restore_zammad () {
 
     if ! id "zammad" &> /dev/null; then
       echo "# ERROR: User 'zammad' is not present, but should be by default! #"
-      echo "# Restoration was NOT successfull, exitting ..."
+      echo "# Restoration was NOT successful, exiting ..."
       exit 1
     fi
-    
+
     echo "# ... Dropping current database ${DB_NAME}"
 
     # This step is only needed for some pgsql dumps, as they don't provide a drop table statement which will cause
-    # relation errors during restoration (as on package installation there's always an initialised database)
+    # relation errors during restoration (as on package installation there's always an initialized database)
     if command -v zammad > /dev/null; then
       zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=1
       zammad run rake db:drop
