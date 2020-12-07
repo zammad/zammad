@@ -371,7 +371,7 @@ class App.UiElement.ticket_perform_action
       for recipient in meta.recipient
         if key is recipient
           selected = true
-      columnSelectOptions.push({ value: key, name: App.i18n.translateInline(value), selected: selected })
+      columnSelectOptions.push({ value: key, name: App.i18n.translatePlain(value), selected: selected })
 
     columnSelectRecipientUserOptions = []
     for user in App.User.all()
