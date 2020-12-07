@@ -48,7 +48,7 @@ class App.DashboardFirstSteps extends App.Controller
       #container: @el.closest('.content')
       head: 'Invite Customer'
       screen: 'invite_customer'
-      role: 'Customer'
+      signup: true
     )
 
   testTicketLoading: =>

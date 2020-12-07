@@ -48,11 +48,13 @@ class App.InviteUser extends App.WizardModal
     # set invite flag
     @params.invite = true
 
-    # find agent role
-    if @role
-      role = App.Role.findByAttribute('name', @role)
-      if role
-        @params.role_ids = role.id
+    # find signup roles
+    if @signup
+      @params.role_ids = App.Role.search(
+        filter:
+          active: true
+          default_at_signup: true
+      ).map((role) -> role.id)
 
     user = new App.User
     user.load(@params)
