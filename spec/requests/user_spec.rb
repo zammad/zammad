@@ -1142,15 +1142,6 @@ RSpec.describe 'User', type: :request do
     end
   end
 
-  describe 'DELETE /api/v1/users', authenticated_as: -> { create(:admin) }, searchindex: false do
-    it 'does user deletion' do
-      customer = create(:customer)
-      delete "/api/v1/users/#{customer.id}", params: {}, as: :json
-      expect(response).to have_http_status(:ok)
-      expect { customer.reload }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
   describe 'POST /api/v1/users', authenticated_as: -> { create(:admin) }, searchindex: false do
     def make_request(params)
       post '/api/v1/users', params: params, as: :json
