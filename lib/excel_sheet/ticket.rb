@@ -48,23 +48,19 @@ class ExcelSheet::Ticket < ExcelSheet
     header.concat(@additional_attributes_header) if @additional_attributes_header
 
     # ObjectManager attributes
-    objects = ObjectManager::Attribute.where(active:           true,
-                                             to_create:        false,
-                                             object_lookup_id: ObjectLookup.lookup(name: 'Ticket').id)
-                                      .pluck(:name, :display, :data_type, :data_option)
-                                      .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option, width: 20 } }
-    objects.each do |object|
-      already_exists = false
-      header.each do |local_header|
-        next if local_header[:name] != object[:name]
-
-        already_exists = true
-        break
-      end
-      next if already_exists
-
-      header.push object
-    end
+    ObjectManager::Attribute
+      .where(
+        active:        true,
+        to_create:     false,
+        object_lookup: ObjectLookup.lookup(name: 'Ticket')
+      )
+      .where.not(
+        name:    header.pluck(:name),
+        display: header.pluck(:display)
+      )
+      .pluck_as_hash(:name, :display, :data_type, :data_option)
+      .each { |elem| elem[:width] = 20 }
+      .then { |objects| header.concat(objects) }
 
     header.concat([
                     { display: 'Created At', name: 'created_at', width: 18, data_type: 'datetime' },
