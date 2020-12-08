@@ -167,7 +167,7 @@ class App.Ticket extends App.Model
       else if attributes[0] is 'article'
 
         # preload required attributes
-        if attributes[1]
+        if !content.type_id
           type = App.TicketArticleType.findByAttribute('name', attributes[1])
           if type
             params.article.type_id = type.id

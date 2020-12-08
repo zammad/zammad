@@ -33,7 +33,7 @@ Capybara.add_selector(:macro) do
 end
 
 Capybara.add_selector(:macro_batch) do
-  css { |id| %(.batch-overlay-macro-entry[data-id='#{id}']) }
+  css { |id| %(.batch-overlay-macro-entry[data-id='#{id}'] .batch-overlay-macro-entry-name) }
 end
 
 Capybara.add_selector(:table_row) do

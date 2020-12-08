@@ -83,6 +83,16 @@ module BrowserTestHelper
     page.driver.browser.action.move_by(x_axis, y_axis).perform
   end
 
+  # Moves the mouse to element.
+  #
+  # @example
+  # move_mouse_to(page.find('button.hover_me'))
+  #
+  def move_mouse_to(element)
+    element.in_fixed_position
+    page.driver.browser.action.move_to_location(element.native.location.x, element.native.location.y).perform
+  end
+
   # Clicks and hold (without releasing) in the middle of the given element.
   #
   # @example

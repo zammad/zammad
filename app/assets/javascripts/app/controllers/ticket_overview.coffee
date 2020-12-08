@@ -243,10 +243,13 @@ class App.TicketOverview extends App.Controller
       for item in items
         #console.log "perform action #{action} with id #{id} on ", $(item).val()
         ticket = App.Ticket.find($(item).val())
+        article = {}
         App.Ticket.macro(
           macro: macro.perform
           ticket: ticket
+          article: article
         )
+        ticket.article = article
         ticket.save(
           done: (r) =>
             @batchCountIndex++
