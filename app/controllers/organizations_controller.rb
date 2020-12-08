@@ -170,7 +170,6 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    model_references_check(Organization, params)
     model_destroy_render(Organization, params)
   end
 

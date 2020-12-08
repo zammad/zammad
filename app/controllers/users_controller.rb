@@ -174,7 +174,6 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize!(user)
 
-    model_references_check(User, params)
     model_destroy_render(User, params)
   end
 

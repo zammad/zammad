@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Organization', type: :request, searchindex: true do
+RSpec.describe 'Organization', type: :request do
 
   let!(:admin) do
     create(:admin, groups: Group.all)
@@ -39,21 +39,20 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
     create(:customer, organization: organization)
   end
 
-  before do
-    configure_elasticsearch do
+  describe 'request handling', searchindex: true do
+    before do
+      configure_elasticsearch do
 
-      travel 1.minute
+        travel 1.minute
 
-      rebuild_searchindex
+        rebuild_searchindex
 
-      # execute background jobs
-      Scheduler.worker(true)
+        # execute background jobs
+        Scheduler.worker(true)
 
-      sleep 6
+        sleep 6
+      end
     end
-  end
-
-  describe 'request handling' do
 
     it 'does index with agent' do
 
@@ -568,6 +567,15 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(organization2.members.count).to eq(1)
       expect(organization2.members.first.login).to eq(customer2.login)
       expect(organization2.active).to eq(false)
+    end
+  end
+
+  describe 'DELETE /api/v1/organizations', authenticated_as: -> { create(:admin) }, searchindex: false do
+    it 'does organization deletion' do
+      organization = create(:organization)
+      delete "/api/v1/organizations/#{organization.id}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect { organization.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
