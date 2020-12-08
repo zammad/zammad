@@ -45,7 +45,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
       # fill in wrong URL
       fill_in 'url', with: 'some host'
       click_on('Next')
-      expect(page).to have_css('.alert', text: 'A URL looks like')
+      expect(page).to have_css('.alert', text: 'An URL looks like')
 
       # fill in valild/current URL
       fill_in 'url', with: app_host

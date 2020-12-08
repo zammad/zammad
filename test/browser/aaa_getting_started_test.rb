@@ -65,7 +65,7 @@ class AaaGettingStartedTest < TestCase
     )
     watch_for(
       css:   'body',
-      value: 'A URL looks like',
+      value: 'An URL looks like this',
     )
     set(
       css:   '.js-base input[name="url"]',

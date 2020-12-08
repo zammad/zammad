@@ -108,18 +108,11 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     messages = {}
     settings = {}
     if !Setting.get('system_online_service')
-      if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
-        messages[:url] = 'A URL looks like http://zammad.example.com'
-      end
-
-      # split url in http_type and fqdn
-      if params[:url]
-        if params[:url] =~ %r{^(http|https)://(.+?)(:.+?|/.+?|)$}
-          settings[:http_type] = $1
-          settings[:fqdn] = $2
-        else
-          messages[:url] = 'A URL looks like http://zammad.example.com'
-        end
+      if (result = self.class.validate_uri(params[:url]))
+        settings[:http_type] = result[:scheme]
+        settings[:fqdn]      = result[:fqdn]
+      else
+        messages[:url] = 'An URL looks like this: http://zammad.example.com'
       end
     end
 
@@ -186,6 +179,25 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     }
   end
 
+  def self.validate_uri(string)
+    uri = URI(string)
+
+    return false if %w[http https].exclude?(uri.scheme) || uri.host.blank?
+
+    defaults = [['http', 80], ['https', 443]]
+    actual   = [uri.scheme, uri.port]
+
+    fqdn = if defaults.include? actual
+             uri.host
+           else
+             "#{uri.host}:#{uri.port}"
+           end
+
+    { scheme: uri.scheme, fqdn: fqdn }
+  rescue
+    false
+  end
+
   private
 
   def auto_wizard_enabled_response
@@ -233,5 +245,4 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       product_logo: Setting.get('product_logo')
     }
   end
-
 end
