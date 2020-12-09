@@ -1266,6 +1266,61 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Article ID in URL' do
+    let(:ticket) { create(:ticket, group: Group.first) }
+    let(:article_count) { 20 }
+    let(:article_at_the_top) { ticket.articles.first }
+    let(:article_in_the_middle) { ticket.articles[ article_count / 2 ] }
+    let(:article_at_the_bottom) { ticket.articles.last }
+
+    before do
+      article_count.times do
+        create(:'ticket/article', ticket: ticket, body: SecureRandom.uuid)
+      end
+    end
+
+    it 'scrolls to given Article ID' do
+      ensure_websocket do
+        visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
+        await_empty_ajax_queue
+        # workaround because browser scrolls in test initially to the bottom
+        # maybe because the articles are not present?!
+        refresh
+
+        # scroll to article in the middle of the page
+        within :active_content do
+          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+
+          expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
+          expect(find("div#article-content-#{article_in_the_middle.id}")).not_to be_obscured
+          expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
+        end
+
+        # scroll to article at the top of the page
+        visit "ticket/zoom/#{ticket.id}/#{article_at_the_top.id}"
+        await_empty_ajax_queue
+        within :active_content do
+          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+
+          expect(find("div#article-content-#{article_at_the_top.id}")).not_to be_obscured
+          expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
+          expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
+        end
+
+        # scroll to article at the bottom of the page
+        visit "ticket/zoom/#{ticket.id}/#{article_at_the_bottom.id}"
+        await_empty_ajax_queue
+        within :active_content do
+          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+
+          expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
+          expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
+          expect(find("div#article-content-#{article_at_the_bottom.id}")).not_to be_obscured
+        end
+      end
+    end
+  end
+
   describe 'Macros', authenticated_as: :authenticate do
     let(:macro) { create :macro, perform: { 'article.note'=>{ 'body' => 'macro <b>body</b>', 'internal' => 'true', 'subject' => 'macro note' } } }
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }

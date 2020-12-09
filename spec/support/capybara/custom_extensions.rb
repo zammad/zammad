@@ -16,11 +16,11 @@ class Capybara::Node::Element
   #   still moving after max number of checks was passed
   #
   # @return [Capybara::Node::Element] the element/node
-  def in_fixed_position(checks: 100)
+  def in_fixed_position(checks: 100, wait: 0.2)
     previous = native.location
 
     (checks + 1).times do
-      sleep 0.2
+      sleep wait
 
       current = native.location
 

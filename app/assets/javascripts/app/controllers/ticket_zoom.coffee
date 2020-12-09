@@ -282,24 +282,23 @@ class App.TicketZoom extends App.Controller
       article_id = @pagePositionData
       @pagePositionData = undefined
 
-    # trigger shown to article
-    if !@shown
-      @shown = true
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
-      @scrollToPosition('bottom', 50, article_id)
-      return
-
     # scroll to article if given
     if article_id && article_id isnt @last_article_id
-      @last_article_id = article_id
       @scrollToPosition('article', 300, article_id)
-      return
 
     # scroll to end if new article has been added
-    if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
-      @last_ticket_article_ids = @ticket_article_ids
+    else if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
       @scrollToPosition('bottom', 100, article_id)
-      return
+
+    # trigger shown to article
+    else if !@shown
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
+      @scrollToPosition('bottom', 50, article_id)
+
+    # save page position state
+    @shown                   = true
+    @last_ticket_article_ids = @ticket_article_ids
+    @last_article_id         = article_id
 
   setPosition: (position) =>
     @$('.main').scrollTop(position)
