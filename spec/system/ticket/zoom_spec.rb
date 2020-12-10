@@ -1266,56 +1266,74 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'Article ID in URL' do
+  describe 'Article ID URL / link' do
     let(:ticket) { create(:ticket, group: Group.first) }
-    let(:article_count) { 20 }
-    let(:article_at_the_top) { ticket.articles.first }
-    let(:article_in_the_middle) { ticket.articles[ article_count / 2 ] }
-    let(:article_at_the_bottom) { ticket.articles.last }
+    let!(:article) { create(:'ticket/article', ticket: ticket) }
+    let(:url) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#ticket/zoom/#{ticket.id}/#{article.id}" }
 
-    before do
-      article_count.times do
-        create(:'ticket/article', ticket: ticket, body: SecureRandom.uuid)
+    it 'shows Article direct link' do
+
+      ensure_websocket do
+        visit "ticket/zoom/#{ticket.id}"
+        await_empty_ajax_queue
+
+        within :active_ticket_article, article do
+          expect(page).to have_css(%(a[href="#{url}"]))
+        end
       end
     end
 
-    it 'scrolls to given Article ID' do
-      ensure_websocket do
-        visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
-        await_empty_ajax_queue
-        # workaround because browser scrolls in test initially to the bottom
-        # maybe because the articles are not present?!
-        refresh
+    context 'when multiple Articles are present' do
 
-        # scroll to article in the middle of the page
-        within :active_content do
-          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+      let(:article_count) { 20 }
+      let(:article_at_the_top) { ticket.articles.first }
+      let(:article_in_the_middle) { ticket.articles[ article_count / 2 ] }
+      let(:article_at_the_bottom) { ticket.articles.last }
 
-          expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
-          expect(find("div#article-content-#{article_in_the_middle.id}")).not_to be_obscured
-          expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
+      before do
+        article_count.times do
+          create(:'ticket/article', ticket: ticket, body: SecureRandom.uuid)
         end
+      end
 
-        # scroll to article at the top of the page
-        visit "ticket/zoom/#{ticket.id}/#{article_at_the_top.id}"
-        await_empty_ajax_queue
-        within :active_content do
-          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+      it 'scrolls to given Article ID' do
+        ensure_websocket do
+          visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
+          await_empty_ajax_queue
+          # workaround because browser scrolls in test initially to the bottom
+          # maybe because the articles are not present?!
+          refresh
 
-          expect(find("div#article-content-#{article_at_the_top.id}")).not_to be_obscured
-          expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
-          expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
-        end
+          # scroll to article in the middle of the page
+          within :active_content do
+            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
 
-        # scroll to article at the bottom of the page
-        visit "ticket/zoom/#{ticket.id}/#{article_at_the_bottom.id}"
-        await_empty_ajax_queue
-        within :active_content do
-          find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+            expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
+            expect(find("div#article-content-#{article_in_the_middle.id}")).not_to be_obscured
+            expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
+          end
 
-          expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
-          expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
-          expect(find("div#article-content-#{article_at_the_bottom.id}")).not_to be_obscured
+          # scroll to article at the top of the page
+          visit "ticket/zoom/#{ticket.id}/#{article_at_the_top.id}"
+          await_empty_ajax_queue
+          within :active_content do
+            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+
+            expect(find("div#article-content-#{article_at_the_top.id}")).not_to be_obscured
+            expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
+            expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
+          end
+
+          # scroll to article at the bottom of the page
+          visit "ticket/zoom/#{ticket.id}/#{article_at_the_bottom.id}"
+          await_empty_ajax_queue
+          within :active_content do
+            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
+
+            expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
+            expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
+            expect(find("div#article-content-#{article_at_the_bottom.id}")).not_to be_obscured
+          end
         end
       end
     end

@@ -125,4 +125,5 @@
 
 <div class="js-article-actions"></div>
 
-<small class="task-subline"><%- @humanTime(@article.created_at) %></small>
+<a href="<%- @C('http_type') %>://<%- @C('fqdn') %>/#ticket/zoom/<%- @article.ticket_id %>/<%- @article.id %>"><small class="task-subline"><%- @humanTime(@article.created_at) %></small></a>
+
