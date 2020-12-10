@@ -178,21 +178,21 @@ RSpec.describe SearchIndexBackend, searchindex: true do
 
     before do
       Ticket.destroy_all # needed to remove not created tickets
-      described_class.add('Ticket', ticket1)
+      ticket1.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket2)
+      ticket2.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket3)
+      ticket3.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket4)
+      ticket4.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket5)
+      ticket5.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket6)
+      ticket6.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket7)
+      ticket7.search_index_update_backend
       travel 1.second
-      described_class.add('Ticket', ticket8)
+      ticket8.search_index_update_backend
       described_class.refresh
     end
 
