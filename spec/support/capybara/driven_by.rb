@@ -3,8 +3,15 @@ require_relative './set_up'
 RSpec.configure do |config|
   config.before(:each, type: :system) do
 
-    # start a silenced Puma as application server
-    Capybara.server = :puma, { Silent: true, Host: '0.0.0.0', Threads: '0:16' }
+    Capybara.register_server :puma_wrapper do |app, port, host, **_options|
+
+      # update fqdn Setting according to random assigned Rack server port
+      Setting.set('fqdn', "#{host}:#{port}")
+
+      # start a silenced Puma as application server
+      Capybara.servers[:puma].call(app, port, host, { Silent: true, Host: '0.0.0.0', Threads: '0:16' })
+    end
+    Capybara.server = :puma_wrapper
 
     # set the Host from gather container IP for CI runs
     if ENV['CI'].present?
