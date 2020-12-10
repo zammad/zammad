@@ -17,9 +17,9 @@ module HasTranslations
       output = eager_load(:translations).joins(translations: { kb_locale: :knowledge_base })
 
       if system_locale_or_id.present?
-        output.where('knowledge_base_locales.system_locale_id = ?', system_locale_or_id)
+        output.where('knowledge_base_locales.system_locale_id' => system_locale_or_id)
       else
-        output.where('knowledge_base_locales.system_locale_id = ?', -1)
+        output.where('knowledge_base_locales.system_locale_id' => -1)
       end
     }
   end

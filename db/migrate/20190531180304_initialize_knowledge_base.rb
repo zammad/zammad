@@ -26,6 +26,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false # rubocop:disable Zammad/ExistsDateTimePrecision
     end
+    add_index :knowledge_base_locales, %i[system_locale_id knowledge_base_id], name: 'index_kb_locale_on_kb_system_locale_kb', unique: true
 
     create_table :knowledge_base_translations do |t|
       t.string :title, limit: 250, null: false
@@ -36,6 +37,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false # rubocop:disable Zammad/ExistsDateTimePrecision
     end
+    add_index :knowledge_base_translations, %i[kb_locale_id knowledge_base_id], name: 'index_kb_t_on_kb_locale_kb', unique: true
 
     create_table :knowledge_base_categories do |t|
       t.references :knowledge_base, null: false, foreign_key: { to_table: :knowledge_bases }
@@ -55,6 +57,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false # rubocop:disable Zammad/ExistsDateTimePrecision
     end
+    add_index :knowledge_base_category_translations, %i[kb_locale_id category_id], name: 'index_kb_c_t_on_kb_locale_category', unique: true
 
     create_table :knowledge_base_answers do |t|
       t.references :category, null: false, foreign_key: { to_table: :knowledge_base_categories }
@@ -89,6 +92,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false # rubocop:disable Zammad/ExistsDateTimePrecision
     end
+    add_index :knowledge_base_answer_translations, %i[kb_locale_id answer_id], name: 'index_kb_a_t_on_kb_locale_answer', unique: true
 
     create_table :knowledge_base_menu_items do |t|
       t.references :kb_locale, null: false, foreign_key: { to_table: :knowledge_base_locales, on_delete: :cascade }

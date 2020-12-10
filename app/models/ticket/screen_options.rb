@@ -111,7 +111,7 @@ returns
 
     agents = {}
     agent_role_ids = Role.with_permissions('ticket.agent').pluck(:id)
-    agent_user_ids = User.joins(:roles).where(users: { active: true }).where('roles_users.role_id IN (?)', agent_role_ids).pluck(:id)
+    agent_user_ids = User.joins(:roles).where(users: { active: true }).where('roles_users.role_id' => agent_role_ids).pluck(:id)
     groups.each do |group|
       filter[:group_id].push group.id
       assets = group.assets(assets)

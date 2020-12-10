@@ -467,7 +467,7 @@ returns
 =end
 
   def self.discard_changes
-    ObjectManager::Attribute.where('to_create = ?', true).each(&:destroy)
+    ObjectManager::Attribute.where(to_create: true).each(&:destroy)
     ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each do |attribute|
       attribute.to_migrate = false
       attribute.to_delete = false

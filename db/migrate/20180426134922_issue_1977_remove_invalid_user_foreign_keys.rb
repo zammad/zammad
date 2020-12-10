@@ -6,15 +6,15 @@ class Issue1977RemoveInvalidUserForeignKeys < ActiveRecord::Migration[5.1]
 
     # cleanup
     OnlineNotification.joins('LEFT OUTER JOIN users ON online_notifications.user_id = users.id')
-                      .where('users.id IS NULL')
+                      .where('users.id' => nil)
                       .destroy_all
 
     RecentView.joins('LEFT OUTER JOIN users ON recent_views.created_by_id = users.id')
-              .where('users.id IS NULL')
+              .where('users.id' => nil)
               .destroy_all
 
     Avatar.joins('LEFT OUTER JOIN users ON avatars.o_id = users.id')
-          .where('users.id IS NULL')
+          .where('users.id' => nil)
           .where(object_lookup_id: ObjectLookup.by_name('User'))
           .destroy_all
 
