@@ -317,4 +317,28 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create :object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
+        'type'      => 'text',
+        'maxlength' => 3,
+        'null'      => true,
+        'translate' => false,
+        'default'   => '',
+        'options'   => {},
+        'relation'  => '',
+      }
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    it 'checks ticket create' do
+      visit 'ticket/create'
+      within(:active_content) do
+        fill_in 'maxtest', with: 'hellu'
+        expect(page.find_field('maxtest').value).to eq('hel')
+      end
+    end
+  end
 end
