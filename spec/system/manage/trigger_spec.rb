@@ -33,6 +33,19 @@ RSpec.describe 'Manage > Trigger', type: :system do
         end
       end
     end
+
+    it 'sets a customer email address with no @ character' do
+      visit '/#manage/trigger'
+
+      click '.page-header-meta .btn--success'
+      modal_ready
+
+      find(".js-attributeSelector select option[value='customer.email']").select_option
+      fill_in 'condition::customer.email::value', with: 'zammad.com'
+      fill_in 'Name', with: 'trigger 1'
+      click '.js-submit'
+      modal_disappear
+    end
   end
 
   context 'Perform' do
