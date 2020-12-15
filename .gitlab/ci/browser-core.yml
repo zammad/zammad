@@ -69,7 +69,7 @@ include:
   variables:
     RAILS_ENV: "test"
   script:
-    - bundle exec rake zammad:ci:test:prepare[with_elasticsearch]
+    - bundle exec rake zammad:ci:test:prepare
     - bundle exec rspec --fail-fast -t type:system
 
 # we need at least one job to store and include this template
