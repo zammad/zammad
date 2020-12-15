@@ -22,5 +22,9 @@ RSpec.configure do |config|
     # set custom Zammad driver (e.g. zammad_chrome) for special
     # functionalities and CI requirements
     driven_by(:"zammad_#{ENV.fetch('BROWSER', 'firefox')}")
+
+    browser_width  = ENV['BROWSER_WIDTH'] || 1024
+    browser_height = ENV['BROWSER_HEIGHT'] || 800
+    page.driver.browser.manage.window.resize_to(browser_width, browser_height)
   end
 end
