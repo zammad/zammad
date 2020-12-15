@@ -92,7 +92,7 @@ class App.UiElement.ticket_selector
           # ignore passwords and relations
           if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
             config = _.clone(row)
-            if config.type is 'email'
+            if config.type is 'email' || config.type is 'tel'
               config.type = 'text'
             for operatorRegEx, operator of operators_type
               myRegExp = new RegExp(operatorRegEx, 'i')
