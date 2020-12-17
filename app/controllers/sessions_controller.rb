@@ -129,8 +129,8 @@ class SessionsController < ApplicationController
       return false
     end
 
-    # remember old user
-    session[:switched_from_user_id] = current_user.id
+    # remember original user
+    session[:switched_from_user_id] ||= current_user.id
 
     # log new session
     user.activity_stream_log('switch to', current_user.id, true)
