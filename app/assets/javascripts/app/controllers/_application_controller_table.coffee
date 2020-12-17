@@ -517,7 +517,7 @@ class App.ControllerTable extends App.Controller
       if object
         position++
         if @groupBy
-          groupByName = App.viewPrint(object, @groupBy, @attributesList)
+          groupByName = @groupObjectName(object, @groupBy)
           if groupLastName isnt groupByName
             groupLastName = groupByName
             tableBody.push @renderTableGroupByRow(object, position, groupByName)
@@ -529,14 +529,11 @@ class App.ControllerTable extends App.Controller
     groupByCount = undefined
     if ui_table_group_by_show_count is true
       groupBy = @groupBy
-      groupLast = object[@groupBy]
-      if !groupLast
-        groupBy = "#{@groupBy}_id"
-        groupLast = object[groupBy]
+      groupLast = @groupObjectName(object, @groupBy)
       groupByCount = 0
       if @objects
         for localObject in @objects
-          if localObject[groupBy] is groupLast
+          if @groupObjectName(localObject, groupBy) is groupLast
             groupByCount += 1
 
     App.view('generic/table_row_group_by')(
@@ -799,22 +796,7 @@ class App.ControllerTable extends App.Controller
       # get groups
       groupObjects = {}
       for object in @objects
-        group = object[@groupBy]
-        if !group
-          withId = "#{@groupBy}_id"
-          if object[withId] && @attributesList[withId] && @attributesList[withId].relation
-            if App[@attributesList[withId].relation].exists(object[withId])
-              item = App[@attributesList[withId].relation].findNative(object[withId])
-              if item && item.displayName
-                group = item.displayName().toLowerCase()
-              else if item.name
-                group = item.name.toLowerCase()
-        if _.isEmpty(group)
-          group = ''
-        if group.displayName
-          group = group.displayName().toLowerCase()
-        else if group.name
-          group = group.name.toLowerCase()
+        group = @groupObjectName(object, @groupBy)
         groupObjects[group] ||= []
         groupObjects[group].push object
 
@@ -835,6 +817,20 @@ class App.ControllerTable extends App.Controller
     return if localObjects is undefined
     @objects = localObjects
     @lastSortedobjects = localObjects
+
+  groupObjectName: (object, key = undefined) ->
+    group = object
+    if key
+      if key not of object
+        key += '_id'
+      group = App.viewPrint(object, key, @attributesList)
+    if _.isEmpty(group)
+      group = ''
+    if group.displayName
+      group = group.displayName().toLowerCase()
+    else if group.name
+      group = group.name.toLowerCase()
+    group
 
   onActionButtonClicked: (e) =>
     id = $(e.currentTarget).parents('tr').data('id')

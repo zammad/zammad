@@ -142,4 +142,32 @@ RSpec.describe 'Ticket views', type: :system do
              ]).to be_all note
     end
   end
+
+  context 'Setting "ui_table_group_by_show_count"', authenticated_as: :authenticate, db_strategy: :reset do
+    let!(:ticket1) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let!(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let!(:ticket3) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let!(:ticket4) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      create :object_manager_attribute_select, name: 'grouptest'
+      ObjectManager::Attribute.migration_execute
+      ticket1
+      ticket2.update(grouptest: 'key_1')
+      ticket3.update(grouptest: 'key_2')
+      ticket4.update(grouptest: 'key_1')
+      Overview.find_by(name: 'Open').update(group_by: 'grouptest')
+      Setting.set('ui_table_group_by_show_count', true)
+      true
+    end
+
+    it 'shows correct ticket counts' do
+      visit 'ticket/view/all_open'
+      within(:active_content) do
+        page.find('.js-tableBody td b', text: '(1)')
+        page.find('.js-tableBody td b', text: 'value_1 (2)')
+        page.find('.js-tableBody td b', text: 'value_2 (1)')
+      end
+    end
+  end
 end
