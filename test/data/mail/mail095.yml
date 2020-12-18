@@ -1,0 +1,12 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Name R. John" <user.name@example.com>'
+from_email: user.name@example.com
+from_display_name: Name R. John
+to: To This Person <user@example.com>
+subject: Subject of message
+body: 'Message text
+
+  '
+content_type: text/plain
+attachments: []
+message_id: "<DM6PR02MF1425372C1E5187B91210554G127D5@do1ram03ok0780.emails.users.example.com>"

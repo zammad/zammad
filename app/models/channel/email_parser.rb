@@ -78,6 +78,8 @@ class Channel::EmailParser
     msg = Mail::Utilities.binary_unsafe_to_crlf(msg)
     mail = Mail.new(msg)
 
+    message_ensure_message_id(msg, mail)
+
     force_parts_encoding_if_needed(mail)
 
     headers = message_header_hash(mail)
@@ -545,6 +547,17 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
   end
 
+  # generate Message ID on the fly if it was missing
+  # yes, Mail gem generates one in some cases
+  # but it is 100% random so duplicate messages would not be detected
+  def message_ensure_message_id(raw, parsed)
+    field = parsed.header.fields.find { |elem| elem.name == 'Message-ID' }
+
+    return true if field&.unparsed_value.present?
+
+    parsed.message_id = generate_message_id(raw, parsed.from)
+  end
+
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
       begin
@@ -908,6 +921,18 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       References:    parsed_incoming_mail[:message_id],
       'In-Reply-To': parsed_incoming_mail[:message_id],
     )
+  end
+
+  def guess_email_fqdn(from)
+    Mail::Address.new(from).domain.strip
+  rescue
+    nil
+  end
+
+  def generate_message_id(raw_message, from)
+    fqdn = guess_email_fqdn(from) || 'zammad_generated'
+
+    "<gen-#{Digest::MD5.hexdigest(raw_message)}@#{fqdn}>"
   end
 end
 
