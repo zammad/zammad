@@ -137,3 +137,15 @@ class App.PrettyDate
     while num.toString().length < digits
       num = '0' + num
     num
+
+  @getISOWeeks: (year) ->
+    dayNumber   = new Date("#{year}-01-01").getDay()
+    isLeap      = new Date("#{year}-02-29").getMonth() == 1
+
+
+    # check for a Jan 1 that's a Thursday or a leap year that has a
+    # Wednesday jan 1. Otherwise it's 52
+    if dayNumber == 4 || isLeap && dayNumber == 3
+      53
+    else
+      52
