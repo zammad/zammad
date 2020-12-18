@@ -368,3 +368,10 @@ test("check pretty date", function() {
   }
 
 });
+
+test("PrettyDate getISOWeeks", function() {
+  equal(App.PrettyDate.getISOWeeks(2026), 53, '53 weeks')
+  equal(App.PrettyDate.getISOWeeks(2020), 53, 'leap year and 53 weeks')
+  equal(App.PrettyDate.getISOWeeks(2019), 52, '52 weeks')
+  equal(App.PrettyDate.getISOWeeks(2024), 52, 'leap year and 52 weeks')
+})
