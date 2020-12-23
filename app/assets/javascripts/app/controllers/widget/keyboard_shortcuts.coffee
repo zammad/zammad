@@ -444,6 +444,19 @@ App.Config.set(
               globalEvent: 'richtext-strikethrough'
             }
             {
+              key: 'v'
+              magicKey: true
+              description: 'Paste from clipboard'
+              globalEvent: 'clipboard-paste'
+            }
+            {
+              key: 'v'
+              magicKey: true
+              shiftKey: true
+              description: 'Paste from clipboard (plain text)'
+              globalEvent: 'clipboard-paste-plain-text'
+            }
+            {
               key: 'f'
               hotkeys: true
               description: 'Removes the formatting'

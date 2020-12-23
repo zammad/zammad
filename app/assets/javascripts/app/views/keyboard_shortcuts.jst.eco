@@ -37,6 +37,9 @@
         <% else if shortcut.magicKey: %>
           <kbd><%= @magicKey %></kbd>
         <% end %>
+        <% if shortcut.shiftKey: %>
+          <kbd>shift</kbd>
+        <% end %>
         <% if shortcut.keyPrefix: %>
           <%= shortcut.keyPrefix %>
         <% end %>

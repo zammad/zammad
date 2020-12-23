@@ -199,7 +199,7 @@
       || e.keyCode == 75
       || e.keyCode == 76
       || e.keyCode == 85
-      || e.keyCode == 86
+      || e.keyCode == 83
       || e.keyCode == 88
       || e.keyCode == 90
       || e.keyCode == 89)) {
@@ -237,7 +237,7 @@
       if (e.keyCode == 85) {
         document.execCommand('underline')
       }
-      if (e.keyCode == 86) {
+      if (e.keyCode == 83) {
         document.execCommand('strikeThrough')
       }
       if (e.keyCode == 88) {
