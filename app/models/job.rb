@@ -53,50 +53,15 @@ job.run(true)
   def run(force = false, start_at = Time.zone.now)
     logger.debug { "Execute job #{inspect}" }
 
-    tickets = nil
-    Transaction.execute(reset_user_id: true) do
-      if !executable?(start_at) && force == false
-        if next_run_at && next_run_at <= Time.zone.now
-          save!
-        end
-        return
-      end
+    ticket_ids = start_job(start_at, force)
 
-      # find tickets to change
-      matching = matching_count
-      if self.matching != matching
-        self.matching = matching
-        save!
-      end
+    return if ticket_ids.nil?
 
-      if !in_timeplan?(start_at) && force == false
-        if next_run_at && next_run_at <= Time.zone.now
-          save!
-        end
-        return
-      end
-
-      ticket_count, tickets = Ticket.selectors(condition, limit: 2_000, execution_time: true)
-
-      logger.debug { "Job #{name} with #{ticket_count} tickets" }
-
-      self.processed = ticket_count || 0
-      self.running = true
-      self.last_run_at = Time.zone.now
-      save!
+    ticket_ids&.each_slice(10) do |slice|
+      run_slice(slice)
     end
 
-    tickets&.each do |ticket|
-      Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
-        ticket.perform_changes(self, 'job')
-      end
-    end
-
-    Transaction.execute(reset_user_id: true) do
-      self.running = false
-      self.last_run_at = Time.zone.now
-      save!
-    end
+    finish_job
   end
 
   def executable?(start_at = Time.zone.now)
@@ -144,10 +109,79 @@ job.run(true)
     self.next_run_at = next_run_at_calculate
   end
 
-  def match_minutes(minutes)
-    return 0 if minutes < 10
-
-    "#{minutes.to_s.gsub(%r{(\d)\d}, '\\1')}0".to_i
+  def finish_job
+    Transaction.execute(reset_user_id: true) do
+      mark_as_finished
+    end
   end
 
+  def mark_as_finished
+    self.running = false
+    self.last_run_at = Time.zone.now
+    save!
+  end
+
+  def start_job(start_at, force)
+    Transaction.execute(reset_user_id: true) do
+      if start_job_executable?(start_at, force) && start_job_ensure_matching_count && start_job_in_timeplan?(start_at, force)
+        ticket_count, tickets = Ticket.selectors(condition, limit: 2_000, execution_time: true)
+
+        logger.debug { "Job #{name} with #{ticket_count} tickets" }
+
+        mark_as_started(ticket_count)
+
+        tickets&.pluck(:id) || []
+      end
+    end
+  end
+
+  def start_job_executable?(start_at, force)
+    return true if executable?(start_at) || force
+
+    if next_run_at && next_run_at <= Time.zone.now
+      save!
+    end
+
+    false
+  end
+
+  def start_job_ensure_matching_count
+    matching = matching_count
+
+    if self.matching != matching
+      self.matching = matching
+      save!
+    end
+
+    true
+  end
+
+  def start_job_in_timeplan?(start_at, force)
+    return true if in_timeplan?(start_at) || force
+
+    if next_run_at && next_run_at <= Time.zone.now
+      save!
+    end
+
+    false
+  end
+
+  def mark_as_started(ticket_count)
+    self.processed = ticket_count || 0
+    self.running = true
+    self.last_run_at = Time.zone.now
+    save!
+  end
+
+  def run_slice(slice)
+    Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
+      _, tickets = Ticket.selectors(condition, limit: 2_000, execution_time: true)
+
+      tickets
+        &.where(id: slice)
+        &.each do |ticket|
+          ticket.perform_changes(self, 'job')
+        end
+    end
+  end
 end

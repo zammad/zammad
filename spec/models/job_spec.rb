@@ -487,4 +487,49 @@ RSpec.describe Job, type: :model do
       end
     end
   end
+
+  # when running a very large job, tickets may change during the job
+  # if tickets are fetched once, their action may be performed later on
+  # when it no longer matches the conditions
+  # https://github.com/zammad/zammad/issues/3329
+  context 'job re-checks conditions' do
+    let(:job)    { create(:job, condition: condition, perform: perform) }
+    let(:ticket) { create(:ticket, title: initial_title) }
+    let(:initial_title) { 'initial 3329'  }
+    let(:changed_title) { 'performed 3329' }
+
+    let(:condition) do
+      { 'ticket.title' => { 'value' => initial_title, 'operator' => 'is' } }
+    end
+
+    let(:perform) do
+      { 'ticket.title' => { 'value'=> changed_title } }
+    end
+
+    it 'condition matches ticket' do
+      ticket
+      expect(job.send(:start_job, Time.zone.now, true)).to eq [ticket.id]
+    end
+
+    it 'action is performed' do
+      ticket
+
+      ticket_ids = job.send(:start_job, Time.zone.now, true)
+      job.send(:run_slice, ticket_ids)
+
+      expect(ticket.reload.title).to eq changed_title
+    end
+
+    it 'checks conditions' do
+      ticket
+
+      ticket_ids = job.send(:start_job, Time.zone.now, true)
+
+      ticket.update! title: 'another title'
+
+      job.send(:run_slice, ticket_ids)
+
+      expect(ticket.reload.title).not_to eq changed_title
+    end
+  end
 end
