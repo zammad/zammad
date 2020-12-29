@@ -51,9 +51,11 @@ function backup_db () {
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
-    su -c "pg_dump --no-privileges --no-owner -c ${DB_NAME} | \
-      gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
-    mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
+    PGPASSWORD="${DB_PASS}" pg_dump \
+        --dbname "${DB_NAME}" \
+        --username "${DB_USER}" \
+        --no-privileges --no-owner --clean \
+        --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
   else
     echo "DB ADAPTER not found. if its sqlite backup is already saved in the filebackup"
