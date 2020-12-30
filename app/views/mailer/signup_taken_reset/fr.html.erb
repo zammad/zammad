@@ -1,0 +1,15 @@
+Réinitialisation de votre mot de passe pour #{config.product_name}
+
+<div>Bonjour #{user.firstname},</div>
+<br>
+<div>Vous ou quelqu'un d'autre a essayé de s'inscrire avec cette adresse e-mail. Cependant, cette adresse est déjà utilisée.</div>
+<br>
+<div>Si vous souhaitez réinitialiser votre mot de passe, il vous suffit de cliquer sur le lien ci-dessous (ou de copier/coller ce lien dans votre navigateur) :</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Ce lien vous permet d'accéder à la page pour changer votre mot de passe.</div>
+<br>
+<div>Si vous ne souhaitez pas changer votre mot de passe, merci d'ignorer ce message. Votre mot de passe ne sera pas réinitialisé.</div>
+<br>
+<div>Votre équipe #{config.product_name}</div>
