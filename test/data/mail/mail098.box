@@ -1,0 +1,18 @@
+Return-Path: <return@example.org>
+Delivered-To: delivered@example.org
+Received: from localhost (unknown [127.0.0.1])
+	by mail.example.org (Postfix) with ESMTP id 31337;
+	Mon, 21 Dec 2020 11:03:03 +0900 (JST)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+From: "=?ISO-2022-JP?B?GyRCO3ZMMzZJGyhC==?="
+ <noreply@example.org>
+Reply-To: info@example.org
+To: noreply@example.org
+Cc: 
+Subject: =?ISO-2022-JP?B?GyRCMGxNdyFXJHIlIiVDJVckNyReJDkbKEI=?=
+Message-Id: <20201221110303>
+Date: Mon, 21 Dec 2020 11:33:03 +0900 (JST)
+
+カテゴリ：全メンバー

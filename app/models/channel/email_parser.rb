@@ -528,14 +528,15 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   # https://github.com/zammad/zammad/issues/2922
   def force_parts_encoding_if_needed(mail)
-    mail.parts.each { |elem| force_single_part_encoding_if_needed(elem) }
+    # enforce encoding on both multipart parts and main body
+    ([mail] + mail.parts).each { |elem| force_single_part_encoding_if_needed(elem) }
   end
 
   # https://github.com/zammad/zammad/issues/2922
   def force_single_part_encoding_if_needed(part)
-    return if part.charset != 'iso-2022-jp'
+    return if part.charset&.downcase != 'iso-2022-jp'
 
-    part.body = part.body.encoded.unpack1('M').force_encoding('ISO-2022-JP').encode('UTF-8')
+    part.body = force_japanese_encoding part.body.encoded.unpack1('M')
   end
 
   ISO2022JP_REGEXP = /=\?ISO-2022-JP\?B\?(.+?)\?=/.freeze
@@ -543,7 +544,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   # https://github.com/zammad/zammad/issues/3115
   def header_field_unpack_japanese(field)
     field.value.gsub ISO2022JP_REGEXP do
-      Base64.decode64($1).force_encoding('SJIS').encode('UTF-8')
+      force_japanese_encoding Base64.decode64($1)
     end
   end
 
@@ -933,6 +934,16 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     fqdn = guess_email_fqdn(from) || 'zammad_generated'
 
     "<gen-#{Digest::MD5.hexdigest(raw_message)}@#{fqdn}>"
+  end
+
+  # https://github.com/zammad/zammad/issues/3096
+  # specific email needs to be forced to ISO-2022-JP
+  # but that breaks other emails that can be forced to SJIS only
+  # thus force to ISO-2022-JP but fallback to SJIS
+  def force_japanese_encoding(input)
+    input.force_encoding('ISO-2022-JP').encode('UTF-8')
+  rescue
+    input.force_encoding('SJIS').encode('UTF-8')
   end
 end
 
