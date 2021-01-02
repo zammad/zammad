@@ -6,7 +6,7 @@ targets:
   centos-7:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx
       - postgresql-server
       - which
@@ -18,7 +18,7 @@ targets:
   centos-8:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx
       - postgresql-server
       - which
@@ -30,7 +30,7 @@ targets:
   debian-9:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
@@ -40,7 +40,7 @@ targets:
   debian-10:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
@@ -50,7 +50,7 @@ targets:
   ubuntu-16.04:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
@@ -60,7 +60,7 @@ targets:
   ubuntu-18.04:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
@@ -70,7 +70,7 @@ targets:
   ubuntu-20.04:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
@@ -80,7 +80,7 @@ targets:
   sles-12:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx
       - postgresql-server
       - libImlib2-1
