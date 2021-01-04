@@ -58,7 +58,7 @@ RSpec.describe Trigger do
       it 'interpolates date in selected locale format' do
         time_in_zone = triggered_article.ticket.created_at.in_time_zone(time_zone)
 
-        expect(triggered_article.body).to match(time_in_zone.strftime('%d.%m.%y'))
+        expect(triggered_article.body).to match(time_in_zone.strftime('%d.%m.%Y'))
       end
     end
 
