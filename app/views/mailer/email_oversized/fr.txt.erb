@@ -1,0 +1,11 @@
+[Non délivrable] Message trop volumineux
+Cher #{mail.from_display_name},
+
+Votre message ayant pour objet "#{mail.subject}" n'a pas pu être distribué à un ou plusieurs destinataires.
+
+La taille de votre message était de #{mail.msg_size} MB. Nous acceptons les messages jusqu'à #{config.postmaster_max_size} MB.
+
+Veuillez réduire la taille du message et réessayer. Nous vous remercions de votre compréhension.
+
+Désolé,
+Postmaster - #{config.fqdn}
