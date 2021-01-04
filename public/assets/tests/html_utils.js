@@ -649,7 +649,7 @@ test("htmlCleanup", function() {
 
   source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
   //should = "<div>This is some text!</div>"
-  should = "This is some text!"
+  should = "<font color=\"red\">This is some text!</font>"
   result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
@@ -671,7 +671,7 @@ test("htmlCleanup", function() {
   equal(result.html().trim(), should, source)
 
   source = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n<html>\n<head>\n  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"/>\n  <title></title>\n  <meta name=\"generator\" content=\"LibreOffice 4.4.7.2 (MacOSX)\"/>\n  <style type=\"text/css\">\n    @page { margin: 0.79in }\n    p { margin-bottom: 0.1in; line-height: 120% }\n    a:link { so-language: zxx }\n  </style>\n</head>\n<body lang=\"en-US\" dir=\"ltr\">\n<p align=\"center\" style=\"margin-bottom: 0in; line-height: 100%\">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align=\"center\" style=\"margin-bottom: 0in; line-height: 100%\"><br/>\n\n</p>\n<p align=\"center\" style=\"margin-bottom: 0in; line-height: 100%\">2.\nMel<font color=\"#800000\">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align=\"center\" style=\"margin-bottom: 0in; line-height: 100%\">Benutzer:\nme@xxx.net</p>\n<p align=\"center\" style=\"margin-bottom: 0in; line-height: 100%\">Passwort:\nxxx.</p>\n</body>\n</html>"
-  should = "\n\n\n  \n  \n  \n  \n\n\n<p>1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p><br>\n\n</p>\n<p>2.\nMelde Dich mit folgende Zugangsdaten an:</p>\n<p>Benutzer:\nme@xxx.net</p>\n<p>Passwort:\nxxx.</p>\n\n"
+  should = "\n\n\n  \n  \n  \n  \n\n\n<p>1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p><br>\n\n</p>\n<p>2.\nMel<font color=\"#800000\">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p>Benutzer:\nme@xxx.net</p>\n<p>Passwort:\nxxx.</p>\n\n"
   result = App.Utils.htmlCleanup(source)
   equal(result.html(), should, source)
 

@@ -1,6 +1,9 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
   @mapTagAttributes:
+    'FONT': ['color']
+    'SPAN': ['style']
+    'DIV': ['style']
     'TABLE': ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'frame', 'rules', 'sortable', 'summary', 'width', 'style']
     'TD': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'valign', 'width', 'style']
     'TH': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'scope', 'sorted', 'valign', 'width', 'style']
@@ -9,6 +12,12 @@ class App.Utils
     'IMG': ['align', 'alt', 'border', 'height', 'src', 'srcset', 'width', 'style']
 
   @mapCss:
+    'SPAN': [
+      'color',
+    ]
+    'DIV': [
+      'color',
+    ]
     'TABLE': [
       'background', 'background-color', 'color', 'font-size', 'vertical-align',
       'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
@@ -58,6 +67,111 @@ class App.Utils
     ]
     'IMG': [
       'width', 'height',
+    ]
+
+  @cssValuesBacklist:
+    'DIV': [
+      'color:white',
+      'color:black',
+      'color:#000',
+      'color:#000000',
+      'color:#fff',
+      'color:#ffffff',
+      'color:rgb(0,0,0)',
+      'color:#585856', # use in UI, ignore it
+      'color:rgb(88, 88, 86)' # use in UI, ignore it
+      'color:#b3b3b3' # use in UI, ignore it
+      'color:rgb(34, 34, 34)' # use in UI, ignore it
+    ],
+    'SPAN': [
+      'color:white',
+      'color:black',
+      'color:#000',
+      'color:#000000',
+      'color:#fff',
+      'color:#ffffff',
+      'color:rgb(0,0,0)',
+      'color:#585856', # use in UI, ignore it
+      'color:rgb(88, 88, 86)' # use in UI, ignore it
+      'color:#b3b3b3' # use in UI, ignore it
+      'color:rgb(34, 34, 34)' # use in UI, ignore it
+    ],
+    'TABLE': [
+      'font-size:0',
+      'font-size:0px',
+      'font-size:0em',
+      'font-size:0%',
+      'font-size:1px',
+      'font-size:1em',
+      'font-size:1%',
+      'font-size:2',
+      'font-size:2px',
+      'font-size:2em',
+      'font-size:2%',
+      'font-size:3',
+      'font-size:3px',
+      'font-size:3em',
+      'font-size:3%',
+      'display:none',
+      'visibility:hidden',
+    ],
+    'TH': [
+      'font-size:0',
+      'font-size:0px',
+      'font-size:0em',
+      'font-size:0%',
+      'font-size:1px',
+      'font-size:1em',
+      'font-size:1%',
+      'font-size:2',
+      'font-size:2px',
+      'font-size:2em',
+      'font-size:2%',
+      'font-size:3',
+      'font-size:3px',
+      'font-size:3em',
+      'font-size:3%',
+      'display:none',
+      'visibility:hidden',
+    ],
+    'TR': [
+      'font-size:0',
+      'font-size:0px',
+      'font-size:0em',
+      'font-size:0%',
+      'font-size:1',
+      'font-size:1px',
+      'font-size:1em',
+      'font-size:1%',
+      'font-size:2',
+      'font-size:2px',
+      'font-size:2em',
+      'font-size:2%',
+      'font-size:3',
+      'font-size:3px',
+      'font-size:3em',
+      'font-size:3%',
+      'display:none',
+      'visibility:hidden',
+    ],
+    'TD': [
+      'font-size:0',
+      'font-size:0px',
+      'font-size:0em',
+      'font-size:0%',
+      'font-size:1px',
+      'font-size:1em',
+      'font-size:1%',
+      'font-size:2',
+      'font-size:2px',
+      'font-size:2em',
+      'font-size:2%',
+      'font-size:3',
+      'font-size:3px',
+      'font-size:3em',
+      'font-size:3%',
+      'display:none',
+      'visibility:hidden',
     ]
 
   # textCleand = App.Utils.textCleanup(rawText)
@@ -269,7 +383,7 @@ class App.Utils
     @_stripDoubleDomainAnchors(html)
 
     # remove tags, keep content
-    html.find('font, small, time, form, label').replaceWith( ->
+    html.find('small, time, form, label').replaceWith( ->
       $(@).contents()
     )
 
@@ -293,7 +407,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('font, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
+    html.find('svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
     # remove style and class
     @_cleanAttributes(html)
@@ -341,7 +455,7 @@ class App.Utils
           prop = local_pear.split(':')
           if prop[0] && prop[0].trim
             key = prop[0].trim()
-            if _.contains(@mapCss[element.nodeName], key)
+            if !(@cssValuesBacklist[element.nodeName] && _.contains(@cssValuesBacklist[element.nodeName], local_pear.toLowerCase())) && _.contains(@mapCss[element.nodeName], key)
               styleNew += "#{local_pear};"
         if styleNew isnt ''
           element.setAttribute('style', styleNew)

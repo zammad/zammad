@@ -659,6 +659,22 @@ RSpec.describe String do
       expect('<span></span>'.html2html_strict).to eq('')
     end
 
+    it 'keeps style with color in <span>' do
+      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        <span style="color: red; bgcolor: red">Hello Martin,</span>
+      HTML
+        <span style="color: red;">Hello Martin,</span>
+      TEXT
+    end
+
+    it 'remove style=#ffffff with color in <span>' do
+      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        <span style="color: #ffffff; bgcolor: red">Hello Martin,</span>
+      HTML
+        Hello Martin,
+      TEXT
+    end
+
     it 'strips <span> tags, id/class attrs, and <o:*> (MS Office) tags' do
       expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
         <div id="123" class="WordSection1">
@@ -671,7 +687,7 @@ RSpec.describe String do
         <div>
       HTML
         <div>
-        <p>Guten Morgen, Frau Koppenhagen,</p><p>&nbsp;</p><p>vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</p><p>&nbsp;</p><p>Nochmals vielen Dank und herzliche Grüße</p></div>
+        <p><span style="color:#1f497d;">Guten Morgen, Frau Koppenhagen,</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p></div>
       TEXT
     end
 
@@ -894,6 +910,22 @@ RSpec.describe String do
         TEXT
       end
 
+      it 'keeps style with color in <div>' do
+        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          <div style="color: red; bgcolor: red">Hello Martin,</div>
+        HTML
+          <div style="color: red;">Hello Martin,</div>
+        TEXT
+      end
+
+      it 'remove style=#ffffff with color in <div>' do
+        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          <div style="color: #ffffff; bgcolor: red">Hello Martin,</div>
+        HTML
+          <div>Hello Martin,</div>
+        TEXT
+      end
+
       it 'rearranges whitespace in nested <div>' do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           <div lang="DE"><div><div>Hello Martin,</div> </div></div>
@@ -1003,7 +1035,7 @@ RSpec.describe String do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           web <a href="www.example.com"><span style="color:blue">www.example.com</span></a>
         HTML
-          web <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a>
+          web <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">www.example.com</span></a>
         TEXT
       end
 
@@ -1097,7 +1129,7 @@ RSpec.describe String do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           <a name="_MailEndCompose"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;color:#44546A">Hello Mr Smith,<o:p></o:p></span></a>
         HTML
-          Hello Mr Smith,
+          <span style="color:#44546a;">Hello Mr Smith,</span>
         TEXT
       end
 
@@ -1114,7 +1146,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <a href="http://facebook.de/examplesrbog"><span lang="EN-US" style='color:blue'>http://facebook.de/examplesrbog</span></a>
           HTML
-            <a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank">http://facebook.de/examplesrbog</a>
+            <a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a>
           TEXT
         end
 
@@ -1123,7 +1155,7 @@ RSpec.describe String do
             <span style="font-size:10.0pt;font-family:&quot;Cambria&quot;,serif;color:#1F497D;mso-fareast-language:DE">web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="http://www.example.com"><span style="color:blue">www.example.com</span></a><o:p></o:p></span>
           HTML
-            web <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a>
+            <span style="color:#1f497d;">web <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">www.example.com</span></a></span>
           TEXT
         end
       end
@@ -1220,7 +1252,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <p class="MsoNormal"><a href="http://www.example.com/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>
           HTML
-            <p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>
+            <p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/"><span style="color:blue;"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></span></a></p>
           TEXT
         end
       end
@@ -1288,7 +1320,8 @@ RSpec.describe String do
           <p class="MsoNormal"><span style="font-size:8.0pt;color:#1F497D">Geschäftsführer Vor Nach, VorUndZu Nach&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp; Amtsgericht Dort HRB 12345&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Ein Unternehmer der ABC Gruppe<o:p></o:p></span></p>
         HTML
           <div>
-          <p>Guten Morgen, Frau ABC,</p><p>&nbsp;</p><p>vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</p><p>&nbsp;</p><p>Nochmals vielen Dank und herzliche Grüße</p><div> <p>&nbsp;</p><p><b>Anna Smith</b></p><p><b>art abc SEV GmbH</b></p><p><b>art abc TRAV</b></p><p>Marktstätte 123</p><p>123456 Dorten</p><p>T: +49 (0) 12345/1234560-1</p><p>T: +49 (0) 12345/1234560-0</p><p>F: +49 (0) 12345/1234560-2</p><p>annad@example.com</p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a> <a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a></p><p>Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</p></div></div>
+          <p><span style="color:#1f497d;">Guten Morgen, Frau ABC,</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p><div>
+          <p><b><span style="color:#1f497d;"><p>&nbsp;</p></span></b></p><p><b><span style="color:#1f497d;">Anna Smith</span></b></p><p><b><span style="color:#1f497d;">art abc SEV GmbH</span></b></p><p><b><span style="color:#1f497d;">art abc TRAV</span></b></p><p><span style="color:#1f497d;">Marktstätte 123</span></p><p><span style="color:#1f497d;">123456 Dorten</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-1</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-0</span></p><p><span style="color:#1f497d;">F: +49 (0) 12345/1234560-2</span></p><p>annad@example.com</p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><span style="color:#1f497d;"> </span><a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a></p><p><span style="color:#1f497d;">Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</span></p></div></div>
         TEXT
       end
 
@@ -1309,12 +1342,12 @@ RSpec.describe String do
           <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Segoe UI&quot;,&quot;sans-serif&quot;;color:#1F497D">&nbsp;</span><o:p></o:p></p>
           <p class="MsoNormal">Guten Morgen Frau Epalza,<o:p></o:p></p>
         HTML
-          <p>&nbsp;</p><div>
+          <p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><div>
           <div>
           <span class="js-signatureMarker"></span><p><b>Von:</b> Besucherbüro, MKuk [besucherbuero@example.com] <br>
           <b>Gesendet:</b> Freitag, 16. Dezember 2016 08:05<br>
           <b>An:</b> 'Amaia Epalza'<br>
-          <b>Betreff:</b> AW: Gruppe vtb Kultuur // 28.06.2017</p></div></div><p>&nbsp;</p><p><b>Reservierungsbestätigung Führung Skulptur-Projekte 2017 am </b></p><p>&nbsp;</p><p>Guten Morgen Frau Epalza,</p>
+          <b>Betreff:</b> AW: Gruppe vtb Kultuur // 28.06.2017</p></div></div><p>&nbsp;</p><p><b><span style="color:#1f497d;">Reservierungsbestätigung Führung Skulptur-Projekte 2017 am </span></b></p><p></p><p><span style="color:#1f497d;"> </span></p><p></p><p>Guten Morgen Frau Epalza,</p>
         TEXT
       end
 
@@ -1332,7 +1365,7 @@ RSpec.describe String do
           <b>bitte</b> noch meine Testphase verlängern?<o:p></o:p></span></p>
           <p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US"><o:p>&nbsp;</o:p></span></p>
         HTML
-          <p>oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</p><p>&nbsp;</p>
+          <p><span style="color:#1f497d;">oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p>
         TEXT
       end
 
@@ -1351,9 +1384,9 @@ RSpec.describe String do
           <tr>
           <td valign="bottom" style=" border-style: none none none solid; border-left-width: 1pt; border-left-color: windowtext; padding: 0cm 5.4pt;"><p>&nbsp;</p></td>
           <td valign="bottom" style=" padding: 0cm 5.4pt;"><div>20-29</div></td>
-          <td valign="bottom" style=" background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><span style="color: rgb(156, 0, 6);">200</span></td>
-          <td valign="bottom" style=" background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><span style="color: rgb(156, 0, 6);">-1</span></td>
-          <td valign="bottom" style=" border-style: none solid none none; border-right-width: 1pt; border-right-color: windowtext; background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><span style="color: rgb(156, 0, 6);">201</span></td>
+          <td valign="bottom" style=" background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><div><span style="color: rgb(156, 0, 6);">200</span></div></td>
+          <td valign="bottom" style=" background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><div><span style="color: rgb(156, 0, 6);">-1</span></div></td>
+          <td valign="bottom" style=" border-style: none solid none none; border-right-width: 1pt; border-right-color: windowtext; background-color: rgb(255, 199, 206); padding: 0cm 5.4pt;"><div><span style="color: rgb(156, 0, 6);">201</span></div></td>
           <td valign="bottom" style=" padding: 0cm 5.4pt;"></td>
           <td valign="bottom" style=" padding: 0cm 5.4pt;"></td>
           <td valign="bottom" style=" border-style: none solid solid; border-left-width: 1pt; border-left-color: windowtext; border-bottom-width: 1pt; border-bottom-color: gray; border-right-width: 1pt; border-right-color: gray; background-color: rgb(242, 242, 242); padding: 0cm 5.4pt;"><div>
@@ -1368,9 +1401,10 @@ RSpec.describe String do
 
       it 'handles sample input 11' do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
-          <div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div>Dear Bob<span style="line-height: 23.8px;">:</span><span style="color: rgb(255, 255, 255); line-height: 1.7;">Mr/Mrs</span></div><div><br></div><div><span style="line-height: 1.7;">We&nbsp;are&nbsp;one&nbsp;of&nbsp;the&nbsp;leading&nbsp;manufacturer&nbsp;and&nbsp;supplier&nbsp;of&nbsp;</span>conduits and cars since 3000.</div><div><br></div><div>Could you inform me the specification you need?</div><div><br></div><div>May I sent you our products catalogues for your reference?</div><div><br></div><div><img src="cid:5cb2783c$1$15ae9b384c8$Coremail$zhanabcdzhao$example.com" orgwidth="1101" orgheight="637" data-image="1" style="width: 722.7px; height: 418px; border: none;"></div><div>Best regards!</div><div><br></div><div><b style="line-height: 1.7;"><i><u><span lang="EL" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#17365D;\nmso-ansi-language:EL">Welcome to our booth B11/1 Hall 13 during SOMEWHERE\n9999.</span></u></i></b></div><div style="position:relative;zoom:1"><div>Bob Smith</div><div><div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) &nbsp;Fax: 0000-11-12345678&nbsp;</div><div>Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</div><div>Web: www.example.com</div></div><div style="clear:both"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+          <div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div>Dear Bob<span style="line-height: 23.8px;">:</span><span style="color: rgb(255, 255, 255); line-height: 1.7;">Mr/Mrs</span></div><div><br></div><div><span style="line-height: 1.7;">We&nbsp;are&nbsp;one&nbsp;of&nbsp;the&nbsp;leading&nbsp;manufacturer&nbsp;and&nbsp;supplier&nbsp;of&nbsp;</span>conduits and cars since 3000.</div><div><br></div><div>Could you inform me the specification you need?</div><div><br></div><div>May I sent you our products catalogues for your reference?</div><div><br></div><div><img src="cid:5cb2783c$1$15ae9b384c8$Coremail$zhanabcdzhao$example.com" orgwidth="1101" orgheight="637" data-image="1" style="width: 722.7px; height: 418px; border: none;"></div><div>Best regards!</div><div><br></div><div><b style="line-height: 1.7;"><i><u><span lang="EL" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#17365D;\nmso-ansi-language:EL">Welcome to our booth B11/1 Hall 13 during SOMEWHERE\n9999.</span></u></i></b></div><div style="position:relative;zoom:1"><div>Bob Smith</div><div><div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) &nbsp;Fax: 0000-11-12345678&nbsp;</div><div><span style="color:#17365d;">Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</span></div><div>Web: www.example.com</div></div><div style="clear:both"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
         HTML
-          <div>\n<div>Dear Bob:Mr/Mrs</div><div>&nbsp;</div><div>We are one of the leading manufacturer and supplier of conduits and cars since 3000.</div><div>&nbsp;</div><div>Could you inform me the specification you need?</div><div>&nbsp;</div><div>May I sent you our products catalogues for your reference?</div><div>&nbsp;</div><div><img src="cid:5cb2783c%241%2415ae9b384c8%24Coremail%24zhanabcdzhao%24example.com" style="width: 722.7px; height: 418px;"></div><div>Best regards!</div><div>&nbsp;</div><div><b><i><u>Welcome to our booth B11/1 Hall 13 during SOMEWHERE 9999.</u></i></b></div><div>\n<div>Bob Smith</div><div>\n<div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) Fax: 0000-11-12345678</div><div>Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</div><div>Web: www.example.com</div></div></div></div>
+          <div>\n<div>Dear Bob:<span style="color: rgb(255, 255, 255);">Mr/Mrs</span>
+          </div><div>&nbsp;</div><div>We are one of the leading manufacturer and supplier of conduits and cars since 3000.</div><div>&nbsp;</div><div>Could you inform me the specification you need?</div><div>&nbsp;</div><div>May I sent you our products catalogues for your reference?</div><div>&nbsp;</div><div><img src="cid:5cb2783c%241%2415ae9b384c8%24Coremail%24zhanabcdzhao%24example.com" style="width: 722.7px; height: 418px;"></div><div>Best regards!</div><div>&nbsp;</div><div><b><i><u><span lang="EL" style="color:#17365d;">Welcome to our booth B11/1 Hall 13 during SOMEWHERE 9999.</span></u></i></b></div><div>\n<div>Bob Smith</div><div>\n<div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) Fax: 0000-11-12345678</div><div><span style="color:#17365d;">Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</span></div><div>Web: www.example.com</div></div></div></div>
         TEXT
       end
 

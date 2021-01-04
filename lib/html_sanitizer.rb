@@ -267,6 +267,8 @@ cleanup html string:
       end
       next if hit && node.keys.count.positive?
 
+      next if node.name == 'span' && node['style'].present?
+
       node.replace cleanup_replace_tags(node.children.to_s)
       Loofah::Scrubber::STOP
     end
@@ -289,19 +291,19 @@ cleanup html string:
       end
 
       # remove empty childs
-      if node.content.blank? && remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name)
+      if node.content.blank? && remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name) && node['style'].blank? && node.children.first['style'].blank?
         node.replace node.children.to_s
         Loofah::Scrubber::STOP
       end
 
       # remove empty childs
-      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name) && node.children.first.content == node.content
+      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name) && node.children.first.content == node.content && node['style'].blank? && node.children.first['style'].blank?
         node.replace node.children.to_s
         Loofah::Scrubber::STOP
       end
 
       # remove node if empty and parent was already a remove node
-      if node.content.blank? && remove_empty_nodes.include?(node.name) && node.parent && node.children.size.zero? && remove_empty_nodes.include?(node.parent.name)
+      if (node.content.blank? || node.content.strip.blank? ) && remove_empty_nodes.include?(node.name) && node.parent && node.children.size.zero? && remove_empty_nodes.include?(node.parent.name)
         node.remove
         Loofah::Scrubber::STOP
       end
