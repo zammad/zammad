@@ -149,6 +149,6 @@ test 123
     attachment_url_evil_other = "#{attachment_url}?disposition=some_other"
     assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url_evil_other}\">Evil link</a>"), "<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
 
-    assert_equal(HtmlSanitizer.strict('<a href="mailto:testäöü@example.com">test</a>'), 'testäöü@example.com')
+    assert_equal(HtmlSanitizer.strict('<a href="mailto:testäöü@example.com" id="123">test</a>'), '<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>')
   end
 end

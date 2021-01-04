@@ -1199,7 +1199,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <a href="mailto:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
-            john.smith@example.com
+            <a href="mailto:john.smith@example.com">john.smith@example.com</a>
           TEXT
         end
 
@@ -1207,7 +1207,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <a href="MAILTO:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
-            john.smith@example.com
+            <a href="MAILTO:john.smith@example.com">john.smith@example.com</a>
           TEXT
         end
 
@@ -1215,7 +1215,7 @@ RSpec.describe String do
           expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
             <a href="MAILTO:john.smith2@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
-            john.smith2@example.com
+            <a href="MAILTO:john.smith2@example.com">john.smith@example.com</a>
           TEXT
         end
 
@@ -1289,7 +1289,9 @@ RSpec.describe String do
           <div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Mit freundlichem Gruß<span class="Apple-converted-space">&nbsp;</span><br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; "><a href="mailto:john.smith@example.com" style=color: blue; text-decoration: underline; ">john.smith@example.com</a></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; "><a href="http://www.example.com" style="color: blue; text-decoration: underline; ">www.example.com</a></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div>
         HTML
           <div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co. </div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>
-          </div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472 </div><div>john.smith@example.com</div><div>
+          </div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472 </div><div>
+          <a href="mailto:john.smith@example.com">john.smith@example.com</a>
+          </div><div>
           <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a>
           </div>
         TEXT
@@ -1321,7 +1323,7 @@ RSpec.describe String do
         HTML
           <div>
           <p><span style="color:#1f497d;">Guten Morgen, Frau ABC,</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p><div>
-          <p><b><span style="color:#1f497d;"><p>&nbsp;</p></span></b></p><p><b><span style="color:#1f497d;">Anna Smith</span></b></p><p><b><span style="color:#1f497d;">art abc SEV GmbH</span></b></p><p><b><span style="color:#1f497d;">art abc TRAV</span></b></p><p><span style="color:#1f497d;">Marktstätte 123</span></p><p><span style="color:#1f497d;">123456 Dorten</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-1</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-0</span></p><p><span style="color:#1f497d;">F: +49 (0) 12345/1234560-2</span></p><p>annad@example.com</p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><span style="color:#1f497d;"> </span><a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a></p><p><span style="color:#1f497d;">Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</span></p></div></div>
+          <p><b><span style="color:#1f497d;"><p>&nbsp;</p></span></b></p><p><b><span style="color:#1f497d;">Anna Smith</span></b></p><p><b><span style="color:#1f497d;">art abc SEV GmbH</span></b></p><p><b><span style="color:#1f497d;">art abc TRAV</span></b></p><p><span style="color:#1f497d;">Marktstätte 123</span></p><p><span style="color:#1f497d;">123456 Dorten</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-1</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-0</span></p><p><span style="color:#1f497d;">F: +49 (0) 12345/1234560-2</span></p><p><a href="mailto:annad@example.com">annad@example.com</a></p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><span style="color:#1f497d;"> </span><a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a></p><p><span style="color:#1f497d;">Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</span></p></div></div>
         TEXT
       end
 
@@ -1344,7 +1346,7 @@ RSpec.describe String do
         HTML
           <p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><div>
           <div>
-          <span class="js-signatureMarker"></span><p><b>Von:</b> Besucherbüro, MKuk [besucherbuero@example.com] <br>
+          <span class="js-signatureMarker"></span><p><b>Von:</b> Besucherbüro, MKuk [<a href="mailto:besucherbuero@example.com">mailto:besucherbuero@example.com</a>] <br>
           <b>Gesendet:</b> Freitag, 16. Dezember 2016 08:05<br>
           <b>An:</b> 'Amaia Epalza'<br>
           <b>Betreff:</b> AW: Gruppe vtb Kultuur // 28.06.2017</p></div></div><p>&nbsp;</p><p><b><span style="color:#1f497d;">Reservierungsbestätigung Führung Skulptur-Projekte 2017 am </span></b></p><p></p><p><span style="color:#1f497d;"> </span></p><p></p><p>Guten Morgen Frau Epalza,</p>
@@ -1473,7 +1475,7 @@ RSpec.describe String do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           <div><div style="border:none;border-top:solid #e1e1e1 1.0pt;padding:3.0pt 0cm 0cm 0cm"><p class="MsoNormal"><b><span lang="DE" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">Von:</span></b><span lang="DE" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif"> Martin Edenhofer via Zammad Helpdesk [mailto:<a href="mailto:support@example.com">support@zammad.com</a>] <br><b>Gesendet:</b>\u0020
         HTML
-          #{marker}<p><b>Von:</b> Martin Edenhofer via Zammad Helpdesk [mailto:support@example.com] <br><b>Gesendet:</b> </p>
+          #{marker}<p><b>Von:</b> Martin Edenhofer via Zammad Helpdesk [mailto:<a href="mailto:support@example.com">support@zammad.com</a>] <br><b>Gesendet:</b> </p>
         TEXT
       end
 
@@ -1510,7 +1512,7 @@ RSpec.describe String do
           <br class=""><div><blockquote type="cite" class=""><div class="">On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;<a href="mailto:oliver@example.com" class="">oliver@example.com</a>&gt; wrote:</div><br class="Apple-interchange-newline">
         HTML
           <div>#{marker}<blockquote type="cite">
-          <div>On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;oliver@example.com&gt; wrote:</div><br>
+          <div>On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;<a href="mailto:oliver@example.com">oliver@example.com</a>&gt; wrote:</div><br>
           </blockquote></div>
         TEXT
       end

@@ -3067,7 +3067,7 @@ Content-Type: text/html; charset=us-ascii; format=flowed
           },
           1 => {
             content_type: 'text/html',
-            body: 'test%C3%A4%C3%B6%C3%BC@example.com',
+            body: '<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>',
             sender: 'Customer',
             type: 'email',
             internal: false,

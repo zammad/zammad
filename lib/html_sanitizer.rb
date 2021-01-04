@@ -45,7 +45,7 @@ satinize html string based on whiltelist
         if node['href']
           href                = cleanup_target(node['href'], keep_spaces: true)
           href_without_spaces = href.gsub(/[[:space:]]/, '')
-          if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
+          if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('mailto:') && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
             node['href']        = "http://#{node['href']}"
             href                = node['href']
             href_without_spaces = href.gsub(/[[:space:]]/, '')
@@ -176,16 +176,6 @@ satinize html string based on whiltelist
           node.delete(attribute)
         end
 
-        # remove mailto links
-        if node['href']
-          href = cleanup_target(node['href'])
-          if href =~ /mailto:(.*)$/i
-            text = Nokogiri::XML::Text.new($1, node.document)
-            node.add_next_sibling(text)
-            node.remove
-            Loofah::Scrubber::STOP
-          end
-        end
       end
 
       done = true
@@ -319,17 +309,6 @@ cleanup html string:
     end
 
     scrubber_cleanup = Loofah::Scrubber.new do |node|
-
-      # remove mailto links
-      if node['href']
-        href = cleanup_target(node['href'])
-        if href =~ /mailto:(.*)$/i
-          text = Nokogiri::XML::Text.new($1, node.document)
-          node.add_next_sibling(text)
-          node.remove
-          Loofah::Scrubber::STOP
-        end
-      end
 
       # remove not needed new lines
       if node.instance_of?(Nokogiri::XML::Text)
