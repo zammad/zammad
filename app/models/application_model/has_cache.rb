@@ -41,7 +41,8 @@ module ApplicationModel::HasCache
 
     def cache_set(data_id, data)
       key = "#{self}::#{data_id}"
-      Cache.write(key, data)
+      # cache for 4 hours max to lower impact of race conditions
+      Cache.write(key, data, expires_in: 4.hours)
     end
 
     def cache_get(data_id)

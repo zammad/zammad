@@ -55,7 +55,7 @@ RSpec.shared_examples 'ApplicationModel::CanLookup' do
             it 'saves the value to the cache' do
               expect(Rails.cache)
                 .to receive(:write)
-                .with("#{described_class}::#{instance.send(attribute)}", instance, { expires_in: 7.days })
+                .with("#{described_class}::#{instance.send(attribute)}", instance, { expires_in: 4.hours })
                 .and_call_original
 
               expect { described_class.lookup(attribute => instance.send(attribute)) }
