@@ -73,6 +73,8 @@ class ChannelsGoogleController < ApplicationController
       channel.options[:inbound][:options][key] = params[:options][key]
     end
 
+    channel.refresh_xoauth2!(force: true)
+
     result = EmailHelper::Probe.inbound(channel.options[:inbound])
     raise Exceptions::UnprocessableEntity, ( result[:message_human] || result[:message] ) if result[:result] == 'invalid'
 

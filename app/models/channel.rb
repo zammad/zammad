@@ -336,9 +336,9 @@ get instance of channel driver
     self.class.driver_class(options[:adapter])
   end
 
-  def refresh_xoauth2!
+  def refresh_xoauth2!(force: false)
     return if options.dig(:auth, :type) != 'XOAUTH2'
-    return if ApplicationHandleInfo.current == 'application_server'
+    return if !force && ApplicationHandleInfo.current == 'application_server'
 
     result = ExternalCredential.refresh_token(options[:auth][:provider], options[:auth])
 
