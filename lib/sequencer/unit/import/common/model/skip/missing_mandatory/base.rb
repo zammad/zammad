@@ -1,4 +1,5 @@
 require_dependency 'sequencer/unit/common/mixin/dynamic_attribute'
+require_dependency 'sequencer/unit/import/common/model/mixin/log/context_identification_string'
 
 class Sequencer
   class Unit
@@ -10,6 +11,7 @@ class Sequencer
               class Base < Sequencer::Unit::Base
                 include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
                 prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+                include ::Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdentificationString
 
                 skip_any_action
 
@@ -18,7 +20,7 @@ class Sequencer
                 def process
                   return if !skip?
 
-                  logger.debug { "Skipping. Missing mandatory attributes for #{attribute}: #{attribute_value.inspect}" }
+                  logger.info { skip_log_message }
                   state.provide(:action, :skipped)
                 end
 
@@ -31,14 +33,15 @@ class Sequencer
                 def skip?
                   return true if attribute_value.blank?
 
-                  mandatory_missing?
+                  missing_for_keys.blank?
                 end
 
-                def mandatory_missing?
-                  values = attribute_value.fetch_values(*mandatory)
-                  values.none?(&:present?)
-                rescue KeyError
-                  false
+                def skip_log_message
+                  "Skipping. Missing values for mandatory keys '#{missing_for_keys.join(', ')}' in attribute '#{attribute}'#{context_identification_string}"
+                end
+
+                def missing_for_keys
+                  @missing_for_keys ||= mandatory.select { |key| attribute_value[key].blank? }
                 end
               end
             end

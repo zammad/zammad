@@ -14,21 +14,15 @@ class Sequencer
                 provides :response, :action
 
                 def process
-                  if failed?
-                    state.provide(:action, :skipped)
-                  else
+                  if response.success?
                     state.provide(:response, response)
+                  else
+                    logger.error "Skipping. Error while downloading Attachment from '#{resource.content_url}': #{response.error}"
+                    state.provide(:action, :skipped)
                   end
                 end
 
                 private
-
-                def failed?
-                  return false if response.success?
-
-                  logger.error response.error
-                  true
-                end
 
                 def response
                   @response ||= begin
