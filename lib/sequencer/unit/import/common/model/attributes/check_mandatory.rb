@@ -16,6 +16,7 @@ class Sequencer
                 mandatory.each do |mapped_attribute|
                   next if mapped[mapped_attribute].present?
 
+                  logger.info { "Skipping. Missing mandatory attribute '#{mapped_attribute}'." }
                   state.provide(:action, :skipped)
                   break
                 end
