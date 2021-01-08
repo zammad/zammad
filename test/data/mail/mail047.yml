@@ -124,7 +124,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -137,7 +137,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>69,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -150,7 +150,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>59,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 26,90</b></b><sup>*</sup>
+  <b>€ 26,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -163,7 +163,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 16,90</b></b><sup>*</sup>
+  <b>€ 16,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -236,7 +236,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 14,90</b></b><sup>*</sup>
+  <b>€ 14,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -249,7 +249,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 9,90</b></b><sup>*</sup>
+  <b>€ 9,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -262,7 +262,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>79,00</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 33,90</b></b><sup>*</sup>
+  <b>€ 33,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -275,7 +275,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 12,90</b></b><sup>*</sup>
+  <b>€ 12,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -348,7 +348,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>89,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 39,90</b></b><sup>*</sup>
+  <b>€ 39,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -361,7 +361,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 24,90</b></b><sup>*</sup>
+  <b>€ 24,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -374,7 +374,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>99,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 47,90</b></b><sup>*</sup>
+  <b>€ 47,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -387,7 +387,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -460,7 +460,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>169,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 99,90</b></b><sup>*</sup>
+  <b>€ 99,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -473,7 +473,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>149,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 77,90</b></b><sup>*</sup>
+  <b>€ 77,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -486,7 +486,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -499,7 +499,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>24,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 12,90</b></b><sup>*</sup>
+  <b>€ 12,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -573,7 +573,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>24,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 12,90</b></b><sup>*</sup>
+  <b>€ 12,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -586,7 +586,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>79,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 24,90</b></b><sup>*</sup>
+  <b>€ 24,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -599,7 +599,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>9,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 1,90</b></b><sup>*</sup>
+  <b>€ 1,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -612,7 +612,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 9,90</b></b><sup>*</sup>
+  <b>€ 9,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -687,7 +687,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>24,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 9,90</b></b><sup>*</sup>
+  <b>€ 9,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -700,7 +700,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -713,7 +713,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 7,90</b></b><sup>*</sup>
+  <b>€ 7,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -726,7 +726,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -800,7 +800,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -813,7 +813,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 19,90</b></b><sup>*</sup>
+  <b>€ 19,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -826,7 +826,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>69,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 27,90</b></b><sup>*</sup>
+  <b>€ 27,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -839,7 +839,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>99,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 39,90</b></b><sup>*</sup>
+  <b>€ 39,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -911,7 +911,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>129,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 47,90</b></b><sup>*</sup>
+  <b>€ 47,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -924,7 +924,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 9,90</b></b><sup>*</sup>
+  <b>€ 9,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -937,7 +937,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>69,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 27,90</b></b><sup>*</sup>
+  <b>€ 27,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -950,7 +950,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>79,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 49,90</b></b><sup>*</sup>
+  <b>€ 49,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1025,7 +1025,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 26,90</b></b><sup>*</sup>
+  <b>€ 26,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1038,7 +1038,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>59,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1051,7 +1051,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 26,90</b></b><sup>*</sup>
+  <b>€ 26,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1064,7 +1064,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>99,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 59,90</b></b><sup>*</sup>
+  <b>€ 59,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1138,7 +1138,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 14,90</b></b><sup>*</sup>
+  <b>€ 14,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1151,7 +1151,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 16,90</b></b><sup>*</sup>
+  <b>€ 16,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1164,7 +1164,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>19,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 9,90</b></b><sup>*</sup>
+  <b>€ 9,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1177,7 +1177,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 22,90</b></b><sup>*</sup>
+  <b>€ 22,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1251,7 +1251,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>9,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 1,90</b></b><sup>*</sup>
+  <b>€ 1,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1264,7 +1264,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>19,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 4,90</b></b><sup>*</sup>
+  <b>€ 4,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1276,7 +1276,7 @@ body: |-
   <td valign="bottom" align="right"><table bgcolor="#cc0000" cellpadding="0" cellspacing="0" border="0">
   <tr><td align="center"> € 0,19 pro Gummiband</td></tr>
   <tr><td align="center">
-  <b><b>€ 3,90</b></b><sup>*</sup>
+  <b>€ 3,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1288,7 +1288,7 @@ body: |-
   <td valign="bottom" align="right"><table bgcolor="#cc0000" cellpadding="0" cellspacing="0" border="0">
   <tr><td align="center"> € 0,74 pro Gepäckspanner</td></tr>
   <tr><td align="center">
-  <b><b>€ 8,90</b></b><sup>*</sup>
+  <b>€ 8,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1362,7 +1362,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>6,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 2,90</b></b><sup>*</sup>
+  <b>€ 2,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1374,7 +1374,7 @@ body: |-
   <td valign="bottom" align="right"><table bgcolor="#cc0000" cellpadding="0" cellspacing="0" border="0">
   <tr><td align="center"> € 7,80 pro l</td></tr>
   <tr><td align="center">
-  <b><b>€ 3,90</b></b><sup>*</sup>
+  <b>€ 3,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1386,7 +1386,7 @@ body: |-
   <td valign="bottom" align="right"><table bgcolor="#cc0000" cellpadding="0" cellspacing="0" border="0">
   <tr><td align="center"> € 0,02 pro Wabdschraube</td></tr>
   <tr><td align="center">
-  <b><b>€ 3,90</b></b><sup>*</sup>
+  <b>€ 3,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1399,7 +1399,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>69,95</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 24,90</b></b><sup>*</sup>
+  <b>€ 24,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1473,7 +1473,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 14,90</b></b><sup>*</sup>
+  <b>€ 14,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1486,7 +1486,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 16,90</b></b><sup>*</sup>
+  <b>€ 16,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1499,7 +1499,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>29,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 12,90</b></b><sup>*</sup>
+  <b>€ 12,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1512,7 +1512,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>169,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 67,92</b></b><sup>*</sup>
+  <b>€ 67,92</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1588,7 +1588,7 @@ body: |-
   <tr><td align="center">statt<sup>6</sup> € <s>1.899,00</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 599,90</b></b><sup>*</sup>
+  <b>€ 599,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1601,7 +1601,7 @@ body: |-
   <tr><td align="center">statt<sup>6</sup> € <s>599,00</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 199,90</b></b><sup>*</sup>
+  <b>€ 199,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1614,7 +1614,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>24,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 12,90</b></b><sup>*</sup>
+  <b>€ 12,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1627,7 +1627,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>39,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 16,90</b></b><sup>*</sup>
+  <b>€ 16,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1701,7 +1701,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>149,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 69,90</b></b><sup>*</sup>
+  <b>€ 69,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1714,7 +1714,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>169,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 69,90</b></b><sup>*</sup>
+  <b>€ 69,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1727,7 +1727,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>249,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 169,90</b></b><sup>*</sup>
+  <b>€ 169,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1740,7 +1740,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>99,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1814,7 +1814,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>69,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1827,7 +1827,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>479,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 99,90</b></b><sup>*</sup>
+  <b>€ 99,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1840,7 +1840,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>49,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 29,90</b></b><sup>*</sup>
+  <b>€ 29,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>
@@ -1853,7 +1853,7 @@ body: |-
   <tr><td align="center">statt<sup>1</sup> € <s>149,90</s>
   </td></tr>
   <tr><td align="center">
-  <b><b>€ 59,90</b></b><sup>*</sup>
+  <b>€ 59,90</b><sup>*</sup>
   </td></tr>
   </table></td>
   </tr></table></td>

@@ -180,7 +180,8 @@ RSpec.describe Ticket::Article, type: :model do
             <div>
             LINK
             <a href="http://lalal.de" rel="nofollow noreferrer noopener" target="_blank" title="http://lalal.de">aa</a>
-            ABC</div>
+            ABC
+            </div>
           SANITIZED
         end
       end
