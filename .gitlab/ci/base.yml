@@ -45,26 +45,23 @@
 
 # DB Docker
 .docker_mysql: &docker_mysql
-  name: registry.znuny.com/docker/zammad-mysql:latest
+  name: registry.znuny.com/docker/zammad-mysql:stable
   alias: mysql
 
 .docker_postgresql: &docker_postgresql
-  name: registry.znuny.com/docker/zammad-postgresql:latest
+  name: registry.znuny.com/docker/zammad-postgresql:stable
   alias: postgresql
 
-# elasticsearch docker
 .docker_elasticsearch: &docker_elasticsearch
   name: registry.znuny.com/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
   alias: elasticsearch
 
-# selenium docker
 .docker_selenium: &docker_selenium
-  name: docker.io/elgalu/selenium:latest
+  name: registry.znuny.com/docker/zammad-selenium:stable
   alias: selenium
 
-# selenium docker
 .docker_imap: &docker_imap
-  name: registry.znuny.com/docker/docker-imap-devel:latest
+  name: registry.znuny.com/docker/zammad-imap:stable
   alias: mail
 
  # service templates
