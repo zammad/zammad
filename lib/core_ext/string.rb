@@ -368,7 +368,7 @@ class String
         '<br(|\/)>[[:space:]]*(--|__)',
         '<\/div>[[:space:]]*(--|__)',
         '<p>[[:space:]]*(--|__)',
-        '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*</b>',
+        '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(|<span[[:space:]]lang=".{1,6}">)(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*(|</span>)</b>',
         '(<br>|<div>)[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
