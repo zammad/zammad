@@ -1337,6 +1337,25 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
       end
     end
+
+    context 'when long articles are present' do
+      it 'will properly show the "See more" link if you switch between the ticket and the dashboard on new articles' do
+        ensure_websocket do
+          visit "ticket/zoom/#{ticket.id}"
+          await_empty_ajax_queue
+
+          visit 'dashboard'
+          expect(page).to have_css("a.js-dashboardMenuItem[data-key='Dashboard'].is-active", wait: 10)
+          article_id = create(:'ticket/article', ticket: ticket, body: "#{SecureRandom.uuid} #{"lorem ipsum\n" * 200}")
+          expect(page).to have_css('div.tasks a.is-modified', wait: 10)
+
+          visit "ticket/zoom/#{ticket.id}"
+          within :active_content do
+            expect(find("div#article-content-#{article_id.id}")).to have_text('See more')
+          end
+        end
+      end
+    end
   end
 
   describe 'Macros', authenticated_as: :authenticate do

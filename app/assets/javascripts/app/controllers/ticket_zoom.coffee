@@ -271,6 +271,7 @@ class App.TicketZoom extends App.Controller
     @delay(scrollToDelay, delay, 'scrollToPosition')
 
   pagePosition: (params = {}) =>
+    return if @el.is(':hidden')
 
     # remember for later
     return if params.type is 'init' && !@shown
@@ -288,6 +289,7 @@ class App.TicketZoom extends App.Controller
 
     # scroll to end if new article has been added
     else if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
       @scrollToPosition('bottom', 100, article_id)
 
     # trigger shown to article
