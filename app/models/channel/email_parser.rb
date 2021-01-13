@@ -740,7 +740,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-    filename ||= file.header[:content_location].to_s.force_encoding('utf-8')
+    filename ||= file.header[:content_location].to_s.dup.force_encoding('utf-8')
 
     # generate file name based on content-id
     if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?)@.+?/i
