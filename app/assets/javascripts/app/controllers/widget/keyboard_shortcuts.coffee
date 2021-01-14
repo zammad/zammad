@@ -487,6 +487,12 @@ App.Config.set(
               globalEvent: 'richtext-ol'
             }
             {
+              key: ','
+              hotkeys: true,
+              description: 'Format as preformated text'
+              globalEvent: 'richtext-pre'
+            }
+            {
               key: '1'
               hotkeys: true,
               description: 'Format as h1 heading'

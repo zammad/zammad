@@ -91,6 +91,15 @@
     }
     else {
       document.execCommand('formatBlock', false, tag)
+
+      // fix cursor position by setting caret again
+      if (tag === 'pre') {
+        var range = document.createRange()
+        range.setStart(sel.anchorNode, sel.focusOffset)
+        range.collapse(true)
+        sel.removeAllRanges()
+        sel.addRange(range)
+      }
     }
   }
 
@@ -202,7 +211,8 @@
       || e.keyCode == 83
       || e.keyCode == 88
       || e.keyCode == 90
-      || e.keyCode == 89)) {
+      || e.keyCode == 89
+      || e.keyCode == 188)) {
       e.preventDefault()
 
       // disable rich text b/u/i
@@ -249,6 +259,9 @@
       }
       if (e.keyCode == 90) {
         document.execCommand('insertHorizontalRule')
+      }
+      if (e.keyCode == 188) {
+        this.toggleBlock('pre')
       }
       this.log('content editable richtext key', e.keyCode)
       return true
