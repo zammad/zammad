@@ -18,7 +18,7 @@ class Sequencer
                 provides :action
 
                 def process
-                  return if !skip?
+                  return if !mandatory_missing?
 
                   logger.info { skip_log_message }
                   state.provide(:action, :skipped)
@@ -30,10 +30,10 @@ class Sequencer
                   raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
                 end
 
-                def skip?
+                def mandatory_missing?
                   return true if attribute_value.blank?
 
-                  missing_for_keys.blank?
+                  missing_for_keys.present?
                 end
 
                 def skip_log_message

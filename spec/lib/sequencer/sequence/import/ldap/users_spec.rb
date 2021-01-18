@@ -23,7 +23,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
               group_entry.dn => [1, 2]
             },
             user_attributes:  {
-              'first_name' => 'firstname',
+              'samaccountname' => 'login',
+              'first_name'     => 'firstname',
             },
             user_uid:         'objectguid',
             unassigned_users: 'skip_sync',
@@ -107,7 +108,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
               group_entry.dn => agent_admin_role_ids
             },
             user_attributes: {
-              'first_name' => 'firstname',
+              'samaccountname' => 'login',
+              'first_name'     => 'firstname',
             },
             user_uid:        'objectguid',
           }
