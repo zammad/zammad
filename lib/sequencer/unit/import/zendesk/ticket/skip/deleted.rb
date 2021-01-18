@@ -12,6 +12,7 @@ class Sequencer
               def process
                 return if resource.status != 'deleted'
 
+                logger.info { "Skipping. Zendesk Ticket ID '#{resource.id}' is in 'deleted' state." }
                 state.provide(:action, :skipped)
               end
             end
