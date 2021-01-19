@@ -931,7 +931,7 @@ do(window) ->
     onInput: =>
       # remove unread-state from messages
       for message in @el.querySelectorAll('.zammad-chat-message--unread')
-        node.classList.remove 'zammad-chat-message--unread'
+        message.classList.remove 'zammad-chat-message--unread'
 
       sessionStorage.setItem 'unfinished_message', @input.innerHTML
 
