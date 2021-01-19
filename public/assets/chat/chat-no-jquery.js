@@ -878,10 +878,10 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       if (this.el) {
         this.el.remove();
       }
-      this.options.target.innerHTML += this.view('chat')({
+      this.options.target.insertAdjacentHTML('beforeend', this.view('chat')({
         title: this.options.title,
         scrollHint: this.options.scrollHint
-      });
+      }));
       this.el = this.options.target.querySelector('.zammad-chat');
       this.input = this.el.querySelector('.zammad-chat-input');
       this.body = this.el.querySelector('.zammad-chat-body');
