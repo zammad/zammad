@@ -1431,7 +1431,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       ref = this.el.querySelectorAll('.zammad-chat-message--unread');
       for (j = 0, len = ref.length; j < len; j++) {
         message = ref[j];
-        node.classList.remove('zammad-chat-message--unread');
+        message.classList.remove('zammad-chat-message--unread');
       }
       sessionStorage.setItem('unfinished_message', this.input.innerHTML);
       return this.onTyping();
