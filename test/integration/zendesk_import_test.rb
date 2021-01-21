@@ -40,32 +40,32 @@ class ZendeskImportTest < ActiveSupport::TestCase
       Users:         {
         skipped:     0,
         created:     141,
-        updated:     0,
-        unchanged:   0,
-        failed:      0,
-        deactivated: 0,
-        sum:         141,
-        total:       141
-      },
-      Organizations: {
-        skipped:     0,
-        created:     1,
-        updated:     0,
-        unchanged:   0,
-        failed:      0,
-        deactivated: 0,
-        sum:         1,
-        total:       1
-      },
-      Tickets:       {
-        skipped:     0,
-        created:     141,
         updated:     1,
         unchanged:   0,
         failed:      0,
         deactivated: 0,
         sum:         142,
         total:       142
+      },
+      Organizations: {
+        skipped:     0,
+        created:     1,
+        updated:     0,
+        unchanged:   1,
+        failed:      0,
+        deactivated: 0,
+        sum:         2,
+        total:       2
+      },
+      Tickets:       {
+        skipped:     1,
+        created:     142,
+        updated:     2,
+        unchanged:   0,
+        failed:      0,
+        deactivated: 0,
+        sum:         145,
+        total:       145
       }
     }
 
@@ -78,8 +78,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
     assert_equal(3, Group.count, 'groups')
     assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
-    assert_equal(142, Ticket.count, 'tickets')
-    assert_equal(151, Ticket::Article.count, 'ticket articles')
+    assert_equal(143, Ticket.count, 'tickets')
+    assert_equal(153, Ticket::Article.count, 'ticket articles')
     assert_equal(3, Store.count, 'ticket article attachments')
 
     # TODO: Macros, Views, Automations...
@@ -97,9 +97,9 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks = [
       {
-        id:     5,
+        id:     144,
         data:   {
-          firstname:     'Bob',
+          firstname:     'Bob Smith',
           lastname:      'Smith',
           login:         'bob.smith@znuny.com',
           email:         'bob.smith@znuny.com',
@@ -111,7 +111,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [group_support],
       },
       {
-        id:     6,
+        id:     142,
         data:   {
           firstname:     'Hansimerkur',
           lastname:      '',
@@ -124,7 +124,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [group_additional_group, group_support],
       },
       {
-        id:     7,
+        id:     6,
         data:   {
           firstname: 'Bernd',
           lastname:  'Hofbecker',
@@ -136,7 +136,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [],
       },
       {
-        id:     8,
+        id:     143,
         data:   {
           firstname: 'Zendesk',
           lastname:  '',
@@ -148,7 +148,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [],
       },
       {
-        id:     90,
+        id:     5,
         data:   {
           firstname: 'Hans',
           lastname:  'Peter Wurst',
@@ -336,7 +336,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           group_id:                 3,
           priority_id:              3,
           owner_id:                 User.find_by(login: 'bob.smith@znuny.com').id,
-          customer_id:              7,
+          customer_id:              User.find_by(login: 'bernd.hofbecker@znuny.com').id,
           organization_id:          2,
           test_checkbox:            true,
           custom_integer:           999,
@@ -357,7 +357,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           group_id:                 3,
           priority_id:              1,
           owner_id:                 User.find_by(login: 'bob.smith@znuny.com').id,
-          customer_id:              8,
+          customer_id:              User.find_by(login: 'noreply@zendesk.com').id,
           organization_id:          nil,
           test_checkbox:            false,
           custom_integer:           nil,
@@ -377,8 +377,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
           state_id:                 1,
           group_id:                 3,
           priority_id:              2,
-          owner_id:                 1,
-          customer_id:              92,
+          owner_id:                 User.find_by(login: '-').id,
+          customer_id:              69,
           organization_id:          nil,
         },
       },
@@ -393,9 +393,25 @@ class ZendeskImportTest < ActiveSupport::TestCase
           state_id:                 1,
           group_id:                 1,
           priority_id:              2,
-          owner_id:                 1,
-          customer_id:              144,
+          owner_id:                 User.find_by(login: '-').id,
+          customer_id:              7,
           organization_id:          nil,
+        },
+      },
+      {
+        id:   145,
+        data: {
+          title:                    'closed ticket - should be archived and imported',
+          note:                     nil,
+          create_article_type_id:   11,
+          create_article_sender_id: 1,
+          article_count:            2,
+          state_id:                 Ticket::State.find_by(name: 'closed').id,
+          group_id:                 Group.find_by(name: 'Additional Group').id,
+          priority_id:              Ticket::Priority.find_by(name: '2 normal').id,
+          owner_id:                 User.find_by(login: 'hansimerkur@znuny.com').id,
+          customer_id:              User.find_by(login: 'bob.smith@znuny.com').id,
+          organization_id:          Organization.find_by(name: 'Znuny').id,
         },
       },
       # {

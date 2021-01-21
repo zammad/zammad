@@ -61,7 +61,7 @@ class Sequencer
             end
 
             def resource_collection
-              collection_provider.public_send(resource_collection_attribute)
+              @resource_collection ||= collection_provider.public_send(resource_collection_attribute)
             end
 
             def resource_iteration_method
