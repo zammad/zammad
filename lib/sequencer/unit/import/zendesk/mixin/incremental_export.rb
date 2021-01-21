@@ -9,10 +9,11 @@ class Sequencer
 
             def self.included(base)
               base.uses :client
+              base.provides :import_job
             end
 
             def resource_collection
-              client.send resource_klass.pluralize.underscore
+              @resource_collection ||= "::ZendeskAPI::#{resource_klass}".constantize.incremental_export(client, 1)
             end
 
             def resource_iteration
@@ -33,7 +34,8 @@ class Sequencer
             # per request
             def update_count
               update_import_job
-              self.previous_page = next_page
+
+              self.previous_page = current_page
             end
 
             def update_import_job
@@ -43,36 +45,33 @@ class Sequencer
             end
 
             def klass_key
-              resource_klass.singularize.to_sym
+              @klass_key ||= resource_klass.pluralize.to_sym
             end
 
             def updated_import_job
-
-              import_job.result[klass_key].merge(
-                total: import_job.result[klass_key][:total] + current_request_count
-              )
+              import_job.result[klass_key][:total] += current_request_count
               import_job
             end
 
             def update_required?
-              return false if previous_page.blank?
-              return false if previous_page == next_page
+              # means: still on first page
+              return false if current_page.blank?
 
-              current_request_count.present?
+              previous_page != current_page
             end
 
             def current_request_count
               # access the internal instance method of the
               # Zendesk collection request to get the current
-              # count of the endpoint (max. 1000)
-              resource_collection_attribute.instance_variable_get(:@count)
+              # count of the fetched result (max. 1000)
+              resource_collection.fetch.size
             end
 
-            def next_page
+            def current_page
               # access the internal instance method of the
-              # Zendesk collection request to get the next
+              # Zendesk collection request to get the current
               # page number of the endpoint
-              resource_collection_attribute.instance_variable_get(:@next_page)
+              resource_collection.instance_variable_get(:@query)
             end
           end
         end
