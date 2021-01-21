@@ -62,7 +62,11 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
           before { allow(response_obj).to receive(:status).and_return(403) }
 
           it 'does not rescue the resulting exception' do
-            expect { process(params) }.to raise_error(api_error)
+            expect do
+              process(params) do |unit|
+                allow(unit).to receive(:sleep) # stub out this method to speed up retry cycle
+              end
+            end.to raise_error(api_error)
           end
         end
       end
