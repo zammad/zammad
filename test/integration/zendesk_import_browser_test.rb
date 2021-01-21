@@ -85,13 +85,13 @@ class ZendeskImportBrowserTest < TestCase
 
     watch_for(
       css:     '.js-organizations .js-done',
-      value:   '1',
+      value:   '2',
       timeout: 120,
     )
 
     watch_for(
       css:     '.js-users .js-done',
-      value:   '141',
+      value:   '142',
       timeout: 120,
     )
 
