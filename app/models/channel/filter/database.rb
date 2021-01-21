@@ -22,12 +22,16 @@ module Channel::Filter::Database
         when 'contains not'
           if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
             all_matches_ok = false
-            Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
+            Rails.logger.debug "  not matching #{key.downcase}:'#{value}' contains not #{match_rule}"
+          else
+            Rails.logger.info "  matching: #{key.downcase}:'#{value}' contains not #{match_rule}"
           end
         when 'contains'
           if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
             all_matches_ok = false
-            Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
+            Rails.logger.debug "  not matching #{key.downcase}:'#{value}' contains #{match_rule}"
+          else
+            Rails.logger.info "  matching #{key.downcase}:'#{value}' contains #{match_rule}"
           end
         else
           all_matches_ok = false
