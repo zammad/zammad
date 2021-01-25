@@ -927,10 +927,21 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   # specific email needs to be forced to ISO-2022-JP
   # but that breaks other emails that can be forced to SJIS only
   # thus force to ISO-2022-JP but fallback to SJIS
+  #
+  # https://github.com/zammad/zammad/issues/3368
+  # some characters are not included in the official ISO-2022-JP
+  # ISO-2022-JP-KDDI superset provides support for more characters
   def force_japanese_encoding(input)
-    input.force_encoding('ISO-2022-JP').encode('UTF-8')
+    %w[ISO-2022-JP ISO-2022-JP-KDDI SJIS]
+      .lazy
+      .map { |encoding| try_encoding(input, encoding) }
+      .detect(&:present?)
+  end
+
+  def try_encoding(input, encoding)
+    input.force_encoding(encoding).encode('UTF-8')
   rescue
-    input.force_encoding('SJIS').encode('UTF-8')
+    nil
   end
 end
 
