@@ -23,6 +23,14 @@ class Sequencer
             # since we are using each object only once
             # Inspired by: https://medium.com/swiftype-engineering/using-jmat-to-find-analyze-memory-in-jruby-1c4196c1ec72
             config.cache = false
+
+            # increase timeouts to avoid network issues.
+            config.client_options = {
+              request: {
+                open_timeout: 20, # default is 10
+                timeout:      120, # default is 60
+              },
+            }
           end
         end
       end
