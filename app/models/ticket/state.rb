@@ -3,6 +3,7 @@ class Ticket::State < ApplicationModel
   include CanBeImported
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
+  include HasSearchIndexBackend
 
   belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states, optional: true
   belongs_to :next_state, class_name: 'Ticket::State', optional: true

@@ -2,6 +2,7 @@
 class Ticket::Priority < ApplicationModel
   include CanBeImported
   include HasCollectionUpdate
+  include HasSearchIndexBackend
 
   self.table_name = 'ticket_priorities'
   validates :name, presence: true

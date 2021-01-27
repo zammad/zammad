@@ -63,14 +63,23 @@ returns
 =end
 
   def search_index_update_associations_full
-    return if self.class.to_s != 'Organization'
+    update_class = {
+      'Organization'     => :organization_id,
+      'Group'            => :group_id,
+      'Ticket::State'    => :state_id,
+      'Ticket::Priority' => :priority_id,
+    }
+    update_column = update_class[self.class.to_s]
+    return if update_column.blank?
 
-    # reindex all organization tickets for the given organization id
+    # reindex all object related tickets for the given object id
     # we can not use the delta function for this because of the excluded
     # ticket article attachments. see explain in delta function
-    Ticket.select('id').where(organization_id: id).order(id: :desc).limit(10_000).pluck(:id).each do |ticket_id|
+    Ticket.select('id').where(update_column => id).order(id: :desc).limit(10_000).pluck(:id).each do |ticket_id|
       SearchIndexJob.perform_later('Ticket', ticket_id)
     end
+
+    true
   end
 
 =begin

@@ -9,6 +9,7 @@ class Group < ApplicationModel
   include HasObjectManagerAttributesValidation
   include HasCollectionUpdate
   include HasTicketCreateScreenImpact
+  include HasSearchIndexBackend
 
   belongs_to :email_address, optional: true
   belongs_to :signature, optional: true
