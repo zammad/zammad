@@ -733,6 +733,7 @@ Metrics/PerceivedComplexity:
     - 'app/models/application_model/checks_attribute_values_and_length.rb'
     - 'app/models/application_model/checks_user_columns_fillup.rb'
     - 'app/models/application_model/has_attachments.rb'
+    - 'app/models/application_model/can_lookup_search_index_attributes.rb'
     - 'app/models/authorization.rb'
     - 'app/models/avatar.rb'
     - 'app/models/calendar.rb'

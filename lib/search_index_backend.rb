@@ -479,9 +479,9 @@ example for aggregations within one year
       current_user_id = current_user.id
     end
 
-    query_must = []
+    query_must     = []
     query_must_not = []
-    relative_map = {
+    relative_map   = {
       day:    'd',
       year:   'y',
       month:  'M',
@@ -490,7 +490,13 @@ example for aggregations within one year
     }
     if selector.present?
       selector.each do |key, data|
-        key_tmp = key.sub(/^.+?\./, '')
+        data = data.clone
+        table, key_tmp = key.split(/\./)
+        if key_tmp.blank?
+          key_tmp = table
+          table   = 'ticket'
+        end
+
         wildcard_or_term = 'term'
         if data['value'].is_a?(Array)
           wildcard_or_term = 'terms'
@@ -539,20 +545,25 @@ example for aggregations within one year
 
         # use .keyword and wildcard search in cases where query contains non A-z chars
         if data['operator'] == 'contains' || data['operator'] == 'contains not'
+
           if data['value'].is_a?(Array)
             data['value'].each_with_index do |value, index|
-              next if !value.is_a?(String) || value !~ /[A-z]/ || value !~ /\W/
+              next if !value.is_a?(String) || value !~ /[A-z]/
 
               data['value'][index] = "*#{value}*"
               key_tmp += '.keyword'
               wildcard_or_term = 'wildcards'
               break
             end
-          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value']) && data['value'] =~ /\W/
+          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value'])
             data['value'] = "*#{data['value']}*"
             key_tmp += '.keyword'
             wildcard_or_term = 'wildcard'
           end
+        end
+
+        if table != 'ticket'
+          key_tmp = "#{table}.#{key_tmp}"
         end
 
         # is/is not/contains/contains not
@@ -702,25 +713,8 @@ return true if backend is configured
   def self.build_index_name(index = nil)
     local_index = "#{Setting.get('es_index')}_#{Rails.env}"
     return local_index if index.blank?
-    return "#{local_index}/#{index}" if lower_equal_es56?
 
     "#{local_index}_#{index.underscore.tr('/', '_')}"
-  end
-
-=begin
-
-return true if the elastic search version is lower equal 5.6
-
-  result = SearchIndexBackend.lower_equal_es56?
-
-returns
-
-  result = true
-
-=end
-
-  def self.lower_equal_es56?
-    Setting.get('es_multi_index') == false
   end
 
 =begin
@@ -770,7 +764,7 @@ generate url for index or document access (only for internal use)
     url = "#{url}/#{index}"
 
     # add document type
-    if with_document_type && !lower_equal_es56?
+    if with_document_type
       url = "#{url}/_doc"
     end
 
@@ -801,7 +795,7 @@ generate url for index or document access (only for internal use)
     message = if response&.error&.match?('Connection refused')
                 "Elasticsearch is not reachable, probably because it's not running or even installed."
               elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
-                'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (5.6 => ingest-attachment, 2.4 - 5.5 => mapper-attachments).'
+                'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).'
               else
                 'Check the response and payload for detailed information: '
               end

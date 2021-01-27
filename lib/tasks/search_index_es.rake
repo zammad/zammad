@@ -6,18 +6,13 @@ namespace :searchindex do
     print 'drop indexes...'
 
     # drop indexes
-    if es_multi_index?
-      Models.indexable.each do |local_object|
-        SearchIndexBackend.index(
-          action: 'delete',
-          name:   local_object.name,
-        )
-      end
-    else
+    Models.indexable.each do |local_object|
       SearchIndexBackend.index(
         action: 'delete',
+        name:   local_object.name,
       )
     end
+
     puts 'done'
 
     Rake::Task['searchindex:drop_pipeline'].execute
@@ -26,37 +21,17 @@ namespace :searchindex do
   task :create, [:opts] => %i[environment searchindex:configured searchindex:version_supported] do |_t, _args|
     print 'create indexes...'
 
-    if es_multi_index?
-      Setting.set('es_multi_index', true)
-    else
-      Setting.set('es_multi_index', false)
-    end
-
     settings = {
       'index.mapping.total_fields.limit': 2000,
     }
 
     # create indexes
-    if es_multi_index?
-      Models.indexable.each do |local_object|
-        SearchIndexBackend.index(
-          action: 'create',
-          name:   local_object.name,
-          data:   {
-            mappings: get_mapping_properties_object(local_object),
-            settings: settings,
-          }
-        )
-      end
-    else
-      mapping = {}
-      Models.indexable.each do |local_object|
-        mapping.merge!(get_mapping_properties_object(local_object))
-      end
+    Models.indexable.each do |local_object|
       SearchIndexBackend.index(
         action: 'create',
+        name:   local_object.name,
         data:   {
-          mappings: mapping,
+          mappings: get_mapping_properties_object(local_object),
           settings: settings,
         }
       )
@@ -68,10 +43,6 @@ namespace :searchindex do
   end
 
   task :create_pipeline, [:opts] => %i[environment searchindex:configured searchindex:version_supported] do |_t, _args|
-    if !es_pipeline?
-      Setting.set('es_pipeline', '')
-      next
-    end
 
     # update processors
     pipeline = Setting.get('es_pipeline')
@@ -80,17 +51,11 @@ namespace :searchindex do
       Setting.set('es_pipeline', pipeline)
     end
 
-    # define pipeline_field_attributes
-    # ES 5.6 and nower has no ignore_missing support
     pipeline_field_attributes = {
       ignore_failure: true,
+      ignore_missing: true,
     }
-    if es_multi_index?
-      pipeline_field_attributes = {
-        ignore_failure: true,
-        ignore_missing: true,
-      }
-    end
+
     print 'create pipeline (pipeline)... '
     SearchIndexBackend.processors(
       "_ingest/pipeline/#{pipeline}": [
@@ -136,7 +101,6 @@ namespace :searchindex do
   end
 
   task :drop_pipeline, [:opts] => %i[environment searchindex:configured searchindex:version_supported] do |_t, _args|
-    next if !es_pipeline?
 
     # update processors
     pipeline = Setting.get('es_pipeline')
@@ -181,7 +145,7 @@ namespace :searchindex do
   task :version_supported, [:opts] => :environment do |_t, _args|
     next if es_version_supported?
 
-    abort "Your Elasticsearch version is not supported! Please update your version to a greater equal than 5.6.0 (Your current version: #{es_version})."
+    abort "Your Elasticsearch version is not supported! Please update your version to a greater equal than 6.5.0 (Your current version: #{es_version})."
   end
 
   task :configured, [:opts] => :environment do |_t, _args|
@@ -214,10 +178,7 @@ mapping = {
 
 def get_mapping_properties_object(object)
 
-  name = object.name
-  if es_multi_index?
-    name = '_doc'
-  end
+  name = '_doc'
   result = {
     name => {
       properties: {}
@@ -230,13 +191,6 @@ def get_mapping_properties_object(object)
   string_type = 'text'
   string_raw  = { 'type': 'keyword', 'ignore_above': 5012 }
   boolean_raw = { 'type': 'boolean' }
-
-  # for elasticsearch 5.6 and lower
-  if !es_multi_index?
-    string_type = 'string'
-    string_raw  = { 'type': 'string', 'index': 'not_analyzed' }
-    boolean_raw = { 'type': 'boolean', 'index': 'not_analyzed' }
-  end
 
   object.columns_hash.each do |key, value|
     if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
@@ -276,46 +230,19 @@ def get_mapping_properties_object(object)
     end
   end
 
-  # es with mapper-attachments plugin
-  if object.name == 'Ticket'
-
-    # do not server attachments if document is requested
+  case object.name
+  when 'Ticket'
     result[name][:_source] = {
       excludes: ['article.attachment']
     }
-
-    # for elasticsearch 5.5 and lower
-    if !es_pipeline?
-      result[name][:_source] = {
-        excludes: ['article.attachment']
-      }
-      result[name][:properties][:article] = {
-        type:              'nested',
-        include_in_parent: true,
-        properties:        {
-          attachment: {
-            type: 'attachment',
-          }
-        }
-      }
-    end
-  end
-
-  if object.name == 'KnowledgeBase::Answer::Translation'
-    # do not server attachments if document is requested
+    result[name][:properties][:article] = {
+      type:              'nested',
+      include_in_parent: true,
+    }
+  when 'KnowledgeBase::Answer::Translation'
     result[name][:_source] = {
       excludes: ['attachment']
     }
-
-    # for elasticsearch 5.5 and lower
-    if !es_pipeline?
-      result[name][:_source] = {
-        excludes: ['attachment']
-      }
-      result[name][:properties][:attachment] = {
-        type: 'attachment',
-      }
-    end
   end
 
   return result if es_type_in_mapping?
@@ -335,40 +262,25 @@ def es_version
   end
 end
 
+def es_version_int
+  number = es_version
+  return 0 if !number
+
+  number_split = es_version.split('.')
+  "#{number_split[0]}#{format('%<minor>03d', minor: number_split[1])}#{format('%<patch>03d', patch: number_split[2])}".to_i
+end
+
 def es_version_supported?
-  version_split = es_version.split('.')
-  version       = "#{version_split[0]}#{format('%<minor>03d', minor: version_split[1])}#{format('%<patch>03d', patch: version_split[2])}".to_i
 
-  # only versions greater/equal than 5.6.0 are supported
-  return if version < 5_006_000
-
-  true
-end
-
-# no es_pipeline for elasticsearch 5.5 and lower
-def es_pipeline?
-  number = es_version
-  return false if number.blank?
-  return false if number.match?(/^[2-4]\./)
-  return false if number.match?(/^5\.[0-5]\./)
-
-  true
-end
-
-# no multi index for elasticsearch 5.6 and lower
-def es_multi_index?
-  number = es_version
-  return false if number.blank?
-  return false if number.match?(/^[2-5]\./)
+  # only versions greater/equal than 6.5.0 are supported
+  return if es_version_int < 6_005_000
 
   true
 end
 
 # no type in mapping
 def es_type_in_mapping?
-  number = es_version
-  return true if number.blank?
-  return true if number.match?(/^[2-6]\./)
+  return true if es_version_int < 7_000_000
 
   false
 end

@@ -15,7 +15,7 @@ returns
 
 =end
 
-  def search_index_attribute_lookup
+  def search_index_attribute_lookup(include_references: true)
     attributes = super
     return if !attributes
 

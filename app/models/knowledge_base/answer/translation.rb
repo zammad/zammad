@@ -51,7 +51,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     [answer_id, title.parameterize].join('-')
   end
 
-  def search_index_attribute_lookup
+  def search_index_attribute_lookup(include_references: true)
     attrs = super
 
     attrs['title']      = ActionController::Base.helpers.strip_tags attrs['title']

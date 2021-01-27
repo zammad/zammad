@@ -2,20 +2,7 @@
 module Ticket::SearchIndex
   extend ActiveSupport::Concern
 
-=begin
-
-lookup name of ref. objects
-
-  ticket = Ticket.find(123)
-  result = ticket.search_index_attribute_lookup
-
-returns
-
-  attributes # object with lookup data
-
-=end
-
-  def search_index_attribute_lookup
+  def search_index_attribute_lookup(include_references: true)
     attributes = super
     return if !attributes
 
@@ -40,7 +27,7 @@ returns
     articles.each do |article|
 
       # lookup attributes of ref. objects (normally name and note)
-      article_attributes = article.search_index_attribute_lookup
+      article_attributes = article.search_index_attribute_lookup(include_references: false)
 
       # remove note needed attributes
       ignore = %w[message_id_md5 ticket]

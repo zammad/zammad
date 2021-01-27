@@ -33,7 +33,7 @@ returns
     }
 
     without_merged_tickets = {
-      'state' => {
+      'state.name' => {
         'operator' => 'is not',
         'value'    => 'merged'
       }
@@ -156,7 +156,7 @@ returns
     end
 
     without_merged_tickets = {
-      'state' => {
+      'state.name' => {
         'operator' => 'is not',
         'value'    => 'merged'
       }

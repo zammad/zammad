@@ -92,7 +92,7 @@ returns
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
 
-    new_search_index_value = search_index_value
+    new_search_index_value = search_index_attribute_lookup(include_references: false)
     return if new_search_index_value.blank?
 
     Models.indexable.each do |local_object|
@@ -172,36 +172,6 @@ returns
     # update backend
     SearchIndexBackend.add(self.class.to_s, attributes)
     true
-  end
-
-=begin
-
-get data to store in search index
-
-  ticket = Ticket.find(123)
-  result = ticket.search_index_data
-
-returns
-
-  result = {
-    attribute1: 'some value',
-    attribute2: ['value 1', 'value 2'],
-    ...
-  }
-
-=end
-
-  def search_index_data
-    attributes = {}
-    %w[name note].each do |key|
-      next if !self[key]
-      next if self[key].respond_to?('blank?') && self[key].blank?
-
-      attributes[key] = self[key]
-    end
-    return true if attributes.blank?
-
-    attributes
   end
 
   def ignore_search_indexing?(_action)

@@ -5,16 +5,7 @@ RSpec.shared_examples 'CanLookupSearchIndexAttributes' do
       user         = create(:agent, organization: organization)
 
       value = user.search_index_value_by_attribute('organization_id')
-      expect(value).to eq('Tomato42')
-    end
-  end
-
-  describe '.search_index_value' do
-    it 'returns correct value' do
-      organization = create(:organization, name: 'Tomato42', note: 'special recipe')
-
-      value = organization.search_index_value
-      expect(value).to eq('Tomato42')
+      expect(value['name']).to eq('Tomato42')
     end
   end
 

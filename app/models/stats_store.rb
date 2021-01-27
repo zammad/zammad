@@ -2,7 +2,6 @@
 
 class StatsStore < ApplicationModel
   include HasSearchIndexBackend
-  include StatsStore::SearchIndex
 
   belongs_to :stats_storable, polymorphic: true
 

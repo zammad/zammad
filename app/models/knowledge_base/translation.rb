@@ -19,7 +19,7 @@ class KnowledgeBase::Translation < ApplicationModel
     knowledge_base.assets(data)
   end
 
-  def search_index_attribute_lookup
+  def search_index_attribute_lookup(include_references: true)
     attrs = super
 
     attrs['title'] = ActionController::Base.helpers.strip_tags attrs['title']

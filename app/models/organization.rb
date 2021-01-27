@@ -17,6 +17,8 @@ class Organization < ApplicationModel
 
   has_many :members, class_name: 'User'
   has_many :tickets, class_name: 'Ticket'
+  belongs_to :created_by,  class_name: 'User'
+  belongs_to :updated_by,  class_name: 'User'
 
   before_create :domain_cleanup
   before_update :domain_cleanup
@@ -25,7 +27,7 @@ class Organization < ApplicationModel
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
 
-  association_attributes_ignored :tickets
+  association_attributes_ignored :tickets, :created_by, :updated_by
 
   activity_stream_permission 'admin.role'
 

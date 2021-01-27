@@ -82,14 +82,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
   test 'a - objects' do
 
     # user
-    attributes = @agent.search_index_data
-    assert_equal('E', attributes['firstname'])
-    assert_equal('S', attributes['lastname'])
-    assert_equal('es-agent@example.com', attributes['email'])
-    assert(attributes['preferences'])
-    assert_not(attributes['password'])
-    assert_not(attributes['organization'])
-
     attributes = @agent.search_index_attribute_lookup
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
@@ -104,14 +96,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('es-customer1@example.com', attributes['email'])
     assert(attributes['preferences'])
     assert_not(attributes['password'])
-    assert_equal('Customer Organization Update', attributes['organization'])
+    assert_equal('Customer Organization Update', attributes['organization']['name'])
 
     # organization
-    attributes = @organization1.search_index_data
-    assert_equal('Customer Organization Update', attributes['name'])
-    assert_equal('some note', attributes['note'])
-    assert_not(attributes['members'])
-
     attributes = @organization1.search_index_attribute_lookup
     assert_equal('Customer Organization Update', attributes['name'])
     assert_equal('some note', attributes['note'])
@@ -150,15 +137,15 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     attributes = ticket1.search_index_attribute_lookup
-    assert_equal('Users', attributes['group'])
-    assert_equal('new', attributes['state'])
-    assert_equal('2 normal', attributes['priority'])
+    assert_equal('Users', attributes['group']['name'])
+    assert_equal('new', attributes['state']['name'])
+    assert_equal('2 normal', attributes['priority']['name'])
 
     assert_equal('ES', attributes['customer']['firstname'])
     assert_equal('Customer1', attributes['customer']['lastname'])
     assert_equal('es-customer1@example.com', attributes['customer']['email'])
     assert_not(attributes['customer']['password'])
-    assert_equal('Customer Organization Update', attributes['customer']['organization'])
+    assert_nil(attributes['customer']['organization'])
 
     assert_equal('-', attributes['owner']['login'])
     assert_equal('-', attributes['owner']['firstname'])
@@ -466,7 +453,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query:        'state:open',
+      query:        'state.name:open',
       limit:        15,
     )
     assert(result[0], 'record 1')

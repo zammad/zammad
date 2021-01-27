@@ -13,20 +13,26 @@
     - bundle exec rspec --tag searchindex --tag ~type:system
     - bundle exec rails test test/integration/report_test.rb
 
-es:5.6:
-  <<: *template_integration_es
-  variables:
-    ELASTICSEARCH_TAG: '5.6'
-    RAILS_ENV: "test"
-
 es:6:
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '6'
     RAILS_ENV: "test"
 
+es:6.5:
+  <<: *template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '6.5'
+    RAILS_ENV: "test"
+
 es:7:
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7'
+    RAILS_ENV: "test"
+
+es:7.0:
+  <<: *template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '7.0'
     RAILS_ENV: "test"

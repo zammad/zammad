@@ -4,10 +4,13 @@ module ApplicationModel::CanLookupSearchIndexAttributes
 
 =begin
 
-lookup name of ref. objects
+This function return the attributes for the elastic search with relation hash values.
+
+It can be run with parameter include_references: false to skip the relational hashes to prevent endless loops.
 
   ticket = Ticket.find(3)
   attributes = ticket.search_index_attribute_lookup
+  attributes = ticket.search_index_attribute_lookup(include_references: false)
 
 returns
 
@@ -15,10 +18,11 @@ returns
 
 =end
 
-  def search_index_attribute_lookup
-
+  def search_index_attribute_lookup(include_references: true)
     attributes = self.attributes
     self.attributes.each do |key, value|
+      break if !include_references
+
       attribute_name = key.to_s
 
       # ignore standard attribute if needed
@@ -74,34 +78,7 @@ returns
     relation_model = relation_class.lookup(id: attributes[attribute_name])
     return if !relation_model
 
-    relation_model.search_index_value
-  end
-
-=begin
-
-This function returns the relational search value.
-
-  organization = Organization.find(1)
-  value = organization.search_index_value
-
-returns
-
-  value = {"name"=>"Zammad Foundation"}
-
-=end
-
-  def search_index_value
-
-    # get name of ref object
-    value = nil
-    if respond_to?('name')
-      value = send('name')
-    elsif respond_to?('search_index_data')
-      value = send('search_index_data')
-      return if value == true
-    end
-
-    value
+    relation_model.search_index_attribute_lookup(include_references: false)
   end
 
 =begin

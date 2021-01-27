@@ -17,7 +17,7 @@ RSpec.describe Chat::Session, type: :model do
     end
 
     it 'verify chat attribute' do
-      expect(chat_session.search_index_attribute_lookup['chat']).to eq chat.name
+      expect(chat_session.search_index_attribute_lookup['chat']['name']).to eq chat.name
     end
 
   end

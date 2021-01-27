@@ -363,7 +363,7 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
       expect(json_response['assets']['User'][customer_nested.id.to_s]).to be_truthy
 
-      post '/api/v1/search/User', params: { query: 'organization:Tomato42' }, as: :json
+      post '/api/v1/search/User', params: { query: 'organization.name:Tomato42' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
@@ -383,7 +383,7 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
       expect(json_response['assets']['User'][customer_nested.id.to_s]).to be_truthy
 
-      post '/api/v1/search/User', params: { query: 'organization:Cucumber43' }, as: :json
+      post '/api/v1/search/User', params: { query: 'organization.name:Cucumber43' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
@@ -400,7 +400,7 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
       expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
 
-      post '/api/v1/search/Ticket', params: { query: 'organization:Tomato42' }, as: :json
+      post '/api/v1/search/Ticket', params: { query: 'organization.name:Tomato42' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
@@ -418,7 +418,7 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response['assets']['Organization'][organization_nested.id.to_s]).to be_truthy
       expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
 
-      post '/api/v1/search/Ticket', params: { query: 'organization:Cucumber43' }, as: :json
+      post '/api/v1/search/Ticket', params: { query: 'organization.name:Cucumber43' }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
