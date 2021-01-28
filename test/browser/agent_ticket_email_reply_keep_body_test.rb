@@ -172,6 +172,85 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     )
   end
 
+  def test_mark_and_quote
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all()
+
+    ticket_open_by_title(
+      title: 'Welcome to Zammad',
+    )
+    watch_for(
+      css: '.content.active .js-settingContainer .js-setting .dropdown-icon',
+    )
+
+    # enable email mark and quote feature
+    change_quote_config(
+      css:        '.modal #ui_ticket_zoom_article_email_mark_and_quote select[name="ui_ticket_zoom_article_email_mark_and_quote"]',
+      value:      'yes',
+      submit_css: '.modal #ui_ticket_zoom_article_email_mark_and_quote .btn[type="submit"]',
+    )
+    change_quote_config(
+      css:        '.modal #ui_ticket_zoom_article_email_mark_and_quote select[name="ui_ticket_zoom_article_email_mark_and_quote"]',
+      value:      'yes',
+      submit_css: '.modal #ui_ticket_zoom_article_email_mark_and_quote .btn[type="submit"]',
+    )
+
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active .ticket-article [data-type="emailReply"]',
+    )
+    click(css: '.content.active .ticket-article [data-type="emailReply"]')
+
+    full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
+
+    # select some text
+    @browser.action.key_down(:control).send_keys(key: 'a').key_up(:control).perform
+    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    assert match
+    assert match[1]
+    assert Time.zone.parse(match[1])
+
+    # try again, but with the mark and quote feature disabled
+    tasks_close_all()
+    ticket_open_by_title(
+      title: 'Welcome to Zammad',
+    )
+    change_quote_config(
+      css:        '.modal #ui_ticket_zoom_article_email_mark_and_quote select[name="ui_ticket_zoom_article_email_mark_and_quote"]',
+      value:      'no',
+      submit_css: '.modal #ui_ticket_zoom_article_email_mark_and_quote .btn[type="submit"]',
+    )
+
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active .ticket-article [data-type="emailReply"]',
+    )
+    click(css: '.content.active .ticket-article [data-type="emailReply"]')
+
+    full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
+
+    # select some text
+    @browser.action.key_down(:control).send_keys(key: 'a').key_up(:control).perform
+    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    assert_nil match
+
+    # after test, turn mark and quote feature back on
+    tasks_close_all()
+    ticket_open_by_title(
+      title: 'Welcome to Zammad',
+    )
+    change_quote_config(
+      css:        '.modal #ui_ticket_zoom_article_email_mark_and_quote select[name="ui_ticket_zoom_article_email_mark_and_quote"]',
+      value:      'yes',
+      submit_css: '.modal #ui_ticket_zoom_article_email_mark_and_quote .btn[type="submit"]',
+    )
+  end
+
   # Regression test for issue #2344 - Missing translation for Full-Quote-Text "on xy wrote"
   def test_full_quote_german_locale
     @browser = browser_instance

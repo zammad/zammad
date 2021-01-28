@@ -147,7 +147,7 @@ class EmailReply extends App.Controller
         selected = App.Utils.textCleanup(article.body)
         selected = App.Utils.text2html(selected)
 
-    if selected
+    if selected && App.Config.get('ui_ticket_zoom_article_email_mark_and_quote')
       quote_header = @replyQuoteHeader(article)
 
       selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
