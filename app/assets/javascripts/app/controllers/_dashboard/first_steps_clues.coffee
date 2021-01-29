@@ -54,8 +54,9 @@ class App.FirstStepsClues extends App.Controller
 
   constructor: (params) ->
 
-    $('#app').append('<div class="js-modal--clue"></div>')
-    params.el = $('#app .js-modal--clue')
+    el = $('<div class="js-modal--clue"></div>')
+    params.appEl.append(el)
+    params.el = el
 
     super params
 
@@ -69,7 +70,7 @@ class App.FirstStepsClues extends App.Controller
     @position = 0
     @render()
 
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
       'clues'
     )
@@ -106,7 +107,7 @@ class App.FirstStepsClues extends App.Controller
   cleanUp: (callback) ->
     @hideWindow =>
       clue = @clues[@position]
-      container = $("#app #{clue.container}")
+      container = @appEl.find(clue.container)
       container.removeClass('selected-clue')
 
       # undo click perform by doing it again
@@ -128,7 +129,7 @@ class App.FirstStepsClues extends App.Controller
 
   showClue: =>
     clue = @clues[@position]
-    container = $("#app #{clue.container}")
+    container = @appEl.find(clue.container)
     container.addClass('selected-clue')
 
     if clue.actions
@@ -324,7 +325,7 @@ class App.FirstStepsClues extends App.Controller
         when 'hover'
 
           # disable active navbar elements
-          $('#app .navigation .is-active').removeClass('is-active')
+          @appEl.find('.navigation .is-active').removeClass('is-active')
 
           if type is 'show'
             target.addClass('is-hovered')

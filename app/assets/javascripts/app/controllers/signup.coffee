@@ -1,9 +1,10 @@
-class Index extends App.ControllerContent
+class Signup extends App.ControllerFullPage
   events:
     'submit form': 'submit'
     'click .submit': 'submit'
     'click .js-submitResend': 'resend'
     'click .cancel': 'cancel'
+  className: 'signup'
 
   constructor: ->
     super
@@ -13,8 +14,6 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
-    @navHide()
-
     # set title
     @title 'Sign up'
     @navupdate '#signup'
@@ -23,7 +22,7 @@ class Index extends App.ControllerContent
 
   render: ->
 
-    @html App.view('signup')()
+    @replaceWith(App.view('signup')())
 
     @form = new App.ControllerForm(
       el:        @el.find('form')
@@ -70,9 +69,9 @@ class Index extends App.ControllerContent
     # save user
     user.save(
       done: (r) =>
-        @html App.view('signup/verify')(
+        @replaceWith(App.view('signup/verify')(
           email: @params.email
-        )
+        ))
       fail: (settings, details) =>
         @formEnable(e)
         @form.showAlert(details.error_human || details.error || 'Unable to create user!')
@@ -93,10 +92,11 @@ class Index extends App.ControllerContent
         @formEnable(e)
 
         # add notify
-        @notify
+        @notify(
           type:      'success'
           msg:       App.i18n.translateContent('Email sent to "%s". Please verify your email address.', @params.email)
           removeAll: true
+        )
 
         if data.token && @Config.get('developer_mode') is true
           @navigate "#email_verify/#{data.token}"
@@ -109,9 +109,9 @@ class Index extends App.ControllerContent
     if !_.isEmpty(detailsRaw)
       details = JSON.parse(detailsRaw)
 
-    @notify
+    @notify(
       type:      'error'
       msg:       App.i18n.translateContent(details.error || 'Could not process your request')
       removeAll: true
-
-App.Config.set('signup', Index, 'Routes')
+    )
+App.Config.set('signup', Signup, 'Routes')

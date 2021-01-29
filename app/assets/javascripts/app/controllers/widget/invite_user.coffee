@@ -1,4 +1,4 @@
-class App.InviteUser extends App.WizardModal
+class App.InviteUser extends App.ControllerWizardModal
   events:
     'click  .js-close':     'hide'
     'submit .js-user':      'submit'

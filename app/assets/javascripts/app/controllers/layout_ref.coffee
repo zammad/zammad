@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class LayoutRef extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -6,10 +6,10 @@ class Index extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/index')()
 
-App.Config.set( 'layout_ref', Index, 'Routes' )
+App.Config.set('layout_ref', LayoutRef, 'Routes')
 
 
-class Content extends App.ControllerContent
+class Content extends App.ControllerAppContent
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
     'click .js-organization':                 'showOrganizationMembers'
@@ -103,7 +103,7 @@ class Content extends App.ControllerContent
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 
 
-class CommunicationOverview extends App.ControllerContent
+class CommunicationOverview extends App.ControllerAppContent
   events:
     'click .js-unfold': 'unfold'
 
@@ -153,7 +153,7 @@ class CommunicationOverview extends App.ControllerContent
 App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
 
 
-class LayoutRefCommunicationReply extends App.ControllerContent
+class LayoutRefCommunicationReply extends App.ControllerAppContent
   elements:
     '.js-textarea' :                'textarea'
     '.attachmentPlaceholder':       'attachmentPlaceholder'
@@ -389,7 +389,7 @@ App.Config.set( 'layout_ref/communication_reply/:content', LayoutRefCommunicatio
 
 
 
-class ContentSidebarRight extends App.ControllerContent
+class ContentSidebarRight extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -400,7 +400,7 @@ class ContentSidebarRight extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_right', ContentSidebarRight, 'Routes' )
 
 
-class ContentSidebarRightSidebarOptional extends App.ControllerContent
+class ContentSidebarRightSidebarOptional extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -442,7 +442,7 @@ class ModalText extends App.ControllerModal
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
 
 
-class ContentSidebarTabsRight extends App.ControllerContent
+class ContentSidebarTabsRight extends App.ControllerAppContent
   elements:
     '.tabsSidebar'  : 'sidebar'
 
@@ -510,7 +510,7 @@ class ContentSidebarTabsRight extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_tabs_right', ContentSidebarTabsRight, 'Routes' )
 
 
-class ContentSidebarLeft extends App.ControllerContent
+class ContentSidebarLeft extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -521,7 +521,7 @@ class ContentSidebarLeft extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_left', ContentSidebarLeft, 'Routes' )
 
 
-class App.ControllerWizard extends App.ControllerContent
+class App.ControllerWizard extends App.ControllerAppContent
   elements:
     '[data-slide]':   'slides'
 
@@ -593,7 +593,7 @@ class ImportWizard extends App.ControllerWizard
 
 App.Config.set( 'layout_ref/import_wizard', ImportWizard, 'Routes' )
 
-class ReferenceUserProfile extends App.ControllerContent
+class ReferenceUserProfile extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -604,7 +604,7 @@ class ReferenceUserProfile extends App.ControllerContent
 
 App.Config.set( 'layout_ref/user_profile', ReferenceUserProfile, 'Routes' )
 
-class ReferenceOrganizationProfile extends App.ControllerContent
+class ReferenceOrganizationProfile extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -656,7 +656,7 @@ class ReferenceSetupWizard extends App.ControllerWizard
 
 App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
-class RichText extends App.ControllerContent
+class RichText extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -724,7 +724,7 @@ class RichText extends App.ControllerContent
 
 App.Config.set( 'layout_ref/richtext', RichText, 'Routes' )
 
-class LocalModalRef extends App.ControllerContent
+class LocalModalRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -735,7 +735,7 @@ class LocalModalRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
 
-class LoadingPlaceholderRef extends App.ControllerContent
+class LoadingPlaceholderRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -746,7 +746,7 @@ class LoadingPlaceholderRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/loading_placeholder', LoadingPlaceholderRef, 'Routes' )
 
-class InsufficientRightsRef extends App.ControllerContent
+class InsufficientRightsRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -758,7 +758,7 @@ class InsufficientRightsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/insufficient_rights', InsufficientRightsRef, 'Routes' )
 
 
-class ErrorRef extends App.ControllerContent
+class ErrorRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -770,7 +770,7 @@ class ErrorRef extends App.ControllerContent
 App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class TicketZoomRef extends App.ControllerContent
+class TicketZoomRef extends App.ControllerAppContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -980,7 +980,7 @@ class TicketZoomRef extends App.ControllerContent
 App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )
 
 
-class CluesRef extends App.ControllerContent
+class CluesRef extends App.ControllerAppContent
 
   clues: [
     {
@@ -1298,7 +1298,7 @@ class CluesRef extends App.ControllerContent
 App.Config.set( 'layout_ref/clues', CluesRef, 'Routes' )
 
 
-class AdminPlaceholderRef extends App.ControllerContent
+class AdminPlaceholderRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1309,7 +1309,7 @@ class AdminPlaceholderRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/admin_placeholder', AdminPlaceholderRef, 'Routes' )
 
-class UserListRef extends App.ControllerContent
+class UserListRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1321,7 +1321,7 @@ class UserListRef extends App.ControllerContent
 App.Config.set( 'layout_ref/user_list', UserListRef, 'Routes' )
 
 
-class SlaRef extends App.ControllerContent
+class SlaRef extends App.ControllerAppContent
 
   events:
     'click .js-activateColumn': 'activateColumn'
@@ -1377,7 +1377,7 @@ class SlaRef extends App.ControllerContent
 App.Config.set( 'layout_ref/sla', SlaRef, 'Routes' )
 
 
-class SchedulersRef extends App.ControllerContent
+class SchedulersRef extends App.ControllerAppContent
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
@@ -1457,7 +1457,7 @@ class SchedulersRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/schedulers', SchedulersRef, 'Routes' )
 
-class InputsRef extends App.ControllerContent
+class InputsRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1584,7 +1584,7 @@ class InputsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 
 
-class CalendarSubscriptionsRef extends App.ControllerContent
+class CalendarSubscriptionsRef extends App.ControllerAppContent
 
   elements:
     'input[type=checkbox]': 'options'
@@ -1660,7 +1660,7 @@ class CalendarSubscriptionsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/calendar_subscriptions', CalendarSubscriptionsRef, 'Routes' )
 
 
-class ButtonsRef extends App.ControllerContent
+class ButtonsRef extends App.ControllerAppContent
 
   elements:
     '.js-submitDropdown': 'buttonDropdown'
@@ -1697,7 +1697,7 @@ class ButtonsRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 
-class MergeCustomerRef extends App.ControllerContent
+class MergeCustomerRef extends App.ControllerAppContent
 
   mergeTarget:
     firstname: 'Nicole',
@@ -1747,7 +1747,7 @@ class MergeCustomerRef extends App.ControllerContent
 App.Config.set( 'layout_ref/merge_customer', MergeCustomerRef, 'Routes' )
 
 
-class PrimaryEmailRef extends App.ControllerContent
+class PrimaryEmailRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -2164,7 +2164,7 @@ class ChatWindowRef extends Spine.Controller
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
 
-class AdminLoadRef extends App.ControllerContent
+class AdminLoadRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -2176,7 +2176,7 @@ class AdminLoadRef extends App.ControllerContent
 App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
 
 
-class TwitterConversationRef extends App.ControllerContent
+class TwitterConversationRef extends App.ControllerAppContent
   elements:
     '.js-textarea':                       'textarea'
     '.article-add':                       'articleNewEdit'
@@ -2264,7 +2264,7 @@ class TwitterConversationRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
-class UI extends App.ControllerContent
+class UI extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -2274,7 +2274,7 @@ class UI extends App.ControllerContent
 
 App.Config.set( 'layout_ref/ui', UI, 'Routes' )
 
-class ChatToTicketRef extends App.ControllerContent
+class ChatToTicketRef extends App.ControllerAppContent
 
   elements:
     '.js-scrollHolder': 'scrollHolder'
@@ -2309,7 +2309,7 @@ class ChatToTicketRef extends App.ControllerContent
 
 App.Config.set('layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes')
 
-class KnowledgeBaseAgentReaderRef extends App.ControllerContent
+class KnowledgeBaseAgentReaderRef extends App.ControllerAppContent
   className: 'flex knowledge-base vertical'
 
   elements:
@@ -2349,7 +2349,7 @@ class KnowledgeBaseAgentReaderRef extends App.ControllerContent
 
 App.Config.set('layout_ref/kb_agent_reader', KnowledgeBaseAgentReaderRef, 'Routes')
 
-class KnowledgeBaseLinkTicketToAnswerRef extends App.ControllerContent
+class KnowledgeBaseLinkTicketToAnswerRef extends App.ControllerAppContent
   constructor: ->
     super
     App.Utils.loadIconFont('anticon')
@@ -2364,7 +2364,7 @@ class KnowledgeBaseLinkTicketToAnswerRef extends App.ControllerContent
 
 App.Config.set('layout_ref/kb_link_ticket_to_answer', KnowledgeBaseLinkTicketToAnswerRef, 'Routes')
 
-class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerContent
+class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
   elements:
     '.js-form': 'form'
 

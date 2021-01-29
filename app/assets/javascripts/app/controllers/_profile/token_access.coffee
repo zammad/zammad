@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfileTokenAccess extends App.ControllerSubContent
   requiredPermission: 'user_preferences.access_token'
   header: 'Token Access'
   events:
@@ -144,4 +144,4 @@ class Create extends App.ControllerModal
       msg:  App.i18n.translateContent(data.message || data.error)
     )
 
-App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, permission: ['user_preferences.access_token']  }, 'NavBarProfile')
+App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: ProfileTokenAccess, permission: ['user_preferences.access_token']  }, 'NavBarProfile')

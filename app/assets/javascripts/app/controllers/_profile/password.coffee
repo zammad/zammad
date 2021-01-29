@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfilePassword extends App.ControllerSubContent
   requiredPermission: 'user_preferences.password'
   header: 'Password'
   events:
@@ -78,4 +78,4 @@ class Index extends App.ControllerSubContent
           removeAll: true
       @formEnable( @$('form') )
 
-App.Config.set('Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: Index, permission: ['user_preferences.password'] }, 'NavBarProfile')
+App.Config.set('Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: ProfilePassword, permission: ['user_preferences.password'] }, 'NavBarProfile')

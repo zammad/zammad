@@ -19,9 +19,10 @@ class App.TicketStats extends App.Controller
       @subscribeIdOrganization = App.Organization.full(@organization.id, @load, false, true)
 
     # rerender view, e.g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       return if !@authenticateCheck()
       @render()
+    )
 
   release: =>
     if @subscribeIdUser

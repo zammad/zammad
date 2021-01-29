@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ReportProfile extends App.ControllerSubContent
   requiredPermission: 'admin.report_profile'
   header: 'Report Profile'
   constructor: ->
@@ -34,4 +34,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('ReportProfile', { prio: 8000, name: 'Report Profiles', parent: '#manage', target: '#manage/report_profiles', controller: Index, permission: ['admin.report_profile'] }, 'NavBarAdmin')
+App.Config.set('ReportProfile', { prio: 8000, name: 'Report Profiles', parent: '#manage', target: '#manage/report_profiles', controller: ReportProfile, permission: ['admin.report_profile'] }, 'NavBarAdmin')

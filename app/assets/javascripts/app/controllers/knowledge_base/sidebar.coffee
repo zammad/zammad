@@ -8,7 +8,7 @@ class App.KnowledgeBaseSidebar extends App.Controller
     super
     @show()
 
-    @bind 'knowledge_base::sidebar::rerender', => @rerender()
+    @controllerBind 'knowledge_base::sidebar::rerender', => @rerender()
 
     @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
       @rerender()

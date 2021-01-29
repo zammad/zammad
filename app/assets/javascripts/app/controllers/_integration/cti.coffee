@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Cti extends App.ControllerIntegrationBase
   featureIntegration: 'cti_integration'
   featureName: 'CTI (generic)'
   featureConfig: 'cti_config'
@@ -234,7 +234,7 @@ App.Config.set(
     name: 'CTI (generic)'
     target: '#system/integration/cti'
     description: 'Generic API to integrate VoIP service provider with realtime push.'
-    controller: Index
+    controller: Cti
     state: State
   }
   'NavBarIntegrations'

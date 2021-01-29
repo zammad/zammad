@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class CustomerTicketCreate extends App.ControllerAppContent
   requiredPermission: 'ticket.customer'
   events:
     'submit form':         'submit',
@@ -211,7 +211,7 @@ class Index extends App.ControllerContent
       return
     @formEnable(@$('.js-submit'), 'button')
 
-App.Config.set('customer_ticket_new', Index, 'Routes')
+App.Config.set('customer_ticket_new', CustomerTicketCreate, 'Routes')
 App.Config.set('CustomerTicketNew', {
   prio: 8003,
   parent: '#new',

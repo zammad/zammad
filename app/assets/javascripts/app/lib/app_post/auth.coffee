@@ -98,9 +98,8 @@ class App.Auth
 
       # rebuild navbar with new navbar items
       App.Event.trigger('auth')
-      App.Event.trigger('auth:logout')
+      App.Event.trigger('auth:failed')
       App.Event.trigger('ui:rerender')
-      App.TaskManager.tasksInitial()
       return false
 
     # clear local store
@@ -160,8 +159,10 @@ class App.Auth
       if _.isFunction(model_object.clearInMemory)
         model_object.clearInMemory()
 
+    App.Plugin.init()
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
+
     if rerender
       @loginCheck(->
         window.location.href = '#login'
@@ -177,6 +178,6 @@ class App.Auth
 
     # rebuild navbar
     App.Event.trigger('auth')
-    App.Event.trigger('auth:logout')
+    App.Event.trigger('auth:failed')
     App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')

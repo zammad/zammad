@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ChannelTelegram extends App.ControllerSubContent
   requiredPermission: 'admin.channel_telegram'
   events:
     'click .js-new':     'new'
@@ -201,4 +201,4 @@ class BotEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
-App.Config.set('Telegram', { prio: 5100, name: 'Telegram', parent: '#channels', target: '#channels/telegram', controller: Index, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')
+App.Config.set('Telegram', { prio: 5100, name: 'Telegram', parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')

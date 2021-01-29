@@ -39,7 +39,7 @@ treeParams = (e, params) ->
     params.data_option.options = tree
   params
 
-class Index extends App.ControllerTabs
+class ObjectManager extends App.ControllerTabs
   requiredPermission: 'admin.object'
   constructor: ->
     super
@@ -278,4 +278,4 @@ class Edit extends App.ControllerGenericEdit
         ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
-App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, permission: ['admin.object'] }, 'NavBarAdmin')
+App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')

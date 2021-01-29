@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfileNotification extends App.ControllerSubContent
   requiredPermission: 'user_preferences.notifications+ticket.agent'
   header: 'Notifications'
   events:
@@ -192,4 +192,4 @@ class Index extends App.ControllerSubContent
     return if !params.notification_sound.file
     App.OnlineNotification.play(params.notification_sound.file)
 
-App.Config.set('Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: Index }, 'NavBarProfile')
+App.Config.set('Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')

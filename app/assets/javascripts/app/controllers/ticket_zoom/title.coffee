@@ -1,4 +1,4 @@
-class App.TicketZoomTitle extends App.ObserverController
+class App.TicketZoomTitle extends App.ControllerObserver
   model: 'Ticket'
   template: 'ticket_zoom/title'
   observe:

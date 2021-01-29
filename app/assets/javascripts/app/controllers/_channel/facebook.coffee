@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ChannelFacebook extends App.ControllerSubContent
   requiredPermission: 'admin.channel_facebook'
   header: 'Facebook'
   events:
@@ -254,4 +254,4 @@ class AccountEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
-App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')
+App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

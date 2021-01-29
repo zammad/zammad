@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Maintenance extends App.ControllerSubContent
   requiredPermission: 'admin.maintenance'
   header: 'Maintenance'
   events:
@@ -88,4 +88,4 @@ class Index extends App.ControllerSubContent
       removeAll: true
     @render()
 
-App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, permission: ['admin.maintenance'] }, 'NavBarAdmin')
+App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Maintenance, permission: ['admin.maintenance'] }, 'NavBarAdmin')

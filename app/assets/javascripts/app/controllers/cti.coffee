@@ -23,13 +23,13 @@ class App.CTI extends App.Controller
     @meta.active = preferences.cti || false
 
     @load()
-    @bind('cti_list_push', (data) =>
+    @controllerBind('cti_list_push', (data) =>
       delay = =>
         @load()
       @delay(delay, 500, 'cti_list_push_render')
       'cti_list_push'
     )
-    @bind('cti_event', (data) =>
+    @controllerBind('cti_event', (data) =>
       return if data.state isnt 'newCall'
       return if data.direction isnt 'in'
       return if @switch() isnt true
@@ -37,7 +37,7 @@ class App.CTI extends App.Controller
         @notify(data)
       'cti_event'
     )
-    @bind('menu:render', (data) =>
+    @controllerBind('menu:render', (data) =>
       return if @switch() isnt true
       localHtml = ''
       for item in @ringingCalls()
@@ -53,26 +53,25 @@ class App.CTI extends App.Controller
         user_id = $(e.currentTarget).data('user-id')
         if user_id
           user = App.User.find(user_id)
-        console.log('user_id', user_id, user)
         @newTicket(user)
       )
     )
-    @bind('auth', (data) =>
+    @controllerBind('auth', (data) =>
       @meta.counter = 0
     )
-    @bind('cti:reload', =>
+    @controllerBind('cti:reload', =>
       @load()
       'cti_reload'
     )
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
       'cti_rerender'
     )
 
     # after a new websocket connection, load again
-    @bind('spool:sent', =>
+    @controllerBind('spool:sent', =>
       if @initSpoolSent
         @load()
         return
@@ -280,7 +279,7 @@ class App.CTI extends App.Controller
   currentPosition: =>
     @$('.main').scrollTop()
 
-class WidgetAvatar extends App.ObserverController
+class WidgetAvatar extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'User'
 

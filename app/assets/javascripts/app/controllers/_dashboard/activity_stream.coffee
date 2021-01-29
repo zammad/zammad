@@ -13,7 +13,7 @@ class App.DashboardActivityStream extends App.CollectionController
     @fetch()
 
     # bind to rebuild view event
-    @bind('activity_stream_rebuild', @load)
+    @controllerBind('activity_stream_rebuild', @load)
 
   fetch: =>
 

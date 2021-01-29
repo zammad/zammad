@@ -1,15 +1,4 @@
-class Stats extends App.Controller
-  constructor: ->
-    super
-    @load()
-
-  load: =>
-    stats_store = App.StatsStore.first()
-    if stats_store
-      @render(stats_store.data)
-    else
-      @render()
-
+class Stats extends App.ControllerDashboardStatsBase
   render: (data = {}) ->
     if !data.StatsTicketWaitingTime
       data.StatsTicketWaitingTime =
@@ -75,4 +64,4 @@ class Stats extends App.Controller
     ctx.closePath()
     ctx.fill()
 
-App.Config.set('ticket_waiting_time', {controller: Stats, permission: 'ticket.agent', prio: 100 }, 'Stats')
+App.Config.set('ticket_waiting_time', { controller: Stats, permission: 'ticket.agent', prio: 100, className: 'ticket_waiting_time' }, 'Stats')

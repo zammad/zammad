@@ -1,5 +1,5 @@
 # coffeelint: disable=no_unnecessary_double_quotes
-class App.ChannelForm extends App.ControllerSubContent
+class ChannelForm extends App.ControllerSubContent
   requiredPermission: 'admin.channel_formular'
   header: 'Form'
   events:
@@ -88,4 +88,4 @@ class App.ChannelForm extends App.ControllerSubContent
     value = @paramsSetting.find('[name=group_id]').val()
     App.Setting.set('form_ticket_create_group_id', value)
 
-App.Config.set('Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, permission: ['admin.formular'] }, 'NavBarAdmin')
+App.Config.set('Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: ChannelForm, permission: ['admin.formular'] }, 'NavBarAdmin')

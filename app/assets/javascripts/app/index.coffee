@@ -5,6 +5,7 @@
 #= require_tree ./lib/mixins
 #= require ./config.coffee
 #= require_tree ./models
+#= require_tree ./controllers/_application_controller
 #= require_tree ./controllers
 #= require_tree ./views
 #= require_tree ./lib/app_post

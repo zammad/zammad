@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Trigger extends App.ControllerSubContent
   requiredPermission: 'admin.trigger'
   header: 'Triggers'
   constructor: ->
@@ -35,4 +35,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, permission: ['admin.trigger'] }, 'NavBarAdmin')
+App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Trigger, permission: ['admin.trigger'] }, 'NavBarAdmin')

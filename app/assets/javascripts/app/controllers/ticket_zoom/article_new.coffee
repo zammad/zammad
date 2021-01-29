@@ -55,7 +55,7 @@ class App.TicketZoomArticleNew extends App.Controller
         @renderAttachment(attachment)
 
     # set article type and expand text area
-    @bind('ui::ticket::setArticleType', (data) =>
+    @controllerBind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id.toString() isnt @ticket_id.toString()
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
@@ -81,7 +81,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     # add article attachment
-    @bind('ui::ticket::addArticleAttachent', (data) =>
+    @controllerBind('ui::ticket::addArticleAttachent', (data) =>
       return if data.ticket?.id?.toString() isnt @ticket_id.toString() && data.form_id isnt @form_id
       return if _.isEmpty(data.attachments)
       for file in data.attachments
@@ -89,7 +89,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     # reset new article screen
-    @bind('ui::ticket::taskReset', (data) =>
+    @controllerBind('ui::ticket::taskReset', (data) =>
       @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
       @type     = 'note'
@@ -98,18 +98,18 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     # set expand of text area only once
-    @bind('ui::ticket::shown', (data) =>
+    @controllerBind('ui::ticket::shown', (data) =>
       return if data.ticket_id.toString() isnt @ticket.id.toString()
       @tokanice(@type)
     )
 
     # rerender, e. g. on language change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
     )
 
     # update security options
-    @bind('ui::ticket::updateSecurityOptions', (data) =>
+    @controllerBind('ui::ticket::updateSecurityOptions', (data) =>
       return if data.taskKey isnt @taskKey
       @updateSecurityOptions()
     )

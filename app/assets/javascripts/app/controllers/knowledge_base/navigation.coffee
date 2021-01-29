@@ -11,7 +11,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
     super
     @render()
 
-    @bind 'knowledge_base::navigation::rerender', => @needsUpdate()
+    @controllerBind('knowledge_base::navigation::rerender', => @needsUpdate())
 
     @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
       @needsUpdate()

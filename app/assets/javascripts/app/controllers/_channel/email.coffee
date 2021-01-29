@@ -1,4 +1,4 @@
-class App.ChannelEmail extends App.ControllerTabs
+class ChannelEmail extends App.ControllerTabs
   requiredPermission: 'admin.channel_email'
   header: 'Email'
   constructor: ->
@@ -10,17 +10,17 @@ class App.ChannelEmail extends App.ControllerTabs
       {
         name:       'Accounts',
         target:     'c-account',
-        controller: App.ChannelEmailAccountOverview,
+        controller: ChannelEmailAccountOverview,
       },
       {
         name:       'Filter',
         target:     'c-filter',
-        controller: App.ChannelEmailFilter,
+        controller: ChannelEmailFilter,
       },
       {
         name:       'Signatures',
         target:     'c-signature',
-        controller: App.ChannelEmailSignature,
+        controller: ChannelEmailSignature,
       },
       {
         name:       'Settings',
@@ -32,7 +32,7 @@ class App.ChannelEmail extends App.ControllerTabs
 
     @render()
 
-class App.ChannelEmailFilter extends App.Controller
+class ChannelEmailFilter extends App.Controller
   events:
     'click [data-type=new]': 'new'
 
@@ -79,7 +79,7 @@ class App.ChannelEmailFilter extends App.Controller
       callback: @load
     )
 
-class App.ChannelEmailSignature extends App.Controller
+class ChannelEmailSignature extends App.Controller
   events:
     'click [data-type=new]':  'new'
 
@@ -111,19 +111,19 @@ Once you have created a signature here, you need also to edit the groups where y
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailSignatureEdit(
+    new ChannelEmailSignatureEdit(
       container: @el.closest('.content')
     )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.Signature.find(id)
-    new App.ChannelEmailSignatureEdit(
+    new ChannelEmailSignatureEdit(
       object:    item
       container: @el.closest('.content')
     )
 
-class App.ChannelEmailSignatureEdit extends App.ControllerModal
+class ChannelEmailSignatureEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -174,7 +174,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
-class App.ChannelEmailAccountOverview extends App.Controller
+class ChannelEmailAccountOverview extends App.Controller
   events:
     'click .js-channelNew': 'wizard'
     'click .js-channelDelete': 'delete'
@@ -248,7 +248,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   wizard: (e) =>
     e.preventDefault()
-    new App.ChannelEmailAccountWizard(
+    new ChannelEmailAccountWizard(
       container:     @el.closest('.content')
       callback:      @load
       channelDriver: @channelDriver
@@ -259,7 +259,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-inbound'
-    new App.ChannelEmailAccountWizard(
+    new ChannelEmailAccountWizard(
       container:     @el.closest('.content')
       slide:         slide
       channel:       channel
@@ -272,7 +272,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
-    new App.ChannelEmailAccountWizard(
+    new ChannelEmailAccountWizard(
       container:     @el.closest('.content')
       slide:         slide
       channel:       channel
@@ -328,7 +328,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
-    new App.ChannelEmailEdit(
+    new ChannelEmailEdit(
       container: @el.closest('.content')
       item: item
       callback: @load
@@ -374,7 +374,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
-    new App.ChannelEmailNotificationWizard(
+    new ChannelEmailNotificationWizard(
       container:     @el.closest('.content')
       channel:       channel
       callback:      @load
@@ -391,7 +391,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
     id = $(e.target).closest('.action').data('id')
     @navigate "#channels/microsoft365/#{id}"
 
-class App.ChannelEmailEdit extends App.ControllerModal
+
+class ChannelEmailEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -442,7 +443,7 @@ class App.ChannelEmailEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
-class App.ChannelEmailAccountWizard extends App.WizardModal
+class ChannelEmailAccountWizard extends App.ControllerWizardModal
   elements:
     '.modal-body': 'body'
   events:
@@ -896,7 +897,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     e.preventDefault()
     @el.modal('hide')
 
-class App.ChannelEmailNotificationWizard extends App.WizardModal
+class ChannelEmailNotificationWizard extends App.ControllerWizardModal
   elements:
     '.modal-body': 'body'
   events:
@@ -1030,4 +1031,4 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
         @enable(e)
     )
 
-App.Config.set('Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: App.ChannelEmail, permission: ['admin.channel_email'] }, 'NavBarAdmin')
+App.Config.set('Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: ChannelEmail, permission: ['admin.channel_email'] }, 'NavBarAdmin')

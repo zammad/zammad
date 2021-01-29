@@ -494,7 +494,6 @@ class App.UiElement.ticket_perform_action
     elementRow.find('.js-setArticle').empty()
 
     name = "#{attribute.name}::article.#{articleType}"
-    console.log('meta', meta)
     selection = App.UiElement.select.render(
       name: "#{name}::internal"
       multiple: false

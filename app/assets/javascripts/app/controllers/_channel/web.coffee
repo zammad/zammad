@@ -1,4 +1,4 @@
-class App.ChannelWeb extends App.ControllerTabs
+class ChannelWeb extends App.ControllerTabs
   requiredPermission: 'admin.channel_web'
   header: 'Web'
   constructor: ->
@@ -16,4 +16,4 @@ class App.ChannelWeb extends App.ControllerTabs
 
     @render()
 
-App.Config.set('Web', { prio: 1000, name: 'Web', parent: '#channels', target: '#channels/web', controller: App.ChannelWeb, permission: ['admin.channel_web'] }, 'NavBarAdmin')
+App.Config.set('Web', { prio: 1000, name: 'Web', parent: '#channels', target: '#channels/web', controller: ChannelWeb, permission: ['admin.channel_web'] }, 'NavBarAdmin')

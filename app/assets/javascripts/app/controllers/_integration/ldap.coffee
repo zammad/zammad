@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Ldap extends App.ControllerIntegrationBase
   featureIntegration: 'ldap_integration'
   featureName: 'LDAP'
   featureConfig: 'ldap_config'
@@ -71,6 +71,7 @@ class Form extends App.Controller
     group_role_map = {}
     for source, dests of @config.group_role_map
       group_role_map[source] = dests.map((dest) ->
+        return '?' if !App.Role.exists(dest)
         App.Role.find(dest).displayName()
       ).join ', '
 
@@ -135,8 +136,9 @@ class Form extends App.Controller
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
-      role = App.Role.find(role_id)
-      job.result.roles[role.displayName()] = statistic
+      if App.Role.exists(role_id)
+        role = App.Role.find(role_id)
+        job.result.roles[role.displayName()] = statistic
     el = $(App.view('integration/ldap_last_import')(job: job))
     @lastImport.html(el)
 
@@ -167,9 +169,7 @@ class State
   @current: ->
     App.Setting.get('ldap_integration')
 
-class ConnectionWizard extends App.WizardModal
-  className: 'modal fade modal--large'
-
+class ConnectionWizard extends App.ControllerWizardModal
   wizardConfig: {}
   slideMethod:
     'js-bind': 'bindShow'
@@ -562,8 +562,9 @@ class ConnectionWizard extends App.WizardModal
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
-      role = App.Role.find(role_id)
-      job.result.roles[role.displayName()] = statistic
+      if App.Role.find(role_id)
+        role = App.Role.find(role_id)
+        job.result.roles[role.displayName()] = statistic
     @showSlide('js-try')
     el = $(App.view('integration/ldap_summary')(job: job))
     @el.find('.js-summary').html(el)
@@ -574,7 +575,7 @@ App.Config.set(
     name: 'LDAP'
     target: '#system/integration/ldap'
     description: 'LDAP integration for user management.'
-    controller: Index
+    controller: Ldap
     state: State
     permission: ['admin.integration.ldap']
   }

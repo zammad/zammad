@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ChannelTwitter extends App.ControllerSubContent
   requiredPermission: 'admin.channel_twitter'
   events:
     'click .js-new':       'new'
@@ -299,4 +299,4 @@ class AccountEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
-App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')
+App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

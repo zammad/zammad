@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Job extends App.ControllerSubContent
   requiredPermission: 'admin.scheduler'
   header: 'Scheduler'
   constructor: ->
@@ -35,4 +35,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Index, permission: ['admin.scheduler'] }, 'NavBarAdmin')
+App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Job, permission: ['admin.scheduler'] }, 'NavBarAdmin')

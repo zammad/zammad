@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Clearbit extends App.ControllerIntegrationBase
   featureIntegration: 'clearbit_integration'
   featureName: 'Clearbit'
   featureConfig: 'clearbit_config'
@@ -155,7 +155,7 @@ App.Config.set(
     name: 'Clearbit'
     target: '#system/integration/clearbit'
     description: 'A powerful service to get more information about your customers.'
-    controller: Index
+    controller: Clearbit
     state: State
     permission: ['admin.integration.clearbit']
   }

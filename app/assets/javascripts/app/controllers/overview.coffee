@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Overview extends App.ControllerSubContent
   requiredPermission: 'admin.overview'
   header: 'Overviews'
   constructor: ->
@@ -46,4 +46,4 @@ class Index extends App.ControllerSubContent
         )
     )
 
-App.Config.set('Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, permission: ['admin.overview'] }, 'NavBarAdmin')
+App.Config.set('Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Overview, permission: ['admin.overview'] }, 'NavBarAdmin')

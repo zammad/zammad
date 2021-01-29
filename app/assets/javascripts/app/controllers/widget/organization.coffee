@@ -71,7 +71,7 @@ class App.WidgetOrganization extends App.Controller
       org.updateAttributes(data)
       @log 'notice', 'update', name, value, org
 
-class User extends App.ObserverController
+class User extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'User'
 

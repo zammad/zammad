@@ -99,11 +99,9 @@ class Certificate extends App.ControllerModal
       cache:       false
       data:        params
       success:     (data, status, xhr) =>
-        console.log('success')
         @close()
         @callback()
       error: (data) =>
-        console.log('error')
         @close()
         details = data.responseJSON || {}
         @notify

@@ -1,4 +1,4 @@
-class App.ChannelSms extends App.ControllerTabs
+class ChannelSms extends App.ControllerTabs
   requiredPermission: 'admin.channel_sms'
   header: 'SMS'
   constructor: ->
@@ -9,13 +9,13 @@ class App.ChannelSms extends App.ControllerTabs
       {
         name:       'Accounts',
         target:     'c-account',
-        controller: App.ChannelSmsAccountOverview,
+        controller: ChannelSmsAccountOverview,
       },
     ]
 
     @render()
 
-class App.ChannelSmsAccountOverview extends App.Controller
+class ChannelSmsAccountOverview extends App.Controller
   events:
     'click .js-channelEdit': 'change'
     'click .js-channelDelete': 'delete'
@@ -76,7 +76,7 @@ class App.ChannelSmsAccountOverview extends App.Controller
       channel = new App.Channel(active: true)
     else
       channel = App.Channel.find(id)
-    new App.ChannelSmsAccount(
+    new ChannelSmsAccount(
       container:     @el.closest('.content')
       channel:       channel
       callback:      @load
@@ -127,7 +127,7 @@ class App.ChannelSmsAccountOverview extends App.Controller
     e.preventDefault()
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
-    new App.ChannelSmsNotification(
+    new ChannelSmsNotification(
       container:     @el.closest('.content')
       channel:       channel
       callback:      @load
@@ -135,7 +135,7 @@ class App.ChannelSmsAccountOverview extends App.Controller
       config:        @config
     )
 
-class App.ChannelSmsAccount extends App.ControllerModal
+class ChannelSmsAccount extends App.ControllerModal
   head: 'SMS Account'
   buttonCancel: true
   centerButtons: [
@@ -272,7 +272,7 @@ class App.ChannelSmsAccount extends App.ControllerModal
       container: @el.closest('.content')
     )
 
-class App.ChannelSmsNotification extends App.ControllerModal
+class ChannelSmsNotification extends App.ControllerModal
   head: 'SMS Notification'
   buttonCancel: true
   centerButtons: [
@@ -439,4 +439,4 @@ class TestModal extends App.ControllerModal
           .removeClass('hide')
     )
 
-App.Config.set('SMS', { prio: 3100, name: 'SMS', parent: '#channels', target: '#channels/sms', controller: App.ChannelSms, permission: ['admin.channel_sms'] }, 'NavBarAdmin')
+App.Config.set('SMS', { prio: 3100, name: 'SMS', parent: '#channels', target: '#channels/sms', controller: ChannelSms, permission: ['admin.channel_sms'] }, 'NavBarAdmin')

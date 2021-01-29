@@ -6,7 +6,7 @@
 <div class="page-content">
   <p><%- @T('Change your language.') %></p>
   <form class="settings-entry horizontal end">
-    <div class="form-item language_item flex"></div>
+    <div class="form-item js-language flex"></div>
     <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
   </form>
 </div>

@@ -1,4 +1,4 @@
-class App.WidgetAvatar extends App.ObserverController
+class App.WidgetAvatar extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'User'
 

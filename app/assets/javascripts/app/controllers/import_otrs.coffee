@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class ImportOtrs extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
     '.input-feedback':     'urlStatus'
@@ -38,7 +38,7 @@ class Index extends App.ControllerContent
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'otrs'
-          @navigate "#import/#{data.import_backend}"
+          @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
         # render page
@@ -50,7 +50,7 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-    @html App.view('import/otrs')()
+    @replaceWith App.view('import/otrs')()
 
   startDownload: (e) =>
     @$('.js-otrs-link').removeClass('hide')
@@ -170,7 +170,7 @@ class Index extends App.ControllerContent
         @delay(@updateMigration, 6500)
     )
 
-App.Config.set('import/otrs', Index, 'Routes')
+App.Config.set('import/otrs', ImportOtrs, 'Routes')
 App.Config.set('otrs', {
   title: 'OTRS'
   name:  'OTRS'

@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfileLinkedAccounts extends App.ControllerSubContent
   requiredPermission: 'user_preferences.linked_accounts'
   header: 'Linked Accounts'
   events:
@@ -59,7 +59,7 @@ class Index extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
+App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: ProfileLinkedAccounts, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
 App.Config.set('auth_provider_all', {
   facebook:
     url:    '/auth/facebook'

@@ -74,7 +74,7 @@ class App.UserProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverActionRow
+class ActionRow extends App.ControllerObserverActionRow
   model: 'User'
   observe:
     verified: true
@@ -159,7 +159,7 @@ class ActionRow extends App.ObserverActionRow
 
     actions
 
-class Object extends App.ObserverController
+class Object extends App.ControllerObserver
   model: 'User'
   observeNot:
     cid: true
@@ -221,7 +221,7 @@ class Object extends App.ObserverController
       user.updateAttributes(data)
       @log 'debug', 'update', name, value, user
 
-class Organization extends App.ObserverController
+class Organization extends App.ControllerObserver
   model: 'Organization'
   observe:
     name: true
@@ -231,7 +231,7 @@ class Organization extends App.ObserverController
       organization: organization
     )
 
-class User extends App.ObserverController
+class User extends App.ControllerObserver
   model: 'User'
   observe:
     firstname: true

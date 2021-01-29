@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Macro extends App.ControllerSubContent
   requiredPermission: 'admin.macro'
   header: 'Macros'
   constructor: ->
@@ -34,4 +34,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Macros', { prio: 2310, name: 'Macros', parent: '#manage', target: '#manage/macros', controller: Index, permission: ['admin.macro'] }, 'NavBarAdmin')
+App.Config.set('Macros', { prio: 2310, name: 'Macros', parent: '#manage', target: '#manage/macros', controller: Macro, permission: ['admin.macro'] }, 'NavBarAdmin')

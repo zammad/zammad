@@ -21,11 +21,11 @@ class App.TicketZoomAttributeBar extends App.Controller
     @render()
 
     # rerender, e. g. on language change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
     )
 
-    @bind('MacroPreconditionUpdate', (data) =>
+    @controllerBind('MacroPreconditionUpdate', (data) =>
       return if data.taskKey isnt @taskKey
       @searchCondition = data.params
       @render()

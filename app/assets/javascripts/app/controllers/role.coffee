@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Role extends App.ControllerSubContent
   requiredPermission: 'admin.role'
   header: 'Roles'
   constructor: ->
@@ -34,4 +34,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Role', { prio: 1600, name: 'Roles', parent: '#manage', target: '#manage/roles', controller: Index, permission: ['admin.role'] }, 'NavBarAdmin')
+App.Config.set('Role', { prio: 1600, name: 'Roles', parent: '#manage', target: '#manage/roles', controller: Role, permission: ['admin.role'] }, 'NavBarAdmin')

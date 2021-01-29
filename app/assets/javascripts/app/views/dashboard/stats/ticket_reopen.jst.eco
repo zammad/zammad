@@ -12,4 +12,6 @@
     <div class="stat-label"><%- @T('%s% have been reopened', @StatsTicketReopen.percent) %></div>
     <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketReopen.average_per_agent) %></div>
   </div>
+  <div class="stat-label"><%- @T('%s% have been reopened', @StatsTicketReopen.percent) %></div>
+  <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketReopen.average_per_agent) %></div>
 </div>

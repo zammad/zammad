@@ -12,4 +12,6 @@
     <div class="stat-label" title="<%- @T('%s of your tickets are currently in process.', @StatsTicketInProcess.in_process) %>"><%- @T('%s% are currently in process', @StatsTicketInProcess.percent) %></div>
     <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketInProcess.average_per_agent) %></div>
   </div>
+  <div class="stat-label" title="<%- @Ti('%s of your tickets are currently in process.', @StatsTicketInProcess.in_process) %>"><%- @T('%s% are currently in process', @StatsTicketInProcess.percent) %></div>
+  <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketInProcess.average_per_agent) %></div>
 </div>

@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class CheckMk extends App.ControllerIntegrationBase
   featureIntegration: 'check_mk_integration'
   featureName: 'Checkmk'
   featureConfig: 'check_mk_config'
@@ -55,7 +55,7 @@ App.Config.set(
     name: 'Checkmk'
     target: '#system/integration/check_mk'
     description: 'An open source monitoring tool.'
-    controller: Index
+    controller: CheckMk
     state: State
     permission: ['admin.integration.check_mk']
   }

@@ -1,4 +1,4 @@
-class App.TicketZoomSidebar extends App.ObserverController
+class App.TicketZoomSidebar extends App.ControllerObserver
   model: 'Ticket'
   observe:
     customer_id: true

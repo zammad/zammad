@@ -32,7 +32,7 @@ class App.Search extends App.Controller
     @render()
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
     )
 

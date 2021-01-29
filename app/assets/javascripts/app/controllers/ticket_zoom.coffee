@@ -43,7 +43,7 @@ class App.TicketZoom extends App.Controller
     @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
-    @bind('Ticket:update Ticket:touch', (data) =>
+    @controllerBind('Ticket:update Ticket:touch', (data) =>
 
       # check if current ticket has changed
       return if data.id.toString() isnt @ticket_id.toString()
@@ -54,7 +54,7 @@ class App.TicketZoom extends App.Controller
     )
 
     # after a new websocket connection, check if ticket has changed
-    @bind('spool:sent', =>
+    @controllerBind('spool:sent', =>
       if @initSpoolSent
         @fetch(true)
         return
@@ -62,7 +62,7 @@ class App.TicketZoom extends App.Controller
     )
 
     # listen to rerender sidebars
-    @bind('ui::ticket::sidebarRerender', (data) =>
+    @controllerBind('ui::ticket::sidebarRerender', (data) =>
       return if data.taskKey isnt @taskKey
       return if !@sidebarWidget
       @sidebarWidget.render(@formCurrent())

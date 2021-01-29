@@ -1,4 +1,4 @@
-class App.ChannelChat extends App.ControllerSubContent
+class ChannelChat extends App.ControllerSubContent
   requiredPermission: 'admin.channel_chat'
   header: 'Chat'
   events:
@@ -353,7 +353,7 @@ class App.ChannelChat extends App.ControllerSubContent
     @code.each (i, block) ->
       hljs.highlightBlock block
 
-App.Config.set('Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
+App.Config.set('Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
 
 class Topics extends App.Controller
   events:

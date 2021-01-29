@@ -1,10 +1,10 @@
 class App.DashboardStats extends App.Controller
   constructor: ->
     super
-    @load()
-    @bind('dashboard_stats_rebuild', @load)
+    @setupStatsWidgets()
+    @controllerBind('dashboard_stats_rebuild', @setupStatsWidgets)
 
-  load: =>
+  setupStatsWidgets: =>
     @setupStatsWidget('Stats', 'stats', @el)
 
   setupStatsWidget: (config, event, el) ->
@@ -20,11 +20,11 @@ class App.DashboardStats extends App.Controller
         if @permissionCheck(widget.permission)
           try
             new widget.controller(
-              el:  el
+              parentEl: @el
+              className: widget.className
             )
             @$('.js-stat-help').tooltip()
           catch e
             @log 'error', "statsWidgets #{widget}:", e
-
 
     App.Event.trigger(event + ':ready')

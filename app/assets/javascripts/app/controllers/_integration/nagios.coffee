@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Nagios extends App.ControllerIntegrationBase
   featureIntegration: 'nagios_integration'
   featureName: 'Nagios'
   featureConfig: 'nagios_config'
@@ -24,7 +24,7 @@ App.Config.set(
     name: 'Nagios'
     target: '#system/integration/nagios'
     description: 'An open source monitoring tool.'
-    controller: Index
+    controller: Nagios
     state: State
   }
   'NavBarIntegrations'

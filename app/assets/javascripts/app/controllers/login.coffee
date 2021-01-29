@@ -1,6 +1,7 @@
-class Index extends App.ControllerContent
+class Login extends App.ControllerFullPage
   events:
     'submit #login': 'login'
+  className: 'login'
 
   constructor: ->
     super
@@ -15,14 +16,12 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
-    @navHide()
-
     @title 'Sign in'
     @render()
     @navupdate '#login'
 
     # observe config changes related to login page
-    @bind('config_update_local', (data) =>
+    @controllerBind('config_update_local', (data) =>
       return if !data.name.match(/^maintenance/) &&
         !data.name.match(/^auth/) &&
         data.name != 'user_lost_password' &&
@@ -33,7 +32,7 @@ class Index extends App.ControllerContent
       @render()
       'rerender'
     )
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
     )
 
@@ -44,7 +43,7 @@ class Index extends App.ControllerContent
       if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
         auth_providers.push provider
 
-    @html App.view('login')(
+    @replaceWith App.view('login')(
       item:           data
       logoUrl:        @logoUrl()
       auth_providers: auth_providers
@@ -77,6 +76,7 @@ class Index extends App.ControllerContent
     )
 
   success: (data, status, xhr) =>
+    App.Plugin.init()
 
     # redirect to #
     requested_url = @Config.get('requested_url')
@@ -110,4 +110,4 @@ class Index extends App.ControllerContent
       600
     )
 
-App.Config.set('login', Index, 'Routes')
+App.Config.set('login', Login, 'Routes')

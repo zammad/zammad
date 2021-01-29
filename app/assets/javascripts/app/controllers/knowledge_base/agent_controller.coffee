@@ -9,7 +9,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
   constructor: (params) ->
     super
-    @bind 'config_update_local', (data) => @configUpdated(data)
+    @controllerBind('config_update_local', (data) => @configUpdated(data))
 
     if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
       @updateNavMenu()
@@ -36,7 +36,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
     @fetchAndRender()
 
-    @bind('ui:rerender',
+    @controllerBind('ui:rerender',
       =>
         @render(true)
         @contentController?.url = null
@@ -44,13 +44,13 @@ class App.KnowledgeBaseAgentController extends App.Controller
         @show(@lastParams)
     )
 
-    @bind 'kb_data_changed', (pushed_data) =>
+    @controllerBind('kb_data_changed', (pushed_data) =>
       key = "kb_pull_#{pushed_data.class}_#{pushed_data.id}"
 
       App.Delay.set( =>
         @loadChange(pushed_data)
       , 1000, key, 'kb_data_changed_loading')
-
+    )
     @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
       return if !@displayingError
 
@@ -139,7 +139,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
       return
 
     if @loaded && @rendered && @lastParams && !params.knowledge_base_id && @contentController && @kb_locale()?
-      @navigate @lastParams.match[0] , true
+      @navigate @lastParams.match[0] , { hideCurrentLocationFromHistory: true }
       return
 
     if @contentController && @contentController.url is params.match[0]
@@ -162,7 +162,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
         @renderControllers(params)
       else
         if (kb = App.KnowledgeBase.all()[0])
-          @navigate kb.uiUrl(App.KnowledgeBaseLocale.detect(kb)), true
+          @navigate kb.uiUrl(App.KnowledgeBaseLocale.detect(kb)), { hideCurrentLocationFromHistory: true }
         else
           @renderScreenErrorInContent('No Knowledge Base created')
     else

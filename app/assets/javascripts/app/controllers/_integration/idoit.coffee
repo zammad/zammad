@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Idoit extends App.ControllerIntegrationBase
   featureIntegration: 'idoit_integration'
   featureName: 'i-doit'
   featureConfig: 'idoit_config'
@@ -58,7 +58,7 @@ class Form extends App.Controller
       )
       success: (data, status, xhr) =>
         if data.result is 'failed'
-          new App.ControllerErrorModal(
+          new App.ErrorModal(
             message: data.message
             container: @el.closest('.content')
           )
@@ -87,7 +87,7 @@ App.Config.set(
     name: 'i-doit'
     target: '#system/integration/idoit'
     description: 'CMDB to document complex relations of your network components.'
-    controller: Index
+    controller: Idoit
     state: State
   }
   'NavBarIntegrations'

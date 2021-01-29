@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Placetel extends App.ControllerIntegrationBase
   featureIntegration: 'placetel_integration'
   featureName: 'Placetel'
   featureConfig: 'placetel_config'
@@ -188,7 +188,7 @@ App.Config.set(
     name: 'Placetel'
     target: '#system/integration/placetel'
     description: 'VoIP service provider with realtime push.'
-    controller: Index
+    controller: Placetel
     state: State
   }
   'NavBarIntegrations'

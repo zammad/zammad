@@ -77,9 +77,9 @@ class App.TicketOverview extends App.Controller
     @render()
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @renderBatchOverlay()
-
+    )
     load = (data) =>
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
@@ -134,7 +134,7 @@ class App.TicketOverview extends App.Controller
 
         @renderOptions()
 
-        $('#app').append @batchDragger
+        @appEl.append(@batchDragger)
 
         @draggedItems.each (i, item) ->
           dx = $(item).data('offset').left - $(item).offset().left - x
@@ -592,17 +592,20 @@ class App.TicketOverview extends App.Controller
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
 
+    @navBarControllerVertical.releaseController() if @navBarControllerVertical
     @navBarControllerVertical = new Navbar(
       el:       elLocal.find('.overview-header')
       view:     @view
       vertical: true
     )
 
+    @navBarController.releaseController() if @navBarController
     @navBarController = new Navbar(
       el:   elLocal.filter('.sidebar')
       view: @view
     )
 
+    @contentController.releaseController() if @contentController
     @contentController = new Table(
       el:          elLocal.find('.overview-table')
       view:        @view
@@ -614,14 +617,14 @@ class App.TicketOverview extends App.Controller
 
     @html elLocal
 
-    @el.find('.main').on('click', =>
+    @$('.main').on('click', =>
       @activeFocus = 'overview'
     )
-    @el.find('.sidebar').on('click', =>
+    @$('.sidebar').on('click', =>
       @activeFocus = 'nav'
     )
 
-    @bind('overview:fetch', =>
+    @controllerBind('overview:fetch', =>
       return if !@view
       update = =>
         App.OverviewListCollection.fetch(@view)
@@ -692,7 +695,7 @@ class App.TicketOverview extends App.Controller
     # redirect to last overview if we got called in first level
     @view = params['view']
     if !@view && @viewLast
-      @navigate "ticket/view/#{@viewLast}", true
+      @navigate "ticket/view/#{@viewLast}", { hideCurrentLocationFromHistory: true }
       return
 
     # build nav bar
@@ -718,6 +721,7 @@ class App.TicketOverview extends App.Controller
     @viewLast = @view
 
     # build content
+    @contentController.releaseController() if @contentController
     @contentController = new Table(
       el:          @$('.overview-table')
       view:        @view
@@ -860,9 +864,9 @@ class Navbar extends App.Controller
     @bindId = App.OverviewIndexCollection.bind(@render)
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render(App.OverviewIndexCollection.get())
-
+    )
     if @vertical
       $(window).on 'resize.navbar', @autoFoldTabs
 
@@ -946,7 +950,7 @@ class Navbar extends App.Controller
     # redirect to first view
     if @activeState && !@view && !@vertical
       view = data[0].link
-      @navigate "ticket/view/#{view}", true
+      @navigate "ticket/view/#{view}", { hideCurrentLocationFromHistory: true }
       return
 
     # add new views
@@ -979,10 +983,11 @@ class Table extends App.Controller
       @bindId = App.OverviewListCollection.bind(@view, @updateTable)
 
     # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       return if !@authenticateCheck()
       return if !@view
       @render(App.OverviewListCollection.get(@view))
+    )
 
   show: =>
     if @table
@@ -1333,6 +1338,7 @@ class Table extends App.Controller
   settings: (e) =>
     e.preventDefault()
     @keyboardOff()
+
     new App.OverviewSettings(
       overview_id:     @overview.id
       view_mode:       @view_mode
@@ -1495,10 +1501,10 @@ class BulkForm extends App.Controller
     @bulkCount = @holder.find('.table-overview').find('[name="bulk"]:checked').length
 
     if @bulkCount is 0
-      App.Event.trigger 'notify', {
+      App.Event.trigger('notify', {
         type: 'error'
         msg: App.i18n.translateContent('At least one object must be selected.')
-      }
+      })
       return
 
     ticket_ids = []
@@ -1535,10 +1541,10 @@ class BulkForm extends App.Controller
           screen: 'edit'
         )
 
-        App.Event.trigger 'notify', {
+        App.Event.trigger('notify', {
           type: 'error'
           msg: App.i18n.translateContent('Bulk action stopped %s!', errorString)
-        }
+        })
         @cancel()
         return
 
@@ -1580,10 +1586,10 @@ class BulkForm extends App.Controller
       @saveTicketArticle(ticket, article)
 
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
-    App.Event.trigger 'notify', {
+    App.Event.trigger('notify', {
       type: 'success'
       msg: App.i18n.translateContent('Bulk action executed!')
-    }
+    })
 
   saveTicketArticle: (ticket, article) =>
     ticket.save(
@@ -1749,6 +1755,7 @@ class TicketOverviewRouter extends App.ControllerPermanent
     # cleanup params
     clean_params =
       view: params.view
+      appEl: params.appEl
 
     App.TaskManager.execute(
       key:        'TicketOverview'

@@ -1,11 +1,11 @@
 <div class="fullHeight vertical center justified reset_password fit">
   <div class="hero-unit">
-    <h2><%- @T( 'Choose your new password.' ) %><small></small></h2>
-    <form>
-      <div class="form-password-change"></div>
+    <h2><%- @T('Choose your new password.') %></h2>
+    <form class="js-passwordForm">
+      <div class="js-password"></div>
       <div class="form-controls">
-        <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-        <button class="btn btn--primary js-submit align-right"><%- @T( 'Submit' ) %></button>
+        <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
+        <button class="btn btn--primary js-submit align-right"><%- @T('Submit') %></button>
       </div>
     </form>
   </div>

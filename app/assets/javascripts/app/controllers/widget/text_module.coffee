@@ -19,7 +19,7 @@ class App.WidgetTextModule extends App.Controller
 
     @subscribeId = App.TextModule.subscribe(@update, initFetch: true)
 
-    @bind('TextModulePreconditionUpdate', (data) =>
+    @controllerBind('TextModulePreconditionUpdate', (data) =>
       return if data.taskKey isnt @taskKey
       @searchCondition = data.params
       @update()

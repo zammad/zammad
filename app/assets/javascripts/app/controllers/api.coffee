@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Api extends App.ControllerSubContent
   requiredPermission: 'admin.api'
   header: 'API'
   events:
@@ -193,4 +193,4 @@ class ViewAppTokenModal extends App.ControllerModal
         @$('.js-submit').remove()
     )
 
-App.Config.set('API', { prio: 1200, name: 'API', parent: '#system', target: '#system/api', controller: Index, permission: ['admin.api'] }, 'NavBarAdmin')
+App.Config.set('API', { prio: 1200, name: 'API', parent: '#system', target: '#system/api', controller: Api, permission: ['admin.api'] }, 'NavBarAdmin')

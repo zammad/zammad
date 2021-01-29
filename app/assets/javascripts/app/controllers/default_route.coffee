@@ -9,19 +9,19 @@ class DefaultRouter extends App.Controller
 
     # check if import is active
     if !@Config.get('system_init_done') && @Config.get('import_mode')
-      @navigate '#import', true
+      @navigate '#import', { hideCurrentLocationFromHistory: true }
       return
 
     # route to getting started screen
     if !@Config.get('system_init_done')
-      @navigate '#getting_started', true
+      @navigate '#getting_started', { hideCurrentLocationFromHistory: true }
       return
 
     if @Config.get('default_controller')
-      @navigate @Config.get('default_controller'), true
+      @navigate @Config.get('default_controller'), { hideCurrentLocationFromHistory: true }
       return
 
-    @navigate '#dashboard', true
+    @navigate '#dashboard', { hideCurrentLocationFromHistory: true }
 
 App.Config.set('', DefaultRouter, 'Routes')
 App.Config.set('/', DefaultRouter, 'Routes')

@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Tag extends App.ControllerSubContent
   requiredPermission: 'admin.tag'
   header: 'Tags'
   events:
@@ -149,4 +149,4 @@ class DestroyConfirm extends App.ControllerModal
         @close()
     )
 
-App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Index, permission: ['admin.tag'] }, 'NavBarAdmin')
+App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')

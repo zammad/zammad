@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfileAvatar extends App.ControllerSubContent
   requiredPermission: 'user_preferences.avatar'
   header: 'Avatar'
   elements:
@@ -145,7 +145,7 @@ class Index extends App.ControllerSubContent
 
       reader.readAsDataURL(@)
 
-App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
+App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: ProfileAvatar, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal
   buttonClose: true

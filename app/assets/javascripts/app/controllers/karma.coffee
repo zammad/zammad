@@ -1,4 +1,4 @@
-class KarmaContent extends App.ControllerContent
+class KarmaContent extends App.Controller
   constructor: ->
     new Karma()
 
@@ -15,7 +15,7 @@ class Karma extends App.ControllerModal
     @load()
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @update()
       'karma'
     )

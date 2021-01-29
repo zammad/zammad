@@ -218,7 +218,6 @@ class App.TicketZoomHighlighter extends App.Controller
     article.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
     if @highlighter.selectionOverlapsHighlight selection
-      console.log('SELECTION EXISTS, REMOVED IT')
       @highlighter.unhighlightSelection()
       selection.removeAllRanges()
       @highlightDisable()
@@ -226,7 +225,6 @@ class App.TicketZoomHighlighter extends App.Controller
       return
 
     if selection && selection.rangeCount > 0
-      console.log('NEW SELECTION', selection)
       @highlighter.highlightSelection @highlightClass,
         selection: selection
         containerElementId: article.get(0).id

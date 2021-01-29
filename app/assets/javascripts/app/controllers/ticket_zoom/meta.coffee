@@ -1,4 +1,4 @@
-class App.TicketZoomMeta extends App.ObserverController
+class App.TicketZoomMeta extends App.ControllerObserver
   model: 'Ticket'
   observe:
     number: true

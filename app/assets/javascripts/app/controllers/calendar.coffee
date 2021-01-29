@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Calendar extends App.ControllerSubContent
   requiredPermission: 'admin.calendar'
   header: 'Calendars'
   events:
@@ -121,4 +121,4 @@ class Index extends App.ControllerSubContent
       container:   @el.closest('.content')
     )
 
-App.Config.set('Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, permission: ['admin.calendar'] }, 'NavBarAdmin')
+App.Config.set('Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Calendar, permission: ['admin.calendar'] }, 'NavBarAdmin')

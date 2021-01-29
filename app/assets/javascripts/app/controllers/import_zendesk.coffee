@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class ImportZendesk extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
     '.input-feedback':                       'urlStatus'
@@ -44,7 +44,7 @@ class Index extends App.ControllerContent
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'zendesk'
-          @navigate "#import/#{data.import_backend}"
+          @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
         # render page
@@ -56,7 +56,7 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-    @html App.view('import/zendesk')()
+    @replaceWith App.view('import/zendesk')()
 
   updateUrl: (e) =>
     @urlStatus.attr('data-state', 'loading')
@@ -189,7 +189,7 @@ class Index extends App.ControllerContent
         @delay(@updateMigration, 5000)
     )
 
-App.Config.set('import/zendesk', Index, 'Routes')
+App.Config.set('import/zendesk', ImportZendesk, 'Routes')
 App.Config.set('zendesk', {
   title: 'Zendesk'
   name:  'Zendesk'

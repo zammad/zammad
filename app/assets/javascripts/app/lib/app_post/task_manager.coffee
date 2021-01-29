@@ -8,6 +8,7 @@ class App.TaskManager
     _instance ?= new _taskManagerSingleton(params)
 
   @all: ->
+    return [] if !_instance
     _instance.all()
 
   @allWithMeta: ->
@@ -112,7 +113,7 @@ class _taskManagerSingleton extends App.Controller
     @offlineModus = params.offlineModus
     @tasksInitial()
 
-    @bind('taskbar:preferences', (data) =>
+    @controllerBind('taskbar:preferences', (data) =>
       @tasksPreferences[data.key] = data.preferences
       @preferencesTrigger(data.key)
     )
@@ -275,7 +276,7 @@ class _taskManagerSingleton extends App.Controller
 
     # empty static content if task is shown
     if params.show
-      @$('#content').empty()
+      @$('#content').remove()
 
     # set all tasks to active false, only new/selected one to active
     if params.show
@@ -311,7 +312,7 @@ class _taskManagerSingleton extends App.Controller
       el = $("<div id=\"#{domKey}\" class=\"content horizontal flex\"></div>")
       @domStore[domKey] = { el: el }
     params_app['el'] = el
-    params_app['task_key'] = params.key
+    params_app['appEl'] = @el
     params_app['taskKey'] = params.key
     if !params.show
       params_app['doNotLog'] = 1

@@ -42,7 +42,7 @@ class App.CustomerChat extends App.Controller
     @on('layout-has-changed', @propagateLayoutChange)
 
     # update navbar on new status
-    @bind('chat_status_agent', (data) =>
+    @controllerBind('chat_status_agent', (data) =>
       if data.assets
         App.Collection.loadAssets(data.assets)
       @meta = data
@@ -52,19 +52,19 @@ class App.CustomerChat extends App.Controller
     )
 
     # add new chat window
-    @bind('chat_session_start', (data) =>
+    @controllerBind('chat_session_start', (data) =>
       if data.session
         @addChat(data.session)
     )
 
     # on new login or on
-    @bind('ws:login chat_agent_state', ->
+    @controllerBind('ws:login chat_agent_state', ->
       App.WebSocket.send(event:'chat_status_agent')
     )
     App.WebSocket.send(event:'chat_status_agent')
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender chat:rerender', =>
+    @controllerBind('ui:rerender chat:rerender', =>
       return if !@authenticateCheck()
       for session_id, chat of @chatWindows
         chat.el.remove()
@@ -122,8 +122,8 @@ class App.CustomerChat extends App.Controller
 
 
   show: (params) =>
-    @title 'Customer Chat', true
-    @navupdate '#customer_chat'
+    @title('Customer Chat', true)
+    @navupdate('#customer_chat')
 
     if params.session_id
       callback = (session) =>
@@ -433,34 +433,34 @@ class ChatWindow extends App.Controller
 
     @on('layout-change', @onLayoutChange)
 
-    @bind('chat_session_typing', (data) =>
+    @controllerBind('chat_session_typing', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @showWritingLoader()
     )
-    @bind('chat_session_message', (data) =>
+    @controllerBind('chat_session_message', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @receiveMessage(data.message.content)
     )
-    @bind('chat_session_notice', (data) =>
+    @controllerBind('chat_session_notice', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @addNoticeMessage(data.message)
     )
-    @bind('chat_session_left', (data) =>
+    @controllerBind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @addStatusMessage("<strong>#{data.realname}</strong> left the conversation")
       @goOffline()
     )
-    @bind('chat_session_closed', (data) =>
+    @controllerBind('chat_session_closed', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @addStatusMessage("<strong>#{data.realname}</strong> closed the conversation")
       @goOffline()
     )
-    @bind('chat_focus', (data) =>
+    @controllerBind('chat_focus', (data) =>
       return if data.session_id isnt @session.session_id
       @focus()
     )
@@ -572,7 +572,7 @@ class ChatWindow extends App.Controller
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
     # of sibling chat windows
-    @trigger 'layout-has-changed'
+    @trigger('layout-has-changed')
 
     if event.data and event.data.callback
       event.data.callback()
@@ -601,7 +601,7 @@ class ChatWindow extends App.Controller
       @removeCallback(@session.session_id)
 
   release: =>
-    @trigger 'closed'
+    @trigger('closed')
     @el.remove()
     super
 

@@ -15,9 +15,10 @@ class App.Dashboard extends App.Controller
     @render()
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       return if !@authenticateCheck()
       @render()
+    )
 
     @mayBeClues()
 
@@ -71,12 +72,12 @@ class App.Dashboard extends App.Controller
 
     # incase of being only customer, redirect to default router
     if @permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent')
-      @navigate '#ticket/view', true
+      @navigate '#ticket/view', { hideCurrentLocationFromHistory: true }
       return
 
     # incase of being only admin, redirect to admin interface (show no empty white content page)
     if !@permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent') && @permissionCheck('admin')
-      @navigate '#manage', true
+      @navigate '#manage', { hideCurrentLocationFromHistory: true }
       return
 
     # set title

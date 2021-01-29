@@ -46,7 +46,7 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css:   '.language_item [name="locale"]',
+      css:   '.js-language [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
@@ -159,7 +159,7 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css:   '.language_item [name="locale"]',
+      css:   '.js-language [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')
@@ -275,7 +275,7 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile/language"]')
     sleep 4
     select(
-      css:   '.language_item [name="locale"]',
+      css:   '.js-language [name="locale"]',
       value: 'Deutsch',
     )
     click(css: '.content.active button[type="submit"]')
@@ -320,7 +320,7 @@ class PreferencesLanguageTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/language"]')
     select(
-      css:   '.language_item [name="locale"]',
+      css:   '.js-language [name="locale"]',
       value: 'English (United States)',
     )
     click(css: '.content.active button[type="submit"]')

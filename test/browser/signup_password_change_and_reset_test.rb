@@ -32,12 +32,20 @@ class SignupPasswordChangeAndResetTest < TestCase
     click(css: 'button.js-submit')
 
     watch_for(
-      css:   '#content',
+      css:   '.signup',
       value: 'Registration successful!',
     )
 
     # auto login via token trick in dev mode
     click(css: '.signup .js-submitResend')
+
+    watch_for(
+      css: '#login',
+    )
+    login(
+      username: signup_user_email,
+      password: 'SOme-pass1',
+    )
 
     watch_for(
       css:   '.content.active',
@@ -166,19 +174,19 @@ class SignupPasswordChangeAndResetTest < TestCase
       css:   'input[name="username"]',
       value: 'nonexisiting',
     )
-    click(css: '.content .btn--primary')
+    click(css: '.reset_password .btn--primary')
     watch_for(
       css:   'body',
       value: 'sent password reset instructions',
     )
 
-    click(css: '.content .btn--primary')
+    click(css: '.reset_password .btn--primary')
 
     set(
       css:   'input[name="username"]',
       value: signup_user_email,
     )
-    click(css: '.content .btn--primary')
+    click(css: '.reset_password .btn--primary')
     watch_for(
       css:   'body',
       value: 'sent password reset instructions',
@@ -199,7 +207,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css:   'input[name="password_confirm"]',
       value: 'some2',
     )
-    click(css: '.content .btn--primary')
+    click(css: '.js-passwordForm .js-submit')
     watch_for(
       css:   'body',
       value: 'passwords do not match',
@@ -213,7 +221,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css:   'input[name="password_confirm"]',
       value: 'SOme-1',
     )
-    click(css: '.content .btn--primary')
+    click(css: '.js-passwordForm .js-submit')
     watch_for(
       css:   'body',
       value: 'it must be at least',
@@ -227,7 +235,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css:   'input[name="password_confirm"]',
       value: 'SOme-pass-new',
     )
-    click(css: '.content .btn--primary')
+    click(css: '.js-passwordForm .js-submit')
     watch_for(
       css:   'body',
       value: 'must contain at least 1 digit',
@@ -241,7 +249,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css:   'input[name="password_confirm"]',
       value: 'SOme-pass-new2',
     )
-    click(css: '.content .btn--primary')
+    click(css: '.js-passwordForm .js-submit')
     watch_for(
       css:   'body',
       value: 'Your password has been changed',

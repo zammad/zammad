@@ -1,4 +1,4 @@
-class Edit extends App.ObserverController
+class Edit extends App.ControllerObserver
   model: 'Ticket'
   observeNot:
     created_at: true
@@ -50,7 +50,7 @@ class Edit extends App.ObserverController
 
     return if @resetBind
     @resetBind = true
-    @bind('ui::ticket::taskReset', (data) =>
+    @controllerBind('ui::ticket::taskReset', (data) =>
       return if data.ticket_id.toString() isnt ticket.id.toString()
       @render(ticket)
     )
@@ -58,7 +58,7 @@ class Edit extends App.ObserverController
 class SidebarTicket extends App.Controller
   constructor: ->
     super
-    @bind 'config_update_local', (data) => @configUpdated(data)
+    @controllerBind('config_update_local', (data) => @configUpdated(data))
 
   configUpdated: (data) ->
     if data.name != 'kb_active'

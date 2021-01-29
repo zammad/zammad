@@ -1,4 +1,4 @@
-class App.TicketZoomTimeUnit extends App.ObserverController
+class App.TicketZoomTimeUnit extends App.ControllerObserver
   model: 'Ticket'
   observe:
     time_unit: true

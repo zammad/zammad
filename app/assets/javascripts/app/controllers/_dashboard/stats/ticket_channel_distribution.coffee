@@ -1,15 +1,4 @@
-class Stats extends App.Controller
-  constructor: ->
-    super
-    @load()
-
-  load: =>
-    stats_store = App.StatsStore.first()
-    if stats_store
-      @render(stats_store.data)
-    else
-      @render()
-
+class Stats extends App.ControllerDashboardStatsBase
   render: (data = {}) ->
     if !data.StatsTicketChannelDistribution
       data.StatsTicketChannelDistribution =
@@ -44,4 +33,4 @@ class Stats extends App.Controller
     else
       @el.append(content)
 
-App.Config.set('ticket_channel_distribution', {controller: Stats, permission: 'ticket.agent', prio: 300 }, 'Stats')
+App.Config.set('ticket_channel_distribution', { controller: Stats, permission: 'ticket.agent', prio: 300, className: 'ticket_channel_distribution' }, 'Stats')

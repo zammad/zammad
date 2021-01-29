@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ProfileOutOfOffice extends App.ControllerSubContent
   requiredPermission: 'user_preferences.out_of_office+ticket.agent'
   header: 'Out of Office'
   events:
@@ -161,4 +161,4 @@ class Index extends App.ControllerSubContent
       msg:       App.i18n.translateContent(message)
       removeAll: true
 
-App.Config.set('OutOfOffice', { prio: 2800, name: 'Out of Office', parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: Index }, 'NavBarProfile')
+App.Config.set('OutOfOffice', { prio: 2800, name: 'Out of Office', parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: ProfileOutOfOffice }, 'NavBarProfile')

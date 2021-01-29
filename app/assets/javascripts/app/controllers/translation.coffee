@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Translation extends App.ControllerSubContent
   requiredPermission: 'admin.translation'
   header: 'Translations'
   events:
@@ -10,13 +10,13 @@ class Index extends App.ControllerSubContent
     super
     @locale = App.i18n.get()
     @render()
-    @bind('i18n:translation_update_todo', =>
+    @controllerBind('i18n:translation_update_todo', =>
       @load('i18n:translation_update_todo')
     )
-    @bind('i18n:translation_update_list', =>
+    @controllerBind('i18n:translation_update_list', =>
       @load('i18n:translation_update_list')
     )
-    @bind('i18n:translation_update', =>
+    @controllerBind('i18n:translation_update', =>
       @load()
     )
 
@@ -350,4 +350,4 @@ class TranslationList extends App.Controller
       reset.addClass('hidden')
       reset.closest('tr').removeClass('warning')
 
-App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, permission: ['admin.translation'] }, 'NavBarAdmin' )
+App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Translation, permission: ['admin.translation'] }, 'NavBarAdmin' )

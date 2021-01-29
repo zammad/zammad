@@ -44,19 +44,19 @@ class App.TaskbarWidget extends App.CollectionController
     @el.sortable(dndOptions)
 
     # bind to changes
-    @bind('taskInit', =>
+    @controllerBind('taskInit', =>
       @queue.push ['renderAll']
       @uIRunner()
     )
-    @bind('taskUpdate', (tasks) =>
+    @controllerBind('taskUpdate', (tasks) =>
       @queue.push ['change', tasks]
       @uIRunner()
     )
-    @bind('taskRemove', (tasks) =>
+    @controllerBind('taskRemove', (tasks) =>
       @queue.push ['destroy', tasks]
       @uIRunner()
     )
-    @bind('taskCollectionOrderSet', (taskKeys) =>
+    @controllerBind('taskCollectionOrderSet', (taskKeys) =>
       @collectionOrderSet(taskKeys)
     )
 

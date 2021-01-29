@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Exchange extends App.ControllerIntegrationBase
   featureIntegration: 'exchange_integration'
   featureName: 'Exchange'
   featureConfig: 'exchange_config'
@@ -166,7 +166,7 @@ class State
   @current: ->
     App.Setting.get('exchange_integration')
 
-class ConnectionWizard extends App.WizardModal
+class ConnectionWizard extends App.ControllerWizardModal
   wizardConfig: {}
   slideMethod:
     'js-folders': 'foldersShow'
@@ -557,7 +557,7 @@ App.Config.set(
     name: 'Exchange'
     target: '#system/integration/exchange'
     description: 'Exchange integration for contacts management.'
-    controller: Index
+    controller: Exchange
     state: State
     permission: ['admin.integration.exchange']
   }

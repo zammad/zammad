@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class Reporting extends App.ControllerAppContent
   requiredPermission: 'report'
 
   constructor: ->
@@ -98,13 +98,14 @@ class Index extends App.ControllerContent
       ui:     @
     )
 
-class Graph extends App.ControllerContent
+class Graph extends App.Controller
   constructor: ->
     super
 
     # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
+    )
 
     @render()
 
@@ -380,8 +381,9 @@ class TimeRangePicker extends App.Controller
     super
 
    # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
+    )
 
     @render()
 
@@ -411,9 +413,9 @@ class TimePicker extends App.Controller
     @_timeSlotPicker()
 
     # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
-
+    )
     @render()
 
   render: =>
@@ -588,5 +590,5 @@ class Sidebar extends App.Controller
     App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
-App.Config.set('report', Index, 'Routes')
+App.Config.set('report', Reporting, 'Routes')
 App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporting', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

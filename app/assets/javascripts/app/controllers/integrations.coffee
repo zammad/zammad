@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class Integrations extends App.ControllerSubContent
   requiredPermission: 'admin.integration'
   header: 'Integrations'
   constructor: ->
@@ -64,4 +64,4 @@ class Index extends App.ControllerSubContent
     if @subscribeId
       App.Setting.unsubscribe(@subscribeId)
 
-App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Index, permission: ['admin.integration'] }, 'NavBarAdmin')
+App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Integrations, permission: ['admin.integration'] }, 'NavBarAdmin')

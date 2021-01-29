@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Icinga extends App.ControllerIntegrationBase
   featureIntegration: 'icinga_integration'
   featureName: 'Icinga'
   featureConfig: 'icinga_config'
@@ -24,7 +24,7 @@ App.Config.set(
     name: 'Icinga'
     target: '#system/integration/icinga'
     description: 'An open source monitoring tool.'
-    controller: Index
+    controller: Icinga
     state: State
     permission: ['admin.integration.icinga']
   }

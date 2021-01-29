@@ -73,7 +73,7 @@ class App.OrganizationProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverActionRow
+class ActionRow extends App.ControllerObserverActionRow
   model: 'Organization'
   observe:
     member_ids: true
@@ -110,7 +110,7 @@ class ActionRow extends App.ObserverActionRow
       }
     ]
 
-class Object extends App.ObserverController
+class Object extends App.ControllerObserver
   model: 'Organization'
   observe:
     member_ids: true
@@ -182,7 +182,7 @@ class Object extends App.ObserverController
       org.updateAttributes(data)
       @log 'debug', 'update', name, value, org
 
-class Organization extends App.ObserverController
+class Organization extends App.ControllerObserver
   model: 'Organization'
   observe:
     name: true
@@ -190,7 +190,7 @@ class Organization extends App.ObserverController
   render: (organization) =>
     @html App.Utils.htmlEscape(organization.displayName())
 
-class Member extends App.ObserverController
+class Member extends App.ControllerObserver
   model: 'User'
   observe:
     firstname: true

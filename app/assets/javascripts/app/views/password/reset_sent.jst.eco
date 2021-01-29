@@ -1,0 +1,12 @@
+<div class="reset_password fullscreen">
+  <div class="fullscreen-center">
+    <div class="hero-unit fullscreen-body">
+      <h2><%- @T('We\'ve sent password reset instructions to your email address.') %><small></small></h2>
+      <p><%- @T('If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.') %></p>
+      <div class="form-controls">
+        <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>
+        <button class="btn btn--primary retry align-right"><%- @T('again') %></button>
+      </div>
+    </div>
+  </div>
+</div>

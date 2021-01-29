@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class SipgateIo extends App.ControllerIntegrationBase
   featureIntegration: 'sipgate_integration'
   featureName: 'sipgate.io'
   featureConfig: 'sipgate_config'
@@ -188,7 +188,7 @@ App.Config.set(
     name: 'sipgate.io'
     target: '#system/integration/sipgate'
     description: 'VoIP service provider with realtime push.'
-    controller: Index
+    controller: SipgateIo
     state: State
   }
   'NavBarIntegrations'

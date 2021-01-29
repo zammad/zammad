@@ -1,4 +1,4 @@
-class CalendarSubscriptions extends App.ControllerSubContent
+class ProfileCalendarSubscriptions extends App.ControllerSubContent
   requiredPermission: 'user_preferences.calendar+ticket.agent'
   header: 'Calendar'
   elements:
@@ -90,4 +90,4 @@ class CalendarSubscriptions extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: CalendarSubscriptions }, 'NavBarProfile')
+App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: ProfileCalendarSubscriptions }, 'NavBarProfile')

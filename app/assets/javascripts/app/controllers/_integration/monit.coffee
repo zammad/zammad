@@ -1,4 +1,4 @@
-class Index extends App.ControllerIntegrationBase
+class Monit extends App.ControllerIntegrationBase
   featureIntegration: 'monit_integration'
   featureName: 'Monit'
   featureConfig: 'monit_config'
@@ -24,7 +24,7 @@ App.Config.set(
     name: 'Monit'
     target: '#system/integration/monit'
     description: 'An open source monitoring tool.'
-    controller: Index
+    controller: Monit
     state: State
     permission: ['admin.integration.monit']
   }
