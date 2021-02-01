@@ -191,4 +191,80 @@ test("form elements check", function() {
   }
   deepEqual(params, test_params, 'form param check')
 
+  $('#forms').append('<hr><h1>form elements check</h1><form id="form4"></form>')
+  var el = $('#form4')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      "configure_attributes": [
+        {
+          "name": "tree_select_search",
+          "display": "tree_select_search",
+          "tag": "tree_select_search",
+          "null": true,
+          "translate": true,
+          "value": ['aa::aab', 'bb', 'aa::aac::33'],
+          "options": [
+            {
+              "value": "aa",
+              "name": "yes",
+              "children": [
+                  {
+                    "value": "aa::aaa",
+                    "name": "yes1",
+                  },
+                  {
+                    "value": "aa::aab",
+                    "name": "yes2",
+                  },
+                  {
+                    "value": "aa::aac",
+                    "name": "yes3",
+                    "children": [
+                        {
+                          "value": "aa::aaa::11",
+                          "name": "11",
+                        },
+                        {
+                          "value": "aa::aa1::22",
+                          "name": "22",
+                        },
+                        {
+                          "value": "aa::aac::33",
+                          "name": "33",
+                        },
+                    ]
+                  },
+              ]
+            },
+            {
+              "value": "bb",
+              "name": "bb (comment)",
+              "children": [
+                  {
+                    "value": "bb::bba",
+                    "name": "yes11",
+                  },
+                  {
+                    "value": "bb::bbb",
+                    "name": "yes22",
+                  },
+                  {
+                    "value": "bb::bbc",
+                    "name": "yes33",
+                  },
+              ]
+            },
+          ],
+        }
+      ]
+    },
+    autofocus: true
+  });
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    tree_select_search: ['aa::aab', 'aa::aac::33', 'bb'],
+  }
+  deepEqual(params, test_params, 'form param check')
+
 });
