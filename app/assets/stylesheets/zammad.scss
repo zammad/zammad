@@ -8898,8 +8898,12 @@ label + .wizard-buttonList {
 
 .horizontal-filter-body {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex: 1;
+
+  .controls:not(.js-value) {
+    flex-shrink: 0;
+  }
 }
 
 .horizontal-filter-group {
