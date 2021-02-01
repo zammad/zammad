@@ -5,9 +5,9 @@ RSpec.describe 'Admin Knowledge Base Public Menu', type: :request, authenticated
   let(:params) do
     {
       menu_items_sets: [{
-        "kb_locale_id": kb_locale.id,
-        "location":     location,
-        "menu_items":   menu_items
+        kb_locale_id: kb_locale.id,
+        location:     location,
+        menu_items:   menu_items
       }]
     }
   end
@@ -59,9 +59,9 @@ RSpec.describe 'Admin Knowledge Base Public Menu', type: :request, authenticated
   def build_params(menu_items)
     {
       menu_items_sets: [{
-        "kb_locale_id": kb_locale.id,
-        "location":     location,
-        "menu_items":   menu_items
+        kb_locale_id: kb_locale.id,
+        location:     location,
+        menu_items:   menu_items
       }]
     }
   end

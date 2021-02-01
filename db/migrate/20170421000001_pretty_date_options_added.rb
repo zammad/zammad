@@ -17,8 +17,8 @@ class PrettyDateOptionsAdded < ActiveRecord::Migration[4.2]
             name:    'pretty_date_format',
             tag:     'select',
             options: {
-              'relative': 'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
-              'absolute': 'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
+              relative: 'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
+              absolute: 'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
             },
           },
         ],

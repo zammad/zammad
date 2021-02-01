@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ActiveRecord::Calculations do
+RSpec.describe ActiveRecord::Calculations do # rubocop:disable RSpec/FilePath
   describe '#pluck_as_hash' do
     let(:ticket) { create(:ticket) }
 

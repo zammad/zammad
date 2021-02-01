@@ -8,11 +8,11 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
 
   let(:params_for_updating) do
     {
-      "translations_attributes": [
+      translations_attributes: [
         {
-          "title":       new_title,
-          "footer_note": 'new footer',
-          "id":          knowledge_base.kb_locales.first.id
+          title:       new_title,
+          footer_note: 'new footer',
+          id:          knowledge_base.kb_locales.first.id
         }
       ]
     }

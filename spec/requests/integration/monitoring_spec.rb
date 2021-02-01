@@ -553,37 +553,37 @@ RSpec.describe 'Monitoring', type: :request do
 
       # parameters for updating
       params = {
-        'name':        'test4',
-        'object':      'Ticket',
-        'display':     'Test 4',
-        'active':      true,
-        'data_type':   'input',
-        'data_option': {
-          'default':   'test',
-          'type':      'text',
-          'maxlength': 120
+        name:        'test4',
+        object:      'Ticket',
+        display:     'Test 4',
+        active:      true,
+        data_type:   'input',
+        data_option: {
+          default:   'test',
+          type:      'text',
+          maxlength: 120
         },
-        'screens':     {
-          'create_middle': {
+        screens:     {
+          create_middle: {
             'ticket.customer': {
-              'shown':      true,
-              'item_class': 'column'
+              shown:      true,
+              item_class: 'column'
             },
             'ticket.agent':    {
-              'shown':      true,
-              'item_class': 'column'
+              shown:      true,
+              item_class: 'column'
             }
           },
-          'edit':          {
+          edit:          {
             'ticket.customer': {
-              'shown': true
+              shown: true
             },
             'ticket.agent':    {
-              'shown': true
+              shown: true
             }
           }
         },
-        'id':          'c-196'
+        id:          'c-196'
       }
 
       # update the object

@@ -209,9 +209,9 @@ Setting.create_or_update(
         name:    'pretty_date_format',
         tag:     'select',
         options: {
-          'relative':  'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
-          'absolute':  'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
-          'timestamp': 'timestamp - e. g. "2018-08-30 14:30"',
+          relative:  'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
+          absolute:  'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
+          timestamp: 'timestamp - e. g. "2018-08-30 14:30"',
         },
       },
     ],

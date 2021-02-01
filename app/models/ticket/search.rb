@@ -156,11 +156,11 @@ returns
         return [] if query_or.blank?
 
         query_extension = {
-          'bool': {
-            'must': [
+          bool: {
+            must: [
               {
-                'bool': {
-                  'should': query_or,
+                bool: {
+                  should: query_or,
                 },
               },
             ],

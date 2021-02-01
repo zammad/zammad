@@ -326,6 +326,8 @@ RSpec/FilePath:
     - 'spec/db/migrate/issue_*_spec.rb'
     - 'spec/jobs/issue_*_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
+    - 'spec/models/knowledge_base/answer/translation/search_with_attachment_spec.rb'
+    - 'spec/models/trigger/sms_spec.rb'
 
 RSpec/InstanceVariable:
   Exclude:

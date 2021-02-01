@@ -355,7 +355,7 @@ class ModelTest < ActiveSupport::TestCase
 
     params = {
       firstname:   '123 ABC',
-      preferences: { 'B' => 3, 'C': 4 },
+      preferences: { 'B' => 3, C: 4 },
     }
     clean_params = User.param_cleanup(params)
     clean_user_params = user.param_preferences_merge(clean_params)

@@ -959,8 +959,8 @@ helper method for making HTTP calls and raising error if response was not succes
 
     # for elasticsearch 6.x and later
     string_type = 'text'
-    string_raw  = { 'type': 'keyword', 'ignore_above': 5012 }
-    boolean_raw = { 'type': 'boolean' }
+    string_raw  = { type: 'keyword', ignore_above: 5012 }
+    boolean_raw = { type: 'boolean' }
 
     object.columns_hash.each do |key, value|
       if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)

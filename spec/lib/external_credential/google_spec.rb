@@ -170,8 +170,8 @@ RSpec.describe ExternalCredential::Google do
         let(:response_status) { 404 }
         let(:response_payload) do
           {
-            "error":             'invalid_client',
-            "error_description": 'The OAuth client was not found.'
+            error:             'invalid_client',
+            error_description: 'The OAuth client was not found.'
           }
         end
         let(:exception_message) { 'Request failed! ERROR: invalid_client (The OAuth client was not found.)' }
@@ -295,8 +295,8 @@ RSpec.describe ExternalCredential::Google do
         let(:response_status) { 400 }
         let(:response_payload) do
           {
-            "error":             'invalid_client',
-            "error_description": 'The OAuth client was not found.'
+            error:             'invalid_client',
+            error_description: 'The OAuth client was not found.'
           }
         end
         let(:exception_message) { /The OAuth client was not found/ }
@@ -397,16 +397,16 @@ RSpec.describe ExternalCredential::Google do
         let(:response_status) { 401 }
         let(:response_payload) do
           {
-            "error": {
-              "code":    401,
-              "message": 'Invalid Credentials',
-              "errors":  [
+            error: {
+              code:    401,
+              message: 'Invalid Credentials',
+              errors:  [
                 {
-                  "locationType": 'header',
-                  "domain":       'global',
-                  "message":      'Invalid Credentials',
-                  "reason":       'authError',
-                  "location":     'Authorization'
+                  locationType: 'header',
+                  domain:       'global',
+                  message:      'Invalid Credentials',
+                  reason:       'authError',
+                  location:     'Authorization'
                 }
               ]
             }
