@@ -926,4 +926,249 @@ helper method for making HTTP calls and raising error if response was not succes
     )
   end
 
+=begin
+
+  This function will return a index mapping based on the
+  attributes of the database table of the existing object.
+
+  mapping = SearchIndexBackend.get_mapping_properties_object(Ticket)
+
+  Returns:
+
+  mapping = {
+    User: {
+      properties: {
+        firstname: {
+          type: 'keyword',
+        },
+      }
+    }
+  }
+
+=end
+
+  def self.get_mapping_properties_object(object)
+    name = '_doc'
+    result = {
+      name => {
+        properties: {}
+      }
+    }
+
+    store_columns = %w[preferences data]
+
+    # for elasticsearch 6.x and later
+    string_type = 'text'
+    string_raw  = { 'type': 'keyword', 'ignore_above': 5012 }
+    boolean_raw = { 'type': 'boolean' }
+
+    object.columns_hash.each do |key, value|
+      if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
+        result[name][:properties][key] = {
+          type:   string_type,
+          fields: {
+            keyword: string_raw,
+          }
+        }
+      elsif value.type == :integer
+        result[name][:properties][key] = {
+          type: 'integer',
+        }
+      elsif value.type == :datetime || value.type == :date
+        result[name][:properties][key] = {
+          type: 'date',
+        }
+      elsif value.type == :boolean
+        result[name][:properties][key] = {
+          type:   'boolean',
+          fields: {
+            keyword: boolean_raw,
+          }
+        }
+      elsif value.type == :binary
+        result[name][:properties][key] = {
+          type: 'binary',
+        }
+      elsif value.type == :bigint
+        result[name][:properties][key] = {
+          type: 'long',
+        }
+      elsif value.type == :decimal
+        result[name][:properties][key] = {
+          type: 'float',
+        }
+      end
+    end
+
+    case object.name
+    when 'Ticket'
+      result[name][:_source] = {
+        excludes: ['article.attachment']
+      }
+      result[name][:properties][:article] = {
+        type:              'nested',
+        include_in_parent: true,
+      }
+    when 'KnowledgeBase::Answer::Translation'
+      result[name][:_source] = {
+        excludes: ['attachment']
+      }
+    end
+
+    return result if type_in_mapping?
+
+    result[name]
+  end
+
+  # get es version
+  def self.version
+    @version ||= begin
+      info = SearchIndexBackend.info
+      number = nil
+      if info.present?
+        number = info['version']['number'].to_s
+      end
+      number
+    end
+  end
+
+  def self.version_int
+    number = version
+    return 0 if !number
+
+    number_split = version.split('.')
+    "#{number_split[0]}#{format('%<minor>03d', minor: number_split[1])}#{format('%<patch>03d', patch: number_split[2])}".to_i
+  end
+
+  def self.version_supported?
+
+    # only versions greater/equal than 6.5.0 are supported
+    return if version_int < 6_005_000
+
+    true
+  end
+
+  # no type in mapping
+  def self.type_in_mapping?
+    return true if version_int < 7_000_000
+
+    false
+  end
+
+  # is es configured?
+  def self.configured?
+    return false if Setting.get('es_url').blank?
+
+    true
+  end
+
+  def self.settings
+    {
+      'index.mapping.total_fields.limit': 2000,
+    }
+  end
+
+  def self.create_index(models = Models.indexable)
+    models.each do |local_object|
+      SearchIndexBackend.index(
+        action: 'create',
+        name:   local_object.name,
+        data:   {
+          mappings: SearchIndexBackend.get_mapping_properties_object(local_object),
+          settings: SearchIndexBackend.settings,
+        }
+      )
+    end
+  end
+
+  def self.drop_index(models = Models.indexable)
+    models.each do |local_object|
+      SearchIndexBackend.index(
+        action: 'delete',
+        name:   local_object.name,
+      )
+    end
+  end
+
+  def self.create_object_index(object)
+    models = Models.indexable.select { |c| c.to_s == object }
+    create_index(models)
+  end
+
+  def self.drop_object_index(object)
+    models = Models.indexable.select { |c| c.to_s == object }
+    drop_index(models)
+  end
+
+  def self.pipeline(create: false)
+    pipeline = Setting.get('es_pipeline')
+    if create && pipeline.blank?
+      pipeline = "zammad#{rand(999_999_999_999)}"
+      Setting.set('es_pipeline', pipeline)
+    end
+    pipeline
+  end
+
+  def self.pipeline_settings
+    {
+      ignore_failure: true,
+      ignore_missing: true,
+    }
+  end
+
+  def self.create_pipeline
+    SearchIndexBackend.processors(
+      "_ingest/pipeline/#{pipeline(create: true)}": [
+        {
+          action: 'delete',
+        },
+        {
+          action:      'create',
+          description: 'Extract zammad-attachment information from arrays',
+          processors:  [
+            {
+              foreach: {
+                field:     'article',
+                processor: {
+                  foreach: {
+                    field:     '_ingest._value.attachment',
+                    processor: {
+                      attachment: {
+                        target_field: '_ingest._value',
+                        field:        '_ingest._value._content',
+                      }.merge(pipeline_settings),
+                    }
+                  }.merge(pipeline_settings),
+                }
+              }.merge(pipeline_settings),
+            },
+            {
+              foreach: {
+                field:     'attachment',
+                processor: {
+                  attachment: {
+                    target_field: '_ingest._value',
+                    field:        '_ingest._value._content',
+                  }.merge(pipeline_settings),
+                }
+              }.merge(pipeline_settings),
+            }
+          ]
+        }
+      ]
+    )
+  end
+
+  def self.drop_pipeline
+    return if pipeline.blank?
+
+    SearchIndexBackend.processors(
+      "_ingest/pipeline/#{pipeline}": [
+        {
+          action: 'delete',
+        },
+      ]
+    )
+  end
+
 end
