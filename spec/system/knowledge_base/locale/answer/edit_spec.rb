@@ -20,6 +20,45 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated
     end
   end
 
+  context 'add weblink' do
+    def open_editor_and_add_link(input)
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"
+
+      sleep 3 # wait for popover killer to pass
+
+      find('a[data-action="link"]').click
+
+      within('.popover-content') do
+        find('input').fill_in with: input
+        find('[type=submit]').click
+      end
+    end
+
+    it 'allows mailto links' do
+      open_editor_and_add_link 'mailto:test@example.com'
+
+      expect(page).to have_selector('a[href="mailto:test@example.com"]')
+    end
+
+    it 'allows link with a protocol' do
+      open_editor_and_add_link 'protocol://example.org'
+
+      expect(page).to have_selector('a[href="protocol://example.org"]')
+    end
+
+    it 'allows relative link' do
+      open_editor_and_add_link '/path'
+
+      expect(page).to have_selector('a[href="/path"]')
+    end
+
+    it 'allows non-protocol URL and prepends default protocol' do
+      open_editor_and_add_link 'example.com'
+
+      expect(page).to have_selector('a[href="http://example.com"]')
+    end
+  end
+
   context 'embedded video' do
 
     it 'has adding functionality' do

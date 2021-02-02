@@ -21,10 +21,10 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
   ensureProtocol: (input) ->
     input = input.trim()
 
-    if !input.match(/^\S+\:\/\//) and input[0] isnt '/'
-      'http://' + input
-    else
+    if @isWithProtocol(input) || @isRelativePath(input) || @isMailto(input)
       input
+    else
+      'http://' + input
 
   apply: (callback) ->
     input = @el.find('input').val()
@@ -57,3 +57,12 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
     switch @selection.type
       when 'existing'
         $(@selection.dom).contents().unwrap()
+
+  isWithProtocol: (input) ->
+    /^\S+\:\/\//.test(input)
+
+  isMailto: (input) ->
+    /^mailto\:\S+@\S/.test(input)
+
+  isRelativePath: (input) ->
+    input[0] is '/'
