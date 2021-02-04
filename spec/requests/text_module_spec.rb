@@ -18,7 +18,7 @@ RSpec.describe 'Text Module', type: :request do
     it 'does csv example - customer no access' do
       authenticated_as(customer)
       get '/api/v1/text_modules/import_example', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
 

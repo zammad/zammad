@@ -98,22 +98,22 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       }
 
       post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
       post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
       post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
     end
 
     it 'does settings index with admin' do

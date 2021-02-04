@@ -37,7 +37,7 @@ RSpec.describe 'Overviews', type: :request do
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does create overviews' do

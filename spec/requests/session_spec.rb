@@ -47,7 +47,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
       it 'returns a new user-session response' do
         get '/auth/sso', as: :json, headers: headers
 
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
 
     context 'with valid user login' do
-      let(:user) { User.last }
+      let(:user) { create(:agent) }
       let(:login) { user.login }
 
       context 'in Maintenance Mode' do
@@ -95,10 +95,10 @@ RSpec.describe 'Sessions endpoints', type: :request do
         context 'in "REMOTE_USER" request env var' do
           let(:env) { { 'REMOTE_USER' => login } }
 
-          it 'returns 401 unauthorized' do
+          it 'returns 403 Forbidden' do
             get '/auth/sso', as: :json, env: env
 
-            expect(response).to have_http_status(:unauthorized)
+            expect(response).to have_http_status(:forbidden)
             expect(json_response).to include('error' => 'Maintenance mode enabled!')
           end
         end
@@ -106,10 +106,10 @@ RSpec.describe 'Sessions endpoints', type: :request do
         context 'in "HTTP_REMOTE_USER" request env var' do
           let(:env) { { 'HTTP_REMOTE_USER' => login } }
 
-          it 'returns 401 unauthorized' do
+          it 'returns 403 Forbidden' do
             get '/auth/sso', as: :json, env: env
 
-            expect(response).to have_http_status(:unauthorized)
+            expect(response).to have_http_status(:forbidden)
             expect(json_response).to include('error' => 'Maintenance mode enabled!')
           end
         end
@@ -117,10 +117,10 @@ RSpec.describe 'Sessions endpoints', type: :request do
         context 'in "X-Forwarded-User" request header' do
           let(:headers) { { 'X-Forwarded-User' => login } }
 
-          it 'returns 401 unauthorized' do
+          it 'returns 403 Forbidden' do
             get '/auth/sso', as: :json, headers: headers
 
-            expect(response).to have_http_status(:unauthorized)
+            expect(response).to have_http_status(:forbidden)
             expect(json_response).to include('error' => 'Maintenance mode enabled!')
           end
         end

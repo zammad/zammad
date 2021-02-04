@@ -16,7 +16,7 @@ module PunditPolicy
   def user_required!
     return if user
 
-    raise Exceptions::NotAuthorized, 'authentication failed'
+    raise Exceptions::Forbidden, 'Authentication required'
   end
 
   private
@@ -25,7 +25,7 @@ module PunditPolicy
     if details
       details = "Not authorized (#{details})!"
     end
-    @custom_exception = Exceptions::NotAuthorized.new(details)
+    @custom_exception = Exceptions::Forbidden.new(details)
     false
   end
 

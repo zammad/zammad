@@ -149,7 +149,7 @@ class FormController < ApplicationController
   def authorize!(*)
     super
   rescue Pundit::NotAuthorizedError
-    raise Exceptions::NotAuthorized
+    raise Exceptions::Forbidden
   end
 
   def token_gen(fingerprint)
@@ -161,7 +161,7 @@ class FormController < ApplicationController
   def token_valid?(token, fingerprint)
     if token.blank?
       Rails.logger.info 'No token for form!'
-      raise Exceptions::NotAuthorized
+      raise Exceptions::Forbidden
     end
     begin
       crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
@@ -205,15 +205,15 @@ class FormController < ApplicationController
     # in elasticsearch7 "created_at:>now-1h" is not working. Needed to catch -2h
     form_limit_by_ip_per_hour = Setting.get('form_ticket_create_by_ip_per_hour') || 20
     result = SearchIndexBackend.search("preferences.form.remote_ip:'#{remote_ip}' AND created_at:>now-2h", 'Ticket', limit: form_limit_by_ip_per_hour)
-    raise Exceptions::NotAuthorized if result.count >= form_limit_by_ip_per_hour.to_i
+    raise Exceptions::Forbidden if result.count >= form_limit_by_ip_per_hour.to_i
 
     form_limit_by_ip_per_day = Setting.get('form_ticket_create_by_ip_per_day') || 240
     result = SearchIndexBackend.search("preferences.form.remote_ip:'#{remote_ip}' AND created_at:>now-1d", 'Ticket', limit: form_limit_by_ip_per_day)
-    raise Exceptions::NotAuthorized if result.count >= form_limit_by_ip_per_day.to_i
+    raise Exceptions::Forbidden if result.count >= form_limit_by_ip_per_day.to_i
 
     form_limit_per_day = Setting.get('form_ticket_create_per_day') || 5000
     result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', 'Ticket', limit: form_limit_per_day)
-    raise Exceptions::NotAuthorized if result.count >= form_limit_per_day.to_i
+    raise Exceptions::Forbidden if result.count >= form_limit_per_day.to_i
 
     false
   end
@@ -222,6 +222,6 @@ class FormController < ApplicationController
     return true if params[:fingerprint].present? && params[:fingerprint].length > 30
 
     Rails.logger.info 'No fingerprint given!'
-    raise Exceptions::NotAuthorized
+    raise Exceptions::Forbidden
   end
 end

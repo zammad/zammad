@@ -624,7 +624,7 @@ class TicketsController < ApplicationController
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/tickets/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
     csv_string = Ticket.csv_example(
       col_sep: ',',
@@ -646,7 +646,7 @@ class TicketsController < ApplicationController
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'

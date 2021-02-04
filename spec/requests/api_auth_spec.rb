@@ -30,7 +30,7 @@ RSpec.describe 'Api Auth', type: :request do
       Setting.set('api_password_access', false)
       authenticated_as(admin)
       get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API password access disabled!')
@@ -51,7 +51,7 @@ RSpec.describe 'Api Auth', type: :request do
       Setting.set('api_password_access', false)
       authenticated_as(agent)
       get '/api/v1/tickets', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API password access disabled!')
@@ -72,7 +72,7 @@ RSpec.describe 'Api Auth', type: :request do
       Setting.set('api_password_access', false)
       authenticated_as(customer)
       get '/api/v1/tickets', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API password access disabled!')
@@ -104,7 +104,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       Setting.set('api_token_access', false)
       get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API token access disabled!')
@@ -124,7 +124,7 @@ RSpec.describe 'Api Auth', type: :request do
       admin_token.save!
 
       get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (token)!')
 
@@ -132,7 +132,7 @@ RSpec.describe 'Api Auth', type: :request do
       admin_token.save!
 
       get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (token)!')
 
@@ -161,7 +161,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_truthy
 
       get '/api/v1/roles', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized (token)!')
 
@@ -254,7 +254,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       Setting.set('api_token_access', false)
       get '/api/v1/tickets', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API token access disabled!')
@@ -276,7 +276,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       name = "some org name #{rand(999_999_999)}"
       post '/api/v1/organizations', params: { name: name }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
     end
 
@@ -293,7 +293,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       Setting.set('api_token_access', false)
       get '/api/v1/tickets', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API token access disabled!')
@@ -315,7 +315,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       name = "some org name #{rand(999_999_999)}"
       post '/api/v1/organizations', params: { name: name }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'does token auth - invalid user - admin', last_admin_check: false do
@@ -334,7 +334,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       Setting.set('api_token_access', false)
       get '/api/v1/sessions', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('API token access disabled!')

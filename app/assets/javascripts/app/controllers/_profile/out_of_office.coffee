@@ -148,8 +148,8 @@ class ProfileOutOfOffice extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
 
     # show error message
-    if xhr.status is 401 || error is 'Unauthorized'
-      message     = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+    if xhr.status is 403 || error is 'Not authorized'
+      message     = '» ' + App.i18n.translateInline('Not authorized') + ' «'
     else if xhr.status is 404 || error is 'Not Found'
       message     = '» ' + App.i18n.translateInline('Not Found') + ' «'
     else if data.error

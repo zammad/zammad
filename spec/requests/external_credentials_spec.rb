@@ -5,38 +5,38 @@ RSpec.describe 'External Credentials', type: :request do
 
   context 'without authentication' do
     describe '#index' do
-      it 'returns 401 unauthorized' do
+      it 'returns 403 Forbidden' do
         get '/api/v1/external_credentials', as: :json
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(json_response).to include('error' => 'authentication failed')
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
       end
     end
 
     describe '#app_verify' do
-      it 'returns 401 unauthorized' do
+      it 'returns 403 Forbidden' do
         post '/api/v1/external_credentials/facebook/app_verify', as: :json
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(json_response).to include('error' => 'authentication failed')
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
       end
     end
 
     describe '#link_account' do
-      it 'returns 401 unauthorized' do
+      it 'returns 403 Forbidden' do
         get '/api/v1/external_credentials/facebook/link_account', as: :json
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(json_response).to include('error' => 'authentication failed')
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
       end
     end
 
     describe '#callback' do
-      it 'returns 401 unauthorized' do
+      it 'returns 403 Forbidden' do
         get '/api/v1/external_credentials/facebook/callback', as: :json
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(json_response).to include('error' => 'authentication failed')
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
       end
     end
   end
@@ -72,9 +72,9 @@ RSpec.describe 'External Credentials', type: :request do
           context 'when permission for Facebook channel is deactivated' do
             before { Permission.find_by(name: 'admin.channel_facebook').update(active: false) }
 
-            it 'returns 401 unauthorized with internal (Zammad) error' do
+            it 'returns 403 Forbidden with internal (Zammad) error' do
               post '/api/v1/external_credentials/facebook/app_verify', as: :json
-              expect(response).to have_http_status(:unauthorized)
+              expect(response).to have_http_status(:forbidden)
               expect(json_response).to include('error' => 'Not authorized (user)!')
             end
           end
@@ -207,7 +207,7 @@ RSpec.describe 'External Credentials', type: :request do
           before { Permission.find_by(name: 'admin.channel_twitter').update(active: false) }
 
           include_examples 'for failure cases' do
-            let(:status) { :unauthorized }
+            let(:status) { :forbidden }
             let(:error_message) { 'Not authorized (user)!' }
           end
         end

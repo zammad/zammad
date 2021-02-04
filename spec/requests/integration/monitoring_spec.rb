@@ -48,7 +48,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -56,7 +56,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -67,11 +67,11 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
     end
 
@@ -79,7 +79,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check
       get '/api/v1/monitoring/health_check?token=abc', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -87,7 +87,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status?token=abc', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -98,11 +98,11 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: 'abc' }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
     end
 
@@ -221,11 +221,11 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
     end
 
@@ -267,7 +267,7 @@ RSpec.describe 'Monitoring', type: :request do
       # health_check
       authenticated_as(agent)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -275,7 +275,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -286,7 +286,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -303,7 +303,7 @@ RSpec.describe 'Monitoring', type: :request do
       # health_check
       authenticated_as(admin)
       get '/api/v1/monitoring/health_check', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['healthy']).to be_falsey
@@ -311,7 +311,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # status
       get '/api/v1/monitoring/status', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['agents']).to be_falsey
@@ -322,7 +322,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
@@ -360,11 +360,11 @@ RSpec.describe 'Monitoring', type: :request do
 
       # token
       post '/api/v1/monitoring/token', params: { token: token }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['token']).to be_falsey
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
       permission.active = true
       permission.save!

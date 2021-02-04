@@ -75,7 +75,7 @@ class AttachmentsController < ApplicationController
     valid_disposition = %w[inline attachment]
     return disposition if valid_disposition.include?(disposition)
 
-    raise Exceptions::NotAuthorized, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
+    raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end
 
   def verify_object_permissions

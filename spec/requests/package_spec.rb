@@ -16,11 +16,11 @@ RSpec.describe 'Packages', type: :request do
 
     it 'does packages index with nobody' do
       get '/api/v1/packages', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
     end
 
     it 'does packages index with admin' do
@@ -38,7 +38,7 @@ RSpec.describe 'Packages', type: :request do
 
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does packages index with inactive admin' do
@@ -49,14 +49,14 @@ RSpec.describe 'Packages', type: :request do
 
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does packages index with agent' do
       authenticated_as(agent)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
@@ -66,7 +66,7 @@ RSpec.describe 'Packages', type: :request do
       authenticated_as(customer)
       get '/api/v1/packages', as: :json
 
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')

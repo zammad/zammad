@@ -11,6 +11,7 @@ module ApplicationController::HandlesErrors
     rescue_from ArgumentError, with: :unprocessable_entity
     rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
     rescue_from Exceptions::NotAuthorized, with: :unauthorized
+    rescue_from Exceptions::Forbidden, with: :forbidden
     rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
   end
 
@@ -40,13 +41,21 @@ module ApplicationController::HandlesErrors
     http_log
   end
 
+  def forbidden(e)
+    logger.info { e }
+    error = humanize_error(e)
+    response.headers['X-Failure'] = error.fetch(:error_human, error[:error])
+    respond_to_exception(e, :forbidden)
+    http_log
+  end
+
   def pundit_not_authorized_error(e)
     logger.info { e }
     # check if a special authorization_error should be shown in the result payload
     # which was raised in one of the policies. Fall back to a simple "Not authorized"
     # error to hide actual cause for security reasons.
-    exeption = e.policy.custom_exception || Exceptions::NotAuthorized.new
-    unauthorized(exeption)
+    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new('Not authorized')
+    forbidden(exeption)
   end
 
   private
@@ -79,10 +88,13 @@ module ApplicationController::HandlesErrors
       data[:error_human] = 'Object already exists!'
     elsif e.message =~ /null value in column "(.+?)" violates not-null constraint/i || e.message =~ /Field '(.+?)' doesn't have a default value/i
       data[:error_human] = "Attribute '#{$1}' required!"
-    elsif e.message == 'Exceptions::NotAuthorized'
+    elsif e.message == 'Exceptions::Forbidden'
       data[:error]       = 'Not authorized'
       data[:error_human] = data[:error]
-    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized].include?(e.class)
+    elsif e.message == 'Exceptions::NotAuthorized'
+      data[:error]       = 'Authorization failed'
+      data[:error_human] = data[:error]
+    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden].include?(e.class)
       data[:error_human] = data[:error]
     end
 

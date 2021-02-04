@@ -10,10 +10,10 @@ RSpec.describe 'SLAs', type: :request do
 
     it 'does index sla with nobody' do
       get '/api/v1/slas', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
     end
 
     it 'does index sla with admin' do

@@ -67,17 +67,17 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
     describe 'as reader' do
       let(:user_identifier) { :agent }
 
-      it { expect(response).to have_http_status(:unauthorized) }
+      it { expect(response).to have_http_status(:forbidden) }
     end
 
     describe 'as non-KB user' do
       let(:user_identifier) { :customer }
 
-      it { expect(response).to have_http_status(:unauthorized) }
+      it { expect(response).to have_http_status(:forbidden) }
     end
 
     describe 'as a guest' do
-      it { expect(response).to have_http_status(:unauthorized) }
+      it { expect(response).to have_http_status(:forbidden) }
     end
   end
 end

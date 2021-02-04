@@ -55,6 +55,6 @@ RSpec.describe 'KnowledgeBase loading initial data', type: :request, searchindex
   end
 
   describe 'for guests without authorization' do
-    it { expect(response).to have_http_status(:unauthorized) }
+    it { expect(response).to have_http_status(:forbidden) }
   end
 end

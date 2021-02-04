@@ -11,7 +11,7 @@ module ApplicationController::Authorizes
   def authorized?(record = policy_record, query = nil)
     authorize!(record, query)
     true
-  rescue Exceptions::NotAuthorized, Pundit::NotAuthorizedError
+  rescue Exceptions::Forbidden, Pundit::NotAuthorizedError
     false
   end
 

@@ -137,7 +137,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       }
       authenticated_as(admin, on_behalf_of: 99_449_494_949)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq("No such user '99449494949'")
@@ -156,7 +156,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       }
       authenticated_as(customer, on_behalf_of: admin.email)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq("Current user has no permission to use 'X-On-Behalf-Of'!")

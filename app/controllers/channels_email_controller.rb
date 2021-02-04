@@ -267,7 +267,7 @@ class ChannelsEmailController < ApplicationController
   def check_online_service
     return true if !Setting.get('system_online_service')
 
-    raise Exceptions::NotAuthorized
+    raise Exceptions::Forbidden
   end
 
   def check_access(id = nil)
@@ -279,6 +279,6 @@ class ChannelsEmailController < ApplicationController
     channel = Channel.find(id)
     return true if channel.preferences && !channel.preferences[:online_service_disable]
 
-    raise Exceptions::NotAuthorized
+    raise Exceptions::Forbidden
   end
 end

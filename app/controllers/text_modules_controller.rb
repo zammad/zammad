@@ -155,7 +155,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/text_modules/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
     csv_string = TextModule.csv_example(
       col_sep: params[:col_sep] || ',',
@@ -177,7 +177,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/Textbausteine_final2.csv' 'https://your.zammad/api/v1/text_modules/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
     string = params[:data]
     if string.blank? && params[:file].present?

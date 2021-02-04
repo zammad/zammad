@@ -104,10 +104,11 @@ RSpec.describe 'Error handling', type: :request do
   context 'request is not authenticated' do
 
     before do
+      authenticated_as(create(:agent), password: 'wrongpw')
       get '/api/v1/organizations', as: as
     end
 
-    let(:message) { 'authentication failed' }
+    let(:message) { 'Invalid BasicAuth credentials' }
     let(:http_status) { :unauthorized }
 
     context 'requesting JSON' do
@@ -117,6 +118,27 @@ RSpec.describe 'Error handling', type: :request do
     context 'requesting HTML' do
       let(:title) { '401: Unauthorized' }
       let(:headline) { '401: Unauthorized' }
+
+      include_examples 'HTML response format'
+    end
+  end
+
+  context 'request is forbidden' do
+
+    before do
+      get '/api/v1/organizations', as: as
+    end
+
+    let(:message) { 'Authentication required' }
+    let(:http_status) { :forbidden }
+
+    context 'requesting JSON' do
+      include_examples 'JSON response format'
+    end
+
+    context 'requesting HTML' do
+      let(:title) { '403: Forbidden' }
+      let(:headline) { '403: Forbidden' }
 
       include_examples 'HTML response format'
     end
@@ -148,8 +170,8 @@ RSpec.describe 'Error handling', type: :request do
       end
     end
 
-    shared_examples 'handles exception' do |exception, http_status, title, headline|
-      include_examples 'exception check', 'some error message', exception, http_status, title, headline
+    shared_examples 'handles exception' do |exception, http_status, title, headline, message = 'some error message'|
+      include_examples 'exception check', message, exception, http_status, title, headline
     end
 
     shared_examples 'masks exception' do |exception, http_status, title, headline|
@@ -157,6 +179,8 @@ RSpec.describe 'Error handling', type: :request do
     end
 
     include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
+    include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
+    include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
     include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
     include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
     include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'

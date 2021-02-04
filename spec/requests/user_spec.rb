@@ -154,13 +154,13 @@ RSpec.describe 'User', type: :request do
 
       # no user (because of no session)
       get '/api/v1/users', params: {}, headers: headers, as: :json
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Authentication required')
 
       # me
       get '/api/v1/users/me', params: {}, headers: headers, as: :json
-      expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(response).to have_http_status(:forbidden)
+      expect(json_response['error']).to eq('Authentication required')
     end
 
     context 'password security' do
@@ -182,25 +182,25 @@ RSpec.describe 'User', type: :request do
       authenticated_as(nil, login: 'not_existing@example.com', password: 'adminpw')
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
 
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does auth tests - username auth, wrong pw' do
       authenticated_as(admin, password: 'not_existing')
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does auth tests - email auth, wrong pw' do
       authenticated_as(nil, login: 'rest-admin@example.com', password: 'not_existing')
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
     it 'does auth tests - username auth' do
@@ -507,7 +507,7 @@ RSpec.describe 'User', type: :request do
       expect('rest-customer1@example.com').to eq(json_response['email'])
 
       get "/api/v1/users/#{customer2.id}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(Hash).to eq(json_response.class)
       expect(json_response['error']).to be_truthy
 
@@ -515,18 +515,18 @@ RSpec.describe 'User', type: :request do
       role = Role.lookup(name: 'Admin')
       params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin_by_customer1@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       # create user with agent role
       role = Role.lookup(name: 'Agent')
       params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_customer1@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       # search
       Scheduler.worker(true)
       get "/api/v1/users/search?query=#{CGI.escape('First')}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'does user index with customer2' do
@@ -549,14 +549,14 @@ RSpec.describe 'User', type: :request do
       expect('rest-customer2@example.com').to eq(json_response['email'])
 
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(Hash).to eq(json_response.class)
       expect(json_response['error']).to be_truthy
 
       # search
       Scheduler.worker(true)
       get "/api/v1/users/search?query=#{CGI.escape('First')}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'does users show and response format (04.01)' do
@@ -847,7 +847,7 @@ RSpec.describe 'User', type: :request do
 
       authenticated_as(customer)
       get '/api/v1/users/import_example', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
 
@@ -1172,7 +1172,7 @@ RSpec.describe 'User', type: :request do
     it 'does not accept requests from customers', authenticated_as: -> { create(:customer) } do
       make_request successful_params
 
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'admins can give any role', authenticated_as: -> { create(:admin) } do

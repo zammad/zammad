@@ -38,7 +38,7 @@ RSpec.describe 'Idoit', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/integration/idoit/verify', params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Not authorized (user)!')

@@ -512,7 +512,7 @@ RSpec.describe 'Integration Placetel', type: :request do
 
       # get caller list
       get '/api/v1/cti/log'
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       authenticated_as(agent)
       get '/api/v1/cti/log', as: :json

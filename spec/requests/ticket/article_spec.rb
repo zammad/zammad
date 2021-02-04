@@ -262,12 +262,12 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[4].attachments.count).to eq(0)
 
       get "/api/v1/ticket_articles/#{article.id}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       put "/api/v1/ticket_articles/#{article.id}", params: { internal: false }, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('Not authorized')
 

@@ -43,7 +43,7 @@ module ApplicationController::HasUser
     return if !user_real
 
     # check if the user has admin rights
-    raise Exceptions::NotAuthorized, "Current user has no permission to use 'X-On-Behalf-Of'!" if !user_real.permissions?('admin.user')
+    raise Exceptions::Forbidden, "Current user has no permission to use 'X-On-Behalf-Of'!" if !user_real.permissions?('admin.user')
 
     # find user for execution based on the header
     %i[id login email].each do |field|
@@ -55,7 +55,7 @@ module ApplicationController::HasUser
     end
 
     # no behalf of user found
-    raise Exceptions::NotAuthorized, "No such user '#{request.headers['X-On-Behalf-Of']}'"
+    raise Exceptions::Forbidden, "No such user '#{request.headers['X-On-Behalf-Of']}'"
   end
 
   def search_attributes(field)

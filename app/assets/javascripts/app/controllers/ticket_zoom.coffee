@@ -115,8 +115,8 @@ class App.TicketZoom extends App.Controller
           return
 
         # show error message
-        if status is 401 || statusText is 'Unauthorized'
-          @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+        if status is 403 || statusText is 'Not authorized'
+          @taskHead      = '» ' + App.i18n.translateInline('Not authorized') + ' «'
           @taskIconClass = 'diagonal-cross'
           @renderScreenUnauthorized(objectName: 'Ticket')
         else if status is 404 || statusText is 'Not Found'

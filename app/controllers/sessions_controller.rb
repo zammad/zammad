@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def create_sso
-    raise Exceptions::NotAuthorized, 'SSO authentication disabled!' if !Setting.get('auth_sso')
+    raise Exceptions::Forbidden, 'SSO authentication disabled!' if !Setting.get('auth_sso')
 
     user = begin
       login = request.env['REMOTE_USER'] ||
@@ -150,7 +150,7 @@ class SessionsController < ApplicationController
   def switch_back_to_user
 
     # check if it's a switch back
-    raise Exceptions::NotAuthorized if !session[:switched_from_user_id]
+    raise Exceptions::Forbidden if !session[:switched_from_user_id]
 
     user = User.lookup(id: session[:switched_from_user_id])
     if !user

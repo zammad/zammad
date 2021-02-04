@@ -10,22 +10,22 @@ RSpec.describe 'Calendars', type: :request do
 
     it 'does calendar index with nobody' do
       get '/api/v1/calendars', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
       get '/api/v1/calendars_init', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
 
       get '/api/v1/calendars/timezones', as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('authentication failed')
+      expect(json_response['error']).to eq('Authentication required')
     end
 
     it 'does calendar index with admin' do

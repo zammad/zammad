@@ -612,7 +612,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       get '/api/v1/cti/log'
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
 
       # get caller list
       authenticated_as(agent)

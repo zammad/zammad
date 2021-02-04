@@ -152,7 +152,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       # search
       Scheduler.worker(true)
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'does index with customer2' do
@@ -171,14 +171,14 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect('Rest Org #1').to eq(json_response['name'])
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to be_nil
 
       # search
       Scheduler.worker(true)
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'does organization search sortable' do
@@ -474,7 +474,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
     it 'does csv example - customer no access' do
       authenticated_as(customer)
       get '/api/v1/organizations/import_example', params: {}, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
 

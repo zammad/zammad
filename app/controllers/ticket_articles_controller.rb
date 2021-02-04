@@ -159,7 +159,7 @@ class TicketArticlesController < ApplicationController
 
       # check if requested ticket got merged
       if ticket.state.state_type.name != 'merged'
-        raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+        raise Exceptions::Forbidden, 'No access, article_id/ticket_id is not matching.'
       end
 
       ticket = article.ticket
@@ -173,7 +173,7 @@ class TicketArticlesController < ApplicationController
         access = true
       end
     end
-    raise Exceptions::NotAuthorized, 'Requested file id is not linked with article_id.' if !access
+    raise Exceptions::Forbidden, 'Requested file id is not linked with article_id.' if !access
 
     # find file
     file = Store.find(params[:id])
@@ -226,7 +226,7 @@ class TicketArticlesController < ApplicationController
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/ticket_articles/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
     csv_string = Ticket::Article.csv_example(
       col_sep: ',',
@@ -248,7 +248,7 @@ class TicketArticlesController < ApplicationController
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/ticket_articles.csv' 'https://your.zammad/api/v1/ticket_articles/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
@@ -286,6 +286,6 @@ class TicketArticlesController < ApplicationController
     valid_disposition = %w[inline attachment]
     return disposition if valid_disposition.include?(disposition)
 
-    raise Exceptions::NotAuthorized, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
+    raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end
 end

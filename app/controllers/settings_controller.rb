@@ -21,7 +21,7 @@ class SettingsController < ApplicationController
 
   # POST /settings
   def create
-    raise Exceptions::NotAuthorized, 'Not authorized (feature not possible)'
+    raise Exceptions::Forbidden, 'Not authorized (feature not possible)'
   end
 
   # PUT /settings/1
@@ -84,7 +84,7 @@ class SettingsController < ApplicationController
 
   # DELETE /settings/1
   def destroy
-    raise Exceptions::NotAuthorized, 'Not authorized (feature not possible)'
+    raise Exceptions::Forbidden, 'Not authorized (feature not possible)'
   end
 
   private

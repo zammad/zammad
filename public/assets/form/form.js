@@ -251,7 +251,10 @@ $(function() {
       _this._config = data
     }).fail(function(jqXHR, textStatus, errorThrown) {
       if (jqXHR.status == 401) {
-        _this.log('error', 'Faild to load form config, feature is disabled!')
+        _this.log('error', 'Faild to load form config, wrong authentication data!')
+      }
+      else if (jqXHR.status == 403) {
+        _this.log('error', 'Faild to load form config, feature is disabled or request is wrong!')
       }
       else {
         _this.log('error', 'Faild to load form config!')

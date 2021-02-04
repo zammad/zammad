@@ -265,7 +265,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/organizations/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
     send_data(
       Organization.csv_example,
@@ -283,7 +283,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/organizations.csv' 'https://your.zammad/api/v1/organizations/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
     string = params[:data]
     if string.blank? && params[:file].present?
