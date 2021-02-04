@@ -8,7 +8,12 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params.data_option = params.data_option_new
 
     if attribute.value == 'select' && params.data_option? && params.data_option.options?
-      sorted = _.map params.data_option.options, (value, key) -> [key.toString(), value.toString()]
+      sorted = _.map(
+        params.data_option.options, (value, key) ->
+          key = '' if !key || !key.toString
+          value = '' if !value || !value.toString
+          [key.toString(), value.toString()]
+      )
       params.data_option.sorted = sorted.sort( (a, b) -> a[1].localeCompare(b[1]) )
 
     item = $(App.view('object_manager/attribute')(attribute: attribute))
