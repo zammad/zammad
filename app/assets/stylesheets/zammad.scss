@@ -305,6 +305,10 @@ ol, ul {
 [contenteditable]:focus {
   background: hsl(210,17%,98%);
 }
+[contenteditable].alert:hover,
+[contenteditable].alert:focus {
+  color: #000;
+}
 [contenteditable]:focus {
   text-overflow: clip !important;
 }
