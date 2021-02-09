@@ -516,6 +516,43 @@ RSpec.describe Ticket, type: :model do
       end
     end
 
+    describe '#trigger_based_notification?' do
+      let(:ticket) { create(:ticket) }
+
+      context 'with a normal user' do
+        let(:customer) { create(:customer) }
+
+        it 'send trigger base notification' do
+          expect(ticket.send(:trigger_based_notification?, customer)).to eq(true)
+        end
+      end
+
+      context 'with a permanent failed user' do
+
+        let(:failed_date) { 1.second.ago }
+
+        let(:customer) do
+          user = create(:customer)
+          user.preferences.merge!(mail_delivery_failed: true, mail_delivery_failed_data: failed_date)
+          user.save!
+          user
+        end
+
+        it 'send no trigger base notification' do
+          expect(ticket.send(:trigger_based_notification?, customer)).to eq(false)
+        end
+
+        context 'with failed date 61 days ago' do
+
+          let(:failed_date) { 61.days.ago }
+
+          it 'send trigger base notification' do
+            expect(ticket.send(:trigger_based_notification?, customer)).to eq(true)
+          end
+        end
+      end
+    end
+
     describe '#subject_build' do
       context 'with default "ticket_hook_position" setting ("right")' do
         it 'returns the given string followed by a ticket reference (of the form "[Ticket#123]")' do
@@ -757,7 +794,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#pending_time' do
-      subject(:ticket) { create(:ticket, pending_time: Time.zone.now + 2.days) }
+      subject(:ticket) { create(:ticket, pending_time: 2.days.from_now) }
 
       context 'when #state is updated to any non-"pending" value' do
         it 'is reset to nil' do
