@@ -5687,6 +5687,10 @@ footer {
     position: relative;
     z-index: 1;
     padding: 0 55px;
+
+    &.article-actions {
+      justify-content: space-around;
+    }
   }
 
   .article-content-meta {

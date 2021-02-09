@@ -1,4 +1,4 @@
-<div class="article-content article-actions horizontal stretch">
+<div class="article-content article-actions horizontal">
   <% for action in @actions: %>
     <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action js-ArticleAction u-clickable<% if action.class: %> <%= action.class %><% end %>">
       <%- @Icon(action.icon, 'article-action-icon') %><span class="article-action-name"><%- @T(action.name) %></span>
