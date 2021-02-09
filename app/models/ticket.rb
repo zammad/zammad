@@ -1468,20 +1468,8 @@ result
     recipients_checked = []
     recipients_raw.each do |recipient_email|
 
-      skip_user = false
       users = User.where(email: recipient_email)
-      users.each do |user|
-        next if user.preferences[:mail_delivery_failed] != true
-        next if !user.preferences[:mail_delivery_failed_data]
-
-        till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
-        next if till_blocked.positive?
-
-        logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
-        skip_user = true
-        break
-      end
-      next if skip_user
+      next if users.any? { |user| !trigger_based_notification?(user) }
 
       # send notifications only to email addresses
       next if recipient_email.blank?
@@ -1499,7 +1487,7 @@ result
             next # no usable format found
           end
 
-          recipient_email = "#{$2}@#{$3}"
+          recipient_email = "#{$2}@#{$3}" # rubocop:disable Lint/OutOfRangeRegexpRef
         end
       end
 
@@ -1777,5 +1765,21 @@ result
       updated_by_id: 1,
       created_by_id: 1,
     )
+  end
+
+  def trigger_based_notification?(user)
+    blocked_in_days = trigger_based_notification_blocked_in_days(user)
+    return true if blocked_in_days.zero?
+
+    logger.info "Send no trigger based notification to #{user.email} because email is marked as mail_delivery_failed for #{blocked_in_days} day(s)"
+    false
+  end
+
+  def trigger_based_notification_blocked_in_days(user)
+    return 0 if !user.preferences[:mail_delivery_failed]
+    return 0 if user.preferences[:mail_delivery_failed_data].blank?
+
+    # blocked for 60 full days
+    (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
   end
 end
