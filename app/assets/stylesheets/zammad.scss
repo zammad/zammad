@@ -5687,6 +5687,10 @@ footer {
     position: relative;
     z-index: 1;
     padding: 0 55px;
+
+    &.article-actions {
+      justify-content: space-around;
+    }
   }
 
   .article-content-meta {
@@ -5968,11 +5972,11 @@ footer {
   }
 
   .ticket-article-item .task-subline {
-    margin-top: 12px;
+    margin-top: 7px;
   }
 
   .article-action {
-    padding-top: 5px;
+    padding: 5px 16px 5px 16px;
     margin-top: 5px;
     color: hsl(198,4%,56%);
     font-size: 12px;
