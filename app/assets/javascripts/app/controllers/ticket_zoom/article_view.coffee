@@ -451,7 +451,7 @@ class ArticleViewItem extends App.ControllerObserver
       height = bubbleContent.attr('data-height')
       @seeMoreOpen = true
 
-    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').text(label)
+    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(label)
 
     bubbleContent.velocity
       properties:
