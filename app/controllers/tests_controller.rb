@@ -2,6 +2,8 @@
 
 class TestsController < ApplicationController
 
+  prepend_before_action -> { authentication_check_only }
+
   # GET /test/wait
   def wait
     sleep params[:sec].to_i

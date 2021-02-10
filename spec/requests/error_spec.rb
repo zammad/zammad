@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Error handling', type: :request do
 
   shared_examples 'JSON response format' do
+
     let(:as) { :json }
 
     it { expect(response).to have_http_status(http_status) }
@@ -29,55 +30,6 @@ RSpec.describe 'Error handling', type: :request do
     it { expect(response.body).to include("<title>#{title}</title>") }
     it { expect(response.body).to include("<h1>#{headline}</h1>") }
     it { expect(response.body).to include(message) }
-  end
-
-  context 'error with confidential message is raised' do
-
-    let!(:ticket) { create(:ticket) }
-    let(:invalid_group_id) { 99_999 }
-    let(:http_status) { :unprocessable_entity }
-
-    before do
-      authenticated_as(requesting_user)
-      put "/api/v1/tickets/#{ticket.id}?all=true", params: { group_id: invalid_group_id }, as: as
-    end
-
-    context 'agent user' do
-      let(:requesting_user) { create(:agent, groups: Group.all) }
-      let(:message) { 'Please contact your administrator' }
-
-      context 'requesting JSON' do
-        include_examples 'JSON response format'
-      end
-
-      context 'requesting HTML' do
-        let(:title) { '422: Unprocessable Entity' }
-        let(:headline) { '422: The change you wanted was rejected.' }
-
-        include_examples 'HTML response format'
-      end
-    end
-
-    context 'admin user' do
-      let(:requesting_user) { create(:admin, groups: Group.all) }
-
-      if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
-        let(:message) { 'Mysql2::Error' }
-      else
-        let(:message) { 'PG::ForeignKeyViolation' }
-      end
-
-      context 'requesting JSON' do
-        include_examples 'JSON response format'
-      end
-
-      context 'requesting HTML' do
-        let(:title) { '422: Unprocessable Entity' }
-        let(:headline) { '422: The change you wanted was rejected.' }
-
-        include_examples 'HTML response format'
-      end
-    end
   end
 
   context 'URL route does not exist' do
@@ -147,12 +99,14 @@ RSpec.describe 'Error handling', type: :request do
   context 'exception is raised' do
 
     before do
+      authenticated_as(create(user))
       get '/tests/raised_exception', params: { exception: exception.name, message: message }, as: as
     end
 
     shared_examples 'exception check' do |message, exception, http_status, title, headline|
 
       context "#{exception} is raised" do
+
         let(:exception) { exception }
         let(:http_status) { http_status }
         let(:message) { message }
@@ -178,12 +132,30 @@ RSpec.describe 'Error handling', type: :request do
       include_examples 'exception check', 'Please contact your administrator', exception, http_status, title, headline
     end
 
-    include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
-    include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
-    include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
-    include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
-    include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-    include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-    include_examples 'masks exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+    context 'with agent user' do
+
+      let(:user) { :agent }
+
+      include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
+      include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
+      include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
+      include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
+      include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'masks exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+    end
+
+    context 'with admin user' do
+
+      let(:user) { :admin }
+
+      include_examples 'handles exception', Exceptions::NotAuthorized, :unauthorized, '401: Unauthorized', '401: Unauthorized'
+      include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
+      include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
+      include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
+      include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', StandardError, :internal_server_error, '500: Something went wrong', "500: We're sorry, but something went wrong."
+    end
   end
 end
