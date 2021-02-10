@@ -76,18 +76,19 @@
                 inputField = manager.inputField,
                 cancelContainer = manager.cancelContainer,
                 inCounter = 0,
-                overEvent = function (e) {
+                onDragEnter = function (e) {
                     e.preventDefault()
                     e.stopPropagation()
                     inCounter++
                     //console.log('in', inCounter, dropContainer)
                     showDropZone(dropContainer)
                 };
-                stopEvent = function (e) {
+                onDragOver = function (e) {
+                    e.dataTransfer.dropEffect = 'copy';
                     e.preventDefault()
                     e.stopPropagation()
                 };
-                leaveEvent = function (e) {
+                onDragLeave = function (e) {
                     e.preventDefault()
                     e.stopPropagation()
                     inCounter--
@@ -95,6 +96,12 @@
                     if ( inCounter == 0 ) {
                       hideDropZone(dropContainer)
                     }
+                };
+                onDrop = function (e) {
+                    inCounter = 0
+                    onDragEnter(e);
+                    hideDropZone(dropContainer)
+                    manager.processFiles(e.dataTransfer.files)
                 };
                 showDropZone = function(dropContainer) {
                   $(dropContainer).trigger('html5Upload.dropZone.show')
@@ -112,15 +119,10 @@
                 }
 
             if (dropContainer) {
-                manager.on(dropContainer, 'dragleave', leaveEvent)
-                manager.on(dropContainer, 'dragover', stopEvent)
-                manager.on(dropContainer, 'dragenter', overEvent)
-                manager.on(dropContainer, 'drop', function (e) {
-                    inCounter = 0
-                    stopEvent(e);
-                    hideDropZone(dropContainer)
-                    manager.processFiles(e.dataTransfer.files)
-                });
+                manager.on(dropContainer, 'dragleave', onDragLeave)
+                manager.on(dropContainer, 'dragover', onDragOver)
+                manager.on(dropContainer, 'dragenter', onDragEnter)
+                manager.on(dropContainer, 'drop', onDrop)
             }
 
             if (inputField) {
