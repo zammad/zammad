@@ -44,6 +44,7 @@ class App.AnswerList extends App.Controller
       attribute =
         name:        'icon'
         display:     ''
+        parentClass:  'noTruncate'
         translation: false
         width:       '28px'
         displayWidth:28
