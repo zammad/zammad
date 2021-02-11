@@ -1051,6 +1051,14 @@ test("identify signature by HTML", function() {
   var result  = App.Utils.signatureIdentifyByHtml(message)
   equal(result, should)
 
+
+  // test if, according to jQuery, invalid HTML does not cause a a crash
+  // https://github.com/zammad/zammad/issues/3393
+  message = "<td></td><table></table><div>test 123 </div>"
+  should  = message
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
   // simple case 1
   message = '<div>actual content</div><blockquote>quoted content</blockquote>'
   should  = '<div>actual content</div><span class="js-signatureMarker"></span><blockquote>quoted content</blockquote>'
@@ -3386,3 +3394,20 @@ test('App.Utils.signatureIdentifyByHtmlHelper()', function() {
 
   equal(result, "&lt;script&gt;alert('fish2');&lt;/script&gt;<span class=\"js-signatureMarker\"></span><blockquote></blockquote>", 'signatureIdentifyByHtmlHelper does not reactivate alert')
 });
+
+test("#safeParseHtml", function() {
+  var unwrap = input => $('<div>').html(input)[0].innerHTML
+
+  var html = "<div>test 123 </div>"
+  var result  = App.Utils.safeParseHtml(html)
+  var should = html
+  equal(unwrap(result), html)
+
+
+  // test if, according to jQuery, invalid HTML does not cause a a crash
+  // https://github.com/zammad/zammad/issues/3393
+  html   = "<td></td><table></table><div>test 123 </div>"
+  should = "<table></table><div>test 123 </div>"
+  result = App.Utils.safeParseHtml(html)
+  equal(unwrap(result), should)
+})

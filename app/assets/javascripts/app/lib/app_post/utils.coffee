@@ -771,7 +771,7 @@ class App.Utils
     if @isMicrosoftOffice message
       return @signatureIdentifyByPlaintext message
 
-    message_element = $($.parseHTML(message))
+    message_element = $(App.Utils.safeParseHtml(message))
     if message_element.length == 1 && $(message_element[0])?.children()?.length
       message_element[0].innerHTML = @signatureIdentifyByHtmlHelper(message_element[0].innerHTML)
       return message_element[0].outerHTML
@@ -792,7 +792,10 @@ class App.Utils
       return true if tag is 'DIV' && (el.data('signature') || el.prop('class') is 'yahoo_quoted')
       _.some el.children(), (el) -> isQuoteOrSignature el
 
-    $('<div/>').html(message).contents().each (index, node) ->
+    try content = $('<div/>').html(message)
+    catch e then content = $('<div/>').html('<div>' + message + '</div>')
+
+    content.contents().each (index, node) ->
       text = $(node).text()
       if node.nodeType == Node.TEXT_NODE
         # convert text back to HTML as it was before
@@ -1457,3 +1460,10 @@ class App.Utils
         htmlString = App.Utils.text2html(text)
 
     htmlString
+
+  # Parses HTML text to DOM tree
+  # jQuery's parseHTML sometimes fail when element does not have a single root element
+  # in that case, fall back to fake root element and try again
+  @safeParseHtml: (input) ->
+    try $.parseHTML(input)
+    catch e then $.parseHTML('<div>' + input + '</div>')[0].childNodes
