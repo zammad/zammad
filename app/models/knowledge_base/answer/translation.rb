@@ -11,7 +11,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   belongs_to :kb_locale,  class_name: 'KnowledgeBase::Locale', inverse_of: :answer_translations
   belongs_to :answer,     class_name: 'KnowledgeBase::Answer', inverse_of: :translations, touch: true
-  #belongs_to :updated_by, class_name: 'User', inverse_of: :answer_translations
+  belongs_to :created_by, class_name: 'User'
+  belongs_to :updated_by, class_name: 'User'
 
   belongs_to                    :content, class_name: 'KnowledgeBase::Answer::Translation::Content', inverse_of: :translation, dependent: :destroy
   accepts_nested_attributes_for :content, update_only: true
