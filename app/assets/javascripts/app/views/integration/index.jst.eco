@@ -13,7 +13,7 @@
     <tbody>
     <% for integration in @integrations: %>
       <tr data-key="<%= integration.key %>">
-        <td>
+        <td class="noTruncate">
           <% if !integration.state.current(): %>
             <%- @Icon('status', 'inactive inline') %>
           <% else: %>
