@@ -5,13 +5,14 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
   let(:ticket) { create(:ticket, group: group) }
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
   let(:customer) { create(:customer) }
+  let(:current_user_id) { customer.id }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
   end
 
   before do
-    UserInfo.current_user_id = customer.id
+    UserInfo.current_user_id = current_user_id
     visit "ticket/zoom/#{ticket_article.ticket.id}"
   end
 
@@ -65,14 +66,14 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
     context 'ticket is created by agent on behalf of customer' do
       let (:agentUser) {create(:agent)}
-      let (:customer) {create(:customer)}
-      let(:ticket) { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer, created_by_id: agentUser.id, updated_by_id: agentUser.id) }
-      let(:ticket_article) { create(:ticket_article, ticket_id: ticket.id, from: 'Created by agent on behalf of a customer', created_by_id: agentUser.id, updated_by_id: agentUser.id, origin_by_id: customer.id) }
+      let (:customer) {create(:customer, firstname: 'Jacob', lastname: 'Peralta')}
+      let(:current_user_id) { agentUser.id }
+      let(:ticket) { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer) }
+      let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Created by agent on behalf of a customer', origin_by_id: customer.id) }
 
       it 'includes OP without email when replying' do
         within(:active_content) do
           highlight_and_click_reply
-          binding.pry
 
           within(:richtext) do
             expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
@@ -195,7 +196,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
     end
 
     def name
-      expected.created_by.fullname
+      expected.origin_by.fullname || expected.created_by.fullname
     end
 
     def email
