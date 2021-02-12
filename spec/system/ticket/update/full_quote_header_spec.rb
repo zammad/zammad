@@ -38,6 +38,17 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
       end
     end
 
+    it 'includes OP when article visibility toggled' do
+      within(:active_content) do
+        set_internal
+        highlight_and_click_reply
+
+        within(:richtext) do
+          expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
+        end
+      end
+    end
+
     context 'when customer is agent' do
       let(:customer) { create(:agent) }
 
@@ -47,6 +58,24 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
           within(:richtext) do
             expect(page).to contain_full_quote(ticket_article).formatted_for(:forward).ensuring_privacy(true)
+          end
+        end
+      end
+    end
+
+    context 'ticket is created by agent on behalf of customer' do
+      let (:agentUser) {create(:agent)}
+      let (:customer) {create(:customer)}
+      let(:ticket) { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer, created_by_id: agentUser.id, updated_by_id: agentUser.id) }
+      let(:ticket_article) { create(:ticket_article, ticket_id: ticket.id, from: 'Created by agent on behalf of a customer', created_by_id: agentUser.id, updated_by_id: agentUser.id, origin_by_id: customer.id) }
+
+      it 'includes OP without email when replying' do
+        within(:active_content) do
+          highlight_and_click_reply
+          binding.pry
+
+          within(:richtext) do
+            expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
           end
         end
       end
@@ -79,6 +108,10 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
   def click_forward
     click '.js-ArticleAction[data-type=emailForward]'
+  end
+
+  def set_internal
+    click '.js-ArticleAction[data-type=internal]'
   end
 
   def highlight_and_click_reply
