@@ -90,24 +90,45 @@ module CommonActions
     visit('logout')
   end
 
-  # Overwrites the Capybara::Session#visit method to allow SPA navigation.
+  # Overwrites the Capybara::Session#visit method to allow SPA navigation
+  # and visiting of external URLs.
   # All routes not starting with `/` will be handled as SPA routes.
+  # All routes containing `://` will be handled as an external URL.
   #
   # @see Capybara::Session#visit
   #
   # @example
   #  visit('logout')
-  # => visited SPA route '/#logout'
+  # => visited SPA route 'localhost:32435/#logout'
   #
   # @example
   #  visit('/test/ui')
-  # => visited regular route '/test/ui'
+  # => visited regular route 'localhost:32435/test/ui'
+  #
+  # @example
+  #  visit('https://zammad.org')
+  # => visited external URL 'https://zammad.org'
   #
   def visit(route)
-    if !route.start_with?('/')
+    if route.include?('://')
+      return without_port do
+        super(route)
+      end
+    elsif !route.start_with?('/')
       route = "/##{route}"
     end
     super(route)
+  end
+
+  # Overwrites the global Capybara.always_include_port setting (true)
+  # with false. This comes in handy when visiting external pages.
+  #
+  def without_port
+    original = Capybara.current_session.config.always_include_port
+    Capybara.current_session.config.always_include_port = false
+    yield
+  ensure
+    Capybara.current_session.config.always_include_port = original
   end
 
   # This method is equivalent to Capybara::RSpecMatchers#have_current_path
