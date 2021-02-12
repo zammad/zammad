@@ -1176,20 +1176,31 @@ raise 'Minimum one user need to have admin permissions'
       next if class_name.blank?
       next if references.blank?
 
-      ref_class = class_name.constantize
+      ref_class          = class_name.constantize
+      ref_update_columns = []
       references.each do |column, reference_found|
         next if !reference_found
 
         if user_columns.include?(column)
-          ref_class.where(column => id).find_in_batches(batch_size: 1000) do |batch_list|
-            batch_list.each do |record|
-              record.update!(column => 1)
-            rescue => e
-              Rails.logger.error e
-            end
-          end
+          ref_update_columns << column
         elsif ref_class.exists?(column => id)
           raise "Failed deleting references! Check logic for #{class_name}->#{column}."
+        end
+      end
+
+      next if ref_update_columns.blank?
+
+      where_sql = ref_update_columns.map { |column| "#{column} = #{id}" }.join(' OR ')
+      ref_class.where(where_sql).find_in_batches(batch_size: 1000) do |batch_list|
+        batch_list.each do |record|
+          ref_update_columns.each do |column|
+            next if record[column] != id
+
+            record[column] = 1
+          end
+          record.save!
+        rescue => e
+          Rails.logger.error e
         end
       end
     end
