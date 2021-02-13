@@ -249,6 +249,7 @@ class App.SearchableSelect extends Spine.Controller
     return if @animating
     if dir > 0
       target = @currentItem.attr('data-value')
+      target = App.Utils.escapeRegExp(target)
       target_menu = @optionsSubmenu.filter("[data-parent-value=\"#{target}\"]")
     else
       target_menu = @findMenuContainingValue(@currentMenu.attr('data-parent-value'))
