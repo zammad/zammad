@@ -196,7 +196,10 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
     end
 
     def name
-      expected.origin_by.fullname || expected.created_by.fullname
+      if expected.origin_by?
+        expected.origin_by.fullname
+      else
+        expected.created_by.fullname
     end
 
     def email
