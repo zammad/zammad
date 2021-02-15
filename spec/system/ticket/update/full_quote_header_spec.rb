@@ -65,8 +65,8 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
     end
 
     context 'ticket is created by agent on behalf of customer' do
-      let (:agentUser) {create(:agent)}
-      let (:customer) {create(:customer, firstname: 'Jacob', lastname: 'Peralta')}
+      let(:agentUser) { create(:agent) }
+      let(:customer) { create(:customer, firstname: 'Jacob', lastname: 'Peralta') }
       let(:current_user_id) { agentUser.id }
       let(:ticket) { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer) }
       let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Created by agent on behalf of a customer', origin_by_id: customer.id) }
