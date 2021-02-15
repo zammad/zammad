@@ -10,6 +10,7 @@ class Ticket::Article < ApplicationModel
   include HasObjectManagerAttributesValidation
 
   include Ticket::Article::Assets
+  include Ticket::Article::HasTicketContactAttributesImpact
 
   belongs_to :ticket, optional: true
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article

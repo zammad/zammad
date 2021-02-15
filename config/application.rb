@@ -31,7 +31,6 @@ module Zammad
       'observer::_ticket::_last_owner_update',
       'observer::_ticket::_pending_time',
       'observer::_ticket::_user_ticket_counter',
-      'observer::_ticket::_article_changes',
       'observer::_ticket::_article::_fillup_from_origin_by_id',
       'observer::_ticket::_article::_fillup_from_general',
       'observer::_ticket::_article::_fillup_from_email',
@@ -44,12 +43,10 @@ module Zammad
       'observer::_ticket::_ref_object_touch',
       'observer::_ticket::_online_notification_seen',
       'observer::_ticket::_stats_reopen',
-      'observer::_ticket::_escalation_update',
       'observer::_tag::_ticket_history',
       'observer::_user::_ref_object_touch',
       'observer::_user::_ticket_organization',
       'observer::_user::_geo',
-      'observer::_sla::_ticket_rebuild_escalation',
       'observer::_transaction'
 
     config.active_job.queue_adapter = :delayed_job

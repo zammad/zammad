@@ -7,6 +7,7 @@ require 'models/concerns/has_tags_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/ticket/escalation_examples'
 
 RSpec.describe Ticket, type: :model do
   subject(:ticket) { create(:ticket) }
@@ -19,6 +20,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
+  it_behaves_like 'Ticket::Escalation'
 
   describe 'Class methods:' do
     describe '.selectors' do
@@ -634,6 +636,52 @@ RSpec.describe Ticket, type: :model do
         end
       end
     end
+
+    describe '#last_original_update_at' do
+      let(:result) { ticket.last_original_update_at }
+
+      it 'returns initial customer enquiry time when customer contacted repeatedly' do
+        ticket
+
+        target = create(:ticket_article, :inbound_email, ticket: ticket)
+        travel 10.minutes
+        create(:ticket_article, :inbound_email, ticket: ticket)
+
+        expect(result).to eq target.created_at
+      end
+
+      it 'returns agent contact time when customer did not respond to agent reach out' do
+        ticket
+        create(:ticket_article, :outbound_email, ticket: ticket)
+
+        expect(result).to eq ticket.last_contact_agent_at
+      end
+
+      it 'returns nil if no customer response' do
+        ticket
+        expect(result).to be_nil
+      end
+
+      context 'with customer enquiry and agent response' do
+        before do
+          ticket
+          create(:ticket_article, :inbound_email, ticket: ticket)
+          travel 10.minutes
+          create(:ticket_article, :outbound_email, ticket: ticket)
+          travel 10.minutes
+        end
+
+        it 'returns last customer enquiry time when agent did not respond yet' do
+          target = create(:ticket_article, :inbound_email, ticket: ticket)
+
+          expect(result).to eq target.created_at
+        end
+
+        it 'returns agent response time when agent responded to customer enquiry' do
+          expect(result).to eq ticket.last_contact_agent_at
+        end
+      end
+    end
   end
 
   describe 'Attributes:' do
@@ -837,12 +885,12 @@ RSpec.describe Ticket, type: :model do
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
-          it 'is updated based on the SLA’s #update_time' do
+          it 'is updated based on the SLA’s #close_escalation_at' do
             travel(1.minute) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
 
             expect { article }
-              .to change { ticket.reload.escalation_at.to_i }
-              .to eq(3.hours.from_now.to_i)
+              .to change { ticket.reload.escalation_at }
+              .to(ticket.reload.close_escalation_at)
           end
 
           context 'when new #update_time is later than original #solution_time' do
@@ -850,8 +898,8 @@ RSpec.describe Ticket, type: :model do
               travel(2.hours) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
 
               expect { article }
-                .to change { ticket.reload.escalation_at.to_i }
-                .to eq(4.hours.after(ticket.created_at).to_i)
+                .to change { ticket.reload.escalation_at }
+                .to(4.hours.after(ticket.created_at))
             end
           end
         end
@@ -978,8 +1026,8 @@ RSpec.describe Ticket, type: :model do
 
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
-          it 'does not change' do
-            expect { article }.not_to change(ticket, :first_response_escalation_at)
+          it 'is cleared' do
+            expect { article }.to change { ticket.reload.first_response_escalation_at }.to(nil)
           end
         end
       end
@@ -1001,6 +1049,9 @@ RSpec.describe Ticket, type: :model do
         before { sla } # create sla
 
         it 'is set based on SLA’s #update_time' do
+          travel 1.minute
+          create(:ticket_article, ticket: ticket, sender_name: 'Customer')
+
           expect(ticket.reload.update_escalation_at.to_i)
             .to eq(3.hours.from_now.to_i)
         end
@@ -1011,11 +1062,12 @@ RSpec.describe Ticket, type: :model do
           let(:article) { create(:ticket_article, ticket: ticket, sender_name: 'Agent') }
 
           it 'is updated based on the SLA’s #update_time' do
-            travel(1.minute) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+            create(:ticket_article, ticket: ticket, sender_name: 'Customer')
+            travel(1.minute)
 
             expect { article }
-              .to change { ticket.reload.update_escalation_at.to_i }
-              .to(3.hours.from_now.to_i)
+              .to change { ticket.reload.update_escalation_at }
+              .to(nil)
           end
         end
       end

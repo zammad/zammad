@@ -13,5 +13,26 @@ FactoryBot.define do
         },
       }
     end
+
+    trait :condition_blank do
+      condition do
+        {}
+      end
+    end
+
+    trait :condition_title do
+      transient do
+        condition_title { nil }
+      end
+
+      condition do
+        {
+          'ticket.title' => {
+            operator: 'contains',
+            value:    condition_title
+          }
+        }
+      end
+    end
   end
 end

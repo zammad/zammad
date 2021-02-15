@@ -2,14 +2,24 @@ FactoryBot.define do
   factory :history do
     transient do
       o { Ticket.first }
+
+      history_type { 'update' }
+      history_attribute { 'state' }
     end
 
-    association :history_type, factory: :'history/type'
     o_id          { o.id }
     created_by_id { 1 }
 
+    history_type_id do
+      History.type_lookup(history_type).id
+    end
+
+    history_attribute_id do
+      History.attribute_lookup(history_attribute).id
+    end
+
     history_object_id do
-      History::Object.lookup(name: o.class.name)&.id || create(:'history/object', name: o.class.name).id
+      History.object_lookup(o.class.name).id
     end
   end
 end

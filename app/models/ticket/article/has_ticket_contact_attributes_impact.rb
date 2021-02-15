@@ -1,124 +1,131 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
-  observe 'ticket::_article'
+module Ticket::Article::HasTicketContactAttributesImpact
+  extend ActiveSupport::Concern
 
-  def after_create(record)
-
-    changed = false
-    if article_count_update(record)
-      changed = true
-    end
-
-    if first_response_at_update(record)
-      changed = true
-    end
-
-    if sender_type_update(record)
-      changed = true
-    end
-
-    if last_contact_update_at(record)
-      changed = true
-    end
-
-    # save ticket
-    if !changed
-      record.ticket.touch # rubocop:disable Rails/SkipsModelValidations
-      return
-    end
-    record.ticket.save!
+  included do
+    after_create :update_ticket_article_attributes
+    after_destroy :update_ticket_count_attribute
   end
 
-  def after_destroy(record)
+  private
+
+  def update_ticket_article_attributes
+
     changed = false
-    if article_count_update(record)
+    if article_count_update
+      changed = true
+    end
+
+    if first_response_at_update
+      changed = true
+    end
+
+    if sender_type_update
+      changed = true
+    end
+
+    if last_contact_update_at
       changed = true
     end
 
     # save ticket
     if !changed
-      record.ticket.touch # rubocop:disable Rails/SkipsModelValidations
+      ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
-    record.ticket.save!
+    ticket.save!
+  end
+
+  def update_ticket_count_attribute
+    changed = false
+    if article_count_update
+      changed = true
+    end
+
+    # save ticket
+    if !changed
+      ticket.touch # rubocop:disable Rails/SkipsModelValidations
+      return
+    end
+    ticket.save!
   end
 
   # get article count
-  def article_count_update(record)
-    current_count = record.ticket.article_count
+  def article_count_update
+    current_count = ticket.article_count
     sender = Ticket::Article::Sender.lookup(name: 'System')
-    count = Ticket::Article.where(ticket_id: record.ticket_id).where.not(sender_id: sender.id).count
+    count = Ticket::Article.where(ticket_id: ticket_id).where.not(sender_id: sender.id).count
     return false if current_count == count
 
-    record.ticket.article_count = count
+    ticket.article_count = count
     true
   end
 
   # set first response
-  def first_response_at_update(record)
+  def first_response_at_update
 
     # return if we run import mode
     return false if Setting.get('import_mode')
 
     # if article in internal
-    return false if record.internal
+    return false if internal
 
     # if sender is not agent
-    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
+    sender = Ticket::Article::Sender.lookup(id: sender_id)
     return false if sender.name != 'Agent'
 
     # if article is a message to customer
-    type = Ticket::Article::Type.lookup(id: record.type_id)
+    type = Ticket::Article::Type.lookup(id: type_id)
     return false if !type.communication
 
     # check if first_response_at is already set
-    return false if record.ticket.first_response_at
+    return false if ticket.first_response_at
 
     # set first_response_at
-    record.ticket.first_response_at = record.created_at
+    ticket.first_response_at = created_at
 
     true
   end
 
   # set sender type
-  def sender_type_update(record)
+  def sender_type_update
 
     # ignore if create channel is already set
-    count = Ticket::Article.where(ticket_id: record.ticket_id).count
+    count = Ticket::Article.where(ticket_id: ticket_id).count
     return false if count > 1
 
-    record.ticket.create_article_type_id   = record.type_id
-    record.ticket.create_article_sender_id = record.sender_id
+    ticket.create_article_type_id   = type_id
+    ticket.create_article_sender_id = sender_id
     true
   end
 
   # set last contact
-  def last_contact_update_at(record)
+  def last_contact_update_at
 
     # if article in internal
-    return false if record.internal
+    return false if internal
 
     # if sender is system
-    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
+    sender = Ticket::Article::Sender.lookup(id: sender_id)
     return false if sender.name == 'System'
 
     # if article is a message to customer
-    return false if !Ticket::Article::Type.lookup(id: record.type_id).communication
+    return false if !Ticket::Article::Type.lookup(id: type_id).communication
 
     # if sender is customer
-    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
-    ticket = record.ticket
+    sender = Ticket::Article::Sender.lookup(id: sender_id)
+    ticket = self.ticket
     if sender.name == 'Customer'
 
       # in case, update last_contact_customer_at on any customer follow-up
       if Setting.get('ticket_last_contact_behaviour') == 'based_on_customer_reaction'
 
         # set last_contact_at customer
-        record.ticket.last_contact_customer_at = record.created_at
+        self.ticket.last_contact_customer_at = created_at
 
         # set last_contact
-        record.ticket.last_contact_at = record.created_at
+        self.ticket.last_contact_at = created_at
 
         return true
       end
@@ -134,10 +141,10 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
          ticket.last_contact_agent_at.to_i > ticket.last_contact_customer_at.to_i
 
         # set last_contact_at customer
-        record.ticket.last_contact_customer_at = record.created_at
+        self.ticket.last_contact_customer_at = created_at
 
         # set last_contact
-        record.ticket.last_contact_at = record.created_at
+        self.ticket.last_contact_at = created_at
       end
       return true
     end
@@ -146,11 +153,12 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     return false if sender.name != 'Agent'
 
     # set last_contact_agent_at
-    record.ticket.last_contact_agent_at = record.created_at
+    self.ticket.last_contact_agent_at = created_at
 
     # set last_contact
-    record.ticket.last_contact_at = record.created_at
+    self.ticket.last_contact_at = created_at
 
     true
   end
+
 end

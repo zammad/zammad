@@ -3,6 +3,7 @@
 class Calendar < ApplicationModel
   include ChecksClientNotification
   include CanUniqName
+  include HasEscalationCalculationImpact
 
   store :business_hours
   store :public_holidays
@@ -324,7 +325,7 @@ returns
     holidays
   end
 
-  def biz
+  def biz(breaks: {})
     Biz::Schedule.new do |config|
 
       # get business hours
@@ -335,7 +336,10 @@ returns
 
       # get holidays
       config.holidays = public_holidays_to_array
+
       config.time_zone = timezone
+
+      config.breaks = breaks
     end
   end
 

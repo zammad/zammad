@@ -1,153 +1,164 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket Escalation', type: :request do
+  let(:sla_first_response) { 1.hour }
+  let(:sla_update)         { 3.hours }
+  let(:sla_close)          { 4.hours }
 
-  let!(:agent) do
-    create(:agent, groups: Group.all)
-  end
-  let!(:customer) do
-    create(:customer)
-  end
-  let!(:calendar) do
-    create(
-      :calendar,
-      name:           'Escalation Test',
-      timezone:       'Europe/Berlin',
-      business_hours: {
-        mon: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        tue: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        wed: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        thu: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        fri: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        sat: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-        sun: {
-          active:     true,
-          timeframes: [ ['00:00', '23:59'] ]
-        },
-      },
-      default:        true,
-      ical_url:       nil,
-    )
-  end
-  let!(:sla) do
-    create(
-      :sla,
-      name:                'test sla 1',
-      condition:           {
-        'ticket.title' => {
-          operator: 'contains',
-          value:    'some value 123',
-        },
-      },
-      first_response_time: 60,
-      update_time:         180,
-      solution_time:       240,
-      calendar:            calendar,
-    )
-  end
-  let!(:mail_group) do
-    create(:group, email_address: create(:email_address) )
+  let!(:mail_group) { create(:group, email_address: create(:email_address) ) }
+
+  let(:calendar) { create(:calendar, :'24/7') }
+  let(:sla) do
+    create(:sla,
+           calendar:            calendar,
+           first_response_time: sla_first_response / 1.minute,
+           update_time:         sla_update / 1.minute,
+           solution_time:       sla_close / 1.minute)
   end
 
-  describe 'request handling' do
+  define :json_equal_date do
+    match do
+      actual&.sub(/.\d\d\dZ$/, 'Z') == expected&.iso8601
+    end
+  end
 
-    it 'does escalate by ticket created via web' do
+  shared_examples 'response matching object' do
+    %w[escalation_at first_response_escalation_at update_escalation_at close_escalation_at].each do |attribute|
+      it "#{attribute} is representing the same time" do
+        expect(json_response[attribute]).to json_equal_date ticket[attribute]
+      end
+    end
+  end
+
+  before do
+    freeze_time
+    sla
+  end
+
+  context 'when customer creates ticket via web', authenticated_as: :customer do
+    subject(:ticket) { Ticket.find(json_response['id']) }
+
+    let(:customer) { create(:customer) }
+
+    before do
       params = {
         title:   'some value 123',
         group:   mail_group.name,
         article: {
-          body: 'some test 123',
+          type_id: Ticket::Article::Type.find_by(name: 'web').id,
+          body:    'some test 123',
         },
       }
 
-      authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:created)
-
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
-      expect(json_response['title']).to eq('some value 123')
-      expect(json_response['updated_by_id']).to eq(customer.id)
-      expect(json_response['created_by_id']).to eq(customer.id)
-
-      ticket_p = Ticket.find(json_response['id'])
-
-      expect(json_response['escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['escalation_at'].iso8601)
-      expect(json_response['first_response_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['first_response_escalation_at'].iso8601)
-      expect(json_response['update_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['update_escalation_at'].iso8601)
-      expect(json_response['close_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['close_escalation_at'].iso8601)
-
-      expect(ticket_p.escalation_at).to be_truthy
-      expect(ticket_p.first_response_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)
-      expect(ticket_p.update_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 3.hours).to_i)
-      expect(ticket_p.close_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 4.hours).to_i)
-      expect(ticket_p.escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)
     end
 
-    it 'does escalate by ticket got created via email - reply by agent via web' do
+    it_behaves_like 'response matching object'
 
-      email = "From: Bob Smith <customer@example.com>
-To: #{mail_group.email_address.email}
-Subject: some value 123
+    it 'first response escalation in 1h' do
+      expect(ticket.first_response_escalation_at).to eq 1.hour.from_now
+    end
 
-Some Text"
+    it 'update_escalation in 3h' do
+      expect(ticket.update_escalation_at).to eq 3.hours.from_now
+    end
 
-      ticket_p, _article_p, user_p, _mail = Channel::EmailParser.new.process({}, email)
-      ticket_p.reload
-      expect(ticket_p.escalation_at).to be_truthy
-      expect(ticket_p.first_response_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)
-      expect(ticket_p.update_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 3.hours).to_i)
-      expect(ticket_p.close_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 4.hours).to_i)
-      expect(ticket_p.escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)
+    it 'close escalation in 4h' do
+      expect(ticket.close_escalation_at).to eq 4.hours.from_now
+    end
 
-      travel 3.hours
+    it 'next escalation is closest escalation' do
+      expect(ticket.escalation_at).to eq 1.hour.from_now
+    end
+  end
 
+  context 'when customer sends email' do
+    subject(:ticket) { ticket_mail_in }
+
+    before { ticket }
+
+    it 'first response escalation in 1h' do
+      expect(ticket.first_response_escalation_at).to eq 1.hour.from_now
+    end
+
+    it 'update_escalation in 3h' do
+      expect(ticket.update_escalation_at).to eq 3.hours.from_now
+    end
+
+    it 'close escalation in 4h' do
+      expect(ticket.close_escalation_at).to eq 4.hours.from_now
+    end
+
+    it 'next escalation is closest escalation' do
+      expect(ticket.escalation_at).to eq 1.hour.from_now
+    end
+  end
+
+  context 'when agent responds via web', authenticated_as: :agent do
+    subject(:ticket) { ticket_mail_in }
+
+    let(:agent) { create(:agent, groups: Group.all) }
+
+    before { ticket && travel(3.hours) }
+
+    it_behaves_like 'response matching object' do
+      before { ticket_respond_web }
+    end
+
+    it 'clears first response escalation' do
+      expect { ticket_respond_web }.to change(ticket, :first_response_escalation_at).to(nil)
+    end
+
+    it 'changes update escalation' do
+      expect { ticket_respond_web }.to change(ticket, :update_escalation_at)
+    end
+
+    it 'update escalation is nil since agent responded' do
+      ticket_respond_web
+      expect(ticket.update_escalation_at).to be_nil
+    end
+
+    it 'does not change close escalation' do
+      expect { ticket_respond_web }.not_to change(ticket, :close_escalation_at)
+    end
+
+    it 'change next escalation' do
+      expect { ticket_respond_web }.to change(ticket, :escalation_at)
+    end
+
+    it 'next escalation is closest escalation which is close escalation' do
+      ticket_respond_web
+      expect(ticket.escalation_at).to eq 1.hour.from_now
+    end
+
+    def ticket_respond_web
       params = {
         title:   'some value 123 - update',
         article: {
-          body: 'some test 123',
-          type: 'email',
-          to:   'customer@example.com',
+          type_id: Ticket::Article::Type.find_by(name: 'email').id,
+          body:    'some test 123',
+          type:    'email',
+          to:      'customer@example.com',
         },
       }
-      authenticated_as(agent)
-      put "/api/v1/tickets/#{ticket_p.id}", params: params, as: :json
 
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'open').id)
-      expect(json_response['title']).to eq('some value 123 - update')
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(user_p.id)
+      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
 
-      ticket_p.reload
-      expect(json_response['escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['escalation_at'].iso8601)
-      expect(json_response['first_response_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['first_response_escalation_at'].iso8601)
-      expect(json_response['update_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['update_escalation_at'].iso8601)
-      expect(json_response['close_escalation_at'].sub(/.\d\d\dZ$/, 'Z')).to eq(ticket_p['close_escalation_at'].iso8601)
-
-      expect(ticket_p.first_response_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 1.hour).to_i)
-      expect(ticket_p.update_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.last_contact_agent_at + 3.hours).to_i)
-      expect(ticket_p.close_escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 4.hours).to_i)
-      expect(ticket_p.escalation_at.to_i).to be_within(90.seconds).of((ticket_p.created_at + 4.hours).to_i)
+      ticket.reload
     end
+  end
+
+  def ticket_mail_in
+    email = <<~EMAIL
+      From: Bob Smith <customer@example.com>
+      To: #{mail_group.email_address.email}
+      Subject: some value 123
+
+      Some Text
+    EMAIL
+
+    ticket, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email)
+
+    ticket
   end
 end

@@ -48,6 +48,22 @@ FactoryBot.define do
       to   { ticket.customer.fullname }
     end
 
+    trait :outbound_note do
+      transient do
+        type_name   { 'note' }
+        sender_name { 'Agent' }
+      end
+
+      from { ticket.group.name }
+    end
+
+    trait :inbound_web do
+      transient do
+        type_name   { 'web' }
+        sender_name { 'Customer' }
+      end
+    end
+
     factory :twitter_article do
       transient do
         type_name { 'twitter status' }
