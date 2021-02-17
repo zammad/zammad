@@ -62,6 +62,70 @@ test("form elements check", function() {
   }
   deepEqual(params, test_params, 'form param check')
 
+  $('#forms').append('<hr><h1>form elements check</h1><form id="form5"></form>')
+  var el = $('#form5')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      "configure_attributes": [
+        {
+          "name": "tree_select",
+          "display": "tree_select",
+          "tag": "tree_select",
+          "null": true,
+          "translate": true,
+          "value": "a\\a::aac",
+          "options": [
+            {
+              "value": "a\\a",
+              "name": "a\\a",
+              "children": [
+                  {
+                    "value": "a\\a::aaa",
+                    "name": "aaa",
+                  },
+                  {
+                    "value": "a\\a::aab",
+                    "name": "aab",
+                  },
+                  {
+                    "value": "a\\a::aac",
+                    "name": "aac",
+                  },
+              ]
+            },
+            {
+              "value": "bb",
+              "name": "bb",
+              "children": [
+                  {
+                    "value": "bb::bba",
+                    "name": "bba",
+                  },
+                  {
+                    "value": "bb::bbb",
+                    "name": "bbb",
+                  },
+                  {
+                    "value": "bb::bbc",
+                    "name": "bbc",
+                  },
+              ]
+            },
+          ],
+        }
+      ]
+    },
+    autofocus: true
+  });
+  equal(el.find('[name="tree_select"]').val(), 'a\\a::aac', 'check tree_select value');
+  equal(el.find('[name="tree_select"]').closest('.searchableSelect').find('.js-input').val(), 'aac', 'check tree_select .js-input value');
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    tree_select: 'a\\a::aac'
+  }
+  deepEqual(params, test_params, 'form param check')
+
   $('#forms').append('<hr><h1>form elements check</h1><form id="form2"></form>')
   var el = $('#form2')
   new App.ControllerForm({

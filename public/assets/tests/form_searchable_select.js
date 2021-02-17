@@ -184,4 +184,53 @@ test( "searchable_select check", function() {
   equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display L2', 'verify shown input')
 
 
+  $('#forms').append('<hr><h1>searchable_select check for special charaters values</h1><form id="form3"></form>')
+  var el = $('#form3')
+  var defaults = {
+    searchable_select1: 'c\\cc::aaa',
+    searchable_select2: 'c\\cc::ccc',
+  }
+  var options = [
+    { value: 'aaa', name: 'aaa display' },
+    { value: 'bbb', name: 'bbb display' },
+    { value: 'c\\cc', name: 'ccc display', children: [
+      { value: 'c\\cc::aaa', name: 'aaa display L2' },
+      { value: 'c\\cc::bbb', name: 'bbb display L2' },
+      { value: 'c\\cc::ccc', name: 'ccc display L2' },
+    ] },
+  ]
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'searchable_select1',
+          display: 'SearchableSelect1',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select1'],
+          null:    true,
+        },
+        {
+          name:    'searchable_select2',
+          display: 'SearchableSelect2',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select2'],
+          null:    true,
+        },
+      ]
+    },
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    searchable_select1: 'c\\cc::aaa',
+    searchable_select2: 'c\\cc::ccc',
+  }
+  deepEqual(params, test_params, 'form param check')
+  equal(el.find('[name="searchable_select1"].js-shadow + .js-input').val(), 'aaa display L2', 'verify shown input')
+  equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display L2', 'verify shown input')
+
+
 });
