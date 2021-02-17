@@ -163,7 +163,7 @@ returns
       )
     end
 
-    histories = histories.order(:created_at)
+    histories = histories.order(:created_at, :id)
 
     list = histories.map(&:attributes).each do |data|
       data['object'] = History::Object.lookup(id: data.delete('history_object_id'))&.name
