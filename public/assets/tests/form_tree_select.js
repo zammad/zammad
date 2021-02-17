@@ -268,3 +268,86 @@ test("form elements check", function() {
   deepEqual(params, test_params, 'form param check')
 
 });
+
+asyncTest("searchable_select submenu and option list check", function() {
+  expect(3);
+
+
+  $('#forms').append('<hr><h1>form elements check</h1><form id="form5"></form>')
+  var el = $('#form5')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      "configure_attributes": [
+        {
+          "name": "tree_select",
+          "display": "tree_select",
+          "tag": "tree_select",
+          "null": true,
+          "translate": true,
+          "value": "bb",
+          "options": [
+            {
+              "value": "a\\a",
+              "name": "a\\a",
+              "children": [
+                  {
+                    "value": "a\\a::aaa",
+                    "name": "aaa",
+                  },
+                  {
+                    "value": "a\\a::aab",
+                    "name": "aab",
+                  },
+                  {
+                    "value": "a\\a::aac",
+                    "name": "aac",
+                  },
+              ]
+            },
+            {
+              "value": "bb",
+              "name": "bb",
+              "children": [
+                  {
+                    "value": "bb::bba",
+                    "name": "bba",
+                  },
+                  {
+                    "value": "bb::bbb",
+                    "name": "bbb",
+                  },
+                  {
+                    "value": "bb::bbc",
+                    "name": "bbc",
+                  },
+              ]
+            },
+          ],
+        }
+      ]
+    },
+    autofocus: true
+  });
+
+  el.find("[name=\"tree_select\"].js-shadow + .js-input").click()
+  el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"]").mouseenter().click()
+  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"]").mouseenter().click()
+  el.find("[name=\"tree_select\"].js-shadow + .js-input").click()
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    tree_select: 'a\\a::aab'
+  }
+
+  var optionsSubmenu = el.find(".searchableSelect [data-parent-value=\"a\\\\a\"].js-optionsSubmenu")
+  var optionsList = el.find(".searchableSelect .js-optionsList")
+
+  setTimeout( () => {
+    deepEqual(params, test_params, 'form param check')
+    equal(optionsSubmenu.is('[hidden]'), false, 'options submenu menu not hidden')
+    equal(optionsList.is('[hidden]'), true, 'options list is hidden')
+    start();
+  }, 300)
+
+});

@@ -183,5 +183,59 @@ test( "searchable_select check", function() {
   equal(el.find('[name="searchable_select1"].js-shadow + .js-input').val(), 'aaa display L2', 'verify shown input')
   equal(el.find('[name="searchable_select2"].js-shadow + .js-input').val(), 'ccc display L2', 'verify shown input')
 
+});
+
+asyncTest("searchable_select submenu and option list check", function() {
+  expect(3);
+
+  $('#forms').append('<hr><h1>searchable_select check for special charaters values</h1><form id="form3"></form>')
+  var el = $('#form3')
+  var defaults = {
+    searchable_select1: 'aaa',
+  }
+  var options = [
+    { value: 'aaa', name: 'aaa display' },
+    { value: 'bbb', name: 'bbb display' },
+    { value: 'c\\cc', name: 'ccc display', children: [
+      { value: 'c\\cc::aaa', name: 'aaa display L2' },
+      { value: 'c\\cc::bbb', name: 'bbb display L2' },
+      { value: 'c\\cc::ccc', name: 'ccc display L2' },
+    ] },
+  ]
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'searchable_select1',
+          display: 'SearchableSelect1',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select1'],
+          null:    true,
+        },
+      ]
+    },
+  })
+
+  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").click()
+  el.find(".searchableSelect .js-optionsList [data-value=\"c\\\\cc\"]").mouseenter().click()
+  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"]").mouseenter().click()
+  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").click()
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    searchable_select1: 'c\\cc::bbb'
+  }
+
+  var optionsSubmenu = el.find(".searchableSelect .js-optionsSubmenu")
+  var optionsList = el.find(".searchableSelect .js-optionsList")
+
+  setTimeout( () => {
+    deepEqual(params, test_params, 'form param check')
+    equal(optionsSubmenu.is('[hidden]'), false, 'options submenu menu not hidden')
+    equal(optionsList.is('[hidden]'), true, 'options list is hidden')
+    start();
+  }, 300)
 
 });
