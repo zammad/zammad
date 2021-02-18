@@ -723,7 +723,7 @@ class TestCase < ActiveSupport::TestCase
     end
 
     true
-  rescue Selenium::WebDriver::Error::StaleElementReferenceError
+  rescue
     sleep retries
     retries += 1
     retry if retries < 3
