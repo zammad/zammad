@@ -26,7 +26,9 @@ module ActiveRecord
 
     def pluck_as_hash_map(keys, values)
       if keys.one?
-        Hash[keys.first, values]
+        {
+          keys.first => values
+        }
       else
         keys.zip(values).to_h
       end

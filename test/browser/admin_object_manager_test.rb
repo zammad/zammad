@@ -597,7 +597,7 @@ class AdminObjectManagerTest < TestCase
 
     # lexicographically ordered list of option strings
     options = %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v]
-    options_hash = Hash[options.reverse.collect { |o| [o, o] }]
+    options_hash = options.reverse.collect { |o| [o, o] }.to_h
 
     object_manager_attribute_create(
       data: {
@@ -678,7 +678,7 @@ class AdminObjectManagerTest < TestCase
       url:      browser_url,
     )
 
-    options = Hash[ %w[äöü cat delete dog ß].map { |x| [x, "#{x.capitalize} Display"] } ]
+    options = %w[äöü cat delete dog ß].map { |x| [x, "#{x.capitalize} Display"] }.to_h
     options_no_dog = options.except('dog')
     options_no_dog_no_delete = options_no_dog.except('delete')
 

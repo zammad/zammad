@@ -119,7 +119,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       handler_attempts_map[job_name][:attempts] += job.attempts
     end
 
-    Hash[handler_attempts_map.sort].each_with_index do |(job_name, job_data), index|
+    handler_attempts_map.sort.to_h.each_with_index do |(job_name, job_data), index|
       issues.push "Failed to run background job ##{index + 1} '#{job_name}' #{job_data[:count]} time(s) with #{job_data[:attempts]} attempt(s)."
     end
 
