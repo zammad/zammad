@@ -15,8 +15,8 @@
       </div>
       <%- @Icon('total-tickets', 'total-tickets') %>
     </div>
-    <%- @Icon('total-tickets', 'total-tickets') %>
+
+    <div class="stat-label"><%- @T('Tickets assigned to me: %s of %s', @StatsTicketLoadMeasure.own, @StatsTicketLoadMeasure.total) %></div>
+    <div class="stat-detail"><%- @T('Average: %s', @StatsTicketLoadMeasure.average_per_agent) %></div>
   </div>
-  <div class="stat-label"><%- @T('Tickets assigned to me: %s of %s', @StatsTicketLoadMeasure.own, @StatsTicketLoadMeasure.total) %></div>
-  <div class="stat-detail"><%- @T('Average: %s', @StatsTicketLoadMeasure.average_per_agent) %></div>
 </div>
