@@ -17,6 +17,11 @@ class TriggerWebhookJob < ApplicationJob
     executions * 10.seconds
   }
 
+  discard_on(ActiveJob::DeserializationError) do |_job, e|
+    Rails.logger.info 'Trigger, Ticket or Article may got removed before TriggerWebhookJob could be executed. Discarding job. See exception for further details.'
+    Rails.logger.info e
+  end
+
   def perform(trigger, ticket, article)
     @trigger = trigger
     @ticket  = ticket
