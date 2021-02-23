@@ -4,6 +4,13 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
   let(:endpoint) { 'http://api.example.com/webhook' }
   let(:token) { 's3cr3t-t0k3n' }
+  let(:webhook) { create(:webhook, endpoint: endpoint, signature_token: token) }
+  let(:trigger) do
+    create(:trigger,
+           perform: {
+             'notification.webhook' => { 'webhook_id' => webhook.id }
+           })
+  end
 
   context 'when serialized model argument gets deleted' do
 
@@ -11,16 +18,6 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
     let(:ticket) { create(:ticket) }
     let(:article) { create(:'ticket/article') }
-
-    let(:trigger) do
-      create(:trigger,
-             perform: {
-               'notification.webhook' => {
-                 endpoint: endpoint,
-                 token:    token
-               }
-             })
-    end
 
     shared_examples 'handle deleted argument models' do
       it 'raises no error' do
@@ -61,15 +58,6 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
     let!(:ticket) { create(:ticket) }
     let!(:article) { create(:'ticket/article') }
-
-    let(:webhook) { create(:webhook, endpoint: endpoint, signature_token: token) }
-
-    let(:trigger) do
-      create(:trigger,
-             perform: {
-               'notification.webhook' => { 'webhook_id' => webhook.id }
-             })
-    end
 
     let(:response_status) { 200 }
     let(:payload) do
