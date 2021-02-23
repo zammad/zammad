@@ -406,55 +406,73 @@ class App.UiElement.ticket_perform_action
 
     selectionRecipient = columnSelectRecipient.element()
 
-    elementTemplate = 'notification'
     if notificationType is 'webhook'
-      elementTemplate =  'webhook'
+      notificationElement = $( App.view('generic/ticket_perform_action/webhook')(
+        attribute: attribute
+        name: name
+        notificationType: notificationType
+        meta: meta || {}
+      ))
 
-    notificationElement = $( App.view("generic/ticket_perform_action/#{elementTemplate}")(
-      attribute: attribute
-      name: name
-      notificationType: notificationType
-      meta: meta || {}
-    ))
+      notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
 
-    notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
+      webhookSelection = App.UiElement.select.render(
+        name: "#{name}::webhook_id"
+        multiple: false
+        null: false
+        relation: 'Webhook'
+        value: meta.webhook_id
+        translate: false
+      )
 
-    visibilitySelection = App.UiElement.select.render(
-      name: "#{name}::internal"
-      multiple: false
-      null: false
-      options: { true: 'internal', false: 'public' }
-      value: meta.internal || 'false'
-      translate: true
-    )
+      notificationElement.find('.js-webhooks').html(webhookSelection)
 
-    notificationElement.find('.js-internal').html(visibilitySelection)
+    else
+      notificationElement = $( App.view('generic/ticket_perform_action/notification')(
+        attribute: attribute
+        name: name
+        notificationType: notificationType
+        meta: meta || {}
+      ))
 
-    notificationElement.find('.js-body div[contenteditable="true"]').ce(
-      mode: 'richtext'
-      placeholder: 'message'
-      maxlength: messageLength
-    )
-    new App.WidgetPlaceholder(
-      el: notificationElement.find('.js-body div[contenteditable="true"]').parent()
-      objects: [
-        {
-          prefix: 'ticket'
-          object: 'Ticket'
-          display: 'Ticket'
-        },
-        {
-          prefix: 'article'
-          object: 'TicketArticle'
-          display: 'Article'
-        },
-        {
-          prefix: 'user'
-          object: 'User'
-          display: 'Current User'
-        },
-      ]
-    )
+      notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
+
+      visibilitySelection = App.UiElement.select.render(
+        name: "#{name}::internal"
+        multiple: false
+        null: false
+        options: { true: 'internal', false: 'public' }
+        value: meta.internal || 'false'
+        translate: true
+      )
+
+      notificationElement.find('.js-internal').html(visibilitySelection)
+
+      notificationElement.find('.js-body div[contenteditable="true"]').ce(
+        mode: 'richtext'
+        placeholder: 'message'
+        maxlength: messageLength
+      )
+      new App.WidgetPlaceholder(
+        el: notificationElement.find('.js-body div[contenteditable="true"]').parent()
+        objects: [
+          {
+            prefix: 'ticket'
+            object: 'Ticket'
+            display: 'Ticket'
+          },
+          {
+            prefix: 'article'
+            object: 'TicketArticle'
+            display: 'Article'
+          },
+          {
+            prefix: 'user'
+            object: 'User'
+            display: 'Current User'
+          },
+        ]
+      )
 
     elementRow.find('.js-setNotification').html(notificationElement).removeClass('hide')
 

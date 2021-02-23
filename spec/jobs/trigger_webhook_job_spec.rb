@@ -62,13 +62,12 @@ RSpec.describe TriggerWebhookJob, type: :job do
     let!(:ticket) { create(:ticket) }
     let!(:article) { create(:'ticket/article') }
 
+    let(:webhook) { create(:webhook, endpoint: endpoint, signature_token: token) }
+
     let(:trigger) do
       create(:trigger,
              perform: {
-               'notification.webhook' => {
-                 endpoint: endpoint,
-                 token:    token
-               }
+               'notification.webhook' => { 'webhook_id' => webhook.id }
              })
     end
 

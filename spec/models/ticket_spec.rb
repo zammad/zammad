@@ -502,13 +502,11 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'with a "notification.webhook" trigger', performs_jobs: true do
+        let(:webhook) { create(:webhook, endpoint: 'http://api.example.com/webhook', signature_token: '53CR3t') }
         let(:trigger) do
           create(:trigger,
                  perform: {
-                   'notification.webhook' => {
-                     endpoint: 'http://api.example.com/webhook',
-                     token:    '53CR3t'
-                   }
+                   'notification.webhook' => { 'webhook_id' => webhook.id }
                  })
         end
 

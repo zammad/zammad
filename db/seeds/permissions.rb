@@ -263,6 +263,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.webhook',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Webhooks']
+  },
+)
+Permission.create_if_not_exists(
   name:         'user_preferences',
   note:         'User Preferences',
   preferences:  {},

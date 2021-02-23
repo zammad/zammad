@@ -2,6 +2,7 @@ class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]': 'edit'
     'click [data-type=new]': 'new'
+    'click [data-type=payload]': 'payload'
     'click [data-type=import]': 'import'
     'click .js-description': 'description'
 
@@ -152,6 +153,12 @@ class App.ControllerGenericIndex extends App.Controller
     else
       @table.update(objects: objects, pagerSelected: @pageData.pagerSelected, pagerTotalCount: @pageData.pagerTotalCount)
 
+    if @pageData.logFacility
+      new App.HttpLog(
+        el: @$('.page-footer')
+        facility: @pageData.logFacility
+      )
+
   edit: (id, e) =>
     e.preventDefault()
     item = App[ @genericObject ].find(id)
@@ -179,6 +186,13 @@ class App.ControllerGenericIndex extends App.Controller
       small:         @small
       large:         @large
       veryLarge:     @veryLarge
+    )
+
+  payload: (e) ->
+    e.preventDefault()
+    new App.WidgetPayloadExample(
+      baseUrl: @payloadExampleUrl
+      container: @el.closest('.content')
     )
 
   import: (e) ->

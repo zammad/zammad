@@ -15,7 +15,7 @@ module ChecksPerformValidation
       'article.note'         => %w[body subject internal],
       'notification.email'   => %w[body recipient subject],
       'notification.sms'     => %w[body recipient],
-      'notification.webhook' => %w[endpoint],
+      'notification.webhook' => %w[webhook_id],
     }
 
     check_present.each do |key, values|
