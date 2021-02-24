@@ -318,6 +318,37 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  context 'when canceling the action' do
+
+    # Regression test for issue #2669 - Close the task automatically when canceled
+    it 'closes the task' do
+      visit 'ticket/create'
+
+      task_key = find('.tasks .task.is-active')['data-key']
+      expect(page).to have_selector ".tasks .task[data-key='#{task_key}']"
+      click '.js-cancel'
+      expect(page).to have_no_selector ".tasks .task[data-key='#{task_key}']"
+    end
+
+    it 'asks for confirmation' do
+      visit 'ticket/create'
+
+      find('[name=title]').fill_in with: 'Title'
+
+      move_mouse_to(page.find('.tasks .task.is-active'))
+      click '.tasks .task.is-active .js-close'
+
+      modal_ready
+      click '.js-close'
+      modal_disappear
+
+      click '.js-cancel'
+
+      # FIXME: This is still not working.
+      # modal_ready
+    end
+  end
+
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
       create :object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
