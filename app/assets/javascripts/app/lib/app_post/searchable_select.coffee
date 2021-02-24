@@ -159,7 +159,9 @@ class App.SearchableSelect extends Spine.Controller
     @currentMenu.find('.js-option, .js-enter, .js-back')
 
   getOptionIndex: (menu, value) ->
-    menu.find('.js-option, .js-enter').filter("[data-value=\"#{value}\"]").index()
+    menu.find('.js-option, .js-enter')
+    .filter((i, el) -> $(el).attr('data-value') is value)
+    .index()
 
   nudge: (event, direction) ->
     return @toggle() if not @isOpen
@@ -249,7 +251,7 @@ class App.SearchableSelect extends Spine.Controller
     return if @animating
     if dir > 0
       target = @currentItem.attr('data-value')
-      target_menu = @optionsSubmenu.filter("[data-parent-value=\"#{target}\"]")
+      target_menu = @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is target)
     else
       target_menu = @findMenuContainingValue(@currentMenu.attr('data-parent-value'))
 
@@ -309,9 +311,11 @@ class App.SearchableSelect extends Spine.Controller
       return @optionsList
     else
       path.pop()
-      return @optionsSubmenu.filter("[data-parent-value=\"#{path.join('::')}\"]")
+      target = path.join('::')
+      return @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is target)
 
   getIndex: (menu) ->
+    return 0 if !menu
     parentValue = menu.attr('data-parent-value')
     return 0 if !parentValue
     return parentValue.split('::').length
