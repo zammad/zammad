@@ -7,6 +7,7 @@
   <div class="editControls">
     <div class="js-avatar"></div>
     <div class="editControls-item is-hidden pop-select">
+      <% if @articleTypes.length > 1: %>
       <div class="editControls-iconHolder centered js-selectedArticleType">
         <% for articleType in @articleTypes: %>
         <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
@@ -21,6 +22,7 @@
         </div>
         <% end %>
       </div>
+      <% end %>
     </div>
     <% if @internalSelector: %>
     <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
