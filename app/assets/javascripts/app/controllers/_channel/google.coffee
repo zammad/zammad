@@ -1,5 +1,5 @@
 class App.ChannelGoogle extends App.ControllerTabs
-  requiredPermission: 'admin.channel_email'
+  requiredPermission: 'admin.channel_google'
   header: 'Google'
   constructor: ->
     super
