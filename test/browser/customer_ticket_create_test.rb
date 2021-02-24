@@ -59,6 +59,11 @@ class CustomerTicketCreateTest < TestCase
       no_click: true,
     )
 
+    # regression test for issue #3012 - check that article type selection button is not shown
+    exists_not(
+      css: '.js-selectedArticleType'
+    )
+
     task_type(
       type: 'stayOnTab',
     )
