@@ -335,6 +335,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
       find('[name=title]').fill_in with: 'Title'
 
+      # hover the task item so the button becomes visible
       move_mouse_to(page.find('.tasks .task.is-active'))
       click '.tasks .task.is-active .js-close'
 
@@ -342,10 +343,12 @@ RSpec.describe 'Ticket Create', type: :system do
       click '.js-close'
       modal_disappear
 
+      # cancel the form
       click '.js-cancel'
 
-      # FIXME: This is still not working.
-      # modal_ready
+      modal_ready
+      click '.js-submit.btn--danger'
+      modal_disappear
     end
   end
 

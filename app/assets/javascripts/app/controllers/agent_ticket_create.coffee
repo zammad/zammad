@@ -442,6 +442,18 @@ class App.TicketCreate extends App.Controller
 
   cancel: (e) ->
     e.preventDefault()
+
+    # check if input has changed
+    worker = App.TaskManager.worker(@taskKey)
+    if worker && worker.changed
+      if worker.changed()
+        new Cancel(
+          key: @taskKey
+          ui: @
+          event: e
+        )
+        return
+
     @close()
 
   close: =>
@@ -617,6 +629,20 @@ class App.TicketCreate extends App.Controller
       @formEnable(e)
       return
     @formEnable(@$('.js-submit'), 'button')
+
+class Cancel extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Discard Changes'
+  buttonClass: 'btn--danger'
+  head: 'Confirm'
+
+  content: ->
+    App.i18n.translateContent('Tab has changed, do you really want to close it?')
+
+  onSubmit: =>
+    @close()
+    @ui.close()
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'
