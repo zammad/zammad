@@ -442,6 +442,16 @@ class App.TicketCreate extends App.Controller
 
   cancel: (e) ->
     e.preventDefault()
+    @close()
+
+  close: =>
+    # close ticket create task
+    App.TaskManager.remove(@taskKey)
+
+    # scroll to top
+    @scrollTo()
+
+    # show start screen
     @navigate '#'
 
   params: =>
