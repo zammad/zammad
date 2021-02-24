@@ -7,20 +7,22 @@
   <div class="editControls">
     <div class="js-avatar"></div>
     <div class="editControls-item is-hidden pop-select">
-      <div class="editControls-iconHolder centered js-selectedArticleType">
-        <% for articleType in @articleTypes: %>
-        <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
-        <%- @Icon(articleType.icon) %>
+      <% if @articleTypes.length > 1: %>
+        <div class="editControls-iconHolder centered js-selectedArticleType">
+          <% for articleType in @articleTypes: %>
+          <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
+          <%- @Icon(articleType.icon) %>
+          </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
-      <div class="pop-selector is-hidden js-articleTypes">
-        <% for articleType in @articleTypes: %>
-        <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
-          <%- @Icon(articleType.icon, 'pop-selectable-icon') %>
+        <div class="pop-selector is-hidden js-articleTypes">
+          <% for articleType in @articleTypes: %>
+          <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
+            <%- @Icon(articleType.icon, 'pop-selectable-icon') %>
+          </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
     <% if @internalSelector: %>
     <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
