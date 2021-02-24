@@ -12,14 +12,14 @@
 
 <div class="breadcrumbs-menu">
   <a href="<%= @search.url %>"
-     class="btn btn--action js-search <% if @search.enabled: %>btn--active<% end %>"
+     class="btn btn--action btn--only-icon js-search <% if @search.enabled: %>btn--active<% end %>"
      >
     <%- @Icon('magnifier') %>
   </a>
   <a href="<%= @externalUrl %>"
      target=_blank
      <% if !@externalUrl: %>disabled<% end %>
-     class="btn btn--action"
+     class="btn btn--action btn--only-icon"
      >
     <%- @Icon('external') %>
   </a>
@@ -33,7 +33,7 @@
   <% end %>
   <div class="btn btn--action btn--split--first js-pickedLanguage"><%= @kbLocales.selected?.systemLocale().locale %></div>
   <div class="dropdown dropdown--actions">
-    <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="false">
+    <div class="btn btn--action btn--split--last btn--slim btn--icon-only centered" data-toggle="dropdown" aria-expanded="false">
       <%- @Icon('arrow-down') %>
     </div>
     <ul class="dropdown-menu dropdown-menu-<%= @dir('right', 'left') %> dropdown-menu-full-height" role="menu">

@@ -11,6 +11,8 @@
   - add this.$body = $(options.container || document.body)
   modified by Felix Jul-2017
   - add rtl support
+  modified by Felix Feb-2021
+  - limit top position value to >= 0
 */
 
 
@@ -255,7 +257,7 @@
     var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
     var css = {
       left: this.$body.offset().left,
-      top: this.$body.offset().top,
+      top: Math.max(0, this.$body.offset().top),
       width: this.$body.width(),
       paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing && this.scrollbarWidth > 0 ? this.scrollbarWidth : '',
       paddingRight: this.bodyIsOverflowing && !modalIsOverflowing && this.scrollbarWidth > 0 ? this.scrollbarWidth : ''

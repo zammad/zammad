@@ -28,7 +28,7 @@
       </ul>
     </li>
   <% else: %>
-    <li class="settings">
+    <li class="settings<%= if item.class then ' '+ item.class %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti(item.name) %>">
         <%- @Icon(item.icon, 'user-menu-icon') %>
       </a>

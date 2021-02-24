@@ -3,6 +3,7 @@ class App.TicketCreate extends App.Controller
 
   elements:
     '.tabsSidebar': 'sidebar'
+    '.tabsSidebar-sidebarSpacer': 'sidebarSpacer'
 
   events:
     'click .type-tabs .tab':   'changeFormType'
@@ -170,6 +171,11 @@ class App.TicketCreate extends App.Controller
     @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
     @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
+
+    # initially hide sidebar on mobile
+    if window.matchMedia('(max-width: 767px').matches
+      @sidebar.addClass('is-closed')
+      @sidebarSpacer.addClass('is-closed')
 
   hide: =>
     @autosaveStop()

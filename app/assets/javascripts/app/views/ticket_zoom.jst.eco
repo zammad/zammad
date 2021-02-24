@@ -27,5 +27,7 @@
 
   <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical"></div>
 
-  <div class="attributeBar js-attributeBar"></div>
+  <div class="attributeBar">
+    <div class="attributeBar-inner js-attributeBar"></div>
+  </div>
 </div>

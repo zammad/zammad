@@ -47,9 +47,6 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @render()
 
-    if @defaults.body or @isIE10()
-      @openTextarea(null, true)
-
     if _.isArray(@defaults.attachments)
       for attachment in @defaults.attachments
         @renderAttachment(attachment)
@@ -101,6 +98,9 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui::ticket::shown', (data) =>
       return if data.ticket_id.toString() isnt @ticket.id.toString()
       @tokanice(@type)
+
+      if @defaults.body or @isIE10()
+        @openTextarea(null, true)
     )
 
     # rerender, e. g. on language change

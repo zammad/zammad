@@ -15,21 +15,22 @@ class App.FirstStepsClues extends App.Controller
       actions: []
     }
     {
-      container: '.user-menu'
+      container: '.user-menu .add'
       headline: 'Create'
       text: 'Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.'
       actions: [
-        'click .add .js-action',
-        'hover .add'
+        'hover .navigation',
+        'hover .user-menu .add'
       ]
     }
     {
-      container: '.user-menu'
+      container: '.user-menu .user .dropdown-menu'
       headline: 'Personal Settings'
       text: 'Here you can sign out, change the frontend language and see your last viewed items.'
       actions: [
-        'click .user .js-action',
-        'hover .user'
+        'hover .navigation',
+        'click .user-menu .user .js-action',
+        'hover .user-menu .user'
       ]
     }
     {
@@ -191,7 +192,7 @@ class App.FirstStepsClues extends App.Controller
     maxHeight = $(window).height()
 
     # try to place it parallel to the larger side
-    if target.height > target.width
+    if target.height > target.width && window.matchMedia('(min-width: 768px').matches
       # try to place it aside
       # prefer right
       if target.right + modal.width <= maxWidth
@@ -317,7 +318,7 @@ class App.FirstStepsClues extends App.Controller
       else
         # 'click .target'
         eventName = action.substr 0, action.indexOf(' ')
-        target = container.find( action.substr action.indexOf(' ') + 1 )
+        target = $( action.substr action.indexOf(' ') + 1 )
 
       switch eventName
         when 'click'

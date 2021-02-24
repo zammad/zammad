@@ -241,6 +241,11 @@ class App.TicketZoom extends App.Controller
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
 
+    # initially hide on mobile
+    if window.matchMedia('(max-width: 767px').matches
+      @el.find('.tabsSidebar').addClass('is-closed')
+      @el.find('.tabsSidebar-sidebarSpacer').addClass('is-closed')
+
     # if controller is executed twice, go to latest article (e. g. click on notification)
     if @activeState
       if @ticket_article_ids

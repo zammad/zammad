@@ -30,7 +30,7 @@ class App.UiElement.richtext.additions.RichTextToolButton
       html:      true
       animation: false
       delay:     0
-      placement: 'auto right'
+      placement: 'auto'
       theme:     'dark'
       content:   content
       container: 'body'
