@@ -234,9 +234,7 @@ class App.Controller extends Spine.Controller
     return true if @permissionCheck(key)
 
     # remember requested url
-    location = window.location.hash
-    if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
-      App.Config.set('requested_url', location)
+    @requestedUrlToStore()
 
     if closeTab
       App.TaskManager.remove(@taskKey)
@@ -255,9 +253,7 @@ class App.Controller extends Spine.Controller
     return true if @authenticateCheck()
 
     # remember requested url
-    location = window.location.hash
-    if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
-      @Config.set('requested_url', location)
+    @requestedUrlToStore()
 
     # redirect to login
     @navigate '#login'
@@ -270,6 +266,25 @@ class App.Controller extends Spine.Controller
     # return true if session exists
     return true if @Session.get()
     false
+
+  requestedUrlToStore: ->
+    location = window.location.hash
+
+    return if !location
+    return if location is '#'
+    return if location is '#login'
+    return if location is '#logout'
+    return if location is '#keyboard_shortcuts'
+
+    # remember requested url
+    @requestedUrlRemember(location)
+
+  requestedUrlRemember: (location) ->
+    App.SessionStorage.set('requested_url', location) # for authentication agains third party
+    App.Config.set('requested_url', location) # for local re-login
+
+  requestedUrlWas: ->
+    App.SessionStorage.get('requested_url') || App.Config.get('requested_url')
 
   frontendTimeUpdate: =>
     update = =>

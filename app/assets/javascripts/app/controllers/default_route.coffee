@@ -17,6 +17,14 @@ class DefaultRouter extends App.Controller
       @navigate '#getting_started', { hideCurrentLocationFromHistory: true }
       return
 
+    # redirect to requested url
+    requested_url = @requestedUrlWas()
+    if requested_url
+      @requestedUrlRemember('')
+      @log 'notice', "REDIRECT to '#{requested_url}'"
+      @navigate requested_url, { hideCurrentLocationFromHistory: true }
+      return
+
     if @Config.get('default_controller')
       @navigate @Config.get('default_controller'), { hideCurrentLocationFromHistory: true }
       return
