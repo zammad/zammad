@@ -1050,6 +1050,26 @@ class App.Utils
       num = '0' + num
     num
 
+  @parseISO: (timestamp) ->
+
+    # YYYY-MM-DD HH:mm:SS UTC
+    pattern = ///
+      ^
+        ([0-9]{4})-([0-9]{2})-([0-9]{2})
+        \s
+        ([0-9]{2}):([0-9]{2}):([0-9]{2})
+        \s
+        UTC
+      $
+    ///
+    return if !timestamp || !timestamp.match || !timestamp.match(pattern)
+
+    [YYYY, MM, DD, HH, mm, SS] = timestamp.match(pattern)[1..6]
+    dateObject = new Date( Date.parse( "#{YYYY}-#{MM}-#{DD}T#{HH}:#{mm}:#{SS}Z" ) )
+
+    return if dateObject is 'Invalid Date'
+    dateObject
+
   @icon: (name, className = '') ->
     return if !name
 

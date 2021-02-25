@@ -2000,6 +2000,50 @@ test("check formatTime format", function() {
   equal(verify, result, string)
 });
 
+// check parseISO
+test("check parseISO", function() {
+
+  var string = '2021-01-01 00:00:00 UTC'
+  var result = new Date(2021, 0, 1, 0, 0, 0);
+  var verify = App.Utils.parseISO(string)
+  deepEqual(verify, result, string)
+
+  string = '2021-01-01 00:00:00 CET'
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = '2021-01-01T00:00:00Z'
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = new Date(2021, 0, 1, 0, 0, 0);
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = '2021-02-30T00:00:00Z'
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = ''
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = undefined
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+
+  string = null
+  result = undefined;
+  verify = App.Utils.parseISO(string)
+  equal(verify, result, string)
+});
+
 // check diffPosition
 test("check diffPosition format", function() {
 

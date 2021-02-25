@@ -1358,6 +1358,38 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'ticket history', time_zone: 'Europe/Berlin' do
+
+    before do
+      # CEDT -> CEST change in 2021
+      travel_to(DateTime.parse('2021-03-28 01:00:00 UTC'))
+
+      create(:'ticket/article', ticket: ticket)
+    end
+
+    let!(:ticket) { create(:ticket, group: Group.first) }
+
+    # regression test for issue #3018 - times in ticket history are displayed in UTC
+    it 'renders localized times' do
+      visit "ticket/zoom/#{ticket.id}"
+
+      expect(page).to have_selector('.js-actions .dropdown-toggle')
+      click '.js-actions .dropdown-toggle'
+      click '.js-actions .dropdown-menu [data-type="ticket-history"]'
+
+      modal_ready
+
+      modal = find('.modal')
+      localized_time = '03/28/2021 03:00'
+
+      last_contact_customer_at = modal.find(:xpath, './/li[contains(.,"last_contact_customer_at")]')
+      expect(last_contact_customer_at.text).to include(localized_time)
+
+      last_contact_at = modal.find(:xpath, './/li[contains(.,"last_contact_at")]')
+      expect(last_contact_at.text).to include(localized_time)
+    end
+  end
+
   describe 'Macros', authenticated_as: :authenticate do
     let(:macro) { create :macro, perform: { 'article.note'=>{ 'body' => 'macro <b>body</b>', 'internal' => 'true', 'subject' => 'macro note' } } }
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }

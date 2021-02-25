@@ -82,15 +82,17 @@ class App.GenericHistory extends App.ControllerModal
         content = "#{ @T( 'This ticket was merged into' ) } #{ @T( 'ticket' ) } #{ ticket_link }"
       else
         content = "#{ @T( item.type ) } #{ @T(item.object) } "
+
+        # convert time stamps
+        if item.value_from
+          dateObject = App.Utils.parseISO(item.value_from)
+          item.value_from = App.i18n.translateTimestamp(dateObject) if dateObject
+        if item.value_to
+          dateObject = App.Utils.parseISO(item.value_to)
+          item.value_to = App.i18n.translateTimestamp(dateObject) if dateObject
+
         if item.attribute
           content += "#{ @T(item.attribute) }"
-
-          # convert time stamps
-          if item.object is 'User' && item.attribute is 'last_login'
-            if item.value_from
-              item.value_from = App.i18n.translateTimestamp( item.value_from )
-            if item.value_to
-              item.value_to = App.i18n.translateTimestamp( item.value_to )
 
         if item.value_from
           if item.value_to
