@@ -7429,7 +7429,11 @@ footer {
   }
 
   &--success {
-    background: hsl(145,51%,45%);
+    &,
+    &[contenteditable]:hover,
+    &[contenteditable]:focus {
+      background: hsl(145,51%,45%);
+    }
   }
 
   &--warning {
