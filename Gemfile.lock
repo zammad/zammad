@@ -177,6 +177,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.3.2)
       railties (>= 5)
+    dotenv (2.7.6)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -602,6 +603,7 @@ DEPENDENCIES
   deprecation_toolkit
   diffy
   doorkeeper
+  dotenv
   eco
   em-websocket
   eventmachine

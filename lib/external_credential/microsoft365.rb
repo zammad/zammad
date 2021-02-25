@@ -233,10 +233,9 @@ class ExternalCredential::Microsoft365
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
-    token.merge(
-      created_at:   Time.zone.now,
-      access_token: result['access_token'],
-    ).symbolize_keys
+    token.merge(result.symbolize_keys).merge(
+      created_at: Time.zone.now,
+    )
   end
 
   def self.user_info(id_token)
