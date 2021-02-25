@@ -206,6 +206,9 @@ group :development, :test do
 
   # image comparison in tests
   gem 'chunky_png'
+
+  # refresh ENVs in CI environment
+  gem 'dotenv', require: false
 end
 
 # Want to extend Zammad with additional gems?

@@ -48,9 +48,17 @@ cache:
   key: "centos7ruby266"
   paths:
     - vendor/ruby
+    # ATTENTION: This should be a dedicated cache only used in the job "TODO".
+    # ATTENTION: Remember to update the global CI ENV setting with the latest
+    #   version of the ENV from an artifact of the "TODO" job to use a valid key.
+    # A dedicated cache should be used because the ENVs are not bound to the Ruby version and OS.
+    # Unfortunately GitLab is not yet capable of having multiple cache-s per job
+    # See: https://gitlab.com/gitlab-org/gitlab/-/issues/32814
+    - fresh.env
 
 # Initialize application env
 before_script:
   - source /etc/profile.d/rvm.sh
+  - FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
   - bundle install -j $(nproc) --path vendor
   - bundle exec ruby script/build/database_config.rb
