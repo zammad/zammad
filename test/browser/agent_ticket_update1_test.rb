@@ -44,11 +44,6 @@ class AgentTicketUpdate1Test < TestCase
       do_not_submit: true,
     )
 
-    # regression test for issue #3012 - check that article type selection button is shown
-    exists(
-      css: '.js-selectedArticleType'
-    )
-
     close_task(
       data:            {
         title: 'some changes',

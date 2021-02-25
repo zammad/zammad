@@ -1094,6 +1094,32 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  # regression test for issue #3012 - hide article type selection button for single choice
+  describe 'article type selection' do
+    context 'when logged in as a customer', authenticated_as: :customer do
+      let(:customer)        { create(:customer) }
+      let(:ticket)          { create(:ticket, customer: customer) }
+
+      it 'hides button for single choice' do
+        visit "ticket/zoom/#{ticket.id}"
+
+        find('.articleNewEdit-body').send_keys('Some reply')
+        expect(page).to have_no_selector('.js-selectedArticleType')
+      end
+    end
+
+    context 'when logged in as an agent' do
+      let(:ticket)          { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+      it 'shows button for multiple choices' do
+        visit "ticket/zoom/#{ticket.id}"
+
+        find('.articleNewEdit-body').send_keys('Some reply')
+        expect(page).to have_selector('.js-selectedArticleType')
+      end
+    end
+  end
+
   # https://github.com/zammad/zammad/issues/3260
   describe 'next in overview macro changes URL', authenticated_as: :authenticate do
     let(:next_ticket) { create(:ticket, title: 'next Ticket', group: Group.first) }
