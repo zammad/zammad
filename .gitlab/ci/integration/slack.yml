@@ -10,6 +10,6 @@ slack:
     - when: always
   script:
     - bundle exec rake zammad:db:unseeded
-    - echo "gem 'slack-api'" >> Gemfile.local
+    - echo "gem 'slack-ruby-client'" >> Gemfile.local
     - bundle install -j $(nproc)
     - bundle exec rails test test/integration/slack_test.rb

@@ -276,10 +276,10 @@ class SlackTest < ActiveSupport::TestCase
       config.token = ENV['SLACK_CI_CHECKER_TOKEN']
     end
 
-    Slack.auth_test
+    client = Slack::Web::Client.new
+    client.auth_test
 
-    client = Slack::Client.new
-    channels = client.channels_list['channels']
+    channels = client.conversations_list['channels']
     channel_id = nil
     channels.each do |channel|
       next if channel['name'] != channel_name
@@ -290,7 +290,7 @@ class SlackTest < ActiveSupport::TestCase
       raise "ERROR: No such channel '#{channel_name}'"
     end
 
-    channel_history = client.channels_history(channel: channel_id)
+    channel_history = client.conversations_history(channel: channel_id)
     if !channel_history
       raise "ERROR: No history for channel #{channel_name}/#{channel_id}"
     end
