@@ -67,17 +67,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  # Automatically inject JavaScript needed for LiveReload
-  if ENV['RAKE_LIVE_RELOAD'].present?
-    require 'rack-livereload'
-    config.middleware.insert_after(
-      ActionDispatch::Static,
-      Rack::LiveReload,
-      no_swf:           true,
-      min_delay:        500,    # default 1000
-      max_delay:        10_000, # default 60_000
-      live_reload_port: 35_738
-    )
-  end
 end
