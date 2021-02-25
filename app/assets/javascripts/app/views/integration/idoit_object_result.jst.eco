@@ -12,7 +12,7 @@
   <tbody>
   <% for item in @items: %>
     <tr>
-      <td><input type="checkbox" name="object_id" value="<%= item.id %>"/></td>
+      <td class="noTruncate"><input type="checkbox" name="object_id" value="<%= item.id %>"/></td>
       <td title="<%= item.id %>"><%= item.id %></td>
       <td title="<%= item.title %>"><a href="<%- item.link %>" target="_blank"><%= item.title %></a></td>
       <td><%= item.cmdb_status_title %></td>
