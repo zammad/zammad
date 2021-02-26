@@ -116,8 +116,17 @@ Oversized Email Message Body #{'#' * 120_000}
     assert_equal(large_message, eml_data)
 
     # 2. verify that a postmaster response email has been sent to the sender
-    imap.select('inbox')
-    message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+    message_ids = nil
+    5.times do |sleep_offset|
+      imap.select('inbox')
+      message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+
+      break if message_ids.count.positive?
+
+      # send mail hasn't arrived yet in the inbox
+      sleep sleep_offset
+    end
+
     assert(message_ids.count.positive?, 'Must have received a reply from the postmaster')
     imap_message_id = message_ids.last
     msg = imap.fetch(imap_message_id, 'RFC822')[0].attr['RFC822']
