@@ -887,7 +887,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       return
     end
 
-    Rails.logger.error "Send mail too large postmaster message to: #{reply_mail[:to]}"
+    Rails.logger.info "Send mail too large postmaster message to: #{reply_mail[:to]}"
     reply_mail[:from] = EmailAddress.find_by(channel: channel).email
     channel.deliver(reply_mail)
   rescue => e
