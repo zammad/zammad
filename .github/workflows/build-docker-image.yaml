@@ -2,7 +2,7 @@ name: build-docker-image
 
 on:
   push:
-    branches: [develop]
+    branches: [thorsteneckel-debug-docker-image-build]
 
 jobs:
   build-docker-image:

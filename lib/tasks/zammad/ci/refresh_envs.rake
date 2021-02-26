@@ -1,11 +1,13 @@
-require 'dotenv'
-
 namespace :zammad do
 
   namespace :ci do
 
     desc 'Re-fresh-es dynamic ENV variables'
     task refresh_envs: :environment do
+
+      # require only at runtime of process to avoid errors when loading
+      # rake tasks in production without this gem installed
+      require 'dotenv'
 
       Dotenv.overload('fresh.env')
 
