@@ -149,6 +149,30 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['created_by_id']).to eq(agent.id)
     end
 
+    it 'does ticket create with empty article body' do
+      params = {
+        title:    'a new ticket with empty article body',
+        group:    ticket_group.name,
+        priority: '2 normal',
+        state:    'new',
+        customer: customer.email,
+        article:  { body: '' }
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
+      expect(json_response['title']).to eq('a new ticket with empty article body')
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
+      ticket = Ticket.find(json_response['id'])
+      expect(ticket.articles.count).to eq(1)
+      article = ticket.articles.first
+      expect(article.body).to eq('')
+    end
+
     it 'does ticket create with agent - wrong owner_id - 0 (01.05)' do
       params = {
         title:       'a new ticket #4',
@@ -1740,6 +1764,40 @@ RSpec.describe 'Ticket', type: :request do
       ticket = Ticket.find(json_response['id'])
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['title']).to eq('a update ticket #4')
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['number']).to eq(expected_ticket_number)
+    end
+
+    it 'does ticket update with empty article param' do
+      title = 'a new ticket'
+      ticket = create(
+        :ticket,
+        title:         title,
+        group:         ticket_group,
+        customer_id:   customer.id,
+        updated_by_id: agent.id,
+        created_by_id: agent.id,
+      )
+
+      params = {
+        state:   Ticket::State.lookup(name: 'close'),
+        article: {}
+      }
+      authenticated_as(agent)
+      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Hash)
+
+      expect(json_response['state_id']).to eq(ticket.state_id)
+      expect(json_response['state']).to be_falsey
+      expect(json_response['priority_id']).to eq(ticket.priority_id)
+      expect(json_response['priority']).to be_falsey
+      expect(json_response['group_id']).to eq(ticket.group_id)
+      expect(json_response['group']).to be_falsey
+      expect(json_response['customer_id']).to eq(customer.id)
+      expect(json_response['updated_by_id']).to eq(agent.id)
+      expect(json_response['created_by_id']).to eq(agent.id)
+      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
+      expect(json_response['title']).to eq(ticket.title)
+      expect(ticket.articles.count).to eq(0)
     end
 
     it 'does ticket split with html - check attachments (05.01)' do
