@@ -48,7 +48,7 @@ module Import
         @no_new_counter += 1
 
         # check max 50 entries with no or no new attributes in a row
-        @enough_examples = @no_new_counter != 50
+        @enough = @no_new_counter != 50
 
         false
       end

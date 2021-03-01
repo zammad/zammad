@@ -56,7 +56,9 @@ module Import
         parent = parent.id if parent.respond_to?(:id) # type coercion
         @connection.folders(root: parent)
       rescue Viewpoint::EWS::EwsFolderNotFound => e
-        logger.warn(e) && return
+        logger.warn("Try to get children folders of: #{parent.inspect}")
+        logger.warn(e)
+        nil
       end
     end
   end
