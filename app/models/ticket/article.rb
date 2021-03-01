@@ -10,7 +10,18 @@ class Ticket::Article < ApplicationModel
   include HasObjectManagerAttributesValidation
 
   include Ticket::Article::Assets
+  include Ticket::Article::EnqueueCommunicateEmailJob
+  include Ticket::Article::EnqueueCommunicateFacebookJob
+  include Ticket::Article::EnqueueCommunicateSmsJob
+  include Ticket::Article::EnqueueCommunicateTelegramJob
+  include Ticket::Article::EnqueueCommunicateTwitterJob
   include Ticket::Article::HasTicketContactAttributesImpact
+  include Ticket::Article::ResetsTicketState
+
+  # AddsMetadataGeneral depends on AddsMetadataOriginById, so load that first
+  include Ticket::Article::AddsMetadataOriginById
+  include Ticket::Article::AddsMetadataGeneral
+  include Ticket::Article::AddsMetadataEmail
 
   belongs_to :ticket, optional: true
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article

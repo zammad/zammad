@@ -15,6 +15,12 @@ class Ticket < ApplicationModel
   include HasLinks
   include HasObjectManagerAttributesValidation
   include HasTaskbars
+  include Ticket::CallsStatsTicketReopenLog
+  include Ticket::EnqueuesUserTicketCounterJob
+  include Ticket::ResetsPendingTimeSeconds
+  include Ticket::SetsCloseTime
+  include Ticket::SetsOnlineNotificationSeen
+  include Ticket::TouchesAssociations
 
   include ::Ticket::Escalation
   include ::Ticket::Subject
@@ -26,6 +32,9 @@ class Ticket < ApplicationModel
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
   before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
+
+  # This must be loaded late as it depends on the internal before_create and before_update handlers of ticket.rb.
+  include Ticket::SetsLastOwnerUpdateTime
 
   validates :group_id, presence: true
 

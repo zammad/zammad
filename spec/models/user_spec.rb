@@ -7,6 +7,7 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/user/performs_geo_lookup_examples'
 require 'models/user/has_ticket_create_screen_impact_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/concerns/has_taskbars_examples'
@@ -29,6 +30,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'User::HasTicketCreateScreenImpact'
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
+  it_behaves_like 'UserPerformsGeoLookup'
 
   describe 'Class methods:' do
     describe '.authenticate' do

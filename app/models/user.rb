@@ -19,6 +19,9 @@ class User < ApplicationModel
   include User::Assets
   include User::Search
   include User::SearchIndex
+  include User::TouchesOrganization
+  include User::PerformsGeoLookup
+  include User::UpdatesTicketOrganization
 
   has_and_belongs_to_many :organizations,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify

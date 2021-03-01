@@ -5,13 +5,6 @@ RSpec.describe CommunicateTwitterJob, type: :job do
   let(:article) { create(:twitter_article, **(try(:factory_options) || {})) }
 
   describe 'core behavior', :use_vcr do
-    # This job runs automatically whenever an article is created.
-    # We disable this auto-execution so we can invoke it manually in the tests below.
-    around do |example|
-      ActiveRecord::Base.observers.disable('observer::_ticket::_article::_communicate_twitter')
-      example.run
-      ActiveRecord::Base.observers.enable('observer::_ticket::_article::_communicate_twitter')
-    end
 
     context 'for tweets' do
       let(:tweet_attributes) do

@@ -4,9 +4,15 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_tags_examples'
+require 'models/concerns/tag/writes_to_ticket_history_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/ticket/calls_stats_ticket_reopen_log_examples'
+require 'models/concerns/ticket/enqueues_user_ticket_counter_job_examples'
+require 'models/concerns/ticket/resets_pending_time_seconds_examples'
+require 'models/concerns/ticket/sets_close_time_examples'
+require 'models/concerns/ticket/sets_last_owner_update_time_examples'
 require 'models/ticket/escalation_examples'
 
 RSpec.describe Ticket, type: :model do
@@ -17,10 +23,16 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory', history_relation_object: 'Ticket::Article'
   it_behaves_like 'HasTags'
+  it_behaves_like 'TagWritesToTicketHistory'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributesValidation'
   it_behaves_like 'Ticket::Escalation'
+  it_behaves_like 'TicketCallsStatsTicketReopenLog'
+  it_behaves_like 'TicketEnqueuesTicketUserTicketCounterJob'
+  it_behaves_like 'TicketResetsPendingTimeSeconds'
+  it_behaves_like 'TicketSetsCloseTime'
+  it_behaves_like 'TicketSetsLastOwnerUpdateTime'
 
   describe 'Class methods:' do
     describe '.selectors' do

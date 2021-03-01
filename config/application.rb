@@ -27,26 +27,6 @@ module Zammad
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
       'observer::_session',
-      'observer::_ticket::_close_time',
-      'observer::_ticket::_last_owner_update',
-      'observer::_ticket::_pending_time',
-      'observer::_ticket::_user_ticket_counter',
-      'observer::_ticket::_article::_fillup_from_origin_by_id',
-      'observer::_ticket::_article::_fillup_from_general',
-      'observer::_ticket::_article::_fillup_from_email',
-      'observer::_ticket::_article::_communicate_email',
-      'observer::_ticket::_article::_communicate_facebook',
-      'observer::_ticket::_article::_communicate_sms',
-      'observer::_ticket::_article::_communicate_twitter',
-      'observer::_ticket::_article::_communicate_telegram',
-      'observer::_ticket::_reset_new_state',
-      'observer::_ticket::_ref_object_touch',
-      'observer::_ticket::_online_notification_seen',
-      'observer::_ticket::_stats_reopen',
-      'observer::_tag::_ticket_history',
-      'observer::_user::_ref_object_touch',
-      'observer::_user::_ticket_organization',
-      'observer::_user::_geo',
       'observer::_transaction'
 
     config.active_job.queue_adapter = :delayed_job
