@@ -111,13 +111,11 @@
       }
 
       this.setDefaultTime(this.defaultTime);
-      this.blurElement()
     },
 
     blurElement: function() {
       this.highlightedUnit = null;
       this.updateFromElementVal();
-      this.$element.get(0).setSelectionRange(0,0)
     },
 
     clear: function() {
@@ -418,7 +416,14 @@
       this.$widget.detach();
     },
 
-    highlightUnit: function() {
+    highlightUnit: function(e) {
+      setTimeout($.proxy(this.highlightUnitDelayed, this), 0);
+    },
+
+    // has to run asynchronously to keep both Firefox and Safari
+    // https://github.com/zammad/zammad/issues/3414
+    // https://github.com/zammad/zammad/issues/2887
+    highlightUnitDelayed: function(e) {
       this.position = this.getCursorPosition();
       if (this.position >= 0 && this.position <= 2) {
         this.highlightHour();
