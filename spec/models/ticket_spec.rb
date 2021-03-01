@@ -1508,4 +1508,189 @@ RSpec.describe Ticket, type: :model do
       end
     end
   end
+
+  describe '.search_index_attribute_lookup_oversized?' do
+    subject!(:ticket) { create(:ticket) }
+
+    context 'when payload is ok' do
+      let(:current_payload_size) { 3.megabyte }
+
+      it 'return false' do
+        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to eq false
+      end
+    end
+
+    context 'when payload is bigger' do
+      let(:current_payload_size) { 350.megabyte }
+
+      it 'return true' do
+        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to eq true
+      end
+    end
+  end
+
+  describe '.search_index_attribute_lookup_file_oversized?' do
+    subject!(:store) do
+      Store.add(
+        object:        'SomeObject',
+        o_id:          1,
+        data:          (1024**800_000).to_s, # with 2.4 mb
+        filename:      'test.TXT',
+        created_by_id: 1,
+      )
+    end
+
+    context 'when total payload is ok' do
+      let(:current_payload_size) { 200.megabyte }
+
+      it 'return false' do
+        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to eq false
+      end
+    end
+
+    context 'when total payload is oversized' do
+      let(:current_payload_size) { 299.megabyte }
+
+      it 'return true' do
+        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to eq true
+      end
+    end
+  end
+
+  describe '.search_index_attribute_lookup_file_ignored?' do
+    context 'when attachment is indexable' do
+      subject!(:store_with_indexable_extention) do
+        Store.add(
+          object:        'SomeObject',
+          o_id:          1,
+          data:          'some content',
+          filename:      'test.TXT',
+          created_by_id: 1,
+        )
+      end
+
+      it 'return false' do
+        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_with_indexable_extention)).to eq false
+      end
+    end
+
+    context 'when attachment is no indexable' do
+      subject!(:store_without_indexable_extention) do
+        Store.add(
+          object:        'SomeObject',
+          o_id:          1,
+          data:          'some content',
+          filename:      'test.BIN',
+          created_by_id: 1,
+        )
+      end
+
+      it 'return true' do
+        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_without_indexable_extention)).to eq true
+      end
+    end
+  end
+
+  describe '.search_index_attribute_lookup' do
+    subject!(:ticket) { create(:ticket) }
+
+    let(:search_index_attribute_lookup) do
+      article1 = create(:ticket_article, ticket: ticket)
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'some content',
+        filename:      'some_file.bin',
+        preferences:   {
+          'Content-Type' => 'text/plain',
+        },
+        created_by_id: 1,
+      )
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          (1024**800_000).to_s, # with 2.4 mb
+        filename:      'some_file.pdf',
+        preferences:   {
+          'Content-Type' => 'image/pdf',
+        },
+        created_by_id: 1,
+      )
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          (1024**2_000_000).to_s, # with 5,8 mb
+        filename:      'some_file.txt',
+        preferences:   {
+          'Content-Type' => 'text/plain',
+        },
+        created_by_id: 1,
+      )
+      create(:ticket_article, ticket: ticket, body: (1024**400_000).to_s.split(/(.{100})/).join(' ')) # body with 1,2 mb
+      create(:ticket_article, ticket: ticket)
+      ticket.search_index_attribute_lookup
+    end
+
+    context 'when es_attachment_max_size_in_mb takes all attachments' do
+      before { Setting.set('es_attachment_max_size_in_mb', 15) }
+
+      it 'verify count of articles' do
+        expect(search_index_attribute_lookup['article'].count).to eq 3
+      end
+
+      it 'verify count of attachments' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'].count).to eq 2
+      end
+
+      it 'verify if pdf exists' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'][0]['_name']).to eq 'some_file.pdf'
+      end
+
+      it 'verify if txt exists' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'][1]['_name']).to eq 'some_file.txt'
+      end
+    end
+
+    context 'when es_attachment_max_size_in_mb takes only one attachment' do
+      before { Setting.set('es_attachment_max_size_in_mb', 4) }
+
+      it 'verify count of articles' do
+        expect(search_index_attribute_lookup['article'].count).to eq 3
+      end
+
+      it 'verify count of attachments' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'].count).to eq 1
+      end
+
+      it 'verify if pdf exists' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'][0]['_name']).to eq 'some_file.pdf'
+      end
+    end
+
+    context 'when es_attachment_max_size_in_mb takes no attachment' do
+      before { Setting.set('es_attachment_max_size_in_mb', 2) }
+
+      it 'verify count of articles' do
+        expect(search_index_attribute_lookup['article'].count).to eq 3
+      end
+
+      it 'verify count of attachments' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'].count).to eq 0
+      end
+    end
+
+    context 'when es_total_max_size_in_mb takes no attachment and no oversized article' do
+      before { Setting.set('es_total_max_size_in_mb', 1) }
+
+      it 'verify count of articles' do
+        expect(search_index_attribute_lookup['article'].count).to eq 2
+      end
+
+      it 'verify count of attachments' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'].count).to eq 0
+      end
+    end
+
+  end
+
 end
