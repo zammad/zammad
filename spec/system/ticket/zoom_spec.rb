@@ -1266,6 +1266,49 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Pending time field in ticket sidebar as agent' do
+    before do
+      ticket.update(pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder'))
+
+      visit "ticket/zoom/#{ticket.id}"
+      await_empty_ajax_queue
+    end
+
+    let(:ticket) { Ticket.first }
+    let(:elem)   { find('.js-timepicker') }
+
+    # has to run asynchronously to keep both Firefox and Safari
+    # https://github.com/zammad/zammad/issues/3414
+    # https://github.com/zammad/zammad/issues/2887
+    context 'when clicking timepicker component' do
+      it 'in the first half, hours selected' do
+        within :active_content do
+          elem.click({ x: 10, y: 10 })
+          expect(elem).to have_selection(0..2)
+        end
+      end
+
+      it 'in the second half, minutes selected' do
+        within :active_content do
+          elem.click({ x: 30, y: 10 })
+          expect(elem).to have_selection(3..5)
+        end
+      end
+    end
+
+    matcher :have_selection do
+      match { starts_at == expected.begin && ends_at == expected.end }
+
+      def starts_at
+        actual.evaluate_script 'this.selectionStart'
+      end
+
+      def ends_at
+        actual.evaluate_script 'this.selectionEnd'
+      end
+    end
+  end
+
   describe 'Article ID URL / link' do
     let(:ticket) { create(:ticket, group: Group.first) }
     let!(:article) { create(:'ticket/article', ticket: ticket) }
