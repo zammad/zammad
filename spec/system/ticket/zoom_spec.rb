@@ -1206,7 +1206,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   # https://github.com/zammad/zammad/issues/2942
-  describe 'attachemts are lost in specific conditions' do
+  describe 'attachments are lost in specific conditions' do
     let(:ticket) { create(:ticket, group: Group.first) }
 
     it 'attachment is retained when forwarding a fresh article' do
@@ -1215,12 +1215,26 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       # add an article, forcing reset of form_id
-      find('.articleNewEdit-body').send_keys('Note here')
+
+      # click in the upper most upper left corner of the article create textbox
+      # (that works for both Firefox and Chrome)
+      # to avoid clicking on attachment upload
+      find('.js-writeArea').click({ x: 5, y: 5 })
+
+      # wait for propagateOpenTextarea to be completed
+      find('.attachmentPlaceholder-label').in_fixed_position
+      expect(page).to have_no_css('.attachmentPlaceholder-hint')
+
+      # write article content
+      find('.articleNewEdit-body').send_keys('Some reply')
       click '.js-submit'
+
+      # wait for article to be added to the page
+      expect(page).to have_css('.ticket-article-item', count: 1)
+      await_empty_ajax_queue
 
       # create a on-the-fly article with attachment that will get pushed to open browser
       article1 = create(:ticket_article, ticket: ticket)
-
       Store.add(
         object:        'Ticket::Article',
         o_id:          article1.id,
@@ -1232,15 +1246,27 @@ RSpec.describe 'Ticket zoom', type: :system do
         created_by_id: 1,
       )
 
+      # wait for article to be added to the page
+      expect(page).to have_css('.ticket-article-item', count: 2, wait: 10)
+      await_empty_ajax_queue
+
+      # click on forward of created article
       within :active_ticket_article, article1 do
         find('a[data-type=emailForward]').click
       end
 
+      # wait for propagateOpenTextarea to be completed
+      find('.attachmentPlaceholder-label').in_fixed_position
+      expect(page).to have_no_css('.attachmentPlaceholder-hint')
+
+      # fill forward information and create article
       fill_in 'To', with: 'forward@example.org'
       find('.articleNewEdit-body').send_keys('Forwarding with the attachment')
       click '.js-submit'
 
+      # wait for article to be added to the page
       await_empty_ajax_queue
+      expect(page).to have_css('.ticket-article-item', count: 3)
 
       # check if attachment was forwarded successfully
       within :active_ticket_article, ticket.reload.articles.last do
