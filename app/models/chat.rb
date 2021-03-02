@@ -651,9 +651,7 @@ check if country is blocked for chat
     return false if geo_ip['country_code'].blank?
 
     countries = block_country.split(';')
-    countries.any? do |local_country|
-      geo_ip['country_code'] == local_country
-    end
+    countries.any?(geo_ip['country_code'])
   end
 
 end

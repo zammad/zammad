@@ -174,7 +174,7 @@ class FormController < ApplicationController
       Rails.logger.info 'Invalid token for form!'
       raise Exceptions::NotAuthorized
     end
-    parts = result.split(/:/)
+    parts = result.split(':')
     if parts.count != 3
       Rails.logger.info "Invalid token for form (need to have 3 parts, only #{parts.count} found)!"
       raise Exceptions::NotAuthorized

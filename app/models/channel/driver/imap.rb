@@ -411,7 +411,7 @@ returns
 
     array.each { |elem| elem.append(nil) if elem.one? }
 
-    Hash[*array.flatten] # rubocop:disable Style/HashConversion
+    Hash[*array.flatten]
   end
 
   # Parses RFC822 header

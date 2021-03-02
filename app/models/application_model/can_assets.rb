@@ -61,7 +61,7 @@ get assets and record_ids of selector
     # get assets of condition
     models = Models.all
     send(selector).each do |item, content|
-      attribute = item.split(/\./)
+      attribute = item.split('.')
       next if !attribute[1]
 
       begin

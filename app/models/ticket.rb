@@ -575,7 +575,7 @@ condition example
     # get tables to join
     tables = ''
     selectors.each_key do |attribute|
-      selector = attribute.split(/\./)
+      selector = attribute.split('.')
       next if !selector[1]
       next if selector[0] == 'ticket'
       next if selector[0] == 'execution_time'
@@ -630,7 +630,7 @@ condition example
       return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(not_set|current_user\.|specific)/
 
       # get attributes
-      attributes = attribute.split(/\./)
+      attributes = attribute.split('.')
       attribute = "#{ActiveRecord::Base.connection.quote_table_name("#{attributes[0]}s")}.#{ActiveRecord::Base.connection.quote_column_name(attributes[1])}"
 
       # magic selectors
@@ -639,7 +639,7 @@ condition example
       end
 
       if attributes[0] == 'ticket' && attributes[1] == 'tags'
-        selector['value'] = selector['value'].split(/,/).collect(&:strip)
+        selector['value'] = selector['value'].split(',').collect(&:strip)
       end
 
       if selector['operator'].include?('in working time')
@@ -993,7 +993,7 @@ perform changes on ticket
       if key == 'ticket.tags'
         next if value['value'].blank?
 
-        tags = value['value'].split(/,/)
+        tags = value['value'].split(',')
         case value['operator']
         when 'add'
           tags.each do |tag|

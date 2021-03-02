@@ -80,7 +80,7 @@ returns
 
     def case_sensitive_find_by(**attrs)
       return nil if attrs.empty?
-      return find_by(**attrs) if Rails.application.config.db_case_sensitive || attrs.values.none? { |v| v.is_a?(String) }
+      return find_by(**attrs) if Rails.application.config.db_case_sensitive || attrs.values.none?(String)
 
       where(**attrs).find { |record| record[attrs.keys.first] == attrs.values.first }
     end

@@ -491,7 +491,7 @@ example for aggregations within one year
     if selector.present?
       selector.each do |key, data|
         data = data.clone
-        table, key_tmp = key.split(/\./)
+        table, key_tmp = key.split('.')
         if key_tmp.blank?
           key_tmp = table
           table   = 'ticket'
