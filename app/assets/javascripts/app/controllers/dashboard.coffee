@@ -89,9 +89,6 @@ class App.Dashboard extends App.Controller
   changed: ->
     false
 
-  release: ->
-    # no
-
   toggle: (e) =>
     @$('.tabs .tab').removeClass('active')
     $(e.target).addClass('active')

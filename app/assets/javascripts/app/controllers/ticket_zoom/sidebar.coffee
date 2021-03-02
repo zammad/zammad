@@ -47,8 +47,11 @@ class App.TicketZoomSidebar extends App.ControllerObserver
         )
       @sidebarItems.push @sidebarBackends[key]
 
-    new App.Sidebar(
-      el:           @el.find('.tabsSidebar')
+    if @sidebar
+      @sidebar.releaseController()
+
+    @sidebar = new App.Sidebar(
+      el:           @$('.tabsSidebar')
       sidebarState: @sidebarState
       items:        @sidebarItems
     )

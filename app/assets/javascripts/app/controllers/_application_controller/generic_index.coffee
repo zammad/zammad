@@ -47,7 +47,7 @@ class App.ControllerGenericIndex extends App.Controller
 
   release: =>
     if @subscribeId
-      App[ @genericObject ].unsubscribe(@subscribeId)
+      App[@genericObject].unsubscribe(@subscribeId)
 
   paginate: (page) =>
     return if page is @pageData.pagerSelected

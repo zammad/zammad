@@ -63,7 +63,6 @@ class App.OnlineNotificationWidget extends App.Controller
   release: ->
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
-    super
 
   access: ->
     return false if !@Session.get()

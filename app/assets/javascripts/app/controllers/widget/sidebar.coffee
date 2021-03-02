@@ -10,6 +10,7 @@ class App.Sidebar extends App.Controller
 
   constructor: ->
     super
+
     @render()
 
     # get active tab by name
@@ -61,7 +62,7 @@ class App.Sidebar extends App.Controller
             type:  'small'
           )
 
-    @html localEl
+    @html(localEl)
 
   badgeRender: (el, item) =>
     @badgeEl = el
@@ -76,19 +77,18 @@ class App.Sidebar extends App.Controller
 
   toggleSidebar: =>
     @el.parent().find('.tabsSidebar-sidebarSpacer').toggleClass('is-closed')
-    @el.parent().find('.tabsSidebar').toggleClass('is-closed')
+    @el.filter('.tabsSidebar').toggleClass('is-closed')
     #@el.parent().next('.attributeBar').toggleClass('is-closed')
 
-  showSidebar: ->
+  showSidebar: =>
     @el.parent().find('.tabsSidebar-sidebarSpacer').removeClass('is-closed')
-    @el.parent().find('.tabsSidebar').removeClass('is-closed')
+    @el.filter('.tabsSidebar').removeClass('is-closed')
     #@el.parent().next('.attributeBar').addClass('is-closed')
 
   toggleTab: (e) =>
 
     # get selected tab
     name = $(e.target).closest('.tabsSidebar-tab').data('tab')
-
     if name
 
       # if current tab is selected again, toggle side bar
@@ -99,7 +99,7 @@ class App.Sidebar extends App.Controller
       else
         @toggleTabAction(name)
 
-  toggleTabAction: (name) ->
+  toggleTabAction: (name) =>
     return if !name
 
     # remember sidebarState for outsite

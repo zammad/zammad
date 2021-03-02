@@ -82,8 +82,12 @@ class App.Controller extends Spine.Controller
       @el.empty()
 
     # release spine bindings (see release() of spine.coffee)
+    @off()
     @unbind()
     @stopListening()
+
+  release: ->
+    # nothing
 
   abortAjaxCalls: =>
     if !@ajaxCalls
@@ -95,11 +99,6 @@ class App.Controller extends Spine.Controller
 
     for callId in idsToCancel
       App.Ajax.abort(callId)
-
-  # release Spine's event handling
-  release: ->
-    @off()
-    @stopListening()
 
   # add @title method to set title
   title: (name, translate = false) ->

@@ -50,7 +50,6 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     @fetchAndRender()
 
   release: ->
-    super
     @modal?.el.remove()
 
   processLoaded: ->

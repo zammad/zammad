@@ -603,7 +603,6 @@ class ChatWindow extends App.Controller
   release: =>
     @trigger('closed')
     @el.remove()
-    super
 
   clearUnread: =>
     @$('.chat-message--new').removeClass('chat-message--new')

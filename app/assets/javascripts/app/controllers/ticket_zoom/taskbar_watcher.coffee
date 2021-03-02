@@ -5,8 +5,8 @@ class App.TaskbarWatcher extends App.Controller
     App.TaskManager.preferencesTrigger(@taskKey)
 
   release: =>
-    return if !@subscribeId
-    App.TaskManager.preferencesUnsubscribe(@subscribeId)
+    if @subscribeId
+      App.TaskManager.preferencesUnsubscribe(@subscribeId)
 
   render: (preferences) =>
     return if !preferences

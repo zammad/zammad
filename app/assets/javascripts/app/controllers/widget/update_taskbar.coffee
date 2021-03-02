@@ -6,7 +6,7 @@ class App.UpdateTastbar extends App.Controller
     @subscribeId = @genericObject.subscribe(@update)
 
   release: =>
-    App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
+    App[@genericObject.constructor.className].unsubscribe(@subscribeId)
 
   update: (genericObject) =>
 

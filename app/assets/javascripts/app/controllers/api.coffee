@@ -79,7 +79,6 @@ class Api extends App.ControllerSubContent
 
 
   release: =>
-    super
     if @subscribeApplicationId
       App.Application.unsubscribe(@subscribeApplicationId)
 
