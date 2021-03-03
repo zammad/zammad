@@ -1309,14 +1309,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'when clicking timepicker component' do
       it 'in the first half, hours selected' do
         within :active_content do
-          elem.click({ x: 10, y: 10 })
+          elem.click({ x: 10, y: 20 })
           expect(elem).to have_selection(0..2)
         end
       end
 
       it 'in the second half, minutes selected' do
         within :active_content do
-          elem.click({ x: 30, y: 10 })
+          elem.click({ x: 35, y: 20 })
           expect(elem).to have_selection(3..5)
         end
       end
