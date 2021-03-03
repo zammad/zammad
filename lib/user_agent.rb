@@ -342,7 +342,7 @@ returns
   def self.set_basic_auth(request, options)
 
     # http basic auth (if needed)
-    if options[:user] && options[:user] != '' && options[:password] && options[:password] != ''
+    if options[:user].present? && options[:password].present?
       request.basic_auth options[:user], options[:password]
     end
     request

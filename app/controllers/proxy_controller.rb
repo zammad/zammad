@@ -7,6 +7,8 @@ class ProxyController < ApplicationController
   def test
     url = 'http://zammad.org'
     options = params
+      .permit(:proxy, :proxy_username, :proxy_password, :proxy_no)
+      .to_h
     options[:open_timeout] = 12
     options[:read_timeout] = 24
     begin
