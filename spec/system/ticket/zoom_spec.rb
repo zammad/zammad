@@ -1428,7 +1428,8 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   describe 'Macros', authenticated_as: :authenticate do
-    let(:macro) { create :macro, perform: { 'article.note'=>{ 'body' => 'macro <b>body</b>', 'internal' => 'true', 'subject' => 'macro note' } } }
+    let(:macro_body) { 'macro <b>body</b>' }
+    let(:macro) { create :macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } } }
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     def authenticate
@@ -1439,10 +1440,10 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does html macro by default' do
       visit "ticket/zoom/#{ticket.id}"
       find('.js-openDropdownMacro').click
-      all('.js-dropdownActionMacro').last.click
+      find(:macro, macro.id).click
       await_empty_ajax_queue
 
-      expect(ticket.reload.articles.last.body).to eq('macro <b>body</b>')
+      expect(ticket.reload.articles.last.body).to eq(macro_body)
       expect(ticket.reload.articles.last.content_type).to eq('text/html')
     end
   end
