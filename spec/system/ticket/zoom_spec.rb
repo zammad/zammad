@@ -1094,6 +1094,27 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Macros', authenticated_as: :authenticate do
+    let(:macro_body) { 'macro <b>body</b>' }
+    let(:macro) { create :macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } } }
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      macro
+      true
+    end
+
+    it 'does html macro by default' do
+      visit "ticket/zoom/#{ticket.id}"
+      find('.js-openDropdownMacro').click
+      find(:macro, macro.id).click
+      await_empty_ajax_queue
+
+      expect(ticket.reload.articles.last.body).to eq(macro_body)
+      expect(ticket.reload.articles.last.content_type).to eq('text/html')
+    end
+  end
+
   describe 'Pending time field in ticket sidebar as agent' do
     before do
       ticket.update(pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder'))

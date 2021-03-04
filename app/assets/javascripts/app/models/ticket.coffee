@@ -177,6 +177,8 @@ class App.Ticket extends App.Model
             content.sender_id = sender.id
         if !content.from
           content.from = App.Session.get('login')
+        if !content.content_type
+          params.article.content_type = 'text/html'
 
         # apply direct value changes
         for articleKey, aricleValue of content
