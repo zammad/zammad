@@ -173,7 +173,7 @@ class ExternalCredential::Microsoft365
 
     uri = URI::HTTPS.build(
       host:  'login.microsoftonline.com',
-      path:  "/#{client_tenant]}/oauth2/v2.0/authorize",
+      path:  "/#{client_tenant}/oauth2/v2.0/authorize",
       query: params.to_query
     )
 
