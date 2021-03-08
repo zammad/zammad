@@ -7,6 +7,7 @@ class MicrosoftOffice365Database < OmniAuth::Strategies::MicrosoftOffice365
     config  = Setting.get('auth_microsoft_office365_credentials') || {}
     args[0] = config['app_id']
     args[1] = config['app_secret']
+    args[2] = config['app_tenant']
     super
   end
 

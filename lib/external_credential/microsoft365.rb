@@ -16,12 +16,16 @@ class ExternalCredential::Microsoft365
       if credentials[:client_secret].blank?
         credentials[:client_secret] = external_credential.credentials['client_secret']
       end
+      if credentials[:client_tenant].blank?
+        credentials[:client_tenant] = external_credential.credentials['client_tenant']
+      end
     end
 
     raise Exceptions::UnprocessableEntity, 'No client_id param!' if credentials[:client_id].blank?
     raise Exceptions::UnprocessableEntity, 'No client_secret param!' if credentials[:client_secret].blank?
+    raise Exceptions::UnprocessableEntity, 'No client_tenant param!' if credentials[:client_tenant].blank?
 
-    authorize_url = generate_authorize_url(credentials[:client_id])
+    authorize_url = generate_authorize_url(credentials[:client_id],credentials[:client_tenant])
 
     {
       authorize_url: authorize_url,
@@ -33,7 +37,7 @@ class ExternalCredential::Microsoft365
     raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential
     raise Exceptions::UnprocessableEntity, 'No code for session found!' if !params[:code]
 
-    response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])
+    response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], external_credential.credentials[:client_tenant], params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
       raise Exceptions::UnprocessableEntity, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
@@ -156,7 +160,7 @@ class ExternalCredential::Microsoft365
     channel
   end
 
-  def self.generate_authorize_url(client_id, scope = 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email')
+  def self.generate_authorize_url(client_id, client_tenant, scope = 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email')
 
     params = {
       'client_id'     => client_id,
@@ -169,14 +173,14 @@ class ExternalCredential::Microsoft365
 
     uri = URI::HTTPS.build(
       host:  'login.microsoftonline.com',
-      path:  '/common/oauth2/v2.0/authorize',
+      path:  "/#{client_tenant]}/oauth2/v2.0/authorize",
       query: params.to_query
     )
 
     uri.to_s
   end
 
-  def self.authorize_tokens(client_id, client_secret, authorization_code)
+  def self.authorize_tokens(client_id, client_secret, client_tenant, authorization_code)
     params = {
       'client_secret' => client_secret,
       'code'          => authorization_code,
@@ -187,7 +191,7 @@ class ExternalCredential::Microsoft365
 
     uri = URI::HTTPS.build(
       host: 'login.microsoftonline.com',
-      path: '/common/oauth2/v2.0/token',
+      path: "/#{client_tenant}/oauth2/v2.0/token",
     )
 
     response = Net::HTTP.post_form(uri, params)
