@@ -16,12 +16,16 @@ class ExternalCredential::Microsoft365
       if credentials[:client_secret].blank?
         credentials[:client_secret] = external_credential.credentials['client_secret']
       end
+      # client_tenant may be empty. Set only if key is nonexistant at all
+      if !credentials.key? :client_tenant
+        credentials[:client_tenant] = external_credential.credentials['client_tenant']
+      end
     end
 
     raise Exceptions::UnprocessableEntity, 'No client_id param!' if credentials[:client_id].blank?
     raise Exceptions::UnprocessableEntity, 'No client_secret param!' if credentials[:client_secret].blank?
 
-    authorize_url = generate_authorize_url(credentials[:client_id])
+    authorize_url = generate_authorize_url(credentials)
 
     {
       authorize_url: authorize_url,
@@ -33,7 +37,7 @@ class ExternalCredential::Microsoft365
     raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential
     raise Exceptions::UnprocessableEntity, 'No code for session found!' if !params[:code]
 
-    response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])
+    response = authorize_tokens(external_credential.credentials, params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
       raise Exceptions::UnprocessableEntity, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
@@ -66,6 +70,7 @@ class ExternalCredential::Microsoft365
         type:          'XOAUTH2',
         client_id:     external_credential.credentials[:client_id],
         client_secret: external_credential.credentials[:client_secret],
+        client_tenant: external_credential.credentials[:client_tenant],
       ),
     }
 
@@ -156,10 +161,9 @@ class ExternalCredential::Microsoft365
     channel
   end
 
-  def self.generate_authorize_url(client_id, scope = 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email')
-
+  def self.generate_authorize_url(credentials, scope = 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email')
     params = {
-      'client_id'     => client_id,
+      'client_id'     => credentials[:client_id],
       'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
       'scope'         => scope,
       'response_type' => 'code',
@@ -167,28 +171,20 @@ class ExternalCredential::Microsoft365
       'prompt'        => 'consent',
     }
 
+    tenant = credentials[:client_tenant].presence || 'common'
+
     uri = URI::HTTPS.build(
       host:  'login.microsoftonline.com',
-      path:  '/common/oauth2/v2.0/authorize',
+      path:  "/#{tenant}/oauth2/v2.0/authorize",
       query: params.to_query
     )
 
     uri.to_s
   end
 
-  def self.authorize_tokens(client_id, client_secret, authorization_code)
-    params = {
-      'client_secret' => client_secret,
-      'code'          => authorization_code,
-      'grant_type'    => 'authorization_code',
-      'client_id'     => client_id,
-      'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
-    }
-
-    uri = URI::HTTPS.build(
-      host: 'login.microsoftonline.com',
-      path: '/common/oauth2/v2.0/token',
-    )
+  def self.authorize_tokens(credentials, authorization_code)
+    uri    = authorize_tokens_uri(credentials[:client_tenant])
+    params = authorize_tokens_params(credentials, authorization_code)
 
     response = Net::HTTP.post_form(uri, params)
     if response.code != 200 && response.body.blank?
@@ -207,19 +203,28 @@ class ExternalCredential::Microsoft365
     result.symbolize_keys
   end
 
+  def self.authorize_tokens_params(credentials, authorization_code)
+    {
+      'client_secret' => credentials[:client_secret],
+      'code'          => authorization_code,
+      'grant_type'    => 'authorization_code',
+      'client_id'     => credentials[:client_id],
+      'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
+    }
+  end
+
+  def self.authorize_tokens_uri(tenant)
+    URI::HTTPS.build(
+      host: 'login.microsoftonline.com',
+      path: "/#{tenant.presence || 'common'}/oauth2/v2.0/token",
+    )
+  end
+
   def self.refresh_token(token)
     return token if token[:created_at] >= Time.zone.now - 50.minutes
 
-    params = {
-      'client_id'     => token[:client_id],
-      'client_secret' => token[:client_secret],
-      'refresh_token' => token[:refresh_token],
-      'grant_type'    => 'refresh_token',
-    }
-    uri = URI::HTTPS.build(
-      host: 'login.microsoftonline.com',
-      path: '/common/oauth2/v2.0/token',
-    )
+    params = refresh_token_params(token)
+    uri    = refresh_token_uri(token)
 
     response = Net::HTTP.post_form(uri, params)
     if response.code != 200 && response.body.blank?
@@ -235,6 +240,24 @@ class ExternalCredential::Microsoft365
 
     token.merge(result.symbolize_keys).merge(
       created_at: Time.zone.now,
+    )
+  end
+
+  def self.refresh_token_params(credentials)
+    {
+      'client_id'           => credentials[:client_id],
+      'client_secret'       => credentials[:client_secret],
+      'refresh_credentials' => credentials[:refresh_credentials],
+      'grant_type'          => 'refresh_credentials',
+    }
+  end
+
+  def self.refresh_token_uri(credentials)
+    tenant = credentials[:client_tenant].presence || 'common'
+
+    URI::HTTPS.build(
+      host: 'login.microsoftonline.com',
+      path: "/#{tenant}/oauth2/v2.0/token",
     )
   end
 

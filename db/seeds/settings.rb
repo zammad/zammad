@@ -1563,6 +1563,13 @@ Setting.create_if_not_exists(
         name:    'app_secret',
         tag:     'input',
       },
+      {
+        display:     'App Tenant ID',
+        null:        true,
+        name:        'app_tenant',
+        tag:         'input',
+        placeholder: 'common',
+      },
     ],
   },
   state:       {},
