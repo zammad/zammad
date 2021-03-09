@@ -1522,6 +1522,7 @@ Setting.create_if_not_exists(
         null:    true,
         name:    'app_tenant',
         tag:     'input',
+        placeholder: 'common',
       },
 
     ],
