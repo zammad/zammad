@@ -1,0 +1,1 @@
+<div><%- @T('No available webhook, please create a new one or activate an existing one at "Manage > Webhook"') %></div>

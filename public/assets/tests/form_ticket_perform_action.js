@@ -605,3 +605,161 @@ test( "ticket_perform_action check possible owner selection", function() {
   deepEqual(params, test_params, 'form param check')
 
 });
+
+test( "ticket_perform_action check when there's no available webhook", function() {
+
+  $('#forms').append('<hr><h1>ticket_perform_action check when there\'s no available webhook</h1><form id="form6"></form>')
+  var el = $('#form6')
+  var defaults = {
+    ticket_perform_action6: {
+      'notification.webhook': {
+        value: undefined
+      }
+    }
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:         'ticket_perform_action6',
+          display:      'TicketPerformAction6',
+          tag:          'ticket_perform_action',
+          null:         true,
+          notification: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  deepEqual(params, {}, 'form param check')
+
+  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
+  var noticeMessage = el.find('.controls.js-webhooks div').text()
+  equal(noticeMessage, testNoticeMessage, 'form shows message when webhook is not available')
+});
+
+test( "ticket_perform_action check when there's an available webhook", function() {
+
+  $('#forms').append('<hr><h1>ticket_perform_action check when there\'s an available webhook</h1><form id="form7"></form>')
+  var el = $('#form7')
+  var defaults = {
+    ticket_perform_action7: {
+      'notification.webhook': {
+        webhook_id: 'c-1'
+      }
+    }
+  }
+
+  App.Webhook.refresh([
+    {
+      name:     'Webhook test',
+      endpoint: 'https://target.example.com/webhook',
+      active:   true,
+      id:       'c-1'
+    }
+  ], { clear: true })
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:         'ticket_perform_action7',
+          display:      'TicketPerformAction7',
+          tag:          'ticket_perform_action',
+          null:         true,
+          notification: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    'ticket_perform_action7': {
+      'notification.webhook': {
+        'webhook_id': 'c-1'
+      }
+    }
+  }
+  deepEqual(params, test_params, 'form param check')
+
+  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
+  var noticeMessage = el.find('.controls.js-webhooks').text()
+  notEqual(noticeMessage, testNoticeMessage, 'form shows message when webhook is not available')
+
+  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
+  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook)', 'form shows message when webhook is not available')
+});
+
+test( "ticket_perform_action check when there's no available webhook but an inactive is already selected", function() {
+
+  $('#forms').append('<hr><h1>ticket_perform_action check when there\'s an available webhook</h1><form id="form8"></form>')
+  var el = $('#form8')
+  var defaults = {
+    ticket_perform_action8: {
+      'notification.webhook': {
+        webhook_id: 'c-2'
+      }
+    }
+  }
+
+  App.Webhook.refresh([
+    {
+      name:     'Webhook test',
+      endpoint: 'https://target.example.com/webhook',
+      active:   false,
+      id:       'c-2'
+    }
+  ], { clear: true })
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:         'ticket_perform_action8',
+          display:      'TicketPerformAction8',
+          tag:          'ticket_perform_action',
+          null:         true,
+          notification: true,
+        },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    'ticket_perform_action8': {
+      'notification.webhook': {
+        'webhook_id': 'c-2'
+      }
+    }
+  }
+  deepEqual(params, test_params, 'form param check')
+
+  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
+  var noticeMessage = el.find('.controls.js-webhooks div').text()
+  notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when inactive webhook is previously selected')
+
+  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
+  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook) (inactive)', 'form shows previously selected inactive webhook')
+
+  // when other option are changed
+  el.find('select:first').val('notification.email').trigger('change')
+  el.find('select:first').val('notification.webhook').trigger('change')
+
+  var noticeMessage = el.find('.controls.js-webhooks div').text()
+  notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when inactive webhook is previously selected')
+
+  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
+  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook) (inactive)', 'form shows previously selected inactive webhook')
+});

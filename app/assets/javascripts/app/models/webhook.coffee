@@ -26,4 +26,6 @@ You can use Webhooks in Zammad to send Ticket, Article and Attachment data whene
 
   displayName: ->
     return @name if !@endpoint
+    if @active is false
+      return "#{@name} (#{@endpoint}) (#{App.i18n.translateInline('inactive')})"
     "#{@name} (#{@endpoint})"

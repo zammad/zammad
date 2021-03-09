@@ -94,7 +94,8 @@ class App.UiElement.ticket_perform_action
     item.on('change', '.js-attributeSelector select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
+      meta = params[attribute.name] && params[attribute.name][groupAndAttribute] || {}
+      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, meta, attribute)
       @updateAttributeSelectors(item)
     )
 
@@ -416,14 +417,18 @@ class App.UiElement.ticket_perform_action
 
       notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
 
-      webhookSelection = App.UiElement.select.render(
-        name: "#{name}::webhook_id"
-        multiple: false
-        null: false
-        relation: 'Webhook'
-        value: meta.webhook_id
-        translate: false
-      )
+
+      if App.Webhook.search(filter: { active: true }).length isnt 0 || !_.isEmpty(meta.webhook_id)
+        webhookSelection = App.UiElement.select.render(
+          name: "#{name}::webhook_id"
+          multiple: false
+          null: false
+          relation: 'Webhook'
+          value: meta.webhook_id
+          translate: false
+        )
+      else
+        webhookSelection = App.view('generic/ticket_perform_action/webhook_not_available')( attribute: attribute )
 
       notificationElement.find('.js-webhooks').html(webhookSelection)
 
