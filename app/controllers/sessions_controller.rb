@@ -240,7 +240,7 @@ class SessionsController < ApplicationController
 
     # remember session_id for websocket logon
     if current_user
-      config['session_id'] = session.id
+      config['session_id'] = session.id.public_id
     end
 
     config
