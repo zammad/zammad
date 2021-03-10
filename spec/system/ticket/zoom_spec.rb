@@ -1538,4 +1538,68 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'GitHub Integration', :integration, authenticated_as: :authenticate do
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      required_envs = %w[GITHUB_ENDPOINT GITHUB_APITOKEN]
+      required_envs.each do |key|
+        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
+      end
+
+      # request schema only once for performance reasons
+      @cached_schema = GitHub.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']).schema.to_json
+    end
+
+    def authenticate
+      Setting.set('github_integration', true)
+      Setting.set('github_config', {
+                    api_token: ENV['GITHUB_APITOKEN'],
+                    endpoint:  ENV['GITHUB_ENDPOINT'],
+                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
+                  })
+      true
+    end
+
+    it 'creates links and removes them' do
+      visit "#ticket/zoom/#{ticket.id}"
+      within(:active_content) do
+
+        # switch to GitHub sidebar
+        click('.tabsSidebar-tab[data-tab=github]')
+        click('.sidebar-header-headline.js-headline')
+
+        # add issue
+        click_on 'Link issue'
+        fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
+        click_on 'Submit'
+        await_empty_ajax_queue
+
+        # verify issue
+        content = find('.sidebar-git-issue-content')
+        expect(content).to have_text('#1575 GitHub integration')
+        expect(content).to have_text('feature backlog')
+        expect(content).to have_text('integration')
+        expect(content).to have_text('4.0')
+        expect(content).to have_text('Thorsten')
+
+        expect(ticket.reload.preferences[:github][:issue_links][0]).to eq(ENV['GITHUB_ISSUE_LINK'])
+
+        # check sidebar counter increased to 1
+        expect(find('.tabsSidebar-tab[data-tab=github] .js-tabCounter')).to have_text('1')
+
+        # delete issue
+        click(".sidebar-git-issue-delete span[data-issue-id='#{ENV['GITHUB_ISSUE_LINK']}']")
+        await_empty_ajax_queue
+
+        content = find('.sidebar[data-tab=github] .sidebar-content')
+        expect(content).to have_text('No linked issues')
+        expect(ticket.reload.preferences[:github][:issue_links][0]).to be nil
+
+        # check that counter got removed
+        expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=github] .js-tabCounter')
+      end
+    end
+  end
 end

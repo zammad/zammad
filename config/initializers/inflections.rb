@@ -22,4 +22,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.singular(/(knowledge_base)s$/i, '\1')
   inflect.acronym 'SMIME'
   inflect.acronym 'GitLab'
+  inflect.acronym 'GitHub'
 end

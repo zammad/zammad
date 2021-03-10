@@ -399,4 +399,62 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'GitHub Integration', :integration, authenticated_as: :authenticate do
+    let(:customer) { create(:customer) }
+    let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+    let!(:template) { create(:template, :dummy_data, group: Group.find_by(name: 'Users'), owner: agent, customer: customer) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      required_envs = %w[GITHUB_ENDPOINT GITHUB_APITOKEN]
+      required_envs.each do |key|
+        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
+      end
+
+      # request schema only once for performance reasons
+      @cached_schema = GitHub.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']).schema.to_json
+    end
+
+    def authenticate
+      Setting.set('github_integration', true)
+      Setting.set('github_config', {
+                    api_token: ENV['GITHUB_APITOKEN'],
+                    endpoint:  ENV['GITHUB_ENDPOINT'],
+                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
+                  })
+      true
+    end
+
+    it 'creates a ticket with links' do
+      visit 'ticket/create'
+      within(:active_content) do
+        use_template(template)
+
+        # switch to github sidebar
+        click('.tabsSidebar-tab[data-tab=github]')
+        click('.sidebar-header-headline.js-headline')
+
+        # add issue
+        click_on 'Link issue'
+        fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
+        click_on 'Submit'
+        await_empty_ajax_queue
+
+        # verify issue
+        content = find('.sidebar-git-issue-content')
+        expect(content).to have_text('#1575 GitHub integration')
+        expect(content).to have_text('feature backlog')
+        expect(content).to have_text('integration')
+        expect(content).to have_text('4.0')
+        expect(content).to have_text('Thorsten')
+
+        # create Ticket
+        click '.js-submit'
+        await_empty_ajax_queue
+
+        # check stored data
+        expect(Ticket.last.preferences[:github][:issue_links][0]).to eq(ENV['GITHUB_ISSUE_LINK'])
+      end
+    end
+  end
 end

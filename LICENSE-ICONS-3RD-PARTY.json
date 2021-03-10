@@ -224,6 +224,11 @@
         "url": "",
         "license": ""
     },
+    "github-logo.svg": {
+        "author": "Github",
+        "url": "",
+        "license": ""
+    },
     "gitlab-button.svg": {
         "author": "GitLab",
         "url": "",
@@ -579,6 +584,11 @@
         "url": "",
         "license": "MIT"
     },
+    "sso-button.svg": {
+        "author": "Tanu Doank",
+        "url": "https:\/\/thenounproject.com\/term\/key\/1247931\/",
+        "license": "CC 3.0 Attribution"
+    },
     "status-modified-outer-circle.svg": {
         "author": "Zammad",
         "url": "",
@@ -688,10 +698,5 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
-    },
-    "sso-button.svg": {
-        "author": "Tanu Doank",
-        "url": "https://thenounproject.com/term/key/1247931/",
-        "license": "CC 3.0 Attribution"
     }
 }
