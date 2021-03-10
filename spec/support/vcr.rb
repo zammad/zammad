@@ -1,4 +1,4 @@
-VCR_IGNORE_MATCHING_HOSTS = %w[zammad.com google.com elasticsearch selenium login.microsoftonline.com zammad.org].freeze
+VCR_IGNORE_MATCHING_HOSTS = %w[elasticsearch selenium zammad.org zammad.com znuny.com google.com login.microsoftonline.com].freeze
 VCR_IGNORE_MATCHING_REGEXPS = [/^192\.168\.\d+\.\d+$/].freeze
 
 VCR.configure do |config|

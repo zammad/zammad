@@ -32,7 +32,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :github_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
 
   # gitlab database connect
-  provider :gitlab_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {
+  provider :git_lab_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {
     client_options: {
       site:          'https://not_change_will_be_set_by_database',
       authorize_url: '/oauth/authorize',

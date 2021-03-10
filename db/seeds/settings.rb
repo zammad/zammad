@@ -1427,18 +1427,18 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_gitlab_credentials'],
-    title_i18n:       ['Gitlab'],
-    description_i18n: ['Gitlab', 'Gitlab Applications', 'https://your-gitlab-host/admin/applications'],
+    title_i18n:       ['GitLab'],
+    description_i18n: ['GitLab', 'GitLab Applications', 'https://your-gitlab-host/admin/applications'],
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Gitlab App Credentials',
+  title:       'GitLab App Credentials',
   name:        'auth_gitlab_credentials',
-  area:        'Security::ThirdPartyAuthentication::Gitlab',
-  description: 'Enables user authentication via Gitlab.',
+  area:        'Security::ThirdPartyAuthentication::GitLab',
+  description: 'Enables user authentication via GitLab.',
   options:     {
     form: [
       {
@@ -4040,6 +4040,48 @@ Setting.create_if_not_exists(
   description: 'Defines the i-doit config.',
   options:     {},
   state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
+  title:       'GitLab integration',
+  name:        'gitlab_integration',
+  area:        'Integration::Switch',
+  description: 'Defines if the GitLab (http://www.gitlab.com) integration is enabled or not.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'gitlab_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       'GitLab config',
+  name:        'gitlab_config',
+  area:        'Integration::GitLab',
+  description: 'Stores the GitLab configuration.',
+  options:     {},
+  state:       {
+    endpoint: 'https://gitlab.com/api/graphql',
+  },
   preferences: {
     prio:       2,
     permission: ['admin.integration'],

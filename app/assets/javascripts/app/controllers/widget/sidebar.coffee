@@ -122,6 +122,12 @@ class App.Sidebar extends App.Controller
     # remember current tab
     @currentTab = name
 
+    # get current sidebar controller
+    for item in @items
+      itemLocal = item.sidebarItem()
+      if itemLocal && itemLocal.name && itemLocal.name is @currentTab && item.shown
+        item.shown()
+
     # show sidebar if not shown
     @showSidebar()
 

@@ -21,4 +21,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   # see: KnowledgeBase.table_name.singularize
   inflect.singular(/(knowledge_base)s$/i, '\1')
   inflect.acronym 'SMIME'
+  inflect.acronym 'GitLab'
 end

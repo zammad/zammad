@@ -1474,4 +1474,68 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'GitLab Integration', :integration, authenticated_as: :authenticate do
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      required_envs = %w[GITLAB_ENDPOINT GITLAB_APITOKEN]
+      required_envs.each do |key|
+        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
+      end
+
+      # request schema only once for performance reasons
+      @cached_schema = GitLab.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']).schema.to_json
+    end
+
+    def authenticate
+      Setting.set('gitlab_integration', true)
+      Setting.set('gitlab_config', {
+                    api_token: ENV['GITLAB_APITOKEN'],
+                    endpoint:  ENV['GITLAB_ENDPOINT'],
+                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
+                  })
+      true
+    end
+
+    it 'creates links and removes them' do
+      visit "#ticket/zoom/#{ticket.id}"
+      within(:active_content) do
+
+        # switch to GitLab sidebar
+        click('.tabsSidebar-tab[data-tab=gitlab]')
+        click('.sidebar-header-headline.js-headline')
+
+        # add issue
+        click_on 'Link issue'
+        fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
+        click_on 'Submit'
+        await_empty_ajax_queue
+
+        # verify issue
+        content = find('.sidebar-git-issue-content')
+        expect(content).to have_text('#1 Example issue')
+        expect(content).to have_text('critical')
+        expect(content).to have_text('special')
+        expect(content).to have_text('important milestone')
+        expect(content).to have_text('zammad-robot')
+
+        expect(ticket.reload.preferences[:gitlab][:issue_links][0]).to eq(ENV['GITLAB_ISSUE_LINK'])
+
+        # check sidebar counter increased to 1
+        expect(find('.tabsSidebar-tab[data-tab=gitlab] .js-tabCounter')).to have_text('1')
+
+        # delete issue
+        click(".sidebar-git-issue-delete span[data-issue-id='#{ENV['GITLAB_ISSUE_LINK']}']")
+        await_empty_ajax_queue
+
+        content = find('.sidebar[data-tab=gitlab] .sidebar-content')
+        expect(content).to have_text('No linked issues')
+        expect(ticket.reload.preferences[:gitlab][:issue_links][0]).to be nil
+
+        # check that counter got removed
+        expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=gitlab] .js-tabCounter')
+      end
+    end
+  end
 end

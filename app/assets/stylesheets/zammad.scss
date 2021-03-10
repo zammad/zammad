@@ -5108,6 +5108,15 @@ footer {
   }
 }
 
+.sidebar-git-issue-delete {
+  text-align: right;
+  float: right;
+}
+
+.sidebar-git-issue-content {
+  width: 90%;
+}
+
 .main + .sidebar {
   border-right: none;
   border-left: 1px solid #e6e6e6;

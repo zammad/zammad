@@ -70,7 +70,7 @@ include:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:ci:test:prepare
-    - bundle exec rspec --fail-fast -t type:system
+    - bundle exec rspec --fail-fast -t type:system -t ~integration
 
 # we need at least one job to store and include this template
 # $IGNORE is not defined

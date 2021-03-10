@@ -1,0 +1,5 @@
+integration_capybara_ff:
+  extends:
+    - .template_browser-integration_capybara
+  variables:
+    BROWSER: "firefox"

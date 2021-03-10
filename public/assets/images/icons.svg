@@ -324,6 +324,11 @@
         <path d="M24.906 9.481l1.333 4.101a.908.908 0 0 1-.33 1.015l-11.533 8.38L24.906 9.48z" fill="#FF998A"/>
         <path d="M25.066 10.022H17.99l3.41-8.668a.454.454 0 0 1 .864 0l2.8 8.668z" fill="#FFF"/>
     </g>
+</symbol><symbol id="icon-gitlab-logo" viewBox="0 0 24 24">
+    <title>
+        gitlab-logo
+    </title>
+    <path d="M23.955 13.64l-1.343-4.133-2.661-8.19a.457.457 0 0 0-.87 0l-2.876 8.726H7.599l-2.68-8.727a.457.457 0 0 0-.87 0L1.388 9.507.045 13.64a.915.915 0 0 0 .332 1.023L12 23.108l11.623-8.445a.915.915 0 0 0 .332-1.023" fill-rule="evenodd"/>
 </symbol><symbol id="icon-google-button" viewBox="0 0 29 24">
     <title>
         google-button

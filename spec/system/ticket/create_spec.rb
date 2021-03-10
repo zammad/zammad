@@ -341,4 +341,62 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'GitLab Integration', :integration, authenticated_as: :authenticate do
+    let(:customer) { create(:customer) }
+    let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+    let!(:template) { create(:template, :dummy_data, group: Group.find_by(name: 'Users'), owner: agent, customer: customer) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      required_envs = %w[GITLAB_ENDPOINT GITLAB_APITOKEN]
+      required_envs.each do |key|
+        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
+      end
+
+      # request schema only once for performance reasons
+      @cached_schema = GitLab.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']).schema.to_json
+    end
+
+    def authenticate
+      Setting.set('gitlab_integration', true)
+      Setting.set('gitlab_config', {
+                    api_token: ENV['GITLAB_APITOKEN'],
+                    endpoint:  ENV['GITLAB_ENDPOINT'],
+                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
+                  })
+      true
+    end
+
+    it 'creates a ticket with links' do
+      visit 'ticket/create'
+      within(:active_content) do
+        use_template(template)
+
+        # switch to gitlab sidebar
+        click('.tabsSidebar-tab[data-tab=gitlab]')
+        click('.sidebar-header-headline.js-headline')
+
+        # add issue
+        click_on 'Link issue'
+        fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
+        click_on 'Submit'
+        await_empty_ajax_queue
+
+        # verify issue
+        content = find('.sidebar-git-issue-content')
+        expect(content).to have_text('#1 Example issue')
+        expect(content).to have_text('critical')
+        expect(content).to have_text('special')
+        expect(content).to have_text('important milestone')
+        expect(content).to have_text('zammad-robot')
+
+        # create Ticket
+        click '.js-submit'
+        await_empty_ajax_queue
+
+        # check stored data
+        expect(Ticket.last.preferences[:gitlab][:issue_links][0]).to eq(ENV['GITLAB_ISSUE_LINK'])
+      end
+    end
+  end
 end

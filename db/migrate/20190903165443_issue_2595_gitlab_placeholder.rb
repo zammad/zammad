@@ -1,4 +1,4 @@
-class Issue2595GitlabPlaceholder < ActiveRecord::Migration[5.2]
+class Issue2595GitLabPlaceholder < ActiveRecord::Migration[5.2]
   def change
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')

@@ -1,4 +1,4 @@
-class GitlabDatabase < OmniAuth::Strategies::GitLab
+class GitLabDatabase < OmniAuth::Strategies::GitLab
   option :name, 'gitlab'
 
   def initialize(app, *args, &block)

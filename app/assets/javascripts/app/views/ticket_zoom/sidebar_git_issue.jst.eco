@@ -1,0 +1,36 @@
+<% for issue in @issues: %>
+  <div class="sidebar-git-issue-delete">
+    <span class="list-item-delete js-delete" data-issue-id="<%= issue.url %>" data-type="remove">
+      <%- @Icon('diagonal-cross') %>
+    </span>
+  </div>
+  <div class="sidebar-git-issue-content">
+    <div class="sidebar-block">
+      <a href="<%- issue.url %>" target="_blank">
+        <span class="icon-holder" title="<%= @T(issue.icon_state) %>">
+          <%- @Icon('task-state', issue.icon_state) %>
+        </span>
+        #<%= issue.id %> <%= issue.title %>
+      </a>
+    </div>
+  <% if issue.milestone: %>
+    <div class="sidebar-block">
+      <label><%- @T('Milestone') %></label>
+      <%= @T(issue.milestone) %>
+    </div>
+  <% end %>
+  <% if issue.assignees.length > 0: %>
+    <div class="sidebar-block">
+      <label><%- @T('Assignee') %></label>
+      <%= issue.assignees.join(', ') %>
+    </div>
+  <% end %>
+  <% if issue.labels.length > 0: %>
+    <div class="sidebar-block">
+      <label><%- @T('Labels') %></label>
+      <% for label in issue.labels: %><span class="badge" style="color: <%- label.text_color %>; background-color: <%- label.color %>"><%= label.title %></span> <% end %>
+    </div>
+  <% end %>
+  </div>
+  <hr class="clearfix">
+<% end %>
