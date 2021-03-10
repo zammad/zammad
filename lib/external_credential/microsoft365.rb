@@ -25,7 +25,7 @@ class ExternalCredential::Microsoft365
     raise Exceptions::UnprocessableEntity, 'No client_secret param!' if credentials[:client_secret].blank?
     raise Exceptions::UnprocessableEntity, 'No client_tenant param!' if credentials[:client_tenant].blank?
 
-    authorize_url = generate_authorize_url(credentials[:client_id],credentials[:client_tenant])
+    authorize_url = generate_authorize_url(credentials[:client_id], credentials[:client_tenant])
 
     {
       authorize_url: authorize_url,
