@@ -19,7 +19,8 @@ To execute this manually, just paste the following into the browser console
     app_version = AppVersion.event_data
 
     if @payload && @payload['session_id']
-      session = ActiveRecord::SessionStore::Session.find_by(session_id: @payload['session_id'])
+      private_session_id = Rack::Session::SessionId.new(@payload['session_id']).private_id
+      session = ActiveRecord::SessionStore::Session.find_by(session_id: private_session_id)
     end
 
     new_session_data = {}
