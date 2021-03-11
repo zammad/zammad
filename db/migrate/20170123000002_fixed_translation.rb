@@ -41,16 +41,6 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
         'description' => 'Use client storage to cache data to enhance performance of application.',
       },
       {
-        'name'        => 'auth_oauth2',
-        'title'       => nil,
-        'description' => 'Enables user authentication via generic OAuth2. Register your app first.',
-      },
-      {
-        'name'        => 'auth_oauth2_credentials',
-        'title'       => nil,
-        'description' => 'Enables user authentication via generic OAuth2.',
-      },
-      {
         'name'        => 'password_min_size',
         'title'       => 'Minimum length',
         'description' => 'Password needs to have at least a minimal number of characters.',

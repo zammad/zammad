@@ -96,11 +96,6 @@ App.Config.set('auth_provider_all', {
     name:   'Google'
     config: 'auth_google_oauth2'
     class:  'google'
-  oauth2:
-    url:    '/auth/oauth2'
-    name:   'OAuth2'
-    config: 'auth_oauth2'
-    class:  'oauth2'
   weibo:
     url:    '/auth/weibo'
     name:   'Weibo'
