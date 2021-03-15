@@ -692,74 +692,8 @@ test( "ticket_perform_action check when there's an available webhook", function(
 
   var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
   var noticeMessage = el.find('.controls.js-webhooks').text()
-  notEqual(noticeMessage, testNoticeMessage, 'form shows message when webhook is not available')
+  notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when webhook is available')
 
-  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
-  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook)', 'form shows message when webhook is not available')
-});
-
-test( "ticket_perform_action check when there's no available webhook but an inactive is already selected", function() {
-
-  $('#forms').append('<hr><h1>ticket_perform_action check when there\'s an available webhook</h1><form id="form8"></form>')
-  var el = $('#form8')
-  var defaults = {
-    ticket_perform_action8: {
-      'notification.webhook': {
-        webhook_id: 'c-2'
-      }
-    }
-  }
-
-  App.Webhook.refresh([
-    {
-      name:     'Webhook test',
-      endpoint: 'https://target.example.com/webhook',
-      active:   false,
-      id:       'c-2'
-    }
-  ], { clear: true })
-
-  new App.ControllerForm({
-    el:        el,
-    model:     {
-      configure_attributes: [
-        {
-          name:         'ticket_perform_action8',
-          display:      'TicketPerformAction8',
-          tag:          'ticket_perform_action',
-          null:         true,
-          notification: true,
-        },
-      ]
-    },
-    params: defaults,
-    autofocus: true
-  })
-
-  var params = App.ControllerForm.params(el)
-  var test_params = {
-    'ticket_perform_action8': {
-      'notification.webhook': {
-        'webhook_id': 'c-2'
-      }
-    }
-  }
-  deepEqual(params, test_params, 'form param check')
-
-  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
-  var noticeMessage = el.find('.controls.js-webhooks div').text()
-  notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when inactive webhook is previously selected')
-
-  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
-  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook) (inactive)', 'form shows previously selected inactive webhook')
-
-  // when other option are changed
-  el.find('select:first').val('notification.email').trigger('change')
-  el.find('select:first').val('notification.webhook').trigger('change')
-
-  var noticeMessage = el.find('.controls.js-webhooks div').text()
-  notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when inactive webhook is previously selected')
-
-  var noticeMessage = el.find('.controls.js-webhooks select option').first().text()
-  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook) (inactive)', 'form shows previously selected inactive webhook')
+  var noticeMessage = el.find('.controls.js-webhooks select option').eq(1).text()
+  equal(noticeMessage, 'Webhook test (https://target.example.com/webhook)', 'form shows available webhook when webhook is available')
 });

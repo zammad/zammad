@@ -94,8 +94,7 @@ class App.UiElement.ticket_perform_action
     item.on('change', '.js-attributeSelector select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      meta = params[attribute.name] && params[attribute.name][groupAndAttribute] || {}
-      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, meta, attribute)
+      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
       @updateAttributeSelectors(item)
     )
 
@@ -426,6 +425,7 @@ class App.UiElement.ticket_perform_action
           relation: 'Webhook'
           value: meta.webhook_id
           translate: false
+          nulloption: true
         )
       else
         webhookSelection = App.view('generic/ticket_perform_action/webhook_not_available')( attribute: attribute )
