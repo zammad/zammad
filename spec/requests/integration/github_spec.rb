@@ -20,7 +20,7 @@ RSpec.describe 'GitHub', type: :request do
       id:         '1575',
       title:      'GitHub integration',
       url:        ENV['GITHUB_ISSUE_LINK'],
-      icon_state: 'open',
+      icon_state: 'closed',
       milestone:  '4.0',
       assignees:  ['Thorsten'],
       labels:     [
