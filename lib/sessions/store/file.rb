@@ -65,7 +65,7 @@ class Sessions::Store::File
     path = "#{@path}/#{client_id}"
     FileUtils.rm_rf path
   end
-  
+
   def set(client_id, data)
     path = "#{@path}/#{client_id}"
     File.open("#{path}/session", 'wb' ) do |file|
@@ -80,19 +80,8 @@ class Sessions::Store::File
     session_file = "#{session_dir}/session"
     data         = nil
 
-    # if no session dir exists, session got destoried
-    if !File.exist?(session_dir)
-      destroy(client_id)
-      Sessions.log('debug', "missing session directory #{session_dir} for '#{client_id}', remove session.")
-      return
-    end
+    return if !check_session_file_for_client(client_id, session_dir, session_file)
 
-    # if only session file is missing, then it's an error behavior
-    if !File.exist?(session_file)
-      destroy(client_id)
-      Sessions.log('error', "missing session file for '#{client_id}', remove session.")
-      return
-    end
     begin
       File.open(session_file, 'rb') do |file|
         file.flock(File::LOCK_SH)
@@ -114,20 +103,8 @@ class Sessions::Store::File
   end
 
   def send_data(client_id, data)
-    path     = "#{@path}/#{client_id}/"
-    filename = "send-#{Time.now.utc.to_f}"
-    location = "#{path}#{filename}"
-    check    = true
-    count    = 0
-    while check
-      if File.exist?(location)
-        count += 1
-        location = "#{path}#{filename}-#{count}"
-      else
-        check = false
-      end
-    end
-    return false if !File.directory? path
+    location = new_message_filename_for(client_id)
+    return false if !location
 
     begin
       File.open(location, 'wb') do |file|
@@ -184,11 +161,11 @@ class Sessions::Store::File
     end
   end
 
-  def each_spool(&block)
+  def each_spool()
     path = "#{@path}/spool/"
     FileUtils.mkpath path
 
-    files     = []
+    files = []
     Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
@@ -204,7 +181,7 @@ class Sessions::Store::File
         message = file.read
         file.flock(File::LOCK_UN)
 
-        block.call message
+        yield message
       end
     end
   end
@@ -224,7 +201,7 @@ class Sessions::Store::File
     FileUtils.rm_rf @nodes_path
   end
 
-  def get_nodes
+  def nodes
     path = "#{@nodes_path}/*.status"
     nodes = []
     files = Dir.glob(path)
@@ -261,7 +238,7 @@ class Sessions::Store::File
     end
   end
 
-  def each_node_session(&block)
+  def each_node_session()
     # read node sessions
     path = "#{@nodes_path}/*.session"
 
@@ -276,7 +253,8 @@ class Sessions::Store::File
 
           data = JSON.parse(content)
           next if data.blank?
-          block.call data
+
+          yield data
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
           #to_delete.push "#{path}/#{entry}"
@@ -300,7 +278,7 @@ class Sessions::Store::File
     end
   end
 
-  def each_session_by_node(node_id, &block)
+  def each_session_by_node(node_id)
     # read node sessions
     path = "#{@nodes_path}/#{node_id}.*.session"
 
@@ -315,7 +293,8 @@ class Sessions::Store::File
 
           data = JSON.parse(content)
           next if data.blank?
-          block.call data
+
+          yield data
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
           #to_delete.push "#{path}/#{entry}"
@@ -344,5 +323,42 @@ class Sessions::Store::File
       Sessions.log('error', "can't parse queue message: #{message}, #{e.inspect}")
       nil
     end
+  end
+
+  def check_session_file_for_client(client_id, session_dir, session_file)
+    # if no session dir exists, session got destoried
+    if !File.exist?(session_dir)
+      destroy(client_id)
+      Sessions.log('debug', "missing session directory #{session_dir} for '#{client_id}', remove session.")
+      return false
+    end
+
+    # if only session file is missing, then it's an error behavior
+    if !File.exist?(session_file)
+      destroy(client_id)
+      Sessions.log('error', "missing session file for '#{client_id}', remove session.")
+      return false
+    end
+
+    true
+  end
+
+  def new_message_filename_for(client_id)
+    path     = "#{@path}/#{client_id}/"
+    filename = "send-#{Time.now.utc.to_f}"
+    location = "#{path}#{filename}"
+    check    = true
+    count    = 0
+    while check
+      if File.exist?(location)
+        count += 1
+        location = "#{path}#{filename}-#{count}"
+      else
+        check = false
+      end
+    end
+    return nil if !File.directory? path
+
+    location
   end
 end

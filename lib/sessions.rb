@@ -1,9 +1,9 @@
 module Sessions
 
   @store = case Rails.application.config.websocket_session_store
-    when :redis then Sessions::Store::Redis.new
-    else Sessions::Store::File.new 
-  end
+           when :redis then Sessions::Store::Redis.new
+           else Sessions::Store::File.new
+           end
 
   # create global vars for threads
   @@client_threads = {} # rubocop:disable Style/ClassVars

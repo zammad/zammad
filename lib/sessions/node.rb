@@ -1,9 +1,9 @@
 module Sessions::Node
 
   @store = case Rails.application.config.websocket_session_store
-    when :redis then Sessions::Store::Redis.new
-    else Sessions::Store::File.new 
-  end
+           when :redis then Sessions::Store::Redis.new
+           else Sessions::Store::File.new
+           end
 
   def self.session_assigne(client_id, force = false)
 
@@ -39,7 +39,7 @@ module Sessions::Node
   end
 
   def self.registered
-    @store.get_nodes
+    @store.nodes
   end
 
   def self.register(node_id)
@@ -56,6 +56,7 @@ module Sessions::Node
     sessions = {}
     @store.each_node_session do |data|
       next if data['client_id'].blank?
+
       sessions[data['client_id']] = data['node_id']
     end
     sessions
@@ -78,6 +79,7 @@ module Sessions::Node
     @store.each_session_by_node(node_id) do |data|
       next if data['client_id'].blank?
       next if !Sessions.session_exists?(data['client_id']) && force == false
+
       sessions.push data['client_id']
     end
     sessions

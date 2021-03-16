@@ -1,8 +1,8 @@
 class Sessions::Store::Redis
-  SESSIONS_KEY = "sessions"
-  MESSAGES_KEY = "messages"
-  SPOOL_KEY = "spool"
-  NODES_KEY = "nodes"
+  SESSIONS_KEY = 'sessions'.freeze
+  MESSAGES_KEY = 'messages'.freeze
+  SPOOL_KEY = 'spool'.freeze
+  NODES_KEY = 'nodes'.freeze
 
   def initialize
     @redis = Redis.new
@@ -32,7 +32,7 @@ class Sessions::Store::Redis
   end
 
   def get(client_id)
-    data         = nil
+    data = nil
 
     # if only session is missing, then it's an error behavior
     session = @redis.get client_session_key(client_id)
@@ -52,12 +52,12 @@ class Sessions::Store::Redis
   end
 
   def send_data(client_id, data)
-    @redis.rpush(client_messages_key(client_id), data.to_json) > 0
+    @redis.rpush(client_messages_key(client_id), data.to_json).positive?
   end
 
   def queue(client_id)
-    data  = []
-    while item = @redis.lpop(client_messages_key(client_id))
+    data = []
+    while (item = @redis.lpop(client_messages_key(client_id)))
       data.push JSON.parse(item)
     end
     data
@@ -75,9 +75,7 @@ class Sessions::Store::Redis
   end
 
   def each_spool(&block)
-    @redis.lrange(SPOOL_KEY, 0, -1).each do |message|
-      block.call message
-    end
+    @redis.lrange(SPOOL_KEY, 0, -1).each(&block)
   end
 
   def remove_from_spool(message)
@@ -87,7 +85,7 @@ class Sessions::Store::Redis
   def clear_spool
     @redis.del SPOOL_KEY
   end
-  
+
   def clear_sessions
     @redis.keys("#{SESSIONS_KEY}/*").each do |key|
       @redis.del key
@@ -110,7 +108,7 @@ class Sessions::Store::Redis
     @redis.del NODES_KEY
   end
 
-  def get_nodes
+  def nodes
     nodes = []
     @redis.smembers(NODES_KEY).each do |node_id|
       content = @redis.get(node_key(node_id))
@@ -129,9 +127,7 @@ class Sessions::Store::Redis
 
   def each_node_session(&block)
     @redis.smembers(NODES_KEY).each do |node_id|
-      each_session_by_node(node_id) do |data|
-        block.call data
-      end
+      each_session_by_node(node_id, &block)
     end
   end
 
@@ -140,12 +136,12 @@ class Sessions::Store::Redis
     @redis.sadd node_sessions_key(node_id), client_id
   end
 
-  def each_session_by_node(node_id, &block)
+  def each_session_by_node(node_id)
     @redis.smembers(node_sessions_key(node_id)).each do |client_id|
       content = @redis.get(node_client_session_key(node_id, client_id))
       if content
         data = JSON.parse(content)
-        block.call data
+        yield data
       end
     end
   end
