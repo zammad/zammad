@@ -14,10 +14,17 @@ class Sequencer
 
                 ews_folder_ids.collect do |folder_id|
 
-                  ews_folder.find(folder_id).items.each do |resource|
-                    attributes = ::Import::Exchange::ItemAttributes.extract(resource)
+                  ews_folder.find(folder_id).items.each do |item|
+
+                    attributes = ::Import::Exchange::ItemAttributes.extract(item)
                     extractor.extract(attributes)
+
                     break if extractor.enough
+                  rescue => e
+                    Rails.logger.error 'Unable to process Exchange folder item'
+                    Rails.logger.debug { item.inspect }
+                    Rails.logger.error e
+                    nil
                   end
                 rescue NoMethodError => e
                   raise if e.message.exclude?('Viewpoint::EWS::')
