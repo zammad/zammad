@@ -11,7 +11,8 @@ Capybara.register_driver(:zammad_chrome) do |app|
     },
     chromeOptions: {
       prefs: {
-        'intl.accept_languages' => 'en-US'
+        'intl.accept_languages'                                => 'en-US',
+        'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
       },
     },
   )
@@ -35,6 +36,7 @@ Capybara.register_driver(:zammad_firefox) do |app|
   profile['intl.locale.matchOS']      = false
   profile['intl.accept_languages']    = 'en-US'
   profile['general.useragent.locale'] = 'en-US'
+  profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
 
   capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
     firefox_profile: profile,

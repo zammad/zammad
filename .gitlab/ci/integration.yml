@@ -2,7 +2,6 @@ include:
   - local: '/.gitlab/ci/integration/clearbit.yml'
   - local: '/.gitlab/ci/integration/email_helper_deliver.yml'
   - local: '/.gitlab/ci/integration/es.yml'
-  - local: '/.gitlab/ci/integration/facebook.yml'
   - local: '/.gitlab/ci/integration/geo.yml'
   - local: '/.gitlab/ci/integration/otrs.yml'
   - local: '/.gitlab/ci/integration/slack.yml'

@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.facebook.com/oauth/access_token
+    body:
+      encoding: UTF-8
+      string: client_id=433768244546254&client_secret=62a69249edb426a894333291734ec81d&grant_type=client_credentials
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      X-Fb-Rev:
+      - '1003441624'
+      Content-Type:
+      - application/json; charset=UTF-8
+      X-Fb-Trace-Id:
+      - EVFAflVJtjd
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Request-Id:
+      - A0us0Ja4b-D6Vk3xdeToGTL
+      Facebook-Api-Version:
+      - v3.2
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Debug:
+      - GZRmFMwfKRZBkp7PHGPkTPsFT3KUX2rz79S7A221IJuL1RBqCufWTUOJGS/xx1fdoRb/A2M/ZvUIHQ8QYkZwJA==
+      Date:
+      - Fri, 12 Mar 2021 15:41:36 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '84'
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"433768244546254|pxTtOQrkmJDMWzJROLEVXuOZqWI","token_type":"bearer"}'
+    http_version:
+  recorded_at: Fri, 12 Mar 2021 15:41:36 GMT
+recorded_with: VCR 4.0.0

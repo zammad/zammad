@@ -58,8 +58,7 @@ include:
   variables:
     RAILS_ENV: "production"
 
-.template_browser-core_capybara: &template_browser-core_capybara
-  stage: browser-core
+.template_browser-capybara: &template_browser-capybara
   dependencies:
     - browser:build
   extends:
@@ -68,6 +67,11 @@ include:
     - .services_mysql_postgresql_elasticsearch_selenium_imap
   variables:
     RAILS_ENV: "test"
+
+.template_browser-core_capybara: &template_browser-core_capybara
+  extends:
+    - .template_browser-capybara
+  stage: browser-core
   script:
     - bundle exec rake zammad:ci:test:prepare
     - bundle exec rspec --fail-fast -t type:system -t ~integration

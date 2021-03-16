@@ -23,20 +23,23 @@ include:
 # RSpec 3rd party integration tests are independent of the database
 # therefore we need only one job and choose a random database for each run
 
-rspec:mysql:integration:
+.rspec_integration_rules: &rspec_integration_rules
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS != null'
+      when: manual
+      allow_failure: true
+    - when: on_success
+
+rspec:integration:
   stage: test
   extends:
     - .env_base
     - .services_mysql_postgresql
+    - .rspec_integration_rules
   variables:
     RAILS_ENV: "test"
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/'
-      when: manual
-      allow_failure: true
-    - when: on_success
   script:
     - bundle exec rake zammad:db:init
     - bundle exec rspec -t type:integration

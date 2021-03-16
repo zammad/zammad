@@ -87,6 +87,41 @@ FactoryBot.define do
       end
     end
 
+    factory :facebook_channel do
+      area { 'Facebook::Account' }
+      options do
+        {
+          adapter: 'facebook',
+          user:    {
+            id:   ENV['FACEBOOK_ADMIN_USER_ID'],
+            name: "#{ENV['FACEBOOK_ADMIN_FIRSTNAME']} #{ENV['FACEBOOK_ADMIN_LASTNAME']}",
+          },
+          auth:    {
+            access_token: ENV['FACEBOOK_ADMIN_ACCESS_TOKEN'],
+          },
+          sync:    {
+            pages: {
+              ENV['FACEBOOK_PAGE_1_ID'] => {
+                group_id: Group.first.id,
+              }
+            }
+          },
+          pages:   [
+            {
+              id:           ENV['FACEBOOK_PAGE_1_ID'],
+              name:         ENV['FACEBOOK_PAGE_1_NAME'],
+              access_token: ENV['FACEBOOK_PAGE_1_ACCCESS_TOKEN'],
+            },
+            {
+              id:           ENV['FACEBOOK_PAGE_2_ID'],
+              name:         ENV['FACEBOOK_PAGE_2_NAME'],
+              access_token: ENV['FACEBOOK_PAGE_2_ACCCESS_TOKEN'],
+            }
+          ],
+        }
+      end
+    end
+
     factory :google_channel do
       area { 'Google::Account' }
       options do

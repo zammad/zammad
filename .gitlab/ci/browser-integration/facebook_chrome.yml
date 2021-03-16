@@ -1,6 +1,0 @@
-facebook_chrome:
-  extends:
-    - .template_browser-integration
-  variables:
-    BROWSER: "chrome"
-    TEST_FILE: "test/integration/facebook_browser_test.rb"

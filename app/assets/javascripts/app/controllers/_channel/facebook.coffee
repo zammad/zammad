@@ -41,14 +41,8 @@ class ChannelFacebook extends App.ControllerSubContent
       channel = App.Channel.find(channel_id)
       if channel && channel.options && channel.options.sync
         displayName = '-'
-        if channel.options.sync.wall && channel.options.sync.wall.group_id
-          group = App.Group.find(channel.options.sync.wall.group_id)
-          displayName = group.displayName()
         if !channel.options.sync
           channel.options.sync = {}
-        if !channel.options.sync.wall
-          channel.options.sync.wall = {}
-        channel.options.sync.wall.groupName = displayName
         if channel.options && channel.options.pages
           for page in channel.options.pages
             displayName = '-'
@@ -199,8 +193,6 @@ class AccountEdit extends App.ControllerModal
   content: ->
     if !@channel.options.sync
       @channel.options.sync = {}
-    if !@channel.options.sync.wall
-      @channel.options.sync.wall = {}
     if !@channel.options.sync.pages
       @channel.options.sync.pages = {}
     content = $( App.view('facebook/account_edit')(channel: @channel) )
@@ -218,7 +210,6 @@ class AccountEdit extends App.ControllerModal
       )
       el.html(selection)
 
-    groupSelection(@channel.options.sync.wall.group_id, content.find('.js-wall .js-groups'), 'wall')
     if @channel.options.pages
       for page in @channel.options.pages
         pageConfigured = false

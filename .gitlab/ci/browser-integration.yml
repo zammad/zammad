@@ -3,8 +3,6 @@ include:
   # browser-integration
   - local: '/.gitlab/ci/browser-integration/capybara_chrome.yml'
   - local: '/.gitlab/ci/browser-integration/capybara_ff.yml'
-  - local: '/.gitlab/ci/browser-integration/facebook_chrome.yml'
-  - local: '/.gitlab/ci/browser-integration/facebook_ff.yml'
   - local: '/.gitlab/ci/browser-integration/idoit_chrome.yml'
   - local: '/.gitlab/ci/browser-integration/otrs_chrome.yml'
   - local: '/.gitlab/ci/browser-integration/zendesk_chrome.yml'
