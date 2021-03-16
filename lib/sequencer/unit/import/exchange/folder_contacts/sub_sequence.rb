@@ -41,19 +41,26 @@ class Sequencer
 
                 logger.debug { "Fetching and processing #{per_page} items (page: #{page}, offset: #{offset}) from Exchange folder '#{display_path}' (total: #{total})" }
 
-                folder.items(opts).each do |item|
+                process_folders(folder, display_path, opts)
+              end
+            end
 
-                  sequence_resource(item) do |parameters|
+            def process_folders(folder, display_path, opts)
+              folder.items(opts).each do |item|
 
-                    item = parameters[:resource]
+                sequence_resource do |parameters|
 
-                    logger.debug { "Extracting attributes from Exchange item: #{item.get_all_properties!.inspect}" }
+                  logger.debug { "Extracting attributes from Exchange item: #{item.get_all_properties!.inspect}" }
 
-                    parameters.merge(
-                      resource:        ::Import::Exchange::ItemAttributes.extract(item),
-                      ews_folder_name: display_path,
-                    )
-                  end
+                  parameters.merge(
+                    resource:        ::Import::Exchange::ItemAttributes.extract(item),
+                    ews_folder_name: display_path,
+                  )
+                rescue => e
+                  Rails.logger.error 'Unable to process Exchange folder item'
+                  Rails.logger.debug { item.inspect }
+                  Rails.logger.error e
+                  nil
                 end
               end
             end
