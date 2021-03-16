@@ -5,19 +5,19 @@ class Webhook < ApplicationModel
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
-  before_create  :validate_endpoint
-  before_update  :validate_endpoint
   before_destroy Webhook::EnsureNoRelatedObjects
 
   validates :name, presence: true
+  validate :validate_endpoint
 
   private
 
   def validate_endpoint
     uri = URI.parse(endpoint)
-    raise Exceptions::UnprocessableEntity, 'Invalid endpoint (no http/https)!' if !uri.is_a?(URI::HTTP)
-    raise Exceptions::UnprocessableEntity, 'Invalid endpoint (no hostname)!' if uri.host.nil?
+
+    errors.add(:endpoint, 'Invalid endpoint (no http/https)!') if !uri.is_a?(URI::HTTP)
+    errors.add(:endpoint, 'Invalid endpoint (no hostname)!') if uri.host.nil?
   rescue URI::InvalidURIError
-    raise Exceptions::UnprocessableEntity, 'Invalid endpoint!'
+    errors.add :endpoint, 'Invalid endpoint!'
   end
 end

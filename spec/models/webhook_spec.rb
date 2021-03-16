@@ -3,40 +3,61 @@ require 'rails_helper'
 RSpec.describe Webhook, type: :model do
 
   describe 'check endpoint' do
-    subject(:webhook) { create(:webhook, endpoint: endpoint) }
+    subject(:webhook) { build(:webhook, endpoint: endpoint) }
 
-    let(:endpoint) { 'example.com' }
+    before { webhook.valid? }
+
+    let(:endpoint_errors) { webhook.errors.messages[:endpoint] }
 
     context 'with missing http type' do
-      it 'raise an error' do
-        expect { webhook }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid endpoint (no http/https)!')
+      let(:endpoint) { 'example.com' }
+
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(endpoint_errors).to include 'Invalid endpoint (no http/https)!'
       end
     end
 
     context 'with spaces in invalid hostname' do
       let(:endpoint) { 'http://   example.com' }
 
-      it 'raise an error' do
-        expect { webhook }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid endpoint!')
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(endpoint_errors).to include 'Invalid endpoint!'
       end
     end
 
     context 'with ? in hostname' do
       let(:endpoint) { 'http://?example.com' }
 
-      it 'raise an error' do
-        expect { webhook }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid endpoint (no hostname)!')
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(endpoint_errors).to include 'Invalid endpoint (no hostname)!'
       end
     end
 
     context 'with nil in endpoint' do
       let(:endpoint) { nil }
 
-      it 'raise an error' do
-        expect { webhook }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid endpoint!')
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(endpoint_errors).to include 'Invalid endpoint!'
       end
     end
 
+    context 'with a valid endpoint' do
+      let(:endpoint) { 'https://example.com/endpoint' }
+
+      it { is_expected.to be_valid }
+
+      it 'has no errors' do
+        expect(endpoint_errors).to be_empty
+      end
+    end
   end
 
   describe '#destroy' do
