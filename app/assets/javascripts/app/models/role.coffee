@@ -35,3 +35,21 @@ class App.Role extends App.Model
           data['permissions'].push permission
 
     data
+
+  @withPermissions: (permissions) ->
+    if !_.isArray(permissions)
+      permissions = [permissions]
+
+    roles = []
+    for role in App.Role.all()
+      found = false
+      for permission in permissions
+        id = App.Permission.findByAttribute('name', permission)?.id
+        continue if !id
+        continue if !_.contains(role.permission_ids, id)
+        found = true
+        break
+      continue if !found
+      roles.push(role)
+    roles
+

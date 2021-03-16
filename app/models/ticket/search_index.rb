@@ -8,10 +8,10 @@ module Ticket::SearchIndex
 
     # collect article data
     # add tags
-    tags = tag_list
-    if tags.present?
-      attributes[:tags] = tags
-    end
+    attributes['tags'] = tag_list
+
+    # mentions
+    attributes['mention_user_ids'] = mentions.pluck(:user_id)
 
     # current payload size
     total_size_current = 0

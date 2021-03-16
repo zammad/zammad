@@ -609,6 +609,82 @@
 
   KbAnswer.trigger = '??'
 
-  Plugin.prototype.helpers = [Collection, KbAnswer]
+  function Mention() {}
+
+  Mention.renderValue = function(textmodule, elem, callback) {
+    textmodule.emptyResultsContainer()
+
+    var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
+    textmodule.appendResults(element)
+
+    var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
+
+    var user_id = $(elem).data('id')
+    var user    = App.User.find(user_id)
+    if (!user) {
+      callback('')
+    }
+
+    fqdn      = App.Config.get('fqdn')
+    http_type = App.Config.get('http_type')
+
+    $replace = $('<a></a>', {
+      href: http_type + '://' + fqdn + '/' + user.uiUrl(),
+      'data-mention-user-id': user_id,
+      text: user.firstname + ' ' + user.lastname
+    })
+
+    callback($replace[0].outerHTML)
+  }
+
+  Mention.renderResults = function(textmodule, term) {
+    textmodule.emptyResultsContainer()
+
+    if(!term) {
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users...'))
+      textmodule.appendResults(element)
+
+      return
+    }
+
+    var element = $('<li>').text(App.i18n.translateInline('Loading...'))
+    textmodule.appendResults(element)
+
+    App.Delay.set(function() {
+      items = []
+
+      App.Mention.searchUser(term, function(data) {
+        textmodule.emptyResultsContainer()
+
+        activeSet = false
+        $.each(data.user_ids, function(index, user_id) {
+          user = App.User.find(user_id)
+          if (!user) return true
+          if (!user.active) return true
+
+          item = $('<li>', {
+            'data-id': user_id,
+            text: user.firstname + ' ' + user.lastname + ' <' + user.email + '>'
+          })
+          if (!activeSet) {
+            activeSet = true
+            item.addClass('is-active')
+          }
+
+          items.push(item)
+        })
+
+        if(items.length == 0) {
+          items.push($('<li>').text(App.i18n.translateInline('No results found')))
+        }
+
+        textmodule.appendResults(items)
+      })
+    }, 200, 'textmoduleMentionDelay', 'textmodule')
+  }
+
+  Mention.trigger = '@@'
+
+  Plugin.prototype.helpers = [Collection, KbAnswer, Mention]
 
 }(jQuery, window));

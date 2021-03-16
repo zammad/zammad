@@ -1277,6 +1277,36 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'mentions' do
+    context 'when logged in as agent' do
+      let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let!(:other_agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+
+      it 'can subscribe and unsubscribe' do
+        ensure_websocket do
+          visit "ticket/zoom/#{ticket.id}"
+
+          click '.mentions .js-subscribe input'
+          expect(page).to have_selector('.mentions .js-unsubscribe input', wait: 10)
+          expect(page).to have_selector('.mentions span.avatar', wait: 10)
+
+          click '.mentions .js-unsubscribe input'
+          expect(page).to have_selector('.mentions .js-subscribe input', wait: 10)
+          expect(page).to have_no_selector('.mentions span.avatar', wait: 10)
+
+          create(:mention, mentionable: ticket, user: other_agent)
+          expect(page).to have_selector('.mentions span.avatar', wait: 10)
+
+          # check history for mention entries
+          click 'h2.sidebar-header-headline.js-headline'
+          click 'li[data-type=ticket-history] a'
+          expect(page).to have_text('created Mention', wait: 10)
+          expect(page).to have_text('removed Mention', wait: 10)
+        end
+      end
+    end
+  end
+
   # https://github.com/zammad/zammad/issues/2671
   describe 'Pending time field in ticket sidebar', authenticated_as: :customer do
     let(:customer) { create(:customer) }

@@ -399,15 +399,21 @@ App.Config.set(
           shortcuts: [
             {
               key: '::'
-              hotkeys: false,
+              hotkeys: false
               description: 'Inserts Text module'
               globalEvent: 'richtext-insert-text-module'
             }
             {
               key: '??'
-              hotkeys: false,
+              hotkeys: false
               description: 'Inserts Knowledge Base answer'
               globalEvent: 'richtext-insert-kb-answer'
+            }
+            {
+              key: '@@'
+              hotkeys: false
+              description: 'Inserts a mention for a user'
+              globalEvent: 'richtext-insert-mention-user'
             }
           ]
         }

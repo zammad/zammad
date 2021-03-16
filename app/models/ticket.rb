@@ -66,7 +66,7 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
-  history_relation_object 'Ticket::Article'
+  history_relation_object 'Ticket::Article', 'Mention'
 
   sanitized_html :note
 
@@ -75,6 +75,7 @@ class Ticket < ApplicationModel
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
   has_many      :flags,                  class_name: 'Ticket::Flag', dependent: :destroy
+  has_many      :mentions,               as: :mentionable, dependent: :destroy
   belongs_to    :state,                  class_name: 'Ticket::State', optional: true
   belongs_to    :priority,               class_name: 'Ticket::Priority', optional: true
   belongs_to    :owner,                  class_name: 'User', optional: true
@@ -84,7 +85,7 @@ class Ticket < ApplicationModel
   belongs_to    :create_article_type,    class_name: 'Ticket::Article::Type', optional: true
   belongs_to    :create_article_sender,  class_name: 'Ticket::Article::Sender', optional: true
 
-  association_attributes_ignored :flags
+  association_attributes_ignored :flags, :mentions
 
   self.inheritance_column = nil
 
@@ -364,6 +365,10 @@ returns
         updated_by_id: data[:user_id],
       )
 
+      # search for mention duplicates and destroy them before moving mentions
+      Mention.duplicates(self, target_ticket).destroy_all
+      Mention.where(mentionable: self).update_all(mentionable_id: target_ticket.id) # rubocop:disable Rails/SkipsModelValidations
+
       # reassign links to the new ticket
       # rubocop:disable Rails/SkipsModelValidations
       ticket_source_id = Link::Object.find_by(name: 'Ticket').id
@@ -574,17 +579,19 @@ condition example
 
     # get tables to join
     tables = ''
-    selectors.each_key do |attribute|
-      selector = attribute.split('.')
-      next if !selector[1]
-      next if selector[0] == 'ticket'
-      next if selector[0] == 'execution_time'
-      next if tables.include?(selector[0])
+    selectors.each do |attribute, selector_raw|
+      attributes = attribute.split('.')
+      selector = selector_raw.stringify_keys
+      next if !attributes[1]
+      next if attributes[0] == 'execution_time'
+      next if tables.include?(attributes[0])
+      next if attributes[0] == 'ticket' && attributes[1] != 'mention_user_ids'
+      next if attributes[0] == 'ticket' && attributes[1] == 'mention_user_ids' && selector['pre_condition'] == 'not_set'
 
       if query != ''
         query += ' AND '
       end
-      case selector[0]
+      case attributes[0]
       when 'customer'
         tables += ', users customers'
         query += 'tickets.customer_id = customers.id'
@@ -600,8 +607,13 @@ condition example
       when 'ticket_state'
         tables += ', ticket_states'
         query += 'tickets.state_id = ticket_states.id'
+      when 'ticket'
+        if attributes[1] == 'mention_user_ids'
+          tables += ', mentions'
+          query += "tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"
+        end
       else
-        raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
+        raise "invalid selector #{attribute.inspect}->#{attributes.inspect}"
       end
     end
 
@@ -660,6 +672,29 @@ condition example
 
       if query != ''
         query += ' AND '
+      end
+
+      # because of no grouping support we select not_set by sub select for mentions
+      if attributes[0] == 'ticket' && attributes[1] == 'mention_user_ids'
+        if selector['pre_condition'] == 'not_set'
+          query += if selector['operator'] == 'is'
+                     "(SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id) IS NULL"
+                   else
+                     "1 = (SELECT 1 FROM mentions mentions_sub WHERE mentions_sub.mentionable_type = 'Ticket' AND mentions_sub.mentionable_id = tickets.id)"
+                   end
+        else
+          query += if selector['operator'] == 'is'
+                     'mentions.user_id IN (?)'
+                   else
+                     'mentions.user_id NOT IN (?)'
+                   end
+          if selector['pre_condition'] == 'current_user.id'
+            bind_params.push current_user_id
+          else
+            bind_params.push selector['value']
+          end
+        end
+        next
       end
 
       if selector['operator'] == 'is'

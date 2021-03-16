@@ -48,6 +48,7 @@ returns
 
     owned_by_nobody = false
     owned_by_me = false
+    mentioned = false
     case ticket.owner_id
     when 1
       owned_by_nobody = true
@@ -67,6 +68,11 @@ returns
         owned_by_me = true
         break
       end
+    end
+
+    # always trigger notifications for user if he is mentioned
+    if owned_by_me == false && ticket.mentions.exists?(user: user)
+      mentioned = true
     end
 
     # check if group is in selected groups
@@ -104,6 +110,12 @@ returns
       }
     end
     if data['criteria']['owned_by_nobody'] && owned_by_nobody
+      return {
+        user:     user,
+        channels: channels
+      }
+    end
+    if data['criteria']['mentioned'] && mentioned
       return {
         user:     user,
         channels: channels

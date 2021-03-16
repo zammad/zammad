@@ -869,9 +869,10 @@ RSpec.describe User, type: :model do
                      'User'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Mention'                            => { 'created_by_id' => 1, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'History'                            => { 'created_by_id' => 2 },
+                     'History'                            => { 'created_by_id' => 3 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
@@ -893,6 +894,8 @@ RSpec.describe User, type: :model do
       recent_view         = create(:recent_view, created_by: user)
       avatar              = create(:avatar, o_id: user.id)
       overview            = create(:overview, created_by_id: user.id, user_ids: [user.id])
+      mention             = create(:mention, mentionable: create(:ticket), user: user)
+      mention_created_by  = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -930,6 +933,8 @@ RSpec.describe User, type: :model do
       expect { customer_ticket2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { customer_ticket3.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_agent_user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { mention.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect(mention_created_by.reload.created_by_id).not_to eq(user.id)
       expect(overview.reload.user_ids).to eq([])
 
       # move ownership objects

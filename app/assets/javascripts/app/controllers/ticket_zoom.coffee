@@ -158,6 +158,10 @@ class App.TicketZoom extends App.Controller
     else
       @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
+    # make sure to load assets for mentions if cache is not up to date
+    if !_.isEqual(data.mentions, @mentions)
+      loadAssets = true
+
     # load assets
     if loadAssets
 
@@ -179,6 +183,9 @@ class App.TicketZoom extends App.Controller
 
       # remember tags
       @tags = data.tags
+
+      # remember mentions
+      @mentions = data.mentions
 
       App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
 
@@ -515,6 +522,7 @@ class App.TicketZoom extends App.Controller
         formMeta:     @formMeta
         markForm:     @markForm
         tags:         @tags
+        mentions:     @mentions
         links:        @links
       )
 
@@ -550,8 +558,9 @@ class App.TicketZoom extends App.Controller
 
     if @sidebarWidget
       @sidebarWidget.reload(
-        tags: @tags
-        links: @links
+        tags:     @tags
+        mentions: @mentions
+        links:    @links
       )
 
     if !@initDone
@@ -891,8 +900,15 @@ class App.TicketZoom extends App.Controller
       return
 
     # verify if time accounting is active for ticket
-    selector = ticket.clone()
-    selector.tags = @tags
+    selector                 = ticket.clone()
+    selector.tags            = @tags
+    # always have a empy value to make sure that the condition gets checked
+    selector.mentions        = ['']
+    for id in @mentions
+      mention = App.Mention.find(id)
+      continue if !mention
+      selector.mentions.push(mention.user_id)
+
     time_accounting_selector = @Config.get('time_accounting_selector')
     if !App.Ticket.selector(selector, time_accounting_selector['condition'])
       @submitPost(e, ticket, macro)

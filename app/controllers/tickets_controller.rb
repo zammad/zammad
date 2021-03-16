@@ -163,6 +163,14 @@ class TicketsController < ApplicationController
         end
       end
 
+      # create mentions if given
+      if params[:mentions].present?
+        authorize!(Mention.new, :create?)
+        Array(params[:mentions]).each do |user_id|
+          Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
+        end
+      end
+
       # create article if given
       if params[:article]
         article_create(ticket, params[:article])
@@ -702,6 +710,12 @@ class TicketsController < ApplicationController
     # get tags
     tags = ticket.tag_list
 
+    # get mentions
+    mentions = Mention.where(mentionable: ticket).order(created_at: :desc)
+    mentions.each do |mention|
+      assets = mention.assets(assets)
+    end
+
     # return result
     {
       ticket_id:          ticket.id,
@@ -709,6 +723,7 @@ class TicketsController < ApplicationController
       assets:             assets,
       links:              links,
       tags:               tags,
+      mentions:           mentions.pluck(:id),
       form_meta:          attributes_to_change[:form_meta],
     }
   end

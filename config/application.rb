@@ -49,6 +49,7 @@ module Zammad
               criteria: {
                 owned_by_me:     true,
                 owned_by_nobody: true,
+                mentioned:       true,
                 no:              false,
               },
               channel:  {
@@ -60,6 +61,7 @@ module Zammad
               criteria: {
                 owned_by_me:     true,
                 owned_by_nobody: true,
+                mentioned:       true,
                 no:              false,
               },
               channel:  {
@@ -71,6 +73,7 @@ module Zammad
               criteria: {
                 owned_by_me:     true,
                 owned_by_nobody: false,
+                mentioned:       false,
                 no:              false,
               },
               channel:  {
@@ -82,6 +85,7 @@ module Zammad
               criteria: {
                 owned_by_me:     true,
                 owned_by_nobody: false,
+                mentioned:       false,
                 no:              false,
               },
               channel:  {

@@ -13,7 +13,9 @@ satinize html string based on whiltelist
 
   def self.strict(string, external = false, timeout: true)
     Timeout.timeout(timeout ? PROCESSING_TIMEOUT : nil) do
-      @fqdn = Setting.get('fqdn')
+      @fqdn              = Setting.get('fqdn')
+      http_type          = Setting.get('http_type')
+      web_app_url_prefix = "#{http_type}://#{@fqdn}/\#".downcase
 
       # config
       tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
@@ -179,7 +181,11 @@ satinize html string based on whiltelist
 
           node.set_attribute('href', href)
           node.set_attribute('rel', 'nofollow noreferrer noopener')
-          node.set_attribute('target', '_blank')
+
+          # do not "target=_blank" WebApp URLs (e.g. mentions)
+          if !href.downcase.start_with?(web_app_url_prefix)
+            node.set_attribute('target', '_blank')
+          end
         end
 
         if node.name == 'a' && node['href'].blank?

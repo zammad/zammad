@@ -31,7 +31,8 @@ class Ticket::Article < ApplicationModel
   belongs_to :updated_by, class_name: 'User', optional: true
   belongs_to :origin_by,  class_name: 'User', optional: true
 
-  before_save   :touch_ticket_if_needed
+  before_validation :check_mentions, on: :create
+  before_save :touch_ticket_if_needed
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
   after_destroy :store_delete, :update_time_units
@@ -321,6 +322,26 @@ returns
 
     logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
     self.body = body[0, limit]
+  end
+
+  def check_mentions
+    begin
+      mention_user_ids = Nokogiri::HTML(body).css('a[data-mention-user-id]').map do |link|
+        link['data-mention-user-id']
+      end
+    rescue => e
+      Rails.logger.error "Can't parse body '#{body}' as HTML for extracting Mentions."
+      Rails.logger.error e
+      return
+    end
+
+    return if mention_user_ids.blank?
+    raise "User #{updated_by_id} has no permission to mention other Users!" if !MentionPolicy.new(updated_by, Mention.new).create?
+
+    user_ids = User.where(id: mention_user_ids).pluck(:id)
+    user_ids.each do |user_id|
+      Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
+    end
   end
 
   def history_log_attributes

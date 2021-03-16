@@ -204,7 +204,7 @@ returns
 =end
 
   def history_get(fulldata = false)
-    relation_object = self.class.instance_variable_get(:@history_relation_object) || nil
+    relation_object = history_relation_object
 
     if !fulldata
       return History.list(self.class.name, self['id'], relation_object)
@@ -213,12 +213,16 @@ returns
     # get related objects
     history = History.list(self.class.name, self['id'], relation_object, true)
     history[:list].each do |item|
-      record = item['object'].constantize.find(item['o_id'])
+      record = item['object'].constantize.lookup(id: item['o_id'])
 
-      history[:assets] = record.assets(history[:assets])
+      if record.present?
+        history[:assets] = record.assets(history[:assets])
+      end
 
-      if item['related_object']
-        record = item['related_object'].constantize.find(item['related_o_id'])
+      next if !item['related_object']
+
+      record = item['related_object'].constantize.lookup(id: item['related_o_id'])
+      if record.present?
         history[:assets] = record.assets(history[:assets])
       end
     end
@@ -226,6 +230,10 @@ returns
       history: history[:list],
       assets:  history[:assets],
     }
+  end
+
+  def history_relation_object
+    @history_relation_object ||= self.class.instance_variable_get(:@history_relation_object) || []
   end
 
   # methods defined here are going to extend the class, not the instance of it
@@ -256,8 +264,9 @@ end
 
 =end
 
-    def history_relation_object(attribute)
-      @history_relation_object = attribute
+    def history_relation_object(*attributes)
+      @history_relation_object ||= []
+      @history_relation_object |= attributes
     end
 
   end

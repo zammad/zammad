@@ -124,7 +124,7 @@ returns
 
 return all history entries of an object and it's related history objects
 
-  history_list = History.list('Ticket', 123, true)
+  history_list = History.list('Ticket', 123, 'Ticket::Article')
 
 returns
 
@@ -137,7 +137,7 @@ returns
 
 return all history entries of an object and it's assets
 
-  history = History.list('Ticket', 123, nil, true)
+  history = History.list('Ticket', 123, nil, ['Ticket::Article'])
 
 returns
 
@@ -148,16 +148,21 @@ returns
 
 =end
 
-  def self.list(requested_object, requested_object_id, related_history_object = nil, assets = nil)
+  def self.list(requested_object, requested_object_id, related_history_object = [], assets = nil)
     histories = History.where(
       history_object_id: object_lookup(requested_object).id,
       o_id:              requested_object_id
     )
 
     if related_history_object.present?
+      object_ids = []
+      Array(related_history_object).each do |object|
+        object_ids << object_lookup(object).id
+      end
+
       histories = histories.or(
         History.where(
-          history_object_id: object_lookup(related_history_object).id,
+          history_object_id: object_ids,
           related_o_id:      requested_object_id
         )
       )

@@ -21,7 +21,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
-  it_behaves_like 'HasHistory', history_relation_object: 'Ticket::Article'
+  it_behaves_like 'HasHistory', history_relation_object: ['Ticket::Article', 'Mention']
   it_behaves_like 'HasTags'
   it_behaves_like 'TagWritesToTicketHistory'
   it_behaves_like 'HasTaskbars'
@@ -193,6 +193,20 @@ RSpec.describe Ticket, type: :model do
             link_object_value: target_ticket.id
           )
           expect(links.count).to eq(3) # one lin to the merged ticket + parent link + normal link
+        end
+      end
+
+      context 'when both tickets having mentions to the same user' do
+        let(:watcher) { create(:agent) }
+
+        before do
+          create(:mention, mentionable: ticket, user: watcher)
+          create(:mention, mentionable: target_ticket, user: watcher)
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        it 'does remove the link from the merged ticket' do
+          expect(target_ticket.mentions.count).to eq(1) # one mention to watcher user
         end
       end
 
@@ -1505,6 +1519,210 @@ RSpec.describe Ticket, type: :model do
 
         expect { Scheduler.worker(true) }
           .to change { NotificationFactory::Mailer.already_sent?(ticket, agent, 'email') }.to(1)
+      end
+    end
+  end
+
+  describe 'Mentions:', sends_notification_emails: true do
+    context 'when notifications' do
+      let(:prefs_matrix_no_mentions) do
+        { 'notification_config' =>
+                                   { 'matrix' =>
+                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'mentioned' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'update'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'mentioned' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
+                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
+      end
+
+      let(:prefs_matrix_only_mentions) do
+        { 'notification_config' =>
+                                   { 'matrix' =>
+                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'update'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
+                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
+      end
+
+      let(:mention_group) { create(:group) }
+      let(:no_access_group) { create(:group) }
+      let(:user_only_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_only_mentions) }
+      let(:user_no_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_no_mentions) }
+      let(:ticket) { create(:ticket, group: mention_group, owner: user_no_mentions) }
+
+      it 'does inform mention user about the ticket update' do
+        create(:mention, mentionable: ticket, user: user_only_mentions)
+        create(:mention, mentionable: ticket, user: user_no_mentions)
+        Observer::Transaction.commit
+        Scheduler.worker(true)
+
+        check_notification do
+          ticket.update(priority: Ticket::Priority.find_by(name: '3 high'))
+          Observer::Transaction.commit
+          Scheduler.worker(true)
+          sent(
+            template: 'ticket_update',
+            user:     user_no_mentions,
+          )
+          sent(
+            template: 'ticket_update',
+            user:     user_only_mentions,
+          )
+        end
+      end
+
+      it 'does not inform mention user about the ticket update' do
+        ticket
+        Observer::Transaction.commit
+        Scheduler.worker(true)
+
+        check_notification do
+          ticket.update(priority: Ticket::Priority.find_by(name: '3 high'))
+          Observer::Transaction.commit
+          Scheduler.worker(true)
+          sent(
+            template: 'ticket_update',
+            user:     user_no_mentions,
+          )
+          not_sent(
+            template: 'ticket_update',
+            user:     user_only_mentions,
+          )
+        end
+      end
+
+      it 'does inform mention user about ticket creation' do
+        check_notification do
+          ticket = create(:ticket, owner: user_no_mentions, group: mention_group)
+          create(:mention, mentionable: ticket, user: user_only_mentions)
+          Observer::Transaction.commit
+          Scheduler.worker(true)
+          sent(
+            template: 'ticket_create',
+            user:     user_no_mentions,
+          )
+          sent(
+            template: 'ticket_create',
+            user:     user_only_mentions,
+          )
+        end
+      end
+
+      it 'does not inform mention user about ticket creation' do
+        check_notification do
+          create(:ticket, owner: user_no_mentions, group: mention_group)
+          Observer::Transaction.commit
+          Scheduler.worker(true)
+          sent(
+            template: 'ticket_create',
+            user:     user_no_mentions,
+          )
+          not_sent(
+            template: 'ticket_create',
+            user:     user_only_mentions,
+          )
+        end
+      end
+
+      it 'does not inform mention user about ticket creation because of no permissions' do
+        check_notification do
+          ticket = create(:ticket, group: no_access_group)
+          create(:mention, mentionable: ticket, user: user_only_mentions)
+          Observer::Transaction.commit
+          Scheduler.worker(true)
+          not_sent(
+            template: 'ticket_create',
+            user:     user_only_mentions,
+          )
+        end
+      end
+    end
+
+    context 'selectors' do
+      let(:mention_group) { create(:group) }
+      let(:ticket_mentions) { create(:ticket, group: mention_group) }
+      let(:ticket_normal) { create(:ticket, group: mention_group) }
+      let(:user_mentions) { create(:agent, groups: [mention_group]) }
+      let(:user_no_mentions) { create(:agent, groups: [mention_group]) }
+
+      before do
+        described_class.destroy_all
+        ticket_normal
+        user_no_mentions
+        create(:mention, mentionable: ticket_mentions, user: user_mentions)
+      end
+
+      it 'pre condition is not_set' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'not_set',
+            operator:      'is',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full'))
+          .to match_array([1, [ticket_normal].to_a])
+      end
+
+      it 'pre condition is not not_set' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'not_set',
+            operator:      'is not',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full'))
+          .to match_array([1, [ticket_mentions].to_a])
+      end
+
+      it 'pre condition is current_user.id' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'current_user.id',
+            operator:      'is',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
+          .to match_array([1, [ticket_mentions].to_a])
+      end
+
+      it 'pre condition is not current_user.id' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'current_user.id',
+            operator:      'is not',
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
+          .to match_array([0, []])
+      end
+
+      it 'pre condition is specific' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'specific',
+            operator:      'is',
+            value:         user_mentions.id
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full'))
+          .to match_array([1, [ticket_mentions].to_a])
+      end
+
+      it 'pre condition is not specific' do
+        condition = {
+          'ticket.mention_user_ids' => {
+            pre_condition: 'specific',
+            operator:      'is not',
+            value:         user_mentions.id
+          },
+        }
+
+        expect(described_class.selectors(condition, limit: 100, access: 'full'))
+          .to match_array([0, []])
       end
     end
   end

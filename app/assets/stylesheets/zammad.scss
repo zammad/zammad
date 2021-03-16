@@ -5613,6 +5613,10 @@ footer {
       cursor: help;
     }
 
+    .notification-icon-help {
+      opacity: .2;
+    }
+
     .stat-label {
       color: #444a4f;
       @extend .u-textTruncate;

@@ -193,6 +193,7 @@ RSpec.describe SearchIndexBackend, searchindex: true do
 
     before do
       Ticket.destroy_all # needed to remove not created tickets
+      create(:mention, mentionable: ticket1, user: agent1)
       ticket1.search_index_update_backend
       travel 1.second
       ticket2.search_index_update_backend
@@ -630,6 +631,100 @@ RSpec.describe SearchIndexBackend, searchindex: true do
         expect(result).to eq({ count: 1, ticket_ids: [ticket8.id.to_s] })
       end
 
+    end
+
+    context 'mentions' do
+      it 'finds records with pre_condition is not_set' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'not_set',
+                                               'operator'      => 'is',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with pre_condition is not not_set' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'not_set',
+                                               'operator'      => 'is not',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+      end
+
+      it 'finds records with pre_condition is current_user.id' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'current_user.id',
+                                               'operator'      => 'is',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+      end
+
+      it 'finds records with pre_condition is not current_user.id' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'current_user.id',
+                                               'operator'      => 'is not',
+                                             },
+                                           },
+                                           { current_user: agent1 },
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with pre_condition is specific' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'specific',
+                                               'operator'      => 'is',
+                                               'value'         => agent1.id,
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 1, ticket_ids: [ticket1.id.to_s] })
+      end
+
+      it 'finds records with pre_condition is not specific' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'ticket.mention_user_ids' => {
+                                               'pre_condition' => 'specific',
+                                               'operator'      => 'is not',
+                                               'value'         => agent1.id,
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
     end
   end
 end

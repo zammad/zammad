@@ -102,6 +102,8 @@ class SidebarTicket extends App.Controller
     if @tagWidget
       if args.tags
         @tagWidget.reload(args.tags)
+      if args.mentions
+        @mentionWidget.reload(args.mentions)
       if args.tagAdd
         @tagWidget.add(args.tagAdd, args.source)
       if args.tagRemove
@@ -128,6 +130,11 @@ class SidebarTicket extends App.Controller
     )
 
     if @ticket.currentView() is 'agent'
+      @mentionWidget = new App.WidgetMention(
+        el:       localEl.filter('.mentions')
+        object:   @ticket
+        mentions: @mentions
+      )
       @tagWidget = new App.WidgetTag(
         el:          localEl.filter('.tags')
         object_type: 'Ticket'

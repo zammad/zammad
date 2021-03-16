@@ -34,6 +34,7 @@ class App.TicketZoomSidebar extends App.ControllerObserver
           formMeta: @formMeta
           markForm: @markForm
           tags:     @tags
+          mentions: @mentions
           links:    @links
         )
       else
@@ -43,6 +44,7 @@ class App.TicketZoomSidebar extends App.ControllerObserver
           formMeta: @formMeta
           markForm: @markForm
           tags:     @tags
+          mentions: @mentions
           links:    @links
         )
       @sidebarItems.push @sidebarBackends[key]

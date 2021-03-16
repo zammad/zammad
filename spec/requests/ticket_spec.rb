@@ -2200,6 +2200,47 @@ RSpec.describe 'Ticket', type: :request do
 
   end
 
+  describe 'mentions' do
+    let(:user1) { create(:agent, groups: [ticket_group]) }
+    let(:user2) { create(:agent, groups: [ticket_group]) }
+    let(:user3) { create(:agent, groups: [ticket_group]) }
+
+    def new_ticket_with_mentions
+      params = {
+        title:    'a new ticket #11',
+        group:    ticket_group.name,
+        customer: {
+          firstname: 'some firstname',
+          lastname:  'some lastname',
+          email:     'some_new_customer@example.com',
+        },
+        article:  {
+          body: 'some test 123',
+        },
+        mentions: [user1.id, user2.id, user3.id]
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+
+      json_response
+    end
+
+    it 'create ticket with mentions' do
+      new_ticket_with_mentions
+      expect(Mention.all.count).to eq(3)
+    end
+
+    it 'check ticket get' do
+      ticket = new_ticket_with_mentions
+
+      get "/api/v1/tickets/#{ticket['id']}?all=true", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response['mentions'].count).to eq(3)
+      expect(json_response['assets']['Mention'].count).to eq(3)
+    end
+  end
+
   describe 'stats' do
     let(:ticket1) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
     let(:ticket2) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }

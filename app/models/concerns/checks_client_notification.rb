@@ -17,9 +17,16 @@ module ChecksClientNotification
     {
       message: {
         event: "#{class_name}:#{event}",
-        data:  { id: id, updated_at: updated_at }
+        data:  notify_clients_data_attributes
       },
       type:    'authenticated',
+    }
+  end
+
+  def notify_clients_data_attributes
+    {
+      id:         id,
+      updated_at: updated_at
     }
   end
 
@@ -104,38 +111,28 @@ module ChecksClientNotification
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
-=begin
-
-serve method to ignore events
-
-class Model < ApplicationModel
-  include ChecksClientNotification
-  client_notification_events_ignored :create, :update, :touch
-end
-
-=end
-
+    # serve method to ignore events
+    #
+    # @example
+    #   class Model < ApplicationModel
+    #     include ChecksClientNotification
+    #     client_notification_events_ignored :create, :update, :touch
+    #   end
     def client_notification_events_ignored(*attributes)
       @client_notification_events_ignored ||= []
       @client_notification_events_ignored |= attributes
     end
 
-=begin
-
-serve method to define recipient user ids
-
-class Model < ApplicationModel
-  include ChecksClientNotification
-  client_notification_send_to :user_id
-end
-
-=end
-
+    # serve method to define recipient user ids
+    #
+    # @example
+    #   class Model < ApplicationModel
+    #     include ChecksClientNotification
+    #     client_notification_send_to :user_id
+    #   end
     def client_notification_send_to(*attributes)
       @client_notification_send_to ||= []
       @client_notification_send_to |= attributes
     end
-
   end
-
 end

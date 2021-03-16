@@ -118,6 +118,15 @@ class App.UiElement.ticket_selector
         translate: true
         operator: ['is', 'is not']
 
+    elements['ticket.mention_user_ids'] =
+      name: 'mention_user_ids'
+      display: 'Mention'
+      tag: 'autocompletion_ajax'
+      relation: 'User'
+      null: false
+      translate: true
+      operator: ['is', 'is not']
+
     [defaults, groups, elements]
 
   @rowContainer: (groups, elements, attribute) ->

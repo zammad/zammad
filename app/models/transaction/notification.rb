@@ -50,8 +50,21 @@ class Transaction::Notification
     recipients_and_channels = []
     recipients_reason = {}
 
-    # loop through all users
+    # loop through all group users
     possible_recipients = possible_recipients_of_group(ticket.group_id)
+
+    # loop through all mention users
+    mention_users = Mention.where(mentionable_type: @item[:object], mentionable_id: @item[:object_id]).map(&:user)
+    if mention_users.present?
+
+      # only notify if read permission on group are given
+      mention_users.each do |mention_user|
+        next if !mention_user.group_access?(ticket.group_id, 'read')
+
+        possible_recipients.push mention_user
+        recipients_reason[mention_user.id] = 'are mentioned'
+      end
+    end
 
     # apply owner
     if ticket.owner_id != 1

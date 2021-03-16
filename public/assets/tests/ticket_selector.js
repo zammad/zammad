@@ -131,6 +131,7 @@ window.onload = function() {
         "id": 434
       },
       "tags": ["tag a", "tag b"],
+      "mention_user_ids": [1,3,5,6],
       "escalation_at": "2017-02-09T09:16:56.192Z",
       "last_contact_agent_at": "2017-02-09T09:16:56.192Z",
       "last_contact_agent_at": "2017-02-09T09:16:56.192Z",
@@ -1106,4 +1107,12 @@ window.onload = function() {
 
     testContains('organization.domain', 'cool', ticket);
   });
+
+  test("ticket mention user_id", function() {
+    ticket = new App.Ticket();
+    ticket.load(ticketData);
+
+    testPreConditionUser('ticket.mention_user_ids', '6', ticket, sessionData);
+  });
+
 }

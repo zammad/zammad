@@ -196,6 +196,15 @@ class App.Ticket extends App.Model
         objectName    = 'ticket'
         attributeName = 'title'
 
+      if objectAttribute == 'ticket.mention_user_ids'
+        if condition['pre_condition'] isnt 'not_set'
+          if condition['pre_condition'] is 'specific'
+            condition.value = parseInt(condition.value)
+          if condition.operator is 'is'
+            condition.operator = 'contains one'
+          else if condition.operator is 'is not'
+            condition.operator = 'contains all not'
+
       # for new articles there is no created_by_id so we set the current user
       # if no id is given
       if objectAttribute == 'article.created_by_id' && !ticket['article']['created_by_id']

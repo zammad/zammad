@@ -489,7 +489,10 @@ example for aggregations within one year
       minute: 'm',
     }
     if selector.present?
+      operators_is_isnot = ['is', 'is not']
+
       selector.each do |key, data|
+
         data = data.clone
         table, key_tmp = key.split('.')
         if key_tmp.blank?
@@ -510,8 +513,6 @@ example for aggregations within one year
           when 'not_set'
             data['value'] = if key_tmp.match?(/^(created_by|updated_by|owner|customer|user)_id/)
                               1
-                            else
-                              'NULL'
                             end
           when 'current_user.id'
             raise "Use current_user.id in selector, but no current_user is set #{data.inspect}" if !current_user_id
@@ -560,6 +561,22 @@ example for aggregations within one year
             key_tmp += '.keyword'
             wildcard_or_term = 'wildcard'
           end
+        end
+
+        # for pre condition not_set we want to check if values are defined for the object by exists
+        if data['pre_condition'] == 'not_set' && operators_is_isnot.include?(data['operator']) && data['value'].nil?
+          t['exists'] = {
+            field: key_tmp,
+          }
+
+          case data['operator']
+          when 'is'
+            query_must_not.push t
+          when 'is not'
+            query_must.push t
+          end
+          next
+
         end
 
         if table != 'ticket'

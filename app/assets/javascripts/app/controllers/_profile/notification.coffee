@@ -50,18 +50,19 @@ class ProfileNotification extends App.ControllerSubContent
 
   render: =>
 
-    # matrix
+    matrix =
+      create:
+        name: 'New Ticket'
+      update:
+        name: 'Ticket update'
+      reminder_reached:
+        name: 'Ticket reminder reached'
+      escalation:
+        name: 'Ticket escalation'
+
     config =
       group_ids: []
-      matrix:
-        create:
-          name: 'New Ticket'
-        update:
-          name: 'Ticket update'
-        reminder_reached:
-          name: 'Ticket reminder reached'
-        escalation:
-          name: 'Ticket escalation'
+      matrix: {}
 
     user_config = @Session.get('preferences').notification_config
     if user_config
@@ -89,6 +90,7 @@ class ProfileNotification extends App.ControllerSubContent
       sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
 
     @html App.view('profile/notification')
+      matrix: matrix
       groups: groups
       config: config
       sounds: @sounds
@@ -102,6 +104,7 @@ class ProfileNotification extends App.ControllerSubContent
     params.notification_config = {}
 
     form_params = @formParam(e.target)
+
     for key, value of form_params
       if key is 'group_ids'
         if typeof value isnt 'object'
@@ -118,11 +121,12 @@ class ProfileNotification extends App.ControllerSubContent
             if !params.notification_config[area[0]][area[1]]
               params.notification_config[area[0]][area[1]] = {}
             if !params.notification_config[area[0]][area[1]][area[2]]
-              params.notification_config[area[0]][area[1]][area[2]] = {
-                owned_by_me:     false
-                owned_by_nobody: false
-                no:              false
-              }
+              params.notification_config[area[0]][area[1]][area[2]] = {}
+
+            for recipientKey in ['owned_by_me', 'owned_by_nobody', 'mentioned', 'no']
+              if params.notification_config[area[0]][area[1]][area[2]][recipientKey] == undefined
+                params.notification_config[area[0]][area[1]][area[2]][recipientKey] = false
+
             params.notification_config[area[0]][area[1]][area[2]][area[3]] = value
           if area[2] is 'channel'
             if !params.notification_config[area[0]]

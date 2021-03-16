@@ -486,6 +486,36 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response['attachments']).to be_truthy
       expect(json_response['attachments'].count).to eq(0)
     end
+
+    it 'does ticket create with mentions' do
+      params = {
+        title:       'a new ticket #1',
+        group:       'Users',
+        customer_id: customer.id,
+        article:     {
+          body: "some body <a data-mention-user-id=\"#{agent.id}\">agent</a>",
+        }
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(Mention.where(mentionable: Ticket.last).count).to eq(1)
+    end
+
+    it 'does not ticket create with mentions when customer' do
+      params = {
+        title:       'a new ticket #1',
+        group:       'Users',
+        customer_id: customer.id,
+        article:     {
+          body: "some body <a data-mention-user-id=\"#{agent.id}\">agent</a>",
+        }
+      }
+      authenticated_as(customer)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:internal_server_error)
+      expect(Mention.count).to eq(0)
+    end
   end
 
   describe 'DELETE /api/v1/ticket_articles/:id', authenticated_as: -> { user } do
