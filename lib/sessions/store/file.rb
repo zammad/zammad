@@ -8,6 +8,7 @@ class Sessions::Store::File
 
     # get working directories
     @path = "#{@root}/tmp/websocket_#{Rails.env}"
+    @nodes_path = "#{@root}/tmp/session_node_#{Rails.env}"
   end
 
   def create(client_id, content)
@@ -215,6 +216,113 @@ class Sessions::Store::File
   def clear_spool
     path = "#{@path}/spool/"
     FileUtils.rm_rf path
+  end
+
+  ### Node-specific methods ###
+
+  def clear_nodes
+    FileUtils.rm_rf @nodes_path
+  end
+
+  def get_nodes
+    path = "#{@nodes_path}/*.status"
+    nodes = []
+    files = Dir.glob(path)
+    files.each do |filename|
+      File.open(filename, 'rb') do |file|
+        file.flock(File::LOCK_SH)
+        content = file.read
+        file.flock(File::LOCK_UN)
+        begin
+          data = JSON.parse(content)
+          nodes.push data
+        rescue => e
+          Rails.logger.error "can't parse status file #{filename}, #{e.inspect}"
+          #to_delete.push "#{path}/#{entry}"
+          #next
+        end
+      end
+    end
+    nodes
+  end
+
+  def add_node(node_id, data)
+    if !File.exist?(@nodes_path)
+      FileUtils.mkpath @nodes_path
+    end
+
+    status_file = "#{@nodes_path}/#{node_id}.status"
+
+    content = data.to_json
+
+    # store session data in session file
+    File.open(status_file, 'wb') do |file|
+      file.write content
+    end
+  end
+
+  def each_node_session(&block)
+    # read node sessions
+    path = "#{@nodes_path}/*.session"
+
+    files = Dir.glob(path)
+    files.each do |filename|
+      File.open(filename, 'rb') do |file|
+        file.flock(File::LOCK_SH)
+        content = file.read
+        file.flock(File::LOCK_UN)
+        begin
+          next if content.blank?
+
+          data = JSON.parse(content)
+          next if data.blank?
+          block.call data
+        rescue => e
+          Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
+          #to_delete.push "#{path}/#{entry}"
+          #next
+        end
+      end
+    end
+  end
+
+  def create_node_session(node_id, client_id, data)
+    if !File.exist?(@nodes_path)
+      FileUtils.mkpath @nodes_path
+    end
+
+    status_file = "#{@nodes_path}/#{node_id}.#{client_id}.session"
+    content = data.to_json
+
+    # store session data in session file
+    File.open(status_file, 'wb') do |file|
+      file.write content
+    end
+  end
+
+  def each_session_by_node(node_id, &block)
+    # read node sessions
+    path = "#{@nodes_path}/#{node_id}.*.session"
+
+    files = Dir.glob(path)
+    files.each do |filename|
+      File.open(filename, 'rb') do |file|
+        file.flock(File::LOCK_SH)
+        content = file.read
+        file.flock(File::LOCK_UN)
+        begin
+          next if content.blank?
+
+          data = JSON.parse(content)
+          next if data.blank?
+          block.call data
+        rescue => e
+          Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
+          #to_delete.push "#{path}/#{entry}"
+          #next
+        end
+      end
+    end
   end
 
   private

@@ -2,6 +2,7 @@ class Sessions::Store::Redis
   SESSIONS_KEY = "sessions"
   MESSAGES_KEY = "messages"
   SPOOL_KEY = "spool"
+  NODES_KEY = "nodes"
 
   def initialize
     @redis = Redis.new
@@ -63,7 +64,9 @@ class Sessions::Store::Redis
   end
 
   def cleanup
-    @redis.flushall
+    clear_spool
+    clear_sessions
+    clear_messages
     true
   end
 
@@ -84,6 +87,68 @@ class Sessions::Store::Redis
   def clear_spool
     @redis.del SPOOL_KEY
   end
+  
+  def clear_sessions
+    @redis.keys("#{SESSIONS_KEY}/*").each do |key|
+      @redis.del key
+    end
+    @redis.del SESSIONS_KEY
+  end
+
+  def clear_messages
+    @redis.keys("#{MESSAGES_KEY}/*").each do |key|
+      @redis.del key
+    end
+  end
+
+  ### Node-specific methods ###
+
+  def clear_nodes
+    @redis.keys("#{NODES_KEY}/*").each do |key|
+      @redis.del key
+    end
+    @redis.del NODES_KEY
+  end
+
+  def get_nodes
+    nodes = []
+    @redis.smembers(NODES_KEY).each do |node_id|
+      content = @redis.get(node_key(node_id))
+      if content
+        data = JSON.parse(content)
+        nodes.push data
+      end
+    end
+    nodes
+  end
+
+  def add_node(node_id, data)
+    @redis.set node_key(node_id), data.to_json
+    @redis.sadd NODES_KEY, node_id
+  end
+
+  def each_node_session(&block)
+    @redis.smembers(NODES_KEY).each do |node_id|
+      each_session_by_node(node_id) do |data|
+        block.call data
+      end
+    end
+  end
+
+  def create_node_session(node_id, client_id, data)
+    @redis.set node_client_session_key(node_id, client_id), data.to_json
+    @redis.sadd node_sessions_key(node_id), client_id
+  end
+
+  def each_session_by_node(node_id, &block)
+    @redis.smembers(node_sessions_key(node_id)).each do |client_id|
+      content = @redis.get(node_client_session_key(node_id, client_id))
+      if content
+        data = JSON.parse(content)
+        block.call data
+      end
+    end
+  end
 
   protected
 
@@ -93,5 +158,17 @@ class Sessions::Store::Redis
 
   def client_messages_key(client_id)
     "#{MESSAGES_KEY}/#{client_id}"
+  end
+
+  def node_key(node_id)
+    "#{NODES_KEY}/#{node_id}"
+  end
+
+  def node_sessions_key(node_id)
+    "#{node_key(node_id)}/sessions"
+  end
+
+  def node_client_session_key(node_id, client_id)
+    "#{node_sessions_key(node_id)}/#{client_id}"
   end
 end
