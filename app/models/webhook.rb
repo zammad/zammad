@@ -5,8 +5,9 @@ class Webhook < ApplicationModel
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
-  before_create :validate_endpoint
-  before_update :validate_endpoint
+  before_create  :validate_endpoint
+  before_update  :validate_endpoint
+  before_destroy Webhook::EnsureNoRelatedObjects
 
   validates :name, presence: true
 
@@ -19,5 +20,4 @@ class Webhook < ApplicationModel
   rescue URI::InvalidURIError
     raise Exceptions::UnprocessableEntity, 'Invalid endpoint!'
   end
-
 end

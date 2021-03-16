@@ -38,4 +38,22 @@ RSpec.describe Webhook, type: :model do
     end
 
   end
+
+  describe '#destroy' do
+    subject(:webhook) { create(:webhook) }
+
+    context 'when no dependencies' do
+      it 'removes the object' do
+        expect { webhook.destroy }.to change(webhook, :destroyed?).to true
+      end
+    end
+
+    context 'when related object exists' do
+      let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
+
+      it 'raises error with details' do
+        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, /#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}/)
+      end
+    end
+  end
 end
