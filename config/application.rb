@@ -40,6 +40,9 @@ module Zammad
     # define cache store
     config.cache_store = :file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}")
 
+    # define websocket session store
+    config.websocket_session_store = ENV['REDIS_URL'] ? :redis : :file
+
     # default preferences by permission
     config.preferences_default_by_permission = {
       'ticket.agent' => {

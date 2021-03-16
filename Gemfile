@@ -28,6 +28,7 @@ gem 'delayed_job_active_record'
 # core - websocket
 gem 'em-websocket'
 gem 'eventmachine'
+gem 'redis'
 
 # core - password security
 gem 'argon2'

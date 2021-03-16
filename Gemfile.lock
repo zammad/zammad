@@ -434,6 +434,7 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rchardet (1.8.0)
+    redis (4.2.5)
     regexp_parser (1.8.2)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -660,6 +661,7 @@ DEPENDENCIES
   rails-observers
   rb-fsevent
   rchardet (>= 1.8.0)
+  redis
   rspec-rails
   rszr (= 0.5.2)
   rubocop
