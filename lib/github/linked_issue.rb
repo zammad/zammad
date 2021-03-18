@@ -84,7 +84,7 @@ class GitHub
     end
 
     def milestone
-      @result['milestone']['title']
+      @result.dig('milestone', 'title')
     end
 
     def query
