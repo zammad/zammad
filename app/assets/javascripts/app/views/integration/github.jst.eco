@@ -13,7 +13,7 @@
           <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.endpoint %>" placeholder="https://api.github.com/graphql" name="endpoint">
         <tr>
           <td class="settings-list-row-control"><%- @T('API token') %> *
-          <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
+          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
       </tbody>
     </table>
   </div>
