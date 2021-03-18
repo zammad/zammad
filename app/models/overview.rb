@@ -63,7 +63,7 @@ class Overview < ApplicationModel
   def fill_prio
     return true if prio.present?
 
-    self.prio = Overview.count + 1
+    self.prio = Overview.maximum(:prio) + 1
     true
   end
 
