@@ -188,7 +188,7 @@ ol, ul {
   min-width: $minWidth;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  
+
   @include phone {
     min-width: auto;
     position: absolute;
@@ -418,7 +418,7 @@ pre code.hljs {
   vertical-align: middle;
   text-decoration: none;
   @extend %clickable;
-  
+
   @include phone {
     padding-left: 12px;
     padding-right: 12px;
@@ -954,7 +954,7 @@ pre code.hljs {
 .status-fields {
   display: flex;
   max-width: 100%;
-  
+
   @include phone {
     display: block;
   }
@@ -988,7 +988,7 @@ pre code.hljs {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  
+
   @include phone {
     border-bottom-width: 0;
   }
@@ -1004,7 +1004,7 @@ pre code.hljs {
 
   &:not(:last-child):not(:only-child) {
     @include bidi-style(border-right-width, 0, border-left-width, 1px);
-    
+
     @include phone {
       border-right-width: 1px !important;
     }
@@ -1013,10 +1013,10 @@ pre code.hljs {
   &:first-child {
     border-radius: 5px 0 0 5px;
     @include rtl(border-radius, 0 5px 5px 0);
-    
+
     @include phone {
       border-radius: 5px 5px 0 0 !important;
-      
+
       .dropdown & {
         flex: 1;
         border-top-right-radius: 0 !important;
@@ -1028,7 +1028,7 @@ pre code.hljs {
       border-radius: 5px 0 0 0;
 
       @include rtl(border-radius, 0 5px 0 0);
-      
+
       @include phone {
         border-radius: 5px 0 0 0 !important;
       }
@@ -1038,7 +1038,7 @@ pre code.hljs {
   &:last-child {
     border-radius: 0 5px 5px 0;
     @include rtl(border-radius, 5px 0 0 5px);
-    
+
     @include phone {
       border-radius: 0 0 5px 5px !important;
       border-bottom-width: 1px;
@@ -1047,7 +1047,7 @@ pre code.hljs {
 
   &:only-child {
     border-radius: 5px;
-    
+
     @include phone {
       border-radius: 5px !important;
     }
@@ -1071,7 +1071,7 @@ pre code.hljs {
     border-left: none;
     width: 34px;
     justify-content: center;
-    
+
     @include phone {
       border-top-right-radius: 5px !important;
     }
@@ -1743,7 +1743,7 @@ table {
 fieldset {
   margin: 0 -4px;
   @extend .clearfix;
-  
+
   @include phone {
     width: calc(100% + 8px);
   }
@@ -1962,7 +1962,7 @@ fieldset > .form-group {
 .form-group.formGroup--halfSize {
   width: 50%;
   float: left;
-  
+
   @include phone {
     width: auto;
     float: none;
@@ -2046,7 +2046,7 @@ textarea,
   box-shadow: none;
   outline: none;
   appearance: none;
-  
+
   @include phone {
     font-size: 16px;
   }
@@ -2181,7 +2181,7 @@ input.time.time--12 {
   margin: 7px 7px 0;
   padding: 3px 5px 10px;
   border-bottom: 1px solid rgba(0,0,0,.04);
-  
+
   @include phone {
     flex-wrap: nowrap;
   }
@@ -2435,11 +2435,11 @@ input.has-error {
   -webkit-overflow-scrolling: touch;
   position: relative;
   background-color: #f8f9fa;
-  
+
   @include phone {
     @include bidi-style(margin-left, $mobileNavigationWidth, margin-right, 0);
     -webkit-overflow-scrolling: touch;
-    
+
     .navigation:hover ~ &,
     .navigation.is-hovered ~ &,
     .navigation:active ~ & {
@@ -2557,7 +2557,7 @@ input.has-error {
     box-shadow:
       0 8px 17px 0 rgba(0, 0, 0, 0.1),
       0 6px 20px 0 rgba(0, 0, 0, 0.05);
-      
+
     @include phone {
       width: 280px;
     }
@@ -2766,7 +2766,7 @@ kbd {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  
+
   @include phone {
     align-items: flex-start;
     flex-wrap: nowrap;
@@ -2789,7 +2789,7 @@ kbd {
   h2 {
     margin-top: 9px;
     margin-bottom: 7px;
-    
+
     @include phone {
       margin-top: 4px;
     }
@@ -2799,7 +2799,7 @@ kbd {
     margin-left: 5px;
     margin-top: 6px;
     display: inline-block;
-    
+
     @include phone {
       margin-top: 4px;
     }
@@ -2824,7 +2824,7 @@ kbd {
   justify-content: flex-end;
   flex: 1;
   min-width: 0; /* firefox flexbug */
-  
+
   @include phone {
     flex: 0 1 auto;
     min-width: auto;
@@ -2834,7 +2834,7 @@ kbd {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  
+
     @include phone {
       flex-shrink: 0;
     }
@@ -2933,7 +2933,7 @@ kbd {
   box-shadow:
     0 8px 17px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  
+
   @include phone {
     width: auto;
     padding: 12px 15px;
@@ -2973,7 +2973,7 @@ kbd {
 .login {
   padding: 24px;
   color: hsl(212,8%,40%);
-  
+
   @include phone {
     padding: 15px 10px;
   }
@@ -3010,7 +3010,7 @@ kbd {
 .login .hero-unit {
   width: 430px;
   margin: 0 0 28px;
-  
+
   @include phone {
     width: auto;
   }
@@ -3021,7 +3021,7 @@ kbd {
     max-width: 200px;
     margin: 20px auto 42px;
     display: block;
-    
+
     @include phone {
       margin: 15px auto 28px;
     }
@@ -3031,7 +3031,7 @@ kbd {
     margin: 0 auto 22px;
     max-width: 400px;
     text-align: center;
-    
+
     @include phone {
       margin: 0 auto 15px;
     }
@@ -3110,7 +3110,7 @@ ol.tabs li {
   border: 1px solid rgba(0,8,14,.08);
   border-radius: 3px;
   background: white;
-  
+
   @include phone {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -3137,7 +3137,7 @@ ol.tabs li {
     min-width: 0;
     flex-grow: 1;
     @extend .u-clickable;
-    
+
     @include phone {
       flex-shrink: 0;
       display: block;
@@ -3240,7 +3240,7 @@ ol.tabs li {
     margin: 28px auto;
     font-size: 14px;
     border-radius: 8px;
-    
+
     @include phone {
       margin: 5px auto 28px;
     }
@@ -3248,7 +3248,7 @@ ol.tabs li {
     .tab {
       height: auto;
       padding: 10px 23px 9px;
-      
+
       @include phone {
         padding: 8px 20px;
       }
@@ -3278,7 +3278,7 @@ ol.tabs li {
 
   .dashboard .tabs--big {
     width: 50%;
-    
+
     @include phone {
       width: auto;
     }
@@ -3633,7 +3633,7 @@ ol.tabs li {
     width: calc(100% + 20px);
     margin-left: -10px;
     margin-right: -10px;
-    
+
     @include phone {
       display: block;
     }
@@ -3662,7 +3662,7 @@ ol.tabs li {
       @each $size in $sizes {
         &[data-width="#{$size}"] {
           width: calc(#{$size} * 100%);
-          
+
           @include phone {
             width: 100%;
           }
@@ -3753,7 +3753,7 @@ footer {
   height: 41px;
   display: none;
   align-items: center;
-  
+
   @include phone {
     margin-top: 0;
   }
@@ -3767,7 +3767,7 @@ footer {
   .tabs {
     margin: 0;
     position: relative;
-    
+
     @include phone {
       overflow: visible;
     }
@@ -3786,7 +3786,7 @@ footer {
   .dropdown {
     min-width: 0;
     width: 336px;
-    
+
     @include phone {
       left: -1px;
       right: auto;
@@ -3963,7 +3963,7 @@ footer {
   width: $navigationWidth;
   background: hsl(232,10%,16%);
   position: relative;
-  
+
   @include phone {
     position: absolute;
     @include bidi-style(left, 0, right, auto);
@@ -3974,16 +3974,16 @@ footer {
     z-index: 1;
     overflow-x: hidden;
     overflow-y: auto;
-    
+
     &:empty {
       display: none !important;
     }
-    
+
     &:hover,
     &:active,
     &.is-hovered {
       width: $mobileNavigationWidthOpen;
-      
+
       .menu-item-name {
         display: block;
         padding-left: 15px;
@@ -4024,7 +4024,7 @@ footer {
     display: flex;
     align-items: center;
     @extend %clickable;
-    
+
     @include phone {
       padding: 0 13px;
       position: relative;
@@ -4079,18 +4079,18 @@ footer {
           width: auto;
           height: auto;
           border-radius: 0;
-          
+
           input:checked + label {
             background: $supergood-color;
           }
-          
+
           label {
             width: 8px;
             height: 8px;
             background: red;
             border-radius: 100%;
             transition: none;
-            
+
             &:after {
               display: none;
             }
@@ -4105,7 +4105,7 @@ footer {
     width: 24px;
     height: 24px;
     fill: hsl(206,7%,37%);
-    
+
     @include phone {
       @include bidi-style(margin-right, 0, margin-left, 0);
     }
@@ -4114,7 +4114,7 @@ footer {
   .menu-item-name {
     flex: 1;
     margin-top: 2px;
-    
+
     @include phone {
       display: none;
     }
@@ -4164,7 +4164,7 @@ footer {
   flex: 1;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  
+
   @include phone {
     overflow-x: hidden;
     min-height: 60px;
@@ -4185,7 +4185,7 @@ footer {
 
       .icon-holder {
         &:first-child .icon-task-state {
-          margin-left: -2px;  
+          margin-left: -2px;
         }
 
         .icon {
@@ -4226,7 +4226,7 @@ footer {
     display: flex;
     align-items: center;
     @extend .u-clickable;
-    
+
     @include phone {
       width: $mobileNavigationWidthOpen;
     }
@@ -4317,7 +4317,7 @@ footer {
     @extend .u-clickable;
     display: flex;
     align-items: center;
-    
+
     @include phone {
       visibility: visible;
     }
@@ -4434,7 +4434,7 @@ footer {
   display: flex;
   align-items: flex-start;
   background-color: inherit;
-  
+
   @include phone {
     padding: 10px 5px 5px;
     @include rtl(padding, 10px 5px 5px);
@@ -4448,7 +4448,7 @@ footer {
     position: relative;
     transition: margin-right 120ms;
     will-change: margin-right;
-    
+
     @include phone {
       transition: none;
       will-change: initial;
@@ -4491,7 +4491,7 @@ footer {
     position: relative;
     z-index: 1;
     appearance: textfield;
-    
+
     @include phone {
       padding: 5px 33px;
       font-size: 16px;
@@ -4549,7 +4549,7 @@ footer {
   .search.focused .search-holder {
     transition: margin-right 240ms;
     @include bidi-style(margin-right, -59px, margin-left, 0);
-    
+
     @include phone {
       margin: 0 !important;
     }
@@ -4558,7 +4558,7 @@ footer {
   .search.focused .logo {
     opacity: 0;
     z-index: -1;
-    
+
     @include phone {
       opacity: 1;
       z-index: initial;
@@ -4586,7 +4586,7 @@ footer {
     @extend .u-clickable, .zIndex-3;
     margin: -4px 10px 0 12px;
     transition: 240ms;
-    
+
     @include phone {
       margin: 10px 0 0;
     }
@@ -4594,7 +4594,7 @@ footer {
 
   .search .logo .icon-logo {
     position: relative;
-    
+
     @include phone {
       width: 35px;
       height: 30px;
@@ -4697,7 +4697,7 @@ footer {
     position: relative;
     flex-shrink: 0;
     display: flex;
-    
+
     @include phone {
       flex-direction: column;
     }
@@ -4716,7 +4716,7 @@ footer {
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       @include phone {
         height: 46px;
       }
@@ -4774,7 +4774,7 @@ footer {
 
     .user-menu > li:not(:last-child) {
       border-right: 1px solid #2c2d36;
-      
+
       @include phone {
         border: none;
       }
@@ -4863,7 +4863,7 @@ footer {
     margin-left: -14px;
     top: -15px;
     fill: hsl(47,100%,59%);
-    
+
     @include phone {
       width: 20px;
       margin-left: -10px;
@@ -4896,7 +4896,7 @@ footer {
     .icon-crown {
       width: 36px;
       margin-left: -18px;
-      
+
       @include phone {
         width: 26px;
         margin-left: -13px;
@@ -4917,7 +4917,7 @@ footer {
       width: 64px;
       margin-left: -32px;
       top: -16px;
-      
+
       @include phone {
         width: 46px;
         margin-left: -43px;
@@ -4952,7 +4952,7 @@ footer {
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
-    
+
     @include phone {
       line-height: 30px;
     }
@@ -4961,7 +4961,7 @@ footer {
       font-size: 10px;
       line-height: 32px;
       background-size: 225px 170px;
-    
+
       @include phone {
         line-height: 22px;
       }
@@ -4971,7 +4971,7 @@ footer {
       font-size: 16px;
       line-height: 52px;
       background-size: 375px 283px;
-    
+
       @include phone {
         line-height: 38px;
       }
@@ -4981,7 +4981,7 @@ footer {
       font-size: 26px;
       line-height: 84px;
       background-size: 600px 452px;
-    
+
       @include phone {
         line-height: 62px;
       }
@@ -5115,7 +5115,9 @@ footer {
 
 .sidebar-git-issue-delete {
   text-align: right;
+  @include rtl(text-align, left);
   float: right;
+  @include rtl(float, left);
 }
 
 .sidebar-git-issue-content {
@@ -5130,12 +5132,12 @@ footer {
 .NavBarAdmin.sidebar,
 .NavBarProfile.sidebar, {
   width: $sidebarWidth;
-  
+
   @include phone {
     width: 50px;
     padding-left: 10px;
     padding-right: 10px;
-    
+
     &:hover,
     &:active {
       width: 165px;
@@ -5146,7 +5148,7 @@ footer {
 
   h2 {
     margin: 21px 0 12px;
-    
+
     @include phone {
       white-space: nowrap;
     }
@@ -5255,7 +5257,7 @@ footer {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  
+
   @include phone {
     padding: 10px;
   }
@@ -5290,7 +5292,7 @@ footer {
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
   @include rtl(text-align, right);
-  
+
   @include phone {
     width: auto;
   }
@@ -5438,7 +5440,7 @@ footer {
       left: -11px;
       @include rtl(left, 408px);
       @include rtl(transform, rotate(180deg));
-      
+
       @include phone {
         top: 61px !important;
       }
@@ -6052,7 +6054,7 @@ footer {
   align-items: center;
   padding: 28px 0 0 0;
   @include bidi-style(margin-right, -40px, margin-left, 0);
-  
+
   @include phone {
     padding: 10px;
     @include bidi-style(margin-right, 0, margin-left, 0);
@@ -6068,7 +6070,7 @@ footer {
 .ticketZoom .ticketZoom-header {
   margin-top: 6px;
   padding: 0;
-  
+
   @include phone {
     margin-top: 10px;
   }
@@ -6076,7 +6078,7 @@ footer {
 
 .ticketZoom .ticket-article {
   margin-top: 55px;
-  
+
   @include phone {
     margin-top: 40px;
   }
@@ -6092,7 +6094,7 @@ footer {
   max-width: 1080px;
   margin: 0 auto;
   padding: 0 21px;
-  
+
   @include phone {
     padding: 0 10px;
   }
@@ -6101,7 +6103,7 @@ footer {
   .ticket-title {
     max-width: 1080px;
     padding: 0 81px;
-    
+
     @include phone {
       padding: 0 10px;
     }
@@ -6137,7 +6139,7 @@ footer {
     position: absolute;
     right: 0;
     top: 5px;
-    
+
     @include phone {
       position: static;
       margin: 0 5px 7px;
@@ -6160,7 +6162,7 @@ footer {
     position: relative;
     height: 100%;
     margin: 0 55px;
-    
+
     @include phone {
       margin: 0;
     }
@@ -6171,7 +6173,7 @@ footer {
     position: relative;
     z-index: 1;
     padding: 0 55px;
-    
+
     @include phone {
       padding: 0;
     }
@@ -6191,7 +6193,7 @@ footer {
     color: white;
     padding: 21px 25px 11px;
     margin: 0 12px;
-    
+
     @include phone {
       margin: 0 5px;
       padding: 10px 10px 5px;
@@ -6201,7 +6203,7 @@ footer {
     .article-meta.bottom {
       padding-top: 17px;
       padding-bottom: 8px;
-      
+
       @include phone {
         padding-top: 10px;
         padding-bottom: 5px;
@@ -6216,7 +6218,7 @@ footer {
       width: 20%;
       text-transform: uppercase;
       flex-shrink: 0;
-      
+
       @include phone {
         width: 50px;
       }
@@ -6226,7 +6228,7 @@ footer {
       @include bidi-style(margin-left, 8px, margin-right, 0);
       overflow: hidden;
       text-overflow: ellipsis;
-      
+
       span {
         white-space: nowrap;
       }
@@ -6316,7 +6318,7 @@ footer {
     border: 1px solid hsl(240,4%,95%);
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
-    
+
     @include phone {
       padding: 10px;
     }
@@ -6412,7 +6414,7 @@ footer {
       left: -6px;
       top: 15px;
       overflow: hidden;
-      
+
       @include phone {
         left: 14px !important;
         top: -5px;
@@ -6432,7 +6434,7 @@ footer {
       border: 1px solid hsl(240,4%,95%);
       box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
       transform: rotate(-45deg);
-      
+
       @include phone {
         top: 2px;
         left: -1px;
@@ -6442,7 +6444,7 @@ footer {
     .customer.ticket-article-item .bubble-arrow {
       left: auto;
       right: -6px;
-      
+
       @include phone {
         left: 14px;
         right: auto;
@@ -6456,7 +6458,7 @@ footer {
       right: 2px;
       border-color: hsl(199,38%,92%);
       box-shadow: none;
-      
+
       @include phone {
         left: -1px;
         right: auto;
@@ -6469,8 +6471,8 @@ footer {
     margin: 10px -20px 0;
     padding: 26px 20px 7px 72px;
     position: relative;
-    
-    @include phone {      
+
+    @include phone {
       margin-left: -10px;
       margin-right: -10px;
       padding: 20px 15px 7px 30px;
@@ -6495,7 +6497,7 @@ footer {
       left: 33px;
       top: 27px;
       fill: hsl(240,1%,84%);
-      
+
       @include phone {
         width: 16px;
         height: 16px;
@@ -6616,7 +6618,7 @@ footer {
   position: absolute;
   left: 0;
   top: 5px;
-  
+
   @include phone {
     position: static;
     margin: 0 0 10px;
@@ -6633,7 +6635,7 @@ footer {
     position: absolute;
     top: 43px;
     @extend .u-clickable, .zIndex-4;
-    
+
     @include phone {
       position: relative;
       z-index: initial;
@@ -6644,7 +6646,7 @@ footer {
 
     &.is-hidden {
       display: none;
-      
+
       @include phone {
         display: block;
       }
@@ -6667,7 +6669,7 @@ footer {
 
   .editControls-item:not(:last-child) {
     border-bottom: 1px solid #e6e6e6;
-    
+
     @include phone {
       border-bottom: 0;
       border-right: 1px solid #e6e6e6;
@@ -6680,7 +6682,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     @include phone {
       width: 48px;
       height: 32px;
@@ -6706,7 +6708,7 @@ footer {
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0 1px 7px rgba(0,8,14,.13);
-    
+
     @include phone {
       top: -4px;
       left: 7px;
@@ -6893,7 +6895,7 @@ footer {
       outline: none;
       resize: none;
       height: auto;
-      
+
       @include phone {
         font-size: 16px;
       }
@@ -6984,7 +6986,7 @@ footer {
         white-space: nowrap;
         @include bidi-style(margin-left, auto, margin-right, 0);
         @extend .u-clickable;
-        
+
         @include phone {
           display: block;
         }
@@ -7114,7 +7116,7 @@ footer {
   */
   overflow-x: hidden;
   overflow-y: scroll;
-  
+
   @include phone {
     @include bidi-style(padding-right, 0 !important, padding-left, 0);
   }
@@ -7238,7 +7240,7 @@ footer {
     top: 0;
     bottom: 0;
     pointer-events: none;
-    
+
     @include phone {
       @include bidi-style(left, -47px, right, auto);
     }
@@ -7260,7 +7262,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     @include phone {
       width: 47px;
       height: 50px;
@@ -7357,7 +7359,7 @@ footer {
     font-size: 9px;
     line-height: 14px;
     color: hsl(197,20%,93%);
-    
+
     @include phone {
       left: 4px;
       top: 4px;
@@ -7556,7 +7558,7 @@ footer {
   background: white;
   transition: margin 250ms;
   flex-shrink: 0;
-  
+
   @include phone {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -7566,14 +7568,14 @@ footer {
   &.is-closed {
     margin-bottom: -60px;
   }
-  
+
   &-inner {
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 10px;
-    
+
     @include phone {
       width: fit-content;
       direction: initial;
@@ -7595,7 +7597,7 @@ footer {
 
 .newTicket {
   padding: 14px 34px;
-  
+
   @include phone {
     padding: 0;
   }
@@ -7659,7 +7661,7 @@ footer {
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
-    
+
     @include phone {
       margin: 0;
       border: none;
@@ -7709,7 +7711,7 @@ footer {
     margin-left: 4px;
     margin-right: 4px;
     width: calc(50% - 8px);
-    
+
     @include phone {
       width: auto;
     }
@@ -7783,7 +7785,7 @@ footer {
   padding: 0 12px 0 12px;
   list-style: none;
   align-items: flex-start;
-  
+
   @include phone {
     display: block;
     text-align: center;
@@ -8068,7 +8070,7 @@ footer {
   max-width: 660px;
   margin-top: 35px;
   margin-bottom: 35px;
-  
+
   @include phone {
     max-width: calc(100vw - 20px) !important;
     margin: 10px;
@@ -8101,7 +8103,7 @@ footer {
   .modal-header {
     padding: 30px 23px 23px;
     border: none;
-    
+
     @include phone {
       padding: 14px 15px;
     }
@@ -8109,7 +8111,7 @@ footer {
 
   .modal-header h1 {
     text-align: center;
-    
+
     @include phone {
       text-align: initial;
       line-height: 1.2;
@@ -8124,7 +8126,7 @@ footer {
     @include rtl(left, 0);
     top: 0;
     @extend .u-clickable;
-    
+
     @include phone {
       position: static;
       padding: 21px;
@@ -8143,7 +8145,7 @@ footer {
 
   .modal-body {
     padding: 0 23px;
-    
+
     @include phone {
       padding: 0 15px;
     }
@@ -8167,7 +8169,7 @@ footer {
     border: none;
     display: flex;
     @include rtl(text-align, left);
-    
+
     @include phone {
       padding: 15px;
     }
@@ -8186,7 +8188,7 @@ footer {
   padding: 0 40px;
   @extend .zIndex-9;
   @include bidi-style(padding-left, 40px, padding-right, 0);
-  
+
   @include phone {
     padding: 0 !important;
   }
@@ -8882,7 +8884,7 @@ footer {
 .settings-entry {
   margin-bottom: 42px;
   max-width: 700px;
-  
+
   @include phone {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -8924,12 +8926,12 @@ footer {
   padding: 0 22px;
   position: absolute;
   transform: translateY(-100%);
-  
+
   @include phone {
     height: 50px;
     padding: 0 6px;
     overflow: hidden;
-    
+
     &.is-closed {
       overflow: visible;
     }
@@ -8938,7 +8940,7 @@ footer {
 
   .scrollPageHeader small {
     color: hsl(198,19%,72%);
-    
+
     @include phone {
       margin-top: 1px;
       @include bidi-style(margin-left, 3px, margin-right, 0);
@@ -8956,7 +8958,7 @@ footer {
     font-size: 19px;
     margin: 0 15px;
     @extend .u-textTruncate;
-    
+
     @include phone {
       font-size: 17px;
       margin: 0 5px;
@@ -9000,7 +9002,7 @@ footer {
 .wizard-body {
   flex: 1;
   padding-bottom: 15px;
-  
+
   @include phone {
     width: 100%;
   }
@@ -9388,7 +9390,7 @@ label + .wizard-buttonList {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   flex: 1;
-  
+
   @include phone {
     padding: 0;
     margin: 0;
@@ -9414,7 +9416,7 @@ label + .wizard-buttonList {
 
 .profile-section {
   padding: 20px 50px;
-  
+
   @include phone {
     padding: 10px;
   }
@@ -9430,7 +9432,7 @@ label + .wizard-buttonList {
 
 .profile-action {
   @include bidi-style(margin-right, -20px, margin-left, 0);
-  
+
   @include phone {
     @include bidi-style(margin-right, 0, margin-left, 0);
   }
@@ -9440,7 +9442,7 @@ label + .wizard-buttonList {
     @include bidi-style(margin-right, -30px, margin-left, 0);
     margin-bottom: 8px;
     padding: 26px 40px 2px;
-    
+
     @include phone {
       margin-top: -5px;
       padding: 10px 0 5px;
@@ -9499,7 +9501,7 @@ label + .wizard-buttonList {
 .profile-ticketLists {
   display: flex;
   margin: 0 -25px;
-  
+
   @include phone {
     display: block;
     margin: 0;
@@ -9512,11 +9514,11 @@ label + .wizard-buttonList {
   flex: 1 1 50%;
   padding: 0 25px;
   min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
-  
+
   @include phone {
     padding: 0;
     margin-bottom: 10px;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -9532,7 +9534,7 @@ label + .wizard-buttonList {
 
 .profile .frequency.stat-widget {
   height: 230px;
-  
+
   @include phone {
     display: none;
   }
@@ -10623,14 +10625,14 @@ output {
   display: flex;
   flex-direction: column;
   padding: 0 14px;
-  
+
   @include phone {
     padding: 0;
   }
 
   .page-header {
     margin: 15px 6px 5px;
-    
+
     @include phone {
       flex-wrap: wrap;
       margin: 0;
@@ -10668,7 +10670,7 @@ output {
   padding: 0 0 10px;
   margin: 0 -4px;
   flex: 1;
-  
+
   @include phone {
     margin: 0;
     padding: 0;
@@ -10687,7 +10689,7 @@ output {
   color: hsl(0,0%,33%);
   transition: all 500ms;
   transform: scale(0);
-  
+
   @include phone {
     min-width: calc(100vw - #{$mobileNavigationWidth} - 16px);
     scroll-snap-align: center;
@@ -10697,7 +10699,7 @@ output {
     flex: 1 0 25%;
     transform: scale(1);
     padding: 10px;
-    
+
     @include phone {
       padding: 8px;
     }
@@ -11641,7 +11643,7 @@ output {
   display: flex;
   align-items: center;
   min-width: 88px;
-    
+
   @include phone {
     overflow: hidden;
   }
@@ -11651,7 +11653,7 @@ output {
     @include ltr(margin-left, auto);
     @include rtl(margin-right, auto);
     @include bidi-style(padding-left, 20px, padding-right, 0);
-    
+
     @include phone {
       @include bidi-style(padding-left, 10px, padding-right, 0);
     }
@@ -11669,7 +11671,7 @@ output {
   color: inherit;
   cursor: pointer;
   @extend .u-textTruncate;
-  
+
   @include phone {
     flex-shrink: 0;
   }
@@ -12243,7 +12245,7 @@ body.fit {
 
 .two-columns > .column {
   width: 50%;
-  
+
   @include phone {
     width: auto;
   }
@@ -12251,7 +12253,7 @@ body.fit {
 
 .three-columns > .column {
   width: 33.33%;
-  
+
   @include phone {
     width: auto;
   }
@@ -12379,7 +12381,7 @@ span.is-disabled {
     background: hsl(210,14%,94%);
     border-bottom: 1px solid hsl(0,0%,90%);
     padding: 7px;
-    
+
     @include phone {
       flex-shrink: 0;
       overflow: auto;
@@ -12395,7 +12397,7 @@ span.is-disabled {
   &-body {
     position: relative;
     overflow-x: hidden;
-    
+
     @include phone {
       flex-direction: column-reverse;
       overflow: visible;
@@ -12413,7 +12415,7 @@ span.is-disabled {
     -webkit-overflow-scrolling: touch;
     transition: transform 500ms;
     @include bidi-style(border-left, 1px solid #e6e6e6, border-right, none);
-    
+
     @include phone {
       width: auto;
       position: static;
@@ -12431,7 +12433,7 @@ span.is-disabled {
       visibility: visible !important;
       @include ltr(transform, translateX(100%));
       @include rtl(transform, translateX(-100%));
-      
+
       @include phone {
         transform: none !important;
         display: none !important;
@@ -12455,7 +12457,7 @@ span.is-disabled {
     @include ltr(margin-right, 280px);
     @include rtl(transition, margin-left 500ms);
     @include rtl(margin-left, 280px);
-    
+
     @include phone {
       margin: 0 0 10px !important;
     }
@@ -12556,7 +12558,7 @@ span.is-disabled {
     &[data-size="medium"] {
       .section {
         width: 25%;
-        
+
         @include phone {
           width: 100%;
         }
@@ -12580,7 +12582,7 @@ span.is-disabled {
     &[data-size="large"] {
       .section {
         width: 33.33%;
-        
+
         @include phone {
           width: 100%;
         }
@@ -12709,7 +12711,7 @@ span.is-disabled {
     border-radius: 2px;
     padding: 50px 50px 10px;
     border: 1px solid hsl(239,4%,95%);
-    
+
     @include phone {
       padding: 15px 15px 5px;
     }
@@ -12717,7 +12719,7 @@ span.is-disabled {
 
   &-content {
     margin-bottom: 40px;
-    
+
     @include phone {
       margin-bottom: 10px;
     }
@@ -12726,7 +12728,7 @@ span.is-disabled {
   &-attachments,
   &-linked-tickets {
     margin: 0 -30px;
-    
+
     @include phone {
       margin: 0 -5px;
     }
@@ -12744,7 +12746,7 @@ span.is-disabled {
       max-width: 50%;
       display: flex;
       align-items: center;
-      
+
       .knowledge-base-article > & {
         margin-top: -10px;
       }
