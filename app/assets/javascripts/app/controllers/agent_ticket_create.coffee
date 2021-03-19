@@ -173,7 +173,7 @@ class App.TicketCreate extends App.Controller
     @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
 
     # initially hide sidebar on mobile
-    if window.matchMedia('(max-width: 767px').matches
+    if window.matchMedia('(max-width: 767px)').matches
       @sidebar.addClass('is-closed')
       @sidebarSpacer.addClass('is-closed')
 

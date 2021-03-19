@@ -192,7 +192,7 @@ class App.FirstStepsClues extends App.Controller
     maxHeight = $(window).height()
 
     # try to place it parallel to the larger side
-    if target.height > target.width && window.matchMedia('(min-width: 768px').matches
+    if target.height > target.width && window.matchMedia('(min-width: 768px)').matches
       # try to place it aside
       # prefer right
       if target.right + modal.width <= maxWidth

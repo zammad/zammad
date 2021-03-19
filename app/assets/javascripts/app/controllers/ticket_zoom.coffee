@@ -249,7 +249,7 @@ class App.TicketZoom extends App.Controller
     App.OnlineNotification.seen('Ticket', @ticket_id)
 
     # initially hide on mobile
-    if window.matchMedia('(max-width: 767px').matches
+    if window.matchMedia('(max-width: 767px)').matches
       @el.find('.tabsSidebar').addClass('is-closed')
       @el.find('.tabsSidebar-sidebarSpacer').addClass('is-closed')
 
