@@ -55,5 +55,7 @@ class App.WidgetTextModule extends App.Controller
     # set new data
     if @bindElements[0]
       for element in @bindElements
-        if $(element).data().plugin_textmodule
-          $(element).data().plugin_textmodule.collection = @all
+        continue if !$(element).data().plugin_textmodule
+
+        $(element).data().plugin_textmodule.searchCondition = @searchCondition
+        $(element).data().plugin_textmodule.collection      = @all

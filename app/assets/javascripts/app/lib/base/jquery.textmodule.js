@@ -622,7 +622,7 @@
     var user_id = $(elem).data('id')
     var user    = App.User.find(user_id)
     if (!user) {
-      callback('')
+      return callback('')
     }
 
     fqdn      = App.Config.get('fqdn')
@@ -653,33 +653,40 @@
     App.Delay.set(function() {
       items = []
 
-      App.Mention.searchUser(term, function(data) {
-        textmodule.emptyResultsContainer()
+      if (textmodule.searchCondition.group_id) {
+        App.Mention.searchUser(term, textmodule.searchCondition.group_id, function(data) {
+          textmodule.emptyResultsContainer()
 
-        activeSet = false
-        $.each(data.user_ids, function(index, user_id) {
-          user = App.User.find(user_id)
-          if (!user) return true
-          if (!user.active) return true
+          activeSet = false
+          $.each(data.user_ids, function(index, user_id) {
+            user = App.User.find(user_id)
+            if (!user) return true
+            if (!user.active) return true
 
-          item = $('<li>', {
-            'data-id': user_id,
-            text: user.firstname + ' ' + user.lastname + ' <' + user.email + '>'
+            item = $('<li>', {
+              'data-id': user_id,
+              text: user.firstname + ' ' + user.lastname + ' <' + user.email + '>'
+            })
+            if (!activeSet) {
+              activeSet = true
+              item.addClass('is-active')
+            }
+
+            items.push(item)
           })
-          if (!activeSet) {
-            activeSet = true
-            item.addClass('is-active')
+
+          if(items.length == 0) {
+            items.push($('<li>').text(App.i18n.translateInline('No results found')))
           }
 
-          items.push(item)
+          textmodule.appendResults(items)
         })
-
-        if(items.length == 0) {
-          items.push($('<li>').text(App.i18n.translateInline('No results found')))
-        }
-
+      }
+      else {
+        textmodule.emptyResultsContainer()
+        items.push($('<li>').text(App.i18n.translateInline('Please select a group first, before you mention a user!')))
         textmodule.appendResults(items)
-      })
+      }
     }, 200, 'textmoduleMentionDelay', 'textmodule')
   }
 

@@ -21,9 +21,12 @@ class App.Mention extends App.Model
         callback(data)
     )
 
-  @searchUser: (query, callback) ->
+  @searchUser: (query, group_id, callback) ->
     roles    = App.Role.withPermissions('ticket.agent')
     role_ids = roles.map (role) -> role.id
+
+    group_ids = {}
+    group_ids[group_id] = 'read'
 
     App.Ajax.request(
       type: 'GET'
@@ -32,6 +35,7 @@ class App.Mention extends App.Model
         limit: 10
         query: query
         role_ids: role_ids
+        group_ids: group_ids
         full: true
       processData: true
       success: (data, status, xhr) ->

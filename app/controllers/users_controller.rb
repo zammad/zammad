@@ -217,12 +217,13 @@ class UsersController < ApplicationController
   #                   The requester has to be in the role 'Admin' or 'Agent' to
   #                   be able to search for User records.
   #
-  # @parameter        query           [String]        The search query.
-  # @parameter        limit           [Integer]       The limit of search results.
-  # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
-  # @parameter        full            [Boolean]       Defines if the result should be
-  #                                                   true: { user_ids => [1,2,...], assets => {...} }
-  #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
+  # @parameter        query            [String]                             The search query.
+  # @parameter        limit            [Integer]                            The limit of search results.
+  # @parameter        role_ids(multi)  [Array<String>]                      A list of Role identifiers to which the Users have to be allocated to.
+  # @parameter        group_ids(multi) [Hash<String=>String,Array<String>>] A list of Group identifiers to which the Users have to be allocated to.
+  # @parameter        full             [Boolean]                            Defines if the result should be
+  #                                                                         true: { user_ids => [1,2,...], assets => {...} }
+  #                                                                         or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
   # @response_message 200 [Array<User>] A list of User records matching the search term.
   # @response_message 403               Forbidden / Invalid session.
@@ -254,7 +255,7 @@ class UsersController < ApplicationController
       order_by:     params[:order_by],
       current_user: current_user,
     }
-    %i[role_ids permissions].each do |key|
+    %i[role_ids group_ids permissions].each do |key|
       next if params[key].blank?
 
       query_params[key] = params[key]

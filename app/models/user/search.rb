@@ -54,6 +54,7 @@ or with certain role_ids | permissions
     offset: 100,
     current_user: user_model,
     role_ids: [1,2,3],
+    group_ids: [1,2,3],
     permissions: ['ticket.agent']
 
     # sort single column
@@ -101,8 +102,8 @@ returns
         if SearchIndexBackend.enabled?
           query_extension = {}
           if params[:role_ids].present?
-            query_extension['bool'] = {}
-            query_extension['bool']['must'] = []
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
             if !params[:role_ids].is_a?(Array)
               params[:role_ids] = [params[:role_ids]]
             end
@@ -110,6 +111,18 @@ returns
               'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
             }
             query_extension['bool']['must'].push access_condition
+          end
+          if params[:group_ids].present?
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
+            user_ids = []
+            params[:group_ids].each do |group_id, access|
+              user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
+            end
+
+            return [] if user_ids.blank?
+
+            query_extension['bool']['must'].push({ 'terms' => { '_id' => user_ids } })
           end
 
           items = SearchIndexBackend.search(query, 'User', limit:           limit,
@@ -132,22 +145,29 @@ returns
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
+
+        statement = User
         if params[:role_ids]
-          User.joins(:roles).where('roles.id' => params[:role_ids]).where(
-            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-          )
-          .order(Arel.sql(order_sql))
-          .offset(offset)
-          .limit(limit)
-        else
-          User.where(
-            '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-          )
-          .order(Arel.sql(order_sql))
-          .offset(offset)
-          .limit(limit)
+          statement = statement.joins(:roles).where('roles.id' => params[:role_ids])
+        end
+        if params[:group_ids]
+          user_ids = []
+          params[:group_ids].each do |group_id, access|
+            user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
+          end
+          statement = if user_ids.present?
+                        statement.where(id: user_ids)
+                      else
+                        statement.none
+                      end
         end
 
+        statement.where(
+          '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+        )
+        .order(Arel.sql(order_sql))
+        .offset(offset)
+        .limit(limit)
       end
     end
   end

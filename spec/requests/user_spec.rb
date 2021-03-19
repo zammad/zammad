@@ -1367,4 +1367,68 @@ RSpec.describe 'User', type: :request do
       expect(User.last).not_to be_role('Agent')
     end
   end
+
+  describe 'GET /api/v1/users/search group ids' do
+    let(:group1) { create(:group) }
+    let(:group2) { create(:group) }
+    let!(:agent1) { create(:agent, firstname: '9U7Z-agent1', groups: [group1]) }
+    let!(:agent2) { create(:agent, firstname: '9U7Z-agent2', groups: [group2]) }
+
+    def make_request(params)
+      authenticated_as(agent1)
+      get '/api/v1/users/search', params: params, as: :json
+    end
+
+    describe 'without searchindex' do
+      it 'does find both users' do
+        make_request(query: '9U7Z')
+        expect(json_response.count).to eq(2)
+      end
+
+      it 'does find only agent 1' do
+        make_request(query: '9U7Z', group_ids: { group1.id => 'read' })
+        expect(json_response[0]['firstname']).to eq(agent1.firstname)
+        expect(json_response.count).to eq(1)
+      end
+
+      it 'does find only agent 2' do
+        make_request(query: '9U7Z', group_ids: { group2.id => 'read' })
+        expect(json_response[0]['firstname']).to eq(agent2.firstname)
+        expect(json_response.count).to eq(1)
+      end
+
+      it 'does find none' do
+        make_request(query: '9U7Z', group_ids: { 999 => 'read' })
+        expect(json_response.count).to eq(0)
+      end
+    end
+
+    describe 'with searchindex', searchindex: true do
+      before do
+        configure_elasticsearch(rebuild: true)
+      end
+
+      it 'does find both users' do
+        make_request(query: '9U7Z')
+        expect(json_response.count).to eq(2)
+      end
+
+      it 'does find only agent 1' do
+        make_request(query: '9U7Z', group_ids: { group1.id => 'read' })
+        expect(json_response[0]['firstname']).to eq(agent1.firstname)
+        expect(json_response.count).to eq(1)
+      end
+
+      it 'does find only agent 2' do
+        make_request(query: '9U7Z', group_ids: { group2.id => 'read' })
+        expect(json_response[0]['firstname']).to eq(agent2.firstname)
+        expect(json_response.count).to eq(1)
+      end
+
+      it 'does find none' do
+        make_request(query: '9U7Z', group_ids: { 999 => 'read' })
+        expect(json_response.count).to eq(0)
+      end
+    end
+  end
 end
