@@ -19,8 +19,17 @@ class App.DashboardStats extends App.Controller
       for widget in widgets
         if @permissionCheck(widget.permission)
           try
+
+            el = @el.find(".column.#{widget.className}")
+            localEl = $("<div class=\"column #{widget.className}\"></div>")
+
+            if !el.get(0)
+              @el.append(localEl)
+            else
+              el.replaceWith(localEl)
+
             new widget.controller(
-              parentEl: @el
+              el: localEl
               className: widget.className
             )
             @$('.js-stat-help').tooltip()
