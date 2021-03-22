@@ -131,18 +131,18 @@ class SidebarTicket extends App.Controller
 
     if @ticket.currentView() is 'agent'
       @mentionWidget = new App.WidgetMention(
-        el:       localEl.filter('.mentions')
+        el:       localEl.filter('.js-subscriptions')
         object:   @ticket
         mentions: @mentions
       )
       @tagWidget = new App.WidgetTag(
-        el:          localEl.filter('.tags')
+        el:          localEl.filter('.js-tags')
         object_type: 'Ticket'
         object:      @ticket
         tags:        @tags
       )
       @linkWidget = new App.WidgetLink.Ticket(
-        el:          localEl.filter('.links')
+        el:          localEl.filter('.js-links')
         object_type: 'Ticket'
         object:      @ticket
         links:       @links
@@ -150,7 +150,7 @@ class SidebarTicket extends App.Controller
 
       if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
         @linkKbAnswerWidget = new App.WidgetLinkKbAnswer(
-          el:          localEl.filter('.link_kb_answers')
+          el:          localEl.filter('.js-linkKbAnswers')
           object_type: 'Ticket'
           object:      @ticket
           links:       @links

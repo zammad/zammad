@@ -1286,16 +1286,16 @@ RSpec.describe 'Ticket zoom', type: :system do
         ensure_websocket do
           visit "ticket/zoom/#{ticket.id}"
 
-          click '.mentions .js-subscribe input'
-          expect(page).to have_selector('.mentions .js-unsubscribe input', wait: 10)
-          expect(page).to have_selector('.mentions span.avatar', wait: 10)
+          click '.js-subscriptions .js-subscribe input'
+          expect(page).to have_selector('.js-subscriptions .js-unsubscribe input', wait: 10)
+          expect(page).to have_selector('.js-subscriptions span.avatar', wait: 10)
 
-          click '.mentions .js-unsubscribe input'
-          expect(page).to have_selector('.mentions .js-subscribe input', wait: 10)
-          expect(page).to have_no_selector('.mentions span.avatar', wait: 10)
+          click '.js-subscriptions .js-unsubscribe input'
+          expect(page).to have_selector('.js-subscriptions .js-subscribe input', wait: 10)
+          expect(page).to have_no_selector('.js-subscriptions span.avatar', wait: 10)
 
           create(:mention, mentionable: ticket, user: other_agent)
-          expect(page).to have_selector('.mentions span.avatar', wait: 10)
+          expect(page).to have_selector('.js-subscriptions span.avatar', wait: 10)
 
           # check history for mention entries
           click 'h2.sidebar-header-headline.js-headline'

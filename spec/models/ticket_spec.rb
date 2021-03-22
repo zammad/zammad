@@ -1528,19 +1528,19 @@ RSpec.describe Ticket, type: :model do
       let(:prefs_matrix_no_mentions) do
         { 'notification_config' =>
                                    { 'matrix' =>
-                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'mentioned' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
-                                                   'update'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'mentioned' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
-                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
-                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
+                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'subscribed' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'update'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true, 'subscribed' => false, 'no' => true }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
+                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => false, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
       end
 
       let(:prefs_matrix_only_mentions) do
         { 'notification_config' =>
                                    { 'matrix' =>
-                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
-                                                   'update'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
-                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
-                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'mentioned' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
+                                                 { 'create'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'update'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                   'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
+                                                   'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
       end
 
       let(:mention_group) { create(:group) }

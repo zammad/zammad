@@ -43,7 +43,7 @@ class AgentTicketLinkTest < TestCase
     )
 
     click(
-      css: '.content.active .links .js-add',
+      css: '.content.active .js-links .js-add',
     )
 
     modal_ready()

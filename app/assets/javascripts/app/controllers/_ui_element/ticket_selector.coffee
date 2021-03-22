@@ -120,7 +120,7 @@ class App.UiElement.ticket_selector
 
     elements['ticket.mention_user_ids'] =
       name: 'mention_user_ids'
-      display: 'Mention'
+      display: 'Subscribe'
       tag: 'autocompletion_ajax'
       relation: 'User'
       null: false

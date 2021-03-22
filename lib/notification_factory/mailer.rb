@@ -48,7 +48,7 @@ returns
 
     owned_by_nobody = false
     owned_by_me = false
-    mentioned = false
+    subscribed = false
     case ticket.owner_id
     when 1
       owned_by_nobody = true
@@ -70,9 +70,9 @@ returns
       end
     end
 
-    # always trigger notifications for user if he is mentioned
+    # always trigger notifications for user if he is subscribed
     if owned_by_me == false && ticket.mentions.exists?(user: user)
-      mentioned = true
+      subscribed = true
     end
 
     # check if group is in selected groups
@@ -115,7 +115,7 @@ returns
         channels: channels
       }
     end
-    if data['criteria']['mentioned'] && mentioned
+    if data['criteria']['subscribed'] && subscribed
       return {
         user:     user,
         channels: channels

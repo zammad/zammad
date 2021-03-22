@@ -86,8 +86,8 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'My mentioned Tickets',
-  link:      'my_mentioned_tickets',
+  name:      'My subscribed Tickets',
+  link:      'my_subscribed_tickets',
   prio:      1025,
   role_ids:  [overview_role.id],
   condition: { 'ticket.mention_user_ids'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } },

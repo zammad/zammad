@@ -62,7 +62,7 @@ class Transaction::Notification
         next if !mention_user.group_access?(ticket.group_id, 'read')
 
         possible_recipients.push mention_user
-        recipients_reason[mention_user.id] = 'are mentioned'
+        recipients_reason[mention_user.id] = 'are subscribed'
       end
     end
 

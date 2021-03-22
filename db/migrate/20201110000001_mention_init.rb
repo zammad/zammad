@@ -23,8 +23,8 @@ class MentionInit < ActiveRecord::Migration[5.2]
 
   def create_overview
     Overview.create_if_not_exists(
-      name:          'My mentioned Tickets',
-      link:          'my_mentioned_tickets',
+      name:          'My subscribed Tickets',
+      link:          'my_subscribed_tickets',
       prio:          1025,
       role_ids:      Role.with_permissions('ticket.agent').pluck(:id),
       condition:     { 'ticket.mention_user_ids'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } },
@@ -55,11 +55,11 @@ class MentionInit < ActiveRecord::Migration[5.2]
 
   def update_user_matrix_by_user(user)
     %w[create update].each do |type|
-      user.preferences['notification_config']['matrix'][type]['criteria']['mentioned'] = true
+      user.preferences['notification_config']['matrix'][type]['criteria']['subscribed'] = true
     end
 
     %w[reminder_reached escalation].each do |type|
-      user.preferences['notification_config']['matrix'][type]['criteria']['mentioned'] = false
+      user.preferences['notification_config']['matrix'][type]['criteria']['subscribed'] = false
     end
     user.save!
   end

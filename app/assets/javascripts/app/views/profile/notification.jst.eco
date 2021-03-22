@@ -11,7 +11,7 @@
           <th>
           <th width="16%" style="text-align: center;"><%- @T('My Tickets') %>
           <th width="16%" style="text-align: center;"><%- @T('Not Assigned') %>*
-          <th width="16%" style="text-align: center;"><%- @T('Mentioned Tickets') %>
+          <th width="16%" style="text-align: center;"><%- @T('Subscribed Tickets') %>
           <th width="16%" style="text-align: center;"><%- @T('All Tickets') %>*
           <th width="120px" class="settings-list-separator" style="text-align: center;"><%- @T('Also notify via email') %>
       </thead>
@@ -37,7 +37,7 @@
             </label>
           <td class="u-positionOrigin">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="matrix.<%= key %>.criteria.mentioned" value="true"<% if criteria && criteria.mentioned: %> checked<% end %> />
+              <input type="checkbox" name="matrix.<%= key %>.criteria.subscribed" value="true"<% if criteria && criteria.subscribed: %> checked<% end %> />
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>

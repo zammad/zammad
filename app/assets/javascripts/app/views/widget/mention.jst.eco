@@ -1,4 +1,4 @@
-<label><%- @T('Mentions') %></label>
+<label><%- @T('Notifications') %></label>
 <form class="ui-front mentionWidget">
   <div class="js-subscribe<% if @subscribed: %> hidden<% end %>">
     <input type="button" class="btn btn--fullWidth" name="subscribe" value="<%- @T('Subscribe') %>">

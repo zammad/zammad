@@ -123,7 +123,7 @@ class ProfileNotification extends App.ControllerSubContent
             if !params.notification_config[area[0]][area[1]][area[2]]
               params.notification_config[area[0]][area[1]][area[2]] = {}
 
-            for recipientKey in ['owned_by_me', 'owned_by_nobody', 'mentioned', 'no']
+            for recipientKey in ['owned_by_me', 'owned_by_nobody', 'subscribed', 'no']
               if params.notification_config[area[0]][area[1]][area[2]][recipientKey] == undefined
                 params.notification_config[area[0]][area[1]][area[2]][recipientKey] = false
 
