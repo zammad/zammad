@@ -180,8 +180,8 @@ RSpec.describe 'Monitoring', type: :request do
         expect(json_response['storage']).to be_truthy
         expect(json_response['storage']).to be_key('kB')
 
-        # check if the stores got summarized. value should be the same because the file has the same fingerprint
-        expect(json_response['storage']['kB']).to eq(first_json_response_kb)
+        # check if the stores got summarized.
+        expect(json_response['storage']['kB']).to eq(first_json_response_kb * 2)
         expect(json_response['storage']).to be_key('MB')
         expect(json_response['storage']).to be_key('GB')
       else
