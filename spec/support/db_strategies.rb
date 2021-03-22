@@ -1,9 +1,18 @@
 RSpec.configure do |config|
 
   config.around(:each, db_strategy: :reset) do |example|
-    self.use_transactional_tests = false
+    if ActiveRecord::Base.connection.instance_values['config'][:adapter] != 'postgresql'
+      self.use_transactional_tests = false
+    end
     example.run
-    Rake::Task['zammad:db:reset'].reenable
-    Rake::Task['zammad:db:reset'].invoke
+    if ActiveRecord::Base.connection.instance_values['config'][:adapter] == 'postgresql'
+      Models.all.each_key do |model|
+        model.connection.schema_cache.clear!
+        model.reset_column_information
+      end
+    else
+      Rake::Task['zammad:db:reset'].reenable
+      Rake::Task['zammad:db:reset'].invoke
+    end
   end
 end
