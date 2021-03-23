@@ -100,6 +100,7 @@ class App.ControllerTable extends App.Controller
 
   events:
     'click .js-sort': 'sortByColumn'
+    'click .js-page': 'paginate'
 
   overviewAttributes: undefined
   #model:             App.TicketPriority,
@@ -339,6 +340,7 @@ class App.ControllerTable extends App.Controller
     @sortList()
     bulkIds = @getBulkSelected()
     container = @renderTableContainer()
+    table = container.filter('.table')
     if !rows
       rows = @renderTableRows()
       @currentRows = clone(rows)
@@ -373,10 +375,10 @@ class App.ControllerTable extends App.Controller
 
           if hit
             for event, callback of item.events
-              do (container, event, callback) ->
+              do (table, event, callback) ->
                 if cursorMap[event]
-                  container.find("tbody > tr > td:nth-child(#{position})").css('cursor', cursorMap[event])
-                container.on(event, "tbody > tr > td:nth-child(#{position})",
+                  table.find("tbody > tr > td:nth-child(#{position})").css('cursor', cursorMap[event])
+                table.on(event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
@@ -387,10 +389,10 @@ class App.ControllerTable extends App.Controller
     if !_.isEmpty(@bindRow)
       if @bindRow.events
         for event, callback of @bindRow.events
-          do (container, event, callback) ->
+          do (table, event, callback) ->
             if cursorMap[event]
-              container.find('tbody > tr').css( 'cursor', cursorMap[event] )
-            container.on(event, 'tbody > tr',
+              table.find('tbody > tr').css( 'cursor', cursorMap[event] )
+            table.on(event, 'tbody > tr',
               (e) ->
                 id = $(e.target).parents('tr').data('id')
                 callback(id, e)
@@ -400,8 +402,8 @@ class App.ControllerTable extends App.Controller
     if @bindCheckbox
       if @bindCheckbox.events
         for event, callback of @bindCheckbox.events
-          do (container, event, callback) ->
-            container.delegate('input[name="bulk"]', event, (e) ->
+          do (table, event, callback) ->
+            table.delegate('input[name="bulk"]', event, (e) ->
               e.stopPropagation()
               id      = $(e.currentTarget).parents('tr').data('id')
               checked = $(e.currentTarget).prop('checked')
@@ -412,19 +414,19 @@ class App.ControllerTable extends App.Controller
     if @tableId
 
       # enable resize column
-      container.on('mousedown', '.js-col-resize', @onColResizeMousedown)
-      container.on('click', '.js-col-resize', @stopPropagation)
+      table.on('mousedown', '.js-col-resize', @onColResizeMousedown)
+      table.on('click', '.js-col-resize', @stopPropagation)
 
     # enable checkbox bulk selection
     if @checkbox
 
       # click first tr>td, catch click
-      container.delegate('tr > td:nth-child(1)', 'click', (e) ->
+      table.delegate('tr > td:nth-child(1)', 'click', (e) ->
         e.stopPropagation()
       )
 
       # bind on full bulk click
-      container.delegate('input[name="bulk_all"]', 'change', (e) =>
+      table.delegate('input[name="bulk_all"]', 'change', (e) =>
         e.stopPropagation()
         clicks = []
         if $(e.currentTarget).prop('checked')
@@ -473,21 +475,7 @@ class App.ControllerTable extends App.Controller
             $(@).width( originals.eq(index).outerWidth() )
           return helper
         update: @dndCallback
-      container.find('tbody').sortable(dndOptions)
-
-    # click on pager
-    container.delegate('.js-page', 'click', (e) =>
-      e.stopPropagation()
-      page = $(e.currentTarget).attr 'data-page'
-      if @pagerAjax
-        @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
-      else
-        render = =>
-          @shownPage = page
-          @renderTableFull()
-        App.QueueManager.add('tableRender', render)
-        App.QueueManager.run('tableRender')
-    )
+      table.find('tbody').sortable(dndOptions)
 
     @el.html(container)
     @setBulkSelected(bulkIds)
@@ -673,6 +661,18 @@ class App.ControllerTable extends App.Controller
     page = parseInt(page)
     @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
 
+  paginate: (e) =>
+    e.stopPropagation()
+    page = $(e.currentTarget).attr('data-page')
+    if @pagerAjax
+      @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
+    else
+      render = =>
+        @shownPage = page
+        @renderTableFull()
+      App.QueueManager.add('tableRender', render)
+      App.QueueManager.run('tableRender')
+
   sortList: =>
     return if _.isEmpty(@objects)
 
@@ -836,7 +836,6 @@ class App.ControllerTable extends App.Controller
     id = $(e.currentTarget).parents('tr').data('id')
     name = e.currentTarget.getAttribute('data-table-action')
     @runAction(name, id)
-    console.log 'onActionButtonClicked'
 
   runAction: (name, id) =>
     action = _.findWhere @actions, name: name
