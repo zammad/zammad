@@ -123,7 +123,6 @@ gem 'acts_as_list'
 
 # integrations
 gem 'clearbit'
-gem 'graphql-client'
 gem 'net-ldap'
 gem 'slack-notifier'
 gem 'zendesk_api'

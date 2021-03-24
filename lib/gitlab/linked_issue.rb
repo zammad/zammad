@@ -84,27 +84,30 @@ class GitLab
       @result.dig('milestone', 'title')
     end
 
-    def query
-      @query ||= client.parse GitLab::LinkedIssue::QUERY
-    end
-
     def query_by_url(url)
       variables = variables(url)
       return if variables.blank?
 
-      response = client.query(query, variables: variables)
+      response = client.perform(
+        query:     GitLab::LinkedIssue::QUERY,
+        variables: variables
+      )
 
-      response&.data&.project&.issue&.to_h&.deep_dup
+      response.dig('data', 'project', 'issue')
     end
 
     def variables(url)
-      return if url !~ %r{^https://([^/]+)/(.*)/-/issues/(\d+)$}
+      if url !~ %r{^https://([^/]+)/(.*)/-/issues/(\d+)$}
+        raise Exceptions::UnprocessableEntity, 'Invalid GitLab issue link format'
+      end
 
       host     = $1
       fullpath = $2
       id       = $3
 
-      return if client.endpoint.exclude?(host)
+      if client.endpoint.exclude?(host)
+        raise Exceptions::UnprocessableEntity, "Issue link doesn't match configured GitLab endpoint '#{client.endpoint}'"
+      end
 
       {
         fullpath: fullpath,

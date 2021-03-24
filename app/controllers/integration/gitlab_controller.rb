@@ -5,9 +5,11 @@ class Integration::GitLabController < ApplicationController
 
   def verify
     gitlab = ::GitLab.new(params[:endpoint], params[:api_token])
+
+    gitlab.verify!
+
     render json: {
-      result:   'ok',
-      response: gitlab.schema.to_json,
+      result: 'ok',
     }
   rescue => e
     logger.error e
@@ -21,7 +23,7 @@ class Integration::GitLabController < ApplicationController
   def query
     config = Setting.get('gitlab_config')
 
-    gitlab = ::GitLab.new(config['endpoint'], config['api_token'], schema: config['schema'])
+    gitlab = ::GitLab.new(config['endpoint'], config['api_token'])
 
     render json: {
       result:   'ok',

@@ -51,8 +51,7 @@ class Form extends App.Controller
           )
           return
 
-        config.schema = data.response
-        App.Setting.set('gitlab_config', config)
+        App.Setting.set('gitlab_config', config, notify: true)
 
       error: (data, status) ->
 

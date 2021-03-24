@@ -60,14 +60,13 @@ RSpec.describe 'GitHub', type: :request do
       authenticated_as(admin)
       instance = instance_double('GitHub')
       expect(GitHub).to receive(:new).with(endpoint, token).and_return instance
-      expect(instance).to receive(:schema).and_return(dummy_schema)
+      expect(instance).to receive(:verify!).and_return(true)
 
       post '/api/v1/integration/github/verify', params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
-      expect(json_response['response']).to eq(dummy_schema.to_json)
     end
 
     it 'does query objects' do

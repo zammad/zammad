@@ -1,14 +1,14 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class GitLab
-  extend Forwardable
-
   attr_reader :client
 
-  def_delegator :client, :schema
+  def initialize(endpoint, api_token)
+    @client = GitLab::HttpClient.new(endpoint, api_token)
+  end
 
-  def initialize(*args, **kargs)
-    @client = GitLab::Client.new(*args, **kargs)
+  def verify!
+    GitLab::Credentials.new(client).verify!
   end
 
   def issues_by_urls(urls)

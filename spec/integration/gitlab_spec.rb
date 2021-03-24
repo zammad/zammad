@@ -6,13 +6,9 @@ RSpec.describe GitLab, type: :integration do # rubocop:disable RSpec/FilePath
     required_envs.each do |key|
       skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
     end
-
-    # request schema only once for performance reasons
-    @cached_schema = described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']).schema
   end
 
-  let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN'], schema: schema) }
-  let(:schema) { @cached_schema } # rubocop:disable RSpec/InstanceVariable
+  let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
   let(:issue_data) do
     {
       id:         '1',
@@ -40,13 +36,7 @@ RSpec.describe GitLab, type: :integration do # rubocop:disable RSpec/FilePath
       ],
     }
   end
-  let(:invalid_issue_url) { 'https://git.example.com/group/project/-/issues/1' }
-
-  describe '#schema' do
-    it 'returns GraphQL schema' do
-      expect(instance.schema).to respond_to(:to_graphql)
-    end
-  end
+  let(:invalid_issue_url) { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/group/project/-/issues/1" }
 
   describe '#issues_by_urls' do
     let(:result) { instance.issues_by_urls([ issue_url ]) }

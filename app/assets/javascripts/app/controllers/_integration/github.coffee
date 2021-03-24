@@ -51,8 +51,7 @@ class Form extends App.Controller
           )
           return
 
-        config.schema = data.response
-        App.Setting.set('github_config', config)
+        App.Setting.set('github_config', config, notify: true)
 
       error: (data, status) ->
 

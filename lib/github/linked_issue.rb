@@ -87,28 +87,28 @@ class GitHub
       @result.dig('milestone', 'title')
     end
 
-    def query
-      @query ||= client.parse GitHub::LinkedIssue::QUERY
-    end
-
     def query_by_url(url)
-      variables = variables(url)
-      return if variables.blank?
+      response = client.perform(
+        query:     GitHub::LinkedIssue::QUERY,
+        variables: variables!(url)
+      )
 
-      response = client.query(query, variables: variables)
-
-      response&.data&.repository&.issue&.to_h&.deep_dup
+      response.dig('data', 'repository', 'issue')
     end
 
-    def variables(url)
-      return if url !~ %r{^https://([^/]+)/([^/]+)/([^/]+)/issues/(\d+)$}
+    def variables!(url)
+      if url !~ %r{^https://([^/]+)/([^/]+)/([^/]+)/issues/(\d+)$}
+        raise Exceptions::UnprocessableEntity, 'Invalid GitHub issue link format'
+      end
 
       host            = $1
       repositor_owner = $2
       repository_name = $3
       id              = $4
 
-      return if client.endpoint.exclude?(host)
+      if client.endpoint.exclude?(host)
+        raise Exceptions::UnprocessableEntity, "Issue link doesn't match configured GitHub endpoint '#{client.endpoint}'"
+      end
 
       {
         repositor_owner: repositor_owner,

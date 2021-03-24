@@ -4,7 +4,8 @@ class App.SidebarGitIssue extends App.Controller
 
   constructor: ->
     super
-    @issueLinks = []
+    @issueLinks         = []
+    @issueLinkData      = []
     @providerIdentifier = @provider.toLowerCase()
 
   sidebarItem: =>
@@ -13,7 +14,7 @@ class App.SidebarGitIssue extends App.Controller
       name: @providerIdentifier
       badgeCallback: @badgeRender
       sidebarHead: @provider
-      sidebarCallback: @showObjects
+      sidebarCallback: @reloadIssues
       sidebarActions: [
         {
           title:    'Link issue'
@@ -26,8 +27,8 @@ class App.SidebarGitIssue extends App.Controller
 
   shown: ->
     return if !@ticket
-    return if !@ticket.id
-    @showIssues()
+
+    @listIssues()
 
   metaBadge: =>
     counter = ''
@@ -45,6 +46,7 @@ class App.SidebarGitIssue extends App.Controller
     @badgeRenderLocal()
 
   badgeRenderLocal: =>
+    return if !@badgeEl
     @badgeEl.html(App.view('generic/sidebar_tabs_item')(@metaBadge()))
 
   linkIssue: =>
@@ -54,86 +56,141 @@ class App.SidebarGitIssue extends App.Controller
       taskKey: @taskKey
       container: @el.closest('.content')
       callback: (link, ui) =>
-        if @ticket && @ticket.id
-          @saveTicketIssues = true
-        ui.close()
-        @showIssues([link])
+        @getIssues(
+          links: [link]
+          success: (result) =>
+            if !_.contains(@issueLinks, link)
+              @issueLinks.push(result[0].url)
+              @issueLinkData = @issueLinkData.concat(result)
+
+            if @ticket && @ticket.id
+              @saveIssues(
+                ticket_id: @ticket.id
+                links: @issueLinks
+                success: =>
+                  ui.close()
+                  @renderIssues()
+                error: (message = 'Unable to save issue') =>
+                  ui.showAlert(App.i18n.translatePlain(message))
+                  form = ui.el.find('.js-result')
+                  @formEnable(form)
+              )
+            else
+              ui.close()
+              @renderIssues()
+          error: (message = 'Unable to load issues') =>
+            ui.showAlert(App.i18n.translatePlain(message))
+            form = ui.el.find('.js-result')
+            @formEnable(form)
+        )
     )
 
-  showObjects: (el) =>
-    @el = el
+  reloadIssues: (el) =>
+    if el
+      @el = el
 
-    # show placeholder
-    if @ticket && @ticket.preferences && @ticket.preferences[@providerIdentifier] && @ticket.preferences[@providerIdentifier].issue_links
-      @issueLinks = @ticket.preferences[@providerIdentifier].issue_links
-    queryParams = @queryParam()
+    return @renderIssues() if !@ticket
 
-    # TODO: what is 'gitlab_issue_links'
-    if queryParams && queryParams.gitlab_issue_links
-      @issueLinks.push queryParams.gitlab_issue_links
-    @showIssues()
+    ticketLinks = @ticket?.preferences?[@providerIdentifier]?.issue_links || []
+    return @renderIssues() if _.isEqual(@issueLinks, ticketLinks)
 
-  showIssues: (issueLinks) =>
-    if issueLinks
-      @issueLinks = _.uniq(@issueLinks.concat(issueLinks))
+    @issueLinks = ticketLinks
+    @listIssues(true)
 
-    # show placeholder
-    if _.isEmpty(@issueLinks)
-      @html("<div>#{App.i18n.translateInline('No linked issues')}</div>")
+  renderIssues: =>
+    if _.isEmpty(@issueLinkData)
+      @showEmpty()
       return
 
-    # AJAX call to show items
-    @ajax(
-      id:    "#{@providerIdentifier}-#{@taskKey}"
-      type:  'POST'
-      url:   "#{@apiPath}/integration/#{@providerIdentifier}"
-      data: JSON.stringify(links: @issueLinks)
-      success: (data, status, xhr) =>
-        if data.response
-          @showList(data.response)
-          if @saveTicketIssues
-            @saveTicketIssues = false
-            @issueLinks = data.response.map((issue) -> issue.url)
-            @updateTicket(@ticket.id, @issueLinks)
-          return
-        @showError('Unable to load data...')
-
-      error: (xhr, status, error) =>
-
-        # do not close window if request is aborted
-        return if status is 'abort'
-
-        # show error message
-        @showError('Unable to load data...')
-    )
-
-  showList: (issues) =>
     list = $(App.view('ticket_zoom/sidebar_git_issue')(
-      issues: issues
+      issues: @issueLinkData
     ))
     list.delegate('.js-delete', 'click', (e) =>
       e.preventDefault()
       issueLink = $(e.currentTarget).attr 'data-issue-id'
-      @delete(issueLink)
+      @deleteIssue(issueLink)
     )
     @html(list)
+    @badgeRenderLocal()
+
+  listIssues: (force = false) =>
+    return @renderIssues() if !force && @fetchFullActive && @fetchFullActive > new Date().getTime() - 5000
+    @fetchFullActive = new Date().getTime()
+
+    return @renderIssues() if _.isEmpty(@issueLinks)
+
+    @getIssues(
+      links: @issueLinks
+      success: (result) =>
+        @issueLinks    = result.map((element) -> element.url)
+        @issueLinkData = result
+        @renderIssues()
+      error: =>
+        @showError(App.i18n.translateInline('Unable to load issues'))
+    )
+
+  getIssues: (params) ->
+    @ajax(
+      id:    "#{@providerIdentifier}-#{@taskKey}"
+      type:  'POST'
+      url:   "#{@apiPath}/integration/#{@providerIdentifier}"
+      data: JSON.stringify(links: params.links)
+      success: (data, status, xhr) ->
+        if data.response
+
+          # some issues redirect to pull requests like
+          # https://github.com/zammad/zammad/issues/1574
+          # in this case throw error
+          return params.error('Unable to load issues') if _.isEmpty(data.response)
+
+          params.success(data.response)
+        else
+          params.error(data.message)
+      error: (xhr, status, error) ->
+        return if status is 'abort'
+
+        params.error()
+    )
+
+  saveIssues: (params) ->
+    App.Ajax.request(
+      id:    "#{@providerIdentifier}-update-#{params.ticket_id}"
+      type:  'POST'
+      url:   "#{@apiPath}/integration/#{@providerIdentifier}_ticket_update"
+      data:  JSON.stringify(ticket_id: params.ticket_id, issue_links: params.links)
+      success: (data, status, xhr) ->
+        params.success(data)
+      error: (xhr, status, details) ->
+        return if status is 'abort'
+
+        params.error()
+    )
+
+  deleteIssue: (link) ->
+    @issueLinks    = _.filter(@issueLinks, (element) -> element isnt link)
+    @issueLinkData = _.filter(@issueLinkData, (element) -> element.url isnt link)
+
+    if @ticket && @ticket.id
+      @saveIssues(
+        ticket_id: @ticket.id
+        links: @issueLinks
+        success: =>
+          @renderIssues()
+        error: (message = 'Unable to save issue') =>
+          @showError(App.i18n.translateInline(message))
+      )
+    else
+      @renderIssues()
+
+  showEmpty: ->
+    @html("<div>#{App.i18n.translateInline('No linked issues')}</div>")
     @badgeRenderLocal()
 
   showError: (message) =>
     @html App.i18n.translateInline(message)
 
   reload: =>
-    @showIssues()
-
-  delete: (issueLink) =>
-    localLinks = []
-    for localLink in @issueLinks
-      if issueLink.toString() isnt localLink.toString()
-        localLinks.push localLink
-    @issueLinks = localLinks
-    if @ticket && @ticket.id
-      @updateTicket(@ticket.id, @issueLinks)
-    @showIssues()
+    @reloadIssues()
 
   postParams: (args) =>
     return if !args.ticket
@@ -143,25 +200,3 @@ class App.SidebarGitIssue extends App.Controller
     args.ticket.preferences ||= {}
     args.ticket.preferences[@providerIdentifier] ||= {}
     args.ticket.preferences[@providerIdentifier].issue_links = @issueLinks
-
-  updateTicket: (ticket_id, issueLinks) =>
-    App.Ajax.request(
-      id:    "#{@providerIdentifier}-update-#{ticket_id}"
-      type:  'POST'
-      url:   "#{@apiPath}/integration/#{@providerIdentifier}_ticket_update"
-      data:  JSON.stringify(ticket_id: ticket_id, issue_links: issueLinks)
-      success: (data, status, xhr) =>
-        @badgeRenderLocal()
-      error: (xhr, status, details) =>
-
-        # do not close window if request is aborted
-        return if status is 'abort'
-
-        # show error message
-        @log 'errors', details
-        @notify(
-          type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
-          timeout: 6000
-        )
-    )

@@ -1,14 +1,14 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class GitHub
-  extend Forwardable
-
   attr_reader :client
 
-  def_delegator :client, :schema
+  def initialize(endpoint, api_token)
+    @client = GitHub::HttpClient.new(endpoint, api_token)
+  end
 
-  def initialize(*args, **kargs)
-    @client = GitHub::Client.new(*args, **kargs)
+  def verify!
+    GitHub::Credentials.new(client).verify!
   end
 
   def issues_by_urls(urls)

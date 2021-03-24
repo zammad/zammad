@@ -5,9 +5,11 @@ class Integration::GitHubController < ApplicationController
 
   def verify
     github = ::GitHub.new(params[:endpoint], params[:api_token])
+
+    github.verify!
+
     render json: {
-      result:   'ok',
-      response: github.schema.to_json,
+      result: 'ok',
     }
   rescue => e
     logger.error e
@@ -21,7 +23,7 @@ class Integration::GitHubController < ApplicationController
   def query
     config = Setting.get('github_config')
 
-    github = ::GitHub.new(config['endpoint'], config['api_token'], schema: config['schema'])
+    github = ::GitHub.new(config['endpoint'], config['api_token'])
 
     render json: {
       result:   'ok',

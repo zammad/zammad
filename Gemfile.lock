@@ -218,10 +218,6 @@ GEM
       activesupport (>= 4.2.0)
     gmail_xoauth (0.4.2)
       oauth (>= 0.3.6)
-    graphql (1.11.6)
-    graphql-client (0.16.0)
-      activesupport (>= 3.0)
-      graphql (~> 1.8)
     guard (2.15.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -617,7 +613,6 @@ DEPENDENCIES
   faker
   github_changelog_generator
   gmail_xoauth
-  graphql-client
   guard
   guard-livereload
   guard-symlink

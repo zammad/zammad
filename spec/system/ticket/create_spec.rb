@@ -352,9 +352,6 @@ RSpec.describe 'Ticket Create', type: :system do
       required_envs.each do |key|
         skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
       end
-
-      # request schema only once for performance reasons
-      @cached_schema = GitLab.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']).schema.to_json
     end
 
     def authenticate
@@ -362,7 +359,6 @@ RSpec.describe 'Ticket Create', type: :system do
       Setting.set('gitlab_config', {
                     api_token: ENV['GITLAB_APITOKEN'],
                     endpoint:  ENV['GITLAB_ENDPOINT'],
-                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
                   })
       true
     end
@@ -410,9 +406,6 @@ RSpec.describe 'Ticket Create', type: :system do
       required_envs.each do |key|
         skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
       end
-
-      # request schema only once for performance reasons
-      @cached_schema = GitHub.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']).schema.to_json
     end
 
     def authenticate
@@ -420,7 +413,6 @@ RSpec.describe 'Ticket Create', type: :system do
       Setting.set('github_config', {
                     api_token: ENV['GITHUB_APITOKEN'],
                     endpoint:  ENV['GITHUB_ENDPOINT'],
-                    schema:    @cached_schema, # rubocop:disable RSpec/InstanceVariable
                   })
       true
     end
