@@ -48,7 +48,7 @@ class Issue3372WebhooksAdminView < ActiveRecord::Migration[5.2]
       name:            "Webhook '#{source}'",
       endpoint:        config['endpoint'],
       signature_token: config['token'],
-      ssl_verify:      config['verify_ssl'],
+      ssl_verify:      config['verify_ssl'] || false,
       active:          true,
       created_by_id:   1,
       updated_by_id:   1,
