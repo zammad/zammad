@@ -1,5 +1,13 @@
-test( "ticket macro pending time check", function() {
-  var test_relative = function(rules, target, description, offset){
+QUnit.module("ticket macro pending time check", hooks => {
+  hooks.beforeEach( () => {
+    this.clock = sinon.useFakeTimers()
+  })
+
+  hooks.afterEach(() => {
+    this.clock.restore()
+  })
+
+  var calculate_travel_on_ticket = (rules) => {
     var ticket = new App.Ticket()
 
     App.Ticket.macro({
@@ -9,38 +17,36 @@ test( "ticket macro pending time check", function() {
       }
     })
 
-    var compare_against = new Date()
-    var travel = Math.abs( new Date(ticket.pending_time) - compare_against)
-
-    var diff = Math.abs(target - travel) - offset*1000
-
-    ok(diff < 1000, description)
+    return new Date(ticket.pending_time) - new Date()
   }
 
-  var data = document.getElementsByTagName('data')[0].dataset
-  debugger
+  test("5 days", assert => {
+    var rules = {
+      operator: "relative",
+      range: "day",
+      value: 5
+    }
 
-  var rules = {
-    operator: "relative",
-    range: "day",
-    value: 5
-  }
+    assert.equal(calculate_travel_on_ticket(rules), 60 * 60 * 24 * 5 * 1000)
+  })
 
-  test_relative(rules, 60 * 60 * 24 * 5 * 1000, '5 days', data['offset-5Days'])
+  test("5 minutes", assert => {
+    var rules = {
+      operator: "relative",
+      range: "minute",
+      value: 3
+    }
 
-  var rules = {
-    operator: "relative",
-    range: "minute",
-    value: 3
-  }
+    assert.equal(calculate_travel_on_ticket(rules), 60 * 3 * 1000)
+  });
 
-  test_relative(rules, 60 * 3 * 1000, '5 minutes', data['offset-3Minutes'])
+  test("10 hours", assert => {
+    var rules = {
+      operator: "relative",
+      range: "hour",
+      value: 10
+    }
 
-  var rules = {
-    operator: "relative",
-    range: "hour",
-    value: 10
-  }
-
-  test_relative(rules, 60 * 60 * 10 * 1000, '10 hours', data['offset-10Hours'])
+    assert.equal(calculate_travel_on_ticket(rules), 60 * 60 * 10 * 1000)
+  });
 })

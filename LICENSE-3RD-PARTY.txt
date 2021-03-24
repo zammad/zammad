@@ -188,3 +188,13 @@ Source: https://github.com/google/material-design-icons
 Copyright: Google
 License: Apache License, Version 2.0
 -----------------------------------------------------------------------------
+QUnit
+Source: https://qunitjs.com/
+Copyright: jQuery Foundation and other contributors
+License: MIT
+-----------------------------------------------------------------------------
+Sinon.JS
+Source: https://sinonjs.org
+Copyright: Sinon committers
+License: BSD-3
+-----------------------------------------------------------------------------

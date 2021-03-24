@@ -1,22 +1,11 @@
 
 <link rel="stylesheet" href="/assets/tests/qunit-1.21.0.css">
-<%= javascript_include_tag "/assets/tests/qunit-1.21.0.js", "/assets/tests/ticket_macro.js", nonce: true %>
+<%= javascript_include_tag "/assets/tests/qunit-1.21.0.js", "/assets/tests/sinon-9.2.4", "/assets/tests/ticket_macro.js", nonce: true %>
 
 <style type="text/css">
 body {
   padding-top: 0px;
 }
 </style>
-
-<script type="text/javascript">
-</script>
-
-<%- date = Time.current.in_time_zone('Europe/London')  %>
-
-<data
-     data-offset-5-days=<%= date.utc_offset - (date + 5.days).utc_offset %>
-     data-offset-3-minutes=<%= date.utc_offset - (date + 3.minutes).utc_offset %>
-     data-offset-10-hours=<%= date.utc_offset - (date + 10.hours).utc_offset %>
->
 
 <div id="qunit" class="u-dontfold"></div>
