@@ -844,13 +844,20 @@ class App.ControllerTable extends App.Controller
   toggleActionDropdown: (id, e, td) =>
     e.stopPropagation()
     $dropdown = $(td).find('.js-table-action-menu')
+
     if $dropdown.length
+
       # open dropdown
       $dropdown.dropdown('toggle')
+
+      # check if bind to open dropdown is already done
+      return if $dropdown.prop('rendered')
+
+      # remember that bind to open dropdown is already done
+      $dropdown.prop('rendered', true)
+
       # bind on click now that the dropdown is open
-      $dropdown.one('click.dropdown', '[data-table-action]', @onActionButtonClicked)
-      # unbind after dropdown is closed
-      $dropdown.parent().one('hide.bs.dropdown', -> $dropdown.off('click.dropdown'))
+      $dropdown.on('click.dropdown', '[data-table-action]', @onActionButtonClicked)
     else
       # only one action - directly fire that action
       name = $(td).find('[data-table-action]').attr('data-table-action')
