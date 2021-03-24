@@ -18,7 +18,7 @@ module Ticket::SearchIndex
 
     # collect article data
     attributes['article'] = []
-    Ticket::Article.where(ticket_id: id).order(:id).limit(1000).find_each(batch_size: 50).each do |article|
+    Ticket::Article.where(ticket_id: id).limit(1000).find_each(batch_size: 50).each do |article|
 
       # lookup attributes of ref. objects (normally name and note)
       article_attributes = article.search_index_attribute_lookup(include_references: false)
