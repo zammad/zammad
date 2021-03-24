@@ -269,13 +269,13 @@ class App.User extends App.Model
   ###
   allGroupIds: (permission = 'full') ->
     group_ids = []
-    user_group_ids = App.Session.get('group_ids')
+    user_group_ids = @group_ids
     if user_group_ids
       for local_group_id, local_permission of user_group_ids
         if _.include(local_permission, permission) || _.include(local_permission, 'full')
           group_ids.push local_group_id
 
-    user_role_ids = App.Session.get('role_ids')
+    user_role_ids = @role_ids
     if user_role_ids
       for role_id in user_role_ids
         if App.Role.exists(role_id)

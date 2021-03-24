@@ -324,7 +324,31 @@ class App.Ticket extends App.Model
     return @userGroupAccess(permission)
 
   userGroupAccess: (permission) ->
-    user      = App.User.current()
+    user = App.User.current()
+    return @isAccessibleByGroup(user, permission)
+
+  userIsCustomer: ->
+    user = App.User.current()
+    return true if user.id is @customer_id
+    false
+
+  userIsOwner: ->
+    user = App.User.current()
+    return @isAccessibleByOwner(user)
+
+  currentView: ->
+    return 'agent' if App.User.current()?.permission('ticket.agent') && @userGroupAccess('read')
+    return 'customer' if App.User.current()?.permission('ticket.customer')
+    return
+
+  isAccessibleByOwner: (user) ->
+    return false if !user
+    return true if user.id is @owner_id
+    false
+
+  isAccessibleByGroup: (user, permission) ->
+    return false if !user
+
     group_ids = user.allGroupIds(permission)
     return false if !@group_id
 
@@ -334,17 +358,8 @@ class App.Ticket extends App.Model
 
     return false
 
-  userIsCustomer: ->
-    user = App.User.current()
-    return true if user.id is @customer_id
-    false
-
-  userIsOwner: ->
-    user = App.User.current()
-    return true if user.id is @owner_id
-    false
-
-  currentView: ->
-    return 'agent' if App.User.current()?.permission('ticket.agent') && @userGroupAccess('read')
-    return 'customer' if App.User.current()?.permission('ticket.customer')
-    return
+  isAccessibleBy: (user, permission) ->
+    return false if !user
+    return false if !user.permission('ticket.agent')
+    return true if @isAccessibleByOwner(user)
+    return @isAccessibleByGroup(user, permission)

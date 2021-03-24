@@ -43,6 +43,7 @@ class App.WidgetMention extends App.Controller
 
       user = App.User.find(mention.user_id)
       continue if !user
+      continue if !user.active
 
       if mention.user_id is App.Session.get().id
         subscribed = true
@@ -50,7 +51,13 @@ class App.WidgetMention extends App.Controller
       # no break because we need to check if user is subscribed
       continue if counter > 10
 
-      mention.avatar = user.avatar('30', '', '')
+      css            = ''
+      mention.access = true
+      if !@object.isAccessibleBy(user, 'read')
+        css            = 'avatar--inactive'
+        mention.access = false
+
+      mention.avatar = user.avatar('30', '', css)
 
       mentions.push(mention)
       counter++
