@@ -248,12 +248,13 @@ module CommonActions
   # Executes action inside of modal. Makes sure modal has opened and closes
   #
   # @param timeout [Integer] seconds to wait
-  def in_modal(timeout: 4, &block)
+  # @param wait_for_disappear [Bool] wait for modal to close
+  def in_modal(timeout: 4, disappears: true, &block)
     modal_ready(timeout: timeout)
 
     within('.modal', &block)
 
-    modal_disappear(timeout: timeout)
+    modal_disappear(timeout: timeout) if disappears
   end
 end
 

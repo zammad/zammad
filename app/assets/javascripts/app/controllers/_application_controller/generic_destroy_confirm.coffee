@@ -15,9 +15,9 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
       @close()
       if @callback
         @callback()
-    options.fail = =>
+    options.fail = (xhr, data) =>
       @log 'errors'
-      @close()
+      @showAlert(data.human_error || data.error)
     @item.destroy(options)
 
 class App.ControllerConfirm extends App.ControllerModal
