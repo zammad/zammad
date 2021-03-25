@@ -6,7 +6,7 @@ targets:
   centos-7:
     dependencies:
       - curl
-      - elasticsearch|elasticsearch-oss
+      - elasticsearch
       - nginx
       - postgresql-server
       - which
@@ -18,7 +18,7 @@ targets:
   centos-8:
     dependencies:
       - curl
-      - elasticsearch|elasticsearch-oss
+      - elasticsearch
       - nginx
       - postgresql-server
       - which
@@ -80,7 +80,7 @@ targets:
   sles-12:
     dependencies:
       - curl
-      - elasticsearch|elasticsearch-oss
+      - elasticsearch
       - nginx
       - postgresql-server
       - libImlib2-1
