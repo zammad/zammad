@@ -16,6 +16,7 @@ targets:
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.5-9.el7.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.5-9.el7.x86_64.rpm
+      - shared-mime-info
   centos-8:
     dependencies:
       - curl
@@ -29,6 +30,7 @@ targets:
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
+      - shared-mime-info
   debian-9:
     dependencies:
       - curl
@@ -40,6 +42,7 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+      - shared-mime-info
   debian-10:
     dependencies:
       - curl
@@ -51,6 +54,7 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+      - shared-mime-info
   ubuntu-16.04:
     dependencies:
       - curl
@@ -62,6 +66,7 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+      - shared-mime-info
   ubuntu-18.04:
     dependencies:
       - curl
@@ -73,6 +78,7 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+      - shared-mime-info
   ubuntu-20.04:
     dependencies:
       - curl
@@ -84,6 +90,7 @@ targets:
     build_dependencies:
       - libimlib2
       - libimlib2-dev
+      - shared-mime-info
   sles-12:
     dependencies:
       - curl
@@ -97,6 +104,7 @@ targets:
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-devel-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-filters-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/libImlib2-1-1.4.5-12.1.1.x86_64.rpm
+      - shared-mime-info
 before:
   - contrib/packager.io/before.sh
 after:
