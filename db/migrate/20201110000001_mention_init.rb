@@ -18,7 +18,7 @@ class MentionInit < ActiveRecord::Migration[5.2]
 
     Mention.reset_column_information
     create_overview
-    update_user_matrix
+    update_users
   end
 
   def create_overview
@@ -43,24 +43,32 @@ class MentionInit < ActiveRecord::Migration[5.2]
     )
   end
 
-  def update_user_matrix
+  def update_users
     User.with_permissions('ticket.agent').each do |user|
       next if user.preferences.blank?
       next if user.preferences['notification_config'].blank?
       next if user.preferences['notification_config']['matrix'].blank?
 
-      update_user_matrix_by_user(user)
+      update_matrix(user.preferences['notification_config']['matrix'])
+
+      user.save!
     end
   end
 
-  def update_user_matrix_by_user(user)
-    %w[create update].each do |type|
-      user.preferences['notification_config']['matrix'][type]['criteria']['subscribed'] = true
+  def update_matrix(matrix)
+    matrix_type_defaults.each do |type, default|
+      matrix[type] ||= {}
+      matrix[type]['criteria'] ||= {}
+      matrix[type]['criteria']['subscribed'] = default
     end
+  end
 
-    %w[reminder_reached escalation].each do |type|
-      user.preferences['notification_config']['matrix'][type]['criteria']['subscribed'] = false
-    end
-    user.save!
+  def matrix_type_defaults
+    @matrix_type_defaults ||= {
+      'create'           => true,
+      'update'           => true,
+      'reminder_reached' => false,
+      'escalation'       => false,
+    }
   end
 end
