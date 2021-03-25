@@ -12,6 +12,7 @@ targets:
       - which
       - epel-release
       - imlib2
+      - shared-mime-info
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.5-9.el7.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.5-9.el7.x86_64.rpm
@@ -24,6 +25,7 @@ targets:
       - which
       - epel-release
       - imlib2
+      - shared-mime-info
     build_dependencies:
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - http://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
@@ -34,6 +36,7 @@ targets:
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
+      - shared-mime-info
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -44,6 +47,7 @@ targets:
       - nginx|apache2
       - postgresql|mariadb-server|sqlite
       - libimlib2
+      - shared-mime-info
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -54,6 +58,7 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
+      - shared-mime-info
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -64,6 +69,7 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
+      - shared-mime-info
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -74,6 +80,7 @@ targets:
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
       - libimlib2
+      - shared-mime-info
     build_dependencies:
       - libimlib2
       - libimlib2-dev
