@@ -1543,14 +1543,26 @@ RSpec.describe Ticket, type: :model do
                                                    'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } } } }
       end
 
+      let(:prefs_matrix_only_mentions_groups) do
+        { 'notification_config' =>
+                                   { 'matrix'    =>
+                                                    { 'create'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                      'update'           => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => true, 'online' => true } },
+                                                      'reminder_reached' => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } },
+                                                      'escalation'       => { 'criteria' => { 'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => false }, 'channel' => { 'email' => false, 'online' => false } } },
+                                     'group_ids' => [create(:group).id, create(:group).id, create(:group).id] } }
+      end
+
       let(:mention_group) { create(:group) }
       let(:no_access_group) { create(:group) }
       let(:user_only_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_only_mentions) }
+      let(:user_read_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_only_mentions_groups) }
       let(:user_no_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_no_mentions) }
       let(:ticket) { create(:ticket, group: mention_group, owner: user_no_mentions) }
 
       it 'does inform mention user about the ticket update' do
         create(:mention, mentionable: ticket, user: user_only_mentions)
+        create(:mention, mentionable: ticket, user: user_read_mentions)
         create(:mention, mentionable: ticket, user: user_no_mentions)
         Observer::Transaction.commit
         Scheduler.worker(true)
@@ -1562,6 +1574,10 @@ RSpec.describe Ticket, type: :model do
           sent(
             template: 'ticket_update',
             user:     user_no_mentions,
+          )
+          sent(
+            template: 'ticket_update',
+            user:     user_read_mentions,
           )
           sent(
             template: 'ticket_update',
@@ -1585,6 +1601,10 @@ RSpec.describe Ticket, type: :model do
           )
           not_sent(
             template: 'ticket_update',
+            user:     user_read_mentions,
+          )
+          not_sent(
+            template: 'ticket_update',
             user:     user_only_mentions,
           )
         end
@@ -1593,12 +1613,17 @@ RSpec.describe Ticket, type: :model do
       it 'does inform mention user about ticket creation' do
         check_notification do
           ticket = create(:ticket, owner: user_no_mentions, group: mention_group)
+          create(:mention, mentionable: ticket, user: user_read_mentions)
           create(:mention, mentionable: ticket, user: user_only_mentions)
           Observer::Transaction.commit
           Scheduler.worker(true)
           sent(
             template: 'ticket_create',
             user:     user_no_mentions,
+          )
+          sent(
+            template: 'ticket_create',
+            user:     user_read_mentions,
           )
           sent(
             template: 'ticket_create',
@@ -1618,6 +1643,10 @@ RSpec.describe Ticket, type: :model do
           )
           not_sent(
             template: 'ticket_create',
+            user:     user_read_mentions,
+          )
+          not_sent(
+            template: 'ticket_create',
             user:     user_only_mentions,
           )
         end
@@ -1626,9 +1655,14 @@ RSpec.describe Ticket, type: :model do
       it 'does not inform mention user about ticket creation because of no permissions' do
         check_notification do
           ticket = create(:ticket, group: no_access_group)
+          create(:mention, mentionable: ticket, user: user_read_mentions)
           create(:mention, mentionable: ticket, user: user_only_mentions)
           Observer::Transaction.commit
           Scheduler.worker(true)
+          not_sent(
+            template: 'ticket_create',
+            user:     user_read_mentions,
+          )
           not_sent(
             template: 'ticket_create',
             user:     user_only_mentions,
