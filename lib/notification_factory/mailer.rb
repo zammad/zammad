@@ -76,7 +76,7 @@ returns
     end
 
     # check if group is in selected groups
-    if !owned_by_me
+    if !owned_by_me && !subscribed
       selected_group_ids = user_preferences['notification_config']['group_ids']
       if selected_group_ids.is_a?(Array)
         hit = nil
