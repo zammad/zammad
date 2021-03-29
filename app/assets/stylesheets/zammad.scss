@@ -437,6 +437,7 @@ pre code.hljs {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
   }
 
   &--only-icon .icon,
@@ -7624,14 +7625,23 @@ footer {
   transition: margin 250ms;
   flex-shrink: 0;
 
-  @include phone {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    direction: rtl;
-  }
-
   &.is-closed {
     margin-bottom: -60px;
+  }
+
+  @include phone {
+    &-reset {
+      flex-shrink: 5;
+    }
+
+    .btn,
+    .buttonDropdown {
+      min-width: 20px;
+
+      &--only-icon {
+        min-width: 36px;
+      }
+    }
   }
 
   &-inner {
@@ -7640,11 +7650,6 @@ footer {
     align-items: center;
     justify-content: flex-end;
     padding: 10px;
-
-    @include phone {
-      width: fit-content;
-      direction: initial;
-    }
   }
 
   &-avatars {
