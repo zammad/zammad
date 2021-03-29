@@ -25,7 +25,7 @@ class Job extends App.ControllerSubContent
           { name: 'New Scheduler', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      large: true
+      veryLarge: true
     )
 
   show: (params) =>
