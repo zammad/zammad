@@ -66,6 +66,7 @@ class ChannelEmailFilter extends App.Controller
       genericObject: 'PostmasterFilter'
       container: @el.closest('.content')
       callback: @load
+      large: true
     )
 
   edit: (id, e) =>
@@ -77,6 +78,7 @@ class ChannelEmailFilter extends App.Controller
       genericObject: 'PostmasterFilter'
       container: @el.closest('.content')
       callback: @load
+      large: true
     )
 
 class ChannelEmailSignature extends App.Controller
