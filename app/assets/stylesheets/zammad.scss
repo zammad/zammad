@@ -3813,8 +3813,7 @@ footer {
 .bulkAction {
   position: fixed;
   bottom: 0;
-  left: $sidebarWidth + $navigationWidth;
-  right: 0;
+  @include bidi-style(left, $sidebarWidth + $navigationWidth, right, 0);
   min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: white;
   z-index: 1;
@@ -3824,14 +3823,30 @@ footer {
     0 -3px rgba(0,0,0,.01);
 
   @include small-desktop {
-    left: $navigationWidth;
+    @include bidi-style(left, $navigationWidth, right, 0);
     min-width: $minWidth - $sidebarWidth;
+  }
+
+  @include phone {
+    @include bidi-style(left, $mobileNavigationWidth, right, 0);
+    min-width: 0;
+
+    .navigation:hover ~ &,
+    .navigation.is-hovered ~ &,
+    .navigation:active ~ & {
+      @include bidi-style(left, $mobileNavigationWidthOpen, right, 0);
+    }
   }
 }
 
   .bulkAction-firstStep {
     display: flex;
     align-items: center;
+    
+    @include phone {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
 
   .bulkAction-firstStep .has-error {
@@ -3842,10 +3857,22 @@ footer {
   .bulkAction-secondStep {
     display: flex;
     flex-direction: column;
+    
+    &-bottom {
+      display: flex;
+      
+      @include phone {
+        display: block;
+      }
+    }
   }
 
   .bulkAction .btn {
     margin: 0 16px;
+    
+    @include phone {
+      margin: 10px;
+    }
   }
 
   .bulkAction .btn--text {
@@ -3855,6 +3882,12 @@ footer {
   .bulkAction-controls {
     margin-top: 10px;
     @include bidi-style(margin-left, auto, margin-right, 0);
+    
+    @include phone {
+      margin-top: 0;
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
 .panel {
@@ -5888,6 +5921,14 @@ footer {
 
 .form-inline {
   display: flex;
+  
+  @include phone {
+    flex-wrap: wrap;
+    
+    .alert {
+      flex-basis: 100%;
+    }
+  }
 }
 
 .form-inline .input-group-addon,
@@ -5902,6 +5943,11 @@ footer {
     position: relative;
     height: 60px;
     flex: 1 1 auto;
+    
+    @include phone {
+      width: 50%;
+      margin-bottom: 0;
+    }
 
     &.datetime {
       min-width: 140px;
@@ -5956,6 +6002,17 @@ footer {
   .form-inline .form-group:not(:last-child),
   .form-inline.form-inline--enclosed .form-group {
     border-right: 1px solid #f0f0f0;
+  }
+
+  .form-inline .form-group,
+  .form-inline.form-inline--enclosed .form-group {    
+    @include phone {
+      border-bottom: 1px solid #f0f0f0;
+      
+      &:nth-child(even) {
+        border-right-width: 0;
+      }
+    }
   }
 
   .form-inline .input-group-addon {
@@ -6017,6 +6074,14 @@ footer {
 
   .bulkAction-secondStep .form-group {
     min-width: 140px;
+        
+    @include phone {
+      min-width: 0;
+      
+      &.textarea {
+        border-bottom-width: 0;
+      }
+    }
   }
 
   .bulkAction-secondStep .form-inline .textarea.form-group {
