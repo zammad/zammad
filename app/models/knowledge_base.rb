@@ -102,6 +102,29 @@ class KnowledgeBase < ApplicationModel
     "#{custom_address_uri.scheme}://#{host}#{port_string}"
   end
 
+  def custom_address_path(path)
+    uri = custom_address_uri
+
+    return path if !uri
+
+    custom_path  = custom_address_uri.path || ''
+    applied_path = path.gsub(%r{^/help}, custom_path)
+
+    applied_path.presence || '/'
+  end
+
+  def canonical_host
+    custom_address_uri&.host || Setting.get('fqdn')
+  end
+
+  def canonical_scheme_host
+    "#{Setting.get('http_type')}://#{canonical_host}"
+  end
+
+  def canonical_url(path)
+    "#{canonical_scheme_host}#{custom_address_path(path)}"
+  end
+
   def full_destroy!
     ChecksKbClientNotification.disable_in_all_classes!
 

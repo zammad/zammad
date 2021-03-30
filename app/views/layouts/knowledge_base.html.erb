@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
+<%= canonical_link_tag @knowledge_base, @category, @object %>
 
 <div class="wrapper js-wrapper">
   <%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if editor? %>
