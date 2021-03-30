@@ -92,7 +92,8 @@ returns
     return [] if overviews.blank?
 
     # get only tickets with permissions
-    access_condition = Ticket.access_condition(user, 'overview')
+    access_condition      = Ticket.access_condition(user, 'overview')
+    access_condition_read = Ticket.access_condition(user, 'read')
 
     ticket_attributes = Ticket.new.attributes
     list = []
@@ -127,8 +128,13 @@ returns
         end
       end
 
+      overview_access_condition = access_condition
+      if overview.condition['ticket.mention_user_ids'].present?
+        overview_access_condition = access_condition_read
+      end
+
       ticket_result = Ticket.distinct
-                            .where(access_condition)
+                            .where(overview_access_condition)
                             .where(query_condition, *bind_condition)
                             .joins(tables)
                             .order(Arel.sql("#{order_by} #{direction}"))
@@ -142,7 +148,7 @@ returns
         }
       end
 
-      count = Ticket.distinct.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
+      count = Ticket.distinct.where(overview_access_condition).where(query_condition, *bind_condition).joins(tables).count()
       item = {
         overview: {
           name:       overview.name,

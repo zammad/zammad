@@ -75,4 +75,27 @@ RSpec.describe Ticket::Overviews do
       expect(result[0][:tickets].count).to be == 2
     end
   end
+
+  describe 'Mentions:' do
+    let(:group_read) { create(:group) }
+    let(:user_read) { create(:agent) }
+    let(:ticket) { create(:ticket, group: group_read) }
+
+    before do
+      user_read.group_names_access_map = {
+        group_read.name => 'read',
+      }
+    end
+
+    it 'does show read only tickets in overview because user is mentioned' do
+      create(:mention, mentionable: ticket, user: user_read)
+      result = described_class.index(user_read, ['my_subscribed_tickets'])
+      expect(result.first[:tickets].pluck(:id)).to eq([ticket.id])
+    end
+
+    it 'does not show read only tickets in overview' do
+      result = described_class.index(user_read, ['my_subscribed_tickets'])
+      expect(result.first[:tickets]).to eq([])
+    end
+  end
 end
