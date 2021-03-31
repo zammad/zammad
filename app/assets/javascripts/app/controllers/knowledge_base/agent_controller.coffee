@@ -190,6 +190,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
     @updateTitle(titleSuffix)
 
     klass = @contentControllerClass(params)
+    @contentController?.releaseController()
     @contentController = @buildUsing(klass, params, object)
     @navigationController?.show(object, params.action)
     @sidebarController?.show(object, params.action)
