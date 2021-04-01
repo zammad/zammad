@@ -4,7 +4,7 @@ class Pseudonymisation
     return if source.blank?
 
     source.transform_values do |value|
-      of_value(value)
+      of_value(value.to_s)
     end
   end
 
@@ -33,7 +33,7 @@ class Pseudonymisation
   end
 
   def self.of_string(source)
-    return '*' if source.length == 1
+    return '*' if source.to_s.length <= 1
     return "#{source.first}*#{source.last}" if source.exclude?(' ')
 
     source.split.map do |sub_string|
