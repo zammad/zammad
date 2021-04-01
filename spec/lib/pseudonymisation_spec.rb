@@ -7,7 +7,7 @@ RSpec.describe Pseudonymisation do
     let(:source) do
       {
         firstname:    'John',
-        lastname:     'Doe',
+        lastname:     nil,
         email:        'john.doe@example.com',
         organization: 'Example Inc.',
       }
@@ -16,7 +16,7 @@ RSpec.describe Pseudonymisation do
     let(:result) do
       {
         firstname:    'J*n',
-        lastname:     'D*e',
+        lastname:     '*',
         email:        'j*e@e*e.com',
         organization: 'E*e I*.',
       }
@@ -42,6 +42,14 @@ RSpec.describe Pseudonymisation do
 
       it 'creates pseudonymous string' do
         expect(described_class.of_value(source)).to eq('Z*d')
+      end
+    end
+
+    context 'when nil is given' do
+      let(:source) { nil }
+
+      it 'returns *' do
+        expect(described_class.of_value(source)).to eq('*')
       end
     end
   end
@@ -105,6 +113,14 @@ RSpec.describe Pseudonymisation do
 
       it 'create pseudonymous string for each' do
         expect(described_class.of_string(source)).to eq('Z*d F*n')
+      end
+    end
+
+    context 'when nil are given' do
+      let(:source) { nil }
+
+      it 'returns *' do
+        expect(described_class.of_string(source)).to eq('*')
       end
     end
   end
