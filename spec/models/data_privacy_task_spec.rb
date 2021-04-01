@@ -52,7 +52,7 @@ RSpec.describe DataPrivacyTask, type: :model do
   describe '#prepare_deletion_preview' do
 
     let(:organization) { create(:organization, name: 'Zammad GmbH') }
-    let(:user) { create(:customer, organization: organization, email: 'secret@example.com') }
+    let(:user) { create(:customer, firstname: 'Nicole', lastname: 'Braun', organization: organization, email: 'secret@example.com') }
     let(:task) { create(:data_privacy_task, deletable: user) }
 
     context 'when storing user data' do

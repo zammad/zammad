@@ -2,12 +2,13 @@ FactoryBot.define do
   factory :user do
     transient do
       intro_clues { true }
+      slug        { "#{firstname}.#{lastname}".parameterize }
     end
 
-    login            { 'nicole.braun' }
-    firstname        { 'Nicole' }
-    lastname         { 'Braun' }
-    sequence(:email) { |n| "nicole.braun#{n}@zammad.org" }
+    login            { slug }
+    firstname        { Faker::Name.first_name }
+    lastname         { Faker::Name.last_name }
+    sequence(:email) { |n| "#{slug}.#{n}@zammad.org" }
     password         { nil }
     active           { true }
     login_failed     { 0 }
