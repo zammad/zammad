@@ -234,6 +234,24 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
       end
+
+      context 'Mentions:' do
+        let(:agent) { create(:agent) }
+        let(:raw_mail) { <<~RAW.chomp }
+          From: foo@bar.com
+          To: baz@qux.net
+          Subject: Foo
+
+          Lorem ipsum dolor <a data-mention-user-id=\"#{agent.id}\">agent</a>
+        RAW
+
+        it 'creates a ticket and article without mentions and no exception raised' do
+          expect { described_class.new.process({}, raw_mail) }
+            .to change(Ticket, :count).by(1)
+            .and change(Ticket::Article, :count).by_at_least(1)
+            .and not_change(Mention, :count)
+        end
+      end
     end
 
     describe 'associating emails to existing tickets' do
