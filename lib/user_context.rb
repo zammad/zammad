@@ -5,7 +5,7 @@
 # to the underlying User instance in the Policy
 class UserContext < Delegator
 
-  def initialize(user, token) # rubocop:disable Lint/MissingSuper
+  def initialize(user, token = nil) # rubocop:disable Lint/MissingSuper
     @user  = user
     @token = token
   end

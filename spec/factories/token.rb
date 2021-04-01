@@ -3,6 +3,20 @@ FactoryBot.define do
     user
     action { 'api' }
     persistent { true }
+    preferences do
+
+      permission_hash = permissions.each_with_object({}) do |permission, result|
+        result[permission] = true
+      end
+
+      {
+        permission: permission_hash
+      }
+    end
+
+    transient do
+      permissions { [] }
+    end
 
     factory :token_password_reset, aliases: %i[password_reset_token] do
       action { 'PasswordReset' }

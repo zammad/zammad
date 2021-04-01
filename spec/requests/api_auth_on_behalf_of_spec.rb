@@ -9,7 +9,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
     create(:agent)
   end
   let(:customer) do
-    create(:customer)
+    create(:customer, firstname: 'Behalf of')
   end
 
   describe 'request handling' do
@@ -179,6 +179,35 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "secret1234"')
+    end
+
+    context 'when Token Admin has no ticket.* permission' do
+
+      let(:admin) { create(:user, firstname: 'Requester', roles: [admin_user_role]) }
+
+      let(:token) { create(:token, user: admin, permissions: %w[admin.user]) }
+
+      let(:admin_user_role) do
+        create(:role).tap { |role| role.permission_grant('admin.user') }
+      end
+
+      it 'creates Ticket because of behalf of user permission' do
+        params = {
+          title:       'a new ticket #3',
+          group:       'Users',
+          priority:    '2 normal',
+          state:       'new',
+          customer_id: customer.id,
+          article:     {
+            body: 'some test 123',
+          },
+        }
+        authenticated_as(admin, on_behalf_of: customer.email, token: token)
+        post '/api/v1/tickets', params: params, as: :json
+        expect(response).to have_http_status(:created)
+        expect(json_response).to be_a_kind_of(Hash)
+        expect(customer.id).to eq(json_response['created_by_id'])
+      end
     end
   end
 end

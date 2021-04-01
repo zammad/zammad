@@ -76,15 +76,18 @@ module ZammadSpecSupportRequest
 
     case via
     when :api_client
+      # ensure that always the correct header value is set
+      # otherwise previous header configurations will be re-used
+      add_headers('X-On-Behalf-Of' => options[:on_behalf_of])
+
       # if we want to authenticate by token
-      if options[:token].present?
-        credentials = "Token token=#{options[:token].name}"
+      credentials = if options[:token].present?
+                      "Token token=#{options[:token].name}"
+                    else
+                      ActionController::HttpAuthentication::Basic.encode_credentials(login, password)
+                    end
 
-        return add_headers('Authorization' => credentials)
-      end
-
-      credentials = ActionController::HttpAuthentication::Basic.encode_credentials(login, password)
-      add_headers('Authorization' => credentials, 'X-On-Behalf-Of' => options[:on_behalf_of])
+      add_headers('Authorization' => credentials)
     when :browser
       post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.number(9) }
     end

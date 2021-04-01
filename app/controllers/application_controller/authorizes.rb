@@ -23,6 +23,12 @@ module ApplicationController::Authorizes
   end
 
   def pundit_user
-    @pundit_user ||= UserContext.new(current_user, @_token)
+    @pundit_user ||= begin
+      if current_user_on_behalf
+        UserContext.new(current_user_on_behalf)
+      else
+        UserContext.new(current_user_real, @_token)
+      end
+    end
   end
 end
