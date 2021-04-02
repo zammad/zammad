@@ -75,18 +75,32 @@ RSpec.describe Overview, type: :model do
   end
 
   describe '#fill_prio' do
+    before do
+      described_class.destroy_all
+    end
 
     it 'fill an empty prio with the maximum prio plus one' do
-
       overview1 = create(:overview, prio: 1)
       overview2 = create(:overview, prio: 200)
       overview3 = create(:overview, prio: nil)
 
       overviews = described_class.all.order(prio: :asc).pluck(:id)
 
-      expect(overviews.first).to eq(overview1.id)
-      expect(overviews.second).to eq(overview2.id)
-      expect(overviews.last).to eq(overview3.id)
+      expect(overviews).to eq [overview1.id, overview2.id, overview3.id]
+    end
+
+    it 'sets first Overview priority as 0' do
+      overview = create :overview, prio: nil
+
+      expect(overview.prio).to be 0
+    end
+
+    it 'sets new Overview priority as +1' do
+      create :overview, prio: 123
+
+      overview_next = create :overview, prio: nil
+
+      expect(overview_next.prio).to be 124
     end
   end
 end

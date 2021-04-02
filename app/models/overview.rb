@@ -19,6 +19,14 @@ class Overview < ApplicationModel
   before_create :fill_link_on_create, :fill_prio
   before_update :fill_link_on_update, :rearrangement
 
+  def self.calculate_prio
+    existing_maximum = Overview.maximum(:prio)
+
+    return 0 if !existing_maximum
+
+    existing_maximum + 1
+  end
+
   private
 
   def rearrangement
@@ -63,7 +71,7 @@ class Overview < ApplicationModel
   def fill_prio
     return true if prio.present?
 
-    self.prio = Overview.maximum(:prio) + 1
+    self.prio = self.class.calculate_prio
     true
   end
 
