@@ -5,6 +5,7 @@ class Translation extends App.ControllerSubContent
     'click .js-pushChanges': 'pushChanges'
     'click .js-resetChanges': 'resetChanges'
     'click .js-syncChanges': 'syncChanges'
+  initialRenderingDone: false
 
   constructor: ->
     super
@@ -38,6 +39,7 @@ class Translation extends App.ControllerSubContent
       url:   "#{@apiPath}/translations/admin/lang/#{@locale}"
       processData: true
       success: (data, status, xhr) =>
+        @initialRenderingDone = true
         @times                = []
         @stringsNotTranslated = []
         @stringsTranslated    = []
@@ -49,6 +51,8 @@ class Translation extends App.ControllerSubContent
               @stringsNotTranslated.push item
             else
               @stringsTranslated.push item
+
+        @untranslatedAtLastRender = $.extend({}, App.i18n.getNotTranslated(@locale))
 
         if !@translationToDo || event is 'render'
           @translationToDo = new TranslationToDo(
@@ -80,12 +84,13 @@ class Translation extends App.ControllerSubContent
     )
 
   show: =>
-    # see https://github.com/zammad/zammad/issues/2056
-    @untranslatedAtLastRender ||= $.extend({}, App.i18n.getNotTranslated(@locale))
-    return if _.isEqual(@untranslatedAtLastRender, App.i18n.getNotTranslated(@locale))
+    return if @initialRenderingDone is false
 
-    @untranslatedAtLastRender = $.extend({}, App.i18n.getNotTranslated(@locale))
-    App.Event.trigger('ui:rerender')
+    # see https://github.com/zammad/zammad/issues/2056
+    return if _.isEmpty(App.i18n.getNotTranslated(@locale))
+    return if @untranslatedAtLastRender && _.isEqual(@untranslatedAtLastRender, App.i18n.getNotTranslated(@locale))
+
+    @render()
 
   hide: =>
     @rerender()
