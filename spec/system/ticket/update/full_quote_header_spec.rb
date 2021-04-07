@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { current_user.id }, type: :system, time_zone: 'Europe/London' do
   let(:group) { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
   let(:customer) { create(:customer) }
+  let(:current_user) { customer }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
   end
 
   before do
-    UserInfo.current_user_id = customer.id
     visit "ticket/zoom/#{ticket_article.ticket.id}"
   end
 
@@ -38,6 +38,17 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
       end
     end
 
+    it 'includes OP when article visibility toggled' do
+      within(:active_content) do
+        set_internal
+        highlight_and_click_reply
+
+        within(:richtext) do
+          expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
+        end
+      end
+    end
+
     context 'when customer is agent' do
       let(:customer) { create(:agent) }
 
@@ -47,6 +58,23 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
           within(:richtext) do
             expect(page).to contain_full_quote(ticket_article).formatted_for(:forward).ensuring_privacy(true)
+          end
+        end
+      end
+    end
+
+    context 'ticket is created by agent on behalf of customer' do
+      let(:agent)          { create(:agent) }
+      let(:current_user)   { agent }
+      let(:ticket)         { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer) }
+      let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Created by agent on behalf of a customer', origin_by_id: customer.id) }
+
+      it 'includes OP without email when replying' do
+        within(:active_content) do
+          highlight_and_click_reply
+
+          within(:richtext) do
+            expect(page).to contain_full_quote(ticket_article).formatted_for(:reply)
           end
         end
       end
@@ -79,6 +107,10 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
 
   def click_forward
     click '.js-ArticleAction[data-type=emailForward]'
+  end
+
+  def set_internal
+    click '.js-ArticleAction[data-type=internal]'
   end
 
   def highlight_and_click_reply
@@ -162,7 +194,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', type: :system, time_zone: 
     end
 
     def name
-      expected.created_by.fullname
+      (expected.origin_by || expected.created_by).fullname
     end
 
     def email
