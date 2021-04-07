@@ -39,11 +39,9 @@ class App.CTI extends App.Controller
     )
     @controllerBind('menu:render', (data) =>
       return if @switch() isnt true
-      localHtml = ''
-      for item in @ringingCalls()
-        localHtml += App.view('navigation/menu_cti_ringing')(
-          item: item
-        )
+      localHtml = App.view('navigation/menu_cti_ringing')(
+        item: @ringingCalls()
+      )
       $('.js-phoneMenuItem').after(localHtml)
       $('.call-widget').find('.js-newUser').bind('click', (e) =>
         @newUser(e)

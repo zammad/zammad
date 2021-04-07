@@ -3843,7 +3843,7 @@ footer {
   .bulkAction-firstStep {
     display: flex;
     align-items: center;
-    
+
     @include phone {
       flex-direction: column;
       align-items: flex-end;
@@ -3858,10 +3858,10 @@ footer {
   .bulkAction-secondStep {
     display: flex;
     flex-direction: column;
-    
+
     &-bottom {
       display: flex;
-      
+
       @include phone {
         display: block;
       }
@@ -3870,7 +3870,7 @@ footer {
 
   .bulkAction .btn {
     margin: 0 16px;
-    
+
     @include phone {
       margin: 10px;
     }
@@ -3883,7 +3883,7 @@ footer {
   .bulkAction-controls {
     margin-top: 10px;
     @include bidi-style(margin-left, auto, margin-right, 0);
-    
+
     @include phone {
       margin-top: 0;
       display: flex;
@@ -4152,6 +4152,11 @@ footer {
     @include phone {
       display: none;
     }
+  }
+
+  .call-widgets {
+    overflow-y: auto;
+    max-height: 30vh;
   }
 
   .call-widget {
@@ -5922,10 +5927,10 @@ footer {
 
 .form-inline {
   display: flex;
-  
+
   @include phone {
     flex-wrap: wrap;
-    
+
     .alert {
       flex-basis: 100%;
     }
@@ -5944,7 +5949,7 @@ footer {
     position: relative;
     height: 60px;
     flex: 1 1 auto;
-    
+
     @include phone {
       width: 50%;
       margin-bottom: 0;
@@ -6006,10 +6011,10 @@ footer {
   }
 
   .form-inline .form-group,
-  .form-inline.form-inline--enclosed .form-group {    
+  .form-inline.form-inline--enclosed .form-group {
     @include phone {
       border-bottom: 1px solid #f0f0f0;
-      
+
       &:nth-child(even) {
         border-right-width: 0;
       }
@@ -6075,10 +6080,10 @@ footer {
 
   .bulkAction-secondStep .form-group {
     min-width: 140px;
-        
+
     @include phone {
       min-width: 0;
-      
+
       &.textarea {
         border-bottom-width: 0;
       }
