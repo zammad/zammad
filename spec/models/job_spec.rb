@@ -1,10 +1,12 @@
 require 'rails_helper'
 require 'models/application_model_examples'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Job, type: :model do
   subject(:job) { create(:job) }
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :job
 
   describe 'Class methods:' do
     describe '.run' do

@@ -1,7 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Scheduler < ApplicationModel
+  include ChecksHtmlSanitized
+
   extend ::Mixin::StartFinishLogger
+
+  sanitized_html :note
 
   # rubocop:disable Style/ClassVars
   @@jobs_started = {}

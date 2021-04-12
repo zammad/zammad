@@ -1,10 +1,12 @@
 require 'rails_helper'
 require 'models/application_model_examples'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Trigger, type: :model do
   subject(:trigger) { create(:trigger, condition: condition, perform: perform) }
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
 
   describe 'validation' do
 
