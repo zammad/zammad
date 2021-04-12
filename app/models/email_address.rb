@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class EmailAddress < ApplicationModel
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
@@ -15,6 +16,8 @@ class EmailAddress < ApplicationModel
   before_update   :check_if_channel_exists_set_inactive
   after_update    :update_email_address_id
   before_destroy  :delete_group_reference
+
+  sanitized_html :note
 
   collection_push_permission('ticket.agent')
 

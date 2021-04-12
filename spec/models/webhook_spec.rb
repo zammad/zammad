@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Webhook, type: :model do
+
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :webhook
 
   describe 'check endpoint' do
     subject(:webhook) { build(:webhook, endpoint: endpoint) }

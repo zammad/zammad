@@ -4,6 +4,7 @@ class Role < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasGroups
   include HasCollectionUpdate
@@ -28,6 +29,8 @@ class Role < ApplicationModel
   association_attributes_ignored :users
 
   activity_stream_permission 'admin.role'
+
+  sanitized_html :note
 
 =begin
 

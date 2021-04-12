@@ -2,6 +2,7 @@
 
 class Ticket::State < ApplicationModel
   include CanBeImported
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
   include HasSearchIndexBackend
@@ -14,6 +15,8 @@ class Ticket::State < ApplicationModel
   after_destroy :ensure_defaults
 
   validates :name, presence: true
+
+  sanitized_html :note
 
   attr_accessor :callback_loop
 

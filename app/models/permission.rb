@@ -2,12 +2,15 @@
 
 class Permission < ApplicationModel
   include ChecksClientNotification
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   has_and_belongs_to_many :roles
   validates               :name, presence: true
   store                   :preferences
+
+  sanitized_html :note
 
 =begin
 

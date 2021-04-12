@@ -1,8 +1,12 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class Chat < ApplicationModel
+  include ChecksHtmlSanitized
+
   validates :name, presence: true
   store     :preferences
+
+  sanitized_html :note
 
 =begin
 

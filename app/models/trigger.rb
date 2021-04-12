@@ -2,6 +2,7 @@
 
 class Trigger < ApplicationModel
   include ChecksConditionValidation
+  include ChecksHtmlSanitized
   include ChecksPerformValidation
   include CanSeed
 
@@ -10,4 +11,6 @@ class Trigger < ApplicationModel
   store     :condition
   store     :perform
   validates :name, presence: true
+
+  sanitized_html :note
 end

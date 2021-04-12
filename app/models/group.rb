@@ -4,6 +4,7 @@ class Group < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasHistory
   include HasObjectManagerAttributesValidation
@@ -15,6 +16,8 @@ class Group < ApplicationModel
   belongs_to :signature, optional: true
 
   validates :name, presence: true
+
+  sanitized_html :note
 
   activity_stream_permission 'admin.group'
 end

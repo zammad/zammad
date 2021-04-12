@@ -3,6 +3,7 @@
 class Job < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
+  include ChecksHtmlSanitized
   include ChecksPerformValidation
 
   include Job::Assets
@@ -14,6 +15,8 @@ class Job < ApplicationModel
 
   before_create :updated_matching, :update_next_run_at
   before_update :updated_matching, :update_next_run_at
+
+  sanitized_html :note
 
 =begin
 
