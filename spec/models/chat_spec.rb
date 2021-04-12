@@ -1,6 +1,8 @@
 require 'rails_helper'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Chat, type: :model do
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :chat
 
   describe 'website whitelisting' do
     let(:chat) { create(:chat, whitelisted_websites: 'zammad.org') }

@@ -11,7 +11,7 @@ class TextModule < ApplicationModel
   before_create  :validate_content
   before_update  :validate_content
 
-  sanitized_html :content
+  sanitized_html :content, :note
 
   csv_delete_possible true
 
