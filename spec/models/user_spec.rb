@@ -813,6 +813,37 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#image' do
+
+      describe 'when value is invalid' do
+        let(:value) { 'Th1515n0t4v4l1dh45h' }
+
+        it 'prevents create' do
+          expect { create(:user, image: value) }.to raise_error(Exceptions::UnprocessableEntity, /#{value}/)
+        end
+
+        it 'prevents update' do
+          expect { create(:user).update!(image: value) }.to raise_error(Exceptions::UnprocessableEntity, /#{value}/)
+        end
+      end
+    end
+
+    describe '#image_source' do
+
+      describe 'when value is invalid' do
+        let(:value) { 'Th1515n0t4v4l1dh45h' }
+        let(:escaped) { Regexp.escape(value) }
+
+        it 'prevents create' do
+          expect { create(:user, image_source: value) }.to raise_error(ActiveRecord::RecordInvalid, /Image source/)
+        end
+
+        it 'prevents update' do
+          expect { create(:user).update!(image_source: value) }.to raise_error(ActiveRecord::RecordInvalid, /Image source/)
+        end
+      end
+    end
   end
 
   describe 'Associations:' do
