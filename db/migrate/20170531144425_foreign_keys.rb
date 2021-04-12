@@ -195,9 +195,6 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:chats, :users, { column: :created_by_id }],
       [:chats, :users, { column: :updated_by_id }],
 
-      [:chat_topics, :users, { column: :created_by_id }],
-      [:chat_topics, :users, { column: :updated_by_id }],
-
       %i[chat_sessions chats],
       %i[chat_sessions users],
       [:chat_sessions, :users, { column: :created_by_id }],

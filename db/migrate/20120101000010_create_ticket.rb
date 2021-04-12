@@ -487,18 +487,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :chats, :users, column: :created_by_id
     add_foreign_key :chats, :users, column: :updated_by_id
 
-    create_table :chat_topics do |t|
-      t.integer :chat_id,                             null: false
-      t.string  :name,                   limit: 250,  null: false
-      t.string  :note,                   limit: 250,  null: true
-      t.integer :updated_by_id,                       null: false
-      t.integer :created_by_id,                       null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :chat_topics, [:name], unique: true
-    add_foreign_key :chat_topics, :users, column: :created_by_id
-    add_foreign_key :chat_topics, :users, column: :updated_by_id
-
     create_table :chat_sessions do |t|
       t.references :chat,                             null: false
       t.string  :session_id,                          null: false
@@ -606,7 +594,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     drop_table :karma_activities
     drop_table :karma_users
     drop_table :report_profiles
-    drop_table :chat_topics
     drop_table :chat_sessions
     drop_table :chat_messages
     drop_table :chat_agents
