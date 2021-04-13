@@ -166,7 +166,7 @@ returns on fail
           reason: 'outbound failed',
         }
       end
-      Rails.logger.info "PROBE FULL SUCCESS: #{result.inspect}"
+      Rails.logger.debug { "PROBE FULL SUCCESS: #{result.inspect}" }
       result
     end
 
