@@ -18,7 +18,7 @@ namespace :zammad do
         refresh_token: ENV['MICROSOFT365_REFRESH_TOKEN'],
       )
 
-      token_env = %(MICROSOFT365_REFRESH_TOKEN="#{result[:refresh_token]}")
+      token_env = %(MICROSOFT365_REFRESH_TOKEN='#{result[:refresh_token]}')
 
       File.write(Rails.root.join('fresh.env'), token_env)
     end
