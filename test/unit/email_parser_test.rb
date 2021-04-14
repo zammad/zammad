@@ -50,7 +50,7 @@ File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.rea
           next if expected_attachment_md5 != parsed_attachment_md5
           attachments_found.push parsed_attachment_md5
           expected_attachment.each do |key, value|
-            assert_equal(value, parsed_attachment[key], "#{key} is different")
+            assert_equal(value, parsed_attachment[key], "#{key} is different in test/data/mail/#{m[:source]}")
           end
           next
         end
