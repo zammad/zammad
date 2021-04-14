@@ -701,6 +701,9 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID'].blank? && headers_store['Content-Id'].present?
+      headers_store['Content-ID'] = headers_store['Content-Id']
+    end
     if headers_store['Content-ID']
       headers_store['Content-ID'].delete_prefix!('<')
       headers_store['Content-ID'].delete_suffix!('>')
@@ -742,11 +745,6 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
     filename ||= file.header[:content_location].to_s.force_encoding('utf-8')
 
-    # generate file name based on content-id
-    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?)@.+?/i
-      filename = $1
-    end
-
     file_body = String.new(file.body.to_s)
 
     # generate file name based on content type
@@ -786,6 +784,11 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
     end
 
+    # generate file name based on content-id with file extention
+    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?\..{2,6})@.+?/i
+      filename = $1
+    end
+
     # e. g. Content-Type: video/quicktime
     if filename.blank? && (content_type = headers_store['Content-Type'])
       map = {
@@ -808,6 +811,11 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
                    end
         break
       end
+    end
+
+    # generate file name based on content-id without file extention
+    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?)@.+?/i
+      filename = $1
     end
 
     # set fallback filename
