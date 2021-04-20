@@ -16,7 +16,7 @@ function get_backup_date () {
 }
 
 function delete_old_backups () {
-  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -exec rm {} \;
+  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -delete
 }
 
 function get_db_credentials () {
