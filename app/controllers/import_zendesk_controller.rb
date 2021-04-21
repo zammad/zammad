@@ -17,6 +17,7 @@ class ImportZendeskController < ApplicationController
     translation_map = {
       'No such file'                                              => 'Hostname not found!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
+      '503 Service Temporarily Unavailable'                       => 'Hostname not found!',
       'No route to host'                                          => 'No route to host!',
       'Connection refused'                                        => 'Connection refused!',
     }
