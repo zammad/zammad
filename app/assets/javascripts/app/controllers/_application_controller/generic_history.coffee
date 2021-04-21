@@ -83,7 +83,7 @@ class App.GenericHistory extends App.ControllerModal
       else
         content = "#{ @T( item.type ) } #{ @T(item.object) } "
         if item.attribute
-          content += "#{ @T(item.attribute) }"
+          content += "#{ @translateItemAttribute(item) }"
 
           # convert time stamps
           if item.object is 'User' && item.attribute is 'last_login'
@@ -95,12 +95,12 @@ class App.GenericHistory extends App.ControllerModal
         if item.value_from
           if item.value_to
             content += " #{ @T( 'from' ) }"
-          content += " '#{ App.Utils.htmlEscape(item.value_from) }'"
+          content += " '#{ @translateItemValue(item, item.value_from) }'"
 
         if item.value_to
           if item.value_from
             content += ' &rarr;'
-          content += " '#{ App.Utils.htmlEscape(item.value_to) }'"
+          content += " '#{ @translateItemValue(item, item.value_to) }'"
         else if item.value_from
           content += " &rarr; '-'"
 
@@ -110,3 +110,28 @@ class App.GenericHistory extends App.ControllerModal
       newItems.push newItem
 
     newItems
+
+  translateItemValue: ({object, attribute}, value) ->
+    localAttribute = @objectAttribute(object, attribute)
+    if localAttribute && localAttribute.tag is 'datetime'
+      return App.i18n.translateTimestamp(value)
+
+    if /_(time|at)$/.test(attribute)
+      return App.i18n.translateTimestamp(value)
+
+    if localAttribute && localAttribute.translate is true
+      return @T(value)
+
+    App.Utils.htmlEscape(value)
+
+  translateItemAttribute: ({object, attribute}) ->
+    localAttribute = @objectAttribute(object, attribute)
+    if localAttribute && localAttribute.display
+      return @T(localAttribute.display)
+
+    @T(attribute)
+
+  objectAttribute: (object, attribute) ->
+    return if !App[object]
+    return if !App[object].attributesGet()
+    App[object].attributesGet()["#{attribute}_id"] ||  App[object].attributesGet()[attribute]

@@ -114,6 +114,9 @@ test('i18n .detectBrowserLocale', function() {
     var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
     equal(timestamp, '06.11.2012 21:07', 'de-de - timestamp translated correctly')
 
+    var timestamp = App.i18n.translateTimestamp('2021-02-08 09:13:20 UTC', offset);
+    equal(timestamp, '08.02.2021 09:13', 'de-de - timestamp translated correctly with UTC format')
+
     timestamp = App.i18n.translateTimestamp('', offset);
     equal(timestamp, '', 'de-de - timestamp translated correctly')
 
