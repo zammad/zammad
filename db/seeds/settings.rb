@@ -1010,6 +1010,7 @@ Setting.create_if_not_exists(
   },
   state:       true,
   preferences: {
+    prio:       10,
     permission: ['admin.security'],
   },
   frontend:    true
@@ -1035,7 +1036,52 @@ Setting.create_if_not_exists(
   },
   state:       true,
   preferences: {
+    prio:       20,
     permission: ['admin.security'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       'Session Timeout',
+  name:        'session_timeout',
+  area:        'Security::Base',
+  description: 'Defines the session timeout for inactivity of users (in seconds).',
+  options:     {
+    form: [
+      {
+        display: 'Default',
+        null:    false,
+        name:    'default',
+        tag:     'input',
+      },
+      {
+        display: 'admin',
+        null:    false,
+        name:    'admin',
+        tag:     'input',
+      },
+      {
+        display: 'ticket.agent',
+        null:    false,
+        name:    'ticket.agent',
+        tag:     'input',
+      },
+      {
+        display: 'ticket.customer',
+        null:    false,
+        name:    'ticket.customer',
+        tag:     'input',
+      },
+    ],
+  },
+  preferences: {
+    prio: 30,
+  },
+  state:       {
+    'default'         => 2.days.seconds,
+    'admin'           => 2.days.seconds,
+    'ticket.agent'    => 2.days.seconds,
+    'ticket.customer' => 2.days.seconds,
   },
   frontend:    true
 )

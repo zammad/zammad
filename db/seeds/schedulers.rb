@@ -137,6 +137,15 @@ Scheduler.create_or_update(
   created_by_id: 1,
 )
 Scheduler.create_or_update(
+  name:          'Cleanup dead sessions.',
+  method:        'SessionTimeoutJob.perform_now',
+  period:        1.minute,
+  prio:          2,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
   name:          'Sync calendars with ical feeds.',
   method:        'Calendar.sync',
   period:        1.day,
