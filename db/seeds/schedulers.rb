@@ -139,7 +139,7 @@ Scheduler.create_or_update(
 Scheduler.create_or_update(
   name:          'Cleanup dead sessions.',
   method:        'SessionTimeoutJob.perform_now',
-  period:        1.minute,
+  period:        1.hour,
   prio:          2,
   active:        true,
   updated_by_id: 1,
