@@ -49,7 +49,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
 
       it 'does not logout user', authenticated_as: :admin do
@@ -62,7 +62,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       it 'does logout user' do
         expect(page).to have_no_text('Sign in')
         Setting.set('session_timeout', { default: '1' })
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
         # backend tests for the rest
         session = ActiveRecord::SessionStore::Session.all.detect { |s| s.data['user_id'] == admin.id }
         SessionTimeoutJob.destroy_session(admin, session)
-        expect(page).to have_text('Sign in', wait: 15)
+        expect(page).to have_text('Sign in', wait: 20)
       end
     end
   end

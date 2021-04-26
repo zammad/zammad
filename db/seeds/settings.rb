@@ -1078,10 +1078,10 @@ Setting.create_if_not_exists(
     prio: 30,
   },
   state:       {
-    'default'         => 2.days.seconds,
-    'admin'           => 2.days.seconds,
-    'ticket.agent'    => 2.days.seconds,
-    'ticket.customer' => 2.days.seconds,
+    'default'         => 4.weeks.seconds,
+    'admin'           => 4.weeks.seconds,
+    'ticket.agent'    => 4.weeks.seconds,
+    'ticket.customer' => 4.weeks.seconds,
   },
   frontend:    true
 )

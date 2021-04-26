@@ -1,22 +1,25 @@
 class SessionTimeout extends App.Controller
+  lastEvent  = 0
+
   constructor: ->
     super
 
-    lastEvent = 0
+    lastEvent = new Date().getTime()
     check_timeout = =>
       return if new Date().getTime() - 1000 < lastEvent
       lastEvent = new Date().getTime()
-      @setDelay()
+      @checkLogout()
 
     $(document).off('keyup.session_timeout').on('keyup.session_timeout', check_timeout)
     $(document).off('mousemove.session_timeout').on('mousemove.session_timeout', check_timeout)
     @controllerBind('config_update', check_timeout)
     @controllerBind('session_timeout', @quitApp)
-    @setDelay()
+    @interval(@checkLogout, 5000, 'session_timeout')
 
-  setDelay: =>
+  checkLogout: =>
     return if App.Session.get() is undefined
-    @delay(@quitApp, @getTimeout(), 'session_timeout')
+    return if lastEvent + @getTimeout() > new Date().getTime()
+    @quitApp()
 
   quitApp: =>
     return if App.Session.get() is undefined
