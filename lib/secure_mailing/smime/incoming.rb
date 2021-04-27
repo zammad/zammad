@@ -103,37 +103,12 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
 
     success = false
     comment = 'Unable to find certificate for verification'
-    ::SMIMECertificate.find_each do |cert|
-      verify_certs = []
-      verify_ca    = OpenSSL::X509::Store.new
 
-      if cert.parsed.issuer.to_s == cert.parsed.subject.to_s
-        verify_ca.add_cert(cert.parsed)
+    result = verify_certificate_chain(p7enc.certificates)
+    if result.present?
+      success = true
+      comment = result
 
-        # CA
-        verify_certs = p7enc.certificates.select do |message_cert|
-          message_cert.issuer.to_s == cert.parsed.subject.to_s && verify_ca.verify(message_cert)
-        end
-      else
-
-        # normal
-        verify_certs.push(cert.parsed)
-      end
-
-      success = p7enc.verify(verify_certs, verify_ca, nil, OPENSSL_PKCS7_VERIFY_FLAGS)
-      next if !success
-
-      comment = cert.subject
-      if cert.expired?
-        comment += " (Certificate #{cert.fingerprint} with start date #{cert.not_before_at} and end date #{cert.not_after_at} expired!)"
-      end
-      break
-    rescue => e
-      success = false
-      comment = e.message
-    end
-
-    if success
       @mail[:attachments].delete_if do |attachment|
         signed?(attachment.dig(:preferences, 'Content-Type'))
       end
@@ -143,6 +118,46 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       success: success,
       comment: comment,
     }
+  end
+
+  def verify_certificate_chain(certificates)
+    return if certificates.blank?
+
+    subjects = p7enc.certificates.map(&:subject).map(&:to_s)
+    return if subjects.blank?
+
+    existing_certs = ::SMIMECertificate.where(subject: subjects).sort_by do |certificate|
+      # ensure that we have the same order as the certificates in the mail
+      subjects.index(certificate.subject)
+    end
+    return if existing_certs.blank?
+
+    if subjects.size > existing_certs.size
+      Rails.logger.debug { "S/MIME mail signed with chain '#{subjects.join(', ')}' but only found '#{existing_certs.map(&:subject).join(', ')}' in database." }
+    end
+
+    begin
+      existing_certs_store = OpenSSL::X509::Store.new
+
+      existing_certs.each do |existing_cert|
+        existing_certs_store.add_cert(existing_cert.parsed)
+      end
+
+      success = p7enc.verify(p7enc.certificates, existing_certs_store, nil, OPENSSL_PKCS7_VERIFY_FLAGS)
+      return if !success
+
+      existing_certs.map do |existing_cert|
+        result = existing_cert.subject
+        if existing_cert.expired?
+          result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.not_before_at} and end date #{existing_cert.not_after_at} expired!)"
+        end
+        result
+      end.join(', ')
+    rescue => e
+      Rails.logger.error "Error while verifying mail with S/MIME certificate subjects: #{subjects}"
+      Rails.logger.error e
+      nil
+    end
   end
 
   def p7enc

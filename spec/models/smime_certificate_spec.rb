@@ -185,7 +185,9 @@ RSpec.describe SMIMECertificate, type: :model do
       it_behaves_like 'correctly parsed', 'smime2@example.com'
       it_behaves_like 'correctly parsed', 'smime3@example.com'
       it_behaves_like 'correctly parsed', 'CaseInsenstive@eXample.COM'
-      it_behaves_like 'correctly parsed', 'ca'
+      it_behaves_like 'correctly parsed', 'RootCA'
+      it_behaves_like 'correctly parsed', 'IntermediateCA'
+      it_behaves_like 'correctly parsed', 'ChainCA'
     end
   end
 

@@ -4,7 +4,7 @@ class SMIMECertificate < ApplicationModel
   validates :fingerprint, uniqueness: true
 
   def self.parse(raw)
-    OpenSSL::X509::Certificate.new(raw.gsub!(/(?:TRUSTED\s)?(CERTIFICATE---)/, '\1'))
+    OpenSSL::X509::Certificate.new(raw.gsub(/(?:TRUSTED\s)?(CERTIFICATE---)/, '\1'))
   end
 
   # Search for the certificate of the given sender email address

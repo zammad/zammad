@@ -68,10 +68,30 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
     raise "Expired certificate for #{from} (fingerprint #{cert_model.fingerprint}) with #{cert_model.not_before_at} to #{cert_model.not_after_at}" if !@security[:sign][:allow_expired] && cert_model.expired?
 
     private_key = OpenSSL::PKey::RSA.new(cert_model.private_key, cert_model.private_key_secret)
-    OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.sign(cert_model.parsed, private_key, @mail.encoded, [], OpenSSL::PKCS7::DETACHED))
+
+    OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.sign(cert_model.parsed, private_key, @mail.encoded, chain(cert_model), OpenSSL::PKCS7::DETACHED))
   rescue => e
     log('sign', 'failed', e.message)
     raise
+  end
+
+  def chain(cert)
+    lookup_issuer = cert.parsed.issuer.to_s
+
+    result = []
+    loop do
+      found_cert = SMIMECertificate.find_by(subject: lookup_issuer)
+      break if found_cert.blank?
+
+      subject       = found_cert.parsed.subject.to_s
+      lookup_issuer = found_cert.parsed.issuer.to_s
+
+      result.push(found_cert.parsed)
+
+      # we've reached the root CA
+      break if subject == lookup_issuer
+    end
+    result
   end
 
   def encrypt(data)
