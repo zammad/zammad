@@ -15,7 +15,7 @@ RSpec.describe SecureMailing::SMIME do
 
   let(:expired_email_address) { 'expiredsmime1@example.com' }
 
-  let(:ca_certificate_subject) { '/emailAddress=ca@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com' }
+  let(:ca_certificate_subject) { '/emailAddress=RootCA@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com' }
 
   let(:content_type) { 'text/plain' }
 
@@ -74,7 +74,7 @@ RSpec.describe SecureMailing::SMIME do
 
       context 'private key present' do
 
-        before do
+        let!(:sender_certificate) do
           create(:smime_certificate, :with_private, fixture: system_email_address)
         end
 
@@ -121,6 +121,29 @@ RSpec.describe SecureMailing::SMIME do
             it 'verifies' do
               expect(mail['x-zammad-article-preferences']['security']['sign']['success']).to be true
             end
+          end
+        end
+
+        context 'when certificate chain is present' do
+
+          let(:system_email_address) { 'chain@example.com' }
+
+          let!(:chain) do
+            [
+              sender_certificate,
+              create(:smime_certificate, fixture: 'ChainCA'),
+              create(:smime_certificate, fixture: 'IntermediateCA'),
+              create(:smime_certificate, fixture: 'RootCA'),
+            ]
+          end
+
+          let(:p7enc) do
+            mail = Channel::EmailParser.new.parse(build_mail.to_s)
+            OpenSSL::PKCS7.read_smime(mail[:raw])
+          end
+
+          it 'is included in the generated mail' do
+            expect(p7enc.certificates).to eq(chain.map(&:parsed))
           end
         end
       end
@@ -308,7 +331,7 @@ RSpec.describe SecureMailing::SMIME do
 
             context 'CA' do
 
-              let(:not_related_fixture) { 'expiredca' }
+              let(:not_related_fixture) { 'ExpiredCA' }
 
               it 'fails' do
                 expect(mail[:body]).to include(raw_body)
@@ -323,17 +346,16 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           context 'usage not prevented' do
-            let(:not_related_certificate_subject) { "/emailAddress=#{not_related_fixture}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
 
             before do
               # remove OpenSSL::PKCS7::NOINTERN
               stub_const('SecureMailing::SMIME::Incoming::OPENSSL_PKCS7_VERIFY_FLAGS', OpenSSL::PKCS7::NOVERIFY)
             end
 
-            it 'wrongly performs a verification' do
+            it "won't perform verification" do
               expect(mail[:body]).to include(raw_body)
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
-              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(not_related_certificate_subject)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Unable to find certificate for verification')
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be nil
             end
@@ -346,7 +368,7 @@ RSpec.describe SecureMailing::SMIME do
             create(:smime_certificate, fixture: ca_fixture)
           end
 
-          let(:ca_fixture) { 'ca' }
+          let(:ca_fixture) { 'RootCA' }
 
           it 'verifies' do
             expect(mail[:body]).to include(raw_body)
@@ -359,7 +381,7 @@ RSpec.describe SecureMailing::SMIME do
           it_behaves_like 'HttpLog writer', 'success'
 
           context 'expired' do
-            let(:ca_fixture) { 'expiredca' }
+            let(:ca_fixture) { 'ExpiredCA' }
 
             it 'fails' do
               expect(mail[:body]).to include(raw_body)
@@ -385,6 +407,70 @@ RSpec.describe SecureMailing::SMIME do
               end
 
               it_behaves_like 'HttpLog writer', 'failed'
+            end
+          end
+        end
+
+        context 'certificate chain' do
+
+          let(:sender_email_address) { 'chain@example.com' }
+          let(:ca_subject_chain) { ca_chain.reverse.map(&:subject).join(', ') }
+
+          context 'incomplete certificate chain present' do
+
+            before do
+              create(:smime_certificate, fixture: 'RootCA')
+              create(:smime_certificate, fixture: 'IntermediateCA')
+            end
+
+            it 'fails' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('Unable to find certificate for verification')
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be nil
+            end
+          end
+
+          context 'certificate chain only partly present' do
+            let(:ca_certificate_subject) { subject_chain }
+
+            let!(:ca_chain) do
+              [
+                create(:smime_certificate, fixture: 'IntermediateCA'),
+                create(:smime_certificate, fixture: 'ChainCA'),
+              ]
+            end
+
+            it 'verifies' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(ca_subject_chain)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be nil
+            end
+          end
+
+          context 'complete certificate chain present' do
+
+            let!(:ca_chain) do
+              [
+                create(:smime_certificate, fixture: 'RootCA'),
+                create(:smime_certificate, fixture: 'IntermediateCA'),
+                create(:smime_certificate, fixture: 'ChainCA'),
+              ]
+            end
+
+            it 'verifies' do
+              allow(Rails.logger).to receive(:warn)
+
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(ca_subject_chain)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be nil
+
+              expect(Rails.logger).not_to have_received(:warn).with(/#{Regexp.escape(ca_certificate_subject)}/)
             end
           end
         end
