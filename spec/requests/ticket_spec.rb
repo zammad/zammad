@@ -2337,6 +2337,43 @@ RSpec.describe 'Ticket', type: :request do
     end
   end
 
+  describe 'GET /api/v1/tickets/:id' do
+
+    subject!(:ticket) { create(:ticket) }
+
+    let(:agent) { create(:agent, groups: [ticket.group]) }
+
+    context 'links present', authenticated_as: -> { agent } do
+
+      before do
+        create(:link, from: ticket, to: linked)
+        get "/api/v1/tickets/#{ticket.id}", params: { all: 'true' }, as: :json
+      end
+
+      let(:linked) { create(:ticket, group: ticket.group) }
+
+      it 'is present in response' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response['links']).to eq([
+                                               {
+                                                 'link_type'         => 'normal',
+                                                 'link_object'       => 'Ticket',
+                                                 'link_object_value' => linked.id
+                                               }
+                                             ])
+      end
+
+      context 'no permission to linked Ticket Group' do
+        let(:linked) { create(:ticket) }
+
+        it 'is not present in response' do
+          expect(response).to have_http_status(:ok)
+          expect(json_response['links']).to be_blank
+        end
+      end
+    end
+  end
+
   describe 'GET /api/v1/ticket_customer' do
 
     subject(:ticket) { create(:ticket, customer: customer_authorized) }

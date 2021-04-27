@@ -8,6 +8,7 @@ class LinksController < ApplicationController
     links = Link.list(
       link_object:       params[:link_object],
       link_object_value: params[:link_object_value],
+      user:              current_user,
     )
 
     linked_objects = links
