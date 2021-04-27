@@ -53,7 +53,11 @@ class Link < ApplicationModel
       items.push link
     end
 
-    items
+    return items if data[:user].blank?
+
+    items.select do |item|
+      authorized_item?(data[:user], item)
+    end
   end
 
 =begin
@@ -272,4 +276,18 @@ class Link < ApplicationModel
     ', object1_id, object2_id, object1_value, object2_value, object1_id, object2_id, object1_value, object2_value)
   end
 
+  def self.authorized_item?(user, item)
+    record = item['link_object'].constantize.lookup(id: item['link_object_value'])
+
+    # non-ID records are not checked for authorization
+    return true if record.blank?
+
+    Pundit.authorize(user, record, :show?).present?
+  rescue Pundit::NotAuthorizedError
+    false
+  rescue NameError, Pundit::NotDefinedError
+    # NameError: no Model means no authorization check possible
+    # Pundit::NotDefinedError: no Policy means no authorization check necessary
+    true
+  end
 end

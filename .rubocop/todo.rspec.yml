@@ -285,6 +285,7 @@ RSpec/ExampleLength:
     - 'spec/requests/integration/twilio_sms_spec.rb'
     - 'spec/requests/integration/user_device_spec.rb'
     - 'spec/requests/knowledge_base/answer_attachments_cloning_spec.rb'
+    - 'spec/requests/links_spec.rb'
     - 'spec/requests/long_polling_spec.rb'
     - 'spec/requests/o_auth_spec.rb'
     - 'spec/requests/organization_spec.rb'
@@ -567,6 +568,7 @@ RSpec/MultipleExpectations:
     - 'spec/requests/integration/telegram_spec.rb'
     - 'spec/requests/integration/twilio_sms_spec.rb'
     - 'spec/requests/integration/user_device_spec.rb'
+    - 'spec/requests/links_spec.rb'
     - 'spec/requests/long_polling_spec.rb'
     - 'spec/requests/o_auth_spec.rb'
     - 'spec/requests/organization_spec.rb'
@@ -610,6 +612,7 @@ RSpec/NamedSubject:
 
 RSpec/NestedGroups:
   Exclude:
+    - 'app/models/user/avatar.rb'
     - 'spec/lib/secure_mailing/smime_spec.rb'
     - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
@@ -618,6 +621,7 @@ RSpec/NestedGroups:
     - 'spec/models/trigger_spec.rb'
     - 'spec/models/user/has_ticket_create_screen_impact_examples.rb'
     - 'spec/models/user_spec.rb'
+    - 'spec/requests/links_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
 
 RSpec/RepeatedDescription:
