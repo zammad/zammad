@@ -26,6 +26,7 @@ RSpec.describe 'Error handling', type: :request do
     let(:as) { :html }
 
     it { expect(response).to have_http_status(http_status) }
+    it { expect(response.content_type).to eq('text/html') }
     it { expect(response.body).to include('<html') }
     it { expect(response.body).to include("<title>#{title}</title>") }
     it { expect(response.body).to include("<h1>#{headline}</h1>") }
@@ -35,10 +36,11 @@ RSpec.describe 'Error handling', type: :request do
   context 'URL route does not exist' do
 
     before do
-      get '/not_existing_url', as: as
+      get url, as: as
     end
 
-    let(:message) { 'No route matches [GET] /not_existing_url' }
+    let(:url) { '/not_existing_url' }
+    let(:message) { "No route matches [GET] #{url}" }
     let(:http_status) { :not_found }
 
     context 'requesting JSON' do
@@ -50,6 +52,14 @@ RSpec.describe 'Error handling', type: :request do
       let(:headline) { '404: Requested resource was not found' }
 
       include_examples 'HTML response format'
+
+      context 'when request ends with URL' do
+
+        let(:url) { "//////#{message}" }
+        let(:message) { 'this__website__is__closed__visit__our__new__site:_someother.com' }
+
+        include_examples 'HTML response format'
+      end
     end
   end
 
