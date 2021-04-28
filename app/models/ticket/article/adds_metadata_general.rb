@@ -55,7 +55,9 @@ module Ticket::Article::AddsMetadataGeneral
     return true if user_id.blank?
 
     user = User.find(user_id)
-    if type.name == 'web' || type.name == 'phone'
+    is_customer = !TicketPolicy.new(user, ticket).agent_read_access?
+
+    if (type.name == 'web' || type.name == 'phone') && is_customer
       self.from = "#{user.firstname} #{user.lastname} <#{user.email}>"
       return
     end
