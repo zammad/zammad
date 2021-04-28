@@ -14,11 +14,14 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
     File.read(Rails.root.join("spec/fixtures/smime/#{fixture}.secret")).strip
   end
 
-  it 'enabling and adding of public and private key' do
+  before do
     visit 'system/integration/smime'
 
     # enable S/MIME
     click 'label[for=setting-switch]'
+  end
+
+  it 'enabling and adding of public and private key' do
 
     # add cert
     click '.js-addCertificate'
@@ -39,5 +42,23 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
     expect( SMIMECertificate.last.fingerprint ).to be_present
     expect( SMIMECertificate.last.raw ).to be_present
     expect( SMIMECertificate.last.private_key ).to be_present
+  end
+
+  it 'adding of multiple certificates at once' do
+    multiple_certificates = [
+      File.read(Rails.root.join('spec/fixtures/smime/ChainCA.crt')),
+      File.read(Rails.root.join('spec/fixtures/smime/IntermediateCA.crt')),
+      File.read(Rails.root.join('spec/fixtures/smime/RootCA.crt')),
+    ].join
+
+    # add cert
+    click '.js-addCertificate'
+    fill_in 'Paste Certificate', with: multiple_certificates
+    click '.js-submit'
+
+    # wait for ajax
+    expect(page).to have_text('ChainCA')
+    expect(page).to have_text('IntermediateCA')
+    expect(page).to have_text('RootCA')
   end
 end

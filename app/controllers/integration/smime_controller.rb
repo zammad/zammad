@@ -42,11 +42,13 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    item = SMIMECertificate.create!(public_key: string)
+    items = string.scan(/.+?-+END(?: TRUSTED)? CERTIFICATE-+/mi).each_with_object([]) do |cert, result|
+      result << SMIMECertificate.create!(public_key: cert)
+    end
 
     render json: {
       result:   'ok',
-      response: item,
+      response: items,
     }
   rescue => e
     unprocessable_entity(e)
