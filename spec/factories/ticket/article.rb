@@ -64,6 +64,13 @@ FactoryBot.define do
       end
     end
 
+    trait :outbound_web do
+      transient do
+        type_name   { 'web' }
+        sender_name { 'Agent' }
+      end
+    end
+
     factory :twitter_article do
       transient do
         type_name { 'twitter status' }
