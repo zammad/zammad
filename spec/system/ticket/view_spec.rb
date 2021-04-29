@@ -170,4 +170,21 @@ RSpec.describe 'Ticket views', type: :system do
       end
     end
   end
+
+  context 'Customer', authenticated_as: :authenticate do
+    let(:customer) { create(:customer, :with_org) }
+    let(:ticket) { create(:ticket, customer: customer) }
+
+    def authenticate
+      ticket
+      customer
+    end
+
+    it 'does basic view test of tickets' do
+      visit 'ticket/view/my_tickets'
+      expect(page).to have_text(ticket.title)
+      click_on 'My Organization Tickets'
+      expect(page).to have_text(ticket.title)
+    end
+  end
 end
