@@ -332,6 +332,8 @@ class App.UiElement.ticket_perform_action
       'within next (relative)',
       'within last (relative)',
       'after (relative)',
+      'till (relative)',
+      'from (relative)',
       'relative'
     ]
 

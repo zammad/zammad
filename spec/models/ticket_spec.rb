@@ -989,6 +989,76 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      context 'when till (relative)' do
+        let(:first_response_time) { 5 }
+        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:condition) do
+          { 'ticket.escalation_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }
+        end
+
+        before do
+          sla
+
+          travel_to '2020-11-05 11:37:00'
+
+          ticket = create(:ticket)
+          create(:ticket_article, :inbound_email, ticket: ticket)
+
+          travel_to '2020-11-05 11:50:00'
+        end
+
+        context 'when in range' do
+          it 'does find the ticket' do
+            count, _tickets = described_class.selectors(condition, limit: 2_000, execution_time: true)
+            expect(count).to eq(1)
+          end
+        end
+
+        context 'when out of range' do
+          let(:first_response_time) { 500 }
+
+          it 'does not find the ticket' do
+            count, _tickets = described_class.selectors(condition, limit: 2_000, execution_time: true)
+            expect(count).to eq(0)
+          end
+        end
+      end
+
+      context 'when from (relative)' do
+        let(:first_response_time) { 5 }
+        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:condition) do
+          { 'ticket.escalation_at'=>{ 'operator' => 'from (relative)', 'value' => '30', 'range' => 'minute' } }
+        end
+
+        before do
+          sla
+
+          travel_to '2020-11-05 11:37:00'
+
+          ticket = create(:ticket)
+          create(:ticket_article, :inbound_email, ticket: ticket)
+        end
+
+        context 'when in range' do
+          it 'does find the ticket' do
+            travel_to '2020-11-05 11:50:00'
+            count, _tickets = described_class.selectors(condition, limit: 2_000, execution_time: true)
+            expect(count).to eq(1)
+          end
+        end
+
+        context 'when out of range' do
+          let(:first_response_time) { 5 }
+
+          it 'does not find the ticket' do
+            travel_to '2020-11-05 13:50:00'
+            count, _tickets = described_class.selectors(condition, limit: 2_000, execution_time: true)
+            expect(count).to eq(0)
+          end
+        end
+      end
+
       context 'when within next (relative)' do
         let(:first_response_time) { 5 }
         let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }

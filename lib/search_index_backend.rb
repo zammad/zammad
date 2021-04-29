@@ -644,6 +644,22 @@ example for aggregations within one year
           end
           query_must.push t
 
+        # till/from (relative)
+        when 'till (relative)', 'from (relative)'
+          range = relative_map[data['range'].to_sym]
+          if range.blank?
+            raise "Invalid relative_map for range '#{data['range']}'."
+          end
+
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'till (relative)'
+            t[:range][key_tmp][:lt] = "now+#{data['value']}#{range}"
+          else
+            t[:range][key_tmp][:gt] = "now-#{data['value']}#{range}"
+          end
+          query_must.push t
+
         # before/after (absolute)
         when 'before (absolute)', 'after (absolute)'
           t[:range] = {}

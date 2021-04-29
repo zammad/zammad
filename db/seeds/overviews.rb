@@ -161,7 +161,7 @@ Overview.create_if_not_exists(
   role_ids:  [overview_role.id],
   condition: {
     'ticket.escalation_at' => {
-      operator: 'before (relative)',
+      operator: 'till (relative)',
       value:    '10',
       range:    'minute',
     },

@@ -21,9 +21,9 @@ class Issue3270SelectorUpdate < ActiveRecord::Migration[5.2]
       next if attribute_condition['operator'] != 'within next (relative)' && attribute_condition['operator'] != 'within last (relative)'
 
       attribute_condition['operator'] = if attribute_condition['operator'] == 'within next (relative)'
-                                          'before (relative)'
+                                          'till (relative)'
                                         else
-                                          'before (after)'
+                                          'from (relative)'
                                         end
 
       fixed = true

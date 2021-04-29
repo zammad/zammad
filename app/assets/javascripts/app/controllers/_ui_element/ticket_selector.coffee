@@ -22,8 +22,8 @@ class App.UiElement.ticket_selector
         name: 'Execution Time'
 
     operators_type =
-      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
-      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
+      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)']
+      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)']
       '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
       'boolean$': ['is', 'is not']
       'integer$': ['is', 'is not']
@@ -37,9 +37,9 @@ class App.UiElement.ticket_selector
 
     if attribute.hasChanged
       operators_type =
-        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
-        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
-        '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
+        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
+        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
+        '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
         'boolean$': ['is', 'is not', 'has changed']
         'integer$': ['is', 'is not', 'has changed']
         '^radio$': ['is', 'is not', 'has changed']
@@ -441,7 +441,7 @@ class App.UiElement.ticket_selector
         item = App.UiElement[tagSearch].render(config, {})
       else
         item = App.UiElement[config.tag].render(config, {})
-    if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)'
+    if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)' || meta.operator is 'from (relative)' || meta.operator is 'till (relative)'
       config['name'] = "#{attribute.name}::#{groupAndAttribute}"
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute])
