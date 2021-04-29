@@ -627,7 +627,7 @@ condition example
 
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$/)
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before|till|from)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$/)
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
@@ -861,15 +861,15 @@ condition example
         time = nil
         case selector['range']
         when 'minute'
-          time = Time.zone.now - selector['value'].to_i.minutes
+          time = selector['value'].to_i.minutes.ago
         when 'hour'
-          time = Time.zone.now - selector['value'].to_i.hours
+          time = selector['value'].to_i.hours.ago
         when 'day'
-          time = Time.zone.now - selector['value'].to_i.days
+          time = selector['value'].to_i.days.ago
         when 'month'
-          time = Time.zone.now - selector['value'].to_i.months
+          time = selector['value'].to_i.months.ago
         when 'year'
-          time = Time.zone.now - selector['value'].to_i.years
+          time = selector['value'].to_i.years.ago
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
@@ -880,15 +880,15 @@ condition example
         time = nil
         case selector['range']
         when 'minute'
-          time = Time.zone.now + selector['value'].to_i.minutes
+          time = selector['value'].to_i.minutes.from_now
         when 'hour'
-          time = Time.zone.now + selector['value'].to_i.hours
+          time = selector['value'].to_i.hours.from_now
         when 'day'
-          time = Time.zone.now + selector['value'].to_i.days
+          time = selector['value'].to_i.days.from_now
         when 'month'
-          time = Time.zone.now + selector['value'].to_i.months
+          time = selector['value'].to_i.months.from_now
         when 'year'
-          time = Time.zone.now + selector['value'].to_i.years
+          time = selector['value'].to_i.years.from_now
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
@@ -899,15 +899,15 @@ condition example
         time = nil
         case selector['range']
         when 'minute'
-          time = Time.zone.now - selector['value'].to_i.minutes
+          time = selector['value'].to_i.minutes.ago
         when 'hour'
-          time = Time.zone.now - selector['value'].to_i.hours
+          time = selector['value'].to_i.hours.ago
         when 'day'
-          time = Time.zone.now - selector['value'].to_i.days
+          time = selector['value'].to_i.days.ago
         when 'month'
-          time = Time.zone.now - selector['value'].to_i.months
+          time = selector['value'].to_i.months.ago
         when 'year'
-          time = Time.zone.now - selector['value'].to_i.years
+          time = selector['value'].to_i.years.ago
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
         end
@@ -917,15 +917,51 @@ condition example
         time = nil
         case selector['range']
         when 'minute'
-          time = Time.zone.now + selector['value'].to_i.minutes
+          time = selector['value'].to_i.minutes.from_now
         when 'hour'
-          time = Time.zone.now + selector['value'].to_i.hours
+          time = selector['value'].to_i.hours.from_now
         when 'day'
-          time = Time.zone.now + selector['value'].to_i.days
+          time = selector['value'].to_i.days.from_now
         when 'month'
-          time = Time.zone.now + selector['value'].to_i.months
+          time = selector['value'].to_i.months.from_now
         when 'year'
-          time = Time.zone.now + selector['value'].to_i.years
+          time = selector['value'].to_i.years.from_now
+        else
+          raise "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
+      elsif selector['operator'] == 'till (relative)'
+        query += "#{attribute} <= ?"
+        time = nil
+        case selector['range']
+        when 'minute'
+          time = selector['value'].to_i.minutes.from_now
+        when 'hour'
+          time = selector['value'].to_i.hours.from_now
+        when 'day'
+          time = selector['value'].to_i.days.from_now
+        when 'month'
+          time = selector['value'].to_i.months.from_now
+        when 'year'
+          time = selector['value'].to_i.years.from_now
+        else
+          raise "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
+      elsif selector['operator'] == 'from (relative)'
+        query += "#{attribute} >= ?"
+        time = nil
+        case selector['range']
+        when 'minute'
+          time = selector['value'].to_i.minutes.ago
+        when 'hour'
+          time = selector['value'].to_i.hours.ago
+        when 'day'
+          time = selector['value'].to_i.days.ago
+        when 'month'
+          time = selector['value'].to_i.months.ago
+        when 'year'
+          time = selector['value'].to_i.years.ago
         else
           raise "Unknown selector attributes '#{selector.inspect}'"
         end

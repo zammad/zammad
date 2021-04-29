@@ -193,9 +193,10 @@ RSpec.describe SearchIndexBackend, searchindex: true do
 
     before do
       Ticket.destroy_all # needed to remove not created tickets
+      travel(-1.hour)
       create(:mention, mentionable: ticket1, user: agent1)
       ticket1.search_index_update_backend
-      travel 1.second
+      travel 1.hour
       ticket2.search_index_update_backend
       travel 1.second
       ticket3.search_index_update_backend
@@ -207,12 +208,52 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       ticket6.search_index_update_backend
       travel 1.second
       ticket7.search_index_update_backend
-      travel 1.second
+      travel 1.hour
       article8.ticket.search_index_update_backend
       described_class.refresh
     end
 
     context 'query with contains' do
+      it 'finds records with till (relative)' do
+        result = described_class.selectors('Ticket',
+                                           { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with from (relative)' do
+        result = described_class.selectors('Ticket',
+                                           { 'ticket.created_at'=>{ 'operator' => 'from (relative)', 'value' => '30', 'range' => 'minute' } },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 7, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+
+      it 'finds records with till (relative) including +1 hour ticket' do
+        result = described_class.selectors('Ticket',
+                                           { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '120', 'range' => 'minute' } },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 8, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
+      it 'finds records with from (relative) including -1 hour ticket' do
+        result = described_class.selectors('Ticket',
+                                           { 'ticket.created_at'=>{ 'operator' => 'from (relative)', 'value' => '120', 'range' => 'minute' } },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 8, ticket_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
+
       it 'finds records with tags which contains all' do
         result = described_class.selectors('Ticket',
                                            { 'ticket.tags'=>{ 'operator' => 'contains all', 'value' => 't1, t2' } },
