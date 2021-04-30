@@ -781,8 +781,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_new
     # get & validate image
-    file_full   = StaticAssets.data_url_attributes(params[:avatar_full])
-    file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
+    begin
+      file_full = StaticAssets.data_url_attributes(params[:avatar_full])
+    rescue
+      render json: { error: 'Full size image is invalid' }, status: :unprocessable_entity
+      return
+    end
+
+    begin
+      file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
+    rescue
+      render json: { error: 'Resized image is invalid' }, status: :unprocessable_entity
+      return
+    end
 
     avatar = Avatar.add(
       object:    'User',

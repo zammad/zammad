@@ -24,7 +24,7 @@ returns
       end
       return data
     end
-    raise "Unable to parse data url: #{data_url.substr(0, 100)}"
+    raise "Unable to parse data url: #{data_url&.slice(0, 100)}"
   end
 
 =begin

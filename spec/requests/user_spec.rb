@@ -1431,4 +1431,28 @@ RSpec.describe 'User', type: :request do
       end
     end
   end
+
+  describe 'POST /api/v1/users/avatar', authenticated_as: :user do
+    let(:user) { create(:user) }
+    let(:base64) { 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+
+    def make_request(params)
+      post '/api/v1/users/avatar', params: params, as: :json
+    end
+
+    it 'returns verbose error when full image is missing' do
+      make_request(avatar_full: '')
+      expect(json_response).to include('error' => match(/Full/).and(match(/is invalid/)))
+    end
+
+    it 'returns verbose error when resized image is missing' do
+      make_request(avatar_full: base64)
+      expect(json_response).to include('error' => match(/Resized/).and(match(/is invalid/)))
+    end
+
+    it 'successfully changes avatar' do
+      expect { make_request(avatar_full: base64, avatar_resize: base64) }
+        .to change { Avatar.list('User', user.id) }
+    end
+  end
 end
