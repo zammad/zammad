@@ -119,15 +119,21 @@ class App.UiElement.user_permission
               if !confirm(App.i18n.translateInline('Role %s is conflicting with role %s, do you want to continue?', role.name, localRole.name, localRole.name))
                 item.find("[name=role_ids][value=#{role_id}]").prop('checked', false)
                 return
-              item.find("[name=role_ids][value=#{localRole.id}]").prop('checked', false)
-              triggers.push item.find("[name=role_ids][value=#{localRole.id}]")
+              item.localElement.prop('checked', false)
+              triggers.push item.localElement
 
     # if role with groups plugin is deselected, hide group selection
     if !checked
+      selectedRoleIds = []
+      item.find('input[name=role_ids]:checked').each( ->
+        selectedRoleIds.push($(@).val())
+      )
+
       show = false
       for role_id, group of rolesWithGroupPlugin
-        if item.find("[name=role_ids][value=#{role_id}]").prop('checked')
+        if _.contains(selectedRoleIds, role_id.toString())
           show = true
+          break
       if !show
         item.find('.js-groupList').addClass('hidden')
 
