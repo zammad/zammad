@@ -1,6 +1,6 @@
 ---
 # % character in the URL has to be escaped (% => %%)
-url: "http://www.google.com/calendar/ical/%{domain}%%23holiday%%40group.v.calendar.google.com/public/basic.ics"
+url: "https://www.google.com/calendar/ical/%{domain}%%23holiday%%40group.v.calendar.google.com/public/basic.ics"
 
 # Mapping from country to domain
 countries:
