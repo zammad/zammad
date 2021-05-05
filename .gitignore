@@ -37,10 +37,12 @@
 
 # NPM / Yarn
 /node_modules
+/yarn.lock
 
 # logfiles and tempfiles
 /log
 /public/assets/*.*
+/public/assets/addons
 /public/assets/app
 /public/assets/custom
 /public/assets/chat/node_modules
