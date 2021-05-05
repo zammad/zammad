@@ -161,7 +161,7 @@ class App extends Spine.Controller
     return if _.isEmpty(object[attributeConfig.name])
     placeholderObjects = { attribute: attributeConfig, session: App.Session.get(), config: App.Config.all() }
     placeholderObjects[object.constructor.className.toLowerCase()] = object
-    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{App.Utils.htmlEscape(resultLocal)}</a>"
+    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{App.i18n.translateInline(resultLocal)}</a>"
 
   @view: (name) ->
     template = (params = {}) ->
