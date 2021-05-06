@@ -115,8 +115,8 @@ class App extends Spine.Controller
         isHtmlEscape = true
         resultLocal = App.i18n.translateDate(resultLocal)
 
-      linktemplate = @_placeholderReplacement(object, attributeConfig, resultLocal)
-      if linktemplate && isHtmlEscape is false
+      linktemplate = @_placeholderReplacement(object, attributeConfig, resultLocal, isHtmlEscape)
+      if linktemplate
         resultLocal = linktemplate
         isHtmlEscape = true
 
@@ -152,7 +152,7 @@ class App extends Spine.Controller
 
     result
 
-  @_placeholderReplacement: (object, attributeConfig, resultLocal) ->
+  @_placeholderReplacement: (object, attributeConfig, resultLocal, isHtmlEscape) ->
     return if !object
     return if !attributeConfig
     return if _.isEmpty(attributeConfig.linktemplate)
@@ -161,7 +161,12 @@ class App extends Spine.Controller
     return if _.isEmpty(object[attributeConfig.name])
     placeholderObjects = { attribute: attributeConfig, session: App.Session.get(), config: App.Config.all() }
     placeholderObjects[object.constructor.className.toLowerCase()] = object
-    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{App.i18n.translateInline(resultLocal)}</a>"
+
+    value = resultLocal
+    if !isHtmlEscape
+      value = App.Utils.htmlEscape(value)
+
+    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{value}</a>"
 
   @view: (name) ->
     template = (params = {}) ->
