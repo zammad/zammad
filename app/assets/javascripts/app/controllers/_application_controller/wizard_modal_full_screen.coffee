@@ -5,6 +5,4 @@ class App.ControllerWizardFullScreen extends App.ControllerWizardModal
   # login check / get session user
   redirectToLogin: =>
     App.Auth.loginCheck()
-    @el.remove()
-    App.Plugin.init()
-    @navigate '#', { removeEl: true }
+    @navigate('#', { removeEl: true })

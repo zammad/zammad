@@ -21,6 +21,9 @@ Data Privacy tasks will be executed every 10 minutes. The execution might take s
 '''
 
   activityMessage: (item) ->
+    return if !item
+    return if !item.created_by
+
     if item.type is 'create'
       return App.i18n.translateContent('%s created data privacy task to delete user id |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
     else if item.type is 'update'

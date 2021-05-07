@@ -19,6 +19,9 @@ class App.Role extends App.Model
   ]
 
   activityMessage: (item) ->
+    return if !item
+    return if !item.created_by
+
     if item.type is 'create'
       return App.i18n.translateContent('%s created Role |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'

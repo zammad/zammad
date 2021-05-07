@@ -76,7 +76,6 @@ class Login extends App.ControllerFullPage
     )
 
   success: (data, status, xhr) =>
-    App.Plugin.init()
 
     # redirect to #
     @log 'notice', 'REDIRECT to -#/-'
