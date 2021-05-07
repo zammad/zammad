@@ -257,9 +257,9 @@ class App.UiElement.postmaster_set
     attributeConfig = elements[groupAndAttribute]
 
     if !attributeConfig || !attributeConfig.operator
-      elementRow.find('.js-operator').addClass('hide')
+      elementRow.find('.js-operator').parent().addClass('hide')
     else
-      elementRow.find('.js-operator').removeClass('hide')
+      elementRow.find('.js-operator').parent().removeClass('hide')
     if attributeConfig && attributeConfig.operator
       for operator in attributeConfig.operator
         operatorName = App.i18n.translateInline(operator)

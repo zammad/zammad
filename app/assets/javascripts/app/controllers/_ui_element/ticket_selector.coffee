@@ -369,12 +369,12 @@ class App.UiElement.ticket_selector
       attribute.tag = 'autocompletion_ajax'
     if !preCondition
       elementRow.find('.js-preCondition select').html('')
-      elementRow.find('.js-preCondition').addClass('hide')
+      elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
       toggleValue()
       @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
       return
 
-    elementRow.find('.js-preCondition').removeClass('hide')
+    elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     name = "#{attribute.name}::#{groupAndAttribute}::pre_condition"
 
     selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
@@ -395,7 +395,7 @@ class App.UiElement.ticket_selector
       if key is meta.pre_condition
         selected = 'selected="selected"'
       selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
-    elementRow.find('.js-preCondition').removeClass('hide')
+    elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
     elementRow.find('.js-preCondition select').bind('change', (e) ->
@@ -436,6 +436,8 @@ class App.UiElement.ticket_selector
         config.guess = false
       if config.tag is 'checkbox'
         config.tag = 'select'
+      if config.tag is 'datetime'
+        config.validationContainer = 'self'
       tagSearch = "#{config.tag}_search"
       if App.UiElement[tagSearch]
         item = App.UiElement[tagSearch].render(config, {})
@@ -450,7 +452,7 @@ class App.UiElement.ticket_selector
     elementRow.find('.js-value').removeClass('hide').html(item)
     if meta.operator is 'has changed'
       elementRow.find('.js-value').addClass('hide')
-      elementRow.find('.js-preCondition').addClass('hide')
+      elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
       elementRow.find('.js-value').removeClass('hide')
 

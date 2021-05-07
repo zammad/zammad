@@ -1,4 +1,5 @@
 <div class="controls u-positionOrigin js-valueRangeSelector"></div>
+<div class="half-spacer"></div>
 <div class="controls u-positionOrigin">
   <select class="form-control js-range" name="<%= @attribute.name %>::range">
     <% for key, value of @ranges: %>

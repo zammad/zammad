@@ -1,11 +1,11 @@
 <div class="horizontal-filter js-filterElement">
   <div class="horizontal-filter-body">
-    <div class="controls">
+    <div class="controls min-fit-content">
       <div class="u-positionOrigin js-attributeSelector">
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
     </div>
-    <div class="controls">
+    <div class="controls min-fit-content">
       <div class="u-positionOrigin js-operator">
         <select></select>
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
