@@ -14,12 +14,6 @@ class SwitchBackToUser extends App.Controller
       @render()
     )
 
-    # remove widget
-    @controllerBind('auth:logout', =>
-      App.Config.set('switch_back_to_possible', false)
-      @render()
-    )
-
   render: (user) ->
 
     # if no switch to user is active

@@ -5,14 +5,16 @@ class SessionTimeout extends App.Controller
     super
 
     lastEvent = new Date().getTime()
-    check_timeout = =>
+    checkTimeout = =>
       return if new Date().getTime() - 1000 < lastEvent
       lastEvent = new Date().getTime()
       @checkLogout()
 
-    $(document).off('keyup.session_timeout').on('keyup.session_timeout', check_timeout)
-    $(document).off('mousemove.session_timeout').on('mousemove.session_timeout', check_timeout)
-    @controllerBind('config_update', check_timeout)
+    # reset timeout on mouse move
+    $(document).off('keyup.session_timeout').on('keyup.session_timeout', checkTimeout)
+    $(document).off('mousemove.session_timeout').on('mousemove.session_timeout', checkTimeout)
+
+    @controllerBind('config_update', checkTimeout)
     @controllerBind('session_timeout', @quitApp)
     @interval(@checkLogout, 5000, 'session_timeout')
 

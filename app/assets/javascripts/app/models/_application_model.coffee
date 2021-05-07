@@ -850,6 +850,8 @@ set new attributes of model (remove already available attributes)
     collection
 
   activityMessage: (item) ->
+    return if !item
+
     return "Need own activityMessage() in model to generate text (#{@objectDisplayName()}/#{item.type})."
 
   @lastUpdatedAt: ->

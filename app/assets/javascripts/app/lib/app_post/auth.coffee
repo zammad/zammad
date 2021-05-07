@@ -159,7 +159,6 @@ class App.Auth
       if _.isFunction(model_object.clearInMemory)
         model_object.clearInMemory()
 
-    App.Plugin.init()
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
 

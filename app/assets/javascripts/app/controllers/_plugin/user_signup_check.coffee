@@ -7,10 +7,6 @@ class UserSignupCheck extends App.Controller
       new Modal(user: user)
     )
 
-    @controllerBind('auth:login', (user) =>
-      return if !user
-      @verifyLater(user.id)
-    )
     user = App.User.current()
     @verifyLater(user.id) if user?
 

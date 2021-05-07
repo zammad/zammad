@@ -27,9 +27,8 @@ class TranslationSupport extends App.Controller
     @controllerBind('i18n:language:change', =>
       @delay(check, 2500, 'translation_support')
     )
-    @controllerBind('auth:login', =>
+    if App.Session.get() isnt undefined
       @delay(check, 2500, 'translation_support')
-    )
 
 App.Config.set( 'translaton_support', TranslationSupport, 'Plugins' )
 

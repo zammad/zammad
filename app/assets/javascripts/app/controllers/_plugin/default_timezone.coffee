@@ -26,9 +26,8 @@ class DefaultTimezone extends App.Controller
       #  processData: true
       #)
 
-    @controllerBind('auth:login', (session) =>
+    if App.Session.get() isnt undefined
       @delay(check, 8500, 'default_timezone')
-    )
 
   updateSetting: (timezone) ->
     App.Setting.set('timezone_default', timezone)
