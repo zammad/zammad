@@ -62,8 +62,13 @@ gem 'autoprefixer-rails'
 
 # asset handling - javascript execution for e.g. linux
 gem 'execjs'
-gem 'libv8'
-gem 'mini_racer'
+
+# mini_racer can be omitted on systems where node.js is available via
+#   `bundle install --without mini_racer`.
+group :mini_racer do
+  gem 'libv8'
+  gem 'mini_racer'
+end
 
 # authentication - provider
 gem 'doorkeeper'
