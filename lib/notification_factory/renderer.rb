@@ -47,6 +47,7 @@ examples how to use
     # aliases
     map = {
       'article.body' => 'article.body_as_text_with_quote.text2html',
+      'ticket.tags'  => 'ticket.tag_list',
     }
     if map[key]
       key = map[key]
@@ -176,6 +177,7 @@ examples how to use
   end
 
   def escaping(key, escape)
+    return escaping(key.join(', '), escape) if key.respond_to?(:join)
     return key if escape == false
     return key if escape.nil? && !@escape
 
