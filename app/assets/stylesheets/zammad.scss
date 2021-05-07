@@ -2120,6 +2120,7 @@ input.timeframe,
 input.time {
   box-sizing: content-box;
   padding: 0 6px;
+  height: 39px;
   line-height: 42px;
   flex-shrink: 0;
 
@@ -9727,25 +9728,13 @@ label + .wizard-buttonList {
     border-top: none;
   }
 
-  .controls,
-  input {
-    @include bidi-style(margin-right, 5px, margin-left, 0);
-  }
-
-  .controls-label {
-    margin-left: 0;
-    margin-right: 5px;
-    @include rtl(margin-left, 5px);
-    @include rtl(margin-right, 0);
-  }
-
   select,
   input {
     border-color: hsl(198,19%,86%);
   }
 
   input[type=text] {
-    width: auto;
+    width: 100%;
   }
 
   input[data-item=time] {
@@ -9755,11 +9744,40 @@ label + .wizard-buttonList {
 
 .horizontal-filter-body {
   display: flex;
-  flex-wrap: nowrap;
   flex: 1;
+  min-width: 100px;
 
-  .controls:not(.js-value) {
-    flex-shrink: 0;
+  @include phone {
+    display: block;
+    margin-right: 5px;
+  }
+
+  > .controls,
+  > input {
+    @include bidi-style(margin-right, 5px, margin-left, 0);
+
+    @include phone {
+      margin: 0 0 5px !important;
+    }
+
+    > .controls-label {
+      margin-left: 0;
+      margin-right: 5px;
+      @include rtl(margin-left, 5px);
+      @include rtl(margin-right, 0);
+    }
+
+    .horizontal-filter-value {
+      max-width: 100%;
+    }
+  }
+
+  > .controls > .controls {
+    max-width: 100%;
+
+    + .controls {
+      @include bidi-style(margin-left, 5px, margin-right, 0);
+    }
   }
 }
 
@@ -9776,11 +9794,20 @@ label + .wizard-buttonList {
 }
 
 .horizontal-filter-value {
-  flex-shrink: 0;
+  max-width: 60%;
+  flex-grow: 1;
+
+  @include phone {
+    max-width: 100%;
+  }
 
   // lower the min-width of url input fields (normally 400px) so that it fits in
   input[type=url] {
     min-width: 200px;
+  }
+
+  .dropdown:only-child {
+    flex-grow: 1;
   }
 }
 
@@ -12348,6 +12375,18 @@ body.fit {
 
 .space-right {
   @include bidi-style(margin-right, 10px, margin-left, 0);
+}
+
+.half-space-left {
+  @include bidi-style(margin-left, 5px, margin-right, 0);
+}
+
+.half-space-right {
+  @include bidi-style(margin-right, 5px, margin-left, 0);
+}
+
+.min-fit-content {
+  min-width: fit-content;
 }
 
 .align-center {

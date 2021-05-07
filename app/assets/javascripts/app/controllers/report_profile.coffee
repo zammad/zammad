@@ -25,6 +25,7 @@ class ReportProfile extends App.ControllerSubContent
           { name: 'New Profile', 'data-type': 'new', class: 'primary' }
         ]
       container: @el.closest('.content')
+      veryLarge: true
     )
 
   show: (params) =>
