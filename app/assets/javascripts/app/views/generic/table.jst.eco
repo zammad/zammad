@@ -20,7 +20,7 @@
     <% end %>
     <% for header, i in @headers: %>
       <th class="js-tableHead<% if header.className: %> <%= header.className %><% end %><% if header.align: %> align-<%= header.align %><% end %>" style="<% if header.displayWidth: %>width:<%= header.displayWidth %>px<% end %>" data-column-key="<%= header.name %>">
-        <div class="table-column-head<%= ' table-column-head-unclickable' if @sortable %><%= ' js-sort' if @tableId and !@sortable %>">
+        <div class="table-column-head<%= ' table-column-head-unclickable' if @sortable or header.unsortable %><%= ' js-sort' if @tableId and !@sortable and !header.unsortable %>">
           <div class="table-column-title"><%- @T(header.display) %></div>
           <% if !@sortable: %>
             <div class="table-column-sortIcon"><% if header.sortOrderIcon: %><%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %><% end %></div>

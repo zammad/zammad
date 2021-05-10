@@ -780,7 +780,8 @@ test('table test 6/7', function() {
   data = [
     { name: 'a item', data: 'g data', active: true },
     { name: 'b item', data: 'b data', active: false },
-    { name: 'c item', data: 'z data', active: true },
+    { name: 'c item', data: 'z data', active: false },
+    { name: 'd item', data: '', active: false },
   ]
 
   new App.ControllerTable({
@@ -788,7 +789,7 @@ test('table test 6/7', function() {
     el:       el_head_sortable,
     overview: ['name', 'data', 'active'],
     attribute_list: [
-      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
+      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%', unsortable: true },
       { name: 'data',     display: 'Data',      type: 'text' },
       { name: 'active',   display: 'Active',    type: 'text' },
     ],
@@ -800,7 +801,7 @@ test('table test 6/7', function() {
     el:       el_not_head_sortable,
     overview: ['name', 'data', 'active'],
     attribute_list: [
-      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
+      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%', unsortable: true },
       { name: 'data',     display: 'Data',      type: 'text' },
       { name: 'active',   display: 'Active',    type: 'text' },
     ],
@@ -811,9 +812,33 @@ test('table test 6/7', function() {
   equal(el_head_sortable.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'a item', 'check row 1')
   equal(el_not_head_sortable.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'a item', 'check row 1')
 
-  el_head_sortable.find('table > thead > tr > th:nth-child(2) > .js-sort').click()
-  el_not_head_sortable.find('table > thead > tr > th:nth-child(3) > .js-sort').click()
+  ok(_.isEqual(list_items(el_head_sortable, 1), ['a item', 'b item', 'c item', 'd item']), 'sortable table is rendered correctly')
+  ok(_.isEqual(list_items(el_not_head_sortable, 2), ['a item', 'b item', 'c item', 'd item']), 'unsortable table is rendered correctly')
 
-  equal(el_head_sortable.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'b item', 'check row 1')
-  equal(el_not_head_sortable.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'a item', 'check row 1')
+  click_sort(el_head_sortable, 2)
+  click_sort(el_not_head_sortable, 3)
+
+  ok(_.isEqual(list_items(el_head_sortable, 1), ['b item', 'a item', 'c item', 'd item']), 'sortable table is sorted')
+  ok(_.isEqual(list_items(el_not_head_sortable, 2), ['a item', 'b item', 'c item', 'd item']), 'unsortable table is not sorted')
+
+  click_sort(el_head_sortable, 3)
+  ok(_.isEqual(list_items(el_head_sortable, 1), ['b item', 'c item', 'd item', 'a item']), 'sorting by boolean column works')
+
+  click_sort(el_head_sortable, 1)
+  ok(_.isEqual(list_items(el_head_sortable, 1), ['b item', 'c item', 'd item', 'a item']), 'sorting on name column is disabled')
 });
+
+function click_sort(table, column_number) {
+  table
+    .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)
+    .click()
+}
+
+function list_items(table, column_number) {
+  return table
+    .find(`tbody > tr > td:nth-child(${column_number})`)
+    .text()
+    .split("\n")
+    .filter(elem => elem.match(/[\w]+/))
+    .map(elem => elem.trim())
+}

@@ -12,7 +12,7 @@ class App.Macro extends App.Model
     },
     { name: 'updated_at',      display: 'Updated',  tag: 'datetime',      readonly: 1 },
     { name: 'note',            display: 'Note',     tag: 'textarea',      limit:   250,      null: true },
-    { name: 'group_ids',       display: 'Groups',   tag: 'column_select', relation: 'Group', null: true },
+    { name: 'group_ids',       display: 'Groups',   tag: 'column_select', relation: 'Group', null: true, unsortable: true },
     { name: 'active',          display: 'Active',   tag: 'active',        default: true },
   ]
   @configure_delete = true

@@ -638,6 +638,7 @@ class App.ControllerTable extends App.Controller
         align:        'right'
         parentClass:  'noTruncate no-padding'
         unresizable:  true
+        unsortable:   true
 
       @bindCol['action'] =
         events:
@@ -707,7 +708,9 @@ class App.ControllerTable extends App.Controller
         list
         (item) ->
           res = iteratee(item)
-          return res if res
+          # Checking for a falsey value would overide 0 or false to placeholder.
+          # UnderscoreJS sorter breaks when \uFFFF is sorted together with non-string values.
+          return res if res != null and res != undefined and res != ''
           # null values are considered lexicographically "last"
           '\uFFFF'
       )

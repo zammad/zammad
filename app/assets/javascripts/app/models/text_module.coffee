@@ -24,7 +24,7 @@ class App.TextModule extends App.Model
       }
     ], note: 'To select placeholders from a list, just enter "::".'},
     { name: 'updated_at', display: 'Updated', tag: 'datetime', readonly: 1 },
-    { name: 'group_ids',  display: 'Groups',  tag: 'column_select', relation: 'Group', null: true },
+    { name: 'group_ids',  display: 'Groups',  tag: 'column_select', relation: 'Group', null: true, unsortable: true },
     { name: 'active',     display: 'Active',  tag: 'active',   default: true },
   ]
   @configure_delete = true
