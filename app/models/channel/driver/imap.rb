@@ -354,7 +354,6 @@ example
       raise too_large_messages.join("\n")
     end
 
-    Rails.logger.info 'done'
     {
       result:  result,
       fetched: count_fetched,

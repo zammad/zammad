@@ -147,7 +147,7 @@ returns
     raise Exceptions::UnprocessableEntity, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
 
     sender = Setting.get('notification_sender')
-    Rails.logger.info "Send notification to: #{data[:recipient][:email]} (from:#{sender}/subject:#{data[:subject]})"
+    Rails.logger.debug { "Send notification to: #{data[:recipient][:email]} (from:#{sender}/subject:#{data[:subject]})" }
 
     content_type = 'text/plain'
     if data[:content_type]
