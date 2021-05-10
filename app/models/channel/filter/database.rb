@@ -8,7 +8,7 @@ module Channel::Filter::Database
     # process postmaster filter
     filters = PostmasterFilter.where(active: true, channel: 'email').order(:name, :created_at)
     filters.each do |filter|
-      Rails.logger.info " process filter #{filter.name} ..."
+      Rails.logger.debug { " process filter #{filter.name} ..." }
       all_matches_ok = true
       min_one_rule_exists = false
       filter[:match].each do |key, meta|
@@ -22,20 +22,20 @@ module Channel::Filter::Database
         when 'contains not'
           if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
             all_matches_ok = false
-            Rails.logger.debug "  not matching #{key.downcase}:'#{value}' contains not #{match_rule}"
+            Rails.logger.debug { "  not matching content '#{key.downcase}' contains not #{match_rule}" }
           else
-            Rails.logger.info "  matching: #{key.downcase}:'#{value}' contains not #{match_rule}"
+            Rails.logger.info { "  matching: content '#{key.downcase}' contains not #{match_rule}" }
           end
         when 'contains'
           if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
             all_matches_ok = false
-            Rails.logger.debug "  not matching #{key.downcase}:'#{value}' contains #{match_rule}"
+            Rails.logger.debug { "  not matching content '#{key.downcase}' contains #{match_rule}" }
           else
-            Rails.logger.info "  matching #{key.downcase}:'#{value}' contains #{match_rule}"
+            Rails.logger.info { "  matching content '#{key.downcase}' contains #{match_rule}" }
           end
         else
           all_matches_ok = false
-          Rails.logger.info "  Invalid operator in match #{meta.inspect}"
+          Rails.logger.info { "  Invalid operator in match #{meta.inspect}" }
         end
         break if !all_matches_ok
       rescue => e
@@ -51,7 +51,7 @@ module Channel::Filter::Database
       filter[:perform].each do |key, meta|
         next if !Channel::EmailParser.check_attributes_by_x_headers(key, meta['value'])
 
-        Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
+        Rails.logger.debug { "  perform '#{key.downcase}' = '#{meta.inspect}'" }
 
         if key.casecmp('x-zammad-ticket-tags').zero? && meta['value'].present? && meta['operator'].present?
           mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] ||= []
