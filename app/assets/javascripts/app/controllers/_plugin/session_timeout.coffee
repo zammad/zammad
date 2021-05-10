@@ -1,31 +1,67 @@
 class SessionTimeout extends App.Controller
-  lastEvent  = 0
+  lastEvent: 0
+  warningDialog: undefined
+  intervalCheck: 5000
+  showLogoutWarningBefore: -(30 * 1000)
+  timeTillLogout: undefined
 
   constructor: ->
     super
 
-    lastEvent = new Date().getTime()
-    checkTimeout = =>
-      return if new Date().getTime() - 1000 < lastEvent
-      lastEvent = new Date().getTime()
-      @checkLogout()
+    @lastEvent = @currentTime()
 
     # reset timeout on mouse move
-    $(document).off('keyup.session_timeout').on('keyup.session_timeout', checkTimeout)
-    $(document).off('mousemove.session_timeout').on('mousemove.session_timeout', checkTimeout)
+    $(document).off('keyup.session_timeout').on('keyup.session_timeout', @checkTimeout)
+    $(document).off('mousemove.session_timeout').on('mousemove.session_timeout', @checkTimeout)
 
-    @controllerBind('config_update', checkTimeout)
+    # lisen to remote events
+    @controllerBind('config_update', @checkTimeout)
     @controllerBind('session_timeout', @quitApp)
-    @interval(@checkLogout, 5000, 'session_timeout')
+
+    # check interfall of session timeouts
+    @interval(@checkLogout, @intervalCheck, 'session_timeout')
+
+  checkTimeout: =>
+    getTime = @currentTime()
+    return if getTime - 2000 < @lastEvent
+
+    @lastEvent = getTime
+
+    # return if time till logout is far away
+    return if @timeTillLogout && @timeTillLogout > 20000
+
+    @checkLogout()
 
   checkLogout: =>
     return if App.Session.get() is undefined
-    return if lastEvent + @getTimeout() > new Date().getTime()
+
+    @timeTillLogout = @currentTime() - (@lastEvent + @getTimeout())
+
+    # close logut warning
+    if @timeTillLogout < @showLogoutWarningBefore
+      return if !@logoutWarningExists()
+
+      @logoutWarningClose()
+      return
+
+    # show logut warning
+    if @timeTillLogout <= 0
+      @logoutWarningShow()
+      return
+
     @quitApp()
+
+  currentTime: ->
+    new Date().getTime()
 
   quitApp: =>
     return if App.Session.get() is undefined
-    @navigate '#logout'
+
+    @logoutWarningClose()
+  
+    App.Auth.logout(false, =>
+      @navigate '#session_timeout'
+    )
 
   getTimeout: ->
     user    = App.User.find(App.Session.get().id)
@@ -42,5 +78,32 @@ class SessionTimeout extends App.Controller
       timeout = parseInt(config['default'])
 
     return timeout * 1000
+
+  logoutWarningExists: =>
+    return true if @warningDialog
+    false
+
+  logoutWarningClose: =>
+    return false if !@warningDialog
+    @warningDialog.close()
+    @warningDialog = undefined
+
+  logoutWarningShow: =>
+    return if @warningDialog
+
+    @warningDialog = new App.ControllerModal(
+      head:         'Session'
+      message:      'Due to inactivity are automatically logged out within the next 30 seconds.'
+      keyboard:     true
+      backdrop:     true
+      buttonClose:  true
+      buttonSubmit: 'Continue session'
+      onSubmit:     =>
+        @lastEvent = @currentTime()
+        @checkLogout()
+    )
+
+  release: ->
+    @logoutWarningClose()
 
 App.Config.set('session_timeout', SessionTimeout, 'Plugins')

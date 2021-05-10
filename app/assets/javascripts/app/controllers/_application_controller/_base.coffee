@@ -273,6 +273,7 @@ class App.Controller extends Spine.Controller
     return if location is '#'
     return if location is '#login'
     return if location is '#logout'
+    return if location is '#session_timeout'
     return if location is '#keyboard_shortcuts'
 
     # remember requested url

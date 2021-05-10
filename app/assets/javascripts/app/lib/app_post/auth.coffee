@@ -43,7 +43,7 @@ class App.Auth
         @_loginError()
     )
 
-  @logout: ->
+  @logout: (rerender = true, callback) ->
     App.Log.debug 'Auth', 'logout'
 
     # abort all AJAX requests
@@ -66,7 +66,7 @@ class App.Auth
         success: =>
 
           # set logout (config, session, ...)
-          @_logout()
+          @_logout(rerender, callback)
 
         error: (xhr, statusText, error) =>
           @_loginError()
@@ -147,7 +147,7 @@ class App.Auth
         if _.isFunction(App[model].updateAttributes)
           App[model].updateAttributes(attributes)
 
-  @_logout: (rerender = true) ->
+  @_logout: (rerender = true, callback) ->
     App.Log.debug 'Auth', '_logout'
 
     App.TaskManager.reset()
@@ -168,6 +168,9 @@ class App.Auth
         App.Event.trigger('ui:rerender')
       )
     App.Event.trigger('clearStore')
+
+    if callback
+      callback()
 
   @_loginError: ->
     App.Log.debug 'Auth', '_loginError:error'

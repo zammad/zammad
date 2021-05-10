@@ -16,8 +16,15 @@ class Login extends App.ControllerFullPage
       @navigate '#'
       return
 
+    # show session timeout message on login screen
+    data = {}
+    if window.location.hash is '#session_timeout'
+      data = {
+        errorMessage: App.i18n.translateContent('Due to inactivity you are automatically logged out.')
+      }
+
     @title 'Sign in'
-    @render()
+    @render(data)
     @navupdate '#login'
 
     # observe config changes related to login page
@@ -102,3 +109,4 @@ class Login extends App.ControllerFullPage
     )
 
 App.Config.set('login', Login, 'Routes')
+App.Config.set('session_timeout', Login, 'Routes')
