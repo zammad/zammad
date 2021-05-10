@@ -44,7 +44,6 @@
 
   Plugin.prototype.bindEvents = function () {
     this.$element.on('keydown', this.onKeydown.bind(this))
-    this.$element.on('keyup', this.onKeyup.bind(this))
     // using onInput event to trigger onKeyPress behavior
     // since keyPress doesn't work on Mobile Chrome / Android
     this.$element.on('input', this.onKeypress.bind(this))
