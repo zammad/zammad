@@ -81,19 +81,40 @@ class SMIMECertificate < ApplicationModel
 
         []
       else
-        # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
-        entries = subject_alt_name.value.split(/,\s?/)
-        # ["email:jd@example.com", "email:John.Doe@example.com"]
-        email_address_entries = entries.select { |entry| entry.start_with?('email') }
-        # ["jd@example.com", "John.Doe@example.com"]
-        email_address_entries.map! { |entry| entry.split(':')[1] }
-        # ["jd@example.com", "john.doe@example.com"]
-        email_address_entries.map!(&:downcase)
+        email_addresses_from_subject_alt_name(subject_alt_name)
       end
     end
   end
 
   def expired?
     !Time.zone.now.between?(not_before_at, not_after_at)
+  end
+
+  private
+
+  def email_addresses_from_subject_alt_name(subject_alt_name)
+    # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
+    entries = subject_alt_name.value.split(/,\s?/)
+
+    entries.each_with_object([]) do |entry, result|
+      # ["email:jd@example.com", "email:John.Doe@example.com"]
+      identifier, email_address = entry.split(':').map(&:downcase)
+
+      # See: https://stackoverflow.com/a/20671427
+      # ["email:jd@example.com", "emailAddress:jd@example.com", "rfc822:jd@example.com", "rfc822Name:jd@example.com"]
+      next if identifier.exclude?('email') && identifier.exclude?('rfc822')
+
+      if !EmailAddressValidation.new(email_address).valid_format?
+        Rails.logger.warn <<~TEXT.squish
+          SMIMECertificate with ID #{id} has the malformed email address "#{email_address}"
+          stored as "#{identifier}" in the subjectAltName extension.
+          This makes it useless in terms of S/MIME. Please check.
+        TEXT
+
+        next
+      end
+
+      result.push(email_address)
+    end
   end
 end
