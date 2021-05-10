@@ -43,7 +43,9 @@
 
   Plugin.prototype.bindEvents = function () {
     this.$element.on('keydown', this.onKeydown.bind(this))
-    this.$element.on('keypress', this.onKeypress.bind(this))
+    // using onInput event to trigger onKeyPress behavior
+    // since keyPress doesn't work on Mobile Chrome / Android
+    this.$element.on('input', this.onKeypress.bind(this))
     this.$element.on('focus', this.onFocus.bind(this))
   }
 
@@ -150,6 +152,16 @@
 
   Plugin.prototype.onKeypress = function (e) {
     this.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which))
+
+    // gets the character and keycode from event
+    // this event does not have keyCode and which value set
+    // so we take char and set those values to not break the flow
+    // if originalEvent.data is null that means a non char key is pressed like delete, space
+    if(e.originalEvent && e.originalEvent.data) {
+      var char = e.originalEvent.data;
+      var keyCode = char.charCodeAt(0);
+      e.keyCode = e.which = keyCode;
+    }
 
     // shift
     if (e.keyCode === 16) return
