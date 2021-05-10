@@ -741,7 +741,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :data_privacy_tasks do |t|
       t.column :state,                :string, limit: 150, default: 'in process', null: true
       t.references :deletable,        polymorphic: true
-      t.string :preferences,          limit: 8000,                                null: true
+      t.text :preferences
       t.column :updated_by_id,        :integer,                                   null: false
       t.column :created_by_id,        :integer,                                   null: false
       t.timestamps limit: 3, null: false
