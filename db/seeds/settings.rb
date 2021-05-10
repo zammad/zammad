@@ -3481,6 +3481,15 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       'Define postmaster filter.',
+  name:        '5500_postmaster_internal_article_check',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines the postmaster filter which set the article internal if a forwarded, replied or sent email also exists with the article internal received.',
+  options:     {},
+  state:       'Channel::Filter::InternalArticleCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       'Icinga integration',
   name:        'icinga_integration',
   area:        'Integration::Switch',
