@@ -1191,8 +1191,10 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def open_nth_item(nth)
       within :active_content do
-        find_all('.table tr.item .user-popover')[nth].click
+        find_all('.table tr.item a[href^="#ticket/zoom"]')[nth].click
       end
+
+      await_empty_ajax_queue
     end
   end
 
