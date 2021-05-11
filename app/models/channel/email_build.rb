@@ -82,18 +82,7 @@ generate email with S/MIME
     alternative_bodies = Mail::Part.new { content_type 'multipart/alternative' }
     alternative_bodies.add_part text_alternative
 
-    found_content_ids = {}
     if html_alternative
-
-      # check if content-ids are used in body
-      attr[:attachments]&.each do |attachment|
-        next if attachment.instance_of?(Hash)
-        next if attachment.preferences['Content-ID'].blank?
-        next if !/<img [^>]* src="cid:#{Regexp.quote(attachment.preferences['Content-ID'])}" [^>]*>/xmsi.match?(html_alternative.body.to_s)
-
-        found_content_ids[ attachment.preferences['Content-ID'] ] = true
-      end
-
       html_container = Mail::Part.new { content_type 'multipart/related' }
       html_container.add_part html_alternative
 
@@ -101,7 +90,6 @@ generate email with S/MIME
       attr[:attachments]&.each do |attachment|
         next if attachment.instance_of?(Hash)
         next if attachment.preferences['Content-ID'].blank?
-        next if !found_content_ids[ attachment.preferences['Content-ID'] ]
 
         attachment = Mail::Part.new do
           content_type attachment.preferences['Content-Type']
@@ -123,7 +111,7 @@ generate email with S/MIME
         attachment['content-id'] = nil
         mail.attachments[attachment[:filename]] = attachment
       else
-        next if attachment.preferences['Content-ID'].present? && found_content_ids[ attachment.preferences['Content-ID'] ]
+        next if attachment.preferences['Content-ID'].present?
 
         filename = attachment.filename
         encoded_filename = Mail::Encodings.decode_encode filename, :encode

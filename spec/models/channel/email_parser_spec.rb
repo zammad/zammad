@@ -1064,39 +1064,6 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect(article.attachments.first.content).to eq('Hello Zammad')
         end
       end
-
-      # https://github.com/zammad/zammad/issues/3529
-      context 'Attachments sent by Zammad not shown in Outlook' do
-        let(:mail_file) { Rails.root.join('test/data/mail/mail101.box') }
-
-        before do
-          described_class.new.process({}, raw_mail)
-        end
-
-        it 'does not have content disposition inline because the file is not referenced in body' do
-          mail = Channel::EmailBuild.build(
-            from:         'sender@example.com',
-            to:           'recipient@example.com',
-            body:         'somebody with some text',
-            content_type: 'text/html',
-            attachments:  Store.where(filename: 'super-seven.jpg')
-          )
-          expect(mail.to_s).to include('Content-Disposition: attachment')
-          expect(mail.to_s).not_to include('Content-Disposition: inline')
-        end
-
-        it 'does have content disposition inline because the file is referenced in body' do
-          mail = Channel::EmailBuild.build(
-            from:         'sender@example.com',
-            to:           'recipient@example.com',
-            body:         "somebody with some text <img src=\"cid:#{Store.find_by(filename: 'super-seven.jpg').preferences['Content-ID']}\">",
-            content_type: 'text/html',
-            attachments:  Store.where(filename: 'super-seven.jpg')
-          )
-          expect(mail.to_s).to include('Content-Disposition: inline')
-          expect(mail.to_s).not_to include('Content-Disposition: attachment')
-        end
-      end
     end
 
     describe 'inline image handling' do
