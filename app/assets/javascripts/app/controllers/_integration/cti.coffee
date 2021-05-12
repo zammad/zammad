@@ -73,6 +73,30 @@ class Form extends App.Controller
       autofocus: false
     )
 
+    configure_attributes = [
+      {
+        name: 'view_limit',
+        display: '',
+        tag: 'select',
+        null: false,
+        options: [
+          { name: 60, value: 60 }
+          { name: 120, value: 120 }
+          { name: 180, value: 180 }
+          { name: 240, value: 240 }
+          { name: 300, value: 300 }
+        ]
+      },
+    ]
+    new App.ControllerForm(
+      el: @$('.js-viewLimit')
+      model:
+        configure_attributes: configure_attributes,
+      params:
+        view_limit: @config['view_limit']
+      autofocus: false
+    )
+
     for row in @config.notify_map
       configure_attributes = [
         { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
@@ -93,6 +117,10 @@ class Form extends App.Controller
     # default caller_id
     default_caller_id = @$('input[name=default_caller_id]').val()
     config.outbound.default_caller_id = cleanupInput(default_caller_id)
+
+    # default view limit
+    view_limit = @$('select[name=view_limit]').val()
+    config.view_limit = parseInt(view_limit)
 
     # routing table
     config.outbound.routing_table = []

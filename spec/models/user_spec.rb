@@ -1296,8 +1296,8 @@ RSpec.describe User, type: :model do
                   user.update(phone: '0123456789')
                   Observer::Transaction.commit
                   Scheduler.worker(true)
-                end.to change { logs.map(&:reload).map(&:preferences) }
-                  .to(Array.new(5) { {} })
+                end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
+                  .to(Array.new(5) { nil })
               end
             end
 
@@ -1307,8 +1307,8 @@ RSpec.describe User, type: :model do
                   user.update(phone: '')
                   Observer::Transaction.commit
                   Scheduler.worker(true)
-                end.to change { logs.map(&:reload).map(&:preferences) }
-                  .to(Array.new(5) { {} })
+                end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
+                  .to(Array.new(5) { nil })
               end
             end
 
@@ -1318,8 +1318,8 @@ RSpec.describe User, type: :model do
                   user.update(phone: nil)
                   Observer::Transaction.commit
                   Scheduler.worker(true)
-                end.to change { logs.map(&:reload).map(&:preferences) }
-                  .to(Array.new(5) { {} })
+                end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
+                  .to(Array.new(5) { nil })
               end
             end
           end

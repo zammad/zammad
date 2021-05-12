@@ -4,10 +4,12 @@ module Cti
 
     self.table_name = 'cti_logs'
 
-    store :preferences
+    store :preferences, accessors: %i[from_pretty to_pretty]
 
     validates :state, format: { with: /\A(newCall|answer|hangup)\z/,  message: 'newCall|answer|hangup is allowed' }
 
+    before_create :set_pretty
+    before_update :set_pretty
     after_commit :push_caller_list_update
 
 =begin
@@ -327,10 +329,10 @@ returns
     def self.log_records(current_user)
       cti_config = Setting.get('cti_config')
       if cti_config[:notify_map].present?
-        return Cti::Log.where(queue: queues_of_user(current_user, cti_config)).order(created_at: :desc).limit(60)
+        return Cti::Log.where(queue: queues_of_user(current_user, cti_config)).order(created_at: :desc).limit(view_limit)
       end
 
-      Cti::Log.order(created_at: :desc).limit(60)
+      Cti::Log.order(created_at: :desc).limit(view_limit)
     end
 
 =begin
@@ -448,7 +450,7 @@ Cti::Log.process(
     end
 
     def self.push_caller_list_update?(record)
-      list_ids = Cti::Log.order(created_at: :desc).limit(60).pluck(:id)
+      list_ids = Cti::Log.order(created_at: :desc).limit(view_limit).pluck(:id)
       return true if list_ids.include?(record.id)
 
       false
@@ -490,6 +492,10 @@ optional you can put the max oldest chat entries as argument
     # adds virtual attributes when rendering #to_json
     # see http://api.rubyonrails.org/classes/ActiveModel/Serialization.html
     def attributes
+      if !from_pretty || !to_pretty
+        set_pretty
+      end
+
       virtual_attributes = {
         'from_pretty' => from_pretty,
         'to_pretty'   => to_pretty,
@@ -498,14 +504,11 @@ optional you can put the max oldest chat entries as argument
       super.merge(virtual_attributes)
     end
 
-    def from_pretty
-      parsed = TelephoneNumber.parse(from&.sub(/^\+?/, '+'))
-      parsed.send(parsed.valid? ? :international_number : :original_number)
-    end
-
-    def to_pretty
-      parsed = TelephoneNumber.parse(to&.sub(/^\+?/, '+'))
-      parsed.send(parsed.valid? ? :international_number : :original_number)
+    def set_pretty
+      %i[from to].each do |field|
+        parsed = TelephoneNumber.parse(send(field)&.sub(/^\+?/, '+'))
+        preferences[:"#{field}_pretty"] = parsed.send(parsed.valid? ? :international_number : :original_number)
+      end
     end
 
 =begin
@@ -556,5 +559,8 @@ return best customer id of caller log
       customer_id
     end
 
+    def self.view_limit
+      Hash(Setting.get('cti_config'))['view_limit'] || 60
+    end
   end
 end
