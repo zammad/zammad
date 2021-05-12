@@ -11,6 +11,18 @@ RSpec.describe Cti::Log do
       expect(described_class.log(user)).to match(hash_including(:list, :assets))
     end
 
+    context 'when pretty is not generated' do
+      let(:log) { create(:'cti/log') }
+
+      before do
+        log.update_column(:preferences, nil)
+      end
+
+      it 'does fallback generate the pretty value' do
+        expect(log.reload.attributes['from_pretty']).to eq('+49 30 609854180')
+      end
+    end
+
     context 'when over 60 Log records exist' do
       subject!(:cti_logs) do
         61.times.map do |_i| # rubocop:disable Performance/TimesMap

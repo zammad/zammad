@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
   let(:phone)     { '1234567890' }
   let!(:logs)     { create_list(:cti_log, 5, direction: :in, from: phone) }
-  let(:log_prefs) { logs.each(&:reload).map(&:preferences) }
+  let(:log_prefs) { logs.each(&:reload).map { |log| log.preferences[:from] } }
 
   it 'accepts a phone number' do
     expect { described_class.perform_now(phone) }
@@ -14,7 +14,7 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
     it 'updates Cti::Logs from that number with "preferences" => {}' do
       described_class.perform_now(phone)
 
-      expect(log_prefs).to all(be_empty)
+      expect(log_prefs).to eq(Array.new(5) { nil })
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe UpdateCtiLogsByCallerJob, type: :job do
     it 'updates Cti::Logs from that number with valid "preferences" hash' do
       described_class.perform_now(phone)
 
-      expect(log_prefs).to all(include('from' => a_kind_of(Array)))
+      expect(log_prefs).not_to eq(Array.new(5) { nil })
     end
   end
 end
