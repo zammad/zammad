@@ -57,6 +57,10 @@
                 console.log('Event: upload onCompleted, data = ' + data);
                 file = null;
                 (self.eventHandlers.onCompleted || noop)(data);
+            },
+            onError: function (message) {
+                console.log('Event: upload error, message: ' + message);
+                (self.eventHandlers.onError || noop)(message);
             }
         };
     }
@@ -226,12 +230,17 @@
 
             // Triggered when upload is completed:
             xhr.onload = function (event) {
-                console.log('Upload completed: ' + fileName);
-
                 // Reduce number of active uploads:
                 manager.activeUploads -= 1;
 
-                upload.events.onCompleted(event.target.responseText);
+                // call the error callback when the status is not ok
+                if (xhr.status !== 200){
+                  console.log('Upload failed: ' + fileName);
+                  upload.events.onError(event.target.statusText);
+                } else {
+                  console.log('Upload completed: ' + fileName);
+                  upload.events.onCompleted(event.target.responseText);
+                }
 
                 // Check if there are any uploads left in a queue:
                 if (manager.uploadsQueue.length) {

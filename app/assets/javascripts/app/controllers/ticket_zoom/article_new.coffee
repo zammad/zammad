@@ -239,6 +239,26 @@ class App.TicketZoomArticleNew extends App.Controller
             # hide cancel on 90%
             if parseInt(progress) >= 90
               @cancelContainer.addClass('hide')
+
+          # Called when upload failed
+          onError: (message) =>
+            @attachmentPlaceholder.removeClass('hide')
+            @attachmentUpload.addClass('hide')
+            @$('.article-attachment input').val('')
+
+            if @callbackFileUploadStop
+              @callbackFileUploadStop()
+
+            new App.ControllerModal(
+              head: 'Upload Failed'
+              buttonCancel: 'Cancel'
+              buttonCancelClass: 'btn--danger'
+              buttonSubmit: false
+              message: message
+              shown: true
+              small: true
+              container: @el.closest('.content')
+            )
         )
     )
 
