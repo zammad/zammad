@@ -12,7 +12,7 @@ module ChecksClientNotification
 
   def notify_clients_data(event)
     class_name = self.class.name
-    class_name.gsub!(/::/, '')
+    class_name.gsub!(%r{::}, '')
 
     {
       message: {

@@ -15,7 +15,7 @@ class KeyboardShortcutsTest < TestCase
     shortcut(key: 'h')
 
     # ff issue, sometimes shortcut is not fired in browser test env
-    if ENV['BROWSER'] && ENV['BROWSER'] =~ /firefox/i
+    if ENV['BROWSER'] && ENV['BROWSER'] =~ %r{firefox}i
       exists = false
       (1..4).each do |_count|
         sleep 1

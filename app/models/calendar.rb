@@ -27,7 +27,7 @@ returns calendar object
   def self.init_setup(ip = nil)
 
     # ignore client ip if not public ip
-    if ip && ip =~ /^(::1|127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.)/
+    if ip && ip =~ %r{^(::1|127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.)}
       ip = nil
     end
 
@@ -214,7 +214,7 @@ returns
   end
 
   def self.fetch_parse(location)
-    if location.match?(/^http/i)
+    if location.match?(%r{^http}i)
       result = UserAgent.get(location)
       if !result.success?
         raise result.error
@@ -262,7 +262,7 @@ returns
     comment = comment.to_utf8(fallback: :read_as_sanitized_binary)
 
     # ignore daylight saving time entries
-    return if comment.match?(/(daylight saving|sommerzeit|summertime)/i)
+    return if comment.match?(%r{(daylight saving|sommerzeit|summertime)}i)
 
     [day, comment]
   end

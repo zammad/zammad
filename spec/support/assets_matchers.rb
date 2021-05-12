@@ -52,7 +52,7 @@ RSpec::Matchers.define :include_assets_of do
   #
   # @return [Hash, nil]
   def find_assets_of(object, actual)
-    actual.dig(object.class.name.gsub(/::/, ''), object.id.to_s)
+    actual.dig(object.class.name.gsub(%r{::}, ''), object.id.to_s)
   end
 end
 

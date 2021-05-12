@@ -98,7 +98,7 @@ class Overview < ApplicationModel
   def link_name(name)
     local_link = name.downcase
     local_link = local_link.parameterize(separator: '_')
-    local_link.gsub!(/\s/, '_')
+    local_link.gsub!(%r{\s}, '_')
     local_link.squeeze!('_')
     local_link = CGI.escape(local_link)
     if local_link.blank?

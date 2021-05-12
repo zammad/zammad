@@ -9,7 +9,7 @@ class SqlHelper
   def get_param_key(key, params)
     sort_by = []
     if params[key].present? && params[key].is_a?(String)
-      params[key] = params[key].split(/\s*,\s*/)
+      params[key] = params[key].split(%r{\s*,\s*})
     elsif params[key].blank?
       params[key] = []
     end
@@ -79,7 +79,7 @@ order_by = [
 
     # check order
     params[:order_by].each do |value|
-      raise "Found invalid order by value #{value}. Please use 'asc' or 'desc'." if !value.match?(/\A(asc|desc)\z/i)
+      raise "Found invalid order by value #{value}. Please use 'asc' or 'desc'." if !value.match?(%r{\A(asc|desc)\z}i)
 
       order_by.push(value.downcase)
     end

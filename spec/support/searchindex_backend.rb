@@ -42,7 +42,7 @@ prepares elasticsearch
 
     if ENV['ES_INDEX_RAND'].present?
       rand_id          = ENV.fetch('CI_JOB_ID', "r#{rand(999)}")
-      test_method_name = self.class.description.gsub(/[^\w]/, '_')
+      test_method_name = self.class.description.gsub(%r{[^\w]}, '_')
       ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id}_#{rand(999_999_999)}"
     end
     if ENV['ES_INDEX'].blank?

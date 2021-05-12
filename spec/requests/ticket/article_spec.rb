@@ -61,7 +61,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
-      expect(json_response['body']).not_to match(/some body <img src="cid:.+?/)
+      expect(json_response['body']).not_to match(%r{some body <img src="cid:.+?})
       expect(json_response['body']).to match(%r{some body <img src="/api/v1/ticket_attachment/.+?" alt="Red dot"})
       expect(json_response['content_type']).to eq('text/html')
       expect(json_response['updated_by_id']).to eq(agent.id)
@@ -76,7 +76,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[2].attachments[0]['size']).to eq('21')
       expect(ticket.articles[2].attachments[0]['preferences']['Mime-Type']).to eq('image/png')
       expect(ticket.articles[2].attachments[0]['preferences']['Content-Disposition']).to eq('inline')
-      expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(/@zammad.example.com/)
+      expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(%r{@zammad.example.com})
 
       params = {
         ticket_id:    json_response['ticket_id'],

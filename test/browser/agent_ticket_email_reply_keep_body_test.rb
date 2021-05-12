@@ -133,7 +133,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    match = full_text.match(%r{\nOn (.*?) Nicole Braun wrote:})
     assert match
     assert match[1]
     assert Time.zone.parse(match[1])
@@ -157,7 +157,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    match = full_text.match(%r{\nOn (.*?) Nicole Braun wrote:})
     assert_nil match
 
     # after test, turn full quote header back on again
@@ -215,7 +215,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nAm (.*?), schrieb Nicole Braun:/)
+    match = full_text.match(%r{\nAm (.*?), schrieb Nicole Braun:})
     assert match
 
     datestamp = match[1]

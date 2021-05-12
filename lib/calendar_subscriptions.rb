@@ -9,7 +9,7 @@ class CalendarSubscriptions
     default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
     default_preferences.each do |calendar_subscription|
 
-      next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
+      next if calendar_subscription.name !~ %r{\Adefaults_calendar_subscriptions_(.*)\z}
 
       object_name                 = $1 # rubocop:disable Lint/OutOfRangeRegexpRef
       @preferences[ object_name ] = calendar_subscription.state_current[:value]

@@ -161,7 +161,7 @@ module Import
           result.push 'Admin'
         end
 
-        return result if !group['Name'].match?(/^(stats|report)/)
+        return result if !group['Name'].match?(%r{^(stats|report)})
         return result if !( permissions.include?('ro') || permissions.include?('rw') )
 
         result.push 'Report'

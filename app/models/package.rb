@@ -64,7 +64,7 @@ install all packages located under auto_install/*.zpm
 
     data = []
     Dir.foreach(path) do |entry|
-      if entry.include?('.zpm') && entry !~ /^\./
+      if entry.include?('.zpm') && entry !~ %r{^\.}
         data.push entry
       end
     end
@@ -133,7 +133,7 @@ execute migration down + unlink files
     Dir.glob("#{package_base_dir}/**/*") do |entry|
       entry = entry.sub('//', '/')
       file = entry
-      file = file.sub(/#{package_base_dir}/, '')
+      file = file.sub(%r{#{package_base_dir}}, '')
       dest = "#{@@root}/#{file}"
 
       if File.symlink?(dest.to_s)
@@ -166,7 +166,7 @@ link files + execute migration up
     Dir.glob("#{package_base_dir}/**/*") do |entry|
       entry = entry.sub('//', '/')
       file = entry
-      file = file.sub(/#{package_base_dir}/, '')
+      file = file.sub(%r{#{package_base_dir}}, '')
       file = file.sub(%r{^/}, '')
 
       # ignore files

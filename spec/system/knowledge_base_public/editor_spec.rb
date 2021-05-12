@@ -14,7 +14,7 @@ RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated_
 
     it 'expect to have edit button' do
       button = find '.topbar-btn'
-      expect(button['href']).to match(/edit$/)
+      expect(button['href']).to match(%r{edit$})
     end
   end
 

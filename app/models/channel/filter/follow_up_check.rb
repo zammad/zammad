@@ -72,7 +72,7 @@ module Channel::Filter::FollowUpCheck
         references += mail[:'in-reply-to']
       end
       if references != ''
-        message_ids = references.split(/\s+/)
+        message_ids = references.split(%r{\s+})
         message_ids.each do |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
@@ -86,7 +86,7 @@ module Channel::Filter::FollowUpCheck
 
           # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
           subject_to_check = mail[:subject]
-          subject_to_check.gsub!(/^(..(\[\d+\])?:\s+)+/, '')
+          subject_to_check.gsub!(%r{^(..(\[\d+\])?:\s+)+}, '')
 
           # if subject is different, it's no followup
           next if subject_to_check != article_first.subject
@@ -119,7 +119,7 @@ module Channel::Filter::FollowUpCheck
   def self.follow_up_by_md5(mail)
     return if mail[:'x-zammad-ticket-id']
 
-    mail_references(mail).split(/\s+/).each do |message_id|
+    mail_references(mail).split(%r{\s+}).each do |message_id|
       article = message_id_article(message_id)
       next if article.blank?
 

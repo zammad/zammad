@@ -14,7 +14,7 @@ RSpec.describe KnowledgeBase, type: :model do
 
   it { is_expected.to validate_presence_of(:color_highlight) }
   it { is_expected.to validate_presence_of(:color_header) }
-  it { is_expected.to validate_presence_of(:iconset).with_message(//) }
+  it { is_expected.to validate_presence_of(:iconset).with_message(%r{}) }
   it { is_expected.to validate_inclusion_of(:iconset).in_array(KnowledgeBase::ICONSETS) }
   it { is_expected.to validate_inclusion_of(:category_layout).in_array(KnowledgeBase::LAYOUTS) }
   it { is_expected.to validate_inclusion_of(:homepage_layout).in_array(KnowledgeBase::LAYOUTS) }

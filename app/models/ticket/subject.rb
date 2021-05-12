@@ -57,17 +57,17 @@ returns
     ticket_subject_size = Setting.get('ticket_subject_size')
 
     # remove all possible ticket hook formats with []
-    subject = subject.gsub(/\[#{ticket_hook}: #{number}\](\s+?|)/, '')
-    subject = subject.gsub(/\[#{ticket_hook}:#{number}\](\s+?|)/, '')
-    subject = subject.gsub(/\[#{ticket_hook}#{ticket_hook_divider}#{number}\](\s+?|)/, '')
+    subject = subject.gsub(%r{\[#{ticket_hook}: #{number}\](\s+?|)}, '')
+    subject = subject.gsub(%r{\[#{ticket_hook}:#{number}\](\s+?|)}, '')
+    subject = subject.gsub(%r{\[#{ticket_hook}#{ticket_hook_divider}#{number}\](\s+?|)}, '')
 
     # remove all possible ticket hook formats without []
-    subject = subject.gsub(/#{ticket_hook}: #{number}(\s+?|)/, '')
-    subject = subject.gsub(/#{ticket_hook}:#{number}(\s+?|)/, '')
-    subject = subject.gsub(/#{ticket_hook}#{ticket_hook_divider}#{number}(\s+?|)/, '')
+    subject = subject.gsub(%r{#{ticket_hook}: #{number}(\s+?|)}, '')
+    subject = subject.gsub(%r{#{ticket_hook}:#{number}(\s+?|)}, '')
+    subject = subject.gsub(%r{#{ticket_hook}#{ticket_hook_divider}#{number}(\s+?|)}, '')
 
     # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
-    subject = subject.gsub(/^(..(\[\d+\])?:\s)+/, '')
+    subject = subject.gsub(%r{^(..(\[\d+\])?:\s)+}, '')
 
     # resize subject based on config
     if subject.length > ticket_subject_size.to_i

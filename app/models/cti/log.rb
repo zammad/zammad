@@ -6,7 +6,7 @@ module Cti
 
     store :preferences, accessors: %i[from_pretty to_pretty]
 
-    validates :state, format: { with: /\A(newCall|answer|hangup)\z/,  message: 'newCall|answer|hangup is allowed' }
+    validates :state, format: { with: %r{\A(newCall|answer|hangup)\z},  message: 'newCall|answer|hangup is allowed' }
 
     before_create :set_pretty
     before_update :set_pretty
@@ -506,7 +506,7 @@ optional you can put the max oldest chat entries as argument
 
     def set_pretty
       %i[from to].each do |field|
-        parsed = TelephoneNumber.parse(send(field)&.sub(/^\+?/, '+'))
+        parsed = TelephoneNumber.parse(send(field)&.sub(%r{^\+?}, '+'))
         preferences[:"#{field}_pretty"] = parsed.send(parsed.valid? ? :international_number : :original_number)
       end
     end

@@ -71,7 +71,7 @@ returns on fail
       provider_map.each_value do |settings|
         domains.each do |domain_to_check|
 
-          next if !domain_to_check.match?(/#{settings[:domain]}/i)
+          next if !domain_to_check.match?(%r{#{settings[:domain]}}i)
 
           # add folder to config if needed
           if params[:folder].present? && settings[:inbound] && settings[:inbound][:options]
@@ -347,7 +347,7 @@ returns on fail
           }
           white_map.each_key do |key|
 
-            next if !e.message.match?(/#{Regexp.escape(key)}/i)
+            next if !e.message.match?(%r{#{Regexp.escape(key)}}i)
 
             return {
               result:   'ok',
@@ -372,7 +372,7 @@ returns on fail
 
     def self.invalid_field(message_backend)
       invalid_fields.each do |key, fields|
-        return fields if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return fields if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       {}
     end
@@ -397,7 +397,7 @@ returns on fail
 
     def self.translation(message_backend)
       translations.each do |key, message_human|
-        return message_human if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return message_human if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       nil
     end

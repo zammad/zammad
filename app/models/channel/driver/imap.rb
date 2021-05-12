@@ -226,7 +226,7 @@ example
         headers = self.class.extract_rfc822_headers(message_meta)
         subject = headers['Subject']
         next if !subject
-        next if !subject.match?(/#{verify_string}/)
+        next if !subject.match?(%r{#{verify_string}})
 
         Rails.logger.info " - verify email #{verify_string} found"
         timeout(600) do
@@ -406,7 +406,7 @@ returns
     array = string
               .gsub("\r\n\t", ' ') # Some servers (e.g. microsoft365) may put attribute value on a separate line and tab it
               .lines(chomp: true)
-              .map { |line| line.split(/:\s*/, 2).map(&:strip) }
+              .map { |line| line.split(%r{:\s*}, 2).map(&:strip) }
 
     array.each { |elem| elem.append(nil) if elem.one? }
 

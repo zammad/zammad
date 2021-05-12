@@ -43,7 +43,7 @@ class SettingsController < ApplicationController
     end
 
     # validate image
-    if !clean_params[:logo].match?(/^data:image/i)
+    if !clean_params[:logo].match?(%r{^data:image}i)
       render json: {
         result:  'invalid',
         message: 'Invalid payload, need data:image in logo param',
@@ -66,7 +66,7 @@ class SettingsController < ApplicationController
 
     # store resized image 1:1
     setting = Setting.lookup(name: 'product_logo')
-    if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
+    if params[:logo_resize] && params[:logo_resize] =~ %r{^data:image}i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes(params[:logo_resize])

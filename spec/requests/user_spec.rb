@@ -168,7 +168,7 @@ RSpec.describe 'User', type: :request do
         params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
         post '/api/v1/users', params: params, headers: headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to be_a(Array).and(include(match(/Invalid password/)))
+        expect(json_response['error']).to be_a(Array).and(include(match(%r{Invalid password})))
       end
 
       it 'verified with no current user', authenticated_as: :admin do
@@ -1442,12 +1442,12 @@ RSpec.describe 'User', type: :request do
 
     it 'returns verbose error when full image is missing' do
       make_request(avatar_full: '')
-      expect(json_response).to include('error' => match(/Full/).and(match(/is invalid/)))
+      expect(json_response).to include('error' => match(%r{Full}).and(match(%r{is invalid})))
     end
 
     it 'returns verbose error when resized image is missing' do
       make_request(avatar_full: base64)
-      expect(json_response).to include('error' => match(/Resized/).and(match(/is invalid/)))
+      expect(json_response).to include('error' => match(%r{Resized}).and(match(%r{is invalid})))
     end
 
     it 'successfully changes avatar' do

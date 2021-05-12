@@ -273,6 +273,9 @@ Style/StringConcatenation:
   Exclude:
     - "config/routes/**/*"
 
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-

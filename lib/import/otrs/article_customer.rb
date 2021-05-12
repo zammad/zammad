@@ -33,7 +33,7 @@ module Import
         def extract_email(from)
           Mail::Address.new(from).address
         rescue
-          return from if from !~ /<\s*([^>]+)/
+          return from if from !~ %r{<\s*([^>]+)}
 
           $1.strip
         end

@@ -1159,7 +1159,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     context 'for “delivery failed” notifications (a.k.a. bounce messages)' do
       let(:ticket) { article.ticket }
       let(:article) { create(:ticket_article, sender_name: 'Agent', message_id: message_id) }
-      let(:message_id) { raw_mail[/(?<=^(References|Message-ID): )\S*/] }
+      let(:message_id) { raw_mail[%r{(?<=^(References|Message-ID): )\S*}] }
 
       context 'with future retries (delayed)' do
         let(:mail_file) { Rails.root.join('test/data/mail/mail078.box') }
@@ -1347,7 +1347,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
             Postmaster of zammad.example.com
           BODY
-          body.gsub(/\n/, "\r\n")
+          body.gsub(%r{\n}, "\r\n")
         end
       end
     end
@@ -1370,7 +1370,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
             Postmaster von zammad.example.com
           BODY
-          body.gsub(/\n/, "\r\n")
+          body.gsub(%r{\n}, "\r\n")
         end
       end
     end

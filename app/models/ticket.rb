@@ -627,7 +627,7 @@ condition example
 
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before|till|from)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$/)
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(%r{^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before|till|from)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$})
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
@@ -639,7 +639,7 @@ condition example
       end
 
       # validate pre_condition values
-      return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(not_set|current_user\.|specific)/
+      return nil if selector['pre_condition'] && selector['pre_condition'] !~ %r{^(not_set|current_user\.|specific)}
 
       # get attributes
       attributes = attribute.split('.')
@@ -699,7 +699,7 @@ condition example
 
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
+          if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
             query += "(#{attribute} IS NULL OR #{attribute} IN (?))"
             bind_params.push 1
           else
@@ -744,7 +744,7 @@ condition example
         end
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
+          if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
             query += "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
             bind_params.push 1
           else
@@ -1444,7 +1444,7 @@ result
   def check_title
     return true if !title
 
-    title.gsub!(/\s|\t|\r/, ' ')
+    title.gsub!(%r{\s|\t|\r}, ' ')
     true
   end
 
@@ -1476,7 +1476,7 @@ result
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return true if current_state_type.name.match?(/^pending/i)
+    return true if current_state_type.name.match?(%r{^pending}i)
 
     self.pending_time = nil
     true
@@ -1561,7 +1561,7 @@ result
         User.group_access(group_id, 'full').sort_by(&:login).each do |user|
           recipients_raw.push(user.email)
         end
-      when /\Auserid_(\d+)\z/
+      when %r{\Auserid_(\d+)\z}
         user = User.lookup(id: $1)
         if !user
           logger.warn "Can't find configured Trigger Email recipient User with ID '#{$1}'"
@@ -1592,7 +1592,7 @@ result
         end
       rescue
         if recipient_email.present?
-          if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+          if recipient_email !~ %r{^(.+?)<(.+?)@(.+?)>$}
             next # no usable format found
           end
 
@@ -1609,15 +1609,15 @@ result
       # do not sent notifications to this recipients
       send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
       begin
-        next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
+        next if recipient_email.match?(%r{#{send_no_auto_response_reg_exp}}i)
       rescue => e
         logger.error "Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
         logger.error e
-        next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
+        next if recipient_email.match?(%r{(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?}i)
       end
 
       # check if notification should be send because of customer emails
-      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ %r{#{Regexp.quote(recipient_email)}}i
         logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
         next
       end
@@ -1812,7 +1812,7 @@ result
       owner_id
     when 'ticket_agents'
       User.group_access(group_id, 'full').sort_by(&:login)
-    when /\Auserid_(\d+)\z/
+    when %r{\Auserid_(\d+)\z}
       return $1 if User.exists?($1)
 
       logger.warn "Can't find configured Trigger SMS recipient User with ID '#{$1}'"

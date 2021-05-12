@@ -302,7 +302,7 @@ class SlackTest < ActiveSupport::TestCase
     channel_history['messages'].each do |message|
       next if !message['text']
 
-      if message['text'].match?(/#{search_for}/i)
+      if message['text'].match?(%r{#{search_for}}i)
         message_count += 1
         p "SUCCESS: message with #{search_for} found #{message_count} time(s)!"
       end

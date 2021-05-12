@@ -46,7 +46,7 @@ RSpec.describe Overview, type: :model do
 
       it 'handles special chars' do
         overview = create(:overview, name: 'Д дФ ф')
-        expect(overview.link).to match(/^\d{1,3}$/)
+        expect(overview.link).to match(%r{^\d{1,3}$})
       end
 
       it 'removes special char fallback if possible' do

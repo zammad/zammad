@@ -46,7 +46,7 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
   end
 
   describe 'POST /api/v1/channels_twitter_webhook' do
-    let(:payload) { params.stringify_keys.to_s.gsub(/=>/, ':').delete(' ') }
+    let(:payload) { params.stringify_keys.to_s.gsub(%r{=>}, ':').delete(' ') }
     let(:headers) { { 'x-twitter-webhooks-signature': hash_signature } }
     let(:params) { { foo: 'bar', for_user_id: twitter_channel.options[:user][:id] } }
 

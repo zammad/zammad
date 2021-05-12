@@ -4,7 +4,7 @@
 
 class Channel::EmailParser
   PROZESS_TIME_MAX = 180
-  EMAIL_REGEX = /.+@.+/.freeze
+  EMAIL_REGEX = %r{.+@.+}.freeze
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
   EXCESSIVE_LINKS_MSG = 'This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
@@ -351,7 +351,7 @@ returns
     # skip check attributes if it is tags
     return true if header_name == 'x-zammad-ticket-tags'
 
-    if header_name =~ /^x-zammad-(.+?)-(followup-|)(.*)$/i
+    if header_name =~ %r{^x-zammad-(.+?)-(followup-|)(.*)$}i
       class_name = $1
       attribute = $3
     end
@@ -401,7 +401,7 @@ returns
       data[:from_local]        = mail_address.local
       data[:from_domain]       = mail_address.domain
       data[:from_display_name] = mail_address.display_name || mail_address.comments&.first
-    elsif from =~ /^(.+?)<((.+?)@(.+?))>/
+    elsif from =~ %r{^(.+?)<((.+?)@(.+?))>}
       data[:from_email]        = $2
       data[:from_local]        = $3
       data[:from_domain]       = $4
@@ -419,7 +419,7 @@ returns
                  .to_s
                  .delete('"')
                  .strip
-                 .gsub(/(^'|'$)/, '')
+                 .gsub(%r{(^'|'$)}, '')
 
     data
   end
@@ -539,7 +539,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     part.body = force_japanese_encoding part.body.encoded.unpack1('M')
   end
 
-  ISO2022JP_REGEXP = /=\?ISO-2022-JP\?B\?(.+?)\?=/.freeze
+  ISO2022JP_REGEXP = %r{=\?ISO-2022-JP\?B\?(.+?)\?=}.freeze
 
   # https://github.com/zammad/zammad/issues/3115
   def header_field_unpack_japanese(field)
@@ -630,7 +630,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     return body_text if !options[:strict_html]
 
     # Issue #2390 - emails with >5k HTML links should be rejected
-    return EXCESSIVE_LINKS_MSG if body_text.scan(/<a[[:space:]]/i).count >= 5_000
+    return EXCESSIVE_LINKS_MSG if body_text.scan(%r{<a[[:space:]]}i).count >= 5_000
 
     body_text.html2html_strict
   end
@@ -717,7 +717,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     rescue
       begin
         case file.header[:content_disposition].to_s
-        when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
+        when %r{(filename|name)(\*{0,1})="(.+?)"}i, %r{(filename|name)(\*{0,1})='(.+?)'}i, %r{(filename|name)(\*{0,1})=(.+?);}i
           filename = $3
         end
       rescue
@@ -727,7 +727,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     begin
       case file.header[:content_disposition].to_s
-      when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
+      when %r{(filename|name)(\*{0,1})="(.+?)"}i, %r{(filename|name)(\*{0,1})='(.+?)'}i, %r{(filename|name)(\*{0,1})=(.+?);}i
         filename = $3
       end
     rescue
@@ -737,7 +737,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # as fallback, use raw values
     if filename.blank?
       case headers_store['Content-Disposition'].to_s
-      when /(filename|name)(\*{0,1})="(.+?)"/i, /(filename|name)(\*{0,1})='(.+?)'/i, /(filename|name)(\*{0,1})=(.+?);/i
+      when %r{(filename|name)(\*{0,1})="(.+?)"}i, %r{(filename|name)(\*{0,1})='(.+?)'}i, %r{(filename|name)(\*{0,1})=(.+?);}i
         filename = $3
       end
     end
@@ -767,7 +767,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # e. g. Content-Type: video/quicktime; name="Video.MOV";
     if filename.blank?
       ['(filename|name)(\*{0,1})="(.+?)"(;|$)', '(filename|name)(\*{0,1})=\'(.+?)\'(;|$)', '(filename|name)(\*{0,1})=(.+?)(;|$)'].each do |regexp|
-        if headers_store['Content-Type'] =~ /#{regexp}/i
+        if headers_store['Content-Type'] =~ %r{#{regexp}}i
           filename = $3
           break
         end
@@ -785,7 +785,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # generate file name based on content-id with file extention
-    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?\..{2,6})@.+?/i
+    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ %r{(.+?\..{2,6})@.+?}i
       filename = $1
     end
 
@@ -802,7 +802,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         'image/gif':               %w[gif image],
       }
       map.each do |type, ext|
-        next if !content_type.match?(/^#{Regexp.quote(type)}/i)
+        next if !content_type.match?(%r{^#{Regexp.quote(type)}}i)
 
         filename = if headers_store['Content-Description'].present?
                      "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
@@ -814,7 +814,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # generate file name based on content-id without file extention
-    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ /(.+?)@.+?/i
+    if filename.blank? && headers_store['Content-ID'].present? && headers_store['Content-ID'] =~ %r{(.+?)@.+?}i
       filename = $1
     end
 
@@ -826,7 +826,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # create uniq filename
     local_filename = ''
     local_extention = ''
-    if filename =~ /^(.*?)\.(.+?)$/
+    if filename =~ %r{^(.*?)\.(.+?)$}
       local_filename = $1
       local_extention = $2
     end
@@ -925,7 +925,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     reply.merge(
       to:            parsed_incoming_mail[:from_email],
-      body:          reply[:body].gsub(/\n/, "\r\n"),
+      body:          reply[:body].gsub(%r{\n}, "\r\n"),
       content_type:  'text/plain',
       References:    parsed_incoming_mail[:message_id],
       'In-Reply-To': parsed_incoming_mail[:message_id],
@@ -978,7 +978,7 @@ module Mail
       end
       return value if value.blank?
 
-      value.sub(/^.+?:(\s|)/, '')
+      value.sub(%r{^.+?:(\s|)}, '')
     end
   end
 

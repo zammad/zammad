@@ -203,9 +203,9 @@ class TwitterSync
           next if local_url['url'].blank?
 
           if local_url['expanded_url'].present?
-            text.gsub!(/#{Regexp.quote(local_url['url'])}/, local_url['expanded_url'])
+            text.gsub!(%r{#{Regexp.quote(local_url['url'])}}, local_url['expanded_url'])
           elsif local_url['display_url']
-            text.gsub!(/#{Regexp.quote(local_url['url'])}/, local_url['display_url'])
+            text.gsub!(%r{#{Regexp.quote(local_url['url'])}}, local_url['display_url'])
           end
         end
       end
@@ -266,9 +266,9 @@ class TwitterSync
 
           if local_media['url'].present?
             if local_media['expanded_url'].present?
-              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['expanded_url'])
+              text.gsub!(%r{#{Regexp.quote(local_media['url'])}}, local_media['expanded_url'])
             elsif local_media['display_url']
-              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['display_url'])
+              text.gsub!(%r{#{Regexp.quote(local_media['url'])}}, local_media['display_url'])
             end
           end
         end
@@ -277,9 +277,9 @@ class TwitterSync
 
           if local_media['url'].present?
             if local_media['expanded_url'].present?
-              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['expanded_url'])
+              text.gsub!(%r{#{Regexp.quote(local_media['url'])}}, local_media['expanded_url'])
             elsif local_media['display_url']
-              text.gsub!(/#{Regexp.quote(local_media['url'])}/, local_media['display_url'])
+              text.gsub!(%r{#{Regexp.quote(local_media['url'])}}, local_media['display_url'])
             end
           end
 
@@ -723,7 +723,7 @@ process webhook messages from twitter
           channel.options[:sync][:search].each do |local_search|
             next if local_search[:term].blank?
             next if local_search[:group_id].blank?
-            next if !item['text'].match?(/#{Regexp.quote(local_search[:term])}/i)
+            next if !item['text'].match?(%r{#{Regexp.quote(local_search[:term])}}i)
 
             group_id = local_search[:group_id]
             break

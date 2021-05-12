@@ -120,7 +120,7 @@ reload config settings
           @@current[key] = value
           next
         end
-        @@current[key] = value.gsub(/\#\{config\.(.+?)\}/) do
+        @@current[key] = value.gsub(%r{\#\{config\.(.+?)\}}) do
           @@raw[$1].to_s
         end
       end

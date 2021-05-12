@@ -65,7 +65,7 @@ class Sequencer
               return true if e.message.include?('execution expired')
 
               status = e.response.status.to_s
-              status.match?(/^(4|5)\d\d$/)
+              status.match?(%r{^(4|5)\d\d$})
             end
 
             def resource_collection

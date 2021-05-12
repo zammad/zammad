@@ -37,7 +37,7 @@ module CreatesTicketArticles
       clean_params.delete(:sender)
       clean_params.delete(:origin_by_id)
       type = Ticket::Article::Type.lookup(id: clean_params[:type_id])
-      if !type.name.match?(/^(note|web)$/)
+      if !type.name.match?(%r{^(note|web)$})
         clean_params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
       end
       clean_params.delete(:type)
@@ -91,12 +91,12 @@ module CreatesTicketArticles
         preferences_keys.each do |key|
           next if !attachment[key]
 
-          store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')
+          store_key = key.tr('-', '_').camelize.gsub(%r{(.+)([A-Z])}, '\1_\2').tr('_', '-')
           preferences[store_key] = attachment[key]
         end
 
         begin
-          base64_data = attachment[:data].gsub(/[\r\n]/, '')
+          base64_data = attachment[:data].gsub(%r{[\r\n]}, '')
           attachment_data = Base64.strict_decode64(base64_data)
         rescue ArgumentError
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"

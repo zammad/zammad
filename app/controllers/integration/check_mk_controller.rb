@@ -61,7 +61,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
           internal:  false,
         )
       end
-      if (!auto_close && params[:state].match(/#{state_recovery_match}/i)) || !params[:state].match(/#{state_recovery_match}/i)
+      if (!auto_close && params[:state].match(%r{#{state_recovery_match}}i)) || !params[:state].match(%r{#{state_recovery_match}}i)
         render json: {
           result:     'ticket already open, added note',
           ticket_ids: ticket_ids_found,
@@ -71,7 +71,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     end
 
     # check if service is recovered
-    if auto_close && params[:state].present? && params[:state].match(/#{state_recovery_match}/i)
+    if auto_close && params[:state].present? && params[:state].match(%r{#{state_recovery_match}}i)
       if ticket_ids_found.blank?
         render json: {
           result: 'no open tickets found, ignore action',

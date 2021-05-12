@@ -42,7 +42,7 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    items = string.scan(/.+?-+END(?: TRUSTED)? CERTIFICATE-+/mi).each_with_object([]) do |cert, result|
+    items = string.scan(%r{.+?-+END(?: TRUSTED)? CERTIFICATE-+}mi).each_with_object([]) do |cert, result|
       result << SMIMECertificate.create!(public_key: cert)
     end
 

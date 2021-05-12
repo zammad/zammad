@@ -91,7 +91,7 @@ returns
         next if !mail
 
         # check how many content messages we have, for notice used
-        if !mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/)
+        if !mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)})
           content_messages += 1
           break if content_max_check < content_messages
         end
@@ -117,7 +117,7 @@ returns
         next if !mail
 
         # check if verify message exists
-        next if !mail.match?(/#{verify_string}/)
+        next if !mail.match?(%r{#{verify_string}})
 
         Rails.logger.info " - verify email #{verify_string} found"
         m.delete
@@ -149,7 +149,7 @@ returns
       next if !mail
 
       # ignore verify messages
-      if mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/) && mail =~ /X-Zammad-Verify-Time:\s(.+?)\s/
+      if mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)}) && mail =~ %r{X-Zammad-Verify-Time:\s(.+?)\s}
         begin
           verify_time = Time.zone.parse($1)
           if verify_time > Time.zone.now - 30.minutes

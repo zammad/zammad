@@ -21,7 +21,7 @@ RSpec.describe Channel::Filter::InternalArticleCheck do
   let(:email_parse_mail_answer) do
     channel_as_model = Channel.new(options: {})
 
-    email_raw_string.sub!(/^Subject: .+?$/, subject)
+    email_raw_string.sub!(%r{^Subject: .+?$}, subject)
     email_raw_string.sub!('From: <John.Smith@example.com>', from)
     email_raw_string.sub!('Message-Id: <053EA3703574649ABDAF24D43A05604F327A130@MEMASFRK004.example.com>', "Message-Id: <053EA3703574649ABDAF24D43A05604F327A130@MEMASFRK004.example.com>\nIn-Reply-To: #{in_reply_to}")
     Channel::EmailParser.new.process(channel_as_model, email_raw_string)

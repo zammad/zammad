@@ -92,7 +92,7 @@ module Import
         mapped.delete(:content_type) if mapped[:content_type].blank?
         return mapped if !mapped[:content_type]
 
-        mapped[:content_type].sub!(/[;,]\s?.+?$/, '')
+        mapped[:content_type].sub!(%r{[;,]\s?.+?$}, '')
         mapped
       end
 

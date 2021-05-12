@@ -1,7 +1,7 @@
 class PasswordPolicy
   class Digit < PasswordPolicy::Backend
 
-    NEED_DIGIT_REGEXP = /\d/.freeze
+    NEED_DIGIT_REGEXP = %r{\d}.freeze
 
     def valid?
       @password.match? NEED_DIGIT_REGEXP

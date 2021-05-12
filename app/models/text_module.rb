@@ -114,9 +114,9 @@ push text_modules to online
 
   def validate_content
     return true if content.blank?
-    return true if content.match?(/<.+?>/)
+    return true if content.match?(%r{<.+?>})
 
-    content.gsub!(/(\r\n|\n\r|\r)/, "\n")
+    content.gsub!(%r{(\r\n|\n\r|\r)}, "\n")
     self.content = content.text2html
     true
   end

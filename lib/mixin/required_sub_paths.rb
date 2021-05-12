@@ -30,7 +30,7 @@ module Mixin
 
         if File.directory?(sub_path)
           sub_paths.push(sub_path)
-        elsif sub_path =~ /\A(.*)\.rb\z/
+        elsif sub_path =~ %r{\A(.*)\.rb\z}
           require_path = $1
           require_dependency(require_path)
         end

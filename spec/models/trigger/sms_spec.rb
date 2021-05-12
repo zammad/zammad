@@ -42,7 +42,7 @@ RSpec.describe Trigger do
       end
 
       it 'renders HTML chars' do
-        expect(triggered_article.body).to match(/space between/)
+        expect(triggered_article.body).to match(%r{space between})
       end
 
       it 'interpolates ticket properties' do

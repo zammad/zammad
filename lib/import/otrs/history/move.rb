@@ -7,7 +7,7 @@ module Import
           # "%%Queue1%%5%%Postmaster%%1"
           from = nil
           to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+          if data =~ %r{%%(.+?)%%(.+?)%%(.+?)%%(.+?)$}
             from    = $1
             from_id = $2
             to      = $3

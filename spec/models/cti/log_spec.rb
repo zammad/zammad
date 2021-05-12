@@ -161,7 +161,7 @@ RSpec.describe Cti::Log do
         before { create(:'cti/log', call_id: '1') }
 
         it 'raises an error' do
-          expect { described_class.process(attributes) }.to raise_error(/call_id \S+ already exists!/)
+          expect { described_class.process(attributes) }.to raise_error(%r{call_id \S+ already exists!})
         end
       end
     end
@@ -171,7 +171,7 @@ RSpec.describe Cti::Log do
 
       context 'with unrecognized "call_id"' do
         it 'raises an error' do
-          expect { described_class.process(attributes) }.to raise_error(/No such call_id/)
+          expect { described_class.process(attributes) }.to raise_error(%r{No such call_id})
         end
       end
 
@@ -202,7 +202,7 @@ RSpec.describe Cti::Log do
 
       context 'with unrecognized "call_id"' do
         it 'raises an error' do
-          expect { described_class.process(attributes) }.to raise_error(/No such call_id/)
+          expect { described_class.process(attributes) }.to raise_error(%r{No such call_id})
         end
       end
 

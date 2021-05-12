@@ -47,26 +47,26 @@ class Channel::Filter::MonitoringBase
     return if result['host'].blank?
 
     # icinga - get state by body - new templates
-    if result['state'].blank? && mail[:body] =~ /.+?\sis\s(.+?)!/
+    if result['state'].blank? && mail[:body] =~ %r{.+?\sis\s(.+?)!}
       result['state'] = $1
     end
 
     # icinga - get state by subject - new templates "state:" is not in body anymore
     # Subject: [PROBLEM] Ping IPv4 on host1234.dc.example.com is WARNING!
     # Subject: [PROBLEM] Host host1234.dc.example.com is DOWN!
-    if result['state'].blank? && mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)!/
+    if result['state'].blank? && mail[:subject] =~ %r{(on|Host)\s.+?\sis\s(.+?)!}
       result['state'] = $2
     end
 
     # monit - get missing attributes from body
-    if result['service'].blank? && mail[:body] =~ /\sService\s(.+?)\s/
+    if result['service'].blank? && mail[:body] =~ %r{\sService\s(.+?)\s}
       result['service'] = $1
     end
 
     # possible event types https://mmonit.com/monit/documentation/#Setting-an-event-filter
     if result['state'].blank?
       result['state'] = case mail[:body]
-                        when /\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/, /(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/
+                        when %r{\s(done|recovery|succeeded|bytes\sok|packets\sok)\s}, %r{(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)}
                           'OK'
                         else
                           'CRITICAL'
@@ -89,7 +89,7 @@ class Channel::Filter::MonitoringBase
       mail[ :'x-zammad-ticket-id' ] = ticket.id
 
       # check if service is recovered
-      if auto_close && result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
+      if auto_close && result['state'].present? && result['state'].match(%r{#{state_recovery_match}}i)
         Rails.logger.info "MonitoringBase.#{integration} set autoclose to state_id #{auto_close_state_id}"
         state = Ticket::State.lookup(id: auto_close_state_id)
         if state
@@ -112,13 +112,13 @@ class Channel::Filter::MonitoringBase
     end
 
     # ignore states
-    if state_ignore_match.present? && result['state'].present? && result['state'].match(/#{state_ignore_match}/i)
+    if state_ignore_match.present? && result['state'].present? && result['state'].match(%r{#{state_ignore_match}}i)
       mail[ :'x-zammad-ignore' ] = true
       return true
     end
 
     # if now problem exists, just ignore the email
-    if result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
+    if result['state'].present? && result['state'].match(%r{#{state_recovery_match}}i)
       mail[ :'x-zammad-ignore' ] = true
       return true
     end

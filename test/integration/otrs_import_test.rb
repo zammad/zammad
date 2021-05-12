@@ -22,7 +22,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     if ENV['IMPORT_OTRS_ENDPOINT'] =~ %r{^(http|https)://((.+?)\..+?)/}
       http      = $1
       system_id = $3
-      system_id.gsub!(/[A-z]/, '') # strip chars
+      system_id.gsub!(%r{[A-z]}, '') # strip chars
     end
     assert_equal( system_id, Setting.get('system_id'), 'system_id' )
     assert_equal( http, Setting.get('http_type'), 'http_type' )

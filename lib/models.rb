@@ -30,7 +30,7 @@ returns
       dir    = Rails.root.join('app/models').to_s
       tables = ActiveRecord::Base.connection.tables
       Dir.glob("#{dir}/**/*.rb") do |entry|
-        next if entry.match?(/application_model/i)
+        next if entry.match?(%r{application_model}i)
         next if entry.match?(%r{channel/}i)
         next if entry.match?(%r{observer/}i)
         next if entry.match?(%r{store/provider/}i)

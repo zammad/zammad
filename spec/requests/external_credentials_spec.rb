@@ -372,7 +372,7 @@ RSpec.describe 'External Credentials', type: :request do
 
             expect(WebMock)
               .to have_requested(:post, 'https://api.twitter.com/oauth/request_token')
-              .with(headers: { 'Authorization' => /oauth_consumer_key="#{twitter_credential.credentials[:consumer_key]}"/ } )
+              .with(headers: { 'Authorization' => %r{oauth_consumer_key="#{twitter_credential.credentials[:consumer_key]}"} } )
           end
 
           it 'redirects to Twitter authorization URL' do

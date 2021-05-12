@@ -699,13 +699,13 @@ RSpec.describe 'Ticket', type: :request do
       expect(Digest::MD5.hexdigest(file.content)).to eq('d3c1e09bdefb92b6a06b791a24ca9599')
       expect(file.filename).to eq('image1.png')
       expect(file.preferences['Mime-Type']).to eq('image/png')
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       expect(file.preferences['Content-ID']).to be_truthy
       file = ticket.articles.first.attachments[1]
       expect(Digest::MD5.hexdigest(file.content)).to eq('006a2ca3793b550c8fe444acdeb39252')
       expect(file.filename).to eq('image2.jpeg')
       expect(file.preferences['Mime-Type']).to eq('image/jpeg')
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       expect(file.preferences['Content-ID']).to be_truthy
     end
 
@@ -744,7 +744,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(file.filename).to eq('image1.jpeg')
       expect(file.preferences['Mime-Type']).to eq('image/jpeg')
       expect(file.preferences['Content-ID']).to be_truthy
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       file = ticket.articles.first.attachments[1]
       expect(Digest::MD5.hexdigest(file.content)).to eq('39d0d586a701e199389d954f2d592720')
       expect(file.filename).to eq('some_file.txt')

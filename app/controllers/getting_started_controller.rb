@@ -124,7 +124,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # validate image
-    if params[:logo] && params[:logo] =~ /^data:image/i
+    if params[:logo] && params[:logo] =~ %r{^data:image}i
       file = StaticAssets.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
         messages[:logo] = 'Unable to process image upload.'
@@ -150,7 +150,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # save image
-    if params[:logo] && params[:logo] =~ /^data:image/i
+    if params[:logo] && params[:logo] =~ %r{^data:image}i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes(params[:logo])
@@ -159,7 +159,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       StaticAssets.store_raw(file[:content], file[:mime_type])
     end
 
-    if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
+    if params[:logo_resize] && params[:logo_resize] =~ %r{^data:image}i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes(params[:logo_resize])

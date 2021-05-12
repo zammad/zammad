@@ -1,7 +1,7 @@
 class PasswordPolicy
   class UpperAndLowerCaseCharacters < PasswordPolicy::Backend
 
-    UPPER_LOWER_REGEXPS = [/\p{Upper}.*\p{Upper}/, /\p{Lower}.*\p{Lower}/].freeze
+    UPPER_LOWER_REGEXPS = [%r{\p{Upper}.*\p{Upper}}, %r{\p{Lower}.*\p{Lower}}].freeze
 
     def valid?
       UPPER_LOWER_REGEXPS.all? { |regexp| @password.match?(regexp) }

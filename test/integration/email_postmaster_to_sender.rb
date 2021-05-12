@@ -90,7 +90,7 @@ To: shugo@example.com
 Message-ID: <#{@test_id}@zammad.test.com>
 
 Oversized Email Message Body #{'#' * 120_000}
-".gsub(/\n/, "\r\n")
+".gsub(%r{\n}, "\r\n")
 
     large_message_md5 = Digest::MD5.hexdigest(large_message)
     large_message_size = format('%<MB>.2f', MB: large_message.size.to_f / 1024 / 1024)
@@ -103,7 +103,7 @@ Oversized Email Message Body #{'#' * 120_000}
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
     path = Rails.root.join('tmp/oversized_mail')
     target_files = Dir.entries(path).select do |filename|
-      filename =~ /^#{large_message_md5}\.eml$/
+      filename =~ %r{^#{large_message_md5}\.eml$}
     end
     assert(target_files.present?, 'Large message .eml log file must be present.')
 
@@ -182,7 +182,7 @@ To: shugo@example.com
 Message-ID: <#{@test_id}@zammad.test.com>
 
 Oversized Email Message Body #{'#' * 120_000}
-".gsub(/\n/, "\r\n")
+".gsub(%r{\n}, "\r\n")
 
     imap.append(@folder, large_message, [], Time.zone.now)
 
@@ -192,7 +192,7 @@ Oversized Email Message Body #{'#' * 120_000}
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
     path = Rails.root.join('tmp/oversized_mail')
     target_files = Dir.entries(path).select do |filename|
-      filename =~ /^.+?\.eml$/
+      filename =~ %r{^.+?\.eml$}
     end
     assert_not(target_files.blank?, 'Large message .eml log file must be blank.')
 

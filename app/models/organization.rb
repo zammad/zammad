@@ -38,8 +38,8 @@ class Organization < ApplicationModel
   def domain_cleanup
     return true if domain.blank?
 
-    domain.gsub!(/@/, '')
-    domain.gsub!(/\s*/, '')
+    domain.gsub!(%r{@}, '')
+    domain.gsub!(%r{\s*}, '')
     domain.strip!
     domain.downcase!
     true

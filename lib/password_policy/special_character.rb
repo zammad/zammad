@@ -1,7 +1,7 @@
 class PasswordPolicy
   class SpecialCharacter < PasswordPolicy::Backend
 
-    NEED_SPECIAL_CHARACTER_REGEXP = /\W/.freeze
+    NEED_SPECIAL_CHARACTER_REGEXP = %r{\W}.freeze
 
     def valid?
       @password.match? NEED_SPECIAL_CHARACTER_REGEXP

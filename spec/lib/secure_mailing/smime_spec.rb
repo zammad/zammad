@@ -470,7 +470,7 @@ RSpec.describe SecureMailing::SMIME do
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
               expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be nil
 
-              expect(Rails.logger).not_to have_received(:warn).with(/#{Regexp.escape(ca_certificate_subject)}/)
+              expect(Rails.logger).not_to have_received(:warn).with(%r{#{Regexp.escape(ca_certificate_subject)}})
             end
           end
         end

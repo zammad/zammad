@@ -264,7 +264,7 @@ job.run(true)
   def match_minutes(minutes)
     return 0 if minutes < 10
 
-    "#{minutes.to_s.gsub(/(\d)\d/, '\\1')}0".to_i
+    "#{minutes.to_s.gsub(%r{(\d)\d}, '\\1')}0".to_i
   end
 
 end

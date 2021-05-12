@@ -106,7 +106,7 @@ examples how to use
       end
 
       arguments = nil
-      if /\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z/ =~ method
+      if %r{\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z} =~ method
 
         if parameter != parameter.to_i.to_s
           value = "\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}"
@@ -185,7 +185,7 @@ examples how to use
   end
 
   def data_key_valid?(key)
-    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)/i && key !~ /(update|create)d_(at|by)/i
+    return false if key =~ %r{`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)}i && key !~ %r{(update|create)d_(at|by)}i
 
     true
   end

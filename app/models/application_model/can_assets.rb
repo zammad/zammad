@@ -81,12 +81,12 @@ get assets and record_ids of selector
         attribute_ref_class = ::User
         item_ids            = []
         Array(content['recipient']).each do |identifier|
-          next if identifier !~ /\Auserid_(\d+)\z/
+          next if identifier !~ %r{\Auserid_(\d+)\z}
 
           item_ids.push($1)
         end
       else
-        reflection = attribute[1].sub(/_id$/, '')
+        reflection = attribute[1].sub(%r{_id$}, '')
         next if !models[attribute_class]
         next if !models[attribute_class][:reflections]
         next if !models[attribute_class][:reflections][reflection]

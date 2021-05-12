@@ -34,7 +34,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", params: {}
       expect(response).to have_http_status(:forbidden)
-      expect(@response.body).to match(/403: Forbidden/)
+      expect(@response.body).to match(%r{403: Forbidden})
 
       ticket2 = create(:ticket, group: group)
       ticket1.merge_to(
@@ -50,7 +50,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store1.id}", params: {}
       expect(response).to have_http_status(:forbidden)
-      expect(@response.body).to match(/403: Forbidden/)
+      expect(@response.body).to match(%r{403: Forbidden})
 
       # allow access via merged ticket id also
       authenticated_as(agent)
@@ -61,7 +61,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", params: {}
       expect(response).to have_http_status(:forbidden)
-      expect(@response.body).to match(/403: Forbidden/)
+      expect(@response.body).to match(%r{403: Forbidden})
 
     end
 

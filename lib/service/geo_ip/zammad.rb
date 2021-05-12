@@ -25,7 +25,7 @@ class Service::GeoIp::Zammad
           total_timeout: 4,
         },
       )
-      if !response.success? && response.code.to_s !~ /^40.$/
+      if !response.success? && response.code.to_s !~ %r{^40.$}
         raise "#{response.code}/#{response.body}"
       end
 

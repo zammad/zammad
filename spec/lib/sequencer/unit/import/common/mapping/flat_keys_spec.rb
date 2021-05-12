@@ -9,7 +9,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Mapping::FlatKeys, sequencer: :u
           remote_attribute: 'value',
         }
       )
-    end.to raise_error(RuntimeError, /mapping/)
+    end.to raise_error(RuntimeError, %r{mapping})
   end
 
   it 'maps flat key structures' do

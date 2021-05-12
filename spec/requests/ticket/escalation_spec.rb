@@ -18,7 +18,7 @@ RSpec.describe 'Ticket Escalation', type: :request do
 
   define :json_equal_date do
     match do
-      actual&.sub(/.\d\d\dZ$/, 'Z') == expected&.iso8601
+      actual&.sub(%r{.\d\d\dZ$}, 'Z') == expected&.iso8601
     end
   end
 

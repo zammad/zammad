@@ -39,7 +39,7 @@ module Import
     end
 
     def module_name
-      name.to_s.sub(/Import::/, '').sub(/Factory/, '')
+      name.to_s.sub(%r{Import::}, '').sub(%r{Factory}, '')
     end
   end
 end

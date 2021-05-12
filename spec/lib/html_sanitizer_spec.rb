@@ -24,7 +24,7 @@ RSpec.describe HtmlSanitizer do
         let(:html) { '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">' }
 
         it 'converts embedded image to cid' do
-          expect(body).to match(/<img style="width: 181px; height: 125px" src="cid:.+?">/)
+          expect(body).to match(%r{<img style="width: 181px; height: 125px" src="cid:.+?">})
         end
 
         it 'extracts one attachment' do
@@ -40,7 +40,7 @@ RSpec.describe HtmlSanitizer do
         end
 
         it 'sets Content-ID based on Zammad fqdn' do
-          expect(inline_attachments.first[:preferences]['Content-ID']).to match(/@#{Setting.get('fqdn')}/)
+          expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
         end
 
         it 'sets Content-Disposition to inline' do
@@ -52,7 +52,7 @@ RSpec.describe HtmlSanitizer do
         let(:html) { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">' }
 
         it 'converts embedded image to cid' do
-          expect(body).to match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/)
+          expect(body).to match(%r{<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">})
         end
 
         it 'extracts one attachment' do
@@ -68,7 +68,7 @@ RSpec.describe HtmlSanitizer do
         end
 
         it 'sets Content-ID based on Zammad fqdn' do
-          expect(inline_attachments.first[:preferences]['Content-ID']).to match(/@#{Setting.get('fqdn')}/)
+          expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
         end
 
         it 'sets Content-Disposition to inline' do
@@ -80,7 +80,7 @@ RSpec.describe HtmlSanitizer do
         let(:html) { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever' }
 
         it 'converts embedded image to cid' do
-          expect(body).to match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/)
+          expect(body).to match(%r{<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">})
         end
 
         it 'extracts one attachment' do
@@ -96,7 +96,7 @@ RSpec.describe HtmlSanitizer do
         end
 
         it 'sets Content-ID based on Zammad fqdn' do
-          expect(inline_attachments.first[:preferences]['Content-ID']).to match(/@#{Setting.get('fqdn')}/)
+          expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
         end
 
         it 'sets Content-Disposition to inline' do
@@ -126,8 +126,8 @@ RSpec.describe HtmlSanitizer do
         end
 
         it 'sets Content-IDs based on Zammad fqdn' do
-          expect(inline_attachments.first[:preferences]['Content-ID']).to match(/@#{Setting.get('fqdn')}/)
-          expect(inline_attachments.second[:preferences]['Content-ID']).to match(/@#{Setting.get('fqdn')}/)
+          expect(inline_attachments.first[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
+          expect(inline_attachments.second[:preferences]['Content-ID']).to match(%r{@#{Setting.get('fqdn')}})
         end
 
         it 'sets Content-Dispositions to inline' do

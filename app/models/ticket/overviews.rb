@@ -103,7 +103,7 @@ returns
       order_by = overview.order[:by]
 
       # validate direction
-      raise "Invalid order direction '#{direction}'" if direction && direction !~ /^(ASC|DESC)$/i
+      raise "Invalid order direction '#{direction}'" if direction && direction !~ %r{^(ASC|DESC)$}i
 
       # check if order by exists
       if !ticket_attributes.key?(order_by)

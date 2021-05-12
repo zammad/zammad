@@ -24,12 +24,12 @@ RSpec.describe Ticket::Number::Increment do
           before { Setting.set('system_id', 123_456) }
 
           it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-            expect(number).to match(/^#{system_id}#{ticket_count}$/)
+            expect(number).to match(%r{^#{system_id}#{ticket_count}$})
           end
         end
 
         it 'returns a string following the pattern system_id + padding zeroes + ticket_count' do
-          expect(number).to match(/^#{system_id}0*#{ticket_count}$/)
+          expect(number).to match(%r{^#{system_id}0*#{ticket_count}$})
         end
 
         context '/ checksum: false (default)' do
@@ -41,14 +41,14 @@ RSpec.describe Ticket::Number::Increment do
           end
 
           it 'returns a string following the pattern system_id + padding zeroes + ticket_counter' do
-            expect(number).to match(/^#{system_id}0*#{ticket_count}$/)
+            expect(number).to match(%r{^#{system_id}0*#{ticket_count}$})
           end
 
           context 'when "system_id" setting exceeds :min_size' do
             before { Setting.set('system_id', 123_456) }
 
             it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-              expect(number).to match(/^#{system_id}#{ticket_count}$/)
+              expect(number).to match(%r{^#{system_id}#{ticket_count}$})
             end
           end
         end
@@ -63,14 +63,14 @@ RSpec.describe Ticket::Number::Increment do
           end
 
           it 'returns a string following the pattern system_id + padding zeroes + ticket_counter + checksum' do
-            expect(number).to match(/^#{system_id}0*#{ticket_count}\d$/)
+            expect(number).to match(%r{^#{system_id}0*#{ticket_count}\d$})
           end
 
           context 'when "system_id" setting exceeds :min_size' do
             before { Setting.set('system_id', 123_456) }
 
             it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-              expect(number).to match(/^#{system_id}#{ticket_count}\d$/)
+              expect(number).to match(%r{^#{system_id}#{ticket_count}\d$})
             end
           end
         end

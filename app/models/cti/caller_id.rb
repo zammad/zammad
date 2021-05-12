@@ -226,19 +226,19 @@ returns
       # see specs for example
       return [] if !text.is_a?(String)
 
-      text.scan(/([\d\s\-(|)]{6,26})/).map do |match|
+      text.scan(%r{([\d\s\-(|)]{6,26})}).map do |match|
         normalize_number(match[0])
       end
     end
 
     def self.normalize_number(number)
-      number = number.gsub(/[\s-]/, '')
-      number.gsub!(/^(00)?(\+?\d\d)\(0?(\d*)\)/, '\\1\\2\\3')
-      number.gsub!(/\D/, '')
+      number = number.gsub(%r{[\s-]}, '')
+      number.gsub!(%r{^(00)?(\+?\d\d)\(0?(\d*)\)}, '\\1\\2\\3')
+      number.gsub!(%r{\D}, '')
       case number
-      when /^00/
+      when %r{^00}
         number[2..]
-      when /^0/
+      when %r{^0}
         DEFAULT_COUNTRY_ID + number[1..]
       else
         number

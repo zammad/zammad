@@ -58,7 +58,7 @@ Checks if file is used inline
 
         node.remove
       when 'div'
-        node.children.to_a.select { |t| t.text.match?(/\A([\n\r]+)\z/) }.each(&:remove)
+        node.children.to_a.select { |t| t.text.match?(%r{\A([\n\r]+)\z}) }.each(&:remove)
 
         node.remove if node.children.none? && node.classes.none?
       end
@@ -138,7 +138,7 @@ Checks if file is used inline
         next if node.name != 'img'
         next if !node['src']&.start_with?('cid:')
 
-        cid = node['src'].sub(/^cid:/, '')
+        cid = node['src'].sub(%r{^cid:}, '')
         lookup_cids = [cid, "<#{cid}>"]
 
         attachment = attachments.find do |file|
@@ -164,7 +164,7 @@ Checks if file is used inline
         next if node.name != 'img'
         next if !node['src']&.start_with? 'cid:'
 
-        cid = node['src'].sub(/^cid:/, '')
+        cid = node['src'].sub(%r{^cid:}, '')
         inline_cids << cid
       end
 

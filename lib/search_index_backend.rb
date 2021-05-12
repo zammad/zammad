@@ -342,7 +342,7 @@ remove whole data from index
       next if order_by&.at(index).blank?
 
       # for sorting values use .keyword values (no analyzer is used - plain values)
-      if value !~ /\./ && value !~ /_(time|date|till|id|ids|at)$/
+      if value !~ %r{\.} && value !~ %r{_(time|date|till|id|ids|at)$}
         value += '.keyword'
       end
       result.push(
@@ -511,7 +511,7 @@ example for aggregations within one year
 
           case data['pre_condition']
           when 'not_set'
-            data['value'] = if key_tmp.match?(/^(created_by|updated_by|owner|customer|user)_id/)
+            data['value'] = if key_tmp.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
                               1
                             end
           when 'current_user.id'
@@ -534,12 +534,12 @@ example for aggregations within one year
 
           if data['value'].is_a?(Array)
             data['value'].each do |value|
-              next if !value.is_a?(String) || value !~ /[A-z]/
+              next if !value.is_a?(String) || value !~ %r{[A-z]}
 
               key_tmp += '.keyword'
               break
             end
-          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value'])
+          elsif data['value'].is_a?(String) && %r{[A-z]}.match?(data['value'])
             key_tmp += '.keyword'
           end
         end
@@ -549,14 +549,14 @@ example for aggregations within one year
 
           if data['value'].is_a?(Array)
             data['value'].each_with_index do |value, index|
-              next if !value.is_a?(String) || value !~ /[A-z]/
+              next if !value.is_a?(String) || value !~ %r{[A-z]}
 
               data['value'][index] = "*#{value}*"
               key_tmp += '.keyword'
               wildcard_or_term = 'wildcards'
               break
             end
-          elsif data['value'].is_a?(String) && /[A-z]/.match?(data['value'])
+          elsif data['value'].is_a?(String) && %r{[A-z]}.match?(data['value'])
             data['value'] = "*#{data['value']}*"
             key_tmp += '.keyword'
             wildcard_or_term = 'wildcard'

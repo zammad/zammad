@@ -30,13 +30,13 @@ class Sequencer
 
               def extract_email(source)
                 # Support format like "Bob Smith (bob@example.com)"
-                if source =~ /\((.+@.+)\)/
+                if source =~ %r{\((.+@.+)\)}
                   source = $1
                 end
 
                 Mail::Address.new(source).address
               rescue
-                return source if source !~ /<\s*([^>]+)/
+                return source if source !~ %r{<\s*([^>]+)}
 
                 $1.strip
               end

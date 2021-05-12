@@ -287,9 +287,9 @@ returns
 
     uri = URI.parse(url)
     case uri.scheme.downcase
-    when /ftp/
+    when %r{ftp}
       ftp(uri, options)
-    when /http|https/
+    when %r{http|https}
       get(url, {}, options)
     end
 
@@ -302,7 +302,7 @@ returns
     proxy_no = proxy_no.split(',').map(&:strip) || []
     proxy_no.push('localhost', '127.0.0.1', '::1')
     if proxy.present? && proxy_no.exclude?(uri.host.downcase)
-      if proxy =~ /^(.+?):(.+?)$/
+      if proxy =~ %r{^(.+?):(.+?)$}
         proxy_host = $1
         proxy_port = $2
       end
@@ -328,7 +328,7 @@ returns
     http.open_timeout = options[:open_timeout] || 4
     http.read_timeout = options[:read_timeout] || 10
 
-    if uri.scheme.match?(/https/i)
+    if uri.scheme.match?(%r{https}i)
       http.use_ssl = true
 
       if !options.fetch(:verify_ssl, false)

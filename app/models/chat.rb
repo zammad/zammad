@@ -611,7 +611,7 @@ check if ip address is blocked for chat
     ips = block_ip.split(';')
     ips.each do |local_ip|
       return true if ip == local_ip.strip
-      return true if ip.match?(/#{local_ip.strip.gsub(/\*/, '.+?')}/)
+      return true if ip.match?(%r{#{local_ip.strip.gsub(%r{\*}, '.+?')}})
     end
     false
   end

@@ -42,7 +42,7 @@ returns
 
       # Take up to 10 lines from this "gap" (i.e., the common substring)
       match_content = diff_lines[sig_range.first..sig_range.last]
-                        .map { |l| l.sub(/^./, '') }
+                        .map { |l| l.sub(%r{^.}, '') }
                         .first(10).join("\n")
 
       # Add this substring to the signature_candidates hash and increment its match score

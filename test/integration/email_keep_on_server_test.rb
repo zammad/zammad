@@ -75,7 +75,7 @@ To: shugo@example.com
 Message-ID: <some1@example_keep_on_server>
 
 hello world
-".gsub(/\n/, "\r\n"), [], Time.zone.now)
+".gsub(%r{\n}, "\r\n"), [], Time.zone.now)
 
     # verify if message is still on server
     message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
@@ -112,7 +112,7 @@ To: shugo@example.com
 Message-ID: <some2@example_keep_on_server>
 
 hello world
-".gsub(/\n/, "\r\n"), [], Time.zone.now)
+".gsub(%r{\n}, "\r\n"), [], Time.zone.now)
 
     message_meta = imap.fetch(1, ['FLAGS'])[0].attr
     assert(message_meta['FLAGS'].include?(:Seen))
@@ -163,7 +163,7 @@ To: shugo@example.com
 Message-ID: <some1@example_remove_from_server>
 
 hello world
-".gsub(/\n/, "\r\n"), [], Time.zone.now)
+".gsub(%r{\n}, "\r\n"), [], Time.zone.now)
 
     # verify if message is still on server
     message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
@@ -188,7 +188,7 @@ To: shugo@example.com
 Message-ID: <some2@example_remove_from_server>
 
 hello world
-".gsub(/\n/, "\r\n"), [], Time.zone.now)
+".gsub(%r{\n}, "\r\n"), [], Time.zone.now)
 
     # verify if message is still on server
     message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
@@ -213,7 +213,7 @@ To: shugo@example.com
 Message-ID: <some2@example_remove_from_server>
 
 hello world
-".gsub(/\n/, "\r\n"), [], Time.zone.now)
+".gsub(%r{\n}, "\r\n"), [], Time.zone.now)
 
     # verify if message is still on server
     message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')

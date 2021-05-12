@@ -53,7 +53,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient bounce mail, mark this user to not sent notifications anymore
       final_recipient = mail[:mail_instance].final_recipient
       if final_recipient.present?
-        final_recipient.sub!(/rfc822;\s{0,10}/, '')
+        final_recipient.sub!(%r{rfc822;\s{0,10}}, '')
         if final_recipient.present?
           recipients.push final_recipient.downcase
         end

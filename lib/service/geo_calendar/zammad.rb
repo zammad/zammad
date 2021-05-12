@@ -27,7 +27,7 @@ class Service::GeoCalendar::Zammad
           total_timeout: 12,
         },
       )
-      if !response.success? && response.code.to_s !~ /^40.$/
+      if !response.success? && response.code.to_s !~ %r{^40.$}
         raise "#{response.code}/#{response.body}"
       end
 

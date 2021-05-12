@@ -73,7 +73,7 @@ RSpec.describe Webhook, type: :model do
       let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
 
       it 'raises error with details' do
-        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, /#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}/)
+        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, %r{#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}})
       end
     end
   end

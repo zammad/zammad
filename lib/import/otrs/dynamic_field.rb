@@ -14,7 +14,7 @@ module Import
       end
 
       def self.convert_name(dynamic_field_name)
-        dynamic_field_name.underscore.sub(/_id(s)?\z/, '_no\1')
+        dynamic_field_name.underscore.sub(%r{_id(s)?\z}, '_no\1')
       end
 
       private

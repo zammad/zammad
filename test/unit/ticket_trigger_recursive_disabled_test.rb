@@ -4282,7 +4282,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('smith@example.com', article1.to)
     assert_match('Thanks for your inquiry (aaäöüßad asd)!', article1.subject)
-    assert_match(/.+cid:.+?@zammad.example.com.+/, article1.body)
+    assert_match(%r{.+cid:.+?@zammad.example.com.+}, article1.body)
     assert_equal(1, article1.attachments.count)
     assert_equal('789', article1.attachments[0].size)
     assert_equal('text/html', article1.content_type)

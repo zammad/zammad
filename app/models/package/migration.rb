@@ -41,7 +41,7 @@ class Package::Migration < ApplicationModel
 
       version = nil
       name    = nil
-      if migration =~ /^(.+?)_(.*)\.rb$/
+      if migration =~ %r{^(.+?)_(.*)\.rb$}
         version = $1
         name    = $2
       end

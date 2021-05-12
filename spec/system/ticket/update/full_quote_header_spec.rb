@@ -183,9 +183,9 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     def confirm_style
       case style
       when :forward
-        citation.text.match?(/Subject(.+)\nDate(.+)/)
+        citation.text.match?(%r{Subject(.+)\nDate(.+)})
       when :reply
-        citation.text.match?(/^On(.+)wrote:$/)
+        citation.text.match?(%r{^On(.+)wrote:$})
       end
     end
 

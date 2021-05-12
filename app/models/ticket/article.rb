@@ -85,10 +85,10 @@ returns
   def self.insert_urls(article)
     return article if article['attachments'].blank?
     return article if !article['content_type'].match?(%r{text/html}i)
-    return article if article['body'] !~ /<img/i
+    return article if article['body'] !~ %r{<img}i
 
     inline_attachments = {}
-    article['body'].gsub!( /(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>/im ) do |item|
+    article['body'].gsub!( %r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im ) do |item|
       tag_start = $1
       cid = $3
       tag_end = $4
@@ -129,7 +129,7 @@ returns
 
   def attachments_inline
     inline_attachments = {}
-    body.gsub( /<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>/im ) do |_item|
+    body.gsub( %r{<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>}im ) do |_item|
       cid = $2
 
       # look for attachment
@@ -251,7 +251,7 @@ returns:
     return true if attribute != :body
     return false if content_type.blank?
 
-    content_type =~ /html/i
+    content_type =~ %r{html}i
   end
 
 =begin
@@ -306,7 +306,7 @@ returns
   def check_subject
     return true if subject.blank?
 
-    subject.gsub!(/\s|\t|\r/, ' ')
+    subject.gsub!(%r{\s|\t|\r}, ' ')
     true
   end
 

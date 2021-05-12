@@ -31,7 +31,7 @@ class CommunicateTelegramJob < ApplicationJob
       result = api.sendMessage(chat_id, article.body)
       me = api.getMe()
       article.attachments.each do |file|
-        parts = file.filename.split(/^(.*)(\..+?)$/)
+        parts = file.filename.split(%r{^(.*)(\..+?)$})
         t = Tempfile.new([parts[1], parts[2]])
         t.binmode
         t.write(file.content)

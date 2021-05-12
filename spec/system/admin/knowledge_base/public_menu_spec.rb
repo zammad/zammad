@@ -64,7 +64,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system, auth
 
   def find_locale(location, locale)
     find_location(location)
-      .find('.label', text: /#{Regexp.escape locale.system_locale.name}/i)
+      .find('.label', text: %r{#{Regexp.escape locale.system_locale.name}}i)
       .ancestor('.kb-menu-preview')
   end
 

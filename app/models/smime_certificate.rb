@@ -4,7 +4,7 @@ class SMIMECertificate < ApplicationModel
   validates :fingerprint, uniqueness: true
 
   def self.parse(raw)
-    OpenSSL::X509::Certificate.new(raw.gsub(/(?:TRUSTED\s)?(CERTIFICATE---)/, '\1'))
+    OpenSSL::X509::Certificate.new(raw.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))
   end
 
   # Search for the certificate of the given sender email address
@@ -94,7 +94,7 @@ class SMIMECertificate < ApplicationModel
 
   def email_addresses_from_subject_alt_name(subject_alt_name)
     # ["IP Address:192.168.7.23", "IP Address:192.168.7.42", "email:jd@example.com", "email:John.Doe@example.com", "dirName:dir_sect"]
-    entries = subject_alt_name.value.split(/,\s?/)
+    entries = subject_alt_name.value.split(%r{,\s?})
 
     entries.each_with_object([]) do |entry, result|
       # ["email:jd@example.com", "email:John.Doe@example.com"]

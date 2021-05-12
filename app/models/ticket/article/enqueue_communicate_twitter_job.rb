@@ -31,7 +31,7 @@ module Ticket::Article::EnqueueCommunicateTwitterJob
 
     type = Ticket::Article::Type.lookup(id: type_id)
     return true if type.nil?
-    return true if !type.name.match?(/\Atwitter/i)
+    return true if !type.name.match?(%r{\Atwitter}i)
 
     raise Exceptions::UnprocessableEntity, 'twitter to: parameter is missing' if to.blank? && type['name'] == 'twitter direct-message'
 

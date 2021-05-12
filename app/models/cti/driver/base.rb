@@ -97,8 +97,8 @@ class Cti::Driver::Base
 
     if routing_table.present?
       routing_table.each do |row|
-        dest = row[:dest].gsub(/\*/, '.+?')
-        next if !to.match?(/^#{dest}$/)
+        dest = row[:dest].gsub(%r{\*}, '.+?')
+        next if !to.match?(%r{^#{dest}$})
 
         return {
           action: 'set_caller_id',

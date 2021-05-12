@@ -18,7 +18,7 @@ class Sequencer
               # model_name
               # model_name_
               # model_name
-              without_double_underscores.gsub(/_id(s?)$/, '_no\1')
+              without_double_underscores.gsub(%r{_id(s?)$}, '_no\1')
             end
 
             def without_double_underscores
@@ -29,7 +29,7 @@ class Sequencer
               # model_name
               # model_name_
               # model_name
-              only_supported_chars.gsub(/_{2,}/, '_')
+              only_supported_chars.gsub(%r{_{2,}}, '_')
             end
 
             def only_supported_chars
@@ -40,7 +40,7 @@ class Sequencer
               # model__name
               # model_name_
               # model_name
-              downcased.split('').map { |char| char.match?(/[a-z0-9_]/) ? char : '_' }.join
+              downcased.split('').map { |char| char.match?(%r{[a-z0-9_]}) ? char : '_' }.join
             end
 
             def downcased

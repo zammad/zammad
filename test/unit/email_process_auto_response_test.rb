@@ -238,9 +238,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -264,9 +264,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -296,14 +296,14 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
     article_auto_reply = article_p.ticket.articles[2]
-    assert_match(/Thanks for your inquiry/, article_auto_reply.subject)
-    assert_match(/me@example.com/, article_auto_reply.to)
+    assert_match(%r{Thanks for your inquiry}, article_auto_reply.subject)
+    assert_match(%r{me@example.com}, article_auto_reply.to)
     assert_equal('System', article_auto_reply.sender.name)
     assert_equal('email', article_auto_reply.type.name)
 
@@ -326,14 +326,14 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
     article_auto_reply = article_p.ticket.articles[2]
-    assert_match(/Thanks for your inquiry/, article_auto_reply.subject)
-    assert_match(/me@example.com/, article_auto_reply.to)
+    assert_match(%r{Thanks for your inquiry}, article_auto_reply.subject)
+    assert_match(%r{me@example.com}, article_auto_reply.to)
     assert_equal('System', article_auto_reply.sender.name)
     assert_equal('email', article_auto_reply.type.name)
 
@@ -575,9 +575,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -601,9 +601,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -633,14 +633,14 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_auto_reply = article_p.ticket.articles[1]
-    assert_match(/Thanks for your inquiry/, article_auto_reply.subject)
-    assert_match(/me@example.com/, article_auto_reply.to)
+    assert_match(%r{Thanks for your inquiry}, article_auto_reply.subject)
+    assert_match(%r{me@example.com}, article_auto_reply.to)
     assert_equal('System', article_auto_reply.sender.name)
     assert_equal('email', article_auto_reply.type.name)
     article_notification = article_p.ticket.articles[2]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -663,14 +663,14 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_auto_reply = article_p.ticket.articles[1]
-    assert_match(/Thanks for your inquiry/, article_auto_reply.subject)
-    assert_match(/me@example.com/, article_auto_reply.to)
+    assert_match(%r{Thanks for your inquiry}, article_auto_reply.subject)
+    assert_match(%r{me@example.com}, article_auto_reply.to)
     assert_equal('System', article_auto_reply.sender.name)
     assert_equal('email', article_auto_reply.type.name)
     article_notification = article_p.ticket.articles[2]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -781,9 +781,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -807,9 +807,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -838,9 +838,9 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
 
@@ -863,14 +863,14 @@ Some Text"
     assert_equal('Customer', article_customer.sender.name)
     assert_equal('email', article_customer.type.name)
     article_notification = article_p.ticket.articles[1]
-    assert_match(/New Ticket add. info/, article_notification.subject)
-    assert_no_match(/me@example.com/, article_notification.to)
-    assert_match(/#{agent1.email}/, article_notification.to)
+    assert_match(%r{New Ticket add. info}, article_notification.subject)
+    assert_no_match(%r{me@example.com}, article_notification.to)
+    assert_match(%r{#{agent1.email}}, article_notification.to)
     assert_equal('System', article_notification.sender.name)
     assert_equal('email', article_notification.type.name)
     article_auto_reply = article_p.ticket.articles[2]
-    assert_match(/Thanks for your inquiry/, article_auto_reply.subject)
-    assert_match(/me@example.com/, article_auto_reply.to)
+    assert_match(%r{Thanks for your inquiry}, article_auto_reply.subject)
+    assert_match(%r{me@example.com}, article_auto_reply.to)
     assert_equal('System', article_auto_reply.sender.name)
     assert_equal('email', article_auto_reply.type.name)
 

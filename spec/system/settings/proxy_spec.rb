@@ -43,7 +43,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           click_on 'Test Connection'
 
           expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: /Invalid proxy address/, wait: 5)
+          expect(page).to have_css('div.modal-body', text: %r{Invalid proxy address}, wait: 5)
           expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
           expect(page).to have_button('Submit', visible: :hidden, wait: 5)
 
@@ -61,7 +61,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           click_on 'Test Connection'
 
           expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: /Failed to open TCP connection/, wait: 5)
+          expect(page).to have_css('div.modal-body', text: %r{Failed to open TCP connection}, wait: 5)
           expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
           expect(page).to have_button('Submit', visible: :hidden, wait: 5)
 
@@ -79,7 +79,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           click_on 'Test Connection'
 
           expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: /Access Denied/, wait: 5)
+          expect(page).to have_css('div.modal-body', text: %r{Access Denied}, wait: 5)
           expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
           expect(page).to have_button('Submit', visible: :hidden, wait: 5)
 
@@ -97,7 +97,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           click_on 'Test Connection'
 
           expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: /Access Denied/, wait: 5)
+          expect(page).to have_css('div.modal-body', text: %r{Access Denied}, wait: 5)
           expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
           expect(page).to have_button('Submit', visible: :hidden, wait: 5)
 

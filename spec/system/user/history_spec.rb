@@ -36,18 +36,18 @@ RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zon
   end
 
   it "translates timestamp when attribute's tag is datetime" do
-    expect(page).to have_css('li', text: /'22.01.2021 00:00'/)
+    expect(page).to have_css('li', text: %r{'22.01.2021 00:00'})
   end
 
   it 'does not include time with UTC format' do
-    expect(page).to have_no_text(/ UTC/)
+    expect(page).to have_no_text(%r{ UTC})
   end
 
   it 'translates out_of_office_start_at value to time stamp' do
-    expect(page).to have_css('li', text: /Benutzer out_of_office_start_at '22.01.2021 00:00'/)
+    expect(page).to have_css('li', text: %r{Benutzer out_of_office_start_at '22.01.2021 00:00'})
   end
 
   it 'translates out_of_office_end_at value to time stamp' do
-    expect(page).to have_css('li', text: /Benutzer out_of_office_end_at '06.04.2021 01:00'/)
+    expect(page).to have_css('li', text: %r{Benutzer out_of_office_end_at '06.04.2021 01:00'})
   end
 end

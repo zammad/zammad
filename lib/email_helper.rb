@@ -60,7 +60,7 @@ returns
   def self.parse_email(email)
     user   = nil
     domain = nil
-    if email =~ /^(.+?)@(.+?)$/
+    if email =~ %r{^(.+?)@(.+?)$}
       user   = $1
       domain = $2
     end

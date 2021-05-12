@@ -106,7 +106,7 @@ class Transaction::Slack
       if ticket.pending_time && ticket.pending_time < Time.zone.now
         color = '#faab00'
       end
-    elsif ticket_state_type.match?(/^(new|open)$/)
+    elsif ticket_state_type.match?(%r{^(new|open)$})
       color = '#faab00'
     elsif ticket_state_type == 'closed'
       color = '#38ad69'

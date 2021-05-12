@@ -44,7 +44,7 @@ returns:
 
     # check if we can find the service now relation
     source_id = nil
-    if subject =~ /\s(INC\d+)\s/
+    if subject =~ %r{\s(INC\d+)\s}
       source_id = $1
     end
 

@@ -12,7 +12,7 @@ class Service::Image::Zammad
 
     email.downcase!
 
-    return if email.match?(/@example.com$/)
+    return if email.match?(%r{@example.com$})
 
     # fetch image
     response = UserAgent.post(
@@ -42,7 +42,7 @@ class Service::Image::Zammad
     raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
 
     # strip, just use domain name
-    domain = domain.sub(/^.+?@(.+?)$/, '\1')
+    domain = domain.sub(%r{^.+?@(.+?)$}, '\1')
 
     domain.downcase!
     return if domain == 'example.com'

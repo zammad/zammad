@@ -76,7 +76,7 @@ class ObjectManagerAttributesController < ApplicationController
     @permitted_params ||= begin
       permitted = params.permit!.to_h
 
-      if permitted[:data_type].match?(/^(boolean)$/) && permitted[:data_option][:options]
+      if permitted[:data_type].match?(%r{^(boolean)$}) && permitted[:data_option][:options]
         # rubocop:disable Lint/BooleanSymbol
         if permitted[:data_option][:options][:false]
           permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
@@ -98,7 +98,7 @@ class ObjectManagerAttributesController < ApplicationController
       if permitted[:data_option]
 
         if !permitted[:data_option].key?(:default)
-          permitted[:data_option][:default] = if permitted[:data_type].match?(/^(input|select|tree_select)$/)
+          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|tree_select)$})
                                                 ''
                                               end
         end

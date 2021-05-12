@@ -36,7 +36,7 @@ class Channel::Driver::Smtp
     if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender
       fqdn = Setting.get('fqdn')
-      if fqdn =~ /(localhost|\.local^|\.loc^)/i && (attr['from'] || attr[:from])
+      if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from])
         domain = Mail::Address.new(attr['from'] || attr[:from]).domain
         if domain
           fqdn = domain

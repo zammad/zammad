@@ -299,7 +299,7 @@ RSpec.describe ExternalCredential::Google do
             error_description: 'The OAuth client was not found.'
           }
         end
-        let(:exception_message) { /The OAuth client was not found/ }
+        let(:exception_message) { %r{The OAuth client was not found} }
 
         include_examples 'failed attempt'
       end
@@ -307,7 +307,7 @@ RSpec.describe ExternalCredential::Google do
       context '500 Internal Server Error' do
         let(:response_status) { 500 }
         let(:response_payload) { nil }
-        let(:exception_message) { /code: 500/ }
+        let(:exception_message) { %r{code: 500} }
 
         include_examples 'failed attempt'
       end

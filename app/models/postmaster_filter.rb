@@ -12,7 +12,7 @@ class PostmasterFilter < ApplicationModel
     raise Exceptions::UnprocessableEntity, 'Min. one match rule needed!' if match.blank?
 
     match.each_value do |meta|
-      raise Exceptions::UnprocessableEntity, 'operator invalid, ony "contains" and "contains not" is supported' if meta['operator'].blank? || meta['operator'] !~ /^(contains|contains not)$/
+      raise Exceptions::UnprocessableEntity, 'operator invalid, ony "contains" and "contains not" is supported' if meta['operator'].blank? || meta['operator'] !~ %r{^(contains|contains not)$}
       raise Exceptions::UnprocessableEntity, 'value invalid/empty' if meta['value'].blank?
 
       begin

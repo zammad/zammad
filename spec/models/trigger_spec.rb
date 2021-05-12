@@ -452,8 +452,8 @@ RSpec.describe Trigger, type: :model do
           let!(:article) do
             create(:ticket_article,
                    ticket:     ticket,
-                   message_id: raw_email[/(?<=^References: )\S*/],
-                   subject:    raw_email[/(?<=^Subject: Re: ).*$/])
+                   message_id: raw_email[%r{(?<=^References: )\S*}],
+                   subject:    raw_email[%r{(?<=^Subject: Re: ).*$}])
           end
 
           let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail005.box')) }
@@ -470,7 +470,7 @@ RSpec.describe Trigger, type: :model do
           let!(:article) do
             create(:ticket_article,
                    ticket:     ticket,
-                   message_id: raw_email[/(?<=^Message-ID: )\S*/])
+                   message_id: raw_email[%r{(?<=^Message-ID: )\S*}])
           end
 
           let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail055.box')) }

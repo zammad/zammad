@@ -16,7 +16,7 @@ returns
 
   def self.data_url_attributes(data_url)
     data = {}
-    if data_url =~ /^data:(.+?);base64,(.+?)$/
+    if data_url =~ %r{^data:(.+?);base64,(.+?)$}
       data[:mime_type] = $1
       data[:content]   = Base64.decode64($2)
       if data[:mime_type] =~ %r{/(.+?)$}
@@ -146,13 +146,13 @@ generate filename based on Store model
     hash = Digest::MD5.hexdigest(file.content)
     extention = ''
     case file.preferences['Content-Type']
-    when /jpg|jpeg/i
+    when %r{jpg|jpeg}i
       extention = '.jpg'
-    when /png/i
+    when %r{png}i
       extention = '.png'
-    when /gif/i
+    when %r{gif}i
       extention = '.gif'
-    when /svg/i
+    when %r{svg}i
       extention = '.svg'
     end
     "#{hash}#{extention}"

@@ -189,7 +189,7 @@ class Ldap
   end
 
   def parse_host
-    return if @host !~ /\A([^:]+):(.+?)\z/
+    return if @host !~ %r{\A([^:]+):(.+?)\z}
 
     @host = $1
     @port = $2.to_i

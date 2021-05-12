@@ -27,7 +27,7 @@ class ImportZendeskController < ApplicationController
     if !response.success?
       message_human = ''
       translation_map.each do |key, message|
-        if response.error.to_s.match?(/#{Regexp.escape(key)}/i)
+        if response.error.to_s.match?(%r{#{Regexp.escape(key)}}i)
           message_human = message
         end
       end
@@ -40,7 +40,7 @@ class ImportZendeskController < ApplicationController
     end
 
     # since 2016-10-15 a redirect to a marketing page has been implemented
-    if !response.body.match?(/#{params[:url]}/)
+    if !response.body.match?(%r{#{params[:url]}})
       render json: {
         result:        'invalid',
         message_human: 'Hostname not found!',

@@ -901,8 +901,8 @@ RSpec.describe Channel::Driver::Twitter do
           it 'creates articles for parent tweets as well' do
             channel.fetch
 
-            expect(thread.articles.last.body).to match(/zammad/i)       # search result
-            expect(thread.articles.first.body).not_to match(/zammad/i)  # parent tweet
+            expect(thread.articles.last.body).to match(%r{zammad}i)       # search result
+            expect(thread.articles.first.body).not_to match(%r{zammad}i)  # parent tweet
           end
         end
 

@@ -62,7 +62,7 @@ satinize html string based on whiltelist
         # prepare src attribute
         if node['src']
           src = cleanup_target(CGI.unescape(node['src']))
-          if src =~ /(javascript|livescript|vbscript):/i || src.downcase.start_with?('http', 'ftp', '//')
+          if src =~ %r{(javascript|livescript|vbscript):}i || src.downcase.start_with?('http', 'ftp', '//')
             node.remove
             Loofah::Scrubber::STOP
           end
@@ -70,7 +70,7 @@ satinize html string based on whiltelist
 
         # clean class / only use allowed classes
         if node['class']
-          classes = node['class'].gsub(/\t|\n|\r/, '').split
+          classes = node['class'].gsub(%r{\t|\n|\r}, '').split
           class_new = ''
           classes.each do |local_class|
             next if classes_whitelist.exclude?(local_class.to_s.strip)
@@ -100,13 +100,13 @@ satinize html string based on whiltelist
           node.delete(key)
           next if value.blank?
 
-          value += 'px' if !value.match?(/%|px|em/i)
+          value += 'px' if !value.match?(%r{%|px|em}i)
           node['style'] += "#{key}:#{value}"
         end
 
         # clean style / only use allowed style properties
         if node['style']
-          pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
+          pears = node['style'].downcase.gsub(%r{\t|\n|\r}, '').split(';')
           style = ''
           pears.each do |local_pear|
             prop = local_pear.split(':')
@@ -115,7 +115,7 @@ satinize html string based on whiltelist
             key = prop[0].strip
             next if css_properties_whitelist.exclude?(node.name)
             next if css_properties_whitelist[node.name].exclude?(key)
-            next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
+            next if css_values_blacklist[node.name]&.include?(local_pear.gsub(%r{[[:space:]]}, '').strip)
 
             style += "#{local_pear};"
           end
@@ -130,7 +130,7 @@ satinize html string based on whiltelist
           next if !node[attribute_name]
 
           href = cleanup_target(node[attribute_name])
-          next if !href.match?(/(javascript|livescript|vbscript):/i)
+          next if !href.match?(%r{(javascript|livescript|vbscript):}i)
 
           node.delete(attribute_name)
         end
@@ -159,8 +159,8 @@ satinize html string based on whiltelist
         # wrap plain-text URLs in <a> tags
         if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
           urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
-                    .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
-                    .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
+                    .map { |u| u.sub(%r{[,.]$}, '') }      # URI::extract captures trailing dots/commas
+                    .reject { |u| u.match?(%r{^[^:]+:$}) } # URI::extract will match, e.g., 'tel:'
 
           next if urls.blank?
 
@@ -170,14 +170,14 @@ satinize html string based on whiltelist
         # prepare links
         if node['href']
           href                = cleanup_target(node['href'], keep_spaces: true)
-          href_without_spaces = href.gsub(/[[:space:]]/, '')
+          href_without_spaces = href.gsub(%r{[[:space:]]}, '')
           if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('mailto:') && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
             node['href']        = "http://#{node['href']}"
             href                = node['href']
-            href_without_spaces = href.gsub(/[[:space:]]/, '')
+            href_without_spaces = href.gsub(%r{[[:space:]]}, '')
           end
 
-          next if !CGI.unescape(href_without_spaces).utf8_encode(fallback: :read_as_sanitized_binary).gsub(/[[:space:]]/, '').downcase.start_with?('http', 'ftp', '//')
+          next if !CGI.unescape(href_without_spaces).utf8_encode(fallback: :read_as_sanitized_binary).gsub(%r{[[:space:]]}, '').downcase.start_with?('http', 'ftp', '//')
 
           node.set_attribute('href', href)
           node.set_attribute('rel', 'nofollow noreferrer noopener')
@@ -219,15 +219,15 @@ cleanup html string:
 
   def self.cleanup(string, timeout: true)
     Timeout.timeout(timeout ? PROCESSING_TIMEOUT : nil) do
-      string.gsub!(/<[A-z]:[A-z]>/, '')
+      string.gsub!(%r{<[A-z]:[A-z]>}, '')
       string.gsub!(%r{</[A-z]:[A-z]>}, '')
       string.delete!("\t")
 
       # remove all new lines
-      string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, "\n")
+      string.gsub!(%r{(\n\r|\r\r\n|\r\n|\n)}, "\n")
 
       # remove double multiple empty lines
-      string.gsub!(/\n\n\n+/, "\n\n")
+      string.gsub!(%r{\n\n\n+}, "\n\n")
 
       string = cleanup_structure(string, 'pre')
       string = cleanup_structure(string)
@@ -302,7 +302,7 @@ cleanup html string:
           content = node.content
           if content
             if content != ' ' && content != "\n"
-              content.gsub!(/[[:space:]]+/, ' ')
+              content.gsub!(%r{[[:space:]]+}, ' ')
             end
             if node.previous
               if node.previous.name == 'div' || node.previous.name == 'p'
@@ -329,11 +329,11 @@ cleanup html string:
     end
     url = urls.shift
 
-    if content =~ /^(.*)#{Regexp.quote(url)}(.*)$/mx
+    if content =~ %r{^(.*)#{Regexp.quote(url)}(.*)$}mx
       pre = $1
       post = $2
 
-      if url.match?(/^www/i)
+      if url.match?(%r{^www}i)
         url = "http://#{url}"
       end
 
@@ -367,11 +367,11 @@ cleanup html string:
 
   def self.cleanup_target(string, **options)
     cleaned_string = string.utf8_encode(fallback: :read_as_sanitized_binary)
-    cleaned_string = cleaned_string.gsub(/[[:space:]]/, '') if !options[:keep_spaces]
+    cleaned_string = cleaned_string.gsub(%r{[[:space:]]}, '') if !options[:keep_spaces]
     cleaned_string = cleaned_string.strip
                                    .delete("\t\n\r\u0000")
                                    .gsub(%r{/\*.*?\*/}, '')
-                                   .gsub(/<!--.*?-->/, '')
+                                   .gsub(%r{<!--.*?-->}, '')
 
     sanitize_attachment_disposition(cleaned_string)
   end
@@ -392,8 +392,8 @@ cleanup html string:
   end
 
   def self.url_same?(url_new, url_old)
-    url_new = CGI.unescape(url_new.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.delete_suffix('/').gsub(/[[:space:]]|\t|\n|\r/, '').strip
-    url_old = CGI.unescape(url_old.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.delete_suffix('/').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = CGI.unescape(url_new.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.delete_suffix('/').gsub(%r{[[:space:]]|\t|\n|\r}, '').strip
+    url_old = CGI.unescape(url_old.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.delete_suffix('/').gsub(%r{[[:space:]]|\t|\n|\r}, '').strip
     url_new = html_decode(url_new).sub('/?', '?')
     url_old = html_decode(url_old).sub('/?', '?')
     return true if url_new == url_old
@@ -460,7 +460,7 @@ satinize style of img tags
         if node['src']
           style = 'max-width:100%;'
           if node['style']
-            pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
+            pears = node['style'].downcase.gsub(%r{\t|\n|\r}, '').split(';')
             pears.each do |local_pear|
               prop = local_pear.split(':')
               next if !prop[0]

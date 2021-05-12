@@ -192,6 +192,6 @@ RSpec.describe SMIMECertificate, type: :model do
   end
 
   it 'ensures uniqueness of records' do
-    expect { create_list(:smime_certificate, 2, fixture: 'smime1@example.com') }.to raise_error(ActiveRecord::RecordInvalid, /Validation failed/)
+    expect { create_list(:smime_certificate, 2, fixture: 'smime1@example.com') }.to raise_error(ActiveRecord::RecordInvalid, %r{Validation failed})
   end
 end

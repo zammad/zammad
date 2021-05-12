@@ -13,7 +13,7 @@ module ActiveRecord
           if column_names.instance_of?(Array)
             index_columns_new = []
             column_names.each do |i|
-              if i =~ /^"(name|login|locale|alias)"$/ || i.end_with?('name"')
+              if i =~ %r{^"(name|login|locale|alias)"$} || i.end_with?('name"')
                 index_columns_new.push "LOWER(#{i})"
               else
                 index_columns_new.push i

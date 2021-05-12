@@ -7,7 +7,7 @@ module Import
           # "%%new%%open%%"
           from = nil
           to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%/
+          if data =~ %r{%%(.+?)%%(.+?)%%}
             from    = $1
             to      = $2
             state_from = ::Ticket::State.lookup(name: from)

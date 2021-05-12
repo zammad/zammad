@@ -86,7 +86,7 @@ RSpec.describe Channel, type: :model do
         end
 
         it 'raises RuntimeError' do
-          expect { channel.refresh_xoauth2! }.to raise_exception(RuntimeError, /#{exception.message}/)
+          expect { channel.refresh_xoauth2! }.to raise_exception(RuntimeError, %r{#{exception.message}})
         end
       end
 

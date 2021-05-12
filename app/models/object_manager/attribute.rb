@@ -569,22 +569,22 @@ to send no browser reload event, pass false
 
       data_type = nil
       case attribute.data_type
-      when /^input|select|tree_select|richtext|textarea|checkbox$/
+      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
         data_type = :string
-      when /^integer|user_autocompletion$/
+      when %r{^integer|user_autocompletion$}
         data_type = :integer
-      when /^boolean|active$/
+      when %r{^boolean|active$}
         data_type = :boolean
-      when /^datetime$/
+      when %r{^datetime$}
         data_type = :datetime
-      when /^date$/
+      when %r{^date$}
         data_type = :date
       end
 
       # change field
       if model.column_names.include?(attribute.name)
         case attribute.data_type
-        when /^input|select|tree_select|richtext|textarea|checkbox$/
+        when %r{^input|select|tree_select|richtext|textarea|checkbox$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -592,7 +592,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        when /^integer|user_autocompletion|datetime|date$/, /^boolean|active$/
+        when %r{^integer|user_autocompletion|datetime|date$}, %r{^boolean|active$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -616,7 +616,7 @@ to send no browser reload event, pass false
 
       # create field
       case attribute.data_type
-      when /^input|select|tree_select|richtext|textarea|checkbox$/
+      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -624,7 +624,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      when /^integer|user_autocompletion$/, /^boolean|active$/, /^datetime|date$/
+      when %r{^integer|user_autocompletion$}, %r{^boolean|active$}, %r{^datetime|date$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -780,22 +780,22 @@ is certain attribute used by triggers, overviews or schedulers
   def check_name
     return if !name
 
-    if name.match?(/.+?_(id|ids)$/i)
+    if name.match?(%r{.+?_(id|ids)$}i)
       errors.add(:name, "can't get used because *_id and *_ids are not allowed")
     end
-    if name.match?(/\s/)
+    if name.match?(%r{\s})
       errors.add(:name, 'spaces are not allowed')
     end
-    if !name.match?(/^[a-z0-9_]+$/)
+    if !name.match?(%r{^[a-z0-9_]+$})
       errors.add(:name, 'Only letters from a-z because numbers from 0-9 and _ are allowed')
     end
-    if !name.match?(/[a-z]/)
+    if !name.match?(%r{[a-z]})
       errors.add(:name, 'At least one letters is needed')
     end
 
     # do not allow model method names as attributes
     reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id]
-    if name.match?(/^(#{reserved_words.join('|')})$/)
+    if name.match?(%r{^(#{reserved_words.join('|')})$})
       errors.add(:name, "#{name} is a reserved word! (1)")
     end
 
@@ -833,7 +833,7 @@ is certain attribute used by triggers, overviews or schedulers
     local_data_option[:null] = true if local_data_option[:null].nil?
 
     case data_type
-    when /^((tree_)?select|checkbox)$/
+    when %r{^((tree_)?select|checkbox)$}
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
       local_data_option[:maxlength] ||= 255
     end
@@ -882,17 +882,17 @@ is certain attribute used by triggers, overviews or schedulers
     when 'input'
       [{ failed:  %w[text password tel fax email url].exclude?(local_data_option[:type]),
          message: 'must have one of text/password/tel/fax/email/url for :type' },
-       { failed:  !local_data_option[:maxlength].to_s.match?(/^\d+$/),
+       { failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
          message: 'must have integer for :maxlength' }]
     when 'richtext'
-      [{ failed:  !local_data_option[:maxlength].to_s.match?(/^\d+$/),
+      [{ failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
          message: 'must have integer for :maxlength' }]
     when 'integer'
-      [{ failed:  !local_data_option[:min].to_s.match?(/^\d+$/),
+      [{ failed:  !local_data_option[:min].to_s.match?(%r{^\d+$}),
          message: 'must have integer for :min' },
-       { failed:  !local_data_option[:max].to_s.match?(/^\d+$/),
+       { failed:  !local_data_option[:max].to_s.match?(%r{^\d+$}),
          message: 'must have integer for :max' }]
-    when /^((tree_)?select|checkbox)$/
+    when %r{^((tree_)?select|checkbox)$}
       [{ failed:  !local_data_option.key?(:default),
          message: 'must have value for :default' },
        { failed:  local_data_option[:options].nil? && local_data_option[:relation].nil?,

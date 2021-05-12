@@ -204,7 +204,7 @@ RSpec.describe Ldap::User do
   # stored in test/data/tcr_cassettes.
   context 'on mocked LDAP connections' do
     around do |example|
-      cassette_name = example.description.gsub(/[^0-9A-Za-z.\-]+/, '_')
+      cassette_name = example.description.gsub(%r{[^0-9A-Za-z.\-]+}, '_')
 
       begin
         original_tcr_format = TCR.configuration.format

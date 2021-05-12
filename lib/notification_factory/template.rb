@@ -17,17 +17,17 @@ examples how to use
   end
 
   def to_s
-    @template.gsub(/\#{\s*(.*?)\s*}/m) do
+    @template.gsub(%r{\#{\s*(.*?)\s*}}m) do
       # some browsers start adding HTML tags
       # fixes https://github.com/zammad/zammad/issues/385
-      input_template = $1.gsub(/\A<.+?>\s*|\s*<.+?>\z/, '')
+      input_template = $1.gsub(%r{\A<.+?>\s*|\s*<.+?>\z}, '')
 
       case input_template
-      when /\At\('(.+?)'\)\z/m
+      when %r{\At\('(.+?)'\)\z}m
         %(<%= t "#{sanitize_text($1)}", #{@escape} %>)
-      when /\At\((.+?)\)\z/m
+      when %r{\At\((.+?)\)\z}m
         %(<%= t d"#{sanitize_object_name($1)}", #{@escape} %>)
-      when /\Aconfig\.(.+?)\z/m
+      when %r{\Aconfig\.(.+?)\z}m
         %(<%= c "#{sanitize_object_name($1)}", #{@escape} %>)
       else
         %(<%= d "#{sanitize_object_name(input_template)}", #{@escape} %>)
@@ -37,7 +37,7 @@ examples how to use
 
   def sanitize_text(string)
     string&.tr("\t\r\n", '')
-          &.gsub(/(?<!\\)(?=")/, '\\')
+          &.gsub(%r{(?<!\\)(?=")}, '\\')
   end
 
   def sanitize_object_name(string)

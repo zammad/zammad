@@ -82,11 +82,11 @@ module ApplicationController::HandlesErrors
       error: e.message
     }
 
-    if e.message =~ /Validation failed: (.+?)(,|$)/i
+    if e.message =~ %r{Validation failed: (.+?)(,|$)}i
       data[:error_human] = $1
-    elsif e.message.match?(/(already exists|duplicate key|duplicate entry)/i)
+    elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
       data[:error_human] = 'Object already exists!'
-    elsif e.message =~ /null value in column "(.+?)" violates not-null constraint/i || e.message =~ /Field '(.+?)' doesn't have a default value/i
+    elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i
       data[:error_human] = "Attribute '#{$1}' required!"
     elsif e.message == 'Exceptions::Forbidden'
       data[:error]       = 'Not authorized'
