@@ -18,7 +18,7 @@
       right: 0;
       width: 100%;
       border-radius: 0 !important;
-      font-size: 16px; } }
+      font-size: 16px !important; } }
   .zammad-chat--animate {
     transition: transform 500ms; }
 
@@ -314,7 +314,6 @@
   line-height: 1.4em;
   font-size: inherit;
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   border: none;
   background: none;
@@ -330,7 +329,6 @@
 
 .zammad-chat-button {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   font-family: inherit;
   font-size: inherit;
