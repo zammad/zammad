@@ -23,4 +23,4 @@ App.Config.set('profile', ProfileRouter, 'Routes')
 App.Config.set('profile/:target', ProfileRouter, 'Routes')
 
 App.Config.set('Profile', { prio: 1000, name: 'Profile', target: '#profile' }, 'NavBarProfile')
-App.Config.set('Profile', { prio: 1700, parent: '#current_user', name: 'Profile', target: '#profile', translate: true }, 'NavBarRight')
+App.Config.set('Profile', { prio: 1700, parent: '#current_user', name: 'Profile', target: '#profile', permission: ['user_preferences.*'], translate: true }, 'NavBarRight')
