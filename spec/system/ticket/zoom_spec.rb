@@ -1652,4 +1652,30 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  context 'Sidebar - Open & Closed Tickets', searchindex: true, authenticated_as: :authenticate do
+    let(:customer) { create(:customer, :with_org) }
+    let(:ticket_open) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, title: SecureRandom.uuid) }
+    let(:ticket_closed) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, state: Ticket::State.find_by(name: 'closed'), title: SecureRandom.uuid) }
+
+    def authenticate
+      ticket_open
+      ticket_closed
+      configure_elasticsearch(required: true, rebuild: true)
+      Scheduler.worker(true)
+      true
+    end
+
+    it 'does show open and closed tickets in advanced search url' do
+      visit "#ticket/zoom/#{ticket_open.id}"
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '.user-tickets[data-type=open]'
+      expect(page).to have_text(ticket_open.title, wait: 20)
+
+      visit "#ticket/zoom/#{ticket_open.id}"
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '.user-tickets[data-type=closed]'
+      expect(page).to have_text(ticket_closed.title, wait: 20)
+    end
+  end
 end
