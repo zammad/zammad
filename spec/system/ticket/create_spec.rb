@@ -449,4 +449,31 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/2669
+  context 'when canceling new ticket creation' do
+    it 'closes the dialog' do
+      visit 'ticket/create'
+
+      task_key = find(:task_active)['data-key']
+
+      expect { click('.js-cancel') }.to change { has_selector?(:task_with, task_key, wait: 0) }.to(false)
+    end
+
+    it 'asks for confirmation if the dialog was modified' do
+      visit 'ticket/create'
+
+      task_key = find(:task_active)['data-key']
+
+      find('[name=title]').fill_in with: 'Title'
+
+      click '.js-cancel'
+
+      in_modal do
+        click '.js-submit'
+      end
+
+      expect(page).to have_no_selector(:task_with, task_key)
+    end
+  end
 end

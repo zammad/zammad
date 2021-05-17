@@ -442,7 +442,9 @@ class App.TicketCreate extends App.Controller
 
   cancel: (e) ->
     e.preventDefault()
-    @navigate '#'
+
+    worker = App.TaskManager.worker(@taskKey)
+    App.Event.trigger('taskClose', [worker.taskKey])
 
   params: =>
     params = @formParam(@$('.main form'))

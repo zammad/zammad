@@ -43,3 +43,11 @@ end
 Capybara.add_selector(:link_containing) do
   xpath { |text| ".//a//*[text()[contains(.,\"#{text}\")]]" }
 end
+
+Capybara.add_selector(:task_active) do
+  css { '.tasks .task.is-active' }
+end
+
+Capybara.add_selector(:task_with) do
+  css { |task_key| ".tasks .task[data-key='#{task_key}']" }
+end
