@@ -205,11 +205,11 @@ class ExternalCredential::Microsoft365
 
   def self.authorize_tokens_params(credentials, authorization_code)
     {
-      'client_secret' => credentials[:client_secret],
-      'code'          => authorization_code,
-      'grant_type'    => 'authorization_code',
-      'client_id'     => credentials[:client_id],
-      'redirect_uri'  => ExternalCredential.callback_url('microsoft365'),
+      client_secret: credentials[:client_secret],
+      code:          authorization_code,
+      grant_type:    'authorization_code',
+      client_id:     credentials[:client_id],
+      redirect_uri:  ExternalCredential.callback_url('microsoft365'),
     }
   end
 
@@ -245,10 +245,10 @@ class ExternalCredential::Microsoft365
 
   def self.refresh_token_params(credentials)
     {
-      'client_id'           => credentials[:client_id],
-      'client_secret'       => credentials[:client_secret],
-      'refresh_credentials' => credentials[:refresh_credentials],
-      'grant_type'          => 'refresh_credentials',
+      client_id:     credentials[:client_id],
+      client_secret: credentials[:client_secret],
+      refresh_token: credentials[:refresh_token],
+      grant_type:    'refresh_token',
     }
   end
 
