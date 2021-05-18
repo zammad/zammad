@@ -14,13 +14,13 @@ RSpec.shared_examples 'HasSearchIndexBackend' do |indexed_factory:|
       end
 
       it 'indexes on create' do
-        expect(SearchIndexJob).to have_been_enqueued
+        expect(SearchIndexAssociationsJob).to have_been_enqueued
       end
 
       it 'indexes on update' do
         clear_jobs
         subject.update(note: 'Updated')
-        expect(SearchIndexJob).to have_been_enqueued
+        expect(SearchIndexAssociationsJob).to have_been_enqueued
       end
 
       it 'indexes on touch' do

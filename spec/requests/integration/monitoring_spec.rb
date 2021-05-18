@@ -610,7 +610,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 1 attempt(s).")
+      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).")
 
       # add another job
       manual_added = SearchIndexJob.perform_later('Ticket', 1)
@@ -624,7 +624,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 2 time(s) with 11 attempt(s).")
+      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # add another job
       dummy_class = Class.new(ApplicationJob) do
@@ -645,7 +645,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect(json_response['message']).to eq("Failed to run background job #1 'Object' 1 time(s) with 5 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 2 time(s) with 11 attempt(s).")
+      expect(json_response['message']).to eq("Failed to run background job #1 'Object' 1 time(s) with 5 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # reset settings
       Setting.set('es_url', prev_es_config)
@@ -664,7 +664,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect(json_response['message']).to eq("14 failing background jobs;Failed to run background job #1 'Object' 7 time(s) with 35 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 2 time(s) with 11 attempt(s).")
+      expect(json_response['message']).to eq("13 failing background jobs;Failed to run background job #1 'Object' 8 time(s) with 40 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # cleanup
       Delayed::Job.delete_all

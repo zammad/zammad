@@ -24,7 +24,6 @@ update search index, if configured - will be executed automatically
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
 
-    SearchIndexJob.perform_later(self.class.to_s, id)
     SearchIndexAssociationsJob.perform_later(self.class.to_s, id)
     true
   end
