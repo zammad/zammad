@@ -67,6 +67,14 @@ RSpec.describe ::Escalation do
 
       expect(instance).to be_calculatable
     end
+
+    it 'true when response to ticket comes while ticket has pending reminder' do
+      ticket.update(state: Ticket::State.find_by(name: 'pending reminder'))
+
+      without_update_escalation_information_callback { create(:'ticket/article', :outbound_email, ticket: ticket) }
+
+      expect(instance).to be_calculatable
+    end
   end
 
   describe '#calculate' do

@@ -65,6 +65,17 @@ RSpec.shared_examples 'Ticket::Escalation' do
         expect(ticket.close_diff_in_min).to be_nil
       end
 
+      context 'with first response time resolved by answer + state pending reminder' do
+        before do
+          ticket.update(state: Ticket::State.find_by(name: 'pending reminder'))
+          create(:'ticket/article', :outbound_email, ticket: ticket, created_at: '2013-03-21 09:45:00 UTC', updated_at: '2013-03-21 09:45:00 UTC')
+        end
+
+        it 'does set first_response_diff_in_min' do
+          expect(ticket.reload.first_response_diff_in_min).to eq(45)
+        end
+      end
+
       context 'with first response in time' do
 
         before do

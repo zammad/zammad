@@ -39,7 +39,7 @@ class Escalation
   end
 
   def calculatable?
-    !escalation_disabled? || preferences.close_at_changed?(ticket)
+    !escalation_disabled? || preferences.close_at_changed?(ticket) || preferences.last_contact_at_changed?(ticket)
   end
 
   def calculate!
