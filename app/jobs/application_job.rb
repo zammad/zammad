@@ -1,6 +1,7 @@
 class ApplicationJob < ActiveJob::Base
   include ApplicationJob::HasDelayedJobMonitoringCompatibilty
   include ApplicationJob::HasQueuingPriority
+  include ApplicationJob::HasCustomLogging
 
   # Automatically retry jobs that encountered a deadlock
   # retry_on ActiveRecord::Deadlocked

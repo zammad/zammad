@@ -120,7 +120,6 @@ module HasActiveJobLock
   end
 
   def existing_active_job_lock!
-    logger.info "Won't enqueue #{self.class.name} (Job ID: #{job_id}) because of already existing job with lock key '#{lock_key}'."
     throw :abort
   end
 end
