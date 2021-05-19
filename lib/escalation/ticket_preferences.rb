@@ -3,7 +3,7 @@ class Escalation
     KEYS = %i[escalation_disabled
               first_response_at last_update_at close_at escalation_at
               sla_id sla_updated_at
-              calendar_id calendar_updated_at].freeze
+              calendar_id calendar_updated_at last_contact_at].freeze
 
     attr_reader :hash
 
@@ -39,6 +39,10 @@ class Escalation
       @hash[:close_at] != ticket.close_at
     end
 
+    def last_contact_at_changed?(ticket)
+      @hash[:last_contact_at] != ticket.last_contact_at
+    end
+
     def property_changes?(ticket)
       %i[first_response_at last_update_at close_at].any? { |elem| send("#{elem}_changed?", ticket) }
     end
@@ -60,6 +64,7 @@ class Escalation
         first_response_at:   ticket.first_response_at,
         last_update_at:      ticket.last_original_update_at,
         close_at:            ticket.close_at,
+        last_contact_at:     ticket.last_contact_at,
         sla_id:              sla&.id,
         sla_updated_at:      sla&.updated_at,
         calendar_id:         sla&.calendar&.id,
