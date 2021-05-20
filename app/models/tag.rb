@@ -2,6 +2,7 @@
 
 class Tag < ApplicationModel
   include Tag::WritesToTicketHistory
+  include HasTransactionDispatcher
 
   belongs_to :tag_object, class_name: 'Tag::Object', optional: true
   belongs_to :tag_item,   class_name: 'Tag::Item', optional: true

@@ -169,7 +169,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -203,7 +203,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -240,7 +240,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created - ticket notification simple')
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -253,7 +253,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -274,7 +274,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to not to @agent1 but to @agent2
@@ -298,7 +298,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to not to @agent1 but to @agent2
@@ -331,7 +331,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
     assert(ticket2, 'ticket created')
 
@@ -346,7 +346,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to none
@@ -360,7 +360,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 and not to @agent2
@@ -393,7 +393,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
     assert(ticket3, 'ticket created')
 
@@ -408,7 +408,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to no one
@@ -422,7 +422,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 and not to @agent2
@@ -434,7 +434,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     article_inbound.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications not to @agent1 and not to @agent2
@@ -480,7 +480,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created - ticket no notification')
 
     # execute object transaction
-    Observer::Transaction.commit(disable_notification: true)
+    TransactionDispatcher.commit(disable_notification: true)
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -533,7 +533,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -546,7 +546,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -579,7 +579,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -592,7 +592,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -625,7 +625,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -638,7 +638,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -691,7 +691,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -704,7 +704,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket4.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -757,7 +757,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -770,7 +770,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket5.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -824,7 +824,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -839,7 +839,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket6.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -903,7 +903,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -918,7 +918,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket7.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -957,7 +957,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created')
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
@@ -965,7 +965,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.save!
 
     list         = EventBuffer.list('transaction')
-    list_objects = Observer::Transaction.get_uniq_changes(list)
+    list_objects = TransactionDispatcher.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects['Ticket'][ticket1.id][:changes]['title'][0])
     assert_equal('some notification event test 1 - #2', list_objects['Ticket'][ticket1.id][:changes]['title'][1])
@@ -979,7 +979,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.save!
 
     list         = EventBuffer.list('transaction')
-    list_objects = Observer::Transaction.get_uniq_changes(list)
+    list_objects = TransactionDispatcher.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects['Ticket'][ticket1.id][:changes]['title'][0])
     assert_equal('some notification event test 1 - #2 - #3', list_objects['Ticket'][ticket1.id][:changes]['title'][1])
@@ -1018,7 +1018,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created - ticket notification simple')
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -1061,7 +1061,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket2, 'ticket created - ticket notification simple')
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -1076,7 +1076,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2
@@ -1098,7 +1098,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # verify notifications to @agent1 + @agent2

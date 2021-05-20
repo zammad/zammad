@@ -140,7 +140,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       end
 
       # reopen ticket and notify agent
-      Observer::Transaction.reset
+      TransactionDispatcher.reset
       UserInfo.current_user_id = 1
       Ticket::Article.create!(
         ticket_id:    local_record.ticket_id,
@@ -159,7 +159,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       ticket       = Ticket.find(local_record.ticket_id)
       ticket.state = Ticket::State.find_by(default_follow_up: true)
       ticket.save!
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       UserInfo.current_user_id = nil
     end
 

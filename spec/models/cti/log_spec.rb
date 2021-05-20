@@ -257,7 +257,7 @@ RSpec.describe Cti::Log do
       let(:customer_of_ticket) { create(:customer) }
       let(:ticket_sample) do
         create(:ticket_article, created_by_id: customer_of_ticket.id, body: 'some text 0123457')
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         Scheduler.worker(true)
       end
       let(:caller_id) { '0123456' }

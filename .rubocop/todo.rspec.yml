@@ -533,6 +533,7 @@ RSpec/MultipleExpectations:
     - 'spec/models/object_manager/attribute_spec.rb'
     - 'spec/models/overview_spec.rb'
     - 'spec/models/scheduler_spec.rb'
+    - 'spec/models/session_spec.rb'
     - 'spec/models/sla/has_escalation_calculation_impact_examples.rb'
     - 'spec/models/smime_certificate_spec.rb'
     - 'spec/models/taskbar_spec.rb'

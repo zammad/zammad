@@ -16,7 +16,7 @@ class Transaction
       if options[:interface_handle]
         ApplicationHandleInfo.current = original_interface_handle
       end
-      Observer::Transaction.commit(options)
+      TransactionDispatcher.commit(options)
       PushMessages.finish
     end
     return if options[:bulk] != true

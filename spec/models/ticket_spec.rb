@@ -1381,7 +1381,7 @@ RSpec.describe Ticket, type: :model do
         expect(Cti::CallerId).to receive(:build).with(ticket)
 
         ticket.save
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         Scheduler.worker(true)
       end
     end
@@ -1584,7 +1584,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'fires triggers before new ticket notifications are sent' do
-        expect { Observer::Transaction.commit }
+        expect { TransactionDispatcher.commit }
           .to change { ticket.reload.group }.to(group)
 
         expect { Scheduler.worker(true) }
@@ -1634,12 +1634,12 @@ RSpec.describe Ticket, type: :model do
         create(:mention, mentionable: ticket, user: user_only_mentions)
         create(:mention, mentionable: ticket, user: user_read_mentions)
         create(:mention, mentionable: ticket, user: user_no_mentions)
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         Scheduler.worker(true)
 
         check_notification do
           ticket.update(priority: Ticket::Priority.find_by(name: '3 high'))
-          Observer::Transaction.commit
+          TransactionDispatcher.commit
           Scheduler.worker(true)
           sent(
             template: 'ticket_update',
@@ -1658,12 +1658,12 @@ RSpec.describe Ticket, type: :model do
 
       it 'does not inform mention user about the ticket update' do
         ticket
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         Scheduler.worker(true)
 
         check_notification do
           ticket.update(priority: Ticket::Priority.find_by(name: '3 high'))
-          Observer::Transaction.commit
+          TransactionDispatcher.commit
           Scheduler.worker(true)
           sent(
             template: 'ticket_update',
@@ -1685,7 +1685,7 @@ RSpec.describe Ticket, type: :model do
           ticket = create(:ticket, owner: user_no_mentions, group: mention_group)
           create(:mention, mentionable: ticket, user: user_read_mentions)
           create(:mention, mentionable: ticket, user: user_only_mentions)
-          Observer::Transaction.commit
+          TransactionDispatcher.commit
           Scheduler.worker(true)
           sent(
             template: 'ticket_create',
@@ -1705,7 +1705,7 @@ RSpec.describe Ticket, type: :model do
       it 'does not inform mention user about ticket creation' do
         check_notification do
           create(:ticket, owner: user_no_mentions, group: mention_group)
-          Observer::Transaction.commit
+          TransactionDispatcher.commit
           Scheduler.worker(true)
           sent(
             template: 'ticket_create',
@@ -1727,7 +1727,7 @@ RSpec.describe Ticket, type: :model do
           ticket = create(:ticket, group: no_access_group)
           create(:mention, mentionable: ticket, user: user_read_mentions)
           create(:mention, mentionable: ticket, user: user_only_mentions)
-          Observer::Transaction.commit
+          TransactionDispatcher.commit
           Scheduler.worker(true)
           not_sent(
             template: 'ticket_create',

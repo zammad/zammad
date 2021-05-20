@@ -155,8 +155,6 @@ Metrics/AbcSize:
     - 'app/models/knowledge_base/search.rb'
     - 'app/models/link.rb'
     - 'app/models/object_manager/attribute.rb'
-    - 'app/models/observer/chat/leave/background_job.rb'
-    - 'app/models/observer/transaction.rb'
     - 'app/models/online_notification.rb'
     - 'app/models/online_notification/assets.rb'
     - 'app/models/organization/assets.rb'
@@ -349,6 +347,7 @@ Metrics/AbcSize:
     - 'lib/stats/ticket_waiting_time.rb'
     - 'lib/tasks/search_index_es.rake'
     - 'lib/telegram.rb'
+    - 'lib/transaction_dispatcher.rb'
     - 'lib/twitter_sync.rb'
     - 'lib/user_agent.rb'
     - 'lib/websocket_server.rb'
@@ -423,6 +422,7 @@ Metrics/BlockLength:
     - 'lib/sessions/client.rb'
     - 'lib/tasks/search_index_es.rake'
     - 'lib/tasks/zammad/ci/service/puma/start.rake'
+    - 'lib/transaction_dispatcher.rb'
     - 'lib/twitter_sync.rb'
     - 'script/websocket-server.rb'
     - 'spec/**/*'
@@ -653,6 +653,7 @@ Metrics/CyclomaticComplexity:
     - 'lib/stats/ticket_waiting_time.rb'
     - 'lib/tasks/search_index_es.rake'
     - 'lib/telegram.rb'
+    - 'lib/transaction_dispatcher.rb'
     - 'lib/twitter_sync.rb'
     - 'lib/user_agent.rb'
     - 'lib/websocket_server.rb'
@@ -686,6 +687,7 @@ Metrics/ModuleLength:
     - 'lib/sessions/node.rb'
     - 'lib/signature_detection.rb'
     - 'lib/static_assets.rb'
+    - 'lib/transaction_dispatcher.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
@@ -878,6 +880,7 @@ Metrics/PerceivedComplexity:
     - 'lib/stats/ticket_waiting_time.rb'
     - 'lib/tasks/search_index_es.rake'
     - 'lib/telegram.rb'
+    - 'lib/transaction_dispatcher.rb'
     - 'lib/twitter_sync.rb'
     - 'lib/user_agent.rb'
     - 'test/browser/admin_object_manager_test.rb'

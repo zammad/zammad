@@ -159,7 +159,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(article.preferences[:delivery_retry]).to be_nil
       expect(article.preferences[:delivery_status]).to be_nil
 
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       Scheduler.worker(true)
 
       article = Ticket::Article.find(json_response['id'])
@@ -175,7 +175,7 @@ RSpec.describe 'Twilio SMS', type: :request do
         email:  'me@example.com',
         mobile: '01710000000',
       )
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       Scheduler.worker(true)
 
       UserInfo.current_user_id = 1

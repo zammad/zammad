@@ -23,12 +23,6 @@ module Zammad
     config.autoload_paths += %W[#{config.root}/lib]
     config.eager_load_paths += %W[#{config.root}/lib]
 
-    # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.active_record.observers =
-      'observer::_session',
-      'observer::_transaction'
-
     config.active_job.queue_adapter = :delayed_job
 
     # Use custom logger to log Thread id next to Process pid

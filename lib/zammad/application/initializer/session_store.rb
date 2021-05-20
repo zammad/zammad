@@ -10,6 +10,7 @@ module Zammad
         SESSION_KEY = "_zammad_session_#{Digest::MD5.hexdigest(Rails.root.to_s)[5..15]}".freeze # default: '_zammad_session'
 
         def self.perform
+          ActionDispatch::Session::ActiveRecordStore.session_class = Session
           Rails.application.config.session_store STORE_TYPE,
                                                  key:    SESSION_KEY,
                                                  secure: secure?

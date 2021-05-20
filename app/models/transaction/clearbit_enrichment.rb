@@ -39,7 +39,7 @@ class Transaction::ClearbitEnrichment
     user_enrichment = Enrichment::Clearbit::User.new(user)
     return if !user_enrichment.synced?
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     true
   end
 end

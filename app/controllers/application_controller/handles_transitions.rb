@@ -13,7 +13,7 @@ module ApplicationController::HandlesTransitions
 
     yield
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     PushMessages.finish
     ActiveSupport::Dependencies::Reference.clear!
   ensure

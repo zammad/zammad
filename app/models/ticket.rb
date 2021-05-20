@@ -36,6 +36,8 @@ class Ticket < ApplicationModel
   # This must be loaded late as it depends on the internal before_create and before_update handlers of ticket.rb.
   include Ticket::SetsLastOwnerUpdateTime
 
+  include HasTransactionDispatcher
+
   validates :group_id, presence: true
 
   activity_stream_permission 'ticket.agent'
@@ -1355,7 +1357,7 @@ perform active triggers on ticket
         ticket.perform_changes(trigger, 'trigger', item, user_id)
 
         if recursive == true
-          Observer::Transaction.commit(local_options)
+          TransactionDispatcher.commit(local_options)
         end
       end
     end

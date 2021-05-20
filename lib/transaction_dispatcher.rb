@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-class Observer::Transaction < ActiveRecord::Observer
-  observe :ticket, 'ticket::_article', :user, :organization, :tag
+class TransactionDispatcher
 
   def self.reset
     EventBuffer.reset('transaction')
@@ -15,7 +14,7 @@ class Observer::Transaction < ActiveRecord::Observer
     params[:interface_handle] = ApplicationHandleInfo.current
 
     # execute object transactions
-    Observer::Transaction.perform(params)
+    TransactionDispatcher.perform(params)
   end
 
   def self.perform(params)
@@ -45,7 +44,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
         # execute sync backends
         sync_backends.each do |backend|
-          execute_singel_backend(backend, item, params)
+          execute_single_backend(backend, item, params)
         end
 
         # execute async backends
@@ -54,8 +53,8 @@ class Observer::Transaction < ActiveRecord::Observer
     end
   end
 
-  def self.execute_singel_backend(backend, item, params)
-    Rails.logger.debug { "Execute singel backend #{backend}" }
+  def self.execute_single_backend(backend, item, params)
+    Rails.logger.debug { "Execute single backend #{backend}" }
     begin
       UserInfo.current_user_id = nil
       integration = backend.new(item, params)
@@ -176,7 +175,8 @@ class Observer::Transaction < ActiveRecord::Observer
     list_objects
   end
 
-  def after_create(record)
+  # Used as ActiveRecord lifecycle callback on the class.
+  def self.after_create(record)
 
     # return if we run import mode
     return true if Setting.get('import_mode')
@@ -193,7 +193,8 @@ class Observer::Transaction < ActiveRecord::Observer
     true
   end
 
-  def before_update(record)
+  # Used as ActiveRecord lifecycle callback on the class.
+  def self.before_update(record)
 
     # return if we run import mode
     return true if Setting.get('import_mode')

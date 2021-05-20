@@ -338,7 +338,7 @@ RSpec.describe Ticket::Article, type: :model do
             it 'does not modify any Log records (because CallerIds from article bodies have #level "maybe")' do
               expect do
                 article.save
-                Observer::Transaction.commit
+                TransactionDispatcher.commit
                 Scheduler.worker(true)
               end.not_to change { log.reload.attributes }
             end

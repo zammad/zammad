@@ -23,6 +23,8 @@ class User < ApplicationModel
   include User::PerformsGeoLookup
   include User::UpdatesTicketOrganization
 
+  include HasTransactionDispatcher
+
   has_and_belongs_to_many :organizations,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy

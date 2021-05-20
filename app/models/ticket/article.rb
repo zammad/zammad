@@ -23,6 +23,8 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::AddsMetadataGeneral
   include Ticket::Article::AddsMetadataEmail
 
+  include HasTransactionDispatcher
+
   belongs_to :ticket, optional: true
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article
   belongs_to :type,       class_name: 'Ticket::Article::Type', optional: true

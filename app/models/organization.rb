@@ -15,6 +15,8 @@ class Organization < ApplicationModel
   include Organization::Search
   include Organization::SearchIndex
 
+  include HasTransactionDispatcher
+
   has_many :members, class_name: 'User'
   has_many :tickets, class_name: 'Ticket'
   belongs_to :created_by,  class_name: 'User'

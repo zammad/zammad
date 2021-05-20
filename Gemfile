@@ -10,7 +10,6 @@ gem 'activerecord-session_store'
 gem 'bootsnap', require: false
 gem 'composite_primary_keys'
 gem 'json'
-gem 'rails-observers'
 
 # core - application servers
 gem 'puma', '~> 4', group: :puma

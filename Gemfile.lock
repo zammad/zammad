@@ -418,8 +418,6 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
-    rails-observers (0.1.5)
-      activemodel (>= 4.0)
     railties (5.2.4.6)
       actionpack (= 5.2.4.6)
       activesupport (= 5.2.4.6)
@@ -654,7 +652,6 @@ DEPENDENCIES
   rack-livereload
   rails (= 5.2.4.6)
   rails-controller-testing
-  rails-observers
   rb-fsevent
   rchardet (>= 1.8.0)
   rspec-rails

@@ -20,7 +20,7 @@ class TransactionJob < ApplicationJob
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 
-      Observer::Transaction.execute_singel_backend(backend.constantize, item, params)
+      TransactionDispatcher.execute_single_backend(backend.constantize, item, params)
     end
   end
 end

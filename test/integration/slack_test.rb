@@ -67,7 +67,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -76,7 +76,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.find_by(name: 'open')
     ticket1.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -105,7 +105,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -117,7 +117,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.title = text
     ticket2.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -127,7 +127,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.pending_time = Time.zone.now - 2.days
     ticket2.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -135,7 +135,7 @@ class SlackTest < ActiveSupport::TestCase
 
     Ticket.process_pending
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -143,7 +143,7 @@ class SlackTest < ActiveSupport::TestCase
 
     Ticket.process_pending
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -186,7 +186,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -195,7 +195,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket3.state = Ticket::State.find_by(name: 'open')
     ticket3.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -224,7 +224,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -236,7 +236,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket4.title = text
     ticket4.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
