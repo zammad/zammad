@@ -115,7 +115,7 @@ class App.UiElement.ApplicationUiElement
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
 
         # check all records
-        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy)
+        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy, translate: attribute.translate)
 
           # check all filter attributes
           for key in attribute.filter

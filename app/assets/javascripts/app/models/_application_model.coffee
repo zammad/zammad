@@ -778,8 +778,9 @@ set new attributes of model (remove already available attributes)
       all_complied = @_filterExtended(all_complied, params.filterExtended)
 
     # sort by
+    # if translate true then use translated strings to sort list
     if params.sortBy != null
-      all_complied = @_sortBy(all_complied, params.sortBy)
+      all_complied = @_sortBy(all_complied, params.sortBy, params.translate)
 
     # order
     if params.order
@@ -787,7 +788,7 @@ set new attributes of model (remove already available attributes)
 
     all_complied
 
-  @_sortBy: (collection, attribute) ->
+  @_sortBy: (collection, attribute, translate) ->
     _.sortBy(collection, (item) ->
 
       # set displayName as default sort attribute
@@ -797,7 +798,9 @@ set new attributes of model (remove already available attributes)
       # check if displayName exists
       if attribute is 'displayName'
         if item.displayName
-          return item.displayName().toLowerCase()
+          value = item.displayName()
+          valueProcessed = if translate then App.i18n.translateInline(value) else value
+          return valueProcessed.toLowerCase()
         else
           attribute = 'name'
 
@@ -806,7 +809,9 @@ set new attributes of model (remove already available attributes)
 
       # return value if string
       if item[ attribute ].toLowerCase
-        return item[ attribute ].toLowerCase()
+        value = item[ attribute ]
+        valueProcessed = if translate then App.i18n.translateInline(value) else value
+        return valueProcessed.toLowerCase()
 
       item[ attribute ]
     )

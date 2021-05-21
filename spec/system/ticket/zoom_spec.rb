@@ -920,6 +920,38 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  # https://github.com/zammad/zammad/issues/3335
+  context 'ticket state sort order maintained when locale is de-de', authenticated_as: :authenticate do
+    def authenticate
+      user.preferences[:locale] = 'de-de'
+      user
+    end
+
+    context 'when existing ticket is open' do
+      let(:user) { create(:customer) }
+      let(:ticket) { create(:ticket, customer: user) }
+
+      it 'shows ticket state dropdown options in sorted order, with new at the end' do
+        visit "ticket/zoom/#{ticket.id}"
+
+        await_empty_ajax_queue
+        expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen offen neu])
+      end
+    end
+
+    context 'when a new ticket is created' do
+      let(:user) { create(:agent, groups: [permitted_group]) }
+      let(:permitted_group) { create(:group) }
+
+      it 'shows ticket state dropdown options in sorted order, with new in sorted position' do
+        visit 'ticket/create'
+
+        await_empty_ajax_queue
+        expect(all('select[name=state_id] option').map(&:text)).to eq ['-', 'geschlossen', 'neu', 'offen', 'warten auf Erinnerung', 'warten auf schliessen']
+      end
+    end
+  end
+
   context 'object manager attribute permission view' do
     let!(:group_users) { Group.find_by(name: 'Users') }
 
