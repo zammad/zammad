@@ -63,6 +63,19 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_boolean, parent: :object_manager_attribute do
+    data_type { 'boolean' }
+    data_option do
+      {
+        default: false,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        }
+      }
+    end
+  end
+
   factory :object_manager_attribute_date, parent: :object_manager_attribute do
     name      { 'date_attribute' }
     data_type { 'date' }

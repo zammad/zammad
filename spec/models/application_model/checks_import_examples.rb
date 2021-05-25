@@ -1,5 +1,5 @@
 RSpec.shared_examples 'ApplicationModel::ChecksImport' do
-  describe '#id (for referential integrity during OTRS/Zendesk import)' do
+  describe '#id (for referential integrity during (e.g. OTRS/Zendesk/Freshdesk) import)' do
     subject { build(described_class.name.underscore, id: next_id + 1) }
 
     let(:next_id) do

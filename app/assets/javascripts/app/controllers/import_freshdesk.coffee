@@ -1,29 +1,31 @@
-class ImportZendesk extends App.ControllerWizardFullScreen
+class ImportFreshdesk extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
-    '.input-feedback':                       'urlStatus'
-    '[data-target=zendesk-credentials]':     'nextEnterCredentials'
-    '[data-target=zendesk-start-migration]': 'nextStartMigration'
-    '#zendesk-url':                          'zendeskUrl'
-    '.js-zendeskUrlApiToken':                'zendeskUrlApiToken'
-    '.zendesk-url-error':                    'linkErrorMessage'
-    '.zendesk-api-token-error':              'apiTokenErrorMessage'
-    '#zendesk-email':                        'zendeskEmail'
-    '#zendesk-api-token':                    'zendeskApiToken'
-    '.js-ticket-count-info':                 'ticketCountInfo'
+    '.input-feedback':                         'urlStatus'
+    '[data-target=freshdesk-credentials]':     'nextEnterCredentials'
+    '[data-target=freshdesk-start-migration]': 'nextStartMigration'
+    '#freshdesk-subdomain':                    'freshdeskSubdomain'
+    '#freshdesk-subdomain-addon':              'freshdeskSubdomainAddon'
+    '.freshdesk-subdomain-error':              'linkErrorMessage'
+    '.freshdesk-api-token-error':              'apiTokenErrorMessage'
+    '#freshdesk-email':                        'freshdeskEmail'
+    '#freshdesk-api-token':                    'freshdeskApiToken'
+    '.js-ticket-count-info':                   'ticketCountInfo'
   updateMigrationDisplayLoop: 0
 
   events:
-    'click .js-zendesk-credentials': 'showCredentials'
+    'click .js-freshdesk-credentials': 'showCredentials'
     'click .js-migration-start':     'startMigration'
-    'keyup #zendesk-url':           'updateUrl'
-    'keyup #zendesk-api-token':     'updateApiToken'
+    'keyup #freshdesk-subdomain':           'updateUrl'
+    'keyup #freshdesk-api-token':     'updateApiToken'
 
   constructor: ->
     super
 
     # set title
     @title 'Import'
+
+    @freshdeskDomain = '.freshdesk.com'
 
     # redirect to login if master user already exists
     if @Config.get('system_init_done')
@@ -43,7 +45,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
       success:     (data, status, xhr) =>
 
         # check if import is active
-        if data.import_mode == true && data.import_backend != 'zendesk'
+        if data.import_mode == true && data.import_backend != 'freshdesk'
           @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
@@ -56,19 +58,22 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     )
 
   render: ->
-    @replaceWith App.view('import/zendesk')()
+    @replaceWith App.view('import/freshdesk')(
+      freshdeskDomain: @freshdeskDomain
+    )
 
   updateUrl: (e) =>
     @urlStatus.attr('data-state', 'loading')
+    @freshdeskSubdomainAddon.attr('style', 'padding-right: 42px')
     @linkErrorMessage.text('')
 
     # get data
     callback = =>
       @ajax(
-        id:          'import_zendesk_url'
+        id:          'import_freshdesk_url'
         type:        'POST'
-        url:         "#{@apiPath}/import/zendesk/url_check"
-        data:        JSON.stringify(url: @zendeskUrl.val())
+        url:         "#{@apiPath}/import/freshdesk/url_check"
+        data:        JSON.stringify(url: "https://#{@freshdeskSubdomain.val()}#{@freshdeskDomain}")
         processData: true
         success:     (data, status, xhr) =>
 
@@ -83,7 +88,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
             @nextEnterCredentials.addClass('hide')
 
       )
-    @delay( callback, 700, 'import_zendesk_url' )
+    @delay( callback, 700, 'import_freshdesk_url' )
 
   updateApiToken: (e) =>
     @urlStatus.attr('data-state', 'loading')
@@ -92,10 +97,10 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     # get data
     callback = =>
       @ajax(
-        id:          'import_zendesk_api_token'
+        id:          'import_freshdesk_api_token'
         type:        'POST'
-        url:         "#{@apiPath}/import/zendesk/credentials_check"
-        data:        JSON.stringify(username: @zendeskEmail.val(), token: @zendeskApiToken.val())
+        url:         "#{@apiPath}/import/freshdesk/credentials_check"
+        data:        JSON.stringify(token: @freshdeskApiToken.val())
         processData: true
         success:     (data, status, xhr) =>
 
@@ -106,25 +111,22 @@ class ImportZendesk extends App.ControllerWizardFullScreen
             @nextStartMigration.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @apiTokenErrorMessage.text(data.message_human || data.message)
+            @apiTokenErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
 
       )
-    @delay(callback, 700, 'import_zendesk_api_token')
+    @delay(callback, 700, 'import_freshdesk_api_token')
 
   showCredentials: (e) =>
     e.preventDefault()
     @urlStatus.attr('data-state', '')
-    url = @zendeskUrl.val() + '/agent/admin/api'
-    @zendeskUrlApiToken.attr('href', url.replace(/([^:])\/\/+/g, '$1/'))
-    @zendeskUrlApiToken.val('HERE')
-    @$('[data-slide=zendesk-url]').toggleClass('hide')
-    @$('[data-slide=zendesk-credentials]').toggleClass('hide')
+    @$('[data-slide=freshdesk-subdomain]').toggleClass('hide')
+    @$('[data-slide=freshdesk-credentials]').toggleClass('hide')
 
   showImportState: =>
-    @$('[data-slide=zendesk-url]').addClass('hide')
-    @$('[data-slide=zendesk-credentials]').addClass('hide')
-    @$('[data-slide=zendesk-import]').removeClass('hide')
+    @$('[data-slide=freshdesk-subdomain]').addClass('hide')
+    @$('[data-slide=freshdesk-credentials]').addClass('hide')
+    @$('[data-slide=freshdesk-import]').removeClass('hide')
 
   startMigration: (e) =>
     e.preventDefault()
@@ -132,7 +134,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     @ajax(
       id:          'import_start'
       type:        'POST'
-      url:         "#{@apiPath}/import/zendesk/import_start"
+      url:         "#{@apiPath}/import/freshdesk/import_start"
       processData: true
       success:     (data, status, xhr) =>
 
@@ -147,7 +149,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     @ajax(
       id:          'import_status'
       type:        'GET'
-      url:         "#{@apiPath}/import/zendesk/import_status"
+      url:         "#{@apiPath}/import/freshdesk/import_status"
       processData: true
       success:     (data, status, xhr) =>
 
@@ -171,9 +173,6 @@ class ImportZendesk extends App.ControllerWizardFullScreen
             if stats.sum > stats.total
               stats.sum = stats.total
 
-            if model == 'Ticket' && stats.total >= 1000
-              @ticketCountInfo.removeClass('hide')
-
             element = @$('.js-' + model.toLowerCase() )
             element.find('.js-done').text(stats.sum)
             element.find('.js-total').text(stats.total)
@@ -186,10 +185,10 @@ class ImportZendesk extends App.ControllerWizardFullScreen
         @delay(@updateMigration, 5000)
     )
 
-App.Config.set('import/zendesk', ImportZendesk, 'Routes')
-App.Config.set('zendesk', {
-  title: 'Zendesk'
-  name:  'Zendesk'
-  class: 'js-zendesk'
-  url:   '#import/zendesk'
+App.Config.set('import/freshdesk', ImportFreshdesk, 'Routes')
+App.Config.set('freshdesk', {
+  title: 'Freshdesk'
+  name:  'Freshdesk'
+  class: 'js-freshdesk'
+  url:   '#import/freshdesk'
 }, 'ImportPlugins')

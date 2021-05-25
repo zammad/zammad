@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-class ImportZendeskController < ApplicationController
+class ImportFreshdeskController < ApplicationController
 
   def url_check
     return if setup_done_response
@@ -13,33 +13,18 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    # connection test
-    translation_map = {
-      'No such file'                                              => 'Hostname not found!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      '503 Service Temporarily Unavailable'                       => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
-    }
-
     response = UserAgent.request(params[:url])
 
     if !response.success?
-      message_human = ''
-      translation_map.each do |key, message|
-        if response.error.to_s.match?(%r{#{Regexp.escape(key)}}i)
-          message_human = message
-        end
-      end
       render json: {
         result:        'invalid',
-        message_human: message_human,
+        message_human: url_check_human_error_message(response.error.to_s),
         message:       response.error.to_s,
       }
       return
     end
 
-    # since 2016-10-15 a redirect to a marketing page has been implemented
+    # Check if maybe a redirect is implemented.
     if !response.body.match?(%r{#{params[:url]}})
       render json: {
         result:        'invalid',
@@ -51,7 +36,7 @@ class ImportZendeskController < ApplicationController
     endpoint = "#{params[:url]}/api/v2"
     endpoint.gsub!(%r{([^:])//+}, '\\1/')
 
-    Setting.set('import_zendesk_endpoint', endpoint)
+    Setting.set('import_freshdesk_endpoint', endpoint)
 
     render json: {
       result: 'ok',
@@ -62,7 +47,7 @@ class ImportZendeskController < ApplicationController
   def credentials_check
     return if setup_done_response
 
-    if !params[:username] || !params[:token]
+    if !params[:token]
 
       render json: {
         result:        'invalid',
@@ -71,15 +56,13 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    Setting.set('import_zendesk_endpoint_username', params[:username])
-    Setting.set('import_zendesk_endpoint_key', params[:token])
+    Setting.set('import_freshdesk_endpoint_key', params[:token])
 
-    result = Sequencer.process('Import::Zendesk::ConnectionTest')
+    result = Sequencer.process('Import::Freshdesk::ConnectionTest')
 
     if !result[:connected]
 
-      Setting.set('import_zendesk_endpoint_username', nil)
-      Setting.set('import_zendesk_endpoint_key', nil)
+      Setting.set('import_freshdesk_endpoint_key', nil)
 
       render json: {
         result:        'invalid',
@@ -97,9 +80,9 @@ class ImportZendeskController < ApplicationController
     return if setup_done_response
 
     Setting.set('import_mode', true)
-    Setting.set('import_backend', 'zendesk')
+    Setting.set('import_backend', 'freshdesk')
 
-    job = ImportJob.create(name: 'Import::Zendesk')
+    job = ImportJob.create(name: 'Import::Freshdesk')
     AsyncImportJob.perform_later(job)
 
     render json: {
@@ -108,7 +91,7 @@ class ImportZendeskController < ApplicationController
   end
 
   def import_status
-    job = ImportJob.find_by(name: 'Import::Zendesk')
+    job = ImportJob.find_by(name: 'Import::Freshdesk')
 
     if job.finished_at.present?
       Setting.reload
@@ -137,6 +120,24 @@ class ImportZendeskController < ApplicationController
       setup_done: true,
     }
     true
+  end
+
+  def url_check_human_error_message(error)
+    translation_map = {
+      'No such file'                                              => 'Hostname not found!',
+      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
+      'No route to host'                                          => 'No route to host!',
+      'Connection refused'                                        => 'Connection refused!',
+    }
+
+    message_human = ''
+    translation_map.each do |key, message|
+      if error.match?(%r{#{Regexp.escape(key)}}i)
+        message_human = message
+      end
+    end
+
+    message_human
   end
 
 end

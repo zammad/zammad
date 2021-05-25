@@ -3142,6 +3142,44 @@ Setting.create_if_not_exists(
   state:       '',
   frontend:    false
 )
+
+Setting.create_if_not_exists(
+  title:       'Import Endpoint',
+  name:        'import_freshdesk_endpoint',
+  area:        'Import::Freshdesk',
+  description: 'Defines Freshdesk endpoint to import users, ticket, states and articles.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_freshdesk_endpoint',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       'https://yours.freshdesk.com/api/v2',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Import Key for requesting the Freshdesk API',
+  name:        'import_freshdesk_endpoint_key',
+  area:        'Import::Freshdesk',
+  description: 'Defines Freshdesk endpoint authentication key.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_freshdesk_endpoint_key',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       '',
+  frontend:    false
+)
+
 Setting.create_if_not_exists(
   title:       'Import Backends',
   name:        'import_backends',

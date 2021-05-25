@@ -57,7 +57,7 @@ module Import
     #
     # return [nil]
     def start
-      raise "Missing implementation if the 'start' method."
+      raise "Missing implementation of the 'start' method."
     end
   end
 end

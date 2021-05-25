@@ -9196,6 +9196,14 @@ label + .wizard-buttonList {
   width: 52px;
   border-radius: 0 5px 5px 0;
   background: linear-gradient(to right, rgba(255,255,255,0), white 33%);
+
+  &--no-background {
+    background: none;
+  }
+}
+
+.input-feedback--no-background {
+  background: none;
 }
 
 .input-feedback .icon {
