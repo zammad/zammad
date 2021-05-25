@@ -8,20 +8,6 @@ RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_a
     end
   end
 
-  # TODO: check/clarify how the ENV-works in the CI-Envoirment?
-
-  # TODO: check https://git.znuny.com/zammad/zammad/-/merge_requests/1506/
-  # comment out bellow block to use VCR tape for running freshdesk import
-  # this allows to work around freshdesk rate limiting
-  # works great for debugging freshdesk locally
-  # around do |example|
-  #   VCR.temporary_ignore_regexps += [/^(\S+\.|)freshdesk.com$/, /^\S+.zdusercontent.com$/]
-
-  #   example.run
-
-  #   VCR.temporary_ignore_regexps -= [/^(\S+\.|)freshdesk.com$/, /^\S+.zdusercontent.com$/]
-  # end
-
   describe 'fields validation', :use_vcr do
     before do
       visit '#import'
