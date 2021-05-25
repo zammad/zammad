@@ -384,7 +384,8 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     public_suffix (3.1.1)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
@@ -647,7 +648,7 @@ DEPENDENCIES
   pry-remote
   pry-rescue
   pry-stack_explorer
-  puma (~> 3.12)
+  puma (~> 4)
   pundit
   pundit-matchers
   rack-livereload
