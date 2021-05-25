@@ -1064,6 +1064,49 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect(article.attachments.first.content).to eq('Hello Zammad')
         end
       end
+
+      # https://github.com/zammad/zammad/issues/3529
+      context 'Attachments sent by Zammad not shown in Outlook' do
+        subject(:mail) do
+          Channel::EmailBuild.build(
+            from:         'sender@example.com',
+            to:           'recipient@example.com',
+            body:         body,
+            content_type: 'text/html',
+            attachments:  Store.where(filename: 'super-seven.jpg')
+          )
+        end
+
+        let(:mail_file) { Rails.root.join('test/data/mail/mail101.box') }
+
+        before do
+          described_class.new.process({}, raw_mail)
+        end
+
+        context 'when no reference in body' do
+          let(:body) { 'no reference here' }
+
+          it 'does not have content disposition inline' do
+            expect(mail.to_s).to include('Content-Disposition: attachment').and not_include('Content-Disposition: inline')
+          end
+        end
+
+        context 'when reference in body' do
+          let(:body) { %(somebody with some text <img src="cid:#{Store.find_by(filename: 'super-seven.jpg').preferences['Content-ID']}">) }
+
+          it 'does have content disposition inline' do
+            expect(mail.to_s).to include('Content-Disposition: inline').and not_include('Content-Disposition: attachment')
+          end
+
+          context 'when encoded as ISO-8859-1' do
+            let(:body) { super().encode('ISO-8859-1') }
+
+            it 'does not raise exception' do
+              expect { mail.to_s }.not_to raise_error
+            end
+          end
+        end
+      end
     end
 
     describe 'inline image handling' do

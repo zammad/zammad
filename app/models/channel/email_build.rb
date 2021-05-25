@@ -82,7 +82,23 @@ generate email with S/MIME
     alternative_bodies = Mail::Part.new { content_type 'multipart/alternative' }
     alternative_bodies.add_part text_alternative
 
+    found_content_ids = {}
     if html_alternative
+
+      # find all inline attachments used in body
+      begin
+        scrubber = Loofah::Scrubber.new do |node|
+          next if node.name != 'img'
+          next if node['src'].blank?
+          next if node['src'] !~ /^cid:\s{0,2}(.+?)\s{0,2}$/
+
+          found_content_ids[$1] = true
+        end
+        Loofah.fragment(html_alternative.body.to_s).scrub!(scrubber)
+      rescue => e
+        logger.error e
+      end
+
       html_container = Mail::Part.new { content_type 'multipart/related' }
       html_container.add_part html_alternative
 
@@ -90,6 +106,7 @@ generate email with S/MIME
       attr[:attachments]&.each do |attachment|
         next if attachment.instance_of?(Hash)
         next if attachment.preferences['Content-ID'].blank?
+        next if !found_content_ids[ attachment.preferences['Content-ID'] ]
 
         attachment = Mail::Part.new do
           content_type attachment.preferences['Content-Type']
@@ -111,7 +128,7 @@ generate email with S/MIME
         attachment['content-id'] = nil
         mail.attachments[attachment[:filename]] = attachment
       else
-        next if attachment.preferences['Content-ID'].present?
+        next if attachment.preferences['Content-ID'].present? && found_content_ids[ attachment.preferences['Content-ID'] ]
 
         filename = attachment.filename
         encoded_filename = Mail::Encodings.decode_encode filename, :encode
