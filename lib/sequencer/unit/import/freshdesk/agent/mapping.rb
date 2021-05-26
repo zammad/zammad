@@ -14,15 +14,15 @@ class Sequencer
 
               provide_mapped do
                 {
-                  login:        contact['email'],
-                  firstname:    contact['name'],
-                  email:        contact['email'],
-                  phone:        contact['phone'],
-                  active:       contact['active'],
-                  group_ids:    group_ids,
-                  password:     password,
-                  image_source: contact['last_login_at'],
-                  role_ids:     ::Role.where(name: role_names).pluck(:id),
+                  login:      contact['email'],
+                  firstname:  contact['name'],
+                  email:      contact['email'],
+                  phone:      contact['phone'],
+                  active:     contact['active'],
+                  group_ids:  group_ids,
+                  password:   password,
+                  last_login: contact['last_login_at'],
+                  role_ids:   ::Role.where(name: role_names).pluck(:id),
                 }
               end
             end
