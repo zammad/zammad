@@ -60,11 +60,12 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
     it 'imports user correctly' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
       expect { process(process_payload) }.to change(User, :count).by(1)
       expect(User.last).to have_attributes(
-        firstname: 'John',
-        lastname:  'Doe',
-        login:     'freshdesk@example.com',
-        email:     'freshdesk@example.com',
-        active:    true,
+        firstname:  'John',
+        lastname:   'Doe',
+        login:      'freshdesk@example.com',
+        email:      'freshdesk@example.com',
+        active:     true,
+        last_login: DateTime.parse('2021-05-10T07:52:58Z'),
       )
     end
 
