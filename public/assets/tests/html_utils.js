@@ -1083,6 +1083,12 @@ test("identify signature by HTML", function() {
   result  = App.Utils.signatureIdentifyByHtml(message)
   equal(result, should)
 
+  // ignore mail structures of case Ticket#1085048
+  message = '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
+  should  = '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
   // Gmail via Safari on MacOS 10.12
   message = '<div dir="ltr">Reply with <b>gmail</b> via Safari on MacOS 10.12</div><br>\
     <div>\
@@ -3303,6 +3309,8 @@ App.Utils.htmlImage2DataUrlAsyncInline($('#image2data2'), {success: htmlImage2Da
 }
 
 test('App.Utils.baseUrl()', function() {
+  configGetBackup = App.Config.get
+
   // When FQDN is undefined or null,
   //   expect @baseUrl() to return window.location.origin
   App.Config.get = function(key) { return undefined }
@@ -3338,6 +3346,8 @@ test('App.Utils.baseUrl()', function() {
     }
   }
   equal(App.Utils.baseUrl(), 'http://bar.zammad.com', 'with any other FQDN (and http scheme)')
+
+  App.Config.get = configGetBackup
 });
 
 test('App.Utils.joinUrlComponents()', function() {
