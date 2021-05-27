@@ -472,7 +472,7 @@ returns
 
       url = response['location']
       return get(url, params, options, count - 1)
-    when Net::HTTPOK, Net::HTTPCreated
+    when Net::HTTPSuccess
       data = nil
       if options[:json] && !options[:jsonParseDisable] && response.body
         data = JSON.parse(response.body)
