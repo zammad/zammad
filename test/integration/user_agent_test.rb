@@ -47,6 +47,21 @@ class UserAgentTest < ActiveSupport::TestCase
       assert_match(%r{"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"}, result.body)
     end
 
+    # get / 202
+    result = UserAgent.get(
+      "#{host}/test/get_accepted/1?submitted=123",
+    )
+    assert(result)
+    assert_equal(true, result.success?)
+    assert_equal('202', result.code)
+    assert_equal(String, result.body.class)
+    assert(result.body.include?('"get"'))
+    assert(result.body.include?('"123"'))
+    assert(result.body.include?('"content_type_requested":null'))
+    if ENV['ZAMMAD_PROXY_TEST'] == 'true' && ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']
+      assert_match(%r{"remote_ip":"#{ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK']}"}, result.body)
+    end
+
     # get / 404
     result = UserAgent.get(
       "#{host}/test/not_existing",
