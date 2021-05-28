@@ -62,6 +62,9 @@ class App.UiElement.ticket_selector
     # merge config
     elements = {}
 
+    if attribute.article is false
+      delete groups.article
+
     if attribute.action
       elements['ticket.action'] =
         name: 'action'
