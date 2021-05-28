@@ -786,7 +786,7 @@ class TestCase < ActiveSupport::TestCase
     begin
       if params[:slow]
         element.send_keys('')
-        keys = params[:value].to_s.split('')
+        keys = params[:value].to_s.chars
         keys.each do |key|
           instance.action.send_keys(key).perform
         end
@@ -803,7 +803,7 @@ class TestCase < ActiveSupport::TestCase
 
       if params[:slow]
         element.send_keys('')
-        keys = params[:value].to_s.split('')
+        keys = params[:value].to_s.chars
         keys.each do |key|
           instance.action.send_keys(key).perform
         end

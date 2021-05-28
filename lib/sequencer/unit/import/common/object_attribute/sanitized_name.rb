@@ -40,7 +40,7 @@ class Sequencer
               # model__name
               # model_name_
               # model_name
-              downcased.split('').map { |char| char.match?(%r{[a-z0-9_]}) ? char : '_' }.join
+              downcased.chars.map { |char| char.match?(%r{[a-z0-9_]}) ? char : '_' }.join
             end
 
             def downcased

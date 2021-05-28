@@ -274,7 +274,17 @@ Style/StringConcatenation:
     - "config/routes/**/*"
 
 Style/RegexpLiteral:
+  Description: 'This cop enforces using // or %r around regular expressions.'
   EnforcedStyle: percent_r
+
+Style/RedundantBegin:
+  Description: 'This cop checks for redundant `begin` blocks.'
+  Enabled: false
+
+Rails/EnvironmentVariableAccess:
+  Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
+  Enabled: true
+  AllowReads: true
 
 # RSpec tests
 Style/NumericPredicate:

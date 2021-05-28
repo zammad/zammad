@@ -61,7 +61,7 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated_a
 
   def insert_kb_answer(translation, target_field)
     target_field.send_keys('??')
-    translation.title.slice(0, 3).split('').each { |letter| target_field.send_keys(letter) }
+    translation.title.slice(0, 3).chars.each { |letter| target_field.send_keys(letter) }
 
     find(:text_module, translation.id).click
   end
