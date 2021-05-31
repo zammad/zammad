@@ -1,4 +1,5 @@
 <li role="presentation" class="<%= @class %>" data-value="<%= @option.value %>" title="<%= @option.name %><% if @detail: %><%= @detail %><% end %>">
+  <% if @option.category: %><small><%= @option.category %></small><br><% end %>
   <span class="searchableSelect-option-text">
     <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
   </span>

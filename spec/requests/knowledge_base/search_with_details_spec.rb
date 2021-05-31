@@ -61,4 +61,28 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
       expect(json_response['details'][0]['subtitle']).to eq category.translation_to(primary_locale).title
     end
   end
+
+  context 'when answer tree is long' do
+    let(:category1) { create('knowledge_base/category') }
+    let(:category2) { create('knowledge_base/category', parent: category1) }
+    let(:category3) { create('knowledge_base/category', parent: category2) }
+    let(:answer_cut_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category3) }
+    let(:category4) { create('knowledge_base/category') }
+    let(:category5) { create('knowledge_base/category', parent: category4) }
+    let(:answer_full_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category5) }
+
+    before do
+      answer_cut_tree && answer_full_tree && rebuild_searchindex
+    end
+
+    it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: answer_cut_tree.translations.first.title }
+      expect(json_response['details'][0]['subtitle']).to eq("#{category1.translations.first.title} > .. > #{category3.translations.first.title}")
+    end
+
+    it 'returns category with full tree', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: answer_full_tree.translations.first.title }
+      expect(json_response['details'][0]['subtitle']).to eq("#{category4.translations.first.title} > #{category5.translations.first.title}")
+    end
+  end
 end
