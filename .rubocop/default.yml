@@ -286,6 +286,10 @@ Rails/EnvironmentVariableAccess:
   Enabled: true
   AllowReads: true
 
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-
