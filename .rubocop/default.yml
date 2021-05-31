@@ -276,6 +276,10 @@ Style/StringConcatenation:
 Style/RegexpLiteral:
   EnforcedStyle: percent_r
 
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-

@@ -151,16 +151,17 @@ execute migration down + unlink files
 
 =begin
 
-link files + execute migration up
+link files
 
   Package.link('/path/to/src/extension')
+
+Migrations will not be executed because the the codebase was modified
+in the current process and is therefore inconsistent. This must be done
+subsequently in a separate step.
 
 =end
 
   def self.link(package_base_dir)
-
-    # check if zpm is a package source repo
-    package = _package_base_dir?(package_base_dir)
 
     # link files
     Dir.glob("#{package_base_dir}/**/*") do |entry|
@@ -201,9 +202,6 @@ link files + execute migration up
         File.symlink(entry.to_s, dest.to_s)
       end
     end
-
-    # migration up
-    Package::Migration.migrate(package)
   end
 
 =begin
@@ -219,6 +217,10 @@ or
 returns
 
   package # record of newly created package
+
+Migrations will not be executed because the the codebase was modified
+in the current process and is therefore inconsistent. This must be done
+subsequently in a separate step.
 
 =end
 
@@ -284,9 +286,6 @@ returns
     # update package state
     package_db.state = 'installed'
     package_db.save
-
-    # up migrations
-    Package::Migration.migrate(meta[:name])
 
     # prebuild assets
 
