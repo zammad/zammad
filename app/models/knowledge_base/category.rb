@@ -61,6 +61,18 @@ class KnowledgeBase::Category < ApplicationModel
     [self] + children.map(&:self_with_children).flatten
   end
 
+  def self_with_parents
+    result = [self]
+
+    check = self
+    while check.parent.present?
+      result << check.parent
+      check = check.parent
+    end
+
+    result
+  end
+
   def self_with_children_answers
     KnowledgeBase::Answer.where(category_id: self_with_children_ids)
   end

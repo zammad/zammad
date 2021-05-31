@@ -8371,6 +8371,16 @@ footer {
     }
   }
 
+  .dropdown li.with-category, .dropdown.dropdown--actions li.with-category {
+    line-height: 19.5px;
+  }
+
+  .dropdown.dropdown--actions li.with-category {
+    height: 39px;
+    padding: 0px 15px;
+    display: list-item;
+  }
+
   .dropdown li:not(:first-child) {
     box-shadow: 0 1px rgba(255,255,255,.13) inset;
   }
@@ -13023,4 +13033,3 @@ span.is-disabled {
 .text-modules-box {
   max-height: 40vh;
 }
-

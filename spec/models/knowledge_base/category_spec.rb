@@ -40,6 +40,10 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
       expect(kb_category_with_tree.self_with_children.count).to eq 7
     end
 
+    it 'fetches all parents' do
+      expect(grandchild_category.self_with_parents.count).to eq 3
+    end
+
     it 'root category has no parent' do
       expect(kb_category_with_tree.parent).to be_blank
     end

@@ -577,7 +577,8 @@
           'flavor':            'agent',
           'index':             'KnowledgeBase::Answer::Translation',
           'url_type':          'agent',
-          'highlight_enabled': false
+          'highlight_enabled': false,
+          'include_locale': true,
         }),
         processData: true,
         success: function(data, status, xhr) {
@@ -585,12 +586,13 @@
 
           var items = data
             .result
-            .map(function(elem){
+            .map(function(elem) {
               if(result = _.find(data.details, function(detailElem) { return detailElem.type == elem.type && detailElem.id == elem.id })) {
                 return {
-                  'name':  result.title,
-                  'value': elem.id,
-                  'url':   result.url
+                  'category': result.subtitle,
+                  'name':     result.title,
+                  'value':    elem.id,
+                  'url':      result.url
                 }
               }
             })
@@ -599,8 +601,11 @@
               var element = $('<li>')
                 .attr('data-id',  elem.value)
                 .attr('data-url', elem.url)
-                .text(elem.name)
-                .addClass('u-clickable u-textTruncate')
+                .addClass('u-clickable u-textTruncate with-category')
+
+              element.append($('<small>').text(elem.category))
+              element.append('<br>')
+              element.append($('<span>').text(elem.name))
 
               if (index == array.length-1) {
                 element.addClass('is-active')

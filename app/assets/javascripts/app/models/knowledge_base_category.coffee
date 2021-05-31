@@ -38,6 +38,22 @@ class App.KnowledgeBaseCategory extends App.Model
       memo.concat elem.categoriesForDropdown(nested: options.nested + 1, kb_locale: options.kb_locale)
     , initial
 
+  categoriesForSearch: (options = {}) ->
+    result = [@guaranteedTitle(options.kb_locale.id)]
+
+    check = @
+    while check.parent()
+      result.push(check.parent().guaranteedTitle(options.kb_locale.id))
+      check = check.parent()
+
+    if options.full || result.length <= 2
+      result = result.reverse().join(' > ')
+    else
+      result = result.reverse()
+      result = "#{result[0]} > .. > #{result[result.length - 1]}"
+
+    result
+
   configure_attributes: (kb_locale = undefined) ->
     [
       {

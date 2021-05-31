@@ -75,7 +75,13 @@ class KnowledgeBase::SearchController < ApplicationController
 
   def public_item_details_answer(meta, object)
     category_translation = object.answer.category.translation_preferred(object.kb_locale)
-    path = help_answer_path(category_translation, object, locale: object.kb_locale.system_locale.locale)
+    path                 = help_answer_path(category_translation, object, locale: object.kb_locale.system_locale.locale)
+    subtitle             = object.answer.category.self_with_parents.map { |c| strip_tags(c.translation_preferred(object.kb_locale).title) }.reverse
+    subtitle = if subtitle.count <= 2
+                 subtitle.join(' > ')
+               else
+                 subtitle.values_at(0, -1).join(' > .. > ')
+               end
 
     url = case url_type
           when :public
@@ -91,7 +97,7 @@ class KnowledgeBase::SearchController < ApplicationController
       date:     object.updated_at,
       url:      url,
       title:    meta.dig(:highlight, 'title')&.first || object.title,
-      subtitle: strip_tags(category_translation.title),
+      subtitle: subtitle,
       body:     meta.dig(:highlight, 'content.body')&.first || strip_tags(object.content.body).truncate(100)
     }
   end

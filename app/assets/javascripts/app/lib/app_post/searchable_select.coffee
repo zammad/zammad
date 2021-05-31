@@ -90,9 +90,17 @@ class App.SearchableSelect extends Spine.Controller
   renderOptions: (options) ->
     html = ''
     for option in options
+      classes = 'u-textTruncate'
+      if option.children
+        classes += ' js-enter'
+      else
+        classes += ' js-option'
+      if option.category
+        classes += ' with-category'
+
       html += App.view('generic/searchable_select_option')
         option: option
-        class: if option.children then 'js-enter' else 'js-option'
+        class: classes
     html
 
   renderAllOptions: (parentName, options, level) ->
