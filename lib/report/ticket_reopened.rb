@@ -112,7 +112,7 @@ returns
 
   def self.ticket_ids
     key = 'Report::TicketReopened::StateList'
-    ticket_state_ids = Cache.get(key)
+    ticket_state_ids = Cache.read(key)
     return ticket_state_ids if ticket_state_ids
 
     ticket_state_types = Ticket::StateType.where(name: %w[closed merged removed])

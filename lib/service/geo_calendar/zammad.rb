@@ -5,7 +5,7 @@ class Service::GeoCalendar::Zammad
 
     # check cache
     cache_key = "zammadgeocalendar::#{address}"
-    cache = ::Cache.get(cache_key)
+    cache = ::Cache.read(cache_key)
     return cache if cache
 
     # do lookup

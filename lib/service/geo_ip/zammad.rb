@@ -7,7 +7,7 @@ class Service::GeoIp::Zammad
 
     # check cache
     cache_key = "zammadgeoip::#{address}"
-    cache = ::Cache.get(cache_key)
+    cache = ::Cache.read(cache_key)
     return cache if cache
 
     # do lookup

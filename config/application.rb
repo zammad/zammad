@@ -32,7 +32,7 @@ module Zammad
     config.api_path = '/api/v1'
 
     # define cache store
-    config.cache_store = :file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}")
+    config.cache_store = :zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }
 
     # default preferences by permission
     config.preferences_default_by_permission = {

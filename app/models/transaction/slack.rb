@@ -119,7 +119,7 @@ class Transaction::Slack
       md5_webhook = Digest::MD5.hexdigest(local_config['webhook'])
       cache_key = "slack::backend::#{@item[:type]}::#{ticket.id}::#{md5_webhook}"
       if sent_value
-        value = Cache.get(cache_key)
+        value = Cache.read(cache_key)
         if value == sent_value
           Rails.logger.debug { "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
           next

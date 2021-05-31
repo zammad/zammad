@@ -126,7 +126,7 @@ reload config settings
       end
     end
 
-    @@change_id = Cache.get('Setting::ChangeId') # rubocop:disable Style/ClassVars
+    @@change_id = Cache.read('Setting::ChangeId') # rubocop:disable Style/ClassVars
     @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
     true
   end
@@ -163,7 +163,7 @@ reload config settings
       return true
     end
 
-    change_id = Cache.get('Setting::ChangeId')
+    change_id = Cache.read('Setting::ChangeId')
     if @@change_id && change_id == @@change_id
       @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
       #logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"

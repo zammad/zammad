@@ -22,7 +22,7 @@ class Sequencer
 
             def total
               if !dry_run
-                result = Cache.get(cache_key)
+                result = Cache.read(cache_key)
               end
 
               result ||= ldap_connection.count(ldap_config[:user_filter])

@@ -33,7 +33,7 @@ returns
     # this cache will optimize the preference catch performance
     # because of the yaml deserialization its pretty slow
     # on many tickets you we cache it.
-    user_preferences = Cache.get("NotificationFactory::Mailer.notification_settings::#{user.id}")
+    user_preferences = Cache.read("NotificationFactory::Mailer.notification_settings::#{user.id}")
     if user_preferences.blank?
       user_preferences = user.preferences
 

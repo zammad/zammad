@@ -83,7 +83,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_token].blank?
 
-    list = Cache.get('placetelGetVoipUsers')
+    list = Cache.read('placetelGetVoipUsers')
     return list if list
 
     response = UserAgent.post(

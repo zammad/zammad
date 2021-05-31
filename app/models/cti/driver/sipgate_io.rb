@@ -27,7 +27,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_user].blank? || @config[:api_password].blank?
 
-    list = Cache.get('sipgateUserList')
+    list = Cache.read('sipgateUserList')
     return list if list
 
     url = 'https://api.sipgate.com/v2/users'

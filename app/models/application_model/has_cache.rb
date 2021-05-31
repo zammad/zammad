@@ -47,7 +47,7 @@ module ApplicationModel::HasCache
 
     def cache_get(data_id)
       key = "#{self}::#{data_id}"
-      Cache.get(key)
+      Cache.read(key)
     end
   end
 end

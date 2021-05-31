@@ -294,7 +294,7 @@ returns
     local_sha = Digest::SHA256.hexdigest(content)
 
     cache_key = "image-resize-#{local_sha}_#{width}"
-    image = Cache.get(cache_key)
+    image = Cache.read(cache_key)
     return image if image
 
     temp_file = ::Tempfile.new

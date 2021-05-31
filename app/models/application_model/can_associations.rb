@@ -119,7 +119,7 @@ returns
   def attributes_with_association_ids
 
     key = "#{self.class}::aws::#{id}"
-    cache = Cache.get(key)
+    cache = Cache.read(key)
     return cache if cache
 
     attributes = self.attributes

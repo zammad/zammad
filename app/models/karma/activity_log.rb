@@ -26,7 +26,7 @@ add karma activity log of an object
     # to skip the time loss of the transaction
     # to increase performance
     if !force
-      cache = Cache.get("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}")
+      cache = Cache.read("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}")
       return cache if cache
     end
 

@@ -44,7 +44,7 @@ returns
       # get linked accounts
       local_attributes['accounts'] = {}
       key = "User::authorizations::#{id}"
-      local_accounts = Cache.get(key)
+      local_accounts = Cache.read(key)
       if !local_accounts
         local_accounts = {}
         authorizations = self.authorizations()

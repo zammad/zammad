@@ -27,7 +27,7 @@ RSpec.describe Setting, type: :model do
 
       it 'resets the cache key' do
         expect { described_class.set(setting.name, 'baz') }
-          .to change { Cache.get('foo') }.to(nil)
+          .to change { Cache.read('foo') }.to(nil)
       end
     end
   end

@@ -357,7 +357,7 @@ class Transaction::Notification
   end
 
   def possible_recipients_of_group(group_id)
-    cache = Cache.get("Transaction::Notification.group_access.full::#{group_id}")
+    cache = Cache.read("Transaction::Notification.group_access.full::#{group_id}")
     return cache if cache
 
     possible_recipients = User.group_access(group_id, 'full').sort_by(&:login)

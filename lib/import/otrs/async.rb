@@ -50,7 +50,7 @@ module Import
       end
 
       def status_bg
-        state = Cache.get('import:state')
+        state = Cache.read('import:state')
         return state if state
 
         {

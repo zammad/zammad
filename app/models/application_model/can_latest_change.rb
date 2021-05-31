@@ -19,7 +19,7 @@ returns
 
     def latest_change
       key        = "#{name}_latest_change"
-      updated_at = Cache.get(key)
+      updated_at = Cache.read(key)
 
       return updated_at if updated_at
 

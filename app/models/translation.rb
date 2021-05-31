@@ -502,7 +502,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
   private_class_method :cache_set
 
   def self.cache_get(locale)
-    Cache.get("TranslationMapOnlyContent::#{locale.downcase}")
+    Cache.read("TranslationMapOnlyContent::#{locale.downcase}")
   end
   private_class_method :cache_get
 end

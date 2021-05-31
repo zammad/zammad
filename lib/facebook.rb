@@ -107,7 +107,7 @@ result
     return if !item['from']['id']
 
     cache_key = "FB:User:Lookup:#{item['from']['id']}"
-    cache = Cache.get(cache_key)
+    cache = Cache.read(cache_key)
     return cache if cache
 
     begin

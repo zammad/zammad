@@ -23,7 +23,7 @@ module Import
       def statistic
 
         # check cache
-        cache = Cache.get('import_otrs_stats')
+        cache = Cache.read('import_otrs_stats')
         return cache if cache
 
         # retrieve statistic
