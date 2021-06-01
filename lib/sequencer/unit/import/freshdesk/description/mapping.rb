@@ -8,20 +8,24 @@ class Sequencer
 
             uses :resource, :id_map
 
-            SOURCE_MAP = {
-              0  => ::Ticket::Article::Type.select(:id).find_by(name: 'email').id, # Reply
-              1  => ::Ticket::Article::Type.select(:id).find_by(name: 'email').id, # Email
-              2  => ::Ticket::Article::Type.select(:id).find_by(name: 'web').id, # Note
-              3  => ::Ticket::Article::Type.select(:id).find_by(name: 'phone').id, # Phone
-              4  => ::Ticket::Article::Type.select(:id).find_by(name: 'note').id, # UNKNOWN!
-              5  => ::Ticket::Article::Type.select(:id).find_by(name: 'twitter status').id, # Created from tweets
-              6  => ::Ticket::Article::Type.select(:id).find_by(name: 'web').id, # Created from survey feedback
-              7  => ::Ticket::Article::Type.select(:id).find_by(name: 'facebook feed post').id, # Created from Facebook post
-              8  => ::Ticket::Article::Type.select(:id).find_by(name: 'email').id, # Created from Forwarded Email
-              9  => ::Ticket::Article::Type.select(:id).find_by(name: 'note').id, # Created from Phone
-              10 => ::Ticket::Article::Type.select(:id).find_by(name: 'note').id, # Created from Mobihelp
-              11 => ::Ticket::Article::Type.select(:id).find_by(name: 'note').id, # E-Commerce
-            }.freeze
+            # Since the imports rely on a fresh Zammad installation, we
+            #   can require the default article types to be present.
+            def source_map # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+              @source_map ||= {
+                0  => ::Ticket::Article::Type.select(:id).find_by(name: 'email')&.id, # Reply
+                1  => ::Ticket::Article::Type.select(:id).find_by(name: 'email')&.id, # Email
+                2  => ::Ticket::Article::Type.select(:id).find_by(name: 'web')&.id, # Note
+                3  => ::Ticket::Article::Type.select(:id).find_by(name: 'phone')&.id, # Phone
+                4  => ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id, # UNKNOWN!
+                5  => ::Ticket::Article::Type.select(:id).find_by(name: 'twitter status')&.id, # Created from tweets
+                6  => ::Ticket::Article::Type.select(:id).find_by(name: 'web')&.id, # Created from survey feedback
+                7  => ::Ticket::Article::Type.select(:id).find_by(name: 'facebook feed post')&.id, # Created from Facebook post
+                8  => ::Ticket::Article::Type.select(:id).find_by(name: 'email')&.id, # Created from Forwarded Email
+                9  => ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id, # Created from Phone
+                10 => ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id, # Created from Mobihelp
+                11 => ::Ticket::Article::Type.select(:id).find_by(name: 'note')&.id, # E-Commerce
+              }.freeze
+            end
 
             def process # rubocop:disable Metrics/AbcSize
               provide_mapped do
@@ -35,7 +39,7 @@ class Sequencer
                   internal:      false,
                   message_id:    "ticketid#{resource['id']}@freshdesk.com",
                   sender_id:     ::Ticket::Article::Sender.select(:id).find_by(name: 'Customer').id,
-                  type_id:       SOURCE_MAP[ resource['source'] ],
+                  type_id:       source_map[ resource['source'] ],
                   updated_by_id: requester_id,
                   created_by_id: requester_id,
                   created_at:    resource['created_at'],
