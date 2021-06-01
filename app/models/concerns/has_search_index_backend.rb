@@ -187,7 +187,7 @@ returns
   end
 
   # methods defined here are going to extend the class, not the instance of it
-  class_methods do
+  class_methods do # rubocop:disable Metrics/BlockLength
 
 =begin
 
@@ -215,20 +215,23 @@ reload search index with full data
     def search_index_reload
       tolerance       = 10
       tolerance_count = 0
-      ids = all.order(created_at: :desc).pluck(:id)
-      ids.each do |item_id|
-        item = find_by(id: item_id)
-        next if !item
-        next if item.ignore_search_indexing?(:destroy)
+      batch_size      = 100
+      query           = all.order(created_at: :desc)
+      total           = query.count
+      query.find_in_batches(batch_size: batch_size).with_index do |group, batch|
+        group.each do |item|
+          next if item.ignore_search_indexing?(:destroy)
 
-        begin
-          item.search_index_update_backend
-        rescue => e
-          logger.error "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}"
-          tolerance_count += 1
-          sleep 15
-          raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
+          begin
+            item.search_index_update_backend
+          rescue => e
+            logger.error "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}"
+            tolerance_count += 1
+            sleep 15
+            raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
+          end
         end
+        puts "\t#{[(batch + 1) * batch_size, total].min}/#{total}" # rubocop:disable Rails/Output
       end
     end
   end
