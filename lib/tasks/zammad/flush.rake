@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 namespace :zammad do
 
   desc 'Flushes all logs and caches'

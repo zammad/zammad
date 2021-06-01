@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false do

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'declaring an error' do
   describe '#error' do
     let(:instance) { described_class.new('') }

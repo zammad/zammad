@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 if Rails.env.development? && ENV['RAKE_LIVE_RELOAD'].present?
 
   require 'rack-livereload'

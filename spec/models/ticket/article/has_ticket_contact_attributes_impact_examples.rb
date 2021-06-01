@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'Ticket::Article::HasTicketContactAttributesImpact' do
 
   describe '#update_ticket_article_attributes callback' do

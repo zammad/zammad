@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 RSpec.describe 'Microsoft365 XOAUTH2', type: :integration do # rubocop:disable RSpec/DescribeClass
   let(:channel) do

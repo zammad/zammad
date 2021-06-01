@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'HasRoles' do |group_access_factory:|
   context 'role' do
     subject { create(group_access_factory) }

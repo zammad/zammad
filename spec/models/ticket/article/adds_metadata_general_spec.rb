@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Ticket::Article::AddsMetadataGeneral, current_user_id: -> { agent.id } do

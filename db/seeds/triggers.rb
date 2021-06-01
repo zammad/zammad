@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 Trigger.create_or_update(
   name:          'auto reply (on new tickets)',
   condition:     {

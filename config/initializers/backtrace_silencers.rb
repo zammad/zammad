@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Be sure to restart your server when you modify this file.
 
 # You can add backtrace silencers for libraries that you're using but don't wish to see in your backtraces.

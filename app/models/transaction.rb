@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Transaction
   attr_reader :options
   attr_accessor :original_user_id, :original_interface_handle

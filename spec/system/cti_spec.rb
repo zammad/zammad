@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Caller log', type: %i[system request], authenticated_as: true do # rubocop:disable RSpec/DescribeClass

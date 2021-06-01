@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 User.create_if_not_exists(
   id:            1,
   login:         '-',

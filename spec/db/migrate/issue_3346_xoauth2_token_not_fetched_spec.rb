@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Issue3346Xoauth2TokenNotFetched, type: :db_migration do

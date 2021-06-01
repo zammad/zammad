@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 

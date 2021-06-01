@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module SystemInitDoneHelper
   def system_init_done(state = true)
     # generally allow all calls to Setting.exists? to avoid

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'delayed_job'
 
 class ResetSettingsPlugin < Delayed::Plugin

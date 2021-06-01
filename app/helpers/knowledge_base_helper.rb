@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module KnowledgeBaseHelper
   def effective_layout_name(knowledge_base, object)
     layout_prefix = object.present? ? :category : :homepage

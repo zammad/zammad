@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Sessions::Event::Spool < Sessions::Event::Base
 
 =begin

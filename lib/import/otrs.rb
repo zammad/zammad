@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Rails autoload has some issues with same namend sub-classes
 # in the importer folder require AND simultaniuos requiring
 # of the same file in different threads so we need to

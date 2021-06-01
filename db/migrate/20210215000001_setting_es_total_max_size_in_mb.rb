@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class SettingEsTotalMaxSizeInMb < ActiveRecord::Migration[5.2]
   def up
     Setting.create_if_not_exists(

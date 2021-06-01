@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Signup, sequencer: :unit do

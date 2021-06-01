@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'TriggerWebhookJob::RecordPayload backend' do |factory|
 
   describe 'const USER_ATTRIBUTE_BLACKLIST' do

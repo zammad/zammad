@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
   option :name, 'google_oauth2'
 

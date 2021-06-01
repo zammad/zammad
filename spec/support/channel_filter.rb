@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module ChannelFilterHelper
 
   # Provides a helper method to run the current class Channel::Filter.

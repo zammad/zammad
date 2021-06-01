@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module BulkImportInfo
   def self.enabled?
     Thread.current[:bulk_import]

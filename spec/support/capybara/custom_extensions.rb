@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Capybara::Node::Element
 
   # This is an extension to each node to check if the element

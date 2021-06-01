@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'CanCsvImport' do |unique_attributes: []|
   describe '.csv_import' do
     let!(:params) { { string: <<~CSV, parse_params: { col_sep: ',' } } }

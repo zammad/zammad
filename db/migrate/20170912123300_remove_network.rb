@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class RemoveNetwork < ActiveRecord::Migration[5.0]
 
   # rewinds db/migrate/20120101000020_create_network.rb

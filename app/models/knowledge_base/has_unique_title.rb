@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # requires scope "neighbors_of" to find translations in same scope
 class KnowledgeBase
   module HasUniqueTitle

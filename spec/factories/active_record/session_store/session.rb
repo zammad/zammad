@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 FactoryBot.define do
   factory :'active_record/session_store/session', aliases: %i[active_session] do
     transient do

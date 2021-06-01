@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rake'
 
 # if you make changes, then please also change this file 'spec/support/searchindex_backend.rb'

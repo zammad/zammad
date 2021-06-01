@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'models/application_model/can_assets_examples'
 require 'models/application_model/can_associations_examples'
 require 'models/application_model/can_creates_and_updates_examples'

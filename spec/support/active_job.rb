@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module ZammadActiveJobHelper
 
   delegate :enqueued_jobs, :performed_jobs, to: :queue_adapter

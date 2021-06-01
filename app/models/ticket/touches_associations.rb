@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 # Update assigned customer and organization change_time information on ticket changes.
 module Ticket::TouchesAssociations

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.configure do |config|
   config.around(:each, :allow_forgery_protection) do |example|
     orig = ActionController::Base.allow_forgery_protection

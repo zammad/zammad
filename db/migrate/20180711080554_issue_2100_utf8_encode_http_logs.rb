@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Issue2100Utf8EncodeHttpLogs < ActiveRecord::Migration[5.1]
   def up
     HttpLog.where('request LIKE :enctag OR response LIKE :enctag', enctag: '%content: !binary |%')

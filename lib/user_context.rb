@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # We need a special UserContext when authorizing in controller context
 # because of Token authentication which has it's own permissions
 # See: https://github.com/varvet/pundit#additional-context

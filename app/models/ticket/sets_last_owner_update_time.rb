@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 # Adds a last_owner_update time on ticket changes.
 module Ticket::SetsLastOwnerUpdateTime

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Using older 5.0 migration to stick to Integer primary keys. Otherwise migration fails in MySQL.
 class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
   def change

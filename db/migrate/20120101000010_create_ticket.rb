@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class CreateTicket < ActiveRecord::Migration[4.2]
   def up
     create_table :ticket_state_types do |t|

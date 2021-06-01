@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 Scheduler.create_if_not_exists(
   name:   'Process pending tickets',
   method: 'Ticket.process_pending',

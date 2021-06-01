@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

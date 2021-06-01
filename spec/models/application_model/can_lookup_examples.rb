@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'ApplicationModel::CanLookup' do
   describe '.lookup_keys' do
     it 'returns a subset of: id, name, login, email, number' do

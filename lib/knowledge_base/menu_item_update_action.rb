@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class KnowledgeBase
   class MenuItemUpdateAction
     def initialize(kb_locale, location, menu_items_data)

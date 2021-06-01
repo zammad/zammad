@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'HasSearchIndexBackend' do |indexed_factory:|
 
   describe '#search_index_update', performs_jobs: true do

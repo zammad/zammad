@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Fixes issue #2333 - Object country already exists
 # The country column already exists in the database, but there is no corresponding ObjectManager::Attribute for it
 # This migration adds the User.country attribute if and only if it does not exist already

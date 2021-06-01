@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class DatetimePrecision < ActiveRecord::Migration[5.2]
 
   # rubocop:disable Metrics/AbcSize

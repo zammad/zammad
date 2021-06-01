@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'User::HasTicketCreateScreenImpact' do
 
   describe '#push_ticket_create_screen', performs_jobs: true do

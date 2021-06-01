@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'pagination' do |model:, klass:, path:, sort_by: :name|
   def prepare(model)
     create_list(model, 500)

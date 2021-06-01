@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'yaml'
 
 cnf = YAML.load_file(File.join(__dir__, '../../config/database/database.yml'))

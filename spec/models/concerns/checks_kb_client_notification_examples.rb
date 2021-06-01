@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'ChecksKbClientNotification' do
   context 'sends client notifications', performs_jobs: true do
     before { subject }

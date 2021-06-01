@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # require all database migrations so we can test them without manual require
 Rails.root.join('db/migrate').children.each do |migration|
   require migration.to_s

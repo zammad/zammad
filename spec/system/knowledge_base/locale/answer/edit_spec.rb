@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated_as: true do

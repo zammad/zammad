@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class TicketCreateTypesSettingIssue1987 < ActiveRecord::Migration[5.1]
   def up
     # return if it's a new setup

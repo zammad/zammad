@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Requires: let!(:group_relation_instance) { ... }
 RSpec.shared_examples 'HasGroupRelationDefinition' do
 

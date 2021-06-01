@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 FactoryBot.define do
   factory 'knowledge_base/category/translation', aliases: %i[knowledge_base_category_translation] do
     transient do

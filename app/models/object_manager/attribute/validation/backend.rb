@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class ObjectManager::Attribute::Validation::Backend
   def self.validate(*args)
     new(*args).validate

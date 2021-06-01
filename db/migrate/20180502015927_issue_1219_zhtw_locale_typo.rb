@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Issue1219ZhtwLocaleTypo < ActiveRecord::Migration[5.1]
   CURRENT_VERSION    = Gem::Version.new(Version.get)
   APPLICABLE_VERSION = Gem::Version.new('2.5.0')

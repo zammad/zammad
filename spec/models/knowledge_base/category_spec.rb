@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/contexts/factory_context'

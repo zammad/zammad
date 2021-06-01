@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class AttachmentsController < ApplicationController
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]

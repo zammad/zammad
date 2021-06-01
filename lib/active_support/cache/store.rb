@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Cache.get => read alias for backwards compatibility
 # Even if main codebase is migrated, custom addons may still use old syntax!
 module ActiveSupport

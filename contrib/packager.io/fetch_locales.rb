@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rubygems'
 require 'uri'

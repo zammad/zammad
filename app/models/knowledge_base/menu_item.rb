@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class KnowledgeBase::MenuItem < ApplicationModel
   belongs_to :kb_locale, class_name: 'KnowledgeBase::Locale', inverse_of: :menu_items, touch: true
 

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'

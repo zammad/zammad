@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 Setting.create_if_not_exists(
   title:       'Application secret',
   name:        'application_secret',

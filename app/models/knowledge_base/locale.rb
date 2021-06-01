@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class KnowledgeBase::Locale < ApplicationModel
   belongs_to :knowledge_base, inverse_of: :kb_locales, touch: true
   belongs_to :system_locale, inverse_of: :knowledge_base_locales, class_name: '::Locale'

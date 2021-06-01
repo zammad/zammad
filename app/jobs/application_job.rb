@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class ApplicationJob < ActiveJob::Base
   include ApplicationJob::HasDelayedJobMonitoringCompatibilty
   include ApplicationJob::HasQueuingPriority

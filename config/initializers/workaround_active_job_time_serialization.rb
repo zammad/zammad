@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # Required workaround to serialize ActiveSupport::TimeWithZone, Time, Date and DateTime for ActiveJob
 # until Rails 6 is used. See:
 # - https://github.com/rails/rails/issues/18519

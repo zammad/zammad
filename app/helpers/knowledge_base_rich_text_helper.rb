@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module KnowledgeBaseRichTextHelper
   def prepare_rich_text(input)
     prepare_rich_text_videos(prepare_rich_text_links(input))

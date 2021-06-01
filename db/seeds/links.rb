@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 Link::Type.create_if_not_exists(id: 1, name: 'normal')
 Link::Object.create_if_not_exists(id: 1, name: 'Ticket')
 Link::Object.create_if_not_exists(id: 2, name: 'Announcement')

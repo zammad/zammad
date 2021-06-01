@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class CommunicateFacebookJob < ApplicationJob
 
   retry_on StandardError, attempts: 4, wait: lambda { |executions|

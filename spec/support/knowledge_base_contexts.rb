@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
   let :knowledge_base do
     create(:knowledge_base)

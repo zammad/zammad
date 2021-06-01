@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'CanLookupSearchIndexAttributes' do
   describe '.search_index_value_by_attribute' do
     it 'returns search index value for attribute' do

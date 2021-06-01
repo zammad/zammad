@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class CalendarSubscriptionsController < ApplicationController
   prepend_before_action { authentication_check(basic_auth_promt: true) && authorize! }
 

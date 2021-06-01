@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec::Matchers.define :include_assets_of do
   match do |actual|
     expected_array.all? { |elem| find_assets_of(elem, actual) }

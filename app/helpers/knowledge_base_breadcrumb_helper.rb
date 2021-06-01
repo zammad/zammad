@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module KnowledgeBaseBreadcrumbHelper
   def render_breadcrumb_if_needed(knowledge_base, object, alternative)
     objects = calculate_breadcrumb_path(object, alternative)

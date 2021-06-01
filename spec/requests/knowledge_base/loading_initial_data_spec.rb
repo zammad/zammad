@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'KnowledgeBase loading initial data', type: :request, searchindex: true, authenticated_as: :current_user do

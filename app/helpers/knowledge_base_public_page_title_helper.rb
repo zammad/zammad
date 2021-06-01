@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module KnowledgeBasePublicPageTitleHelper
   def kb_public_page_title(leading, trailing, exception)
     [

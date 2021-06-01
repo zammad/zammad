@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Issue2867FooterHeaderPublicLink, type: :db_migration, db_strategy: :reset do

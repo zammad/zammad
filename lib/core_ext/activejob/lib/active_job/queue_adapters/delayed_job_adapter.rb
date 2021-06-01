@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # In previous versions of Zammad we used Delayed::Job exclusively
 # for performing background jobs. Delayed::Job was therefore in
 # charge of scheduling, retrying and executing background jobs.

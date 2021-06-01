@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class MonitIntegration < ActiveRecord::Migration[4.2]
   def up
 

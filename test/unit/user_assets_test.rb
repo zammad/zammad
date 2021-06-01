@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # NOTE: This test file is _almost_ fully migrated to RSpec, as of 4cc64d0ce.
 # It may be deleted once all missing spec coverage has been added.
 #

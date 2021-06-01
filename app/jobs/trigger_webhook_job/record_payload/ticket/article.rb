@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class TriggerWebhookJob::RecordPayload::Ticket::Article < TriggerWebhookJob::RecordPayload::Base
 
   ASSOCIATIONS = %i[created_by updated_by].freeze

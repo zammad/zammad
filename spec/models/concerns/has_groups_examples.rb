@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'HasGroups' do |group_access_factory:|
   context 'group' do
     subject { create(group_access_factory) }

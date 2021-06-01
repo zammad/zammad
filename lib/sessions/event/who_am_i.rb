@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 class Sessions::Event::WhoAmI < Sessions::Event::Base
   database_connection_required
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 # Records added/removed tags also in the ticket history.
 module Tag::WritesToTicketHistory

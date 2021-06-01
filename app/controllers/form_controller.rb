@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class FormController < ApplicationController
   prepend_before_action -> { authorize! }, only: %i[configuration submit]

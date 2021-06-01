@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # file is based on Twitter::Streaming::Connection, needed to get custom_connection_handle
 # to close connection after config has changed
 class Twitter::Streaming::ConnectionCustom < Twitter::Streaming::Connection

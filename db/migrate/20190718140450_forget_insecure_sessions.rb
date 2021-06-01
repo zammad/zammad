@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 # This migration removes all pre-existing user sessions
 # so that they can be replaced with sessions that use "secure cookies".
 # It is skipped on non-HTTPS deployments

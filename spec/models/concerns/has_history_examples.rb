@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
   describe 'auto-creation of history records' do
     let(:histories) { History.where(history_object_id: History::Object.find_by(name: described_class.name)) }
