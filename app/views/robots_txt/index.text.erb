@@ -1,0 +1,12 @@
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+#
+User-Agent: *
+<% if custom_path? %>
+Allow: <%= custom_address_uri.path %>
+Disallow: /
+<% elsif custom_domain_path? %>
+Allow: /
+<% else %>
+Allow: /help/
+Disallow: /
+<% end %>
