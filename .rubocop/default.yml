@@ -273,6 +273,10 @@ Style/StringConcatenation:
   Exclude:
     - "config/routes/**/*"
 
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-
