@@ -57,6 +57,7 @@ class InitSessionTimeout < ActiveRecord::Migration[5.2]
       name:          'Cleanup dead sessions.',
       method:        'SessionTimeoutJob.perform_now',
       period:        1.minute,
+      last_run:      1.day.from_now,
       prio:          2,
       active:        true,
       updated_by_id: 1,
