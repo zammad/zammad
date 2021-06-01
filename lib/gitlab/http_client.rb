@@ -39,7 +39,7 @@ class GitLab
 
     def headers
       {
-        "PRIVATE-TOKEN": @api_token
+        'PRIVATE-TOKEN': @api_token
       }
     end
   end

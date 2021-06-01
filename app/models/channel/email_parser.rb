@@ -274,7 +274,7 @@ returns
           content_type: mail[:content_type],
           body:         mail[:body],
           from:         mail[:from],
-          reply_to:     mail[:"reply-to"],
+          reply_to:     mail[:'reply-to'],
           to:           mail[:to],
           cc:           mail[:cc],
           subject:      mail[:subject],
