@@ -1173,7 +1173,7 @@ raise 'Minimum one user need to have admin permissions'
   def destroy_move_dependency_ownership
     result = Models.references(self.class.to_s, id)
 
-    user_columns = %w[created_by_id updated_by_id origin_by_id owner_id archived_by_id published_by_id internal_by_id]
+    user_columns = %w[created_by_id updated_by_id out_of_office_replacement_id origin_by_id owner_id archived_by_id published_by_id internal_by_id]
     result.each do |class_name, references|
       next if class_name.blank?
       next if references.blank?
