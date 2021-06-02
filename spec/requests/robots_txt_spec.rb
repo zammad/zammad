@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'RobotsTxt', type: :request do
+  shared_examples 'returns default robot instructions' do
+    it 'returns default robot instructions' do
+      expect(response.body).to match(%r{^Allow: /help/$}).and match(%r{^Disallow: /$})
+    end
+  end
 
   context 'when no Knowledge Base exists' do
 
@@ -15,12 +20,10 @@ RSpec.describe 'RobotsTxt', type: :request do
     end
 
     it 'returns text' do
-      expect(response.content_type).to eq('text/plain')
+      expect(response.content_type).to start_with('text/plain')
     end
 
-    it 'returns robot instructions' do
-      expect(response.body).to include('Allow:').and(include('Disallow:'))
-    end
+    include_examples 'returns default robot instructions'
   end
 
   context 'when Knowledge Base exists' do
@@ -33,9 +36,7 @@ RSpec.describe 'RobotsTxt', type: :request do
       get '/robots.txt', headers: { SERVER_NAME: server_name }
     end
 
-    it 'returns robot instructions' do
-      expect(response.body).to include('Allow:').and(include('Disallow:'))
-    end
+    include_examples 'returns default robot instructions'
 
     context 'when custom path is configured' do
       let(:custom_address) { '/knowledge_base' }
@@ -49,10 +50,7 @@ RSpec.describe 'RobotsTxt', type: :request do
       let(:custom_address) { 'kb.com/knowledge_base' }
 
       context 'when requesting main domain' do
-
-        it 'returns default rules' do
-          expect(response.body).to include('Allow:').and(include('Disallow:'))
-        end
+        include_examples 'returns default robot instructions'
       end
 
       context 'when requesting KB domain' do
