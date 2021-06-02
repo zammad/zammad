@@ -133,6 +133,7 @@ returns
     if object_name == 'User'
       ref_attributes.push 'created_by_id'
       ref_attributes.push 'updated_by_id'
+      ref_attributes.push 'out_of_office_replacement_id'
     end
     list.each do |model_class, model_attributes|
       if !references[model_class.to_s]
