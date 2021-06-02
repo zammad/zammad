@@ -19,6 +19,13 @@ class DataPrivacyTask < ApplicationModel
   validates_with DataPrivacyTask::Validation
 
   def perform
+    perform_deletable
+    update!(state: 'completed')
+  rescue => e
+    handle_exception(e)
+  end
+
+  def perform_deletable
     return if deletable.blank?
 
     prepare_deletion_preview
@@ -29,10 +36,6 @@ class DataPrivacyTask < ApplicationModel
     else
       deletable.destroy
     end
-
-    update!(state: 'completed')
-  rescue => e
-    handle_exception(e)
   end
 
   def handle_exception(e)
