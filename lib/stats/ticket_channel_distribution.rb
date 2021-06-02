@@ -76,6 +76,15 @@ class Stats::TicketChannelDistribution
       )
     end
 
+    if Channel.exists?(area: 'Quepasa::Account')
+      channels.push(
+        {
+          sender: 'quepasa',
+          icon:   'whatsapp',
+        }
+      )
+    end
+
     # calculate
     result    = {}
     total_in  = 0

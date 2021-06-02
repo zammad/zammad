@@ -24,6 +24,10 @@ class App.TicketCreate extends App.Controller
       icon: 'email',
       label: 'Send Email'
     }
+    'whatsapp-out': {
+      icon: 'whatsapp',
+      label: 'Send WhatsApp'
+    }
   }
 
   constructor: (params) ->
@@ -117,6 +121,11 @@ class App.TicketCreate extends App.Controller
         article: 'email'
         title:   'Email'
         screen:  'create_email_out'
+      'whatsapp-out':
+        sender:  'Agent'
+        article: 'quepasa personal-message'
+        title:   'WhatsApp'
+        screen:  'create_whatsapp_out'
     @articleAttributes = articleSenderTypeMap[type]
 
     # update form
