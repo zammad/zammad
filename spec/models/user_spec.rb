@@ -897,13 +897,13 @@ RSpec.describe User, type: :model do
                      'Trigger'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Translation'                        => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'ObjectManager::Attribute'           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'User'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'User'                               => { 'created_by_id' => 1, 'out_of_office_replacement_id' => 1, 'updated_by_id' => 1 },
                      'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Mention'                            => { 'created_by_id' => 1, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'History'                            => { 'created_by_id' => 3 },
+                     'History'                            => { 'created_by_id' => 4 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
@@ -927,6 +927,7 @@ RSpec.describe User, type: :model do
       overview            = create(:overview, created_by_id: user.id, user_ids: [user.id])
       mention             = create(:mention, mentionable: create(:ticket), user: user)
       mention_created_by  = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
+      user_created_by     = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -980,6 +981,10 @@ RSpec.describe User, type: :model do
         .to change(knowledge_base_answer, :archived_by_id).to(1)
         .and change(knowledge_base_answer, :published_by_id).to(1)
         .and change(knowledge_base_answer, :internal_by_id).to(1)
+      expect { user_created_by.reload }
+        .to change(user_created_by, :created_by_id).to(1)
+        .and change(user_created_by, :updated_by_id).to(1)
+        .and change(user_created_by, :out_of_office_replacement_id).to(1)
     end
 
     it 'does delete cache after user deletion' do
