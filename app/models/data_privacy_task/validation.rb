@@ -17,12 +17,14 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
   private
 
   def check_for_user
+    return if !record.deletable_type_changed?
     return if deletable_is_user?
 
     invalid_because(:deletable, 'is not a User')
   end
 
   def check_for_system_user
+    return if !record.deletable_id_changed?
     return if !deletable_is_user?
     return if deletable.id != 1
 
@@ -30,6 +32,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
   end
 
   def check_for_current_user
+    return if !record.deletable_id_changed?
     return if !deletable_is_user?
     return if deletable.id != UserInfo.current_user_id
 
@@ -37,6 +40,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
   end
 
   def check_for_last_admin
+    return if !record.deletable_id_changed?
     return if !deletable_is_user?
     return if !last_admin?
 
@@ -44,6 +48,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
   end
 
   def check_for_existing_task
+    return if !record.deletable_id_changed?
     return if !deletable_is_user?
     return if !tasks_exists?
 
