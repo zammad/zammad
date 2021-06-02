@@ -48,14 +48,14 @@ RSpec.describe 'RobotsTxt', type: :request do
     context 'when custom domain is configured' do
       let(:custom_address) { 'kb.com/knowledge_base' }
 
-      context 'when requesting main domain' do # rubocop:disable RSpec/NestedGroups
+      context 'when requesting main domain' do
 
         it 'returns default rules' do
           expect(response.body).to include('Allow:').and(include('Disallow:'))
         end
       end
 
-      context 'when requesting KB domain' do # rubocop:disable RSpec/NestedGroups
+      context 'when requesting KB domain' do
         let(:server_name) { 'kb.com' }
 
         it 'returns domain rules' do
