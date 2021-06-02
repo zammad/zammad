@@ -316,6 +316,9 @@ Layout/MultilineMethodCallIndentation:
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
+RSpec/NestedGroups:
+  Max: 6
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'
