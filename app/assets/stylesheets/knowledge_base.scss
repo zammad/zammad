@@ -251,6 +251,11 @@ b {
     align-items: center;
     justify-content: space-between;
   }
+
+  .menu {
+    justify-content: flex-end;
+    margin-right: -1em;
+  }
 }
 
 .logo {
@@ -276,7 +281,7 @@ b {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   display: flex;
   align-items: center;
-  margin-right: -1em;
+  flex-wrap: wrap;
   font-size: 14px;
 
   &-item {
@@ -1011,6 +1016,10 @@ b {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .menu {
+    justify-content: center;
   }
 }
 
