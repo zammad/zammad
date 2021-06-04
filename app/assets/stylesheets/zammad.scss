@@ -2633,6 +2633,7 @@ input.has-error {
 
   &-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     border: 1px solid hsl(213,14%,91%);
 
