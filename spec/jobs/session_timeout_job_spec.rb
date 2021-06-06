@@ -19,6 +19,12 @@ RSpec.describe SessionTimeoutJob, type: :job do
       expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(-1)
     end
 
+    it 'does also kill the session of deleted users' do
+      user.destroy
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(-1)
+    end
+
     it 'does not kill the session' do
       travel_to 1.minute.from_now
       expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
