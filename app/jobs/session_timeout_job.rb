@@ -8,22 +8,27 @@ class SessionTimeoutJob < ApplicationJob
   def perform_session(session)
     return if !session.data['user_id']
 
-    user = User.find(session.data['user_id'])
-    return if !user
-
-    timeout = get_timeout(user)
-    return if session.data['ping'] > Time.zone.now - timeout.seconds
+    # user is optional because it can be deleted already
+    user = User.find_by(id: session.data['user_id'])
+    if user
+      timeout = get_timeout(user)
+      return if session.data['ping'] > timeout.seconds.ago
+    end
 
     self.class.destroy_session(user, session)
   end
 
   def self.destroy_session(user, session)
-    PushMessages.send_to(user.id, { event: 'session_timeout' })
+
+    # user is optional because it can be deleted already
+    if user
+      PushMessages.send_to(user.id, { event: 'session_timeout' })
+    end
     session.destroy
   end
 
   def sessions
-    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - config.values.map(&:to_i).min.seconds)
+    ActiveRecord::SessionStore::Session.where('updated_at < ?', config.values.map(&:to_i).min.seconds.ago)
   end
 
   def config
