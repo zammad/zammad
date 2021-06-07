@@ -1047,7 +1047,7 @@ Setting.create_if_not_exists(
   title:       'Session Timeout',
   name:        'session_timeout',
   area:        'Security::Base',
-  description: 'Defines the session timeout for inactivity of users (in seconds).',
+  description: 'Defines the session timeout for inactivity of users. Based on the assigned permissions the highest timeout value will be used, otherwise the default.',
   options:     {
     form: [
       {
