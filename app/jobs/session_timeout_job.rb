@@ -14,6 +14,7 @@ class SessionTimeoutJob < ApplicationJob
     user = User.find_by(id: session.data['user_id'])
     if user
       timeout = get_timeout(user)
+      return if timeout < 1
       return if session.data['ping'] > timeout.seconds.ago
     end
 
@@ -49,7 +50,7 @@ class SessionTimeoutJob < ApplicationJob
       timeout = value.to_i
     end
 
-    if timeout == -1
+    if timeout < 1
       timeout = config['default'].to_i
     end
 

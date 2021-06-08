@@ -35,7 +35,10 @@ class SessionTimeout extends App.Controller
   checkLogout: =>
     return if App.Session.get() is undefined
 
-    @timeTillLogout = @currentTime() - (@lastEvent + @getTimeout())
+    timeout = @getTimeout()
+    return if timeout < 1
+
+    @timeTillLogout = @currentTime() - (@lastEvent + timeout)
 
     # close logut warning
     if @timeTillLogout < @showLogoutWarningBefore
@@ -58,7 +61,7 @@ class SessionTimeout extends App.Controller
     return if App.Session.get() is undefined
 
     @logoutWarningClose()
-  
+
     App.Auth.logout(false, =>
       @navigate '#session_timeout'
     )
@@ -74,7 +77,7 @@ class SessionTimeout extends App.Controller
       continue if parseInt(value) < timeout
       timeout = parseInt(value)
 
-    if timeout is -1
+    if timeout < 1
       timeout = parseInt(config['default'])
 
     return timeout * 1000

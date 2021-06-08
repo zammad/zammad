@@ -115,5 +115,29 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
         expect(page).to have_text('Due to inactivity you are automatically logged out.', wait: 20)
       end
     end
+
+    context 'Logout by frontend plugin - Fallback from admin to default', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('session_timeout', { admin: '0', default: '1000' })
+        admin
+      end
+
+      it 'does not logout user', authenticated_as: :admin do
+        sleep 1.5
+        expect(page).to have_no_text('Due to inactivity you are automatically logged out.', wait: 0)
+      end
+    end
+
+    context 'Logout by frontend plugin - No logout because timeouts are disabled', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('session_timeout', { admin: '0', default: '0' })
+        admin
+      end
+
+      it 'does not logout user', authenticated_as: :admin do
+        sleep 1.5
+        expect(page).to have_no_text('Due to inactivity you are automatically logged out.', wait: 0)
+      end
+    end
   end
 end
