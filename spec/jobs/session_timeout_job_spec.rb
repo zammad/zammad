@@ -100,4 +100,52 @@ RSpec.describe SessionTimeoutJob, type: :job do
       expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
     end
   end
+
+  context 'with timeout fallback from admin to default' do
+    let(:user) { create(:admin) }
+
+    before do
+      Setting.set('session_timeout', { admin: '0', default: 30.minutes.to_s })
+    end
+
+    it 'does kill the session' do
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(-1)
+    end
+
+    it 'does also kill the session of deleted users' do
+      user.destroy
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(-1)
+    end
+
+    it 'does not kill the session' do
+      travel_to 1.minute.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+    end
+  end
+
+  context 'with timeouts all disabled' do
+    let(:user) { create(:admin) }
+
+    before do
+      Setting.set('session_timeout', { admin: '0', default: '0' })
+    end
+
+    it 'does not kill the session because all timeouts are disabled in 1 hour' do
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+    end
+
+    it 'does also kill the session of deleted users' do
+      user.destroy
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(-1)
+    end
+
+    it 'does not kill the session because all timeouts are disabled in 1 minute' do
+      travel_to 1.minute.from_now
+      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+    end
+  end
 end
