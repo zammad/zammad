@@ -329,6 +329,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   2,
         data: {
+          number:                   '2',
           title:                    'test',
           note:                     nil,
           create_article_type_id:   1,
@@ -350,6 +351,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   3,
         data: {
+          number:                   '3',
           title:                    'Bob Smith, here is the test ticket you requested',
           note:                     nil,
           create_article_type_id:   10,
@@ -371,6 +373,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   5,
         data: {
+          number:                   '5',
           title:                    'Twitter',
           note:                     nil,
           create_article_type_id:   6,
@@ -387,6 +390,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   143,
         data: {
+          number:                   '143',
           title:                    'Basti ist cool',
           note:                     nil,
           create_article_type_id:   8,
@@ -403,6 +407,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   145,
         data: {
+          number:                   '145',
           title:                    'closed ticket - should be archived and imported',
           note:                     nil,
           create_article_type_id:   11,

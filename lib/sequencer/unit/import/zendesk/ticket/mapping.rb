@@ -17,6 +17,7 @@ class Sequencer
               provide_mapped do
                 {
                   id:                       resource.id,
+                  number:                   resource.id,
                   title:                    subject,
                   owner_id:                 owner_id,
                   group_id:                 group_id,
