@@ -11,6 +11,7 @@ module Tasks
         def self.task_handler
           puts 'Executing all pending package migrations...'
           ::Package.migration_execute
+          ::Package::Migration.linked
           puts 'done.'
         end
 
