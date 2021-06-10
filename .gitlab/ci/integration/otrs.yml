@@ -1,4 +1,5 @@
 .template_integration_otrs: &template_integration_otrs
+  allow_failure: true
   extends:
     - .template_integration
   script:
