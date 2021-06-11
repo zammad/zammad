@@ -1344,7 +1344,9 @@ class App.Utils
     ctx = canvas.getContext('2d')
     ctx.drawImage(img, 0, 0, img.width, img.height)
     try
-      data = canvas.toDataURL('image/png')
+      # img alt attribute is used to get file type
+      # if not present, then it will default to image/png
+      data = canvas.toDataURL(App.Utils.getMimeTypeFromFilename(img.alt))
       params.success(img, data) if params.success
       return data
     catch e
@@ -1406,6 +1408,7 @@ class App.Utils
     imageCache.onerror = ->
       App.Log.notice('Utils', "Unable to load image from #{originalImage.src}")
       params.fail(originalImage) if params.fail
+    imageCache.alt = originalImage.alt
     imageCache.src = originalImage.src
 
   @baseUrl: ->
@@ -1470,3 +1473,13 @@ class App.Utils
   @safeParseHtml: (input) ->
     try $.parseHTML(input)
     catch e then $.parseHTML('<div>' + input + '</div>')[0].childNodes
+
+
+  # Gets file Mime Type from file name
+  # For e.g. oscar-menu.jpg returns image/jpeg
+  # For other file types it return image/png as default mimeType
+  @getMimeTypeFromFilename: (filename) ->
+    if filename?.match(/\.(jpe?g)$/i)
+      return 'image/jpeg'
+
+    return 'image/png'
