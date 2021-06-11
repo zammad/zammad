@@ -44,10 +44,18 @@ returns
 
 =begin
 
-store attachments for this object
+store attachments for this object with store objects or hashes
 
   item = Model.find(123)
-  item.attachments = [ Store-Object1, Store-Object2 ]
+  item.attachments = [
+    Store-Object1,
+    Store-Object2,
+    {
+      filename: 'test.txt',
+      data: 'test',
+      preferences: {},
+    }
+  ]
 
 =end
 
@@ -118,14 +126,22 @@ For use in #search_index_attribute_lookup
     # store attachments
     article_store = []
     attachments_buffer.each do |attachment|
-      article_store.push Store.add(
+      data = {
         object:        self.class.to_s,
         o_id:          id,
-        data:          attachment.content,
-        filename:      attachment.filename,
-        preferences:   attachment.preferences,
         created_by_id: created_by_id,
-      )
+      }
+      if attachment.is_a?(Store)
+        data[:data]        = attachment.content
+        data[:filename]    = attachment.filename
+        data[:preferences] = attachment.preferences
+      else
+        data[:data]        = attachment[:data]
+        data[:filename]    = attachment[:filename]
+        data[:preferences] = attachment[:preferences]
+      end
+
+      article_store.push Store.add(data)
     end
   end
 end
