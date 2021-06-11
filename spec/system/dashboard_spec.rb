@@ -100,16 +100,16 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       end
     end
 
-    context 'Logout by SessionTimeoutJob - destroy_session' do
+    context 'Logout by SessionTimeoutJob - frontend_timeout' do
       it 'does logout user', authenticated_as: :admin do
 
         # because of the websocket server running in the same
         # process and the checks in the frontend it is really
         # hard test the SessionTimeoutJob.perform_now here
         # so we only check the session killing code and use
-        # backend tests for the rest
+        # backend tests for the reset
         session = ActiveRecord::SessionStore::Session.all.detect { |s| s.data['user_id'] == admin.id }
-        SessionTimeoutJob.destroy_session(admin, session)
+        SessionTimeoutJob::Session.new(session).frontend_timeout
         expect(page).to have_text('Due to inactivity you are automatically logged out.', wait: 20)
       end
     end

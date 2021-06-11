@@ -148,4 +148,37 @@ RSpec.describe SessionTimeoutJob, type: :job do
       expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
     end
   end
+
+  context 'with timeout and a dead session in the past' do
+    let(:user) { create(:admin) }
+
+    before do
+      Setting.set('session_timeout', { admin: 30.minutes.to_s })
+      travel_to 10.hours.ago
+      create(:active_session, user: user)
+      travel_to 10.hours.from_now
+    end
+
+    it 'does a frontend logout for the user' do
+      allow(PushMessages).to receive(:send_to)
+      travel_to 1.hour.from_now
+      described_class.perform_now
+      expect(PushMessages).to have_received(:send_to).with(user.id, { event: 'session_timeout' }).twice
+    end
+
+    it 'does not init a frontend logout for the user because he does not exist anymore' do
+      allow(PushMessages).to receive(:send_to)
+      user.destroy
+      travel_to 1.hour.from_now
+      described_class.perform_now
+      expect(PushMessages).not_to have_received(:send_to).with(user.id, { event: 'session_timeout' })
+    end
+
+    it 'does not init a frontend logout for the user because of an active session' do
+      allow(PushMessages).to receive(:send_to)
+      travel_to 1.minute.from_now
+      described_class.perform_now
+      expect(PushMessages).not_to have_received(:send_to).with(user.id, { event: 'session_timeout' })
+    end
+  end
 end
