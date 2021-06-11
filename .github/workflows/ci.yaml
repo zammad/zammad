@@ -54,3 +54,5 @@ jobs:
           mysql --host 127.0.0.1 --port 13306 -uroot -ppassword -e "SET GLOBAL max_allowed_packet=1073741824;"
       - name: CI
         run: .github/ci.sh
+
+    
