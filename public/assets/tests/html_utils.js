@@ -3304,6 +3304,44 @@ var htmlImage2DataUrlTest2Fail = function() {
     ok(false, 'fail callback is exectuted!')
   });
 }
+
+// Gitlab Issue #3538
+// Jpeg images should convert to jpegs
+// This functionality uses alt attribute present in img tag to get file type
+// if alt attribute is missing then it will default to image/png
+var jpegImageSource = '<img src="/assets/images/8000x300.jpg" alt="test.jpeg">jpeg image'
+$('#jpegImage').html(jpegImageSource)
+var htmlImage2DataUrlTest3 = function() {
+  test("htmlImage2DataUrl3 async", function() {
+    var result = App.Utils.htmlImage2DataUrl(jpegImageSource)
+    ok(result.match(/jpeg image/), jpegImageSource)
+    ok(result.match(/^\<img src=\"data:image\/jpeg;base64,/), jpegImageSource)
+  });
+}
+$('#jpegImage img').one('load', htmlImage2DataUrlTest3)
+
+var pngImageSource = '<img src="/assets/images/1000x1000.png" alt="test.png">png image'
+$('#pngImage').html(pngImageSource)
+var htmlImage2DataUrlTest4 = function() {
+  test("htmlImage2DataUrl4 async", function() {
+    var result = App.Utils.htmlImage2DataUrl(pngImageSource)
+    ok(result.match(/png image/), pngImageSource)
+    ok(result.match(/^\<img src=\"data:image\/png;base64,/), pngImageSource)
+  });
+}
+$('#pngImage img').one('load', htmlImage2DataUrlTest4)
+
+var jpegImageSourceWithoutAlt = '<img src="/assets/images/8000x300.jpg">jpeg image'
+$('#jpegImage2').html(jpegImageSourceWithoutAlt)
+var htmlImage2DataUrlTest5 = function() {
+  test("htmlImage2DataUrl5 async", function() {
+    var result = App.Utils.htmlImage2DataUrl(jpegImageSourceWithoutAlt)
+    ok(result.match(/jpeg image/), jpegImageSourceWithoutAlt)
+    ok(result.match(/^\<img src=\"data:image\/png;base64,/), jpegImageSourceWithoutAlt)
+  });
+}
+$('#jpegImage2 img').one('load', htmlImage2DataUrlTest5)
+
 App.Utils.htmlImage2DataUrlAsyncInline($('#image2data2'), {success: htmlImage2DataUrlTest2Success, fail: htmlImage2DataUrlTest2Fail})
 
 }
