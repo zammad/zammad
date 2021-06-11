@@ -54,24 +54,18 @@ module CreatesTicketArticles
     end
 
     # find attachments in upload cache
+    attachments = []
     if form_id
-      article.attachments = UploadCache.new(form_id).attachments
+      attachments += UploadCache.new(form_id).attachments
     end
-
-    # set subtype of present
-    article.preferences[:subtype] = subtype if subtype.present?
-
-    article.save!
 
     # store inline attachments
     attachments_inline.each do |attachment|
-      Store.add(
-        object:      'Ticket::Article',
-        o_id:        article.id,
+      attachments << {
         data:        attachment[:data],
         filename:    attachment[:filename],
         preferences: attachment[:preferences],
-      )
+      }
     end
 
     # add attachments as param
@@ -102,15 +96,20 @@ module CreatesTicketArticles
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
         end
 
-        Store.add(
-          object:      'Ticket::Article',
-          o_id:        article.id,
+        attachments << {
           data:        attachment_data,
           filename:    attachment[:filename],
           preferences: preferences,
-        )
+        }
       end
     end
+
+    article.attachments = attachments
+
+    # set subtype of present
+    article.preferences[:subtype] = subtype if subtype.present?
+
+    article.save!
 
     # account time
     if time_unit.present?
