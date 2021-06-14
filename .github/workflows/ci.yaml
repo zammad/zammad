@@ -1,6 +1,7 @@
 name: ci
 
-on: [push]
+on: 
+  pull_request
   
         
 
@@ -20,7 +21,7 @@ jobs:
     needs: lint-bash-scripts
     services:
       mysql:
-        image: mysql:5.6
+        image: mysql:5
         env:
           MYSQL_ROOT_PASSWORD: password
         ports:
@@ -33,7 +34,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
         - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries=5
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       matrix:
         dbs:
@@ -49,10 +50,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.6
-      - name: Increase MySQL max_allowed_packet to 1GB (workaround for unknown/missing service option)
-        run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 13306 -uroot -ppassword -e "SET GLOBAL max_allowed_packet=1073741824;"
+      # - name: Increase MySQL max_allowed_packet to 1GB (workaround for unknown/missing service option)
+      #   run: |
+      #     sudo apt-get install -y mysql-client
+      #     mysql --host 127.0.0.1 --port 13306 -uroot -ppassword -e "SET GLOBAL max_allowed_packet=1073741824;"
       - name: CI
         run: .github/ci.sh
 
