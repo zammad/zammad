@@ -127,3 +127,22 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1 do
     end
   end
 end
+
+
+rspec ./spec/integration/freshdesk_spec.rb:96 # Freshdesk import when performing the full Freshdesk import imports the correct number of expected objects
+rspec ./spec/lib/facebook_spec.rb:50 # Facebook#connect works
+rspec ./spec/lib/facebook_spec.rb:56 # Facebook#pages works
+rspec ./spec/lib/facebook_spec.rb:62 # Facebook#current_user works for user
+rspec ./spec/lib/facebook_spec.rb:66 # Facebook#current_user works for page
+rspec ./spec/lib/facebook_spec.rb:76 # Facebook#to_user works
+rspec ./spec/lib/facebook_spec.rb:85 # Facebook#to_ticket works
+rspec ./spec/lib/facebook_spec.rb:93 # Facebook#to_article works
+rspec ./spec/lib/facebook_spec.rb:104 # Facebook#to_group parses title correctly
+rspec ./spec/lib/facebook_spec.rb:108 # Facebook#to_group parses body correctly
+rspec ./spec/lib/facebook_spec.rb:125 # Facebook#from_article works
+rspec ./spec/models/channel/driver/facebook_spec.rb:34 # Channel::Driver::Facebook tests full run
+rspec ./spec/requests/integration/github_spec.rb:92 # GitHub request handling does save ticket issues
+rspec ./spec/requests/integration/gitlab_spec.rb:97 # GitLab request handling does save ticket issues
+rspec ./spec/requests/proxy_spec.rb:43 # Manage > Settings > System > Network request handling when proxy settings uses invalid config with unknown proxy
+rspec ./spec/requests/proxy_spec.rb:53 # Manage > Settings > System > Network request handling when proxy settings uses invalid config with invalid proxy username
+rspec ./spec/requests/proxy_spec.rb:63 # Manage > Settings > System > Network request handling when proxy settings uses invalid config with invalid proxy password
