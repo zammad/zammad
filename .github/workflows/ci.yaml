@@ -19,25 +19,25 @@ jobs:
     needs: lint-bash-scripts
     services:
       mysql:
-        image: mysql:5
+        image: mysql:5.6
         env:
           MYSQL_ROOT_PASSWORD: password
         ports:
         - 13306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      # postgres:
-      #   image: postgres:11
-      #   env:
-      #     POSTGRES_USER: postgres
-      #     POSTGRES_PASSWORD: postgres
-      #   ports:
-      #   - 5432:5432
-        # options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries=5
     strategy:
       matrix:
         dbs:
           - mysql
-          # - postgresql
+          - postgresql
     env:
       RAILS_ENV: test
       ZAMMAD_DBS: ${{ matrix.dbs }}
