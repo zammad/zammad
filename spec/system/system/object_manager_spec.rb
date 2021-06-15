@@ -63,8 +63,6 @@ RSpec.describe 'Admin Panel > Objects', type: :system, authenticated_as: true do
                               'nulloption' => true,
                               'maxlength'  => 255 }
 
-    await_empty_ajax_queue
-
     expect(ObjectManager::Attribute.last.data_option).to eq(expected_data_options)
   end
 end

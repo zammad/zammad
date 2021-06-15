@@ -542,6 +542,12 @@ class TestCase < ActiveSupport::TestCase
 
     sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
+
+    if params[:expect_alert]
+      check_alert(params)
+    else
+      await_empty_ajax_queue(params)
+    end
   end
 
 =begin
@@ -825,6 +831,7 @@ class TestCase < ActiveSupport::TestCase
     end
 
     sleep 0.2
+    await_empty_ajax_queue(params)
   end
 
 =begin
@@ -880,6 +887,8 @@ class TestCase < ActiveSupport::TestCase
       dropdown.select_by(:text, params[:value])
       #puts "select2 - #{params.inspect}"
     end
+
+    await_empty_ajax_queue(params)
   end
 
 =begin
@@ -1265,16 +1274,17 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
 =end
 
-  def verify_task(params = {}, fallback = false)
+  def verify_task(params = {})
     switch_window_focus(params)
     log('verify_task', params)
 
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    sleep 1
-
     begin
+      retries ||= 0
+      sleep 1
+
       # verify title
       if data[:title]
         title = instance.find_elements(css: '.tasks .is-active')[0].text.strip
@@ -1318,10 +1328,8 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
         end
       end
     rescue => e
-      # just try again
-      if !fallback
-        verify_task(params, true)
-      end
+      retries += 1
+      retry if retries < 5
       raise "ERROR: #{e.inspect}"
     end
     true
@@ -1572,6 +1580,7 @@ wait untill text in selector disabppears
             .key_up(:control)
             .perform
     screenshot(browser: instance, comment: 'shortcut_after')
+    await_empty_ajax_queue(params)
   end
 
 =begin
@@ -1588,6 +1597,7 @@ wait untill text in selector disabppears
     log('window_keys', params)
     instance = params[:browser] || @browser
     instance.action.send_keys(params[:value]).perform
+    await_empty_ajax_queue(params)
   end
 
 =begin
@@ -2122,19 +2132,14 @@ wait untill text in selector disabppears
       mute_log: true,
     )
 
-    found = false
-    7.times do
-      element = instance.find_elements(css: '.content.active .newTicket')[0]
-      if element
-        found = true
-        break
-      end
-      sleep 1
-    end
-    if !found
-      screenshot(browser: instance, comment: 'ticket_create_failed')
-      raise 'no ticket create screen found!'
-    end
+    watch_for(
+      browser: instance,
+      css:     '.content.active .newTicket',
+      timeout: 30,
+    )
+
+    # Rumors say there is a modal reaper which will kill your modals if you dont sleep before a new ticket create
+    sleep 3
 
     if data[:group]
       if data[:group] == '-NONE-'
@@ -2570,6 +2575,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.content.active .js-submit')[0].click
+    await_empty_ajax_queue(params)
 
     # do not stay on tab
     if params[:task_type] == 'closeTab' || params[:task_type] == 'closeNextInOverview'
@@ -2867,7 +2873,7 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     instance.find_elements(css: '.js-overviewsMenuItem')[0].click
-    sleep 2
+    await_empty_ajax_queue(params)
 
     execute(
       browser: instance,
@@ -2878,18 +2884,28 @@ wait untill text in selector disabppears
     #  js: '$(".content.active .overview-header").css("display", "none")',
     #)
 
-    overviews = {}
-    instance.find_elements(css: '.content.active .sidebar a[href]').each do |element|
-      url = element.attribute('href')
-      url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
-      overviews[url] = 0
-      #puts url.inspect
-      #puts element.inspect
+    begin
+      overviews = {}
+      instance.find_elements(css: '.content.active .sidebar a[href]').each do |element|
+        url = element.attribute('href')
+        url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
+        overviews[url] = 0
+        #puts url.inspect
+        #puts element.inspect
+      end
+
+      overviews.each_key do |url|
+        count          = instance.find_elements(css: ".content.active .sidebar a[href=\"#{url}\"] .badge")[0].text
+        overviews[url] = count.to_i
+      end
+    rescue => e
+      retries ||= 0
+      retries += 1
+      sleep 0.5
+      retry if retries < 5
+      raise e
     end
-    overviews.each_key do |url|
-      count          = instance.find_elements(css: ".content.active .sidebar a[href=\"#{url}\"] .badge")[0].text
-      overviews[url] = count.to_i
-    end
+
     log('overview_counter', overviews)
     overviews
   end
@@ -3340,6 +3356,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:name])
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    await_empty_ajax_queue(params)
     modal_disappear(
       browser: instance,
       timeout: 5,
@@ -3458,6 +3475,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:first_response_time_in_text])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    await_empty_ajax_queue(params)
     modal_disappear(browser: instance)
     7.times do
       element = instance.find_elements(css: 'body')[0]
@@ -3661,6 +3679,7 @@ wait untill text in selector disabppears
       dropdown.select_by(:text, data[:signature])
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    await_empty_ajax_queue(params)
     modal_disappear(browser: instance)
 
     element = instance.find_elements(css: 'body')[0]
@@ -3673,6 +3692,7 @@ wait untill text in selector disabppears
       data[:member]&.each do |member|
         instance.find_elements(css: 'a[href="#manage"]')[0].click
         sleep 1
+        scroll_to(params.merge(css: '.content.active a[href="#manage/users"]'))
         instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
         sleep 3
         element = instance.find_elements(css: '.content.active [name="search"]')[0]
@@ -3685,6 +3705,7 @@ wait untill text in selector disabppears
         #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
         instance.execute_script(%($(".js-groupList tr:contains(\\"#{data[:name]}\\") .js-groupListItem[value=#{member[:access]}]").prop("checked", true)))
         instance.find_elements(css: '.modal button.js-submit')[0].click
+        await_empty_ajax_queue(params)
         modal_disappear(browser: instance)
       end
     end
@@ -3933,6 +3954,8 @@ wait untill text in selector disabppears
       css:      '.content.active a[href="#manage/roles"]',
       mute_log: true,
     )
+
+    await_text(container: '.content.active table tr td', text: data[:name])
     instance.execute_script(%($('.content.active table tr td:contains(" #{data[:name]}")').first().click()))
 
     modal_ready(browser: instance)
@@ -4829,5 +4852,125 @@ wait untill text in selector disabppears
     end
     screenshot(browser: instance, comment: "object_manager_attribute_#{action}_failed")
     raise "object_manager_attribute_#{action}_failed"
+  end
+
+  def check_alert(params = {})
+    instance = params[:browser] || @browser
+
+    tries = 5
+    begin
+      alert = instance.switch_to.alert
+      alert.dismiss()
+    rescue e
+      tries -= 1
+      sleep 0.5
+      retry if tries.positive?
+      raise e
+    end
+  end
+
+=begin
+
+  This function waits for ajax requests and object form flow to be done
+
+  await_empty_ajax_queue
+
+=end
+
+  def await_empty_ajax_queue(params = {})
+    return if params[:ajax] == false
+
+    instance = params[:browser] || @browser
+
+    10.times do
+      sleep 0.5
+
+      break if instance.execute_script('return typeof(App) === "undefined"')
+      break if instance.execute_script('return App.Ajax.queue().length').zero?
+    end
+  end
+
+=begin
+
+  This function waits for a text to be ready in the dom. By default it searches in the active content.
+
+  await_text(text: 'New Ticket')
+
+  await_text(text: 'New Ticket', container: 'body')
+
+=end
+
+  def await_text(params)
+    return if params[:ajax] == false
+
+    instance = params[:browser] || @browser
+
+    container = '.content.active'
+    if params[:container]
+      container = params[:container]
+    end
+
+    20.times do
+      log('await_text', params)
+
+      break if instance.execute_script("return $(\"#{container}:contains('#{params[:text]}')\").length").positive?
+
+      sleep 0.5
+    end
+  end
+
+=begin
+
+  This function waits for the overview_counter to return a specific result.
+
+  await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
+
+=end
+
+  def await_overview_counter(params)
+    result = nil
+    40.times do
+      result = overview_counter
+
+      if result[ params[:view] ] != params[:count]
+        sleep 0.5
+        next
+      end
+
+      break
+    end
+
+    assert_equal(params[:count], result[ params[:view] ])
+  end
+
+=begin
+
+  This function waits for a search result to be available in the global search.
+  It can help to verify if a user is indexed in elastic search.
+
+  await_global_search(query: 'customer 1 firstname')
+
+=end
+
+  def await_global_search(params)
+    instance = params[:browser] || @browser
+
+    30.times do
+      log('await_global_search', params)
+
+      set(
+        css:   'input#global-search',
+        value: params[:query],
+      )
+
+      break if instance.execute_script("return $(\"ul.global-search-result:visible:contains('#{params[:query]}')\").length") == 1
+
+      sleep 0.5
+    end
+
+    set(
+      css:   'input#global-search',
+      value: '',
+    )
   end
 end

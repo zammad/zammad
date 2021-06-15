@@ -38,6 +38,8 @@ module CommonActions
     wait(4).until_exists do
       current_login
     end
+
+    await_empty_ajax_queue
   end
 
   # Checks if the current session is logged in.
@@ -120,6 +122,16 @@ module CommonActions
       route = "/##{route}"
     end
     super(route)
+
+    # wait for AJAX requets only on WebApp visits
+    return if !route.start_with?('/#')
+    return if route == '/#logout'
+
+    # make sure all AJAX requests are done
+    await_empty_ajax_queue
+
+    # make sure loading is completed (e.g. ticket zoom may take longer)
+    expect(page).to have_no_css('.icon-loading', wait: 30)
   end
 
   # Overwrites the global Capybara.always_include_port setting (true)

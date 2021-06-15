@@ -3,6 +3,20 @@
 require 'browser_test_helper'
 
 class AgentTicketOverviewTabTest < TestCase
+  def task_count_equals(count)
+
+    retries ||= 0
+    assert_equal(count, @browser.find_elements(css: '.tasks .task').count)
+  rescue
+    retries += 1
+    if retries < 5
+      sleep 1
+      retry
+    end
+    raise e
+
+  end
+
   def test_i
     @browser = browser_instance
     login(
@@ -54,7 +68,7 @@ class AgentTicketOverviewTabTest < TestCase
       link:   '#ticket/view/all_unassigned',
     )
 
-    assert_equal(1, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(1)
 
     ticket_update(
       data:      {
@@ -70,7 +84,7 @@ class AgentTicketOverviewTabTest < TestCase
       timeout: 8,
     )
 
-    assert_equal(1, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(1)
 
     ticket_update(
       data:      {
@@ -80,7 +94,7 @@ class AgentTicketOverviewTabTest < TestCase
       task_type: 'closeTab', # default: stayOnTab / possible: closeTab, closeNextInOverview, stayOnTab
     )
 
-    assert_equal(0, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(0)
 
     # cleanup
     tasks_close_all()

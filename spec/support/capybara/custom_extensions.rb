@@ -34,3 +34,108 @@ class Capybara::Node::Element
     raise "Element still moving after #{checks} checks"
   end
 end
+
+module ZammadCapybarActionDelegator
+  def select(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def click(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def click_on(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def click_link_or_button(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def click_button(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def select_option(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
+  def send_keys(*)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+end
+
+module ZammadCapybarSelectorDelegator
+  def find_field(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def find_button(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def find_by_id(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def find_link(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def find(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def first(*)
+    ZammadCapybaraElementDelegator.new(element: super, context: self)
+  end
+
+  def all(*)
+    super.map { |element| ZammadCapybaraElementDelegator.new(element: element, context: self) }
+  end
+end
+
+class ZammadCapybaraSessionDelegator < SimpleDelegator
+  extend Forwardable
+
+  def_delegator :@context, :await_empty_ajax_queue
+
+  include ZammadCapybarSelectorDelegator
+
+  def initialize(context:, element:)
+    @context = context
+
+    super(element)
+  end
+end
+
+class ZammadCapybaraElementDelegator < ZammadCapybaraSessionDelegator
+  include ZammadCapybarActionDelegator
+end
+
+module CapybaraCustomExtensions
+  include ZammadCapybarActionDelegator
+  include ZammadCapybarSelectorDelegator
+
+  def page(*)
+    ZammadCapybaraSessionDelegator.new(element: super, context: self)
+  end
+end
+
+RSpec.configure do |config|
+  config.include CapybaraCustomExtensions, type: :system
+end

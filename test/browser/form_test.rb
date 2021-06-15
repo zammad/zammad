@@ -160,13 +160,11 @@ class FormTest < TestCase
       value:   "some text\nnew line",
     )
     click(
-      browser: customer,
-      css:     'body div.zammad-form-modal button[type="submit"]',
+      browser:      customer,
+      css:          'body div.zammad-form-modal button[type="submit"]',
+      expect_alert: true,
     )
 
-    # check warning
-    alert = customer.switch_to.alert
-    alert.dismiss()
     sleep 10
 
     # fill form invalid data - within correct time

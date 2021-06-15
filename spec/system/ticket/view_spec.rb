@@ -112,9 +112,9 @@ RSpec.describe 'Ticket views', type: :system do
 
         release_mouse
 
-        await_empty_ajax_queue
-
-        expect(Ticket.first.articles.last.subject).to eq('macro note')
+        expect do
+          wait(10, interval: 0.1).until { Ticket.first.articles.last.subject == 'macro note' }
+        end.not_to raise_error
       end
     end
   end
@@ -136,12 +136,9 @@ RSpec.describe 'Ticket views', type: :system do
         click '.js-submit'
       end
 
-      await_empty_ajax_queue
-
-      expect([
-               ticket1.articles.last&.body,
-               ticket2.articles.last&.body
-             ]).to be_all note
+      expect do
+        wait(10, interval: 0.1).until { [ ticket1.articles.last&.body, ticket2.articles.last&.body ] == [note, note] }
+      end.not_to raise_error
     end
   end
 
@@ -184,9 +181,9 @@ RSpec.describe 'Ticket views', type: :system do
 
     it 'does basic view test of tickets' do
       visit 'ticket/view/my_tickets'
-      expect(page).to have_text(ticket.title)
+      expect(page).to have_text(ticket.title, wait: 10)
       click_on 'My Organization Tickets'
-      expect(page).to have_text(ticket.title)
+      expect(page).to have_text(ticket.title, wait: 10)
     end
   end
 end

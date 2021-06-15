@@ -68,9 +68,11 @@ module BrowserTestHelper
   #  await_empty_ajax_queue
   #
   def await_empty_ajax_queue
-    wait(5, interval: 0.5).until_constant do
+    wait(5, interval: 0.1).until_constant do
       page.evaluate_script('App.Ajax.queue().length').zero?
     end
+  rescue
+    nil
   end
 
   # Moves the mouse from its current position by the given offset.
@@ -112,6 +114,7 @@ module BrowserTestHelper
   #
   def release_mouse
     page.driver.browser.action.release.perform
+    await_empty_ajax_queue
   end
 
   class Waiter < SimpleDelegator

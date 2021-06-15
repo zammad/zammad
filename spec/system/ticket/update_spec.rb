@@ -35,7 +35,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
         select('closed', from: 'state_id')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
       end
 
       # the update should have failed and thus the ticket is still in the new state
@@ -45,7 +45,7 @@ RSpec.describe 'Ticket Update', type: :system do
         # update should work now
         find(".edit [name=#{attribute.name}]").select('name 2')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 2)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
       end
 
       ticket.reload
@@ -185,7 +185,7 @@ RSpec.describe 'Ticket Update', type: :system do
     it 'tickets history of both tickets should show the merge event' do
       visit "#ticket/zoom/#{origin_ticket.id}"
       within(:active_content) do
-        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 10)
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 

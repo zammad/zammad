@@ -15,12 +15,12 @@ RSpec.describe 'Authentication', type: :system do
 
   it 'Logout' do
     logout
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
   end
 
   it 'will unset user attributes after logout' do
     logout
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     visit '/#signup'
 
@@ -31,20 +31,20 @@ RSpec.describe 'Authentication', type: :system do
   it 'Login and redirect to requested url', authenticated_as: false do
     visit 'ticket/zoom/1'
 
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     login(
       username: 'master@example.com',
       password: 'test',
     )
 
-    expect_current_route 'ticket/zoom/1', wait: 2
+    expect_current_route 'ticket/zoom/1', wait: 10
   end
 
   it 'Login and redirect to requested url via external authentication', authenticated_as: false do
     visit 'ticket/zoom/1'
 
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     # simulate jump to external ressource
     visit 'https://www.zammad.org'
@@ -59,7 +59,7 @@ RSpec.describe 'Authentication', type: :system do
     # jump back and check if origin requested url is shown
     visit ''
 
-    expect_current_route 'ticket/zoom/1', wait: 2
+    expect_current_route 'ticket/zoom/1', wait: 10
 
     expect(current_login).to eq('master@example.com')
   end

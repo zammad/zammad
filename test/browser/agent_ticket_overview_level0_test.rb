@@ -67,6 +67,9 @@ class AgentTicketOverviewLevel0Test < TestCase
       css: %(.content.active table tr td input[value="#{ticket2[:id]}"][type="checkbox"]:checked),
     )
 
+    # remember current overview count
+    overview_counter_before = overview_counter()
+
     # select close state & submit
     select(
       css:   '.content.active .bulkAction [name="state_id"]',
@@ -92,6 +95,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # remember current overview count
+    await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
     overview_counter_before = overview_counter()
 
     # click options and enable number and article count
@@ -188,11 +192,9 @@ class AgentTicketOverviewLevel0Test < TestCase
         body:     'overview count test #3',
       }
     )
-    sleep 6
 
     # get new overview count
-    overview_counter_new = overview_counter()
-    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] + 1, overview_counter_new['#ticket/view/all_unassigned'])
+    await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] + 1)
 
     # open ticket by search
     ticket_open_by_search(
@@ -206,11 +208,9 @@ class AgentTicketOverviewLevel0Test < TestCase
         state: 'closed',
       }
     )
-    sleep 6
 
     # get current overview count
-    overview_counter_after = overview_counter()
-    assert_equal(overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'])
+    await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'])
 
     # cleanup
     tasks_close_all()
@@ -334,8 +334,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # get new overview count
-    overview_counter_new = overview_counter()
-    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] - 2, overview_counter_new['#ticket/view/all_unassigned'])
+    await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
 
     # open ticket by search
     ticket_open_by_search(
@@ -463,8 +462,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # get new overview count
-    overview_counter_new = overview_counter()
-    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] - 2, overview_counter_new['#ticket/view/all_unassigned'])
+    await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
 
     # cleanup
     tasks_close_all()

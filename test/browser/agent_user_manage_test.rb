@@ -4,8 +4,9 @@ require 'browser_test_helper'
 
 class AgentUserManageTest < TestCase
   def test_agent_customer_ticket_create
-    customer_user_email = "customer-test-#{rand(999_999)}@example.com"
-    firstname           = 'Customer Firstname'
+    random_number       = rand(999_999)
+    customer_user_email = "customer-test-#{random_number}@example.com"
+    firstname           = "Customer Firstname #{random_number}"
     lastname            = 'Customer Lastname'
     fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"
 
@@ -21,10 +22,10 @@ class AgentUserManageTest < TestCase
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
 
-    watch_for(
-      css:     '.content.active .newTicket',
-      timeout: 1,
-    )
+    await_text(text: 'New Ticket')
+
+    # Rumors say there is a modal reaper which will kill your modals if you dont sleep before a new ticket create
+    sleep 3
 
     click(css: '.content.active .newTicket [name="customer_id_completion"]')
 
@@ -77,10 +78,12 @@ class AgentUserManageTest < TestCase
       css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: fullname,
     )
-    sleep 4
 
     # call new ticket screen again
     tasks_close_all()
+
+    # wait for user get indexed in elastic search
+    await_global_search(query: random_number)
 
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')

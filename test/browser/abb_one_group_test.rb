@@ -159,7 +159,7 @@ class AgentTicketActionLevel0Test < TestCase
       css:   '.newTicket',
       value: 'New Ticket',
     )
-    exists_not(css: '.newTicket select[name="group_id"]')
+    exists(css: '.newTicket .form-group.hide select[name="group_id"]')
 
     set(
       css:   '.newTicket input[name="title"]',

@@ -204,8 +204,6 @@ RSpec.describe 'Ticket Create', type: :system do
                 encrypt_button = find('.js-securityEncrypt', wait: 5)
                 sign_button    = find('.js-securitySign', wait: 5)
 
-                await_empty_ajax_queue
-
                 active_button_class = '.btn--active'
                 expect(encrypt_button.matches_css?(active_button_class, wait: 2)).to be(encrypt)
                 expect(sign_button.matches_css?(active_button_class, wait: 2)).to be(sign)
@@ -233,8 +231,6 @@ RSpec.describe 'Ticket Create', type: :system do
 
               within(:active_content) do
                 use_template(template)
-
-                await_empty_ajax_queue
 
                 select new_group.name, from: 'group_id'
               end
@@ -378,7 +374,6 @@ RSpec.describe 'Ticket Create', type: :system do
         click_on 'Link issue'
         fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
         click_on 'Submit'
-        await_empty_ajax_queue
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -390,7 +385,6 @@ RSpec.describe 'Ticket Create', type: :system do
 
         # create Ticket
         click '.js-submit'
-        await_empty_ajax_queue
 
         # check stored data
         expect(Ticket.last.preferences[:gitlab][:issue_links][0]).to eq(ENV['GITLAB_ISSUE_LINK'])
@@ -432,7 +426,6 @@ RSpec.describe 'Ticket Create', type: :system do
         click_on 'Link issue'
         fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
         click_on 'Submit'
-        await_empty_ajax_queue
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -444,7 +437,6 @@ RSpec.describe 'Ticket Create', type: :system do
 
         # create Ticket
         click '.js-submit'
-        await_empty_ajax_queue
 
         # check stored data
         expect(Ticket.last.preferences[:github][:issue_links][0]).to eq(ENV['GITHUB_ISSUE_LINK'])

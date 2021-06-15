@@ -690,6 +690,7 @@ Metrics/ModuleLength:
     - 'lib/signature_detection.rb'
     - 'lib/static_assets.rb'
     - 'lib/transaction_dispatcher.rb'
+    - 'spec/support/capybara/common_actions.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:

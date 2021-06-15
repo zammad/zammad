@@ -30,14 +30,7 @@ class AgentTicketAttachmentTest < TestCase
     sleep 1
 
     # submit form
-    click(css: '.content.active .js-submit')
-    sleep 2
-
-    # check warning
-    alert = @browser.switch_to.alert
-    alert.dismiss()
-    #alert.accept()
-    #alert = alert.text
+    click(css: '.content.active .js-submit', expect_alert: true)
 
     # since selenium webdriver with firefox is not able to upload files, skipp here
     # https://github.com/w3c/webdriver/issues/1230
@@ -90,12 +83,7 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # submit form
-    click(css: '.content.active .js-submit')
-    sleep 2
-
-    # check warning
-    alert = @browser.switch_to.alert
-    alert.dismiss()
+    click(css: '.content.active .js-submit', expect_alert: true)
 
     # add attachment, attachment check should quiet
     file_upload(
@@ -111,12 +99,6 @@ class AgentTicketAttachmentTest < TestCase
 
     # submit form
     click(css: '.content.active .js-submit')
-    sleep 2
-
-    # no warning
-    #alert = @browser.switch_to.alert
-
-    # check if article exists
 
     # discard changes should gone away
     watch_for_disappear(

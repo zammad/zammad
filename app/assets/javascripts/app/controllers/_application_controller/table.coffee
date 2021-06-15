@@ -1038,12 +1038,13 @@ class App.ControllerTable extends App.Controller
     # update store
     @preferencesStore('order', 'customOrderBy', @orderBy)
     @preferencesStore('order', 'customOrderDirection', @orderDirection)
-    render = =>
-      @renderTableFull(false, skipHeadersResize: true)
-    App.QueueManager.add('tableRender', render)
 
     if @sortRenderCallback
       App.QueueManager.add('tableRender', @sortRenderCallback)
+    else
+      render = =>
+        @renderTableFull(false, skipHeadersResize: true)
+      App.QueueManager.add('tableRender', render)
 
     App.QueueManager.run('tableRender')
 

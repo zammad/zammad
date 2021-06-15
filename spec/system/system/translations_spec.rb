@@ -15,6 +15,6 @@ RSpec.describe 'System > Translations', type: :system do
 
     click '.js-syncChanges'
 
-    modal_ready && modal_disappear # make sure test is not terminated while modal is visible
+    modal_disappear # make sure test is not terminated while modal is visible
   end
 end

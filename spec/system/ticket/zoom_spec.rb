@@ -448,7 +448,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'button is hidden on the go' do
-      let(:setting_delete_timeframe) { 5 }
+      let(:setting_delete_timeframe) { 10 }
 
       let(:user)     { agent }
       let(:item)     { 'article_note_self' }
@@ -692,8 +692,6 @@ RSpec.describe 'Ticket zoom', type: :system do
             encrypt_button = find('.js-securityEncrypt', wait: 5)
             sign_button    = find('.js-securitySign', wait: 5)
 
-            await_empty_ajax_queue
-
             active_button_class = '.btn--active'
             expect(encrypt_button.matches_css?(active_button_class, wait: 2)).to be(encrypt)
             expect(sign_button.matches_css?(active_button_class, wait: 2)).to be(sign)
@@ -709,8 +707,6 @@ RSpec.describe 'Ticket zoom', type: :system do
           within(:active_content) do
             all('a[data-type=emailReply]').last.click
             find('.articleNewEdit-body').send_keys('Test')
-
-            await_empty_ajax_queue
           end
         end
 
@@ -725,8 +721,6 @@ RSpec.describe 'Ticket zoom', type: :system do
           within(:active_content) do
             all('a[data-type=emailReply]').last.click
             find('.articleNewEdit-body').send_keys('Test')
-
-            await_empty_ajax_queue
 
             select new_group.name, from: 'group_id'
           end
@@ -883,8 +877,6 @@ RSpec.describe 'Ticket zoom', type: :system do
         find(:richtext).execute_script "this.innerHTML = \"#{ticket_article_body}\""
         find('.js-submit').click
       end
-
-      await_empty_ajax_queue
     end
 
     def forward
@@ -893,8 +885,6 @@ RSpec.describe 'Ticket zoom', type: :system do
         fill_in 'To', with: 'customer@example.com'
         find('.js-submit').click
       end
-
-      await_empty_ajax_queue
     end
 
     def images_identical?(image_a, image_b)
@@ -986,7 +976,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "ticket/zoom/#{ticket.id}"
         refresh # refresh to have assets generated for ticket
 
-        expect(page).to have_select('state_id', options: %w[new open closed])
+        expect(page).to have_select('state_id', options: %w[new open closed], wait: 10)
         expect(page).to have_no_select('priority_id')
         expect(page).to have_no_select('owner_id')
         expect(page).to have_no_css('div.tabsSidebar-tab[data-tab=customer]')
@@ -1119,11 +1109,10 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         # make sure ticket is done loading and change will be pushed via WS
         find(:active_ticket_article, ticket_article)
-        await_empty_ajax_queue
 
         ticket_note.update!(internal: false)
 
-        expect(page).to have_selector(:active_ticket_article, ticket_note)
+        expect(page).to have_selector(:active_ticket_article, ticket_note, wait: 10)
       end
     end
   end
@@ -1190,37 +1179,37 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'previous is not clickable for the first item' do
       open_nth_item(0)
 
-      expect { click '.pagination .previous' }.not_to change { current_url }
+      expect { click '.pagination .previous' }.not_to change { page.find('.content.active')[:id] }
     end
 
     it 'next is clickable for the first item' do
       open_nth_item(0)
 
-      expect { click '.pagination .next' }.to change { current_url }
+      expect { click '.pagination .next' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'previous is clickable for the middle item' do
       open_nth_item(1)
 
-      expect { click '.pagination .previous' }.to change { current_url }
+      expect { click '.pagination .previous' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'next is clickable for the middle item' do
       open_nth_item(1)
 
-      expect { click '.pagination .next' }.to change { current_url }
+      expect { click '.pagination .next' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'previous is clickable for the last item' do
       open_nth_item(2)
 
-      expect { click '.pagination .previous' }.to change { current_url }
+      expect { click '.pagination .previous' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'next is not clickable for the last item' do
       open_nth_item(2)
 
-      expect { click '.pagination .next' }.not_to change { current_url }
+      expect { click '.pagination .next' }.not_to change { page.find('.content.active')[:id] }
     end
 
     def open_nth_item(nth)
@@ -1243,8 +1232,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       visit "ticket/zoom/#{ticket_a.id}"
 
-      await_empty_ajax_queue
-
       visit 'ticket/view/all_unassigned'
     end
 
@@ -1252,7 +1239,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       within :active_content do
         click_on ticket_a.title
 
-        expect(page).to have_css('.pagination-counter')
+        expect(page).to have_css('.pagination-counter', wait: 10)
       end
     end
 
@@ -1262,7 +1249,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit 'dashboard'
         visit "ticket/zoom/#{ticket_a.id}"
 
-        expect(page).to have_css('.pagination-counter')
+        expect(page).to have_css('.pagination-counter', wait: 10)
       end
     end
   end
@@ -1293,7 +1280,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       # wait for article to be added to the page
       expect(page).to have_css('.ticket-article-item', count: 1)
-      await_empty_ajax_queue
 
       # create a on-the-fly article with attachment that will get pushed to open browser
       article1 = create(:ticket_article, ticket: ticket)
@@ -1310,7 +1296,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       # wait for article to be added to the page
       expect(page).to have_css('.ticket-article-item', count: 2, wait: 10)
-      await_empty_ajax_queue
 
       # click on forward of created article
       within :active_ticket_article, article1 do
@@ -1327,7 +1312,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       click '.js-submit'
 
       # wait for article to be added to the page
-      await_empty_ajax_queue
       expect(page).to have_css('.ticket-article-item', count: 3)
 
       # check if attachment was forwarded successfully
@@ -1376,7 +1360,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'not shown to customer' do
       visit "ticket/zoom/#{ticket.id}"
-      await_empty_ajax_queue
 
       within :active_content do
         expect(page).to have_no_css('.controls[data-name=pending_time]')
@@ -1389,7 +1372,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket.update(pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder'))
 
       visit "ticket/zoom/#{ticket.id}"
-      await_empty_ajax_queue
     end
 
     let(:ticket) { Ticket.first }
@@ -1436,7 +1418,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       ensure_websocket do
         visit "ticket/zoom/#{ticket.id}"
-        await_empty_ajax_queue
 
         within :active_ticket_article, article do
           expect(page).to have_css(%(a[href="#{url}"]))
@@ -1457,44 +1438,33 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
       end
 
+      def check_obscured(top: true, middle: true, bottom: true, scroll_y: 0)
+        expect(page).to have_text(ticket.title, wait: 10)
+        wait(5, interval: 0.2).until do
+          scroll_y != find('.ticketZoom').native.location.y
+        end
+        expect(page).to have_css("div#article-content-#{article_at_the_top.id}", obscured: top, wait: 10)
+        expect(page).to have_css("div#article-content-#{article_in_the_middle.id}", obscured: middle, wait: 10)
+        expect(page).to have_css("div#article-content-#{article_at_the_bottom.id}", obscured: bottom, wait: 10)
+        find('.ticketZoom').native.location.y
+      end
+
       it 'scrolls to given Article ID' do
         ensure_websocket do
-          visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
-          await_empty_ajax_queue
-          # workaround because browser scrolls in test initially to the bottom
-          # maybe because the articles are not present?!
-          refresh
+          visit "ticket/zoom/#{ticket.id}"
+          y = check_obscured(bottom: false)
 
           # scroll to article in the middle of the page
-          within :active_content do
-            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
-
-            expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
-            expect(find("div#article-content-#{article_in_the_middle.id}")).not_to be_obscured
-            expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
-          end
+          visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
+          y = check_obscured(middle: false, scroll_y: y)
 
           # scroll to article at the top of the page
           visit "ticket/zoom/#{ticket.id}/#{article_at_the_top.id}"
-          await_empty_ajax_queue
-          within :active_content do
-            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
-
-            expect(find("div#article-content-#{article_at_the_top.id}")).not_to be_obscured
-            expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
-            expect(find("div#article-content-#{article_at_the_bottom.id}")).to be_obscured
-          end
+          y = check_obscured(top: false, scroll_y: y)
 
           # scroll to article at the bottom of the page
           visit "ticket/zoom/#{ticket.id}/#{article_at_the_bottom.id}"
-          await_empty_ajax_queue
-          within :active_content do
-            find("div#article-content-#{article_in_the_middle.id}").in_fixed_position(wait: 0.5)
-
-            expect(find("div#article-content-#{article_at_the_top.id}")).to be_obscured
-            expect(find("div#article-content-#{article_in_the_middle.id}")).to be_obscured
-            expect(find("div#article-content-#{article_at_the_bottom.id}")).not_to be_obscured
-          end
+          check_obscured(bottom: false, scroll_y: y)
         end
       end
     end
@@ -1503,12 +1473,11 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'will properly show the "See more" link if you switch between the ticket and the dashboard on new articles' do
         ensure_websocket do
           visit "ticket/zoom/#{ticket.id}"
-          await_empty_ajax_queue
 
           visit 'dashboard'
           expect(page).to have_css("a.js-dashboardMenuItem[data-key='Dashboard'].is-active", wait: 10)
           article_id = create(:'ticket/article', ticket: ticket, body: "#{SecureRandom.uuid} #{"lorem ipsum\n" * 200}")
-          expect(page).to have_css('div.tasks a.is-modified', wait: 10)
+          expect(page).to have_css('div.tasks a.is-modified', wait: 30)
 
           visit "ticket/zoom/#{ticket.id}"
           within :active_content do
@@ -1533,7 +1502,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       visit "ticket/zoom/#{ticket.id}"
       find('.js-openDropdownMacro').click
       find(:macro, macro.id).click
-      await_empty_ajax_queue
 
       expect(ticket.reload.articles.last.body).to eq(macro_body)
       expect(ticket.reload.articles.last.content_type).to eq('text/html')
@@ -1598,7 +1566,6 @@ RSpec.describe 'Ticket zoom', type: :system do
         click_on 'Link issue'
         fill_in 'link', with: ENV['GITLAB_ISSUE_LINK']
         click_on 'Submit'
-        await_empty_ajax_queue
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1615,7 +1582,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         # delete issue
         click(".sidebar-git-issue-delete span[data-issue-id='#{ENV['GITLAB_ISSUE_LINK']}']")
-        await_empty_ajax_queue
 
         content = find('.sidebar[data-tab=gitlab] .sidebar-content')
         expect(content).to have_text('No linked issues')
@@ -1658,7 +1624,6 @@ RSpec.describe 'Ticket zoom', type: :system do
         click_on 'Link issue'
         fill_in 'link', with: ENV['GITHUB_ISSUE_LINK']
         click_on 'Submit'
-        await_empty_ajax_queue
 
         # verify issue
         content = find('.sidebar-git-issue-content')
@@ -1675,7 +1640,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         # delete issue
         click(".sidebar-git-issue-delete span[data-issue-id='#{ENV['GITHUB_ISSUE_LINK']}']")
-        await_empty_ajax_queue
 
         content = find('.sidebar[data-tab=github] .sidebar-content')
         expect(content).to have_text('No linked issues')
@@ -1707,7 +1671,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text(ticket_open.title, wait: 20)
 
       visit "#ticket/zoom/#{ticket_open.id}"
-      click '.tabsSidebar-tab[data-tab=customer]'
       click '.user-tickets[data-type=closed]'
       expect(page).to have_text(ticket_closed.title, wait: 20)
     end

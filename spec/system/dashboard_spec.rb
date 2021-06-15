@@ -30,7 +30,6 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
       fill_in 'Lastname', with: 'Braun'
       fill_in 'Email', with: 'nick.braun@zammad.org'
       click_on 'Invite'
-      await_empty_ajax_queue
       expect(User.find_by(firstname: 'Nick').roles).to eq([Role.find_by(name: 'Public')])
     end
   end
@@ -42,6 +41,7 @@ RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
 
     before do
       ensure_websocket(check_if_pinged: false)
+      sleep 3 # fast relog causes raise conditions in websocket server
     end
 
     context 'Logout by frontend plugin - Default', authenticated_as: :authenticate do
