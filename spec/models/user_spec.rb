@@ -877,9 +877,9 @@ RSpec.describe User, type: :model do
                      'Taskbar'                            => { 'user_id' => 1 },
                      'Sla'                                => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'UserDevice'                         => { 'user_id' => 1 },
-                     'Chat::Message'                      => { 'created_by_id' => 0 },
+                     'Chat::Message'                      => { 'created_by_id' => 1 },
                      'Chat::Agent'                        => { 'created_by_id' => 1, 'updated_by_id' => 1 },
-                     'Chat::Session'                      => { 'user_id' => 0, 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Chat::Session'                      => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Tag'                                => { 'created_by_id' => 0 },
                      'Karma::User'                        => { 'user_id' => 0 },
                      'Karma::ActivityLog'                 => { 'user_id' => 1 },
@@ -928,6 +928,9 @@ RSpec.describe User, type: :model do
       mention             = create(:mention, mentionable: create(:ticket), user: user)
       mention_created_by  = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
       user_created_by     = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
+      chat_session        = create(:'chat/session', user: user)
+      chat_message        = create(:'chat/message', chat_session: chat_session)
+      chat_message2       = create(:'chat/message', chat_session: chat_session, created_by: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -968,6 +971,9 @@ RSpec.describe User, type: :model do
       expect { mention.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(mention_created_by.reload.created_by_id).not_to eq(user.id)
       expect(overview.reload.user_ids).to eq([])
+      expect { chat_session.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { chat_message.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { chat_message2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
 
       # move ownership objects
       expect { group.reload }.to change(group, :created_by_id).to(1)
