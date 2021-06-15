@@ -2446,6 +2446,7 @@ input.has-error {
     .navigation.is-hovered ~ &,
     .navigation:active ~ & {
       transform: translateX(#{$mobileNavigationWidthOpen - $mobileNavigationWidth});
+      @include rtl(transform, translateX(-#{$mobileNavigationWidthOpen - $mobileNavigationWidth}));
     }
   }
 }
