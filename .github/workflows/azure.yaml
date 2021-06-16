@@ -31,7 +31,7 @@ jobs:
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
     - name: Cloning Dockerfile repo
-      run: git clone https://github.com/heber-crv/zammad-docker.git
+      run: git clone https://github.com/joelchan24/zammad-docker.git
 #    - name: Changing to repo directory
 #      run: cd zammad-docker
     - name: Showing entrypoint
