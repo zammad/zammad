@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zammad-deployment
+  labels:
+    app: zammad
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: zammad
+  template:
+    metadata:
+      labels:
+        app: zammad
+    spec:
+      containers:
+      - name: zammad
+        image: zammadjoel.azurecr.io/zammadjoel:7ccc66d7e407f4108b2c7dc77f9659b1dddc911a
+        ports:
+        - containerPort: 80

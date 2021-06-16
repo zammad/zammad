@@ -1,0 +1,78 @@
+on: [push,workflow_dispatch]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  REGISTRY_NAME: zammadjoel
+  CLUSTER_NAME: cluster1
+  CLUSTER_RESOURCE_GROUP: joel-chan
+  NAMESPACE: default
+  SECRET: zpswd
+  APP_NAME: zammad
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    #- uses: actions/checkout@main
+    - uses: actions/checkout@master
+    
+    # Connect to Azure Container Registry (ACR)
+    - name: Connecting to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Checkout code
+      uses: actions/checkout@master
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
+    - name: Cloning Dockerfile repo
+      run: git clone https://github.com/heber-crv/zammad-docker.git
+#    - name: Changing to repo directory
+#      run: cd zammad-docker
+    - name: Showing entrypoint
+      run: cat zammad-docker/docker-entrypoint.sh
+
+    # Container build and push to a Azure Container Registry (ACR)
+    - name: Container build and push to a Azure Container Registry (ACR)
+      run: |
+        cd zammad-docker
+        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+    
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - name: Set the target Azure Kubernetes Service (AKS) cluster
+      uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+   
+    # Create namespace if doesn't exist
+    #- run: |
+        #kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+    
+    # Create image pull secret for ACR
+    - name: Create image pull secret for ACR
+      uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        force: true
+    
+    - name: Deploying image to AKS cluster
+      uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          deployment.yml
+          service.yml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          #${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:5243e2c2d8bff64781f7a559f5fa8c462b1f9cf9
+        imagepullsecrets: |
+          ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}

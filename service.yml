@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zammad-deployment
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: test
+      port: 8080
+      targetPort: 8080
+    - name: sql
+      port: 5432
+      targetPort: 5432
+  type: LoadBalancer
+  selector:
+    app: zammad
