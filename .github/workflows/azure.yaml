@@ -1,4 +1,7 @@
-on: [push,workflow_dispatch]
+on: 
+  push:
+    branches:
+    - develop
 
 # Environment variables available to all jobs and steps in this workflow
 env:
