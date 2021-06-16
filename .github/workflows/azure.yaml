@@ -75,7 +75,7 @@ jobs:
           service.yml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-          #${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:bf8506639d3b5067b8b9ca407bb395eb8208228a
+          #${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
         imagepullsecrets: |
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
