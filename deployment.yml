@@ -16,7 +16,7 @@ spec:
         app: zammad
     spec:
       containers:
-      - name: joelchan24
-        image: joelchan24/zammad
+      - name: zammad
+        image: zammadjoel.azurecr.io/zammad:latest
         ports:
         - containerPort: 80
