@@ -8,26 +8,7 @@ class App.WidgetMention extends App.Controller
 
   constructor: ->
     super
-
-    @mentions = []
-    App.Event.bind('Mention:create Mention:destroy',
-      (data) =>
-        return if !data
-        return if data.mentionable_type isnt 'Ticket'
-        return if data.mentionable_id isnt @object.id
-        @fetch()
-    )
     @render()
-
-  fetch: =>
-    App.Mention.fetchMentionable(
-      'Ticket',
-      @object.id,
-      (data) =>
-        @mentions = data.record_ids
-        App.Collection.loadAssets(data.assets)
-        @render()
-    )
 
   reload: (mentions) =>
     @mentions = mentions
