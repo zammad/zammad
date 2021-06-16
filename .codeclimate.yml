@@ -1,29 +1,5 @@
 ---
 version: "2"
-plugins:
-  brakeman:
-    enabled: true
-  bundler-audit:
-    enabled: true
-  csslint:
-    enabled: true
-  coffeelint:
-    enabled: true
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - ruby
-      - javascript
-  eslint:
-    enabled: true
-  fixme:
-    enabled: true
-  phpmd:
-    enabled: false
-  rubocop:
-    enabled: true
-    channel: rubocop-1-10
 exclude_patterns:
   # Bundled thirdparty asset files
   - "app/assets/javascripts/app/lib/**/*.js"
