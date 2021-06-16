@@ -18,13 +18,10 @@ class OtrsImportTest < ActiveSupport::TestCase
   # check settings items
   test 'check settings' do
     http      = nil
-    system_id = nil
-    if ENV['IMPORT_OTRS_ENDPOINT'] =~ %r{^(http|https)://((.+?)\..+?)/}
-      http      = $1
-      system_id = $3
-      system_id.gsub!(/[A-z]/, '') # strip chars
+    if ENV['IMPORT_OTRS_ENDPOINT'] =~ %r{^(http|https)://}
+      http = $1
     end
-    assert_equal( system_id, Setting.get('system_id'), 'system_id' )
+    assert( Setting.get('system_id'), 'system_id' )
     assert_equal( http, Setting.get('http_type'), 'http_type' )
     assert_equal( 'Example Company', Setting.get('organization'), 'organization' )
   end
