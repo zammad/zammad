@@ -1,4 +1,5 @@
 require 'yaml'
+require 'resolv'
 
 cnf = YAML.load_file(File.join(__dir__, '../../config/database/database.yml'))
 
@@ -6,6 +7,7 @@ cnf.delete('default')
 
 database = ENV['ENFORCE_DB_SERVICE']
 
+# Lookup in /etc/hosts first: gitlab uses that if FF_NETWORK_PER_BUILD is not set.
 if !database
   hostsfile = '/etc/hosts'
   database  = %w[postgresql mysql].shuffle.find do |possible_database|
@@ -13,7 +15,21 @@ if !database
   end
 end
 
-raise "Can't find any supported database in #{hostsfile}." if database.nil?
+# Lookup via DNS if needed: gitlab uses that if FF_NETWORK_PER_BUILD is enabled.
+if !database
+  dns = Resolv::DNS.new
+  dns.timeouts = 3
+  database = %w[postgresql mysql].shuffle.find do |possible_database|
+    # Perform a lookup of the database host to check if it is configured as a service.
+    if dns.getaddress possible_database
+      next possible_database
+    end
+  rescue Resolv::ResolvError
+    # Ignore DNS lookup errors
+  end
+end
+
+raise "Can't find any supported database." if database.nil?
 
 puts "NOTICE: Found/selected #{database} Database Service"
 
