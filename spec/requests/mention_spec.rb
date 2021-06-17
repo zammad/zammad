@@ -56,6 +56,18 @@ RSpec.describe 'Mention', type: :request, authenticated_as: -> { user } do
     it 'updates mention count' do
       expect { post '/api/v1/mentions', params: params, as: :json }.to change(Mention, :count).from(0).to(1)
     end
+
+    describe 'when agent with read permissions' do
+      before do
+        user.group_names_access_map = {
+          ticket1.group.name => 'read',
+        }
+      end
+
+      it 'updates mention count of read only agent' do
+        expect { post '/api/v1/mentions', params: params, as: :json }.to change(Mention, :count).from(0).to(1)
+      end
+    end
   end
 
   describe 'DELETE /api/v1/mentions/:id' do
@@ -69,6 +81,18 @@ RSpec.describe 'Mention', type: :request, authenticated_as: -> { user } do
 
     it 'clears mention count' do
       expect { delete "/api/v1/mentions/#{mention.id}", params: {}, as: :json }.to change(Mention, :count).from(1).to(0)
+    end
+
+    describe 'when agent with read permissions' do
+      before do
+        user.group_names_access_map = {
+          ticket1.group.name => 'read',
+        }
+      end
+
+      it 'clears mention count for read only agent' do
+        expect { delete "/api/v1/mentions/#{mention.id}", params: {}, as: :json }.to change(Mention, :count).from(1).to(0)
+      end
     end
   end
 end

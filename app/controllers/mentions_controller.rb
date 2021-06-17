@@ -63,7 +63,7 @@ class MentionsController < ApplicationController
     ensure_mentionable_type!
 
     object = params[:mentionable_type].constantize.find(params[:mentionable_id])
-    authorize!(object, :update?)
+    authorize!(object, :agent_read_access?)
     object
   end
 
