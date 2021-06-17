@@ -16,7 +16,10 @@ function get_backup_date () {
 }
 
 function delete_old_backups () {
-  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -delete
+  # Use -mmin to clean up files as -mtime (days) is too unprecise.
+  #   However, add +60 minutes to allow for the backup script run time, so that
+  #   backups created a few minutes more than a day ago are not already purged.
+  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)) -delete
 }
 
 function get_db_credentials () {
