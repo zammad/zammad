@@ -49,6 +49,14 @@ function backup_files () {
   ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${BACKUP_DIR}/latest_zammad_files.tar.gz
 }
 
+function create_pgpassfile() {
+  export PGPASSFILE=$(mktemp)
+    chmod 600 "$PGPASSFILE"
+    cat <<EOT > "$PGPASSFILE"
+*:*:${DB_NAME}:${DB_USER}:${DB_PASS}
+EOT
+}
+
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "creating mysql backup..."
@@ -57,14 +65,9 @@ function backup_db () {
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
 
-    export PGPASSFILE=$(mktemp)
-    chmod 600 "$PGPASSFILE"
-    cat <<EOT > "$PGPASSFILE"
-*:*:${DB_NAME}:${DB_USER}:${DB_PASS}
-EOT
+    create_pgpassfile
 
-    PGPASSWORD="${DB_PASS}" pg_dump \
-        --dbname "${DB_NAME}" \
+    pg_dump --dbname "${DB_NAME}" \
         --username "${DB_USER}" \
         ${DB_HOST:+--host $DB_HOST} \
         ${DB_PORT:+--port $DB_PORT} \
@@ -208,8 +211,14 @@ function restore_zammad () {
     fi
 
     echo "# Restoring PostgreSQL DB"
+
+    create_pgpassfile
+
     zcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz \
       | psql ${DB_HOST:+--host $DB_HOST} ${DB_PORT:+--port $DB_PORT} ${DB_USER:+--username $DB_USER} --dbname ${DB_NAME}
+
+    rm "$PGPASSFILE"
+
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "# Restoring MySQL DB"
     zcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
