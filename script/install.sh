@@ -7,7 +7,7 @@ DBUSER=zammad
 
 function check_requirements() {
     items="git useradd sudo getent curl bash gcc make svn apg"
-    for item in $items 
+    for item in $items
     do
         which $item > /dev/null
         if [ $? -ne 0 ]; then
@@ -37,7 +37,7 @@ check_os
 #
 # @TODO Should the mysql user be created?
 # @TODO Install Elasticsearch?
-# @TODO Should the script create a VirtualHost or a config file to include for apache/nginx? 
+# @TODO Should the script create a VirtualHost or a config file to include for apache/nginx?
 #
 
 #
@@ -82,7 +82,7 @@ sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && gem install rails --no-ri --no-r
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && bundle install --jobs 8'
 
 DBPASS=$(apg -x8|head -1)
-echo Password $DBPASS 
+echo Password $DBPASS
 mysql -e "GRANT ALL ON ${DBNAME}.* to '${DBUSER}'@'localhost' IDENTIFIED BY '$DBPASS'";
 sudo -u $USER -H cp ${HOMEDIR}/zammad/config/database.yml.dist ${HOMEDIR}/zammad/config/database.yml
 sudo -u $USER -H sed -i s/some_pass/${DBPASS}/g  ${HOMEDIR}/zammad/config/database.yml
@@ -97,10 +97,9 @@ sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake db:mig
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake db:seed'
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake assets:precompile'
 
-cp "${HOMEDIR}/zammad/script/init.d/zammad /etc/init.d/zammad"
+cp "${HOMEDIR}/zammad/script/init.d/zammad" /etc/init.d/zammad
 chmod +x /etc/init.d/zammad
 
 if [ "$OS" = "Debian" ]; then
   update-rc.d zammad defaults
 fi
-

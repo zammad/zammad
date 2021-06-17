@@ -13,6 +13,14 @@ rubocop:
     - bundle install -j $(nproc) --path vendor
     - bundle exec rubocop --parallel
 
+shellcheck:
+  <<: *template_pre
+  image: koalaman/shellcheck-alpine:stable
+  before_script:
+    - echo "Disable default before_script."
+  script:
+    - shellcheck -S error $(find . -name "*.sh" | grep -v "/vendor/")
+
 coffeelint:
   <<: *template_pre
   script:
