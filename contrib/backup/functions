@@ -55,6 +55,7 @@ function create_pgpassfile() {
     cat <<EOT > "$PGPASSFILE"
 *:*:${DB_NAME}:${DB_USER}:${DB_PASS}
 EOT
+  trap 'rm "$PGPASSFILE"' EXIT
 }
 
 function backup_db () {
@@ -73,8 +74,6 @@ function backup_db () {
         ${DB_PORT:+--port $DB_PORT} \
         --no-privileges --no-owner --clean \
         --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
-
-    rm "$PGPASSFILE"
 
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
   else
@@ -216,8 +215,6 @@ function restore_zammad () {
 
     zcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz \
       | psql ${DB_HOST:+--host $DB_HOST} ${DB_PORT:+--port $DB_PORT} ${DB_USER:+--username $DB_USER} --dbname ${DB_NAME}
-
-    rm "$PGPASSFILE"
 
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "# Restoring MySQL DB"
