@@ -3,7 +3,6 @@
 # zammad restore script
 #
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
 if [ -f "${BACKUP_SCRIPT_PATH}/config" ]; then
