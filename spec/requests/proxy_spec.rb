@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Settings > System > Network', type: :request do
+RSpec.describe 'Manage > Settings > System > Network', type: :request, required_envs: %w[ZAMMAD_PROXY_USERNAME ZAMMAD_PROXY_PASSWORD] do
 
   let(:group) { create(:group) }
   let!(:admin) do

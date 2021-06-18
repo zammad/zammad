@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitLab', type: :request do
+RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
 
   let(:token) { 't0k3N' }
   let(:endpoint) { 'https://git.example.com/api/graphql' }

@@ -1,16 +1,9 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
-RSpec.describe 'Microsoft365 XOAUTH2', type: :integration do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Microsoft365 XOAUTH2', type: :integration, required_envs: %w[MICROSOFT365_REFRESH_TOKEN MICROSOFT365_CLIENT_ID MICROSOFT365_CLIENT_SECRET MICROSOFT365_USER] do # rubocop:disable RSpec/DescribeClass
   let(:channel) do
     create(:microsoft365_channel).tap(&:refresh_xoauth2!)
-  end
-
-  before do
-    required_envs = %w[MICROSOFT365_REFRESH_TOKEN MICROSOFT365_CLIENT_ID MICROSOFT365_CLIENT_SECRET MICROSOFT365_USER]
-    required_envs.each do |key|
-      skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
-    end
   end
 
   context 'when probing inbound' do
