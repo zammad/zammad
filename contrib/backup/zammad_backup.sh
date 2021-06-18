@@ -4,10 +4,12 @@
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
+# shellcheck disable=SC2046
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
 if [ -f "${BACKUP_SCRIPT_PATH}/config" ]; then
   # Ensure we're inside of our Backup-Script folder (see issue 2508)
+  # shellcheck disable=SC2164
   cd "${BACKUP_SCRIPT_PATH}"
 
   # import config

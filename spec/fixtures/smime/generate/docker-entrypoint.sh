@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Zammad S/MIME test certificate generation"
 
@@ -79,6 +79,7 @@ do
 done
 
 echo "Generating from CA chain"
+# shellcheck disable=SC2043
 for EMAIL_ADDRESS in chain@example.com
 do
   if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]]

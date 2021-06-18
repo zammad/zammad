@@ -22,7 +22,8 @@ function check_os()
     # Debian
     if [ -f /etc/debian_version ]; then
         OS=Debian
-        local MAJOR=$(cut -d. /etc/debian_version -f1)
+        local MAJOR
+        MAJOR=$(cut -d. /etc/debian_version -f1)
         if [ $MAJOR -lt 7 ]; then
             echo Please check the supported operating systems
             exit 1
@@ -54,9 +55,9 @@ fi
 HOMEDIR=$(getent passwd $USER | cut -d: -f 6)
 GROUP=$(id -gn $USER)
 
-cd "${HOMEDIR}"
+cd "${HOMEDIR}" || exit 1
 sudo -u "${USER}" -H git clone $REPOURL zammad
-cd zammad
+cd zammad || exit 1
 LATEST=$(git tag --list|sort|tail -1)
 git checkout tags/"${LATEST}"
 chown -R "${USER}":"${GROUP}" .
