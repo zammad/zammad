@@ -3142,6 +3142,52 @@ test('check getRecipientArticle format', function() {
   verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
   deepEqual(verify, result)
 
+  // https://github.com/zammad/zammad/issues/2551
+  // If "From:" is local address and "Reply-To:" is available, use it
+
+  var article_customer = {
+    login: 'login',
+    firstname: 'article',
+    lastname: 'lastname',
+    email: 'article_customer@example.com',
+  }
+  var ticket_customer = {
+    login: 'login2',
+    firstname: 'ticket',
+    lastname: 'lastname',
+    email: 'ticket_customer@example.com',
+  }
+  ticket = {
+    customer: ticket_customer,
+  }
+  article = {
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: 'article lastname <article_customer@example.com>',
+    to: 'some group',
+    reply_to: 'asd@example.com',
+    message_id: 'message_id22',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  email_addresses = [{ email: 'article_customer@example.com'}]
+  result = {
+    to:          'asd@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id22',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type, email_addresses)
+  deepEqual(verify, result)
+
 });
 
 test("contentTypeCleanup", function() {
