@@ -1535,15 +1535,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'GitLab Integration', :integration, authenticated_as: :authenticate do
+  describe 'GitLab Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
-
-    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      required_envs = %w[GITLAB_ENDPOINT GITLAB_APITOKEN]
-      required_envs.each do |key|
-        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
-      end
-    end
 
     def authenticate
       Setting.set('gitlab_integration', true)
@@ -1593,15 +1586,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'GitHub Integration', :integration, authenticated_as: :authenticate do
+  describe 'GitHub Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
-
-    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      required_envs = %w[GITHUB_ENDPOINT GITHUB_APITOKEN]
-      required_envs.each do |key|
-        skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
-      end
-    end
 
     def authenticate
       Setting.set('github_integration', true)

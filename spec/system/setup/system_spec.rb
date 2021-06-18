@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false do
+RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false, required_envs: %w[MAILBOX_INIT] do
 
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)
@@ -13,9 +13,6 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
 
   it 'Setting up a new system' do
 
-    if !ENV['MAILBOX_INIT']
-      skip("NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'")
-    end
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Facebook, use_vcr: true, current_user_id: 1 do
+RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_ACCESS_TOKEN] do
 
   before do
     VCR.configure do |c|

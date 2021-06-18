@@ -1,14 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
-RSpec.describe GitLab, type: :integration do # rubocop:disable RSpec/FilePath
-
-  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    required_envs = %w[GITLAB_ENDPOINT GITLAB_APITOKEN]
-    required_envs.each do |key|
-      skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
-    end
-  end
+RSpec.describe GitLab, type: :integration, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do # rubocop:disable RSpec/FilePath
 
   let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
   let(:issue_data) do
