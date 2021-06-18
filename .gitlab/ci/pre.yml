@@ -19,7 +19,7 @@ shellcheck:
   before_script:
     - echo "Disable default before_script."
   script:
-    - shellcheck -S error $(find . -name "*.sh" | grep -v "/vendor/")
+    - shellcheck -S warning $(find . -name "*.sh" | grep -v "/vendor/")
 
 coffeelint:
   <<: *template_pre
