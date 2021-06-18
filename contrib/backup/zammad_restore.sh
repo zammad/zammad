@@ -3,6 +3,7 @@
 # zammad restore script
 #
 
+# shellcheck disable=SC2046
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
 if [ -f "${BACKUP_SCRIPT_PATH}/config" ]; then

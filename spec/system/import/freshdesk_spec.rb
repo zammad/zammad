@@ -2,14 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_as: false do
-  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    required_envs = %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY]
-    required_envs.each do |key|
-      skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
-    end
-  end
-
+RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_as: false, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY] do
   describe 'fields validation', :use_vcr do
     before do
       visit '#import'

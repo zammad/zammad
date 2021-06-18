@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Facebook, use_vcr: true do
+RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEBOOK_ADMIN_ACCESS_TOKEN] do
 
   before do
     VCR.configure do |c|

@@ -4,19 +4,8 @@ on:
   pull_request
 
 jobs:
-  lint-bash-scripts:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Lint Bash scripts
-        uses: docker://koalaman/shellcheck-alpine:v0.7.0
-        with:
-          args: .github/lint-scripts.sh
-
   ci:
     runs-on: ubuntu-latest
-    needs: lint-bash-scripts
     services:
       mysql:
         image: mysql:5
