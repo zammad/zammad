@@ -1253,7 +1253,7 @@ class App.Utils
 
       # sender is local
       if senderIsLocal
-        articleNew.to = article.to
+        articleNew.to = article.reply_to || article.to
 
       # sender is agent - sent via system
       else if article.sender.name is 'Agent' && article_created_by_email && article.from && article.from.toString().toLowerCase().match(article_created_by_email) && !recipientIsLocal
