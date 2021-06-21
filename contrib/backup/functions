@@ -50,7 +50,8 @@ function backup_files () {
 }
 
 function create_pgpassfile() {
-  export PGPASSFILE=$(mktemp)
+  PGPASSFILE=$(mktemp)
+  export PGPASSFILE
     chmod 600 "$PGPASSFILE"
     cat <<EOT > "$PGPASSFILE"
 *:*:${DB_NAME}:${DB_USER}:${DB_PASS}
