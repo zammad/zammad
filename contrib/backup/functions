@@ -72,7 +72,7 @@ function backup_db () {
         --username "${DB_USER}" \
         ${DB_HOST:+--host $DB_HOST} \
         ${DB_PORT:+--port $DB_PORT} \
-        --no-privileges --no-owner --clean \
+        --no-privileges --no-owner \
         --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
 
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
