@@ -342,3 +342,6 @@ Zammad/ExistsResetColumnInformation:
   Include:
     - "db/migrate/*.rb"
     - "**/db/addon/**/*.rb"
+  Exclude:
+    - 'db/migrate/201*_*.rb'
+    - 'db/migrate/2020*_*.rb'
