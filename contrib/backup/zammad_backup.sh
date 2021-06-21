@@ -3,7 +3,6 @@
 # zammad backup script
 #
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 # shellcheck disable=SC2046
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
