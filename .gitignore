@@ -13,6 +13,9 @@
 # database (copy from config/database/database.yml, or use `rails bs:init`)
 /config/database.yml
 
+# local backup config file
+/contrib/backup/config
+
 # Third-Party ------------------------------------------------------------------
 # The config files / dev tools listed below are optional
 # and may not be present on most users' machines
