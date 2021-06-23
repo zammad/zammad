@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'mixin/rails_logger'
-require_dependency 'mixin/start_finish_logger'
-
 class Sequencer
   class State
     include ::Mixin::RailsLogger
@@ -166,7 +163,7 @@ class Sequencer
     #
     # @return [Hash{Symbol => Object}]
     def to_h
-      available.map { |identifier| [identifier, @values[identifier]] }.to_h
+      available.index_with { |identifier| @values[identifier] }
     end
 
     private

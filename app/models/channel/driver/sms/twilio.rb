@@ -21,7 +21,7 @@ class Channel::Driver::Sms::Twilio
           body: attr[:message],
         )
 
-        raise result.error_message if result.error_code.positive?
+        raise result.error_message if result&.error_code&.positive?
       end
 
       true

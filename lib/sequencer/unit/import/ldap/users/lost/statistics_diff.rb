@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'sequencer/unit/import/common/model/statistics/mixin/empty_diff'
-
 class Sequencer
   class Unit
     module Import

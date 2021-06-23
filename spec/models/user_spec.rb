@@ -1255,11 +1255,11 @@ RSpec.describe User, type: :model do
           user.save
         end
 
-        it 'updates CallerId record on touch/update (via Cti::CallerId.build)' do
+        it 'does not update CallerId record on touch/update (via Cti::CallerId.build)' do
+          expect(Cti::CallerId).to receive(:build).with(user)
           user.save
 
-          expect(Cti::CallerId).to receive(:build).with(user)
-
+          expect(Cti::CallerId).not_to receive(:build).with(user)
           user.touch
         end
 

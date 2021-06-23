@@ -14,7 +14,7 @@
 module Zammad
   class Application
     class Initializer
-      module DBPreflightCheck
+      module DbPreflightCheck
         module Base
           def check_version_compatibility
             return if Gem::Version.new(current_version) >= Gem::Version.new(min_version)

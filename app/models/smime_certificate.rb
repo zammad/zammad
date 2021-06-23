@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
-  validates :fingerprint, uniqueness: true
+  validates :fingerprint, uniqueness: { case_sensitive: true }
 
   def self.parse(raw)
     OpenSSL::X509::Certificate.new(raw.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))

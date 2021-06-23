@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Ticket
-          class OrganizationID < Sequencer::Unit::Common::Provider::Named
+          class OrganizationId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource, :organization_map
 

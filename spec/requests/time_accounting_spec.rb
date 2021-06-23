@@ -37,7 +37,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response['Content-Disposition']).to be_truthy
-        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"")
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xls")
         expect(response['Content-Type']).to eq('application/vnd.ms-excel')
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response['Content-Disposition']).to be_truthy
-        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"")
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xls")
         expect(response['Content-Type']).to eq('application/vnd.ms-excel')
       end
     end

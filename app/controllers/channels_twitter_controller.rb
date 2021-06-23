@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'channel/driver/twitter'
-
 class ChannelsTwitterController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, except: %i[webhook_incoming webhook_verify]
   skip_before_action :verify_csrf_token, only: %i[webhook_incoming webhook_verify]

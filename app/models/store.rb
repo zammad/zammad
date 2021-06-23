@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'store/object'
-require_dependency 'store/file'
-
 class Store < ApplicationModel
   PREFERENCES_SIZE_MAX = 2400
 

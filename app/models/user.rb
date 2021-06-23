@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'karma/user'
-
 class User < ApplicationModel
   include CanBeAuthorized
   include CanBeImported
@@ -14,7 +12,7 @@ class User < ApplicationModel
   include HasGroups
   include HasRoles
   include HasObjectManagerAttributesValidation
-  include HasTicketCreateScreenImpact
+  include ::HasTicketCreateScreenImpact
   include HasTaskbars
   include User::HasTicketCreateScreenImpact
   include User::Assets
@@ -461,7 +459,7 @@ returns
       end
       next if permission_ids.blank?
 
-      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
+      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
         role_ids.push role_id
       end
       total_role_ids.push role_ids
@@ -475,7 +473,7 @@ returns
       end
       condition += 'roles_users.role_id IN (?)'
     end
-    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
+    User.joins(:roles_users).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
   end
 
 =begin
@@ -686,11 +684,11 @@ returns
   def self.of_role(role, group_ids = nil)
     roles_ids = Role.where(active: true, name: role).map(&:id)
     if !group_ids
-      return User.where(active: true).joins(:users_roles).where('roles_users.role_id' => roles_ids).order('users.updated_at DESC')
+      return User.where(active: true).joins(:roles_users).where('roles_users.role_id' => roles_ids).order('users.updated_at DESC')
     end
 
     User.where(active: true)
-        .joins(:users_roles)
+        .joins(:roles_users)
         .joins(:users_groups)
         .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids).order('users.updated_at DESC')
   end

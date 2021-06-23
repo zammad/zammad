@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-%w[
-  .ruby-version
-  .rbenv-vars
-  tmp/restart.txt
-  tmp/caching-dev.txt
-].each { |path| Spring.watch(path) }
+Spring.watch(
+  '.ruby-version',
+  '.rbenv-vars',
+  'tmp/restart.txt',
+  'tmp/caching-dev.txt',
+)
 
 module Spring
   module Commands

@@ -102,7 +102,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
       end
     end
 
-    context 'group' do
+    describe 'group' do
 
       before do
         role.group_names_access_map = {
@@ -155,7 +155,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
           expect(result).not_to include(group_inactive.id)
         end
 
-        context 'single access' do
+        describe 'single access' do
 
           it 'lists access Group IDs' do
             result = subject.group_ids_access('read')
@@ -177,7 +177,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
           end
         end
 
-        context 'access list' do
+        describe 'access list' do
 
           it 'lists access Group IDs' do
             result = subject.group_ids_access(%w[read change])

@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 # rubocop:disable Rails/Output
-module FillDB
+module FillDb
 
 =begin
 
 fill your database with demo records
 
-  FillDB.load(
+  FillDb.load(
     agents: 50,
     customers: 1000,
     groups: 20,
@@ -18,10 +18,10 @@ fill your database with demo records
 
 or if you only want to create 100 tickets
 
-  FillDB.load(tickets: 100)
-  FillDB.load(agents: 20)
-  FillDB.load(overviews: 20)
-  FillDB.load(tickets: 10000)
+  FillDb.load(tickets: 100)
+  FillDb.load(agents: 20)
+  FillDb.load(overviews: 20)
+  FillDb.load(tickets: 10000)
 
 =end
 

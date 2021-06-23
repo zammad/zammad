@@ -7,8 +7,8 @@ FactoryBot.define do
     persistent { true }
     preferences do
 
-      permission_hash = permissions.each_with_object({}) do |permission, result|
-        result[permission] = true
+      permission_hash = permissions.index_with do |_permission|
+        true
       end
 
       {

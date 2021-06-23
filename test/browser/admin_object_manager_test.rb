@@ -680,7 +680,7 @@ class AdminObjectManagerTest < TestCase
       url:      browser_url,
     )
 
-    options = %w[äöü cat delete dog ß].map { |x| [x, "#{x.capitalize} Display"] }.to_h
+    options = %w[äöü cat delete dog ß].index_with { |x| "#{x.capitalize} Display" }
     options_no_dog = options.except('dog')
     options_no_dog_no_delete = options_no_dog.except('delete')
 

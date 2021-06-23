@@ -39,4 +39,10 @@ RSpec.configure do |config|
       ::ActiveJob::Base.queue_adapter = default_queue_adapter
     end
   end
+
+  # Workaround needed for behavior change introduced in Rails >= 5.2
+  # see: https://github.com/rails/rails/issues/37270
+  config.before(:each) do
+    (ActiveJob::Base.descendants << ActiveJob::Base).each(&:disable_test_adapter)
+  end
 end

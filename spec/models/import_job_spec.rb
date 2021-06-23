@@ -157,7 +157,7 @@ RSpec.describe ImportJob do
       expect do
         described_class.start_registered
       end.to change {
-        described_class.where.not(started_at: nil, finished_at: nil).count
+        described_class.where.not(started_at: nil).where.not(finished_at: nil).count
       }.by(1)
     end
   end

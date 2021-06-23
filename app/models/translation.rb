@@ -244,7 +244,7 @@ or
       return timestamp.to_s
     end
 
-    record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pluck(:target).first
+    record = Translation.where(locale: locale, source: 'timestamp', format: 'time').pick(:target)
     return timestamp.to_s if !record
 
     record.sub!('dd', format('%<day>02d', day: timestamp.day))
@@ -286,7 +286,7 @@ or
 
     return date.to_s if date.class != Date
 
-    record = Translation.where(locale: locale, source: 'date', format: 'time').pluck(:target).first
+    record = Translation.where(locale: locale, source: 'date', format: 'time').pick(:target)
     return date.to_s if !record
 
     record.sub!('dd', format('%<day>02d', day: date.day))

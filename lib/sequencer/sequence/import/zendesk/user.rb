@@ -14,7 +14,7 @@ class Sequencer
               'Import::Zendesk::User::Login',
               'Import::Zendesk::User::Password',
               'Import::Zendesk::User::ImageSource',
-              'Import::Zendesk::User::OrganizationID',
+              'Import::Zendesk::User::OrganizationId',
               'Common::ModelClass::User',
               'Import::Zendesk::User::Mapping',
               'Import::Zendesk::User::CustomFields',

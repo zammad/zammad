@@ -2,13 +2,15 @@
 
 Rails.application.routes.draw do
 
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   # app init
   match '/init', to: 'init#index', via: :get
   match '/app',  to: 'init#index', via: :get
 
   # just remember to delete public/index.html.
   root to: 'init#index', via: :get
-  root to: 'errors#routing', via: %i[post put delete options]
+  root to: 'errors#routing', via: %i[post put delete options], as: nil
 
   # load routes from external files
   dir = File.expand_path(__dir__)

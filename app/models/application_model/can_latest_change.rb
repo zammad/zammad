@@ -25,7 +25,7 @@ returns
       return updated_at if updated_at
 
       # if we do not have it cached, do lookup
-      updated_at = order(updated_at: :desc).limit(1).pluck(:updated_at).first
+      updated_at = order(updated_at: :desc).limit(1).pick(:updated_at)
 
       return if !updated_at
 

@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'sequencer/unit/common/mixin/dynamic_attribute'
-require_dependency 'sequencer/unit/import/common/model/mixin/log/context_identification_string'
-
 # This unit checks if an Sequencer state attribute (e.g. `mapped`) is blank.
 # Don't confuse it with e.g. 'Import::Common::Model::Skip::MissingMandatory::Base' which checks if an attribute key (e.g. mapped[:some_key]) is blank/missing.
 class Sequencer

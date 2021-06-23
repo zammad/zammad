@@ -72,6 +72,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
       deletable: deletable
     ).where.not(
       id:    record.id,
+    ).where.not(
       state: 'failed'
     ).exists?
   end

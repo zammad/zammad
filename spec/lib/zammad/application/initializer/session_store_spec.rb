@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
-require_dependency 'zammad/application/initializer/session_store'
 
 RSpec.describe Zammad::Application::Initializer::SessionStore do
   describe '.perform' do

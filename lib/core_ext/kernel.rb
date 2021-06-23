@@ -1,4 +1,3 @@
-# rubocop:disable Naming/FileName
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 if Kernel.respond_to?(:open_uri_original_open)
@@ -20,4 +19,3 @@ if Kernel.respond_to?(:open_uri_original_open)
     end
   end
 end
-# rubocop:enable Naming/FileName

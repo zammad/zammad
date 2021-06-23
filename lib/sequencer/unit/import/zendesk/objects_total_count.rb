@@ -12,8 +12,8 @@ class Sequencer
           private
 
           def statistics_diff
-            %i[Groups Users Organizations Tickets].each_with_object({}) do |object, stats|
-              stats[object] = empty_diff.merge(
+            %i[Groups Users Organizations Tickets].index_with do |object|
+              empty_diff.merge(
                 total: request(object).count!
               )
             end

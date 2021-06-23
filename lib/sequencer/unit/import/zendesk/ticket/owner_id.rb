@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Ticket
-          class OwnerID < Sequencer::Unit::Common::Provider::Named
+          class OwnerId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource, :user_map
 

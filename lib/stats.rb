@@ -41,7 +41,6 @@ returns
           raise "Dashboard::Stats backend #{stats_item.name} is not defined"
         end
 
-        require_dependency backend.to_filename
         backend = backend.constantize
 
         data[backend] = backend.generate(user)

@@ -25,9 +25,13 @@ require 'rspec/rails'
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
-# Checks for pending migration and applies them before tests are run.
-# If you are not using ActiveRecord, you can remove this line.
+# Checks if the database schema is up-to-date and re-creates the database if needed.
 ActiveRecord::Migration.maintain_test_schema!
+
+# Since maintain_test_schema! may provide an unseeded database, but tests rely on the seeding.
+if User.count.zero?
+  Rake::Task['db:seed'].execute
+end
 
 # make sure that all migrations of linked packages are executed
 Package::Migration.linked

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Ldap do
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     # required as 'let' to perform test based
     # expectations and reuse it in mock_initialization
@@ -29,7 +29,7 @@ RSpec.describe Ldap do
       )
     end
 
-    context 'bind credentials' do
+    describe 'bind credentials' do
 
       it 'uses given credentials' do
 
@@ -115,7 +115,7 @@ RSpec.describe Ldap do
       )
     end
 
-    context 'host_url' do
+    describe 'host_url' do
       it 'parses protocol and host' do
         config = {
           host_url: 'ldaps://localhost'
@@ -205,7 +205,7 @@ RSpec.describe Ldap do
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     # required as 'let' to perform test based
     # expectations and reuse it in 'let' instance

@@ -9,7 +9,7 @@ RSpec.shared_examples 'HasSearchIndexBackend' do |indexed_factory:|
       allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
     end
 
-    context 'record indexing' do
+    describe 'record indexing' do
 
       before do
         expect(subject).to be_present

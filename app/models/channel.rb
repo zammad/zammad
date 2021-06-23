@@ -315,12 +315,6 @@ load channel driver and return class
 =end
 
   def self.driver_class(adapter)
-    # we need to require each channel backend individually otherwise we get a
-    # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
-    # so we have to convert the channel name to the filename via Rails String.underscore
-    # http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
-    require_dependency "channel/driver/#{adapter.to_filename}"
-
     "::Channel::Driver::#{adapter.to_classname}".constantize
   end
 

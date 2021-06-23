@@ -298,7 +298,7 @@ remove whole data from index
     query_data = build_query(condition, options)
 
     if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
-      fields_for_highlight = fields.each_with_object({}) { |elem, memo| memo[elem] = {} }
+      fields_for_highlight = fields.index_with { |_elem| {} }
 
       query_data[:highlight] = { fields: fields_for_highlight }
     end

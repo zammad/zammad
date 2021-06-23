@@ -10,7 +10,7 @@ module HasTicketCreateScreenImpact
   def push_ticket_create_screen?
     return true if destroyed?
 
-    %w[id name active].any? do |attribute|
+    %w[id name active updated_at].any? do |attribute|
       saved_change_to_attribute?(attribute)
     end
   end

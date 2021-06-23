@@ -227,8 +227,6 @@ returns on fail
       # connection test
       result_inbound = {}
       begin
-        require_dependency "channel/driver/#{adapter.to_filename}"
-
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
@@ -330,8 +328,6 @@ returns on fail
 
       # test connection
       begin
-        require_dependency "channel/driver/#{adapter.to_filename}"
-
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         driver_instance.send(

@@ -6,7 +6,7 @@ class Authorization < ApplicationModel
   after_update  :delete_user_cache
   after_destroy :delete_user_cache
   validates     :user_id,  presence: true
-  validates     :uid,      presence: true, uniqueness: { scope: :provider }
+  validates     :uid,      presence: true, uniqueness: { case_sensitive: true, scope: :provider }
   validates     :provider, presence: true
 
   def self.find_from_hash(hash)

@@ -51,7 +51,8 @@ class ObjectManager::Attribute::Validation < ActiveModel::Validator
   def sanitize_memory_cache
     @model_attributes = nil
 
-    latest_cache_key = active_attributes_in_db.cache_key
+    active_attributes = active_attributes_in_db
+    latest_cache_key = active_attributes.cache_key + active_attributes.cache_version
     return if @previous_cache_key == latest_cache_key
 
     @previous_cache_key = latest_cache_key

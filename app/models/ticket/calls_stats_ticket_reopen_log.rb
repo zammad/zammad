@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'stats/ticket_reopen'
-
 # Adds new and updated tickets to the reopen log processing.
 module Ticket::CallsStatsTicketReopenLog
   extend ActiveSupport::Concern

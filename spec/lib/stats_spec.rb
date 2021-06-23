@@ -24,7 +24,7 @@ RSpec.describe Stats do
 
       it 'fails for unknown backend' do
         Setting.set('Stats::TicketWaitingTime', 'Stats::UNKNOWN')
-        expect { described_class.generate }.to raise_error(LoadError)
+        expect { described_class.generate }.to raise_error(NameError)
       end
     end
   end

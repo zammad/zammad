@@ -13,7 +13,7 @@
 module Zammad
   class Application
     class Initializer
-      module DBPreflightCheck
+      module DbPreflightCheck
         module Postgresql
           extend Base
 

@@ -1,28 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-# Rails autoload has some issues with same namend sub-classes
-# in the importer folder require AND simultaniuos requiring
-# of the same file in different threads so we need to
-# require them ourself
-require_dependency 'import/otrs/ticket'
-require_dependency 'import/otrs/ticket_factory'
-require_dependency 'import/otrs/article_customer'
-require_dependency 'import/otrs/article_customer_factory'
-require_dependency 'import/otrs/article'
-require_dependency 'import/otrs/article_factory'
-require_dependency 'import/otrs/article/attachment_factory'
-require_dependency 'import/otrs/history'
-require_dependency 'import/otrs/history_factory'
-require_dependency 'import/otrs/history/article'
-require_dependency 'import/otrs/history/move'
-require_dependency 'import/otrs/history/new_ticket'
-require_dependency 'import/otrs/history/priority_update'
-require_dependency 'import/otrs/history/state_update'
-require_dependency 'store'
-require_dependency 'store/object'
-require_dependency 'store/provider/db'
-require_dependency 'store/provider/file'
-
 module Import
   module OTRS
     extend Import::Helper

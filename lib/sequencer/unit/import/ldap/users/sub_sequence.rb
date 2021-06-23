@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'sequencer/unit/import/common/sub_sequence/mixin/import_job'
-
 class Sequencer
   class Unit
     module Import

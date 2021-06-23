@@ -23,7 +23,7 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       config = {}
@@ -62,7 +62,7 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     let(:initialization_config) do
       {

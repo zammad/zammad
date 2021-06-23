@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require_dependency 'external_credential/twitter'
-
 class Channel::Driver::Twitter
 
 =begin

@@ -45,7 +45,7 @@ variables:
 # as a key for the cache to avoid cache growth and incompatibilities between
 # the gems. Search hook: 2.6.6 (change it when updating the Ruby version too)
 cache:
-  key: "centos7ruby266"
+  key: "centos7ruby266rails6"
   paths:
     - vendor/ruby
     # ATTENTION: This should be a dedicated cache only used in the job "TODO".

@@ -6,7 +6,7 @@ class Sequencer
       module Zendesk
         module Ticket
           module Comment
-            class UserID < Sequencer::Unit::Base
+            class UserId < Sequencer::Unit::Base
 
               uses :resource, :user_map
               provides :user_id

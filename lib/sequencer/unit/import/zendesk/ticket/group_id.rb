@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Ticket
-          class GroupID < Sequencer::Unit::Common::Provider::Named
+          class GroupId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource, :group_map
 

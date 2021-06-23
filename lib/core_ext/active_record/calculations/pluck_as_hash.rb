@@ -18,7 +18,7 @@ module ActiveRecord
     def pluck_as_hash(*column_names)
       column_names.flatten! # flatten args in case array was given
 
-      klass.enforce_raw_sql_whitelist(column_names) # keep up deprection as in #pluck to ensure smooth Rails 6 transition
+      klass.disallow_raw_sql!(column_names) # validate parameters as in #pluck
 
       pluck(*arel_columns(column_names))
         .map { |elem| pluck_as_hash_map(column_names, elem) }

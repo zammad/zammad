@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Ticket
-          class StateID < Sequencer::Unit::Common::Provider::Named
+          class StateId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource
 

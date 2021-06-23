@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Common
-          class ArticleSenderID < Sequencer::Unit::Common::Provider::Named
+          class ArticleSenderId < Sequencer::Unit::Common::Provider::Named
 
             uses :user_id
 

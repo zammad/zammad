@@ -15,9 +15,7 @@ AllCops:
   NewCops: enable
   DisplayCopNames: true
   Exclude:
-    - 'bin/rails'
-    - 'bin/rake'
-    - 'bin/spring'
+    - 'bin/*'
     - 'db/schema.rb'
     - 'vendor/**/*'
     - 'node_modules/**/*'

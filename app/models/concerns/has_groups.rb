@@ -159,7 +159,7 @@ module HasGroups
   # @return [Hash<String=>String,Array<String>>] The given map
   def group_names_access_map=(name_access_map)
     groups_access_map_store(name_access_map) do |group_name|
-      Group.where(name: group_name).pluck(:id).first
+      Group.where(name: group_name).pick(:id)
     end
   end
 

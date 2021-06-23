@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Ticket
-          class PriorityID < Sequencer::Unit::Common::Provider::Named
+          class PriorityId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource
 

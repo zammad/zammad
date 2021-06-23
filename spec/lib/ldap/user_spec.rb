@@ -37,7 +37,7 @@ RSpec.describe Ldap::User do
   # expectations and reuse it in 'let' instance
   # as additional parameter
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       expect(Ldap).not_to receive(:new)
@@ -75,7 +75,7 @@ RSpec.describe Ldap::User do
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     let(:initialization_config) do
       {
@@ -204,7 +204,7 @@ RSpec.describe Ldap::User do
   # Each of these test cases depends on
   # sample TCP transmission data recorded with TCR,
   # stored in test/data/tcr_cassettes.
-  context 'on mocked LDAP connections' do
+  describe 'on mocked LDAP connections' do
     around do |example|
       cassette_name = example.description.gsub(%r{[^0-9A-Za-z.\-]+}, '_')
 
@@ -217,7 +217,7 @@ RSpec.describe Ldap::User do
       end
     end
 
-    describe '#attributes' do
+    describe 'attributes' do
       let(:subject) { described_class.new(config, ldap: ldap) }
       let(:ldap)    { Ldap.new(config) }
       let(:config) do

@@ -116,7 +116,7 @@ returns
 
   def self.with_permissions(keys)
     permission_ids = Role.permission_ids_by_name(keys)
-    Role.joins(:roles_permissions).joins(:permissions).where(
+    Role.joins(:permissions_roles).joins(:permissions).where(
       'permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true
     ).distinct()
   end
@@ -140,7 +140,7 @@ returns
 
   def with_permission?(keys)
     permission_ids = Role.permission_ids_by_name(keys)
-    return true if Role.joins(:roles_permissions).joins(:permissions).where(
+    return true if Role.joins(:permissions_roles).joins(:permissions).where(
       'roles.id = ? AND permissions_roles.permission_id IN (?) AND permissions.active = ?', id, permission_ids, true
     ).distinct().count.nonzero?
 

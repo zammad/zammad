@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Zendesk
         module Common
-          class ArticleTypeID < Sequencer::Unit::Common::Provider::Named
+          class ArticleTypeId < Sequencer::Unit::Common::Provider::Named
 
             uses :resource
 

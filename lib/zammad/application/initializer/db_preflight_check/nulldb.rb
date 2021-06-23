@@ -3,7 +3,7 @@
 module Zammad
   class Application
     class Initializer
-      module DBPreflightCheck
+      module DbPreflightCheck
         module Nulldb
           # no-op
           def self.perform; end

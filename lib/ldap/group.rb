@@ -3,13 +3,6 @@
 class Ldap
 
   # Class for handling LDAP Groups.
-  #  ATTENTION: Make sure to add the following lines to your code if accessing this class.
-  #  Otherwise Rails will autoload the Group model or might throw parameter errors if crearing
-  #  an ::Ldap instance.
-  #
-  # @example
-  #  require_dependency 'ldap'
-  #  require_dependency 'ldap/group'
   class Group
     include Ldap::FilterLookup
 
@@ -31,8 +24,6 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require_dependency 'ldap'
-    #  require_dependency 'ldap/group'
     #  ldap_group = Ldap::Group.new
     #
     # @return [nil]

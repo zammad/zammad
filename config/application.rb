@@ -15,14 +15,27 @@ Bundler.require(*Rails.groups)
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
+
+    Rails.autoloaders.each do |autoloader|
+      autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
+      autoloader.collapse          "#{config.root}/lib/omniauth"
+      autoloader.inflector.inflect(
+        'github_database' => 'GithubDatabase',
+        'otrs'            => 'OTRS',
+        'db'              => 'DB',
+      )
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+
+    # the framework and any gems in your application.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W[#{config.root}/lib]
+    config.add_autoload_paths_to_load_path = false
+    config.autoload_paths   += %W[#{config.root}/lib]
     config.eager_load_paths += %W[#{config.root}/lib]
 
     config.active_job.queue_adapter = :delayed_job
@@ -35,6 +48,9 @@ module Zammad
 
     # define cache store
     config.cache_store = :zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }
+
+    # Rails 6.1 returns false when the enqueuing is aborted.
+    config.active_job.return_false_on_aborted_enqueue = true
 
     # default preferences by permission
     config.preferences_default_by_permission = {

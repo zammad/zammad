@@ -5,6 +5,8 @@ class ApplicationJob < ActiveJob::Base
   include ApplicationJob::HasQueuingPriority
   include ApplicationJob::HasCustomLogging
 
+  ActiveJob::Logging::LogSubscriber.detach_from :active_job
+
   # Automatically retry jobs that encountered a deadlock
   # retry_on ActiveRecord::Deadlocked
 

@@ -12,6 +12,13 @@ namespace :zammad do
       # there is no way in rake to achieve that
       %w[db:drop:_unsafe db:create db:migrate db:seed].each do |task|
 
+        if task == 'db:drop:_unsafe'
+          # ensure all DB connections are closed before dropping the DB
+          # since Rails > 5.2 two connections are present (after `db:migrate`) that
+          # block dropping the DB for PostgreSQL
+          ActiveRecord::Base.connection_handler.connection_pools.each(&:disconnect!)
+        end
+
         $stdout = StringIO.new if task == 'db:migrate'.freeze
 
         Rake::Task[task].reenable
