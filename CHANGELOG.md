@@ -79,4 +79,3 @@
 - Mentions migration fails because of unexpected User notification_config matrix state. [3472](https://github.com/zammad/zammad/issues/3472) [[bug](https://github.com/zammad/zammad/labels/bug)] [[update](https://github.com/zammad/zammad/labels/update)]
 - Invalid elasticsearch(-oss) alternative dependency format breaks package installation/update for RPM based installations. [3470](https://github.com/zammad/zammad/issues/3470) [[bug](https://github.com/zammad/zammad/labels/bug)] [[update](https://github.com/zammad/zammad/labels/update)]
 - Startup fails with "Circular dependency detected while autoloading constant Tag::WritesToTicketHistory (RuntimeError)" [3469](https://github.com/zammad/zammad/issues/3469) [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[bug](https://github.com/zammad/zammad/labels/bug)]
-
