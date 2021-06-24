@@ -26,7 +26,7 @@ returns
     messages.each do |message|
 
       # lookup attributes of ref. objects (normally name and note)
-      message_attributes = message.search_index_attribute_lookup
+      message_attributes = message.search_index_attribute_lookup(include_references: false)
 
       attributes['messages'].push message_attributes
     end
