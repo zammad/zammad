@@ -26,7 +26,7 @@ class SessionTimeoutJob < ApplicationJob
     @active_session ||= {}
     return @active_session[user.id] if @active_session[user.id].present?
 
-    @active_session[user.id] = sessions.detect { |session| session.active? && session.user.id == user.id }
+    @active_session[user.id] = sessions.detect { |session| session.active? && session.user? && session.user.id == user.id }
   end
 
   def sessions

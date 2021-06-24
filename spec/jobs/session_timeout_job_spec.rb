@@ -181,4 +181,18 @@ RSpec.describe SessionTimeoutJob, type: :job do
       expect(PushMessages).not_to have_received(:send_to).with(user.id, { event: 'session_timeout' })
     end
   end
+
+  context 'without user in session' do
+    let(:user) { create(:admin) }
+
+    before do
+      Setting.set('session_timeout', { admin: 30.minutes.to_s })
+      create(:active_session, user: nil)
+    end
+
+    it 'does not crash' do
+      travel_to 1.hour.from_now
+      expect { described_class.perform_now }.not_to raise_error
+    end
+  end
 end
