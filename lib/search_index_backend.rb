@@ -261,8 +261,7 @@ remove whole data from index
     end
 
     index
-      .map { |local_index| search_by_index(query, local_index, options) }
-      .compact
+      .filter_map { |local_index| search_by_index(query, local_index, options) }
       .flatten(1)
   end
 

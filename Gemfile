@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '2.6.6'
+ruby '2.7.3'
 gem 'rails', '6.0.4'
 
 # core - rails additions
@@ -19,7 +19,7 @@ gem 'unicorn', group: :unicorn
 
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
-gem 'mysql2', '0.4.10', group: :mysql
+gem 'mysql2', group: :mysql
 gem 'pg', '0.21.0', group: :postgres
 
 # core - asynchrous task execution

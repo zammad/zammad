@@ -36,7 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.6
+          ruby-version: 2.7.3
       - name: Increase MySQL max_allowed_packet to 1GB (workaround for unknown/missing service option)
         run: |
           sudo apt-get install -y mysql-client

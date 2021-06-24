@@ -12,8 +12,7 @@ class Sequencer
             private
 
             def groups
-              remote_ids.map { |remote_id| group_map[remote_id] }
-                        .compact
+              remote_ids.filter_map { |remote_id| group_map[remote_id] }
                         .map { |local_id| ::Group.find(local_id) }
             end
 

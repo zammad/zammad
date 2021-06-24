@@ -309,7 +309,7 @@ returns
                    .map { |p| p.slice(:from, :to) }
                    .map(&:values).flatten
                    .pluck(:user_id).compact
-                   .map { |user_id| User.lookup(id: user_id) }.compact
+                   .filter_map { |user_id| User.lookup(id: user_id) }
                    .each.with_object({}) { |user, a| user.assets(a) }
 
       {

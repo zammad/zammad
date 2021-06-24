@@ -136,13 +136,13 @@ class Ldap
     end
 
     def group_user_dns_memberuid(entry)
-      entry[:memberuid].collect do |uid|
+      entry[:memberuid].filter_map do |uid|
         dn = nil
         @ldap.search("(&(uid=#{uid})#{Import::Ldap.config[:user_filter]})", attributes: %w[dn]) do |user|
           dn = user.dn
         end
         dn
-      end.compact
+      end
     end
   end
 end

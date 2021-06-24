@@ -377,7 +377,7 @@ returns
 
   def self.sender_attributes(from)
     if from.is_a?(HashWithIndifferentAccess)
-      from = SENDER_FIELDS.map { |f| from[f] }.compact
+      from = SENDER_FIELDS.filter_map { |f| from[f] }
                           .map(&:to_utf8).reject(&:blank?)
                           .partition { |address| address.match?(EMAIL_REGEX) }
                           .flatten.first
@@ -743,7 +743,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     end
 
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-    filename ||= file.header[:content_location].to_s.force_encoding('utf-8')
+    filename ||= file.header[:content_location].to_s.dup.force_encoding('utf-8')
 
     file_body = String.new(file.body.to_s)
 

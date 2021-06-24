@@ -83,7 +83,7 @@ class KnowledgeBase
 
     def all_ids_present?
       old_ids = scope.pluck(:id)
-      new_ids = @menu_items_data.map { |elem| elem[:id]&.to_i }.compact
+      new_ids = @menu_items_data.filter_map { |elem| elem[:id]&.to_i }
 
       old_ids.sort == new_ids.sort
     end

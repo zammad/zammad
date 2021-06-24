@@ -12,8 +12,7 @@ class LinksController < ApplicationController
     )
 
     linked_objects = links
-                     .map { |elem| elem['link_object']&.safe_constantize&.lookup(id: elem['link_object_value']) }
-                     .compact
+                     .filter_map { |elem| elem['link_object']&.safe_constantize&.lookup(id: elem['link_object_value']) }
 
     # return result
     render json: {

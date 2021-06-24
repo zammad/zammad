@@ -230,8 +230,7 @@ class Link < ApplicationModel
 
   def self.reduce_assets(assets, link_references)
     link_items = link_references
-                 .map { |elem| lookup_linked_object(elem) }
-                 .compact
+                 .filter_map { |elem| lookup_linked_object(elem) }
 
     ApplicationModel::CanAssets.reduce(link_items, assets)
   end

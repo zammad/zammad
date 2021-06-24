@@ -75,7 +75,7 @@ class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
 
     assets = object.assets({})
 
-    contents = object.translations.map(&:content).compact
+    contents = object.translations.filter_map(&:content)
     assets = ApplicationModel::CanAssets.reduce contents, assets
 
     render json: { id: object.id, assets: assets }, status: :created
