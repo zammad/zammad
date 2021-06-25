@@ -32,17 +32,6 @@ zeitwerk_check:
     - bundle exec rake zammad:db:init
     - bundle exec rails zeitwerk:check
 
-zeitwerk_check:
-  <<: *template_pre
-  extends:
-    - .tags_docker
-    - .services_postgresql
-  script:
-    - bundle install -j $(nproc) --path vendor
-    - bundle exec ruby script/build/database_config.rb
-    - bundle exec rake zammad:db:init
-    - bundle exec rails zeitwerk:check
-
 coffeelint:
   <<: *template_pre
   script:
