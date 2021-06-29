@@ -30,6 +30,16 @@ RSpec.shared_examples 'text modules' do |path:|
     end
   end
 
+  it 'does not break search on backspace' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select(1)
+      find(:richtext).send_keys('@@agen')
+      find(:richtext).send_keys(:backspace)
+      expect(page).to have_no_text('No results found')
+    end
+  end
+
   it 'supports group-dependent text modules' do
 
     # give user access to all groups including those created
