@@ -13,6 +13,7 @@
 .zammad-form .form-control {
   display: block;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .zammad-form .has-error .form-control {
