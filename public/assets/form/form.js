@@ -274,7 +274,6 @@ $(function() {
         _this.render()
         return true
       })
-      window.addEventListener('resize', _this.resizeModalBackdrop.bind(_this));
     }
   }
 
@@ -373,12 +372,6 @@ $(function() {
     }
   }
 
-  Plugin.prototype.resizeModalBackdrop = function() {
-    if (this.$modal) {
-      this.$modal.find('.js-zammad-form-modal-backdrop').css('height', this.$modal.prop('scrollHeight'));
-    }
-  }
-
   // render form
   Plugin.prototype.render = function(e) {
     var _this = this
@@ -442,7 +435,6 @@ $(function() {
     // append modal to body
     else {
       $('body').append($element)
-      this.resizeModalBackdrop()
     }
 
   }

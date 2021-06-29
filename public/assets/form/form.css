@@ -36,6 +36,7 @@
     text-align: center;
     z-index: 999;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .zammad-form-modal:before {
@@ -47,7 +48,7 @@
 }
 
 .zammad-form-modal-backdrop {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
