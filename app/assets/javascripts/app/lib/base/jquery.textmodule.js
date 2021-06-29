@@ -163,17 +163,17 @@
       e.keyCode = e.which = keyCode;
     }
 
-    // shift
-    if (e.keyCode === 16) return
+    // ignore invalid key codes if search is opened (issue #3637)
+    if (this.isActive() && e.keyCode === undefined) return
+
+    // skip on shift + arrow_keys
+    if (_.contains([16, 37, 38, 39, 40], e.keyCode)) return
 
     // enter
     if (e.keyCode === 13) {
       this.buffer = ''
       return
     }
-
-    // arrow keys
-    if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) return
 
     var newChar = String.fromCharCode(e.which)
 
