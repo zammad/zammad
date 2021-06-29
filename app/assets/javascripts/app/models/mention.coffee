@@ -14,6 +14,7 @@ class App.Mention extends App.Model
     group_ids[group_id] = 'read'
 
     App.Ajax.request(
+      id: 'mention_search_user'
       type: 'GET'
       url:  "#{@apiPath}/users/search"
       data:
