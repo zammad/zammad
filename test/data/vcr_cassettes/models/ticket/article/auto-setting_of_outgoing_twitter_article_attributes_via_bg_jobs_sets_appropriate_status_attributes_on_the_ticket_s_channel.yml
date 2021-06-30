@@ -5,15 +5,14 @@ http_interactions:
     uri: https://api.twitter.com/1.1/statuses/update.json
     body:
       encoding: UTF-8
-      string: in_reply_to_status_id&status=Today+the+weather+is+really...
+      string: in_reply_to_status_id&status=Est+velit+impedit+et.
     headers:
       User-Agent:
       - TwitterRubyGem/6.2.0
       Authorization:
-      - OAuth oauth_consumer_key="REDACTED", oauth_nonce="some",
-        oauth_signature="some%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1543795610", oauth_token="REDACTED",
-        oauth_version="1.0"
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="cd6d1468440a104ea1ac2133cef8d586",
+        oauth_signature="8HoiS4bnPp1XCjDkxCxdfz41UKg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1625050606", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
       Connection:
       - close
       Content-Type:
@@ -25,63 +24,58 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
-      Connection:
-      - close
-      Content-Disposition:
-      - attachment; filename=json.json
-      Content-Length:
-      - '2376'
-      Content-Type:
-      - application/json;charset=utf-8
       Date:
-      - Mon, 03 Dec 2018 00:06:49 GMT
-      Expires:
-      - Tue, 31 Mar 1981 05:00:00 GMT
-      Last-Modified:
-      - Mon, 03 Dec 2018 00:06:49 GMT
+      - Wed, 30 Jun 2021 10:56:46 GMT
       Pragma:
       - no-cache
       Server:
       - tsa_o
-      Set-Cookie:
-      - guest_id=v1%3A154379560980468557; Expires=Wed, 02 Dec 2020 00:06:49 GMT; Path=/;
-        Domain=.twitter.com
-      - lang=en; Path=/
-      - personalization_id="v1_I6QHv6WAcEJj8qqGADKl+Q=="; Expires=Wed, 02 Dec 2020
-        00:06:49 GMT; Path=/; Domain=.twitter.com
       Status:
       - 200 OK
-      Strict-Transport-Security:
-      - max-age=631138519
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A162505060653538428; Max-Age=63072000; Expires=Fri, 30 Jun 2023
+        10:56:46 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_T7XY6dskMmQ8qJKDn+Wc+A=="; Max-Age=63072000; Expires=Fri,
+        30 Jun 2023 10:56:46 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 30 Jun 2021 10:56:46 GMT
+      X-Transaction:
+      - d1fb7a6ad2c6f639
+      Content-Length:
+      - '1963'
       X-Access-Level:
       - read-write-directmessages
-      X-Connection-Hash:
-      - af3c2f4e24b6e6b940f913b84f710297
-      X-Content-Type-Options:
-      - nosniff
       X-Frame-Options:
       - SAMEORIGIN
-      X-Response-Time:
-      - '209'
-      X-Transaction:
-      - 00fb3d5400c70774
-      X-Tsa-Request-Body-Time:
+      X-Xss-Protection:
       - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
       X-Twitter-Response-Tags:
       - BouncerCompliant
-      X-Xss-Protection:
-      - 1; mode=block; report=https://twitter.com/i/xss_report
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - f461f8bc9fd52e807b41cd7adb55fa2ca1e50b7c5c7143e8cba87007e6e405ae
+      Connection:
+      - close
     body:
       encoding: UTF-8
-      string: '{"created_at":"Mon Dec 03 00:06:49 +0000 2018","id":1069382411899817990,"id_str":"1069382411899817990","text":"Today
-        the weather is really...","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
-        href=\"https:\/\/edenhofer.de\" rel=\"nofollow\"\u003eMartin Edenhofer\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":219826253,"id_str":"219826253","name":"Martin
-        Edenhofer","screen_name":"example","location":"","description":"Open Source
-        professional and geek. Also known as #OTRS and #Zammad inventor. ;)\r\nEntrepreneur
-        and Advisor for open source people in need.","url":"https:\/\/t.co\/whm4HTWdMw","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/whm4HTWdMw","expanded_url":"http:\/\/edenhofer.de\/","display_url":"edenhofer.de","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":311,"friends_count":314,"listed_count":16,"created_at":"Fri
-        Nov 26 00:19:49 +0000 2010","favourites_count":129,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":227,"lang":"en","contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":true,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/794220000450150401\/D-eFg44R_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/794220000450150401\/D-eFg44R_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/219826253\/1349428277","profile_link_color":"0084B4","profile_sidebar_border_color":"FFFFFF","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"regular"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
-    http_version: 
-  recorded_at: Mon, 03 Dec 2018 00:06:50 GMT
+      string: '{"created_at":"Wed Jun 30 10:56:46 +0000 2021","id":1410190569691922432,"id_str":"1410190569691922432","text":"Est
+        velit impedit et.","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1408314039470538752,"id_str":"1408314039470538752","name":"Zammad
+        Integration Test Account","screen_name":"ZammadTesting","location":"","description":"Zammad
+        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":145,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"fr"}'
+    http_version:
+  recorded_at: Wed, 30 Jun 2021 10:56:46 GMT
 recorded_with: VCR 4.0.0
