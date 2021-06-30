@@ -29,6 +29,7 @@ gem 'delayed_job_active_record'
 # core - websocket
 gem 'em-websocket'
 gem 'eventmachine'
+gem 'hiredis', require: false
 gem 'redis', require: false
 
 # core - password security
