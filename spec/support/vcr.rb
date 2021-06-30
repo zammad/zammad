@@ -83,6 +83,8 @@ RSpec.configure do |config|
       vcr_options.include?(:with_oauth_headers) ? :oauth_headers : nil
     ].compact
 
+    puts cassette_path.join(cassette_name)
+
     VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do |cassette|
       if vcr_options.include?(:time_sensitive) && !cassette.recording?
         travel_to(cassette.http_interactions.interactions.first.recorded_at)
