@@ -64,19 +64,45 @@
   name: registry.znuny.com/docker/zammad-imap:stable
   alias: mail
 
+.docker_redis: &docker_redis
+  name: redis:latest
+  alias: redis
+
  # service templates
 .services_mysql: &services_mysql
   services:
     - <<: *docker_mysql
 
+.services_mysql_redis: &services_mysql_redis
+  variables:
+    REDIS_URL: "redis://redis:6379"
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_redis
+
 .services_postgresql: &services_postgresql
   services:
     - <<: *docker_postgresql
+
+.services_postgresql_redis: &services_postgresql_redis
+  variables:
+    REDIS_URL: "redis://redis:6379"
+  services:
+    - <<: *docker_postgresql
+    - <<: *docker_redis
 
 .services_mysql_postgresql: &services_mysql_postgresql
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
+
+.services_mysql_postgresql_redis: &services_mysql_postgresql_redis
+  variables:
+    REDIS_URL: "redis://redis:6379"
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_redis
 
 .services_postgresql_selenium: &services_postgresql_selenium
   services:
@@ -106,6 +132,18 @@
     - <<: *docker_elasticsearch
     - <<: *docker_selenium
     - <<: *docker_imap
+
+.services_mysql_postgresql_elasticsearch_selenium_imap_redis: &services_mysql_postgresql_elasticsearch_selenium_imap_redis
+  variables:
+    ELASTICSEARCH_TAG: 'stable'
+    REDIS_URL: "redis://redis:6379"
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_elasticsearch
+    - <<: *docker_selenium
+    - <<: *docker_imap
+    - <<: *docker_redis
 
 # we need at least one job to store and include this template
 # but we skip this via 'only' -> 'variables' -> '$IGNORE'

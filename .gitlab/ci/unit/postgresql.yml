@@ -1,5 +1,5 @@
 unit:postgresql:
   stage: test
   extends:
-    - .services_postgresql
+    - .services_postgresql_redis
     - .template_unit

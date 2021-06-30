@@ -59,6 +59,6 @@ cache:
 # Initialize application env
 before_script:
   - source /etc/profile.d/rvm.sh
-  - FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
   - bundle install -j $(nproc) --path vendor
-  - bundle exec ruby script/build/database_config.rb
+  - bundle exec ruby .gitlab/configure_environment.rb
+  - source .gitlab/environment.env

@@ -1,11 +1,11 @@
 rspec:mysql:
   stage: test
   extends:
-    - .services_mysql
+    - .services_mysql_redis
     - .template_rspec
 
 rspec:mysql:db_reset:
   stage: test
   extends:
-    - .services_mysql
+    - .services_mysql_redis
     - .template_rspec_db_reset

@@ -49,6 +49,9 @@ module Zammad
     # define cache store
     config.cache_store = :zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }
 
+    # define websocket session store
+    config.websocket_session_store = ENV['REDIS_URL'] ? :redis : :file
+
     # Rails 6.1 returns false when the enqueuing is aborted.
     config.active_job.return_false_on_aborted_enqueue = true
 

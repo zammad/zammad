@@ -28,7 +28,8 @@ zeitwerk_check:
     - .services_postgresql
   script:
     - bundle install -j $(nproc) --path vendor
-    - bundle exec ruby script/build/database_config.rb
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
     - bundle exec rake zammad:db:init
     - bundle exec rails zeitwerk:check
 

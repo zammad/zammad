@@ -16,6 +16,9 @@
 # local backup config file
 /contrib/backup/config
 
+# Dynamic environment config for Gitlab
+/.gitlab/environment.env
+
 # Third-Party ------------------------------------------------------------------
 # The config files / dev tools listed below are optional
 # and may not be present on most users' machines

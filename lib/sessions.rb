@@ -2,14 +2,10 @@
 
 module Sessions
 
-  # get application root directory
-  @root = Dir.pwd.to_s
-  if @root.blank? || @root == '/'
-    @root = Rails.root
-  end
-
-  # get working directories
-  @path = "#{@root}/tmp/websocket_#{Rails.env}"
+  @store = case Rails.application.config.websocket_session_store
+           when :redis then Sessions::Store::Redis.new
+           else Sessions::Store::File.new
+           end
 
   # create global vars for threads
   @@client_threads = {} # rubocop:disable Style/ClassVars
@@ -27,10 +23,6 @@ returns
 =end
 
   def self.create(client_id, session, meta)
-    path         = "#{@path}/#{client_id}"
-    path_tmp     = "#{@path}/tmp/#{client_id}"
-    session_file = "#{path_tmp}/session"
-
     # collect session data
     meta[:last_ping] = Time.now.utc.to_i
     data = {
@@ -39,19 +31,7 @@ returns
     }
     content = data.to_json
 
-    # store session data in session file
-    FileUtils.mkpath path_tmp
-    File.open(session_file, 'wb') do |file|
-      file.write content
-    end
-
-    # destroy old session if needed
-    if File.exist?(path)
-      Sessions.destroy(client_id)
-    end
-
-    # move to destination directory
-    FileUtils.mv(path_tmp, path)
+    @store.create(client_id, content)
 
     # send update to browser
     return if !session || session['id'].blank?
@@ -78,23 +58,7 @@ returns
 =end
 
   def self.sessions
-    path = "#{@path}/"
-
-    # just make sure that spool path exists
-    if !File.exist?(path)
-      FileUtils.mkpath path
-    end
-
-    data = []
-    Dir.foreach(path) do |entry|
-      next if entry == '.'
-      next if entry == '..'
-      next if entry == 'tmp'
-      next if entry == 'spool'
-
-      data.push entry.to_s
-    end
-    data
+    @store.sessions
   end
 
 =begin
@@ -110,13 +74,7 @@ returns
 =end
 
   def self.session_exists?(client_id)
-    session_dir = "#{@path}/#{client_id}"
-    return false if !File.exist?(session_dir)
-
-    session_file = "#{session_dir}/session"
-    return false if !File.exist?(session_file)
-
-    true
+    @store.session_exists?(client_id)
   end
 
 =begin
@@ -175,8 +133,7 @@ returns
 =end
 
   def self.destroy(client_id)
-    path = "#{@path}/#{client_id}"
-    FileUtils.rm_rf path
+    @store.destroy(client_id)
   end
 
 =begin
@@ -219,13 +176,8 @@ returns
     data = get(client_id)
     return false if !data
 
-    path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.now.utc.to_i
-    File.open("#{path}/session", 'wb' ) do |file|
-      file.flock(File::LOCK_EX)
-      file.write data.to_json
-      file.flock(File::LOCK_UN)
-    end
+    @store.set(client_id, data)
     true
   end
 
@@ -250,41 +202,7 @@ returns
 =end
 
   def self.get(client_id)
-    session_dir  = "#{@path}/#{client_id}"
-    session_file = "#{session_dir}/session"
-    data         = nil
-
-    # if no session dir exists, session got destoried
-    if !File.exist?(session_dir)
-      destroy(client_id)
-      log('debug', "missing session directory #{session_dir} for '#{client_id}', remove session.")
-      return
-    end
-
-    # if only session file is missing, then it's an error behavior
-    if !File.exist?(session_file)
-      destroy(client_id)
-      log('error', "missing session file for '#{client_id}', remove session.")
-      return
-    end
-    begin
-      File.open(session_file, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        all = file.read
-        file.flock(File::LOCK_UN)
-        data_json = JSON.parse(all)
-        if data_json
-          data        = symbolize_keys(data_json)
-          data[:user] = data_json['user'] # for compat. reasons
-        end
-      end
-    rescue => e
-      log('error', e.inspect)
-      destroy(client_id)
-      log('error', "error in reading/parsing session file '#{session_file}', remove session.")
-      return
-    end
-    data
+    @store.get client_id
   end
 
 =begin
@@ -300,34 +218,7 @@ returns
 =end
 
   def self.send(client_id, data)
-    path     = "#{@path}/#{client_id}/"
-    filename = "send-#{Time.now.utc.to_f}"
-    location = "#{path}#{filename}"
-    check    = true
-    count    = 0
-    while check
-      if File.exist?(location)
-        count += 1
-        location = "#{path}#{filename}-#{count}"
-      else
-        check = false
-      end
-    end
-    return false if !File.directory? path
-
-    begin
-      File.open(location, 'wb') do |file|
-        file.flock(File::LOCK_EX)
-        file.write data.to_json
-        file.flock(File::LOCK_UN)
-        file.close
-      end
-    rescue => e
-      log('error', e.inspect)
-      log('error', "error in writing message file '#{location}'")
-      return false
-    end
-    true
+    @store.send_data(client_id, data)
   end
 
 =begin
@@ -431,43 +322,7 @@ returns
 =end
 
   def self.queue(client_id)
-    path  = "#{@path}/#{client_id}/"
-    data  = []
-    files = []
-    Dir.foreach(path) do |entry|
-      next if entry == '.'
-      next if entry == '..'
-
-      files.push entry
-    end
-    files.sort.each do |entry|
-      next if !entry.start_with?('send')
-
-      message = Sessions.queue_file_read(path, entry)
-      next if !message
-
-      data.push message
-    end
-    data
-  end
-
-  def self.queue_file_read(path, filename)
-    location = "#{path}#{filename}"
-    message = ''
-    File.open(location, 'rb') do |file|
-      file.flock(File::LOCK_EX)
-      message = file.read
-      file.flock(File::LOCK_UN)
-    end
-    File.delete(location)
-    return if message.blank?
-
-    begin
-      JSON.parse(message)
-    rescue => e
-      log('error', "can't parse queue message: #{message}, #{e.inspect}")
-      nil
-    end
+    @store.queue(client_id)
   end
 
 =begin
@@ -479,10 +334,7 @@ remove all session and spool messages
 =end
 
   def self.cleanup
-    return true if !File.exist?(@path)
-
-    FileUtils.rm_rf @path
-    true
+    @store.cleanup
   end
 
 =begin
@@ -495,18 +347,11 @@ create spool messages
 
   def self.spool_create(data)
     msg = JSON.generate(data)
-    path = "#{@path}/spool/"
-    FileUtils.mkpath path
     data = {
       msg:       msg,
       timestamp: Time.now.utc.to_i,
     }
-    file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
-    File.open(file_path, 'wb') do |file|
-      file.flock(File::LOCK_EX)
-      file.write data.to_json
-      file.flock(File::LOCK_UN)
-    end
+    @store.add_to_spool(data)
   end
 
 =begin
@@ -518,84 +363,66 @@ get spool messages
 =end
 
   def self.spool_list(timestamp, current_user_id)
-    path = "#{@path}/spool/"
-    FileUtils.mkpath path
-
     data      = []
     to_delete = []
-    files     = []
-    Dir.foreach(path) do |entry|
-      next if entry == '.'
-      next if entry == '..'
+    @store.each_spool do |message|
+      message_parsed = {}
+      begin
+        spool = JSON.parse(message)
+        message_parsed = JSON.parse(spool['msg'])
+      rescue => e
+        log('error', "can't parse spool message: #{message}, #{e.inspect}")
+        to_delete.push message
+        next
+      end
 
-      files.push entry
-    end
-    files.sort.each do |entry|
-      filename = "#{path}/#{entry}"
-      next if !File.exist?(filename)
+      # ignore message older then 48h
+      if spool['timestamp'] + (2 * 86_400) < Time.now.utc.to_i
+        to_delete.push message
+        next
+      end
 
-      File.open(filename, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        message = file.read
-        file.flock(File::LOCK_UN)
-        message_parsed = {}
-        begin
-          spool = JSON.parse(message)
-          message_parsed = JSON.parse(spool['msg'])
-        rescue => e
-          log('error', "can't parse spool message: #{message}, #{e.inspect}")
-          to_delete.push "#{path}/#{entry}"
-          next
-        end
+      # add spool attribute to push spool info to clients
+      message_parsed['spool'] = true
 
-        # ignore message older then 48h
-        if spool['timestamp'] + (2 * 86_400) < Time.now.utc.to_i
-          to_delete.push "#{path}/#{entry}"
-          next
-        end
+      # only send not already older messages
+      if !timestamp || timestamp < spool['timestamp']
 
-        # add spool attribute to push spool info to clients
-        message_parsed['spool'] = true
+        # spool to recipient list
+        if message_parsed['recipient'] && message_parsed['recipient']['user_id']
 
-        # only send not already older messages
-        if !timestamp || timestamp < spool['timestamp']
+          message_parsed['recipient']['user_id'].each do |user_id|
 
-          # spool to recipient list
-          if message_parsed['recipient'] && message_parsed['recipient']['user_id']
+            next if current_user_id != user_id
 
-            message_parsed['recipient']['user_id'].each do |user_id|
-
-              next if current_user_id != user_id
-
-              message = message_parsed
-              if message_parsed['event'] == 'broadcast'
-                message = message_parsed['data']
-              end
-
-              item = {
-                type:    'direct',
-                message: message,
-              }
-              data.push item
-            end
-
-          # spool to every client
-          else
             message = message_parsed
             if message_parsed['event'] == 'broadcast'
               message = message_parsed['data']
             end
+
             item = {
-              type:    'broadcast',
+              type:    'direct',
               message: message,
             }
             data.push item
           end
+
+        # spool to every client
+        else
+          message = message_parsed
+          if message_parsed['event'] == 'broadcast'
+            message = message_parsed['data']
+          end
+          item = {
+            type:    'broadcast',
+            message: message,
+          }
+          data.push item
         end
       end
     end
     to_delete.each do |file|
-      File.delete(file)
+      @store.remove_from_spool(file)
     end
     data
   end
@@ -609,16 +436,10 @@ delete spool messages
 =end
 
   def self.spool_delete
-    path = "#{@path}/spool/"
-    FileUtils.rm_rf path
+    @store.clear_spool
   end
 
   def self.jobs(node_id = nil)
-
-    # just make sure that spool path exists
-    if !File.exist?(@path)
-      FileUtils.mkpath(@path)
-    end
 
     # dispatch sessions
     if node_id.blank? && ENV['ZAMMAD_SESSION_JOBS_CONCURRENT'].to_i.positive?

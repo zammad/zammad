@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
+require 'yaml'
+require 'resolv'
+
+#
+# Configures the CI system
+#   - either (randomly) mysql or postgresql, if it is available
+#   - (randomly) Redis or File as web socket session back end, if Redis is available
+#
+# Database config happens directly in config/database.yml, other settings are written to
+#   .gitlab/environment.env which must be sourced in the CI configuration.
+#
+
+class ConfigureEnvironment
+
+  @env_file_content = <<~EOF
+  #!/bin/bash
+  FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
+  true
+  EOF
+
+  def self.configure_redis
+    if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank
+      puts 'Redis is not available, using File as web socket session back end.'
+      return
+    end
+    if [true, false].sample
+      puts 'Using Redis as web socket session back end.'
+      return
+    end
+    puts 'Using File as web socket session back end.'
+    @env_file_content += "unset REDIS_URL\n"
+  end
+
+  def self.configure_database # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+    if File.exist? File.join(__dir__, '../config/database.yml')
+      puts "'config/database.yml' already exists and will not be changed."
+      return
+    end
+
+    cnf = YAML.load_file(File.join(__dir__, '../config/database/database.yml'))
+    cnf.delete('default')
+
+    database = ENV['ENFORCE_DB_SERVICE']
+
+    # Lookup in /etc/hosts first: gitlab uses that if FF_NETWORK_PER_BUILD is not set.
+    if !database
+      hostsfile = '/etc/hosts'
+      database  = %w[postgresql mysql].shuffle.find do |possible_database|
+        File.foreach(hostsfile).any? { |l| l[possible_database] }
+      end
+    end
+
+    # Lookup via DNS if needed: gitlab uses that if FF_NETWORK_PER_BUILD is enabled.
+    if !database
+      dns = Resolv::DNS.new
+      dns.timeouts = 3
+      database = %w[postgresql mysql].shuffle.find do |possible_database|
+        # Perform a lookup of the database host to check if it is configured as a service.
+        if dns.getaddress possible_database
+          next possible_database
+        end
+      rescue Resolv::ResolvError
+        # Ignore DNS lookup errors
+      end
+    end
+
+    raise "Can't find any supported database." if database.nil?
+
+    puts "Using #{database} as database service."
+
+    db_settings_map = {
+      'postgresql' => {
+        'adapter'  => 'postgresql',
+        'username' => 'zammad',
+        'password' => 'zammad',
+        'host'     => 'postgresql', # db alias from gitlab-ci.yml
+      },
+      'mysql'      => {
+        'adapter'  => 'mysql2',
+        'username' => 'root',
+        'password' => 'zammad',
+        'host'     => 'mysql', # db alias from gitlab-ci.yml
+      }
+    }
+
+    # fetch DB settings from settings map and fallback to postgresql
+    db_settings = db_settings_map.fetch(database) { db_settings_map['postgresql'] }
+
+    %w[development test production].each do |environment|
+      cnf[environment].merge!(db_settings)
+    end
+
+    File.write(File.join(__dir__, '../config/database.yml'), Psych.dump(cnf))
+  end
+
+  def self.write_env_file
+    File.write(File.join(__dir__, 'environment.env'), @env_file_content)
+  end
+
+  def self.run
+    configure_redis
+    configure_database
+    write_env_file
+  end
+end
+
+ConfigureEnvironment.run

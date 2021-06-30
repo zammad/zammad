@@ -19,11 +19,10 @@ include:
     - .env_base
     - .variables_es
     - .variables_app_restart_cmd
-    - .services_mysql_postgresql_elasticsearch_selenium_imap
+    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis
   variables:
     RAILS_ENV: "production"
   script:
-    - env
     - script/build/test_slice_tests.sh $TEST_SLICE
     - RAILS_ENV=test bundle exec rake db:create
     - bundle exec rake zammad:ci:test:start[with_elasticsearch]
@@ -54,7 +53,7 @@ include:
   extends:
     - .env_base
     - .variables_app_restart_cmd
-    - .services_mysql_postgresql
+    - .services_mysql_postgresql_redis
   variables:
     RAILS_ENV: "production"
 
@@ -64,9 +63,10 @@ include:
   extends:
     - .env_base
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap
+    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis
   variables:
     RAILS_ENV: "test"
+    REDIS_URL: "redis://redis:6379"
 
 .template_browser-core_capybara: &template_browser-core_capybara
   extends:
