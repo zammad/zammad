@@ -17,7 +17,7 @@ class SidebarArticleAttachments extends App.Controller
       @el.html("<div>#{App.i18n.translateInline('none')}</div>")
       return
     html = ''
-    for ticket_article_id in @ticket.article_ids.sort((a, b) -> a - b)
+    for ticket_article_id in @ticket.article_ids.sort((a, b) -> b - a)
       if App.TicketArticle.exists(ticket_article_id)
         article = App.TicketArticle.find(ticket_article_id)
         attachments = App.TicketArticle.contentAttachments(article)
