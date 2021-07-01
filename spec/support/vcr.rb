@@ -76,9 +76,21 @@ RSpec.configure do |config|
   config.around(:each, use_vcr: true) do |example|
     vcr_options = Array(example.metadata[:use_vcr])
 
-    spec_path       = Pathname.new(example.file_path).realpath
-    cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(%r{_spec\.rb$}, '')
-    cassette_name   = "#{example.example_group.description} #{example.description}".gsub(%r{[^0-9A-Za-z.\-]+}, '_').downcase
+    spec_path     = Pathname.new(example.file_path).realpath
+    cassette_path = spec_path.relative_path_from(Rails.root.join('spec')).sub(%r{_spec\.rb$}, '')
+    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z\-]+}, '_').downcase
+
+    # handle file name limit of 255 chars
+    if cassette_name.length > 253
+      hexdigest_cassette_name = Digest::SHA256.hexdigest(cassette_name)
+
+      shortened_casset_name = "#{cassette_name.first(30)}-#{cassette_name.last(30)}-#{hexdigest_cassette_name}"
+
+      Rails.logger.info "Detected too long VCR filename '#{cassette_name}' (#{cassette_name.length}) and therefore converted it to '#{shortened_casset_name}'"
+
+      cassette_name = shortened_casset_name
+    end
+
     request_profile = [
       :method,
       :uri,

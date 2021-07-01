@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CommunicateTwitterJob, type: :job do
+RSpec.describe CommunicateTwitterJob, type: :job, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_USER_ID TWITTER_DM_RECIPIENT] do
 
   let(:article) { create(:twitter_article, **(try(:factory_options) || {})) }
 
@@ -18,7 +18,7 @@ RSpec.describe CommunicateTwitterJob, type: :job do
           'in_reply_to_user_id' => nil,
           'place'               => {},
           'retweet_count'       => 0,
-          'source'              => '<a href="https://zammad.com/" rel="nofollow">zammad</a>',
+          'source'              => '<a href="https://zammad.com" rel="nofollow">Zammad Integration Test</a>',
           'favorited'           => false,
           'truncated'           => false,
         }
@@ -26,7 +26,7 @@ RSpec.describe CommunicateTwitterJob, type: :job do
 
       let(:links_array) do
         [{
-          url:    'https://twitter.com/_/status/1244937367435108360',
+          url:    'https://twitter.com/_/status/1410147100403417088',
           target: '_blank',
           name:   'on Twitter',
         }]
@@ -47,7 +47,7 @@ RSpec.describe CommunicateTwitterJob, type: :job do
 
       it 'updates the article with tweet attributes' do
         expect { described_class.perform_now(article.id) }
-          .to change { article.reload.message_id }.to('1244937367435108360')
+          .to change { article.reload.message_id }.to('1410147100403417088')
           .and change { article.reload.preferences[:twitter] }.to(hash_including(tweet_attributes))
           .and change { article.reload.preferences[:links] }.to(links_array)
       end
@@ -60,41 +60,29 @@ RSpec.describe CommunicateTwitterJob, type: :job do
       end
 
       context 'with a user mention' do
-        let(:factory_options) { { body: '@twitter @twitterlive Don’t mind me, just testing the API' } }
+        let(:factory_options) { { body: '@zammadtesting Don’t mind me, just testing the API' } }
 
         it 'updates the article with tweet recipients' do
           expect { described_class.perform_now(article.id) }
-            .to change { article.reload.to }.to('@Twitter @TwitterLive')
+            .to change { article.reload.to }.to('@ZammadTesting')
         end
       end
     end
 
     context 'for DMs' do
       let(:article) { create(:twitter_dm_article, :pending_delivery, recipient: recipient, body: 'Please ignore this message.') }
-      let(:recipient) { create(:twitter_authorization, uid: '2688148651', username: 'AirbnbHelp') }
-
-      let(:request_body) do
-        {
-          event: {
-            type:           'message_create',
-            message_create: {
-              target:       { recipient_id: recipient.uid },
-              message_data: { text: article.body }
-            }
-          }
-        }.to_json
-      end
+      let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
 
       let(:dm_attributes) do
         {
           'recipient_id' => recipient.uid,
-          'sender_id'    => '1205290247124217856',
+          'sender_id'    => ENV.fetch('TWITTER_USER_ID', '0987654321'),
         }
       end
 
       let(:links_array) do
         [{
-          url:    "https://twitter.com/messages/#{recipient.uid}-1205290247124217856",
+          url:    "https://twitter.com/messages/#{recipient.uid}-1408314039470538752",
           target: '_blank',
           name:   'on Twitter',
         }]
@@ -110,12 +98,11 @@ RSpec.describe CommunicateTwitterJob, type: :job do
 
         expect(WebMock)
           .to have_requested(:post, 'https://api.twitter.com/1.1/direct_messages/events/new.json')
-          .with(body: request_body)
       end
 
       it 'updates the article with DM attributes' do
         expect { described_class.perform_now(article.id) }
-          .to change { article.reload.message_id }.to('1244953398509617156')
+          .to change { article.reload.message_id }.to('1410145389026676741')
           .and change { article.reload.preferences[:twitter] }.to(hash_including(dm_attributes))
           .and change { article.reload.preferences[:links] }.to(links_array)
       end

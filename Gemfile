@@ -70,7 +70,7 @@ gem 'execjs'
 #   Instead, use an external node.js binary.
 group :mini_racer, optional: true do
   gem 'libv8'
-  gem 'mini_racer'
+  gem 'mini_racer', '0.2.9' # Newer versions require libv8-node instead which does not compile on older platforms.
 end
 
 # authentication - provider
@@ -95,7 +95,8 @@ gem 'omniauth-weibo-oauth2'
 gem 'gmail_xoauth'
 gem 'koala'
 gem 'telegramAPI'
-gem 'twitter', git: 'https://github.com/sferik/twitter.git'
+# Updating twitter to 'master' seems to break things, so freeze the revision for now.
+gem 'twitter', git: 'https://github.com/sferik/twitter.git', ref: '29a18644e3c433f53ed76f0867f9b9734f7a7357'
 
 # channels - email additions
 gem 'htmlentities'
@@ -190,6 +191,7 @@ group :development, :test do
   gem 'coffeelint'
   gem 'pre-commit'
   gem 'rubocop'
+  gem 'rubocop-faker'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'

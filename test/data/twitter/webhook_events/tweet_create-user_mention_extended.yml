@@ -48,7 +48,7 @@ tweet_create_events:
     profile_sidebar_fill_color: DDEEF6
     profile_text_color: '333333'
     profile_use_background_image: true
-    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url: https://pbs.twimg.com/profile_images/1408343046731845632/K56uhLP2_400x400.png
     profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
     default_profile: true
     default_profile_image: false

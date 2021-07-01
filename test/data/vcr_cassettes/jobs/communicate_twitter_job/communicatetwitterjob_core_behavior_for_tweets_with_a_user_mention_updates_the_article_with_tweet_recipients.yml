@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=%40zammadtesting+Don%E2%80%99t+mind+me%2C+just+testing+the+API
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="f77ac505b61754bfbde7a42892d72f74",
+        oauth_signature="n5IyO1qHpjsXPTwt8lha%2BFgN3vM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1625040243", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 30 Jun 2021 08:04:03 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A162504024379781362; Max-Age=63072000; Expires=Fri, 30 Jun 2023
+        08:04:03 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_G6r0btkeauSX2rnAtARLog=="; Max-Age=63072000; Expires=Fri,
+        30 Jun 2023 08:04:03 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 30 Jun 2021 08:04:03 GMT
+      X-Transaction:
+      - 7b7cb7bcda114d15
+      Content-Length:
+      - '2185'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - d439bbae23d92067b858b87ee3feba1ce08e9d4a6b2be570665475684729e051
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Jun 30 08:04:03 +0000 2021","id":1410147105210081287,"id_str":"1410147105210081287","text":"@zammadtesting
+        Don\u2019t mind me, just testing the API","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"ZammadTesting","name":"Zammad
+        Integration Test Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[0,14]}],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":<TWITTER_USER_ID>,"in_reply_to_user_id_str":"<TWITTER_USER_ID>","in_reply_to_screen_name":"ZammadTesting","user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Zammad
+        Integration Test Account","screen_name":"ZammadTesting","location":"","description":"Zammad
+        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":131,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+  recorded_at: Wed, 30 Jun 2021 08:04:03 GMT
+recorded_with: VCR 6.0.0

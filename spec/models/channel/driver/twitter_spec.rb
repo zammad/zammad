@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Twitter do
+RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DM_RECIPIENT TWITTER_USER_ID] do
   subject(:channel) { create(:twitter_channel) }
 
   let(:external_credential) { ExternalCredential.find(channel.options[:auth][:external_credential_id]) }
@@ -704,101 +704,41 @@ RSpec.describe Channel::Driver::Twitter do
         end
       end
 
-      describe 'Twitter API authentication' do
-        let(:consumer_credentials) do
-          {
-            consumer_key:    external_credential.credentials[:consumer_key],
-            consumer_secret: external_credential.credentials[:consumer_secret],
-          }
-        end
-
-        let(:oauth_credentials) do
-          {
-            access_token:        channel.options[:auth][:oauth_token],
-            access_token_secret: channel.options[:auth][:oauth_token_secret],
-          }
-        end
-
-        it 'uses consumer key/secret stored on ExternalCredential' do
-          expect(Twitter::REST::Client)
-            .to receive(:new).with(hash_including(consumer_credentials))
-            .and_call_original
-
-          channel.deliver(delivery_payload)
-        end
-
-        it 'uses OAuth token/secret stored on #options hash' do
-          expect(Twitter::REST::Client)
-            .to receive(:new).with(hash_including(oauth_credentials))
-            .and_call_original
-
-          channel.deliver(delivery_payload)
-        end
-      end
-
       describe 'Twitter API activity' do
-        it 'creates a tweet/DM via the API' do
-          channel.deliver(delivery_payload)
-
-          expect(WebMock)
-            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
-            .with(body: request_body)
-        end
 
         it 'returns the created tweet/DM' do
-          expect(channel.deliver(delivery_payload)).to match(return_value)
+          expect(channel.deliver(delivery_payload)).to be_a(return_value)
         end
       end
     end
 
     context 'for tweets' do
       let!(:outgoing_tweet) { create(:twitter_article) }
-      let(:endpoint) { '/statuses/update.json' }
-      let(:request_body) { <<~BODY.chomp }
-        in_reply_to_status_id&status=#{URI.encode_www_form_component(outgoing_tweet.body)}
-      BODY
       let(:return_value) { Twitter::Tweet }
 
       include_examples 'for #send'
 
       context 'in a thread' do
         let!(:outgoing_tweet) { create(:twitter_article, :reply) }
-        let(:request_body) { <<~BODY.chomp }
-          in_reply_to_status_id=#{outgoing_tweet.in_reply_to}&status=#{URI.encode_www_form_component(outgoing_tweet.body)}
-        BODY
 
         it 'creates a tweet via the API' do
-          channel.deliver(delivery_payload)
-
-          expect(WebMock)
-            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
-            .with(body: request_body)
+          expect { channel.deliver(delivery_payload) }.to not_raise_error
         end
       end
 
       context 'containing an asterisk (workaround for sferik/twitter #677)' do
         let!(:outgoing_tweet) { create(:twitter_article, body: 'foo * bar') }
-        let(:request_body) { <<~BODY.chomp }
-          in_reply_to_status_id&status=#{URI.encode_www_form_component('foo ＊ bar')}
-        BODY
 
         it 'converts it to a full-width asterisk (U+FF0A)' do
-          channel.deliver(delivery_payload)
-
-          expect(WebMock)
-            .to have_requested(:post, "https://api.twitter.com/1.1#{endpoint}")
-            .with(body: request_body)
+          expect { channel.deliver(delivery_payload) }.to not_raise_error
         end
       end
     end
 
     context 'for DMs' do
-      let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery) }
-      let(:endpoint) { '/direct_messages/events/new.json' }
-      let(:request_body) { <<~BODY.chomp }
-        {"event":{"type":"message_create","message_create":{"target":{"recipient_id":"#{Authorization.last.uid}"},"message_data":{"text":"#{outgoing_tweet.body}"}}}}
-      BODY
-      let(:return_value) { { event: hash_including(type: 'message_create') } }
+      let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
+      let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery, recipient: recipient) }
+      let(:return_value) { Twitter::DirectMessage }
 
       include_examples 'for #send'
     end
@@ -827,38 +767,6 @@ RSpec.describe Channel::Driver::Twitter do
           expect { channel.fetch }
             .to change { channel.reload.preferences[:last_fetch] }
         end
-      end
-    end
-
-    describe 'Twitter API authentication' do
-      let(:consumer_credentials) do
-        {
-          consumer_key:    external_credential.credentials[:consumer_key],
-          consumer_secret: external_credential.credentials[:consumer_secret],
-        }
-      end
-
-      let(:oauth_credentials) do
-        {
-          access_token:        channel.options[:auth][:oauth_token],
-          access_token_secret: channel.options[:auth][:oauth_token_secret],
-        }
-      end
-
-      it 'uses consumer key/secret stored on ExternalCredential' do
-        expect(Twitter::REST::Client)
-          .to receive(:new).with(hash_including(consumer_credentials))
-          .and_call_original
-
-        channel.fetch
-      end
-
-      it 'uses OAuth token/secret stored on #options hash' do
-        expect(Twitter::REST::Client)
-          .to receive(:new).with(hash_including(oauth_credentials))
-          .and_call_original
-
-        channel.fetch
       end
     end
 
@@ -921,8 +829,8 @@ RSpec.describe Channel::Driver::Twitter do
 
             it 'creates an article for each recent tweet/retweet' do
               expect { channel.fetch }
-                .to change { Ticket.where('title LIKE ?', 'RT @%').count }.by(1)
-                .and change(Ticket, :count).by(3)
+                .to change { Ticket.where('title LIKE ?', 'RT @%').count }.by(49)
+                .and change(Ticket, :count).by(73)
             end
           end
         end

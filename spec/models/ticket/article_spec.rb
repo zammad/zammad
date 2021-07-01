@@ -349,7 +349,7 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
-    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', use_vcr: :with_oauth_headers do
+    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', use_vcr: :with_oauth_headers, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET] do
       subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
 
       let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
@@ -358,7 +358,7 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #from to sender’s Twitter handle' do
         expect(&run_bg_jobs)
           .to change { twitter_article.reload.from }
-          .to('@example')
+          .to('@ZammadTesting')
       end
 
       it 'sets #to to recipient’s Twitter handle' do
@@ -370,7 +370,7 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #message_id to tweet ID (https://twitter.com/_/status/<id>)' do
         expect(&run_bg_jobs)
           .to change { twitter_article.reload.message_id }
-          .to('1069382411899817990')
+          .to('1410130368498372609')
       end
 
       it 'sets #preferences with tweet metadata' do

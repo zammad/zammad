@@ -77,7 +77,7 @@ users: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
     followers_count: 0
     friends_count: 1
     statuses_count: 8
-    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url: https://pbs.twimg.com/profile_images/1408343046731845632/K56uhLP2_400x400.png
     profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
   '2975699229': !ruby/hash:ActiveSupport::HashWithIndifferentAccess
     id: '2975699229'

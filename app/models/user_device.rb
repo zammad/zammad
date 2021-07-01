@@ -81,11 +81,11 @@ store new device for user if device not already known
     end
 
     # generate device name
-    if browser[:name] == 'Generic Browser'
+    if browser[:name] == 'Unknown Browser'
       browser[:name] = user_agent
     end
     name = ''
-    if browser[:plattform].present? && browser[:plattform] != 'Other'
+    if browser[:plattform].present? && browser[:plattform] != 'UnknownPlatform'
       name = browser[:plattform]
     end
     if browser[:name].present? && browser[:name] != 'Other'

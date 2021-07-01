@@ -2,6 +2,7 @@
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 require:
+  - rubocop-faker
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec

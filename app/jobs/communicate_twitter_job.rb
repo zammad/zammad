@@ -53,26 +53,22 @@ class CommunicateTwitterJob < ApplicationJob
     # fill article with tweet info
 
     # direct message
-    if tweet.is_a?(Hash)
+    if tweet.is_a?(Twitter::DirectMessage)
       tweet_type = 'DirectMessage'
-      article.message_id = tweet[:event][:id].to_s
-      if tweet[:event] && tweet[:event][:type] == 'message_create'
-        #article.from = "@#{tweet.sender.screen_name}"
-        #article.to = "@#{tweet.recipient.screen_name}"
+      article.message_id = tweet.id.to_s
 
-        article.preferences['twitter'] = {
-          recipient_id: tweet[:event][:message_create][:target][:recipient_id],
-          sender_id:    tweet[:event][:message_create][:sender_id],
-        }
+      article.preferences['twitter'] = {
+        recipient_id: tweet.recipient_id.to_s,
+        sender_id:    tweet.sender_id.to_s,
+      }
 
-        article.preferences['links'] = [
-          {
-            url:    TwitterSync::DM_URL_TEMPLATE % article.preferences[:twitter].slice(:recipient_id, :sender_id).values.map(&:to_i).sort.join('-'),
-            target: '_blank',
-            name:   'on Twitter',
-          },
-        ]
-      end
+      article.preferences['links'] = [
+        {
+          url:    TwitterSync::DM_URL_TEMPLATE % article.preferences[:twitter].slice(:recipient_id, :sender_id).values.map(&:to_i).sort.join('-'),
+          target: '_blank',
+          name:   'on Twitter',
+        },
+      ]
 
     # regular tweet
     elsif tweet.instance_of?(Twitter::Tweet)

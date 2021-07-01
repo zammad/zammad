@@ -91,7 +91,7 @@ module ZammadSpecSupportRequest
 
       add_headers('Authorization' => credentials)
     when :browser
-      post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.number(9) }
+      post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.number(digits: 9) }
     end
   end
 

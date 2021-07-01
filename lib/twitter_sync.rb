@@ -130,6 +130,14 @@ class TwitterSync
       state = get_state(channel, tweet)
     end
 
+    if tweet.is_a?(Twitter::DirectMessage)
+      message = {
+        type: 'direct_message',
+        text: tweet.text,
+      }
+      state = get_state(channel, tweet)
+    end
+
     if tweet.is_a?(Hash) && tweet['type'] == 'message_create'
       message = {
         type: 'direct_message',
@@ -478,38 +486,17 @@ create a tweet or direct message from an article
 =end
 
   def from_article(article)
-
     tweet = nil
     case article[:type]
     when 'twitter direct-message'
 
       Rails.logger.debug { "Create twitter direct message from article to '#{article[:to]}'..." }
 
-      #      tweet = @client.create_direct_message(
-      #        article[:to],
-      #        article[:body],
-      #        {}
-      #      )
       article[:to].delete!('@')
       authorization = Authorization.find_by(provider: 'twitter', username: article[:to])
       raise "Unable to lookup user_id for @#{article[:to]}" if !authorization
 
-      data = {
-        event: {
-          type:           'message_create',
-          message_create: {
-            target:       {
-              recipient_id: authorization.uid,
-            },
-            message_data: {
-              text: article[:body],
-            }
-          }
-        }
-      }
-
-      tweet = Twitter::REST::Request.new(@client, :json_post, '/1.1/direct_messages/events/new.json', data).perform
-
+      tweet = @client.create_direct_message(authorization.uid.to_i, article[:body])
     when 'twitter status'
 
       Rails.logger.debug { 'Create tweet from article...' }

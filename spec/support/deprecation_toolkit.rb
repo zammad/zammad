@@ -3,3 +3,4 @@
 require 'deprecation_toolkit/rspec'
 
 DeprecationToolkit::Configuration.test_runner = :rspec
+# DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [ %r{deprecat}i ]

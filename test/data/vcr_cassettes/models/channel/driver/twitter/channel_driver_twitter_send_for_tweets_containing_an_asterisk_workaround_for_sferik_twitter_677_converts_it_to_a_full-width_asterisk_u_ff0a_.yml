@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=foo+%EF%BC%8A+bar
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="6747389a248f680a7631a27227ed2b59",
+        oauth_signature="4qex9kNATP0zpmYZ%2FII9zK5y7qI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1624609540", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Fri, 25 Jun 2021 08:25:40 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 403 Forbidden
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A162460954028999985; Max-Age=63072000; Expires=Sun, 25 Jun 2023
+        08:25:40 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_oeJ/LzvDFYl770c2yd5/2Q=="; Max-Age=63072000; Expires=Sun,
+        25 Jun 2023 08:25:40 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Fri, 25 Jun 2021 08:25:40 GMT
+      X-Transaction:
+      - 3d3b3cb53cc1d2c6
+      Content-Length:
+      - '60'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - bc552ee394dd8af2a62fb08c68c30cb4353e05a857443b017d1a769991bad7d8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":187,"message":"Status is a duplicate."}]}'
+  recorded_at: Fri, 25 Jun 2021 08:25:40 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="958bd506f769b865b166a3e829c9a4da",
+        oauth_signature="r8LCO8HHujDiOIc1ogb3YAhD34M%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1624609540", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Jun 2021 08:25:40 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A162460954049230142; Max-Age=63072000; Expires=Sun, 25 Jun 2023
+        08:25:40 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_9g6No5EunMQ6o37MZ7NtqQ=="; Max-Age=63072000; Expires=Sun,
+        25 Jun 2023 08:25:40 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Fri, 25 Jun 2021 08:25:40 GMT
+      X-Transaction:
+      - 72ea9ef95267a1fb
+      Content-Length:
+      - '1945'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1624609878'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-App-Rate-Limit-Limit:
+      - '100000'
+      X-App-Rate-Limit-Reset:
+      - '1624695378'
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '897'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-App-Rate-Limit-Remaining:
+      - '99997'
+      X-Connection-Hash:
+      - 53dd0153d68cb91522e2aadf22caf12a9e6e2c914d61f748e05b75c147266d9f
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"created_at":"Fri Jun 25 08:25:39 +0000 2021","id":1408340600848629760,"id_str":"1408340600848629760","text":"Est
+        non rem consequatur.","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1408314039470538752,"id_str":"1408314039470538752","name":"Zammad","screen_name":"ZammadTesting","location":"","description":"Zammad
+        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":35,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_image_url_https":"https:\/\/abs.twimg.com\/sticky\/default_profile_images\/default_profile_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":true,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}]'
+  recorded_at: Fri, 25 Jun 2021 08:25:40 GMT
+recorded_with: VCR 6.0.0

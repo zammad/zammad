@@ -7,7 +7,7 @@ require 'rails_helper'
 # Individual import steps are tested in spec/lib/sequencer.
 #
 
-RSpec.describe 'Freshdesk import', type: :integration, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT IMPORT_FRESHDESK_ENDPOINT_KEY] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Freshdesk import', type: :integration, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT IMPORT_FRESHDESK_ENDPOINT_KEY IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN] do # rubocop:disable RSpec/DescribeClass
 
   before do
 
@@ -24,20 +24,8 @@ RSpec.describe 'Freshdesk import', type: :integration, use_vcr: true, db_strateg
     Setting.set('system_init_done', false)
 
     VCR.configure do |c|
-      %w[
-        IMPORT_FRESHDESK_ENDPOINT
-        IMPORT_FRESHDESK_ENDPOINT_KEY
-        IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN
-      ].each do |env_key|
-        c.filter_sensitive_data("<#{env_key}>") { ENV[env_key] }
-      end
-
       # The API key is used only inside the base64 encoded Basic Auth string, so mask that as well.
-      %w[
-        IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH
-      ].each do |env_key|
-        c.filter_sensitive_data("<#{env_key}>") { Base64.encode64( "#{ENV['IMPORT_FRESHDESK_ENDPOINT_KEY']}:X" ).chomp }
-      end
+      c.filter_sensitive_data('<IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>') { Base64.encode64( "#{ENV['IMPORT_FRESHDESK_ENDPOINT_KEY']}:X" ).chomp }
     end
 
     VCR.use_cassette 'freshdesk_import' do

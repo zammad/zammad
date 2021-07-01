@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://reallybadexample.freshdesk.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - reallybadexample.freshdesk.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 30 Jun 2021 09:10:23 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 60005b71-aa9e-4615-b5e6-1787b42e890a
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - W/"1f9efcb8395f73f1b213752ae9941ad3"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Rack-Cache:
+      - miss
+      X-Envoy-Upstream-Service-Time:
+      - '27'
+      X-Trace-Id:
+      - 00-35567a8fbfd7346dc95ea2a8b0c9320b-f68d5ac26a465810-00
+      Server:
+      - fwe
+    body:
+      encoding: ASCII-8BIT
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t<meta http-equiv=\"content-type\"
+        content=\"text/html; charset=utf-8\" />\n\t\t<meta name=\"robots\" content=\"noindex\"/>\n\t\t<meta
+        name=\"robots\" content=\"noarchive\"/>\n\t\t<link rel=\"stylesheet\" href=\"/assets/page/404.css\"
+        type=\"text/css\" media=\"screen, projection\" />\n\t\t<title>There is no
+        helpdesk here!</title>\n\t</head>\n\t<body>\n\t\t<div id=\"wrap\" class=\"container\">\n\t\t\t<div
+        class=\"wrapper\">\n\t\t\t\t<div class=\"wrapper-shadow\">\n\t\t\t\t\t<div
+        class=\"no-helpdesk\">\n\t\t\t\t\t\t<img src=\"/assets/misc/freshdesklogo.png\"
+        alt=\"Freshdesk\" width=\"204px\" height=\"50px\" />\n\t\t\t\t\t\t<h2>  We
+        couldn&#x27;t find  <span id=\"domainname\"></span></h2>\n\t\t\t\t\t\t<p>
+        May be this is still fresh!  </p> \n\t\t\t\t\t\t<p> You can claim it now at
+        <a href=\"http://www.freshdesk.com/signup\">http://www.freshdesk.com/signup</a></p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<script
+        type=\"text/javascript\">\n//<![CDATA[\n\n\t\t\tdocument.getElementById(\"domainname\").innerHTML
+        = (document.domain);\n\n//]]>\n</script>\t</body>\n</html>\n"
+  recorded_at: Wed, 30 Jun 2021 09:10:23 GMT
+recorded_with: VCR 6.0.0

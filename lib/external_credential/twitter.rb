@@ -32,7 +32,7 @@ class ExternalCredential::Twitter
       request_token = consumer.get_request_token(oauth_callback: ExternalCredential.callback_url('twitter'))
     rescue => e
       case e.message
-      when '401 Authorization Required'
+      when '401 Unauthorized'
         raise "#{e.message} (Invalid credentials may be to blame.)"
       when '403 Forbidden'
         raise "#{e.message} (Your app's callback URL configuration on developer.twitter.com may be to blame.)"

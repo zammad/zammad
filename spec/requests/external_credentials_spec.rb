@@ -179,7 +179,7 @@ RSpec.describe 'External Credentials', type: :request do
       end
     end
 
-    context 'for Twitter', :use_vcr do
+    context 'for Twitter', :use_vcr, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DEV_ENVIRONMENT] do
       shared_context 'for callback URL configuration' do
         # NOTE: When recording a new VCR cassette for these tests,
         # the URL below must match the callback URL
@@ -227,7 +227,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              401 Authorization Required (Invalid credentials may be to blame.)
+              401 Unauthorized (Invalid credentials may be to blame.)
             ERR
           end
         end
@@ -262,7 +262,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              Dev Environment Label invalid. Please use an existing one ["zammad"], or create a new one.
+              Dev Environment Label invalid. Please use an existing one ["#{ENV.fetch('TWITTER_DEV_ENVIRONMENT', 'Integration')}"], or create a new one.
             ERR
           end
         end
@@ -348,7 +348,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :internal_server_error }
             let(:error_message) { <<~ERR.chomp }
-              401 Authorization Required (Invalid credentials may be to blame.)
+              401 Unauthorized (Invalid credentials may be to blame.)
             ERR
           end
         end

@@ -84,7 +84,7 @@ FactoryBot.define do
       sender_name { 'Agent' }
 
       trait :reply do
-        in_reply_to { Faker::Number.number(19) }
+        in_reply_to { Faker::Number.number(digits: 19) }
       end
     end
 
@@ -99,18 +99,18 @@ FactoryBot.define do
       trait :pending_delivery do
         transient do
           recipient { create(:twitter_authorization) }
-          sender_id { Faker::Number.number(10) }
+          sender_id { Faker::Number.number(digits: 10) }
         end
 
         from         { ticket.owner.fullname }
         to           { recipient.username }
-        in_reply_to  { Faker::Number.number(19) }
+        in_reply_to  { Faker::Number.number(digits: 19) }
         content_type { 'text/plain' }
       end
 
       trait :delivered do
         pending_delivery
-        message_id { Faker::Number.number(19) }
+        message_id { Faker::Number.number(digits: 19) }
         preferences do
           {
             delivery_retry:          1,
