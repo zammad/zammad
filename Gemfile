@@ -96,7 +96,7 @@ gem 'gmail_xoauth'
 gem 'koala'
 gem 'telegramAPI'
 # Updating twitter to 'master' seems to break things, so freeze the revision for now.
-gem 'twitter', git: 'https://github.com/sferik/twitter.git', ref: '29a18644e3c433f53ed76f0867f9b9734f7a7357'
+gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
