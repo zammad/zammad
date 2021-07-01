@@ -837,12 +837,18 @@ RSpec.describe User, type: :model do
         let(:value) { 'Th1515n0t4v4l1dh45h' }
         let(:escaped) { Regexp.escape(value) }
 
-        it 'prevents create' do
-          expect { create(:user, image_source: value) }.to raise_error(ActiveRecord::RecordInvalid, %r{Image source})
+        it 'valid create' do
+          expect(create(:user, image_source: 'https://zammad.org/avatar.png').image_source).not_to eq(nil)
         end
 
-        it 'prevents update' do
-          expect { create(:user).update!(image_source: value) }.to raise_error(ActiveRecord::RecordInvalid, %r{Image source})
+        it 'removes invalid image source of create' do
+          expect(create(:user, image_source: value).image_source).to eq(nil)
+        end
+
+        it 'removes invalid image source of update' do
+          user = create(:user)
+          user.update!(image_source: value)
+          expect(user.image_source).to eq(nil)
         end
       end
     end
