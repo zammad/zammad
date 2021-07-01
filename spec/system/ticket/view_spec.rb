@@ -117,6 +117,119 @@ RSpec.describe 'Ticket views', type: :system do
         end.not_to raise_error
       end
     end
+
+    context 'with macro batch overlay' do
+      shared_examples "adding 'small' class to macro element" do
+        it 'adds a "small" class to the macro element' do
+          within(:active_content) do
+
+            ticket = page.find(:table_row, Ticket.first.id).native
+
+            display_macro_batches(ticket)
+
+            expect(page).to have_selector('.batch-overlay-macro-entry.small', wait: 10)
+
+            release_mouse
+          end
+        end
+      end
+
+      shared_examples "not adding 'small' class to macro element" do
+        it 'does not add a "small" class to the macro element' do
+          within(:active_content) do
+
+            ticket = page.find(:table_row, Ticket.first.id).native
+
+            display_macro_batches(ticket)
+
+            expect(page).to have_no_selector('.batch-overlay-macro-entry.small', wait: 10)
+
+            release_mouse
+          end
+        end
+      end
+
+      shared_examples 'showing all macros' do
+        it 'shows all macros' do
+          within(:active_content) do
+
+            ticket = page.find(:table_row, Ticket.first.id).native
+
+            display_macro_batches(ticket)
+
+            expect(page).to have_selector('.batch-overlay-macro-entry', count: all, wait: 10)
+
+            release_mouse
+          end
+        end
+      end
+
+      shared_examples 'showing some macros' do |count|
+        it 'shows all macros' do
+          within(:active_content) do
+
+            ticket = page.find(:table_row, Ticket.first.id).native
+
+            display_macro_batches(ticket)
+
+            expect(page).to have_selector('.batch-overlay-macro-entry', count: count, wait: 10)
+
+            release_mouse
+          end
+        end
+      end
+
+      shared_examples 'show macros batch overlay' do
+        before do
+          Macro.destroy_all && (create_list :macro, all)
+          refresh
+          page.current_window.resize_to(width, height)
+          visit '#ticket/view/all_open'
+        end
+
+        context 'with few macros' do
+          let(:all) { 15 }
+
+          context 'when on large screen' do
+            let(:width) { 1520 }
+            let(:height) { 1040 }
+
+            it_behaves_like 'showing all macros'
+            it_behaves_like "not adding 'small' class to macro element"
+          end
+
+          context 'when on small screen' do
+            let(:width) { 1020 }
+            let(:height) { 1040 }
+
+            it_behaves_like 'showing all macros'
+            it_behaves_like "not adding 'small' class to macro element"
+          end
+
+        end
+
+        context 'with many macros' do
+          let(:all) { 50 }
+
+          context 'when on large screen' do
+            let(:width) { 1520 }
+            let(:height) { 1040 }
+
+            it_behaves_like 'showing some macros', 32
+          end
+
+          context 'when on small screen' do
+            let(:width) { 1020 }
+            let(:height) { 1040 }
+
+            it_behaves_like 'showing some macros', 30
+            it_behaves_like "adding 'small' class to macro element"
+          end
+        end
+      end
+
+      include_examples 'show macros batch overlay'
+    end
   end
 
   context 'bulk note', authenticated_as: :user do

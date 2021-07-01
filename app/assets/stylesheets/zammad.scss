@@ -11588,11 +11588,7 @@ output {
     bottom: -50px; // extra space for bounce animation
 
     .batch-overlay-box-inner {
-      max-height: 310px;
-
-      @media screen and (min-height: 1000px) {
-        max-height: 465px;
-      }
+      max-height: 40vh;
     }
 
     &-group {
@@ -11657,12 +11653,8 @@ output {
     top: -50px; // extra space for bounce animation
 
     .batch-overlay-box-inner {
-      max-height: 146px;
+      max-height: 55vh;
       margin: 24px 12px;
-
-      @media screen and (min-height: 800px) {
-        max-height: 292px;
-      }
     }
 
     &-entry {
@@ -11681,6 +11673,14 @@ output {
       &.is-hovered {
         border-color: $highlight-color;
         transform: scale(1.05);
+      }
+
+      &.small {
+        @include small-desktop {
+          height: 80px;
+          width: 80px;
+          padding: 11px 11px 8px;
+        }
       }
     }
   }
@@ -11712,7 +11712,7 @@ output {
       color: inherit;
     }
 
-    td {
+    td:not(:first-child) {
       display: block;
       padding: 0 12px;
       white-space: nowrap;
@@ -11727,6 +11727,11 @@ output {
       &:nth-child(n+4) {
         display: none;
       }
+    }
+
+    .checkbox-replacement > .icon,
+    .radio-replacement > .icon {
+      fill: none;
     }
   }
 

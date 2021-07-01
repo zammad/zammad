@@ -107,6 +107,22 @@ module BrowserTestHelper
     page.driver.browser.action.click_and_hold(element).perform
   end
 
+  # Clicks and hold (without releasing) in the middle of the given element
+  # and moves it to the top left of the page to show marcos batches in
+  # overview section.
+  #
+  # @example
+  # display_macro_batches(ticket)
+  # display_macro_batches(tr[data-id='1'])
+  #
+  def display_macro_batches(element)
+    click_and_hold(element)
+    # move element to y -ticket.location.y
+    move_mouse_by(0, -element.location.y + 5)
+    # move a bit to the left to display macro batches
+    move_mouse_by(-250, 0)
+  end
+
   # Releases the depressed left mouse button at the current mouse location.
   #
   # @example
