@@ -8,9 +8,16 @@ class User
       after_create :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
       after_update :avatar_for_email_check, unless: -> { BulkImportInfo.enabled? }
 
-      validates :image_source, format: URI::DEFAULT_PARSER.make_regexp(%w[http https]), allow_blank: true
+      before_validation :ensure_existing_image, :remove_invalid_image_source
+    end
 
-      before_validation :ensure_existing_image
+    def remove_invalid_image_source
+      return if image_source.blank?
+      return if image_source.match?(URI::DEFAULT_PARSER.make_regexp(%w[http https]))
+
+      Rails.logger.debug "Removed invalid image source '#{image_source}' for user '#{email}'"
+
+      self.image_source = nil
     end
 
     def avatar_for_email_check
