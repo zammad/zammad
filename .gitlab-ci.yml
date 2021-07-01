@@ -59,6 +59,7 @@ cache:
 # Initialize application env
 before_script:
   - source /etc/profile.d/rvm.sh
+  - source /opt/rh/rh-nodejs12/enable
   - bundle install -j $(nproc) --path vendor
   - bundle exec ruby .gitlab/configure_environment.rb
   - source .gitlab/environment.env
