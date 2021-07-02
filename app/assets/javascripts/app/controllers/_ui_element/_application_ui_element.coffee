@@ -114,26 +114,20 @@ class App.UiElement.ApplicationUiElement
 
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
 
+        filter = _.clone(attribute.filter)
+        if !attribute.rejectNonExistentValues && params[ attribute.name ] && !_.contains(filter, params[ attribute.name ])
+          filter.push(params[ attribute.name ])
+
         # check all records
         for record in App[ attribute.relation ].search(sortBy: attribute.sortBy, translate: attribute.translate)
 
           # check all filter attributes
-          for key in attribute.filter
+          for key in filter
 
             # check all filter values as array
             # if it's matching, use it for selection
             if record['id'] is key || ( record['id'] && key && record['id'].toString() is key.toString() )
               list.push record
-
-        # check if current value need to be added
-        if params[ attribute.name ] && !attribute.rejectNonExistentValues
-          hit = false
-          for value in list
-            if value['id'].toString() is params[ attribute.name ].toString()
-              hit = true
-          if !hit
-            currentRecord = App[ attribute.relation ].find(params[ attribute.name ])
-            list.push currentRecord
 
       # no data filter matched
       else
