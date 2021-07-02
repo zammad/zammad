@@ -190,6 +190,7 @@ do(window) ->
     showTimeEveryXMinutes: 2
     lastTimestamp: null
     lastAddedType: null
+    inputDisabled: false
     inputTimeout: null
     isTyping: false
     state: 'offline'
@@ -819,7 +820,7 @@ do(window) ->
 
     onKeydown: (e) =>
       # check for enter
-      if not e.shiftKey and e.keyCode is 13
+      if not @inputDisabled and not e.shiftKey and e.keyCode is 13
         e.preventDefault()
         @sendMessage()
 
@@ -1142,11 +1143,14 @@ do(window) ->
       @el.classList.add('zammad-chat-is-shown')
 
     disableInput: ->
-      @input.disabled = true
+      @inputDisabled = true
+      @input.setAttribute('contenteditable', false)
       @el.querySelector('.zammad-chat-send').disabled = true
+      @io.close()
 
     enableInput: ->
-      @input.disabled = false
+      @inputDisabled = false
+      @input.setAttribute('contenteditable', true)
       @el.querySelector('.zammad-chat-send').disabled = false
 
     hideModal: ->

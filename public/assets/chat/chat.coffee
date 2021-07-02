@@ -188,6 +188,7 @@ do($ = window.jQuery, window) ->
     showTimeEveryXMinutes: 2
     lastTimestamp: null
     lastAddedType: null
+    inputDisabled: false
     inputTimeout: null
     isTyping: false
     state: 'offline'
@@ -852,7 +853,7 @@ do($ = window.jQuery, window) ->
       event.stopPropagation()
 
     checkForEnter: (event) =>
-      if not event.shiftKey and event.keyCode is 13
+      if not @inputDisabled and not event.shiftKey and event.keyCode is 13
         event.preventDefault()
         @sendMessage()
 
@@ -1150,11 +1151,14 @@ do($ = window.jQuery, window) ->
       @el.addClass('zammad-chat-is-shown')
 
     disableInput: ->
-      @input.prop('disabled', true)
+      @inputDisabled = true
+      @input.prop('contenteditable', false)
       @el.find('.zammad-chat-send').prop('disabled', true)
+      @io.close()
 
     enableInput: ->
-      @input.prop('disabled', false)
+      @inputDisabled = false
+      @input.prop('contenteditable', true)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
     hideModal: ->
