@@ -3,8 +3,6 @@
 class SessionTimeoutJob::Session
   attr_accessor :session, :user
 
-  delegate :destroy, to: :session
-
   def initialize(session)
     @session = session
     @user    = User.find_by(id: session.data['user_id'])
@@ -15,7 +13,6 @@ class SessionTimeoutJob::Session
   end
 
   def active?
-    return true if !user?
     return true if timeout < 1
     return true if session.data['ping'] > timeout.seconds.ago
   end
@@ -27,7 +24,13 @@ class SessionTimeoutJob::Session
   end
 
   def timeout
-    @timeout ||= begin
+    return -1 if !user?
+
+    timeout_user
+  end
+
+  def timeout_user
+    @timeout_user ||= begin
       permissions = Permission.where(id: user.permissions_with_child_ids).pluck(:name)
 
       result = -1
@@ -49,5 +52,10 @@ class SessionTimeoutJob::Session
 
   def config
     Setting.get('session_timeout')
+  end
+
+  def destroy
+    session.destroy
+    Rails.logger.info "SessionTimeoutJob removed session '#{session.id}' for user id '#{user&.id}' (last ping: '#{session.data['ping']}', timeout: '#{timeout.seconds}')"
   end
 end
