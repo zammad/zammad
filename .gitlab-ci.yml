@@ -1,5 +1,5 @@
 default:
-  image: registry.znuny.com/docker/zammad-ci:test-ruby-3.7
+  image: registry.znuny.com/docker/zammad-ci:2.7.3
 
 include:
   - local: '/.gitlab/ci/base.yml'
