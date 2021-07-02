@@ -12,4 +12,13 @@ RSpec.describe Issue3618GoogleCalendarUrlHttps, type: :db_migration, db_strategy
       .from(false)
       .to(true)
   end
+
+  it 'other' do
+    calendar.update_attribute(:business_hours, nil)
+
+    expect { migrate }
+      .to change { calendar.reload.ical_url.starts_with? 'https://' }
+      .from(false)
+      .to(true)
+  end
 end

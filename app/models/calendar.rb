@@ -8,11 +8,14 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
-  before_create  :validate_public_holidays, :validate_hours, :fetch_ical
-  after_create   :sync_default, :min_one_check
-  before_update  :validate_public_holidays, :validate_hours, :fetch_ical
-  after_update   :sync_default, :min_one_check
-  after_destroy  :min_one_check
+  validate :validate_hours
+
+  before_save :ensure_public_holidays_details, :fetch_ical
+
+  after_destroy :min_one_check
+  after_save    :min_one_check
+
+  after_save :sync_default
 
 =begin
 
@@ -391,8 +394,8 @@ returns
     true
   end
 
-  # validate format of public holidays
-  def validate_public_holidays
+  # ensure integrity of details of public holidays
+  def ensure_public_holidays_details
 
     # fillup feed info
     before = public_holidays_was
@@ -414,7 +417,13 @@ returns
 
     # get business hours
     hours = business_hours_to_hash
-    raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+
+    if hours.blank?
+      errors.add :base, 'No configured business hours found!'
+      return
+    end
+
+    #raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin
@@ -423,10 +432,8 @@ returns
       end
       Biz.time(10, :minutes).after(Time.zone.parse('Tue, 05 Feb 2019 21:40:28 UTC +00:00'))
     rescue => e
-      raise Exceptions::UnprocessableEntity, e.message
+      errors.add :base, e.message
     end
-
-    true
   end
 
 end

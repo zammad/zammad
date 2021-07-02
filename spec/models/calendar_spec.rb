@@ -211,14 +211,14 @@ RSpec.describe Calendar, type: :model do
                      timeframes: [['09:00', '00:00']]
                    }
                  })
-        end.to raise_error(Exceptions::UnprocessableEntity, 'nonsensical hours provided')
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{nonsensical hours provided})
       end
 
       it 'fails for blank structure' do
         expect do
           create(:calendar,
                  business_hours: {})
-        end.to raise_error(Exceptions::UnprocessableEntity, 'No configured business hours found!')
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{No configured business hours found!})
       end
     end
   end
