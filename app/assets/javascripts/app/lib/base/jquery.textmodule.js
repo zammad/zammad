@@ -43,6 +43,7 @@
 
   Plugin.prototype.bindEvents = function () {
     this.$element.on('keydown', this.onKeydown.bind(this))
+    this.$element.on('keyup', this.onKeyup.bind(this))
     // using onInput event to trigger onKeyPress behavior
     // since keyPress doesn't work on Mobile Chrome / Android
     this.$element.on('input', this.onKeypress.bind(this))
@@ -150,6 +151,15 @@
     }
   }
 
+  Plugin.prototype.onKeyup = function (e) {
+
+    // in normal use we make sure that mentions
+    // which has no text anymore get deleted
+    if (e.keyCode == 8 && !this.buffer) {
+      this.removeInvalidMentions()
+    }
+  }
+
   Plugin.prototype.onKeypress = function (e) {
     this.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which))
 
@@ -201,6 +211,15 @@
 
       this.result(trigger)
     }
+  }
+
+  // remove invalid mentions
+  Plugin.prototype.removeInvalidMentions = function() {
+    this.$element.find('a[data-mention-user-id]').each(function() {
+      if ($(this).text() != '') return true
+
+      $(this).remove()
+    })
   }
 
   // check if at least one trigger is available with the given prefix

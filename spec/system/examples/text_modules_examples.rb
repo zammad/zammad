@@ -1,5 +1,5 @@
 RSpec.shared_examples 'text modules' do |path:|
-
+  let!(:agent_fixed_name)          { create :agent, firstname: 'FFFF1', lastname: 'GGGG1', groups: [Group.find_by(name: 'Users')] }
   let!(:group1)                    { create :group }
   let!(:group2)                    { create :group }
   let!(:text_module_without_group) { create :text_module }
@@ -35,6 +35,34 @@ RSpec.shared_examples 'text modules' do |path:|
       find(:richtext).send_keys('@@agen')
       find(:richtext).send_keys(:backspace)
       expect(page).to have_no_text('No results found')
+    end
+  end
+
+  it 'does delete empty mentions (issue #3636 / FF only)' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select('Users')
+      find(:richtext).send_keys('@@FFFF1')
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(:enter)
+      (agent_fixed_name.firstname.length + agent_fixed_name.lastname.length + 2).times do
+        find(:richtext).send_keys(:backspace)
+      end
+      expect(find(:richtext).all('a[data-mention-user-id]', visible: :all).count).to eq(0)
+    end
+  end
+
+  it 'does delete empty mentions (issue #3636 / simulation)' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select('Users')
+      find(:richtext).send_keys('@@FFFF1')
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys('test')
+      page.execute_script("$('a[data-mention-user-id]').first().html('<br>')")
+      find(:richtext).send_keys(:backspace)
+      expect(find(:richtext).all('a[data-mention-user-id]', visible: :all).count).to eq(0)
     end
   end
 
