@@ -411,12 +411,6 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
         objects:  result
       )
 
-      # only if system is in develop mode, send token back to browser for browser tests
-      if Setting.get('developer_mode') == true
-        render json: { message: 'ok', token: result[:token].name }, status: :ok
-        return
-      end
-
       # token sent to user, send ok to browser
       render json: { message: 'ok' }, status: :ok
       return
@@ -466,12 +460,6 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
         user:     result[:user],
         objects:  result
       )
-
-      # only if system is in develop mode, send token back to browser for browser tests
-      if Setting.get('developer_mode') == true
-        render json: { message: 'ok', token: result[:token].name }, status: :ok
-        return
-      end
     end
 
     # result is always positive to avoid leaking of existing user accounts

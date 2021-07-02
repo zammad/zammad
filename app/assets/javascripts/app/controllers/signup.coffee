@@ -98,8 +98,6 @@ class Signup extends App.ControllerFullPage
           removeAll: true
         )
 
-        if data.token && @Config.get('developer_mode') is true
-          @navigate "#email_verify/#{data.token}"
       error: @error
     )
 

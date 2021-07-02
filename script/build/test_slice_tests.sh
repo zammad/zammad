@@ -74,7 +74,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/preferences_token_access_test.rb
   rm test/browser/reporting_test.rb
   rm test/browser/setting_test.rb
-  # test/browser/signup_password_change_and_reset_test.rb
   # test/browser/swich_to_user_test.rb
   # test/browser/taskbar_session_test.rb
   # test/browser/taskbar_task_test.rb
@@ -151,7 +150,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/preferences_token_access_test.rb
   rm test/browser/reporting_test.rb
   rm test/browser/setting_test.rb
-  rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -228,7 +226,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/preferences_token_access_test.rb
   rm test/browser/reporting_test.rb
   rm test/browser/setting_test.rb
-  rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -305,7 +302,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/preferences_token_access_test.rb
   rm test/browser/reporting_test.rb
   rm test/browser/setting_test.rb
-  rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -381,7 +377,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/preferences_token_access_test.rb
   rm test/browser/reporting_test.rb
   rm test/browser/setting_test.rb
-  rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -460,7 +455,6 @@ elif [ "$LEVEL" == '6' ]; then
   # test/browser/preferences_token_access_test.rb
   # test/browser/reporting_test.rb
   # test/browser/setting_test.rb
-  rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb

@@ -63,13 +63,6 @@ class Modal extends App.ControllerModal
     @sent = true
     @update()
 
-    # if in developer mode, redirect to verify
-    if data.token && @Config.get('developer_mode') is true
-      redirect = =>
-        @close()
-        @navigate "#email_verify/#{data.token}"
-      App.Delay.set(redirect, 4000)
-
   error: =>
     @contentInline = App.i18n.translateContent('Unable to send verify email.')
     @update()

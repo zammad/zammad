@@ -58,12 +58,6 @@ class PasswordReset extends App.ControllerFullPage
     )
 
   success: (data) =>
-
-    # if in developer mode, redirect to set new password
-    if data.token && @Config.get('developer_mode') is true
-      redirect = =>
-        @navigate "#password_reset_verify/#{data.token}"
-      @delay(redirect, 2000)
     @html(App.view('password/reset_sent')())
 
 App.Config.set('password_reset', PasswordReset, 'Routes')
