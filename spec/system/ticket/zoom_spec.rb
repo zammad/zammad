@@ -923,11 +923,11 @@ RSpec.describe 'Ticket zoom', type: :system do
       let(:user) { create(:customer) }
       let(:ticket) { create(:ticket, customer: user) }
 
-      it 'shows ticket state dropdown options in sorted order, with new at the end' do
+      it 'shows ticket state dropdown options in sorted order' do
         visit "ticket/zoom/#{ticket.id}"
 
         await_empty_ajax_queue
-        expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen offen neu])
+        expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen neu offen])
       end
     end
 
@@ -935,7 +935,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       let(:user) { create(:agent, groups: [permitted_group]) }
       let(:permitted_group) { create(:group) }
 
-      it 'shows ticket state dropdown options in sorted order, with new in sorted position' do
+      it 'shows ticket state dropdown options in sorted order' do
         visit 'ticket/create'
 
         await_empty_ajax_queue
