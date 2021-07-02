@@ -100,11 +100,15 @@ return all online notifications of an user
 
   notifications = OnlineNotification.list(user, limit)
 
+or with expand data
+
+  notifications = OnlineNotification.list(user, limit, expand)
+
 =end
 
   def self.list(user, limit)
     OnlineNotification.where(user_id: user.id)
-                      .order(created_at: :desc)
+                      .order('created_at DESC, id DESC')
                       .limit(limit)
   end
 
@@ -253,4 +257,25 @@ with dedicated times
     true
   end
 
+  # streamline structur
+  def attributes_with_association_names
+    attributes = super
+    map = {
+      'object_lookup'    => 'object',
+      'object_lookup_id' => 'object_id',
+      'type_lookup'      => 'type',
+      'type_lookup_id'   => 'type_id',
+    }
+    map.each do |key, value|
+      next if !attributes.key?(key)
+
+      attributes[value] = attributes[key]
+      attributes.delete(key)
+    end
+
+    attributes['object'] = ObjectLookup.by_id(attributes['object_id']) if attributes['object_id'].present?
+    attributes['type']   = TypeLookup.by_id(attributes['type_id']) if attributes['type_id'].present?
+
+    attributes
+  end
 end
