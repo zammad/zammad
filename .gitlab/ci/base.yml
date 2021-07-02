@@ -68,41 +68,52 @@
   name: redis:latest
   alias: redis
 
+.docker_memcached: &docker_memcached
+  name: memcached:latest
+  alias: memcached
+  command: ["memcached", "-m", "256M"]
+
  # service templates
 .services_mysql: &services_mysql
   services:
     - <<: *docker_mysql
 
-.services_mysql_redis: &services_mysql_redis
+.services_mysql_redis_memcached: &services_mysql_redis_memcached
   variables:
     REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_redis
+    - <<: *docker_memcached
 
 .services_postgresql: &services_postgresql
   services:
     - <<: *docker_postgresql
 
-.services_postgresql_redis: &services_postgresql_redis
+.services_postgresql_redis_memcached: &services_postgresql_redis_memcached
   variables:
     REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_postgresql
     - <<: *docker_redis
+    - <<: *docker_memcached
 
 .services_mysql_postgresql: &services_mysql_postgresql
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
 
-.services_mysql_postgresql_redis: &services_mysql_postgresql_redis
+.services_mysql_postgresql_redis_memcached: &services_mysql_postgresql_redis_memcached
   variables:
     REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_redis
+    - <<: *docker_memcached
 
 .services_postgresql_selenium: &services_postgresql_selenium
   services:
@@ -133,10 +144,11 @@
     - <<: *docker_selenium
     - <<: *docker_imap
 
-.services_mysql_postgresql_elasticsearch_selenium_imap_redis: &services_mysql_postgresql_elasticsearch_selenium_imap_redis
+.services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     ELASTICSEARCH_TAG: 'stable'
     REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -144,6 +156,7 @@
     - <<: *docker_selenium
     - <<: *docker_imap
     - <<: *docker_redis
+    - <<: *docker_memcached
 
 # we need at least one job to store and include this template
 # but we skip this via 'only' -> 'variables' -> '$IGNORE'

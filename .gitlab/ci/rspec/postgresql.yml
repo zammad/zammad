@@ -1,11 +1,11 @@
 rspec:postgresql:
   stage: test
   extends:
-    - .services_postgresql_redis
+    - .services_postgresql_redis_memcached
     - .template_rspec
 
 rspec:postgresql:db_reset:
   stage: test
   extends:
-    - .services_postgresql_redis
+    - .services_postgresql_redis_memcached
     - .template_rspec_db_reset

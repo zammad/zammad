@@ -15,7 +15,7 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis
+    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "test"
   script:

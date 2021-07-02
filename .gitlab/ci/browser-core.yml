@@ -19,7 +19,7 @@ include:
     - .env_base
     - .variables_es
     - .variables_app_restart_cmd
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis
+    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "production"
   script:
@@ -53,7 +53,7 @@ include:
   extends:
     - .env_base
     - .variables_app_restart_cmd
-    - .services_mysql_postgresql_redis
+    - .services_mysql_postgresql_redis_memcached
   variables:
     RAILS_ENV: "production"
 
@@ -63,7 +63,7 @@ include:
   extends:
     - .env_base
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis
+    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "test"
     REDIS_URL: "redis://redis:6379"

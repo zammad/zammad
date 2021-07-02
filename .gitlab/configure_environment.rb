@@ -23,15 +23,28 @@ class ConfigureEnvironment
 
   def self.configure_redis
     if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank
-      puts 'Redis is not available, using File as web socket session back end.'
+      puts 'Redis is not available, using File as web socket session store.'
       return
     end
     if [true, false].sample
-      puts 'Using Redis as web socket session back end.'
+      puts 'Using Redis as web socket session store.'
       return
     end
-    puts 'Using File as web socket session back end.'
+    puts 'Using File as web socket session store.'
     @env_file_content += "unset REDIS_URL\n"
+  end
+
+  def self.configure_memcached
+    if ENV['MEMCACHE_SERVERS'].nil? || ENV['MEMCACHE_SERVERS'].empty? # rubocop:disable Rails/Blank
+      puts 'Memcached is not available, using File as Rails cache store.'
+      return
+    end
+    if [true, false].sample
+      puts 'Using memcached as Rails cache store.'
+      return
+    end
+    puts "Using Zammad's file store as Rails cache store."
+    @env_file_content += "unset MEMCACHE_SERVERS\n"
   end
 
   def self.configure_database # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -103,6 +116,7 @@ class ConfigureEnvironment
 
   def self.run
     configure_redis
+    configure_memcached
     configure_database
     write_env_file
   end
