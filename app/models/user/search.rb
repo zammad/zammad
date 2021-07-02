@@ -91,6 +91,8 @@ returns
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
 
+        is_query = query.present? && query != '*'
+
         # lookup for roles of permission
         if params[:permissions].present?
           params[:role_ids] ||= []
@@ -99,7 +101,7 @@ returns
         end
 
         # try search index backend
-        if SearchIndexBackend.enabled?
+        if SearchIndexBackend.enabled? && is_query
           query_extension = {}
           if params[:role_ids].present?
             query_extension['bool'] ||= {}
@@ -162,12 +164,15 @@ returns
                       end
         end
 
-        statement.where(
-          '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-        )
-        .order(Arel.sql(order_sql))
-        .offset(offset)
-        .limit(limit)
+        if is_query
+          statement = statement.where(
+            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+          )
+        end
+
+        statement.order(Arel.sql(order_sql))
+          .offset(offset)
+          .limit(limit)
       end
     end
   end

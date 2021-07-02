@@ -179,8 +179,20 @@ class User extends App.ControllerSubContent
         navupdate: '#users'
       genericObject: 'User'
       container: @el.closest('.content')
-      callback: @search
+      callback: @newUserAddedCallback
     )
+
+  # GitHub Issue #3050
+  # resets search input value to empty after new user added
+  # resets any active role tab
+  newUserAddedCallback: =>
+    @searchInput.val('')
+    @query = ''
+    @resetActiveTabs()
+    @search()
+
+  resetActiveTabs: ->
+    @$('.tab.active').removeClass('active')
 
   import: (e) ->
     e.preventDefault()

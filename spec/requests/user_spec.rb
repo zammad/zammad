@@ -1434,6 +1434,37 @@ RSpec.describe 'User', type: :request do
     end
   end
 
+  describe 'GET /api/v1/users/search, checks ES Usage', searchindex: true, authenticated_as: :agent do
+    let!(:agent) { create(:agent) }
+
+    def make_request(params)
+      get '/api/v1/users/search', params: params, as: :json
+    end
+
+    before do
+      # create some users that can be found
+      create(:agent, firstname: 'Test-Agent1')
+      create(:agent, firstname: 'Test-Agent2')
+
+      configure_elasticsearch(rebuild: true)
+    end
+
+    it 'uses elasticsearch when query is non empty' do
+      # Check if ES is used
+      allow(SearchIndexBackend).to receive(:search)
+
+      make_request(query: 'Test')
+      expect(SearchIndexBackend).to have_received(:search)
+    end
+
+    it 'does not uses elasticsearch when query is empty' do
+      allow(SearchIndexBackend).to receive(:search)
+
+      make_request(query: '')
+      expect(SearchIndexBackend).not_to have_received(:search)
+    end
+  end
+
   describe 'POST /api/v1/users/avatar', authenticated_as: :user do
     let(:user) { create(:user) }
     let(:base64) { 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }

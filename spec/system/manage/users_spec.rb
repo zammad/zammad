@@ -50,4 +50,27 @@ RSpec.describe 'Manage > Users', type: :system do
       expect(page).to have_text("Zammad looks like this for \"#{user.firstname} #{user.lastname}\"", wait: 10)
     end
   end
+
+  # Fixes GitHub Issue #3050 - Newly created users are only shown in the admin interface after reload
+  describe 'adding a new user', authenticated_as: -> { user } do
+    let(:user) { create(:admin) }
+
+    it 'newly added user is visible in the user list' do
+      visit '#manage/users'
+
+      within(:active_content) do
+        find('[data-type=new]').click
+
+        find('[name=firstname]').fill_in with: 'NewTestUserFirstName'
+        find('[name=lastname]').fill_in with: 'User'
+        find('span.label-text', text: 'Customer').first(:xpath, './/..').click
+
+        click '.js-submit'
+
+        expect(page).to have_css('table.user-list td', text: 'NewTestUserFirstName')
+      end
+
+    end
+
+  end
 end
