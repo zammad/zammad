@@ -15,6 +15,7 @@ module ApplicationController::HandlesDevices
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
     return true if params[:controller] == 'init' # do no device logging on static initial page
     return true if switched_from_user_id
+    return true if current_user_on_behalf # do no device logging for the user on behalf feature
     return true if !user
     return true if !user.permissions?('user_preferences.device')
     return true if type == 'SSO'
@@ -40,6 +41,7 @@ module ApplicationController::HandlesDevices
 
     # if ip has not changed and ttl in still valid
     remote_ip = ENV['TEST_REMOTE_IP'] || request.remote_ip
+
     return true if time_to_check == false && session[:user_device_remote_ip] == remote_ip
 
     session[:user_device_remote_ip] = remote_ip
