@@ -6,6 +6,7 @@ RSpec.describe OnlineNotification, type: :request do
 
   let(:admin) { create(:admin, groups: Group.all) }
   let(:agent) { create(:agent, groups: Group.all) }
+  let(:user_id) { user.id }
 
   let(:type_lookup_id) { TypeLookup.by_name('create') }
   let(:object_lookup_id) { ObjectLookup.by_name('User') }
@@ -36,7 +37,7 @@ RSpec.describe OnlineNotification, type: :request do
       end
     end
 
-    shared_examples 'for notification id' do
+    shared_examples 'for notification id in array' do
       it 'has a notification id' do
         get path, params: {}, as: :json
 
@@ -44,11 +45,59 @@ RSpec.describe OnlineNotification, type: :request do
       end
     end
 
-    shared_examples 'for object attribute' do
-      it 'has a object attribute' do
+    shared_examples 'for notification id in hash' do
+      it 'has a notification id' do
         get path, params: {}, as: :json
 
-        expect(json_response[0]['object']).to be_a_kind_of(String)
+        expect(json_response['id']).to be online_notification.id
+      end
+    end
+
+    shared_examples 'for user id in array' do
+      it 'has a user id' do
+        get path, params: {}, as: :json
+
+        expect(json_response[0]['user_id']).to eq(user_id)
+      end
+    end
+
+    shared_examples 'for user id in hash' do
+      it 'has a user id' do
+        get path, params: {}, as: :json
+
+        expect(json_response['user_id']).to eq(user_id)
+      end
+    end
+
+    shared_examples 'for object lookup id in array' do
+      it 'has a object lookup id' do
+        get path, params: {}, as: :json
+
+        expect(json_response[0]['object_lookup_id']).to eq(object_lookup_id)
+      end
+    end
+
+    shared_examples 'for object lookup id in hash' do
+      it 'has a object lookup' do
+        get path, params: {}, as: :json
+
+        expect(json_response['object_lookup_id']).to eq(object_lookup_id)
+      end
+    end
+
+    shared_examples 'for type lookup id in array' do
+      it 'has a type lookup id' do
+        get path, params: {}, as: :json
+
+        expect(json_response[0]['type_lookup_id']).to eq(type_lookup_id)
+      end
+    end
+
+    shared_examples 'for type lookup id in hash' do
+      it 'has a type lookup' do
+        get path, params: {}, as: :json
+
+        expect(json_response['type_lookup_id']).to eq(type_lookup_id)
       end
     end
 
@@ -67,21 +116,12 @@ RSpec.describe OnlineNotification, type: :request do
       context 'when online notifications is requested' do
         let(:path) { '/api/v1/online_notifications' }
 
-        it 'has an object lookup id' do
-          get path, params: {}, as: :json
-
-          expect(json_response[0]['object_lookup_id']).to be_a_kind_of(Integer)
-        end
-
-        it 'has a type lookup id' do
-          get path, params: {}, as: :json
-
-          expect(json_response[0]['type_lookup_id']).to be_a_kind_of(Integer)
-        end
-
         include_examples 'for successful request'
         include_examples 'for array response'
-        include_examples 'for notification id'
+        include_examples 'for notification id in array'
+        include_examples 'for user id in array'
+        include_examples 'for object lookup id in array'
+        include_examples 'for type lookup id in array'
       end
 
       context 'when online notifications is requested with full params' do
@@ -106,14 +146,21 @@ RSpec.describe OnlineNotification, type: :request do
         it 'has a type attribute' do
           get path, params: {}, as: :json
 
-          expect(json_response[0]['type']).to be_a_kind_of(String)
+          expect(json_response[0]['type']).to eq('create')
+        end
+
+        it 'has a object attribute' do
+          get path, params: {}, as: :json
+
+          expect(json_response[0]['object']).to eq('User')
         end
 
         include_examples 'for successful request'
         include_examples 'for array response'
-        include_examples 'for object attribute'
-        include_examples 'for notification id'
-
+        include_examples 'for notification id in array'
+        include_examples 'for user id in array'
+        include_examples 'for object lookup id in array'
+        include_examples 'for type lookup id in array'
       end
     end
 
@@ -123,26 +170,12 @@ RSpec.describe OnlineNotification, type: :request do
       context 'when specific online notifications is requested' do
         let(:path) { "/api/v1/online_notifications/#{online_notification.id}" }
 
-        it 'has a notification id' do
-          get path, params: {}, as: :json
-
-          expect(json_response['id']).to be online_notification.id
-        end
-
-        it 'has a type lookup id' do
-          get path, params: {}, as: :json
-
-          expect(json_response['type_lookup_id']).to be_a_kind_of(Integer)
-        end
-
-        it 'has an object lookup id' do
-          get path, params: {}, as: :json
-
-          expect(json_response['object_lookup_id']).to be_a_kind_of(Integer)
-        end
-
         include_examples 'for successful request'
         include_examples 'for hash response'
+        include_examples 'for notification id in hash'
+        include_examples 'for user id in hash'
+        include_examples 'for object lookup id in hash'
+        include_examples 'for type lookup id in hash'
       end
 
       context 'when specific online notifications is requested with full params' do
@@ -165,23 +198,21 @@ RSpec.describe OnlineNotification, type: :request do
         it 'has a type attribute' do
           get path, params: {}, as: :json
 
-          expect(json_response['type']).to be_a_kind_of(String)
+          expect(json_response['type']).to eq('create')
         end
 
         it 'has a object attribute' do
           get path, params: {}, as: :json
 
-          expect(json_response['object']).to be_a_kind_of(String)
-        end
-
-        it 'has a notification id' do
-          get path, params: {}, as: :json
-
-          expect(json_response['id']).to be online_notification.id
+          expect(json_response['object']).to eq('User')
         end
 
         include_examples 'for successful request'
         include_examples 'for hash response'
+        include_examples 'for notification id in hash'
+        include_examples 'for user id in hash'
+        include_examples 'for object lookup id in hash'
+        include_examples 'for type lookup id in hash'
       end
 
     end
@@ -212,7 +243,7 @@ RSpec.describe OnlineNotification, type: :request do
       let(:user) { create(:admin, groups: Group.all) }
 
       let(:online_notification) do
-        create(:online_notification, o_id: admin.id, user_id: user.id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
+        create(:online_notification, o_id: admin.id, user_id: user_id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
       end
 
       let(:different_online_notification) do
@@ -230,7 +261,7 @@ RSpec.describe OnlineNotification, type: :request do
       let(:user) { create(:agent, groups: Group.all) }
 
       let(:online_notification) do
-        create(:online_notification, o_id: admin.id, user_id: user.id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
+        create(:online_notification, o_id: admin.id, user_id: user_id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
       end
 
       let(:different_online_notification) do
@@ -248,7 +279,7 @@ RSpec.describe OnlineNotification, type: :request do
       let(:user) { create(:customer) }
 
       let(:online_notification) do
-        create(:online_notification, o_id: user.id, user_id: user.id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
+        create(:online_notification, o_id: user_id, user_id: user_id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
       end
 
       let(:different_online_notification) do
