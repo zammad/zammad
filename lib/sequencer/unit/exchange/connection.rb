@@ -11,6 +11,7 @@ class Sequencer
         private
 
         def ews_connection
+          require 'viewpoint' # Only load this gem when it is really used.
           Viewpoint::EWSClient.new(
             config[:endpoint],
             config[:user],

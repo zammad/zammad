@@ -15,6 +15,7 @@ class Sequencer
             end
 
             def resource_collection
+              require 'zendesk_api' # Only load this gem when it is really used.
               @resource_collection ||= "::ZendeskAPI::#{resource_klass}".constantize.incremental_export(client, 1)
             end
 

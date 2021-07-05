@@ -142,6 +142,7 @@ class Channel::Driver::Sms::Twilio
   private
 
   def api(options)
+    require 'twilio-ruby'  # Only load this gem when it is really used.
     @api ||= ::Twilio::REST::Client.new options[:account_id], options[:token]
   end
 end

@@ -7,6 +7,7 @@ class Integration::ExchangeController < ApplicationController
 
   def autodiscover
     answer_with do
+      require 'autodiscover' # Only load this gem when it is really used.
       client = Autodiscover::Client.new(
         email:    params[:user],
         password: params[:password],

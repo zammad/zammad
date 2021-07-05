@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
+require 'viewpoint' # Only load this gem when it is really used.
 
 RSpec.describe Import::Exchange::Folder do
   # see https://github.com/zammad/zammad/issues/2152

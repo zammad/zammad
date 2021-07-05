@@ -45,7 +45,7 @@ gem 'pundit'
 gem 'rszr', '0.5.2'
 
 # performance - Memcached
-gem 'dalli'
+gem 'dalli', require: false
 
 # asset handling - coffee-script
 gem 'coffee-rails'
@@ -95,7 +95,6 @@ gem 'omniauth-weibo-oauth2'
 gem 'gmail_xoauth'
 gem 'koala'
 gem 'telegramAPI'
-# Updating twitter to 'master' seems to break things, so freeze the revision for now.
 gem 'twitter'
 
 # channels - email additions
@@ -112,7 +111,7 @@ gem 'biz'
 gem 'diffy'
 
 # feature - excel output
-gem 'writeexcel'
+gem 'writeexcel', require: false
 
 # feature - device logging
 gem 'browser'
@@ -125,21 +124,20 @@ gem 'icalendar-recurrence'
 gem 'telephone_number'
 
 # feature - SMS
-gem 'twilio-ruby'
+gem 'twilio-ruby', require: false
 
 # feature - ordering
 gem 'acts_as_list'
 
 # integrations
-gem 'clearbit'
+gem 'clearbit', require: false
 gem 'net-ldap'
-gem 'slack-notifier'
-gem 'zendesk_api'
+gem 'slack-notifier', require: false
+gem 'zendesk_api', require: false
 
 # integrations - exchange
-gem 'autodiscover', git: 'https://github.com/zammad-deps/autodiscover'
-gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm'
-gem 'viewpoint'
+gem 'autodiscover', git: 'https://github.com/zammad-deps/autodiscover', require: false
+gem 'viewpoint', require: false
 
 # integrations - S/MIME
 gem 'openssl'
@@ -218,6 +216,9 @@ group :development, :test do
 
   # refresh ENVs in CI environment
   gem 'dotenv', require: false
+
+  # Slack helper for testing
+  gem 'slack-ruby-client', require: false
 end
 
 # Want to extend Zammad with additional gems?

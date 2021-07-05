@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
+require 'zendesk_api' # Only load this gem when it is really used.
+
 RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
   describe 'error handling' do
     before do

@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/wimm/rubyntlm
-  revision: 53969639b87b9e5d5fef560f19cf0d977259591c
-  specs:
-    rubyntlm (0.1.2)
-
-GIT
   remote: https://github.com/zammad-deps/autodiscover
   revision: ee9b53dfa797ce6d4f970b82beea7fbdd2df56bb
   specs:
@@ -228,6 +222,8 @@ GEM
       faraday (>= 0.8)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     ffi (1.15.3)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -243,6 +239,7 @@ GEM
       octokit (~> 4.6)
       rainbow (>= 2.2.1)
       rake (>= 10.0)
+    gli (2.20.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     gmail_xoauth (0.4.2)
@@ -525,6 +522,7 @@ GEM
       nokogiri (>= 1.10.5)
       rexml
     ruby2_keywords (0.0.4)
+    rubyntlm (0.6.3)
     rubyzip (2.3.0)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -553,6 +551,12 @@ GEM
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.3)
     slack-notifier (2.4.0)
+    slack-ruby-client (0.17.0)
+      faraday (>= 1.0)
+      faraday_middleware
+      gli
+      hashie
+      websocket-driver
     slop (3.6.0)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
@@ -721,13 +725,13 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  rubyntlm!
   sassc-rails
   selenium-webdriver
   shoulda-matchers
   simplecov
   simplecov-rcov
   slack-notifier
+  slack-ruby-client
   spring
   spring-commands-rspec
   spring-commands-testunit

@@ -168,6 +168,7 @@ class Transaction::Slack
 
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
 
+      require 'slack-notifier' # Only load this gem when it is really used.
       notifier = Slack::Notifier.new(
         local_config['webhook'],
         channel:     local_config['channel'],
