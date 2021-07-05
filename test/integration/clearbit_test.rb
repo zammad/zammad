@@ -273,11 +273,11 @@ class ClearbitTest < ActiveSupport::TestCase
       'San Francisco, CA, USA',
       'San Francisco, CA 94103, USA',
       '90 Sheridan St, San Francisco, CA 94103, USA',
+      '90 Sheridan, San Francisco, CA 94103, USA',
       '3030 16th St, San Francisco, CA 94103, USA',
     ]
     assert_includes(sometimes_changing_but_valid_addresses, customer6.address)
-
-    organization6 = Organization.find_by('name LIKE ?', 'APIHub, Inc%')
+    organization6 = Organization.find_by('name LIKE ?', 'APIHub Inc%')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6.id))
     assert_equal(false, organization6.shared)
     assert_equal('The marketing data engine to deeply understand your customers, identify future prospects, &amp; personalize every single marketing &amp; sales interaction.', organization6.note)
