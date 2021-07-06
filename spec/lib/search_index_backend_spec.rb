@@ -69,6 +69,22 @@ RSpec.describe SearchIndexBackend, searchindex: true do
         it { is_expected.to be_an(Array).and not_include(nil).and be_empty }
       end
     end
+
+    context 'search with date that requires time zone conversion', time_zone: 'Europe/Vilnius' do
+      let(:record_type) { 'Ticket'.freeze }
+      let(:record) { create :ticket }
+
+      before do
+        travel_to(Time.zone.parse('2019-01-01 23:33'))
+        described_class.add(record_type, record)
+        described_class.refresh
+      end
+
+      it 'finds record in effective time zone' do
+        result = described_class.search('created_at: [2019-01-01 TO 2019-01-01]', record_type)
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+    end
   end
 
   describe '.append_wildcard_to_simple_query' do
