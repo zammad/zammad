@@ -8,7 +8,7 @@ class Sequencer
           class Conversation < Sequencer::Unit::Import::Freshdesk::Request::Generic
             attr_reader :ticket
 
-            def initialize(*)
+            def initialize(...)
               super
               @ticket = request_params.delete(:ticket)
             end

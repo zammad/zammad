@@ -95,8 +95,9 @@ class TicketsController < ApplicationController
       clean_params[:customer_id] = current_user.id
     end
 
-    # try to create customer if needed
-    if clean_params[:customer_id].present? && clean_params[:customer_id] =~ %r{^guess:(.+?)$}
+    # The parameter :customer_id is 'abused' in cases where it is not an integer, but a string like
+    #   'guess:customers.email@domain.com' which implies that the customer should be looked up.
+    if clean_params[:customer_id].is_a?(String) && clean_params[:customer_id] =~ %r{^guess:(.+?)$}
       email_address = $1
       email_address_validation = EmailAddressValidation.new(email_address)
       if !email_address_validation.valid_format?

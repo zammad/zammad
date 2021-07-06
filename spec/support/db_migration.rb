@@ -117,7 +117,7 @@ module DbMigrationHelper
   #  remove_foreign_key(:online_notifications, :users)
   #
   # @return [nil]
-  def respond_to_missing?(*)
+  def respond_to_missing?(...)
     true
   end
 

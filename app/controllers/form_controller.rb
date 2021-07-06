@@ -146,7 +146,7 @@ class FormController < ApplicationController
 
   # we don't wann to tell what the cause for the authorization error is
   # so we capture the exception and raise an anonymized one
-  def authorize!(*)
+  def authorize!(...)
     super
   rescue Pundit::NotAuthorizedError
     raise Exceptions::Forbidden

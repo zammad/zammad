@@ -11,7 +11,7 @@ RSpec.configure do |config|
       Setting.set('fqdn', "#{host}:#{port}")
 
       # start a silenced Puma as application server
-      Capybara.servers[:puma].call(app, port, host, { Silent: true, Host: '0.0.0.0', Threads: '0:16' })
+      Capybara.servers[:puma].call(app, port, host, Silent: true, Host: '0.0.0.0', Threads: '0:16')
     end
     Capybara.server = :puma_wrapper
 

@@ -36,43 +36,43 @@ class Capybara::Node::Element
 end
 
 module ZammadCapybarActionDelegator
-  def select(*)
+  def select(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def click(*)
+  def click(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def click_on(*)
+  def click_on(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def click_link_or_button(*)
+  def click_link_or_button(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def click_button(*)
+  def click_button(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def select_option(*)
+  def select_option(...)
     super.tap do
       await_empty_ajax_queue
     end
   end
 
-  def send_keys(*)
+  def send_keys(...)
     super.tap do
       await_empty_ajax_queue
     end
@@ -80,31 +80,31 @@ module ZammadCapybarActionDelegator
 end
 
 module ZammadCapybarSelectorDelegator
-  def find_field(*)
+  def find_field(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def find_button(*)
+  def find_button(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def find_by_id(*)
+  def find_by_id(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def find_link(*)
+  def find_link(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def find(*)
+  def find(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def first(*)
+  def first(...)
     ZammadCapybaraElementDelegator.new(element: super, context: self)
   end
 
-  def all(*)
+  def all(...)
     super.map { |element| ZammadCapybaraElementDelegator.new(element: element, context: self) }
   end
 end
@@ -131,7 +131,7 @@ module CapybaraCustomExtensions
   include ZammadCapybarActionDelegator
   include ZammadCapybarSelectorDelegator
 
-  def page(*)
+  def page(...)
     ZammadCapybaraSessionDelegator.new(element: super, context: self)
   end
 end

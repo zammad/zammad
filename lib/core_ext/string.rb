@@ -470,8 +470,8 @@ class String
   #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
   #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
   #       invalid byte sequences replaced with "?" characters.
-  def utf8_encode(**options)
-    dup.utf8_encode!(options)
+  def utf8_encode(...)
+    dup.utf8_encode!(...)
   end
 
   def utf8_encode!(**options)

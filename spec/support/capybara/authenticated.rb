@@ -18,6 +18,6 @@ RSpec.configure do |config|
     authenticated = example.metadata.fetch(:authenticated_as, true)
     credentials   = authenticated_as_get_user(authenticated, return_type: :credentials)
 
-    login(credentials) if credentials
+    login(**credentials) if credentials
   end
 end

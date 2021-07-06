@@ -93,7 +93,7 @@ RSpec.shared_examples 'ApplicationModel::CanLookup' do
                   expect { instance.update(attribute => new_attribute_val) }
                     .to change { described_class.cache_get(old_attribute_val) }.to(nil)
 
-                  expect { described_class.lookup({ attribute => instance.send(attribute) }) }
+                  expect { described_class.lookup(attribute => instance.send(attribute)) }
                     .to change { described_class.cache_get(new_attribute_val) }.to(instance)
                 end
               end

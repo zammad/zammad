@@ -20,8 +20,8 @@ class Sequencer
   #  )
   #
   # @return [Hash{Symbol => Object}] the final result state attributes and values
-  def self.process(sequence, *args)
-    new(sequence, *args).process
+  def self.process(sequence, **args)
+    new(sequence, **args).process
   end
 
   # Provides the log level definition for the requested Sequencer component.

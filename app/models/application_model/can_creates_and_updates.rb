@@ -41,7 +41,7 @@ returns
 
       raise ArgumentError, 'Need name, login, email or locale for create_or_update()' if attr.nil?
 
-      record = case_sensitive_find_by(data.slice(attr))
+      record = case_sensitive_find_by(**data.slice(attr))
       record.nil? ? create(data) : record.tap { |r| r.update(data) }
     end
 

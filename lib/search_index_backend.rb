@@ -946,7 +946,7 @@ helper method for making HTTP calls and raising error if response was not succes
 =end
 
   def self.make_request_and_validate(url, **args)
-    response = make_request(url, args)
+    response = make_request(url, **args)
 
     return true if response.success?
 

@@ -59,7 +59,7 @@ returns
         raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
       end
 
-      header, *rows = ::CSV.parse(data[:string], data[:parse_params])
+      header, *rows = ::CSV.parse(data[:string], **data[:parse_params])
 
       header&.each do |column|
         column.try(:strip!)
@@ -117,7 +117,7 @@ returns
           record = (lookup_keys & attributes.keys).lazy.map do |lookup_key|
             params = attributes.slice(lookup_key)
             params.transform_values!(&:downcase) if lookup_key.in?(%i[email login])
-            lookup(params)
+            lookup(**params)
           end.detect(&:present?)
 
           if record&.in?(records)
@@ -296,7 +296,7 @@ returns
         end
         rows_to_add = []
       end
-      ::CSV.generate(params) do |csv|
+      ::CSV.generate(**params) do |csv|
         csv << header
         rows.each do |row|
           csv << row

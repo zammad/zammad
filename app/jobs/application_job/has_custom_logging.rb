@@ -13,7 +13,7 @@ class ApplicationJob
     class LogSubscriber < ActiveJob::Logging::LogSubscriber
 
       # ATTENTION: Uncomment this line to enable info logging again
-      def info(*); end
+      def info(...); end
 
       def enqueue(event)
         super if job_enqueued?(event)

@@ -29,7 +29,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
     options[:url]     = ENV['REMOTE_URL']
   end
 
-  Capybara::Selenium::Driver.new(app, options)
+  Capybara::Selenium::Driver.new(app, **options)
 end
 
 Capybara.register_driver(:zammad_firefox) do |app|
@@ -54,5 +54,5 @@ Capybara.register_driver(:zammad_firefox) do |app|
     options[:url]     = ENV['REMOTE_URL']
   end
 
-  Capybara::Selenium::Driver.new(app, options)
+  Capybara::Selenium::Driver.new(app, **options)
 end

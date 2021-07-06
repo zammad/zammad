@@ -5,7 +5,7 @@ class Channel::Driver::Null
     false
   end
 
-  def fetch(*)
+  def fetch(...)
     {
       result:  'ok',
       fetched: 0,
