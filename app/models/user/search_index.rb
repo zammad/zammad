@@ -6,6 +6,7 @@ class User
 
     def search_index_attribute_lookup(include_references: true)
       attributes = super
+      attributes['fullname'] = fullname
       attributes.delete('password')
 
       if include_references

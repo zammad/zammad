@@ -25,12 +25,27 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       let(:record) { create :ticket }
 
       before do
-        described_class.add(record_type, record)
+        record.search_index_update_backend
         described_class.refresh
       end
 
       it 'finds added records' do
         result = described_class.search(record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+    end
+
+    context 'when search for user firstname + double lastname' do
+      let(:record_type) { 'User'.freeze }
+      let(:record) { create :user, login: 'a', email: 'a@a.de', firstname: 'AnFirst', lastname: 'ASplit Lastname' }
+
+      before do
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      it 'finds user record' do
+        result = described_class.search('AnFirst ASplit Lastname', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
