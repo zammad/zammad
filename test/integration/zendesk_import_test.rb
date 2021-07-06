@@ -39,13 +39,13 @@ class ZendeskImportTest < ActiveSupport::TestCase
       },
       Users:         {
         skipped:     0,
-        created:     141,
+        created:     142,
         updated:     1,
         unchanged:   0,
         failed:      0,
         deactivated: 0,
-        sum:         142,
-        total:       142
+        sum:         143,
+        total:       143
       },
       Organizations: {
         skipped:     0,
@@ -74,7 +74,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
   # check count of imported items
   test 'check counts' do
-    assert_equal(144, User.count, 'users')
+    assert_equal(145, User.count, 'users')
     assert_equal(3, Group.count, 'groups')
     assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
@@ -97,7 +97,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks = [
       {
-        id:     144,
+        id:     145,
         data:   {
           firstname:     'Bob Smith',
           lastname:      'Smith',
