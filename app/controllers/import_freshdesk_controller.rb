@@ -14,9 +14,12 @@ class ImportFreshdeskController < ApplicationController
       return
     end
 
-    response = UserAgent.request(params[:url])
+    endpoint = "#{params[:url]}/api/v2"
+    endpoint.gsub!(%r{([^:])//+}, '\\1/')
 
-    if !response.success?
+    response = UserAgent.request("#{endpoint}/contacts")
+
+    if response.header.nil? || !response.header['x-freshdesk-api-version']
       render json: {
         result:        'invalid',
         message_human: url_check_human_error_message(response.error.to_s),
@@ -24,18 +27,6 @@ class ImportFreshdeskController < ApplicationController
       }
       return
     end
-
-    # Check if maybe a redirect is implemented.
-    if !response.body.match?(%r{#{params[:url]}})
-      render json: {
-        result:        'invalid',
-        message_human: 'Hostname not found!',
-      }
-      return
-    end
-
-    endpoint = "#{params[:url]}/api/v2"
-    endpoint.gsub!(%r{([^:])//+}, '\\1/')
 
     Setting.set('import_freshdesk_endpoint', endpoint)
 
