@@ -158,6 +158,15 @@
     - <<: *docker_redis
     - <<: *docker_memcached
 
+.rules_integration_manual_start: &rules_integration_manual_start
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS == null'
+      when: manual
+      allow_failure: true
+    - when: on_success
+
 # we need at least one job to store and include this template
 # but we skip this via 'only' -> 'variables' -> '$IGNORE'
 # $IGNORE is not defined
