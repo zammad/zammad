@@ -292,6 +292,7 @@ GEM
       ice_cube (~> 0.16)
     ice_cube (0.16.3)
     inflection (1.0.0)
+    iniparse (1.5.0)
     interception (0.5)
     json (2.5.1)
     jwt (2.2.3)
@@ -392,14 +393,15 @@ GEM
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
     openssl (2.2.0)
+    overcommit (0.58.0)
+      childprocess (>= 0.6.3, < 5)
+      iniparse (~> 1.4)
+      rexml (~> 3.2)
     parallel (1.20.1)
     parser (3.0.2.0)
       ast (~> 2.4.1)
     pg (0.21.0)
-    pluginator (1.5.0)
     power_assert (2.0.0)
-    pre-commit (0.39.0)
-      pluginator (~> 1.5)
     protocol-hpack (1.4.2)
     protocol-http (0.22.4)
     protocol-http1 (0.14.1)
@@ -707,8 +709,8 @@ DEPENDENCIES
   omniauth-twitter
   omniauth-weibo-oauth2
   openssl
+  overcommit
   pg (= 0.21.0)
-  pre-commit
   pry-rails
   pry-remote
   pry-rescue

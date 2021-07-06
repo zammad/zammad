@@ -187,7 +187,7 @@ group :development, :test do
 
   # code QA
   gem 'coffeelint'
-  gem 'pre-commit'
+  gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
   gem 'rubocop-performance'

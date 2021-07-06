@@ -1,0 +1,44 @@
+CommitMsg:
+  ALL:
+    enabled: false
+  EmptyMessage:
+    enabled: true
+
+PreCommit:
+  ALL:
+    enabled: false
+  RuboCop:
+    enabled: true
+    on_warn: fail # Treat all warnings as failures
+  CoffeeLint:
+    enabled: true
+    on_warn: fail # Treat all warnings as failures
+
+PostCheckout:
+  ALL:
+    enabled: false
+
+PostCommit:
+  ALL:
+    enabled: false
+
+PostMerge:
+  ALL:
+    enabled: false
+
+PostRewrite:
+  ALL:
+    enabled: false
+
+PrePush:
+  ALL:
+    enabled: false
+
+PreRebase:
+  ALL:
+    enabled: false
+
+PrepareCommitMsg:
+  ALL:
+    enabled: false
+
