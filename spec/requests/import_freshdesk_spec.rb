@@ -18,10 +18,5 @@ RSpec.describe 'ImportFreshdesk', type: :request, set_up: false, authenticated_a
       post endpoint, params: { url: "https://#{ENV['IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN']}.freshdesk.com" }, as: :json
       expect(json_response['result']).to eq('ok')
     end
-
-    it 'check valid subdomain with special configuration (e.g. SSO / OAUTH)' do
-      post endpoint, params: { url: 'https://example.freshdesk.com' }, as: :json
-      expect(json_response['result']).to eq('ok')
-    end
   end
 end
