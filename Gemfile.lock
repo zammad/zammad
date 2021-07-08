@@ -610,7 +610,7 @@ GEM
     unicorn (6.0.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    valid_email2 (3.6.1)
+    valid_email2 (4.0.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
     vcr (6.0.0)
