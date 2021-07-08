@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/contacts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Wed, 07 Jul 2021 12:33:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 401 Unauthorized
+      X-Request-Id:
+      - f01712d8-de54-40e2-b1e4-2284152cab96
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - no-cache
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '42'
+      X-Trace-Id:
+      - 00-90b7c160c67d36cd991c85e8f12f59bc-747f4eda01a0a3c3-00
+      Server:
+      - fwe
+    body:
+      encoding: UTF-8
+      string: '{"code":"invalid_credentials","message":"You have to be logged in to
+        perform this action."}'
+    http_version:
+  recorded_at: Wed, 07 Jul 2021 12:33:47 GMT
+recorded_with: VCR 4.0.0

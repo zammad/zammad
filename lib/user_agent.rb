@@ -453,19 +453,22 @@ returns
         error:   "No such file #{uri}, 404!",
         success: false,
         code:    response.code,
+        header:  response.each_header.to_h,
       )
     when Net::HTTPClientError
       return Result.new(
         error:   "Client Error: #{response.inspect}!",
         success: false,
         code:    response.code,
-        body:    response.body
+        body:    response.body,
+        header:  response.each_header.to_h,
       )
     when Net::HTTPInternalServerError
       return Result.new(
         error:   "Server Error: #{response.inspect}!",
         success: false,
         code:    response.code,
+        header:  response.each_header.to_h,
       )
     when Net::HTTPRedirection
       raise 'Too many redirections for the original URL, halting.' if count <= 0
@@ -483,6 +486,7 @@ returns
         content_type: response['Content-Type'],
         success:      true,
         code:         response.code,
+        header:       response.each_header.to_h,
       )
     end
 
@@ -546,7 +550,7 @@ returns
 
   class Result
 
-    attr_reader :error, :body, :data, :code, :content_type
+    attr_reader :error, :body, :data, :code, :content_type, :header
 
     def initialize(options)
       @success      = options[:success]
@@ -555,6 +559,7 @@ returns
       @code         = options[:code]
       @content_type = options[:content_type]
       @error        = options[:error]
+      @header       = options[:header]
     end
 
     def success?

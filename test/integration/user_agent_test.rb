@@ -23,6 +23,8 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(true, result.success?)
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
+    assert_equal(Hash, result.header.class)
+    assert_equal('application/json; charset=utf-8', result.header['content-type'])
     assert(result.body.include?('"get"'))
     assert(result.body.include?('"123"'))
     assert(result.body.include?('"content_type_requested":null'))

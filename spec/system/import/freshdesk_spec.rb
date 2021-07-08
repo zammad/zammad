@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_as: false do
+RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_as: false, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY] do
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    required_envs = %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY]
-    required_envs.each do |key|
-      skip("NOTICE: Missing environment variable #{key} for test! (Please fill up: #{required_envs.join(' && ')})") if ENV[key].blank?
+    VCR.configure do |c|
+      # The API key is used only inside the base64 encoded Basic Auth string, so mask that as well.
+      c.filter_sensitive_data('<IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>') { Base64.encode64( "#{ENV['IMPORT_FRESHDESK_ENDPOINT_KEY']}:X" ).chomp }
     end
   end
 
