@@ -328,6 +328,10 @@ Lint/UnusedMethodArgument:
 RSpec/NestedGroups:
   Max: 6
 
+RSpec/Rails/AvoidSetupHook:
+  Exclude:
+    - "test/**/*"
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'
