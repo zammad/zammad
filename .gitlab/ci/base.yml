@@ -65,11 +65,11 @@
   alias: mail
 
 .docker_redis: &docker_redis
-  name: redis:latest
+  name: registry.znuny.com/docker/zammad-redis:stable
   alias: redis
 
 .docker_memcached: &docker_memcached
-  name: memcached:latest
+  name: registry.znuny.com/docker/zammad-memcached:stable
   alias: memcached
   command: ["memcached", "-m", "256M"]
 
