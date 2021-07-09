@@ -5,6 +5,8 @@ class Store < ApplicationModel
 
   belongs_to :store_object, class_name: 'Store::Object', optional: true
   belongs_to :store_file,   class_name: 'Store::File', optional: true
+  delegate :content, to: :store_file
+  delegate :provider, to: :store_file
 
   validates :filename, presence: true
 
@@ -142,28 +144,6 @@ remove one attachment from storage
 
 =begin
 
-get content of file
-
-  store = Store.find(store_id)
-  content_as_string = store.content
-
-returns
-
-  content_as_string
-
-=end
-
-  def content
-    file = Store::File.find_by(id: store_file_id)
-    if !file
-      raise "No such file #{store_file_id}!"
-    end
-
-    file.content
-  end
-
-=begin
-
 get content of file in preview size
 
   store = Store.find(store_id)
@@ -239,15 +219,6 @@ returns
 
   def attributes_for_display
     slice :id, :filename, :size, :preferences
-  end
-
-  def provider
-    file = Store::File.find_by(id: store_file_id)
-    if !file
-      raise "No such file #{store_file_id}!"
-    end
-
-    file.provider
   end
 
   RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i.freeze
