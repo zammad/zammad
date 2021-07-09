@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TicketSelectorTest < ActiveSupport::TestCase
 
-  before do
+  setup do
     @group = Group.create_or_update(
       name:          'SelectorTest',
       updated_at:    '2015-02-05 16:37:00',

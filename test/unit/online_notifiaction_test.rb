@@ -4,7 +4,7 @@ require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
 
-  before do
+  setup do
     role = Role.lookup(name: 'Agent')
     @group = Group.create_or_update(
       name:          'OnlineNotificationTest',

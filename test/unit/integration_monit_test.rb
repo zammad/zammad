@@ -7,7 +7,7 @@ class IntegrationMonitTest < ActiveSupport::TestCase
   # according
   # https://mmonit.com/monit/documentation/#ALERT-MESSAGES
 
-  before do
+  setup do
     Setting.set('monit_integration', true)
     Setting.set('monit_sender', 'monit@monitoring.example.com')
   end

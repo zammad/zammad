@@ -4,7 +4,7 @@ require 'test_helper'
 require 'net/imap'
 
 class EmailKeepOnServerTest < ActiveSupport::TestCase
-  before do
+  setup do
 
     if ENV['KEEP_ON_MAIL_SERVER'].blank?
       raise "Need KEEP_ON_MAIL_SERVER as ENV variable like export KEEP_ON_MAIL_SERVER='mx.example.com'"

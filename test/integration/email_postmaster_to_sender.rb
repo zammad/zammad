@@ -5,7 +5,7 @@ require 'net/imap'
 
 class EmailPostmasterToSender < ActiveSupport::TestCase
 
-  before do
+  setup do
     Setting.set('postmaster_max_size', 0.1)
 
     @test_id = rand(999_999_999)

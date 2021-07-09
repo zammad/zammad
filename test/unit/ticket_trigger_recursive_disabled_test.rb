@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
 
-  before do
+  setup do
     Setting.set('ticket_trigger_recursive', false)
   end
 

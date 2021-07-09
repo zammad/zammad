@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
-  before do
+  setup do
     Setting.set('timezone_default', 'Europe/Berlin')
     Trigger.create_or_update(
       name:                 'auto reply - new ticket',

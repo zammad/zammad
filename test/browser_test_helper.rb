@@ -24,7 +24,7 @@ class TestCase < ActiveSupport::TestCase
 
   DEBUG = true
 
-  before do
+  setup do
     # print current test case to STDOUT
     # for status reasoning and debugging purposes
     source_location  = self.class.instance_method(method_name).source_location

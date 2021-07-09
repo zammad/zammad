@@ -5,7 +5,7 @@ require 'webmock/minitest'
 
 class GeoLocationTest < ActiveSupport::TestCase
 
-  before do
+  setup do
     @mock = true
     #WebMock.allow_net_connect!
   end

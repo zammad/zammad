@@ -7,7 +7,7 @@ class IntegrationNagiosTest < ActiveSupport::TestCase
   # according
   # https://github.com/NagiosEnterprises/nagioscore/blob/754218e67653929a58938b99ef6b6039b6474fe4/sample-config/template-object/commands.cfg.in#L35
 
-  before do
+  setup do
     Setting.set('nagios_integration', true)
     Setting.set('nagios_sender', 'nagios2@monitoring.example.com')
   end
