@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
 
-  setup do
+  before do
 
     # exit all threads
     Thread.list.each do |thread|

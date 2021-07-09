@@ -9,7 +9,7 @@ class IntegrationIcingaTest < ActiveSupport::TestCase
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#host-states
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
 
-  setup do
+  before do
     Setting.set('icinga_integration', true)
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
   end

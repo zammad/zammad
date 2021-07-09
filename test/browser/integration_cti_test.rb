@@ -3,7 +3,7 @@
 require 'browser_test_helper'
 
 class IntegrationCtiTest < TestCase
-  setup do
+  before do
     if !ENV['CTI_TOKEN']
       raise "ERROR: Need CTI_TOKEN - hint CTI_TOKEN='some_token'"
     end

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
 
-  setup do
+  before do
     EmailAddress.create_or_update(
       channel_id:    1,
       realname:      'My System',

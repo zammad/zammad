@@ -25,7 +25,7 @@ class ActiveSupport::TestCase
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
 
-  setup do
+  before do
 
     # clear cache
     Cache.clear

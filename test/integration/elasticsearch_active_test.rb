@@ -5,7 +5,7 @@ require 'test_helper'
 class ElasticsearchActiveTest < ActiveSupport::TestCase
   include SearchindexHelper
 
-  setup do
+  before do
 
     configure_elasticsearch(required: true)
 

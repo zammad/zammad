@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TicketTest < ActiveSupport::TestCase
 
-  setup do
+  before do
     Ticket.destroy_all
   end
 

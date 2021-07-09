@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ActivityStreamTest < ActiveSupport::TestCase
 
-  setup do
+  before do
     roles = Role.where(name: %w[Admin Agent])
     groups = Group.where(name: 'Users')
     @admin_user = User.create_or_update(

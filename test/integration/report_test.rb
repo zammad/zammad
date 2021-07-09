@@ -5,7 +5,7 @@ require 'integration_test_helper'
 class ReportTest < ActiveSupport::TestCase
   include SearchindexHelper
 
-  setup do
+  before do
 
     # create attribute
     ObjectManager::Attribute.add(

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ChatTest < ActiveSupport::TestCase
 
-  setup do
+  before do
     groups = Group.all
     roles  = Role.where(name: %w[Agent])
     @agent1 = User.create!(

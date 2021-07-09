@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
-  setup do
+  before do
     Group.create_or_update(
       name:               'LastOwnerUpdate',
       email_address:      EmailAddress.first,

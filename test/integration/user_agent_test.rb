@@ -6,7 +6,7 @@ class UserAgentTest < ActiveSupport::TestCase
   host = 'https://web-test.dc.zammad.com'
   #host = 'http://127.0.0.1:3003'
 
-  setup do
+  before do
     if ENV['ZAMMAD_PROXY_TEST'] == 'true'
       Setting.set('proxy', ENV['ZAMMAD_PROXY'])
       Setting.set('proxy_username', ENV['ZAMMAD_PROXY_USERNAME'])
