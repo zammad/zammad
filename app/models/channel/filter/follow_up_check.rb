@@ -123,7 +123,7 @@ module Channel::Filter::FollowUpCheck
       article = message_id_article(message_id)
       next if article.blank?
 
-      Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
+      Rails.logger.debug { "Follow up for '##{article.ticket.number}' in references." }
       mail[:'x-zammad-ticket-id'] = article.ticket_id
       return true
     end

@@ -26,7 +26,7 @@ class Channel::Driver::Sms::Twilio
 
       true
     rescue => e
-      Rails.logger.debug "Twilio error: #{e.inspect}"
+      Rails.logger.debug { "Twilio error: #{e.inspect}" }
       raise e
     end
   end

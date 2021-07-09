@@ -15,7 +15,7 @@ class User
       return if image_source.blank?
       return if image_source.match?(URI::DEFAULT_PARSER.make_regexp(%w[http https]))
 
-      Rails.logger.debug "Removed invalid image source '#{image_source}' for user '#{email}'"
+      Rails.logger.debug { "Removed invalid image source '#{image_source}' for user '#{email}'" }
 
       self.image_source = nil
     end
