@@ -9,5 +9,9 @@ updates:
     open-pull-requests-limit: 5
     pull-request-branch-name:
       separator: "/"
+    commit-message:
+      prefix: "Maintenance:"
     assignees:
       - mg
+    #reviewers: # Broken, see https://gitlab.com/dependabot-gitlab/dependabot-standalone/-/issues/10
+    #  - mg
