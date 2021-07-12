@@ -89,8 +89,6 @@ class Ticket < ApplicationModel
 
   association_attributes_ignored :flags, :mentions
 
-  self.inheritance_column = nil
-
   attr_accessor :callback_loop
 
 =begin

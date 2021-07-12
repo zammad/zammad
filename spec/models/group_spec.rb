@@ -9,6 +9,8 @@ require 'models/concerns/has_ticket_create_screen_impact_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Group, type: :model do
+  subject(:group) { create(:group) }
+
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasObjectManagerAttributesValidation'
