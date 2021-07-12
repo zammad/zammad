@@ -36,6 +36,7 @@ class Channel::Driver::Sms::Twilio
 
     # prevent already created articles
     if Ticket::Article.exists?(message_id: attr[:SmsMessageSid])
+      require 'twilio-ruby' # Only load this gem when it is really used
       return ['application/xml; charset=UTF-8;', Twilio::TwiML::MessagingResponse.new.to_s]
     end
 
@@ -117,6 +118,7 @@ class Channel::Driver::Sms::Twilio
       }
     )
 
+    require 'twilio-ruby'  # Only load this gem when it is really used
     ['application/xml; charset=UTF-8;', Twilio::TwiML::MessagingResponse.new.to_s]
   end
 
