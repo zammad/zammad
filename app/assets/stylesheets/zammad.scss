@@ -13651,6 +13651,12 @@ span.is-disabled {
       }
     }
   }
+
+  &--list {
+    .section-detail {
+      margin-left: 0.2em;
+    }
+  }
 }
 
 .section {
@@ -13668,6 +13674,14 @@ span.is-disabled {
     display: block;
     text-decoration: none;
     color: inherit;
+  }
+
+  &-title {
+    color: #444a4f;
+  }
+
+  &-detail {
+    color: #b4b7b9;
   }
 }
 

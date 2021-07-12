@@ -890,6 +890,10 @@ msgstr ""
 msgid "Answers"
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
+msgid "Answers: %s"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
 msgstr ""

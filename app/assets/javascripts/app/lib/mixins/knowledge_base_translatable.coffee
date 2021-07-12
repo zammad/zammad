@@ -29,17 +29,20 @@ InstanceMethods =
     if @ instanceof App.KnowledgeBase
       attrs.icon  = 'knowledge-base'
       attrs.title = ''
+      attrs.type  = 'base'
 
     if @ instanceof App.KnowledgeBaseCategory
       attrs.iconFont = true
       attrs.icon     = @category_icon
       attrs.count    = @countDeepAnswers()
       attrs.state    = @visibilityState(kb_locale)
+      attrs.type     = 'category'
 
     if @ instanceof App.KnowledgeBaseAnswer
       attrs.icon  = 'knowledge-base-answer'
       attrs.state = @can_be_published_state()
       attrs.tags  = @tags
+      attrs.type  = 'answer'
 
     attrs.icons = {}
 
