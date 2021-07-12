@@ -95,3 +95,10 @@
 
 # Backup files
 *~
+
+# Docker
+/docker
+docker-compose.*
+Dockerfile
+.env
+READY
