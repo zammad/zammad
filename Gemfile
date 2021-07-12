@@ -47,24 +47,27 @@ gem 'rszr', '0.5.2'
 # performance - Memcached
 gem 'dalli', require: false
 
-# asset handling - coffee-script
-gem 'coffee-rails'
-gem 'coffee-script-source'
+# Only load gems for asset compilation if they are needed to avoid
+#   having unneeded runtime dependencies like NodeJS.
+group :assets do
+  # asset handling - javascript execution for e.g. linux
+  gem 'execjs', require: false
 
-# asset handling - frontend templating
-gem 'eco'
+  # asset handling - coffee-script
+  gem 'coffee-rails', require: false
 
-# asset handling - SASS
-gem 'sassc-rails'
+  # asset handling - frontend templating
+  gem 'eco', require: false
 
-# asset handling - pipeline
-gem 'sprockets', '~> 3.7.2'
-gem 'uglifier'
+  # asset handling - SASS
+  gem 'sassc-rails', require: false
 
-gem 'autoprefixer-rails'
+  # asset handling - pipeline
+  gem 'sprockets', '~> 3.7.2', require: false
+  gem 'uglifier', require: false
 
-# asset handling - javascript execution for e.g. linux
-gem 'execjs'
+  gem 'autoprefixer-rails', require: false
+end
 
 # Don't use mini_racer any more for asset compilation.
 #   Instead, use an external node.js binary.

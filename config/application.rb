@@ -12,6 +12,14 @@ Bundler.setup
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Only load gems for asset compilation if they are needed to avoid
+#   having unneeded runtime dependencies like NodeJS.
+if ARGV.include?('assets:precompile') || Rails.groups.exclude?('production')
+  Bundler.load.current_dependencies.select do |dep|
+    require dep.name if dep.groups.include?(:assets)
+  end
+end
+
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
