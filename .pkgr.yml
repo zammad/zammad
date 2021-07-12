@@ -8,7 +8,8 @@ targets:
       - curl
       - elasticsearch
       - nginx
-      - postgresql-server
+      # Only CentOS 7 has the old PostgreSQL 9.2, so explicitly require 9.3 here.
+      - "postgresql-server >= 9.3"
       - which
       - epel-release
       - imlib2
@@ -36,7 +37,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mariadb-server|sqlite
+      - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
     build_dependencies:
@@ -48,7 +49,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mariadb-server|sqlite
+      - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
     build_dependencies:
@@ -60,7 +61,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
     build_dependencies:
@@ -72,7 +73,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
     build_dependencies:
@@ -84,7 +85,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
     build_dependencies:
