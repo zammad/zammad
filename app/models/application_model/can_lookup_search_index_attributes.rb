@@ -3,6 +3,23 @@
 module ApplicationModel::CanLookupSearchIndexAttributes
   extend ActiveSupport::Concern
 
+  class RequestCache < ActiveSupport::CurrentAttributes
+    attribute :integer_attribute_names
+
+    def integer_fields(class_name)
+      self.integer_attribute_names ||= {}
+
+      updated_at = ObjectManager::Attribute.maximum('updated_at')
+      return self.integer_attribute_names[class_name][:data] if self.integer_attribute_names[class_name].present? && self.integer_attribute_names[class_name][:updated_at] == updated_at
+
+      self.integer_attribute_names[class_name] = {
+        updated_at: updated_at,
+        data:       ObjectManager::Attribute.where(object_lookup: ObjectLookup.find_by(name: class_name), data_type: 'integer', editable: true).pluck(:name),
+      }
+      self.integer_attribute_names[class_name][:data]
+    end
+  end
+
 =begin
 
 This function return the attributes for the elastic search with relation hash values.
@@ -51,6 +68,14 @@ returns
 
       # save name of ref object
       attributes[ attribute_ref_name ] = value
+    end
+
+    if self.class.include?(HasObjectManagerAttributesValidation)
+      RequestCache.integer_fields(self.class.to_s).each do |field|
+        next if attributes[field].blank?
+
+        attributes["#{field}_text"] = attributes[field].to_s
+      end
     end
 
     attributes
