@@ -34,17 +34,22 @@ class Sequencer
             private
 
             DATA_TYPE_MAP = {
-              'custom_date'      => 'date',
-              'custom_checkbox'  => 'boolean',
-              'custom_dropdown'  => 'select',
-              'custom_text'      => 'input',
-              'custom_number'    => 'integer',
-              'custom_paragraph' => 'input',
-              'custom_decimal'   => 'input',  # Don't use 'integer' as it would cut off the fractional part.
+              'custom_date'         => 'date',
+              'custom_checkbox'     => 'boolean',
+              'custom_dropdown'     => 'select',
+              'custom_text'         => 'input',
+              'custom_number'       => 'integer',
+              'custom_paragraph'    => 'input',
+              'custom_decimal'      => 'input', # Don't use 'integer' as it would cut off the fractional part.
+              'custom_url'          => 'input',
+              'custom_phone_number' => 'input',
             }.freeze
 
             def data_type
               @data_type ||= DATA_TYPE_MAP[resource['type']]
+              raise "The custom field type '#{resource['type']}' cannot be mapped to an internal field, aborting." if !@data_type
+
+              @data_type
             end
 
             def data_option
@@ -54,7 +59,7 @@ class Sequencer
               }.merge(data_type_options)
             end
 
-            def data_type_options
+            def data_type_options # rubocop:disable Metrics/CyclomaticComplexity
 
               case data_type
               when 'date'
@@ -77,10 +82,23 @@ class Sequencer
                   options: options,
                 }
               when 'input'
-                {
-                  type:      'text',
-                  maxlength: 255,
-                }
+                case resource['type']
+                when 'custom_phone_number'
+                  {
+                    type:      'tel',
+                    maxlength: 100,
+                  }
+                when 'custom_url'
+                  {
+                    type:      'url',
+                    maxlength: 250,
+                  }
+                else
+                  {
+                    type:      'text',
+                    maxlength: 255,
+                  }
+                end
               when 'integer'
                 {
                   min: 0,

@@ -141,6 +141,46 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
       end
     end
 
+    context 'when field is a phone number' do
+      let(:resource) do
+        base_resource.merge(
+          {
+            'name' => 'cf_custom_phone_number',
+            'type' => 'custom_phone_number',
+          }
+        )
+      end
+
+      it 'adds a custom field' do
+        expect { process(process_payload) }.to change(Ticket, :column_names).by(['cf_custom_phone_number'])
+      end
+
+      it 'the custom field has type "tel"' do
+        process(process_payload)
+        expect( ObjectManager::Attribute.find_by(name: 'cf_custom_phone_number').data_option ).to include( 'type' => 'tel' )
+      end
+    end
+
+    context 'when field is an URL' do
+      let(:resource) do
+        base_resource.merge(
+          {
+            'name' => 'cf_custom_url',
+            'type' => 'custom_url',
+          }
+        )
+      end
+
+      it 'adds a custom field' do
+        expect { process(process_payload) }.to change(Ticket, :column_names).by(['cf_custom_url'])
+      end
+
+      it 'the custom field has type "url"' do
+        process(process_payload)
+        expect( ObjectManager::Attribute.find_by(name: 'cf_custom_url').data_option ).to include( 'type' => 'url' )
+      end
+    end
+
     context 'when field is invalid' do
       let(:resource) do
         base_resource.merge(
@@ -152,7 +192,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
       end
 
       it 'raises an error' do
-        expect { process(process_payload) }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { process(process_payload) }.to raise_error(RuntimeError, "The custom field type 'custom_unknown' cannot be mapped to an internal field, aborting.")
       end
     end
   end
