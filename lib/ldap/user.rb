@@ -6,7 +6,7 @@ class Ldap
   class User
     include Ldap::FilterLookup
 
-    BLACKLISTED = %i[
+    IGNORED_ATTRIBUTES = %i[
       admincount
       accountexpires
       badpasswordtime
@@ -124,7 +124,7 @@ class Ldap
           pre_merge_count = attributes.count
 
           attributes.reverse_merge!(entry.to_h
-                                         .except(*BLACKLISTED)
+                                         .except(*IGNORED_ATTRIBUTES)
                                          .transform_values(&:first)
                                          .compact)
 

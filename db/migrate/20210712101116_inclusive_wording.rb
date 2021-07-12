@@ -1,0 +1,12 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
+class InclusiveWording < ActiveRecord::Migration[6.0]
+  def up
+
+    # return if it's a new setup
+    return if !Setting.exists?(name: 'system_init_done')
+
+    rename_column :chats, :whitelisted_websites, :allowed_websites # rubocop:disable Naming/InclusiveLanguage
+    Chat.reset_column_information
+  end
+end

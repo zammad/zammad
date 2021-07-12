@@ -2,7 +2,7 @@
 
 class TriggerWebhookJob < ApplicationJob
 
-  USER_ATTRIBUTE_BLACKLIST = %w[
+  USER_ATTRIBUTE_FILTER = %w[
     last_login
     login_failed
     password

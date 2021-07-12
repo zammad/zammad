@@ -1,6 +1,6 @@
 <div>
   <h4><%- @T( 'Merge to Ticket#' ) %></h4>
-  <input type="text" name="master_ticket_number" class="form-control" value=""/>
+  <input type="text" name="target_ticket_number" class="form-control" value=""/>
   <hr>
   <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
   <div id="ticket-merge-customer-tickets"></div>

@@ -2022,7 +2022,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('failed')
-      expect(json_response['message']).to eq('No such master ticket number!')
+      expect(json_response['message']).to eq('No such target ticket number!')
 
       put "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -2040,7 +2040,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket merge - change permission (07.02)' do
@@ -2070,7 +2070,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket search sorted (08.01)' do

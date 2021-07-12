@@ -479,7 +479,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.boolean :public,                              null: false, default: false
       t.string  :block_ip,               limit: 5000, null: true
       t.string  :block_country,          limit: 5000, null: true
-      t.string  :whitelisted_websites,   limit: 5000, null: true
+      t.string  :allowed_websites,   limit: 5000, null: true
       t.string  :preferences,            limit: 5000, null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false

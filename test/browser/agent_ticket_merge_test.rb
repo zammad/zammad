@@ -62,7 +62,7 @@ class AgentTicketMergeTest < TestCase
 
     modal_ready()
     set(
-      css:   '.modal input[name="master_ticket_number"]',
+      css:   '.modal input[name="target_ticket_number"]',
       value: ticket1[:number],
     )
 
@@ -116,7 +116,7 @@ class AgentTicketMergeTest < TestCase
 
     modal_ready()
     set(
-      css:   '.modal input[name="master_ticket_number"]',
+      css:   '.modal input[name="target_ticket_number"]',
       value: ticket3[:number],
     )
     click( css: '.modal button[type="submit"]' )

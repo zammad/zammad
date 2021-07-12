@@ -2,12 +2,12 @@
 
 RSpec.shared_examples 'TriggerWebhookJob::RecordPayload backend' do |factory|
 
-  describe 'const USER_ATTRIBUTE_BLACKLIST' do
+  describe 'const USER_ATTRIBUTE_FILTER' do
 
-    subject(:blacklist) { described_class.const_get(:USER_ATTRIBUTE_BLACKLIST) }
+    subject(:filter) { described_class.const_get(:USER_ATTRIBUTE_FILTER) }
 
     it 'contains sensitive attributes' do
-      expect(blacklist).to include('password')
+      expect(filter).to include('password')
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.shared_examples 'TriggerWebhookJob::RecordPayload backend' do |factory|
       end
     end
 
-    it 'does not contain blacklisted User attributes' do
+    it 'does not contain filtered User attributes' do
       expect(generate['created_by']).not_to have_key('password')
     end
   end

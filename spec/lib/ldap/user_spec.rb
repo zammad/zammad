@@ -131,7 +131,7 @@ RSpec.describe Ldap::User do
         # selectable attribute
         ldap_entry['mail'] = 'test@example.com'
 
-        # blacklisted attribute
+        # filtered attribute
         ldap_entry['lastlogon'] = DateTime.current
 
         allow(mocked_ldap).to receive(:search).and_yield(ldap_entry)

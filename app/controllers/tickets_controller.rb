@@ -385,39 +385,39 @@ class TicketsController < ApplicationController
   # PUT /api/v1/ticket_merge/1/1
   def ticket_merge
 
-    # check master ticket
-    ticket_master = Ticket.find_by(number: params[:master_ticket_number])
-    if !ticket_master
+    # check target ticket
+    target_ticket = Ticket.find_by(number: params[:target_ticket_number])
+    if !target_ticket
       render json: {
         result:  'failed',
-        message: 'No such master ticket number!',
+        message: 'No such target ticket number!',
       }
       return
     end
-    authorize!(ticket_master, :update?)
+    authorize!(target_ticket, :update?)
 
-    # check slave ticket
-    ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
-    if !ticket_slave
+    # check source ticket
+    source_ticket = Ticket.find_by(id: params[:source_ticket_id])
+    if !source_ticket
       render json: {
         result:  'failed',
-        message: 'No such slave ticket!',
+        message: 'No such source ticket!',
       }
       return
     end
-    authorize!(ticket_slave, :update?)
+    authorize!(source_ticket, :update?)
 
     # merge ticket
-    ticket_slave.merge_to(
-      ticket_id:     ticket_master.id,
+    source_ticket.merge_to(
+      ticket_id:     target_ticket.id,
       created_by_id: current_user.id,
     )
 
     # return result
     render json: {
       result:        'success',
-      master_ticket: ticket_master.attributes,
-      slave_ticket:  ticket_slave.attributes,
+      target_ticket: target_ticket.attributes,
+      source_ticket: source_ticket.attributes,
     }
   end
 

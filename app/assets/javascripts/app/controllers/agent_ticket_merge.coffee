@@ -49,7 +49,7 @@ class App.TicketMerge extends App.ControllerModal
       radio:      true
     )
 
-    content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
+    content.delegate('[name="target_ticket_number"]', 'focus', (e) ->
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
@@ -57,7 +57,7 @@ class App.TicketMerge extends App.ControllerModal
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal(ticket_id)
-        $(e.target).parents().find('[name="master_ticket_number"]').val(ticket.number)
+        $(e.target).parents().find('[name="target_ticket_number"]').val(ticket.number)
     )
 
     content
@@ -66,7 +66,7 @@ class App.TicketMerge extends App.ControllerModal
     @formDisable(e)
     params = @formParam(e.target)
 
-    if !params.master_ticket_number
+    if !params.target_ticket_number
       alert(App.i18n.translateInline('%s required!', 'Ticket#'))
       @formEnable(e)
       return
@@ -75,30 +75,30 @@ class App.TicketMerge extends App.ControllerModal
     @ajax(
       id:    'ticket_merge'
       type:  'PUT'
-      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.master_ticket_number}"
+      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.target_ticket_number}"
       processData: true,
       success: (data, status, xhr) =>
 
         if data['result'] is 'success'
 
           # update collection
-          App.Collection.load(type: 'Ticket', data: [data.master_ticket])
-          App.Collection.load(type: 'Ticket', data: [data.slave_ticket])
+          App.Collection.load(type: 'Ticket', data: [data.target_ticket])
+          App.Collection.load(type: 'Ticket', data: [data.source_ticket])
 
           # hide dialog
           @close()
 
           # view ticket
-          @log 'notice', 'nav...', App.Ticket.find(data.master_ticket['id'])
-          @navigate '#ticket/zoom/' + data.master_ticket['id']
+          @log 'notice', 'nav...', App.Ticket.find(data.target_ticket['id'])
+          @navigate '#ticket/zoom/' + data.target_ticket['id']
 
           # notify UI
           @notify
             type:    'success'
-            msg:     App.i18n.translateContent('Ticket %s merged!', data.slave_ticket['number'])
+            msg:     App.i18n.translateContent('Ticket %s merged!', data.source_ticket['number'])
             timeout: 4000
 
-          App.TaskManager.remove("Ticket-#{data.slave_ticket['id']}")
+          App.TaskManager.remove("Ticket-#{data.source_ticket['id']}")
 
         else
 

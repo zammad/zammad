@@ -72,7 +72,7 @@ return is sent as message back to peer
   end
 
   def blocked_origin?
-    return false if current_chat.website_whitelisted?(origin)
+    return false if current_chat.website_allowed?(origin)
 
     send_unavailable
     true
