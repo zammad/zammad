@@ -3,7 +3,7 @@
     <%- @iconWithModifier(@item, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
     <span><%= @item.title %></span>
     <% if @item.count: %>
-      <span>Answers: <%= @item.count %></span>
+      <span><%= @T('Answers: %s', @item.count) %></span>
     <% end %>
   </span>
 </a>
