@@ -663,7 +663,6 @@ DEPENDENCIES
   chunky_png
   clearbit
   coffee-rails
-  coffee-script-source
   coffeelint
   composite_primary_keys
   coveralls
