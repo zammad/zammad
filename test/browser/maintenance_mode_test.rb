@@ -27,7 +27,7 @@ class MaintenanceModeTest < TestCase
       css:     'a[href="#system/maintenance"]',
     )
 
-    exists_not(
+    watch_for_disappear(
       browser: browser2,
       css:     '.js-maintenanceMode',
     )
@@ -88,6 +88,10 @@ class MaintenanceModeTest < TestCase
       css:     'a[href="#system/maintenance"]',
     )
 
+    watch_for(
+      browser: browser1,
+      css:     '.content.active .js-modeSetting',
+    )
     switch(
       browser: browser1,
       css:     '.content.active .js-modeSetting',
