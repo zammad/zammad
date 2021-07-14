@@ -274,7 +274,7 @@ class ArticleViewItem extends App.ControllerObserver
       offsetTop = signatureMarker.next('div, p, br').position()
 
     # remember bubble content height
-    bubbleContentHeigth = bubbleContent.height()
+    bubbleContentHeight = bubbleContent.height()
 
     # get marker height
     if offsetTop
@@ -282,18 +282,18 @@ class ArticleViewItem extends App.ControllerObserver
 
     # if signature marker exists and height is within maxHeight
     if markerHeight && markerHeight < maxHeight
-      newHeigth = markerHeight + 30
-      if newHeigth < minHeight
-        newHeigth = minHeight
+      newHeight = markerHeight + 30
+      if newHeight < minHeight
+        newHeight = minHeight
 
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
-      bubbleContent.attr('data-height-origin', newHeigth)
-      bubbleContent.css('height', "#{newHeigth}px")
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
+      bubbleContent.attr('data-height-origin', newHeight)
+      bubbleContent.css('height', "#{newHeight}px")
       bubbleOverflowContainer.removeClass('hide')
 
     # if height is higher then maxHeight
-    else if bubbleContentHeigth > maxHeight
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+    else if bubbleContentHeight > maxHeight
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', maxHeight)
       bubbleContent.css('height', "#{maxHeight}px")
       bubbleOverflowContainer.removeClass('hide')
