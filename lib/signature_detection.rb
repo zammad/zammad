@@ -47,6 +47,9 @@ returns
                         .map { |l| l.sub(%r{^.}, '') }
                         .first(10).join("\n")
 
+      # Invalid html signature detection for exchange warning boxes #3571
+      next if match_content.include?('CAUTION:')
+
       # Add this substring to the signature_candidates hash and increment its match score
       signature_candidates[match_content] += 1
     end

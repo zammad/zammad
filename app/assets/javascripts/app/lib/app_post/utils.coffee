@@ -795,8 +795,8 @@ class App.Utils
     try content = $('<div/>').html(message)
     catch e then content = $('<div/>').html('<div>' + message + '</div>')
 
-    # ignore mail structures of case Ticket#1085048
-    return message if content.find("div:first span:contains('CAUTION:')").css('color') == 'rgb(156, 101, 0)'
+    # Invalid html signature detection for exchange warning boxes #3571
+    return message if content.find("div:first:contains('CAUTION:')").length > 0
 
     content.contents().each (index, node) ->
       text = $(node).text()

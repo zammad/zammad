@@ -1083,9 +1083,15 @@ test("identify signature by HTML", function() {
   result  = App.Utils.signatureIdentifyByHtml(message)
   equal(result, should)
 
-  // ignore mail structures of case Ticket#1085048
+  // Invalid html signature detection for exchange warning boxes #3571
   message = '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
   should  = '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Invalid html signature detection for exchange warning boxes #3571
+  message = '<div>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
+  should  = '<div>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>'
   result  = App.Utils.signatureIdentifyByHtml(message)
   equal(result, should)
 
