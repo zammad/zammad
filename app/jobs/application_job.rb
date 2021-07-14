@@ -7,6 +7,11 @@ class ApplicationJob < ActiveJob::Base
 
   ActiveJob::Logging::LogSubscriber.detach_from :active_job
 
+  # See config/initializers/delayed_jobs_timeout_per_job.rb for details.
+  def self.max_run_time
+    4.hours
+  end
+
   # Automatically retry jobs that encountered a deadlock
   # retry_on ActiveRecord::Deadlocked
 
