@@ -21,7 +21,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 02 Jul 2021 17:06:30 GMT
+      - Thu, 08 Jul 2021 14:45:03 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,7 +31,7 @@ http_interactions:
       Status:
       - 401 Unauthorized
       X-Request-Id:
-      - 66aac436-9efb-4643-a8ca-e4250e5ba347
+      - 16535d28-0fa9-4bbd-81a5-7734a134dbe6
       X-Freshdesk-Api-Version:
       - latest=v2; requested=v2
       X-Rack-Cache:
@@ -55,16 +55,16 @@ http_interactions:
       X-Ratelimit-Used-Currentrequest:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '30'
+      - '226'
       X-Trace-Id:
-      - 00-88a9c09bf2c30bcef8eea4f252e63c6b-0b6c0658c2370f17-00
+      - 00-cfd704f35e647fd26907025f0d0227db-0078eeaf66759491-00
       Server:
       - fwe
     body:
       encoding: UTF-8
       string: '{"code":"invalid_credentials","message":"You have to be logged in to
         perform this action."}'
-  recorded_at: Fri, 02 Jul 2021 17:06:30 GMT
+  recorded_at: Thu, 08 Jul 2021 14:45:03 GMT
 - request:
     method: get
     uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/agents/me
@@ -83,14 +83,14 @@ http_interactions:
       Host:
       - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
       Authorization:
-      - Basic MWlPRmFiVjFYc1kwZ3h0eU9ud1E6WA==
+      - Basic <IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Fri, 02 Jul 2021 17:06:32 GMT
+      - Thu, 08 Jul 2021 14:45:04 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -102,7 +102,7 @@ http_interactions:
       Pragma:
       - no-cache
       X-Request-Id:
-      - '096094d7-b196-941f-bbe3-22acc2b2bbe1'
+      - 3613fc6e-8364-44f1-b5ae-e4b92c4f17b6
       X-Freshdesk-Api-Version:
       - latest=v2; requested=v2
       X-Rack-Cache:
@@ -118,7 +118,7 @@ http_interactions:
       Expires:
       - Wed, 13 Oct 2010 00:00:00 UTC
       Set-Cookie:
-      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTdkNzE4MWMzYjQzMjMxNTYzZTFhN2Y5MTE3ZjM2MjQ5BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMXorVFhHeEY1YU5VcW5xZjBaaE9BTllMZTM5azdHL3ZZTmphQkpXWVJhWEE9BjsARg%3D%3D--9f8399eb8b8434c862f21cfd38da18f3479ca5be;
+      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTNmMDYxMzM4YmI1MGE3NjdhMWM5YjMxODJjMDJiYjQ1BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMU9rVTAybEdLVmVCc2ZXaGpERThtNHYyeERURHVrRllZYnRJT3ZkQnN4MHc9BjsARg%3D%3D--362eaa4142cd23acdd978a5d43af16884701199e;
         path=/; HttpOnly; secure
       - _x_w=5_2; path=/; HttpOnly; secure
       X-Fw-Ratelimiting-Managed:
@@ -130,14 +130,14 @@ http_interactions:
       X-Ratelimit-Used-Currentrequest:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '62'
+      - '71'
       X-Trace-Id:
-      - 00-42555d29af204cf817095f7d2dce5178-00cb4ebcca7ebfe1-01
+      - 00-0b4df5d88358f783274f4e709f735c1b-f919d65b8eb09b19-00
       Server:
       - fwe
     body:
       encoding: ASCII-8BIT
       string: '{"available":false,"occasional":false,"id":80014400475,"ticket_scope":1,"signature":null,"group_ids":[],"role_ids":[80000198826],"skill_ids":[],"available_since":null,"contact":{"active":true,"email":"info@<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.org","job_title":null,"language":"en","mobile":null,"name":"Thorsten
-        Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z","last_login_at":"2021-06-04T06:55:46Z"},"created_at":"2021-04-09T13:23:58Z","updated_at":"2021-06-08T09:56:50Z","type":"support_agent"}'
-  recorded_at: Fri, 02 Jul 2021 17:06:32 GMT
+        Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z","last_login_at":"2021-06-07T05:38:22Z"},"created_at":"2021-04-09T13:23:58Z","updated_at":"2021-07-08T07:08:47Z","type":"support_agent"}'
+  recorded_at: Thu, 08 Jul 2021 14:45:04 GMT
 recorded_with: VCR 6.0.0
