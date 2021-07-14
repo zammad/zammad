@@ -75,13 +75,26 @@ RSpec.describe SearchIndexBackend, searchindex: true do
       let(:record) { create :ticket }
 
       before do
-        travel_to(Time.zone.parse('2019-01-01 23:33'))
+        travel_to(Time.zone.parse('2019-01-02 00:33'))
         described_class.add(record_type, record)
         described_class.refresh
       end
 
-      it 'finds record in effective time zone' do
+      it 'finds record in a given timezone with a range' do
+        Setting.set('timezone_default', 'UTC')
         result = described_class.search('created_at: [2019-01-01 TO 2019-01-01]', record_type)
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+
+      it 'finds record in a far away timezone with a date' do
+        Setting.set('timezone_default', 'Europe/Vilnius')
+        result = described_class.search('created_at: 2019-01-02', record_type)
+        expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+
+      it 'finds record in UTC with date' do
+        Setting.set('timezone_default', 'UTC')
+        result = described_class.search('created_at: 2019-01-01', record_type)
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
