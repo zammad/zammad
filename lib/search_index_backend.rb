@@ -20,10 +20,12 @@ info about used search index machine
       installed_version = response.data.dig('version', 'number')
       raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
 
-      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('8')
+      installed_version_parsed = Gem::Version.new(installed_version)
+
+      version_supported = installed_version_parsed < Gem::Version.new('8')
       raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
-      version_supported = Gem::Version.new(installed_version) > Gem::Version.new('2.3')
+      version_supported = installed_version_parsed >= Gem::Version.new('7.8')
       raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
       return response.data
