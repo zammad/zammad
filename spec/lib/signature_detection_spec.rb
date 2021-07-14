@@ -105,6 +105,21 @@ RSpec.describe SignatureDetection do
         expect { described_class.find_signature(messages) }.not_to raise_error
       end
     end
+
+    context 'when message contains exchange warning (#3571)' do
+      let(:content_type) { 'text/html' }
+      let(:messages) do
+        [
+          { content: '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>actual content</p><div><p>actual content 2</p></div><p>&nbsp;</p><div><p>actual quote</p></div><div><blockquote><p>actual quote</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>', content_type: 'text/html' },
+          { content: '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>333 content</p><div><p>4452134123 content 2</p></div><p>&nbsp;</p><div><p>123124123 quote</p></div><div><blockquote><p>123141 144234</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>', content_type: 'text/html' },
+          { content: '<div><span style="color:#9c6500;">CAUTION:</span> This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.</div><br><div><p>333 content</p><div><p>4452134123 content 2</p></div><p>&nbsp;</p><div><p>9999 quote</p></div><div><blockquote><p>999 144234</p></blockquote></div><div><p>&nbsp;</p></div><p>&nbsp;</p></div></div>', content_type: 'text/html' },
+        ]
+      end
+
+      it 'does not detect the warning information as signature' do
+        expect(described_class.find_signature(messages)).to eq(nil)
+      end
+    end
   end
 
   describe '.find_signature_line' do
