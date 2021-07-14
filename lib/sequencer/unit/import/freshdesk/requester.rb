@@ -13,7 +13,7 @@ class Sequencer
               return response if response.is_a? Net::HTTPOK
 
               handle_error response, iteration
-            rescue => e
+            rescue Net::HTTPClientError => e
               handle_exception e, iteration
             end
           end
@@ -32,7 +32,7 @@ class Sequencer
 
           def handle_exception(e, iteration)
             logger.error e
-            logger.info "Sleeping 10 seconds after #{e.name} and retry (##{iteration + 1}/10)."
+            logger.info "Sleeping 10 seconds after #{e.class.name} and retry (##{iteration + 1}/10)."
             sleep 10
           end
 
