@@ -21,7 +21,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Thu, 08 Jul 2021 07:13:13 GMT
+      - Thu, 08 Jul 2021 14:44:47 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,7 +31,7 @@ http_interactions:
       Status:
       - 404 Not Found
       X-Request-Id:
-      - 15c82625-ae5f-9aa7-9d08-18ee572c66c3
+      - edf9bb99-1c3c-48df-875e-455cbd963c52
       X-Rack-Cache:
       - miss
       Cache-Control:
@@ -45,14 +45,13 @@ http_interactions:
       X-Fw-Ratelimiting-Managed:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '26'
+      - '29'
       X-Trace-Id:
-      - 00-0f76361d75636993bf4ed57c75c6da6d-093b38dffcf2c728-01
+      - 00-e50f39ffa8d89a7ab2f260463b10436e-4d93e6d797831b87-00
       Server:
       - fwe
     body:
       encoding: ASCII-8BIT
       string: " "
-    http_version:
-  recorded_at: Thu, 08 Jul 2021 07:13:13 GMT
-recorded_with: VCR 4.0.0
+  recorded_at: Thu, 08 Jul 2021 14:44:47 GMT
+recorded_with: VCR 6.0.0

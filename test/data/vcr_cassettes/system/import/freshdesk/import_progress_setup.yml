@@ -21,7 +21,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 08 Jul 2021 07:13:23 GMT
+      - Thu, 08 Jul 2021 14:45:03 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,7 +31,7 @@ http_interactions:
       Status:
       - 401 Unauthorized
       X-Request-Id:
-      - bb402ac5-37eb-43d2-a5dd-23f18be84dff
+      - 16535d28-0fa9-4bbd-81a5-7734a134dbe6
       X-Freshdesk-Api-Version:
       - latest=v2; requested=v2
       X-Rack-Cache:
@@ -55,17 +55,16 @@ http_interactions:
       X-Ratelimit-Used-Currentrequest:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '43'
+      - '226'
       X-Trace-Id:
-      - 00-7618a30e98936519e5c46d517ed0f3df-bb76747a74b7f25b-00
+      - 00-cfd704f35e647fd26907025f0d0227db-0078eeaf66759491-00
       Server:
       - fwe
     body:
       encoding: UTF-8
       string: '{"code":"invalid_credentials","message":"You have to be logged in to
         perform this action."}'
-    http_version:
-  recorded_at: Thu, 08 Jul 2021 07:13:23 GMT
+  recorded_at: Thu, 08 Jul 2021 14:45:03 GMT
 - request:
     method: get
     uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/agents/me
@@ -91,7 +90,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 08 Jul 2021 07:13:24 GMT
+      - Thu, 08 Jul 2021 14:45:04 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -103,7 +102,7 @@ http_interactions:
       Pragma:
       - no-cache
       X-Request-Id:
-      - dfda73d3-ca46-4252-b396-2fca5f955dd1
+      - 3613fc6e-8364-44f1-b5ae-e4b92c4f17b6
       X-Freshdesk-Api-Version:
       - latest=v2; requested=v2
       X-Rack-Cache:
@@ -119,7 +118,7 @@ http_interactions:
       Expires:
       - Wed, 13 Oct 2010 00:00:00 UTC
       Set-Cookie:
-      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTRiNWNjOTI2YTE1OTcyNDhiNDNlNzcyMjhkNWYxYmUwBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMW1STDNtQ0VaUGR2Y0lEOCswZ2xRMVRRdzFEVnFkcnVQUE9aWm5VZmpxTE09BjsARg%3D%3D--c558062351e89e194bf50fb25071768caa5c3263;
+      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTNmMDYxMzM4YmI1MGE3NjdhMWM5YjMxODJjMDJiYjQ1BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMU9rVTAybEdLVmVCc2ZXaGpERThtNHYyeERURHVrRllZYnRJT3ZkQnN4MHc9BjsARg%3D%3D--362eaa4142cd23acdd978a5d43af16884701199e;
         path=/; HttpOnly; secure
       - _x_w=5_2; path=/; HttpOnly; secure
       X-Fw-Ratelimiting-Managed:
@@ -131,15 +130,14 @@ http_interactions:
       X-Ratelimit-Used-Currentrequest:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '69'
+      - '71'
       X-Trace-Id:
-      - 00-a0f7f1682df49020cb3227b2c339f0df-16eb1edd66682085-00
+      - 00-0b4df5d88358f783274f4e709f735c1b-f919d65b8eb09b19-00
       Server:
       - fwe
     body:
       encoding: ASCII-8BIT
       string: '{"available":false,"occasional":false,"id":80014400475,"ticket_scope":1,"signature":null,"group_ids":[],"role_ids":[80000198826],"skill_ids":[],"available_since":null,"contact":{"active":true,"email":"info@<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.org","job_title":null,"language":"en","mobile":null,"name":"Thorsten
         Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z","last_login_at":"2021-06-07T05:38:22Z"},"created_at":"2021-04-09T13:23:58Z","updated_at":"2021-07-08T07:08:47Z","type":"support_agent"}'
-    http_version:
-  recorded_at: Thu, 08 Jul 2021 07:13:24 GMT
-recorded_with: VCR 4.0.0
+  recorded_at: Thu, 08 Jul 2021 14:45:04 GMT
+recorded_with: VCR 6.0.0
