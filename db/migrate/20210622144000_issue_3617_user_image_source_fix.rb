@@ -4,7 +4,7 @@ class Issue3617UserImageSourceFix < ActiveRecord::Migration[5.2]
   def change
     return if !Setting.exists?(name: 'system_init_done')
 
-    User.where.not(image_source: nil).find_each do |user|
+    User.where("image_source NOT LIKE 'http%'").find_each do |user|
       user.remove_invalid_image_source
       user.save!
     end
