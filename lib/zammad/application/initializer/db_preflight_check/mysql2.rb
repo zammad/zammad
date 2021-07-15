@@ -66,9 +66,9 @@ module Zammad
           def self.min_version
             case vendor
             when 'MySQL'
-              '5.6'
+              '5.7'
             when 'MariaDB'
-              '10.0'
+              '10.3'
             end
           end
 

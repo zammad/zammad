@@ -58,7 +58,7 @@ module Zammad
           end
 
           def self.min_version
-            @min_version ||= '9.1'
+            @min_version ||= '9.3'
           end
 
           def self.vendor
