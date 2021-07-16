@@ -40,7 +40,7 @@ class AgentTicketTaskChangedTest < TestCase
     tasks_close_all
 
     sleep 0.5
-    exists_not( css: '.modal')
+    exists_not(css: '.modal')
 
     object_manager_attribute_delete(
       data: {

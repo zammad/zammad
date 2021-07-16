@@ -91,7 +91,7 @@ class Stats::TicketChannelDistribution
         type_ids.push type.id
       end
 
-      sender = Ticket::Article::Sender.lookup( name: 'Customer' )
+      sender = Ticket::Article::Sender.lookup(name: 'Customer')
       count = Ticket.where(group_id: group_ids).joins(:articles).where(
         ticket_articles: { sender_id: sender, type_id: type_ids }
       ).where(
@@ -100,7 +100,7 @@ class Stats::TicketChannelDistribution
       result[channel[:sender].to_sym][:inbound] = count
       total_in += count
 
-      sender = Ticket::Article::Sender.lookup( name: 'Agent' )
+      sender = Ticket::Article::Sender.lookup(name: 'Agent')
       count = Ticket.where(group_id: group_ids).joins(:articles).where(
         ticket_articles: { sender_id: sender, type_id: type_ids }
       ).where(

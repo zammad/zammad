@@ -44,7 +44,7 @@ class CalendarSubscriptions::Tickets
       owner_ids = [ @user.id ]
     end
     if preferences[:not_assigned]
-      owner_ids.push( 1 )
+      owner_ids.push(1)
     end
 
     owner_ids

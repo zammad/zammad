@@ -9,11 +9,11 @@ FactoryBot.define do
       fixture { nil }
     end
 
-    public_key { File.read( Rails.root.join("spec/fixtures/smime/#{fixture}.crt") ) if fixture }
+    public_key { File.read(Rails.root.join("spec/fixtures/smime/#{fixture}.crt")) if fixture }
 
     trait :with_private do
-      private_key { File.read( Rails.root.join("spec/fixtures/smime/#{fixture}.key") ) }
-      private_key_secret { File.read( Rails.root.join("spec/fixtures/smime/#{fixture}.secret") ).strip! }
+      private_key { File.read(Rails.root.join("spec/fixtures/smime/#{fixture}.key")) }
+      private_key_secret { File.read(Rails.root.join("spec/fixtures/smime/#{fixture}.secret")).strip! }
     end
   end
 end

@@ -98,7 +98,7 @@ module Import
 
           dynamic_field_name = key_string[13, key_string.length]
 
-          next if Import::OTRS::DynamicFieldFactory.skip_field?( dynamic_field_name )
+          next if Import::OTRS::DynamicFieldFactory.skip_field?(dynamic_field_name)
 
           dynamic_field_name = Import::OTRS::DynamicField.convert_name(dynamic_field_name)
 

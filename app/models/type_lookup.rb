@@ -2,16 +2,16 @@
 
 class TypeLookup < ApplicationModel
 
-  def self.by_id( id )
-    lookup = self.lookup( id: id )
+  def self.by_id(id)
+    lookup = self.lookup(id: id)
     return if !lookup
 
     lookup.name
   end
 
-  def self.by_name( name )
+  def self.by_name(name)
     # lookup
-    lookup = self.lookup( name: name )
+    lookup = self.lookup(name: name)
     if lookup
       return lookup.id
     end

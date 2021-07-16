@@ -7,7 +7,7 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
 
   context 'when Agent creates Article' do
     shared_examples 'not including email in from' do |factory|
-      subject(:article) { create(:ticket_article, factory, ticket: ticket, created_by_id: agent.id, updated_by_id: agent.id ) }
+      subject(:article) { create(:ticket_article, factory, ticket: ticket, created_by_id: agent.id, updated_by_id: agent.id) }
 
       let(:ticket) { create(:ticket) }
       let!(:agent) { create(:agent, groups: [ticket.group]) }

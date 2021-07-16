@@ -146,7 +146,7 @@ returns
 
       if keys.size > 1
         values = ids.transpose.map(&:compact).map(&:uniq)
-        attributes.merge!( keys.zip( values ).to_h )
+        attributes.merge!(keys.zip(values).to_h)
       else
         attributes[ keys.first ] = ids.compact
       end

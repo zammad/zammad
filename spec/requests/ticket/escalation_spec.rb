@@ -7,7 +7,7 @@ RSpec.describe 'Ticket Escalation', type: :request do
   let(:sla_update)         { 3.hours }
   let(:sla_close)          { 4.hours }
 
-  let!(:mail_group) { create(:group, email_address: create(:email_address) ) }
+  let!(:mail_group) { create(:group, email_address: create(:email_address)) }
 
   let(:calendar) { create(:calendar, :'24/7') }
   let(:sla) do

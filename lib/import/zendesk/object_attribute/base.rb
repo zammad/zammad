@@ -18,7 +18,7 @@ module Import
         def init_callback(_attribute); end
 
         def add(object, name, attribute)
-          ObjectManager::Attribute.add( attribute_config(object, name, attribute) )
+          ObjectManager::Attribute.add(attribute_config(object, name, attribute))
           ObjectManager::Attribute.migration_execute(false)
         rescue
           # rubocop:disable Style/SpecialGlobalVars

@@ -65,7 +65,7 @@ add a new activity entry for an object
     # return if old entry is really fresh
     if result
       activity_record_delay = 90.seconds
-      return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )
+      return result if result.created_at.to_i >= (data[:created_at].to_i - activity_record_delay)
     end
 
     # create history

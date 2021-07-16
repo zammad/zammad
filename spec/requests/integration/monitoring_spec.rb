@@ -612,7 +612,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).")
+      expect(json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).")
 
       # add another job
       manual_added = SearchIndexJob.perform_later('Ticket', 1)
@@ -626,7 +626,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
       expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
+      expect(json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # add another job
       dummy_class = Class.new(ApplicationJob) do
@@ -636,7 +636,7 @@ RSpec.describe 'Monitoring', type: :request do
         end
       end
 
-      manual_added = Delayed::Job.enqueue( dummy_class.new )
+      manual_added = Delayed::Job.enqueue(dummy_class.new)
       manual_added.update!(attempts: 5)
 
       # health_check
@@ -654,7 +654,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # add some more failing job
       10.times do
-        manual_added = Delayed::Job.enqueue( dummy_class.new )
+        manual_added = Delayed::Job.enqueue(dummy_class.new)
         manual_added.update!(attempts: 5)
       end
 

@@ -70,7 +70,7 @@ class Sessions::Store::File
 
   def set(client_id, data)
     path = "#{@path}/#{client_id}"
-    File.open("#{path}/session", 'wb' ) do |file|
+    File.open("#{path}/session", 'wb') do |file|
       file.flock(File::LOCK_EX)
       file.write data.to_json
       file.flock(File::LOCK_UN)

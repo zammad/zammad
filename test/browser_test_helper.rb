@@ -3248,7 +3248,7 @@ wait untill text in selector disabppears
       element.send_keys(data[:phone])
     end
     if data[:active].present?
-      select(css: 'select[name="active"]', value: data[:active] ? 'active' : 'inactive' )
+      select(css: 'select[name="active"]', value: data[:active] ? 'active' : 'inactive')
     end
 
     if data[:organization]

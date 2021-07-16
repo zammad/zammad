@@ -157,7 +157,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
 
       it 'the custom field has type "tel"' do
         process(process_payload)
-        expect( ObjectManager::Attribute.find_by(name: 'cf_custom_phone_number').data_option ).to include( 'type' => 'tel' )
+        expect(ObjectManager::Attribute.find_by(name: 'cf_custom_phone_number').data_option).to include('type' => 'tel')
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
 
       it 'the custom field has type "url"' do
         process(process_payload)
-        expect( ObjectManager::Attribute.find_by(name: 'cf_custom_url').data_option ).to include( 'type' => 'url' )
+        expect(ObjectManager::Attribute.find_by(name: 'cf_custom_url').data_option).to include('type' => 'url')
       end
     end
 

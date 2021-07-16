@@ -366,12 +366,12 @@ class PackageTest < ActiveSupport::TestCase
           false
         end
         if test[:zpm]
-          File.delete(location )
+          File.delete(location)
         end
       end
       if test[:verify] && test[:verify][:package]
         exists = Package.where(name: test[:verify][:package][:name], version: test[:verify][:package][:version]).first
-        assert(exists, "package '#{test[:verify][:package][:name]}' is not installed" )
+        assert(exists, "package '#{test[:verify][:package][:name]}' is not installed")
       end
       next if !test[:verify]
       next if !test[:verify][:check_files]
@@ -379,9 +379,9 @@ class PackageTest < ActiveSupport::TestCase
       test[:verify][:check_files].each do |item|
         exists = File.exist?(item[:location])
         if item[:result]
-          assert(exists, "'#{item[:location]}' exists" )
+          assert(exists, "'#{item[:location]}' exists")
         else
-          assert_not(exists, "'#{item[:location]}' doesn't exists" )
+          assert_not(exists, "'#{item[:location]}' doesn't exists")
         end
       end
     end

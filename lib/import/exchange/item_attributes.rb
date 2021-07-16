@@ -55,9 +55,9 @@ module Import
       def sub_elems(elems)
         elems.each_with_object({}) do |elem, result|
           if elem[:entry]
-            result.merge!( sub_elem_entry( elem[:entry] ) )
+            result.merge!(sub_elem_entry(elem[:entry]))
           else
-            result.merge!( normalize(elem) )
+            result.merge!(normalize(elem))
           end
         end
       end
@@ -88,7 +88,7 @@ module Import
 
           result_key = key
           if prefix
-            result_key = if keys.include?(key) && ( !result[result_key] || result[result_key] == value )
+            result_key = if keys.include?(key) && (!result[result_key] || result[result_key] == value)
                            prefix
                          else
                            :"#{prefix}.#{key}"

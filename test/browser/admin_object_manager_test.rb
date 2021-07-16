@@ -818,13 +818,13 @@ class AdminObjectManagerTest < TestCase
 
     ticket_open_by_title(title: 'select')
 
-    click( css: '.content.active .tabsSidebar-tab[data-tab="organization"]' )
-    click( css: '.content.active .sidebar[data-tab="organization"] .js-actions .dropdown-toggle' )
-    click( css: '.content.active .sidebar[data-tab="organization"] .js-actions [data-type="organization-edit"]' )
+    click(css: '.content.active .tabsSidebar-tab[data-tab="organization"]')
+    click(css: '.content.active .sidebar[data-tab="organization"] .js-actions .dropdown-toggle')
+    click(css: '.content.active .sidebar[data-tab="organization"] .js-actions [data-type="organization-edit"]')
 
     modal_ready
     select(css: '.content.active .modal select[name="bool_test"]', value: 'NO')
-    click( css: '.content.active .modal .js-submit' )
+    click(css: '.content.active .modal .js-submit')
     modal_disappear
 
     watch_for(
@@ -894,13 +894,13 @@ class AdminObjectManagerTest < TestCase
 
     ticket_open_by_title(title: 'select')
 
-    click( css: '.content.active .tabsSidebar-tab[data-tab="customer"]' )
-    click( css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle' )
-    click( css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]' )
+    click(css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
+    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
     modal_ready
     select(css: '.content.active .modal select[name="bool_test"]', value: 'NO')
-    click( css: '.content.active .modal .js-submit' )
+    click(css: '.content.active .modal .js-submit')
     modal_disappear
 
     watch_for(

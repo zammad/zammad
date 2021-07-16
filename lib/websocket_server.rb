@@ -10,7 +10,7 @@ class WebsocketServer
 
     Rails.configuration.interface = 'websocket'
     EventMachine.run do
-      EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options] ) do |ws|
+      EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
 
         # register client connection
         ws.onopen do |handshake|
@@ -52,7 +52,7 @@ class WebsocketServer
     headers = handshake.headers
     client_id = websocket.object_id.to_s
     log 'info', 'Client connected.', client_id
-    Sessions.create( client_id, {}, { type: 'websocket' } )
+    Sessions.create(client_id, {}, { type: 'websocket' })
 
     return if @clients.include? client_id
 
@@ -138,7 +138,7 @@ class WebsocketServer
     # close unused web socket sessions
     @clients.each do |client_id, client|
 
-      next if ( client[:last_ping].to_i + idle_time_in_sec ) >= Time.now.utc.to_i
+      next if (client[:last_ping].to_i + idle_time_in_sec) >= Time.now.utc.to_i
 
       log 'info', 'closing idle websocket connection', client_id
 

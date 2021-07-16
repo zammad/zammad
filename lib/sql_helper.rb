@@ -128,7 +128,7 @@ sql = 'tickets.created_at, tickets.updated_at'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push( "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)}" )
+      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)}")
     end
 
     sql = set_sql_order_default(sql, default)
@@ -162,7 +162,7 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push( "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)} #{order_by[index]}" )
+      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)} #{order_by[index]}")
     end
 
     sql = set_sql_order_default(sql, default)

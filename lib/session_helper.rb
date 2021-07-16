@@ -19,7 +19,7 @@ module SessionHelper
 
     # load collections to deliver from external files
     dir = File.expand_path('..', __dir__)
-    files = Dir.glob( "#{dir}/lib/session_helper/collection_*.rb")
+    files = Dir.glob("#{dir}/lib/session_helper/collection_*.rb")
     files.each do |file|
       file =~ %r{/(session_helper/collection_.*)\.rb\z}
       (default_collection, assets) = $1.camelize.constantize.session(default_collection, assets, user)

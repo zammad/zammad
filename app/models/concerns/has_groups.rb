@@ -320,7 +320,7 @@ module HasGroups
 
       # check direct access
       instances = joins(group_through.name)
-                  .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
+                  .where(group_through.table_name => { group_id: group_id, access: access }, active: true)
 
       if method_defined?(:permissions?)
         permissions = Permission.with_parents('ticket.agent')

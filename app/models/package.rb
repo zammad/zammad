@@ -440,7 +440,7 @@ execute all pending package migrations at once
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length - 2) ).each do |position|
+    (0..(directories.length - 2)).each do |position|
       tmp_path = ''
       (1..position).each do |count|
         tmp_path = "#{tmp_path}/#{directories[count]}"

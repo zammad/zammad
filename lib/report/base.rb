@@ -333,7 +333,7 @@ class Report::Base
   end
 
   def self.ticket_condition(ticket_id, condition)
-    ticket = Ticket.lookup( id: ticket_id )
+    ticket = Ticket.lookup(id: ticket_id)
     condition.each do |key, value|
       if ticket[key.to_sym] != value
         return false

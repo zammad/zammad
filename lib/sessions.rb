@@ -152,7 +152,7 @@ returns
     list_of_closed_sessions = []
     clients                 = Sessions.list
     clients.each do |client_id, client|
-      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.utc.to_i
+      if !client[:meta] || !client[:meta][:last_ping] || (client[:meta][:last_ping].to_i + idle_time_in_sec) < Time.now.utc.to_i
         list_of_closed_sessions.push client_id
         Sessions.destroy(client_id)
       end
@@ -579,7 +579,7 @@ returns
       Sessions::Client.new(client_id, node_id)
     rescue => e
       log('error', "thread_client #{client_id} exited with error #{e.inspect}")
-      log('error', e.backtrace.join("\n  ") )
+      log('error', e.backtrace.join("\n  "))
       sleep 10
       begin
         ActiveRecord::Base.connection_pool.release_connection
@@ -591,7 +591,7 @@ returns
       try_count += 1
 
       # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.now.utc
+      if try_run_time + (60 * 5) < Time.now.utc
         try_count = 0
       end
       try_run_time = Time.now.utc

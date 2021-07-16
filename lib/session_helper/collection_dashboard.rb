@@ -4,7 +4,7 @@ module SessionHelper::CollectionDashboard
 
   module_function
 
-  def session( collections, assets, user )
+  def session(collections, assets, user)
     return [collections, assets] if !user
 
     item = StatsStore.find_by(

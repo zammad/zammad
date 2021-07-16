@@ -991,8 +991,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'as agent with full permissions' do
-      let(:current_user) { create(:agent, groups: [ group_users ] ) }
-      let(:ticket) { create(:ticket, group: group_users ) }
+      let(:current_user) { create(:agent, groups: [ group_users ]) }
+      let(:ticket) { create(:ticket, group: group_users) }
 
       include_examples 'shows attributes and values for agent view and editable'
     end
@@ -1024,16 +1024,16 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'as agent+customer with full permissions' do
-      let!(:current_user) { create(:agent_and_customer, groups: [ group_users ] ) }
+      let!(:current_user) { create(:agent_and_customer, groups: [ group_users ]) }
 
       context 'normal ticket' do
-        let(:ticket) { create(:ticket, group: group_users ) }
+        let(:ticket) { create(:ticket, group: group_users) }
 
         include_examples 'shows attributes and values for agent view and editable'
       end
 
       context 'ticket where current_user is also customer' do
-        let(:ticket) { create(:ticket, customer: current_user, group: group_users ) }
+        let(:ticket) { create(:ticket, customer: current_user, group: group_users) }
 
         include_examples 'shows attributes and values for agent view and editable'
       end

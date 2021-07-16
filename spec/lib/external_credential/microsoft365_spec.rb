@@ -74,7 +74,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
           .with(body: hash_including(request_payload))
           .to_return(status: 200, body: token_response_payload.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       it 'creates a Channel instance' do
@@ -122,7 +122,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       before do
         stub_request(:post, token_url).to_return(status: response_status, body: response_payload&.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       shared_examples 'failed attempt' do
@@ -172,7 +172,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
     let!(:channel) do
       stub_request(:post, token_url).to_return(status: 200, body: token_response_payload.to_json, headers: {})
 
-      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       channel = described_class.link_account(request_token, authorization_payload)
 
       # remove stubs and allow new stubbing for tested requests
@@ -282,7 +282,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
   describe '.request_account_to_link' do
     it 'generates authorize_url from credentials' do
-      microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request      = described_class.request_account_to_link(microsoft365.credentials)
 
       expect(request[:authorize_url]).to eq(authorize_url)

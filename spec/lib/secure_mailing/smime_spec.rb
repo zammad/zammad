@@ -606,7 +606,7 @@ RSpec.describe SecureMailing::SMIME do
     end
 
     let!(:article) do
-      _ticket, article, _user, _mail = Channel::EmailParser.new.process({}, mail['raw'] )
+      _ticket, article, _user, _mail = Channel::EmailParser.new.process({}, mail['raw'])
       article
     end
 

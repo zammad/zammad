@@ -36,7 +36,7 @@ RSpec.describe 'Caller log', type: %i[system request], authenticated_as: true do
       visit 'cti'
 
       post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'newCall'), as: :json
-      post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'answer', answeringNumber: '0190111' ), as: :json
+      post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'answer', answeringNumber: '0190111'), as: :json
 
       within(:active_content) do
         expect(page).to have_text('New Ticket', wait: 5)
@@ -53,7 +53,7 @@ RSpec.describe 'Caller log', type: %i[system request], authenticated_as: true do
       visit 'cti'
 
       post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'newCall'), as: :json
-      post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'answer', answeringNumber: '0190111' ), as: :json
+      post "#{Capybara.app_host}/api/v1/cti/token1234", params: params.merge(event: 'answer', answeringNumber: '0190111'), as: :json
 
       within(:active_content) do
         expect(page).to have_text(customer.fullname, wait: 5)

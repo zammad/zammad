@@ -4,7 +4,7 @@ module SessionHelper::CollectionTicket
 
   module_function
 
-  def session( collections, assets, user )
+  def session(collections, assets, user)
 
     # all ticket stuff
     collections[ Ticket::StateType.to_app_model ] = []

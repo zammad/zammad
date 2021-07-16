@@ -57,8 +57,8 @@ class AgentTicketMergeTest < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
-    click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
+    click(css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down')
+    click(css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]')
 
     modal_ready
     set(
@@ -66,7 +66,7 @@ class AgentTicketMergeTest < TestCase
       value: ticket1[:number],
     )
 
-    click( css: '.modal button[type="submit"]' )
+    click(css: '.modal button[type="submit"]')
 
     # check if merged to ticket is shown now
     watch_for(
@@ -111,15 +111,15 @@ class AgentTicketMergeTest < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
-    click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
+    click(css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down')
+    click(css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]')
 
     modal_ready
     set(
       css:   '.modal input[name="target_ticket_number"]',
       value: ticket3[:number],
     )
-    click( css: '.modal button[type="submit"]' )
+    click(css: '.modal button[type="submit"]')
 
     # check if merged to ticket is shown now
     watch_for(

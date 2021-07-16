@@ -64,7 +64,7 @@ class SettingTest < TestCase
       css:   '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: 'secret_test1234äöüß',
     )
-    click( css: '[data-name="auth_facebook_credentials"] button[type=submit]')
+    click(css: '[data-name="auth_facebook_credentials"] button[type=submit]')
     watch_for(
       css:   '#notify',
       value: 'update successful',

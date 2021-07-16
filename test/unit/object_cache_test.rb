@@ -10,7 +10,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    roles  = Role.where( name: %w[Agent Admin] )
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
     user1 = User.create_or_update(
       login:           'object_cache1@example.org',

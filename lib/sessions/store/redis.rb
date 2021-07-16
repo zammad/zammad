@@ -10,7 +10,7 @@ class Sessions::Store::Redis
     # Only load redis if it is really used.
     require 'redis'
     require 'hiredis'
-    @redis = Redis.new( driver: :hiredis )
+    @redis = Redis.new(driver: :hiredis)
   end
 
   def create(client_id, data)

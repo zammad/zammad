@@ -30,7 +30,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     click(css: '.content.active .newTicket [name="customer_id_completion"]')
 
     # check if pulldown is open, it's not working stable via selenium
-    @browser.execute_script( "$('.content.active .newTicket .js-recipientDropdown').addClass('open')" )
+    @browser.execute_script("$('.content.active .newTicket .js-recipientDropdown').addClass('open')")
 
     set(
       css:   '.content.active .newTicket input[name="customer_id_completion"]',
@@ -110,7 +110,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     click(css: '.content.active .newTicket [name="customer_id_completion"]')
 
     # check if pulldown is open, it's not working stable via selenium
-    @browser.execute_script( "$('.content.active .newTicket .js-recipientDropdown').addClass('open')" )
+    @browser.execute_script("$('.content.active .newTicket .js-recipientDropdown').addClass('open')")
 
     set(
       css:   '.content.active .newTicket input[name="customer_id_completion"]',

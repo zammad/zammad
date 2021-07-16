@@ -90,7 +90,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
     context 'with trigger token configured' do
       it 'includes X-Hub-Signature header' do
         expect(WebMock).to have_requested(:post, endpoint)
-          .with( body: payload, headers: headers )
+          .with(body: payload, headers: headers)
           .with { |req| req.headers['X-Zammad-Delivery'].is_a?(String) }
           .with { |req| req.headers['X-Hub-Signature'].is_a?(String) }
       end
@@ -101,7 +101,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
       it "doesn't include X-Hub-Signature header" do
         expect(WebMock).to have_requested(:post, endpoint)
-          .with( body: payload, headers: headers )
+          .with(body: payload, headers: headers)
           .with { |req| req.headers['X-Zammad-Delivery'].is_a?(String) }
           .with { |req| !req.headers.key?('X-Hub-Signature') }
       end

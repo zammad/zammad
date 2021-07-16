@@ -615,7 +615,7 @@ RSpec.describe Ticket::Article, type: :model do
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
 
-          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true )
+          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true)
 
           expect(attachments.count).to eq(1)
           expect(attachments[0].filename).to eq('some_file1.jpg')

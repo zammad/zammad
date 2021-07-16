@@ -72,7 +72,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
     end
 
     it 'sets user roles correctly for admin user' do
-      allow( Sequencer::Unit::Import::Freshdesk::Agent::Mapping).to receive(:admin_id).and_return(1001)
+      allow(Sequencer::Unit::Import::Freshdesk::Agent::Mapping).to receive(:admin_id).and_return(1001)
       process(process_payload)
       expect(User.last.roles.sort.map(&:name)).to eq %w[Admin Agent]
     end

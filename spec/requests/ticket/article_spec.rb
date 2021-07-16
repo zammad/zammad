@@ -530,25 +530,25 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     let(:article_communication) do
       create(:ticket_article,
              sender_name: 'Agent', type_name: 'email', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id )
+             updated_by_id: agent.id, created_by_id: agent.id)
     end
 
     let(:article_note_self) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_other) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     let(:article_note_customer) do
       create(:ticket_article,
              sender_name: 'Customer', internal: false, type_name: 'note', ticket: ticket,
-             updated_by_id: customer.id, created_by_id: customer.id )
+             updated_by_id: customer.id, created_by_id: customer.id)
     end
 
     let(:article_note_communication_self) do
@@ -556,7 +556,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_communication_other) do
@@ -564,7 +564,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     def delete_article_via_rest(article)

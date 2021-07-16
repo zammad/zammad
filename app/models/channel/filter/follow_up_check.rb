@@ -55,7 +55,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references
-    return true if ( setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none') ) && follow_up_by_md5(mail)
+    return true if (setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none')) && follow_up_by_md5(mail)
 
     # get ticket# from references current email has same subject as initial article
     if mail[:subject].present?

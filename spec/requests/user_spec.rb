@@ -1150,8 +1150,8 @@ RSpec.describe 'User', type: :request do
     end
 
     let(:successful_params)  { { email: attributes_for(:admin)[:email] } }
-    let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] } ) }
-    let(:params_with_invite) { successful_params.merge({ invite: true } ) }
+    let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] }) }
+    let(:params_with_invite) { successful_params.merge({ invite: true }) }
 
     it 'succeeds' do
       make_request successful_params

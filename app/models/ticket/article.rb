@@ -91,7 +91,7 @@ returns
     return article if article['body'] !~ %r{<img}i
 
     inline_attachments = {}
-    article['body'].gsub!( %r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im ) do |item|
+    article['body'].gsub!(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
       tag_start = $1
       cid = $3
       tag_end = $4
@@ -99,7 +99,7 @@ returns
 
       # look for attachment
       article['attachments'].each do |file|
-        next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>" )
+        next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>")
 
         replace = "#{tag_start}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file[:id]}?view=inline\"#{tag_end}>"
         inline_attachments[file[:id]] = true
@@ -132,13 +132,13 @@ returns
 
   def attachments_inline
     inline_attachments = {}
-    body.gsub( %r{<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>}im ) do |_item|
+    body.gsub(%r{<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>}im) do |_item|
       cid = $2
 
       # look for attachment
       attachments.each do |file|
         content_id = file.preferences['Content-ID'] || file.preferences['content_id']
-        next if content_id.blank? || (content_id != cid && content_id != "<#{cid}>" )
+        next if content_id.blank? || (content_id != cid && content_id != "<#{cid}>")
 
         inline_attachments[file.id] = true
         break

@@ -1504,7 +1504,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org') )
+    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org'))
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
@@ -1617,7 +1617,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    ticket1.update!(customer: customer )
+    ticket1.update!(customer: customer)
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(

@@ -37,7 +37,7 @@ class UserDevicesController < ApplicationController
         next if !session.data['user_device_id']
         next if session.data['user_device_id'] != user_device.id
 
-        SessionHelper.destroy( session.id )
+        SessionHelper.destroy(session.id)
       end
       user_device.destroy
     end

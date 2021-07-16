@@ -114,7 +114,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = as_client1.push
-    assert( result1, 'check as agent1 - recall 3')
+    assert(result1, 'check as agent1 - recall 3')
     travel_back
   end
 

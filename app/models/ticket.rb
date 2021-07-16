@@ -113,7 +113,7 @@ returns
     end
 
     if user.permissions?('ticket.customer')
-      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
+      if !user.organization || (!user.organization.shared || user.organization.shared == false)
         sql.push('tickets.customer_id = ?')
         bind.push(user.id)
       else
@@ -661,7 +661,7 @@ condition example
         biz = Calendar.lookup(id: selector['value'])&.biz
         next if biz.blank?
 
-        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
+        if (selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now)) || (selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now))
           no_result = true
           break
         end

@@ -138,7 +138,7 @@ returns
           end
         end
         if current_user.permissions?('ticket.customer')
-          access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
+          access_condition = if !current_user.organization || (!current_user.organization.shared || current_user.organization.shared == false)
                                {
                                  'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
                                }
@@ -202,7 +202,7 @@ returns
         query.delete! '*'
         tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
                             .where(access_condition)
-                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
+                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
                             .joins(:articles)
                             .order(Arel.sql(order_sql))
                             .offset(offset)

@@ -54,7 +54,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       create(:ticket, title: 'ticket for report #1', created_at: today.midday)
       create(:ticket, title: 'ticket for report #2', created_at: today.midday + 2.hours)
       create(:ticket, title: 'ticket for report #3', created_at: today.midday + 2.hours)
-      create(:ticket, title: 'ticket for report #4', created_at: today.midday + 10.hours, state: Ticket::State.lookup(name: 'closed') )
+      create(:ticket, title: 'ticket for report #4', created_at: today.midday + 10.hours, state: Ticket::State.lookup(name: 'closed'))
       create(:ticket, title: 'ticket for report #5', created_at: today.midday + 11.hours)
       create(:ticket, title: 'ticket for report #6', created_at: today.midday - 11.hours)
       create(:ticket, title: 'ticket for report #7', created_at: Time.zone.parse('2019-02-28T23:30:00Z'))

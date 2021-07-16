@@ -13,7 +13,7 @@ RSpec.describe 'Profile', type: :system do
 
   context 'when user is an agent with no user_preferences permission', authenticated_as: :new_user do
     let(:role)            { create(:role, permissions: [Permission.find_by(name: 'ticket.agent')]) }
-    let(:new_user)        { create(:user, roles: [role] ) }
+    let(:new_user)        { create(:user, roles: [role]) }
 
     it 'does not show profile link in navigation' do
       visit 'dashboard'

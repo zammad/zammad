@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe 'Ticket', type: :request do
 
   let!(:ticket_group) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let!(:ticket_group_without_create) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let(:admin) do
     create(:admin, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')

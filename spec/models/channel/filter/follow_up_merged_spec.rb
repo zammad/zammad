@@ -10,7 +10,7 @@ RSpec.describe Channel::Filter::FollowUpMerged, type: :channel_filter do
       ticket1 = create(:ticket)
       ticket2 = create(:ticket)
 
-      ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
+      ticket1.merge_to(ticket_id: ticket2.id, user_id: 1)
 
       mail = {
         'x-zammad-ticket-id': ticket1.id
@@ -26,8 +26,8 @@ RSpec.describe Channel::Filter::FollowUpMerged, type: :channel_filter do
       ticket2 = create(:ticket)
       ticket3 = create(:ticket)
 
-      ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
-      ticket2.merge_to( ticket_id: ticket3.id, user_id: 1 )
+      ticket1.merge_to(ticket_id: ticket2.id, user_id: 1)
+      ticket2.merge_to(ticket_id: ticket3.id, user_id: 1)
 
       mail = {
         'x-zammad-ticket-id': ticket1.id
@@ -44,9 +44,9 @@ RSpec.describe Channel::Filter::FollowUpMerged, type: :channel_filter do
       ticket3 = create(:ticket)
       ticket4 = create(:ticket)
 
-      ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
-      ticket2.merge_to( ticket_id: ticket3.id, user_id: 1 )
-      ticket3.merge_to( ticket_id: ticket4.id, user_id: 1 )
+      ticket1.merge_to(ticket_id: ticket2.id, user_id: 1)
+      ticket2.merge_to(ticket_id: ticket3.id, user_id: 1)
+      ticket3.merge_to(ticket_id: ticket4.id, user_id: 1)
 
       mail = {
         'x-zammad-ticket-id': ticket2.id

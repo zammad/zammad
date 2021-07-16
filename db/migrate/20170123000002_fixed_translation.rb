@@ -403,7 +403,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
     ]
 
     settings_update.each do |setting|
-      fetched_setting = Setting.find_by(name: setting['name'] )
+      fetched_setting = Setting.find_by(name: setting['name'])
       next if !fetched_setting
 
       if setting['title']

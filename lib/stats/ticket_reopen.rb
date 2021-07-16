@@ -22,7 +22,7 @@ class Stats::TicketReopen
 
     reopen_in_precent = 0
     if total.nonzero?
-      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      reopen_in_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
     {
       used_for_average:  reopen_in_precent,
@@ -45,7 +45,7 @@ class Stats::TicketReopen
 
     #in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
     #result[:average_per_agent_in_percent] = in_percent
-    in_percent = ( result[:count].to_f / (result[:total].to_f / 100) ).round(1)
+    in_percent = (result[:count].to_f / (result[:total].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'superbad'
                      elsif in_percent >= 65

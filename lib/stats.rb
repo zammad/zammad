@@ -63,7 +63,7 @@ returns
 
     # generate average param and icon state
     backend_average_sum.each do |backend_model_average, result|
-      average = ( result.to_f / agent_count ).round(1)
+      average = (result.to_f / agent_count).round(1)
       user_result.each do |user, data|
         next if !data[backend_model_average]
         next if !data[backend_model_average].key?(:used_for_average)

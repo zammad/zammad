@@ -123,7 +123,7 @@ class AdminOverviewTest < TestCase
   def ordered_ticket_titles(ticket_titles)
     ticket_titles.map do |title|
       [title,
-       get_location( css: "td[title='#{title}']").y]
+       get_location(css: "td[title='#{title}']").y]
     end.sort_by { |x| x[1] }.map { |x| x[0] }
   end
 
@@ -140,11 +140,11 @@ class AdminOverviewTest < TestCase
     out_of_office_css = '.content.active .modal select[name="out_of_office"]'
     first_overview_css = '.content.active tr[data-id="1"] td'
 
-    click( css: 'a[href="#manage"]' )
-    click( css: '.content.active a[href="#manage/overviews"]' )
+    click(css: 'a[href="#manage"]')
+    click(css: '.content.active a[href="#manage/overviews"]')
 
     # round 1, open the overview and set out_of_office to true
-    click( css: first_overview_css )
+    click(css: first_overview_css)
     modal_ready
     watch_for(
       css:   out_of_office_css,
@@ -154,11 +154,11 @@ class AdminOverviewTest < TestCase
       css:   out_of_office_css,
       value: 'yes',
     )
-    click( css: '.content.active .modal .js-submit' )
+    click(css: '.content.active .modal .js-submit')
     modal_disappear
 
     # round 2, open the overview and set out_of_office back to false
-    click( css: first_overview_css )
+    click(css: first_overview_css)
     modal_ready
     watch_for(
       css:   out_of_office_css,
@@ -168,17 +168,17 @@ class AdminOverviewTest < TestCase
       css:   out_of_office_css,
       value: 'no',
     )
-    click( css: '.content.active .modal .js-submit' )
+    click(css: '.content.active .modal .js-submit')
     modal_disappear
 
     # round 3, open the overview and confirm that it's still false
-    click( css: first_overview_css )
+    click(css: first_overview_css)
     modal_ready
     watch_for(
       css:   out_of_office_css,
       value: 'no',
     )
-    click( css: '.content.active .modal .js-submit' )
+    click(css: '.content.active .modal .js-submit')
     modal_disappear
   end
 end

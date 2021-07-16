@@ -54,7 +54,7 @@ class Stats::TicketResponseTime
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f / 100) ).round(1)
+    in_percent = (result[:used_for_average].to_f / (result[:total].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'supergood'
                      elsif in_percent >= 65

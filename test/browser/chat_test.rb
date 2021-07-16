@@ -785,7 +785,7 @@ class ChatTest < TestCase
       timeout: 150,
     )
 
-    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+    agent.find_elements({ css: '.active .chat-window .js-close' }).each(&:click)
     sleep 2
     click(
       browser: customer,

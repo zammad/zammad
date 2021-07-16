@@ -1250,13 +1250,13 @@ RSpec.describe Ticket, type: :model do
 
       shared_examples 'permitted' do
         it 'finds Ticket' do
-          expect( described_class.search(query: ticket.number, current_user: current_user).count ).to eq(1)
+          expect(described_class.search(query: ticket.number, current_user: current_user).count).to eq(1)
         end
       end
 
       shared_examples 'no permission' do
         it "doesn't find Ticket" do
-          expect( described_class.search(query: ticket.number, current_user: current_user) ).to be_blank
+          expect(described_class.search(query: ticket.number, current_user: current_user)).to be_blank
         end
       end
 
