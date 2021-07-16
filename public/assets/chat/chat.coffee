@@ -1278,6 +1278,9 @@ do($ = window.jQuery, window) ->
 
       if params.remove && @el
         @el.remove()
+        # Remove button, because it can no longer be used.
+        $(".#{ @options.buttonClass }").hide()
+
 
       # stop all timer
       if @waitingListTimeout
