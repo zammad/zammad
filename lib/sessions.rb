@@ -365,20 +365,20 @@ get spool messages
   def self.spool_list(timestamp, current_user_id)
     data      = []
     to_delete = []
-    @store.each_spool do |message|
+    @store.each_spool do |message, entry|
       message_parsed = {}
       begin
         spool = JSON.parse(message)
         message_parsed = JSON.parse(spool['msg'])
       rescue => e
         log('error', "can't parse spool message: #{message}, #{e.inspect}")
-        to_delete.push message
+        to_delete.push [message, entry]
         next
       end
 
       # ignore message older then 48h
       if spool['timestamp'] + (2 * 86_400) < Time.now.utc.to_i
-        to_delete.push message
+        to_delete.push [message, entry]
         next
       end
 
@@ -421,8 +421,8 @@ get spool messages
         end
       end
     end
-    to_delete.each do |file|
-      @store.remove_from_spool(file)
+    to_delete.each do |item|
+      @store.remove_from_spool(*item)
     end
     data
   end

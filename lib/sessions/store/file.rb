@@ -183,13 +183,14 @@ class Sessions::Store::File
         message = file.read
         file.flock(File::LOCK_UN)
 
-        yield message
+        yield message, entry
       end
     end
   end
 
-  def remove_from_spool(entry)
-    File.remove "#{path}/#{entry}"
+  def remove_from_spool(_message, entry)
+    path = "#{@path}/spool/"
+    FileUtils.rm "#{path}/#{entry}"
   end
 
   def clear_spool

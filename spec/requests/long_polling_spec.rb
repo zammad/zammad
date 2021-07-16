@@ -122,7 +122,24 @@ RSpec.describe 'LongPolling', type: :request do
 
       spool_list = Sessions.spool_list(nil, agent.id)
       expect(spool_list).to eq([{ message: { 'taskbar_id' => 9_391_633 }, type: 'direct' }])
+
     end
 
+    it 'automatically cleans-up old spool entries' do
+      authenticated_as(agent)
+      Sessions.spool_create({ data: 'my message', event: 'broadcast' })
+
+      # Message found
+      travel 2.seconds
+      expect(Sessions.spool_list(nil, agent.id)).to eq([{ message: 'my message', type: 'broadcast' }])
+
+      # Message expired. In this case spool_list needs to also delete it.
+      travel 4.days
+      expect(Sessions.spool_list(nil, agent.id)).to eq([])
+
+      # Verify that the message was correctly deleted
+      travel(-4.days)
+      expect(Sessions.spool_list(nil, agent.id)).to eq([])
+    end
   end
 end

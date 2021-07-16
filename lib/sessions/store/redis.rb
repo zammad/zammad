@@ -79,11 +79,13 @@ class Sessions::Store::Redis
     @redis.rpush SPOOL_KEY, data.to_json
   end
 
-  def each_spool(&block)
-    @redis.lrange(SPOOL_KEY, 0, -1).each(&block)
+  def each_spool()
+    @redis.lrange(SPOOL_KEY, 0, -1).each do |message|
+      yield message, nil
+    end
   end
 
-  def remove_from_spool(message)
+  def remove_from_spool(message, _entry)
     @redis.lrem SPOOL_KEY, 1, message
   end
 
