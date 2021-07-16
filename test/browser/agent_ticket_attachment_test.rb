@@ -11,7 +11,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # attachment checks - new ticket
@@ -147,13 +147,13 @@ class AgentTicketAttachmentTest < TestCase
     click(css: '.content.active .js-submit')
 
     # check warning
-    modal_ready()
+    modal_ready
     match(
       css:   '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
-    modal_disappear()
+    modal_disappear
 
     ticket_update(
       data:          {
@@ -298,7 +298,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data:          {

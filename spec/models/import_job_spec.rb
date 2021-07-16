@@ -248,7 +248,7 @@ RSpec.describe ImportJob do
 
     it 'returns false for already finished jobs' do
       instance    = create(:import_job)
-      delayed_job = double()
+      delayed_job = double
 
       instance.update!(finished_at: Time.zone.now)
 
@@ -257,14 +257,14 @@ RSpec.describe ImportJob do
 
     it 'returns false for backends not responding to reschedule?' do
       instance    = create(:import_job)
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to be false
     end
 
     it 'returns the backend reschedule? value' do
       instance    = create(:import_job, name: 'Import::NoRescheduleMethod')
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to eq 'invalid_but_checkable_result'
     end

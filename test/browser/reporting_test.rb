@@ -11,7 +11,7 @@ class ReportingTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     report_profile_create(
       data: {

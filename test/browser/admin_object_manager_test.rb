@@ -12,7 +12,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # already existing
     object_manager_attribute_create(
@@ -165,7 +165,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {
@@ -389,7 +389,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # valid name
     object_manager_attribute_create(
@@ -499,7 +499,7 @@ class AdminObjectManagerTest < TestCase
       url:      browser_url,
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # create two new attributes
     object_manager_attribute_create(
@@ -595,7 +595,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # lexicographically ordered list of option strings
     options = %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v]
@@ -684,7 +684,7 @@ class AdminObjectManagerTest < TestCase
     options_no_dog = options.except('dog')
     options_no_dog_no_delete = options_no_dog.except('delete')
 
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {
@@ -788,7 +788,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {
@@ -864,7 +864,7 @@ class AdminObjectManagerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {

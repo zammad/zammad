@@ -11,7 +11,7 @@ class TranslationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
@@ -144,7 +144,7 @@ class TranslationTest < TestCase
       value: 'Übersichten123',
     )
 
-    reload()
+    reload
     exists_not(
       css: 'span.translation[title="Overviews"]',
     )
@@ -260,7 +260,7 @@ class TranslationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
@@ -285,7 +285,7 @@ class TranslationTest < TestCase
 
     click(css: '.content.active .js-syncChanges')
 
-    modal_ready()
+    modal_ready
     watch_for(
       css:   '.content.active .modal',
       value: 'Letzte Übersetzung laden',
@@ -327,7 +327,7 @@ class TranslationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')

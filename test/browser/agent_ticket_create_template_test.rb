@@ -15,7 +15,7 @@ class AgentTicketCreateTemplateTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(
       css: 'a[href="#ticket/create"]'
@@ -74,7 +74,7 @@ class AgentTicketCreateTemplateTest < TestCase
     )
 
     # apply new tempalte
-    tasks_close_all()
+    tasks_close_all
     click(
       css: 'a[href="#ticket/create"]'
     )

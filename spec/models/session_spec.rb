@@ -9,7 +9,7 @@ RSpec.describe Session, type: :model do
       subject(:session) { described_class.create( session_id: SecureRandom.urlsafe_base64(64), data: {} ) }
 
       it 'does not set the persistent attribute' do
-        expect(session.persistent).to be_nil()
+        expect(session.persistent).to be_nil
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Session, type: :model do
       subject(:session) { described_class.create( session_id: SecureRandom.urlsafe_base64(64), data: { 'persistent' => false }) }
 
       it 'does not set the persistent attribute' do
-        expect(session.persistent).to be_nil()
+        expect(session.persistent).to be_nil
       end
     end
   end

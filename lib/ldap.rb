@@ -64,7 +64,7 @@ class Ldap
   # @return [true] Returns always true
   def search(filter, base: nil, scope: nil, attributes: nil, &block)
 
-    base  ||= base_dn()
+    base  ||= base_dn
     scope ||= Net::LDAP::SearchScope_WholeSubtree
 
     connection.search(

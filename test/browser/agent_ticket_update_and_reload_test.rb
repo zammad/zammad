@@ -11,7 +11,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create ticket
     ticket_create(
@@ -45,7 +45,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
     )
 
     # reload instances, verify autosave
-    reload()
+    reload
 
     # check if customer is still shown in sidebar
     click(css: '.active .tabsSidebar-tab[data-tab="customer"]')
@@ -95,7 +95,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
     )
 
     # reload
-    reload()
+    reload
     sleep 4
 
     # check task title
@@ -122,7 +122,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
     )
 
     # reload
-    reload()
+    reload
     sleep 5
 
     # check page title
@@ -131,6 +131,6 @@ class AgentTicketUpdateAndReloadTest < TestCase
     )
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 end

@@ -31,7 +31,7 @@ class CommunicateTelegramJob < ApplicationJob
       api = TelegramAPI.new(channel.options[:api_token])
       chat_id = ticket.preferences[:telegram][:chat_id]
       result = api.sendMessage(chat_id, article.body)
-      me = api.getMe()
+      me = api.getMe
       article.attachments.each do |file|
         parts = file.filename.split(%r{^(.*)(\..+?)$})
         t = Tempfile.new([parts[1], parts[2]])

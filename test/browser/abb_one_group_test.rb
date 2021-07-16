@@ -13,7 +13,7 @@ class AgentTicketActionLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket_create(
@@ -35,7 +35,7 @@ class AgentTicketActionLevel0Test < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # invite agent (with one group)
     click(css: '#navigation a[href="#dashboard"]')
@@ -45,7 +45,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Bob',
@@ -85,7 +85,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Bob2',
@@ -138,7 +138,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Sending',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -198,7 +198,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'one group - some body 1234 äöüß',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -210,7 +210,7 @@ class AgentTicketActionLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     group_create(
       data: {
@@ -250,7 +250,7 @@ class AgentTicketActionLevel0Test < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 

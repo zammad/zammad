@@ -12,7 +12,7 @@ class AgentUserProfileTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # search and open user
     user_open_by_search(value: 'Braun')
@@ -37,14 +37,14 @@ class AgentUserProfileTest < TestCase
       css:   '.active [data-name="note"]',
       value: 'some note 123',
     )
-    empty_search()
+    empty_search
     sleep 2
 
     # check and change note again in edit screen
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     watch_for(
       css:   '.active .modal',
       value: 'some note 123',
@@ -59,7 +59,7 @@ class AgentUserProfileTest < TestCase
       value: 'some note abc',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.active .profile-window',
@@ -76,13 +76,13 @@ class AgentUserProfileTest < TestCase
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     verify_task(
       data: {
@@ -106,7 +106,7 @@ class AgentUserProfileTest < TestCase
       css:   '.active .profile-window',
       value: "user profile check #{message}",
     )
-    tasks_close_all()
+    tasks_close_all
 
     # work with two browser windows
     message = "comment 1 #{rand(99_999_999_999_999_999)}"

@@ -45,7 +45,7 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   end
 
   it 'deletes old and reimports' do
-    dummy_attachment = double()
+    dummy_attachment = double
     expect(dummy_attachment).to receive(:delete)
     article_attachment_expectations([dummy_attachment])
     import_expectations

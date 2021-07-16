@@ -8,7 +8,7 @@ require 'tcr/net/ldap'
 
 RSpec.describe Ldap::User do
 
-  let(:mocked_ldap) { double() }
+  let(:mocked_ldap) { double }
 
   describe '.uid_attribute' do
 
@@ -71,7 +71,7 @@ RSpec.describe Ldap::User do
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
 
-      described_class.new()
+      described_class.new
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.describe Ldap::User do
       end
 
       it 'validates username and password' do
-        connection = double()
+        connection = double
         allow(mocked_ldap).to receive(:connection).and_return(connection)
 
         build(:ldap_entry)
@@ -107,7 +107,7 @@ RSpec.describe Ldap::User do
       end
 
       it 'fails for invalid credentials' do
-        connection = double()
+        connection = double
         allow(mocked_ldap).to receive(:connection).and_return(connection)
 
         build(:ldap_entry)

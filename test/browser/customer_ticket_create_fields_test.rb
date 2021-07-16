@@ -13,7 +13,7 @@ class CustomerTicketCreateFieldsTest < TestCase
       url:      browser_url,
     )
     # remove local object attributes bound to the session
-    logout()
+    logout
 
     # re-create agent session and fetch object attributes
     login(
@@ -24,7 +24,7 @@ class CustomerTicketCreateFieldsTest < TestCase
     # re-remove local object attributes bound to the session
     # there was an issue (#1856) where the old attribute values
     # persisted and were stored as the original attributes
-    logout()
+    logout
 
     # create customer session and fetch object attributes
     login(

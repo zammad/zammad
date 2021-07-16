@@ -10,7 +10,7 @@ class SettingTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # make sure, that we have english frontend
     click(css: 'a[href="#current_user"]')
@@ -111,7 +111,7 @@ class SettingTest < TestCase
       value: '---',
     )
 
-    reload()
+    reload
 
     click(css: 'a[href="#settings/security"]')
     click(css: 'a[href="#third_party_auth"]')
@@ -149,7 +149,7 @@ class SettingTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     verify_title(value: 'Zammad Test System')
 

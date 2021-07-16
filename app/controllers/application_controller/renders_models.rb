@@ -75,7 +75,7 @@ module ApplicationController::RendersModels
   def model_destroy_render(object, params)
     generic_object = object.find(params[:id])
     generic_object.destroy!
-    model_destroy_render_item()
+    model_destroy_render_item
   end
 
   def model_destroy_render_item()

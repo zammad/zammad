@@ -16,7 +16,7 @@ class AgentUserManageTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create customer
     click(css: 'a[href="#new"]', only_if_exists: true)
@@ -37,7 +37,7 @@ class AgentUserManageTest < TestCase
     sleep 0.5
     click(css: '.content.active .newTicket .recipientList-entry.js-objectNew')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal input[name="firstname"]',
       value: firstname,
@@ -52,7 +52,7 @@ class AgentUserManageTest < TestCase
     )
 
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     sleep 4
 
@@ -80,7 +80,7 @@ class AgentUserManageTest < TestCase
     )
 
     # call new ticket screen again
-    tasks_close_all()
+    tasks_close_all
 
     # wait for user get indexed in elastic search
     await_global_search(query: random_number)
@@ -146,7 +146,7 @@ class AgentUserManageTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -172,7 +172,7 @@ class AgentUserManageTest < TestCase
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions')
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions li[data-type="customer-change"]')
 
-    modal_ready()
+    modal_ready
     click(css: '.content.active .modal [name="customer_id_completion"]')
 
     # check if pulldown is open, it's not working stable via selenium
@@ -229,7 +229,7 @@ class AgentUserManageTest < TestCase
     )
 
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:     '.content.active .tabsSidebar .sidebar[data-tab="customer"]',

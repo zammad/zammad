@@ -12,7 +12,7 @@ class AdminOverviewTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # add new overview
     overview_create(
@@ -49,7 +49,7 @@ class AdminOverviewTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -135,7 +135,7 @@ class AdminOverviewTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     out_of_office_css = '.content.active .modal select[name="out_of_office"]'
     first_overview_css = '.content.active tr[data-id="1"] td'

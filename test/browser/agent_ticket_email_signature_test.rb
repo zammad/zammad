@@ -20,7 +20,7 @@ class AgentTicketEmailSignatureTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # create groups and signatures
@@ -83,7 +83,7 @@ class AgentTicketEmailSignatureTest < TestCase
     #
 
     # reload instances to get new group permissions
-    reload()
+    reload
 
     # create ticket
     ticket_create(

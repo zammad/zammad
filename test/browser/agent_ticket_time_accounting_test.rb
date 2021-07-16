@@ -10,7 +10,7 @@ class AgentTicketTimeAccountingTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # enable time accounting
     click(
@@ -42,7 +42,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal [name=time_unit]',
       value: '4',
@@ -50,7 +50,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .js-timeUnit',
@@ -75,7 +75,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal [name=time_unit]',
       value: '4,6',
@@ -83,7 +83,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .js-timeUnit',
@@ -100,7 +100,7 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.active .js-submit',
     )
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal [name=time_unit]',
       value: '4abc',
@@ -118,7 +118,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    modal_disappear
     watch_for(
       css:   '.content.active .js-timeUnit',
       value: '8.6',
@@ -139,7 +139,7 @@ class AgentTicketTimeAccountingTest < TestCase
     # make sure "off" AJAX request gets completed
     # otherwise following tests might fail because
     # off still active timeaccounting
-    logout()
+    logout
   end
 
   def test_closing_time_accounting_modal_by_clicking_background
@@ -149,7 +149,7 @@ class AgentTicketTimeAccountingTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # enable time accounting
     click(
@@ -181,18 +181,18 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+    modal_ready
 
     # Click outside the modal to make it disappear
     execute(
       js: 'document.elementFromPoint(300, 100).click();',
     )
-    modal_disappear()
+    modal_disappear
 
     click(
       css: '.active .js-submit',
     )
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal [name=time_unit]',
       value: '4',
@@ -200,7 +200,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    modal_disappear()
+    modal_disappear
 
     # disable time accounting
     click(
@@ -217,6 +217,6 @@ class AgentTicketTimeAccountingTest < TestCase
     # make sure "off" AJAX request gets completed
     # otherwise following tests might fail because
     # off still active timeaccounting
-    logout()
+    logout
   end
 end

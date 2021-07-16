@@ -95,7 +95,7 @@ RSpec.describe Import::Ldap, sequencer: :caller do
     it 'initiates always a rescheduling' do
       import_job  = create(:import_job)
       instance    = described_class.new(import_job)
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to be true
     end
@@ -103,7 +103,7 @@ RSpec.describe Import::Ldap, sequencer: :caller do
     it 'updates the result with an info text' do
       import_job  = create(:import_job)
       instance    = described_class.new(import_job)
-      delayed_job = double()
+      delayed_job = double
 
       expect do
         instance.reschedule?(delayed_job)

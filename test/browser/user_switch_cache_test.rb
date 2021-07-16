@@ -12,7 +12,7 @@ class UserSwitchCache < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     ticket_create(
       data: {
         customer: 'nico',
@@ -22,7 +22,7 @@ class UserSwitchCache < TestCase
       },
     )
 
-    logout()
+    logout
 
     # login as customer and verify ticket create screen
     login(
@@ -51,7 +51,7 @@ class UserSwitchCache < TestCase
       value: 'State',
     )
 
-    logout()
+    logout
 
     # login again as customer and verify ticket create screen
     login(

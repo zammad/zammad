@@ -205,7 +205,7 @@ class CustomerTicketCreateTest < TestCase
       no_quote: true,
     )
 
-    logout()
+    logout
 
     # verify if we still can create new tickets as agent
     login(
@@ -213,7 +213,7 @@ class CustomerTicketCreateTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -244,7 +244,7 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is not visible
 
@@ -256,7 +256,7 @@ class CustomerTicketCreateTest < TestCase
 
     assert(exists_not(css: 'a[href="#customer_ticket_new"]'))
 
-    logout()
+    logout
 
     # enable ticket creation
 
@@ -274,7 +274,7 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is visible
 

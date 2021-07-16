@@ -14,7 +14,7 @@ class AgentTicketOverviewPendingTil < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create 4 tickets, 2 with pending til data and 2 without
     tickets = []

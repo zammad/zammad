@@ -13,7 +13,7 @@ class AgentTicketCreateDefaultTypeTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(
       css: 'a[href="#ticket/create"]'
@@ -39,7 +39,7 @@ class AgentTicketCreateDefaultTypeTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     @browser.execute_script("App.Config.set('ui_ticket_create_available_types', ['email-out', 'phone-out'])")
 
@@ -67,7 +67,7 @@ class AgentTicketCreateDefaultTypeTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     @browser.execute_script("App.Config.set('ui_ticket_create_available_types', ['email-out'])")
 

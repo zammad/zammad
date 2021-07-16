@@ -14,7 +14,7 @@ RSpec.describe Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Re
       }
     end
 
-    let(:response) { double() }
+    let(:response) { double }
 
     it 'open timeout should be 20s and read timeout should be 240s' do
       allow(response).to receive(:success?).and_return(true)

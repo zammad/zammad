@@ -10,7 +10,7 @@ class AdminCalendarSlaTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     calendar_name = "ZZZ some calendar #{rand(99_999_999)}"
     sla_name = "ZZZ some sla #{rand(99_999_999)}"
@@ -41,7 +41,7 @@ class AdminCalendarSlaTest < TestCase
       timeout: 4,
     )
 
-    logout()
+    logout
 
     login(
       username: 'master@example.com',
@@ -71,7 +71,7 @@ class AdminCalendarSlaTest < TestCase
       value:   timezone_verify,
       timeout: 4,
     )
-    modal_close()
+    modal_close
 
     sla_create(
       data: {

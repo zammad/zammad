@@ -361,7 +361,7 @@ class PackageTest < ActiveSupport::TestCase
           file.close
         end
         begin
-          Package.auto_install()
+          Package.auto_install
         rescue
           false
         end

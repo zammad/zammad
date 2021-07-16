@@ -14,7 +14,7 @@ RSpec.describe TriggerWebhookJob::RecordPayload do
       let(:backend) { TriggerWebhookJob::RecordPayload::Ticket }
 
       it 'initializes backend instance and sends generate' do
-        instance = double()
+        instance = double
         allow(instance).to receive(:generate)
         allow(backend).to receive(:new).and_return(instance)
 

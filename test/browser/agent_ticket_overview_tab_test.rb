@@ -24,7 +24,7 @@ class AgentTicketOverviewTabTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     title = "test #{rand(9_999_999)}"
 
@@ -53,7 +53,7 @@ class AgentTicketOverviewTabTest < TestCase
         body:     "overview tab test #3 - #{title}",
       }
     )
-    tasks_close_all()
+    tasks_close_all
 
     #click(text: 'Overviews')
     # enable full overviews
@@ -97,6 +97,6 @@ class AgentTicketOverviewTabTest < TestCase
     task_count_equals(0)
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 end

@@ -54,14 +54,14 @@ class AgentTicketZoomHideTest < TestCase
       css: '.attachment-icon img',
     )
 
-    modal_ready()
+    modal_ready
 
     # Now go to a previous ticket and confirm that the modal disappears
     location(
       url: "#{browser_url}/#ticket/zoom/1",
     )
     sleep 2
-    modal_disappear()
+    modal_disappear
   end
 
   def teardown

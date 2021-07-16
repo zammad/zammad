@@ -10,7 +10,7 @@ class KeyboardShortcutsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     sleep 2
 
     # show shortkeys
@@ -41,14 +41,14 @@ class KeyboardShortcutsTest < TestCase
       end
     end
 
-    modal_ready()
+    modal_ready
     # hide shortkeys
     shortcut(key: 'h')
-    modal_disappear()
+    modal_disappear
 
     # show shortkeys
     shortcut(key: 'h')
-    modal_ready()
+    modal_ready
 
     # show notifications
     shortcut(key: 'a')

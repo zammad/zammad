@@ -11,7 +11,7 @@ class AdminPermissionsGranularVsFullTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#manage/groups"]')

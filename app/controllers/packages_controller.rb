@@ -5,7 +5,7 @@ class PackagesController < ApplicationController
 
   # GET /api/v1/packages
   def index
-    packages = Package.all().order('name')
+    packages = Package.all.order('name')
     render json: {
       packages: packages
     }

@@ -12,7 +12,7 @@ class AgentTicketMergeTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket1 = ticket_create(
@@ -32,7 +32,7 @@ class AgentTicketMergeTest < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # create second ticket to merge
     ticket_create(
@@ -60,7 +60,7 @@ class AgentTicketMergeTest < TestCase
     click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
     click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="target_ticket_number"]',
       value: ticket1[:number],
@@ -89,7 +89,7 @@ class AgentTicketMergeTest < TestCase
     )
 
     # close task/cleanup
-    tasks_close_all()
+    tasks_close_all
 
     # merge ticket with open tabs
     ticket3 = ticket_create(
@@ -114,7 +114,7 @@ class AgentTicketMergeTest < TestCase
     click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
     click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="target_ticket_number"]',
       value: ticket3[:number],

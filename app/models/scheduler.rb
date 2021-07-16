@@ -288,7 +288,7 @@ class Scheduler < ApplicationModel
     )
 
     logger.info "execute #{job.method} (try_count #{try_count})..."
-    eval job.method() # rubocop:disable Security/Eval
+    eval job.method # rubocop:disable Security/Eval
     took = Time.zone.now - started_at
     logger.info "ended #{job.method} took: #{took} seconds."
   rescue => e

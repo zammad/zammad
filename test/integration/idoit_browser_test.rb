@@ -82,7 +82,7 @@ class IntegrationIdoitTest < TestCase
     # click the check box from the first row and note its entry ID
     checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
     entry_id = checkbox.attribute('value')
-    checkbox.click()
+    checkbox.click
 
     # submit the i-doit object selections
     click(css: '.content.active .modal form button.js-submit')
@@ -113,7 +113,7 @@ class IntegrationIdoitTest < TestCase
       css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # new create a new ticket with an i-doit object
     ticket_create(
@@ -142,7 +142,7 @@ class IntegrationIdoitTest < TestCase
     # click the check box from the first row and note its entry ID
     checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
     entry_id = checkbox.attribute('value')
-    checkbox.click()
+    checkbox.click
 
     # submit the i-doit object selections
     click(css: '.content.active .modal form button.js-submit')
@@ -173,7 +173,7 @@ class IntegrationIdoitTest < TestCase
 
     # reload browser and check if it's still removed
     sleep 3
-    reload()
+    reload
     watch_for(
       css: '.content.active .ticketZoom-header .ticket-number',
     )
@@ -192,7 +192,7 @@ class IntegrationIdoitTest < TestCase
     # add item again
     click(css: '.content.active .sidebar[data-tab="idoit"] .js-actions .dropdown-toggle')
     click(css: '.content.active .sidebar[data-tab="idoit"] .js-actions [data-type="objects-change"]')
-    modal_ready()
+    modal_ready
 
     # wait for the API call to populate the dropdown menu
     watch_for(css: '.content.active .modal form input.js-input')
@@ -205,7 +205,7 @@ class IntegrationIdoitTest < TestCase
     # click the check box from the first row and note its entry ID
     checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
     entry_id = checkbox.attribute('value')
-    checkbox.click()
+    checkbox.click
 
     # submit the i-doit object selections
     click(css: '.content.active .modal form button.js-submit')
@@ -217,7 +217,7 @@ class IntegrationIdoitTest < TestCase
 
     # reload browser and check if it's still removed
     sleep 3
-    reload()
+    reload
     watch_for(
       css: '.content.active .ticketZoom-header .ticket-number',
     )

@@ -22,7 +22,7 @@ RSpec.describe MigrateLdapSamaccountnameToUidJob, type: :job do
     }
     allow(Import::Ldap).to receive(:config).and_return(ldap_config)
 
-    ldap_user = double()
+    ldap_user = double
     allow(ldap_user).to receive(:uid_attribute).and_return('samaccountname')
     allow(::Ldap::User).to receive(:new).and_return(ldap_user)
 
@@ -49,7 +49,7 @@ RSpec.describe MigrateLdapSamaccountnameToUidJob, type: :job do
 
     allow(Import::Ldap).to receive(:config).and_return(ldap_config_obsolete)
 
-    ldap_user = double()
+    ldap_user = double
     allow(ldap_user).to receive(:uid_attribute).and_return('objectguid')
     allow(::Ldap::User).to receive(:new).and_return(ldap_user)
 

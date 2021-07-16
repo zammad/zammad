@@ -10,7 +10,7 @@ class AgentTicketUpdate1Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # confirm on create
     ticket_create(

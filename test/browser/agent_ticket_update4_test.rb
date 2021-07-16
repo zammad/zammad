@@ -12,7 +12,7 @@ class AgentTicketUpdate4Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # date object
     object_manager_attribute_create(

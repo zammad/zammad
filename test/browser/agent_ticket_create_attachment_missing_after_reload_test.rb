@@ -13,7 +13,7 @@ class AgentticketCreateAttachmentMissingAfterReloadTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # attachment checks - new ticket

@@ -10,7 +10,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # test bulk action
 
@@ -68,7 +68,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # remember current overview count
-    overview_counter_before = overview_counter()
+    overview_counter_before = overview_counter
 
     # select close state & submit
     select(
@@ -96,12 +96,12 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # remember current overview count
     await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
-    overview_counter_before = overview_counter()
+    overview_counter_before = overview_counter
 
     # click options and enable number and article count
     click(css: '.content.active [data-type="settings"]')
 
-    modal_ready()
+    modal_ready
 
     check(
       css: '.modal input[value="number"]',
@@ -139,7 +139,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # reload browser
-    reload()
+    reload
     sleep 4
 
     # check if number and article count is shown
@@ -159,7 +159,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     # disable number and article count
     click(css: '.content.active [data-type="settings"]')
 
-    modal_ready()
+    modal_ready
 
     uncheck(
       css: '.modal input[value="number"]',
@@ -213,7 +213,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'])
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 
   def test_bulk_pending
@@ -223,7 +223,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # test bulk action
 
@@ -259,7 +259,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # remember current overview count
-    overview_counter_before = overview_counter()
+    overview_counter_before = overview_counter
 
     # select both via bulk action
     click(
@@ -363,7 +363,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 
   # verify correct behaviour for issue #1864 - Bulk-Action: Not possible to change owner
@@ -374,7 +374,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # test bulk action
 
@@ -407,7 +407,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # remember current overview count
-    overview_counter_before = overview_counter()
+    overview_counter_before = overview_counter
 
     # select both via bulk action
     click(
@@ -465,7 +465,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     await_overview_counter(view: '#ticket/view/all_unassigned', count: overview_counter_before['#ticket/view/all_unassigned'] - 2)
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 
   # verify fix for issue #2026 - Bulk action should not be shown if user has no change permissions
@@ -476,7 +476,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new group
     group_create(
@@ -531,13 +531,13 @@ class AgentTicketOverviewLevel0Test < TestCase
       }
     )
 
-    logout() # logout as master@example.com then login as agent2@example.com
+    logout # logout as master@example.com then login as agent2@example.com
     login(
       username: 'agent2@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # open Overview menu tab
     click(
@@ -611,14 +611,14 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # cleanup
-    tasks_close_all()
-    logout() # logout as agent2@example.com and then login as master@example.com to clean up tickets
+    tasks_close_all
+    logout # logout as agent2@example.com and then login as master@example.com to clean up tickets
     login(
       username: 'master@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # open ticket by search
     ticket_open_by_search(

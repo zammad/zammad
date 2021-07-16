@@ -12,7 +12,7 @@ class AgentTicketTaskChangedTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -37,7 +37,7 @@ class AgentTicketTaskChangedTest < TestCase
     # verify the 'Discard your changes' message does not appear (since there are no changes)
     assert_nil execute(js: "return $('.content.active .js-attributeBar .js-reset:not(\".hide\")').get(0)")
 
-    tasks_close_all()
+    tasks_close_all
 
     sleep 0.5
     exists_not( css: '.modal')

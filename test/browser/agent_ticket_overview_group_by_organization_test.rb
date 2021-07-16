@@ -20,7 +20,7 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # 1. Create a new test organization with special characters in its name
     organization_create(

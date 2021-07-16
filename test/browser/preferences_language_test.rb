@@ -11,7 +11,7 @@ class PreferencesLanguageTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # start ticket create
     ticket_create(
@@ -289,7 +289,7 @@ class PreferencesLanguageTest < TestCase
     sleep 6
 
     # check if language is still used after reload
-    reload()
+    reload
     sleep 2
 
     watch_for(

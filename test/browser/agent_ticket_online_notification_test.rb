@@ -12,7 +12,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket_create(
@@ -246,7 +246,7 @@ class AgentTicketOnlineNotificationTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     browser2 = browser_instance
     login(

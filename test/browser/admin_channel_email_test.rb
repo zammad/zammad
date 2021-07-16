@@ -19,7 +19,7 @@ class AdminChannelEmailTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#channels/email"]')
@@ -41,7 +41,7 @@ class AdminChannelEmailTest < TestCase
     click(css: '.content.active a[href="#c-account"]')
     click(css: '.content.active .js-channelNew')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="realname"]',
       value: 'My System',
@@ -82,7 +82,7 @@ class AdminChannelEmailTest < TestCase
     # re-create
     click(css: '.content.active .js-channelNew')
 
-    modal_ready()
+    modal_ready
 
     set(
       css:   '.modal input[name="realname"]',
@@ -111,7 +111,7 @@ class AdminChannelEmailTest < TestCase
     # set invalid folder
     click(css: '.content.active .js-editInbound')
 
-    modal_ready()
+    modal_ready
 
     set(
       css:   '.modal input[name="options::folder"]',
@@ -136,7 +136,7 @@ class AdminChannelEmailTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#channels/email"]')
@@ -146,7 +146,7 @@ class AdminChannelEmailTest < TestCase
     # create a new email filter
     click(css: '.content.active a[data-type="new"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="name"]',
       value: filter_name,
@@ -156,7 +156,7 @@ class AdminChannelEmailTest < TestCase
       value: 'target',
     )
     click(css: '.modal .js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .table',
@@ -167,9 +167,9 @@ class AdminChannelEmailTest < TestCase
     click(css: '.content.active .table .dropdown .btn--table')
     click(css: '.content.active .table .dropdown .js-clone')
 
-    modal_ready()
+    modal_ready
     click(css: '.modal .js-submit')
-    modal_disappear()
+    modal_disappear
 
     # confirm the clone exists in the table
     watch_for(

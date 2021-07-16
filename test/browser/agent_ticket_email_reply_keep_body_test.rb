@@ -12,7 +12,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket_create(
@@ -87,7 +87,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       css:      '.content.active .js-settingContainer .js-setting',
     )
     click(css: '.content.active .js-settingContainer .js-setting')
-    modal_ready()
+    modal_ready
     select(
       css:   params[:css],
       value: params[:value]
@@ -95,8 +95,8 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     click(
       css: params[:submit_css],
     )
-    modal_close()
-    modal_disappear()
+    modal_close
+    modal_disappear
   end
 
   def test_full_quote
@@ -106,7 +106,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_title(
       title: 'Welcome to Zammad',
@@ -141,7 +141,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     assert Time.zone.parse(match[1])
 
     # try again, but with the full quote header disabled
-    tasks_close_all()
+    tasks_close_all
     ticket_open_by_title(
       title: 'Welcome to Zammad',
     )
@@ -163,7 +163,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     assert_nil match
 
     # after test, turn full quote header back on again
-    tasks_close_all()
+    tasks_close_all
     ticket_open_by_title(
       title: 'Welcome to Zammad',
     )
@@ -182,7 +182,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_title(
       title: 'Welcome to Zammad',

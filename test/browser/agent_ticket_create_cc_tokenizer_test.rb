@@ -16,7 +16,7 @@ class AgentTicketCreateCcTokenizerTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(
       css: 'a[href="#ticket/create"]'

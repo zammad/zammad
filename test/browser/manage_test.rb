@@ -30,13 +30,13 @@ class ManageTest < TestCase
 
     click(css: '.table-overview tr:last-child td')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="lastname"]',
       value: "2Manage Lastname#{random}",
     )
     click(css: '.modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   'body',
@@ -58,7 +58,7 @@ class ManageTest < TestCase
 
     click(css: '.content:not(.hide) .action:last-child .js-edit')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name=name]',
       value: "some sla update #{random}",
@@ -68,7 +68,7 @@ class ManageTest < TestCase
       value: '2:01',
     )
     click(css: '.modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   'body',
@@ -94,7 +94,7 @@ class ManageTest < TestCase
       value: "some sla update #{random}",
     )
 
-    reload()
+    reload
     sleep 2
 
     click(css: 'a[href="#manage"]')

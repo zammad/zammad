@@ -12,7 +12,7 @@ class AdminObjectManagerTreeSelectTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {
@@ -126,7 +126,7 @@ class AdminObjectManagerTreeSelectTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     object_manager_attribute_create(
       data: {

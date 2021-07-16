@@ -14,7 +14,7 @@ class FirstStepsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: '.active.content .tab[data-area="first-steps-widgets"]')
     watch_for(
@@ -25,7 +25,7 @@ class FirstStepsTest < TestCase
     # invite agent (with more then one group)
     click(css: '.active.content .js-inviteAgent')
 
-    modal_ready()
+    modal_ready
 
     set(
       css:   '.modal [name="firstname"]',
@@ -52,11 +52,11 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Sending',
     )
-    modal_disappear()
+    modal_disappear
 
     # invite customer
     click(css: '.active.content .js-inviteCustomer')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Client',
@@ -85,14 +85,14 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Sending',
     )
-    modal_disappear()
+    modal_disappear
 
     # test ticket
     click(
       css:  '.active.content .js-testTicket',
       fast: true,
     )
-    modal_ready()
+    modal_ready
     watch_for(
       css:   'body div.modal',
       value: 'A Test Ticket has been created',
@@ -105,7 +105,7 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Test Ticket',
     )
-    modal_disappear()
+    modal_disappear
 
     execute(
       js: '$(".active.content .sidebar").show()',

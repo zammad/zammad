@@ -14,7 +14,7 @@ class AgentOrganizationProfileTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # search and open org
     organization_open_by_search(
@@ -41,14 +41,14 @@ class AgentOrganizationProfileTest < TestCase
       css:   '.active .profile [data-name="note"]',
       value: note,
     )
-    empty_search()
+    empty_search
     sleep 2
 
     # check and change note again in edit screen
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     watch_for(
       css:   '.active .modal',
       value: note,
@@ -63,7 +63,7 @@ class AgentOrganizationProfileTest < TestCase
       value: 'some note abc',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.active .profile-window',
@@ -80,13 +80,13 @@ class AgentOrganizationProfileTest < TestCase
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="name"]',
       value: 'Zammad Foundation',
     )
     click(css: '.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     verify_task(
       data: {
@@ -112,7 +112,7 @@ class AgentOrganizationProfileTest < TestCase
       css:   '.active .profile-window',
       value: "org profile check #{message}",
     )
-    tasks_close_all()
+    tasks_close_all
 
     # work with two browser windows
     message = "comment 1 #{rand(99_999_999_999_999_999)}"
@@ -166,7 +166,7 @@ class AgentOrganizationProfileTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # search and open org
     organization_open_by_search(
@@ -192,7 +192,7 @@ class AgentOrganizationProfileTest < TestCase
     click(
       css: '.active .profile-window .dropdown li[data-type="edit"]',
     )
-    modal_ready()
+    modal_ready
 
     select(
       css:   '.active .modal select[name="active"]',
@@ -203,7 +203,7 @@ class AgentOrganizationProfileTest < TestCase
       css: '.modal .js-submit',
     )
 
-    modal_disappear()
+    modal_disappear
 
     # go back to the org and check for inactive status update
     click(
@@ -224,7 +224,7 @@ class AgentOrganizationProfileTest < TestCase
     click(
       css: '.active .profile-window .dropdown li[data-type="edit"]',
     )
-    modal_ready()
+    modal_ready
 
     select(
       css:   '.active .modal select[name="active"]',
@@ -235,7 +235,7 @@ class AgentOrganizationProfileTest < TestCase
       css: '.modal .js-submit',
     )
 
-    modal_disappear()
+    modal_disappear
 
     # go back to the org and check for active status update
     click(

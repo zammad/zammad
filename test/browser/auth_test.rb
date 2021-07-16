@@ -23,10 +23,10 @@ class AuthTest < TestCase
       username: 'nicole.braun@zammad.org',
       password: 'test',
     )
-    tasks_close_all()
+    tasks_close_all
 
     # reload page
-    reload()
+    reload
 
     # check if cookie is temporarily
     watch_for(
@@ -75,7 +75,7 @@ class AuthTest < TestCase
       expires: '\d{4}-\d{1,2}-\d{1,2}.+?',
     )
 
-    logout()
+    logout
 
     # verify session cookie
     sleep 2

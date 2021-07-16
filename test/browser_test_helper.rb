@@ -3095,7 +3095,7 @@ wait untill text in selector disabppears
         end
         raise "Can't find organization #{data[:organization]}" if target.blank?
 
-        target.click()
+        target.click
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
         retries += 1
@@ -3263,7 +3263,7 @@ wait untill text in selector disabppears
           sleep 0.5
           target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
         end
-        target.click()
+        target.click
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
         retries += 1
@@ -4860,7 +4860,7 @@ wait untill text in selector disabppears
     tries = 5
     begin
       alert = instance.switch_to.alert
-      alert.dismiss()
+      alert.dismiss
     rescue e
       tries -= 1
       sleep 0.5

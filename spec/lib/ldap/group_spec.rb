@@ -10,7 +10,7 @@ RSpec.describe Ldap::Group do
   # required as 'let' to perform test based
   # expectations and reuse it in 'let' instance
   # as additional parameter
-  let(:mocked_ldap) { double() }
+  let(:mocked_ldap) { double }
 
   describe '.uid_attribute' do
 

@@ -459,7 +459,7 @@ returns
       end
       next if permission_ids.blank?
 
-      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
+      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct.pluck(:id).each do |role_id|
         role_ids.push role_id
       end
       total_role_ids.push role_ids
@@ -1058,7 +1058,7 @@ raise 'Minimum one user need to have admin permissions'
 
   def last_admin_check_admin_count
     admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct().count - 1
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct.count - 1
   end
 
   def validate_agent_limit_by_attributes
@@ -1068,7 +1068,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !permissions?('ticket.agent')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count + 1
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count + 1
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
 
     true
@@ -1081,7 +1081,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !role.with_permission?('ticket.agent')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count
 
     # if new added role is a ticket.agent role
     if ticket_agent_role_ids.include?(role.id)

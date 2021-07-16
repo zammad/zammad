@@ -134,7 +134,7 @@ Oversized Email Message Body #{'#' * 120_000}
     msg = imap.fetch(imap_message_id, 'RFC822')[0].attr['RFC822']
     assert(msg.present?, 'Must have received a reply from the postmaster')
     imap.store(imap_message_id, '+FLAGS', [:Deleted])
-    imap.expunge()
+    imap.expunge
 
     # parse the reply mail and verify the various headers
     parser = Channel::EmailParser.new
@@ -209,7 +209,7 @@ Oversized Email Message Body #{'#' * 120_000}
     imap_message_id = message_ids.last
     msg = imap.fetch(imap_message_id, 'RFC822')[0].attr['RFC822']
     imap.store(imap_message_id, '+FLAGS', [:Deleted])
-    imap.expunge()
+    imap.expunge
     assert(msg.present?, 'Oversized Email Message')
     assert_equal(message_ids.count, 1, 'Original customer mail must be deleted.')
 
