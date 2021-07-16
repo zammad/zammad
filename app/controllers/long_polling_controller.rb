@@ -73,7 +73,7 @@ class LongPollingController < ApplicationController
         count = 12
       end
       loop do
-        count = count - 1
+        count -= 1
         queue = Sessions.queue(client_id)
         if queue && queue[0]
           logger.debug { "send #{queue.inspect} to #{client_id}" }

@@ -162,7 +162,7 @@ class String
     elsif string.scan(%r{<a[[:space:]]}i).count < 5_000
       string.gsub!(%r{<a[[:space:]].*?href=("|')(.+?)("|').*?>}ix) do
         link = $2
-        counter = counter + 1
+        counter += 1
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
       end

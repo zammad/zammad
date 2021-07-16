@@ -151,7 +151,7 @@ job.run(true)
     if last_run_at
       diff = time - last_run_at
       if diff.positive?
-        time = time + 10.minutes
+        time += 10.minutes
       end
     end
     day_map = {
@@ -180,8 +180,8 @@ job.run(true)
 
         # start on next day at 00:00:00
         time = day_to_check - day_to_check.sec.seconds
-        time = time - day_to_check.min.minutes
-        time = time - day_to_check.hour.hours
+        time -= day_to_check.min.minutes
+        time -= day_to_check.hour.hours
         next
       end
 
@@ -202,7 +202,7 @@ job.run(true)
 
       # move to [0-5]0:00 time stamps
       day_to_check = day_to_check - day_to_check.min.minutes + min.minutes
-      day_to_check = day_to_check - day_to_check.sec.seconds
+      day_to_check -= day_to_check.sec.seconds
 
       # loop minutes till next full hour
       if day_to_check.min.nonzero?
@@ -210,7 +210,7 @@ job.run(true)
           if minute_counter.nonzero?
             break if day_to_check.min.zero?
 
-            day_to_check = day_to_check + 10.minutes
+            day_to_check += 10.minutes
           end
           next if !timeplan['hours'][day_to_check.hour] && !timeplan['hours'][day_to_check.hour.to_s]
           next if !timeplan['minutes'][match_minutes(day_to_check.min)] && !timeplan['minutes'][match_minutes(day_to_check.min).to_s]

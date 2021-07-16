@@ -243,7 +243,7 @@ class Report::Base
       #          puts 'CT:' + ticket.created_at.to_s
       diff = timestamp - ticket.created_at
       #puts 'DIFF:' + diff.to_s
-      time_total = time_total + diff
+      time_total += diff
       tickets += 1
     end
     if time_total.zero? || tickets.zero?

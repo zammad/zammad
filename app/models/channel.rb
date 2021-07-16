@@ -164,7 +164,7 @@ stream all accounts
 
         local_delay_before_reconnect = delay_before_reconnect
         if channel.status_in == 'error'
-          local_delay_before_reconnect = local_delay_before_reconnect * 2
+          local_delay_before_reconnect *= 2
         end
         if @@channel_stream[channel_id].blank? && @@channel_stream_started_till_at[channel_id].present?
           wait_in_seconds = @@channel_stream_started_till_at[channel_id] - (Time.zone.now - local_delay_before_reconnect.seconds)

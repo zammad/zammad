@@ -74,7 +74,7 @@ class Stats::TicketWaitingTime
     end
 
     if count_articles.positive?
-      average_time = average_time / count_articles
+      average_time /= count_articles
     end
 
     average_time

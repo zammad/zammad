@@ -9,7 +9,7 @@ class TicketOnlineNotificationSeenJob < ApplicationJob
   end
 
   def perform(ticket_id, user_id)
-    user_id = user_id || 1
+    user_id ||= 1
 
     # set all online notifications to seen
     Transaction.execute do

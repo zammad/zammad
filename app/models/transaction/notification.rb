@@ -84,7 +84,7 @@ class Transaction::Notification
 
     if possible_recipients_additions.present?
       # join unique entries
-      possible_recipients = possible_recipients | possible_recipients_additions.to_a
+      possible_recipients |= possible_recipients_additions.to_a
     end
 
     already_checked_recipient_ids = {}

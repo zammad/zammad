@@ -199,7 +199,7 @@ class WebsocketServer
     client_list.each_value do |client|
       next if client[:meta][:type] == 'websocket'
 
-      clients = clients + 1
+      clients += 1
     end
     log 'info', "Status: ajax clients: #{clients}"
     client_list.each do |client_id, client|
