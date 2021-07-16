@@ -7,13 +7,13 @@ class FirstStepsController < ApplicationController
 
   def index
     invite_agents = false
-    #if User.of_role('Agent').count > 2
+    # if User.of_role('Agent').count > 2
     #  invite_agents = true
-    #end
+    # end
     invite_customers = false
-    #if User.of_role('Customer').count > 2
+    # if User.of_role('Customer').count > 2
     #  invite_customers = true
-    #end
+    # end
 
     chat_active = false
     if Setting.get('chat')
@@ -98,11 +98,11 @@ class FirstStepsController < ApplicationController
               checked:  macro_active,
               location: '#manage/macros',
             },
-            #{
+            # {
             #  name: 'Create Overviews',
             #  checked: false,
             #  location: '#manage/overviews',
-            #},
+            # },
           ],
         },
         {

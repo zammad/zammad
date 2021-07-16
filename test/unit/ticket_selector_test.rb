@@ -86,7 +86,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -102,7 +102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -118,7 +118,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'open'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -773,7 +773,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       'ticket.owner_id' => {
         operator:      'is',
         pre_condition: 'specific',
-        #value: @agent1.id, # value is not set, no result should be shown
+        # value: @agent1.id, # value is not set, no result should be shown
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)

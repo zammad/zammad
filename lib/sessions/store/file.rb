@@ -218,8 +218,8 @@ class Sessions::Store::File
           nodes.push data
         rescue => e
           Rails.logger.error "can't parse status file #{filename}, #{e.inspect}"
-          #to_delete.push "#{path}/#{entry}"
-          #next
+          # to_delete.push "#{path}/#{entry}"
+          # next
         end
       end
     end
@@ -260,8 +260,8 @@ class Sessions::Store::File
           yield data
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
-          #to_delete.push "#{path}/#{entry}"
-          #next
+          # to_delete.push "#{path}/#{entry}"
+          # next
         end
       end
     end
@@ -300,8 +300,8 @@ class Sessions::Store::File
           yield data
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
-          #to_delete.push "#{path}/#{entry}"
-          #next
+          # to_delete.push "#{path}/#{entry}"
+          # next
         end
       end
     end

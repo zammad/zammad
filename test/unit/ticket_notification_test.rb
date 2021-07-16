@@ -1015,8 +1015,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       group:         Group.lookup(name: 'TicketNotificationTest'),
       customer:      @customer,
       owner_id:      @agent2.id,
-      #state: Ticket::State.lookup(name: 'new'),
-      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      # state: Ticket::State.lookup(name: 'new'),
+      # priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -1058,8 +1058,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       group:         Group.lookup(name: 'TicketNotificationTest'),
       customer:      @customer,
       owner_id:      @agent2.id,
-      #state: Ticket::State.lookup(name: 'new'),
-      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      # state: Ticket::State.lookup(name: 'new'),
+      # priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )

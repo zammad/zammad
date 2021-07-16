@@ -55,12 +55,12 @@ class AgentTicketOverviewTabTest < TestCase
     )
     tasks_close_all
 
-    #click(text: 'Overviews')
+    # click(text: 'Overviews')
     # enable full overviews
-    #execute(
+    # execute(
     #  js: '$(".content.active .sidebar").css("display", "block")',
-    #)
-    #click(text: 'Unassigned & Open')
+    # )
+    # click(text: 'Unassigned & Open')
 
     ticket_open_by_overview(
       number: ticket1[:number],

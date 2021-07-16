@@ -33,7 +33,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       password:      'agentpw',
       active:        true,
       roles:         roles,
-      #groups: groups,
+      # groups: groups,
       updated_at:    '2015-02-05 16:38:00',
       updated_by_id: 1,
       created_by_id: 1,

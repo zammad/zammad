@@ -27,8 +27,8 @@ class ClearbitTest < ActiveSupport::TestCase
                     'person.site'            => 'user.web',
                     'company.location'       => 'user.address',
                     'person.location'        => 'user.address',
-                    #'person.timeZone' => 'user.preferences[:timezone]',
-                    #'person.gender' => 'user.preferences[:gender]',
+                    # 'person.timeZone' => 'user.preferences[:timezone]',
+                    # 'person.gender' => 'user.preferences[:gender]',
                   },
                   organization_sync:       {
                     'company.legalName'   => 'organization.name',
@@ -270,7 +270,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('', customer6.lastname)
     assert_equal('', customer6.note)
     assert_equal('', customer6.web)
-    #assert_equal('http://clearbit.com', customer6.web)
+    # assert_equal('http://clearbit.com', customer6.web)
     sometimes_changing_but_valid_addresses = [
       'San Francisco, CA, USA',
       'San Francisco, CA 94103, USA',

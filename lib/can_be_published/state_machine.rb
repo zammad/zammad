@@ -59,7 +59,7 @@ module CanBePublished
       state :internal
       state :published
       state :archived
-      state :unarchived #magic
+      state :unarchived # magic
 
       event :internal do
         transitions from:  :draft,

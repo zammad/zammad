@@ -55,9 +55,9 @@ returns
         all[model_class][:attributes] = model_class.attribute_names
         all[model_class][:reflections] = model_class.reflections
         all[model_class][:table] = model_class.table_name
-        #puts model_class
-        #puts "rrrr #{all[model_class][:attributes]}"
-        #puts " #{model_class.attribute_names.inspect}"
+        # puts model_class
+        # puts "rrrr #{all[model_class][:attributes]}"
+        # puts " #{model_class.attribute_names.inspect}"
       end
       all
     end

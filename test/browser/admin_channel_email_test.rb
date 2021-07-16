@@ -6,7 +6,7 @@ class AdminChannelEmailTest < TestCase
   def test_account_add
 
     if !ENV['MAILBOX_INIT']
-      #raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      # raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
       puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
       return
     end

@@ -441,7 +441,7 @@ class String
     # word 14
     # edv hotline wrote:
     # edv hotline schrieb:
-    #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
+    # map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each_value do |regexp|
       string.sub!(%r{#{regexp}}) do |placeholder|

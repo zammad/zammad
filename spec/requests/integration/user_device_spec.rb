@@ -166,7 +166,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
 
-      #reset_notification_checks
+      # reset_notification_checks
 
       params = {}
       get '/api/v1/users', params: params, as: :json

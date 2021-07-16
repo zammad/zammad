@@ -423,7 +423,7 @@ returns
       return
     end
 
-    #raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+    # raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin

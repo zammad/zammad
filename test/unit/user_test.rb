@@ -411,7 +411,7 @@ class UserTest < ActiveSupport::TestCase
       login:         login,
       firstname:     'Role',
       lastname:      "Admin#{name}",
-      #email: "",
+      # email: "",
       password:      'adminpw',
       active:        true,
       roles:         Role.where(name: %w[Admin Agent]),
@@ -449,7 +449,7 @@ class UserTest < ActiveSupport::TestCase
       login:         login,
       firstname:     'Role',
       lastname:      "Admin#{name}",
-      #email: "",
+      # email: "",
       password:      'adminpw',
       active:        true,
       roles:         Role.where(name: %w[Admin Agent]),
@@ -1223,7 +1223,7 @@ class UserTest < ActiveSupport::TestCase
 
     Cti::CallerId.maybe_add(
       caller_id: '49123456789',
-      comment:   'Hairdresser Bob Smith, San Francisco', #optional
+      comment:   'Hairdresser Bob Smith, San Francisco', # optional
       level:     'maybe', # known|maybe
       user_id:   agent1_id, # optional
       object:    'Ticket',

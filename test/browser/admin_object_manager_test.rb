@@ -91,9 +91,9 @@ class AdminObjectManagerTest < TestCase
         title:    'ticket attribute test #1',
         body:     'ticket attribute test #1',
       },
-      #custom_data_select: {
+      # custom_data_select: {
       #  key1: 'some value',
-      #},
+      # },
       custom_data_input:   {
         browser_test1: 'some value öäüß',
       },
@@ -103,9 +103,9 @@ class AdminObjectManagerTest < TestCase
     # update ticket
     ticket_update(
       data:              {},
-      #custom_data_select: {
+      # custom_data_select: {
       #  key1: 'some value',
-      #},
+      # },
       custom_data_input: {
         browser_test1: 'some value ABC',
       },
@@ -190,9 +190,9 @@ class AdminObjectManagerTest < TestCase
         name:      'browser_test2',
         display:   'Browser Test 2',
         data_type: 'Text',
-        #data_option: {
+        # data_option: {
         #  default: 'xxx',
-        #},
+        # },
       },
     )
     object_manager_attribute_create(
@@ -215,11 +215,11 @@ class AdminObjectManagerTest < TestCase
         name:      'browser_test4',
         display:   'Browser Test 4',
         data_type: 'Integer',
-        #data_option: {
+        # data_option: {
         #  default: 'xxx',
         #  min: 15,
         #  max: 99,
-        #},
+        # },
       },
     )
 
@@ -228,11 +228,11 @@ class AdminObjectManagerTest < TestCase
         name:      'browser_test5',
         display:   'Browser Test 5',
         data_type: 'Datetime',
-        #data_option: {
+        # data_option: {
         #  future: true,
         #  past: true,
         #  diff: 24
-        #},
+        # },
       },
     )
 
@@ -241,11 +241,11 @@ class AdminObjectManagerTest < TestCase
         name:      'browser_test6',
         display:   'Browser Test 6',
         data_type: 'Date',
-        #data_option: {
+        # data_option: {
         #  future: true,
         #  past: true,
         #  diff: 24
-        #},
+        # },
       },
     )
 

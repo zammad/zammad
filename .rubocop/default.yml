@@ -81,11 +81,6 @@ Style/RescueStandardError:
   Enabled: true
   EnforcedStyle: implicit
 
-Layout/LeadingCommentSpace:
-  Description: 'Comments should start with a space.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#hash-space'
-  Enabled: false
-
 Layout/SpaceInsideReferenceBrackets:
   Description: 'Checks the spacing inside referential brackets.'
   Enabled: false

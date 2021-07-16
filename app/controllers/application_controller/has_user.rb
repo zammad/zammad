@@ -88,7 +88,7 @@ module ApplicationController::HasUser
 
   # update session updated_at
   def session_update
-    #sleep 0.6
+    # sleep 0.6
 
     session[:ping] = Time.zone.now.iso8601
 

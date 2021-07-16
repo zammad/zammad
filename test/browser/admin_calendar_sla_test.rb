@@ -57,7 +57,7 @@ class AdminCalendarSlaTest < TestCase
       timeout: 4,
     )
 
-    #@browser.execute_script('$(\'.content.active table tr td:contains(" ' + data[:name] + '")\').first().click()')
+    # @browser.execute_script('$(\'.content.active table tr td:contains(" ' + data[:name] + '")\').first().click()')
     @browser.execute_script('$(\'.content.active .main .js-edit\').last().click()')
 
     modal_ready(browser: @browser)

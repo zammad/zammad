@@ -24,7 +24,7 @@ class CommunicateTelegramJob < ApplicationJob
       channel = Channel.lookup(id: ticket.preferences['channel_id'])
     end
     log_error(article, "No such channel for bot #{ticket.preferences['bid']} or channel id #{ticket.preferences['channel_id']}") if !channel
-    #log_error(article, "Channel.find(#{channel.id}) isn't a telegram channel!") if channel.options[:adapter] !~ /\Atelegram/i
+    # log_error(article, "Channel.find(#{channel.id}) isn't a telegram channel!") if channel.options[:adapter] !~ /\Atelegram/i
     log_error(article, "Channel.find(#{channel.id}) has not telegram api token!") if channel.options[:api_token].blank?
 
     begin

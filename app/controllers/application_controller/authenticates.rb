@@ -43,10 +43,10 @@ module ApplicationController::Authenticates
   end
 
   def authentication_check_only(auth_param = {})
-    #logger.debug 'authentication_check'
-    #logger.debug params.inspect
-    #logger.debug session.inspect
-    #logger.debug cookies.inspect
+    # logger.debug 'authentication_check'
+    # logger.debug params.inspect
+    # logger.debug session.inspect
+    # logger.debug cookies.inspect
     authentication_errors = []
 
     # already logged in, early exit

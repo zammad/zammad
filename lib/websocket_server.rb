@@ -163,7 +163,7 @@ class WebsocketServer
   def self.send_to_client
     return if @clients.size.zero?
 
-    #log 'debug', 'checking for data to send...'
+    # log 'debug', 'checking for data to send...'
     @clients.each do |client_id, client|
       next if client[:disconnect]
 
@@ -213,6 +213,6 @@ class WebsocketServer
     return if !@options[:v] && level == 'debug'
 
     puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}" # rubocop:disable Rails/Output
-    #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
+    # puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end
 end

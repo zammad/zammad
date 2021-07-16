@@ -209,7 +209,7 @@ Comment: [] =
     assert_nil(ticket_3_1.preferences['nagios']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
 
-    #Setting.set('nagios_integration', false)
+    # Setting.set('nagios_integration', false)
 
   end
 

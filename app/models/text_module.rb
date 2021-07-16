@@ -72,7 +72,7 @@ push text_modules to online
   def self.push(locale)
 
     # only push changed text_modules
-    text_modules         = TextModule.all #where(locale: locale)
+    text_modules         = TextModule.all # where(locale: locale)
     text_modules_to_push = []
     text_modules.each do |text_module|
       next if !text_module.active

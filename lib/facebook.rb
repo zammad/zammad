@@ -284,7 +284,7 @@ result
       end
 
       article = {
-        #to:        @account['name'],
+        # to:        @account['name'],
         ticket_id:     ticket.id,
         internal:      false,
         sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,

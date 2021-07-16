@@ -7,7 +7,7 @@ class GeoLocationTest < ActiveSupport::TestCase
 
   setup do
     @mock = true
-    #WebMock.allow_net_connect!
+    # WebMock.allow_net_connect!
   end
 
   # check

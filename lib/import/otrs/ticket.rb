@@ -16,13 +16,13 @@ module Import
         Title:         :title,
         TicketID:      :id,
         FirstResponse: :first_response_at,
-        #FirstResponseTimeDestinationDate: :first_response_escalation_at,
-        #FirstResponseInMin: :first_response_in_min,
-        #FirstResponseDiffInMin: :first_response_diff_in_min,
+        # FirstResponseTimeDestinationDate: :first_response_escalation_at,
+        # FirstResponseInMin: :first_response_in_min,
+        # FirstResponseDiffInMin: :first_response_diff_in_min,
         Closed:        :close_at,
-        #SoltutionTimeDestinationDate: :close_escalation_at,
-        #CloseTimeInMin: :close_in_min,
-        #CloseTimeDiffInMin: :close_diff_in_min,
+        # SoltutionTimeDestinationDate: :close_escalation_at,
+        # CloseTimeInMin: :close_in_min,
+        # CloseTimeDiffInMin: :close_diff_in_min,
       }.freeze
 
       def initialize(ticket)

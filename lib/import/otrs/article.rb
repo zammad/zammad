@@ -16,7 +16,7 @@ module Import
         Subject:     :subject,
         InReplyTo:   :in_reply_to,
         MessageID:   :message_id,
-        #ReplyTo:    :reply_to,
+        # ReplyTo:    :reply_to,
         References:  :references,
         ContentType: :content_type,
         Changed:     :updated_at,

@@ -44,7 +44,7 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
             password: @server_password,
             ssl:      true,
             folder:   @folder,
-            #keep_on_server: true,
+            # keep_on_server: true,
           }
         },
         outbound: {

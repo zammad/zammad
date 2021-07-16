@@ -175,7 +175,7 @@ get list of translations
 
         presorted_list.push item
         list.delete item
-        #list.unshift presort
+        # list.unshift presort
       end
     end
     data['list'] = presorted_list.concat list

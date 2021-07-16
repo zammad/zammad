@@ -238,7 +238,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     sleep 1
 
     click(css: '.content.active .modal .js-submit')
-    #click(css: '.content.active .tabsSidebar-tabs .tabsSidebar-tab[data-tab="customer"]')
+    # click(css: '.content.active .tabsSidebar-tabs .tabsSidebar-tab[data-tab="customer"]')
 
     watch_for(
       css:   '.content.active .tabsSidebar .sidebar[data-tab="customer"]',

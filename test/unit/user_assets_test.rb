@@ -115,7 +115,7 @@ class UserAssetsTest < ActiveSupport::TestCase
     end
     return true if (object1.to_a - object2.to_a).blank?
 
-    #puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
+    # puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
     false
   end
 

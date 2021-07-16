@@ -74,7 +74,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     scroll_to(agent_permission.location.y)
 
-    toggle_checkbox(@browser.find_element(css: '.modal'), "\"#{permission_id}\"") #digit-only selector fails
+    toggle_checkbox(@browser.find_element(css: '.modal'), "\"#{permission_id}\"") # digit-only selector fails
 
     assign_group(group_name)
 
@@ -135,7 +135,7 @@ class AdminDragDropToNewGroupTest < TestCase
     assert_not_nil role_container
 
     role_id = role_container.find_element(css: 'input').attribute(:value)
-    toggle_checkbox(role_container, "\"#{role_id}\"") #digit-only selector fails
+    toggle_checkbox(role_container, "\"#{role_id}\"") # digit-only selector fails
   end
 
   def get_group_element(group_name)

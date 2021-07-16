@@ -55,7 +55,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     role_admin    = Role.where(name: 'Admin').first
     role_agent    = Role.where(name: 'Agent').first
     role_customer = Role.where(name: 'Customer').first
-    #role_report   = Role.where( :name => 'Report' ).first
+    # role_report   = Role.where( :name => 'Report' ).first
 
     user1 = User.find(2)
     assert_equal('agent-1 firstname', user1.firstname)
@@ -67,7 +67,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert(user1.roles.include?(role_agent))
     assert_not(user1.roles.include?(role_admin))
     assert_not(user1.roles.include?(role_customer))
-    #assert_not( user1.roles.include?( role_report ) )
+    # assert_not( user1.roles.include?( role_report ) )
 
     group_dasa = Group.where(name: 'dasa').first
     group_raw  = Group.where(name: 'Raw').first
@@ -85,7 +85,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert(user2.roles.include?(role_agent))
     assert(user2.roles.include?(role_admin))
     assert_not(user2.roles.include?(role_customer))
-    #assert( user2.roles.include?( role_report ) )
+    # assert( user2.roles.include?( role_report ) )
 
     assert(user2.groups_access('full').include?(group_dasa))
     assert(user2.groups_access('full').include?(group_raw))
@@ -100,7 +100,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert(user3.roles.include?(role_agent))
     assert_not(user3.roles.include?(role_admin))
     assert_not(user3.roles.include?(role_customer))
-    #assert( user3.roles.include?( role_report ) )
+    # assert( user3.roles.include?( role_report ) )
 
     assert_not(user3.groups_access('full').include?(group_dasa))
     assert_not(user3.groups_access('full').include?(group_raw))
@@ -115,7 +115,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert(user4.roles.include?(role_agent))
     assert_not(user4.roles.include?(role_admin))
     assert_not(user4.roles.include?(role_customer))
-    #assert( user4.roles.include?( role_report ) )
+    # assert( user4.roles.include?( role_report ) )
 
     assert_not(user4.groups_access('full').include?(group_dasa))
     assert_not(user4.groups_access('full').include?(group_raw))

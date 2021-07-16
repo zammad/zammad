@@ -174,7 +174,7 @@ stream all accounts
           end
         end
 
-        #logger.info "thread stream for channel (#{channel.id}) already running" if @@channel_stream[channel_id].present?
+        # logger.info "thread stream for channel (#{channel.id}) already running" if @@channel_stream[channel_id].present?
         next if @@channel_stream[channel_id].present?
 
         @@channel_stream[channel_id] = {

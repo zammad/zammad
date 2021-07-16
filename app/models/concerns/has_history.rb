@@ -47,7 +47,7 @@ log object update history with all updated attributes, if configured - will be e
       end
     end
     self.history_changes_last_done = changes
-    #logger.info 'updated ' + self.changes.inspect
+    # logger.info 'updated ' + self.changes.inspect
 
     return if changes['id'] && !changes['id'][0]
 
@@ -101,7 +101,7 @@ log object update history with all updated attributes, if configured - will be e
         id_from:           value_id[0],
         id_to:             value_id[1],
       }
-      #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      # logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       history_log('updated', updated_by_id, data)
     end
   end

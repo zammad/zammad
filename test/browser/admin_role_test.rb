@@ -175,7 +175,7 @@ class AdminRoleTest < TestCase
     user_email = "admin.user.#{rand}@example.com"
     user_create(
       data: {
-        #login:    "some login #{random}",
+        # login:    "some login #{random}",
         firstname: "Admin.User Firstname #{random}",
         lastname:  "Admin.User Lastname #{random}",
         email:     user_email,

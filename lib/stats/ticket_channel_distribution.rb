@@ -113,7 +113,7 @@ class Stats::TicketChannelDistribution
     # append in percent
     channels.each do |channel| # rubocop:disable Style/CombinableLoops
       count = result[channel[:sender].to_sym][:inbound]
-      #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
+      # puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
       in_process_precent = if count.zero?
                              0
                            else

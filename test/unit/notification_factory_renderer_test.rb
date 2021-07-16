@@ -246,7 +246,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   test 'translation' do
 
-    #template = "<%= t 'new' %>"
+    # template = "<%= t 'new' %>"
     template = "\#{t('new')}"
     result = described_class.new(
       objects:  {
