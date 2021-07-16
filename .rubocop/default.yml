@@ -108,12 +108,6 @@ Style/DefWithParentheses:
   Description: 'Use def with parentheses when there are arguments.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
   Enabled: false
-Style/MethodDefParentheses:
-  Description: >-
-                 Checks if the method definitions have or don't have
-                 parentheses.
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
-  Enabled: false
 
 Layout/HashAlignment:
   Description: >-
