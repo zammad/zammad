@@ -1804,6 +1804,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.destroy = function(params) {
+      var btn;
       if (params == null) {
         params = {};
       }
@@ -1811,6 +1812,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       this.setAgentOnlineState('offline');
       if (params.remove && this.el) {
         this.el.remove();
+        btn = document.querySelector("." + this.options.buttonClass);
+        if (btn) {
+          btn.classList.add(this.options.inactiveClass);
+          btn.style.display = 'none';
+        }
       }
       if (this.waitingListTimeout) {
         this.waitingListTimeout.stop();

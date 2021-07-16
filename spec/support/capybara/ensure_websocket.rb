@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 module EnsureWebsocket
-  # Ensures that websocket is connectged
+  # Ensures that websocket is connected
   #
   # @param timeout [Integer] seconds to wait
   # @param check_if_pinged [Boolean] checks if was pinged to prevent stale connections

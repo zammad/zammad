@@ -1272,6 +1272,12 @@ do(window) ->
       if params.remove && @el
         @el.remove()
 
+        # Remove button, because it can no longer be used.
+        btn = document.querySelector(".#{ @options.buttonClass }")
+        if btn
+          btn.classList.add @options.inactiveClass
+          btn.style.display = 'none';
+
       # stop all timer
       if @waitingListTimeout
         @waitingListTimeout.stop()
