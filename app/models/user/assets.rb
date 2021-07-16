@@ -22,7 +22,7 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
       return data if assets_added_to?(data)
 
       app_model = User.to_app_model

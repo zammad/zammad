@@ -22,7 +22,7 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
 
       app_model_sla = Sla.to_app_model
 

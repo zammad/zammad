@@ -78,7 +78,7 @@ module ApplicationController::RendersModels
     model_destroy_render_item()
   end
 
-  def model_destroy_render_item ()
+  def model_destroy_render_item()
     render json: {}, status: :ok
   end
 
