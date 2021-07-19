@@ -5,7 +5,7 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
 
   # avoid stuck time issues
-  config.after(:each) do
+  config.after do
     travel_back
   end
 end

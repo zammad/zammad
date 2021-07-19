@@ -12,9 +12,17 @@ inherit_from:
   - todo.yml
   - todo.rspec.yml
 
+inherit_mode:
+  merge:
+    - Include
+
 AllCops:
   NewCops: enable
   DisplayCopNames: true
+  Include:
+    - '.gitlab/**/*.rb'
+    - '.github/**/*.rb'
+    - '.rubocop/**/*.rb'
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'

@@ -8,6 +8,7 @@ FactoryBot.define do
     from          { 'factory-customer-1@example.com' }
     to            { 'factory-customer-1@example.com' }
     subject       { 'factory article' }
+
     message_id    { 'factory@id_com_1' }
     body          { 'some message 123' }
     internal      { false }

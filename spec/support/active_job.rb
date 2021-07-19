@@ -42,7 +42,7 @@ RSpec.configure do |config|
 
   # Workaround needed for behavior change introduced in Rails >= 5.2
   # see: https://github.com/rails/rails/issues/37270
-  config.before(:each) do
+  config.before do
     (ActiveJob::Base.descendants << ActiveJob::Base).each(&:disable_test_adapter)
   end
 end

@@ -13,6 +13,7 @@ RSpec.shared_examples 'TriggerWebhookJob::RecordPayload backend' do |factory|
 
   describe '#generate' do
     subject(:generate) { described_class.new(record).generate }
+
     let(:resolved_associations) { described_class.const_get(:ASSOCIATIONS).map(&:to_s) }
     let(:record) { build(factory) }
 

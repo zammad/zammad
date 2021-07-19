@@ -10,7 +10,7 @@ module SearchindexBackendHelper
     # Execute in RSpec class context
     base.class_exec do
 
-      after(:each) do
+      after do
         next if ENV['ES_URL'].blank?
 
         Rake::Task['searchindex:drop'].execute

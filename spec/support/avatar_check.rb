@@ -14,7 +14,7 @@ module ZammadSpecSupportAvatarCheck
       # @example
       #  it 'does stuff with avatar check', perform_avatar_for_email_check: true do
       #
-      before(:each) do |example|
+      before do |example|
         if !example.metadata[:perform_avatar_for_email_check]
           allow(Avatar).to receive(:auto_detection).and_return(false)
         end

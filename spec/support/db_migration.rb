@@ -157,7 +157,7 @@ module DbMigrationHelper
       # @example
       #  it 'does stuff in an unitialized system', system_init_done: false do
       #
-      before(:each) do |example|
+      before do |example|
         initialized = example.metadata.fetch(:system_init_done, true)
         system_init_done(initialized)
       end

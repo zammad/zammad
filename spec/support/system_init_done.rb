@@ -8,7 +8,7 @@ module SystemInitDoneHelper
 
     # just mock the Setting check for `system_init_done`
     # and return the given parameter value
-    expect(Setting).to receive(:exists?).with(name: 'system_init_done').and_return(state)
+    allow(Setting).to receive(:exists?).with(name: 'system_init_done').and_return(state)
   end
 end
 

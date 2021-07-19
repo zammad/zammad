@@ -39,7 +39,7 @@ module SendsNotificationEmailsHelper
   # @return [nil]
   def not_sent(args)
     check_in_progress!
-    expect(NotificationFactory::Mailer).to_not have_received(:notification).with(
+    expect(NotificationFactory::Mailer).not_to have_received(:notification).with(
       hash_including(args)
     )
   end

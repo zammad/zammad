@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
+RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:disable RSpec/ContextWording
   let :knowledge_base do
     create(:knowledge_base)
   end
@@ -38,10 +38,12 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do
   end
 end
 
-RSpec.shared_context 'Knowledge Base menu items', current_user_id: 1 do
+RSpec.shared_context 'Knowledge Base menu items', current_user_id: 1 do # rubocop:disable RSpec/ContextWording
+  # rubocop:disable RSpec/LetSetup
   let!(:menu_item_1) { create(:knowledge_base_menu_item, :for_header, kb_locale: primary_locale) }
   let!(:menu_item_2) { create(:knowledge_base_menu_item, :for_header, kb_locale: primary_locale) }
   let!(:menu_item_3) { create(:knowledge_base_menu_item, :for_footer, kb_locale: primary_locale) }
   let!(:menu_item_4) { create(:knowledge_base_menu_item, :for_footer, kb_locale: alternative_locale) }
   let!(:menu_item_5) { create(:knowledge_base_menu_item, :for_footer, kb_locale: alternative_locale) }
+  # rubocop:enable RSpec/LetSetup
 end

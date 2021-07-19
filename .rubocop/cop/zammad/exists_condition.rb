@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+
 module RuboCop
   module Cop
     module Zammad
@@ -84,7 +86,7 @@ module RuboCop
 
         def handle_node(node)
           if node.send_type?
-            check_offense(*find_by_condition?(node)) # rubocop:disable Rails/DynamicFindBy
+            check_offense(*find_by_condition?(node))
           elsif %i[and or begin].include?(node.type)
             check_node(node)
           end

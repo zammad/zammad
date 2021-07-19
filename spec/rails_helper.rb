@@ -37,7 +37,7 @@ RSpec.configure do |config|
 
   # make usage of time travel helpers possible
   config.include ActiveSupport::Testing::TimeHelpers
-  config.after(:each) do
+  config.after do
     travel_back
   end
 
