@@ -41,12 +41,14 @@ class Cti::Driver::Base
     end
 
     log = Cti::Log.process(@params)
+    if log.present?
 
-    # push new call notification
-    push_incoming_call(log)
+      # push new call notification
+      push_incoming_call(log)
 
-    # open screen if call got answered
-    push_open_ticket_screen(log)
+      # open screen if call got answered
+      push_open_ticket_screen(log)
+    end
 
     result || {}
   end

@@ -407,6 +407,18 @@ RSpec.describe 'Integration CTI', type: :request do
 
       travel 1.second
 
+      # inbound - I - answer for hangup by customer
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'in',
+        call_id:   '1234567890-3',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }, as: :json
+      expect(response).to have_http_status(:ok)
+
+      travel 1.second
+
       # inbound - II - new call
       post "/api/v1/cti/#{token}", params: {
         event:     'newCall',
