@@ -39,6 +39,21 @@ treeParams = (e, params) ->
     params.data_option.options = tree
   params
 
+setSelectDefaults = (el) ->
+  data_type = el.find('select[name=data_type]').val()
+  return if data_type isnt 'select' && data_type isnt 'boolean'
+
+  el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
+    element = $(@)
+    return true if element.val()
+
+    if element.hasClass('js-valueTrue') || element.hasClass('js-valueFalse')
+      element.val(element.attr('placeholder'))
+    else
+      key_value = element.closest('tr').find('.js-key').val()
+      element.val(key_value)
+  )
+
 class ObjectManager extends App.ControllerTabs
   requiredPermission: 'admin.object'
   constructor: ->
@@ -179,6 +194,8 @@ class Items extends App.ControllerSubContent
 class New extends App.ControllerGenericNew
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
 
@@ -242,6 +259,8 @@ class Edit extends App.ControllerGenericEdit
     @controller.form
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
 
