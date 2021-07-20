@@ -3,6 +3,15 @@
 </div>
 
 <div class="page-content">
+  <p>
+    <%- @T('After installing, updating or uninstalling packages the following commands need to be executed on the server:') %>
+    <ul>
+    <% for command in @commands: %>
+      <li><code>zammad> <%- command %></code></li>
+    <% end %>
+      <li><code>root> systemctl restart zammad</code></li>
+    </ul>
+  </p>
   <!--
   <ul class="nav nav-tabs nav-stacked">
     <li class=""><a data-type="" ><%- @T('Installed') %></a></li>
