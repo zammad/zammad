@@ -17,7 +17,7 @@ class ImportFreshdeskController < ApplicationController
     endpoint = "#{params[:url]}/api/v2"
     endpoint.gsub!(%r{([^:])//+}, '\\1/')
 
-    response = UserAgent.request("#{endpoint}/contacts")
+    response = UserAgent.request("#{endpoint}/contacts", verify_ssl: true)
 
     if response.header.nil? || !response.header['x-freshdesk-api-version']
       render json: {

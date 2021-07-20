@@ -24,6 +24,7 @@ class GitHub
           log:          {
             facility: 'GitHub',
           },
+          verify_ssl:   true,
         },
       )
 

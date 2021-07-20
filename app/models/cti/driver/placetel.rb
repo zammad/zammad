@@ -101,6 +101,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
         open_timeout:  4,
         read_timeout:  6,
         total_timeout: 6,
+        verify_ssl:    true,
       },
     )
 

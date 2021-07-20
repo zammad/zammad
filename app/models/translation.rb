@@ -85,6 +85,7 @@ push translations to online
         json:         true,
         open_timeout: 8,
         read_timeout: 24,
+        verify_ssl:   true,
       }
     )
     raise "Can't push translations to #{url}: #{result.error}" if !result.success?
@@ -355,6 +356,7 @@ all:
           json:         true,
           open_timeout: 8,
           read_timeout: 24,
+          verify_ssl:   true,
         }
       )
       raise "Can't load translations from #{url}: #{result.error}" if !result.success?

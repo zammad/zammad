@@ -24,6 +24,7 @@ class Service::Image::Zammad
         open_timeout:  OPEN_TIMEOUT,
         read_timeout:  READ_TIMEOUT,
         total_timeout: TOTAL_TIMEOUT,
+        verify_ssl:    true,
       },
     )
     if !response.success?
@@ -57,6 +58,7 @@ class Service::Image::Zammad
         open_timeout:  OPEN_TIMEOUT,
         read_timeout:  READ_TIMEOUT,
         total_timeout: TOTAL_TIMEOUT,
+        verify_ssl:    true,
       },
     )
     if !response.success?

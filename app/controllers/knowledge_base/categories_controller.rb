@@ -4,20 +4,20 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   before_action :load_knowledge_base, only: %i[reorder_root_categories reorder_categories reorder_answers]
 
   def reorder_root_categories
-    reorder @knowledge_base.categories.root, params[:ordered_ids], KnowledgeBase::Category
+    reorder_records @knowledge_base.categories.root, params[:ordered_ids], KnowledgeBase::Category
   end
 
   def reorder_categories
-    reorder @category.children, params[:ordered_ids], KnowledgeBase::Category
+    reorder_records @category.children, params[:ordered_ids], KnowledgeBase::Category
   end
 
   def reorder_answers
-    reorder @category.answers, params[:ordered_ids], KnowledgeBase::Answer
+    reorder_records @category.answers, params[:ordered_ids], KnowledgeBase::Answer
   end
 
   private
 
-  def reorder(collection, ids, klass)
+  def reorder_records(collection, ids, klass)
     # Check if ids for models in collection are present
     all_ids_present = collection.map(&:id).sort == ids.sort
     raise Exceptions::UnprocessableEntity, 'Provide position of all items in scope' if !all_ids_present

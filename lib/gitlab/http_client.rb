@@ -24,6 +24,7 @@ class GitLab
           log:          {
             facility: 'GitLab',
           },
+          verify_ssl:   true,
         },
       )
 

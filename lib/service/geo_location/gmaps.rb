@@ -11,6 +11,7 @@ class Service::GeoLocation::Gmaps
         open_timeout:  2,
         read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?
@@ -36,6 +37,7 @@ class Service::GeoLocation::Gmaps
         open_timeout:  2,
         read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?

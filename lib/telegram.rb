@@ -795,6 +795,7 @@ returns
       {
         open_timeout: 20,
         read_timeout: 40,
+        verify_ssl:   true,
       },
     )
   end

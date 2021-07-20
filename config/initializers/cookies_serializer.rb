@@ -4,4 +4,6 @@
 
 # Specify a serializer for the signed and encrypted cookie jars.
 # Valid options are :json, :marshal, and :hybrid.
-Rails.application.config.action_dispatch.cookies_serializer = :marshal
+
+# Since sessions are stored in the database, the serializer is not used / not relevant.
+# Rails.application.config.action_dispatch.cookies_serializer = :json

@@ -40,6 +40,7 @@ class Sequencer
                 {
                   open_timeout: 20,
                   read_timeout: 240,
+                  verify_ssl:   true,
                 },
               )
 

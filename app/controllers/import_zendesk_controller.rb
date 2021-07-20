@@ -23,7 +23,7 @@ class ImportZendeskController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    response = UserAgent.request(params[:url])
+    response = UserAgent.request(params[:url], verify_ssl: true)
 
     if !response.success?
       message_human = ''
@@ -41,7 +41,7 @@ class ImportZendeskController < ApplicationController
     end
 
     # since 2016-10-15 a redirect to a marketing page has been implemented
-    if !response.body.match?(%r{#{params[:url]}})
+    if response.body.exclude?(params[:url])
       render json: {
         result:        'invalid',
         message_human: 'Hostname not found!',

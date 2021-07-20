@@ -106,6 +106,7 @@ all:
         json:         true,
         open_timeout: 8,
         read_timeout: 24,
+        verify_ssl:   true,
       }
     )
 

@@ -37,7 +37,8 @@ load text modules from online
       url,
       {},
       {
-        json: true,
+        json:       true,
+        verify_ssl: true,
       }
     )
 
@@ -98,6 +99,7 @@ push text_modules to online
         json:         true,
         open_timeout: 6,
         read_timeout: 16,
+        verify_ssl:   true,
       }
     )
     raise "Can't push text_modules to #{url}: #{result.error}" if !result.success?

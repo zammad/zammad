@@ -127,6 +127,7 @@ GEM
       tzinfo
     bootsnap (1.7.5)
       msgpack (~> 1.0)
+    brakeman (5.0.4)
     browser (5.3.1)
     buftok (0.2.0)
     builder (3.2.4)
@@ -657,6 +658,7 @@ DEPENDENCIES
   autoprefixer-rails
   biz
   bootsnap
+  brakeman
   browser
   byebug
   capybara

@@ -300,7 +300,8 @@ class Transaction::Slack
           total_timeout: 20,
           log:           {
             facility: 'slack_webhook',
-          }
+          },
+          verify_ssl:    true,
         },
       )
     end

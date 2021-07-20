@@ -189,6 +189,7 @@ group :development, :test do
   gem 'guard-symlink', require: false
 
   # code QA
+  gem 'brakeman', require: false
   gem 'coffeelint'
   gem 'overcommit'
   gem 'rubocop'

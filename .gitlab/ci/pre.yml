@@ -34,6 +34,17 @@ zeitwerk_check:
     - bundle exec rake zammad:db:init
     - bundle exec rails zeitwerk:check
 
+brakeman:
+  <<: *template_pre
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - tmp/brakeman-report.html
+    when: on_failure
+  script:
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+
 coffeelint:
   <<: *template_pre
   script:
