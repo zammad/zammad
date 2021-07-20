@@ -16,7 +16,7 @@ module TicketStats
     assets_of_tickets(tickets, assets)
   end
 
-  def ticket_stats_last_year(condition, access_condition)
+  def ticket_stats_last_year(condition)
     volume_by_year = []
     now            = Time.zone.now
 
@@ -26,16 +26,16 @@ module TicketStats
       date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
 
       # created
-      created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end)
-                      .where(access_condition)
-                      .where(condition)
-                      .count
+      created = TicketPolicy::ReadScope.new(current_user).resolve
+                                       .where('created_at > ? AND created_at < ?', date_start, date_end)
+                                       .where(condition)
+                                       .count
 
       # closed
-      closed = Ticket.where('close_at > ? AND close_at < ?', date_start, date_end)
-                     .where(access_condition)
-                     .where(condition)
-                     .count
+      closed = TicketPolicy::ReadScope.new(current_user).resolve
+                                      .where('close_at > ? AND close_at < ?', date_start, date_end)
+                                      .where(condition)
+                                      .count
 
       data = {
         month:   date_to_check.month,

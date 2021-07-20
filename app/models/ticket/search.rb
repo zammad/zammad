@@ -190,9 +190,6 @@ returns
         return tickets
       end
 
-      # fallback do sql query
-      access_condition = Ticket.access_condition(current_user, 'read')
-
       # do query
       # - stip out * we already search for *query* -
 
@@ -200,22 +197,22 @@ returns
       order_sql        = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
       if query
         query.delete! '*'
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .where(access_condition)
-                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
-                            .joins(:articles)
-                            .order(Arel.sql(order_sql))
-                            .offset(offset)
-                            .limit(limit)
+        tickets_all = TicketPolicy::ReadScope.new(current_user).resolve
+                                             .select("DISTINCT(tickets.id), #{order_select_sql}")
+                                             .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+                                             .joins(:articles)
+                                             .order(Arel.sql(order_sql))
+                                             .offset(offset)
+                                             .limit(limit)
       else
         query_condition, bind_condition, tables = selector2sql(condition)
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .joins(tables)
-                            .where(access_condition)
-                            .where(query_condition, *bind_condition)
-                            .order(Arel.sql(order_sql))
-                            .offset(offset)
-                            .limit(limit)
+        tickets_all = TicketPolicy::ReadScope.new(current_user).resolve
+                                             .select("DISTINCT(tickets.id), #{order_select_sql}")
+                                             .joins(tables)
+                                             .where(query_condition, *bind_condition)
+                                             .order(Arel.sql(order_sql))
+                                             .offset(offset)
+                                             .limit(limit)
       end
 
       # build result list

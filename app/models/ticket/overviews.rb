@@ -92,10 +92,6 @@ returns
     )
     return [] if overviews.blank?
 
-    # get only tickets with permissions
-    access_condition      = Ticket.access_condition(user, 'overview')
-    access_condition_read = Ticket.access_condition(user, 'read')
-
     ticket_attributes = Ticket.new.attributes
     list = []
     overviews.each do |overview|
@@ -129,18 +125,17 @@ returns
         end
       end
 
-      overview_access_condition = access_condition
+      scope = TicketPolicy::OverviewScope
       if overview.condition['ticket.mention_user_ids'].present?
-        overview_access_condition = access_condition_read
+        scope = TicketPolicy::ReadScope
       end
-
-      ticket_result = Ticket.distinct
-                            .where(overview_access_condition)
-                            .where(query_condition, *bind_condition)
-                            .joins(tables)
-                            .order(Arel.sql("#{order_by} #{direction}"))
-                            .limit(2000)
-                            .pluck(:id, :updated_at, Arel.sql(order_by))
+      ticket_result = scope.new(user).resolve
+                                                .distinct
+                                                .where(query_condition, *bind_condition)
+                                                .joins(tables)
+                                                .order(Arel.sql("#{order_by} #{direction}"))
+                                                .limit(2000)
+                                                .pluck(:id, :updated_at, Arel.sql(order_by))
 
       tickets = ticket_result.map do |ticket|
         {
@@ -149,7 +144,12 @@ returns
         }
       end
 
-      count = Ticket.distinct.where(overview_access_condition).where(query_condition, *bind_condition).joins(tables).count()
+      count = TicketPolicy::OverviewScope.new(user).resolve
+                                                              .distinct
+                                                              .where(query_condition, *bind_condition)
+                                                              .joins(tables)
+                                                              .count()
+
       item = {
         overview: {
           name:       overview.name,

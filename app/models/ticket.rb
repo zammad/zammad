@@ -93,43 +93,6 @@ class Ticket < ApplicationModel
 
 =begin
 
-get user access conditions
-
-  conditions = Ticket.access_condition( User.find(1) , 'full')
-
-returns
-
-  result = [user1, user2, ...]
-
-=end
-
-  def self.access_condition(user, access)
-    sql  = []
-    bind = []
-
-    if user.permissions?('ticket.agent')
-      sql.push('group_id IN (?)')
-      bind.push(user.group_ids_access(access))
-    end
-
-    if user.permissions?('ticket.customer')
-      if !user.organization || (!user.organization.shared || user.organization.shared == false)
-        sql.push('tickets.customer_id = ?')
-        bind.push(user.id)
-      else
-        sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
-        bind.push(user.id)
-        bind.push(user.organization.id)
-      end
-    end
-
-    return if sql.blank?
-
-    [ sql.join(' OR ') ].concat(bind)
-  end
-
-=begin
-
 processes tickets which have reached their pending time and sets next state_id
 
   processed_tickets = Ticket.process_pending
@@ -500,9 +463,18 @@ get count of tickets and tickets which match on selector
         return [ticket_count, tickets]
       end
 
-      access_condition = Ticket.access_condition(current_user, access)
-      ticket_count = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).count
-      tickets = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+      ticket_count = "TicketPolicy::#{access.camelize}Scope".constantize
+                                                            .new(current_user).resolve
+                                                            .distinct
+                                                            .where(query, *bind_params)
+                                                            .joins(tables)
+                                                            .count
+      tickets = "TicketPolicy::#{access.camelize}Scope".constantize
+                                                       .new(current_user).resolve
+                                                       .distinct
+                                                       .where(query, *bind_params)
+                                                       .joins(tables)
+                                                       .limit(limit)
 
       return [ticket_count, tickets]
     rescue ActiveRecord::StatementInvalid => e

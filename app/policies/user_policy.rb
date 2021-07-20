@@ -37,15 +37,4 @@ class UserPolicy < ApplicationPolicy
 
     record.organization_id == user.organization_id
   end
-
-  class Scope < ApplicationPolicy::Scope
-
-    def resolve
-      if user.permissions?(['ticket.agent', 'admin.user'])
-        scope.all
-      else
-        scope.where(id: user.id)
-      end
-    end
-  end
 end

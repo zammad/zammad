@@ -23,8 +23,10 @@ class TicketsController < ApplicationController
       per_page = 100
     end
 
-    access_condition = Ticket.access_condition(current_user, 'read')
-    tickets = Ticket.where(access_condition).order(id: :asc).offset(offset).limit(per_page)
+    tickets = TicketPolicy::ReadScope.new(current_user).resolve
+                                     .order(id: :asc)
+                                     .offset(offset)
+                                     .limit(per_page)
 
     if response_expand?
       list = []
@@ -317,36 +319,29 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:ticket_id])
     assets = ticket.assets({})
 
-    # open tickets by customer
-    access_condition = Ticket.access_condition(current_user, 'read')
-
-    ticket_lists = Ticket
-                   .where(
-                     customer_id: ticket.customer_id,
-                     state_id:    Ticket::State.by_category(:open).pluck(:id), # rubocop:disable Rails/PluckInWhere
-                   )
-                   .where(access_condition)
-                   .where.not(id: [ ticket.id ])
-                   .order(created_at: :desc)
-                   .limit(6)
+    tickets = TicketPolicy::ReadScope.new(current_user).resolve
+                                     .where(
+                                       customer_id: ticket.customer_id,
+                                       state_id:    Ticket::State.by_category(:open).select(:id),
+                                     )
+                                    .where.not(id: [ ticket.id ])
+                                    .order(created_at: :desc)
+                                    .limit(6)
 
     # if we do not have open related tickets, search for any tickets
-    if ticket_lists.blank?
-      ticket_lists = Ticket
-                     .where(
-                       customer_id: ticket.customer_id,
-                     ).where.not(
-                       state_id: Ticket::State.by_category(:merged).pluck(:id),
-                     )
-                     .where(access_condition)
-                     .where.not(id: [ ticket.id ])
-                     .order(created_at: :desc)
-                     .limit(6)
-    end
+    tickets ||= TicketPolicy::ReadScope.new(current_user).resolve
+                                       .where(
+                                         customer_id: ticket.customer_id,
+                                       ).where.not(
+                                         state_id: Ticket::State.by_category(:merged).pluck(:id),
+                                       )
+                                       .where.not(id: [ ticket.id ])
+                                      .order(created_at: :desc)
+                                      .limit(6)
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_lists.each do |ticket_list|
+    tickets.each do |ticket_list|
       ticket_ids_by_customer.push ticket_list.id
       assets = ticket_list.assets(assets)
     end
@@ -534,7 +529,6 @@ class TicketsController < ApplicationController
     # lookup open user tickets
     limit            = 100
     assets           = {}
-    access_condition = Ticket.access_condition(current_user, 'read')
 
     user_tickets = {}
     if params[:user_id]
@@ -573,7 +567,7 @@ class TicketsController < ApplicationController
       condition = {
         'tickets.customer_id' => user.id,
       }
-      user_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
+      user_tickets[:volume_by_year] = ticket_stats_last_year(condition)
 
     end
 
@@ -615,7 +609,7 @@ class TicketsController < ApplicationController
       condition = {
         'tickets.organization_id' => organization.id,
       }
-      org_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
+      org_tickets[:volume_by_year] = ticket_stats_last_year(condition)
     end
 
     # return result
