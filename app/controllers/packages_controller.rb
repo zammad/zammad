@@ -6,7 +6,7 @@ class PackagesController < ApplicationController
   # GET /api/v1/packages
   def index
     packages = Package.all.order('name')
-    commands = ['rails zammad:db:migrate', 'rails assets:precompile']
+    commands = ['rails zammad:package:migrate', 'rails assets:precompile']
     if File.exist?('/usr/bin/zammad')
       commands.map! { |s| "zammad run #{s}" }
     end
