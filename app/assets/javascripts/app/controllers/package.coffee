@@ -16,6 +16,7 @@ class Package extends App.ControllerSubContent
       processData: true,
       success: (data) =>
         @packages = data.packages
+        @commands = data.commands
         @render()
       )
 
@@ -34,6 +35,7 @@ class Package extends App.ControllerSubContent
     @html App.view('package')(
       head:     'Dashboard'
       packages: @packages
+      commands: @commands
     )
 
   action: (e) ->
