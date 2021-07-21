@@ -44,9 +44,9 @@ RSpec.describe Ticket::State, type: :model do
       end
 
       context 'with invalid category name' do
-        it 'raises RuntimeError' do
+        it 'raises ArgumentError' do
           expect { described_class.by_category(:invalidcategoryname) }
-            .to raise_error(RuntimeError)
+            .to raise_error(ArgumentError)
         end
       end
     end

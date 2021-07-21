@@ -20,6 +20,22 @@ class Ticket::State < ApplicationModel
 
   attr_accessor :callback_loop
 
+  TYPES = {
+    open:                   ['new', 'open', 'pending reminder', 'pending action'],
+    pending_reminder:       ['pending reminder'],
+    pending_action:         ['pending action'],
+    pending:                ['pending reminder', 'pending action'],
+    work_on:                %w[new open],
+    work_on_all:            ['new', 'open', 'pending reminder'],
+    viewable:               ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed'],
+    viewable_agent_new:     ['new', 'open', 'pending reminder', 'pending action', 'closed'],
+    viewable_agent_edit:    ['open', 'pending reminder', 'pending action', 'closed'],
+    viewable_customer_new:  %w[new closed],
+    viewable_customer_edit: %w[open closed],
+    closed:                 %w[closed],
+    merged:                 %w[merged],
+  }.freeze
+
 =begin
 
 looks up states for a given category
@@ -32,42 +48,11 @@ returns:
 
 =end
 
-  def self.by_category(category)
+  def self.by_category(*categories)
+    state_types = TYPES.slice(*categories.map(&:to_sym)).values.uniq
+    raise ArgumentError, "No such categories (#{categories.join(', ')})" if state_types.empty?
 
-    case category.to_sym
-    when :open
-      state_types = ['new', 'open', 'pending reminder', 'pending action']
-    when :pending_reminder
-      state_types = ['pending reminder']
-    when :pending_action
-      state_types = ['pending action']
-    when :pending
-      state_types = ['pending reminder', 'pending action']
-    when :work_on
-      state_types = %w[new open]
-    when :work_on_all
-      state_types = ['new', 'open', 'pending reminder']
-    when :viewable
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
-    when :viewable_agent_new
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed']
-    when :viewable_agent_edit
-      state_types = ['open', 'pending reminder', 'pending action', 'closed']
-    when :viewable_customer_new
-      state_types = %w[new closed]
-    when :viewable_customer_edit
-      state_types = %w[open closed]
-    when :closed
-      state_types = %w[closed]
-    when :merged
-      state_types = %w[merged]
-    end
-
-    raise "Unknown category '#{category}'" if state_types.blank?
-
-    Ticket::State.where(
-      state_type_id: Ticket::StateType.where(name: state_types)
-    )
+    Ticket::State.joins(:state_type).where(ticket_state_types: { name: state_types })
   end
 
 =begin

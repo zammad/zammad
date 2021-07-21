@@ -27,13 +27,13 @@ module TicketStats
 
       # created
       created = TicketPolicy::ReadScope.new(current_user).resolve
-                                       .where('created_at > ? AND created_at < ?', date_start, date_end)
+                                       .where(created_at: (date_start..date_end))
                                        .where(condition)
                                        .count
 
       # closed
       closed = TicketPolicy::ReadScope.new(current_user).resolve
-                                      .where('close_at > ? AND close_at < ?', date_start, date_end)
+                                      .where(close_at: (date_start..date_end))
                                       .where(condition)
                                       .count
 

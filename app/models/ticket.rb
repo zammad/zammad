@@ -463,20 +463,13 @@ get count of tickets and tickets which match on selector
         return [ticket_count, tickets]
       end
 
-      ticket_count = "TicketPolicy::#{access.camelize}Scope".constantize
-                                                            .new(current_user).resolve
-                                                            .distinct
-                                                            .where(query, *bind_params)
-                                                            .joins(tables)
-                                                            .count
       tickets = "TicketPolicy::#{access.camelize}Scope".constantize
                                                        .new(current_user).resolve
                                                        .distinct
                                                        .where(query, *bind_params)
                                                        .joins(tables)
-                                                       .limit(limit)
 
-      return [ticket_count, tickets]
+      return [tickets.count, tickets.limit(limit)]
     rescue ActiveRecord::StatementInvalid => e
       Rails.logger.error e
       raise ActiveRecord::Rollback

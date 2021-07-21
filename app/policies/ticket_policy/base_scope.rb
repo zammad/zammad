@@ -22,9 +22,8 @@ class TicketPolicy < ApplicationPolicy
       bind = []
 
       if user.permissions?('ticket.agent')
-        access_type = self.class.name.demodulize.slice(%r{.*(?=Scope)}).underscore
         sql.push('group_id IN (?)')
-        bind.push(user.group_ids_access(access_type))
+        bind.push(user.group_ids_access(self.class::ACCESS_TYPE))
       end
 
       if user.organization&.shared

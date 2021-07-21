@@ -93,8 +93,7 @@ returns
     return [] if overviews.blank?
 
     ticket_attributes = Ticket.new.attributes
-    list = []
-    overviews.each do |overview|
+    overviews.map do |overview|
       query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, current_user: user)
       direction = overview.order[:direction]
       order_by = overview.order[:by]
@@ -150,7 +149,7 @@ returns
                                                               .joins(tables)
                                                               .count()
 
-      item = {
+      {
         overview: {
           name:       overview.name,
           id:         overview.id,
@@ -160,10 +159,7 @@ returns
         tickets:  tickets,
         count:    count,
       }
-
-      list.push item
     end
-    list
   end
 
 end

@@ -27,7 +27,7 @@ RSpec.shared_examples 'for agent user' do |access_type|
   context 'with direct access via User#groups' do
     let(:user) { create(:agent, groups: member_groups) }
 
-    context 'when checkin for "full" access' do
+    context 'when checking for "full" access' do
       # this is already true by default, but it doesn't hurt to be explicit
       before { user.user_groups.each { |ug| ug.update_columns(access: 'full') } }
 
@@ -51,7 +51,7 @@ RSpec.shared_examples 'for agent user' do |access_type|
     let(:user) { create(:agent).tap { |u| u.roles << role } }
     let(:role) { create(:role, groups: member_groups) }
 
-    context 'when checkin for "full" access' do
+    context 'when checking for "full" access' do
       # this is already true by default, but it doesn't hurt to be explicit
       before { role.role_groups.each { |rg| rg.update_columns(access: 'full') } }
 

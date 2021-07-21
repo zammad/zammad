@@ -324,20 +324,17 @@ class TicketsController < ApplicationController
                                        customer_id: ticket.customer_id,
                                        state_id:    Ticket::State.by_category(:open).select(:id),
                                      )
-                                    .where.not(id: [ ticket.id ])
-                                    .order(created_at: :desc)
-                                    .limit(6)
+                                     .where.not(id: ticket.id)
+                                     .order(created_at: :desc)
+                                     .limit(6)
 
     # if we do not have open related tickets, search for any tickets
     tickets ||= TicketPolicy::ReadScope.new(current_user).resolve
-                                       .where(
-                                         customer_id: ticket.customer_id,
-                                       ).where.not(
-                                         state_id: Ticket::State.by_category(:merged).pluck(:id),
-                                       )
-                                       .where.not(id: [ ticket.id ])
-                                      .order(created_at: :desc)
-                                      .limit(6)
+                                       .where(customer_id: ticket.customer_id)
+                                       .where.not(state_id: Ticket::State.by_category(:merged).pluck(:id))
+                                       .where.not(id: ticket.id)
+                                       .order(created_at: :desc)
+                                       .limit(6)
 
     # get related assets
     ticket_ids_by_customer = []

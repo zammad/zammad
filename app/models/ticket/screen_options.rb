@@ -173,42 +173,19 @@ returns
 
   def self.list_by_customer(data)
 
-    # get closed/open states
-    state_id_list_open   = Ticket::State.by_category(:open).pluck(:id)
-    state_id_list_closed = Ticket::State.by_category(:closed).pluck(:id)
+    base_query = TicketPolicy::ReadScope.new(data[:current_user]).resolve
+                                        .joins(state: :state_type)
+                                        .where(customer_id: data[:customer_id])
+                                        .limit(data[:limit] || 15)
+                                        .order(created_at: :desc)
 
-    # get tickets
-    tickets_open = TicketPolicy::ReadScope.new(data[:current_user]).resolve
-                                          .where(
-                                            customer_id: data[:customer_id],
-                                            state_id:    state_id_list_open
-                                          )
-                                          .limit(data[:limit] || 15)
-                                          .order(created_at: :desc)
-    assets = {}
-    ticket_ids_open = []
-    tickets_open.each do |ticket|
-      ticket_ids_open.push ticket.id
-      assets = ticket.assets(assets)
-    end
-
-    tickets_closed = TicketPolicy::ReadScope.new(data[:current_user]).resolve
-                                            .where(
-                                              customer_id: data[:customer_id],
-                                              state_id:    state_id_list_closed
-                                            )
-                                            .limit(data[:limit] || 15)
-                                            .order(created_at: :desc)
-    ticket_ids_closed = []
-    tickets_closed.each do |ticket|
-      ticket_ids_closed.push ticket.id
-      assets = ticket.assets(assets)
-    end
+    open_tickets   = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:open] })
+    closed_tickets = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:closed] })
 
     {
-      ticket_ids_open:   ticket_ids_open,
-      ticket_ids_closed: ticket_ids_closed,
-      assets:            assets,
+      ticket_ids_open:   open_tickets.map(&:id),
+      ticket_ids_closed: closed_tickets.map(&:id),
+      assets:            (open_tickets | closed_tickets).reduce({}) { |hash, ticket| ticket.assets(hash) },
     }
   end
 end
