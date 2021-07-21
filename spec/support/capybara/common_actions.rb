@@ -270,6 +270,19 @@ module CommonActions
 
     modal_disappear(timeout: timeout) if disappears
   end
+
+  # Show the popover on hover
+  #
+  # @example
+  # popover_on_hover(page.find('button.hover_me'))
+  #
+  def popover_on_hover(element, wait_for_popover_killer: true)
+    # wait for popover killer to pass
+    sleep 3 if wait_for_popover_killer
+
+    move_mouse_to(element)
+    move_mouse_by(5, 5)
+  end
 end
 
 RSpec.configure do |config|

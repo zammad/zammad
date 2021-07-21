@@ -25,6 +25,7 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
   buildContentFor: (elem) ->
     id = @objectIdFor(elem)
     object = @constructor.klass.fullLocal(id)
+    ignoredAttributes = @constructor.ignoredAttributes
 
     # get display data
     data = _.values(@constructor.klass.attributesGet('view'))
@@ -37,7 +38,7 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
 
         # add to show if value exists
         # do not show ignroed attributes
-        object[name] && attr.shown && !_.include(@constructor.ignoredAttributes, name)
+        object[name] && attr.shown && !_.include(ignoredAttributes, name)
 
     @buildHtmlContent(
       object: object
