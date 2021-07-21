@@ -2,7 +2,7 @@
 
 module Zammad
   class Application
-    class Initializer
+    module Initializer
       module DbPreflightCheck
         module Nulldb
           # no-op

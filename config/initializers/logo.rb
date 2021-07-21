@@ -1,9 +1,12 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-return if !ActiveRecord::Base.connected?
+Rails.application.reloader.to_prepare do
 
-# sync logo to fs / only if settings already exists
-return if ActiveRecord::Base.connection.tables.exclude?('settings')
-return if Setting.column_names.exclude?('state_current')
+  next if !ActiveRecord::Base.connected?
 
-StaticAssets.sync
+  # sync logo to fs / only if settings already exists
+  next if ActiveRecord::Base.connection.tables.exclude?('settings')
+  next if Setting.column_names.exclude?('state_current')
+
+  StaticAssets.sync
+end

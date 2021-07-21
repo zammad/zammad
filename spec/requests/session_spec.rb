@@ -4,6 +4,68 @@ require 'rails_helper'
 
 RSpec.describe 'Sessions endpoints', type: :request do
 
+  describe 'GET /' do
+
+    let(:headers) { {} }
+    let(:session_key) { Zammad::Application::Initializer::SessionStore::SESSION_KEY }
+
+    before do
+      Setting.set('http_type', http_type)
+
+      get '/', headers: headers
+    end
+
+    context "when Setting 'http_type' is set to 'https'" do
+
+      let(:http_type) { 'https' }
+
+      context "when it's not an HTTPS request" do
+
+        it 'sets no Cookie' do
+          expect(response.header['Set-Cookie']).to be_nil
+        end
+      end
+
+      context "when it's an HTTPS request" do
+
+        let(:headers) do
+          {
+            'X-Forwarded-Proto' => 'https'
+          }
+        end
+
+        it "sets Cookie with 'secure' flag" do
+          expect(response.header['Set-Cookie']).to include(session_key).and include('; secure;')
+        end
+      end
+    end
+
+    context "when Setting 'http_type' is set to 'http'" do
+
+      let(:http_type) { 'http' }
+
+      context "when it's not an HTTPS request" do
+
+        it 'sets Cookie' do
+          expect(response.header['Set-Cookie']).to include(session_key).and not_include('; secure;')
+        end
+      end
+
+      context "when it's an HTTPS request" do
+
+        let(:headers) do
+          {
+            'X-Forwarded-Proto' => 'https'
+          }
+        end
+
+        it "sets Cookie without 'secure' flag" do
+          expect(response.header['Set-Cookie']).to include(session_key).and not_include('; secure;')
+        end
+      end
+    end
+  end
+
   describe 'GET /signshow' do
 
     context 'user logged in' do

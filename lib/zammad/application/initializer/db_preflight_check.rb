@@ -7,7 +7,7 @@ require 'zammad/application/initializer/db_preflight_check/nulldb'
 
 module Zammad
   class Application
-    class Initializer
+    module Initializer
       module DbPreflightCheck
         def self.perform
           adapter.perform

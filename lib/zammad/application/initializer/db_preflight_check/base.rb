@@ -13,7 +13,7 @@
 
 module Zammad
   class Application
-    class Initializer
+    module Initializer
       module DbPreflightCheck
         module Base
           def check_version_compatibility
