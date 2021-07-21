@@ -3,3 +3,15 @@ otrs_chrome:
     - .template_browser-integration_import
   variables:
     TEST_FILE: "test/integration/otrs_import_browser_test.rb"
+    FF_NETWORK_PER_BUILD: 1   # https://docs.gitlab.com/runner/configuration/feature-flags.html
+    IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
+    TZ: "Europe/Berlin"       # Required for the zammad-ci-otrsimport-app containers
+  services:
+    - name: registry.znuny.com/docker/zammad-postgresql:stable
+      alias: postgresql
+    - name: registry.znuny.com/docker/zammad-selenium:stable
+      alias: selenium
+    - name: registry.znuny.com/docker/zammad-ci-otrsimport-db:otrs6
+      alias: zammad-ci-otrsimport-db
+    - name: registry.znuny.com/docker/zammad-ci-otrsimport-app:otrs6
+      alias: zammad-ci-otrsimport-app
