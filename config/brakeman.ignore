@@ -461,46 +461,6 @@
       "note": "Admin configured RegExp"
     },
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "a5818edfcce4a3860c36ce71d434d1d4dd91fe3cac9ac945c71e4e2932ffe6cc",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/ticket/search.rb",
-      "line": 203,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Ticket.select(\"DISTINCT(tickets.id), #{::SqlHelper.new(:object => (self)).get_order_select(::SqlHelper.new(:object => (self)).get_sort_by(params, \"updated_at\"), ::SqlHelper.new(:object => (self)).get_order_by(params, \"desc\"), \"tickets.updated_at\")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Search",
-        "method": "search"
-      },
-      "user_input": "::SqlHelper.new(:object => (self)).get_order_select(::SqlHelper.new(:object => (self)).get_sort_by(params, \"updated_at\"), ::SqlHelper.new(:object => (self)).get_order_by(params, \"desc\"), \"tickets.updated_at\")",
-      "confidence": "Medium",
-      "note": "SqlHelper does properly escape table and column names."
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "a5818edfcce4a3860c36ce71d434d1d4dd91fe3cac9ac945c71e4e2932ffe6cc",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/ticket/search.rb",
-      "line": 212,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Ticket.select(\"DISTINCT(tickets.id), #{::SqlHelper.new(:object => (self)).get_order_select(::SqlHelper.new(:object => (self)).get_sort_by(params, \"updated_at\"), ::SqlHelper.new(:object => (self)).get_order_by(params, \"desc\"), \"tickets.updated_at\")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Search",
-        "method": "search"
-      },
-      "user_input": "::SqlHelper.new(:object => (self)).get_order_select(::SqlHelper.new(:object => (self)).get_sort_by(params, \"updated_at\"), ::SqlHelper.new(:object => (self)).get_order_by(params, \"desc\"), \"tickets.updated_at\")",
-      "confidence": "Medium",
-      "note": "SqlHelper does properly escape table and column names."
-    },
-    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
       "fingerprint": "b24120f184a097dbf931fd0c251e26b431fc4a0ac679f02ed2c85a9ebb338cc7",
@@ -539,6 +499,26 @@
       "user_input": "ObjectLookup.by_id(object_lookup_id)",
       "confidence": "Medium",
       "note": "ObjectLookup.by_id works as designed"
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "be422b13e9cd280bc5ae570cd575777a4d48d8a53aed09bb59d1db85eee4927b",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/mysql_strategy.rb",
+      "line": 64,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"mysqldump #{mysql_arguments} > #{backup_file}\", :exception => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MysqlStrategy",
+        "method": "s(:self).backup"
+      },
+      "user_input": "mysql_arguments",
+      "confidence": "Medium",
+      "note": "Mysql arguments are internal / from config."
     },
     {
       "warning_type": "Denial of Service",
@@ -717,13 +697,33 @@
       "note": "Reflections come from the models themselves and are thus safe to use."
     },
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "fe15417756eed2c518c355309ee042b57df5f88a5410858dce3fa9fe9c893b84",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/mysql_strategy.rb",
+      "line": 56,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"mysql #{mysql_arguments} < #{backup_file}\", :exception => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MysqlStrategy",
+        "method": "s(:self).rollback"
+      },
+      "user_input": "mysql_arguments",
+      "confidence": "Medium",
+      "note": "Mysql arguments are internal / from config."
+    },
+    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "fe906d9ee6b37c92b7deec029d6a4cca47071006440817e4a50292b2ca956a30",
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "app/models/ticket.rb",
-      "line": 1612,
+      "line": 1577,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
       "render_path": null,
@@ -737,6 +737,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2021-07-20 13:22:48 +0200",
-  "brakeman_version": "5.0.4"
+  "updated": "2021-07-22 13:52:48 +0200",
+  "brakeman_version": "5.1.1"
 }

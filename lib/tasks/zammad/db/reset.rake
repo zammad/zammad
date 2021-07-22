@@ -10,7 +10,7 @@ namespace :zammad do
       # we loop over each dependent task to be able to
       # execute them and their prerequisites multiple times (in tests)
       # there is no way in rake to achieve that
-      %w[db:drop:_unsafe db:create db:migrate db:seed].each do |task|
+      %w[db:drop:_unsafe db:create db:migrate db:seed zammad:db:rebuild].each do |task|
 
         if task == 'db:drop:_unsafe'
           # ensure all DB connections are closed before dropping the DB
@@ -26,12 +26,6 @@ namespace :zammad do
       ensure
         $stdout = STDOUT
       end
-
-      Package::Migration.linked
-      ActiveRecord::Base.connection.reconnect!
-      ActiveRecord::Base.descendants.each(&:reset_column_information)
-      Cache.clear
-      Setting.reload
     end
   end
 end
