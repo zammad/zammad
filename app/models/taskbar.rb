@@ -2,6 +2,7 @@
 
 class Taskbar < ApplicationModel
   include ChecksClientNotification
+  include ::Taskbar::HasAttachments
 
   store           :state
   store           :params
@@ -55,24 +56,7 @@ class Taskbar < ApplicationModel
     add_attachments_to_attributes(super)
   end
 
-  # form_id is saved directly in a new ticket, but inside of the article when updating an existing ticket
-  def persisted_form_id
-    state&.dig(:form_id) || state&.dig(:article, :form_id)
-  end
-
   private
-
-  def attachments
-    return [] if persisted_form_id.blank?
-
-    UploadCache.new(persisted_form_id).attachments
-  end
-
-  def add_attachments_to_attributes(attributes)
-    attributes.tap do |result|
-      result['attachments'] = attachments.map(&:attributes_for_display)
-    end
-  end
 
   def update_last_contact
     return true if local_update
