@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # https://github.com/zammad/zammad/issues/266
-RSpec.describe 'Admin Panel > Objects', type: :system, authenticated_as: true do
+RSpec.describe 'Admin Panel > Objects', type: :system do
   before do
     visit '/#system/object_manager'
   end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true do
+RSpec.describe 'Search', type: :system, searchindex: true do
   before do
     configure_elasticsearch(required: true, rebuild: true)
   end

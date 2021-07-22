@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Profile > Devices', type: :system, authenticated_as: true do
+RSpec.describe 'Profile > Devices', type: :system do
   subject!(:device) { create(:user_device, user_id: User.find_by(login: 'master@example.com').id) }
 
   it 'allows to remove device' do

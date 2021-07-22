@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated_as: true do
+RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
   include_context 'basic Knowledge Base'
 
   before do

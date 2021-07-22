@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
   let(:group) { Group.find_by(name: 'Users') }
   let(:customer) { create(:customer) }
   let!(:session_user) { User.find_by(login: 'master@example.com') }

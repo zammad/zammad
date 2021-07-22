@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Dashboard', type: :system, authenticated_as: true do
+RSpec.describe 'Dashboard', type: :system do
 
   it 'shows default widgets' do
     visit 'dashboard'

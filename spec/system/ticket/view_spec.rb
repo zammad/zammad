@@ -89,7 +89,7 @@ RSpec.describe 'Ticket views', type: :system do
       end
     end
 
-    it 'can use macro to create article', authenticated_as: true do
+    it 'can use macro to create article' do
       refresh
       visit '#ticket/view/all_open'
 
