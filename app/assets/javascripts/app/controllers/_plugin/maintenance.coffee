@@ -62,7 +62,7 @@ class Maintenance extends App.Controller
   maintanaceRestartManual: (data) =>
     return if @messageRestartManual
     @messageRestartManual = new App.SessionMessage(
-      head:          App.i18n.translateInline('Zammad need a restart!')
+      head:          App.i18n.translateInline('Zammad requires a restart!')
       contentInline: App.i18n.translateInline('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
       keyboard:      false
       backdrop:      false
