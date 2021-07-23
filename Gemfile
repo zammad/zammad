@@ -212,6 +212,10 @@ group :development, :test do
 
   # refresh ENVs in CI environment
   gem 'dotenv', require: false
+
+  # Can be used to detect for example the current
+  # operating system in tests, to handle things differently.
+  gem 'os'
 end
 
 # Want to extend Zammad with additional gems?

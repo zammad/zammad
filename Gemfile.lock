@@ -361,6 +361,7 @@ GEM
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
     openssl (2.1.2)
+    os (1.1.1)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -640,6 +641,7 @@ DEPENDENCIES
   omniauth-twitter
   omniauth-weibo-oauth2
   openssl
+  os
   pg (= 0.21.0)
   pre-commit
   pry-rails
