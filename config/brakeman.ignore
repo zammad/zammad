@@ -461,26 +461,6 @@
       "note": "Admin configured RegExp"
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "b24120f184a097dbf931fd0c251e26b431fc4a0ac679f02ed2c85a9ebb338cc7",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "app/controllers/attachments_controller.rb",
-      "line": 87,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "Store.find(params[:id]).store_object.name.safe_constantize.send(\"can_#{params[:action]}_attachment?\", Store.find(params[:id]), current_user)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "AttachmentsController",
-        "method": "verify_object_permissions"
-      },
-      "user_input": "params[:action]",
-      "confidence": "High",
-      "note": "Save because 'before_action' is limited to defined actions"
-    },
-    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "b4e5b1ad22930f849b12cbdf519dced6ec46b6cc653504f0a8e910c0a9590d61",
@@ -507,7 +487,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/mysql_strategy.rb",
-      "line": 64,
+      "line": 62,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"mysqldump #{mysql_arguments} > #{backup_file}\", :exception => true)",
       "render_path": null,
@@ -603,7 +583,7 @@
     {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
-      "fingerprint": "e8789f715661836374232aa2ba4aa9eacbba8ea4961f5b26468a0d96c4c91e33",
+      "fingerprint": "dfe8a5a18f3d403c3cb32a50bf9b10da7254fa6b958c45fa5d6b8d97ae017961",
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `safe_constantize` called with model attribute",
       "file": "app/controllers/attachments_controller.rb",
@@ -614,11 +594,11 @@
       "location": {
         "type": "method",
         "class": "AttachmentsController",
-        "method": "verify_object_permissions"
+        "method": "authorize!"
       },
       "user_input": "Store.find(params[:id]).store_object",
       "confidence": "Medium",
-      "note": "Store#store_object returns defined Model objects"
+      "note": "Works as designed."
     },
     {
       "warning_type": "Denial of Service",
@@ -703,7 +683,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/mysql_strategy.rb",
-      "line": 56,
+      "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"mysql #{mysql_arguments} < #{backup_file}\", :exception => true)",
       "render_path": null,
@@ -737,6 +717,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2021-07-22 13:52:48 +0200",
+  "updated": "2021-07-23 08:25:01 +0200",
   "brakeman_version": "5.1.1"
 }

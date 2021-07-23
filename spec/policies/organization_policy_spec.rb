@@ -11,13 +11,13 @@ describe OrganizationPolicy do
     let(:user) { create(:customer, organization: record) }
 
     it { is_expected.to permit_actions(%i[show]) }
-    it { is_expected.not_to permit_actions(%i[update]) }
+    it { is_expected.to forbid_actions(%i[update]) }
   end
 
   context 'when customer without organization' do
     let(:user) { create(:customer) }
 
-    it { is_expected.not_to permit_actions(%i[show update]) }
+    it { is_expected.to forbid_actions(%i[show update]) }
   end
 
   context 'when agent and customer' do

@@ -115,12 +115,6 @@ class KnowledgeBase::Category < ApplicationModel
     public_content?(kb_locale)
   end
 
-  def visible_content_for?(user)
-    return true if user&.permissions? 'knowledge_base.editor'
-
-    public_content?
-  end
-
   def api_url
     Rails.application.routes.url_helpers.knowledge_base_category_path(knowledge_base, self)
   end

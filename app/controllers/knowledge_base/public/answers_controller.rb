@@ -13,10 +13,8 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
   private
 
   def render_alternative
-    @alternative = @knowledge_base
-                   .answers
+    @alternative = policy_scope(@knowledge_base.answers)
                    .eager_load(translations: :kb_locale)
-                   .check_published_unless_editor(current_user)
                    .find_by(id: params[:answer])
 
     raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?

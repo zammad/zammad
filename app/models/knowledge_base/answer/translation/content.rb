@@ -3,7 +3,6 @@
 class KnowledgeBase::Answer::Translation::Content < ApplicationModel
   include HasAgentAllowedParams
   include HasRichText
-  include HasKnowledgeBaseAttachmentPermissions
 
   AGENT_ALLOWED_ATTRIBUTES = %i[body].freeze
 

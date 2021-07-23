@@ -34,12 +34,6 @@ class KnowledgeBase < ApplicationModel
 
   scope :active, -> { where(active: true) }
 
-  scope :check_active_unless_editor, lambda { |user|
-    return if user&.permissions? 'knowledge_base.editor'
-
-    active
-  }
-
   alias assets_essential assets
 
   def assets(data)

@@ -2,7 +2,7 @@
 
 class KnowledgeBase::Public::BaseController < ApplicationController
   before_action :load_kb
-  helper_method :system_locale_via_uri, :fallback_locale, :current_user, :editor?, :find_category, :filter_primary_kb_locale, :menu_items, :all_locales
+  helper_method :system_locale_via_uri, :fallback_locale, :current_user, :find_category, :filter_primary_kb_locale, :menu_items, :all_locales
 
   layout 'knowledge_base'
 
@@ -11,8 +11,7 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   private
 
   def load_kb
-    @knowledge_base = KnowledgeBase
-                      .check_active_unless_editor(current_user)
+    @knowledge_base = policy_scope(KnowledgeBase)
                       .localed(guess_locale_via_uri)
                       .first
 
@@ -63,26 +62,20 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     list
       .localed(system_locale_via_uri)
       .sorted
-      .to_a
-      .select { |elem| elem.visible_content_for?(current_user) }
+      .select { |category| policy(category).show? }
   end
 
   def find_answer(scope, id)
     return if scope.nil?
 
-    scope
+    policy_scope(scope)
       .localed(system_locale_via_uri)
       .include_contents
-      .check_published_unless_editor(current_user)
       .find_by(id: id)
   end
 
-  def editor?
-    current_user&.permissions? 'knowledge_base.editor'
-  end
-
   def not_found(e)
-    @knowledge_base = KnowledgeBase.check_active_unless_editor(current_user).first
+    @knowledge_base = policy_scope(KnowledgeBase).first
 
     if @knowledge_base.nil?
       super

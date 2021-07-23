@@ -102,11 +102,7 @@ module ApplicationController::HandlesErrors
 
     if data[:error_human].present?
       data[:error] = data[:error_human]
-    elsif !current_user&.permissions?('admin')
-      # We want to avoid leaking of internal information but also want the user
-      # to give the administrator a reference to find the cause of the error.
-      # Therefore we generate a one time unique error ID that can be used to
-      # search the logs and find the actual error message.
+    elsif !policy(Exceptions).view_details?
       error_code_prefix = "Error ID #{SecureRandom.urlsafe_base64(6)}:"
       Rails.logger.error "#{error_code_prefix} #{data[:error]}"
       data[:error] = "#{error_code_prefix} Please contact your administrator."

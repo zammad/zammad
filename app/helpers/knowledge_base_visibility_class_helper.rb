@@ -2,7 +2,7 @@
 
 module KnowledgeBaseVisibilityClassHelper
   def visibility_class_name(object)
-    return if !current_user&.permissions?('knowledge_base.editor')
+    return if !policy(:knowledge_base).edit?
 
     suffix = case object
              when CanBePublished

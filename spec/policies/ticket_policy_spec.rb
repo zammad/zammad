@@ -10,7 +10,7 @@ describe TicketPolicy do
   context 'when given ticket’s owner' do
     let(:user) { record.owner }
 
-    it { is_expected.not_to permit_actions(%i[show full]) }
+    it { is_expected.to forbid_actions(%i[show full]) }
 
     context 'when owner has ticket.agent permission' do
 
@@ -33,7 +33,7 @@ describe TicketPolicy do
   context 'when given a user that is neither owner nor customer' do
     let(:user) { create(:agent) }
 
-    it { is_expected.not_to permit_actions(%i[show full]) }
+    it { is_expected.to forbid_actions(%i[show full]) }
 
     context 'but the user is an agent with full access to ticket’s group' do
       before { user.group_names_access_map = { record.group.name => 'full' } }
@@ -54,14 +54,14 @@ describe TicketPolicy do
       context 'but organization.shared is false' do
         before { customer.organization.update(shared: false) }
 
-        it { is_expected.not_to permit_actions(%i[show full]) }
+        it { is_expected.to forbid_actions(%i[show full]) }
       end
     end
 
     context 'when user is admin with group access' do
       let(:user) { create(:user, roles: Role.where(name: %w[Admin])) }
 
-      it { is_expected.not_to permit_actions(%i[show full]) }
+      it { is_expected.to forbid_actions(%i[show full]) }
     end
   end
 

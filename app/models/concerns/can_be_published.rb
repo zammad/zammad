@@ -79,20 +79,6 @@ module CanBePublished
     scope :date_later_or_nil, lambda { |field, timestamp|
       where arel_table[field].gt(timestamp).or(arel_table[field].eq(nil))
     }
-
-    scope :check_published_unless_editor, lambda { |user|
-      return if user&.permissions? 'knowledge_base.editor'
-
-      published
-    }
-
-    scope :check_internal_unless_editor, lambda { |user|
-      return if user&.permissions? 'knowledge_base.editor'
-
-      return internal if user&.permissions? 'knowledge_base.reader'
-
-      published
-    }
   end
 
   def update_user_references

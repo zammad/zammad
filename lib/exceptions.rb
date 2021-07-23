@@ -8,4 +8,8 @@ module Exceptions
 
   class UnprocessableEntity < StandardError; end
 
+  def self.policy_class
+    ExceptionsPolicy
+  end
+
 end

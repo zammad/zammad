@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class AttachmentsController < ApplicationController
+  prepend_before_action :authorize!, only: %i[show destroy]
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]
-  before_action :verify_object_permissions, only: %i[show destroy]
 
   def show
     content   = @file.content_preview if params[:preview] && @file.preferences[:content_preview]
@@ -80,12 +80,12 @@ class AttachmentsController < ApplicationController
     raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end
 
-  def verify_object_permissions
+  def authorize!
     @file = Store.find(params[:id])
 
-    klass = @file&.store_object&.name&.safe_constantize
-    return if klass.send("can_#{params[:action]}_attachment?", @file, current_user)
-
+    record = @file&.store_object&.name&.safe_constantize&.find(@file.o_id)
+    authorize(record) if record
+  rescue Pundit::NotAuthorizedError
     raise ActiveRecord::RecordNotFound
   end
 end

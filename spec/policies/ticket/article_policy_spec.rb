@@ -37,13 +37,13 @@ describe Ticket::ArticlePolicy do
         create(:agent_and_customer, roles: [customer_role])
       end
 
-      it { is_expected.not_to permit_actions(%i[show]) }
+      it { is_expected.to forbid_actions(%i[show]) }
     end
 
     context 'when customer' do
       let(:user) { ticket_customer }
 
-      it { is_expected.not_to permit_actions(%i[show]) }
+      it { is_expected.to forbid_actions(%i[show]) }
     end
   end
 

@@ -4,7 +4,6 @@ class KnowledgeBase::Answer < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
   include CanBePublished
-  include HasKnowledgeBaseAttachmentPermissions
   include ChecksKbClientNotification
   include CanCloneAttachments
 

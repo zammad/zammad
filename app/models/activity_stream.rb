@@ -107,22 +107,9 @@ return all activity entries of an user
 =end
 
   def self.list(user, limit)
-    # do not return an activity stream for customers
-    return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
-
-    permission_ids = user.permissions_with_child_ids
-    group_ids = user.group_ids_access('read')
-
-    if group_ids.blank?
-      ActivityStream.where('(permission_id IN (?) AND group_id IS NULL)', permission_ids)
-                    .order(created_at: :desc)
-                    .limit(limit)
-    else
-      ActivityStream.where('(permission_id IN (?) AND (group_id IS NULL OR group_id IN (?))) OR (permission_id IS NULL AND group_id IN (?))', permission_ids, group_ids, group_ids)
-                    .order(created_at: :desc)
-                    .limit(limit)
-    end
-
+    ActivityStreamPolicy::Scope.new(user, self).resolve
+                               .order(created_at: :desc)
+                               .limit(limit)
   end
 
 =begin
