@@ -19,6 +19,27 @@ RSpec.shared_examples 'text modules' do |path:|
     end
   end
 
+  it 'does not break after usage of Ctrl/Command+Backspace' do
+    visit path
+    within(:active_content) do
+      find(:richtext).send_keys(':')
+      find(:richtext).send_keys(':')
+      find(:richtext).send_keys('bur')
+
+      # The click is needed to get the focus back to the field for chrome.
+      find(:richtext).click
+      if OS.mac?
+        find(:richtext).send_keys(%i[command backspace])
+      else
+        find(:richtext).send_keys(%i[control backspace])
+      end
+
+      find(:richtext).send_keys('Some other text')
+      find(:richtext).send_keys(:enter)
+      expect(find(:richtext)).to have_text 'Some other text'
+    end
+  end
+
   it 'does not show when send :enter:' do
     visit path
     within(:active_content) do

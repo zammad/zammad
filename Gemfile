@@ -223,6 +223,10 @@ group :development, :test do
 
   # Slack helper for testing
   gem 'slack-ruby-client', require: false
+
+  # Can be used to detect for example the current
+  # operating system in tests, to handle things differently.
+  gem 'os'
 end
 
 # Want to extend Zammad with additional gems?
