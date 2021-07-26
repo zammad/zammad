@@ -4,15 +4,18 @@ module Channel::Filter::AutoResponseCheck
 
   def self.run(_channel, mail, _transaction_params)
 
-    # if header is available, do not generate auto response
-    mail[ :'x-zammad-send-auto-response' ] = false
-    mail[ :'x-zammad-is-auto-response' ] = true
+    header_is_auto_response_exists = mail.key?(:'x-zammad-is-auto-response')
+    mail[ :'x-zammad-is-auto-response' ] = header_is_auto_response_exists ? ActiveModel::Type::Boolean.new.cast(mail[ :'x-zammad-is-auto-response' ]) : true
 
-    if !mail[ :'x-zammad-article-preferences' ]
-      mail[ :'x-zammad-article-preferences' ] = {}
-    end
-    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = false
-    mail[ :'x-zammad-article-preferences' ]['is-auto-response'] = true
+    header_send_auto_response_exists = mail.key?(:'x-zammad-send-auto-response')
+    mail[ :'x-zammad-send-auto-response' ] = header_send_auto_response_exists ? ActiveModel::Type::Boolean.new.cast(mail[ :'x-zammad-send-auto-response' ]) : !mail[ :'x-zammad-is-auto-response' ]
+
+    mail[ :'x-zammad-article-preferences' ] ||= {}
+    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = mail[ :'x-zammad-send-auto-response' ]
+    mail[ :'x-zammad-article-preferences' ]['is-auto-response'] = mail[ :'x-zammad-is-auto-response' ]
+
+    # Skip the auto response checks, if the header already exists.
+    return if header_is_auto_response_exists
 
     # do not send an auto response if one of the following headers exists
     return if mail[ :'list-unsubscribe' ] && mail[ :'list-unsubscribe' ] =~ %r{...}
@@ -28,10 +31,10 @@ module Channel::Filter::AutoResponseCheck
       return if message_id.match?(%r{@#{Regexp.quote(fqdn)}}i)
     end
 
-    mail[ :'x-zammad-send-auto-response' ] = true
+    mail[ :'x-zammad-send-auto-response' ] = true if !header_send_auto_response_exists
     mail[ :'x-zammad-is-auto-response' ] = false
 
-    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = true
+    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = mail[ :'x-zammad-send-auto-response' ]
     mail[ :'x-zammad-article-preferences' ]['is-auto-response'] = false
 
   end
