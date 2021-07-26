@@ -232,26 +232,71 @@ RSpec.describe 'Ticket views', type: :system do
     end
   end
 
-  context 'bulk note', authenticated_as: :user do
-    let(:group)    { create :group }
-    let(:user)     { create :admin, groups: [group] }
-    let!(:ticket1) { create(:ticket, state_name: 'open', owner: user, group: group) }
-    let!(:ticket2) { create(:ticket, state_name: 'open', owner: user, group: group) }
-    let(:note)     { Faker::Lorem.sentence }
+  context 'when performing a Bulk action' do
+    context 'when creating a Note', authenticated_as: :user do
+      let(:group)    { create :group }
+      let(:user)     { create :admin, groups: [group] }
+      let!(:ticket1) { create(:ticket, state_name: 'open', owner: user, group: group) }
+      let!(:ticket2) { create(:ticket, state_name: 'open', owner: user, group: group) }
+      let(:note)     { Faker::Lorem.sentence }
 
-    it 'adds note to all selected tickets' do
-      visit 'ticket/view/my_assigned'
+      it 'adds note to all selected tickets' do
+        visit 'ticket/view/my_assigned'
 
-      within :active_content do
-        all('.js-checkbox-field', count: 2).each(&:click)
-        click '.js-confirm'
-        find('.js-confirm-step textarea').fill_in with: note
-        click '.js-submit'
+        within :active_content do
+          all('.js-checkbox-field', count: 2).each(&:click)
+          click '.js-confirm'
+          find('.js-confirm-step textarea').fill_in with: note
+          click '.js-submit'
+        end
+
+        expect do
+          wait(10, interval: 0.1).until { [ ticket1.articles.last&.body, ticket2.articles.last&.body ] == [note, note] }
+        end.not_to raise_error
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/3568
+    # We need a manual ticket creation to test the correct behaviour of the bulk functionality, because of some
+    #   leftovers after the creation in the the javascript assets store.
+    context 'when performed a manual Ticket creation', authenticated_as: :agent do
+      let(:customer)  { create(:customer) }
+      let(:group)     { Group.find_by(name: 'Users') }
+      let(:agent)     { create(:agent, groups: [group]) }
+      let!(:template) { create(:template, :dummy_data, group: group, owner: agent, customer: customer) }
+
+      before do
+        visit 'ticket/create'
+
+        within(:active_content) do
+          use_template(template)
+
+          click('.js-submit')
+
+          find('.ticket-article-item')
+        end
       end
 
-      expect do
-        wait(10, interval: 0.1).until { [ ticket1.articles.last&.body, ticket2.articles.last&.body ] == [note, note] }
-      end.not_to raise_error
+      it 'check that no duplicated article was created after usage of bulk action' do
+        click('.menu-item[href="#ticket/view"]')
+
+        created_ticket_id = Ticket.last.id
+
+        within(:active_content) do
+          click("tr[data-id='#{created_ticket_id}'] .js-checkbox-field")
+
+          find('select[name="priority_id"] option[value="1"]').select_option
+
+          click('.js-confirm')
+          click('.js-submit')
+
+          await_empty_ajax_queue
+
+          # Check if still only one article exists on the ticket.
+          click("tr[data-id='#{created_ticket_id}'] a")
+          expect(page).to have_css('.ticket-article-item', count: 1)
+        end
+      end
     end
   end
 
