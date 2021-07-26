@@ -102,9 +102,9 @@
                     }
                 };
                 onDrop = function (e) {
-                    inCounter = 0
                     onDragEnter(e);
                     hideDropZone(dropContainer)
+                    inCounter = 0
                     manager.processFiles(e.dataTransfer.files)
                 };
                 showDropZone = function(dropContainer) {
