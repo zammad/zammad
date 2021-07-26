@@ -412,8 +412,6 @@
   }
 
   Plugin.prototype.onDrop = function (e) {
-    e.stopPropagation();
-    e.preventDefault();
     this.log('drop')
 
     var dataTransfer
@@ -431,6 +429,10 @@
     x = e.clientX
     y = e.clientY
     var file = dataTransfer.files[0]
+    // Do not stop propagation if the there is no file to handle
+    if (!file) return;
+    e.stopPropagation();
+    e.preventDefault();
 
     // look for images
     if (file.type.match('image.*')) {
