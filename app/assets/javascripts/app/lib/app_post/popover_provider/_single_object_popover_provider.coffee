@@ -20,7 +20,10 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
 
   buildTitleFor: (elem) ->
     object = @constructor.klass.find(@objectIdFor(elem))
-    App.Utils.htmlEscape(@displayTitleUsing(object))
+    title = App.Utils.htmlEscape(@displayTitleUsing(object))
+    if object.active is false
+      title = '<span class="is-inactive">' + title + '</span>'
+    title
 
   buildContentFor: (elem) ->
     id = @objectIdFor(elem)

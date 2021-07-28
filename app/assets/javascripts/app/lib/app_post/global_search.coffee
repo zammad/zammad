@@ -9,7 +9,6 @@ class App.GlobalSearch extends App.Controller
 
   search: (params) =>
     query = params.query
-
     # use cache for search result
     currentTime = new Date
     if @searchResultCache[query] && @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)

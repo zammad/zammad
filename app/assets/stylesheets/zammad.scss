@@ -4285,6 +4285,12 @@ footer {
 
     .navigation .nav-tab-name {
       text-align: start;
+
+
+      &.is-inactive {
+        text-decoration: line-through;
+        opacity: .73;
+      }
     }
 
     .tasks-navigation .nav-tab-icon .error {
@@ -4314,6 +4320,11 @@ footer {
   .nav-tab.nav-tab--search {
     height: 30px;
     padding-top: 9px;
+
+    &.is-inactive {
+      text-decoration: line-through;
+      opacity: .73;
+    }
   }
 
   .nav-tab-icon {
@@ -5353,6 +5364,11 @@ footer {
     border: none;
     background: none;
     padding: 21px 17px 4px;
+
+    .is-inactive {
+      text-decoration: line-through;
+      color: #ccc;
+    }
   }
 
   .popover-content {
@@ -5411,10 +5427,22 @@ footer {
     color: #a1a4a7;
   }
 
+  .popover .person {
+    &.is-inactive {
+      text-decoration: line-through;
+      color: #ccc;
+    }
+  }
+
   .popover .user-organization {
     @extend .u-textTruncate;
     margin-bottom: 8px;
     margin-top: -4px;
+
+    &.is-inactive {
+      text-decoration: line-through;
+      color: #ccc;
+    }
   }
 
   .popover-block {
@@ -5553,6 +5581,11 @@ footer {
     position: absolute;
     left: 0;
     top: 0;
+  }
+
+  .user-popover.is-inactive {
+    text-decoration: line-through;
+    opacity: .73;
   }
 
   .btn.js-newTicket {
@@ -7996,6 +8029,11 @@ footer {
     padding: 9px 15px;
     list-style-image: none;
 
+    &.is-inactive {
+      text-decoration: line-through;
+      opacity: .73;
+    }
+
     &:not(:first-child) {
       box-shadow: 0 1px rgba(255,255,255,.13) inset;
     }
@@ -8566,6 +8604,13 @@ footer {
   display: flex;
   align-items: center;
   @extend .u-clickable;
+
+  &.is-inactive {
+    .recipientList-name {
+      text-decoration: line-through;
+      opacity: .73;
+    }
+  }
 }
 
   .recipientList-entry .recipientList-iconSpacer {
@@ -8620,6 +8665,10 @@ footer {
 
   .recipientList-detail {
     opacity: 0.5;
+
+    &.is-inactive > span {
+      text-decoration: line-through;
+    }
   }
 
   .recipientList-icon.plus {
@@ -10353,6 +10402,11 @@ output {
 
     & + .icon {
       @include bidi-style(margin-left, 10px, margin-right, 0);
+    }
+
+    &.is-inactive {
+      opacity: .73;
+      text-decoration: line-through;
     }
   }
 

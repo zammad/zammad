@@ -456,4 +456,21 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_no_selector(:task_with, task_key)
     end
   end
+
+  describe 'customer selection to check the field search' do
+    before do
+      create(:customer, active: true)
+      create(:customer, active: false)
+    end
+
+    it 'check for inactive customer in customer/organization selection' do
+      visit 'ticket/create'
+
+      within(:active_content) do
+        find('[name=customer_id] ~ .user-select.token-input').fill_in with: '**'
+        expect(page).to have_css('ul.recipientList > li.recipientList-entry', minimum: 2)
+        expect(page).to have_css('ul.recipientList > li.recipientList-entry.is-inactive', count: 1)
+      end
+    end
+  end
 end

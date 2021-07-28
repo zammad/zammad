@@ -1311,6 +1311,14 @@ class App.Utils
         autocomplete: {
           source: source
           minLength: 2
+          create: ->
+            $(@).data('ui-autocomplete')._renderItem = (ul, item) ->
+              option_html = App.Utils.htmlEscape(item.label)
+              additional_class = ''
+              if item.inactive
+                option_html += '<span style="float: right;">' + App.i18n.translateContent('inactive') + '</span>'
+                additional_class = 'is-inactive'
+              return $('<li>').addClass(additional_class).append(option_html).appendTo(ul)
         },
       ).on('tokenfield:createtoken', (e) ->
         if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)

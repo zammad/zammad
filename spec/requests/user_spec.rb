@@ -65,6 +65,18 @@ RSpec.describe 'User', type: :request do
       )
     end
 
+    let!(:customer_inactive) do
+      create(
+        :customer,
+        organization: organization,
+        login:        'rest-customer_inactive@example.com',
+        firstname:    'Rest',
+        lastname:     'CustomerInactive',
+        email:        'rest-customer_inactive@example.com',
+        active:       false,
+      )
+    end
+
     before do
       configure_elasticsearch(rebuild: true)
     end
@@ -224,7 +236,7 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-admin@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-admin@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
@@ -243,13 +255,13 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
-      expect('rest-agent@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-agent@example.com')
 
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       # create user with admin role
       role = Role.lookup(name: 'Admin')
@@ -332,7 +344,7 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-agent@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-agent@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
@@ -442,8 +454,14 @@ RSpec.describe 'User', type: :request do
       expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq('new_customer_by_agent@example.com')
+      expect(json_response[0]['inactive']).to eq(false)
       expect(json_response[0]['role_ids']).to be_falsey
       expect(json_response[0]['roles']).to be_falsey
+
+      get "/api/v1/users/search?term=#{CGI.escape('CustomerInactive')}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response[0]['inactive']).to eq(true)
 
       # Regression test for issue #2539 - search pagination broken in users_controller.rb
       # Get the total number of users N, then search with one result per page, so there should N pages with one result each
@@ -494,19 +512,19 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Array).to eq(json_response.class)
-      expect(1).to eq(json_response.length)
+      expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -536,19 +554,19 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-customer2@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer2@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Array).to eq(json_response.class)
-      expect(1).to eq(json_response.length)
+      expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer2@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer2@example.com')
 
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)

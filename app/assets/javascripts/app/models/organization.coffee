@@ -41,11 +41,18 @@ Using **Organisations** you can **group** customers. This has among others two i
     data
 
   searchResultAttributes: ->
+    classList = ['organization', 'organization-popover' ]
+    icon = 'organization'
+
+    if @active is false
+      classList.push 'is-inactive'
+      icon = 'inactive-' + icon
+
     display:    "#{@displayName()}"
     id:         @id
-    class:      'organization organization-popover'
+    class:      classList.join(' ')
     url:        @uiUrl()
-    icon:       'organization'
+    icon:       icon
 
   activityMessage: (item) ->
     return if !item

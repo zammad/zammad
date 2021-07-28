@@ -15,10 +15,15 @@ class App.UserProfile extends App.Controller
 
     if App.User.exists(@user_id)
       user = App.User.find(@user_id)
+      icon = user.icon()
+
+      if user.active is false
+        icon = 'inactive-' + icon
 
       meta.head       = user.displayName()
       meta.title      = user.displayName()
-      meta.iconClass  = user.icon()
+      meta.iconClass  = icon
+      meta.active     = user.active
     meta
 
   url: =>

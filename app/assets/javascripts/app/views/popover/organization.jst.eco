@@ -5,7 +5,7 @@
   <div class="popover-block">
     <label><%- @T('Members') %></label>
     <% for user in @object.members: %>
-      <div class="person"><%= user.displayName() %></div>
+      <div class="person<% if user.active is false: %> is-inactive<% end %>"><%= user.displayName() %></div>
     <% end %>
   </div>
 <% end %>

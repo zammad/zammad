@@ -282,7 +282,7 @@ class UsersController < ApplicationController
           realname = "#{realname} <#{user.email}>"
         end
         a = if params[:term]
-              { id: user.id, label: realname, value: user.email }
+              { id: user.id, label: realname, value: user.email, inactive: !user.active }
             else
               { id: user.id, label: realname, value: realname }
             end

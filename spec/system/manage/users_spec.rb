@@ -69,8 +69,25 @@ RSpec.describe 'Manage > Users', type: :system do
 
         expect(page).to have_css('table.user-list td', text: 'NewTestUserFirstName')
       end
-
     end
 
+    describe 'select an Organization' do
+      before do
+        create(:organization, name: 'Example Inc.', active: true)
+        create(:organization, name: 'Inactive Inc.', active: false)
+      end
+
+      it 'check for inactive Organizations in Organization selection' do
+        visit '#manage/users'
+
+        within(:active_content) do
+          find('[data-type=new]').click
+
+          find('[name=organization_id] ~ .searchableSelect-main').fill_in with: '**'
+          expect(page).to have_css('ul.js-optionsList > li.js-option', minimum: 2)
+          expect(page).to have_css('ul.js-optionsList > li.js-option .is-inactive', count: 1)
+        end
+      end
+    end
   end
 end

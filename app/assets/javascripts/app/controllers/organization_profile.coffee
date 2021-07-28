@@ -14,10 +14,15 @@ class App.OrganizationProfile extends App.Controller
 
     if App.Organization.exists(@organization_id)
       organization = App.Organization.find(@organization_id)
+      icon = organization.icon()
+
+      if organization.active is false
+        icon = 'inactive-' + icon
 
       meta.head       = organization.displayName()
       meta.title      = organization.displayName()
-      meta.iconClass  = organization.icon()
+      meta.iconClass  = icon
+      meta.active     = organization.active
     meta
 
   url: =>

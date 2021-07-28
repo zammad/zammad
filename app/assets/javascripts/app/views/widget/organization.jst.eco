@@ -1,7 +1,11 @@
 <div class="sidebar-block">
     <div class="avatar organizationInfo-avatar size-50">
       <a href="<%- @organization.uiUrl() %>">
-        <%- @Icon('organization') %>
+        <% if @organization.active is true: %>
+          <%- @Icon('organization') %>
+        <% else: %>
+          <%- @Icon('inactive-organization') %>
+        <% end %>
       </a>
     </div>
     <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>

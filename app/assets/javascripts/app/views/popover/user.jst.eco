@@ -1,5 +1,5 @@
 <% if @object['organization']: %>
-<div class="user-organization"><a href="<%- @object.organization.uiUrl() %>"><%= @object.organization.displayName() %></a></div>
+<div class="user-organization<% if @object.organization.active is false: %> is-inactive<% end %>"><a href="<%- @object.organization.uiUrl() %>"><%= @object.organization.displayName() %></a></div>
 <% end %>
 
 <%- @V('popover/single_object_generic', object: @object, attributes: @attributes) %>
