@@ -801,13 +801,19 @@ b {
   }
 }
 
-.icon,
-[data-font] {
-  .section-inner & {
-    color: $highlight-color;
-    fill: currentColor;
+.sections--list, .sections--compact-text {
+  .icon,
+  [data-font] {
     @include ltr(margin, 4px 9px 0 3px);
     @include rtl(margin, 4px 3px 0 9px);
+  }
+}
+
+.section-inner {
+  .icon,
+  [data-font] {
+    color: $highlight-color;
+    fill: currentColor;
     line-height: inherit; 
     flex-shrink: 0;
   }
