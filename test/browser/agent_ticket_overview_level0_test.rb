@@ -46,17 +46,17 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"]),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
     click(
-      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       fast: true,
     )
 
@@ -263,17 +263,17 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"]),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
     click(
-      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       fast: true,
     )
 
@@ -411,17 +411,17 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket1[:id]}"]),
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:      %(.content.active table tr td input[value="#{ticket2[:id]}"]),
     )
     click(
-      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:  %(.content.active table tr td input[value="#{ticket2[:id]}"]),
       fast: true,
     )
 
@@ -574,7 +574,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     # then select the ticket that we do not have change rights to
     scroll_to(
       position: 'top',
-      css:      %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"] + .icon-checkbox.icon-unchecked),
+      css:      %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"]),
     )
     check(
       css: %(.content.active table tr td input[value="#{cannot_change_ticket[:id]}"]),
