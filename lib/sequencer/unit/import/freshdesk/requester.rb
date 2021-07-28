@@ -18,6 +18,8 @@ class Sequencer
             rescue Net::HTTPClientError => e
               handle_exception e, iteration
             end
+
+            nil
           end
 
           def handle_error(response, iteration)

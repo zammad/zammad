@@ -8,7 +8,7 @@ class Sequencer
 
           def self.sequence
             [
-              'Sequencer::Unit::Import::Freshdesk::Request',
+              'Import::Freshdesk::Request',
               'Import::Freshdesk::Resources',
               'Import::Freshdesk::ModelClass',
               'Import::Freshdesk::Perform',

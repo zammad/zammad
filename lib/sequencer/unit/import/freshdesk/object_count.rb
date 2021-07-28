@@ -6,6 +6,9 @@ class Sequencer
       module Freshdesk
         class ObjectCount < Sequencer::Unit::Common::Provider::Attribute
           include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::EmptyDiff
+          prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+          skip_action :skipped, :failed
 
           uses :model_class, :resources
 
