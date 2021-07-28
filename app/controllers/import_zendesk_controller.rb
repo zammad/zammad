@@ -22,7 +22,7 @@ class ImportZendeskController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    response = UserAgent.request(params[:url])
+    response = UserAgent.request(URI.join(params[:url], '/api/v2/users/me').to_s)
 
     if !response.success?
       message_human = ''
@@ -39,8 +39,7 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    # since 2016-10-15 a redirect to a marketing page has been implemented
-    if !response.body.match?(%r{#{params[:url]}})
+    if response.header['x-zendesk-api-version'].blank?
       render json: {
         result:        'invalid',
         message_human: 'Hostname not found!',
