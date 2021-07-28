@@ -5542,15 +5542,21 @@ footer {
   padding: 2px 0 0 50px;
   position: relative;
   min-height: 40px;
-  max-width: 192px;
+  padding-right: 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 192px;
 
   .avatar {
     position: absolute;
     left: 0;
     top: 0;
+  }
+
+  .btn.js-newTicket {
+    position: absolute;
+    right: 0;
   }
 }
 
