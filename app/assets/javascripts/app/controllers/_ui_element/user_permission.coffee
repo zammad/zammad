@@ -82,7 +82,7 @@ class App.UiElement.user_permission
 
     throttled = _.throttle( (e) ->
       input = $(@).find('input')
-      upcoming_state = !input.prop('checked')
+      upcoming_state = if $(e.target).is(':checkbox') then input.prop('checked') else !input.prop('checked')
       value = input.val()
 
       if value is 'full' and upcoming_state is true

@@ -1444,9 +1444,9 @@ td .icon-trash {
 
   input[type="checkbox"],
   input[type="radio"] {
-    pointer-events: none;
     position: absolute;
     opacity: 0;
+    cursor: pointer;
 
     &:disabled ~ .icon {
       opacity: 0.33;

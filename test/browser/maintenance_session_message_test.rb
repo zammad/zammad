@@ -145,7 +145,7 @@ class MaintenanceSessionMessageTest < TestCase
     )
     click(
       browser: browser1,
-      css:     '.content.active .js-Message input[name="reload"] + .icon-checkbox.icon-unchecked',
+      css:     '.content.active .js-Message input[name="reload"]',
     )
     click(
       browser: browser1,
