@@ -432,6 +432,8 @@
     y = e.clientY
     var file = dataTransfer.files[0]
 
+    if(!file) return;
+
     // look for images
     if (file.type.match('image.*')) {
       var reader = new FileReader()

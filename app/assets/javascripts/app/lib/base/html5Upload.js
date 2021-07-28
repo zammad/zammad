@@ -102,10 +102,15 @@
                     }
                 };
                 onDrop = function (e) {
-                    inCounter = 0
-                    onDragEnter(e);
-                    hideDropZone(dropContainer)
+                    e.preventDefault()
+                    e.stopPropagation()
                     manager.processFiles(e.dataTransfer.files)
+                };
+                onDragEnd = function (e) {
+                    inCounter = 0
+                    e.preventDefault()
+                    e.stopPropagation()
+                    hideDropZone(dropContainer)
                 };
                 showDropZone = function(dropContainer) {
                   $(dropContainer).trigger('html5Upload.dropZone.show')
@@ -126,6 +131,7 @@
                 manager.on(dropContainer, 'dragleave', onDragLeave)
                 manager.on(dropContainer, 'dragover', onDragOver)
                 manager.on(dropContainer, 'dragenter', onDragEnter)
+                manager.on(dropContainer, 'dragend', onDragEnd)
                 manager.on(dropContainer, 'drop', onDrop)
             }
 
