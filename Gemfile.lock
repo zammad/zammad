@@ -529,7 +529,7 @@ GEM
     ruby-saml (1.12.2)
       nokogiri (>= 1.10.5)
       rexml
-    ruby2_keywords (0.0.4)
+    ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
     rubyzip (2.3.0)
     sassc (2.4.0)
@@ -592,7 +592,7 @@ GEM
     timers (4.3.3)
     tins (1.29.1)
       sync
-    twilio-ruby (5.57.0)
+    twilio-ruby (5.57.1)
       faraday (>= 0.9, < 2.0)
       jwt (>= 1.5, <= 2.5)
       nokogiri (>= 1.6, < 2.0)
