@@ -125,7 +125,7 @@ GEM
     biz (1.8.2)
       clavius (~> 1.0)
       tzinfo
-    bootsnap (1.7.6)
+    bootsnap (1.7.7)
       msgpack (~> 1.0)
     brakeman (5.1.1)
     browser (5.3.1)
