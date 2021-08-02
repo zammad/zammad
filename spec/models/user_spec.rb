@@ -264,6 +264,84 @@ RSpec.describe User, type: :model do
           end
         end
       end
+
+      context 'date range is inclusive' do
+        before do
+          freeze_time
+
+          agent.update(
+            out_of_office:                true,
+            out_of_office_start_at:       1.day.from_now.to_date,
+            out_of_office_end_at:         1.week.from_now.to_date,
+            out_of_office_replacement_id: 1
+          )
+        end
+
+        it 'today in office' do
+          expect(agent).not_to be_out_of_office
+        end
+
+        it 'tomorrow not in office' do
+          travel 1.day
+          expect(agent).to be_out_of_office
+        end
+
+        it 'after 7 days not in office' do
+          travel 7.days
+          expect(agent).to be_out_of_office
+        end
+
+        it 'after 8 days in office' do
+          travel 8.days
+          expect(agent).not_to be_out_of_office
+        end
+      end
+
+      # https://github.com/zammad/zammad/issues/3590
+      context 'when setting the same date' do
+        before do
+          freeze_time
+
+          target_date = 1.day.from_now.to_date
+          agent.update(
+            out_of_office:                true,
+            out_of_office_start_at:       target_date,
+            out_of_office_end_at:         target_date,
+            out_of_office_replacement_id: 1
+          )
+        end
+
+        it 'agent is out of office tomorrow' do
+          travel 1.day
+          expect(agent).to be_out_of_office
+        end
+
+        it 'agent is not out of office the day after tomorrow' do
+          travel 2.days
+          expect(agent).not_to be_out_of_office
+        end
+
+        it 'agent is not out of office today' do
+          expect(agent).not_to be_out_of_office
+        end
+
+        context 'given it respects system time zone' do
+          before do
+            travel_to Time.current.end_of_day
+          end
+
+          it 'agent is in office if in UTC' do
+            expect(agent).not_to be_out_of_office
+          end
+
+          it 'agent is out of office if ahead of UTC' do
+            travel_to Time.current.end_of_day
+            Setting.set('timezone_default', 'Europe/Vilnius')
+
+            expect(agent).to be_out_of_office
+          end
+        end
+      end
     end
 
     describe '#out_of_office_agent' do

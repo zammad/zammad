@@ -195,7 +195,12 @@ returns
     return false if out_of_office_start_at.blank?
     return false if out_of_office_end_at.blank?
 
-    Time.zone.today.between?(out_of_office_start_at, out_of_office_end_at)
+    Time.use_zone(Setting.get('timezone_default').presence) do
+      start  = out_of_office_start_at.beginning_of_day
+      finish = out_of_office_end_at.end_of_day
+
+      Time.zone.now.between? start, finish
+    end
   end
 
 =begin
