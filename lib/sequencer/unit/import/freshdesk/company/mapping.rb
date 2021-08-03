@@ -11,8 +11,9 @@ class Sequencer
             def process
               provide_mapped do
                 {
-                  name: resource['name'],
-                  note: resource['description'],
+                  name:   resource['name'],
+                  note:   resource['description'],
+                  domain: resource['domains']&.first,
                 }
               end
             end
