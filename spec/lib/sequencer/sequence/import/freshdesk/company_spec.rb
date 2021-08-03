@@ -47,6 +47,18 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Company, sequencer: :se
       }
     end
 
+    let(:imported_organization) do
+      {
+        name:               'Test Foundation',
+        note:               nil,
+        domain:             'acmecorp.com',
+        cf_custom_dropdown: 'key_2',
+        cf_custom_integer:  999,
+        cf_test_checkbox:   true,
+        cf_custom_decimal:  '1.1',
+      }
+    end
+
     before do
       create :object_manager_attribute_select, object_name: 'Organization', name:  'cf_custom_dropdown'
       create :object_manager_attribute_integer, object_name: 'Organization', name: 'cf_custom_integer'
@@ -55,16 +67,44 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Company, sequencer: :se
       ObjectManager::Attribute.migration_execute
     end
 
-    it 'adds organizations' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    it 'increased organization count' do
       expect { process(process_payload) }.to change(Organization, :count).by(1)
-      expect(Organization.last).to have_attributes(
-        name:               'Test Foundation',
-        note:               nil,
-        cf_custom_dropdown: 'key_2',
-        cf_custom_integer:  999,
-        cf_test_checkbox:   true,
-        cf_custom_decimal:  '1.1',
-      )
+    end
+
+    it 'adds correct organization data' do
+      process(process_payload)
+      expect(Organization.last).to have_attributes(imported_organization)
+    end
+
+    context 'when resource has no domains' do
+      let(:resource) do
+        { 'id'            => 80_000_602_705,
+          'name'          => 'Test Foundation',
+          'description'   => nil,
+          'note'          => nil,
+          'domains'       => [],
+          'created_at'    => '2021-04-09T13:24:00Z',
+          'updated_at'    => '2021-04-12T20:25:36Z',
+          'custom_fields' => {
+            'cf_test_checkbox'   => true,
+            'cf_custom_integer'  => 999,
+            'cf_custom_dropdown' => 'key_2',
+            'cf_custom_decimal'  => '1.1',
+          },
+          'health_score'  => nil,
+          'account_tier'  => 'Basic',
+          'renewal_date'  => nil,
+          'industry'      => nil }
+      end
+
+      before do
+        imported_organization[:domain] = nil
+      end
+
+      it 'adds organizations' do
+        process(process_payload)
+        expect(Organization.last).to have_attributes(imported_organization)
+      end
     end
   end
 end
