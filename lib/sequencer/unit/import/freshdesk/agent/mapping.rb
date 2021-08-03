@@ -20,7 +20,7 @@ class Sequencer
                   firstname:  contact['name'],
                   email:      contact['email'],
                   phone:      contact['phone'],
-                  active:     contact['active'],
+                  active:     !contact['deleted'],
                   group_ids:  group_ids,
                   password:   password,
                   last_login: contact['last_login_at'],

@@ -14,7 +14,7 @@ class Sequencer
               provide_mapped do
                 {
                   firstname:       resource['name'],
-                  active:          resource['active'],
+                  active:          !resource['deleted'],
                   organization_id: organization_id,
                   email:           resource['email'],
                   mobile:          resource['mobile'],

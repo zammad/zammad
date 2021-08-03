@@ -62,6 +62,20 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, sequencer: :se
       }
     end
 
+    let(:imported_user) do
+      {
+        firstname:          'Sam',
+        lastname:           'Osborne',
+        login:              'sam.ozzy@freshdesk.com',
+        email:              'sam.ozzy@freshdesk.com',
+        active:             true,
+        cf_custom_dropdown: 'key_2',
+        cf_custom_integer:  999,
+        cf_test_checkbox:   true,
+        cf_custom_decimal:  '1.1',
+      }
+    end
+
     before do
       create :object_manager_attribute_select, object_name: 'User', name:  'cf_custom_dropdown'
       create :object_manager_attribute_integer, object_name: 'User', name: 'cf_custom_integer'
@@ -70,19 +84,25 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, sequencer: :se
       ObjectManager::Attribute.migration_execute
     end
 
-    it 'imports customers correctly' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    it 'imports customer correctly (increased user count)' do
       expect { process(process_payload) }.to change(User, :count).by(1)
-      expect(User.last).to have_attributes(
-        firstname:          'Sam',
-        lastname:           'Osborne',
-        login:              'sam.ozzy@freshdesk.com',
-        email:              'sam.ozzy@freshdesk.com',
-        active:             false,
-        cf_custom_dropdown: 'key_2',
-        cf_custom_integer:  999,
-        cf_test_checkbox:   true,
-        cf_custom_decimal:  '1.1',
-      )
+    end
+
+    it 'imports customer data correctly' do
+      process(process_payload)
+      expect(User.last).to have_attributes(imported_user)
+    end
+
+    context 'with deleted flag in resource' do
+      before do
+        resource['deleted'] = true
+        imported_user[:active] = false
+      end
+
+      it 'imports customer data correctly' do
+        process(process_payload)
+        expect(User.last).to have_attributes(imported_user)
+      end
     end
   end
 end
