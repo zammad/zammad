@@ -34,15 +34,14 @@ module ApplicationController::HasUser
       raise Exceptions::Forbidden, "Current user has no permission to use 'X-On-Behalf-Of'!"
     end
 
-    # find user for execution based on the header
-    %i[id login email].each do |field|
-      @_user_on_behalf = User.find_by(field => request.headers['X-On-Behalf-Of'].to_s.downcase.strip)
-
-      return @_user_on_behalf if @_user_on_behalf
-    end
+    @_user_on_behalf = find_on_behalf_user request.headers['X-On-Behalf-Of'].to_s.downcase.strip
 
     # no behalf of user found
-    raise Exceptions::Forbidden, "No such user '#{request.headers['X-On-Behalf-Of']}'"
+    if !@_user_on_behalf
+      raise Exceptions::Forbidden, "No such user '#{request.headers['X-On-Behalf-Of']}'"
+    end
+
+    @_user_on_behalf
   end
 
   def current_user_set(user, auth_type = 'session')
@@ -76,5 +75,19 @@ module ApplicationController::HasUser
     return if session[:user_agent]
 
     session[:user_agent] = request.env['HTTP_USER_AGENT']
+  end
+
+  # find on behalf user by ID, login or email
+  def find_on_behalf_user(identifier)
+    # ActiveRecord casts string beginning with a numeric characters
+    # to numeric characters by dropping textual bits altogether
+    # thus 123@example.com returns user with ID 123
+    if identifier.match?(%r{^\d+$})
+      user = User.find_by(id: identifier)
+      return user if user
+    end
+
+    # find user for execution based on the header
+    User.where('login = :param OR email = :param', param: identifier).first
   end
 end
