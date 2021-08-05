@@ -239,4 +239,33 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       end
     end
   end
+
+  describe 'user lookup' do
+    it 'does X-On-Behalf-Of auth - user lookup by ID' do
+      authenticated_as(admin, on_behalf_of: customer.id)
+      get '/api/v1/users/me', as: :json
+      expect(json_response.fetch('id')).to be customer.id
+    end
+
+    it 'does X-On-Behalf-Of auth - user lookup by login' do
+      authenticated_as(admin, on_behalf_of: customer.login)
+      get '/api/v1/users/me', as: :json
+      expect(json_response.fetch('id')).to be customer.id
+    end
+
+    it 'does X-On-Behalf-Of auth - user lookup by email' do
+      authenticated_as(admin, on_behalf_of: customer.email)
+      get '/api/v1/users/me', as: :json
+      expect(json_response.fetch('id')).to be customer.id
+    end
+
+    # https://github.com/zammad/zammad/issues/2851
+    it 'does X-On-Behalf-Of auth - user lookup by email even if email starts with a digit' do
+      customer.update! email: "#{agent.id}#{customer.email}"
+
+      authenticated_as(admin, on_behalf_of: customer.email)
+      get '/api/v1/users/me', as: :json
+      expect(json_response.fetch('id')).to be customer.id
+    end
+  end
 end
