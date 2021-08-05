@@ -629,8 +629,8 @@ GEM
       logging
       nokogiri
       rubyntlm
-    webmock (3.13.0)
-      addressable (>= 2.3.6)
+    webmock (3.14.0)
+      addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.5)
