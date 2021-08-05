@@ -1506,4 +1506,41 @@ RSpec.describe 'User', type: :request do
         .to change { Avatar.list('User', user.id) }
     end
   end
+
+  describe 'PUT /api/v1/users/unlock/{id}' do
+    let(:admin) { create(:admin) }
+    let(:agent) { create(:agent) }
+    let(:customer) { create(:customer, login_failed: 2) }
+
+    def make_request(id)
+      put "/api/v1/users/unlock/#{id}", params: {}, as: :json
+    end
+
+    context 'with authenticated admin user', authenticated_as: :admin do
+      it 'returns success' do
+        make_request(customer.id)
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'check that login failed was reseted' do
+        expect { make_request(customer.id) }.to change { customer.reload.login_failed }.from(2).to(0)
+      end
+
+      it 'fail with not existing user id' do
+        make_request(99_999)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'with authenticated agent user', authenticated_as: :agent do
+      it 'fail without admin permission' do
+        make_request(customer.id)
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'check that login failed was not changed' do
+        expect { make_request(customer.id) }.not_to change { customer.reload.login_failed }
+      end
+    end
+  end
 end

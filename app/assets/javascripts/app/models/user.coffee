@@ -121,6 +121,9 @@ class App.User extends App.Model
       return true
     false
 
+  maxLoginFailedReached: ->
+    return @login_failed > (App.Config.get('password_max_login_failed') || 10)
+
   imageUrl: ->
     return if !@image
     # set image url

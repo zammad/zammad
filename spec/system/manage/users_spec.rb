@@ -90,4 +90,24 @@ RSpec.describe 'Manage > Users', type: :system do
       end
     end
   end
+
+  describe 'show/unlock a user', authenticated_as: -> { user } do
+    let(:user) { create(:admin) }
+    let!(:locked_user) { create(:user, login_failed: 6) }
+
+    it 'check marked locked user and execute unlock action' do
+      visit '#manage/users'
+
+      within(:active_content) do
+        row = find("tr[data-id=\"#{locked_user.id}\"]")
+
+        expect(row).to have_css('.icon-lock')
+
+        row.find('.js-action').click
+        row.find('li.unlock').click
+
+        expect(row).to have_no_css('.icon-lock')
+      end
+    end
+  end
 end

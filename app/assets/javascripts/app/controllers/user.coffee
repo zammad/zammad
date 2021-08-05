@@ -9,6 +9,7 @@ class User extends App.ControllerSubContent
 
   constructor: ->
     super
+
     @render()
 
   show: =>
@@ -95,6 +96,17 @@ class User extends App.ControllerSubContent
         container: @el.closest('.content')
       )
 
+
+    callbackLoginAttribute = (value, object, attribute, attributes) ->
+      attribute.prefixIcon = null
+      attribute.title = null
+
+      if object.maxLoginFailedReached()
+        attribute.title = App.i18n.translateContent('The user is locked, because of too many failed login attempts.')
+        attribute.prefixIcon = 'lock'
+
+      value
+
     users = []
     for user_id in user_ids
       user = App.User.find(user_id)
@@ -129,7 +141,7 @@ class User extends App.ControllerSubContent
                 )
               800
             )
-        }
+        },
         {
           name: 'delete'
           display: 'Delete'
@@ -138,7 +150,33 @@ class User extends App.ControllerSubContent
           callback: (id) =>
             @navigate "#system/data_privacy/#{id}"
         },
+        {
+          name: 'unlock'
+          display: 'Unlock'
+          icon: 'lock-open'
+          class: 'unlock'
+          available: (user) ->
+            user.maxLoginFailedReached()
+          callback: (id) =>
+            @ajax(
+              id: "user_unlock_#{id}"
+              type:  'PUT'
+              url:   "#{@apiPath}/users/unlock/#{id}"
+              success: =>
+                App.User.full(id,
+                => @notify(
+                  type: 'success'
+                  msg:  App.i18n.translateContent('User successfully unlocked!')
+
+                  @renderResult(user_ids)
+                ),
+                true)
+            )
+        }
       ]
+      callbackAttributes: {
+        login: [ callbackLoginAttribute ]
+      }
       bindRow:
         events:
           'click': edit

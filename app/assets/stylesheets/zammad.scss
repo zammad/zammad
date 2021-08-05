@@ -1353,6 +1353,10 @@ td .icon-trash {
   //fill: hsl(240,1%,77%);
 }
 
+td .prefix-icon > .icon {
+  vertical-align: top;
+}
+
 .table-checkbox,
 .table-radio {
   padding: 0 !important;

@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
 
-  prepend_before_action -> { authorize! }, only: %i[import_example import_start search history]
+  prepend_before_action -> { authorize! }, only: %i[import_example import_start search history unlock]
   prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]
   prepend_before_action :authentication_check_only, only: %i[create]
 
@@ -336,6 +336,24 @@ class UsersController < ApplicationController
 
     # get history of user
     render json: user.history_get(true)
+  end
+
+  # @path       [PUT] /users/unlock/{id}
+  #
+  # @summary          Unlocks the User record matching the identifier.
+  # @notes            The requester have 'admin.user' permissions to be able to unlock a user.
+  #
+  # @parameter        id(required) [Integer] The identifier matching the requested User record.
+  #
+  # @response_message 200 Unlocked User record.
+  # @response_message 403 Forbidden / Invalid session.
+  def unlock
+    user = User.find(params[:id])
+
+    user.with_lock do
+      user.update!(login_failed: 0)
+    end
+    render json: { message: 'ok' }, status: :ok
   end
 
 =begin

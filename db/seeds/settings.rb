@@ -1869,9 +1869,10 @@ Setting.create_if_not_exists(
   },
   state:       5,
   preferences: {
-    permission: ['admin.security'],
+    authentication: true,
+    permission:     ['admin.security'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
