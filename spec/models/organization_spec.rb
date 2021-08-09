@@ -40,14 +40,28 @@ RSpec.describe Organization, type: :model do
         expect(refs_organization).to eq(refs_known)
       end
 
-      it 'checks user deletion' do
-        organization.destroy
-        expect { user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      context 'with associations' do
+        it 'checks user deletion' do
+          organization.destroy(associations: true)
+          expect { user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
+
+        it 'checks ticket deletion' do
+          organization.destroy(associations: true)
+          expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
       end
 
-      it 'checks ticket deletion' do
-        organization.destroy
-        expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      context 'without associations' do
+        it 'checks user deletion' do
+          organization.destroy
+          expect(user.reload.organization_id).to be nil
+        end
+
+        it 'checks ticket deletion' do
+          organization.destroy
+          expect(ticket.reload.organization_id).to be nil
+        end
       end
 
       describe 'when changes for member_ids' do

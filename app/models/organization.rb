@@ -24,7 +24,6 @@ class Organization < ApplicationModel
 
   before_create :domain_cleanup
   before_update :domain_cleanup
-  before_destroy :delete_associations
 
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
@@ -34,6 +33,15 @@ class Organization < ApplicationModel
   activity_stream_permission 'admin.role'
 
   sanitized_html :note
+
+  def destroy(associations: false)
+    if associations
+      delete_associations
+    else
+      unset_associations
+    end
+    super()
+  end
 
   private
 
@@ -50,5 +58,14 @@ class Organization < ApplicationModel
   def delete_associations
     User.where(organization_id: id).find_each(&:destroy)
     Ticket.where(organization_id: id).find_each(&:destroy)
+  end
+
+  def unset_associations
+    User.where(organization_id: id).find_each do |user|
+      user.update(organization_id: nil)
+    end
+    Ticket.where(organization_id: id) do |ticket|
+      ticket.update(organization_id: nil)
+    end
   end
 end

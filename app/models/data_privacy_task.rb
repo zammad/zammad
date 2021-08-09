@@ -32,7 +32,7 @@ class DataPrivacyTask < ApplicationModel
     save!
 
     if delete_organization?
-      deletable.organization.destroy
+      deletable.organization.destroy(associations: true)
     else
       deletable.destroy
     end
