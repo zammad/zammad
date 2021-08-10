@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api Auth On Behalf Of', type: :request do
+RSpec.describe 'Api Auth From', type: :request do
 
   let(:admin) do
     create(:admin, groups: Group.all)
@@ -11,12 +11,12 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
     create(:agent)
   end
   let(:customer) do
-    create(:customer, firstname: 'Behalf of')
+    create(:customer, firstname: 'From')
   end
 
   describe 'request handling' do
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for customer by id' do
+    it 'does From auth - ticket create admin for customer by id' do
       params = {
         title:       'a new ticket #3',
         group:       'Users',
@@ -27,14 +27,14 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: customer.id)
+      authenticated_as(admin, from: customer.id)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(customer.id).to eq(json_response['created_by_id'])
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for customer by login (upcase)' do
+    it 'does From auth - ticket create admin for customer by login (upcase)' do
       params = {
         title:       'a new ticket #3',
         group:       'Users',
@@ -45,14 +45,14 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: customer.login.upcase)
+      authenticated_as(admin, from: customer.login.upcase)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(customer.id).to eq(json_response['created_by_id'])
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for customer by login' do
+    it 'does From auth - ticket create admin for customer by login' do
       ActivityStream.cleanup(1.year)
 
       params = {
@@ -65,7 +65,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: customer.login)
+      authenticated_as(admin, from: customer.login)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       json_response_ticket = json_response
@@ -108,7 +108,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       expect(customer.id).to eq(ticket_created.created_by_id)
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for customer by email' do
+    it 'does From auth - ticket create admin for customer by email' do
       params = {
         title:       'a new ticket #3',
         group:       'Users',
@@ -119,14 +119,14 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: customer.email)
+      authenticated_as(admin, from: customer.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(customer.id).to eq(json_response['created_by_id'])
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for unknown' do
+    it 'does From auth - ticket create admin for unknown' do
       params = {
         title:       'a new ticket #3',
         group:       'Users',
@@ -137,7 +137,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: 99_449_494_949)
+      authenticated_as(admin, from: 99_449_494_949)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -145,7 +145,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
       expect(json_response['error']).to eq("No such user '99449494949'")
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create customer for admin' do
+    it 'does From auth - ticket create customer for admin' do
       params = {
         title:       'a new ticket #3',
         group:       'Users',
@@ -156,15 +156,15 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(customer, on_behalf_of: admin.email)
+      authenticated_as(customer, from: admin.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq("Current user has no permission to use 'X-On-Behalf-Of'!")
+      expect(json_response['error']).to eq("Current user has no permission to use 'From'/'X-On-Behalf-Of'!")
     end
 
-    it 'does X-On-Behalf-Of auth - ticket create admin for customer by email but no permitted action' do
+    it 'does From auth - ticket create admin for customer by email but no permitted action' do
       params = {
         title:       'a new ticket #3',
         group:       'secret1234',
@@ -175,7 +175,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
           body: 'some test 123',
         },
       }
-      authenticated_as(admin, on_behalf_of: customer.email)
+      authenticated_as(admin, from: customer.email)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(@response.header).not_to be_key('Access-Control-Allow-Origin')
@@ -204,7 +204,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
             body: 'some test 123',
           },
         }
-        authenticated_as(admin, on_behalf_of: customer.email, token: token)
+        authenticated_as(admin, from: customer.email, token: token)
         post '/api/v1/tickets', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(json_response).to be_a_kind_of(Hash)
@@ -232,7 +232,7 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
             body: 'some test 123',
           },
         }
-        authenticated_as(admin, on_behalf_of: customer.email)
+        authenticated_as(admin, from: customer.email)
         post '/api/v1/tickets', params: params, as: :json
         expect(response).to have_http_status(:created)
         expect(customer.id).to eq(json_response['created_by_id'])
@@ -243,29 +243,29 @@ RSpec.describe 'Api Auth On Behalf Of', type: :request do
   end
 
   describe 'user lookup' do
-    it 'does X-On-Behalf-Of auth - user lookup by ID' do
-      authenticated_as(admin, on_behalf_of: customer.id)
+    it 'does From auth - user lookup by ID' do
+      authenticated_as(admin, from: customer.id)
       get '/api/v1/users/me', as: :json
       expect(json_response.fetch('id')).to be customer.id
     end
 
-    it 'does X-On-Behalf-Of auth - user lookup by login' do
-      authenticated_as(admin, on_behalf_of: customer.login)
+    it 'does From auth - user lookup by login' do
+      authenticated_as(admin, from: customer.login)
       get '/api/v1/users/me', as: :json
       expect(json_response.fetch('id')).to be customer.id
     end
 
-    it 'does X-On-Behalf-Of auth - user lookup by email' do
-      authenticated_as(admin, on_behalf_of: customer.email)
+    it 'does From auth - user lookup by email' do
+      authenticated_as(admin, from: customer.email)
       get '/api/v1/users/me', as: :json
       expect(json_response.fetch('id')).to be customer.id
     end
 
     # https://github.com/zammad/zammad/issues/2851
-    it 'does X-On-Behalf-Of auth - user lookup by email even if email starts with a digit' do
+    it 'does From auth - user lookup by email even if email starts with a digit' do
       customer.update! email: "#{agent.id}#{customer.email}"
 
-      authenticated_as(admin, on_behalf_of: customer.email)
+      authenticated_as(admin, from: customer.email)
       get '/api/v1/users/me', as: :json
       expect(json_response.fetch('id')).to be customer.id
     end

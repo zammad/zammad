@@ -21,24 +21,34 @@ module ApplicationController::HasUser
     @_current_user ||= User.lookup(id: session[:user_id]) # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
+  def request_header_from
+    @request_header_from ||= begin
+      if request.headers['X-On-Behalf-Of'].present?
+        ActiveSupport::Deprecation.warn("Header 'X-On-Behalf-Of' is deprecated. Please use header 'From' instead.")
+      end
+
+      request.headers['From'] || request.headers['X-On-Behalf-Of']
+    end
+  end
+
   # Finds the user based on the id, login or email which is given
   # in the headers. If it is found then all api activities are done
   # with the behalf of user. With this functionality it is possible
   # to do changes with a user which is different from the admin user.
   # E.g. create a ticket as a customer user based on a user with admin rights.
   def current_user_on_behalf
-    return if request.headers['X-On-Behalf-Of'].blank?  # require header
+    return if request_header_from.blank? # require header
     return @_user_on_behalf if @_user_on_behalf         # return memoized user
     return if !current_user_real                        # require session user
     if !SessionsPolicy.new(current_user_real, Sessions).impersonate?
-      raise Exceptions::Forbidden, "Current user has no permission to use 'X-On-Behalf-Of'!"
+      raise Exceptions::Forbidden, "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
     end
 
-    @_user_on_behalf = find_on_behalf_user request.headers['X-On-Behalf-Of'].to_s.downcase.strip
+    @_user_on_behalf = find_on_behalf_user request_header_from.to_s.downcase.strip
 
     # no behalf of user found
     if !@_user_on_behalf
-      raise Exceptions::Forbidden, "No such user '#{request.headers['X-On-Behalf-Of']}'"
+      raise Exceptions::Forbidden, "No such user '#{request_header_from}'"
     end
 
     @_user_on_behalf

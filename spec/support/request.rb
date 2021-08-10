@@ -80,7 +80,7 @@ module ZammadSpecSupportRequest
     when :api_client
       # ensure that always the correct header value is set
       # otherwise previous header configurations will be re-used
-      add_headers('X-On-Behalf-Of' => options[:on_behalf_of])
+      add_headers('From' => options[:from])
 
       # if we want to authenticate by token
       credentials = if options[:token].present?
