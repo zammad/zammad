@@ -143,7 +143,6 @@ FactoryBot.define do
             'adapter' => 'smtp',
             'options' => {
               'host'           => 'smtp.gmail.com',
-              'domain'         => 'gmail.com',
               'port'           => 465,
               'ssl'            => true,
               'user'           => ENV['GMAIL_USER'],
@@ -186,7 +185,6 @@ FactoryBot.define do
             'adapter' => 'smtp',
             'options' => {
               'host'           => 'smtp.office365.com',
-              'domain'         => 'office365.com',
               'port'           => 587,
               'user'           => ENV['MICROSOFT365_USER'],
               'authentication' => 'xoauth2',

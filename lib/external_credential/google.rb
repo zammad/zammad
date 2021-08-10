@@ -57,7 +57,6 @@ class ExternalCredential::Google
         adapter: 'smtp',
         options: {
           host:           'smtp.gmail.com',
-          domain:         'gmail.com',
           port:           465,
           ssl:            true,
           user:           user_data[:email],

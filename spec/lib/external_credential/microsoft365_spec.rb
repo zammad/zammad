@@ -95,7 +95,6 @@ RSpec.describe ExternalCredential::Microsoft365 do
               'options' => a_hash_including(
                 'authentication' => 'xoauth2',
                 'host'           => 'smtp.office365.com',
-                'domain'         => 'office365.com',
                 'port'           => 587,
                 'user'           => email_address,
               )

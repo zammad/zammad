@@ -61,7 +61,6 @@ class ExternalCredential::Microsoft365
         adapter: 'smtp',
         options: {
           host:           'smtp.office365.com',
-          domain:         'office365.com',
           port:           587,
           user:           user_data[:preferred_username],
           authentication: 'xoauth2',

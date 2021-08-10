@@ -129,7 +129,6 @@ RSpec.describe ExternalCredential::Google do
               'options' => a_hash_including(
                 'authentication' => 'xoauth2',
                 'host'           => 'smtp.gmail.com',
-                'domain'         => 'gmail.com',
                 'port'           => 465,
                 'ssl'            => true,
                 'user'           => primary_email,
