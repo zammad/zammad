@@ -25,14 +25,13 @@
   <% end %>
 <% end %>
 
-<% if @organization.members: %>
+<% if @organization.member_ids: %>
 <hr>
 <div class="sidebar-block">
   <label><%- @T('Members') %></label>
-  <div class="userList">
-<% for user in @organization.members: %>
-    <div class="userList-row" data-id="<%- user.id %>"></div>
-<% end %>
-  </div>
+  <div class="userList js-userList"></div>
+  <p class="hidden">
+    <a href="#" class="js-showMoreMembers"><%- @T('show more') %></a>
+  <p>
 </div>
 <% end %>

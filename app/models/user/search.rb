@@ -114,16 +114,20 @@ returns
             }
             query_extension['bool']['must'].push access_condition
           end
+
+          user_ids = []
           if params[:group_ids].present?
-            query_extension['bool'] ||= {}
-            query_extension['bool']['must'] ||= []
-            user_ids = []
             params[:group_ids].each do |group_id, access|
               user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
             end
-
             return [] if user_ids.blank?
-
+          end
+          if params[:ids].present?
+            user_ids |= params[:ids].map(&:to_i)
+          end
+          if user_ids.present?
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
             query_extension['bool']['must'].push({ 'terms' => { '_id' => user_ids } })
           end
 
@@ -149,6 +153,10 @@ returns
         query.delete! '*'
 
         statement = User
+        if params[:ids].present?
+          statement = statement.where(id: params[:ids])
+        end
+
         if params[:role_ids]
           statement = statement.joins(:roles).where('roles.id' => params[:role_ids])
         end

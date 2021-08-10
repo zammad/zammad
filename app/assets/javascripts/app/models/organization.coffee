@@ -29,16 +29,36 @@ Using **Organisations** you can **group** customers. This has among others two i
   icon: ->
     'organization'
 
-  @_fillUp: (data) ->
+  members: (offset, limit, callback) ->
+    member_ids         = @member_ids.slice(offset, limit)
+    missing_member_ids = _.filter(member_ids, (id) -> !App.User.findNative(id))
 
-    # add users of organization
-    if data['member_ids']
-      data['members'] = []
-      for user_id in data['member_ids']
-        if App.User.exists(user_id)
-          user = App.User.findNative(user_id)
-          data['members'].push user
-    data
+    userResult = ->
+      users = []
+      for user_id in member_ids
+        user = App.User.find(user_id)
+        continue if !user
+        users.push(user)
+      return users
+
+    return callback(userResult()) if missing_member_ids.length < 1
+
+    App.Ajax.request(
+      type: 'POST'
+      url: "#{@constructor.apiPath}/users/search"
+      data: JSON.stringify(
+        query: '*'
+        ids: missing_member_ids
+        limit: limit
+        full:  true
+      )
+      processData: true,
+      success: (data, status, xhr) ->
+        App.Collection.loadAssets(data.assets)
+        callback(userResult())
+      error: (data, status) ->
+        callback([])
+    )
 
   searchResultAttributes: ->
     classList = ['organization', 'organization-popover' ]

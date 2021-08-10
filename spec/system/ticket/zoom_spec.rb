@@ -1682,4 +1682,28 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text(ticket_closed.title, wait: 20)
     end
   end
+
+  context 'Sidebar - Organization' do
+    let(:organization) { create(:organization) }
+
+    context 'members section' do
+
+      let(:customers) { create_list(:customer, 50, organization: organization) }
+      let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customers.first) }
+      let(:members) { organization.members.order(id: :asc) }
+
+      before do
+        visit "#ticket/zoom/#{ticket.id}"
+        click '.tabsSidebar-tab[data-tab=organization]'
+      end
+
+      it 'shows first 10 members and loads more on demand' do
+        expect(page).to have_text(members[9].fullname)
+        expect(page).to have_no_text(members[10].fullname)
+
+        click '.js-showMoreMembers'
+        expect(page).to have_text(members[10].fullname)
+      end
+    end
+  end
 end

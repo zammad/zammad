@@ -1,6 +1,8 @@
 class App.WidgetOrganization extends App.Controller
+  memberLimit: 10
 
   events:
+    'click .js-showMoreMembers': 'showMoreMembers'
     'focusout [contenteditable]': 'update'
 
   constructor: ->
@@ -12,9 +14,35 @@ class App.WidgetOrganization extends App.Controller
   release: =>
     App.Organization.unsubscribe(@subscribeId)
 
+  showMoreMembers: (e) ->
+    @preventDefaultAndStopPropagation(e)
+    @memberLimit = (parseInt(@memberLimit / 100) + 1) * 100
+    @renderMembers()
+
+  renderMembers: ->
+    elLocal = @el
+    @organization.members(0, @memberLimit, (users) ->
+      members = []
+      for user in users
+        el = $('<div></div>')
+        new Member(
+          object_id: user.id
+          el: el
+        )
+        members.push el
+      elLocal.find('.js-userList').html(members)
+    )
+
+    if @organization.member_ids.length < @memberLimit
+      @el.find('.js-showMoreMembers').parent().addClass('hidden')
+    else
+      @el.find('.js-showMoreMembers').parent().removeClass('hidden')
+
   render: (organization) =>
-    if !organization
-      organization = @u
+    if organization
+      @organization = organization
+    else if !@organization
+      @organization = @u
 
     # get display data
     organizationData = []
@@ -23,7 +51,7 @@ class App.WidgetOrganization extends App.Controller
       # check if value for _id exists
       name    = attributeName
       nameNew = name.substr( 0, name.length - 3 )
-      if nameNew of organization
+      if nameNew of @organization
         name = nameNew
 
       # do not show name since it's already shown via diplayName()
@@ -36,24 +64,20 @@ class App.WidgetOrganization extends App.Controller
       # Always show for these two conditions:
       # 1. the attribute exists and is not empty
       # 2. it is a richtext note field
-      continue if ( !organization[name]? || organization[name] is '' ) && attributeConfig.tag isnt 'richtext'
+      continue if ( !@organization[name]? || @organization[name] is '' ) && attributeConfig.tag isnt 'richtext'
 
       # add to show if all checks passed
       organizationData.push attributeConfig
 
     # insert userData
     elLocal = $(App.view('widget/organization')(
-      organization:     organization
+      organization:     @organization
       organizationData: organizationData
     ))
 
-    for user in organization.members
-      new User(
-        object_id: user.id
-        el: elLocal.find('div.userList-row[data-id=' + user.id + ']')
-      )
-
     @html elLocal
+
+    @renderMembers()
 
     @$('[contenteditable]').ce(
       mode:      'textonly'
@@ -71,7 +95,7 @@ class App.WidgetOrganization extends App.Controller
       org.updateAttributes(data)
       @log 'notice', 'update', name, value, org
 
-class User extends App.ControllerObserver
+class Member extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'User'
 
@@ -80,6 +104,7 @@ class User extends App.ControllerObserver
     firstname: true
     lastname: true
     image: true
+    active: true
 
   render: (user) =>
     @html App.view('organization_profile/member')(

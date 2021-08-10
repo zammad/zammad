@@ -17,6 +17,28 @@ RSpec.describe 'Search', type: :system, searchindex: true do
     end
   end
 
+  context 'Organization members', authenticated_as: :authenticate do
+    let(:organization) { create(:organization) }
+    let(:members) { organization.members.order(id: :asc) }
+
+    def authenticate
+      create_list(:customer, 50, organization: organization)
+      true
+    end
+
+    before do
+      sleep 3 # wait for popover killer to pass
+      fill_in id: 'global-search', with: organization.name.to_s
+    end
+
+    it 'shows only first 10 members' do
+      expect(page).to have_text(organization.name)
+      popover_on_hover(first('a.nav-tab.organization'))
+      expect(page).to have_text(members[9].fullname, wait: 30)
+      expect(page).to have_no_text(members[10].fullname)
+    end
+  end
+
   context 'inactive user and organizations' do
     before do
       create(:organization, name: 'Example Inc.', active: true)

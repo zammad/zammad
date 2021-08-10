@@ -217,11 +217,12 @@ class UsersController < ApplicationController
   #                   The requester has to be in the role 'Admin' or 'Agent' to
   #                   be able to search for User records.
   #
-  # @parameter        query            [String]                             The search query.
-  # @parameter        limit            [Integer]                            The limit of search results.
-  # @parameter        role_ids(multi)  [Array<String>]                      A list of Role identifiers to which the Users have to be allocated to.
-  # @parameter        group_ids(multi) [Hash<String=>String,Array<String>>] A list of Group identifiers to which the Users have to be allocated to.
-  # @parameter        full             [Boolean]                            Defines if the result should be
+  # @parameter        query             [String]                             The search query.
+  # @parameter        limit             [Integer]                            The limit of search results.
+  # @parameter        ids(multi)        [Array<Integer>]                     A list of User IDs which should be returned
+  # @parameter        role_ids(multi)   [Array<String>]                      A list of Role identifiers to which the Users have to be allocated to.
+  # @parameter        group_ids(multi)  [Hash<String=>String,Array<String>>] A list of Group identifiers to which the Users have to be allocated to.
+  # @parameter        full              [Boolean]                            Defines if the result should be
   #                                                                         true: { user_ids => [1,2,...], assets => {...} }
   #                                                                         or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
@@ -255,7 +256,7 @@ class UsersController < ApplicationController
       order_by:     params[:order_by],
       current_user: current_user,
     }
-    %i[role_ids group_ids permissions].each do |key|
+    %i[ids role_ids group_ids permissions].each do |key|
       next if params[key].blank?
 
       query_params[key] = params[key]

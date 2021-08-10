@@ -1507,6 +1507,50 @@ RSpec.describe 'User', type: :request do
     end
   end
 
+  describe 'GET /api/v1/users/search, checks usage of the ids parameter', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    let(:search_agents) { create_list(:agent, 3, firstname: 'Nick') }
+
+    shared_examples 'ids requests' do
+
+      before do
+        post '/api/v1/users/search', params: { query: 'Nick', ids: search_ids, sort_by: ['created_at'], order_by: ['ASC'] }, as: :json
+      end
+
+      shared_examples 'result check' do
+
+        it 'returns only agents matching search parameter ids' do
+          expect(json_response.map { |row| row['id'] }).to eq(search_ids)
+        end
+      end
+
+      context 'when searching for first two agents' do
+        let(:search_ids) { search_agents.first(2).map(&:id) }
+
+        include_examples 'result check'
+      end
+
+      context 'when searching for last two agents' do
+        let(:search_ids) { search_agents.last(2).map(&:id) }
+
+        include_examples 'result check'
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      include_examples 'ids requests' do
+        before do
+          configure_elasticsearch(required: true, rebuild: true)
+        end
+      end
+    end
+
+    context 'without elasticsearch' do
+      include_examples 'ids requests'
+    end
+  end
+
   describe 'PUT /api/v1/users/unlock/{id}' do
     let(:admin) { create(:admin) }
     let(:agent) { create(:agent) }

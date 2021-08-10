@@ -40,11 +40,10 @@ returns
       app_model_user = User.to_app_model
       if local_attributes['member_ids'].present?
 
-        # feature used for different purpose; do limit references
-        if local_attributes['member_ids'].count > 100
-          local_attributes['member_ids'] = local_attributes['member_ids'].sort[0, 100]
-        end
-        local_attributes['member_ids'].each do |local_user_id|
+        # only provide assets for the first 10 organization users
+        # rest will be loaded optionally by the frontend
+        local_attributes['member_ids'] = local_attributes['member_ids'].sort
+        local_attributes['member_ids'][0, 10].each do |local_user_id|
           next if data[ app_model_user ] && data[ app_model_user ][ local_user_id ]
 
           user = User.lookup(id: local_user_id)

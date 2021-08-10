@@ -1,11 +1,9 @@
 <%- @V('popover/single_object_generic', object: @object, attributes: @attributes) %>
 
-<% if  @object.members: %>
+<% if  @object.member_ids: %>
   <hr>
   <div class="popover-block">
     <label><%- @T('Members') %></label>
-    <% for user in @object.members: %>
-      <div class="person<% if user.active is false: %> is-inactive<% end %>"><%= user.displayName() %></div>
-    <% end %>
+    <div class="userList js-userList"></div>
   </div>
 <% end %>
