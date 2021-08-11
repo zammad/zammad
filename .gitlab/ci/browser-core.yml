@@ -19,7 +19,6 @@ include:
     - .env_base
     - .variables_es
     - .variables_app_restart_cmd
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "production"
   script:
@@ -28,6 +27,16 @@ include:
     - bundle exec rake zammad:ci:test:start[with_elasticsearch]
     - time bundle exec rails test --fail-fast test/browser
 
+.template_browser-core_chrome: &template_browser-core_chrome
+  extends:
+    - .template_browser-core
+    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+
+.template_browser-core_firefox: &template_browser-core_firefox
+  extends:
+    - .template_browser-core
+    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+
 .template_browser-core_autowizard: &template_browser-core_autowizard
   stage: browser-core
   dependencies:
@@ -35,7 +44,6 @@ include:
   extends:
     - .env_base
     - .variables_app_restart_cmd
-    - .services_postgresql_selenium
   variables:
     RAILS_ENV: "production"
     AUTO_WIZARD_FILE: "contrib/auto_wizard_example.json"
@@ -45,6 +53,16 @@ include:
     - cp $AUTO_WIZARD_FILE auto_wizard.json
     - bundle exec rake zammad:ci:test:start
     - bundle exec rails test $TEST_FILE
+
+.template_browser-core_autowizard_chrome: &template_browser-core_autowizard_chrome
+  extends:
+    - .template_browser-core_autowizard
+    - .services_postgresql_selenium_chrome
+
+.template_browser-core_autowizard_firefox: &template_browser-core_autowizard_firefox
+  extends:
+    - .template_browser-core_autowizard
+    - .services_postgresql_selenium_firefox
 
 .template_browser-core_api_client: &template_browser-core_api_client
   stage: browser-core
@@ -57,24 +75,29 @@ include:
   variables:
     RAILS_ENV: "production"
 
-.template_browser-capybara: &template_browser-capybara
+.template_browser-core_capybara: &template_browser-core_capybara
+  stage: browser-core
   dependencies:
     - browser:build
   extends:
     - .env_base
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "test"
     REDIS_URL: "redis://redis:6379"
-
-.template_browser-core_capybara: &template_browser-core_capybara
-  extends:
-    - .template_browser-capybara
-  stage: browser-core
   script:
     - bundle exec rake zammad:ci:test:prepare
     - bundle exec rspec --fail-fast -t type:system -t ~integration
+
+.template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome
+  extends:
+    - .template_browser-core_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+
+.template_browser-core_capybara_firefox: &template_browser-core_capybara_firefox
+  extends:
+    - .template_browser-core_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
 
 # we need at least one job to store and include this template
 # $IGNORE is not defined

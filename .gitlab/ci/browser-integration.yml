@@ -15,21 +15,30 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
   variables:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:ci:test:prepare
     - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration
 
-.template_browser-integration: &template_browser-integration
+.template_browser-integration_capybara_chrome: &template_browser-integration_capybara_chrome
+  extends:
+    - .template_browser-integration_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+
+.template_browser-integration_capybara_firefox: &template_browser-integration_capybara_firefox
+  extends:
+    - .template_browser-integration_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+
+.template_browser-integration_chrome: &template_browser-integration_chrome
   stage: browser-integration
   dependencies:
     - browser:build
   extends:
     - .env_base
     - .variables_app_restart_cmd
-    - .services_postgresql_selenium
+    - .services_postgresql_selenium_chrome
   variables:
     RAILS_ENV: "production"
     AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
@@ -39,16 +48,15 @@ include:
     - bundle exec rake zammad:ci:test:start
     - bundle exec rails test $TEST_FILE
 
-.template_browser-integration_import: &template_browser-integration_import
+.template_browser-integration_import_chrome: &template_browser-integration_import_chrome
   stage: browser-integration
   dependencies:
     - browser:build
   extends:
     - .env_base
-    - .services_postgresql_selenium
+    - .services_postgresql_selenium_chrome
   variables:
     RAILS_ENV: "production"
-    BROWSER: "chrome"
     RAILS_SERVE_STATIC_FILES: "true"
   script:
     - RAILS_ENV=test bundle exec rake db:create

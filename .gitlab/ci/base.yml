@@ -13,6 +13,22 @@
     ES_INDEX_RAND: "true"
     ES_URL: "http://elasticsearch:9200"
 
+.variables_selenium_firefox: &variables_selenium_firefox
+  variables:
+    REMOTE_URL: "http://selenium-firefox:4444/wd/hub"
+    BROWSER: "firefox"
+    # Settings for Selenium 3:
+    NODE_MAX_INSTANCES: "5"
+    NODE_MAX_SESSION: "5"
+
+.variables_selenium_chrome: &variables_selenium_chrome
+  variables:
+    REMOTE_URL: "http://selenium-chrome:4444/wd/hub"
+    BROWSER: chrome
+    # Settings for Selenium 3:
+    NODE_MAX_INSTANCES: "5"
+    NODE_MAX_SESSION: "5"
+
 .variables_app_restart_cmd: &variables_app_restart_cmd
   variables:
     APP_RESTART_CMD: "bundle exec rake environment zammad:ci:app:restart"
@@ -56,9 +72,13 @@
   name: registry.znuny.com/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
   alias: elasticsearch
 
-.docker_selenium: &docker_selenium
-  name: registry.znuny.com/docker/zammad-selenium:stable
-  alias: selenium
+.docker_selenium_chrome: &docker_selenium_chrome
+  name: registry.znuny.com/docker/zammad-selenium-chrome:stable
+  alias: selenium-chrome
+
+.docker_selenium_firefox: &docker_selenium_firefox
+  name: registry.znuny.com/docker/zammad-selenium-firefox:stable
+  alias: selenium-firefox
 
 .docker_imap: &docker_imap
   name: registry.znuny.com/docker/zammad-imap:stable
@@ -115,10 +135,19 @@
     - <<: *docker_redis
     - <<: *docker_memcached
 
-.services_postgresql_selenium: &services_postgresql_selenium
+.services_postgresql_selenium_chrome: &services_postgresql_selenium_chrome
+  extends:
+    - .variables_selenium_chrome
   services:
     - <<: *docker_postgresql
-    - <<: *docker_selenium
+    - <<: *docker_selenium_chrome
+
+.services_postgresql_selenium_firefox: &services_postgresql_selenium_firefox
+  extends:
+    - .variables_selenium_firefox
+  services:
+    - <<: *docker_postgresql
+    - <<: *docker_selenium_firefox
 
 .services_mysql_postgresql_imap: &services_mysql_postgresql_imap
   services:
@@ -134,17 +163,33 @@
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
 
-.services_mysql_postgresql_elasticsearch_selenium_imap: &services_mysql_postgresql_elasticsearch_selenium_imap
+.services_mysql_postgresql_elasticsearch_selenium_chrome_imap: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap
+  extends:
+    - .variables_selenium_chrome
   variables:
     ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
-    - <<: *docker_selenium
+    - <<: *docker_selenium_chrome
     - <<: *docker_imap
 
-.services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
+.services_mysql_postgresql_elasticsearch_selenium_firefox_imap: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap
+  extends:
+    - .variables_selenium_firefox
+  variables:
+    ELASTICSEARCH_TAG: 'stable'
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_elasticsearch
+    - <<: *docker_selenium_firefox
+    - <<: *docker_imap
+
+.services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+  extends:
+    - .variables_selenium_chrome
   variables:
     ELASTICSEARCH_TAG: 'stable'
     REDIS_URL: "redis://redis:6379"
@@ -153,10 +198,27 @@
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
-    - <<: *docker_selenium
+    - <<: *docker_selenium_chrome
     - <<: *docker_imap
     - <<: *docker_redis
     - <<: *docker_memcached
+
+.services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+  extends:
+    - .variables_selenium_firefox
+  variables:
+    ELASTICSEARCH_TAG: 'stable'
+    REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_elasticsearch
+    - <<: *docker_selenium_firefox
+    - <<: *docker_imap
+    - <<: *docker_redis
+    - <<: *docker_memcached
+
 
 .rules_integration_manual_start: &rules_integration_manual_start
   rules:

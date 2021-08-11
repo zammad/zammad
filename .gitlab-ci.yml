@@ -23,11 +23,7 @@ variables:
   Z_LOCALES: "en-us:de-de"
   # Browser tests and variables
   RAILS_SERVE_STATIC_FILES: "true"
-  REMOTE_URL: "http://selenium:24444/wd/hub"
   TZ: "Europe/London"
-  # docker elgalu/selenium variables for parallel browser instance creation
-  MAX_INSTANCES: "50"
-  MAX_SESSIONS: "50"
   # docker-imap-devel variables required for browser tests
   MAILNAME: "mail.test.dc.zammad.com"
   MAILBOX_INIT: "zammad@mail.test.dc.zammad.com:zammad"
