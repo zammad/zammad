@@ -209,7 +209,7 @@ group :development, :test do
   gem 'webmock'
 
   # record and replay TCP/HTTP transactions
-  gem 'tcr', git: 'https://github.com/zammad-deps/tcr'
+  gem 'tcr'
   gem 'vcr'
 
   # handle deprecations in core and addons

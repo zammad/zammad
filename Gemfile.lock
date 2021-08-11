@@ -16,12 +16,6 @@ GIT
     mail (2.7.2.edge)
       mini_mime (>= 0.1.1)
 
-GIT
-  remote: https://github.com/zammad-deps/tcr
-  revision: ddc8caf9d57a991c8af850d2870969e7a265ec59
-  specs:
-    tcr (0.2.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -581,6 +575,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sync (0.5.0)
+    tcr (0.2.2)
     telegramAPI (1.4.2)
       rest-client (~> 2.0, >= 2.0.2)
     telephone_number (1.4.12)
@@ -747,7 +742,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-commands-testunit
   sprockets (~> 3.7.2)
-  tcr!
+  tcr
   telegramAPI
   telephone_number
   test-unit
