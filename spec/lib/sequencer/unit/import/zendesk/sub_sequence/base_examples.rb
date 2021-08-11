@@ -28,7 +28,7 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
       }
     end
 
-    let(:collection_name) { described_class.name.demodulize.snakecase.to_sym }
+    let(:collection_name) { described_class.name.demodulize.underscore.to_sym }
     let(:client_collection) { double('ZendeskAPI::Collection') }
     let(:api_error_message) { 'Mock err msg' }
     let(:api_error) { ZendeskAPI::Error::NetworkError.new(api_error_message, response_obj) }
@@ -83,7 +83,7 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
       end
     end
 
-    context 'when DNS resolution fails (getaddrinfo: nodename nor servname provided, or not known)' do
+    shared_examples 'retries ten times, in 10s intervals' do
       it 'retries ten times, in 10s intervals' do
         expect(client_collection)
           .to receive(:all!).exactly(11).times
@@ -96,16 +96,25 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
       end
     end
 
+    context 'when DNS resolution fails (getaddrinfo: nodename nor servname provided, or not known)' do
+      include_examples 'retries ten times, in 10s intervals'
+    end
+
     context 'when execution timeout occurs' do
       let(:api_error_message) { "execution expired -- get https://example.zendesk.com/api/v2/#{collection_name}" }
 
-      it 'retries ten times, in 10s intervals' do
-        expect do
-          process(params) do |unit|
-            expect(unit).to receive(:sleep).with(10).exactly(10).times
-          end
-        end.to raise_error(api_error)
+      include_examples 'retries ten times, in 10s intervals'
+    end
+
+    context 'when reset by peer occurs' do
+      let(:api_error_message) { "Connection reset by peer - SSL_connect -- get https://example.zendesk.com/api/v2/#{collection_name}" }
+
+      # ssl error does not return 4xx or 5xx status code that triggers retry
+      let(:response_obj) do
+        double('Faraday::Response', method: :get, url: 'https://example.com', status: nil)
       end
+
+      include_examples 'retries ten times, in 10s intervals'
     end
   end
 end
