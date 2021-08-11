@@ -13,6 +13,11 @@
     ES_INDEX_RAND: "true"
     ES_URL: "http://elasticsearch:9200"
 
+.variables_redis_memcached: &variables_redis_memcached
+  variables:
+    REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
+
 .variables_selenium_firefox: &variables_selenium_firefox
   variables:
     REMOTE_URL: "http://selenium-firefox:4444/wd/hub"
@@ -99,9 +104,8 @@
     - <<: *docker_mysql
 
 .services_mysql_redis_memcached: &services_mysql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_mysql
     - <<: *docker_redis
@@ -112,9 +116,8 @@
     - <<: *docker_postgresql
 
 .services_postgresql_redis_memcached: &services_postgresql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_postgresql
     - <<: *docker_redis
@@ -126,9 +129,8 @@
     - <<: *docker_postgresql
 
 .services_mysql_postgresql_redis_memcached: &services_mysql_postgresql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -190,10 +192,9 @@
 .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
   extends:
     - .variables_selenium_chrome
+    - .variables_redis_memcached
   variables:
     ELASTICSEARCH_TAG: 'stable'
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -206,10 +207,9 @@
 .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
   extends:
     - .variables_selenium_firefox
+    - .variables_redis_memcached
   variables:
     ELASTICSEARCH_TAG: 'stable'
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql

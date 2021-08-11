@@ -84,7 +84,6 @@ include:
     - .variables_es
   variables:
     RAILS_ENV: "test"
-    REDIS_URL: "redis://redis:6379"
   script:
     - bundle exec rake zammad:ci:test:prepare
     - bundle exec rspec --fail-fast -t type:system -t ~integration
