@@ -1,6 +1,5 @@
 idoit_chrome:
   extends:
-    - .template_browser-integration
+    - .template_browser-integration_chrome
   variables:
-    BROWSER: "chrome"
     TEST_FILE: "test/integration/idoit_browser_test.rb"

@@ -1,5 +1,3 @@
 capybara_ff:
   extends:
-    - .template_browser-core_capybara
-  variables:
-    BROWSER: "firefox"
+    - .template_browser-core_capybara_firefox

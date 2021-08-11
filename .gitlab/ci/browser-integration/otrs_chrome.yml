@@ -1,6 +1,6 @@
 otrs_chrome:
   extends:
-    - .template_browser-integration_import
+    - .template_browser-integration_import_chrome
   variables:
     TEST_FILE: "test/integration/otrs_import_browser_test.rb"
     FF_NETWORK_PER_BUILD: 1   # https://docs.gitlab.com/runner/configuration/feature-flags.html
@@ -9,8 +9,8 @@ otrs_chrome:
   services:
     - name: registry.znuny.com/docker/zammad-postgresql:stable
       alias: postgresql
-    - name: registry.znuny.com/docker/zammad-selenium:stable
-      alias: selenium
+    - name: registry.znuny.com/docker/zammad-selenium-chrome:stable
+      alias: selenium-chrome
     - name: registry.znuny.com/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
     - name: registry.znuny.com/docker/zammad-ci-otrsimport-app:otrs6
