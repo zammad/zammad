@@ -630,9 +630,8 @@ RSpec.describe 'Monitoring', type: :request do
 
       # add another job
       dummy_class = Class.new(ApplicationJob) do
-
         def perform
-          puts 'work work'
+          true
         end
       end
 

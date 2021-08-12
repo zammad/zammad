@@ -46,7 +46,6 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
       end
 
       it 'adds a custom field' do
-        p resource
         expect { process(process_payload) }.to change(Ticket, :column_names).by(['cf_custom_dropdown'])
       end
     end

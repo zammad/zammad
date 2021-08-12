@@ -252,6 +252,8 @@ Rails/EnvironmentVariableAccess:
 Rails/Output:
   Exclude:
     - "lib/tasks/**/*"
+  Include:
+    - "**/*_spec.rb"
 
 # RSpec tests
 Style/NumericPredicate:
