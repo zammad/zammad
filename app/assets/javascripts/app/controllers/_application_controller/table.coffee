@@ -111,8 +111,9 @@ class App.ControllerTable extends App.Controller
   groupBy:            undefined
   groupDirection:     undefined
 
-  shownPerPage: 150
-  shownPage: 0
+  pagerEnabled: true
+  pagerItemsPerPage: 150
+  pagerShownPage: 0
 
   destroy: false
   customActions: []
@@ -197,6 +198,8 @@ class App.ControllerTable extends App.Controller
     App.QueueManager.run('tableRender')
 
   renderPager: (el, find = false) =>
+    return if !@pagerEnabled
+
     if @pagerAjax
       @renderPagerAjax(el, find)
     else
@@ -220,7 +223,7 @@ class App.ControllerTable extends App.Controller
       el.filter('.js-pager').html(pager)
 
   renderPagerStatic: (el, find = false) =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
     if pages < 1
       if find
         el.find('.js-pager').html('')
@@ -228,7 +231,7 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:  @shownPage
+      page:  @pagerShownPage
       pages: pages
     )
     if find
@@ -500,7 +503,7 @@ class App.ControllerTable extends App.Controller
     groupLast = ''
     groupLastName = ''
     tableBody = []
-    objectsToShow = @objectsOfPage(@shownPage)
+    objectsToShow = @objectsOfPage(@pagerShownPage)
     for object in objectsToShow
       if object
         position++
@@ -654,13 +657,17 @@ class App.ControllerTable extends App.Controller
     ['new headers', @headers]
 
   setMaxPage: =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
-    if parseInt(@shownPage) > pages
-      @shownPage = pages
+    return if !@pagerEnabled
+
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
+    if parseInt(@pagerShownPage) > pages
+      @pagerShownPage = pages
 
   objectsOfPage: (page = 0) =>
+    return @objects if !@pagerEnabled
+
     page = parseInt(page)
-    @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
+    @objects.slice(page * @pagerItemsPerPage, (page + 1) * @pagerItemsPerPage)
 
   paginate: (e) =>
     e.stopPropagation()
@@ -669,7 +676,7 @@ class App.ControllerTable extends App.Controller
       @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
     else
       render = =>
-        @shownPage = page
+        @pagerShownPage = page
         @renderTableFull()
       App.QueueManager.add('tableRender', render)
       App.QueueManager.run('tableRender')
