@@ -17,7 +17,7 @@ class Sequencer
                 'Import::Zendesk::Ticket::Comment::Mapping',
                 'Import::Zendesk::Ticket::Comment::UnsetInstance',
                 'Common::ModelClass::Ticket::Article',
-                'Import::Common::Model::FindBy::Id',
+                'Import::Common::Model::FindBy::MessageId',
                 'Import::Common::Model::Update',
                 'Import::Common::Model::Create',
                 'Import::Common::Model::Save',

@@ -9,23 +9,25 @@ class Sequencer
 
             uses :dry_run, :import_job, :field_map, :id_map
 
-            attr_accessor :iteration
+            attr_accessor :iteration, :result
+
+            EXPECTING = %i[action response].freeze
 
             def process
               loop.each_with_index do |_, iteration|
                 @iteration = iteration
-
-                result = ::Sequencer.process(sequence_name,
-                                             parameters: {
-                                               request_params: request_params,
-                                               import_job:     import_job,
-                                               dry_run:        dry_run,
-                                               object:         object,
-                                               field_map:      field_map,
-                                               id_map:         id_map,
-                                             },
-                                             expecting:  %i[action response])
-                break if iteration_should_stop?(result)
+                @result = ::Sequencer.process(sequence_name,
+                                              parameters: {
+                                                request_params:      request_params,
+                                                import_job:          import_job,
+                                                dry_run:             dry_run,
+                                                object:              object,
+                                                field_map:           field_map,
+                                                id_map:              id_map,
+                                                skipped_resource_id: skipped_resource_id,
+                                              },
+                                              expecting:  self.class.const_get(:EXPECTING))
+                break if iteration_should_stop?
               end
             end
 
@@ -49,21 +51,15 @@ class Sequencer
 
             private
 
-            def iteration_should_stop?(result)
+            def skipped_resource_id
+              @skipped_resource_id ||= nil
+            end
+
+            def iteration_should_stop?
               return true if result[:action] == :failed
               return true if result[:response].header['link'].blank?
 
-              max_page_reached?
-            end
-
-            # https://github.com/zammad/zammad/issues/3661
-            # https://developers.freshdesk.com/api/#list_all_tickets
-            def max_page_reached?
-              return false if object != 'Ticket'
-              return false if page <= 300
-
-              logger.warn "Reached max Freshdesk API page number #{page} for #{object}. Stopping further requests to prevent errors."
-              true
+              false
             end
           end
         end

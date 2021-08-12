@@ -76,12 +76,23 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer
       end
     end
 
-    it 'adds article with inline image' do # rubocop:disable RSpec/MultipleExpectations
+    it 'adds article with inline image' do
       expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+    end
+
+    it 'correct attributes for added article ' do
+      process(process_payload)
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',
         body: "\n<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"data:image/png;base64,MTIz\" style=\"width: auto;\"></div>\n</div>\n",
       )
+    end
+
+    it 'updates already existing article' do
+      expect do
+        process(process_payload)
+        process(process_payload)
+      end.to change(Ticket::Article, :count).by(1)
     end
 
     it 'adds correct number of attachments' do

@@ -14,6 +14,7 @@ class Sequencer
               'Import::Freshdesk::Ticket::Fetch',
               'Import::Freshdesk::Ticket::Mapping',
               'Import::Freshdesk::Mapping::CustomFields',
+              'Import::Common::Model::FindBy::Number',
               'Import::Common::Model::Attributes::AddByIds',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',

@@ -10,6 +10,7 @@ class Sequencer
             [
               'Common::ModelClass::Ticket::TimeAccounting',
               'Import::Freshdesk::TimeEntry::Mapping',
+              'Import::Common::Model::FindBy::TimeAccountingAttributes',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
               'Import::Common::Model::Save',

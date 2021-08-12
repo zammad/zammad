@@ -11,7 +11,7 @@ class Sequencer
               'Common::ModelClass::User',
               'Import::Freshdesk::Agent::Mapping',
               'Import::Common::Model::Attributes::AddByIds',
-              'Import::Common::Model::FindBy::Name',
+              'Import::Common::Model::FindBy::UserAttributes',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
               'Import::Common::Model::Save',

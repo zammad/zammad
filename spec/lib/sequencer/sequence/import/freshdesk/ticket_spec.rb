@@ -42,7 +42,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
         'created_at' => '2021-05-14T12:29:27Z',
         'updated_at' => '2021-05-14T12:30:19Z',
         'associated_tickets_count' => nil,
-        'tags' => [],
+        'tags' => %w[example test],
         'description' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Inline images in the first article might not be working, see following:</div>\n<div dir=\"ltr\"><img src=\"https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY0NzksImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.cdYIOOSi7ckCFIZlQ9eynELMzJp1ECVeTLlQMCDgKo4\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226479\"></div>\n</div>", 'description_text' => 'Inline images in the first article might not be working, see following:'
       }
 
@@ -103,31 +103,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
       ]
     end
 
-    before do
-      create :object_manager_attribute_select, name:  'cf_custom_dropdown'
-      create :object_manager_attribute_integer, name: 'cf_custom_integer'
-      create :object_manager_attribute_boolean, name: 'cf_test_checkbox'
-      create :object_manager_attribute_text, name: 'cf_custom_decimal'
-      ObjectManager::Attribute.migration_execute
-
-      # Mock the attachment and inline image download requests.
-      used_urls.each do |used_url|
-        stub_request(:get, used_url).to_return(status: 200, body: '123', headers: {})
-      end
-      # Mock the ticket get request (Import::Freshdesk::Ticket::Fetch).
-      stub_request(:get, 'https://yours.freshdesk.com/api/v2/tickets/13').to_return(status: 200, body: JSON.generate(ticket_get_response_payload), headers: {})
-    end
-
-    # We only want to test here the Ticket API, so disable other modules in the sequence
-    #   that make their own HTTP requests.
-    custom_sequence = Sequencer::Sequence::Import::Freshdesk::Ticket.sequence.dup
-    custom_sequence.delete('Import::Freshdesk::Ticket::TimeEntries')
-    custom_sequence.delete('Import::Freshdesk::Ticket::Conversations')
-
-    it 'adds tickets' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
-      allow(Sequencer::Sequence::Import::Freshdesk::Ticket).to receive(:sequence) { custom_sequence }
-      expect { process(process_payload) }.to change(Ticket, :count).by(1)
-      expect(Ticket.last).to have_attributes(
+    let(:imported_ticket) do
+      {
         title:                    'Inline Images Failing?',
         note:                     nil,
         create_article_type_id:   5,
@@ -142,12 +119,63 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
         cf_custom_integer:        999,
         cf_test_checkbox:         true,
         cf_custom_decimal:        '1.1',
-      )
+      }
     end
 
-    it 'adds article with inline image' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    let(:imported_article_attachments) do
+      {
+        'filename'    => 'standalone_attachment.png',
+        'size'        => '3',
+        'preferences' => {
+          'Content-Type' => 'image/png',
+          'resizable'    => false,
+        }
+      }
+    end
+
+    before do
+      create :object_manager_attribute_select, name:  'cf_custom_dropdown'
+      create :object_manager_attribute_integer, name: 'cf_custom_integer'
+      create :object_manager_attribute_boolean, name: 'cf_test_checkbox'
+      create :object_manager_attribute_text, name: 'cf_custom_decimal'
+      ObjectManager::Attribute.migration_execute
+
+      # Mock the attachment and inline image download requests.
+      used_urls.each do |used_url|
+        stub_request(:get, used_url).to_return(status: 200, body: '123', headers: {})
+      end
+      # Mock the ticket get request (Import::Freshdesk::Ticket::Fetch).
+      stub_request(:get, 'https://yours.freshdesk.com/api/v2/tickets/13').to_return(status: 200, body: JSON.generate(ticket_get_response_payload), headers: {})
+
+      # We only want to test here the Ticket API, so disable other modules in the sequence
+      #   that make their own HTTP requests.
+      custom_sequence = Sequencer::Sequence::Import::Freshdesk::Ticket.sequence.dup
+      custom_sequence.delete('Import::Freshdesk::Ticket::TimeEntries')
+      custom_sequence.delete('Import::Freshdesk::Ticket::Conversations')
+
       allow(Sequencer::Sequence::Import::Freshdesk::Ticket).to receive(:sequence) { custom_sequence }
+    end
+
+    it 'adds tickets' do
+      expect { process(process_payload) }.to change(Ticket, :count).by(1)
+    end
+
+    it 'correct attributes for added ticket' do
+      process(process_payload)
+      expect(Ticket.last).to have_attributes(imported_ticket)
+    end
+
+    it 'correct tags for added ticket' do
+      process(process_payload)
+      expect(Ticket.last.tag_list).to eq(%w[example test])
+    end
+
+    it 'adds article with inline image' do
       expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+    end
+
+    it 'correct attributes for added article ' do
+      process(process_payload)
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',
         body: "\n<div>\n<div dir=\"ltr\">Inline images in the first article might not be working, see following:</div>\n<div dir=\"ltr\"><img src=\"data:image/png;base64,MTIz\" style=\"width: auto;\"></div>\n</div>\n",
@@ -155,22 +183,28 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
     end
 
     it 'adds correct number of attachments' do
-      allow(Sequencer::Sequence::Import::Freshdesk::Ticket).to receive(:sequence) { custom_sequence }
       process(process_payload)
       expect(Ticket::Article.last.attachments.size).to eq 1
     end
 
-    it 'adds attachment content' do # rubocop:disable RSpec/ExampleLength
-      allow(Sequencer::Sequence::Import::Freshdesk::Ticket).to receive(:sequence) { custom_sequence }
+    it 'adds attachment content' do
       process(process_payload)
-      expect(Ticket::Article.last.attachments.last).to have_attributes(
-        'filename'    => 'standalone_attachment.png',
-        'size'        => '3',
-        'preferences' => {
-          'Content-Type' => 'image/png',
-          'resizable'    => false,
-        }
-      )
+      expect(Ticket::Article.last.attachments.last).to have_attributes(imported_article_attachments)
+    end
+
+    context 'when ticket is imported twice' do
+      before do
+        process(process_payload)
+      end
+
+      it 'updates first article for already existing ticket' do
+        expect { process(process_payload) }.to change(Ticket::Article, :count).by(0)
+      end
+
+      it 'correct tags for added ticket' do
+        process(process_payload)
+        expect(Ticket.last.tag_list).to eq(%w[example test])
+      end
     end
   end
 end

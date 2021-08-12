@@ -16,6 +16,7 @@ class Sequencer
 
             def process
               instance = model_class.new(mapped)
+
               state.provide(:instance, instance)
               state.provide(:action, :created)
             rescue => e

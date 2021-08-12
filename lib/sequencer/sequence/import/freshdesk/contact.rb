@@ -12,7 +12,7 @@ class Sequencer
               'Import::Freshdesk::Contact::Mapping',
               'Import::Freshdesk::Mapping::CustomFields',
               'Import::Common::Model::Attributes::AddByIds',
-              'Import::Common::Model::FindBy::Name',
+              'Import::Common::Model::FindBy::UserAttributes',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
               'Import::Common::Model::Save',
