@@ -81,7 +81,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
     assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
     assert_equal(143, Ticket.count, 'tickets')
-    assert_equal(153, Ticket::Article.count, 'ticket articles')
+    assert_equal(152, Ticket::Article.count, 'ticket articles')
     assert_equal(3, Store.count, 'ticket article attachments')
 
     # TODO: Macros, Views, Automations...
@@ -412,7 +412,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           note:                     nil,
           create_article_type_id:   11,
           create_article_sender_id: 1,
-          article_count:            2,
+          article_count:            1,
           state_id:                 Ticket::State.find_by(name: 'closed').id,
           group_id:                 Group.find_by(name: 'Additional Group').id,
           priority_id:              Ticket::Priority.find_by(name: '2 normal').id,
