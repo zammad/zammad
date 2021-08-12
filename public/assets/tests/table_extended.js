@@ -1705,4 +1705,73 @@ test('table new - initial list', function() {
   equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '', 'check row 2')
 
+  $('#table').append('<hr><h1>table with large data and pager and 10 per page</h1><div id="table-new12"></div>')
+  var el = $('#table-new12')
+
+  var objects = [];
+  var created_at = Date.parse('2014-06-10T11:17:34.000Z')
+
+  for (i = 0; i < 35; i++) {
+    local_created_at = new Date(created_at - (1000 * 60 * 60 * 24 * i)).toISOString()
+    item = {
+      id:         i,
+      name:       i + ' prio',
+      note:       'some note',
+      active:     true,
+      created_at: local_created_at,
+    }
+    objects.push(item)
+  }
+
+  App.TicketPriority.refresh(objects, {clear: true})
+
+  var table = new App.ControllerTable({
+    tableId:            'large_table_test_pager',
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.all(),
+    checkbox:           false,
+    radio:              false,
+    pagerItemsPerPage:  10,
+    ttt: true
+  })
+
+  equal(el.find('tbody > tr').length, 10)
+  equal(el.find('.js-pager:first-child .js-page').length, 4)
+
+  $('#table').append('<hr><h1>table with large data and pager disabled</h1><div id="table-new13"></div>')
+  var el = $('#table-new13')
+
+  var objects = [];
+  var created_at = Date.parse('2014-06-10T11:17:34.000Z')
+
+  for (i = 0; i < 200; i++) {
+    local_created_at = new Date(created_at - (1000 * 60 * 60 * 24 * i)).toISOString()
+    item = {
+      id:         i,
+      name:       i + ' prio',
+      note:       'some note',
+      active:     true,
+      created_at: local_created_at,
+    }
+    objects.push(item)
+  }
+
+  App.TicketPriority.refresh(objects, {clear: true})
+
+  var table = new App.ControllerTable({
+    tableId:            'large_table_test_pager',
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.all(),
+    checkbox:           false,
+    radio:              false,
+    pagerEnabled:       false,
+    ttt: true
+  })
+
+  equal(el.find('tbody > tr').length, 200)
+  equal(el.find('.js-pager:first-child .js-page').length, 0)
 })

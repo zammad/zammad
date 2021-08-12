@@ -4,6 +4,7 @@ class App.ControllerReorderModal extends App.ControllerModal
     view = $(App.view('reorder_modal')())
 
     table = new App.ControllerTable(
+      pager: false
       baseColWidth: null
       dndCallback: ->
         true
