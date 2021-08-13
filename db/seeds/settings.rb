@@ -3539,6 +3539,24 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '5400_postmaster_filter_jira_check',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify jira mails for correct follow-ups.',
+  options:     {},
+  state:       'Channel::Filter::JiraCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
+  name:        '5401_postmaster_filter_jira_check',
+  area:        'Postmaster::PostFilter',
+  description: 'Defines postmaster filter to identify jira mails for correct follow-ups.',
+  options:     {},
+  state:       'Channel::Filter::JiraCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       'Define postmaster filter.',
   name:        '5500_postmaster_internal_article_check',
   area:        'Postmaster::PreFilter',
