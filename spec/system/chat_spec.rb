@@ -4,27 +4,34 @@ require 'rails_helper'
 
 RSpec.describe 'Chat Handling', type: :system do
   let(:agent_chat_switch_selector) { '#navigation .js-chatMenuItem .js-switch' }
+  let(:chat_url) { "/assets/chat/znuny_open_by_button.html?port=#{ENV['WS_PORT']}" }
 
   def authenticate
     Setting.set('chat', true)
     true
   end
 
-  it 'Check that button is hidden after idle timeout (JQuery and without JQuery variant)', authenticated_as: :authenticate do
-    click agent_chat_switch_selector
+  shared_examples 'chat button is hidden after idle timeout' do
+    it 'Check that button is hidden after idle timeout', authenticated_as: :authenticate do
+      click agent_chat_switch_selector
 
-    open_window_and_switch
+      open_window_and_switch
 
-    visit "/assets/chat/znuny_open_by_button.html?port=#{ENV['WS_PORT']}"
+      visit chat_url
 
-    expect(page).to have_css('.zammad-chat', visible: :all)
-    expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-    expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
+      expect(page).to have_css('.zammad-chat', visible: :all)
+      expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
+      expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all, wait: 20)
+    end
+  end
 
-    visit "/assets/chat/znuny-no-jquery-open_by_button.html?port=#{ENV['WS_PORT']}"
+  context 'when jquery variant is used' do
+    include_examples 'chat button is hidden after idle timeout'
+  end
 
-    expect(page).to have_css('.zammad-chat', visible: :all)
-    expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-    expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
+  context 'when none jquery variant is used' do
+    let(:chat_url) { "/assets/chat/znuny-no-jquery-open_by_button.html?port=#{ENV['WS_PORT']}" }
+
+    include_examples 'chat button is hidden after idle timeout'
   end
 end
