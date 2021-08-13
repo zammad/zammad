@@ -33,12 +33,13 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::GenericObject, sequence
 
     let(:process_payload) do
       {
-        import_job:     build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
-        dry_run:        false,
-        object:         'Group',
-        request_params: {},
-        field_map:      {},
-        id_map:         {},
+        import_job:          build_stubbed(:import_job, name: 'Import::Freshdesk', payload: {}),
+        dry_run:             false,
+        object:              'Group',
+        request_params:      {},
+        field_map:           {},
+        id_map:              {},
+        skipped_resource_id: nil,
       }
     end
 
