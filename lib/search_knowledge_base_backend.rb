@@ -84,6 +84,7 @@ class SearchKnowledgeBaseBackend
             .joins(:category)
             .where(knowledge_base_categories: { knowledge_base_id: knowledge_bases })
 
+    # rubocop:disable Style/RedundantSelfAssignmentBranch
     scope = if user&.permissions?('knowledge_base.editor')
               scope
             elsif user&.permissions?('knowledge_base.reader') && flavor == :agent
@@ -91,6 +92,7 @@ class SearchKnowledgeBaseBackend
             else
               scope.published
             end
+    # rubocop:enable Style/RedundantSelfAssignmentBranch
 
     flatten_translation_ids(scope)
   end

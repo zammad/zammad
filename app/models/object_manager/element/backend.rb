@@ -38,7 +38,7 @@ class ObjectManager::Element::Backend
       name:    attribute.name,
       display: attribute.display,
       tag:     attribute.data_type,
-      #:null     => attribute.null,
+      # :null     => attribute.null,
     }
   end
 

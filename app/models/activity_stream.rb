@@ -56,7 +56,7 @@ add a new activity entry for an object
     # check newest entry - is needed
     result = ActivityStream.where(
       o_id:                      data[:o_id],
-      #:activity_stream_type_id  => type_id,
+      # :activity_stream_type_id  => type_id,
       permission_id:             permission_id,
       activity_stream_object_id: object_id,
       created_by_id:             data[:created_by_id]

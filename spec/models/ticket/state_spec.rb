@@ -16,7 +16,7 @@ RSpec.describe Ticket::State, type: :model do
     describe 'of whole table:' do
       it 'has seven records' do
         expect(described_class.pluck(:name))
-          .to match_array(%w[closed merged new open pending\ close pending\ reminder removed])
+          .to match_array(['closed', 'merged', 'new', 'open', 'pending close', 'pending reminder', 'removed'])
       end
     end
 
