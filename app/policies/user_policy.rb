@@ -13,11 +13,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
+    # full access for admins
     return true if user.permissions?('admin.user')
     # forbid non-agents to change users
     return false if !user.permissions?('ticket.agent')
 
-    # allow agents to change customers
+    # allow agents to change customers only
+    return false if record.permissions?(['admin.user', 'ticket.agent'])
+
     record.permissions?('ticket.customer')
   end
 
