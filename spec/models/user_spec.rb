@@ -35,154 +35,6 @@ RSpec.describe User, type: :model do
   it_behaves_like 'UserPerformsGeoLookup'
 
   describe 'Class methods:' do
-    describe '.authenticate' do
-      subject(:user) { create(:user, password: password) }
-
-      let(:password) { Faker::Internet.password }
-
-      context 'with valid credentials' do
-        context 'using #login' do
-          it 'returns the matching user' do
-            expect(described_class.authenticate(user.login, password))
-              .to eq(user)
-          end
-
-          it 'is not case-sensitive' do
-            expect(described_class.authenticate(user.login.upcase, password))
-              .to eq(user)
-          end
-        end
-
-        context 'using #email' do
-          it 'returns the matching user' do
-            expect(described_class.authenticate(user.email, password))
-              .to eq(user)
-          end
-
-          it 'is not case-sensitive' do
-            expect(described_class.authenticate(user.email.upcase, password))
-              .to eq(user)
-          end
-        end
-
-        context 'but exceeding failed login limit' do
-          before { user.update(login_failed: 999) }
-
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, password))
-              .to be(nil)
-          end
-        end
-
-        context 'when previous login was' do
-          context 'never' do
-            it 'updates #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to change { user.reload.last_login }
-                .and change { user.reload.updated_at }
-            end
-          end
-
-          context 'less than 10 minutes ago' do
-            before do
-              described_class.authenticate(user.login, password)
-              travel 9.minutes
-            end
-
-            it 'does not update #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to not_change { user.reload.last_login }
-                .and not_change { user.reload.updated_at }
-            end
-          end
-
-          context 'more than 10 minutes ago' do
-            before do
-              described_class.authenticate(user.login, password)
-              travel 11.minutes
-            end
-
-            it 'updates #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to change { user.reload.last_login }
-                .and change { user.reload.updated_at }
-            end
-          end
-        end
-      end
-
-      context 'with valid user and invalid password' do
-        it 'increments failed login count' do
-          expect(described_class).to receive(:sleep).with(1)
-          expect { described_class.authenticate(user.login, password.next) }
-            .to change { user.reload.login_failed }.by(1)
-        end
-
-        it 'returns nil' do
-          expect(described_class).to receive(:sleep).with(1)
-          expect(described_class.authenticate(user.login, password.next)).to be(nil)
-        end
-      end
-
-      context 'with inactive user’s login' do
-        before { user.update(active: false) }
-
-        it 'returns nil' do
-          expect(described_class.authenticate(user.login, password)).to be(nil)
-        end
-      end
-
-      context 'with non-existent user login' do
-        it 'returns nil' do
-          expect(described_class.authenticate('john.doe', password)).to be(nil)
-        end
-      end
-
-      context 'with empty login string' do
-        it 'returns nil' do
-          expect(described_class.authenticate('', password)).to be(nil)
-        end
-      end
-
-      context 'with empty password string' do
-        it 'returns nil' do
-          expect(described_class.authenticate(user.login, '')).to be(nil)
-        end
-      end
-
-      context 'with empty password string when the stored password is an empty string' do
-        before { user.update_column(:password, '') }
-
-        context 'when password is an empty string' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, '')).to be(nil)
-          end
-        end
-
-        context 'when password is nil' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, nil)).to be(nil)
-          end
-        end
-      end
-
-      context 'with empty password string when the stored hash represents an empty string' do
-        before { user.update(password: PasswordHash.crypt('')) }
-
-        context 'when password is an empty string' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, '')).to be(nil)
-          end
-        end
-
-        context 'when password is nil' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, nil)).to be(nil)
-          end
-        end
-      end
-    end
-
     describe '.identify' do
       it 'returns users by given login' do
         expect(described_class.identify(user.login)).to eq(user)
@@ -191,37 +43,14 @@ RSpec.describe User, type: :model do
       it 'returns users by given email' do
         expect(described_class.identify(user.email)).to eq(user)
       end
+
+      it 'returns nil for empty username' do
+        expect(described_class.identify('')).to eq(nil)
+      end
     end
   end
 
   describe 'Instance methods:' do
-    describe '#max_login_failed?' do
-      it { is_expected.to respond_to(:max_login_failed?) }
-
-      context 'with "password_max_login_failed" setting' do
-        before do
-          Setting.set('password_max_login_failed', 5)
-          user.update(login_failed: 5)
-        end
-
-        it 'returns true once user’s #login_failed count exceeds the setting' do
-          expect { user.update(login_failed: 6) }
-            .to change(user, :max_login_failed?).to(true)
-        end
-      end
-
-      context 'without password_max_login_failed setting' do
-        before do
-          Setting.set('password_max_login_failed', nil)
-          user.update(login_failed: 0)
-        end
-
-        it 'defaults to 0' do
-          expect { user.update(login_failed: 1) }
-            .to change(user, :max_login_failed?).to(true)
-        end
-      end
-    end
 
     describe '#out_of_office?' do
       context 'without any out_of_office_* attributes set' do

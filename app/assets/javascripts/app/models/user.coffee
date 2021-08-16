@@ -122,7 +122,7 @@ class App.User extends App.Model
     false
 
   maxLoginFailedReached: ->
-    return @login_failed > (App.Config.get('password_max_login_failed') || 10)
+    return @login_failed > (parseInt(App.Config.get('password_max_login_failed')))
 
   imageUrl: ->
     return if !@image

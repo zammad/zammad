@@ -578,8 +578,9 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       render json: { message: 'failed', notice: ['Current password needed!'] }, status: :ok
       return
     end
-    user = User.authenticate(current_user.login, params[:password_old])
-    if !user
+
+    current_password_verified = PasswordHash.verified?(current_user.password, params[:password_old])
+    if !current_password_verified
       render json: { message: 'failed', notice: ['Current password is wrong!'] }, status: :ok
       return
     end
@@ -596,20 +597,19 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       return
     end
 
-    user.update!(password: params[:password_new])
+    current_user.update!(password: params[:password_new])
 
-    if user.email.present?
+    if current_user.email.present?
       NotificationFactory::Mailer.notification(
         template: 'password_change',
-        user:     user,
+        user:     current_user,
         objects:  {
-          user:         user,
-          current_user: current_user,
+          user: current_user,
         }
       )
     end
 
-    render json: { message: 'ok', user_login: user.login }, status: :ok
+    render json: { message: 'ok', user_login: current_user.login }, status: :ok
   end
 
 =begin

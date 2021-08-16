@@ -70,12 +70,6 @@ module ZammadSpecSupportRequest
     password = options[:password] || user.password.to_s
     login    = options[:login] || user.login
 
-    # mock authentication otherwise login won't
-    # if user has no password (which is expensive to create)
-    if password.blank?
-      allow(User).to receive(:authenticate).with(login, '') { user.update_last_login }.and_return(user)
-    end
-
     case via
     when :api_client
       # ensure that always the correct header value is set

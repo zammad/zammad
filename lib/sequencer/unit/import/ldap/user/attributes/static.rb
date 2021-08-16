@@ -19,6 +19,9 @@ class Sequencer
                     # because otherwise disabled instances won't get
                     # re-activated if they should get synced again
                     active: true,
+
+                    # Set the source to 'Ldap' for the authentication handling.
+                    source: 'Ldap',
                   }
                 end
               end

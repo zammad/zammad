@@ -214,6 +214,14 @@ class SessionsController < ApplicationController
 
   private
 
+  def authenticate_with_password
+    auth = Auth.new(params[:username], params[:password])
+    raise_unified_login_error if !auth.valid?
+
+    session.delete(:switched_from_user_id)
+    authentication_check_prerequesits(auth.user, 'session', {})
+  end
+
   def initiate_session_for(user)
     request.env['rack.session.options'][:expire_after] = 1.year if params[:remember_me]
     session[:persistent] = true

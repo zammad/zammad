@@ -1124,6 +1124,38 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       'Authentication via %s',
+  name:        'auth_internal',
+  area:        'Security::Authentication',
+  description: 'Enables user authentication via %s.',
+  preferences: {
+    title_i18n:       ['internal database'],
+    description_i18n: ['internal database'],
+    permission:       ['admin.security'],
+  },
+  state:       {
+    priority: 1,
+    adapter:  'Auth::Backend::Internal',
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Authentication via %s',
+  name:        'auth_developer',
+  area:        'Security::Authentication',
+  description: 'Enables user authentication via %s.',
+  preferences: {
+    title_i18n:       ['developer password'],
+    description_i18n: ['developer password'],
+    permission:       ['admin.security'],
+  },
+  state:       {
+    priority: 2,
+    adapter:  'Auth::Backend::Developer',
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Authentication via %s',
   name:        'auth_ldap',
   area:        'Security::Authentication',
   description: 'Enables user authentication via %s.',
@@ -1133,7 +1165,8 @@ Setting.create_if_not_exists(
     permission:       ['admin.security'],
   },
   state:       {
-    adapter:       'Auth::Ldap',
+    priority:      3,
+    adapter:       'Auth::Backend::Ldap',
     host:          'localhost',
     port:          389,
     bind_dn:       'cn=Manager,dc=example,dc=org',

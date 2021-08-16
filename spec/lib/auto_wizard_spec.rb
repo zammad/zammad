@@ -63,7 +63,7 @@ RSpec.describe AutoWizard do
           .and change { User.last.firstname }.to('Test Master')
           .and change { User.last.lastname }.to('Agent')
           .and change { User.last.email }.to('master_unit_test01@example.com')
-          .and change { User.authenticate(User.last.email, 'test') }.from(nil)
+          .and change { Auth.new(User.last.email, 'test').valid? }.from(false)
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe AutoWizard do
           .and change { User.last.firstname }.to('Test Master')
           .and change { User.last.lastname }.to('Agent')
           .and change { User.last.email }.to('master_unit_test01@example.com')
-          .and change { User.authenticate(User.last.email, 'test') }.from(nil)
+          .and change { Auth.new(User.last.email, 'test').valid? }.from(false)
       end
     end
 
