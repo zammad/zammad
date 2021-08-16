@@ -68,6 +68,12 @@ module BrowserTestHelper
   #  await_empty_ajax_queue
   #
   def await_empty_ajax_queue
+    # page.evaluate_script silently discards any present alerts, which is not desired.
+    begin
+      return if page.driver.browser.switch_to.alert
+    rescue Selenium::WebDriver::Error::NoSuchAlertError # rubocop:disable Lint/SuppressedException
+    end
+
     wait(5, interval: 0.1).until_constant do
       page.evaluate_script('App.Ajax.queue().length').zero?
     end

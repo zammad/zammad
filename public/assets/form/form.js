@@ -33,6 +33,7 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: function () {return User.email;},
       },
@@ -40,6 +41,7 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
+        required: true,
         placeholder: 'Your Message...',
         defaultValue: '',
         rows: 7,
@@ -76,6 +78,8 @@ $(function() {
         name: 'name',
         tag: 'input',
         type: 'text',
+        id: 'zammad-form-name',
+        required: true,
         placeholder: 'Your Name',
         defaultValue: '',
       },
@@ -84,6 +88,8 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        id: 'zammad-form-email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: '',
       },
@@ -91,6 +97,8 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
+        id: 'zammad-form-body',
+        required: true,
         placeholder: 'Your Message...',
         defaultValue: '',
         rows: 7,
@@ -396,14 +404,15 @@ $(function() {
       $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
     $.each(this.options.attributes, function(index, value) {
-      var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>');
+      var valueId = _this.options.modal ? value.id + '-modal' : value.id + '-inline'
+      var item = $('<div class="form-group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
       var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
         if (value.tag == 'input') {
-          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '">')
+          item.append('<input class="form-control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '">' + (defaultValue || '') + '</textarea>')
+          item.append('<textarea class="form-control" id="' + valueId + '" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"' + (value.required === true ? ' required' : '') + '>' + (defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)

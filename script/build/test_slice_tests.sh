@@ -59,7 +59,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/customer_ticket_create_fields_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  # test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   # test/browser/maintenance_app_version_test.rb
@@ -135,7 +134,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/customer_ticket_create_fields_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_app_version_test.rb
@@ -211,7 +209,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/customer_ticket_create_fields_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_app_version_test.rb
@@ -287,7 +284,6 @@ elif [ "$LEVEL" == '4' ]; then
   # test/browser/customer_ticket_create_fields_test.rb
   # test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_app_version_test.rb
@@ -362,7 +358,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/customer_ticket_create_fields_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_app_version_test.rb
@@ -440,7 +435,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/customer_ticket_create_fields_test.rb
   rm test/browser/customer_ticket_create_test.rb
   # test/browser/first_steps_test.rb
-  rm test/browser/form_test.rb
   # test/browser/integration_test.rb
   # test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_app_version_test.rb
