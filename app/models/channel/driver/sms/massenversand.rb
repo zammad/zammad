@@ -10,17 +10,7 @@ class Channel::Driver::Sms::Massenversand
 
     Rails.logger.info "Backend sending Massenversand SMS to #{attr[:recipient]}"
     begin
-      url = build_url(options, attr)
-
-      if Setting.get('developer_mode') != true
-        response = Faraday.get(url).body
-
-        if !response.match?('OK')
-          message = "Received non-OK response from gateway URL '#{url}'"
-          Rails.logger.error "#{message}: #{response.inspect}"
-          raise message
-        end
-      end
+      send_create(options, attr)
 
       true
     rescue => e
@@ -29,6 +19,19 @@ class Channel::Driver::Sms::Massenversand
       Rails.logger.error e
       raise message
     end
+  end
+
+  def send_create(options, attr)
+    url = build_url(options, attr)
+
+    return if Setting.get('developer_mode')
+
+    response = Faraday.get(url).body
+    return if response.match?('OK')
+
+    message = "Received non-OK response from gateway URL '#{url}'"
+    Rails.logger.error "#{message}: #{response.inspect}"
+    raise message
   end
 
   def self.definition

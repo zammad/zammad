@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
-  NAME = 'sms/twilio'.freeze
+class Channel::Driver::Sms::MessageBird < Channel::Driver::Sms::Base
+  NAME = 'sms/message_bird'.freeze
 
   def fetchable?(_channel)
     false
@@ -12,13 +12,12 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
 
     return true if Setting.get('import_mode')
 
-    Rails.logger.info "Backend sending Twilio SMS to #{attr[:recipient]}"
+    Rails.logger.info "Backend sending MessageBird SMS to #{attr[:recipient]}"
     begin
       send_create(options, attr)
-
       true
     rescue => e
-      Rails.logger.debug { "Twilio error: #{e.inspect}" }
+      Rails.logger.debug { "MessageBird error: #{e.inspect}" }
       raise e
     end
   end
@@ -26,35 +25,28 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
   def send_create(options, attr)
     return if Setting.get('developer_mode')
 
-    result = api(options).messages.create(
-      from: options[:sender],
-      to:   attr[:recipient],
-      body: attr[:message],
-    )
-
-    raise result.error_message if result&.error_code&.positive?
+    api(options).message_create(options[:sender], attr[:recipient], attr[:message])
   end
 
   def process(_options, attr, channel)
-    Rails.logger.info "Receiving SMS frim recipient #{attr[:From]}"
+    Rails.logger.info "Receiving SMS frim recipient #{attr['originator']}"
 
     # prevent already created articles
-    if Ticket::Article.exists?(message_id: attr[:SmsMessageSid])
-      require 'twilio-ruby' # Only load this gem when it is really used
-      return ['application/xml; charset=UTF-8;', Twilio::TwiML::MessagingResponse.new.to_s]
+    if attr['message_id'].present? && Ticket::Article.exists?(message_id: attr['message_id'])
+      return [:json, {}]
     end
 
-    user = user_by_mobile(attr[:From])
+    # find sender
+    user = user_by_mobile(attr['originator'])
     UserInfo.current_user_id = user.id
 
     process_ticket(attr, channel, user)
 
-    require 'twilio-ruby'  # Only load this gem when it is really used
-    ['application/xml; charset=UTF-8;', Twilio::TwiML::MessagingResponse.new.to_s]
+    [:json, {}]
   end
 
   def create_ticket(attr, channel, user)
-    title = cut_title(attr[:Body])
+    title = cut_title(attr['incomingMessage'])
     ticket = Ticket.new(
       group_id:    channel.group_id,
       title:       title,
@@ -64,9 +56,8 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
       preferences: {
         channel_id: channel.id,
         sms:        {
-          AccountSid: attr['AccountSid'],
-          From:       attr['From'],
-          To:         attr['To'],
+          originator: attr['originator'],
+          recipient:  attr['recipient'],
         }
       }
     )
@@ -79,17 +70,15 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
       ticket_id:    ticket.id,
       type:         article_type_sms,
       sender:       Ticket::Article::Sender.find_by(name: 'Customer'),
-      body:         attr[:Body],
-      from:         attr[:From],
-      to:           attr[:To],
-      message_id:   attr[:SmsMessageSid],
+      body:         attr['incomingMessage'],
+      from:         attr['originator'],
+      to:           attr['recipient'],
+      message_id:   attr['message_id'],
       content_type: 'text/plain',
       preferences:  {
         channel_id: channel.id,
         sms:        {
-          AccountSid: attr['AccountSid'],
-          From:       attr['From'],
-          To:         attr['To'],
+          reference: attr['reference'],
         }
       }
     )
@@ -97,18 +86,16 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
 
   def self.definition
     {
-      name:         'twilio',
-      adapter:      'sms/twilio',
+      name:         'message_bird',
+      adapter:      'sms/message_bird',
       account:      [
         { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(rand(999_999_999_999).to_s), disabled: true, readonly: true },
-        { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
-        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },
+        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 255, null: false },
         { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
         { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
       ],
       notification: [
-        { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
-        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },
+        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 255, null: false },
         { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
       ],
     }
@@ -117,7 +104,7 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
   private
 
   def api(options)
-    require 'twilio-ruby'  # Only load this gem when it is really used.
-    @api ||= ::Twilio::REST::Client.new options[:account_id], options[:token]
+    require 'messagebird'
+    @api ||= ::MessageBird::Client.new(options[:token])
   end
 end

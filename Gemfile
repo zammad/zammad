@@ -127,6 +127,7 @@ gem 'icalendar-recurrence'
 gem 'telephone_number'
 
 # feature - SMS
+gem 'messagebird-rest'
 gem 'twilio-ruby', require: false
 
 # feature - ordering
