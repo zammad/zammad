@@ -1057,9 +1057,7 @@ class Table extends App.Controller
       ticketListShow.push App.Ticket.find(ticket.id)
 
     # if customer and no ticket exists, show the following message only
-    if !ticketListShow[0] && !@permissionCheck('ticket.agent')
-      @html App.view('customer_not_ticket_exists')()
-      return
+    return if @renderCustomerNotTicketExistIfNeeded(ticketListShow)
 
     # set page title
     @overview = App.Overview.find(overview.id)
@@ -1317,6 +1315,23 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
+
+  renderCustomerNotTicketExistIfNeeded: (ticketListShow) =>
+    user = App.User.current()
+    @stopListening user, 'refresh'
+
+    return if ticketListShow[0] || @permissionCheck('ticket.agent')
+
+    tickets_count = user.lifetimeCustomerTicketsCount()
+    @html App.view('customer_not_ticket_exists')(has_any_tickets: tickets_count > 0)
+
+    if tickets_count == 0
+      @listenTo user, 'refresh', =>
+        return if tickets_count == user.lifetimeCustomerTicketsCount()
+
+        @renderCustomerNotTicketExistIfNeeded([])
+
+    return true
 
   shouldShowBulkForm: =>
     items = @$('table').find('input[name="bulk"]:checked')

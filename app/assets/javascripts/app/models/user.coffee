@@ -360,6 +360,9 @@ class App.User extends App.Model
     return false if requester.organization_id is null
     @organization_id == requester.organization_id
 
+  lifetimeCustomerTicketsCount: ->
+    (@preferences.tickets_closed || 0) + (@preferences.tickets_open || 0)
+
   # Do NOT modify the return value of this method!
   # It is a direct reference to a value in the App.User.irecords object.
   @current: App.Session.get

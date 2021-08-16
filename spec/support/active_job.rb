@@ -15,12 +15,25 @@ module ZammadActiveJobHelper
   end
 end
 
+module ZammadActiveJobSystemHelper
+  include ActiveJob::TestHelper
+
+  alias original_perform_enqueued_jobs perform_enqueued_jobs
+
+  def perform_enqueued_jobs(**kwargs, &block)
+    ActiveJobLock.destroy_all
+    original_perform_enqueued_jobs(**kwargs, &block)
+  end
+end
+
 RSpec.configure do |config|
 
   activate_for = {
     type:          :job, # actual Job examples
     performs_jobs: true, # examples performing Jobs
   }
+
+  config.include ZammadActiveJobSystemHelper, performs_jobs: true, type: :system
 
   activate_for.each do |key, value|
     config.include ZammadActiveJobHelper, key => value
