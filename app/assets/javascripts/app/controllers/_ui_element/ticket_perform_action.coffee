@@ -455,7 +455,17 @@ class App.UiElement.ticket_perform_action
         translate: true
       )
 
+      includeAttachmentsCheckbox = App.UiElement.select.render(
+        name: "#{name}::include_attachments"
+        multiple: false
+        null: false
+        options: { true: 'Yes', false: 'No' }
+        value: meta.include_attachments || 'false'
+        translate: true
+      )
+
       notificationElement.find('.js-internal').html(visibilitySelection)
+      notificationElement.find('.js-include_attachments').html(includeAttachmentsCheckbox)
 
       notificationElement.find('.js-body div[contenteditable="true"]').ce(
         mode: 'richtext'

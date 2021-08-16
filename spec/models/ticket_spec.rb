@@ -520,6 +520,117 @@ RSpec.describe Ticket, type: :model do
           include_examples 'verify log visibility status'
         end
 
+        shared_examples 'add a new article' do
+          it 'adds a new article' do
+            expect { ticket.perform_changes(performable, 'trigger', ticket, user) }
+              .to change { ticket.articles.count }.by(1)
+          end
+        end
+
+        shared_examples 'add attachment to new article' do
+          include_examples 'add a new article'
+
+          it 'adds attachment to the new article' do
+            ticket.perform_changes(performable, 'trigger', ticket, user)
+            article = ticket.articles.last
+
+            expect(article.type.name).to eq('email')
+            expect(article.sender.name).to eq('System')
+            expect(article.attachments.count).to eq(1)
+            expect(article.attachments[0].filename).to eq('some_file.pdf')
+            expect(article.attachments[0].preferences['Content-ID']).to eq('image/pdf@01CAB192.K8H512Y9')
+          end
+        end
+
+        shared_examples 'does not add attachment to new article' do
+          include_examples 'add a new article'
+
+          it 'does not add attachment to the new article' do
+            ticket.perform_changes(performable, 'trigger', ticket, user)
+            article = ticket.articles.last
+
+            expect(article.type.name).to eq('email')
+            expect(article.sender.name).to eq('System')
+            expect(article.attachments.count).to eq(0)
+          end
+        end
+
+        context 'dispatching email with include attachment present' do
+          let(:notification_type) { :email }
+          let(:additional_options) do
+            {
+              notification_key => {
+                include_attachments: 'true'
+              }
+            }
+          end
+
+          context 'when ticket has an attachment' do
+
+            before do
+              UserInfo.current_user_id = 1
+              ticket_article = create(:ticket_article, ticket: ticket)
+
+              Store.add(
+                object:        'Ticket::Article',
+                o_id:          ticket_article.id,
+                data:          'dGVzdCAxMjM=',
+                filename:      'some_file.pdf',
+                preferences:   {
+                  'Content-Type': 'image/pdf',
+                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                },
+                created_by_id: 1,
+              )
+            end
+
+            include_examples 'add attachment to new article'
+          end
+
+          context 'when ticket does not have an attachment' do
+
+            include_examples 'does not add attachment to new article'
+          end
+        end
+
+        context 'dispatching email  with include attachment not present' do
+          let(:notification_type) { :email }
+          let(:additional_options) do
+            {
+              notification_key => {
+                include_attachments: 'false'
+              }
+            }
+          end
+
+          context 'when ticket has an attachment' do
+
+            before do
+              UserInfo.current_user_id = 1
+              ticket_article = create(:ticket_article, ticket: ticket)
+
+              Store.add(
+                object:        'Ticket::Article',
+                o_id:          ticket_article.id,
+                data:          'dGVzdCAxMjM=',
+                filename:      'some_file.pdf',
+                preferences:   {
+                  'Content-Type': 'image/pdf',
+                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                },
+                created_by_id: 1,
+              )
+            end
+
+            include_examples 'does not add attachment to new article'
+          end
+
+          context 'when ticket does not have an attachment' do
+
+            include_examples 'does not add attachment to new article'
+          end
+        end
+
         context 'dispatching SMS' do
           let(:notification_type) { :sms }
 

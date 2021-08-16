@@ -1755,6 +1755,11 @@ result
     end
 
     original_article = objects[:article]
+
+    if ActiveModel::Type::Boolean.new.cast(value['include_attachments']) == true && original_article&.attachments.present?
+      original_article.clone_attachments('Ticket::Article', message.id, only_attached_attachments: true)
+    end
+
     if original_article&.should_clone_inline_attachments? # rubocop:disable Style/GuardClause
       original_article.clone_attachments('Ticket::Article', message.id, only_inline_attachments: true)
       original_article.should_clone_inline_attachments = false # cancel the temporary flag after cloning

@@ -55,6 +55,135 @@ RSpec.describe Trigger, type: :model do
       }
     end
 
+    shared_examples 'include ticket attachment' do
+      context 'notification.email include_attachments' do
+        let(:perform) do
+          {
+            'notification.email' => {
+              'recipient' => 'ticket_customer',
+              'subject'   => 'Example subject',
+              'body'      => 'Example body',
+            }
+          }.deep_merge(additional_options).deep_stringify_keys
+        end
+
+        let(:ticket) { create(:ticket) }
+
+        shared_examples 'add a new article' do
+          it 'adds a new article' do
+            expect { TransactionDispatcher.commit }
+              .to change(ticket.articles, :count).by(1)
+          end
+        end
+
+        shared_examples 'add attachment to new article' do
+          include_examples 'add a new article'
+
+          it 'adds attachment to the new article' do
+            ticket && trigger
+
+            TransactionDispatcher.commit
+            article = ticket.articles.last
+
+            expect(article.type.name).to eq('email')
+            expect(article.sender.name).to eq('System')
+            expect(article.attachments.count).to eq(1)
+            expect(article.attachments[0].filename).to eq('some_file.pdf')
+            expect(article.attachments[0].preferences['Content-ID']).to eq('image/pdf@01CAB192.K8H512Y9')
+          end
+        end
+
+        shared_examples 'does not add attachment to new article' do
+          include_examples 'add a new article'
+
+          it 'does not add attachment to the new article' do
+            ticket && trigger
+
+            TransactionDispatcher.commit
+            article = ticket.articles.last
+
+            expect(article.type.name).to eq('email')
+            expect(article.sender.name).to eq('System')
+            expect(article.attachments.count).to eq(0)
+          end
+        end
+
+        context 'with include attachment present' do
+          let(:additional_options) do
+            {
+              'notification.email' => {
+                include_attachments: 'true'
+              }
+            }
+          end
+
+          context 'when ticket has an attachment' do
+
+            before do
+              UserInfo.current_user_id = 1
+              ticket_article = create(:ticket_article, ticket: ticket)
+
+              Store.add(
+                object:        'Ticket::Article',
+                o_id:          ticket_article.id,
+                data:          'dGVzdCAxMjM=',
+                filename:      'some_file.pdf',
+                preferences:   {
+                  'Content-Type': 'image/pdf',
+                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                },
+                created_by_id: 1,
+              )
+            end
+
+            include_examples 'add attachment to new article'
+          end
+
+          context 'when ticket does not have an attachment' do
+
+            include_examples 'does not add attachment to new article'
+          end
+        end
+
+        context 'with include attachment not present' do
+          let(:additional_options) do
+            {
+              'notification.email' => {
+                include_attachments: 'false'
+              }
+            }
+          end
+
+          context 'when ticket has an attachment' do
+
+            before do
+              UserInfo.current_user_id = 1
+              ticket_article = create(:ticket_article, ticket: ticket)
+
+              Store.add(
+                object:        'Ticket::Article',
+                o_id:          ticket_article.id,
+                data:          'dGVzdCAxMjM=',
+                filename:      'some_file.pdf',
+                preferences:   {
+                  'Content-Type': 'image/pdf',
+                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                },
+                created_by_id: 1,
+              )
+            end
+
+            include_examples 'does not add attachment to new article'
+          end
+
+          context 'when ticket does not have an attachment' do
+
+            include_examples 'does not add attachment to new article'
+          end
+        end
+      end
+    end
+
     context 'for condition "ticket created"' do
       let(:condition) do
         { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
@@ -417,6 +546,8 @@ RSpec.describe Trigger, type: :model do
           end
         end
       end
+
+      include_examples 'include ticket attachment'
     end
 
     context 'for condition "ticket updated"' do
@@ -575,6 +706,8 @@ RSpec.describe Trigger, type: :model do
           expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
         end
       end
+
+      include_examples 'include ticket attachment'
     end
   end
 

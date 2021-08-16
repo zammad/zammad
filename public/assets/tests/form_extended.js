@@ -413,7 +413,8 @@ test('form checks', function() {
         recipient: 'ticket_customer',
         subject: 'some subject',
         body: "some<br>\nbody",
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -486,7 +487,8 @@ test('form checks', function() {
         recipient: 'ticket_customer',
         subject: 'some subject',
         body: "some<br>\nbody",
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -548,6 +550,7 @@ test('form checks', function() {
         subject: 'some subject',
         body: "some<br>\nbody",
         internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -660,7 +663,8 @@ test('form checks', function() {
         recipient: 'ticket_owner',
         subject: 'some subject',
         body: 'lala',
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -681,7 +685,8 @@ test('form checks', function() {
         recipient: 'ticket_customer',
         subject: 'some subject',
         body: "some<br>\nbody",
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -711,6 +716,7 @@ test('form checks', function() {
         subject: 'some subject',
         body: "some<br>\nbody",
         internal: 'false',
+        include_attachments: 'false',
       },
     },
   }
@@ -730,7 +736,8 @@ test('form checks', function() {
         recipient: 'ticket_customer',
         subject: 'some subject',
         body: "some<br>\nbody",
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'true',
       },
     },
   }
@@ -758,7 +765,8 @@ test('form checks', function() {
         recipient: 'ticket_customer',
         subject: 'some subject',
         body: "some<br>\nbody",
-        internal: 'false'
+        internal: 'false',
+        include_attachments: 'true',
       },
     },
   }

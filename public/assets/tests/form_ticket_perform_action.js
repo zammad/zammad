@@ -51,7 +51,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
     },
     ticket_perform_action3: {
@@ -103,7 +104,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -139,7 +141,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -153,7 +156,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_owner',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.state_id': {
         value: '3'
@@ -177,7 +181,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_customer',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -191,7 +196,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_owner',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.state_id': {
         value: '3'
@@ -215,7 +221,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'true',
         recipient: 'ticket_customer',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -229,7 +236,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_owner',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.state_id': {
         value: '3'
@@ -262,7 +270,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'true',
         recipient: 'ticket_customer',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -276,7 +285,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_owner',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.pending_time': {
         operator: 'static',
@@ -314,7 +324,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'true',
         recipient: 'ticket_customer',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.priority_id': {
         value: '2'
@@ -328,7 +339,8 @@ test( "ticket_perform_action check", function(assert) {
         body: 'some body',
         internal: 'false',
         recipient: 'ticket_owner',
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'false',
       },
       'ticket.pending_time': {
         operator: 'relative',
@@ -354,7 +366,8 @@ test( "ticket_perform_action backwards check after issue #2782", function() {
       'notification.email': {
         body: 'some body',
         recipient: ['ticket_owner', 'ticket_customer'],
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'true',
       },
     },
   }
@@ -382,7 +395,8 @@ test( "ticket_perform_action backwards check after issue #2782", function() {
         body: 'some body',
         internal: 'false',
         recipient: ['ticket_owner', 'ticket_customer'],
-        subject: 'some subject'
+        subject: 'some subject',
+        include_attachments: 'true',
       },
     }
   }
