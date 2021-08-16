@@ -126,6 +126,21 @@ describe UserPolicy do
       it { is_expected.to permit_action(:show) }
       it { is_expected.to forbid_actions(%i[update destroy]) }
     end
+
+    context 'when record is both admin and customer' do
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Admin').id)) }
+
+      it { is_expected.to permit_action(:show) }
+      it { is_expected.to forbid_actions(%i[update destroy]) }
+    end
+
+    context 'when record is both agent and customer' do
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Agent').id)) }
+
+      it { is_expected.to permit_action(:show) }
+      it { is_expected.to forbid_actions(%i[update destroy]) }
+    end
+
   end
 
   context 'when user is a customer' do
@@ -169,5 +184,18 @@ describe UserPolicy do
       it { is_expected.to permit_action(:show) }
       it { is_expected.to forbid_actions(%i[update destroy]) }
     end
+
+    context 'when record is both admin and customer' do
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Admin').id)) }
+
+      it { is_expected.to forbid_actions(%i[show update destroy]) }
+    end
+
+    context 'when record is both agent and customer' do
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Agent').id)) }
+
+      it { is_expected.to forbid_actions(%i[show update destroy]) }
+    end
+
   end
 end
