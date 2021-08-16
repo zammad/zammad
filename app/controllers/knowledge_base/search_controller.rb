@@ -100,7 +100,8 @@ class KnowledgeBase::SearchController < ApplicationController
       url:      url,
       title:    meta.dig(:highlight, 'title')&.first || object.title,
       subtitle: subtitle,
-      body:     meta.dig(:highlight, 'content.body')&.first || strip_tags(object.content.body).truncate(100)
+      body:     meta.dig(:highlight, 'content.body')&.first || strip_tags(object.content.body).truncate(100),
+      tags:     object.answer.tag_list
     }
   end
 

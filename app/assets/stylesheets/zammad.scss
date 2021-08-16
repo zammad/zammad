@@ -5168,6 +5168,12 @@ footer {
   .btn-list {
     margin-bottom: 5px;
   }
+
+  &-button {
+    .sidebar-block-header + &.text-muted {
+      margin-top: 3px;
+    }
+  }
 }
 
 .sidebar-git-issue-delete {
@@ -6608,8 +6614,7 @@ footer {
       }
     }
 
-    .attachments .icon-paperclip,
-    .attachments .icon-overviews {
+    .attachments > .icon:first-child {
       position: absolute;
       left: 33px;
       top: 27px;
@@ -7608,6 +7613,18 @@ footer {
 
 .tags {
   margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  background: #0F94D6;
+  color: white;
+  border-radius: 999px;
+  padding: 2px 12px 1px;
+  
+  &:hover {
+    background: hsl(200deg, 87%, 34%);
+  }
 }
 
 .userNotifications label + .btn {
@@ -12929,6 +12946,7 @@ span.is-disabled {
   }
 
   &-attachments,
+  &-tags,
   &-linked-tickets {
     margin: 0 -30px;
 
@@ -12939,6 +12957,16 @@ span.is-disabled {
 
   .tasks {
     @include bidi-style(margin-left, 7px, margin-right, 0);
+  }
+
+  &-tags--container {
+    padding: 6px 5px 11px;
+    display: flex;
+    flex-wrap: wrap;
+    
+    .tag {
+      margin: 2px;
+    }
   }
 
   &-nav {

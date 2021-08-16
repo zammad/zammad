@@ -2,10 +2,13 @@
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
+require 'models/concerns/has_tags_examples'
 require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
   subject!(:kb_answer) { create(:knowledge_base_answer) }
+
+  it_behaves_like 'HasTags'
 
   include_context 'factory'
 

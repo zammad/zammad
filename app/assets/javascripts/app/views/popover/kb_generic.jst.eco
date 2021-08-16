@@ -35,6 +35,13 @@
         <label><%- @T('Language') %></label>
         <%= App.KnowledgeBaseLocale.localeFor(@object).systemLocale().name %>
       </div>
+
+      <% if !_.isEmpty(@object.parent().tags): %>
+        <div class="column">
+          <label><%- @T('Tags') %></label>
+          <%= @object.parent().tags.map((elem) -> "##{elem}").join(' ') %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>

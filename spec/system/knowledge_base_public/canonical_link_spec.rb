@@ -31,6 +31,11 @@ RSpec.describe 'Public Knowledge Base canonical link', type: :system, current_us
       visit help_answer_path(locale, published_answer.category, published_answer)
       expect(page).to have_canonical_url("#{prefix}/#{locale}/#{category_slug}/#{answer_slug}")
     end
+
+    it 'includes canonical link on tag page' do
+      visit help_tag_path(locale, published_answer_tag_name)
+      expect(page).to have_canonical_url("#{prefix}/#{locale}/tag/#{published_answer_tag_name}")
+    end
   end
 
   shared_examples 'core locations' do

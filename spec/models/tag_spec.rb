@@ -167,7 +167,7 @@ RSpec.describe Tag, type: :model do
 
       let(:object_1) { create(:ticket) }
       let(:object_2) { create(:knowledge_base_answer) }
-      let(:tag) { 'foo' }
+      let(:tag)      { 'foo' }
 
       it 'returns references' do
         expect(described_class.tag_references(tag: tag)).to match_array [

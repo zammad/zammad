@@ -1,0 +1,19 @@
+<main class="main main--categories">
+  <div class="container">
+    <h1>
+      <%= icon 'hashtag' %> <%= @object[1] %>
+    </h1>
+
+    <% if @answers&.present? %>
+      <ul class="sections sections--list" data-less-than-four="<%= @answers.length < 4 %>">
+        <% @answers.each do |translation| %>
+          <%= render 'knowledge_base/public/categories/answer', { answer: translation } %>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="sections-empty">
+        <%= zt('No content to show') %>
+      </div>
+    <% end %>
+  </div>
+</main>

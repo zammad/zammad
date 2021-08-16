@@ -73,7 +73,7 @@ module KnowledgeBaseHelper
   def kb_public_system_path(*objects)
     objects
       .compact
-      .map { |elem| elem.translation.to_param }
+      .map { |elem| elem.is_a?(HasTranslations) ? elem.translation.to_param : elem }
       .unshift(help_root_path)
       .join('/')
   end

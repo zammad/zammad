@@ -3,6 +3,7 @@
 class KnowledgeBase::Answer < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
+  include HasTags
   include CanBePublished
   include ChecksKbClientNotification
   include CanCloneAttachments
@@ -33,6 +34,7 @@ class KnowledgeBase::Answer < ApplicationModel
     attrs = super
 
     attrs[:attachments] = attachments_sorted.map { |elem| self.class.attachment_to_hash(elem) }
+    attrs[:tags]        = tag_list
 
     Cache.write(key, attrs)
 
@@ -111,6 +113,11 @@ class KnowledgeBase::Answer < ApplicationModel
     category.answers.each(&:cache_delete)
   end
   before_save :reordering_callback
+
+  def touch_translations
+    translations.each(&:touch) # move to #touch_all when migrationg to Rails 6
+  end
+  after_touch :touch_translations
 
   class << self
     def attachment_to_hash(attachment)

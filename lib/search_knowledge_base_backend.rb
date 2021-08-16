@@ -173,7 +173,7 @@ class SearchKnowledgeBaseBackend
 
     if @params.fetch(:highlight_enabled, true)
       output[:highlight_fields_by_indexes] = {
-        'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content],
+        'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content tags],
         'KnowledgeBase::Category::Translation': %w[title],
         'KnowledgeBase::Translation':           %w[title]
       }

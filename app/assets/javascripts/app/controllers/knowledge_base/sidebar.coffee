@@ -15,7 +15,9 @@ class App.KnowledgeBaseSidebar extends App.Controller
       true
 
   rerender: ->
-    @show(@savedParams, @savedAction)
+    @delay( =>
+      @show(@savedParams, @savedAction)
+    , 300, 'rerender')
 
   contentActionClicked: (e) ->
     # coffeelint: disable=indentation
@@ -59,5 +61,6 @@ class App.KnowledgeBaseSidebar extends App.Controller
     if object instanceof App.KnowledgeBaseAnswer
       output.push App.KnowledgeBaseSidebarLinkedTickets
       output.push App.KnowledgeBaseSidebarAttachments
+      output.push App.KnowledgeBaseSidebarTags
 
     output

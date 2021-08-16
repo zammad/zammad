@@ -455,6 +455,12 @@ b {
 .main--categories {
   h1 {
     color: $dark-color;
+    
+    .icon-hashtag {
+      fill: hsl(208,13%,81%);
+      width: .7em;
+      height: .7em;
+    }
   }
 }
 
@@ -566,6 +572,11 @@ b {
     width: 16px;
     height: 16px;
     
+    &-hashtag {
+      width: 14px;
+      height: 14px;
+    }
+    
     &-knowledge-base {
       width: 20px;
       height: 20px;
@@ -627,6 +638,8 @@ b {
 }
 
 .sections--list {
+  padding: 0 !important;
+  
   &:first-child {
     margin-top: 20px;
   }
@@ -948,9 +961,13 @@ b {
   }
 }
 
-.attachments {
+.article-tags {
+  margin-top: 1rem;
+}
+
+.article-accessories {
   padding: 2rem 0 2rem 4rem;
-  margin: 2rem 0 !important;
+  margin: 2rem 0;
   list-style: none;
   border-top: 1px solid $border;
   position: relative;
@@ -959,7 +976,7 @@ b {
     padding-left: 2.8rem;
   }
   
-  .icon-paperclip {
+  .icon {
     position: absolute;
     left: 1.2rem;
     top: 2rem;
@@ -979,6 +996,30 @@ b {
     color: $light-color;
     padding: 0 .8rem .2rem;
   }
+
+  &:not(:last-child) {
+    padding-bottom: 0;
+    margin-bottom:  0;
+  }
+}
+
+.tags-content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .2rem .6rem 0;
+  
+  .tag {
+    margin: .2rem;
+  }
+}
+
+.tag {
+  font-size: .8em;
+  display: inline-block;
+  color: white;
+  border-radius: 999px;
+  padding: 2px 12px 1px;
+  text-decoration: none;
 }
 
 .attachment {

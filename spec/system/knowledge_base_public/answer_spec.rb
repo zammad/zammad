@@ -18,4 +18,20 @@ RSpec.describe 'Public Knowledge Base answer', type: :system, authenticated_as: 
       expect(iframe['src']).to start_with('https://www.youtube.com/embed/')
     end
   end
+
+  context 'tags' do
+    before do
+      visit help_answer_path(locale_name, category, published_answer_with_tag)
+    end
+
+    it 'shows an associated tag' do
+      expect(page).to have_css('.tags a', text: published_answer_tag_name)
+    end
+
+    it 'links to tag page' do
+      click '.tags a'
+
+      expect(current_url).to end_with help_tag_path(locale_name, published_answer_tag_name)
+    end
+  end
 end

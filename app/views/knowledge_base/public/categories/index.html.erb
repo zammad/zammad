@@ -27,15 +27,13 @@
       <% end %>
 
       <% if @categories&.present? && @answers&.present? %>
-      <hr>
+        <hr>
       <% end %>
 
       <% if @answers&.present? %>
         <ul class="sections sections--list" data-less-than-four="<%= @answers.length < 4 %>">
           <% @answers.each do |translation| %>
-            <li class="section <%= visibility_class_name(translation) %>">
-              <%= render 'answer', { answer: translation } %>
-            </li>
+            <%= render 'answer', { answer: translation } %>
           <% end %>
         </ul>
       <% end %>

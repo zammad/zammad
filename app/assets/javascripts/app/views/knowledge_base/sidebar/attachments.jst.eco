@@ -4,15 +4,12 @@
 
 <div class="dropContainer">
   <% if @attachments.length > 0: %>
-    <ol class="tasks tasks--standalone">
+    <ol class="list list--sidebar">
       <% for attachment in @attachments: %>
-        <li class="task">
-          <div class="task-text">
-            <a class="name" target=_blank href="<%= attachment.url %>">
-              <%= attachment.filename %>
-            </a>
-          </div>
-
+        <li class="list-item">
+          <a class="list-item-name" target=_blank href="<%= attachment.url %>">
+            <%= attachment.filename %>
+          </a>
           <a class="list-item-delete js-delete" data-object-id="<%= attachment.id %>" href="#">
             <%- @Icon('diagonal-cross') %>
           </a>

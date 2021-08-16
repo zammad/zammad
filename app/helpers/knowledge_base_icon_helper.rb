@@ -9,6 +9,8 @@ module KnowledgeBaseIconHelper
       icon 'knowledge-base-answer'
     when KnowledgeBase
       icon 'knowledge-base'
+    when Array
+      icon 'hashtag' # object[0] override while tag icon is available
     end
   end
 

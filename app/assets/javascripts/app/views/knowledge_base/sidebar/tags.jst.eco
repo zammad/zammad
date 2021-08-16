@@ -1,0 +1,24 @@
+<div class="sidebar-block-header">
+  <h2><%- @T('Tags') %></h2>
+</div>
+
+<% if @tags.length > 0: %>
+<ol class="list list--sidebar">
+  <% for elem in @tags: %>
+    <li class="list-item" data-id="<%= elem %>">
+      <a class="list-item-name js-tag"><%= elem %></a>
+      <div class="list-item-delete js-delete" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </li>
+  <% end %>
+</ol>
+<% end %>
+
+<a class="sidebar-block-button text-muted js-newTagLabel" href="#">
+  + <%- @T('Add Tag') %>
+</a>
+
+<form class="ui-front">
+  <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
+</form>

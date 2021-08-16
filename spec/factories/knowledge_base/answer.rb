@@ -3,10 +3,10 @@
 FactoryBot.define do
   factory 'knowledge_base/answer', aliases: %i[knowledge_base_answer] do
     transient do
-      add_translation { true }
-      translation_traits { [] }
+      add_translation        { true }
+      translation_traits     { [] }
       translation_attributes { {} }
-      knowledge_base { nil }
+      knowledge_base         { nil }
     end
 
     category { create(:knowledge_base_category, { knowledge_base: knowledge_base }.compact) }
@@ -40,6 +40,16 @@ FactoryBot.define do
     trait :with_image do
       transient do
         translation_traits { [:with_image] }
+      end
+    end
+
+    trait :with_tag do
+      transient do
+        tag_names { %w[example_kb_tag] }
+      end
+
+      after(:create) do |answer, context|
+        context.tag_names.each { |tag| answer.tag_add tag }
       end
     end
 

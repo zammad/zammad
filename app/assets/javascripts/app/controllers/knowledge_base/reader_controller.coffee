@@ -2,13 +2,17 @@ class App.KnowledgeBaseReaderController extends App.Controller
   @extend App.PopoverProvidable
   @registerPopovers 'Ticket'
 
+  events:
+    'click .js-tag': 'searchTag'
+
   elements:
-    '.js-answer-title':      'answerTitle'
-    '.js-answer-body':       'answerBody'
-    '.js-answer-pagination': 'answerPagination'
-    '.js-answer-attachments': 'answerAttachments'
+    '.js-answer-title':          'answerTitle'
+    '.js-answer-body':           'answerBody'
+    '.js-answer-pagination':     'answerPagination'
+    '.js-answer-attachments':    'answerAttachments'
+    '.js-answer-tags':           'answerTags'
     '.js-answer-linked-tickets': 'answerLinkedTickets'
-    '.js-answer-meta': 'answerMeta'
+    '.js-answer-meta':           'answerMeta'
 
   constructor: ->
     super
@@ -60,6 +64,7 @@ class App.KnowledgeBaseReaderController extends App.Controller
       return
 
     @renderAttachments(answer.attachments)
+    @renderTags(answer.tags)
     @renderLinkedTickets(answer.translation(kb_locale.id)?.linked_tickets())
 
     paginator = new App.KnowledgeBaseReaderPagination(object: @object, kb_locale: kb_locale)
@@ -129,6 +134,11 @@ class App.KnowledgeBaseReaderController extends App.Controller
       attachments: attachments
     )
 
+  renderTags: (tags) ->
+    @answerTags.html App.view('knowledge_base/_reader_tags')(
+      tags: tags
+    )
+
   renderLinkedTickets: (linked_tickets) ->
     @answerLinkedTickets.html App.view('knowledge_base/_reader_linked_tickets')(
       tickets: linked_tickets
@@ -154,3 +164,8 @@ class App.KnowledgeBaseReaderController extends App.Controller
       return
 
     decodeURIComponent @parentController.lastParams.arguments
+
+  searchTag: (e) ->
+    e.preventDefault()
+    item = $(e.currentTarget).text()
+    App.GlobalSearchWidget.search(item, 'tags')

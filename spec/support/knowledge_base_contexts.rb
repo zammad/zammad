@@ -9,6 +9,10 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
     knowledge_base.translation_primary.kb_locale
   end
 
+  let :locale_name do
+    primary_locale.system_locale.locale
+  end
+
   let :alternative_locale do
     create(:knowledge_base_locale, knowledge_base: knowledge_base, system_locale: Locale.find_by(locale: 'lt'))
   end
@@ -27,6 +31,14 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
 
   let :published_answer_with_video do
     create(:knowledge_base_answer, :published, :with_video, category: category)
+  end
+
+  let :published_answer_with_tag do
+    create(:knowledge_base_answer, :published, :with_tag, tag_names: [published_answer_tag_name], category: category)
+  end
+
+  let(:published_answer_tag_name) do
+    'example_kb_tag'
   end
 
   let :internal_answer do

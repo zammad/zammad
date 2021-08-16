@@ -16,7 +16,7 @@
 <%= canonical_link_tag @knowledge_base, @category, @object %>
 
 <div class="wrapper js-wrapper">
-  <%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if policy(:knowledge_base).edit? %>
+  <%= render_top_bar_if_needed @object, @knowledge_base %>
 
   <header class="header js-header">
     <div class="container">
