@@ -313,7 +313,7 @@ GEM
     marcel (1.0.1)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
-    messagebird-rest (2.0.0)
+    messagebird-rest (3.0.0)
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
