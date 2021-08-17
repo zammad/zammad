@@ -203,11 +203,6 @@ class TransactionDispatcher
     real_changes = {}
     record.changes_to_save.each do |key, value|
       next if key == 'updated_at'
-      next if key == 'first_response_at'
-      next if key == 'close_at'
-      next if key == 'last_contact_agent_at'
-      next if key == 'last_contact_customer_at'
-      next if key == 'last_contact_at'
       next if key == 'article_count'
       next if key == 'create_article_type_id'
       next if key == 'create_article_sender_id'

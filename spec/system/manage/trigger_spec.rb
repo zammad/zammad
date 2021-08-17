@@ -5,6 +5,13 @@ require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Trigger', type: :system do
 
+  def open_new_trigger_dialog
+    visit '/#manage/trigger'
+    click_on 'New Trigger'
+
+    modal_ready
+  end
+
   context 'Selector' do
 
     context 'custom attribute', db_strategy: :reset do
@@ -23,10 +30,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
                                        nulloption: true,
                                      }
 
-        visit '/#manage/trigger'
-        click '.page-header-meta .btn--success'
-
-        modal_ready
+        open_new_trigger_dialog
 
         within '.modal .ticket_selector' do
           find('.js-attributeSelector select').select(attribute.display)
@@ -57,10 +61,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
       it 'shows tag selection list in foreground' do
         tag_item = create :tag_item
 
-        visit '/#manage/trigger'
-        click_on 'New Trigger'
-
-        modal_ready
+        open_new_trigger_dialog
 
         within '.modal .ticket_perform_action' do
           find('.js-attributeSelector select').select('Tags')
@@ -76,5 +77,27 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
   context 'ajax pagination' do
     include_examples 'pagination', model: :trigger, klass: Trigger, path: 'manage/trigger'
+  end
+
+  context "with elements which do not support 'has changed' operator" do
+    it "check 'created_at' element" do
+      open_new_trigger_dialog
+
+      within '.modal .ticket_selector' do
+        find(".js-attributeSelector select option[value='ticket.created_at']").select_option
+
+        expect(page).to have_no_css('select[name="condition::ticket.created_at::operator"] option[value="has changed"]')
+      end
+    end
+
+    it "check 'updated_at' element" do
+      open_new_trigger_dialog
+
+      within '.modal .ticket_selector' do
+        find(".js-attributeSelector select option[value='ticket.updated_at']").select_option
+
+        expect(page).to have_no_css('select[name="condition::ticket.updated_at::operator"] option[value="has changed"]')
+      end
+    end
   end
 end

@@ -91,7 +91,6 @@ class App.UiElement.ticket_selector
 
       else
         for row in App[groupMeta.model].configure_attributes
-
           # ignore passwords and relations
           if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
             config = _.clone(row)
@@ -120,6 +119,10 @@ class App.UiElement.ticket_selector
         null: false
         translate: true
         operator: ['is', 'is not']
+
+    # Remove 'has changed' operator from attributes which don't support the operator.
+    ['ticket.created_at', 'ticket.updated_at'].forEach (element_name) ->
+      elements[element_name]['operator'] = elements[element_name]['operator'].filter (item) -> item != 'has changed'
 
     elements['ticket.mention_user_ids'] =
       name: 'mention_user_ids'

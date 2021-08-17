@@ -1704,6 +1704,59 @@ RSpec.describe Ticket, type: :model do
           .to change { NotificationFactory::Mailer.already_sent?(ticket, agent, 'email') }.to(1)
       end
     end
+
+    describe 'Ticket has changed attributes:' do
+      subject!(:ticket) { create(:ticket) }
+
+      let(:group) { create(:group) }
+      let(:condition_field) { nil }
+
+      shared_examples 'updated ticket group with trigger condition' do
+        it 'updated ticket group with has changed trigger condition' do
+          expect { TransactionDispatcher.commit }.to change { ticket.reload.group }.to(group)
+        end
+      end
+
+      before do
+        create(
+          :trigger,
+          condition: { "ticket.#{condition_field}" => { 'operator' => 'has changed', 'value' => 'create' } },
+          perform:   { 'ticket.group_id' => { 'value' => group.id } }
+        )
+
+        ticket.update!(condition_field => Time.zone.now)
+      end
+
+      context "when changing 'first_response_at' attribute" do
+        let(:condition_field) { 'first_response_at' }
+
+        include_examples 'updated ticket group with trigger condition'
+      end
+
+      context "when changing 'close_at' attribute" do
+        let(:condition_field) { 'close_at' }
+
+        include_examples 'updated ticket group with trigger condition'
+      end
+
+      context "when changing 'last_contact_agent_at' attribute" do
+        let(:condition_field) { 'last_contact_agent_at' }
+
+        include_examples 'updated ticket group with trigger condition'
+      end
+
+      context "when changing 'last_contact_customer_at' attribute" do
+        let(:condition_field) { 'last_contact_customer_at' }
+
+        include_examples 'updated ticket group with trigger condition'
+      end
+
+      context "when changing 'last_contact_at' attribute" do
+        let(:condition_field) { 'last_contact_at' }
+
+        include_examples 'updated ticket group with trigger condition'
+      end
+    end
   end
 
   describe 'Mentions:', sends_notification_emails: true do
@@ -2127,5 +2180,4 @@ RSpec.describe Ticket, type: :model do
     end
 
   end
-
 end
