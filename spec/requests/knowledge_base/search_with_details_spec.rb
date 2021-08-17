@@ -87,4 +87,32 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
       expect(json_response['details'][0]['subtitle']).to eq("#{category4.translations.first.title} > #{category5.translations.first.title}")
     end
   end
+
+  context 'when using paging' do
+    let(:answers) do
+      Array.new(20) do |nth|
+        create(:knowledge_base_answer, :published, :with_attachment, category: category, translation_attributes: { title: "#{search_phrase} #{nth}" })
+      end
+    end
+
+    let(:search_phrase) { 'paging test' }
+
+    before do
+      configure_elasticsearch(required: true, rebuild: true) do
+        answers
+      end
+    end
+
+    it 'returns success' do
+      post endpoint, params: { query: search_phrase, per_page: 10, page: 0 }
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns defined amount of items' do
+      post endpoint, params: { query: search_phrase, per_page: 7, page: 0 }
+
+      expect(json_response['result'].count).to be 7
+    end
+  end
 end

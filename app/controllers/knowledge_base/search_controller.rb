@@ -6,9 +6,10 @@ class KnowledgeBase::SearchController < ApplicationController
 
   include KnowledgeBaseHelper
   include ActionView::Helpers::SanitizeHelper
+  include ApplicationController::Paginates
 
   # POST /api/v1/knowledge_bases/search
-  # knowledge_base_id, locale, flavor, index, limit, include_locale
+  # knowledge_base_id, locale, flavor, index, page, per_page, limit, include_locale
   def search
     knowledge_base = KnowledgeBase
                      .active
@@ -35,7 +36,7 @@ class KnowledgeBase::SearchController < ApplicationController
 
     include_locale = params[:include_locale] && KnowledgeBase.with_multiple_locales_exists?
 
-    result = search_backend.search params[:query], user: current_user
+    result = search_backend.search params[:query], user: current_user, pagination: pagination
 
     if (exclude_ids = params[:exclude_ids]&.map(&:to_i))
       result.reject! { |meta| meta[:type] == params[:index] && exclude_ids.include?(meta[:id]) }

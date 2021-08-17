@@ -42,6 +42,67 @@ RSpec.describe SearchKnowledgeBaseBackend do
     end
   end
 
+  context 'with paging' do
+    let(:answers) do
+      Array.new(20) do |nth|
+        create(:knowledge_base_answer, :published, :with_attachment, category: category, translation_attributes: { title: "#{search_phrase} #{nth}" })
+      end
+    end
+
+    let(:search_phrase) { 'paging test' }
+
+    let(:options) do
+      {
+        knowledge_base: knowledge_base,
+        locale:         primary_locale,
+        scope:          nil,
+        order_by:       { id: :desc }
+      }
+    end
+
+    shared_examples 'verify paging' do |elasticsearch:|
+      context "when elastic search is #{elasticsearch}", searchindex: elasticsearch do
+        before do
+          answers
+          configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+        end
+
+        it 'first page is first 5 answers' do
+          results = instance.search(search_phrase, user: user, pagination: build(:pagination, params: { page: 1, per_page: 5 }))
+
+          first_5 = answers.reverse.slice(0, 5)
+
+          expect(results.pluck(:id)).to eq first_5.map { |answer| answer.translations.first.id }
+        end
+
+        it 'second page is next 5 answers' do
+          results = instance.search(search_phrase, user: user, pagination: build(:pagination, params: { page: 2, per_page: 5 }))
+
+          next_5 = answers.reverse.slice(5, 5)
+
+          expect(results.pluck(:id)).to eq next_5.map { |answer| answer.translations.first.id }
+        end
+
+        it 'last page may be partial' do
+          results = instance.search(search_phrase, user: user, pagination: build(:pagination, params: { page: 4, per_page: 6 }))
+
+          last_page = answers.reverse.slice(18, 6)
+
+          expect(results.pluck(:id)).to eq last_page.map { |answer| answer.translations.first.id }
+        end
+
+        it '5th page is empty' do
+          results = instance.search(search_phrase, user: user, pagination: build(:pagination, params: { page: 5, per_page: 5 }))
+
+          expect(results).to be_blank
+        end
+      end
+    end
+
+    include_examples 'verify paging', elasticsearch: true
+    include_examples 'verify paging', elasticsearch: false
+  end
+
   context 'with successful API response' do
     shared_examples 'verify response' do |elasticsearch:|
       it "ID is an Integer when ES=#{elasticsearch}", searchindex: elasticsearch do

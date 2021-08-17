@@ -42,17 +42,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
   end
 
   before do
-    configure_elasticsearch do
-
-      travel 1.minute
-
-      rebuild_searchindex
-
-      # execute background jobs
-      Scheduler.worker(true)
-
-      sleep 6
-    end
+    configure_elasticsearch rebuild: true, required: true
   end
 
   describe 'request handling' do

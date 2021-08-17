@@ -337,22 +337,24 @@ remove whole data from index
   end
 
   def self.search_by_index_sort(sort_by = nil, order_by = nil)
-    result = []
+    result = (sort_by || [])
+      .map(&:to_s)
+      .each_with_object([])
+      .each_with_index do |(elem, memo), index|
+        next if elem.blank?
+        next if order_by&.at(index).blank?
 
-    sort_by&.each_with_index do |value, index|
-      next if value.blank?
-      next if order_by&.at(index).blank?
+        # for sorting values use .keyword values (no analyzer is used - plain values)
+        if elem !~ %r{\.} && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
+          elem += '.keyword'
+        end
 
-      # for sorting values use .keyword values (no analyzer is used - plain values)
-      if value !~ %r{\.} && value !~ %r{_(time|date|till|id|ids|at)$}
-        value += '.keyword'
+        memo.push(
+          elem => {
+            order: order_by[index],
+          },
+        )
       end
-      result.push(
-        value => {
-          order: order_by[index],
-        },
-      )
-    end
 
     if result.blank?
       result.push(

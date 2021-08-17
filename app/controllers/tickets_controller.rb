@@ -5,28 +5,19 @@ class TicketsController < ApplicationController
   include ClonesTicketArticleAttachments
   include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
+  include ApplicationController::Paginates
 
   prepend_before_action -> { authorize! }, only: %i[create selector import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
   prepend_before_action :authentication_check
 
   # GET /api/v1/tickets
   def index
-    offset = 0
-    per_page = 100
-
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      per_page = params[:per_page].to_i
-    end
-
-    if per_page > 100
-      per_page = 100
-    end
+    paginate_with(max: 100)
 
     tickets = TicketPolicy::ReadScope.new(current_user).resolve
                                      .order(id: :asc)
-                                     .offset(offset)
-                                     .limit(per_page)
+                                     .offset(pagination.offset)
+                                     .limit(pagination.limit)
 
     if response_expand?
       list = []
@@ -448,14 +439,7 @@ class TicketsController < ApplicationController
       params.require(:condition).permit!
     end
 
-    per_page = params[:per_page] || params[:limit] || 50
-    per_page = per_page.to_i
-    if per_page > 200
-      per_page = 200
-    end
-    page = params[:page] || 1
-    page = page.to_i
-    offset = (page - 1) * per_page
+    paginate_with(max: 200, default: 50)
 
     query = params[:query]
     if query.respond_to?(:permit!)
@@ -466,8 +450,8 @@ class TicketsController < ApplicationController
     tickets = Ticket.search(
       query:        query,
       condition:    params[:condition].to_h,
-      limit:        per_page,
-      offset:       offset,
+      limit:        pagination.limit,
+      offset:       pagination.offset,
       order_by:     params[:order_by],
       sort_by:      params[:sort_by],
       current_user: current_user,
