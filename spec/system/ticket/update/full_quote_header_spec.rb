@@ -8,6 +8,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
   let(:customer) { create(:customer) }
   let(:current_user) { customer }
+  let(:selection) { '' }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
@@ -107,6 +108,78 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     end
   end
 
+  context 'when text is selected on page while replying' do
+    let(:full_quote_header_setting) { false }
+    let(:before_article_content_selector) { '.ticketZoom-header' }
+    let(:after_article_content_selector) { '.ticket-article-item .humanTimeFromNow' }
+    let(:article_content_selector) { '.ticket-article-item .richtext-content' }
+
+    it 'does not quote article when bits other than the article are selected' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, '')
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+        end
+      end
+    end
+
+    it 'quotes article when bits inside the article are selected' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(article_content_selector, '')
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_text(selection)
+        end
+      end
+    end
+
+    it 'quotes only article when bits before the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+    it 'quotes only article when bits after the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(article_content_selector, after_article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+    it 'quotes only article when bits both before and after the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, after_article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+  end
+
   def click_forward
     click '.js-ArticleAction[data-type=emailForward]'
   end
@@ -115,8 +188,30 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     click '.js-ArticleAction[data-type=internal]'
   end
 
+  def click_reply
+    click '.js-ArticleAction[data-type=emailReply]'
+  end
+
+  def highlight_and_get_selection(start_selector, end_selector)
+    find(start_selector)
+      .execute_script(<<~JAVASCRIPT, end_selector)
+        let [ end_selector ] = arguments
+        let end_node = $(end_selector)[0]
+        if(!end_node) {
+          end_node = this.nextSibling
+        }
+        window.getSelection().removeAllRanges()
+        var range = window.document.createRange()
+        range.setStart(this, 0)
+        range.setEnd(end_node, end_node.childNodes.length)
+        window.getSelection().addRange(range)
+      JAVASCRIPT
+
+    find(start_selector).evaluate_script 'window.getSelection().toString().trim()'
+  end
+
   def highlight_and_click_reply
-    find('.ticket-article-item .textBubble')
+    find('.ticket-article-item .richtext-content')
       .execute_script <<~JAVASCRIPT
         window.getSelection().removeAllRanges()
         var range = window.document.createRange()
@@ -125,7 +220,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         window.getSelection().addRange(range)
       JAVASCRIPT
 
-    click '.js-ArticleAction[data-type=emailReply]'
+    click_reply
   end
 
   define :contain_full_quote do

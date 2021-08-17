@@ -6,10 +6,20 @@ class App.ClipBoard
       _instance ?= new _Singleton
     _instance.bind(el)
 
+  @manuallyUpdateSelection: (type) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.manuallyUpdateSelection(type)
+  
   @getSelected: (type) ->
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.getSelected(type)
+
+  @getSelectedObject: (type) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.getSelectedObject(type)
 
   @getSelectedLast: (type) ->
     if _instance == undefined
@@ -36,9 +46,11 @@ class _Singleton
     @selection =
       html: ''
       text: ''
+      sel: null
     @selectionLast =
       html: ''
       text: ''
+      sel: null
 
   # bind to fill selected text into
   bind: (el) ->
@@ -59,7 +71,7 @@ class _Singleton
     )
 
   _updateSelection: =>
-    for key in ['html', 'text']
+    for key in ['html', 'text', 'sel']
       @selection[key] = @_getSelected(key)
       if @selection[key]
         @selectionLast[key] = @selection[key]
@@ -86,11 +98,22 @@ class _Singleton
       for i in [1..sel.rangeCount]
         container.appendChild(sel.getRangeAt(i-1).cloneContents())
       html = container.innerHTML
-    html
+    
+    if type != 'sel'
+      html
+    else
+      sel
+
+  manuallyUpdateSelection: ->
+    @_updateSelection()
 
   # get current selection
   getSelected: (type) ->
     @selection[type]
+
+  # get current selection original object
+  getSelectedObject: ->
+    @selection['sel']
 
   # get latest selection
   getSelectedLast: (type) ->

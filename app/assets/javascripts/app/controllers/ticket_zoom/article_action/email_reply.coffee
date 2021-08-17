@@ -127,16 +127,14 @@ class EmailReply extends App.Controller
     # get current body
     body = ui.el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
-    # check if quote need to be added
+    # check if quote need to be added via user selection of content
     signaturePosition = 'bottom'
-    selected = App.ClipBoard.getSelected('html')
-    if selected
-      selected = App.Utils.htmlCleanup(selected).html()
-    if !selected
-      selected = App.ClipBoard.getSelected('text')
-      if selected
-        selected = App.Utils.textCleanup(selected)
-        selected = App.Utils.text2html(selected)
+
+    if !@hasUserSelectedContent(ui)
+      selected = ''
+    else
+      selected = @getSelectedContent(ui)
+      selected = @cleanUpHtmlSelection(selected)
 
     # full quote, if needed
     if !selected && article && App.Config.get('ui_ticket_zoom_article_email_full_quote')
@@ -169,6 +167,67 @@ class EmailReply extends App.Controller
     })
 
     true
+
+  @cleanUpHtmlSelection: (selected) ->
+    if selected
+      cleaned_up = App.Utils.htmlCleanup(selected).html()
+
+      return cleaned_up if cleaned_up
+
+    text = App.ClipBoard.getSelected('text')
+    return App.Utils.text2html(text) if text
+
+    false
+
+  # Fixes Issue #3539 - When replying quote article content only
+  @getSelectedContent: (ui) ->
+    range          = window.getSelection().getRangeAt(0)
+    parentSelector = ui.el.closest('.ticket-article-item').attr('id')
+
+    return if !parentSelector
+
+    lastSelElem = $('#' + parentSelector + ' .richtext-content')[0]
+
+    startInsideArticle = @isInsideSelectionBoundary(range.startContainer, parentSelector)
+    endInsideArticle   = @isInsideSelectionBoundary(range.endContainer, parentSelector)
+
+    if !startInsideArticle && endInsideArticle
+      range.setStart(lastSelElem, 0)
+    else if startInsideArticle && !endInsideArticle
+      range.setEnd(lastSelElem, lastSelElem.childNodes.length)
+    else if @containsNode(lastSelElem)
+      range.setStart(lastSelElem, 0)
+      range.setEnd(lastSelElem, lastSelElem.childNodes.length)
+
+    App.ClipBoard.manuallyUpdateSelection()
+    App.ClipBoard.getSelected('html')
+
+  # checks if user has made any text selection
+  # checks if that text selection is inside article-content only
+  @hasUserSelectedContent: (ui) ->
+    selObject = App.ClipBoard.getSelectedObject()
+
+    if selObject.rangeCount > 0
+      # item on which reply is clicked
+      parentTicketArticleContainer = ui.el.closest('.ticket-article-item')
+      if parentTicketArticleContainer
+        parentSelector = parentTicketArticleContainer.attr('id')
+        range = selObject.getRangeAt(0)
+        return @isInsideSelectionBoundary(range.startContainer, parentSelector) || @isInsideSelectionBoundary(range.endContainer, parentSelector) || @containsNode($('#' + parentSelector + ' .richtext-content')[0])
+    else
+      return false
+        
+  @isInsideSelectionBoundary: (node, parentSelectorId) ->
+    hasParent = $(node).closest('#' + parentSelectorId + ' .richtext-content')
+    return hasParent && hasParent.attr('class') is 'richtext-content'
+
+  # Selection.containsNode is not supported in IE, hence check
+  @containsNode: (node) ->
+    selected = App.ClipBoard.getSelectedObject()
+    if typeof selected.containsNode == 'function'
+      return selected.containsNode(node, false)
+    else
+      return false
 
   @date_format: (date_string) ->
     options = {
