@@ -7,7 +7,7 @@ class Group < ApplicationModel
   include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasHistory
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
   include HasCollectionUpdate
   include HasTicketCreateScreenImpact
   include HasSearchIndexBackend

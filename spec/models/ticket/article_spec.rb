@@ -5,7 +5,7 @@ require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
-require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/ticket/article/has_ticket_contact_attributes_impact_examples'
 
 RSpec.describe Ticket::Article, type: :model do
@@ -15,7 +15,7 @@ RSpec.describe Ticket::Article, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory'
-  it_behaves_like 'HasObjectManagerAttributesValidation'
+  it_behaves_like 'HasObjectManagerAttributes'
 
   it_behaves_like 'Ticket::Article::HasTicketContactAttributesImpact'
 

@@ -11,7 +11,7 @@ class User < ApplicationModel
   include ChecksHtmlSanitized
   include HasGroups
   include HasRoles
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
   include ::HasTicketCreateScreenImpact
   include HasTaskbars
   include User::HasTicketCreateScreenImpact

@@ -70,7 +70,7 @@ returns
       attributes[ attribute_ref_name ] = value
     end
 
-    if self.class.include?(HasObjectManagerAttributesValidation)
+    if is_a? HasObjectManagerAttributes
       RequestCache.integer_fields(self.class.to_s).each do |field|
         next if attributes[field].blank?
 

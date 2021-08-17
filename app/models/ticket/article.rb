@@ -8,7 +8,7 @@ class Ticket::Article < ApplicationModel
   include ChecksHtmlSanitized
   include CanCsvImport
   include CanCloneAttachments
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
 
   include Ticket::Article::Assets
   include Ticket::Article::EnqueueCommunicateEmailJob

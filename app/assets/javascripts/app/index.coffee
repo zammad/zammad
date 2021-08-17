@@ -53,7 +53,7 @@ class App extends Spine.Controller
   @viewPrintItem: (item, attributeConfig = {}, valueRef, table, object) ->
     return '-' if item is undefined
     return '-' if item is ''
-    return item if item is null
+    return '-' if item is null
     result = ''
     items = [item]
     if _.isArray(item)
