@@ -563,17 +563,20 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     imported_fields = mail.header.fields.map do |f|
       begin
         value = if f.value.match?(ISO2022JP_REGEXP)
-                  header_field_unpack_japanese(f)
+                  value = header_field_unpack_japanese(f)
                 else
-                  f.to_utf8
+                  f.decoded.to_utf8
                 end
-
-        if value.blank?
-          value = f.decoded.to_utf8
-        end
       # fields that cannot be cleanly parsed fallback to the empty string
       rescue Mail::Field::IncompleteParseError
         value = ''
+      rescue Encoding::CompatibilityError => e
+        try_iso88591 = f.value.force_encoding('iso-8859-1').encode('utf-8')
+
+        raise e if !try_iso88591.is_utf8?
+
+        f.value = try_iso88591
+        value = f.decoded.to_utf8
       rescue
         value = f.decoded.to_utf8(fallback: :read_as_sanitized_binary)
       end
