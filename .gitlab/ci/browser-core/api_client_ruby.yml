@@ -1,6 +1,9 @@
 api_client_ruby:
   extends:
     - .template_browser-core_api_client
+  variables:
+    TEST_USER: master@example.com
+    TEST_PASSWORD: test
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
@@ -9,4 +12,3 @@ api_client_ruby:
     - cd zammad-api-client-ruby
     - bundle install -j $(nproc)
     - bundle exec rspec
-
