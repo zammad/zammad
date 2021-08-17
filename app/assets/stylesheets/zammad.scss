@@ -7624,18 +7624,6 @@ footer {
   margin-top: 10px;
 }
 
-.tag {
-  display: inline-block;
-  background: #0F94D6;
-  color: white;
-  border-radius: 999px;
-  padding: 2px 12px 1px;
-  
-  &:hover {
-    background: hsl(200deg, 87%, 34%);
-  }
-}
-
 .userNotifications label + .btn {
   margin-top: 1px;
 }
@@ -12975,6 +12963,15 @@ span.is-disabled {
     
     .tag {
       margin: 2px;
+      display: inline-block;
+      background: #0F94D6;
+      color: white;
+      border-radius: 999px;
+      padding: 2px 12px 1px;
+
+      &:hover {
+        background: hsl(200deg, 87%, 34%);
+      }
     }
   }
 
