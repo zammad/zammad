@@ -6,7 +6,7 @@ class AdminDragDropToNewGroupTest < TestCase
   def test_group_via_role
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -23,7 +23,7 @@ class AdminDragDropToNewGroupTest < TestCase
   def test_new_group
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -92,7 +92,7 @@ class AdminDragDropToNewGroupTest < TestCase
     watch_for(css: user_css)
 
     user_element = @browser.find_elements(css: user_css).find do |el|
-      el.text.strip == 'master@example.com'
+      el.text.strip == 'admin@example.com'
     end
 
     user_element.click

@@ -9,7 +9,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -176,7 +176,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -289,7 +289,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -444,7 +444,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -598,7 +598,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -670,7 +670,7 @@ class ChatNoJqueryTest < TestCase
     agent = browser_instance
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -839,7 +839,7 @@ class ChatNoJqueryTest < TestCase
   def disable_chat
     login(
       browser:  agent,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

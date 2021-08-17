@@ -6,7 +6,7 @@ RSpec.describe 'Authentication', type: :system do
 
   it 'Login', authenticated_as: false do
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
     )
 
@@ -34,7 +34,7 @@ RSpec.describe 'Authentication', type: :system do
     expect_current_route 'login', wait: 10
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
     )
 
@@ -50,7 +50,7 @@ RSpec.describe 'Authentication', type: :system do
     visit 'https://www.zammad.org'
 
     # simulate successful login via third party
-    user = User.find_by(login: 'master@example.com')
+    user = User.find_by(login: 'admin@example.com')
     ActiveRecord::SessionStore::Session.all.each do |session|
       session.data[:user_id] = user.id
       session.save!
@@ -61,7 +61,7 @@ RSpec.describe 'Authentication', type: :system do
 
     expect_current_route 'ticket/zoom/1', wait: 10
 
-    expect(current_login).to eq('master@example.com')
+    expect(current_login).to eq('admin@example.com')
   end
 
 end

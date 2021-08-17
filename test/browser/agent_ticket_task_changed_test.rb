@@ -8,7 +8,7 @@ class AgentTicketTaskChangedTest < TestCase
   def test_detection_of_ticket_update_after_new_attribute
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

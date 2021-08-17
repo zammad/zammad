@@ -3,7 +3,7 @@ api_client_php:
     - .template_browser-core_api_client
   variables:
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL: "http://localhost:3000"
-    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "master@example.com"
+    ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME: "admin@example.com"
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
   script:
     - RAILS_ENV=test bundle exec rake db:create

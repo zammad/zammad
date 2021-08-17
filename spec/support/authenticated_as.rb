@@ -42,7 +42,7 @@ module ZammadAuthenticatedAsHelper
       parse_meta_user(input)
     when true
       {
-        username: 'master@example.com',
+        username: 'admin@example.com',
         password: 'test',
       }
     end

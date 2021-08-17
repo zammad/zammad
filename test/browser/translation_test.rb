@@ -7,7 +7,7 @@ class TranslationTest < TestCase
   def test_preferences
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -256,7 +256,7 @@ class TranslationTest < TestCase
   def test_admin_sync
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -323,7 +323,7 @@ class TranslationTest < TestCase
   def test_rerender_when_new_phrases_detected
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile > Devices', type: :system do
-  subject!(:device) { create(:user_device, user_id: User.find_by(login: 'master@example.com').id) }
+  subject!(:device) { create(:user_device, user_id: User.find_by(login: 'admin@example.com').id) }
 
   it 'allows to remove device' do
     visit 'profile/devices'

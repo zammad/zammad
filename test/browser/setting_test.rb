@@ -6,7 +6,7 @@ class SettingTest < TestCase
   def test_setting
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -145,7 +145,7 @@ class SettingTest < TestCase
   def test_product_name
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

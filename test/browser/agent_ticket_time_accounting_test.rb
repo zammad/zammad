@@ -6,7 +6,7 @@ class AgentTicketTimeAccountingTest < TestCase
   def test_macro
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -145,7 +145,7 @@ class AgentTicketTimeAccountingTest < TestCase
   def test_closing_time_accounting_modal_by_clicking_background
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

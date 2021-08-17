@@ -14,6 +14,6 @@ RSpec.describe 'Auto wizard', type: :system, set_up: false do
 
     visit 'getting_started/auto_wizard'
 
-    expect(current_login).to eq('master@example.com')
+    expect(current_login).to eq('admin@example.com')
   end
 end

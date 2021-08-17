@@ -607,7 +607,7 @@ test('auth - existing user', function(assert) {
   new Promise( (resolve, reject) => {
     App.Auth.login({
       data: {
-        username: 'master@example.com',
+        username: 'admin@example.com',
         password: 'test',
       },
       success: resolve,
@@ -616,7 +616,7 @@ test('auth - existing user', function(assert) {
   }).then( function(data) {
     ok(true, 'authenticated')
     var user = App.Session.get('login')
-    equal('master@example.com', user, 'session login')
+    equal('admin@example.com', user, 'session login')
   }, function() {
     ok(false, 'failed')
   })

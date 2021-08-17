@@ -8,7 +8,7 @@ class CustomerTicketCreateFieldsTest < TestCase
 
     # create agent session and fetch object attributes
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -17,7 +17,7 @@ class CustomerTicketCreateFieldsTest < TestCase
 
     # re-create agent session and fetch object attributes
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

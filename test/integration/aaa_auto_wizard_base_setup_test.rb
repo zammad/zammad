@@ -10,7 +10,7 @@ class AaaAutoWizardBaseSetupTest < TestCase
     watch_for(
       css:       '.user-menu .user a',
       attribute: 'title',
-      value:     'master@example.com',
+      value:     'admin@example.com',
       timeout:   14,
     )
   end

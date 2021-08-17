@@ -16,7 +16,7 @@ class AgentTicketEmailSignatureTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -47,7 +47,7 @@ class AgentTicketEmailSignatureTest < TestCase
         signature: signature_name1,
         member:    [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -59,7 +59,7 @@ class AgentTicketEmailSignatureTest < TestCase
         signature: signature_name2,
         member:    [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -70,7 +70,7 @@ class AgentTicketEmailSignatureTest < TestCase
         name:   group_name3,
         member: [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],

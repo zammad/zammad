@@ -209,7 +209,7 @@ class CustomerTicketCreateTest < TestCase
 
     # verify if we still can create new tickets as agent
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -231,7 +231,7 @@ class CustomerTicketCreateTest < TestCase
 
     # disable ticket creation
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -261,7 +261,7 @@ class CustomerTicketCreateTest < TestCase
     # enable ticket creation
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

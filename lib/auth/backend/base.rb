@@ -14,7 +14,7 @@ class Auth
       # @param auth [Auth] the Auth object for the authentication.
       #
       # @example
-      #  auth = Auth::Backend::Internal.new('master@example.com', auth)
+      #  auth = Auth::Backend::Internal.new('admin@example.com', auth)
       def initialize(config, auth)
         @config = config
         @auth   = auth

@@ -7,7 +7,7 @@ class PreferencesLanguageTest < TestCase
   def test_lang_change
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

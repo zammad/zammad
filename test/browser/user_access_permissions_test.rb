@@ -123,7 +123,7 @@ class AgentProfilePermissionsTest < TestCase
   def test_agent_to_edit_admin_ticket_user_details
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

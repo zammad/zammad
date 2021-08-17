@@ -97,7 +97,7 @@ class AgentTicketTagTest < TestCase
     browser2 = browser_instance
     login(
       browser:  browser2,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -365,7 +365,7 @@ class AgentTicketTagTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

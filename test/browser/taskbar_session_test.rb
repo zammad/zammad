@@ -43,7 +43,7 @@ class TaskbarSessionTest < TestCase
     browser1 = browser_instance
     login(
       browser:  browser1,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

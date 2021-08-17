@@ -4667,7 +4667,7 @@ wait untill text in selector disabppears
   def fetch_settings
     url = URI.parse(browser_url)
     req = Net::HTTP::Get.new("#{browser_url}/api/v1/settings/")
-    req.basic_auth('master@example.com', 'test')
+    req.basic_auth('admin@example.com', 'test')
 
     res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)
@@ -4692,7 +4692,7 @@ wait untill text in selector disabppears
     url = URI.parse(browser_url)
     req = Net::HTTP::Put.new("#{browser_url}/api/v1/settings/#{id}")
     req['Content-Type'] = 'application/json'
-    req.basic_auth('master@example.com', 'test')
+    req.basic_auth('admin@example.com', 'test')
     req.body = { 'state_current' => { 'value' => value } }.to_json
     res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)

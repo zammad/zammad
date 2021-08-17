@@ -33,7 +33,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="email"]',
-      value: 'master@example.com',
+      value: 'admin@example.com',
     )
     set(
       css:   '.js-admin input[name="firstname"]',

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 # This file registers a hook before each system test
-# which logs in with/authenticates the master@example.com account.
+# which logs in with/authenticates the admin@example.com account.
 
 # we need to make sure that Capybara is configured/started before
 # this hook. Otherwise a login try is performed while the app/puma

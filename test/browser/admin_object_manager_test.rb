@@ -8,7 +8,7 @@ class AdminObjectManagerTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -161,7 +161,7 @@ class AdminObjectManagerTest < TestCase
   def test_basic_b
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -385,7 +385,7 @@ class AdminObjectManagerTest < TestCase
   def test_basic_c
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -494,7 +494,7 @@ class AdminObjectManagerTest < TestCase
   def test_that_attributes_with_references_should_have_a_disabled_delete_button
     @browser = instance = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -591,7 +591,7 @@ class AdminObjectManagerTest < TestCase
   def test_proper_sorting_of_select_attributes
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -675,7 +675,7 @@ class AdminObjectManagerTest < TestCase
   def test_deleted_select_attributes
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -784,7 +784,7 @@ class AdminObjectManagerTest < TestCase
   def test_false_boolean_attributes_gets_displayed_for_organizations
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -860,7 +860,7 @@ class AdminObjectManagerTest < TestCase
   def test_false_boolean_attributes_gets_displayed_for_users
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

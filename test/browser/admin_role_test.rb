@@ -6,7 +6,7 @@ class AdminRoleTest < TestCase
   def test_role_device
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -79,7 +79,7 @@ class AdminRoleTest < TestCase
 
     logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -141,7 +141,7 @@ class AdminRoleTest < TestCase
 
     # add admin.user to agent role
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -196,7 +196,7 @@ class AdminRoleTest < TestCase
     # revoke admin.user
     logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -234,7 +234,7 @@ class AdminRoleTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

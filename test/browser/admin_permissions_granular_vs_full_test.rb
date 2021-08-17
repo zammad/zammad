@@ -7,7 +7,7 @@ class AdminPermissionsGranularVsFullTest < TestCase
     new_group_name = "permissions_test_group#{rand(99_999_999)}"
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -30,7 +30,7 @@ class AdminPermissionsGranularVsFullTest < TestCase
     user_css = '.user-list .js-tableBody tr td'
     watch_for(css: user_css)
     @browser.find_elements(css: '.content.active .user-list td:first-child').each do |entry|
-      next if entry.text.strip != 'master@example.com'
+      next if entry.text.strip != 'admin@example.com'
 
       entry.click
       break

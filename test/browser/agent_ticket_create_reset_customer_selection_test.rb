@@ -6,7 +6,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
   def test_clear_customer
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -90,7 +90,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
   def test_clear_customer_use_email
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -242,7 +242,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
 
     watch_for(
       css:   '.content.active .tabsSidebar .sidebar[data-tab="customer"]',
-      value: 'master@example.com',
+      value: 'admin@example.com',
     )
 
     # cleanup

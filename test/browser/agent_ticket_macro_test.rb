@@ -45,7 +45,7 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_stay_on_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -90,7 +90,7 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_close_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -123,7 +123,7 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_advance_to_next_ticket_from_overview
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

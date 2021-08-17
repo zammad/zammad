@@ -2744,7 +2744,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       'Notification Master <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
+  state:       '#{config.product_name} <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
   preferences: {
     online_service_disable: true,
     permission:             ['admin.channel_email'],

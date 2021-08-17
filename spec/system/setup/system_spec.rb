@@ -29,7 +29,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     within('.js-admin') do
       fill_in 'firstname',        with: 'Test Master'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'TEst1234äöüß'
       fill_in 'password_confirm', with: 'TEst1234äöüß'
 
@@ -119,7 +119,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     within('.js-admin') do
       fill_in 'firstname',        with: 'Test Master'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'asd'
       fill_in 'password_confirm', with: 'asd'
 

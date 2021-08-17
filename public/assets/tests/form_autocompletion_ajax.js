@@ -48,7 +48,7 @@ test( "autocompletion_ajax check", function(assert) {
   new Promise( (resolve, reject) => {
     App.Auth.login({
       data: {
-        username: 'master@example.com',
+        username: 'admin@example.com',
         password: 'test',
       },
       success: resolve,
@@ -59,7 +59,7 @@ test( "autocompletion_ajax check", function(assert) {
     return new Promise( (resolve, reject) => {
       notEqual(App.Session.get(), undefined, 'User is logged in so the api requests will work')
 
-      check_ajax_field('autocompletion_ajax1', 'master@example.com', 1, resolve)
+      check_ajax_field('autocompletion_ajax1', 'admin@example.com', 1, resolve)
     })
   })
   .then( function() {

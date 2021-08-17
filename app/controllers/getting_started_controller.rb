@@ -36,7 +36,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # check it auto wizard is already done
     return if auto_wizard_enabled_response
 
-    # if master user already exists, we need to be authenticated
+    # if admin user already exists, we need to be authenticated
     return if setup_done && !authentication_check
 
     # return result

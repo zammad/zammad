@@ -6,7 +6,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'owner auto-assignment', authenticated_as: :authenticate do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), state: Ticket::State.find_by(name: 'new')) }
-    let!(:session_user) { User.find_by(login: 'master@example.com') }
+    let!(:session_user) { User.find_by(login: 'admin@example.com') }
 
     context 'for agent disabled' do
       def authenticate

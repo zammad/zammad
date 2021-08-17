@@ -13,7 +13,7 @@ class Auth
   # @param username [String] the user name for the user object which needs an authentication.
   #
   # @example
-  #  auth = Auth.new('master@example.com', 'some+password')
+  #  auth = Auth.new('admin@example.com', 'some+password')
   def initialize(username, password)
     @lookup_backend_instance = {}
 

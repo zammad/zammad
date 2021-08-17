@@ -25,7 +25,7 @@ class EmailPostmasterToSender < ActiveSupport::TestCase
     @folder = "postmaster_to_sender_#{@test_id}"
 
     if ENV['MAIL_SERVER_EMAIL'].blank?
-      raise "Need MAIL_SERVER_EMAIL as ENV variable like export MAIL_SERVER_EMAIL='master@example.com'"
+      raise "Need MAIL_SERVER_EMAIL as ENV variable like export MAIL_SERVER_EMAIL='admin@example.com'"
     end
 
     @sender_email_address = ENV['MAIL_SERVER_EMAIL']

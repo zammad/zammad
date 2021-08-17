@@ -102,7 +102,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
   def test_full_quote
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -178,7 +178,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
   def test_full_quote_german_locale
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

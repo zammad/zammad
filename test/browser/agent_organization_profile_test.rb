@@ -10,7 +10,7 @@ class AgentOrganizationProfileTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -162,7 +162,7 @@ class AgentOrganizationProfileTest < TestCase
   def test_org_profile_user_active_update
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

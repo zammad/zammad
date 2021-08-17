@@ -6,7 +6,7 @@ class AgentTicketOverviewLevel0Test < TestCase
   def test_bulk_close
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -219,7 +219,7 @@ class AgentTicketOverviewLevel0Test < TestCase
   def test_bulk_pending
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -370,7 +370,7 @@ class AgentTicketOverviewLevel0Test < TestCase
   def test_bulk_owner_change
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -472,7 +472,7 @@ class AgentTicketOverviewLevel0Test < TestCase
   def test_no_bulk_action_when_missing_change_permission
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -495,7 +495,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     user_edit(
       data: {
-        login:       'master@example.com',
+        login:       'admin@example.com',
         permissions: { 1 => ['full'],
                        2 => ['full'],
                        3 => ['full'], }
@@ -531,7 +531,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       }
     )
 
-    logout # logout as master@example.com then login as agent2@example.com
+    logout # logout as admin@example.com then login as agent2@example.com
     login(
       username: 'agent2@example.com',
       password: 'test',
@@ -612,9 +612,9 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # cleanup
     tasks_close_all
-    logout # logout as agent2@example.com and then login as master@example.com to clean up tickets
+    logout # logout as agent2@example.com and then login as admin@example.com to clean up tickets
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

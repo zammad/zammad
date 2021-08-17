@@ -8,7 +8,7 @@ class MaintenanceModeTest < TestCase
     browser1 = browser_instance
     login(
       browser:  browser1,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -75,7 +75,7 @@ class MaintenanceModeTest < TestCase
     sleep 4
     login(
       browser:  browser1,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

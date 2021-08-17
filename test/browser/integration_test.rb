@@ -7,7 +7,7 @@ class IntegrationTest < TestCase
   def test_sipgate
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -79,7 +79,7 @@ class IntegrationTest < TestCase
   def test_slack
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -165,7 +165,7 @@ class IntegrationTest < TestCase
   def test_clearbit
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -255,7 +255,7 @@ class IntegrationTest < TestCase
   def test_icinga
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

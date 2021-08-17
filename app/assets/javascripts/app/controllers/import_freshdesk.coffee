@@ -27,7 +27,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
 
     @freshdeskDomain = '.freshdesk.com'
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return

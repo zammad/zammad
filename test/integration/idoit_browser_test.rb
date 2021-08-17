@@ -24,7 +24,7 @@ class IntegrationIdoitTest < TestCase
 
     @browser = browser_instance
     login(
-      username:    'master@example.com',
+      username:    'admin@example.com',
       password:    'test',
       url:         browser_url,
       auto_wizard: true,
@@ -95,7 +95,7 @@ class IntegrationIdoitTest < TestCase
     # reselect the customer and verify if object is still shown in sidebar
     ticket_customer_select(
       css:      '.content.active .newTicket',
-      customer: 'master',
+      customer: 'admin',
     )
 
     watch_for(

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
   let(:group) { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
-  let!(:session_user) { User.find_by(login: 'master@example.com') }
+  let!(:session_user) { User.find_by(login: 'admin@example.com') }
 
   before do
     freeze_time

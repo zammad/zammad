@@ -9,13 +9,13 @@ module CommonActions
   #
   # @example
   #  login(
-  #    username: 'master@example.com',
+  #    username: 'admin@example.com',
   #    password: 'test',
   #  )
   #
   # @example
   #  login(
-  #    username:    'master@example.com',
+  #    username:    'admin@example.com',
   #    password:    'test',
   #    remember_me: true,
   #  )
@@ -59,7 +59,7 @@ module CommonActions
   #
   # @example
   #  current_login
-  # => 'master@example.com'
+  # => 'admin@example.com'
   #
   # @return [String] the login of the currently logged in user.
   def current_login
@@ -70,7 +70,7 @@ module CommonActions
   #
   # @example
   #  current_user.login
-  # => 'master@example.com'
+  # => 'admin@example.com'
   #
   # @example
   #  current_user do |user|

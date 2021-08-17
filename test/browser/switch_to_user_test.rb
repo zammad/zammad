@@ -6,7 +6,7 @@ class SwitchToUserTest < TestCase
   def test_agent_user
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -47,7 +47,7 @@ class SwitchToUserTest < TestCase
 
     sleep 5
     login = @browser.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
-    assert_equal(login, 'master@example.com')
+    assert_equal(login, 'admin@example.com')
 
   end
 end

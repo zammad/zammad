@@ -8,7 +8,7 @@ class AdminObjectManagerTreeSelectTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -122,7 +122,7 @@ class AdminObjectManagerTreeSelectTest < TestCase
   def test_modify_tree_select_attributes
     @browser = instance = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

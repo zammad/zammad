@@ -9,7 +9,7 @@ class AgentTicketActionLevel0Test < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -206,7 +206,7 @@ class AgentTicketActionLevel0Test < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -217,7 +217,7 @@ class AgentTicketActionLevel0Test < TestCase
         name:   "some group #{rand(999_999_999)}",
         member: [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
           {

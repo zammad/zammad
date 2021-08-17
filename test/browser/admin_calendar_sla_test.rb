@@ -6,7 +6,7 @@ class AdminCalendarSlaTest < TestCase
   def test_calendar
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -44,7 +44,7 @@ class AdminCalendarSlaTest < TestCase
     logout
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
     )
 

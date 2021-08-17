@@ -14,7 +14,7 @@ class Import extends App.ControllerWizardFullScreen
       processData: true,
       success: (data, status, xhr) =>
 
-        # redirect to login if master user already exists
+        # redirect to login if admin user already exists
         if @Config.get('system_init_done')
           @navigate '#login'
           return

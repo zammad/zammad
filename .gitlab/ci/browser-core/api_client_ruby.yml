@@ -5,9 +5,8 @@ api_client_ruby:
     - RAILS_ENV=test bundle exec rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - bundle exec rake zammad:ci:test:start
-    - git clone https://github.com/zammad/zammad-api-client-ruby.git
+    - git clone https://github.com/zammad/zammad-api-client-ruby.git -b mg/maintenance/inclusive-language
     - cd zammad-api-client-ruby
     - bundle update --bundler
     - bundle install -j $(nproc)
     - bundle exec rspec
-
