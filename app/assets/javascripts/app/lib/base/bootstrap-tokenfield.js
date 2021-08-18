@@ -6,6 +6,9 @@
  * Edit: Felix
  * - remove maxTokenWidth
  *
+ * Edit: Romit
+ * - allow to remove token by clearing it's text manually
+ *
  */
 
 (function (factory) {
@@ -233,7 +236,10 @@
       this.$element.trigger(createEvent)
 
       // Bail out if there if attributes are empty or event was defaultPrevented
-      if (!createEvent.attrs || createEvent.isDefaultPrevented()) return
+      if (!createEvent.attrs || createEvent.isDefaultPrevented()) {
+        this.updateTokensOnEditDiscard(triggerChange)
+        return
+      }
 
       var $token = $('<div class="token" />')
             .append('<span class="token-label" />')
@@ -303,10 +309,21 @@
       return this.$element.get(0)
     }
 
+  , updateTokensOnEditDiscard: function(triggerChange) {
+      // if the field is being edited, update original field's value 
+      if(this.$input.data('edit') && triggerChange) {
+        // Trigger change event on the original field
+        this.$element.val( this.getTokensList() ).trigger( $.Event('change', { initiator: 'tokenfield' }) )
+      }        
+    }
+
   , setTokens: function (tokens, add, triggerChange) {
       if (!add) this.$wrapper.find('.token').remove()
 
-      if (!tokens) return
+      if (!tokens) {
+        this.updateTokensOnEditDiscard(triggerChange)
+        return
+      }
 
       if (typeof triggerChange === 'undefined') {
           triggerChange = true

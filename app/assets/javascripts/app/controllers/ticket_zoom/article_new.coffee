@@ -75,6 +75,9 @@ class App.TicketZoomArticleNew extends App.Controller
       if data.position is 'end'
         @placeCaretAtEnd(@textarea.get(0))
         return
+      
+      # fixes email validation issue right after new ticket creation
+      @tokanice(data.type.name)
     )
 
     # add article attachment
