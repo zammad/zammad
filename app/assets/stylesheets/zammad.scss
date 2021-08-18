@@ -3835,6 +3835,15 @@ footer {
     min-width: $minWidth - $sidebarWidth;
   }
 
+  &.no-sidebar {
+    @include bidi-style(left, $navigationWidth, right, 0);
+    min-width: $minWidth - $navigationWidth;
+
+    @include small-desktop {
+      min-width: $minWidth;
+    }
+  }
+
   @include phone {
     @include bidi-style(left, $mobileNavigationWidth, right, 0);
     min-width: 0;
