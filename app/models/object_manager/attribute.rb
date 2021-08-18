@@ -20,6 +20,10 @@ class ObjectManager::Attribute < ApplicationModel
     active
   ].freeze
 
+  VALIDATE_INTEGER_MIN    = -2_147_483_647
+  VALIDATE_INTEGER_MAX    = 2_147_483_647
+  VALIDATE_INTEGER_REGEXP = %r{^-?\d+$}.freeze
+
   self.table_name = 'object_manager_attributes'
 
   belongs_to :object_lookup, optional: true
@@ -888,10 +892,23 @@ is certain attribute used by triggers, overviews or schedulers
       [{ failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
          message: 'must have integer for :maxlength' }]
     when 'integer'
-      [{ failed:  !local_data_option[:min].to_s.match?(%r{^\d+$}),
+      min = local_data_option[:min]
+      max = local_data_option[:max]
+
+      [{ failed:  !VALIDATE_INTEGER_REGEXP.match?(min.to_s),
          message: 'must have integer for :min' },
-       { failed:  !local_data_option[:max].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :max' }]
+       { failed:  !VALIDATE_INTEGER_REGEXP.match?(max.to_s),
+         message: 'must have integer for :max' },
+       { failed:  !(min.is_a?(Integer) && min >= VALIDATE_INTEGER_MIN),
+         message: 'min must be higher than -2147483648' },
+       { failed:  !(min.is_a?(Integer) && min <= VALIDATE_INTEGER_MAX),
+         message: 'min must be lower than 2147483648' },
+       { failed:  !(max.is_a?(Integer) && max >= VALIDATE_INTEGER_MIN),
+         message: 'max must be higher than -2147483648' },
+       { failed:  !(max.is_a?(Integer) && max <= VALIDATE_INTEGER_MAX),
+         message: 'max must be lower than 2147483648' },
+       { failed:  !(max.is_a?(Integer) && min.is_a?(Integer) && min <= max),
+         message: 'min must be lower than max' }]
     when %r{^((tree_)?select|checkbox)$}
       [{ failed:  !local_data_option.key?(:default),
          message: 'must have value for :default' },

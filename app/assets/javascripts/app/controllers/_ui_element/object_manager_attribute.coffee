@@ -279,7 +279,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::min', display: 'Minimal', tag: 'integer', null: false, default: 0, min: 1 },
+      { name: 'data_option::min', display: 'Minimal', tag: 'integer', null: false, default: 0, min: -2147483647, max: 2147483647 },
     ]
     integerMin = new App.ControllerForm(
       model:
@@ -288,7 +288,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::max', display: 'Maximal', tag: 'integer', null: false, default: 999999999, min: 2 },
+      { name: 'data_option::max', display: 'Maximal', tag: 'integer', null: false, min: -2147483647, max: 2147483647, default: 999999999 },
     ]
     integerMax = new App.ControllerForm(
       model:
