@@ -270,7 +270,7 @@ returns
 
 =end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
     attributes = super
     add_attachments_to_attributes(attributes)
     Ticket::Article.insert_urls(attributes)

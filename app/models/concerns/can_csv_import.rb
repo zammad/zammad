@@ -246,20 +246,20 @@ returns
       records.each do |record|
         record_attributes_with_association_names = record.attributes_with_association_names
         records_attributes_with_association_names.push record_attributes_with_association_names
-        record_attributes_with_association_names.each do |key, value|
-          next if value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
-          next if value.instance_of?(Hash)
-          next if csv_attributes_ignored&.include?(key.to_sym)
-          next if key.end_with?('_id')
-          next if key.end_with?('_ids')
-          next if key == 'created_by'
-          next if key == 'updated_by'
-          next if key == 'created_at'
-          next if key == 'updated_at'
-          next if header.include?(key)
+      end
+      new.attributes_with_association_names(empty_keys: true).each do |key, value|
+        next if value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
+        next if value.instance_of?(Hash)
+        next if csv_attributes_ignored&.include?(key.to_sym)
+        next if key.end_with?('_id')
+        next if key.end_with?('_ids')
+        next if key == 'created_by'
+        next if key == 'updated_by'
+        next if key == 'created_at'
+        next if key == 'updated_at'
+        next if header.include?(key)
 
-          header.push key
-        end
+        header.push key
       end
 
       rows = []

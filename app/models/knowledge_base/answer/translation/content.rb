@@ -27,7 +27,7 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     add_attachments_to_attributes(attrs)
   end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
     attrs = super
     add_attachments_to_attributes(attrs)
   end

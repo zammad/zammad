@@ -1,6 +1,18 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 RSpec.shared_examples 'CanCsvImport' do |unique_attributes: []|
+  describe '.csv_example' do
+    before do
+      described_class.destroy_all
+    end
+
+    context 'when no data avaiable' do
+      it 'still returns the header for the csv example' do
+        expect(described_class.csv_example).to include('id')
+      end
+    end
+  end
+
   describe '.csv_import' do
     let!(:params) { { string: <<~CSV, parse_params: { col_sep: ',' } } }
       #{described_class.attribute_names.join(',')}

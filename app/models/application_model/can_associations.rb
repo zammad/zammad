@@ -176,7 +176,7 @@ returns
 
 =end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
 
     # get relations
     attributes = attributes_with_association_ids
@@ -185,6 +185,9 @@ returns
       next if association_attributes_ignored.include?(assoc.name)
 
       ref = send(assoc.name)
+      if empty_keys
+        attributes[assoc.name.to_s] = nil
+      end
       next if !ref
 
       if ref.respond_to?(:first)

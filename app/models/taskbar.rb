@@ -44,7 +44,7 @@ class Taskbar < ApplicationModel
     false
   end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
     add_attachments_to_attributes(super)
   end
 
