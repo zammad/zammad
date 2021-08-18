@@ -113,4 +113,109 @@ RSpec.describe 'Admin Panel > Objects', type: :system do
 
     expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
   end
+
+  # https://github.com/zammad/zammad/issues/3647
+  context 'when setting Min/Max values for integer' do
+    before do
+      page.find('.js-new').click
+
+      in_modal disappears: false do
+        fill_in 'Name', with: 'integer1'
+        fill_in 'Display', with: 'Integer1'
+        page.find('select[name=data_type]').select('Integer')
+      end
+    end
+
+    it 'verifies max value does not go above limit' do
+      in_modal disappears: false do
+        fill_in 'Maximal', with: '999999999999'
+
+        page.find('.js-submit').click
+
+        expect(page).to have_text 'Data option max must be lower than 2147483648'
+      end
+    end
+
+    it 'verifies max value does not go below limit' do
+      in_modal disappears: false do
+        fill_in 'Maximal', with: '-999999999999'
+
+        page.find('.js-submit').click
+
+        expect(page).to have_text 'Data option max must be higher than -2147483648'
+      end
+    end
+
+    it 'verifies max value can be set' do
+      in_modal do
+        fill_in 'Maximal', with: '128'
+
+        page.find('.js-submit').click
+      end
+
+      expect(page).to have_text 'Integer1'
+    end
+
+    it 'verifies max value can be set to a negative value' do
+      in_modal do
+        fill_in 'Minimal', with: '-256'
+        fill_in 'Maximal', with: '-128'
+
+        page.find('.js-submit').click
+      end
+
+      expect(page).to have_text 'Integer1'
+    end
+
+    it 'verifies min value does not go above limit' do
+      in_modal disappears: false do
+        fill_in 'Minimal', with: '999999999999'
+
+        page.find('.js-submit').click
+
+        expect(page).to have_text 'Data option min must be lower than 2147483648'
+      end
+    end
+
+    it 'verifies min value does not go below limit' do
+      in_modal disappears: false do
+        fill_in 'Minimal', with: '-999999999999'
+
+        page.find('.js-submit').click
+
+        expect(page).to have_text 'Data option min must be higher than -2147483648'
+      end
+    end
+
+    it 'verifies min value can be set' do
+      in_modal do
+        fill_in 'Minimal', with: '128'
+
+        page.find('.js-submit').click
+      end
+
+      expect(page).to have_text 'Integer1'
+    end
+
+    it 'verifies min value can be set to a negative value' do
+      in_modal do
+        fill_in 'Minimal', with: '-128'
+
+        page.find('.js-submit').click
+      end
+
+      expect(page).to have_text 'Integer1'
+    end
+
+    it 'verifies min value must be lower than max' do
+      in_modal disappears: false do
+        fill_in 'Minimal', with: '128'
+        fill_in 'Maximal', with: '-128'
+
+        page.find('.js-submit').click
+
+        expect(page).to have_text 'Data option min must be lower than max'
+      end
+    end
+  end
 end
