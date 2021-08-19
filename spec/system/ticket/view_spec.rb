@@ -344,4 +344,33 @@ RSpec.describe 'Ticket views', type: :system do
       expect(page).to have_text(ticket.title, wait: 10)
     end
   end
+
+  describe 'Grouping' do
+    context 'when sorted by custom object date', authenticated_as: :authenticate, db_strategy: :reset do
+      let(:ticket1) { create(:ticket, group: Group.find_by(name: 'Users'), cdate: '2018-01-17') }
+      let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users'), cdate: '2018-08-19') }
+      let(:ticket3) { create(:ticket, group: Group.find_by(name: 'Users'), cdate: '2019-01-19') }
+      let(:ticket4) { create(:ticket, group: Group.find_by(name: 'Users'), cdate: '2021-08-18') }
+
+      def authenticate
+        create :object_manager_attribute_date, name: 'cdate'
+        ObjectManager::Attribute.migration_execute
+        ticket4
+        ticket3
+        ticket2
+        ticket1
+        Overview.find_by(link: 'all_unassigned').update(group_by: 'cdate')
+        true
+      end
+
+      it 'does show the date groups sorted' do
+        visit 'ticket/view/all_unassigned'
+        text = page.find('.js-tableBody').text(:all)
+
+        expect(text.index('01/17/2018') < text.index('08/19/2018')).to eq(true)
+        expect(text.index('08/19/2018') < text.index('01/19/2019')).to eq(true)
+        expect(text.index('01/19/2019') < text.index('08/18/2021')).to eq(true)
+      end
+    end
+  end
 end

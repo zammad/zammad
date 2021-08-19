@@ -370,8 +370,8 @@ test('table test', function() {
     groupBy:        'priority',
     groupDirection: 'DESC',
   })
-  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), '2 normal', 'check row 1')
-  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(1)').text().trim(), '1 niedrig', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(4) > td:nth-child(1)').text().trim(), '2 normal', 'check row 3')
 
   $('#table').append('<hr><h1>table Group By Direction ASC</h1><div id="table7"></div>')
   el = $('#table7')
