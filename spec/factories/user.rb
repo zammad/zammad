@@ -57,6 +57,26 @@ FactoryBot.define do
       password_plain = user.password
       user.define_singleton_method(:password_plain, -> { password_plain })
     end
+
+    trait :preferencable do
+      transient do
+        notification_group_ids { [] }
+      end
+
+      preferences do
+        {
+          'notification_config' => {
+            'matrix'    => {
+              'create'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true }, 'channel' => { 'email' => true, 'online' => true } },
+              'update'           => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true }, 'channel' => { 'email' => true, 'online' => true } },
+              'reminder_reached' => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true }, 'channel' => { 'email' => true, 'online' => true } },
+              'escalation'       => { 'criteria' => { 'owned_by_me' => true, 'owned_by_nobody' => true }, 'channel' => { 'email' => true, 'online' => true } },
+            },
+            'group_ids' => notification_group_ids
+          }
+        }
+      end
+    end
   end
 
   sequence(:password_valid) do |n|

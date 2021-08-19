@@ -28,6 +28,9 @@ returns
     map = {
       'escalation_warning' => 'escalation'
     }
+
+    type = type.split('.').first # pick parent type of a subtype. Eg. update vs update.merged_into
+
     if map[type]
       type = map[type]
     end

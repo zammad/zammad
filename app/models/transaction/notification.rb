@@ -182,21 +182,24 @@ class Transaction::Notification
 
       # get user based notification template
       # if create, send create message / block update messages
-      template = nil
-      case @item[:type]
-      when 'create'
-        template = 'ticket_create'
-      when 'update'
-        template = 'ticket_update'
-      when 'reminder_reached'
-        template = 'ticket_reminder_reached'
-      when 'escalation'
-        template = 'ticket_escalation'
-      when 'escalation_warning'
-        template = 'ticket_escalation_warning'
-      else
-        raise "unknown type for notification #{@item[:type]}"
-      end
+      template = case @item[:type]
+                 when 'create'
+                   'ticket_create'
+                 when 'update'
+                   'ticket_update'
+                 when 'reminder_reached'
+                   'ticket_reminder_reached'
+                 when 'escalation'
+                   'ticket_escalation'
+                 when 'escalation_warning'
+                   'ticket_escalation_warning'
+                 when 'update.merged_into'
+                   'ticket_update_merged_into'
+                 when 'update.received_merge'
+                   'ticket_update_received_merge'
+                 else
+                   raise "unknown type for notification #{@item[:type]}"
+                 end
 
       current_user = User.lookup(id: @item[:user_id])
       if !current_user

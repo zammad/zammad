@@ -73,8 +73,10 @@ class App.UiElement.ticket_selector
         null: false
         translate: true
         options:
-          create: 'created'
-          update: 'updated'
+          create:                  'created'
+          update:                  'updated'
+          'update.merged_into':    'merged into'
+          'update.received_merge': 'received merge'
         operator: ['is', 'is not']
 
     for groupKey, groupMeta of groups

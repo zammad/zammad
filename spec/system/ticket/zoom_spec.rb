@@ -1706,4 +1706,60 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'merging', authenticated_as: :user do
+    before do
+      merged_into_trigger && received_merge_trigger && update_trigger
+
+      visit "ticket/zoom/#{ticket.id}"
+      visit "ticket/zoom/#{target_ticket.id}"
+
+      await_empty_ajax_queue
+
+      ensure_websocket do
+        visit 'dashboard'
+      end
+    end
+
+    let(:merged_into_trigger)    { create(:trigger, :conditionable, condition_ticket_action: :merged_into) }
+    let(:received_merge_trigger) { create(:trigger, :conditionable, condition_ticket_action: :received_merge) }
+    let(:update_trigger)         { create(:trigger, :conditionable, condition_ticket_action: :update) }
+
+    let(:ticket)                 { create(:ticket) }
+    let(:target_ticket)          { create(:ticket) }
+
+    let(:user)                   { create(:agent, :preferencable, notification_group_ids: [ticket, target_ticket].map(&:group_id), groups: [ticket, target_ticket].map(&:group)) }
+
+    context 'when merging ticket' do
+      before do
+        ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+      end
+
+      it 'pulses source ticket' do
+        expect(page).to have_css("#navigation a.is-modified[data-key=\"Ticket-#{ticket.id}\"]")
+      end
+
+      it 'pulses target ticket' do
+        expect(page).to have_css("#navigation a.is-modified[data-key=\"Ticket-#{target_ticket.id}\"]")
+      end
+    end
+
+    context 'when merging and looking at online notifications', :performs_jobs do
+      before do
+        perform_enqueued_jobs do
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        end
+
+        find('.js-toggleNotifications').click
+      end
+
+      it 'shows online notification for source ticket' do
+        expect(page).to have_text("Ticket #{ticket.title} was merged into another ticket")
+      end
+
+      it 'shows online notification for target ticket' do
+        expect(page).to have_text("Another ticket was merged into ticket #{ticket.title}")
+      end
+    end
+  end
 end

@@ -376,6 +376,26 @@ returns
 
       # touch new ticket (to broadcast change)
       target_ticket.touch # rubocop:disable Rails/SkipsModelValidations
+
+      EventBuffer.add('transaction', {
+                        object:     target_ticket.class.name,
+                        type:       'update.received_merge',
+                        data:       target_ticket,
+                        changes:    {},
+                        id:         target_ticket.id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
+
+      EventBuffer.add('transaction', {
+                        object:     self.class.name,
+                        type:       'update.merged_into',
+                        data:       self,
+                        changes:    {},
+                        id:         id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
     end
     true
   end

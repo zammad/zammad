@@ -103,17 +103,23 @@ class App.Ticket extends App.Model
     return if !item
     return if !item.created_by
 
-    if item.type is 'create'
-      return App.i18n.translateContent('%s created Ticket |%s|', item.created_by.displayName(), item.title)
-    else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Ticket |%s|', item.created_by.displayName(), item.title)
-    else if item.type is 'reminder_reached'
-      return App.i18n.translateContent('Pending reminder reached for Ticket |%s|', item.title)
-    else if item.type is 'escalation'
-      return App.i18n.translateContent('Ticket |%s| is escalated!', item.title)
-    else if item.type is 'escalation_warning'
-      return App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
-    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+    switch item.type
+      when 'create'
+        App.i18n.translateContent('%s created Ticket |%s|', item.created_by.displayName(), item.title)
+      when 'update'
+        App.i18n.translateContent('%s updated Ticket |%s|', item.created_by.displayName(), item.title)
+      when 'reminder_reached'
+        App.i18n.translateContent('Pending reminder reached for Ticket |%s|', item.title)
+      when 'escalation'
+        App.i18n.translateContent('Ticket |%s| is escalated!', item.title)
+      when 'escalation_warning'
+        App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
+      when 'update.merged_into'
+        App.i18n.translateContent('Ticket |%s| was merged into another ticket', item.title)
+      when 'update.received_merge'
+        App.i18n.translateContent('Another ticket was merged into ticket |%s|', item.title)
+      else
+        "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   # apply macro
   @macro: (params) ->

@@ -274,6 +274,150 @@ RSpec.describe Ticket, type: :model do
           end
         end
       end
+
+      # https://github.com/zammad/zammad/issues/3105
+      context 'when merge actions triggers exist', :performs_jobs do
+        before do
+          ticket && target_ticket
+          merged_into_trigger && received_merge_trigger && update_trigger
+
+          allow_any_instance_of(described_class).to receive(:perform_changes) do |ticket, trigger| # rubocop:disable RSpec/AnyInstance
+            log << { ticket: ticket.id, trigger: trigger.id }
+          end
+
+          perform_enqueued_jobs do
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+          end
+        end
+
+        let(:merged_into_trigger)    { create(:trigger, :conditionable, condition_ticket_action: 'update.merged_into') }
+        let(:received_merge_trigger) { create(:trigger, :conditionable, condition_ticket_action: 'update.received_merge') }
+        let(:update_trigger)         { create(:trigger, :conditionable, condition_ticket_action: 'update') }
+
+        let(:log) { [] }
+
+        it 'merge_into triggered with source ticket' do
+          expect(log).to include({ ticket: ticket.id, trigger: merged_into_trigger.id })
+        end
+
+        it 'received_merge not triggered with source ticket' do
+          expect(log).not_to include({ ticket: ticket.id, trigger: received_merge_trigger.id })
+        end
+
+        it 'update not triggered with source ticket' do
+          expect(log).not_to include({ ticket: ticket.id, trigger: update_trigger.id })
+        end
+
+        it 'merge_into not triggered with target ticket' do
+          expect(log).not_to include({ ticket: target_ticket.id, trigger: merged_into_trigger.id })
+        end
+
+        it 'received_merge triggered with target ticket' do
+          expect(log).to include({ ticket: target_ticket.id, trigger: received_merge_trigger.id })
+        end
+
+        it 'update not triggered with target ticket' do
+          expect(log).not_to include({ ticket: target_ticket.id, trigger: update_trigger.id })
+        end
+      end
+
+      # https://github.com/zammad/zammad/issues/3105
+      context 'when user has notifications enabled', :performs_jobs do
+        before do
+          user
+
+          allow(OnlineNotification).to receive(:add) do |**args|
+            next if args[:object] != 'Ticket'
+
+            log << { type: :online, event: args[:type], ticket_id: args[:o_id], user_id: args[:user_id] }
+          end
+
+          allow(NotificationFactory::Mailer).to receive(:notification) do |**args|
+            log << { type: :email, event: args[:template], ticket_id: args[:objects][:ticket].id, user_id: args[:user].id }
+          end
+
+          perform_enqueued_jobs do
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+          end
+        end
+
+        let(:user) { create(:agent, :preferencable, notification_group_ids: [ticket, target_ticket].map(&:group_id), groups: [ticket, target_ticket].map(&:group)) }
+        let(:log)  { [] }
+
+        it 'merge_into notification sent with source ticket' do
+          expect(log).to include({ type: :online, event: 'update.merged_into', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'received_merge notification not sent with source ticket' do
+          expect(log).not_to include({ type: :online, event: 'update.received_merge', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'update notification not sent with source ticket' do
+          expect(log).not_to include({ type: :online, event: 'update', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'merge_into notification not sent with target ticket' do
+          expect(log).not_to include({ type: :online, event: 'update.merged_into', ticket_id: target_ticket.id, user_id: user.id })
+        end
+
+        it 'received_merge notification sent with target ticket' do
+          expect(log).to include({ type: :online, event: 'update.received_merge', ticket_id: target_ticket.id, user_id: user.id })
+        end
+
+        it 'update notification not sent with target ticket' do
+          expect(log).not_to include({ type: :online, event: 'update', ticket_id: target_ticket.id, user_id: user.id })
+        end
+
+        it 'merge_into email sent with source ticket' do
+          expect(log).to include({ type: :email, event: 'ticket_update_merged_into', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'received_merge email not sent with source ticket' do
+          expect(log).not_to include({ type: :email, event: 'ticket_update_received_merge', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'update email not sent with source ticket' do
+          expect(log).not_to include({ type: :email, event: 'ticket_update', ticket_id: ticket.id, user_id: user.id })
+        end
+
+        it 'merge_into email not sent with target ticket' do
+          expect(log).not_to include({ type: :email, event: 'ticket_update_merged_into', ticket_id: target_ticket.id, user_id: user.id })
+        end
+
+        it 'received_merge email sent with target ticket' do
+          expect(log).to include({ type: :email, event: 'ticket_update_received_merge', ticket_id: target_ticket.id, user_id: user.id })
+        end
+
+        it 'update email not sent with target ticket' do
+          expect(log).not_to include({ type: :email, event: 'ticket_update', ticket_id: target_ticket.id, user_id: user.id })
+        end
+      end
+
+      # https://github.com/zammad/zammad/issues/3105
+      context 'when sending notification email correct template', :performs_jobs do
+        before do
+          user
+
+          allow(NotificationFactory::Mailer).to receive(:send) do |**args|
+            log << args[:subject]
+          end
+
+          perform_enqueued_jobs do
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+          end
+        end
+
+        let(:user) { create(:agent, :preferencable, notification_group_ids: [ticket, target_ticket].map(&:group_id), groups: [ticket, target_ticket].map(&:group)) }
+        let(:log)  { [] }
+
+        it 'is used for merged_into' do
+          expect(log).to include(start_with("Ticket (#{ticket.title}) was merged into another ticket"))
+        end
+
+        it 'is used for received_merge' do
+          expect(log).to include(start_with("Another ticket was merged into ticket (#{target_ticket.title})"))
+        end
+      end
     end
 
     describe '#perform_changes' do
