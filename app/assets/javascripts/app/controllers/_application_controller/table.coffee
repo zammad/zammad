@@ -504,15 +504,24 @@ class App.ControllerTable extends App.Controller
     groupLastName = ''
     tableBody = []
     objectsToShow = @objectsOfPage(@pagerShownPage)
-    for object in objectsToShow
-      if object
-        position++
-        if @groupBy
-          groupByName = @groupObjectName(object, @groupBy)
-          if groupLastName isnt groupByName
-            groupLastName = groupByName
-            tableBody.push @renderTableGroupByRow(object, position, groupByName)
-        tableBody.push @renderTableRow(object, position)
+    if @groupBy
+      # group by raw (and not printable) value so dates work also
+      objectsGrouped = _.groupBy(objectsToShow, (object) => object[@groupBy])
+    else
+      objectsGrouped = { '': objectsToShow }
+
+    for groupValue in Object.keys(objectsGrouped).sort()
+      groupObjects = objectsGrouped[groupValue]
+
+      for object in groupObjects
+        if object
+          position++
+          if @groupBy
+            groupByName = @groupObjectName(object, @groupBy)
+            if groupLastName isnt groupByName
+              groupLastName = groupByName
+              tableBody.push @renderTableGroupByRow(object, position, groupByName)
+          tableBody.push @renderTableRow(object, position)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
