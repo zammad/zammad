@@ -311,7 +311,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     select(
       css:   '.content.active .bulkAction [name="owner_id"]',
-      value: 'Test Master Agent',
+      value: 'Test Admin Agent',
     )
 
     click(
@@ -434,7 +434,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     select(
       css:   '.content.active .bulkAction [name="owner_id"]',
-      value: 'Test Master Agent',
+      value: 'Test Admin Agent',
     )
 
     select(

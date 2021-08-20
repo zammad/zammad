@@ -2,7 +2,7 @@
   "Users": [
     {
       "login": "admin@example.com",
-      "firstname": "Test Master",
+      "firstname": "Test Admin",
       "lastname": "Agent",
       "email": "admin@example.com",
       "password": "test"

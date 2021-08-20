@@ -25,7 +25,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="firstname"]',
-      value: 'Test Master',
+      value: 'Test Admin',
     )
     set(
       css:   '.js-admin input[name="lastname"]',
@@ -37,7 +37,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="firstname"]',
-      value: 'Test Master',
+      value: 'Test Admin',
     )
     set(
       css:   '.js-admin input[name="password"]',

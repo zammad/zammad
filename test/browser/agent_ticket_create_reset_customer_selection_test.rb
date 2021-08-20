@@ -192,7 +192,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
 
     set(
       css:   '.content.active .modal input[name="customer_id_completion"]',
-      value: 'master',
+      value: 'admin',
     )
     click(css: '.content.active .modal .js-submit')
 
@@ -202,11 +202,11 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
 
     set(
       css:   '.content.active .modal input[name="customer_id_completion"]',
-      value: 'master',
+      value: 'admin',
     )
     watch_for(
       css:     '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
-      value:   'Master',
+      value:   'Admin',
       timeout: 3,
     )
     sendkey(value: :enter)
@@ -227,11 +227,11 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
 
     set(
       css:   '.content.active .modal input[name="customer_id_completion"]',
-      value: 'master',
+      value: 'admin',
     )
     watch_for(
       css:     '.content.active .modal .js-recipientDropdown .recipientList.is-shown',
-      value:   'Master',
+      value:   'Admin',
       timeout: 3,
     )
     sendkey(value: :enter)

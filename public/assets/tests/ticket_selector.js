@@ -87,10 +87,10 @@ window.onload = function() {
         "id": 2
       },
       "article": {
-        "from": "Test Master Agent",
+        "from": "Test Admin Agent",
         "to": "agent1@example.com",
         "cc": "agent1+cc@example.com",
-        "body": "asdfasdfasdf<br><br><div data-signature=\"true\" data-signature-id=\"1\">  Test Master Agent<br><br>--<br> Super Support - Waterford Business Park<br> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA<br> Email: hot@example.com - Web: http://www.example.com/<br>--</div>",
+        "body": "asdfasdfasdf<br><br><div data-signature=\"true\" data-signature-id=\"1\">  Test Admin Agent<br><br>--<br> Super Support - Waterford Business Park<br> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA<br> Email: hot@example.com - Web: http://www.example.com/<br>--</div>",
         "content_type": "text/html",
         "ticket_id": "2",
         "type_id": 1,
@@ -930,7 +930,7 @@ window.onload = function() {
     ticket = new App.Ticket();
     ticket.load(ticketData);
 
-    testContains('article.from', 'Master', ticket);
+    testContains('article.from', 'Admin', ticket);
   });
 
   test("article to", function() {

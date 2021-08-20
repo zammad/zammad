@@ -24,7 +24,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           expect(page).to have_css('select[name=owner_id]')
           expect(page).to have_select('owner_id',
                                       selected: '-',
-                                      options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                      options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
         end
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('.content.active select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: session_user.fullname,
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end
@@ -61,7 +61,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end
@@ -76,7 +76,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end
@@ -91,7 +91,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end
@@ -106,7 +106,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: '-',
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end
@@ -121,7 +121,7 @@ RSpec.describe 'Ticket zoom', type: :system do
             expect(page).to have_css('select[name=owner_id]')
             expect(page).to have_select('owner_id',
                                         selected: session_user.fullname,
-                                        options:  ['-', 'Agent 1 Test', 'Test Master Agent'])
+                                        options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])
           end
         end
       end

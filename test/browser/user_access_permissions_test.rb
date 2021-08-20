@@ -96,11 +96,11 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all
 
-    user_open_by_search(value: 'Test Master')
+    user_open_by_search(value: 'Test Admin')
 
     verify_task(
       data: {
-        title: 'Test Master Agent',
+        title: 'Test Admin Agent',
       }
     )
 
@@ -131,7 +131,7 @@ class AgentProfilePermissionsTest < TestCase
 
     ticket1 = ticket_create(
       data: {
-        customer: 'master',
+        customer: 'admin',
         group:    'Users',
         title:    'test_user_access_permissions - ticket 1',
         body:     'test_user_access_permissions - ticket 1',
@@ -336,7 +336,7 @@ class AgentProfilePermissionsTest < TestCase
 
     ticket1 = ticket_create(
       data: {
-        customer: 'master',
+        customer: 'admin',
         group:    'Users',
         title:    'test_user_access_permissions - ticket 4',
         body:     'test_user_access_permissions - ticket 4',
