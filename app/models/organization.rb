@@ -64,7 +64,7 @@ class Organization < ApplicationModel
     User.where(organization_id: id).find_each do |user|
       user.update(organization_id: nil)
     end
-    Ticket.where(organization_id: id) do |ticket|
+    Ticket.where(organization_id: id).find_each do |ticket|
       ticket.update(organization_id: nil)
     end
   end
