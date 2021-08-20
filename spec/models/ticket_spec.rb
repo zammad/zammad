@@ -418,6 +418,21 @@ RSpec.describe Ticket, type: :model do
           expect(log).to include(start_with("Another ticket was merged into ticket (#{target_ticket.title})"))
         end
       end
+
+      context 'ApplicationHandleInfo context' do
+        it 'gets switched to "merge"' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+          expect(ApplicationHandleInfo).to have_received('context=').with('merge').at_least(1)
+        end
+
+        it 'reverts back to default' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+
+          expect(ApplicationHandleInfo.context).not_to eq 'merge'
+        end
+      end
     end
 
     describe '#perform_changes' do

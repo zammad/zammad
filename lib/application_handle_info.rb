@@ -1,13 +1,9 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 module ApplicationHandleInfo
-  def self.current
-    Thread.current[:application_handle] || 'unknown'
-  end
-
-  def self.current=(name)
-    Thread.current[:application_handle] = name
-  end
+  # stores current application handler.
+  # for example application_server, scheduler, websocket, postmaster...
+  thread_mattr_accessor :current
 
   def self.postmaster?
     return false if current.blank?
@@ -23,5 +19,24 @@ module ApplicationHandleInfo
     yield
   ensure
     self.current = orig
+  end
+
+  # stores action context
+  # for example merge, twitter, telegram....
+  # used to determine if custom attribute validation shall run
+  thread_mattr_accessor :context
+
+  def self.in_context(name)
+    raise ArgumentError, 'requires a block' if !block_given?
+
+    orig = context
+    self.context = name
+    yield
+  ensure
+    self.context = orig
+  end
+
+  def self.context_without_custom_attributes?
+    %w[merge twitter telegram facebook form mail sms].include? context.to_s
   end
 end

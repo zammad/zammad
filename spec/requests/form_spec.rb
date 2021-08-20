@@ -233,5 +233,27 @@ RSpec.describe 'Form', type: :request, searchindex: true do
 
       expect(response).to have_http_status(:forbidden)
     end
+
+    context 'when ApplicationHandleInfo context' do
+      let(:fingerprint) { SecureRandom.hex(40) }
+      let(:token)       { json_response['token'] }
+
+      before do
+        Setting.set('form_ticket_create', true)
+        post '/api/v1/form_config', params: { fingerprint: fingerprint }, as: :json
+      end
+
+      it 'gets switched to "form"' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-last', body: 'hello' }, as: :json
+        expect(ApplicationHandleInfo).to have_received('context=').with('form').at_least(1)
+      end
+
+      it 'reverts back to default' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-last', body: 'hello' }, as: :json
+        expect(ApplicationHandleInfo.context).not_to eq 'form'
+      end
+    end
   end
 end

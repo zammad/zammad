@@ -10,7 +10,21 @@ RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEB
 
   let!(:channel) { create(:facebook_channel) }
 
+  # This test requires ENV variables to run
+  # Yes, it runs off VCR cassette
+  # But it requires following ENV variables to be present:
+  #
+  # export FACEBOOK_CUSTOMER_ID=placeholder
+  # export FACEBOOK_CUSTOMER_FIRSTNAME=placeholder
+  # export FACEBOOK_CUSTOMER_LASTNAME=placeholder
+  # export FACEBOOK_PAGE_1_ACCCESS_TOKEN=placeholder
+  # export FACEBOOK_PAGE_1_ID=123
+  # export FACEBOOK_PAGE_1_NAME=placeholder
+  # export FACEBOOK_PAGE_1_POST_ID=placeholder
+  # export FACEBOOK_PAGE_1_POST_COMMENT_ID=placeholder
+  #
   it 'tests full run' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    allow(ApplicationHandleInfo).to receive('context=')
     ExternalCredential.create name: :facebook, credentials: { application_id: ENV['FACEBOOK_APPLICATION_ID'], application_secret: ENV['FACEBOOK_APPLICATION_SECRET'] }
 
     channel.fetch
@@ -50,5 +64,7 @@ RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEB
     expect(outbound_article).to be_present
     expect(outbound_article.from).to eq ENV['FACEBOOK_PAGE_1_NAME']
     expect(outbound_article.ticket.articles.count).to be ticket_initial_count + 1
+
+    expect(ApplicationHandleInfo).to have_received('context=').with('facebook').at_least(1)
   end
 end

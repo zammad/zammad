@@ -744,7 +744,7 @@ returns
     ticket = nil
 
     # use transaction
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'telegram') do
       user   = to_user(params)
       ticket = to_ticket(params, user, group_id, channel)
       to_article(params, user, ticket, channel)

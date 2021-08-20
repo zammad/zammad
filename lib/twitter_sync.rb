@@ -450,7 +450,7 @@ class TwitterSync
     Rails.logger.debug { 'import tweet' }
 
     ticket = nil
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'twitter') do
 
       # check if parent exists
       user = to_user(tweet)

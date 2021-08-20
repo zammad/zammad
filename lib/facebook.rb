@@ -305,7 +305,7 @@ result
     ticket = nil
 
     # use transaction
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'facebook') do
       existing_article = Ticket::Article.find_by(message_id: post['id'])
       ticket = if existing_article
                  existing_article.ticket

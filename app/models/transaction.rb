@@ -2,7 +2,7 @@
 
 class Transaction
   attr_reader :options
-  attr_accessor :original_user_id, :original_interface_handle
+  attr_accessor :original_user_id, :original_interface_handle, :original_interface_context
 
   def initialize(options = {})
     @options = options
@@ -32,6 +32,7 @@ class Transaction
     reset_user_id_start
     bulk_import_start
     interface_handle_start
+    interface_context_start
   end
 
   def start_transaction
@@ -45,6 +46,7 @@ class Transaction
 
   def finish_transaction
     interface_handle_finish
+    interface_context_finish
 
     TransactionDispatcher.commit(options)
     PushMessages.finish
@@ -100,5 +102,23 @@ class Transaction
     return if !interface_handle?
 
     ApplicationHandleInfo.current = original_interface_handle
+  end
+
+  def interface_context?
+    options[:context].present?
+  end
+
+  def interface_context_start
+    return if !interface_context?
+
+    self.original_interface_context = ApplicationHandleInfo.context
+
+    ApplicationHandleInfo.context = options[:context]
+  end
+
+  def interface_context_finish
+    return if !interface_context?
+
+    ApplicationHandleInfo.context = original_interface_context
   end
 end

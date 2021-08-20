@@ -201,6 +201,28 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(customer.id).to eq(User.last.id)
     end
 
+    it 'does basic call when ticket has a custom attribute', db_strategy: :reset do
+      create(:object_manager_attribute_text, screens: attributes_for(:required_screen))
+      ObjectManager::Attribute.migration_execute
+
+      UserInfo.current_user_id = 1
+      create(
+        :channel,
+        area:     'Sms::Account',
+        options:  {
+          adapter:       'sms/twilio',
+          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          account_id:    '111',
+          token:         '223',
+          sender:        '333',
+        },
+        group_id: Group.first.id,
+      )
+
+      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      expect(response).to have_http_status(:ok)
+    end
+
     def read_message(file)
       JSON.parse(File.read(Rails.root.join('test', 'data', 'twilio', "#{file}.json")))
     end

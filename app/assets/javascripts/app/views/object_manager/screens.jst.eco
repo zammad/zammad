@@ -23,6 +23,10 @@
               <%- @T(key) %>: <input class="js-boolean" name="screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if @params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true: %>checked<% end %> value="true">
             <% end %>
         <% end %>
+        <tr>
+          <td class="settings-list-control-cell">
+          <td class="settings-list-control-cell small" colspan=2>
+            <%- @T('Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS') %>
       <% end %>
     </tbody>
   </table>

@@ -398,6 +398,20 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         expect(ticket2.articles.first.to).to eq('@ChrispressoBot2')
       end
 
+      context 'when ApplicationHandleInfo context' do
+        it 'gets switched to "telegram"' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo).to have_received('context=').with('telegram').at_least(1)
+        end
+
+        it 'reverts back to default' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo.context).not_to eq 'telegram'
+        end
+      end
+
     end
 
     def read_message(type, file)

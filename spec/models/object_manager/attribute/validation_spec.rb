@@ -97,5 +97,41 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
         end
       end
     end
+
+    context 'when custom attribute exists' do
+      before do
+        allow(subject).to receive(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+      end
+
+      it 'runs validation in default context' do
+        ApplicationHandleInfo.in_context(nil) do
+          subject.validate(record)
+        end
+
+        expect(subject).to have_received(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+      end
+
+      it 'does not run validations in contexts that do not use custom attributes' do
+        ApplicationHandleInfo.in_context('merge') do
+          subject.validate(record)
+        end
+
+        expect(subject).not_to have_received(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+      end
+    end
+  end
+
+  describe '#validation_needed' do
+    it 'runs validation in default context' do
+      ApplicationHandleInfo.in_context(nil) do
+        expect(subject.send(:validation_needed?)).to be true
+      end
+    end
+
+    it 'does not run validations in contexts that do not use custom attributes' do
+      ApplicationHandleInfo.in_context('merge') do
+        expect(subject.send(:validation_needed?)).to be false
+      end
+    end
   end
 end

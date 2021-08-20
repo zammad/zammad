@@ -745,6 +745,20 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
   end
 
   describe '#fetch', use_vcr: :time_sensitive do
+    context 'when ApplicationHandleInfo context' do
+      it 'gets switched to "twitter"' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        channel.fetch
+        expect(ApplicationHandleInfo).to have_received('context=').with('twitter').at_least(1)
+      end
+
+      it 'reverts back to default' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        channel.fetch
+        expect(ApplicationHandleInfo.context).not_to eq 'twitter'
+      end
+    end
+
     describe 'rate limiting' do
       before do
         allow(Rails.env).to receive(:test?).and_return(false)

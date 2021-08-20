@@ -6,4 +6,10 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.around(:each, :application_handle_context) do |example|
+    ApplicationHandleInfo.in_context(example.metadata[:application_handle_context]) do
+      example.run
+    end
+  end
 end
