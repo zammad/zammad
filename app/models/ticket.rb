@@ -327,7 +327,7 @@ returns
     raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
 
     # update articles
-    Transaction.execute do
+    Transaction.execute context: 'merge' do
 
       Ticket::Article.where(ticket_id: id).each(&:touch)
 

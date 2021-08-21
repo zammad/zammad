@@ -53,22 +53,24 @@ class ChannelsSmsController < ApplicationController
   def webhook
     raise Exceptions::UnprocessableEntity, 'token param missing' if params['token'].blank?
 
-    channel = nil
-    Channel.where(active: true, area: 'Sms::Account').each do |local_channel|
-      next if local_channel.options[:webhook_token] != params['token']
+    ApplicationHandleInfo.in_context('sms') do
+      channel = nil
+      Channel.where(active: true, area: 'Sms::Account').each do |local_channel|
+        next if local_channel.options[:webhook_token] != params['token']
 
-      channel = local_channel
-    end
-    if !channel
-      render(
-        json:   { message: 'channel not found' },
-        status: :not_found
-      )
-      return
-    end
+        channel = local_channel
+      end
+      if !channel
+        render(
+          json:   { message: 'channel not found' },
+          status: :not_found
+        )
+        return
+      end
 
-    conten_type, content = channel.process(params.permit!.to_h)
-    send_data content, type: conten_type
+      content_type, content = channel.process(params.permit!.to_h)
+      send_data content, type: content_type
+    end
   end
 
   private

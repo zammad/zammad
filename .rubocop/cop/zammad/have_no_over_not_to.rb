@@ -23,8 +23,8 @@ module RuboCop
           have_not_no?(matcher_name) && capybara_matcher?(matcher_name)
         end
 
-        def have_not_no?(matcher_name)
-          matcher_name.match?(/^have_(?!no)/)
+        def have_not_no?(matcher_name) # rubocop:disable Naming/PredicateName
+          matcher_name.match?(%r{^have_(?!no)})
         end
 
         def capybara_matcher?(matcher_name)
@@ -53,10 +53,9 @@ module RuboCop
         end
 
         def message(node)
-          message = format(MSG, replacement: alternative_matcher(node), original: original_matcher(node))
+          format(MSG, replacement: alternative_matcher(node), original: original_matcher(node))
         end
       end
     end
   end
 end
-
