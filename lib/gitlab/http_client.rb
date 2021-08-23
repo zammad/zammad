@@ -1,12 +1,14 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
+require 'uri'
+
 class GitLab
   class HttpClient
     attr_reader :api_token, :endpoint
 
     def initialize(endpoint, api_token)
       raise 'api_token required' if api_token.blank?
-      raise 'endpoint required' if endpoint.blank?
+      raise 'endpoint required' if endpoint.blank? || endpoint.exclude?('/graphql') || endpoint.scan(URI::DEFAULT_PARSER.make_regexp).blank?
 
       @api_token = api_token
       @endpoint = endpoint
@@ -29,7 +31,7 @@ class GitLab
 
       if !response.success?
         Rails.logger.error response.error
-        raise "Error while requesting GitLab GraphQL API: #{response.error}"
+        raise 'GitLab request failed! Please have a look at the log file for details'
       end
 
       response.data
