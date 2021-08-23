@@ -721,7 +721,7 @@ DEPENDENCIES
   pundit
   pundit-matchers
   rack-livereload
-  rails (= 6.0.4.1)
+  rails (~> 6.0)
   rails-controller-testing
   rb-fsevent
   rchardet (>= 1.8.0)
