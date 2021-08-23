@@ -7,6 +7,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     'click .js-object':                       'onObjectClick'
     'click .js-objectNew':                    'newObject'
     'focus .js-objectSelect':                 'onFocus'
+    'input .js-objectSelect':                 'open'
     'click .js-objectSelect':                 'stopPropagation'
     'blur .js-objectSelect':                  'onBlur'
     'click .form-control':                    'focusInput'
