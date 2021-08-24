@@ -902,6 +902,28 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect { described_class.new.process({}, raw_mail) }
             .to change { ticket.reload.state.name }.to('open')
         end
+
+        context 'when group has follow_up_assignment true' do
+          let(:group) { create(:group, follow_up_assignment: true) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does not change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .not_to change { ticket.reload.owner.login }
+          end
+        end
+
+        context 'when group has follow_up_assignment false' do
+          let(:group) { create(:group, follow_up_assignment: false) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to change { ticket.reload.owner.login }.to eq(User.find(1).login)
+          end
+        end
       end
     end
 

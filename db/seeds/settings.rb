@@ -3420,6 +3420,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       'Defines postmaster filter.',
+  name:        '0009_postmaster_filter_follow_up_assignment',
+  area:        'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to set the owner (based on group follow up assignment).',
+  options:     {},
+  state:       'Channel::Filter::FollowUpAssignment',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Defines postmaster filter.',
   name:        '0011_postmaster_sender_based_on_reply_to',
   area:        'Postmaster::PreFilter',
   description: 'Defines postmaster filter to set the sender/from of emails based on reply-to header.',
