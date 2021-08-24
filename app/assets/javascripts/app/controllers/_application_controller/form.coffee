@@ -510,7 +510,7 @@ class App.ControllerForm extends App.Controller
           value = false
       if item.type is 'integer'
         if value is ''
-          value = undefined
+          value = null
         else
           value = parseInt(value)
       if param[item.name] isnt undefined
