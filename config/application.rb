@@ -43,8 +43,11 @@ module Zammad
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.add_autoload_paths_to_load_path = false
-    config.autoload_paths   += %W[#{config.root}/lib]
-    config.eager_load_paths += %W[#{config.root}/lib]
+    config.autoload_paths += %W[#{config.root}/lib]
+
+    # zeitwerk:check will only check preloaded paths. To make sure that also lib/ gets validated,
+    #   add it to the eager_load_paths only if zeitwerk:check is running.
+    config.eager_load_paths += %W[#{config.root}/lib] if ARGV[0].eql? 'zeitwerk:check'
 
     config.active_job.queue_adapter = :delayed_job
 
