@@ -186,10 +186,20 @@ class App.UiElement.ApplicationUiElement
     return if !attribute.filter
     return if _.isEmpty(attribute.options)
 
-    return if typeof attribute.filter isnt 'function'
-    App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+    if typeof attribute.filter is 'function'
+      App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+      attribute.options = attribute.filter(attribute.options, attribute)
+    else if !attribute.relation && attribute.filter && _.isArray(attribute.filter)
+      @filterOptionArray(attribute)
 
-    attribute.options = attribute.filter(attribute.options, attribute)
+  @filterOptionArray: (attribute) ->
+    result = []
+    for option in attribute.options
+      for value in attribute.filter
+        if value.toString() == option.value.toString()
+          result.push(option)
+
+    attribute.options = result
 
   # set selected attributes
   @selectedOptions: (attribute) ->

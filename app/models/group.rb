@@ -4,6 +4,7 @@ class Group < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include ChecksCoreWorkflow
   include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasHistory

@@ -575,6 +575,7 @@ test("form dependend fields check", function() {
   var test_params = {
     input1: "",
     input2: "some used default",
+    input3: "some used default",
     select1: "false",
     select2: "false",
     selectmulti2: [ "true", "false" ],
@@ -603,12 +604,13 @@ test("form dependend fields check", function() {
   params = App.ControllerForm.params(el)
   test_params = {
     input1: "",
+    input2: "some used default",
     input3: "some used default",
     select1: "true",
     select2: "false",
     selectmulti2: [ "true", "false" ],
     selectmultioption1: "false",
-    datetime1: null,
+    datetime1: '2015-01-11T12:40:00.000Z',
     datetime2: null,
     datetime3: '2015-01-11T12:40:00.000Z',
     datetime4: null,
@@ -999,72 +1001,6 @@ test("form selector", function() {
 
   params = App.ControllerForm.params(el.parent())
   deepEqual(params, test_params, 'form param check via $("#form").parent()')
-
-});
-
-test("form required_if + shown_if", function() {
-  $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form8"></form></div>')
-  var el = $('#form8')
-  var defaults = {
-    input2: 'some name66',
-    input3: 'some name77',
-    input4: 'some name88',
-  }
-  new App.ControllerForm({
-    el:        el,
-    model:     {
-      configure_attributes: [
-        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
-        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: true }, shown_if: { active: true } },
-        { name: 'input3', display: 'Input3', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: [true,false] }, shown_if: { active: [true,false] } },
-        { name: 'input4', display: 'Input4', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: [55,66] }, shown_if: { active: [55,66] } },
-        { name: 'active', display: 'Active', tag: 'active', 'default': true },
-      ],
-    },
-    params: defaults,
-  });
-  test_params = {
-    input1: "some not used default33",
-    input2: "some name66",
-    input3: "some name77",
-    active: true,
-  };
-  params = App.ControllerForm.params(el)
-  deepEqual(params, test_params, 'form param check via $("#form")')
-  equal(el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
-  equal(el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
-  equal(el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
-  equal(el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
-  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
-
-
-  el.find('[name="active"]').val('false').trigger('change')
-  test_params = {
-    input1: "some not used default33",
-    active: false,
-  };
-  params = App.ControllerForm.params(el)
-  deepEqual(params, test_params, 'form param check via $("#form")')
-  equal(el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2')
-  equal(el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2')
-  equal(el.find('[name="input3"]').is(":visible"), false, 'check visible attribute of input3')
-  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
-
-
-  el.find('[name="active"]').val('true').trigger('change')
-  test_params = {
-    input1: "some not used default33",
-    input2: "some name66",
-    input3: "some name77",
-    active: true,
-  };
-  params = App.ControllerForm.params(el)
-  deepEqual(params, test_params, 'form param check via $("#form")')
-  equal(el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2')
-  equal(el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2')
-  equal(el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3')
-  equal(el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3')
-  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
 
 });
 

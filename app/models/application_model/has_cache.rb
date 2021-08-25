@@ -11,6 +11,7 @@ module ApplicationModel::HasCache
   def cache_update(other)
     cache_delete if respond_to?('cache_delete')
     other.cache_delete if other.respond_to?('cache_delete')
+    ActiveSupport::CurrentAttributes.clear_all
     true
   end
 

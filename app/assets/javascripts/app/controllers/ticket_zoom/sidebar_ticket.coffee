@@ -20,7 +20,7 @@ class Edit extends App.ControllerObserver
     if followUpPossible == 'new_ticket' && ticketState != 'closed' ||
        followUpPossible != 'new_ticket' ||
        @permissionCheck('admin') || ticket.currentView() is 'agent'
-      new App.ControllerForm(
+      @controllerFormSidebarTicket = new App.ControllerForm(
         elReplace:      @el
         model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
         screen:         'edit'
@@ -30,10 +30,13 @@ class Edit extends App.ControllerObserver
         params:         defaults
         isDisabled:     !ticket.editable()
         taskKey:        @taskKey
+        core_workflow: {
+          callbacks: [@markForm]
+        }
         #bookmarkable:  true
       )
     else
-      new App.ControllerForm(
+      @controllerFormSidebarTicket = new App.ControllerForm(
         elReplace:      @el
         model:          { configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
         screen:         'edit'
@@ -43,6 +46,9 @@ class Edit extends App.ControllerObserver
         params:         defaults
         isDisabled:     ticket.editable()
         taskKey:        @taskKey
+        core_workflow: {
+          callbacks: [@markForm]
+        }
         #bookmarkable:  true
       )
 

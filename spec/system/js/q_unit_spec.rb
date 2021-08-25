@@ -131,6 +131,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
     it 'DateTime' do
       q_unit_tests('form_datetime')
     end
+
+    it 'Core Workflow' do
+      q_unit_tests('form_core_workflow')
+    end
   end
 
   context 'Form AJAX', searchindex: true do

@@ -22,7 +22,7 @@ returns
 
 =end
 
-    def param_cleanup(params, new_object = false, inside_nested = false)
+    def param_cleanup(params, new_object = false, inside_nested = false, exceptions = true)
 
       if params.respond_to?(:permit!)
         params = params.permit!.to_h
@@ -52,6 +52,8 @@ returns
       new.attributes.each_key do |attribute|
         next if !data.key?(attribute)
 
+        invalid = false
+
         # check reference records, referenced by _id attributes
         reflect_on_all_associations.map do |assoc|
           class_name = assoc.options[:class_name]
@@ -62,8 +64,14 @@ returns
           next if data[name].blank?
           next if assoc.klass.lookup(id: data[name])
 
-          raise Exceptions::UnprocessableEntity, "Invalid value for param '#{name}': #{data[name].inspect}"
+          raise Exceptions::UnprocessableEntity, "Invalid value for param '#{name}': #{data[name].inspect}" if exceptions
+
+          invalid = true
+          break
         end
+
+        next if invalid
+
         clean_params[attribute] = data[attribute]
       end
 

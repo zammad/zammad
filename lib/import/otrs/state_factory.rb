@@ -61,7 +61,6 @@ module Import
 
       def update_ticket_attributes
         update_ticket_state
-        update_ticket_pending_time
         reseed_dependent_objects
       end
 
@@ -93,22 +92,6 @@ module Import
         ticket_state_id[:screens][:edit][:Customer]          = customer_edit
 
         update_ticket_attribute(ticket_state_id)
-      end
-
-      def update_ticket_pending_time
-        pending_state_ids = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where(name: ['pending reminder', 'pending action'])
-        ).pluck(:id)
-
-        ticket_pending_time = ::ObjectManager::Attribute.get(
-          object: 'Ticket',
-          name:   'pending_time',
-        )
-
-        ticket_pending_time[:data_option][:required_if][:state_id] = pending_state_ids
-        ticket_pending_time[:data_option][:required_if][:state_id] = pending_state_ids
-
-        update_ticket_attribute(ticket_pending_time)
       end
 
       def update_ticket_attribute(attribute)

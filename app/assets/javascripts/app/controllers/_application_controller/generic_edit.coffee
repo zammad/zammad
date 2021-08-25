@@ -27,7 +27,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
       return false
 
     # validate
-    errors = @item.validate()
+    errors = @item.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate( form: e.target, errors: errors )

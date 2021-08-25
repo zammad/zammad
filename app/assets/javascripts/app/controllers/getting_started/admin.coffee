@@ -67,7 +67,7 @@ class GettingStartedAdmin extends App.ControllerWizardFullScreen
     user.load(@params)
 
     errors = user.validate(
-      screen: 'signup'
+      controllerForm: @form
     )
     if errors
       @log 'error new', errors

@@ -5,6 +5,7 @@ class User < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include ChecksCoreWorkflow
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport

@@ -4,6 +4,7 @@ class Ticket < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include ChecksCoreWorkflow
   include ChecksLatestChangeObserved
   include CanCsvImport
   include ChecksHtmlSanitized

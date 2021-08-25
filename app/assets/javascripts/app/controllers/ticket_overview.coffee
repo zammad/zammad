@@ -39,7 +39,7 @@ class App.TicketOverview extends App.Controller
     load = (data) =>
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
-    @bindId = App.TicketCreateCollection.bind(load)
+    @bindId = App.TicketOverviewCollection.bind(load)
 
   startDragItem: (event) =>
     return if !@batchSupport
@@ -206,13 +206,22 @@ class App.TicketOverview extends App.Controller
           article: article
         )
         ticket.article = article
-        ticket.save(
+        ticket.ajax().update(
+          ticket.attributes()
+          # this option will prevent callbacks and invalid data states in case of an error
+          failResponseNoTrigger: true
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
+          fail: (record, settings, details) ->
+            console.log('record, settings, details', record, settings, details)
+            App.Event.trigger('notify', {
+              type: 'error'
+              msg: App.i18n.translateContent('Bulk action stopped %s!', error)
+            })
         )
       return
 
@@ -225,13 +234,21 @@ class App.TicketOverview extends App.Controller
         ticket.owner_id = id
         if !_.isEmpty(groupId)
           ticket.group_id = groupId
-        ticket.save(
+        ticket.ajax().update(
+          ticket.attributes()
+          # this option will prevent callbacks and invalid data states in case of an error
+          failResponseNoTrigger: true
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
+          fail: (record, settings, details) ->
+            App.Event.trigger('notify', {
+              type: 'error'
+              msg: App.i18n.translateContent('Bulk action stopped %s!', settings.error)
+            })
         )
       return
 
@@ -242,13 +259,21 @@ class App.TicketOverview extends App.Controller
         #console.log "perform action #{action} with id #{id} on ", $(item).val()
         ticket = App.Ticket.find($(item).val())
         ticket.group_id = id
-        ticket.save(
+        ticket.ajax().update(
+          ticket.attributes()
+          # this option will prevent callbacks and invalid data states in case of an error
+          failResponseNoTrigger: true
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
+          fail: (record, settings, details) ->
+            App.Event.trigger('notify', {
+              type: 'error'
+              msg: App.i18n.translateContent('Bulk action stopped %s!', error)
+            })
         )
       return
 
@@ -673,6 +698,8 @@ class App.TicketOverview extends App.Controller
         @contentController.show()
       return
 
+    App.TicketOverviewCollection.fetch()
+
     # remember last view
     @viewLast = @view
 
@@ -707,7 +734,7 @@ class App.TicketOverview extends App.Controller
   release: =>
     @keyboardOff()
     super
-    App.TicketCreateCollection.unbindById(@bindId)
+    App.TicketOverviewCollection.unbindById(@bindId)
 
   keyboardOn: =>
     $(window).off 'keydown.overview_navigation'
@@ -1134,6 +1161,8 @@ class Table extends App.Controller
 
         @lastChecked = e.currentTarget
 
+        @updateTicketIdsBulkForm()
+
       callbackIconHeader = (headers) ->
         attribute =
           name:         'icon'
@@ -1273,6 +1302,11 @@ class Table extends App.Controller
           bulkAll.prop('indeterminate', true)
     )
 
+  updateTicketIdsBulkForm: =>
+    items      = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
+    ticket_ids = _.map(items, (el) -> $(el).val() )
+    @bulkForm.el.find('input[name=ticket_ids]').val(ticket_ids.join(',')).trigger('change')
+
   renderCustomerNotTicketExistIfNeeded: (ticketListShow) =>
     user = App.User.current()
     @stopListening user, 'refresh'
@@ -1318,7 +1352,6 @@ class Table extends App.Controller
       container:       @el.closest('.content')
       onCloseCallback: @keyboardOn
     )
-
 
 class App.OverviewSettings extends App.ControllerModal
   buttonClose: true

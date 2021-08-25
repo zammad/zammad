@@ -46,6 +46,10 @@ module SessionHelper::CollectionBase
       end
     end
 
+    if user.permissions?(['admin.core_workflow'])
+      collections['CoreWorkflowCustomModule'] = CoreWorkflow::Custom.list.map { |m| { name: m } }
+    end
+
     [collections, assets]
   end
 end

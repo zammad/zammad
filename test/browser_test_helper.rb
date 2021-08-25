@@ -2151,7 +2151,7 @@ wait untill text in selector disabppears
             log('ticket_create invalid group count', text: element.text)
           end
         end
-        assert_equal(0, count, 'owner selection should not be showm')
+        assert_equal(2, count, 'group_id selection should not be shown because of only one group exists (auto select + hide)')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
         count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
@@ -2462,7 +2462,7 @@ wait untill text in selector disabppears
 
         # check if owner selection exists
         count = instance.find_elements(css: '.content.active .sidebar select[name="group_id"] option').count
-        assert_equal(0, count, 'owner selection should not be showm')
+        assert_equal(2, count, 'group_id selection should not be shown because of only one group exists (auto select + hide)')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
         count = instance.find_elements(css: '.content.active .sidebar select[name="owner_id"] option').count
@@ -4871,7 +4871,7 @@ wait untill text in selector disabppears
 
 =begin
 
-  This function waits for ajax requests and object form flow to be done
+  This function waits for ajax requests and core workflow to be done
 
   await_empty_ajax_queue
 
@@ -4886,7 +4886,7 @@ wait untill text in selector disabppears
       sleep 0.5
 
       break if instance.execute_script('return typeof(App) === "undefined"')
-      break if instance.execute_script('return App.Ajax.queue().length').zero?
+      break if instance.execute_script('return App.Ajax.queue().length').zero? && instance.execute_script('return Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length').zero?
     end
   end
 

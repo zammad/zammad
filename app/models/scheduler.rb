@@ -336,6 +336,8 @@ class Scheduler < ApplicationModel
     took = Time.zone.now - started_at
     logger.error "execute #{job.method} (try_count #{try_count}) exited with a non standard-error #{e.inspect} in: #{took} seconds."
     raise
+  ensure
+    ActiveSupport::CurrentAttributes.clear_all
   end
 
   def self.worker(foreground = false)

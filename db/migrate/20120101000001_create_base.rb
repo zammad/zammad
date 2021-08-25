@@ -761,5 +761,24 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :mentions, :users, column: :created_by_id
     add_foreign_key :mentions, :users, column: :updated_by_id
     add_foreign_key :mentions, :users, column: :user_id
+
+    create_table :core_workflows do |t|
+      t.string :name,                     limit: 100, null: false
+      t.string :object,                   limit: 100, null: true
+      t.text   :preferences,              limit: 500.kilobytes + 1, null: true
+      t.text   :condition_saved,          limit: 500.kilobytes + 1, null: true
+      t.text   :condition_selected,       limit: 500.kilobytes + 1, null: true
+      t.text   :perform,                  limit: 500.kilobytes + 1, null: true
+      t.boolean :active,                  null: false, default: true
+      t.boolean :stop_after_match,        null: false, default: false
+      t.boolean :changeable,              null: false, default: true
+      t.integer :priority,                null: false, default: 0
+      t.integer :updated_by_id,           null: false
+      t.integer :created_by_id,           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :core_workflows, [:name], unique: true
+    add_foreign_key :core_workflows, :users, column: :created_by_id
+    add_foreign_key :core_workflows, :users, column: :updated_by_id
   end
 end

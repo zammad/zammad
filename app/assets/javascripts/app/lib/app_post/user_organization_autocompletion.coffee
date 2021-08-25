@@ -40,7 +40,7 @@ class UserNew extends App.ControllerModal
   content: ->
     @controller = new App.ControllerForm(
       model:     App.User
-      screen:    'edit'
+      screen:    'create'
       autofocus: true
     )
     @controller.form
@@ -64,7 +64,9 @@ class UserNew extends App.ControllerModal
     user = new App.User
     user.load(params)
 
-    errors = user.validate()
+    errors = user.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate(form: e.target, errors: errors)

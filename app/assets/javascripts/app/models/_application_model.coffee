@@ -82,35 +82,15 @@ class App.Model extends Spine.Model
     ''
 
   @validate: (data = {}) ->
+    screen = data?.controllerForm?.screen
 
     # based on model attributes
     if App[ data['model'] ] && App[ data['model'] ].attributesGet
-      attributes = App[ data['model'] ].attributesGet(data['screen'])
+      attributes = App[ data['model'] ].attributesGet(screen)
 
     # based on custom attributes
     else if data['model'].configure_attributes
-      attributes = App.Model.attributesGet(data['screen'], data['model'].configure_attributes)
-
-    # check required_if attributes
-    for attributeName, attribute of attributes
-      if attribute['required_if']
-
-        for key, values of attribute['required_if']
-
-          localValues = data['params'][key]
-          if !_.isArray( localValues )
-            localValues = [ localValues ]
-
-          match = false
-          for value in values
-            if localValues
-              for localValue in localValues
-                if value && localValue && value.toString() is localValue.toString()
-                  match = true
-          if match is true
-            attribute['null'] = false
-          else
-            attribute['null'] = true
+      attributes = App.Model.attributesGet(screen, data['model'].configure_attributes)
 
     # check attributes/each attribute of object
     errors = {}
@@ -120,7 +100,7 @@ class App.Model extends Spine.Model
       if !attribute.readonly
 
         # check required // if null is defined && null is false
-        if 'null' of attribute && !attribute['null']
+        if data.controllerForm && data.controllerForm.attributeIsMandatory(attribute.name)
 
           # check :: fields
           parts = attribute.name.split '::'
@@ -168,9 +148,13 @@ class App.Model extends Spine.Model
 
           # validate value
 
+    if data?.controllerForm && App.FormHandlerCoreWorkflow.requestsRunning(data.controllerForm)
+      errors['_core_workflow'] = { target: data.target, controllerForm: data.controllerForm }
+
     # return error object
     if !_.isEmpty(errors)
-      App.Log.error('Model', 'validation failed', errors)
+      if !errors['_core_workflow']
+        App.Log.error('Model', 'validation failed', errors)
       return errors
 
     # return no errors
@@ -256,7 +240,8 @@ set new attributes of model (remove already available attributes)
     App.Model.validate(
       model:  @constructor.className
       params: @
-      screen: params.screen
+      controllerForm: params.controllerForm
+      target: params.target
     )
 
   isOnline: ->

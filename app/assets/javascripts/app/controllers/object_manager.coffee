@@ -273,7 +273,9 @@ class Edit extends App.ControllerGenericEdit
     @item.load(params)
 
     # validate
-    errors = @item.validate()
+    errors = @item.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate(form: e.target, errors: errors)

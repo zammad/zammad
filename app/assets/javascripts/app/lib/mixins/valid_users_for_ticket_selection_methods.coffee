@@ -11,7 +11,7 @@ App.ValidUsersForTicketSelectionMethods =
     users            = @usersInGroups(ticket_group_ids)
 
     # get the list of possible groups for the current user
-    # from the TicketCreateCollection
+    # from the TicketOverviewCollection
     # (filled for e.g. the TicketCreation or TicketZoom assignment)
     # and order them by name
     group_ids     = _.keys(@formMeta?.dependencies?.group_id)
@@ -19,7 +19,7 @@ App.ValidUsersForTicketSelectionMethods =
     groups_sorted = _.sortBy(groups, (group) -> group.name)
 
     # get the number of visible users per group
-    # from the TicketCreateCollection
+    # from the TicketOverviewCollection
     # (filled for e.g. the TicketCreation or TicketZoom assignment)
     for group in groups
       group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0

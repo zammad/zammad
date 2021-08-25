@@ -50,7 +50,7 @@ class Signup extends App.ControllerFullPage
     user.load(@params)
 
     errors = user.validate(
-      screen: 'signup'
+      controllerForm: @form
     )
 
     if errors

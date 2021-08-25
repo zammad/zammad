@@ -14,7 +14,7 @@ RSpec.describe 'Manage > Organizations', type: :system do
         it 'creates record', db_strategy: :reset do
 
           # required to edit attribute in admin interface
-          screens = { edit:  { 'admin.organization': { shown: true, required: false } } }
+          screens = { create: { 'admin.organization': { shown: true, required: false } } }
 
           attribute = create(:object_manager_attribute_text,
                              object_name:             'Organization',

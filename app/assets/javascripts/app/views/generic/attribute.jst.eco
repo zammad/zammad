@@ -1,4 +1,4 @@
-<div data-attribute-name="<%= @attribute.name %>" class="<%= @attribute.tag %> form-group<%= " form-group--block" if @attribute.style == 'block' %><%= " #{ @attribute.item_class }" if @attribute.item_class %>"<%= " data-width=#{ @attribute.grid_width }" if @attribute.grid_width %>>
+<div data-attribute-name="<%= @attribute.name %>" class="<%= @attribute.tag %> form-group<%= " form-group--block" if @attribute.style == 'block' %><%= " #{ @attribute.item_class }" if @attribute.item_class %><%= " is-required" if !@attribute.null %>"<%= " data-width=#{ @attribute.grid_width }" if @attribute.grid_width %>>
   <% if @attribute.style == 'block': %>
   <h2>
   <% end %>

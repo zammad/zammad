@@ -622,6 +622,32 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       'Core Workflow Ajax Mode',
+  name:        'core_workflow_ajax_mode',
+  area:        'System::UI',
+  description: 'Defines if the core workflow communication should run over ajax instead of websockets.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'core_workflow_ajax_mode',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.system'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
   title:       'User Organization Selector - email',
   name:        'ui_user_organization_selector_with_email',
   area:        'UI::UserOrganizatiomSelector',

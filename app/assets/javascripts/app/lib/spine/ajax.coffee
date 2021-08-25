@@ -234,17 +234,21 @@ class Singleton extends Base
 
   failResponse: (options) =>
     (xhr, statusText, error, settings) =>
-      switch settings.type
-        when 'POST' then @createFailed()
-        when 'DELETE' then @destroyFailed()
-      # add errors to calllback
-      @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
+      if options.failResponseNoTrigger isnt true
+        switch settings.type
+          when 'POST' then @createFailed()
+          when 'DELETE' then @destroyFailed()
+        # add errors to calllback
+        @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
+
       #options.fail?.call(@record, settings)
       detailsRaw = xhr.responseText
       if !_.isEmpty(detailsRaw)
         details = JSON.parse(detailsRaw)
       options.fail?.call(@record, settings, details)
-      @record.trigger('destroy', @record)
+
+      if options.failResponseNoTrigger isnt true
+        @record.trigger('destroy', @record)
       # /add errors to calllback
 
   createFailed: ->

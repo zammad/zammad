@@ -65,11 +65,14 @@ get assets and record_ids of selector
       attribute = item.split('.')
       next if !attribute[1]
 
+      if attribute[0] == 'customer' || attribute[0] == 'session'
+        attribute[0] = 'user'
+      end
+
       begin
         attribute_class = attribute[0].to_classname.constantize
       rescue => e
         next if attribute[0] == 'article'
-        next if attribute[0] == 'customer'
         next if attribute[0] == 'execution_time'
 
         logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"

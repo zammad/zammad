@@ -24,7 +24,7 @@ returns:
 
 =end
 
-  def attributes(user, record = nil)
+  def attributes(user, record = nil, data_only: true)
     @attributes ||= begin
       attribute_records.each_with_object([]) do |attribute_record, result|
 
@@ -36,7 +36,11 @@ returns:
 
         next if !element.visible?
 
-        result.push element.data
+        if data_only
+          result.push element.data
+        else
+          result.push element
+        end
       end
     end
   end

@@ -26,6 +26,7 @@ Zammad::Application.routes.draw do
   match '/tests_form_sla_times',              to: 'tests#form_sla_times',             via: :get
   match '/tests_form_skip_rendering',         to: 'tests#form_skip_rendering',        via: :get
   match '/tests_form_datetime',               to: 'tests#form_datetime',              via: :get
+  match '/tests_form_core_workflow',       to: 'tests#form_core_workflow',      via: :get
   match '/tests_table',                       to: 'tests#table',                      via: :get
   match '/tests_table_extended',              to: 'tests#table_extended',             via: :get
   match '/tests_html_utils',                  to: 'tests#html_utils',                 via: :get

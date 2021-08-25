@@ -52,7 +52,8 @@ class App.TicketCreate extends App.Controller
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
       @buildScreen(params)
-    @bindId = App.TicketCreateCollection.one(load)
+    @bindId = App.TicketCreateCollection.bind(load, false)
+    App.TicketCreateCollection.fetch()
 
     # rerender view, e. g. on langauge change
     @controllerBind('ui:rerender', =>
@@ -123,6 +124,7 @@ class App.TicketCreate extends App.Controller
     @$('[name="formSenderType"]').val(type)
 
     # force changing signature
+    # skip on initialization because it will trigger core workflow
     @$('[name="group_id"]').trigger('change')
 
     # add observer to change options
@@ -319,40 +321,12 @@ class App.TicketCreate extends App.Controller
 
     handlers = @Config.get('TicketCreateFormHandler')
 
-    new App.ControllerForm(
-      el:             @$('.ticket-form-top')
-      form_id:        @formId
-      model:          App.Ticket
-      screen:         'create_top'
-      events:
-        'change [name=customer_id]': @localUserInfo
-      handlersConfig: handlers
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      autofocus:      true
-      params:         params
-      taskKey:        @taskKey
-    )
-
-    new App.ControllerForm(
-      el:      @$('.article-form-top')
-      form_id: @formId
-      model:   App.TicketArticle
-      screen:  'create_top'
-      events:
-        'fileUploadStart .richtext': => @submitDisable()
-        'fileUploadStop .richtext': => @submitEnable()
-      params:  params
-      taskKey: @taskKey
-    )
-    new App.ControllerForm(
-      el:             @$('.ticket-form-middle')
-      form_id:        @formId
-      model:          App.Ticket
-      screen:         'create_middle'
-      events:
-        'change [name=customer_id]': @localUserInfo
-      handlersConfig: handlers
+    @controllerFormCreateMiddle = new App.ControllerForm(
+      el:                      @$('.ticket-form-middle')
+      form_id:                 @formId
+      model:                   App.Ticket
+      screen:                  'create_middle'
+      handlersConfig:          handlers
       filter:                  @formMeta.filter
       formMeta:                @formMeta
       params:                  params
@@ -360,14 +334,52 @@ class App.TicketCreate extends App.Controller
       taskKey:                 @taskKey
       rejectNonExistentValues: true
     )
-    new App.ControllerForm(
+
+    # tunnel events to make sure core workflow does know
+    # about every change of all attributes (like subject)
+    tunnelController = @controllerFormCreateMiddle
+    class TicketCreateFormHandlerControllerFormCreateMiddle
+      @run: (params, attribute, attributes, classname, form, ui) ->
+        return if !ui.lastChangedAttribute
+        tunnelController.lastChangedAttribute = ui.lastChangedAttribute
+        params = App.ControllerForm.params(tunnelController.form)
+        App.FormHandlerCoreWorkflow.run(params, tunnelController.attributes[0], tunnelController.attributes, tunnelController.idPrefix, tunnelController.form, tunnelController)
+
+    handlersTunnel = _.clone(handlers)
+    handlersTunnel['000-TicketCreateFormHandlerControllerFormCreateMiddle'] = TicketCreateFormHandlerControllerFormCreateMiddle
+
+    @controllerFormCreateTop = new App.ControllerForm(
+      el:             @$('.ticket-form-top')
+      form_id:        @formId
+      model:          App.Ticket
+      screen:         'create_top'
+      events:
+        'change [name=customer_id]': @localUserInfo
+      handlersConfig: handlersTunnel
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      autofocus:      true
+      params:         params
+      taskKey:        @taskKey
+    )
+    @controllerFormCreateTopArticle = new App.ControllerForm(
+      el:      @$('.article-form-top')
+      form_id: @formId
+      model:   App.TicketArticle
+      screen:  'create_top'
+      events:
+        'fileUploadStart .richtext': => @submitDisable()
+        'fileUploadStop .richtext': => @submitEnable()
+      handlersConfig: handlersTunnel
+      params:  params
+      taskKey: @taskKey
+    )
+    @controllerFormCreateBottom = new App.ControllerForm(
       el:             @$('.ticket-form-bottom')
       form_id:        @formId
       model:          App.Ticket
       screen:         'create_bottom'
-      events:
-        'change [name=customer_id]': @localUserInfo
-      handlersConfig: handlers
+      handlersConfig: handlersTunnel
       filter:         @formMeta.filter
       formMeta:       @formMeta
       params:         params
@@ -513,19 +525,23 @@ class App.TicketCreate extends App.Controller
     ticket.load(params)
 
     ticketErrorsTop = ticket.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTop
+      target: e.target
     )
     ticketErrorsMiddle = ticket.validate(
-      screen: 'create_middle'
+      controllerForm: @controllerFormCreateMiddle
+      target: e.target
     )
     ticketErrorsBottom = ticket.validate(
-      screen: 'create_bottom'
+      controllerForm: @controllerFormCreateBottom
+      target: e.target
     )
 
     article = new App.TicketArticle
     article.load(params['article'])
     articleErrors = article.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTopArticle
+      target: e.target
     )
 
     # collect whole validation result

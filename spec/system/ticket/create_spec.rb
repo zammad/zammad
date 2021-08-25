@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
@@ -426,6 +427,19 @@ RSpec.describe 'Ticket Create', type: :system do
 
         # check stored data
         expect(Ticket.last.preferences[:github][:issue_links][0]).to eq(ENV['GITHUB_ISSUE_LINK'])
+      end
+    end
+  end
+
+  describe 'Core Workflow' do
+    include_examples 'core workflow' do
+      let(:object_name) { 'Ticket' }
+      let(:before_it) do
+        lambda {
+          ensure_websocket(check_if_pinged: false) do
+            visit 'ticket/create'
+          end
+        }
       end
     end
   end

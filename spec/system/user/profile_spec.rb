@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'User Profile', type: :system do
@@ -30,6 +31,23 @@ RSpec.describe 'User Profile', type: :system do
         page.find('.profile li[data-type=edit]').click
         fill_in 'maxtest', with: 'hellu'
         expect(page.find_field('maxtest').value).to eq('hel')
+      end
+    end
+  end
+
+  describe 'Core Workflow' do
+    include_examples 'core workflow' do
+      let(:object_name) { 'User' }
+      let(:before_it) do
+        lambda {
+          ensure_websocket(check_if_pinged: false) do
+            visit "#user/profile/#{customer.id}"
+            within(:active_content) do
+              page.find('.profile .js-action').click
+              page.find('.profile li[data-type=edit]').click
+            end
+          end
+        }
       end
     end
   end

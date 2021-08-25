@@ -136,6 +136,7 @@ class TicketsController < ApplicationController
     end
 
     clean_params = Ticket.param_cleanup(clean_params, true)
+    clean_params[:screen] = 'create_middle'
     ticket = Ticket.new(clean_params)
     authorize!(ticket, :create?)
 
@@ -232,6 +233,7 @@ class TicketsController < ApplicationController
 
     # only apply preferences changes (keep not updated keys/values)
     clean_params = ticket.param_preferences_merge(clean_params)
+    clean_params[:screen] = 'edit'
 
     # disable changes on ticket number
     clean_params.delete('number')
@@ -426,6 +428,7 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       view:         'ticket_create',
+      screen:       'create_middle',
       current_user: current_user,
     )
     render json: attributes_to_change
@@ -659,7 +662,8 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       current_user: current_user,
-      ticket:       ticket
+      ticket:       ticket,
+      screen:       'edit',
     )
 
     # get related users

@@ -3,6 +3,7 @@
 class Sla < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
+  include ChecksCoreWorkflow
   include HasEscalationCalculationImpact
 
   include Sla::Assets

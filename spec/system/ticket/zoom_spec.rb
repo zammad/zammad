@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'system/examples/core_workflow_examples'
+
 RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'owner auto-assignment', authenticated_as: :authenticate do
@@ -944,7 +946,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       let(:user) { create(:customer) }
       let(:ticket) { create(:ticket, customer: user) }
 
-      it 'shows ticket state dropdown options in sorted order' do
+      it 'shows ticket state dropdown options in sorted translated alphabetically order' do
         visit "ticket/zoom/#{ticket.id}"
 
         await_empty_ajax_queue
@@ -1654,6 +1656,20 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         # check that counter got removed
         expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=github] .js-tabCounter')
+      end
+    end
+  end
+
+  describe 'Core Workflow' do
+    include_examples 'core workflow' do
+      let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let(:object_name) { 'Ticket' }
+      let(:before_it) do
+        lambda {
+          ensure_websocket(check_if_pinged: false) do
+            visit "#ticket/zoom/#{ticket.id}"
+          end
+        }
       end
     end
   end

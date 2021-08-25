@@ -61,7 +61,7 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
     user.load(@params)
 
     errors = user.validate(
-      screen: 'invite_agent'
+      controllerForm: @form
     )
     if errors
       @log 'error new', errors

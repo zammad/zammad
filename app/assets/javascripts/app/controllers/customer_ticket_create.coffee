@@ -18,7 +18,8 @@ class CustomerTicketCreate extends App.ControllerAppContent
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
       @render()
-    @bindId = App.TicketCreateCollection.one(load)
+    @bindId = App.TicketCreateCollection.bind(load, false)
+    App.TicketCreateCollection.fetch()
 
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
@@ -43,32 +44,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
       form_id: @form_id
     )
 
-    new App.ControllerForm(
-      el:             @el.find('.ticket-form-top')
-      form_id:        @form_id
-      model:          App.Ticket
-      screen:         'create_top'
-      handlersConfig: handlers
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      autofocus:      true
-      params:         defaults
-    )
-
-    new App.ControllerForm(
-      el:             @el.find('.article-form-top')
-      form_id:        @form_id
-      model:          App.TicketArticle
-      screen:         'create_top'
-      events:
-        'fileUploadStart .richtext': => @submitDisable()
-        'fileUploadStop .richtext': => @submitEnable()
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      params:         defaults
-      handlersConfig: handlers
-    )
-    new App.ControllerForm(
+    @controllerFormCreateMiddle = new App.ControllerForm(
       el:                      @el.find('.ticket-form-middle')
       form_id:                 @form_id
       model:                   App.Ticket
@@ -80,13 +56,51 @@ class CustomerTicketCreate extends App.ControllerAppContent
       handlersConfig:          handlers
       rejectNonExistentValues: true
     )
+
+    # tunnel events to make sure core workflow does know
+    # about every change of all attributes (like subject)
+    tunnelController = @controllerFormCreateMiddle
+    class TicketCreateFormHandlerControllerFormCreateMiddle
+      @run: (params, attribute, attributes, classname, form, ui) ->
+        return if !ui.lastChangedAttribute
+        tunnelController.lastChangedAttribute = ui.lastChangedAttribute
+        params = App.ControllerForm.params(tunnelController.form)
+        App.FormHandlerCoreWorkflow.run(params, tunnelController.attributes[0], tunnelController.attributes, tunnelController.idPrefix, tunnelController.form, tunnelController)
+
+    handlersTunnel = _.clone(handlers)
+    handlersTunnel['000-TicketCreateFormHandlerControllerFormCreateMiddle'] = TicketCreateFormHandlerControllerFormCreateMiddle
+
+    @controllerFormCreateTop = new App.ControllerForm(
+      el:             @el.find('.ticket-form-top')
+      form_id:        @form_id
+      model:          App.Ticket
+      screen:         'create_top'
+      handlersConfig: handlersTunnel
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      autofocus:      true
+      params:         defaults
+    )
+    @controllerFormCreateTopArticle = new App.ControllerForm(
+      el:             @el.find('.article-form-top')
+      form_id:        @form_id
+      model:          App.TicketArticle
+      screen:         'create_top'
+      events:
+        'fileUploadStart .richtext': => @submitDisable()
+        'fileUploadStop .richtext': => @submitEnable()
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         defaults
+      handlersConfig: handlersTunnel
+    )
     if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
-      new App.ControllerForm(
+      @controllerFormCreateBottom = new App.ControllerForm(
         el:             @el.find('.ticket-form-bottom')
         form_id:        @form_id
         model:          App.Ticket
         screen:         'create_bottom'
-        handlersConfig: handlers
+        handlersConfig: handlersTunnel
         filter:         @formMeta.filter
         formMeta:       @formMeta
         params:         defaults
@@ -151,15 +165,18 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
     # validate form
     ticketErrorsTop = ticket.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTop
+      target: e.target
     )
     ticketErrorsMiddle = ticket.validate(
-      screen: 'create_middle'
+      controllerForm: @controllerFormCreateMiddle
+      target: e.target
     )
     article = new App.TicketArticle
     article.load(params['article'])
     articleErrors = article.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTop
+      target: e.target
     )
 
     # collect whole validation

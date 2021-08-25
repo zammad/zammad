@@ -120,6 +120,7 @@ class UsersController < ApplicationController
     user.with_lock do
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
+      clean_params[:screen] = 'update'
       user.update!(clean_params)
 
       # presence and permissions were checked via `check_attributes_by_current_user_permission`
@@ -887,7 +888,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   private
 
   def clean_user_params
-    User.param_cleanup(User.association_name_to_id_convert(params), true)
+    User.param_cleanup(User.association_name_to_id_convert(params), true).merge(screen: 'create')
   end
 
   # @summary          Creates a User record with the provided attribute values.

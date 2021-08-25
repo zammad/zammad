@@ -12,6 +12,9 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
+    if object.included_modules.include?(ChecksCoreWorkflow)
+      clean_params[:screen] = 'create'
+    end
 
     # create object
     generic_object = object.new(clean_params)
@@ -46,6 +49,9 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
+    if object.included_modules.include?(ChecksCoreWorkflow)
+      clean_params[:screen] = 'update'
+    end
 
     generic_object.with_lock do
 

@@ -24,6 +24,9 @@ class App.TicketBulkForm extends App.Controller
         localAttribute.null = true
         @configure_attributes_ticket.push localAttribute
 
+    # add field for ticket ids
+    ticket_ids_attribute = { name: 'ticket_ids', display: false, tag: 'input', type: 'hidden', limit: 100, null: false }
+    @configure_attributes_ticket.push ticket_ids_attribute
 
     time_attribute = _.findWhere(@configure_attributes_ticket, {'name': 'pending_time'})
     if time_attribute
@@ -37,10 +40,10 @@ class App.TicketBulkForm extends App.Controller
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
       @render()
-    @bindId = App.TicketCreateCollection.bind(load)
+    @bindId = App.TicketOverviewCollection.bind(load)
 
   release: =>
-    App.TicketCreateCollection.unbind(@bindId)
+    App.TicketOverviewCollection.unbind(@bindId)
 
   render: ->
     @el.css('right', App.Utils.getScrollBarWidth())
@@ -50,31 +53,27 @@ class App.TicketBulkForm extends App.Controller
 
     handlers = @Config.get('TicketZoomFormHandler')
 
-    for attribute in @configure_attributes_ticket
-      continue if attribute.name != 'owner_id'
-      {users, groups} = @validUsersForTicketSelection()
-      options = _.map(users, (user) -> {value: user.id, name: user.displayName()} )
-      attribute.possible_groups_owners = options
-
-    new App.ControllerForm(
+    @controllerFormBulk = new App.ControllerForm(
       el: @$('#form-ticket-bulk')
       model:
         configure_attributes: @configure_attributes_ticket
-        className:            'create'
+        className:            'Ticket'
         labelClass:           'input-group-addon'
+      screen:         'overview_bulk'
       handlersConfig: handlers
-      params:     {}
-      filter:     @formMeta.filter
-      formMeta:   @formMeta
-      noFieldset: true
+      params:         {}
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      noFieldset:     true
     )
 
     new App.ControllerForm(
       el: @$('#form-ticket-bulk-comment')
       model:
         configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
-        className:            'create'
+        className:            'Ticket'
         labelClass:           'input-group-addon'
+      screen:     'overview_bulk_comment'
       noFieldset: true
     )
 
@@ -87,8 +86,9 @@ class App.TicketBulkForm extends App.Controller
       el: @$('#form-ticket-bulk-typeVisibility')
       model:
         configure_attributes: @confirm_attributes
-        className:            'create'
+        className:            'Ticket'
         labelClass:           'input-group-addon'
+      screen:     'overview_bulk_visibility'
       noFieldset: true
     )
 
@@ -183,7 +183,7 @@ class App.TicketBulkForm extends App.Controller
 
       # validate ticket
       errors = ticket.validate(
-        screen: 'edit'
+        controllerForm: @controllerFormBulk
       )
       if errors
         @log 'error', 'update', errors
