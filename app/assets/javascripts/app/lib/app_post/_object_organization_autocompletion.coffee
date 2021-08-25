@@ -39,6 +39,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
     @key = Math.floor( Math.random() * 999999 ).toString()
 
+    if !@attribute.sourceType
+      @attribute.sourceType = 'GET'
     if !@attribute.source
       @attribute.source = "#{@apiPath}/search/user-organization"
     @build()
@@ -345,38 +347,49 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       @lazySearch(query)
 
   searchObject: (query) =>
+    data =
+      query: query
+    if @attribute.queryCallback
+      data = @attribute.queryCallback(query)
+
     @ajax(
-      id:    "searchObject#{@key}"
-      type:  'GET'
-      url:   @attribute.source
-      data:
-        query: query
+      id:          "searchObject#{@key}"
+      type:        @attribute.sourceType
+      url:         @attribute.source
+      data:        data
       processData: true
-      success: (data, status, xhr) =>
+      success:     (data, status, xhr) =>
         @emptyResultList()
 
         # load assets
         App.Collection.loadAssets(data.assets)
 
-        # build markup
-        for item in data.result
-
-          # organization
-          if item.type is 'Organization'
-            organization = App.Organization.fullLocal(item.id)
-            @recipientList.append(@buildOrganizationItem(organization))
-
-            # objectss of organization
-            if organization[@referenceAttribute]
-              @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
-
-          # objectss
-          if item.type is @objectSingle
-            object = App[@objectSingle].fullLocal(item.id)
+        # user search endpoint
+        if data.user_ids
+          for id in data.user_ids
+            object = App[@objectSingle].fullLocal(id)
             @recipientList.append(@buildObjectItem(object))
 
-        if !@attribute.disableCreateObject
-          @recipientList.append(@buildObjectNew())
+        # global search endpoint
+        else
+          for item in data.result
+
+            # organization
+            if item.type is 'Organization'
+              organization = App.Organization.fullLocal(item.id)
+              @recipientList.append(@buildOrganizationItem(organization))
+
+              # objectss of organization
+              if organization[@referenceAttribute]
+                @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
+
+            # objectss
+            else if item.type is @objectSingle
+              object = App[@objectSingle].fullLocal(item.id)
+              @recipientList.append(@buildObjectItem(object))
+
+          if !@attribute.disableCreateObject
+            @recipientList.append(@buildObjectNew())
 
         @recipientList.find('.js-object').first().addClass('is-active')
     )

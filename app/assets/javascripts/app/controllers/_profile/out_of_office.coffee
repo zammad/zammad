@@ -75,6 +75,13 @@ class ProfileOutOfOffice extends App.ControllerSubContent
             translate: false
             disableCreateObject: true
             value: @localData
+            source: "#{@apiPath}/users/search?full=true"
+            sourceType: 'POST'
+            queryCallback: (query) ->
+              return JSON.stringify(
+                query: query
+                permissions: ['ticket.agent']
+              )
           ]
       noFieldset: true
       params: @localData
