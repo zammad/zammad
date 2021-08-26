@@ -50,6 +50,7 @@ module ChecksCoreWorkflow
 
   def check_mandatory(perform_result)
     perform_result[:mandatory].each_key do |key|
+      next if perform_result[:visibility][key] != 'show'
       next if !perform_result[:mandatory][key]
       next if self[key].present?
 

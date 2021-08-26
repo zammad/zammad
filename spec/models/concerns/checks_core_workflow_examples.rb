@@ -91,4 +91,31 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
       expect { ticket }.to raise_error(Exceptions::UnprocessableEntity, "Missing required value for field 'pending_time'!")
     end
   end
+
+  context 'when creation of mandatory field but hidden' do
+    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open')) }
+
+    before do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.pending_time': {
+                 operator:      'set_mandatory',
+                 set_mandatory: true
+               },
+             })
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.pending_time': {
+                 operator: 'hide',
+                 hide:     true
+               },
+             })
+    end
+
+    it 'does create a ticket without pending_time value' do
+      expect { ticket }.not_to raise_error
+    end
+  end
 end
