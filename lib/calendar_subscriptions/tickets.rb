@@ -2,10 +2,10 @@
 
 class CalendarSubscriptions::Tickets
 
-  def initialize(user, preferences)
+  def initialize(user, preferences, time_zone)
     @user        = user
     @preferences = preferences
-    @tzid        = 'UTC'
+    @time_zone   = time_zone
   end
 
   def all
@@ -86,8 +86,8 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
@@ -144,8 +144,8 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       if alarm?
@@ -198,8 +198,8 @@ class CalendarSubscriptions::Tickets
         escalation_at = Time.zone.today
       end
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       if alarm?
