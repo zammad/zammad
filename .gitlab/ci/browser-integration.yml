@@ -5,7 +5,6 @@ include:
   - local: '/.gitlab/ci/browser-integration/capybara_ff.yml'
   - local: '/.gitlab/ci/browser-integration/idoit_chrome.yml'
   - local: '/.gitlab/ci/browser-integration/otrs_chrome.yml'
-  - local: '/.gitlab/ci/browser-integration/zendesk_chrome.yml'
 
 .template_browser-integration_capybara: &template_browser-integration_capybara
   stage: browser-integration

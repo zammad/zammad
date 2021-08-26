@@ -20,6 +20,10 @@ include:
     - bundle exec rake zammad:db:init
     - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t db_strategy:reset
 
+# RSpec 3rd party integration tests are independent of the database
+# therefore we need only one job and choose a random database for each run
+# Optionally pass INTEGRATION_TESTS=enabled to run them in private- branch
+
 rspec:integration:
   stage: test
   extends:
@@ -28,6 +32,13 @@ rspec:integration:
     - .rules_integration_manual_start
   variables:
     RAILS_ENV: "test"
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS != "enabled"'
+      when: manual
+      allow_failure: true
+    - when: always
   script:
     - bundle exec rake zammad:db:init
     - bundle exec rspec -t type:integration

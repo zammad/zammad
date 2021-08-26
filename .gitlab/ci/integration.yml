@@ -6,7 +6,6 @@ include:
   - local: '/.gitlab/ci/integration/otrs.yml'
   - local: '/.gitlab/ci/integration/slack.yml'
   - local: '/.gitlab/ci/integration/user_agent.yml'
-  - local: '/.gitlab/ci/integration/zendesk.yml'
 
 .template_integration: &template_integration
   extends:

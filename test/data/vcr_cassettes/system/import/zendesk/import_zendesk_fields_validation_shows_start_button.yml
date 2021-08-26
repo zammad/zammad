@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<IMPORT_ZENDESK_ENDPOINT>/users/me"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 20 Aug 2021 13:25:32 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zendesk-Api-Version:
+      - v2
+      X-Zendesk-Application-Version:
+      - v9449
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Expose-Headers:
+      - X-Zendesk-API-Warn
+      Vary:
+      - origin
+      X-Rate-Limit:
+      - '700'
+      X-Rate-Limit-Remaining:
+      - '700'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Etag:
+      - W/"3c0256d85244a27a8ce7b6f5873ccd20"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Zendesk-Origin-Server:
+      - classic-app-server-5d8ffc66d-4qfvw
+      X-Request-Id:
+      - 681bf2ba78d91456-FRA
+      - 681bf2ba78d91456-FRA
+      X-Runtime:
+      - '0.062649'
+      X-Zendesk-Zorg:
+      - 'yes'
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=zoYPc%2BRXmsDxXz60KgGj6HbcHwUVl2DMdXJDLG7Puadk819LSODyeTWQVmq%2BWNr6dPfLjl%2BbjgadmjuMkEMh3%2FagyesmlXY6%2FmIE7h7ufqhaf3WDEHy54jYUlnSVDOZsFcaoMYbL0w%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Set-Cookie:
+      - __cfruid=da46982ffcca5ea958f4e4ca167a32ad2a9f96b7-1629465932; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 681bf2ba78d91456-FRA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"user":{"id":null,"url":null,"name":"Nicht registrierter Benutzer","email":"invalid@example.com","created_at":null,"updated_at":null,"time_zone":"Berlin","iana_time_zone":"Europe/Berlin","phone":null,"shared_phone_number":null,"photo":null,"locale_id":8,"locale":"de","organization_id":null,"role":"end-user","verified":false,"authenticity_token":"K4wyhBU1oaZc51Iy3A0wE4iBxJxbFdcdiGbGTfCiML1zJpFFy6QhSMHp+lzp2PvYoyUtVqunySi7wRpOtrywzg=="}}'
+  recorded_at: Fri, 20 Aug 2021 13:25:31 GMT
+- request:
+    method: get
+    uri: "<IMPORT_ZENDESK_ENDPOINT>/users/me"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - ZendeskAPI Ruby 1.32.0
+      Authorization:
+      - Basic <IMPORT_ZENDESK_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 20 Aug 2021 13:25:33 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zendesk-Api-Version:
+      - v2
+      X-Zendesk-Application-Version:
+      - v9449
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Expose-Headers:
+      - X-Zendesk-API-Warn
+      Vary:
+      - origin
+      X-Rate-Limit:
+      - '700'
+      X-Rate-Limit-Remaining:
+      - '699'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Etag:
+      - W/"f14a46f2e02be3ac54793639fc4a2bab"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Zendesk-Origin-Server:
+      - classic-app-server-5d8ffc66d-tlbz4
+      X-Request-Id:
+      - 681bf2c5282d42f7-FRA
+      - 681bf2c5282d42f7-FRA
+      X-Runtime:
+      - '0.211401'
+      X-Zendesk-Zorg:
+      - 'yes'
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=lptF1lImDKX46TfzAwSGsGGPe8vCgQJGykBIRA%2B%2B%2F50MYmNlyuNV9bqDghfiMLyqZFABSRwpO57DlW8WMoXvCCLngFo7MyPCmxwsWF9DGqdu0uyoB1hRY9CgaDRzPz1yfiwKO8kfkg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Set-Cookie:
+      - __cfruid=194b2ee3473a1a1f8f7c192193f8c8d8240c03b8-1629465933; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 681bf2c5282d42f7-FRA
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA21T7WrbMBR9laHfSfxRu0kMhW39WDvYYDSlJWMIxb5x1MiSK125TUrfZm+yF9uVk7QdDPIjlo7OPefo6Jl5B5YVz0xWrEiSPB4fZeOjZMC8VaxgK8TWFVG01V5vVqDa0RZ0BW49Kk0TiVZGXRoFChe9HR7dO6PZgGnRAHF8NosP143EFS1BI2TgXZjFyIW1jz1zYKPd0oJAqLhAgqRxkg/j8TCZztK0yBL6zQnj2+o9Jk2G8WSYxrPkqEjGRToJGJQN8K3R/XSwSgY1UmjB3++ce2taiF4B7Wp3Io6TJEvSjM64lbCkp9/h2jeLkBVaDwNGa2hYob1SA6ZMKRTwPsPDF80GPby5Jhpja6HlVqA0egfKs3Ge58cEtkYFmaJqepUdWLmUQES7McLjCjTKUuKGo1mDJvCpz9cSl8mndn7V2ondCHfTfYmO8wf3/XEVx7fusrs7W2utHlT3sMavAJN6fG9mJoovmqu7bC5vz8q5TKeX02/mdHZxfnd+++PkJFzQE4LVQvUyd+ZQ1I4VP1nKfg2YUFLQFyOoKFF2pH0ndBcVK5ZCOYpnn5yoSfzrohIOuTK11Icr/v/1PRq+JHZjebDPQYuFCpEcuGWtBXobciMdFSCVai9KG4T935Asx01LsJ2R0js0De/X3+w1pgIraNjBCYW9BuQWHFpJHqnLewKj1Ya3VnbUQE6VbcgcDdvLOhwIBf7HtvOuDa/mzUEFS+EV8toa3/Za0izPs2l4eBZaY5GXrjsICu+LUylURcOe2d5GRe2tzGPoQ0opKAkLKnrtUIaSskuvqz+/2cvLy1+xR8KQ5AMAAA==
+  recorded_at: Fri, 20 Aug 2021 13:25:33 GMT
+recorded_with: VCR 6.0.0
