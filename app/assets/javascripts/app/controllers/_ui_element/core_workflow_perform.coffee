@@ -40,7 +40,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
       'boolean$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'add_option', 'remove_option', 'set_fixed_to']
       'integer$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional']
       '^select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'add_option', 'remove_option', 'set_fixed_to', 'select', 'auto_select']
-      '^tree_select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'select', 'auto_select']
+      '^tree_select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'add_option', 'remove_option', 'set_fixed_to', 'select', 'auto_select']
       '^input$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'fill_in', 'fill_in_empty']
 
     operatorsName =
