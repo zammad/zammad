@@ -208,6 +208,48 @@ RSpec.describe User, type: :model do
             expect(user.out_of_office_agent).to eq(substitute)
           end
         end
+
+        context 'with recursive out of office structure' do
+          let(:out_of_office) { true }
+          let(:substitute) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: user_active.id,)
+          end
+          let!(:user_active) { create(:user) }
+
+          it 'returns the designated substitute recursive' do
+            expect(user.out_of_office_agent).to eq(user_active)
+          end
+        end
+
+        context 'with recursive out of office structure with a endless loop' do
+          let(:out_of_office) { true }
+          let(:substitute) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: user_active.id,)
+          end
+          let!(:user_active) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: agent.id,)
+          end
+
+          before do
+            user_active.update(out_of_office_replacement_id: substitute.id)
+          end
+
+          it 'returns the designated substitute recursive with a endless loop' do
+            expect(user.out_of_office_agent).to eq(substitute)
+          end
+        end
       end
     end
 
@@ -247,6 +289,55 @@ RSpec.describe User, type: :model do
           it 'returns an ActiveRecord::Relation including that agent' do
             expect(agent.out_of_office_agent_of)
               .to match_array([agent_on_holiday])
+          end
+        end
+
+        context 'when inherited' do
+          let(:out_of_office) { true }
+          let!(:agent_on_holiday_sub) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday.id,
+              out_of_office:                out_of_office
+            )
+          end
+
+          it 'returns an ActiveRecord::Relation including both agents' do
+            expect(agent.out_of_office_agent_of)
+              .to match_array([agent_on_holiday, agent_on_holiday_sub])
+          end
+        end
+
+        context 'when inherited endless loop' do
+          let(:out_of_office) { true }
+          let!(:agent_on_holiday_sub) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday.id,
+              out_of_office:                out_of_office
+            )
+          end
+          let!(:agent_on_holiday_sub2) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday_sub.id,
+              out_of_office:                out_of_office
+            )
+          end
+
+          before do
+            agent_on_holiday_sub.update(out_of_office_replacement_id: agent_on_holiday_sub2.id)
+          end
+
+          it 'returns an ActiveRecord::Relation including both agents referencing each other' do
+            expect(agent_on_holiday_sub.out_of_office_agent_of)
+              .to match_array([agent_on_holiday_sub, agent_on_holiday_sub2])
           end
         end
       end

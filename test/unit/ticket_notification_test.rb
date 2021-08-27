@@ -1122,7 +1122,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
     assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
-    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent4, 'email'), ticket2.id)
 
   end

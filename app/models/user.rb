@@ -217,11 +217,21 @@ returns
 
 =end
 
-  def out_of_office_agent
+  def out_of_office_agent(loop_user_ids: [])
     return if !out_of_office?
     return if out_of_office_replacement_id.blank?
 
-    User.find_by(id: out_of_office_replacement_id)
+    user = User.find_by(id: out_of_office_replacement_id)
+
+    # stop if users are occuring multiple times to prevent endless loops
+    return user if loop_user_ids.include?(out_of_office_replacement_id)
+
+    loop_user_ids |= [out_of_office_replacement_id]
+
+    ooo_agent = user.out_of_office_agent(loop_user_ids: loop_user_ids)
+    return ooo_agent if ooo_agent.present?
+
+    user
   end
 
 =begin
@@ -238,7 +248,19 @@ returns
 =end
 
   def out_of_office_agent_of
-    User.where(active: true, out_of_office: true, out_of_office_replacement_id: id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today)
+    User.where(id: out_of_office_agent_of_recursive(user_id: id))
+  end
+
+  def out_of_office_agent_of_recursive(user_id:, result: [])
+    User.where(active: true, out_of_office: true, out_of_office_replacement_id: user_id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today).each do |user|
+
+      # stop if users are occuring multiple times to prevent endless loops
+      break if result.include?(user.id)
+
+      result |= [user.id]
+      result |= out_of_office_agent_of_recursive(user_id: user.id, result: result)
+    end
+    result
   end
 
 =begin
