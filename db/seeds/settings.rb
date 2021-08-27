@@ -3799,7 +3799,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null:    true,
-        name:    'checkmk_auto_close',
+        name:    'check_mk_auto_close',
         tag:     'boolean',
         options: {
           true  => 'yes',
