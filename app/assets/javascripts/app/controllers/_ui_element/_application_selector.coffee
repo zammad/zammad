@@ -485,8 +485,7 @@ class App.UiElement.ApplicationSelector
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
       if 'multiple' of config
-        config.multiple = true
-        config.nulloption = false
+        config = @buildValueConfigMultiple(config, meta)
       if config.relation is 'User'
         config.multiple = false
         config.nulloption = false
@@ -515,6 +514,11 @@ class App.UiElement.ApplicationSelector
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
       elementRow.find('.js-value').removeClass('hide')
+
+  @buildValueConfigMultiple: (config, meta) ->
+    config.multiple = true
+    config.nulloption = false
+    return config
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
