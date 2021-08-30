@@ -304,7 +304,12 @@ class App.Controller extends Spine.Controller
 
     # only do dom updates on changes
     return if time is currentVal
-    item.attr('title', App.i18n.translateTimestamp(timestamp))
+
+    newTitle = App.i18n.translateTimestamp(timestamp)
+    if item.attr('timezone')
+      newTitle += ' ' + item.attr('timezone')
+
+    item.attr('title', newTitle)
     item.html(time)
 
   recentView: (object, o_id) =>

@@ -16,7 +16,7 @@ test("form elements check", function() {
     autofocus: true
   });
 
-  equal('Run every Monday at 00:00', el.find('.js-timerResult').val())
+  equal('Run every Monday at 00:00 in UTC time', el.find('.js-timerResult').text())
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -101,7 +101,7 @@ test("form elements check", function() {
     autofocus: true
   });
 
-  equal('Run every Monday and Friday at 00:00, 00:10, 00:50, 10:00, 10:10, 10:50, 16:00, 16:10 and 16:50', el.find('.js-timerResult').val())
+  equal('Run every Monday and Friday at 00:00, 00:10, 00:50, 10:00, 10:10, 10:50, 16:00, 16:10 and 16:50 in UTC time', el.find('.js-timerResult').text())
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -158,7 +158,7 @@ test("form elements check", function() {
   $('#form2 .js-hour [data-value="16"]').click()
   $('#form2 .js-minute [data-value="10"]').click()
 
-  equal('Run every Monday, Friday and Saturday at 00:00, 00:50, 10:00 and 10:50', el.find('.js-timerResult').val())
+  equal('Run every Monday, Friday and Saturday at 00:00, 00:50, 10:00 and 10:50 in UTC time', el.find('.js-timerResult').text())
 
   var params = App.ControllerForm.params(el)
   var test_params = {

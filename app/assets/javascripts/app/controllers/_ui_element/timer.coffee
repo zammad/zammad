@@ -112,8 +112,9 @@ class App.UiElement.timer
 
     days = @joinItems days
     hours = @joinItems hours
+    timezone = App.Config.get('timezone_default') || 'UTC'
 
-    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s', days, hours))
+    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s in %s time', days, hours, timezone))
 
   @injectMinutes: (hours, minutes) ->
     newHours = [] # hours.length x minutes.length long

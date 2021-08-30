@@ -60,6 +60,15 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="blank">closed</a>')
   equal( App.viewPrint( ticket, 'link2' ), '<a href="http://zammad.com" target="blank">closed</a>')
 
+  let stub = sinon.stub(App.Config, 'get')
+  stub.withArgs('timezone_default').returns('Example/Timezone')
+  let attr = App.Ticket.configure_attributes.find(e => { return e.name == 'updated_at' })
+  attr.include_timezone = true
+
+  equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 23:43 Example/Timezone" timezone="Example/Timezone">11/07/2014</time>')
+
+  attr.include_timezone = false
+  stub.restore()
 
   App.i18n.set('de-de')
   equal( App.viewPrint( ticket, 'id' ), 1000)
