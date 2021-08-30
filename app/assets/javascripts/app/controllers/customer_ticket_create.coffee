@@ -33,12 +33,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
     defaults = template['options'] || {}
     handlers = @Config.get('TicketCreateFormHandler')
 
-    groupFilter = App.Config.get('customer_ticket_create_group_ids')
-    if groupFilter
-      if !_.isArray(groupFilter)
-        groupFilter = [groupFilter]
-      @formMeta.filter.group_id = groupFilter
-
     @html App.view('customer_ticket_create')(
       head: 'New Ticket'
       form_id: @form_id

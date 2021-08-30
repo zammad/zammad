@@ -237,6 +237,28 @@ RSpec.describe CoreWorkflow, type: :model do
     end
   end
 
+  describe '.perform - Default - Customer setting customer_ticket_create_group_ids' do
+    let(:action_user) { create(:customer) }
+
+    let!(:group1) { create(:group) }
+    let!(:group2) { create(:group) }
+    let!(:group3) { create(:group) }
+
+    it 'does show group 1' do
+      expect(result[:restrict_values]['group_id']).to include(group1.id.to_s)
+    end
+
+    context 'with customer_ticket_create_group_ids set' do
+      before do
+        Setting.set('customer_ticket_create_group_ids', [group2.id.to_s, group3.id.to_s])
+      end
+
+      it 'does not show group 1' do
+        expect(result[:restrict_values]['group_id']).not_to include(group1.id.to_s)
+      end
+    end
+  end
+
   describe '.perform - Custom - Pending Time' do
     it 'does not show pending time for non pending state' do
       expect(result[:visibility]['pending_time']).to eq('remove')
