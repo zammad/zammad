@@ -11,14 +11,13 @@ JSON
 
 Example:
 {
-  "id":1,
-  "name":"some template",
-  "user_id": null,
-  "options":{"a":1,"b":2},
-  "updated_at":"2012-09-14T17:51:53Z",
-  "created_at":"2012-09-14T17:51:53Z",
-  "updated_by_id":2.
-  "created_by_id":2,
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 =end
@@ -26,24 +25,28 @@ Example:
 =begin
 
 Resource:
-GET /api/v1/templates.json
+GET /api/v1/online_notifications
 
 Response:
 [
   {
     "id": 1,
-    "name": "some_name1",
+    "object": "Ticket",
+    "type": "escalation",
+    "seen": true,
     ...
   },
   {
     "id": 2,
-    "name": "some_name2",
+    "object": "Ticket",
+    "type": "escalation",
+    "seen": false,
     ...
   }
 ]
 
 Test:
-curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
 
 =end
 
@@ -63,7 +66,7 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
       assets = {}
       item_ids = []
       online_notifications.each do |item|
-        item_ids.push item.id
+        item_ids.push item['id']
         assets = item.assets(assets)
       end
       render json: {
@@ -83,18 +86,17 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
 =begin
 
 Resource:
-GET /api/v1/online_notifications/{id}
-
-Payload:
-{
-  "id": "123",
-}
+GET /api/v1/online_notifications/#{id}
 
 Response:
 {
-  "id": 1,
-  "name": "some_name",
-  ...
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Test:
@@ -113,15 +115,24 @@ PUT /api/v1/online_notifications/{id}
 
 Payload:
 {
-  "name": "some name",
-  "options":{"a":1,"b":2},
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Response:
 {
-  "id": 1,
-  "name": "some_name",
-  ...
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Test:
