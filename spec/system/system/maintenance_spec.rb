@@ -3,59 +3,104 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Maintenance', type: :system do
-  it 'switch maintenance_login on' do
-    Setting.set 'maintenance_login', false
+  context 'when maintenance login is used' do
+    context 'when maintenance login will be activated', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('maintenance_login', false)
+        true
+      end
 
-    visit 'system/maintenance'
-    refresh # ensure changed Setting is loaded
+      it 'switch maintenance_login on' do
+        visit 'system/maintenance'
 
-    find('.js-loginSetting label').click
-    find('.js-loginSetting input', visible: :all).check # required for chrome
+        click '.js-loginSetting label'
 
-    wait(10).until { expect(Setting.get('maintenance_login')).to be true }
-  end
-
-  it 'switch maintenance_login off' do
-    Setting.set 'maintenance_login', true
-
-    visit 'system/maintenance'
-    refresh # ensure changed Setting is loaded
-
-    find('.js-loginSetting label').click
-    find('.js-loginSetting input', visible: :all).uncheck # required for chrome
-
-    wait(10).until { expect(Setting.get('maintenance_login')).to be false }
-  end
-
-  it 'shows current maintenance_login_message' do
-    message = "badum tssss #{rand(99_999)}"
-
-    Setting.set 'maintenance_login_message', message
-
-    visit 'system/maintenance'
-    refresh # ensure changed Setting is loaded
-
-    expect(find('.js-loginPreview [data-name="message"]')).to have_text message
-  end
-
-  it 'saves new maintenance_login_message' do
-    message_prefix = 'badum'
-    message_suffix = "tssss#{rand(99_999)}"
-
-    Setting.set 'maintenance_login_message', message_prefix
-
-    visit 'system/maintenance'
-    refresh # ensure changed Setting is loaded
-
-    within(:active_content) do
-      elem = find('#maintenance-message.hero-unit')
-      elem.click
-      elem.send_keys message_suffix
-      elem.execute_script "$(this).trigger('blur')" # required for chrome
+        wait(10).until { expect(Setting.get('maintenance_login')).to be true }
+      end
     end
 
-    find('#global-search').click # unfocus
+    context 'when maintenance login will be deactiavted', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('maintenance_login', true)
+        true
+      end
 
-    wait(10).until { expect(Setting.get('maintenance_login_message')).to eq "#{message_prefix}#{message_suffix}" }
+      it 'switch maintenance_login off' do
+        visit 'system/maintenance'
+
+        click '.js-loginSetting label'
+
+        wait(10).until { expect(Setting.get('maintenance_login')).to be false }
+      end
+    end
+
+    context 'when maintenance login message will be used', authenticated_as: :authenticate do
+      def message
+        @message ||= "badum tssss #{rand(99_999)}"
+      end
+
+      def authenticate
+        Setting.set('maintenance_login_message', message)
+        true
+      end
+
+      it 'shows current maintenance_login_message' do
+        visit 'system/maintenance'
+
+        expect(find('.js-loginPreview [data-name="message"]')).to have_text message
+      end
+
+      it 'saves new maintenance_login_message' do
+        message_suffix = "tssss#{rand(99_999)}"
+
+        visit 'system/maintenance'
+
+        within(:active_content) do
+          elem = find('#maintenance-message.hero-unit')
+          elem.click
+          elem.send_keys message_suffix
+          elem.execute_script "$(this).trigger('blur')" # required for chrome
+        end
+
+        find('#global-search').click # unfocus
+
+        wait(10).until { expect(Setting.get('maintenance_login_message')).to eq "#{message}#{message_suffix}" }
+      end
+    end
+  end
+
+  context 'when maintenance mode is used' do
+    context 'when maintenance mode will be activated', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('maintenance_mode', false)
+        true
+      end
+
+      it 'switch maintenance_mode on' do
+        visit 'system/maintenance'
+
+        click '.js-modeSetting label'
+        modal_ready
+        click '.content.active .modal .js-submit'
+        modal_disappear
+
+        wait(10).until { expect(Setting.get('maintenance_mode')).to be true }
+      end
+    end
+
+    context 'when maintenance mode will be deactiavted', authenticated_as: :authenticate do
+      def authenticate
+        Setting.set('maintenance_mode', true)
+        true
+      end
+
+      it 'switch maintenance_mode off' do
+        visit 'system/maintenance'
+
+        click '.js-modeSetting label'
+
+        wait(10).until { expect(Setting.get('maintenance_mode')).to be false }
+      end
+    end
   end
 end
