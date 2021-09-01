@@ -4,7 +4,7 @@ class App.Sla extends App.Model
   @url: @apiPath + '/slas'
   @configure_attributes = [
     { name: 'name',           display: 'Name',            tag: 'input',    type: 'text', limit: 100, null: false },
-    { name: 'condition',      display: 'Ticket Selector', tag: 'ticket_selector', null: false, note: 'Create rules that single out the tickets for the Service Level Agreement.' },
+    { name: 'condition',      display: 'Ticket Selector', tag: 'ticket_selector', null: false, note: 'Create rules that single out the tickets for the Service Level Agreement.', noCurrentUser: true },
     { name: 'calendar_id',    display: 'Calendar',        tag: 'select', relation: 'Calendar', null: false },
     { name: 'sla_times',      display: 'SLA Times',       tag: 'sla_times', null: true },
     { name: 'created_by_id',  display: 'Created by',      relation: 'User', readonly: 1 },

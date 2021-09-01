@@ -383,15 +383,15 @@ class App.UiElement.ticket_selector
     selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
     options = {}
     if preCondition is 'user'
-      options =
-        'current_user.id': App.i18n.translateInline('current user')
-        'specific': App.i18n.translateInline('specific user')
-        'not_set': App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noCurrentUser isnt true
+        options['current_user.id'] = App.i18n.translateInline('current user')
+      options['specific'] = App.i18n.translateInline('specific user')
+      options['not_set'] = App.i18n.translateInline('not set (not defined)')
     else if preCondition is 'org'
-      options =
-        'current_user.organization_id': App.i18n.translateInline('current user organization')
-        'specific': App.i18n.translateInline('specific organization')
-        'not_set': App.i18n.translateInline('not set (not defined)')
+      if attributeConfig.noCurrentUser isnt true
+        options['current_user.organization_id'] = App.i18n.translateInline('current user organization')
+      options['specific'] = App.i18n.translateInline('specific organization')
+      options['not_set'] = App.i18n.translateInline('not set (not defined)')
 
     for key, value of options
       selected = ''
