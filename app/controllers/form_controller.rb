@@ -156,7 +156,7 @@ class FormController < ApplicationController
   end
 
   def token_gen(fingerprint)
-    crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
+    crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32], serializer: JSON)
     fingerprint = "#{Base64.strict_encode64(Setting.get('fqdn'))}:#{Time.zone.now.to_i}:#{Base64.strict_encode64(fingerprint)}"
     Base64.strict_encode64(crypt.encrypt_and_sign(fingerprint))
   end
@@ -167,7 +167,7 @@ class FormController < ApplicationController
       raise Exceptions::Forbidden
     end
     begin
-      crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
+      crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32], serializer: JSON)
       result = crypt.decrypt_and_verify(Base64.decode64(token))
     rescue
       Rails.logger.info 'Invalid token for form!'
