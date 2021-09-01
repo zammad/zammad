@@ -189,11 +189,11 @@ class App.FormHandlerCoreWorkflow
         ui.hide(field, form, true)
 
   # changes the mandatory flag of form elements
-  @changeMandatory: (form, ui, data) ->
-    return if _.isEmpty(data)
+  @changeMandatory: (form, ui, visibility, mandatory) ->
+    return if _.isEmpty(visibility)
 
-    for field, state of data
-      if state
+    for field, state of visibility
+      if state && !_.contains(['hide', 'remove'], mandatory[field])
         ui.mandantory(field, form)
       else
         ui.optional(field, form)
@@ -218,7 +218,7 @@ class App.FormHandlerCoreWorkflow
     App.FormHandlerCoreWorkflow.select(classname, form, ui, attributes, params, data.select)
     App.FormHandlerCoreWorkflow.fillIn(classname, form, ui, attributes, params, data.fill_in)
     App.FormHandlerCoreWorkflow.changeVisibility(form, ui, data.visibility)
-    App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory)
+    App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
     App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
 

@@ -512,4 +512,36 @@ RSpec.shared_examples 'core workflow' do
       end
     end
   end
+
+  describe 'Unable to close tickets in certran cases if core workflow is used #3710', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_text, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    before do
+      create(:core_workflow,
+             object:  object_name,
+             perform: {
+               "#{object_name.downcase}.#{field_name}": {
+                 operator:      'set_mandatory',
+                 set_mandatory: 'true'
+               },
+             })
+      create(:core_workflow,
+             object:  object_name,
+             perform: {
+               "#{object_name.downcase}.#{field_name}": {
+                 operator: 'hide',
+                 hide:     'true'
+               },
+             })
+    end
+
+    it 'does not display hidden fields as mandatory' do
+      before_it.call
+      expect(page.find("input[name='#{field_name}']", visible: :hidden, wait: 10)[:required]).not_to eq('true')
+    end
+  end
 end
