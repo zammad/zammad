@@ -1305,9 +1305,7 @@ perform active triggers on ticket
           user_id = article.updated_by_id
         end
 
-        user = if user_id != 1
-                 User.lookup(id: user_id)
-               end
+        user = User.lookup(id: user_id)
 
         # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true, current_user: user, access: 'ignore')
