@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require 'csv'
-
 module CanCsvImport
   extend ActiveSupport::Concern
 
@@ -59,6 +57,7 @@ returns
         raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
       end
 
+      require 'csv' # Only load it when it's really needed to save memory.
       header, *rows = ::CSV.parse(data[:string], **data[:parse_params])
 
       header&.each do |column|
@@ -296,6 +295,8 @@ returns
         end
         rows_to_add = []
       end
+
+      require 'csv' # Only load it when it's really needed to save memory.
       ::CSV.generate(**params) do |csv|
         csv << header
         rows.each do |row|

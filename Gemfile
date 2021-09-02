@@ -116,6 +116,9 @@ gem 'diffy'
 # feature - excel output
 gem 'writeexcel', require: false
 
+# feature - csv import/export
+gem 'csv', require: false
+
 # feature - device logging
 gem 'browser'
 

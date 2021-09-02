@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require 'csv'
-
 class Translation < ApplicationModel
   before_create :set_initial
   after_create  :cache_clear
@@ -407,6 +405,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
     params = {
       col_sep: ',',
     }
+    require 'csv' # Only load it when it's really needed to save memory.
     rows = ::CSV.parse(content, params)
     rows.shift # remove header
 

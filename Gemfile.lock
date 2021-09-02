@@ -165,6 +165,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    csv (3.2.0)
     daemons (1.4.1)
     dalli (2.7.11)
     debug_inspector (1.1.0)
@@ -667,6 +668,7 @@ DEPENDENCIES
   coffeelint
   composite_primary_keys
   coveralls
+  csv
   daemons
   dalli
   delayed_job_active_record
