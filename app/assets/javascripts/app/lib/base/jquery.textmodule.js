@@ -390,14 +390,10 @@
       start = 0
     }
 
-    // for chrome, remove also leading space, add it later - otherwice space will be tropped
-    if (start) {
-      clone.setStart(range.startContainer, start-1)
-      clone.setEnd(range.startContainer, start)
-      var spacerChar = clone.toString()
-      if (spacerChar === ' ') {
-        start = start - 1
-      }
+    // for chrome, check if space is before trigger if so, add it later - otherwise space will be dropped
+    var addSpacer = false
+    if ( $(range.startContainer.parentNode).html().includes(' ' + string) ) {
+      addSpacer = true
     }
     //this.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
@@ -405,10 +401,8 @@
     clone.deleteContents()
 
     // for chrome, insert space again
-    if (start) {
-      if (spacerChar === ' ') {
-        this.paste('&nbsp;')
-      }
+    if (addSpacer) {
+      range.pasteHtml('&nbsp;')
     }
   }
 
