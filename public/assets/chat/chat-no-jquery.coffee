@@ -762,7 +762,11 @@ do(window) ->
       console.log('p', docType, text)
       if docType is 'html'
         html = document.createElement('div')
-        html.innerHTML = text
+        # can't log because might contain malicious content
+        # @log.debug 'HTML clipboard', text
+        sanitized = DOMPurify.sanitize(text)
+        @log.debug 'sanitized HTML clipboard', sanitized
+        html.innerHTML = sanitized
         match = false
         htmlTmp = text
         regex = new RegExp('<(/w|w)\:[A-Za-z]')
