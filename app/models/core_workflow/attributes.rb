@@ -82,16 +82,18 @@ class CoreWorkflow::Attributes
     end
   end
 
+  def attribute_mandatory?(attribute)
+    return false if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
+    return screen_value(attribute, 'required').present? if !screen_value(attribute, 'required').nil?
+    return screen_value(attribute, 'null').blank? if !screen_value(attribute, 'null').nil?
+
+    false
+  end
+
   # dont cache this else the result object will work with references and cache bugs occur
   def mandatory_default
     object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
-                                     false
-                                   elsif screen_value(attribute, 'required').nil?
-                                     !screen_value(attribute, 'null')
-                                   else
-                                     screen_value(attribute, 'required')
-                                   end
+      result[ attribute[:name] ] = attribute_mandatory?(attribute)
     end
   end
 

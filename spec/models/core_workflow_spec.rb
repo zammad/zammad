@@ -259,6 +259,28 @@ RSpec.describe CoreWorkflow, type: :model do
     end
   end
 
+  describe '.perform - Default - #3721 - Fields are falsey displayed as mandatory if they contain historic screen values', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        create_middle: {
+          'ticket.agent' => {
+            shown: true,
+          },
+        },
+      }
+    end
+
+    before do
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+    end
+
+    it 'does show the field as optional because it has no required value' do
+      expect(result[:mandatory][field_name]).to eq(false)
+    end
+  end
+
   describe '.perform - Custom - Pending Time' do
     it 'does not show pending time for non pending state' do
       expect(result[:visibility]['pending_time']).to eq('remove')
