@@ -25,11 +25,14 @@ gulp.task('js', function(){
   var templates = gulp.src('views/*.eco')
     .pipe(eco({namespace: 'zammadChatTemplates'}));
 
+  var purify = gulp.src('purify.min.js');
+
   var js = gulp.src('chat.coffee')
     .pipe(plumber())
     .pipe(coffee({bare: true}).on('error', gutil.log));
 
   return merge(templates, js)
+    .add(purify)
     .pipe(concat('chat.js'))
     .pipe(gulp.dest('./'))
     .pipe(uglify())
@@ -42,11 +45,14 @@ gulp.task('no-jquery', function(){
   var templates = gulp.src('views/*.eco')
     .pipe(eco({namespace: 'zammadChatTemplates'}));
 
+  var purify = gulp.src('purify.min.js');
+
   var js = gulp.src('chat-no-jquery.coffee')
     .pipe(plumber())
     .pipe(coffee({bare: true}).on('error', gutil.log));
 
   return merge(templates, js)
+    .add(purify)
     .pipe(concat('chat-no-jquery.js'))
     .pipe(gulp.dest('./'))
     .pipe(uglify())

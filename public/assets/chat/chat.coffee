@@ -718,7 +718,9 @@ do($ = window.jQuery, window) ->
           text = text.replace(/<div><\/div>/g, '<div><br></div>')
         console.log('p', docType, text)
         if docType is 'html'
-          html = $("<div>#{text}</div>")
+          sanitized = DOMPurify.sanitize(text)
+          @log.debug 'sanitized HTML clipboard', sanitized
+          html = $("<div>#{sanitized}</div>")
           match = false
           htmlTmp = text
           regex = new RegExp('<(/w|w)\:[A-Za-z]')

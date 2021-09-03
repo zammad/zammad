@@ -314,6 +314,7 @@
   line-height: 1.4em;
   font-size: inherit;
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   border: none;
   background: none;
@@ -329,6 +330,7 @@
 
 .zammad-chat-button {
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   font-family: inherit;
   font-size: inherit;
@@ -349,6 +351,7 @@
 
 .zammad-chat-button:disabled,
 .zammad-chat-input:disabled {
+  cursor: not-allowed;
   opacity: 0.3; }
 
 .zammad-chat-is-hidden {
