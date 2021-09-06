@@ -949,7 +949,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'shows ticket state dropdown options in sorted translated alphabetically order' do
         visit "ticket/zoom/#{ticket.id}"
 
-        await_empty_ajax_queue
         expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen neu offen])
       end
     end
@@ -961,7 +960,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'shows ticket state dropdown options in sorted order' do
         visit 'ticket/create'
 
-        await_empty_ajax_queue
         expect(all('select[name=state_id] option').map(&:text)).to eq ['-', 'geschlossen', 'neu', 'offen', 'warten auf Erinnerung', 'warten auf schliessen']
       end
     end
@@ -1737,8 +1735,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       visit "ticket/zoom/#{ticket.id}"
       visit "ticket/zoom/#{target_ticket.id}"
-
-      await_empty_ajax_queue
 
       ensure_websocket do
         visit 'dashboard'
