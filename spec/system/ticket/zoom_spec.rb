@@ -1435,77 +1435,85 @@ RSpec.describe 'Ticket zoom', type: :system do
   describe 'Article ID URL / link' do
     let(:ticket) { create(:ticket, group: Group.first) }
     let!(:article) { create(:'ticket/article', ticket: ticket) }
-    let(:url) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#ticket/zoom/#{ticket.id}/#{article.id}" }
 
     it 'shows Article direct link' do
-
       ensure_websocket do
         visit "ticket/zoom/#{ticket.id}"
+      end
 
-        within :active_ticket_article, article do
-          expect(page).to have_css(%(a[href="#{url}"]))
-        end
+      url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#ticket/zoom/#{ticket.id}/#{article.id}"
+
+      within :active_ticket_article, article do
+        expect(page).to have_css(%(a[href="#{url}"]))
       end
     end
 
     context 'when multiple Articles are present' do
-
       let(:article_count) { 20 }
-      let(:article_at_the_top) { ticket.articles.first }
-      let(:article_in_the_middle) { ticket.articles[ article_count / 2 ] }
-      let(:article_at_the_bottom) { ticket.articles.last }
+      let(:article_top) { ticket.articles.second }
+      let(:article_middle) { ticket.articles[ article_count / 2 ] }
+      let(:article_bottom) { ticket.articles.last }
 
       before do
         article_count.times do
           create(:'ticket/article', ticket: ticket, body: SecureRandom.uuid)
         end
+
+        visit "ticket/zoom/#{ticket.id}"
       end
 
-      def check_obscured(top: true, middle: true, bottom: true, scroll_y: 0)
-        expect(page).to have_text(ticket.title, wait: 10)
-        wait(5, interval: 0.2).until do
-          scroll_y != find('.ticketZoom').native.location.y
+      def wait_for_scroll
+        wait(5, interval: 0.2).until_constant do
+          find('.ticketZoom').native.location.y
         end
-        expect(page).to have_css("div#article-content-#{article_at_the_top.id}", obscured: top, wait: 10)
-        expect(page).to have_css("div#article-content-#{article_in_the_middle.id}", obscured: middle, wait: 10)
-        expect(page).to have_css("div#article-content-#{article_at_the_bottom.id}", obscured: bottom, wait: 10)
-        find('.ticketZoom').native.location.y
       end
 
-      it 'scrolls to given Article ID' do
-        ensure_websocket do
-          visit "ticket/zoom/#{ticket.id}"
-          y = check_obscured(bottom: false)
+      def check_shown(top: false, middle: false, bottom: false)
+        wait_for_scroll
 
-          # scroll to article in the middle of the page
-          visit "ticket/zoom/#{ticket.id}/#{article_in_the_middle.id}"
-          y = check_obscured(middle: false, scroll_y: y)
+        expect(page).to have_css("div#article-content-#{article_top.id} .richtext-content", obscured: !top)
+          .and(have_css("div#article-content-#{article_middle.id} .richtext-content", obscured: !middle, wait: 0))
+          .and(have_css("div#article-content-#{article_bottom.id} .richtext-content", obscured: !bottom, wait: 0))
+      end
 
-          # scroll to article at the top of the page
-          visit "ticket/zoom/#{ticket.id}/#{article_at_the_top.id}"
-          y = check_obscured(top: false, scroll_y: y)
+      it 'scrolls to top article ID' do
+        visit "ticket/zoom/#{ticket.id}/#{article_top.id}"
+        check_shown(top: true)
+      end
 
-          # scroll to article at the bottom of the page
-          visit "ticket/zoom/#{ticket.id}/#{article_at_the_bottom.id}"
-          check_obscured(bottom: false, scroll_y: y)
-        end
+      it 'scrolls to middle article ID' do
+        visit "ticket/zoom/#{ticket.id}/#{article_middle.id}"
+        check_shown(middle: true)
+      end
+
+      it 'scrolls to bottom article ID' do
+        visit "ticket/zoom/#{ticket.id}/#{article_top.id}"
+        wait_for_scroll
+
+        visit "ticket/zoom/#{ticket.id}/#{article_bottom.id}"
+        check_shown(bottom: true)
       end
     end
 
     context 'when long articles are present' do
       it 'will properly show the "See more" link if you switch between the ticket and the dashboard on new articles' do
         ensure_websocket do
+          # prerender ticket
           visit "ticket/zoom/#{ticket.id}"
 
+          # ticket tab becomes background
           visit 'dashboard'
-          expect(page).to have_css("a.js-dashboardMenuItem[data-key='Dashboard'].is-active", wait: 10)
-          article_id = create(:'ticket/article', ticket: ticket, body: "#{SecureRandom.uuid} #{"lorem ipsum\n" * 200}")
-          expect(page).to have_css('div.tasks a.is-modified', wait: 30)
+        end
 
-          visit "ticket/zoom/#{ticket.id}"
-          within :active_content do
-            expect(find("div#article-content-#{article_id.id}")).to have_text('See more')
-          end
+        # create a new article
+        article_id = create(:'ticket/article', ticket: ticket, body: "#{SecureRandom.uuid} #{"lorem ipsum\n" * 200}")
+
+        wait(30).until { has_css?('div.tasks a.is-modified') }
+
+        visit "ticket/zoom/#{ticket.id}"
+
+        within :active_content do
+          expect(find("div#article-content-#{article_id.id}")).to have_text('See more')
         end
       end
     end
