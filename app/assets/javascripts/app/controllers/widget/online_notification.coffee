@@ -152,8 +152,12 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   fetch: =>
-    load = =>
+    load = (objects) =>
+      for elem in objects
+        App.TaskManager.touch "#{elem.object}-#{elem.o_id}"
+
       @fetchedData = true
+
     App.OnlineNotification.fetchFull(load, clear: true, force: true)
 
   toggle: =>

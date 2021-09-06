@@ -5,8 +5,7 @@ module Ticket::ResetsPendingTimeSeconds
   extend ActiveSupport::Concern
 
   included do
-    before_create :ticket_reset_pending_time_seconds
-    before_update :ticket_reset_pending_time_seconds
+    before_save :ticket_reset_pending_time_seconds
   end
 
   private

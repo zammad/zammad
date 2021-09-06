@@ -432,7 +432,19 @@ class App.TicketZoom extends App.Controller
 
     @scrollHeaderPos = scroll
 
+  pendingTimeReminderReached: =>
+    App.TaskManager.touch(@taskKey)
+
+  setPendingTimeReminderDelay: =>
+    stateType = App.TicketStateType.find @ticket?.state?.state_type_id
+    return if stateType?.name != 'pending reminder'
+
+    delay = new Date(@ticket.pending_time) - new Date()
+
+    @delay @pendingTimeReminderReached, delay, 'pendingTimeReminderDelay'
+
   render: (local) =>
+    @setPendingTimeReminderDelay()
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
