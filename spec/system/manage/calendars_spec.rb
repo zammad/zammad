@@ -46,4 +46,26 @@ RSpec.describe 'Manage > Calendars', type: :system do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/2528
+  context 'ical feed - subscribe to public holidays in another country' do
+    it 'shows countries dropdown in sorted order' do
+      allow(Calendar).to receive(:ical_feeds).and_return({
+                                                           'https://argentinien.de':  'Argentinien',
+                                                           'https://australien.de':   'Australien',
+                                                           'https://osterreich.de':   'Österreich',
+                                                           'https://weibrussland.de': 'Weißrussland',
+                                                           'https://kanada.de':       'Kanada',
+                                                           'https://chile.de':        'Chile',
+                                                         })
+
+      visit '/#manage/calendars'
+
+      click '.js-new'
+
+      in_modal disappears: false do
+        expect(all('.ical_feed select option').map(&:text)).to eq ['-', 'Argentinien', 'Australien', 'Chile', 'Kanada', 'Österreich', 'Weißrussland']
+      end
+    end
+  end
 end
