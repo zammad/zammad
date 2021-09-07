@@ -2,8 +2,10 @@
 class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
 
-    icalFeeds = App.Config.get('ical_feeds') || {}
-    icalFeedsSorted = App.Utils.sortByValue(icalFeeds)
+    icalFeeds           = App.Config.get('ical_feeds') || {}
+    icalFeedsTranslated = _.mapObject icalFeeds, (value, key) -> App.i18n.translateContent(value)
+    icalFeedsSorted     = App.Utils.sortByValue(icalFeedsTranslated)
+
     item = $( App.view('generic/ical_feed')( attribute: attribute, icalFeeds: icalFeedsSorted ) )
 
     updateCheckList = ->

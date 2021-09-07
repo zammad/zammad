@@ -1008,7 +1008,10 @@ class App.Utils
       valueTmp = value.toString().toLowerCase()
       byNames.push valueTmp
       byNamesWithValue[valueTmp] = [i, value]
-    byNames = byNames.sort()
+    
+    # sort() by default doesn't compare non-ascii characters such as ['é', 'a', 'ú', 'c']
+    # hence using localecompare in sorting for translated strings
+    byNames = byNames.sort((a, b) -> a.localeCompare(b))
 
     # do a reverse, if needed
     if order == 'DESC'
