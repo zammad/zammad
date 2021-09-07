@@ -102,8 +102,10 @@
                     }
                 };
                 onDrop = function (e) {
+                    inCounter = 0
                     e.preventDefault()
                     e.stopPropagation()
+                    hideDropZone(dropContainer)
                     manager.processFiles(e.dataTransfer.files)
                 };
                 onDragEnd = function (e) {
