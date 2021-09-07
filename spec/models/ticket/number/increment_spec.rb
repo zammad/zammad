@@ -82,7 +82,11 @@ RSpec.describe Ticket::Number::Increment do
 
   describe '.check' do
     context 'for tickets with increment-style numbers' do
-      let(:ticket) { create(:ticket, number: ticket_number) }
+      let(:ticket) do
+        # There might be conflicts with the hardcoded ticket number
+        #   and the one from the welcome ticket, so use find_by || create.
+        Ticket.find_by(number: ticket_number) || create(:ticket, number: ticket_number)
+      end
       let(:ticket_number) { "#{Setting.get('system_id')}0001" }
       let(:check_query) { ticket.subject_build(ticket.title) }
 
