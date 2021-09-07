@@ -5,7 +5,7 @@ class TicketsController < ApplicationController
   include ClonesTicketArticleAttachments
   include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
-  include ApplicationController::Paginates
+  include CanPaginate
 
   prepend_before_action -> { authorize! }, only: %i[create selector import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
   prepend_before_action :authentication_check

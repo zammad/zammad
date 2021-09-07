@@ -6,7 +6,7 @@ class KnowledgeBase::SearchController < ApplicationController
 
   include KnowledgeBaseHelper
   include ActionView::Helpers::SanitizeHelper
-  include ApplicationController::Paginates
+  include CanPaginate
 
   # POST /api/v1/knowledge_bases/search
   # knowledge_base_id, locale, flavor, index, page, per_page, limit, include_locale

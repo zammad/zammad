@@ -3,7 +3,7 @@
 module ApplicationController::RendersModels
   extend ActiveSupport::Concern
 
-  include ApplicationController::Paginates
+  include CanPaginate
 
   private
 

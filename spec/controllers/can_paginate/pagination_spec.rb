@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ApplicationController::Paginates::Pagination do
+RSpec.describe CanPaginate::Pagination do
   describe '#limit' do
     it 'returns as set in params' do
       instance = described_class.new({ per_page: 123 })

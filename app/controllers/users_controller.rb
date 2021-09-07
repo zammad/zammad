@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
-  include ApplicationController::Paginates
+  include CanPaginate
 
   prepend_before_action -> { authorize! }, only: %i[import_example import_start search history unlock]
   prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]

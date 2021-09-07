@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   prepend_before_action -> { authorize! }, except: %i[index show]
   prepend_before_action { authentication_check }
 
-  include ApplicationController::Paginates
+  include CanPaginate
 
 =begin
 
