@@ -48,4 +48,73 @@ RSpec.describe 'Manage > Users', type: :system do
       await_empty_ajax_queue
     end
   end
+
+  describe 'check user edit permissions', authenticated_as: -> { user } do
+
+    shared_examples 'user permission' do |allow|
+      it(allow ? 'allows editing' : 'forbids editing') do
+        visit "#user/profile/#{record.id}"
+        find('.js-action .icon-arrow-down').click
+        selector = '.js-action [data-type="edit"]'
+        expect(page).to(allow ? have_css(selector) : have_no_css(selector))
+      end
+    end
+
+    context 'when admin tries to change admin' do
+      let(:user) { create(:admin) }
+      let(:record) { create(:admin) }
+
+      include_examples 'user permission', true
+    end
+
+    context 'when admin tries to change agent' do
+      let(:user) { create(:admin) }
+      let(:record) { create(:agent) }
+
+      include_examples 'user permission', true
+    end
+
+    context 'when admin tries to change customer' do
+      let(:user) { create(:admin) }
+      let(:record) { create(:customer) }
+
+      include_examples 'user permission', true
+    end
+
+    context 'when agent tries to change admin' do
+      let(:user) { create(:agent) }
+      let(:record) { create(:admin) }
+
+      include_examples 'user permission', false
+    end
+
+    context 'when agent tries to change agent' do
+      let(:user) { create(:agent) }
+      let(:record) { create(:agent) }
+
+      include_examples 'user permission', false
+    end
+
+    context 'when agent tries to change customer' do
+      let(:user) { create(:agent) }
+      let(:record) { create(:customer) }
+
+      include_examples 'user permission', true
+    end
+
+    context 'when agent tries to change customer who is also admin' do
+      let(:user) { create(:agent) }
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Admin').id)) }
+
+      include_examples 'user permission', false
+    end
+
+    context 'when agent tries to change customer who is also agent' do
+      let(:user) { create(:agent) }
+      let(:record) { create(:customer, role_ids: Role.signup_role_ids.push(Role.find_by(name: 'Agent').id)) }
+
+      include_examples 'user permission', false
+    end
+
+  end
 end
