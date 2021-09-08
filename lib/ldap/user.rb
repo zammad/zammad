@@ -95,7 +95,7 @@ class Ldap
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
         base:     @ldap.base_dn,
-        filter:   "(#{login_attribute}=#{username})",
+        filter:   @user_filter ? "(&(#{login_attribute}=#{username})#{@user_filter})" : "(#{login_attribute}=#{username})",
         password: password
       )
 
@@ -179,6 +179,7 @@ class Ldap
 
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+      @user_filter   = config[:user_filter]
     end
   end
 end
