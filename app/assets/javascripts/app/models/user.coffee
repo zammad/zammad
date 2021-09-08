@@ -344,9 +344,12 @@ class App.User extends App.Model
     @sameOrganization?(requester)
 
   isChangeableBy: (requester) ->
+    # full access for admins
     return true if requester.permission('admin.user')
-    # allow agents to change customers
+    # forbid non-agents to change users
     return false if !requester.permission('ticket.agent')
+    # allow agents to change customers only
+    return false if @permission(['admin.user', 'ticket.agent'])
     @permission('ticket.customer')
 
   isDeleteableBy: (requester) ->
