@@ -224,7 +224,7 @@ set new attributes of model (remove already available attributes)
     attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined))
+        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined || App.FormHandlerCoreWorkflow.checkScreen(@.className, screen)))
           for item, value of attribute.screen[screen]
             attribute[item] = value
           attributesNew[ attribute.name ] = attribute

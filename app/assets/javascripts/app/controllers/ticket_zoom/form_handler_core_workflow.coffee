@@ -32,6 +32,12 @@ class App.FormHandlerCoreWorkflow
         result.push(screen)
     return result
 
+  # returns if the object and screen is controlled by core workflow
+  @checkScreen: (checkObject, checkScreen) ->
+    for object, screens of coreWorkflowScreens
+      return true if checkObject is object && _.contains(screens, checkScreen)
+    return false
+
   # returns active Core Workflow requests. it is used to stabilize tests
   @getRequests: ->
     return coreWorkflowRequests
