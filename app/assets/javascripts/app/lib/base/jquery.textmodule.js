@@ -368,7 +368,16 @@
           nnode.innerHTML = string
     }
     else {
-      document.execCommand('insertHTML', false, string)
+      var sel = rangy.getSelection();
+      if (!sel.rangeCount) return
+
+      var range = sel.getRangeAt(0);
+      range.collapse(false);
+      $('<div>').append(string).contents().each(function() {
+        range.insertNode($(this).get(0));
+        range.collapseAfter($(this).get(0));
+      })
+      sel.setSingleRange(range);
     }
   }
 
@@ -391,20 +400,10 @@
       start = 0
     }
 
-    // for chrome, check if space is before trigger if so, add it later - otherwise space will be dropped
-    var addSpacer = false
-    if ( $(range.startContainer.parentNode).html().includes(' ' + string) ) {
-      addSpacer = true
-    }
     //this.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
-
-    // for chrome, insert space again
-    if (addSpacer) {
-      range.pasteHtml('&nbsp;')
-    }
   }
 
   Plugin.prototype.onMouseEnter = function(event) {

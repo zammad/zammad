@@ -106,6 +106,22 @@ RSpec.shared_examples 'text modules' do |path:|
     end
   end
 
+  it 'does not delete line breaks of text with mentions (issue #3717)' do
+    visit path
+    within(:active_content) do
+      find('select[name="group_id"]').select('Users')
+      find(:richtext).send_keys('@@FFFF1')
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(' Testing Testy')
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(:enter)
+      find(:richtext).send_keys(:backspace)
+      find(:richtext).send_keys('@@FFFF1')
+      find(:richtext).send_keys(:enter)
+      expect(find(:richtext).text).to include("FFFF1 GGGG1 Testing Testy\nFFFF1 GGGG1")
+    end
+  end
+
   it 'supports group-dependent text modules' do
 
     # give user access to all groups including those created
