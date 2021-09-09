@@ -116,6 +116,24 @@ RSpec.describe 'Admin Panel > Objects', type: :system, authenticated_as: true do
     expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
   end
 
+  it 'checks default boolean value visibility' do
+    page.find('.js-new').click
+
+    fill_in 'Name', with: 'bool1'
+    find('input[name=display]').set('Bool 1')
+
+    page.find('select[name=data_type]').select('Boolean')
+    choose('data_option::default', option: 'true')
+    page.find('.js-submit').click
+
+    td = page.find(:css, 'td', text: 'bool1')
+    tr = td.find(:xpath, './parent::tr')
+
+    tr.click
+
+    expect(page).to have_checked_field('data_option::default', with: 'true')
+  end
+
   # https://github.com/zammad/zammad/issues/3647
   context 'when setting Min/Max values for integer' do
     before do
