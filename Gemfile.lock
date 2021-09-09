@@ -564,7 +564,7 @@ GEM
       hashie
       websocket-driver
     slop (3.6.0)
-    spring (2.1.1)
+    spring (3.0.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     spring-commands-testunit (1.0.1)
