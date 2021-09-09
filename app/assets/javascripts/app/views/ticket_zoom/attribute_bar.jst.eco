@@ -10,6 +10,11 @@
       <span class="dropdown-selectedSpacer js-selectedIcon">
         <%- @Icon('checkmark') %>
       </span>
+    <li class="js-secondaryAction" role="menuitem">
+      <span class="js-secondaryActionLabel" data-type="closeTabOnTicketClose"><%- @T('Close tab on ticket close') %></span>
+      <span class="dropdown-selectedSpacer js-selectedIcon">
+        <%- @Icon('checkmark') %>
+      </span>
     <% if @overview_id: %>
     <li class="js-secondaryAction" role="menuitem">
       <span class="js-secondaryActionLabel" data-type="closeNextInOverview"><%- @T('Next in overview') %></span>

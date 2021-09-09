@@ -1782,4 +1782,128 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'Tab behaviour - Define default "stay on tab" / "close tab" behavior #257', authenticated_as: :authenticate do
+    def authenticate
+      Setting.set('ticket_secondary_action', 'closeTabOnTicketClose')
+      true
+    end
+
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before do
+      visit "ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show the default of the system' do
+      expect(page).to have_text('Close tab on ticket close')
+    end
+
+    it 'does save state for the user preferences' do
+      click '.js-attributeBar .dropup div'
+      click 'span[data-type=stayOnTab]'
+      refresh
+      expect(page).to have_text('Stay on tab')
+      expect(User.find_by(email: 'admin@example.com').preferences[:secondaryAction]).to eq('stayOnTab')
+    end
+
+    context 'Tab behaviour - Close tab on ticket close' do
+      it 'does not close the tab without any action' do
+        click '.js-submit'
+        expect(current_url).to include('ticket/zoom')
+      end
+
+      it 'does close the tab on ticket close' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        expect(current_url).not_to include('ticket/zoom')
+      end
+    end
+
+    context 'Tab behaviour - Stay on tab' do
+      def authenticate
+        Setting.set('ticket_secondary_action', 'stayOnTab')
+        true
+      end
+
+      it 'does not close the tab without any action' do
+        click '.js-submit'
+        expect(current_url).to include('ticket/zoom')
+      end
+
+      it 'does not close the tab on ticket close' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        expect(current_url).to include('ticket/zoom')
+      end
+    end
+
+    context 'Tab behaviour - Close tab' do
+      def authenticate
+        Setting.set('ticket_secondary_action', 'closeTab')
+        true
+      end
+
+      it 'does close the tab without any action' do
+        click '.js-submit'
+        expect(current_url).not_to include('ticket/zoom')
+      end
+
+      it 'does close the tab on ticket close' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        expect(current_url).not_to include('ticket/zoom')
+      end
+    end
+
+    context 'Tab behaviour - Next in overview' do
+      let(:ticket1) { create(:ticket, title: SecureRandom.uuid, group: Group.find_by(name: 'Users')) }
+      let(:ticket2) { create(:ticket, title: SecureRandom.uuid, group: Group.find_by(name: 'Users')) }
+      let(:ticket3) { create(:ticket, title: SecureRandom.uuid, group: Group.find_by(name: 'Users')) }
+
+      def authenticate
+        Setting.set('ticket_secondary_action', 'closeNextInOverview')
+        ticket1
+        ticket2
+        ticket3
+        true
+      end
+
+      before do
+        visit 'ticket/view/all_open'
+      end
+
+      it 'does change the tab without any action' do
+        click_on ticket1.title
+        expect(current_url).to include("ticket/zoom/#{ticket1.id}")
+        click '.js-submit'
+        expect(current_url).to include("ticket/zoom/#{ticket2.id}")
+        click '.js-submit'
+        expect(current_url).to include("ticket/zoom/#{ticket3.id}")
+      end
+
+      it 'does show default stay on tab if secondary action is not given' do
+        click_on ticket1.title
+        refresh
+        expect(page).to have_text('Stay on tab')
+      end
+    end
+
+    context 'On ticket switch' do
+      let(:ticket1) { create(:ticket, title: SecureRandom.uuid, group: Group.find_by(name: 'Users')) }
+      let(:ticket2) { create(:ticket, title: SecureRandom.uuid, group: Group.find_by(name: 'Users')) }
+
+      before do
+        visit "ticket/zoom/#{ticket1.id}"
+        visit "ticket/zoom/#{ticket2.id}"
+      end
+
+      it 'does setup the last behaviour' do
+        click '.js-attributeBar .dropup div'
+        click 'span[data-type=stayOnTab]'
+        visit "ticket/zoom/#{ticket1.id}"
+        expect(page).to have_text('Stay on tab')
+      end
+    end
+  end
 end

@@ -2364,6 +2364,35 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       'Tab behaviour after ticket action',
+  name:        'ticket_secondary_action',
+  area:        'CustomerWeb::Base',
+  description: 'Defines the tab behaviour after a ticket action.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_secondary_action',
+        tag:     'boolean',
+        options: {
+          'closeTab'              => 'Close tab',
+          'closeTabOnTicketClose' => 'Close tab on ticket close',
+          'closeNextInOverview'   => 'Next in overview',
+          'stayOnTab'             => 'Stay on tab',
+        },
+      },
+    ],
+  },
+  state:       'stayOnTab',
+  preferences: {
+    authentication: true,
+    permission:     ['admin.channel_web'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       'Enable Ticket creation',
   name:        'form_ticket_create',
   area:        'Form::Base',

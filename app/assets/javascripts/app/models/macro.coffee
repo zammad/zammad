@@ -7,7 +7,7 @@ class App.Macro extends App.Model
     { name: 'perform',         display: 'Actions',           tag: 'ticket_perform_action',           null: true
     },
     { name: 'ux_flow_next_up', display: 'Once completed...', tag: 'select', default: 'none', options: {
-        none: 'Stay on tab', next_task: 'Close tab', next_from_overview: 'Advance to next ticket from overview'
+        none: 'Stay on tab', next_task: 'Close tab', next_task_on_close: 'Close tab on ticket close', next_from_overview: 'Advance to next ticket from overview'
       }
     },
     { name: 'updated_at',      display: 'Updated',  tag: 'datetime',      readonly: 1 },
