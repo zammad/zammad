@@ -272,6 +272,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.core_workflow',
+  note:        'Manage %s',
+  preferences: {
+    translations: ['Core Workflow']
+  },
+)
+Permission.create_if_not_exists(
   name:         'user_preferences',
   note:         'User Preferences',
   preferences:  {},
