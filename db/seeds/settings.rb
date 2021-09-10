@@ -2864,7 +2864,7 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.api'],
   },
-  frontend:    false
+  frontend:    true
 )
 Setting.create_if_not_exists(
   title:       'API Password Access',

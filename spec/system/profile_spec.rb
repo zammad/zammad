@@ -22,4 +22,28 @@ RSpec.describe 'Profile', type: :system do
       expect(page).to have_no_css('.dropdown-menu > li > a[href="#profile"]')
     end
   end
+
+  context "Don't provide option to create API-Token if authentication via API token is disabled #3168" do
+    before do
+      visit 'profile'
+    end
+
+    it 'does show the navbar link Token Access based on the Setting api_token_access' do
+      expect(page).to have_text('Token Access')
+
+      # disable token access
+      visit 'system/api'
+      click 'label[for=api_token_access]'
+
+      visit 'profile'
+      expect(page).to have_no_text('Token Access')
+
+      # enable token access
+      visit 'system/api'
+      click 'label[for=api_token_access]'
+
+      visit 'profile'
+      expect(page).to have_text('Token Access')
+    end
+  end
 end

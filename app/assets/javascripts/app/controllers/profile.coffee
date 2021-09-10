@@ -2,6 +2,15 @@ class App.Profile extends App.ControllerNavSidbar
   authenticateRequired: true
   configKey: 'NavBarProfile'
 
+  constructor: (params) ->
+    super
+
+    @controllerBind('config_update', (data) =>
+      return if data.name isnt 'api_token_access'
+      @render(true)
+      @updateNavigation(true, params)
+    )
+
 class ProfileRouter extends App.ControllerPermanent
   requiredPermission: ['user_preferences.*']
 
