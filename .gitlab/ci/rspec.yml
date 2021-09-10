@@ -5,20 +5,11 @@ include:
 .template_rspec: &template_rspec
   extends:
     - .env_base
-  variables:
-    RAILS_ENV: "test"
+    - .variables_rspec_slicing
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t ~db_strategy:reset
-
-.template_rspec_db_reset: &template_rspec_db_reset
-  extends:
-    - .env_base
-  variables:
-    RAILS_ENV: "test"
-  script:
-    - bundle exec rake zammad:db:init
-    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t db_strategy:reset
+    - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --example-matches "$RSPEC_EXAMPLE_MATCHES" --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex --profile 10
 
 # RSpec 3rd party integration tests are independent of the database
 # therefore we need only one job and choose a random database for each run
@@ -41,4 +32,4 @@ rspec:integration:
     - when: always
   script:
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t type:integration
+    - bundle exec rspec -t type:integration --profile 10

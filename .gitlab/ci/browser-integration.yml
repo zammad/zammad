@@ -18,7 +18,7 @@ include:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:ci:test:prepare
-    - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration
+    - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration --profile 10
 
 .template_browser-integration_capybara_chrome: &template_browser-integration_capybara_chrome
   extends:

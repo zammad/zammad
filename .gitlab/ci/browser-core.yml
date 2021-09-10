@@ -82,11 +82,13 @@ include:
   extends:
     - .env_base
     - .variables_es
+    - .variables_rspec_slicing
   variables:
     RAILS_ENV: "test"
   script:
     - bundle exec rake zammad:ci:test:prepare
-    - bundle exec rspec --fail-fast -t type:system -t ~integration
+    - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --example-matches "$RSPEC_EXAMPLE_MATCHES" --fail-fast -t ~integration --profile 10 spec/system
 
 .template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome
   extends:
