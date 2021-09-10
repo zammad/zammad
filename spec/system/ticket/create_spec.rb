@@ -531,7 +531,7 @@ RSpec.describe 'Ticket Create', type: :system do
       end
 
       it 'does not show the field' do
-        expect(page).to have_css("div[data-attribute-name='#{field_name}'].is-hidden.is-removed", visible: :hidden)
+        expect(page).to have_css("div[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
   end

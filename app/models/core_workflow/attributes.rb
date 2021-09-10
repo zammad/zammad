@@ -77,7 +77,7 @@ class CoreWorkflow::Attributes
       result[ attribute[:name] ] = if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
                                      'show'
                                    else
-                                     screen_value(attribute, 'shown') == false ? 'remove' : 'show'
+                                     screen_value(attribute, 'shown') == false ? 'hide' : 'show'
                                    end
     end
   end
