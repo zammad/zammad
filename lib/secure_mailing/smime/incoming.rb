@@ -1,9 +1,10 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
+  attr_accessor :mail, :content_type
 
   EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i.freeze
-  EXPRESSION_SIGNATURE = %r{application/(x-pkcs7|pkcs7)-signature}i.freeze
+  EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i.freeze
 
   OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
 
@@ -11,7 +12,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     super()
 
     @mail = mail
-    @content_type = @mail[:mail_instance].content_type
+    @content_type = mail[:mail_instance].content_type
   end
 
   def process
@@ -40,8 +41,8 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
   def article_preferences
     @article_preferences ||= begin
       key = :'x-zammad-article-preferences'
-      @mail[ key ] ||= {}
-      @mail[ key ]
+      mail[ key ] ||= {}
+      mail[ key ]
     end
   end
 
@@ -49,12 +50,23 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     signed? || smime?
   end
 
-  def signed?(content_type = @content_type)
-    EXPRESSION_SIGNATURE.match?(content_type)
+  def signed?(check_content_type = content_type)
+    EXPRESSION_SIGNATURE.match?(check_content_type)
   end
 
-  def smime?(content_type = @content_type)
-    EXPRESSION_MIME.match?(content_type)
+  def signed_type
+    @signed_type ||= begin
+      # Special wrapped mime-type S/MIME signature check (e.g. for Microsoft Outlook).
+      if content_type.include?('signed-data') && EXPRESSION_MIME.match?(content_type)
+        'wrapped'
+      else
+        'inline'
+      end
+    end
+  end
+
+  def smime?(check_content_type = content_type)
+    EXPRESSION_MIME.match?(check_content_type)
   end
 
   def decrypt
@@ -66,22 +78,12 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       key = OpenSSL::PKey::RSA.new(cert.private_key, cert.private_key_secret)
 
       begin
-        decrypted_data = p7enc.decrypt(key, cert.parsed)
+        decrypted_data = decrypt_p7enc.decrypt(key, cert.parsed)
       rescue
         next
       end
 
-      @mail[:mail_instance].header['Content-Type'] = nil
-      @mail[:mail_instance].header['Content-Disposition'] = nil
-      @mail[:mail_instance].header['Content-Transfer-Encoding'] = nil
-      @mail[:mail_instance].header['Content-Description'] = nil
-
-      new_raw_mail = "#{@mail[:mail_instance].header}#{decrypted_data}"
-
-      mail_new = Channel::EmailParser.new.parse(new_raw_mail)
-      mail_new.each do |local_key, local_value|
-        @mail[local_key] = local_value
-      end
+      parse_new_mail(decrypted_data)
 
       success = true
       comment = cert.subject
@@ -90,7 +92,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       end
 
       # overwrite content_type for signature checking
-      @content_type = @mail[:mail_instance].content_type
+      @content_type = mail[:mail_instance].content_type
       break
     end
 
@@ -106,12 +108,16 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     success = false
     comment = 'Unable to find certificate for verification'
 
-    result = verify_certificate_chain(p7enc.certificates)
+    result = verify_certificate_chain(verify_sign_p7enc.certificates)
     if result.present?
       success = true
       comment = result
 
-      @mail[:attachments].delete_if do |attachment|
+      if signed_type == 'wrapped'
+        parse_new_mail(verify_sign_p7enc.data)
+      end
+
+      mail[:attachments].delete_if do |attachment|
         signed?(attachment.dig(:preferences, 'Content-Type'))
       end
     end
@@ -125,7 +131,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
   def verify_certificate_chain(certificates)
     return if certificates.blank?
 
-    subjects = p7enc.certificates.map(&:subject).map(&:to_s)
+    subjects = certificates.map(&:subject).map(&:to_s)
     return if subjects.blank?
 
     existing_certs = ::SMIMECertificate.where(subject: subjects).sort_by do |certificate|
@@ -145,7 +151,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
         existing_certs_store.add_cert(existing_cert.parsed)
       end
 
-      success = p7enc.verify(p7enc.certificates, existing_certs_store, nil, OPENSSL_PKCS7_VERIFY_FLAGS)
+      success = verify_sign_p7enc.verify(certificates, existing_certs_store, nil, OPENSSL_PKCS7_VERIFY_FLAGS)
       return if !success
 
       existing_certs.map do |existing_cert|
@@ -162,8 +168,14 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     end
   end
 
-  def p7enc
-    OpenSSL::PKCS7.read_smime(@mail[:raw])
+  private
+
+  def verify_sign_p7enc
+    @verify_sign_p7enc ||= OpenSSL::PKCS7.read_smime(mail[:raw])
+  end
+
+  def decrypt_p7enc
+    @decrypt_p7enc ||= OpenSSL::PKCS7.read_smime(mail[:raw])
   end
 
   def log
@@ -183,17 +195,31 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       HttpLog.create(
         direction:     'in',
         facility:      'S/MIME',
-        url:           "#{@mail[:from]} -> #{@mail[:to]}",
+        url:           "#{mail[:from]} -> #{mail[:to]}",
         status:        status,
         ip:            nil,
         request:       {
-          message_id: @mail[:message_id],
+          message_id: mail[:message_id],
         },
         response:      article_preferences[:security],
         method:        action,
         created_by_id: 1,
         updated_by_id: 1,
       )
+    end
+  end
+
+  def parse_new_mail(new_mail)
+    mail[:mail_instance].header['Content-Type'] = nil
+    mail[:mail_instance].header['Content-Disposition'] = nil
+    mail[:mail_instance].header['Content-Transfer-Encoding'] = nil
+    mail[:mail_instance].header['Content-Description'] = nil
+
+    new_raw_mail = "#{mail[:mail_instance].header}#{new_mail}"
+
+    mail_new = Channel::EmailParser.new.parse(new_raw_mail)
+    mail_new.each do |local_key, local_value|
+      mail[local_key] = local_value
     end
   end
 end

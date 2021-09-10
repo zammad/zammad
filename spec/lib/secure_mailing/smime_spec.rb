@@ -256,7 +256,6 @@ RSpec.describe SecureMailing::SMIME do
 
         let(:mail) do
           smime_mail = build_mail
-
           mail = Channel::EmailParser.new.parse(smime_mail.to_s)
           SecureMailing.incoming(mail)
 
@@ -288,6 +287,25 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           it_behaves_like 'HttpLog writer', 'success'
+        end
+
+        context 'with wrapped mime-type S/MIME signature (e.g. for Microsoft Outlook)' do
+          before do
+            # We need to disable the open ssl detached flag, to force the smime-type with 'signed-data'.
+            stub_const('OpenSSL::PKCS7::DETACHED', nil)
+          end
+
+          it 'check that mail was verified' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+          end
+
+          it 'check that signe comment exists' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(sender_certificate_subject)
+          end
+
+          it 'check that body was verified' do
+            expect(mail[:body]).to include(raw_body)
+          end
         end
       end
 
@@ -559,6 +577,59 @@ RSpec.describe SecureMailing::SMIME do
         end
 
         it_behaves_like 'HttpLog writer', 'failed'
+      end
+    end
+
+    context 'with signature verification and decryption' do
+      let!(:sender_certificate) { create(:smime_certificate, :with_private, fixture: sender_email_address) }
+      let!(:recipient_certificate) { create(:smime_certificate, :with_private, fixture: recipient_email_address) }
+
+      let(:security_preferences) do
+        {
+          type:       'S/MIME',
+          sign:       {
+            success: true,
+          },
+          encryption: {
+            success: true,
+          },
+        }
+      end
+
+      let(:mail) do
+        smime_mail = build_mail
+
+        mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+        SecureMailing.incoming(mail)
+
+        mail
+      end
+
+      context 'with wrapped mime-type S/MIME signature (e.g. for Microsoft Outlook)' do
+        before do
+          # We need to disable the open ssl detached flag, to force the smime-type with 'signed-data'.
+          stub_const('OpenSSL::PKCS7::DETACHED', nil)
+        end
+
+        it 'check that mail was decrypted' do
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be true
+        end
+
+        it 'check that encryption comment exists' do
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to eq(recipient_certificate_subject)
+        end
+
+        it 'check that mail was verified' do
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+        end
+
+        it 'check that signe comment exists' do
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(sender_certificate_subject)
+        end
+
+        it 'check that body was endcrypted and verified' do
+          expect(mail[:body]).to include(raw_body)
+        end
       end
     end
   end
