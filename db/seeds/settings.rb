@@ -7,6 +7,7 @@ Setting.create_if_not_exists(
   state:       SecureRandom.hex(128),
   preferences: {
     permission: ['admin'],
+    protected:  true,
   },
   frontend:    false
 )

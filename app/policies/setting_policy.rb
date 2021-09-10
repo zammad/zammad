@@ -11,6 +11,7 @@ class SettingPolicy < ApplicationPolicy
   private
 
   def permitted?
+    return false if record.preferences[:protected]
     return true if !record.preferences[:permission]
 
     user.permissions?(record.preferences[:permission])
