@@ -225,5 +225,31 @@ RSpec.describe 'Settings', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
+
+    it 'protected setting not existing in list' do
+      authenticated_as(admin)
+      get '/api/v1/settings', params: {}, as: :json
+      expect(json_response.detect { |setting| setting['name'] == 'application_secret' }).to eq(nil)
+    end
+
+    it 'can not show protected setting' do
+      setting = Setting.find_by(name: 'application_secret')
+      authenticated_as(admin)
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'can not update protected setting' do
+      setting = Setting.find_by(name: 'application_secret')
+      params = {
+        id:    setting.id,
+        state: 'Examaple'
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+
+      authenticated_as(admin)
+      put "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
   end
 end
