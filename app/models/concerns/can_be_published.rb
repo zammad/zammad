@@ -38,7 +38,8 @@ module CanBePublished
 
       belongs_to local, class_name: 'User', inverse_of: remote, optional: true
 
-      User.has_many remote, class_name: model_name, inverse_of: local, foreign_key: "#{local}_id"
+      # Deletion of users is handled in User.destroy_move_dependency_ownership and resets fields to user_id: 1, so skip dependent: here.
+      User.has_many remote, class_name: model_name, inverse_of: local, foreign_key: "#{local}_id" # rubocop:disable Rails/HasManyOrHasOneDependent
       User.association_attributes_ignored remote
     end
 

@@ -67,7 +67,7 @@ module KnowledgeBaseHelper
   def canonical_link_tag(knowledge_base, *objects)
     path = kb_public_system_path(*objects)
 
-    tag :link, rel: 'canonical', href: knowledge_base.canonical_url(path)
+    tag.link(rel: 'canonical', href: knowledge_base.canonical_url(path))
   end
 
   def kb_public_system_path(*objects)
