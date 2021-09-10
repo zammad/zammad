@@ -4,7 +4,7 @@ class CoreWorkflow < ApplicationModel
   include ChecksClientNotification
   include CoreWorkflow::Assets
 
-  default_scope { order(priority: :asc, id: :asc) }
+  default_scope { order('priority ASC, name ASC, id ASC') }
   scope :active, -> { where(active: true) }
   scope :changeable, -> { where(changeable: true) }
   scope :object, ->(object) { where(object: [object, nil]) }

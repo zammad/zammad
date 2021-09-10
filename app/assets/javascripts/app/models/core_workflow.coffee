@@ -5,7 +5,7 @@ class App.CoreWorkflow extends App.Model
   @configure_attributes = [
     { name: 'name', display: 'Name', tag: 'input', type: 'text', limit: 100, null: false },
     { name: 'object', display: 'Object', tag: 'select', null: false, nulloption: true },
-    { name: 'preferences::screen', display: 'Action', tag: 'select', translate: true, null: true, multiple: true, nulloption: true },
+    { name: 'preferences::screen', display: 'Context', tag: 'select', translate: true, null: true, multiple: true, nulloption: true },
     { name: 'condition_selected', display: 'Selected conditions', tag: 'core_workflow_condition', null: true, preview: false },
     { name: 'condition_saved', display: 'Saved conditions', tag: 'core_workflow_condition', null: true, preview: false },
     { name: 'perform', display: 'Action', tag: 'core_workflow_perform', null: true, preview: false },
