@@ -8,7 +8,7 @@ module ActiveSupport
         # time, just log it
         super
       rescue => e
-        Rails.logger.error "Can't write cache #{key}: #{e.inspect}"
+        Rails.logger.error "Can't write cache #{name}: #{e.inspect}"
         Rails.logger.error e
       end
     end
