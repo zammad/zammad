@@ -410,6 +410,15 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
+    if !@channel
+      #Email Inbound form opened from new email wizard, show full settings
+      configureAttributesInbound = [
+        { name: 'options::realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+        { name: 'options::email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+      ].concat(configureAttributesInbound)
+
+
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
       return if !params
       if params.adapter is 'imap'
@@ -424,7 +433,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       return if !params.options
       currentPort = @$('[name="options::port"]').val()
       if params.options.ssl is true
-        if !currentPort
+        if !currentPort || currentPort is '143'
           @$('[name="options::port"]').val('993')
         return
       if params.options.ssl is false
@@ -484,18 +493,12 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       params.channel_id = @channel.id
 
     if $(e.currentTarget).hasClass('js-expert')
-
-      # validate form
-      errors = @formMeta.validate(params)
-      if errors
-        delete errors.password
-      if !_.isEmpty(errors)
-        @formValidate(form: e.target, errors: errors)
-        return
-
       @showSlide('js-inbound')
       @$('.js-inbound [name="options::user"]').val(params.email)
       @$('.js-inbound [name="options::password"]').val(params.password)
+      @$('.js-inbound [name="options::email"]').val(params.email)
+      @$('.js-inbound [name="options::realname"]').val(params.realname)
+      @$('.js-inbound [name="options::group_id"]').val(params.group_id)
       return
 
     @disable(e)
@@ -528,6 +531,9 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
           @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.')
           @$('.js-inbound [name="options::user"]').val(@account['meta']['email'])
           @$('.js-inbound [name="options::password"]').val(@account['meta']['password'])
+          @$('.js-inbound [name="options::email"]').val(@account['meta']['email'])
+          @$('.js-inbound [name="options::realname"]').val(@account['meta']['realname'])
+          @$('.js-inbound [name="options::group_id"]').val(@account['meta']['group_id'])
 
         @enable(e)
       error: =>
@@ -543,6 +549,11 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
     if params.options && params.options.password is @passwordPlaceholder
       params.options.password = @inboundPassword
+
+    # Update meta as the one from AttributesBase could be outdated
+    @account.meta.realname = params.options.realname
+    @account.meta.email = params.options.email
+    @account.meta.group_id = params.options.group_id
 
     # let backend know about the channel
     if @channel
