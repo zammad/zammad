@@ -454,8 +454,10 @@ class App.TicketZoom extends App.Controller
     App.TaskManager.touch(@taskKey)
 
     if !@renderDone
-      @renderDone = true
-      @autosaveLast = {}
+      @renderDone      = true
+      @autosaveLast    = {}
+      @scrollHeaderPos = undefined
+
       elLocal = $(App.view('ticket_zoom')
         ticket:         @ticket
         nav:            @nav
