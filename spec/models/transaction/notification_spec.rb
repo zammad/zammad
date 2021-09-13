@@ -9,11 +9,11 @@ RSpec.describe Transaction::Notification, type: :model do
     let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
 
     before do
+      travel_to Time.current.noon
       user.groups << group
       ticket
 
       Setting.set('timezone_default', 'America/Santiago')
-      freeze_time
       run(ticket, user, 'reminder_reached')
       OnlineNotification.destroy_all
     end
