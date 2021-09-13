@@ -88,6 +88,27 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     end
   end
 
+  context 'when using include_locale parameter' do
+    context 'when no multiple locales exists' do
+      it 'no locale added to title' do
+        post endpoint, params: { query: published_answer.translations.first.title, include_locale: true }
+        expect(json_response['details'][0]['title']).to not_include('(EN-US)')
+      end
+    end
+
+    context 'when multiple locales exists' do
+      before do
+        # Create a alternative knowledge base locale.
+        alternative_locale
+      end
+
+      it 'locale added to title' do
+        post endpoint, params: { query: published_answer.translations.first.title, include_locale: true }
+        expect(json_response['details'][0]['title']).to include('(EN-US)')
+      end
+    end
+  end
+
   context 'when using paging' do
     let(:answers) do
       Array.new(20) do |nth|

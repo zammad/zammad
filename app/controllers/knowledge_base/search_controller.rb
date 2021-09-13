@@ -70,7 +70,7 @@ class KnowledgeBase::SearchController < ApplicationController
              end
 
     if include_locale && (system_locale = object.kb_locale.system_locale)
-      output[:title] += " (#{system_locale.name})"
+      output[:title] += " (#{system_locale.locale.upcase})"
     end
 
     output
