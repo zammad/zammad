@@ -11,6 +11,14 @@
 <div class="page-content">
 
   <div class="box box--message">
+    <h2><%- @T('Contributing Translations') %></h2>
+    <p><%- @T('Starting with Zammad 5.1, translations can be contributed exclusively via "translations.zammad.org" %l.', 'https://translations.zammad.org') %></p>
+    <p>
+      <%- @T('While it will be no longer possible to directly push changed translations from Zammad, they can be contributed in a very convenient user interface based on Weblate.') %>
+      </p>
+  </div>
+
+  <div class="box box--message">
     <h2><%- @T('Inline translation') %></h2>
     <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s".', 'ctrl+alt+t') %></p>
     <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary"><%- @Ti('Some Text') %></button></p>
