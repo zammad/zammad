@@ -19,8 +19,8 @@ module Import
         # ReplyTo:    :reply_to,
         References:  :references,
         ContentType: :content_type,
-        Changed:     :updated_at,
-        Created:     :created_at,
+        ChangeTime:  :updated_at,
+        CreateTime:  :created_at,
         ChangedBy:   :updated_by_id,
         CreatedBy:   :created_by_id,
       }.freeze
