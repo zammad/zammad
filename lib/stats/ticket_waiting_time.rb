@@ -33,7 +33,7 @@ class Stats::TicketWaitingTime
                 percent = (handling_time.to_f - 60) / (60 * 3)
                 'good'
               elsif handling_time <= 60 * 8
-                percent = (handling_time.to_f - 60 * 4) / (60 * 4)
+                percent = (handling_time.to_f - (60 * 4)) / (60 * 4)
                 'ok'
               else
                 percent = 1.00

@@ -91,7 +91,7 @@ class KnowledgeBase < ApplicationModel
   def custom_address_prefix(request)
     host        = custom_address_uri.host || request.headers.env['SERVER_NAME']
     port        = request.headers.env['SERVER_PORT']
-    port_silent = request.ssl? && port == '443' || !request.ssl? && port == '80'
+    port_silent = (request.ssl? && port == '443') || (!request.ssl? && port == '80')
     port_string = port_silent ? '' : ":#{port}"
 
     "#{custom_address_uri.scheme}://#{host}#{port_string}"

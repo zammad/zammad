@@ -192,7 +192,7 @@ class FormController < ApplicationController
       Rails.logger.info "Invalid token for form (invalid fingerprint found #{fingerprint_local} != #{fingerprint})!"
       raise Exceptions::NotAuthorized
     end
-    if parts[1].to_i < (Time.zone.now.to_i - 60 * 60 * 24)
+    if parts[1].to_i < (Time.zone.now.to_i - (60 * 60 * 24))
       Rails.logger.info 'Invalid token for form (token expired})!'
       raise Exceptions::NotAuthorized
     end

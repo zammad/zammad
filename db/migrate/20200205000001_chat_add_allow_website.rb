@@ -6,6 +6,6 @@ class ChatAddAllowWebsite < ActiveRecord::Migration[5.1]
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    add_column :chats, :whitelisted_websites, :string, limit: 5000, null: true # rubocop:disable Naming/InclusiveLanguage
+    add_column :chats, :whitelisted_websites, :string, limit: 5000, null: true
   end
 end

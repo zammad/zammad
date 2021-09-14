@@ -2183,7 +2183,7 @@ RSpec.describe Ticket, type: :model do
       Store.add(
         object:        'SomeObject',
         o_id:          1,
-        data:          'a' * (1024**2 * 2.4), # with 2.4 mb
+        data:          'a' * ((1024**2) * 2.4), # with 2.4 mb
         filename:      'test.TXT',
         created_by_id: 1,
       )
@@ -2258,7 +2258,7 @@ RSpec.describe Ticket, type: :model do
       Store.add(
         object:        'Ticket::Article',
         o_id:          article1.id,
-        data:          'a' * (1024**2 * 2.4), # with 2.4 mb
+        data:          'a' * ((1024**2) * 2.4), # with 2.4 mb
         filename:      'some_file.pdf',
         preferences:   {
           'Content-Type' => 'image/pdf',
@@ -2268,14 +2268,14 @@ RSpec.describe Ticket, type: :model do
       Store.add(
         object:        'Ticket::Article',
         o_id:          article1.id,
-        data:          'a' * (1024**2 * 5.8), # with 5,8 mb
+        data:          'a' * ((1024**2) * 5.8), # with 5,8 mb
         filename:      'some_file.txt',
         preferences:   {
           'Content-Type' => 'text/plain',
         },
         created_by_id: 1,
       )
-      create(:ticket_article, ticket: ticket, body: 'a' * (1024**2 * 1.2)) # body with 1,2 mb
+      create(:ticket_article, ticket: ticket, body: 'a' * ((1024**2) * 1.2)) # body with 1,2 mb
       create(:ticket_article, ticket: ticket)
       ticket.search_index_attribute_lookup
     end

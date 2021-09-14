@@ -82,7 +82,7 @@ module Import
             # get the offset for the current thread and loop count
             thread_offset_base = (Thread.current[:thread_no] - 1) * limit
             thread_step        = thread_count * limit
-            offset             = Thread.current[:loop_count] * thread_step + thread_offset_base + start_offset_base
+            offset             = (Thread.current[:loop_count] * thread_step) + thread_offset_base + start_offset_base
 
             break if !imported?(
               remote_object: remote_object,

@@ -74,9 +74,7 @@ class Sequencer
               # Model Name
               # Model::Name
               # Model Name?
-              # rubocop:disable Style/AsciiComments
               # Mödel Nâmé
-              # rubocop:enable Style/AsciiComments
               raise 'Missing implementation for unsanitized_name method'
             end
           end
