@@ -19,6 +19,12 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
     # find selected/checked item of list
     @selectedOptions(attribute, params)
 
+    # disable item of list
+    @disabledOptions(attribute, params)
+
+    # filter attributes
+    @filterOption(attribute, params)
+
     item = $(App.view('generic/select')(attribute: attribute))
     item.find('select').data('field-type', 'boolean')
     item
