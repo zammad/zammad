@@ -33,7 +33,7 @@ RSpec.describe 'Manage > Calendars', type: :system do
         end
       end
 
-      wait(5).until_constant { find('.modal-dialog').style('height') }
+      wait(5).until_exists { find('.holiday_selector tr:nth-child(30)', wait: 0) }
 
       within '.modal-dialog' do
         row = first('.holiday_selector tr') do |elem|
