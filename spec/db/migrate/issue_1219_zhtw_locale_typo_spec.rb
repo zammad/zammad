@@ -8,7 +8,7 @@ RSpec.describe Issue1219ZhtwLocaleTypo, type: :db_migration do
   let(:user)        { create(:user, preferences: { locale: premigrate_locale }) }
 
   before do
-    Locale.find_by(locale: %w[zh-tw zj-tw])&.destroy
+    Locale.where(locale: %w[zh-tw zj-tw]).each(&:destroy)
     stub_const("#{described_class}::CURRENT_VERSION", version)
   end
 
