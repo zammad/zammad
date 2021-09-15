@@ -54,8 +54,8 @@ class ChannelsGoogleController < ApplicationController
 
   def destroy
     channel = Channel.find_by(id: params[:id], area: 'Google::Account')
-    email   = EmailAddress.find_by(channel_id: channel.id)
-    email.destroy!
+    email = EmailAddress.find_by(channel_id: channel.id)
+    email&.destroy!
     channel.destroy!
     render json: {}
   end
