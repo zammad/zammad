@@ -76,6 +76,7 @@ class App.FormHandlerCoreWorkflow
 
   # checks if the ajax or websocket endpoint should be used
   @useWebSockets: ->
+    return if !App.WebSocket.channel()
     return !App.Config.get('core_workflow_ajax_mode')
 
   # restricts the dropdown and tree select values of a form
@@ -274,6 +275,7 @@ class App.FormHandlerCoreWorkflow
   # this will use the form handler information to send the data to the backend via ajax/websockets
   @request: (classname, form, ui, attributes, params) ->
     requestID = "CoreWorkflow-#{Math.floor( Math.random() * 999999 ).toString()}"
+    coreWorkflowRequests = {}
     coreWorkflowRequests[requestID] = { classname: classname, form: form, ui: ui, attributes: attributes, params: params }
 
     requestData = {
