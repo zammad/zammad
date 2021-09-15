@@ -92,7 +92,7 @@ class App.ControllerForm extends App.Controller
     if @model.attributesGet
       attributesClean = @model.attributesGet(@screen)
     else
-      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes)
+      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes, undefined, @model.className)
 
     for attributeName, attribute of attributesClean
 

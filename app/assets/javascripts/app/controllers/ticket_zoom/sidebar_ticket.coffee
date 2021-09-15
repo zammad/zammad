@@ -38,7 +38,7 @@ class Edit extends App.ControllerObserver
     else
       @controllerFormSidebarTicket = new App.ControllerForm(
         elReplace:      @el
-        model:          { configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
+        model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
         screen:         'edit'
         handlersConfig: handlers
         filter:         @formMeta.filter

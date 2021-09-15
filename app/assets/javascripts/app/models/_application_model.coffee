@@ -211,9 +211,12 @@ set new attributes of model (remove already available attributes)
 
   ###
 
-  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false) ->
+  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false, className = undefined) ->
+    if !className
+      className = @.className
+
     if !attributes
-      attributes = clone(App[@.className].configure_attributes, true)
+      attributes = clone(App[className].configure_attributes, true)
     else
       attributes = clone(attributes, true)
 
@@ -224,7 +227,7 @@ set new attributes of model (remove already available attributes)
     attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined || App.FormHandlerCoreWorkflow.checkScreen(@.className, screen)))
+        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined || App.FormHandlerCoreWorkflow.checkScreen(className, screen)))
           for item, value of attribute.screen[screen]
             attribute[item] = value
           attributesNew[ attribute.name ] = attribute

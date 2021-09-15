@@ -1908,4 +1908,53 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'Core Workflow: Show hidden attributes on group selection (ticket edit) #3739', authenticated_as: :authenticate do
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:field_name) { SecureRandom.uuid }
+    let(:field) do
+      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
+        'edit' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+      ObjectManager::Attribute.migration_execute
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    context 'when field visible' do
+      let(:workflow) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: { "ticket.#{field_name}" => { 'operator' => 'show', 'show' => 'true' } })
+      end
+
+      def authenticate
+        field
+        workflow
+        true
+      end
+
+      it 'does show up the field' do
+        expect(page).to have_css("div[data-attribute-name='#{field_name}']")
+      end
+    end
+
+    context 'when field hidden' do
+      def authenticate
+        field
+        true
+      end
+
+      it 'does not show the field' do
+        expect(page).to have_css("div[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
+      end
+    end
+  end
 end
