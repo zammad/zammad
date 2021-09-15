@@ -55,7 +55,7 @@ class ChannelsMicrosoft365Controller < ApplicationController
   def destroy
     channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     email   = EmailAddress.find_by(channel_id: channel.id)
-    email.destroy!
+    email&.destroy!
     channel.destroy!
     render json: {}
   end
