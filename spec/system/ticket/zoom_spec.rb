@@ -1909,7 +1909,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'Core Workflow: Show hidden attributes on group selection (ticket edit) #3739', authenticated_as: :authenticate do
+  describe 'Core Workflow: Show hidden attributes on group selection (ticket edit) #3739', authenticated_as: :authenticate, db_strategy: :reset do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
