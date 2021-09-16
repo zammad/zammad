@@ -70,11 +70,7 @@ class Sessions::Store::File
 
   def set(client_id, data)
     path = "#{@path}/#{client_id}"
-    File.open("#{path}/session", 'wb') do |file|
-      file.flock(File::LOCK_EX)
-      file.write data.to_json
-      file.flock(File::LOCK_UN)
-    end
+    write_with_lock("#{path}/session", data.to_json)
   end
 
   def get(client_id)
@@ -85,15 +81,10 @@ class Sessions::Store::File
     return if !check_session_file_for_client(client_id, session_dir, session_file)
 
     begin
-      File.open(session_file, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        all = file.read
-        file.flock(File::LOCK_UN)
-        data_json = JSON.parse(all)
-        if data_json
-          data        = Sessions.symbolize_keys(data_json)
-          data[:user] = data_json['user'] # for compat. reasons
-        end
+      data_json = JSON.parse(read_with_lock(session_file))
+      if data_json
+        data        = Sessions.symbolize_keys(data_json)
+        data[:user] = data_json['user'] # for compat. reasons
       end
     rescue => e
       Sessions.log('error', e.inspect)
@@ -109,12 +100,7 @@ class Sessions::Store::File
     return false if !location
 
     begin
-      File.open(location, 'wb') do |file|
-        file.flock(File::LOCK_EX)
-        file.write data.to_json
-        file.flock(File::LOCK_UN)
-        file.close
-      end
+      write_with_lock(location, data.to_json)
     rescue => e
       Sessions.log('error', e.inspect)
       Sessions.log('error', "error in writing message file '#{location}'")
@@ -156,11 +142,7 @@ class Sessions::Store::File
     FileUtils.mkpath path
 
     file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
-    File.open(file_path, 'wb') do |file|
-      file.flock(File::LOCK_EX)
-      file.write data.to_json
-      file.flock(File::LOCK_UN)
-    end
+    write_with_lock(file_path, data.to_json)
   end
 
   def each_spool()
@@ -178,13 +160,8 @@ class Sessions::Store::File
       filename = "#{path}/#{entry}"
       next if !File.exist?(filename)
 
-      File.open(filename, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        message = file.read
-        file.flock(File::LOCK_UN)
-
-        yield message, entry
-      end
+      message = read_with_lock(filename)
+      yield message, entry
     end
   end
 
@@ -209,18 +186,14 @@ class Sessions::Store::File
     nodes = []
     files = Dir.glob(path)
     files.each do |filename|
-      File.open(filename, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        content = file.read
-        file.flock(File::LOCK_UN)
-        begin
-          data = JSON.parse(content)
-          nodes.push data
-        rescue => e
-          Rails.logger.error "can't parse status file #{filename}, #{e.inspect}"
-          # to_delete.push "#{path}/#{entry}"
-          # next
-        end
+      begin
+        content = read_with_lock(filename)
+        data = JSON.parse(content)
+        nodes.push data
+      rescue => e
+        Rails.logger.error "can't parse status file #{filename}, #{e.inspect}"
+        # to_delete.push "#{path}/#{entry}"
+        # next
       end
     end
     nodes
@@ -236,9 +209,7 @@ class Sessions::Store::File
     content = data.to_json
 
     # store session data in session file
-    File.open(status_file, 'wb') do |file|
-      file.write content
-    end
+    write_with_lock(status_file, content)
   end
 
   def each_node_session()
@@ -247,22 +218,18 @@ class Sessions::Store::File
 
     files = Dir.glob(path)
     files.each do |filename|
-      File.open(filename, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        content = file.read
-        file.flock(File::LOCK_UN)
-        begin
-          next if content.blank?
+      begin
+        content = read_with_lock(filename)
+        next if content.blank?
 
-          data = JSON.parse(content)
-          next if data.blank?
+        data = JSON.parse(content)
+        next if data.blank?
 
-          yield data
-        rescue => e
-          Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
-          # to_delete.push "#{path}/#{entry}"
-          # next
-        end
+        yield data
+      rescue => e
+        Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
+        # to_delete.push "#{path}/#{entry}"
+        # next
       end
     end
   end
@@ -276,9 +243,7 @@ class Sessions::Store::File
     content = data.to_json
 
     # store session data in session file
-    File.open(status_file, 'wb') do |file|
-      file.write content
-    end
+    write_with_lock(status_file, content)
   end
 
   def each_session_by_node(node_id)
@@ -287,27 +252,38 @@ class Sessions::Store::File
 
     files = Dir.glob(path)
     files.each do |filename|
-      File.open(filename, 'rb') do |file|
-        file.flock(File::LOCK_SH)
-        content = file.read
-        file.flock(File::LOCK_UN)
-        begin
-          next if content.blank?
+      begin
+        content = read_with_lock(filename)
+        next if content.blank?
 
-          data = JSON.parse(content)
-          next if data.blank?
+        data = JSON.parse(content)
+        next if data.blank?
 
-          yield data
-        rescue => e
-          Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
-          # to_delete.push "#{path}/#{entry}"
-          # next
-        end
+        yield data
+      rescue => e
+        Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
+        # to_delete.push "#{path}/#{entry}"
+        # next
       end
     end
   end
 
   private
+
+  def write_with_lock(filename, data)
+    File.open(filename, 'ab') do |file|
+      file.flock(File::LOCK_EX)
+      file.truncate 0 # Truncate only after locking to avoid empty state
+      file.write data
+    end
+  end
+
+  def read_with_lock(filename)
+    File.open(filename, 'rb') do |file|
+      file.flock(File::LOCK_SH)
+      return file.read
+    end
+  end
 
   def queue_file_read(path, filename)
     location = "#{path}#{filename}"
