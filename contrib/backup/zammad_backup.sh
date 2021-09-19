@@ -3,6 +3,9 @@
 # zammad backup script
 #
 
+# Stop the execution of the script if a command or pipeline has an error
+set -e
+
 # shellcheck disable=SC2046
 BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
