@@ -263,6 +263,10 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStart()
     @autosaveStart()
     @shortcutNavigationStart()
+
+    if @articleNew
+      @articleNew.show()
+
     return if !@attributeBar
     @attributeBar.start()
 
@@ -1056,12 +1060,22 @@ class App.TicketZoom extends App.Controller
 
   taskUpdate: (area, data) =>
     @localTaskData[area] = data
-    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+
+    taskData = { 'state': @localTaskData }
+    if _.isArray(data.attachments)
+      taskData.attachments = data.attachments
+
+    App.TaskManager.update(@taskKey, taskData)
 
   taskUpdateAll: (data) =>
     @localTaskData = data
     @localTaskData.article['form_id'] = @form_id
-    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+
+    taskData = { 'state': @localTaskData }
+    if _.isArray(data.attachments)
+      taskData.attachments = data.attachments
+
+    App.TaskManager.update(@taskKey, taskData)
 
   # reset task state
   taskReset: =>
