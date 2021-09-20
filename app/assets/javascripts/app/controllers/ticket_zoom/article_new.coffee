@@ -43,13 +43,9 @@ class App.TicketZoomArticleNew extends App.Controller
       closed: 20
 
     @dragEventCounter = 0
-    @attachments      = []
+    @attachments      = @defaults.attachments || []
 
     @render()
-
-    if _.isArray(@defaults.attachments)
-      for attachment in @defaults.attachments
-        @renderAttachment(attachment)
 
     # set article type and expand text area
     @controllerBind('ui::ticket::setArticleType', (data) =>
@@ -75,6 +71,9 @@ class App.TicketZoomArticleNew extends App.Controller
       if data.position is 'end'
         @placeCaretAtEnd(@textarea.get(0))
         return
+
+      # fixes email validation issue right after new ticket creation
+      @tokanice(data.type.name)
     )
 
     # add article attachment
@@ -89,22 +88,17 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui::ticket::taskReset', (data) =>
       @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
-      @type     = 'note'
-      @defaults = {}
+      @type        = 'note'
+      @defaults    = {}
+      @attachments = []
       @render()
-    )
-
-    # set expand of text area only once
-    @controllerBind('ui::ticket::shown', (data) =>
-      return if data.ticket_id.toString() isnt @ticket.id.toString()
-      @tokanice(@type)
-
-      if @defaults.body or @isIE10()
-        @openTextarea(null, true)
     )
 
     # rerender, e. g. on language change
     @controllerBind('ui:rerender', =>
+      @adjustedTextarea = false
+      @defaults         = @ui.taskGet('article')
+      @attachments      = @defaults.attachments
       @render()
     )
 
@@ -113,6 +107,18 @@ class App.TicketZoomArticleNew extends App.Controller
       return if data.taskKey isnt @taskKey
       @updateSecurityOptions()
     )
+
+  show: ->
+    @adjustTextarea()
+
+  adjustTextarea: ->
+    return if @adjustedTextarea
+    @adjustedTextarea = true
+
+    @tokanice(@type)
+
+    if @defaults.body or @isIE10()
+      @openTextarea(null, true)
 
   tokanice: (type = 'email') ->
     App.Utils.tokanice('.content.active .js-to, .js-cc, js-bcc', type)
@@ -282,6 +288,10 @@ class App.TicketZoomArticleNew extends App.Controller
       if !@subscribeIdTextModule
         @subscribeIdTextModule = ticket.subscribe(callback)
 
+    if _.isArray(@attachments)
+      for attachment in @attachments
+        @renderAttachment(attachment)
+
   params: =>
     params = @formParam( @$('.article-add') )
 
@@ -329,6 +339,7 @@ class App.TicketZoomArticleNew extends App.Controller
       params.preferences ||= {}
       params.preferences.security = @paramsSecurity()
 
+    params.attachments = @attachments
     params
 
   validate: =>

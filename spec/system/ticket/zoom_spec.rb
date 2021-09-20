@@ -1710,4 +1710,73 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text(ticket_closed.title, wait: 20)
     end
   end
+
+  describe 'Notes on existing ticks are discarded by editing profile settings #3088' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    def upload_and_set_text
+      page.find('.js-textarea').send_keys("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      expect(page).to have_text('mail001.box')
+      wait_for_upload_present
+    end
+
+    def wait_for_upload_present
+      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
+    end
+
+    def wait_for_upload_blank
+      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].blank? }
+    end
+
+    def switch_language_german
+      visit '#profile/language'
+      page.find('.js-input').click
+      page.find('.js-input').set('Deutsch')
+      page.find('.js-input').send_keys(:enter)
+      click_on 'Submit'
+
+      visit "#ticket/zoom/#{ticket.id}"
+      expect(page).to have_text('Dateien wählen')
+    end
+
+    def expect_upload_and_text
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
+    end
+
+    def expect_no_upload_and_text
+      expect(page).to have_no_text('mail001.box')
+      expect(page).to have_no_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
+    end
+
+    it 'does show up the attachments after a reload of the page' do
+      upload_and_set_text
+      expect_upload_and_text
+      refresh
+      expect_upload_and_text
+    end
+
+    it 'does show up the attachments after updating language (ui:rerender event)' do
+      upload_and_set_text
+      expect_upload_and_text
+      switch_language_german
+      expect_upload_and_text
+    end
+
+    it 'does remove attachments and text on reset' do
+      upload_and_set_text
+      expect_upload_and_text
+
+      page.find('.js-reset').click
+      wait_for_upload_blank
+      expect_no_upload_and_text
+      refresh
+      expect_no_upload_and_text
+    end
+  end
 end
