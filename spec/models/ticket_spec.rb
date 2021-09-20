@@ -980,6 +980,12 @@ RSpec.describe Ticket, type: :model do
         end
       end
     end
+
+    describe '#param_cleanup' do
+      it 'does only remove parameters which are invalid and not the complete params hash if one element is invalid (#3743)' do
+        expect(described_class.param_cleanup({ state_id: 3, customer_id: 'guess:1234' }, true, false, false)).to eq({ 'state_id' => 3 })
+      end
+    end
   end
 
   describe 'Attributes:' do
