@@ -56,10 +56,9 @@ RSpec.describe CoreWorkflow::Attributes, type: :model do
     end
   end
 
-  describe '#shown_default' do
+  describe '#visibility_default' do
     it 'priority should be shown by default' do
-      expect(result.shown_default['priority_id']).to eq('show')
+      expect(result.visibility_default['priority_id']).to eq('show')
     end
   end
-
 end

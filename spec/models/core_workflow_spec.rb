@@ -1561,4 +1561,46 @@ RSpec.describe CoreWorkflow, type: :model do
       expect(result[:visibility]['priority_id']).to eq('hide')
     end
   end
+
+  describe '.perform - Readonly' do
+    let!(:workflow1) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.group_id': {
+                 operator:     'set_readonly',
+                 set_readonly: 'true'
+               },
+             })
+    end
+
+    it 'does match workflow' do
+      expect(result[:matched_workflows]).to include(workflow1.id)
+    end
+
+    it 'does set group readonly' do
+      expect(result[:readonly]['group_id']).to eq(true)
+    end
+
+    context 'when readonly unset' do
+      let!(:workflow2) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 'ticket.group_id': {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does match workflows' do
+        expect(result[:matched_workflows]).to include(workflow1.id, workflow2.id)
+      end
+
+      it 'does set group readonly' do
+        expect(result[:readonly]['group_id']).to eq(false)
+      end
+    end
+  end
 end

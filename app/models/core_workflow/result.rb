@@ -28,17 +28,10 @@ class CoreWorkflow::Result
   def set_default
     @rerun = false
 
-    @result = {
-      request_id:        payload['request_id'],
-      restrict_values:   {},
-      visibility:        attributes.shown_default,
-      mandatory:         attributes.mandatory_default,
-      select:            @result[:select] || {},
-      fill_in:           @result[:fill_in] || {},
-      eval:              [],
-      matched_workflows: @result[:matched_workflows] || [],
-      rerun_count:       @result[:rerun_count] || 0,
-    }
+    @result[:restrict_values] = {}
+    %i[request_id visibility mandatory readonly select fill_in eval matched_workflows rerun_count].each do |group|
+      @result[group] = attributes.send(:"#{group}_default")
+    end
 
     # restrict init defaults to make sure param values to removed if not allowed
     attributes.restrict_values_default.each do |field, values|

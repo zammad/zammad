@@ -71,8 +71,12 @@ class CoreWorkflow::Attributes
     attribute[:screens].dig(@payload['screen'], type)
   end
 
+  def request_id_default
+    payload['request_id']
+  end
+
   # dont cache this else the result object will work with references and cache bugs occur
-  def shown_default
+  def visibility_default
     object_elements.each_with_object({}) do |attribute, result|
       result[ attribute[:name] ] = if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
                                      'show'
@@ -104,6 +108,33 @@ class CoreWorkflow::Attributes
 
       result[ attribute[:name] ] = true
     end
+  end
+
+  # dont cache this else the result object will work with references and cache bugs occur
+  def readonly_default
+    object_elements.each_with_object({}) do |attribute, result|
+      result[ attribute[:name] ] = false
+    end
+  end
+
+  def select_default
+    @result_object.result[:select] || {}
+  end
+
+  def fill_in_default
+    @result_object.result[:fill_in] || {}
+  end
+
+  def eval_default
+    []
+  end
+
+  def matched_workflows_default
+    @result_object.result[:matched_workflows] || []
+  end
+
+  def rerun_count_default
+    @result_object.result[:rerun_count] || 0
   end
 
   def options_array(options)

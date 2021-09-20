@@ -205,6 +205,16 @@ class App.FormHandlerCoreWorkflow
       else
         ui.optional(field, form)
 
+  # changes the mandatory flag of form elements
+  @changeReadonly: (form, ui, data) ->
+    return if _.isEmpty(data)
+
+    for field, state of data
+      if state
+        ui.readonly(field, form)
+      else
+        ui.changeable(field, form)
+
   # executes individual js commands of the Core Workflow engine
   @executeEval: (form, ui, data) ->
     return if _.isEmpty(data)
@@ -226,6 +236,7 @@ class App.FormHandlerCoreWorkflow
     App.FormHandlerCoreWorkflow.fillIn(classname, form, ui, attributes, params, data.fill_in)
     App.FormHandlerCoreWorkflow.changeVisibility(form, ui, data.visibility)
     App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
+    App.FormHandlerCoreWorkflow.changeReadonly(form, ui, data.readonly)
     App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
 

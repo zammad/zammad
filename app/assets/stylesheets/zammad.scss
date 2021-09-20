@@ -1782,6 +1782,11 @@ fieldset > .form-group {
   &.form-group--inactive {
     opacity: 0.5;
   }
+
+  &.is-readonly {
+    pointer-events: none;
+    cursor: not-allowed !important;
+  }
 }
 
 .date.form-group .controls {
@@ -12960,7 +12965,7 @@ span.is-disabled {
     padding: 6px 5px 11px;
     display: flex;
     flex-wrap: wrap;
-    
+
     .tag {
       margin: 2px;
       display: inline-block;

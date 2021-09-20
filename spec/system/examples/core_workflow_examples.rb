@@ -122,6 +122,42 @@ RSpec.shared_examples 'core workflow' do
       end
     end
 
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
     describe 'action - fill_in' do
       before do
         create(:core_workflow,
@@ -281,6 +317,42 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
       end
     end
 
@@ -604,6 +676,42 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
       end
     end
 
