@@ -314,3 +314,9 @@ Zammad/ExistsResetColumnInformation:
   Exclude:
     - 'db/migrate/201*_*.rb'
     - 'db/migrate/2020*_*.rb'
+
+Zammad/ExistsDbStrategy:
+  Include:
+    - "spec/**/*.rb"
+  Exclude:
+    - spec/support/capybara/common_actions.rb

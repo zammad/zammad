@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :sequence, db_strategy: 'reset' do
+RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :sequence, db_strategy: :reset do
 
   context 'when importing tickets from Freshdesk' do
 

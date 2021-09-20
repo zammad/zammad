@@ -2,6 +2,7 @@
 
 require_relative 'cop/zammad/exists_condition'
 require_relative 'cop/zammad/exists_date_time_precision'
+require_relative 'cop/zammad/exists_db_strategy'
 require_relative 'cop/zammad/exists_reset_column_information'
 require_relative 'cop/zammad/correct_migration_timestamp'
 require_relative 'cop/zammad/have_no_over_not_to'
