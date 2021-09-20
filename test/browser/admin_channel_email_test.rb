@@ -128,7 +128,7 @@ class AdminChannelEmailTest < TestCase
   # test the creation and cloning of Postmaster filters
   # confirm fix for issue #2170 - Cannot clone PostmasterFilter
   def test_filter_clone
-    filter_name = "Test Filter #{rand(999_999)}"
+    filter_name = "Test Filter #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(

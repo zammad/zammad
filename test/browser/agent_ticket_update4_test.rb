@@ -18,7 +18,7 @@ class AgentTicketUpdate4Test < TestCase
     object_manager_attribute_create(
       data: {
         name:      'date1',
-        display:   "Date-#{rand(999_999)}",
+        display:   "Date-#{SecureRandom.uuid}",
         data_type: 'Date',
       },
     )

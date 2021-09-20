@@ -12,7 +12,7 @@ class IntegrationCtiTest < TestCase
 
   # Regression test for #2017
   def test_nav_menu_notification_badge_clears
-    id = rand(99_999_999)
+    id = SecureRandom.uuid
 
     @browser = browser_instance
     login(
@@ -78,7 +78,7 @@ class IntegrationCtiTest < TestCase
 
   # Regression test for #2018
   def test_e164_numbers_displayed_in_prettified_format
-    id = rand(99_999_999)
+    id = SecureRandom.uuid
 
     @browser = browser_instance
     login(
@@ -156,7 +156,7 @@ class IntegrationCtiTest < TestCase
 
   # Regression test for #2096
   def test_inactive_users_displayed_inactive_in_caller_log
-    id = rand(99_999_999)
+    id = SecureRandom.uuid
 
     @browser = browser_instance
     login(
@@ -216,7 +216,7 @@ class IntegrationCtiTest < TestCase
 
   # Regression test for #2075
   def test_caller_ids_include_organization_names
-    id = rand(99_999_999)
+    id = SecureRandom.uuid
 
     @browser = browser_instance
     login(

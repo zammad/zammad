@@ -183,14 +183,14 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)}"
+      name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq(name)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)} - 2"
+      name = "some org name #{SecureRandom.uuid} - 2"
       put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -205,14 +205,14 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)}"
+      name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq(name)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)} - 2"
+      name = "some org name #{SecureRandom.uuid} - 2"
       put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -227,14 +227,14 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)}"
+      name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['name']).to eq(name)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)} - 2"
+      name = "some org name #{SecureRandom.uuid} - 2"
       put "/api/v1/organizations/#{json_response['id']}", params: { name: name }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -276,7 +276,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)}"
+      name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
       expect(response).to have_http_status(:forbidden)
 
@@ -315,7 +315,7 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response).to be_a_kind_of(Array)
       expect(json_response).to be_truthy
 
-      name = "some org name #{rand(999_999_999)}"
+      name = "some org name #{SecureRandom.uuid}"
       post '/api/v1/organizations', params: { name: name }, as: :json
       expect(response).to have_http_status(:forbidden)
     end

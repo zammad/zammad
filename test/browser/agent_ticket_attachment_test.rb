@@ -203,7 +203,7 @@ class AgentTicketAttachmentTest < TestCase
       browser: browser2,
     )
 
-    random     = "ticket-actions-6-test-#{rand(999_999)}"
+    random     = "ticket-actions-6-test-#{SecureRandom.uuid}"
     user_email = "#{random}@example.com"
     user_create(
       browser: browser2,

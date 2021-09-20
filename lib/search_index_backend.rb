@@ -1140,7 +1140,7 @@ helper method for making HTTP calls and raising error if response was not succes
   def self.pipeline(create: false)
     pipeline = Setting.get('es_pipeline')
     if create && pipeline.blank?
-      pipeline = "zammad#{rand(999_999_999_999)}"
+      pipeline = "zammad#{SecureRandom.uuid}"
       Setting.set('es_pipeline', pipeline)
     end
     pipeline

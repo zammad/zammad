@@ -10,7 +10,7 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
 
 =end
   def test_grouping_by_organzation_overview
-    random = rand(999_999).to_s
+    random = SecureRandom.uuid
     user_email = "user_#{random}@example.com"
     overview_name = "overview_#{random}"
 

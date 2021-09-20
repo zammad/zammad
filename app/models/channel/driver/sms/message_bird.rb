@@ -89,7 +89,7 @@ class Channel::Driver::Sms::MessageBird < Channel::Driver::Sms::Base
       name:         'message_bird',
       adapter:      'sms/message_bird',
       account:      [
-        { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(rand(999_999_999_999).to_s), disabled: true, readonly: true },
+        { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },
         { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 255, null: false },
         { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
         { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },

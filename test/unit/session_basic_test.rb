@@ -65,7 +65,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       login:         'activity-stream-agent-1',
       firstname:     'Session',
-      lastname:      "activity stream #{rand(99_999)}",
+      lastname:      "activity stream #{SecureRandom.uuid}",
       email:         'activity-stream-agent1@example.com',
       password:      'agentpw',
       active:        true,
@@ -76,7 +76,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     )
 
     # create min. on activity record
-    random_name = "Random:#{rand(9_999_999_999)}"
+    random_name = "Random:#{SecureRandom.uuid}"
     Group.create_or_update(
       name:          random_name,
       updated_by_id: 1,

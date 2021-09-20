@@ -36,7 +36,7 @@ RSpec.describe 'Manage > Maintenance', type: :system do
 
     context 'when maintenance login message will be used', authenticated_as: :authenticate do
       def message
-        @message ||= "badum tssss #{rand(99_999)}"
+        @message ||= 'badum tssss'
       end
 
       def authenticate
@@ -51,7 +51,7 @@ RSpec.describe 'Manage > Maintenance', type: :system do
       end
 
       it 'saves new maintenance_login_message' do
-        message_suffix = "tssss#{rand(99_999)}"
+        message_suffix = 'tssss'
 
         visit 'system/maintenance'
 

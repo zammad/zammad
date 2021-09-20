@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Manage > Calendars', type: :system do
 
   context 'Date' do
-    let(:calendar_title) { "test calendar #{rand(999_999_999)}" }
+    let(:calendar_title) { "test calendar #{SecureRandom.uuid}" }
 
     it 'show festivity dates correctly far away from UTC', time_zone: 'America/Sao_Paulo' do
       visit '/#manage/calendars'

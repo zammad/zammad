@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class AgentUserProfileTest < TestCase
   def test_user_profile
-    message = "1 #{rand(99_999_999)}"
+    message = "1 #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
@@ -109,7 +109,7 @@ class AgentUserProfileTest < TestCase
     tasks_close_all
 
     # work with two browser windows
-    message = "comment 1 #{rand(99_999_999_999_999_999)}"
+    message = "comment 1 #{SecureRandom.uuid}"
 
     # use current session
     browser1 = @browser

@@ -58,7 +58,7 @@ or
     def self.email(params)
 
       # send verify email
-      subject = params[:subject].presence || "##{rand(99_999_999_999)}"
+      subject = params[:subject].presence || "##{SecureRandom.hex(10)}"
       result = EmailHelper::Probe.outbound(params[:outbound], params[:sender], subject)
       if result[:result] != 'ok'
         result[:source] = 'outbound'

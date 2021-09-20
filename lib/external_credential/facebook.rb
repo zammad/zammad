@@ -29,7 +29,7 @@ class ExternalCredential::Facebook
       ExternalCredential.callback_url('facebook'),
     )
     oauth.get_app_access_token.inspect
-    state = rand(999_999_999_999).to_s
+    state = SecureRandom.uuid
     {
       request_token: state,
       # authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages, user_posts', state: state),

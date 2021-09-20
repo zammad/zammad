@@ -375,7 +375,7 @@ RSpec.describe 'User', type: :request do
       expect(json_response.count).to eq(2)
 
       # create user with admin role
-      firstname = "First test#{rand(999_999_999)}"
+      firstname = "First test#{SecureRandom.uuid}"
       role = Role.lookup(name: 'Admin')
       params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
@@ -966,7 +966,7 @@ RSpec.describe 'User', type: :request do
     end
 
     it 'does user search sortable' do
-      firstname = "user_search_sortable #{rand(999_999_999)}"
+      firstname = "user_search_sortable #{SecureRandom.uuid}"
 
       user1 = create(
         :customer,

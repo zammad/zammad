@@ -156,7 +156,7 @@ class Cti::Driver::Base
       end
     end
 
-    id = rand(999_999_999)
+    id = SecureRandom.uuid
     PushMessages.send_to(user.id, {
                            event: 'remote_task',
                            data:  {

@@ -102,7 +102,7 @@ class Overview < ApplicationModel
     local_link.squeeze!('_')
     local_link = CGI.escape(local_link)
     if local_link.blank?
-      local_link = id || rand(999)
+      local_link = id || SecureRandom.uuid
     end
     check = true
     count = 0

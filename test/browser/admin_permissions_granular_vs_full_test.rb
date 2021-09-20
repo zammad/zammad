@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class AdminPermissionsGranularVsFullTest < TestCase
   def test_permissions_selecting
-    new_group_name = "permissions_test_group#{rand(99_999_999)}"
+    new_group_name = "permissions_test_group#{SecureRandom.uuid}"
     @browser = browser_instance
     login(
       username: 'admin@example.com',

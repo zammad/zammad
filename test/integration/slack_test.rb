@@ -247,7 +247,7 @@ class SlackTest < ActiveSupport::TestCase
   end
 
   def hash_gen
-    (0...10).map { ('a'..'z').to_a[rand(26)] }.join
+    SecureRandom.hex(10)
   end
 
   def rand_word
@@ -269,7 +269,7 @@ class SlackTest < ActiveSupport::TestCase
       'be a good boy',
       'invent new things',
     ]
-    words[rand(words.length)]
+    words.sample
   end
 
   def slack_check(channel_name, search_for)

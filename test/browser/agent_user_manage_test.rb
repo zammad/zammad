@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class AgentUserManageTest < TestCase
   def test_agent_customer_ticket_create
-    random_number       = rand(999_999)
+    random_number       = SecureRandom.uuid
     customer_user_email = "customer-test-#{random_number}@example.com"
     firstname           = "Customer Firstname #{random_number}"
     lastname            = 'Customer Lastname'
@@ -135,7 +135,7 @@ class AgentUserManageTest < TestCase
   end
 
   def test_agent_customer_ticket_zoom
-    customer_user_email = "customer-test-#{rand(999_999)}@example.com"
+    customer_user_email = "customer-test-#{SecureRandom.uuid}@example.com"
     firstname           = 'Customer Firstname'
     lastname            = 'Customer Lastname'
     fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"

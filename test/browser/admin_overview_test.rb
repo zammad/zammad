@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class AdminOverviewTest < TestCase
   def test_account_add
-    name = "some overview #{rand(99_999_999)}"
+    name = "some overview #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
@@ -40,7 +40,7 @@ class AdminOverviewTest < TestCase
   end
 
   def test_overview_group_by_direction
-    name = "overview_#{rand(99_999_999)}"
+    name = "overview_#{SecureRandom.uuid}"
     ticket_titles = (1..3).map { |i| "Priority #{i} ticket" }
 
     @browser = browser_instance

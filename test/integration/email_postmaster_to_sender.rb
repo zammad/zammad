@@ -8,7 +8,7 @@ class EmailPostmasterToSender < ActiveSupport::TestCase
   setup do
     Setting.set('postmaster_max_size', 0.1)
 
-    @test_id = rand(999_999_999)
+    @test_id = SecureRandom.uuid
 
     # setup the IMAP account info for Zammad
     if ENV['MAIL_SERVER'].blank?

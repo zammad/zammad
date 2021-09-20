@@ -6,7 +6,7 @@ class AgentTicketOverviewPendingTil < TestCase
 
   # regression for issue #2367 - cannot sort by Pending Til
   def test_sorting_by_pending_til
-    name = "overview_pending_til_#{rand(999_999)}"
+    name = "overview_pending_til_#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(

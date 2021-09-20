@@ -33,7 +33,7 @@ RSpec.describe 'Manage > Organizations', type: :system do
 
           modal_ready
 
-          name = "Organization #{rand(999_999)}"
+          name = "Organization #{SecureRandom.uuid}"
 
           within '.modal-dialog' do
             fill_in 'name', with: name

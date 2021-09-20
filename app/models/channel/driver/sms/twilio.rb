@@ -100,7 +100,7 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
       name:         'twilio',
       adapter:      'sms/twilio',
       account:      [
-        { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(rand(999_999_999_999).to_s), disabled: true, readonly: true },
+        { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },
         { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
         { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },
         { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },

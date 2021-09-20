@@ -5,7 +5,7 @@ require 'browser_test_helper'
 class IntegrationSipgateTest < TestCase
   # Regression test for #2017
   def test_nav_menu_notification_badge_clears
-    id = rand(99_999_999)
+    id = SecureRandom.uuid
 
     @browser = browser_instance
     login(

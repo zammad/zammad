@@ -230,7 +230,7 @@ options = {}
 (10..99).each do |item|
   options[item] = item
 end
-system_id = rand(10..99)
+system_id = rand(10..99) # rubocop:disable Zammad/ForbidRand
 Setting.create_if_not_exists(
   title:       'SystemID',
   name:        'system_id',

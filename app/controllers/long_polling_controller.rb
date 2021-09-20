@@ -97,7 +97,7 @@ class LongPollingController < ApplicationController
   private
 
   def client_id_gen
-    rand(9_999_999_999).to_s
+    SecureRandom.uuid
   end
 
   def client_id_verify

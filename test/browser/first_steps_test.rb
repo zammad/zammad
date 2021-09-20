@@ -5,8 +5,8 @@ require 'browser_test_helper'
 class FirstStepsTest < TestCase
 
   def test_basic
-    agent    = "bob.smith_#{rand(99_999_999)}"
-    customer = "customer.smith_#{rand(99_999_999)}"
+    agent    = "bob.smith_#{SecureRandom.uuid}"
+    customer = "customer.smith_#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(

@@ -32,7 +32,7 @@ class Sequencer
     #
     # @example
     #  state.provide(:sum) do
-    #    some_value = rand(100)
+    #    some_value = ...
     #    some_value * 3
     #  end
     #

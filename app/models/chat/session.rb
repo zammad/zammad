@@ -40,7 +40,7 @@ class Chat::Session < ApplicationModel
   end
 
   def generate_session_id
-    self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)
+    self.session_id = Digest::MD5.hexdigest(SecureRandom.uuid)
   end
 
   def add_recipient(client_id, store = false)

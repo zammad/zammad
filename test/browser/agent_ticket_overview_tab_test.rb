@@ -26,7 +26,7 @@ class AgentTicketOverviewTabTest < TestCase
     )
     tasks_close_all
 
-    title = "test #{rand(9_999_999)}"
+    title = "test #{SecureRandom.uuid}"
 
     # create new ticket
     ticket1 = ticket_create(

@@ -179,7 +179,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     roles        = Role.where(name: ['Agent'])
     groups       = Group.all
     organization = Organization.create(
-      name: "SomeOrg::#{rand(999_999)}", active: true,
+      name: "SomeOrg::#{SecureRandom.uuid}", active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )

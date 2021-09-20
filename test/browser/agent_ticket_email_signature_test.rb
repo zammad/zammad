@@ -5,7 +5,7 @@ require 'browser_test_helper'
 class AgentTicketEmailSignatureTest < TestCase
   def test_agent_signature_check
 
-    suffix          = rand(99_999_999_999_999_999).to_s
+    suffix          = SecureRandom.uuid
     signature_name1 = "sig name 1 äöüß #{suffix}"
     signature_body1 = "--\nsig body 1 äöüß #{suffix}"
     signature_name2 = "sig name 2 äöüß #{suffix}"

@@ -5,8 +5,8 @@ require 'browser_test_helper'
 class AgentOrganizationProfileTest < TestCase
   def test_org_profile
     # work in one browser window
-    message = "1 #{rand(99_999_999)}"
-    note    = "some note #{rand(99_999_999)}"
+    message = "1 #{SecureRandom.uuid}"
+    note    = "some note #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
@@ -115,7 +115,7 @@ class AgentOrganizationProfileTest < TestCase
     tasks_close_all
 
     # work with two browser windows
-    message = "comment 1 #{rand(99_999_999_999_999_999)}"
+    message = "comment 1 #{SecureRandom.uuid}"
 
     # use current session
     browser1 = @browser

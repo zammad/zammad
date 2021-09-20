@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class MaintenanceSessionMessageTest < TestCase
   def test_message
-    string       = rand(99_999_999_999_999_999).to_s
+    string       = SecureRandom.uuid
     title_html   = "test <b>#{string}</b>"
     title_text   = "test <b>#{string}<\/b>"
     message_html = "message <b>1äöüß</b> #{string}\n\n\nhttps://zammad.org"

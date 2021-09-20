@@ -12,7 +12,7 @@ class AdminRoleTest < TestCase
     )
     tasks_close_all
 
-    rand      = rand(99_999_999).to_s
+    rand      = SecureRandom.uuid
     login     = "agent-role-#{rand}"
     firstname = "Role#{rand}"
     lastname  = "Module#{rand}"
@@ -171,8 +171,8 @@ class AdminRoleTest < TestCase
     tasks_close_all
 
     # create user
-    random = rand(999_999_999)
-    user_email = "admin.user.#{rand}@example.com"
+    random = SecureRandom.uuid
+    user_email = "admin.user.#{random}@example.com"
     user_create(
       data: {
         # login:    "some login #{random}",
@@ -230,7 +230,7 @@ class AdminRoleTest < TestCase
 
   # regression test for issue #2332 - Role-Filter shows inactive Roles
   def test_inactive_roles_do_not_show_in_role_filter
-    name = "some role #{rand(99_999_999)}"
+    name = "some role #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(

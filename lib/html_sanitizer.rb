@@ -415,7 +415,7 @@ reolace inline images with cid images
 
 =end
 
-  def self.replace_inline_images(string, prefix = rand(999_999_999))
+  def self.replace_inline_images(string, prefix = SecureRandom.uuid)
     fqdn = Setting.get('fqdn')
     attachments_inline = []
     filename_counter = 0
@@ -424,7 +424,7 @@ reolace inline images with cid images
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
           filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
-          cid = "#{prefix}.#{rand(999_999_999)}@#{fqdn}"
+          cid = "#{prefix}.#{SecureRandom.uuid}@#{fqdn}"
           filename = cid
           if file_attributes[:file_extention].present?
             filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"

@@ -140,7 +140,7 @@ reload config settings
 
   def reset_change_id
     @@current[name] = state_current[:value]
-    change_id = rand(999_999_999).to_s
+    change_id = SecureRandom.uuid
     logger.debug { "Setting.reset_change_id: set new cache, #{change_id}" }
     Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
     @@lookup_at = nil # rubocop:disable Style/ClassVars

@@ -817,7 +817,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (02.04)' do
-      title = "ticket with corret ticket id testagent#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -1055,7 +1055,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket pagination (02.05)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
       tickets = []
       (1..20).each do |count|
         ticket = create(
@@ -1222,7 +1222,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (03.05)' do
-      title = "ticket with corret ticket id testme#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testme#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -1427,7 +1427,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket show and response format (04.01)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1511,7 +1511,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket index and response format (04.02)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1606,7 +1606,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket create and response format (04.03)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       params = {
         title:       title,
         group:       ticket_group.name,
@@ -1677,7 +1677,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket update and response formats (04.04)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -2074,7 +2074,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket search sorted (08.01)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
 
       ticket1 = create(
         :ticket,

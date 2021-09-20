@@ -28,13 +28,13 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_send', params: { data: {} }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
+      expect(json_response['client_id']).to be_a_uuid
 
       client_id = json_response['client_id']
       get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'spool' } }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
+      expect(json_response['client_id']).to be_a_uuid
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
@@ -63,7 +63,7 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_send', params: { data: {} }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
+      expect(json_response['client_id']).to be_a_uuid
     end
 
     it 'send with client_id' do
@@ -82,7 +82,7 @@ RSpec.describe 'LongPolling', type: :request do
       authenticated_as(agent, token: create(:token, action: 'api', user_id: agent.id))
       get '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response['client_id'].to_i).to be_between(1, 9_999_999_999)
+      expect(json_response['client_id']).to be_a_uuid
       client_id = json_response['client_id']
 
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json

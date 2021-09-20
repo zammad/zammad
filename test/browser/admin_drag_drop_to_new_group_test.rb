@@ -39,7 +39,7 @@ class AdminDragDropToNewGroupTest < TestCase
   private
 
   def add_group
-    name = "dndgroup-#{rand(99_999_999)}"
+    name = "dndgroup-#{SecureRandom.uuid}"
 
     click(css: '.user-menu a[title=Admin')
     click(css: '.content.active a[href="#manage/groups"]')

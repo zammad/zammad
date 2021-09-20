@@ -141,7 +141,7 @@ class Sessions::Store::File
     path = "#{@path}/spool/"
     FileUtils.mkpath path
 
-    file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
+    file_path = "#{path}/#{Time.now.utc.to_f}-#{SecureRandom.uuid}"
     write_with_lock(file_path, data.to_json)
   end
 

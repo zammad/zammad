@@ -920,7 +920,7 @@ try to find correct name
 
     # generate auto login
     if login.blank?
-      self.login = "auto-#{Time.zone.now.to_i}-#{rand(999_999)}"
+      self.login = "auto-#{SecureRandom.uuid}"
     end
 
     # check if login already exists
@@ -929,7 +929,7 @@ try to find correct name
     while check
       exists = User.find_by(login: login)
       if exists && exists.id != id
-        self.login = "#{login}#{rand(999)}"
+        self.login = "#{login}#{rand(999)}" # rubocop:disable Zammad/ForbidRand
       else
         check = false
       end

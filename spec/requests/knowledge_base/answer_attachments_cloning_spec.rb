@@ -12,7 +12,7 @@ RSpec.describe 'KnowledgeBase answer attachments cloning', type: :request, authe
   let(:current_user) { create(:agent) }
 
   it 'copies to given UploadCache' do
-    form_id  = Random.rand(999..9999)
+    form_id  = SecureRandom.uuid
     endpoint = "/api/v1/knowledge_bases/#{knowledge_base.id}/answers/#{published_answer.id}/attachments/clone_to_form"
     params   = { form_id: form_id }
 

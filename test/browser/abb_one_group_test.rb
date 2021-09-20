@@ -5,7 +5,7 @@ require 'browser_test_helper'
 class AgentTicketActionLevel0Test < TestCase
 
   def test_aaa_agent_ticket_create_with_one_group
-    agent = "bob.smith_one_group#{rand(99_999_999)}"
+    agent = "bob.smith_one_group#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
@@ -214,7 +214,7 @@ class AgentTicketActionLevel0Test < TestCase
 
     group_create(
       data: {
-        name:   "some group #{rand(999_999_999)}",
+        name:   "some group #{SecureRandom.uuid}",
         member: [
           {
             login:  'admin@example.com',

@@ -113,7 +113,7 @@ class TestCase < ActiveSupport::TestCase
       local_browser = browser_instance_remote
       break
     rescue => e
-      wait_until_ready = rand(5..13)
+      wait_until_ready = rand(5..13) # rubocop:disable Zammad/ForbidRand
       log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready, exception: e })
       sleep wait_until_ready
 

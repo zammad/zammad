@@ -4,7 +4,7 @@ require 'browser_test_helper'
 
 class ManageTest < TestCase
   def test_user
-    random     = "manage-test-#{rand(999_999)}"
+    random     = "manage-test-#{SecureRandom.uuid}"
     user_email = "#{random}@example.com"
 
     # user management

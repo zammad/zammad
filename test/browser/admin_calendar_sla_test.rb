@@ -12,8 +12,8 @@ class AdminCalendarSlaTest < TestCase
     )
     tasks_close_all
 
-    calendar_name = "ZZZ some calendar #{rand(99_999_999)}"
-    sla_name = "ZZZ some sla #{rand(99_999_999)}"
+    calendar_name = "ZZZ some calendar #{SecureRandom.uuid}"
+    sla_name = "ZZZ some sla #{SecureRandom.uuid}"
     timezone = 'Europe/Berlin'
     timezone_verify = "Europe/Berlin\s\\(GMT\\+(2|1)\\)"
     calendar_create(

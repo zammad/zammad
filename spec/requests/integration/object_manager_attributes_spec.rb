@@ -333,9 +333,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
     it 'does converts string to boolean for default value for boolean data type with true (01)', db_strategy: :reset do
       params = {
-        name:        "customerdescription#{rand(999_999_999)}",
+        name:        "customerdescription#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description#{rand(999_999_999)}",
+        display:     "custom description#{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -384,9 +384,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
     it 'does converts string to boolean for default value for boolean data type with false (02)', db_strategy: :reset do
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -894,9 +894,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does verify if attribute type can not be changed (07)', db_strategy: :reset do
 
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -958,9 +958,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does verify if attribute type can be changed (08)', db_strategy: :reset do
 
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'input',
         data_option: {
@@ -1041,9 +1041,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     context 'position handling', authenticated_as: -> { admin } do
       let(:params) do
         {
-          name:        "customerdescription_#{rand(999_999_999)}",
+          name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
           object:      'Ticket',
-          display:     "custom description #{rand(999_999_999)}",
+          display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
           active:      true,
           data_type:   'input',
           data_option: {
