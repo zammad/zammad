@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System > Sla', type: :system do
+RSpec.describe 'Manage > Sla', type: :system do
   before do
     ensure_websocket do
       visit 'manage/slas'

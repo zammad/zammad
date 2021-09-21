@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Maintenance', type: :system do
+RSpec.describe 'System > Maintenance', type: :system do
   context 'when maintenance login is used' do
     context 'when maintenance login will be activated', authenticated_as: :authenticate do
       def authenticate
