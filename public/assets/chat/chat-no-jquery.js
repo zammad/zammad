@@ -738,7 +738,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Send': 'Wyślij',
         'Chat closed by %s': 'Czat zamknięty przez %s',
         'Compose your message...': 'Utwórz swoją wiadomość...',
-        'All colleagues are busy.': 'Wszyscy koledzy są zajęci.',
+        'All colleagues are busy.': 'Wszyscy konsultanci są zajęci.',
         'You are on waiting list position <strong>%s</strong>.': 'Na liście oczekujących znajduje się pozycja <strong>%s</strong>.',
         'Start new conversation': 'Rozpoczęcie nowej konwersacji',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ponieważ w ciągu ostatnich %s minut nie odpowiedziałeś, Twoja rozmowa z <strong>%s</strong> została zamknięta.',
