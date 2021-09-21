@@ -33,17 +33,9 @@ RSpec.describe 'Manage > Calendars', type: :system do
         end
       end
 
-      wait(5).until_exists { find('.holiday_selector tr:nth-child(30)', wait: 0) }
-
-      within '.modal-dialog' do
-        row = first('.holiday_selector tr') do |elem|
-          elem.find('input.js-summary').value.starts_with?('Christmas Eve')
-        rescue
-          false
-        end
-
-        expect(row).to have_text('24').and have_text('12')
-      end
+      # Check that holidays were imported by looking at the first entry.
+      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td:nth-child(2)').text).to match(%r{^\d{4}-\d{2}-\d{2}$})
+      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td input.js-summary').value).to be_present
     end
   end
 
