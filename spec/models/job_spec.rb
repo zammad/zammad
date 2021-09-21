@@ -679,4 +679,55 @@ RSpec.describe Job, type: :model do
       end
     end
   end
+
+  describe 'Scheduler ignores "disable notifications == no" #3684', sends_notification_emails: true do
+    let!(:group) { create(:group) }
+    let!(:agent) { create(:agent, groups: [group]) }
+    let!(:ticket) { create(:ticket, group: group, owner: agent) }
+    let(:perform) do
+      { 'article.note' => { 'body' => 'ccc', 'internal' => 'true', 'subject' => 'ccc' }, 'ticket.state_id' => { 'value' => 4 } }
+    end
+
+    context 'with disable_notification true' do
+      let!(:notify_job) { create(:job, :always_on) }
+
+      it 'does modify the ticket' do
+        expect { notify_job.run(true) }.to change { ticket.reload.state }
+      end
+
+      it 'does not send a notification to the owner of the ticket' do # rubocop:disable RSpec/ExampleLength
+        check_notification do
+          notify_job.run(true)
+          Scheduler.worker(true)
+
+          not_sent(
+            template: 'ticket_update',
+            user:     agent,
+            objects:  hash_including({ article: nil })
+          )
+        end
+      end
+    end
+
+    context 'with disable_notification false' do
+      let!(:notify_job) { create(:job, :always_on, disable_notification: false, perform: perform) }
+
+      it 'does modify the ticket' do
+        expect { notify_job.run(true) }.to change { ticket.reload.state }
+      end
+
+      it 'does send a notification to the owner of the ticket with trigger note in notification body' do # rubocop:disable RSpec/ExampleLength
+        check_notification do
+          notify_job.run(true)
+          Scheduler.worker(true)
+
+          sent(
+            template: 'ticket_update',
+            user:     agent,
+            objects:  hash_including({ article: ticket.reload.articles.first })
+          )
+        end
+      end
+    end
+  end
 end

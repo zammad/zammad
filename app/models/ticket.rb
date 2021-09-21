@@ -1170,6 +1170,7 @@ perform changes on ticket
       type:          Ticket::Article::Type.find_by(name: 'note'),
       preferences:   {
         perform_origin: perform_origin,
+        notification:   true,
       },
       updated_by_id: 1,
       created_by_id: 1,
