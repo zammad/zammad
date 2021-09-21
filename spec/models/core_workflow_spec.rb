@@ -1603,4 +1603,34 @@ RSpec.describe CoreWorkflow, type: :model do
       end
     end
   end
+
+  describe 'Core Workflow "is not" operator is working unexpected #3752' do
+    let(:approval_role) { create(:role) }
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'session.role_ids': {
+                 operator: 'is_not',
+                 value:    [ approval_role.id.to_s ]
+               },
+             })
+    end
+
+    context 'when not action user has approval role' do
+      let(:action_user) { create(:agent, roles: [Role.find_by(name: 'Agent'), approval_role]) }
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when action user has not approval role' do
+      let(:action_user) { create(:agent) }
+
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+  end
 end
