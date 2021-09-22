@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   include ApplicationController::RendersModels
   include ApplicationController::HasUser
   include ApplicationController::HasResponseExtentions
+  include ApplicationController::HasDownload
   include ApplicationController::PreventsCsrf
-  include ApplicationController::HasSecureContentSecurityPolicyForDownloads
   include ApplicationController::LogsHttpAccess
   include ApplicationController::Authorizes
 end

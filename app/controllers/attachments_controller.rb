@@ -6,14 +6,13 @@ class AttachmentsController < ApplicationController
   prepend_before_action :authentication_check_only, only: %i[show destroy]
 
   def show
-    content   = @file.content_preview if params[:preview] && @file.preferences[:content_preview]
-    content ||= @file.content
+    view_type = params[:preview] ? 'preview' : nil
 
     send_data(
-      content,
-      filename:    @file.filename,
-      type:        @file.preferences['Content-Type'] || @file.preferences['Mime-Type'] || 'application/octet-stream',
-      disposition: sanitized_disposition
+      download_file.content(view_type),
+      filename:    download_file.filename,
+      type:        download_file.content_type,
+      disposition: download_file.disposition
     )
   end
 
@@ -52,7 +51,7 @@ class AttachmentsController < ApplicationController
   end
 
   def destroy
-    Store.remove_item(@file.id)
+    Store.remove_item(download_file.id)
 
     render json: {
       success: true,
@@ -72,18 +71,8 @@ class AttachmentsController < ApplicationController
 
   private
 
-  def sanitized_disposition
-    disposition = params.fetch(:disposition, 'inline')
-    valid_disposition = %w[inline attachment]
-    return disposition if valid_disposition.include?(disposition)
-
-    raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
-  end
-
   def authorize!
-    @file = Store.find(params[:id])
-
-    record = @file&.store_object&.name&.safe_constantize&.find(@file.o_id)
+    record = download_file&.store_object&.name&.safe_constantize&.find(download_file.o_id)
     authorize(record) if record
   rescue Pundit::NotAuthorizedError
     raise ActiveRecord::RecordNotFound
