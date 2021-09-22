@@ -948,17 +948,16 @@ try to find correct name
     end
 
     # check if login already exists
-    self.login = login.downcase.strip
-    check      = true
-    while check
+    base_login = login.downcase.strip
+
+    alternatives = [nil] + Array(1..20) + [ SecureRandom.uuid ]
+    alternatives.each do |suffix|
+      self.login = "#{base_login}#{suffix}"
       exists = User.find_by(login: login)
-      if exists && exists.id != id
-        self.login = "#{login}#{rand(999)}"
-      else
-        check = false
-      end
+      return true if !exists || exists.id == id
     end
-    true
+
+    raise Exceptions::UnprocessableEntity, "Invalid user login generation for login #{login}!"
   end
 
   def check_mail_delivery_failed
