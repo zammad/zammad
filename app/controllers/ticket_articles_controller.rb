@@ -175,29 +175,11 @@ class TicketArticlesController < ApplicationController
     end
     raise Exceptions::Forbidden, 'Requested file id is not linked with article_id.' if !access
 
-    # find file
-    file = Store.find(params[:id])
-
-    disposition = sanitized_disposition
-
-    content = nil
-    if params[:view].present? && file.preferences[:resizable] == true
-      if file.preferences[:content_inline] == true && params[:view] == 'inline'
-        content = file.content_inline
-      elsif file.preferences[:content_preview] == true && params[:view] == 'preview'
-        content = file.content_preview
-      end
-    end
-
-    if content.blank?
-      content = file.content
-    end
-
     send_data(
-      content,
-      filename:    file.filename,
-      type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
-      disposition: disposition
+      download_file.content(params[:view]),
+      filename:    download_file.filename,
+      type:        download_file.content_type,
+      disposition: download_file.disposition
     )
   end
 
@@ -277,15 +259,5 @@ class TicketArticlesController < ApplicationController
     result = SecureMailing.retry(article)
 
     render json: result
-  end
-
-  private
-
-  def sanitized_disposition
-    disposition = params.fetch(:disposition, 'inline')
-    valid_disposition = %w[inline attachment]
-    return disposition if valid_disposition.include?(disposition)
-
-    raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end
 end
