@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-class Issue3751MissingWorkflowScreens < ActiveRecord::Migration[5.2]
+class Issue3751MissingWorkflowScreens < ActiveRecord::Migration[6.0]
   def change
     return if !Setting.exists?(name: 'system_init_done')
 
