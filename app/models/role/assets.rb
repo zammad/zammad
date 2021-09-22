@@ -60,5 +60,13 @@ returns
       end
       data
     end
+
+    def filter_unauthorized_attributes(attributes)
+      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+
+      attributes = super
+      attributes['name'] = "Role_#{id}"
+      attributes.slice('id', 'name', 'group_ids', 'permission_ids', 'active')
+    end
   end
 end

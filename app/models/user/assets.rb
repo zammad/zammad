@@ -110,5 +110,20 @@ returns
       end
       data
     end
+
+    def filter_unauthorized_attributes(attributes)
+      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+
+      # customer assets for the user session
+      if UserInfo.current_user_id == id
+        attributes = super
+        attributes.except!('web', 'phone', 'mobile', 'fax', 'department', 'street', 'zip', 'city', 'country', 'address', 'note')
+        return attributes
+      end
+
+      # customer assets for other user
+      attributes = super
+      attributes.slice('id', 'firstname', 'lastname', 'image', 'image_source', 'active')
+    end
   end
 end

@@ -3,7 +3,7 @@ module SessionHelper
     collections, assets = default_collections(user)
 
     {
-      session:     user.filter_attributes(user.attributes),
+      session:     user.filter_unauthorized_attributes(user.filter_attributes(user.attributes)),
       models:      models(user),
       collections: collections,
       assets:      assets,

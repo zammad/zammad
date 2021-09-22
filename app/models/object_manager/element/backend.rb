@@ -41,7 +41,7 @@ class ObjectManager::Element::Backend
   end
 
   def screens
-    attribute.screens.transform_values do |permission_options|
+    @screens ||= attribute.screens.transform_values do |permission_options|
       screen_value(permission_options)
     end
   end
