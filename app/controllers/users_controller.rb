@@ -732,31 +732,28 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
 =end
 
   def image
-
     # cache image
     response.headers['Expires']       = 1.year.from_now.httpdate
     response.headers['Cache-Control'] = 'cache, store, max-age=31536000, must-revalidate'
     response.headers['Pragma']        = 'cache'
 
     file = Avatar.get_by_hash(params[:hash])
+
     if file
+      file_content_type = file.preferences['Content-Type'] || file.preferences['Mime-Type']
+
+      return serve_default_image if ActiveStorage.content_types_allowed_inline.exclude?(file_content_type)
+
       send_data(
         file.content,
         filename:    file.filename,
-        type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+        type:        file_content_type,
         disposition: 'inline'
       )
       return
     end
 
-    # serve default image
-    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
-    send_data(
-      Base64.decode64(image),
-      filename:    'image.gif',
-      type:        'image/gif',
-      disposition: 'inline'
-    )
+    serve_default_image
   end
 
 =begin
@@ -785,6 +782,11 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       file_full = StaticAssets.data_url_attributes(params[:avatar_full])
     rescue
       render json: { error: 'Full size image is invalid' }, status: :unprocessable_entity
+      return
+    end
+
+    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_full[:mime_type])
+      render json: { error: 'Mime type is invalid' }, status: :unprocessable_entity
       return
     end
 
@@ -1070,5 +1072,16 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     render json: { message: 'ok' }, status: :created
+  end
+
+  def serve_default_image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+
+    send_data(
+      Base64.decode64(image),
+      filename:    'image.gif',
+      type:        'image/gif',
+      disposition: 'inline'
+    )
   end
 end

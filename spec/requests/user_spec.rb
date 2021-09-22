@@ -1454,5 +1454,59 @@ RSpec.describe 'User', type: :request do
       expect { make_request(avatar_full: base64, avatar_resize: base64) }
         .to change { Avatar.list('User', user.id) }
     end
+
+    context 'with a not allowed mime-type' do
+      let(:base64) { 'data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+
+      it 'returns verbose error for a not allowed mime-type' do
+        make_request(avatar_full: base64)
+        expect(json_response).to include('error' => 'Mime type is invalid')
+      end
+    end
+  end
+
+  describe 'GET /api/v1/users/image/:hash', authenticated_as: :user do
+    let(:user) { create(:user) }
+    let(:avatar_mime_type) { 'image/png' }
+    let(:avatar) do
+      file = File.open('test/data/image/1000x1000.png', 'rb')
+      contents = file.read
+      Avatar.add(
+        object:        'User',
+        o_id:          user.id,
+        default:       true,
+        resize:        {
+          content:   contents,
+          mime_type: avatar_mime_type,
+        },
+        source:        'web',
+        deletable:     true,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:avatar_content) { Avatar.get_by_hash(avatar.store_hash).content }
+
+    before do
+      user.update!(image: avatar.store_hash)
+    end
+
+    def make_request(image_hash, params: {})
+      get "/api/v1/users/image/#{image_hash}", params: params, as: :json
+    end
+
+    it 'returns verbose error when full image is missing' do
+      make_request(avatar.store_hash)
+      expect(response.body).to eq(avatar_content)
+    end
+
+    context 'with a not allowed inline mime-type' do
+      let(:avatar_mime_type) { 'image/svg+xml' }
+
+      it 'returns the default image' do
+        make_request(avatar.store_hash)
+        expect(response.headers['Content-Type']).to include('image/gif')
+      end
+    end
   end
 end

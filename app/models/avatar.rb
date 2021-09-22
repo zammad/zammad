@@ -72,7 +72,6 @@ add avatar by url
 =end
 
   def self.add(data)
-
     # lookups
     if data[:object]
       object_id = ObjectLookup.by_name(data[:object])
