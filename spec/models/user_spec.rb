@@ -573,6 +573,38 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#check_login' do
+      let(:agent) { create(:agent) }
+
+      it 'does use the origin login' do
+        new_agent = create(:agent)
+        expect(new_agent.login).not_to end_with('1')
+      end
+
+      it 'does number up agent logins (1)' do
+        new_agent = create(:agent, login: agent.login)
+        expect(new_agent.login).to eq("#{agent.login}1")
+      end
+
+      it 'does number up agent logins (5)' do
+        new_agent = create(:agent, login: agent.login)
+        4.times do
+          new_agent = create(:agent, login: agent.login)
+        end
+
+        expect(new_agent.login).to eq("#{agent.login}5")
+      end
+
+      it 'does backup with uuid in cases of many duplicates' do
+        new_agent = create(:agent, login: agent.login)
+        20.times do
+          new_agent = create(:agent, login: agent.login)
+        end
+
+        expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
+      end
+    end
   end
 
   describe 'Attributes:' do
