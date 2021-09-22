@@ -283,6 +283,17 @@ module CommonActions
     move_mouse_to(element)
     move_mouse_by(5, 5)
   end
+
+  # Scroll into view with javscript.
+  #
+  # @param position [Symbol] :top or :bottom, position of the scroll into view
+  #
+  # scroll_into_view('button.js-submit)
+  #
+  def scroll_into_view(css_selector, position: :top)
+    page.execute_script("document.querySelector('#{css_selector}').scrollIntoView(#{position == :top})")
+    sleep 0.3
+  end
 end
 
 RSpec.configure do |config|

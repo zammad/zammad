@@ -30,13 +30,28 @@ RSpec.describe 'Manage > Groups', type: :system do
 
     it 'is possible to reset the assignment timeout of a group' do
       find('td', text: 'Users').click
-      fill_in 'Assignment Timeout', with: '30'
-      find('button', text: 'Submit').click
+
+      within '.modal-dialog' do
+        fill_in 'Assignment Timeout', with: '30'
+
+        # Needed for chrome, when element is outside viewport.
+        scroll_into_view('button.js-submit', position: :bottom)
+
+        click_button
+      end
+
       expect(Group.find_by(name: 'Users').assignment_timeout).to eq(30)
 
       find('td', text: 'Users').click
-      fill_in 'Assignment Timeout', with: ''
-      find('button', text: 'Submit').click
+
+      within '.modal-dialog' do
+        fill_in 'Assignment Timeout', with: ''
+
+        # Needed for chrome, when element is outside viewport.
+        scroll_into_view('button.js-submit', position: :bottom)
+
+        click_button
+      end
       expect(Group.find_by(name: 'Users').assignment_timeout).to be nil
     end
   end
