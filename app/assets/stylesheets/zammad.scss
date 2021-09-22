@@ -4997,6 +4997,11 @@ footer {
     }
   }
 
+  &--vacation {
+    filter: grayscale(70%);
+    opacity: 1;
+  }
+
   &--idle {
     filter: grayscale(100%);
     opacity: 0.5;
@@ -5005,11 +5010,6 @@ footer {
   &--inactive {
     filter: grayscale(100%);
     opacity: 0.2;
-  }
-
-  &--vacation {
-    filter: grayscale(70%);
-    opacity: 1;
   }
 
   &--unique {
