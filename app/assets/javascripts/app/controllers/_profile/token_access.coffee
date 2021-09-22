@@ -97,7 +97,10 @@ class Create extends App.ControllerModal
 
     # check if min one permission exists
     if _.isEmpty(params['permission'])
-      alert('Min. one permission is needed!')
+      @notify(
+        type: 'error'
+        msg:  App.i18n.translateContent('Minimum of one permission is needed!')
+      )
       return
 
     if !_.isArray(params['permission'])
