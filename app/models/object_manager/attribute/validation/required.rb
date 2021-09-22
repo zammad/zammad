@@ -3,7 +3,7 @@
 class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute::Validation::Backend
 
   def validate
-    return if value.present?
+    return if !value.nil?
     return if optional_for_user?
 
     invalid_because_attribute('is required but missing.')

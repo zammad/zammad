@@ -41,6 +41,14 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
           }
         end
 
+        context 'when boolean field with false values' do
+          let(:value) { false }
+          let(:attribute) { build(:object_manager_attribute_boolean) }
+          let(:action) { 'create_middle' }
+
+          it_behaves_like 'a validation without errors'
+        end
+
         context 'when action is edit' do
 
           let(:action) { 'edit' }
