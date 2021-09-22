@@ -12,6 +12,8 @@ class Group < ApplicationModel
   include HasTicketCreateScreenImpact
   include HasSearchIndexBackend
 
+  include Group::Assets
+
   belongs_to :email_address, optional: true
   belongs_to :signature, optional: true
 

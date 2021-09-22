@@ -121,7 +121,7 @@ returns
 
     key = "#{self.class}::aws::#{id}"
     cache = Cache.read(key)
-    return cache if cache
+    return filter_unauthorized_attributes(cache) if cache
 
     attributes = self.attributes
     relevant   = %i[has_and_belongs_to_many has_many]
@@ -160,7 +160,7 @@ returns
     filter_attributes(attributes)
 
     Cache.write(key, attributes)
-    attributes
+    filter_unauthorized_attributes(attributes)
   end
 
 =begin
@@ -234,13 +234,16 @@ returns
     end
 
     filter_attributes(attributes)
-
-    attributes
+    filter_unauthorized_attributes(attributes)
   end
 
   def filter_attributes(attributes)
     # remove forbidden attributes
     attributes.except!('password', 'token', 'tokens', 'token_ids')
+  end
+
+  def filter_unauthorized_attributes(attributes)
+    attributes
   end
 
 =begin

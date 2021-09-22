@@ -7,6 +7,11 @@ module UserInfo
 
   def self.current_user_id=(user_id)
     Thread.current[:user_id] = user_id
+    Thread.current[:assets]  = UserInfo::Assets.new(user_id)
+  end
+
+  def self.assets
+    Thread.current[:assets]
   end
 
   def self.ensure_current_user_id
