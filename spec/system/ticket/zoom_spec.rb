@@ -245,6 +245,27 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
       end
     end
+
+    context 'scrollPageHeader disappears when answering via email #3736' do
+      let(:ticket) do
+        ticket = create(:ticket, group: Group.first)
+        create_list(:ticket_article, 15, ticket: ticket)
+        ticket
+      end
+
+      before do
+        visit "ticket/zoom/#{ticket.id}"
+        await_empty_ajax_queue
+      end
+
+      it 'does reset the scrollPageHeader on rerender of the ticket' do
+        select User.find_by(email: 'master@example.com').fullname, from: 'Owner'
+        find('.js-textarea').send_keys('test 1234')
+        find('.js-submit').click
+        await_empty_ajax_queue
+        expect(page).to have_selector('div.scrollPageHeader .js-ticketTitleContainer')
+      end
+    end
   end
 
   describe 'delete article', authenticated_as: :authenticate do
