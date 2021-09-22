@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Caller log', type: %i[system request] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Caller log', type: %i[system request] do
   let(:admin) do
     create(:admin, groups: Group.all)
   end

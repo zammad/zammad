@@ -1492,7 +1492,7 @@ RSpec.describe String do
         TEXT
       end
 
-      it 'places marker before quoted reply’s "Von:" header (as <p> with  parent <div>)' do
+      it 'places marker before quoted reply’s "Von:" header (as <p> with parent <div>)' do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           <div style="border:none;border-top:solid #B5C4DF 1.0pt;padding:3.0pt 0cm 0cm 0cm">
           <p class="MsoNormal" style="margin-left:35.4pt"><b><span style="font-family:Calibri;color:black">Von:
@@ -1872,32 +1872,32 @@ RSpec.describe String do
 
   describe '#utf8_encode' do
     context 'on valid, UTF-8-encoded strings' do
-      let(:subject) { 'hello' }
+      subject(:string) { 'hello' }
 
       it 'returns an identical copy' do
-        expect(subject.utf8_encode).to eq(subject)
-        expect(subject.utf8_encode.encoding).to be(subject.encoding)
-        expect(subject.utf8_encode).not_to be(subject)
+        expect(string.utf8_encode).to eq(string)
+        expect(string.utf8_encode.encoding).to be(string.encoding)
+        expect(string.utf8_encode).not_to be(string)
       end
 
       context 'which are incorrectly set to other, technically valid encodings' do
-        let(:subject) { described_class.new('ö', encoding: 'tis-620') }
+        subject(:string) { described_class.new('ö', encoding: 'tis-620') }
 
         it 'sets input encoding to UTF-8 instead of attempting conversion' do
-          expect(subject.utf8_encode).to eq(subject.dup.force_encoding('utf-8'))
+          expect(string.utf8_encode).to eq(string.dup.force_encoding('utf-8'))
         end
       end
     end
 
     context 'on strings in other encodings' do
-      let(:subject) { original_string.encode(input_encoding) }
+      subject(:string) { original_string.encode(input_encoding) }
 
       context 'with no from: option' do
         let(:original_string) { 'Tschüss!' }
         let(:input_encoding) { Encoding::ISO_8859_2 }
 
         it 'detects the input encoding' do
-          expect(subject.utf8_encode).to eq(original_string)
+          expect(string.utf8_encode).to eq(original_string)
         end
       end
 
@@ -1906,11 +1906,11 @@ RSpec.describe String do
         let(:input_encoding) { Encoding::ISO_8859_2 }
 
         it 'uses the specified input encoding' do
-          expect(subject.utf8_encode(from: 'iso-8859-2')).to eq(original_string)
+          expect(string.utf8_encode(from: 'iso-8859-2')).to eq(original_string)
         end
 
         it 'uses any valid input encoding, even if not correct' do
-          expect(subject.utf8_encode(from: 'gb18030')).to eq('Tsch黶s!')
+          expect(string.utf8_encode(from: 'gb18030')).to eq('Tsch黶s!')
         end
       end
 
@@ -1919,21 +1919,21 @@ RSpec.describe String do
         let(:input_encoding) { Encoding::GB18030 }
 
         it 'does not try it' do
-          expect { subject.encode('utf-8', 'gb2312') }
+          expect { string.encode('utf-8', 'gb2312') }
             .to raise_error(Encoding::InvalidByteSequenceError)
 
-          expect { subject.utf8_encode(from: 'gb2312') }
+          expect { string.utf8_encode(from: 'gb2312') }
             .not_to raise_error
         end
 
         it 'uses the detected input encoding instead' do
-          expect(subject.utf8_encode(from: 'gb2312')).to eq(original_string)
+          expect(string.utf8_encode(from: 'gb2312')).to eq(original_string)
         end
       end
     end
 
     context 'performance' do
-      let(:subject) { original_string.encode(input_encoding) }
+      subject(:string) { original_string.encode(input_encoding) }
 
       context 'with utf8_encode in iso-8859-1' do
         let(:original_string) { 'äöü0' * 999_999 }
@@ -1941,7 +1941,7 @@ RSpec.describe String do
 
         it 'detects the input encoding' do
           Timeout.timeout(1) do
-            expect(subject.utf8_encode(from: 'iso-8859-1')).to eq(original_string)
+            expect(string.utf8_encode(from: 'iso-8859-1')).to eq(original_string)
           end
         end
       end
@@ -1952,7 +1952,7 @@ RSpec.describe String do
 
         it 'detects the input encoding' do
           Timeout.timeout(1) do
-            expect(subject.utf8_encode(from: 'utf-8')).to eq(original_string)
+            expect(string.utf8_encode(from: 'utf-8')).to eq(original_string)
           end
         end
       end
@@ -1963,7 +1963,7 @@ RSpec.describe String do
 
         it 'detects the input encoding' do
           Timeout.timeout(18) do
-            expect(subject.utf8_encode(from: 'utf-8')).to eq(original_string)
+            expect(string.utf8_encode(from: 'utf-8')).to eq(original_string)
           end
         end
       end

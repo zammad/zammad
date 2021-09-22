@@ -55,7 +55,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntry, sequencer: :
       expect { process(process_payload) }.to change(Ticket::TimeAccounting, :count).by(1)
     end
 
-    it 'correct attributes for added time entry ' do
+    it 'correct attributes for added time entry' do
       process(process_payload)
       expect(Ticket::TimeAccounting.last).to have_attributes(imported_time_entry)
     end

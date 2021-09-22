@@ -2145,7 +2145,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
 
-    it 'does ticket history ' do
+    it 'does ticket history' do
       ticket1 = create(
         :ticket,
         title:       'some title',

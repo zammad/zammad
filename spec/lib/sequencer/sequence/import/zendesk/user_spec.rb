@@ -139,7 +139,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequenc
         expect(User.last.roles.sort.map(&:name)).to eq ['Agent']
       end
 
-      it 'sets user groups correctly ' do
+      it 'sets user groups correctly' do
         process(process_payload)
         expect(User.last.groups_access('full').sort).to eq groups
       end

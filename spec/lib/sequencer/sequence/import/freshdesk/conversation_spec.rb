@@ -80,7 +80,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer
       expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
     end
 
-    it 'correct attributes for added article ' do
+    it 'correct attributes for added article' do
       process(process_payload)
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',

@@ -9,7 +9,7 @@ RSpec.describe Channel::Filter::InternalArticleCheck do
   let(:from) { "From: <#{vendor_email}>" }
   let(:message_id) { 'some_message_id_999@example.com' }
   let(:in_reply_to) { message_id }
-  let(:subject) { "Subject: #{ticket.subject_build('some subject')}" }
+  let(:article_subject) { "Subject: #{ticket.subject_build('some subject')}" }
   let(:ticket_article) { build(:ticket_article, ticket: ticket, to: article_to, internal: false, message_id: message_id) }
   let(:inbound_email) { create(:ticket_article, :inbound_email, ticket: ticket) }
   let(:outbound_email) { create(:ticket_article, :outbound_email, ticket: ticket) }
@@ -23,7 +23,7 @@ RSpec.describe Channel::Filter::InternalArticleCheck do
   let(:email_parse_mail_answer) do
     channel_as_model = Channel.new(options: {})
 
-    email_raw_string.sub!(%r{^Subject: .+?$}, subject)
+    email_raw_string.sub!(%r{^Subject: .+?$}, article_subject)
     email_raw_string.sub!('From: <John.Smith@example.com>', from)
     email_raw_string.sub!('Message-Id: <053EA3703574649ABDAF24D43A05604F327A130@MEMASFRK004.example.com>', "Message-Id: <053EA3703574649ABDAF24D43A05604F327A130@MEMASFRK004.example.com>\nIn-Reply-To: #{in_reply_to}")
     Channel::EmailParser.new.process(channel_as_model, email_raw_string)

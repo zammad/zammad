@@ -17,7 +17,7 @@ RSpec.describe Issue3446Microsoft365Tenants, type: :db_migration do
         .to('app_tenant')
     end
 
-    it 'changes form fields count from 2 to 3 ' do
+    it 'changes form fields count from 2 to 3' do
       expect { migrate }
         .to change { setting.reload.options['form'].count }
         .from(2)

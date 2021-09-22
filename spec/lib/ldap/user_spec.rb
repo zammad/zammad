@@ -218,8 +218,9 @@ RSpec.describe Ldap::User do
     end
 
     describe 'attributes' do
-      let(:subject) { described_class.new(config, ldap: ldap) }
-      let(:ldap)    { Ldap.new(config) }
+      subject(:user) { described_class.new(config, ldap: ldap) }
+
+      let(:ldap)     { Ldap.new(config) }
       let(:config) do
         { 'host_url'  => 'ldap://localhost',
           'options'   => { 'dc=example,dc=org' => 'dc=example,dc=org' },
@@ -240,7 +241,7 @@ RSpec.describe Ldap::User do
       # ActiveRecord::Store would convert them to binary (ASCII-8BIT) strings,
       # which would then break #to_json with an Encoding::UndefinedConversion error.
       it 'skips binary attributes (#2140)' do
-        Setting.set('ldap_config', subject.attributes)
+        Setting.set('ldap_config', user.attributes)
 
         expect { Setting.get('ldap_config').to_json }
           .not_to raise_error

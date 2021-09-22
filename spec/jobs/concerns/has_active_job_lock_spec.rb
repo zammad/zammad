@@ -120,7 +120,7 @@ RSpec.describe HasActiveJobLock, type: :job do
       end
     end
 
-    context "when ActiveRecord::SerializationFailure 'PG::TRSerializationFailure: ERROR:  could not serialize access due to concurrent update' is raised" do
+    context "when ActiveRecord::SerializationFailure 'PG::TRSerializationFailure: ERROR: could not serialize access due to concurrent update' is raised" do
 
       it 'retries execution until succeed' do
         allow(ActiveRecord::Base.connection).to receive(:open_transactions).and_return(0)

@@ -754,7 +754,7 @@ RSpec.describe Ticket, type: :model do
           end
         end
 
-        context 'dispatching email  with include attachment not present' do
+        context 'dispatching email with include attachment not present' do
           let(:notification_type) { :email }
           let(:additional_options) do
             {
