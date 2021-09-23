@@ -7,17 +7,21 @@ examples how to use
     cleaned_template = NotificationFactory::Template.new(
       'some template <b>#{ticket.title}</b> #{config.fqdn}',
       true,
+      false,  # Allow ERB tags in the template?
     ).to_s
 
 =end
 
-  def initialize(template, escape)
+  def initialize(template, escape, trusted)
     @template = template
-    @escape = escape
+    @escape   = escape
+    @trusted  = trusted
   end
 
   def to_s
-    @template.gsub(%r{\#{\s*(.*?)\s*}}m) do
+    result = @template
+    result.gsub!(%r{<%(?!%)}, '<%%') if !@trusted
+    result.gsub(%r{\#{\s*(.*?)\s*}}m) do
       # some browsers start adding HTML tags
       # fixes https://github.com/zammad/zammad/issues/385
       input_template = $1.gsub(%r{\A<.+?>\s*|\s*<.+?>\z}, '')
