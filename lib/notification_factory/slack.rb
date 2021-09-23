@@ -46,14 +46,16 @@ returns
       locale:   data[:locale],
       timezone: data[:timezone],
       template: template[:subject],
-      escape:   false
+      escape:   false,
+      trusted:  true
     ).render
     message_body = NotificationFactory::Renderer.new(
       objects:  data[:objects],
       locale:   data[:locale],
       timezone: data[:timezone],
       template: template[:body],
-      escape:   false
+      escape:   false,
+      trusted:  true
     ).render
 
     if !data[:raw]
@@ -68,7 +70,8 @@ returns
         locale:   data[:locale],
         timezone: data[:timezone],
         template: application_template,
-        escape:   false
+        escape:   false,
+        trusted:  true
       ).render
     end
     {

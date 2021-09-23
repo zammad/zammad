@@ -13,7 +13,8 @@ examples how to use
       locale: 'de-de',
       timezone: 'America/Port-au-Prince',
       template: 'some template <b>#{ticket.title}</b> {config.fqdn}',
-      escape: false
+      escape: false,
+      trusted: false, # Allow ERB tags in the template?
     ).render
 
     message_body = NotificationFactory::Renderer.new(
@@ -27,11 +28,11 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false) # rubocop:disable Metrics/ParameterLists
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
-    @template = NotificationFactory::Template.new(template, escape)
+    @template = NotificationFactory::Template.new(template, escape, trusted)
     @escape = escape
   end
 

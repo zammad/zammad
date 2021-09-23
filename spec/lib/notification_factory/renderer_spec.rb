@@ -12,6 +12,21 @@ RSpec.describe NotificationFactory::Renderer do
       expect(renderer.render).to eq ''
     end
 
+    context 'when rendering templates with ERB tags' do
+
+      let(:template) { '<%% <%= "<%" %> %%>' }
+
+      it 'ignores pre-existing ERB tags in an untrusted template' do
+        renderer = build :notification_factory_renderer, template: template
+        expect(renderer.render).to eq '<% <%= "<%" %> %%>'
+      end
+
+      it 'executes pre-existing ERB tags in a trusted template' do
+        renderer = build :notification_factory_renderer, template: template, trusted: true
+        expect(renderer.render).to eq '<% <% %%>'
+      end
+    end
+
     it 'correctly renders chained object references' do
       user = User.where(firstname: 'Nicole').first
       ticket = create :ticket, customer: user
@@ -30,17 +45,17 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     it 'raises a StandardError when rendering a template with a broken syntax' do
-      renderer = build :notification_factory_renderer, template: 'test <% if %>', objects: {}
+      renderer = build :notification_factory_renderer, template: 'test <% if %>', objects: {}, trusted: true
       expect { renderer.render }.to raise_error(StandardError)
     end
 
     it 'raises a StandardError when rendering a template calling a non existant method' do
-      renderer = build :notification_factory_renderer, template: 'test <% Ticket.non_existant_method %>', objects: {}
+      renderer = build :notification_factory_renderer, template: 'test <% Ticket.non_existant_method %>', objects: {}, trusted: true
       expect { renderer.render }.to raise_error(StandardError)
     end
 
     it 'raises a StandardError when rendering a template referencing a non existant object' do
-      renderer = build :notification_factory_renderer, template: 'test <% NonExistantObject.first %>', objects: {}
+      renderer = build :notification_factory_renderer, template: 'test <% NonExistantObject.first %>', objects: {}, trusted: true
       expect { renderer.render }.to raise_error(StandardError)
     end
 
