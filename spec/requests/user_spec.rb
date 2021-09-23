@@ -1421,6 +1421,12 @@ RSpec.describe 'User', type: :request do
         make_request(query: '9U7Z', group_ids: { 999 => 'read' })
         expect(json_response.count).to eq(0)
       end
+
+      it 'does not list user with id 1' do
+        make_request(query: '')
+        not_in_response = json_response.none? { |item| item['id'] == 1 }
+        expect(not_in_response).to be(true)
+      end
     end
 
     describe 'with searchindex', searchindex: true do
@@ -1448,6 +1454,12 @@ RSpec.describe 'User', type: :request do
       it 'does find none' do
         make_request(query: '9U7Z', group_ids: { 999 => 'read' })
         expect(json_response.count).to eq(0)
+      end
+
+      it 'does not list user with id 1' do
+        make_request(query: '')
+        not_in_response = json_response.none? { |item| item['id'] == 1 }
+        expect(not_in_response).to be(true)
       end
     end
   end

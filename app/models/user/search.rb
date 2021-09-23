@@ -174,9 +174,12 @@ returns
 
         if is_query
           statement = statement.where(
-            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
           )
         end
+
+        # Fixes #3755 - User with user_id 1 is show in admin interface (which should not)
+        statement = statement.where('users.id != 1')
 
         statement.order(Arel.sql(order_sql))
           .offset(offset)
