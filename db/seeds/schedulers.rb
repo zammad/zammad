@@ -22,15 +22,6 @@ Scheduler.create_if_not_exists(
   active: true,
 )
 Scheduler.create_if_not_exists(
-  name:          'Import OTRS diff load',
-  method:        'Import::OTRS.diff_worker',
-  period:        3.minutes,
-  prio:          1,
-  active:        true,
-  updated_by_id: 1,
-  created_by_id: 1,
-)
-Scheduler.create_if_not_exists(
   name:          'Check Channels',
   method:        'Channel.fetch',
   period:        30.seconds,
