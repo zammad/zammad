@@ -6,12 +6,11 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
   describe 'configure third-party applications' do
     shared_examples 'for third-party applications button in login page' do
       context 'for third-party applications button in login page', authenticated_as: false do
-        before { visit 'login' }
-
         context 'when feature is on' do
           before { Setting.set(app_setting, true) }
 
           it 'has authentication button in login page' do
+            visit 'login'
             expect(page).to have_button(app_name)
           end
         end
@@ -20,6 +19,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
           before { Setting.set(app_setting, false) }
 
           it 'does not have authentication button in login page' do
+            visit 'login'
             expect(page).to have_no_button(app_name)
           end
         end
