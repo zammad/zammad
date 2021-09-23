@@ -2045,4 +2045,42 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect_no_upload_and_text
     end
   end
+
+  describe 'Unable to close tickets in certran cases if core workflow is used #3710', authenticated_as: :authenticate, db_strategy: :reset do
+    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:field_name) { SecureRandom.uuid }
+    let(:field) do
+      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
+        'edit' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+      ObjectManager::Attribute.migration_execute
+    end
+    let(:workflow) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: { "ticket.#{field_name}" => { 'operator' => 'set_mandatory', 'set_mandatory' => 'true' } })
+    end
+
+    def authenticate
+      field
+      workflow
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does save the ticket because the field is mandatory but hidden' do
+      admin = User.find_by(email: 'admin@example.com')
+      select admin.fullname, from: 'Owner'
+      find('.js-submit').click
+      expect(ticket.reload.owner_id).to eq(admin.id)
+    end
+  end
 end

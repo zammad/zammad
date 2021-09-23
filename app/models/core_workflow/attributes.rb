@@ -78,16 +78,11 @@ class CoreWorkflow::Attributes
   # dont cache this else the result object will work with references and cache bugs occur
   def visibility_default
     object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
-                                     'show'
-                                   else
-                                     screen_value(attribute, 'shown') == false ? 'hide' : 'show'
-                                   end
+      result[ attribute[:name] ] = screen_value(attribute, 'shown') == false ? 'hide' : 'show'
     end
   end
 
   def attribute_mandatory?(attribute)
-    return false if @payload['request_id'] == 'ChecksCoreWorkflow.validate_workflows'
     return screen_value(attribute, 'required').present? if !screen_value(attribute, 'required').nil?
     return screen_value(attribute, 'null').blank? if !screen_value(attribute, 'null').nil?
 

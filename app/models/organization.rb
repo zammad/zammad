@@ -3,7 +3,6 @@
 class Organization < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
-  include ChecksCoreWorkflow
   include ChecksLatestChangeObserved
   include HasHistory
   include HasSearchIndexBackend
@@ -25,6 +24,9 @@ class Organization < ApplicationModel
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment

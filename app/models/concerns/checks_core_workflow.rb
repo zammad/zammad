@@ -4,7 +4,8 @@ module ChecksCoreWorkflow
   extend ActiveSupport::Concern
 
   included do
-    before_validation :validate_workflows
+    before_create :validate_workflows
+    before_update :validate_workflows
 
     attr_accessor :screen
   end
@@ -32,12 +33,14 @@ module ChecksCoreWorkflow
     changes.each_key do |key|
       next if perform_result[:restrict_values][key].blank?
       next if self[key].blank?
-
-      value_found = perform_result[:restrict_values][key].any? { |value| value.to_s == self[key].to_s }
-      next if value_found
+      next if restricted_value?(perform_result, key)
 
       raise Exceptions::UnprocessableEntity, "Invalid value '#{self[key]}' for field '#{key}'!"
     end
+  end
+
+  def restricted_value?(perform_result, key)
+    perform_result[:restrict_values][key].any? { |value| value.to_s == self[key].to_s }
   end
 
   def check_visibility(perform_result)
@@ -50,11 +53,28 @@ module ChecksCoreWorkflow
 
   def check_mandatory(perform_result)
     perform_result[:mandatory].each_key do |key|
-      next if %w[hide remove].include?(perform_result[:visibility][key])
-      next if !perform_result[:mandatory][key]
-      next if self[key].present?
+      next if field_visible?(perform_result, key)
+      next if !field_mandatory?(perform_result, key)
+      next if !column_value?(key)
+      next if !colum_default?(key)
 
       raise Exceptions::UnprocessableEntity, "Missing required value for field '#{key}'!"
     end
+  end
+
+  def field_visible?(perform_result, key)
+    %w[hide remove].include?(perform_result[:visibility][key])
+  end
+
+  def field_mandatory?(perform_result, key)
+    perform_result[:mandatory][key]
+  end
+
+  def column_value?(key)
+    self[key].nil?
+  end
+
+  def colum_default?(key)
+    self.class.column_defaults[key].nil?
   end
 end

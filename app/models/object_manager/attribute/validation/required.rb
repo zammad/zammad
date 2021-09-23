@@ -3,6 +3,7 @@
 class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute::Validation::Backend
 
   def validate
+    return if record.class.include?(ChecksCoreWorkflow)
     return if !value.nil?
     return if optional_for_user?
 

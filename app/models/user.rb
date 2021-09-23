@@ -5,7 +5,6 @@ class User < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
-  include ChecksCoreWorkflow
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport
@@ -53,6 +52,9 @@ class User < ApplicationModel
   before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
   after_commit      :update_caller_id
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   store :preferences
 

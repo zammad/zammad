@@ -4,7 +4,6 @@ class Group < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
-  include ChecksCoreWorkflow
   include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasHistory
@@ -15,6 +14,9 @@ class Group < ApplicationModel
 
   belongs_to :email_address, optional: true
   belongs_to :signature, optional: true
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :name, presence: true
 

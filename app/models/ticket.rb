@@ -4,7 +4,6 @@ class Ticket < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
-  include ChecksCoreWorkflow
   include ChecksLatestChangeObserved
   include CanCsvImport
   include ChecksHtmlSanitized
@@ -38,6 +37,9 @@ class Ticket < ApplicationModel
   include Ticket::SetsLastOwnerUpdateTime
 
   include HasTransactionDispatcher
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :group_id, presence: true
 
