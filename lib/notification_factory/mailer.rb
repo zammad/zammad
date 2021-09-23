@@ -324,7 +324,8 @@ returns
       locale:   data[:locale],
       timezone: data[:timezone],
       template: template[:subject],
-      escape:   false
+      escape:   false,
+      trusted:  true,
     ).render
 
     # strip off the extra newline at the end of the subject to avoid =0A suffixes (see #2726)
@@ -334,7 +335,8 @@ returns
       objects:  data[:objects],
       locale:   data[:locale],
       timezone: data[:timezone],
-      template: template[:body]
+      template: template[:body],
+      trusted:  true,
     ).render
 
     if !data[:raw]
@@ -348,7 +350,8 @@ returns
         objects:  data[:objects],
         locale:   data[:locale],
         timezone: data[:timezone],
-        template: application_template
+        template: application_template,
+        trusted:  true,
       ).render
     end
     {
