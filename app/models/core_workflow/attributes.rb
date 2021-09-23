@@ -55,6 +55,7 @@ class CoreWorkflow::Attributes
     # dont use lookup here because the cache will not
     # know about new attributes and make crashes
     @saved_only ||= payload_class.find_by(id: @payload['params']['id'])
+    @saved_only.dup
   end
 
   def saved

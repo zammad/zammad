@@ -1633,4 +1633,49 @@ RSpec.describe CoreWorkflow, type: :model do
       end
     end
   end
+
+  describe 'Saved conditions break on selections without reloading #3758', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        edit: {
+          'ticket.agent' => {
+            shown: true,
+          },
+        },
+      }
+    end
+    let!(:workflow) do
+      create(:core_workflow,
+             object:          'Ticket',
+             condition_saved: {
+               "ticket.#{field_name}": {
+                 operator: 'is_not',
+                 value:    'true',
+               },
+             })
+    end
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+
+    before do
+      create(:object_manager_attribute_boolean, object_name: 'Ticket', name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+    end
+
+    it 'does match the workflow because saved value is false' do
+      expect(result[:matched_workflows]).to include(workflow.id)
+    end
+
+    context 'when params contain boolean field true' do
+      let(:payload) do
+        base_payload.merge('params' => { 'id' => ticket.id, field_name => true }, 'screen' => 'edit')
+      end
+
+      it 'does match the workflow because saved value is false' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+  end
 end
