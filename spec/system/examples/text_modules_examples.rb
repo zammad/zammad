@@ -28,7 +28,7 @@ RSpec.shared_examples 'text modules' do |path:|
 
       # The click is needed to get the focus back to the field for chrome.
       find(:richtext).click
-      if OS.mac?
+      if Gem::Platform.local.os.eql? 'darwin'
         find(:richtext).send_keys(%i[command backspace])
       else
         find(:richtext).send_keys(%i[control backspace])

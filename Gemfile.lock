@@ -392,7 +392,6 @@ GEM
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
     openssl (2.2.0)
-    os (1.1.1)
     overcommit (0.58.0)
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
@@ -711,7 +710,6 @@ DEPENDENCIES
   omniauth-twitter
   omniauth-weibo-oauth2
   openssl
-  os
   overcommit
   pg (= 0.21.0)
   pry-rails
