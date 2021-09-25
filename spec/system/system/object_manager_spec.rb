@@ -78,7 +78,7 @@ RSpec.describe 'System > Objects', type: :system do
           expect(page).to have_text('Database Update required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('please reload your browser')
-          page.refresh
+          click '.modal-content button.js-submit'
 
           # Delete
           click 'tbody tr:last-child .js-delete'
@@ -121,7 +121,7 @@ RSpec.describe 'System > Objects', type: :system do
       expect(page).to have_text('Database Update required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
-      page.refresh
+      click '.modal-content button.js-submit'
 
       # Check that the attributes were correctly saved.
       expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq([{ 'name' => 'new tree option 0', 'value' => 'new tree option 0' }, { 'name' => 'new tree option 1', 'value' => 'new tree option 1' }])
@@ -212,8 +212,7 @@ RSpec.describe 'System > Objects', type: :system do
       expect(page).to have_text('Database Update required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
-      sleep 1 # Not sure why this is neede to pick up the new config in subsequent screens.
-      page.refresh
+      click '.modal-content button.js-submit'
 
       # Make sure option is still available in already saved ticket, even though the option was removed from the object attribute.
       # This is done via the :historical_options.
