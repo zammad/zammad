@@ -7,3 +7,26 @@ RSpec::Matchers.define :exist_in_database do
     actual.class.exists?(actual.id)
   end
 end
+
+RSpec::Matchers.define :have_computed_style do
+
+  match do
+    actual_value == expected_value
+  end
+
+  failure_message do
+    "Expected element to have CSS property #{expected_key} with value #{expected_value}. But it was #{actual_value}."
+  end
+
+  def expected_key
+    expected[0]
+  end
+
+  def expected_value
+    expected[1]
+  end
+
+  def actual_value
+    actual.evaluate_script "getComputedStyle(this).#{expected_key}"
+  end
+end

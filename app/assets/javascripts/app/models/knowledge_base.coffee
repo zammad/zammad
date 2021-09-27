@@ -1,5 +1,5 @@
 class App.KnowledgeBase extends App.Model
-  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
+  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @url: @apiPath + '/knowledge_bases'
@@ -145,6 +145,17 @@ class App.KnowledgeBase extends App.Model
       null: false
       screen:
         admin_style_color_header:
+          display:    false
+          horizontal: true
+          shown:      true
+    }, {
+      name: 'color_header_link'
+      display: 'Header Link Color'
+      tag: 'color'
+      style: 'block'
+      null: false
+      screen:
+        admin_style_color_header_link:
           display:    false
           horizontal: true
           shown:      true

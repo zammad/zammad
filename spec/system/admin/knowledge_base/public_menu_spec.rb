@@ -7,20 +7,44 @@ RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system do
   include_context 'basic Knowledge Base'
   include_context 'Knowledge Base menu items'
 
-  before do
-    visit '/#manage/knowledge_base'
-    find('a', text: 'Public Menu').click
-  end
-
   context 'lists menu items' do
+    before do
+      visit '/#manage/knowledge_base'
+      find('a', text: 'Public Menu').click
+    end
+
     it { expect(find_locale('Footer menu', alternative_locale).text).to include menu_item_4.title }
     it { expect(find_locale('Header menu', primary_locale).text).to include menu_item_1.title }
     it { expect(find_locale('Header menu', alternative_locale).text).not_to include menu_item_2.title }
     it { expect(find_locale('Header menu', primary_locale).text).to include menu_item_2.title }
   end
 
+  context 'menu items color' do
+    before do
+      knowledge_base.update! color_header_link: color
+      visit '/#manage/knowledge_base'
+      find('a', text: 'Public Menu').click
+    end
+
+    let(:color) { 'rgb(255, 0, 255)' }
+
+    it 'applies color for header preview' do
+      elem = all('.kb-menu-preview a')[0]
+
+      expect(elem).to have_computed_style :color, color
+    end
+
+    it 'does not apply color for footer preview' do
+      elem = all('.kb-menu-preview a')[3]
+
+      expect(elem).not_to have_computed_style :color, color
+    end
+  end
+
   context 'edit menu items' do
     before do
+      visit '/#manage/knowledge_base'
+      find('a', text: 'Public Menu').click
       find_location('Header menu').find('a', text: 'Edit').click
 
       modal_ready
