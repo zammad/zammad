@@ -34,7 +34,6 @@ RSpec.describe NotificationFactory::Renderer do
                        objects:  { ticket: ticket },
                        template: '#{ticket.customer.firstname.downcase}'
       expect(renderer.render).to eq 'nicole'
-      ticket.destroy
     end
 
     it 'correctly renders multiple value calls' do
@@ -43,7 +42,21 @@ RSpec.describe NotificationFactory::Renderer do
                        objects:  { ticket: ticket },
                        template: '#{ticket.created_at.value.value.value.value.to_s.first}'
       expect(renderer.render).to eq '2'
-      ticket.destroy
+    end
+
+    it 'raises a StandardError when rendering a template with a broken syntax' do
+      renderer = build :notification_factory_renderer, template: 'test <% if %>', objects: {}, trusted: true
+      expect { renderer.render }.to raise_error(StandardError)
+    end
+
+    it 'raises a StandardError when rendering a template calling a non existant method' do
+      renderer = build :notification_factory_renderer, template: 'test <% Ticket.non_existant_method %>', objects: {}, trusted: true
+      expect { renderer.render }.to raise_error(StandardError)
+    end
+
+    it 'raises a StandardError when rendering a template referencing a non existant object' do
+      renderer = build :notification_factory_renderer, template: 'test <% NonExistantObject.first %>', objects: {}, trusted: true
+      expect { renderer.render }.to raise_error(StandardError)
     end
 
     context 'when handling ObjectManager::Attribute usage', db_strategy: :reset do
@@ -59,13 +72,6 @@ RSpec.describe NotificationFactory::Renderer do
                          template: '#{ticket.select} _SEPERATOR_ #{ticket.select.value}'
 
         expect(renderer.render).to eq 'key_1 _SEPERATOR_ value_1'
-        ticket.destroy
-
-        ObjectManager::Attribute.remove(
-          object: 'Ticket',
-          name:   'select',
-        )
-        ObjectManager::Attribute.migration_execute
       end
 
       it 'correctly renders select attributes on chained user object' do
@@ -84,13 +90,6 @@ RSpec.describe NotificationFactory::Renderer do
                          template: '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}'
 
         expect(renderer.render).to eq 'key_2 _SEPERATOR_ value_2'
-        ticket.destroy
-
-        ObjectManager::Attribute.remove(
-          object: 'User',
-          name:   'select',
-        )
-        ObjectManager::Attribute.migration_execute
       end
 
       it 'correctly renders select attributes on chained group object' do
@@ -109,13 +108,6 @@ RSpec.describe NotificationFactory::Renderer do
                          template: '#{ticket.group.select} _SEPERATOR_ #{ticket.group.select.value}'
 
         expect(renderer.render).to eq 'key_3 _SEPERATOR_ value_3'
-        ticket.destroy
-
-        ObjectManager::Attribute.remove(
-          object: 'Group',
-          name:   'select',
-        )
-        ObjectManager::Attribute.migration_execute
       end
 
       it 'correctly renders select attributes on chained organization object' do
@@ -133,13 +125,6 @@ RSpec.describe NotificationFactory::Renderer do
                          template: '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}'
 
         expect(renderer.render).to eq 'key_2 _SEPERATOR_ value_2'
-        ticket.destroy
-
-        ObjectManager::Attribute.remove(
-          object: 'Organization',
-          name:   'select',
-        )
-        ObjectManager::Attribute.migration_execute
       end
 
       it 'correctly renders tree select attributes' do
@@ -153,13 +138,6 @@ RSpec.describe NotificationFactory::Renderer do
                          template: '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}'
 
         expect(renderer.render).to eq 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop'
-        ticket.destroy
-
-        ObjectManager::Attribute.remove(
-          object: 'Ticket',
-          name:   'tree_select',
-        )
-        ObjectManager::Attribute.migration_execute
       end
     end
   end
