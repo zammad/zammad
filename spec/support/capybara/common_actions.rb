@@ -275,7 +275,6 @@ module CommonActions
   #
   # @example
   # popover_on_hover(page.find('button.hover_me'))
-  #
   def popover_on_hover(element, wait_for_popover_killer: true)
     # wait for popover killer to pass
     sleep 3 if wait_for_popover_killer
@@ -293,6 +292,30 @@ module CommonActions
   def scroll_into_view(css_selector, position: :top)
     page.execute_script("document.querySelector('#{css_selector}').scrollIntoView(#{position == :top})")
     sleep 0.3
+  end
+
+  # Close a tab in the taskbar.
+  #
+  # @param discard_changes [Boolean] if true, discard changes
+  #
+  # @example
+  # taskbar_tab_close('Ticket-2')
+  #
+  def taskbar_tab_close(tab_data_key, discard_changes: true)
+    retry_on_stale do
+      taskbar_entry = find(:task_with, tab_data_key)
+
+      move_mouse_to(taskbar_entry)
+      move_mouse_by(5, 5)
+
+      click ".tasks .task[data-key='#{tab_data_key}'] .js-close"
+
+      return if !discard_changes
+
+      in_modal do
+        click '.js-submit'
+      end
+    end
   end
 end
 

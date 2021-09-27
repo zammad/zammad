@@ -471,6 +471,18 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  context 'when closing taskbar tab for new ticket creation' do
+    it 'close task bar entry after some changes in ticket create form' do
+      visit 'ticket/create'
+
+      within(:active_content) do
+        find('[name=title]').fill_in with: 'Title'
+      end
+
+      taskbar_tab_close(find(:task_active)['data-key'])
+    end
+  end
+
   describe 'customer selection to check the field search' do
     before do
       create(:customer, active: true)
