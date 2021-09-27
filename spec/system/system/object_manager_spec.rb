@@ -217,6 +217,11 @@ RSpec.describe 'System > Objects', type: :system do
       # Make sure option is still available in already saved ticket, even though the option was removed from the object attribute.
       # This is done via the :historical_options.
       visit "/#ticket/zoom/#{ticket.id}"
+
+      # Ticket data is loaded from a front end cache first, so wait until there is a consistent state.
+      expect(page).to have_css("select[name=#{object_attribute.name}] option[value='delete']")
+      expect(page).to have_no_css("select[name=#{object_attribute.name}] option[value='dog']")
+
       sorted_ticket_values = all("select[name=#{object_attribute.name}] option").map(&:value).reject { |x| x == '' }
       expect(sorted_ticket_values).to eq(options_no_dog.keys)
       expect(find("select[name=#{object_attribute.name}] option:checked").value).to eq('delete')
