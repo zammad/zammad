@@ -14,7 +14,7 @@
       <div class="kb-menu-preview">
         <div class="label"><%= kb_locale.systemLocale().name %></div>
 
-        <div class="kb-menu-preview-container kb-menu-preview-container--<%= location.identifier %>" style="background-color: <%= location.color %>">
+        <div class="kb-menu-preview-container kb-menu-preview-container--<%= location.identifier %>" style="background-color: <%= location.color %>; color: <%= location.color_link %>;">
           <% menu_items = App.KnowledgeBaseMenuItem.using_kb_locale_location(kb_locale, location.identifier) %>
 
           <% if menu_items.length == 0: %>

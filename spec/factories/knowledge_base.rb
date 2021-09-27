@@ -8,6 +8,7 @@ FactoryBot.define do
     iconset         { 'FontAwesome' }
     color_highlight { '#AAA' }
     color_header    { '#EEE' }
+    color_header_link { '#FFF000' }
     homepage_layout { 'grid' }
     category_layout { 'list' }
 

@@ -26,11 +26,12 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
       App.UiElement[attribute.tag].prepareParams?(attribute, dom, params)
 
   applyDefaults: (params) ->
-    params['iconset']         = 'FontAwesome'
-    params['color_highlight'] = '#38ae6a'
-    params['color_header']    = '#f9fafb'
-    params['homepage_layout'] = 'grid'
-    params['category_layout'] = 'grid'
+    params['iconset']           = 'FontAwesome'
+    params['color_highlight']   = '#38ae6a'
+    params['color_header']      = '#f9fafb'
+    params['color_header_link'] = 'hsl(206,8%,50%)'
+    params['homepage_layout']   = 'grid'
+    params['category_layout']   = 'grid'
 
   onSubmit: (e) ->
     params = @formParams(@el)

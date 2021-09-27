@@ -8,8 +8,9 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
     create_table :knowledge_bases do |t|
       t.string :iconset, limit: 30, null: false
 
-      t.string :color_highlight, limit: 25, null: false
-      t.string :color_header,    limit: 25, null: false
+      t.string :color_highlight,   limit: 25, null: false
+      t.string :color_header,      limit: 25, null: false
+      t.string :color_header_link, limit: 25, null: false
 
       t.string :homepage_layout, null: false
       t.string :category_layout, null: false
