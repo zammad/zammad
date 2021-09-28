@@ -37,11 +37,11 @@ class App.Browser
 
     # define min. required browser version
     map =
-      Chrome: 37
-      Firefox: 36
-      Explorer: 10
-      Safari: 6
-      Opera: 22
+      Firefox:  78  # ESR
+      Chrome:   83  # parallel to FF ESR - Edge is also detected as Chrome
+      Opera:    69  # based on Chrome 83
+      Explorer: 11  # 10 is EOL
+      Safari:   11  # released 2018
 
     # disable id older
     if data.browser
