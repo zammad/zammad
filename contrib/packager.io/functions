@@ -228,7 +228,7 @@ function create_webserver_config () {
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
 
-  ES_CONNECTION="$(zammad run rails r "puts Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
+  ES_CONNECTION="$(zammad run rails r "puts '',Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
 
   if [ -z "${ES_CONNECTION}" ]; then
     echo "-- Nevermind, no es_url is set, leaving Elasticsearch untouched ...!"
