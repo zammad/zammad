@@ -1,6 +1,6 @@
 class CoreWorkflow extends App.ControllerSubContent
   requiredPermission: 'admin.core_workflow'
-  header: 'Core Workflow'
+  header: 'Core Workflows'
   constructor: ->
     super
 
@@ -54,4 +54,4 @@ class CoreWorkflow extends App.ControllerSubContent
     }
     return mapping[screen] || screen
 
-App.Config.set('CoreWorkflowObject', { prio: 1750, parent: '#system', name: 'Core Workflow', target: '#system/core_workflow', controller: CoreWorkflow, permission: ['admin.core_workflow'] }, 'NavBarAdmin')
+App.Config.set('CoreWorkflowObject', { prio: 1750, parent: '#system', name: 'Core Workflows', target: '#system/core_workflow', controller: CoreWorkflow, permission: ['admin.core_workflow'] }, 'NavBarAdmin')

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System > Core Workflow', type: :system do
+RSpec.describe 'System > Core Workflows', type: :system do
   before do
     ensure_websocket do
       visit 'system/core_workflow'
