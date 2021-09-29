@@ -5,10 +5,16 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
     @result_object.result[:restrict_values][field] = if restriction_set?
                                                        restrict_values
                                                      else
-                                                       replace_values
+                                                       config_value
                                                      end
     remove_excluded_param_values
     true
+  end
+
+  def config_value
+    result = Array(@perform_config['set_fixed_to'])
+    result |= Array(saved_value)
+    result
   end
 
   def restriction_set?
@@ -16,10 +22,6 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
   end
 
   def restrict_values
-    @result_object.result[:restrict_values][field].reject { |v| Array(@perform_config['set_fixed_to']).exclude?(v) }
-  end
-
-  def replace_values
-    Array(@perform_config['set_fixed_to'])
+    @result_object.result[:restrict_values][field].reject { |v| config_value.exclude?(v) }
   end
 end

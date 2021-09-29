@@ -1,12 +1,14 @@
-class Edit extends App.ControllerObserver
-  model: 'Ticket'
-  observeNot:
-    created_at: true
-    updated_at: true
-  globalRerender: false
+# No usage of a ControllerObserver here because we want to use
+# the data of the ticket zoom ajax request which is using the all=true parameter
+# and contain the core workflow information as well. Without observer we also
+# dont have double rendering because of the zoom (all=true) and observer (full=true) render callback
+class Edit extends App.Controller
+  constructor: (params) ->
+    super
+    @render()
 
-  render: (ticket, diff) =>
-    defaults = ticket.attributes()
+  render: =>
+    defaults = @ticket.attributes()
     delete defaults.article # ignore article infos
     followUpPossible = App.Group.find(defaults.group_id).follow_up_possible
     ticketState = App.TicketState.find(defaults.state_id).name
@@ -19,7 +21,7 @@ class Edit extends App.ControllerObserver
 
     if followUpPossible == 'new_ticket' && ticketState != 'closed' ||
        followUpPossible != 'new_ticket' ||
-       @permissionCheck('admin') || ticket.currentView() is 'agent'
+       @permissionCheck('admin') || @ticket.currentView() is 'agent'
       @controllerFormSidebarTicket = new App.ControllerForm(
         elReplace:      @el
         model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
@@ -28,7 +30,7 @@ class Edit extends App.ControllerObserver
         filter:         @formMeta.filter
         formMeta:       @formMeta
         params:         defaults
-        isDisabled:     !ticket.editable()
+        isDisabled:     !@ticket.editable()
         taskKey:        @taskKey
         core_workflow: {
           callbacks: [@markForm]
@@ -44,7 +46,7 @@ class Edit extends App.ControllerObserver
         filter:         @formMeta.filter
         formMeta:       @formMeta
         params:         defaults
-        isDisabled:     ticket.editable()
+        isDisabled:     @ticket.editable()
         taskKey:        @taskKey
         core_workflow: {
           callbacks: [@markForm]
@@ -57,8 +59,8 @@ class Edit extends App.ControllerObserver
     return if @resetBind
     @resetBind = true
     @controllerBind('ui::ticket::taskReset', (data) =>
-      return if data.ticket_id.toString() isnt ticket.id.toString()
-      @render(ticket)
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+      @render()
     )
 
 class SidebarTicket extends App.Controller
@@ -128,6 +130,7 @@ class SidebarTicket extends App.Controller
 
     @edit = new Edit(
       object_id: @ticket.id
+      ticket:    @ticket
       el:        localEl.find('.edit')
       taskGet:   @taskGet
       formMeta:  @formMeta

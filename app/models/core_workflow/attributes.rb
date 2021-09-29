@@ -30,10 +30,26 @@ class CoreWorkflow::Attributes
     end
   end
 
+  def selectable_field?(key)
+    return if key == 'id'
+    return if !@payload['params'].key?(key)
+
+    # some objects have no attributes like "CoreWorkflow"-object as well.
+    # attributes only exists in the frontend so we skip this check
+    return true if object_elements.blank?
+
+    object_elements_hash.key?(key)
+  end
+
   def overwrite_selected(result)
     selected_attributes = selected_only.attributes
     selected_attributes.each_key do |key|
-      next if selected_attributes[key].nil?
+      next if !selectable_field?(key)
+
+      # special behaviour for owner id
+      if key == 'owner_id' && selected_attributes[key].nil?
+        selected_attributes[key] = 1
+      end
 
       result[key.to_sym] = selected_attributes[key]
     end
@@ -55,7 +71,10 @@ class CoreWorkflow::Attributes
     # dont use lookup here because the cache will not
     # know about new attributes and make crashes
     @saved_only ||= payload_class.find_by(id: @payload['params']['id'])
-    @saved_only.dup
+
+    # we use marshal here because clone still uses references and dup can't
+    # detect changes for the rails object
+    Marshal.load(Marshal.dump(@saved_only))
   end
 
   def saved
@@ -66,6 +85,10 @@ class CoreWorkflow::Attributes
     @object_elements ||= ObjectManager::Object.new(@payload['class_name']).attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
       result << element.data.merge(screens: element.screens)
     end
+  end
+
+  def object_elements_hash
+    @object_elements_hash ||= object_elements.index_by { |x| x[:name] }
   end
 
   def screen_value(attribute, type)

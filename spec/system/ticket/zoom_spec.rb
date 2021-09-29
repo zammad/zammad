@@ -2083,4 +2083,55 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(ticket.reload.owner_id).to eq(admin.id)
     end
   end
+
+  describe "escaped 'Set fixed' workflows don't refresh set values on active ticket sessions #3757", authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), field_name => false) }
+
+    def authenticate
+      workflow
+      create :object_manager_attribute_boolean, name: field_name, display: field_name, screens: attributes_for(:required_screen)
+      ObjectManager::Attribute.migration_execute
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    context 'when operator set_fixed_to' do
+      let(:workflow) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: { "ticket.#{field_name}" => { 'operator' => 'set_fixed_to', 'set_fixed_to' => ['false'] } })
+      end
+
+      context 'when saved value is removed by set_fixed_to operator' do
+        it 'does show up the saved value if it would not be possible because of the restriction' do
+          expect(page.find("select[name='#{field_name}']").value).to eq('false')
+          ticket.update(field_name => true)
+          wait(10, interval: 0.5).until { page.find("select[name='#{field_name}']").value == 'true' }
+          expect(page.find("select[name='#{field_name}']").value).to eq('true')
+        end
+      end
+    end
+
+    context 'when operator remove_option' do
+      let(:workflow) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: { "ticket.#{field_name}" => { 'operator' => 'remove_option', 'remove_option' => ['true'] } })
+      end
+
+      context 'when saved value is removed by set_fixed_to operator' do
+        it 'does show up the saved value if it would not be possible because of the restriction' do
+          expect(page.find("select[name='#{field_name}']").value).to eq('false')
+          ticket.update(field_name => true)
+          wait(10, interval: 0.5).until { page.find("select[name='#{field_name}']").value == 'true' }
+          expect(page.find("select[name='#{field_name}']").value).to eq('true')
+        end
+      end
+    end
+  end
 end
