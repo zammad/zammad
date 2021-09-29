@@ -87,11 +87,11 @@ RSpec.describe Ticket::Article, type: :model do
 
       context 'when body contains only injected JS' do
         let(:body) { <<~RAW.chomp }
-          <script type="text/javascript">alert("XSS!");</script>
+          <script type="text/javascript">alert("XSS!");</script> some other text
         RAW
 
         it 'removes <script> tags' do
-          expect(article.body).to eq('alert("XSS!");')
+          expect(article.body).to eq(' some other text')
         end
       end
 
@@ -102,7 +102,7 @@ RSpec.describe Ticket::Article, type: :model do
 
         it 'removes <script> tags' do
           expect(article.body).to eq(<<~SANITIZED.chomp)
-            please tell me this doesn't work: alert("XSS!");
+            please tell me this doesn't work:#{' '}
           SANITIZED
         end
       end

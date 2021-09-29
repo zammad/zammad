@@ -1258,7 +1258,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         let(:content_type) { 'text/html' }
 
         it 'removes injected <script> tags from body' do
-          expect(article.body).to eq("no HTML alert('XSS')")
+          expect(article.body).to eq('no HTML')
         end
       end
 

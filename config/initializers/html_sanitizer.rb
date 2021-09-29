@@ -5,11 +5,11 @@ Rails.application.config.html_sanitizer_tags_remove_content = %w[
   style
   comment
   meta
+  script
 ]
 
 # content of this tags will will be inserted html quoted
 Rails.application.config.html_sanitizer_tags_quote_content = %w[
-  script
 ]
 
 # only this tags are allowed
