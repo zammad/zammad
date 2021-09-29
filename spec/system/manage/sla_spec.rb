@@ -57,4 +57,23 @@ RSpec.describe 'Manage > Sla', type: :system do
       expect(page.find('input[name=solution_time_in_text]')[:required]).not_to eq('true')
     end
   end
+
+  context 'when using custom calendars' do
+    let(:calendar) { create(:calendar) }
+
+    it 'allows to select custom calendars' do
+      calendar
+      page.refresh
+      click '.js-new'
+
+      within '.modal-dialog' do
+        fill_in :name, with: 'SLA with custom calendar'
+        select calendar.name, from: :calendar_id
+        click '.js-submit'
+      end
+
+      modal_disappear
+      expect(page).to have_text(calendar.name)
+    end
+  end
 end
