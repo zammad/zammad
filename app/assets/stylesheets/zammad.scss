@@ -7017,8 +7017,8 @@ footer {
   .article-new .textBubble {
     border-color: #b3b3b3;
     border-radius: 5px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 12px;
+    padding-right: 12px;
     cursor: text;
   }
 
@@ -7057,7 +7057,12 @@ footer {
     .attachments:not(:empty) {
       padding: 9px 5px;
       border-top: 1px solid hsl(0,0%,93%);
-      margin: 6px 0 30px;
+      margin: 6px -12px 30px;
+    }
+
+    .ticket-create .attachments:not(:empty) {
+      margin-left: 0;
+      margin-right: 0;
     }
 
     .attachment.attachment--row {
