@@ -7051,7 +7051,7 @@ footer {
     padding: 10px 0;
     color: #b3b3b3;
     overflow: hidden;
-    @extend .u-unclickable, .u-textTruncate;
+    @extend .u-textTruncate;
   }
 
     .attachments:not(:empty) {
