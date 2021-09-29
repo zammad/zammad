@@ -18,4 +18,26 @@ class CoreWorkflow::Result::Backend
   def result(backend, field, value = nil)
     @result_object.run_backend_value(backend, field, value)
   end
+
+  def saved_value
+
+    # make sure we have a saved object
+    return if @result_object.attributes.saved_only.blank?
+
+    # we only want to have the saved value in the restrictions
+    # if no changes happend to the form. If the users does changes
+    # to the form then also the saved value should get removed
+    return if @result_object.attributes.selected.changed?
+
+    # attribute can be blank e.g. in custom development
+    # or if attribute is only available in the frontend but not
+    # in the backend
+    return if attribute.blank?
+
+    @result_object.attributes.saved_attribute_value(attribute).to_s
+  end
+
+  def attribute
+    @attribute ||= @result_object.attributes.object_elements_hash[field]
+  end
 end

@@ -128,9 +128,10 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
   @buildValueConfigMultiple: (config, meta) ->
     if _.contains(['add_option', 'remove_option', 'set_fixed_to'], meta.operator)
       config.multiple = true
+      config.nulloption = true
     else
       config.multiple = false
-    config.nulloption = false
+      config.nulloption = false
     return config
 
   @HasPreCondition: ->

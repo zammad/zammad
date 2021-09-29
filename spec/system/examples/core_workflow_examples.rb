@@ -525,15 +525,15 @@ RSpec.shared_examples 'core workflow' do
                perform: {
                  "#{object_name.downcase}.#{field_name}": {
                    operator:     'set_fixed_to',
-                   set_fixed_to: %w[true]
+                   set_fixed_to: %w[false]
                  },
                })
       end
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='true']", wait: 10)
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='false']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='false']", wait: 10)
+        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='true']", wait: 10)
       end
     end
 
@@ -562,7 +562,7 @@ RSpec.shared_examples 'core workflow' do
                perform: {
                  "#{object_name.downcase}.#{field_name}": {
                    operator:     'set_fixed_to',
-                   set_fixed_to: ['', 'true'],
+                   set_fixed_to: ['', 'false'],
                  },
                })
         create(:core_workflow,
@@ -577,7 +577,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='true'][selected]", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='false'][selected]", wait: 10)
       end
     end
   end
