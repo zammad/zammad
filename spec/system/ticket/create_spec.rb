@@ -500,6 +500,39 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  context 'when agent and customer user login after another' do
+    let(:agent) { create(:agent, password: 'test') }
+    let(:customer) { create(:customer, password: 'test') }
+
+    it 'customer user should not have agent object attributes', authenticated_as: :agent do
+      visit 'ticket/create'
+
+      logout
+
+      # Re-create agent session and fetch object attributes.
+      login(
+        username: agent.login,
+        password: 'test'
+      )
+      visit 'ticket/create'
+
+      # Re-remove local object attributes bound to the session
+      # there was an issue (#1856) where the old attribute values
+      # persisted and were stored as the original attributes.
+      logout
+
+      # Create customer session and fetch object attributes.
+      login(
+        username: customer.login,
+        password: 'test'
+      )
+
+      visit 'customer_ticket_new'
+
+      expect(page).to have_no_css('.newTicket input[name="customer_id"]')
+    end
+  end
+
   describe 'It should be possible to show attributes which are configured shown false #3726', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
