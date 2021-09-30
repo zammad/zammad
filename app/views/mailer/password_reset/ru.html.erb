@@ -1,0 +1,15 @@
+Cброс пароля учетной записи #{config.product_name}
+
+<div>Здравствуйте #{user.firstname},</div>
+<br>
+<div>Мы получили запрос на сброс пароля для вашей учетной записи #{config.product_name} <b>#{user.login}</b>.</div>
+<br>
+<div>Если вы хотите сбросить пароль, нажмите на ссылку ниже (или скопируйте и вставьте URL-адрес в свой браузер):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Эта ссылка приведет вас на страницу, где вы можете изменить свой пароль.</div>
+<br>
+<div>Если вы не хотите сбрасывать пароль, не обращайте внимания на это сообщение. Ваш пароль не будет сброшен.</div>
+<br>
+<div>Команда #{config.product_name}</div>
