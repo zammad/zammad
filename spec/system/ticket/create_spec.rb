@@ -562,6 +562,25 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  context 'when state options have a special translation', authenticated_as: :authenticate do
+    let(:admin_de) { create(:admin, preferences: { locale: 'de-de' }) }
+
+    context 'when translated state option has a single quote' do
+      def authenticate
+        open_tranlation = Translation.where(locale: 'de-de', source: 'open')
+        open_tranlation.update(target: "off'en")
+
+        admin_de
+      end
+
+      it 'shows the translated state options correctly' do
+        visit 'ticket/create'
+
+        expect(page).to have_select('state_id', with_options: ["off'en"])
+      end
+    end
+  end
+
   describe 'It should be possible to show attributes which are configured shown false #3726', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:field) do

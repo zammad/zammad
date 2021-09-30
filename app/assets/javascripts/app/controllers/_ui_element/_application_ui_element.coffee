@@ -46,7 +46,7 @@ class App.UiElement.ApplicationUiElement
     result = []
     for row in selection
       if attribute.translate
-        row.name = App.i18n.translateInline(row.name)
+        row.name = App.i18n.translatePlain(row.name)
         if !_.isEmpty(row.children)
           row.children = @getConfigOptionListArray(attribute, row.children)
       result.push row
@@ -65,7 +65,7 @@ class App.UiElement.ApplicationUiElement
       for key in order
         name_new = selection[key]
         if attribute.translate
-          name_new = App.i18n.translateInline(name_new)
+          name_new = App.i18n.translatePlain(name_new)
         attribute.options.push {
           name:  name_new
           value: key
@@ -162,7 +162,7 @@ class App.UiElement.ApplicationUiElement
           nameNew = item.name
 
         if attribute.translate
-          nameNew = App.i18n.translateInline(nameNew)
+          nameNew = App.i18n.translatePlain(nameNew)
 
         row =
           value: item.id,
