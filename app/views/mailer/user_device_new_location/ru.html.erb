@@ -1,0 +1,19 @@
+#{config.product_name} обнаружен вход из новой страны
+
+<div>Здравствуйте #{user.firstname},</div>
+<br>
+<div>Похоже, вы использовали свою учетную запись на <b> известном устройстве, но из другой страны </b> в "#{user_device.created_at}":</div>
+<br>
+<div>
+Ваше устройство: #{user_device.name}<br>
+Ваша локация (относительная): #{user_device.location}<br>
+Ваш IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Страна добавлена в список известных устройств, который вы можете просмотреть здесь.:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Если это не вы, удалите устройство, измените пароль учетной записи и обратитесь к администратору. Кто-то мог получить несанкционированный доступ к вашей учетной записи.</div>
+<br>
+<div>Команда #{config.product_name}</div>

@@ -114,6 +114,15 @@ $(function() {
         'Attachments': 'Anhänge',
         'Your Message...': 'Ihre Nachricht...',
       },
+      'ru': {
+        'Name': 'Имя',
+        'Your Name': 'Ваше имя',
+        'Email': 'E-Mail',
+        'Your Email': 'Ваша почта',
+        'Message': 'Сообщение',
+        'Attachments': 'Прикрепленные',
+        'Your Message...': 'Ваше Сообщение...',
+      },
       'es': {
         'Name': 'Nombre',
         'Your Name': 'tu Nombre',
