@@ -1314,7 +1314,7 @@ class Table extends App.Controller
     return if ticketListShow[0] || @permissionCheck('ticket.agent')
 
     tickets_count = user.lifetimeCustomerTicketsCount()
-    @html App.view('customer_not_ticket_exists')(has_any_tickets: tickets_count > 0)
+    @html App.view('customer_not_ticket_exists')(has_any_tickets: tickets_count > 0, is_allowed_to_create_ticket: @Config.get('customer_ticket_create'))
 
     if tickets_count == 0
       @listenTo user, 'refresh', =>

@@ -23,6 +23,19 @@ RSpec.describe 'Overview', type: :system do
       end
     end
 
+    def authenticate
+      Setting.set('customer_ticket_create', false)
+      customer
+    end
+
+    it 'does not show create button when ticket creation via web is disabled', authenticated_as: :authenticate do
+      visit "ticket/view/#{main_overview.link}"
+
+      within :active_content do
+        expect(page).to have_text 'You currently don\'t have any tickets.'
+      end
+    end
+
     it 'shows overview-specific message if customer has tickets in other overview', performs_jobs: true do
       perform_enqueued_jobs only: TicketUserTicketCounterJob do
         create(:ticket, customer: customer)
