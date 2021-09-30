@@ -161,8 +161,8 @@ satinize html string based on whiltelist
         # wrap plain-text URLs in <a> tags
         if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
           urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
-                    .map { |u| u.sub(%r{[,.]$}, '') }      # URI::extract captures trailing dots/commas
-                    .reject { |u| u.match?(%r{^[^:]+:$}) } # URI::extract will match, e.g., 'tel:'
+                    .map { |u| u.sub(%r{[,.]$}, '') } # URI::extract captures trailing dots/commas
+                    .grep_v(%r{^[^:]+:$}) # URI::extract will match, e.g., 'tel:'
 
           next if urls.blank?
 

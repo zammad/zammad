@@ -62,7 +62,7 @@ class ActiveSupport::TestCase
     # read config file and count type & recipients
     file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
-    IO.foreach(file) do |line|
+    File.foreach(file) do |line|
       lines.push line
     end
     count = 0

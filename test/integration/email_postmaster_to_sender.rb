@@ -104,9 +104,7 @@ Oversized Email Message Body #{'#' * 120_000}
     # 1. verify that the oversized email has been saved locally to:
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
     path = Rails.root.join('tmp/oversized_mail')
-    target_files = Dir.entries(path).select do |filename|
-      filename =~ %r{^#{large_message_md5}\.eml$}
-    end
+    target_files = Dir.entries(path).grep(%r{^#{large_message_md5}\.eml$})
     assert(target_files.present?, 'Large message .eml log file must be present.')
 
     # pick the latest file that matches the criteria
@@ -193,9 +191,7 @@ Oversized Email Message Body #{'#' * 120_000}
     # 1. verify that the oversized email has been saved locally to:
     # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
     path = Rails.root.join('tmp/oversized_mail')
-    target_files = Dir.entries(path).select do |filename|
-      filename =~ %r{^.+?\.eml$}
-    end
+    target_files = Dir.entries(path).grep(%r{^.+?\.eml$})
     assert_not(target_files.blank?, 'Large message .eml log file must be blank.')
 
     # 2. verify that a postmaster response email has been sent to the sender

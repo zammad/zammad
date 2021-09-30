@@ -502,7 +502,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     path = Rails.root.join('tmp/unprocessable_mail')
     files = []
     Dir.glob("#{path}/*.eml") do |entry|
-      ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, IO.binread(entry))
+      ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, File.binread(entry))
       next if ticket.blank?
 
       files.push entry
