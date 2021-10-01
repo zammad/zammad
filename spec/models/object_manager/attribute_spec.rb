@@ -148,4 +148,12 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       it { is_expected.to be_valid }
     end
   end
+
+  describe 'Class methods:' do
+    describe '.attribute_to_references_hash_objects' do
+      it 'returns classes with conditions' do
+        expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
+      end
+    end
+  end
 end

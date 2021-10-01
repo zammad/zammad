@@ -678,7 +678,7 @@ to send no browser reload event, pass false
 
 =begin
 
-where attributes are used by triggers, overviews or schedulers
+where attributes are used in conditions
 
   result = ObjectManager::Attribute.attribute_to_references_hash
 
@@ -696,18 +696,32 @@ where attributes are used by triggers, overviews or schedulers
 =end
 
   def self.attribute_to_references_hash
-    objects = Trigger.select(:name, :condition) + Overview.select(:name, :condition) + Job.select(:name, :condition)
     attribute_list = {}
-    objects.each do |item|
-      item.condition.each do |condition_key, _condition_attributes|
-        attribute_list[condition_key] ||= {}
-        attribute_list[condition_key][item.class.name] ||= []
-        next if attribute_list[condition_key][item.class.name].include?(item.name)
 
-        attribute_list[condition_key][item.class.name].push item.name
+    attribute_to_references_hash_objects
+      .map { |elem| elem.select(:name, :condition) }
+      .flatten
+      .each do |item|
+        item.condition.each do |condition_key, _condition_attributes|
+          attribute_list[condition_key] ||= {}
+          attribute_list[condition_key][item.class.name] ||= []
+          next if attribute_list[condition_key][item.class.name].include?(item.name)
+
+          attribute_list[condition_key][item.class.name].push item.name
+        end
       end
-    end
+
     attribute_list
+  end
+
+=begin
+
+models that may reference attributes
+
+=end
+
+  def self.attribute_to_references_hash_objects
+    Models.all.keys.select { |elem| elem.include? ChecksConditionValidation }
   end
 
 =begin
