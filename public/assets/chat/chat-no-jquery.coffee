@@ -430,7 +430,7 @@ do(window) ->
         'Chat closed by %s': '%s закрыл чат'
         'Compose your message...': 'Напишите сообщение...'
         'All colleagues are busy.': 'Все сотрудники заняты'
-        'You are on waiting list position %s.': 'Вы в списке ожидания под номером %s'
+        'You are on waiting list position <strong>%s</strong>.': 'Вы в списке ожидания под номером <strong>%s</strong>'
         'Start new conversation': 'Начать новую переписку.'
         'Since you didn\'t respond in the last %s minutes your conversation with %s got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор с %s был закрыт.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор был закрыт.'
