@@ -198,6 +198,7 @@ group :development, :test do
   gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
+  gem 'rubocop-inflector'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'

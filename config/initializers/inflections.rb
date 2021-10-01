@@ -21,7 +21,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 
   # Rails thinks the singularized version of knowledge_bases is knowledge_basis?!
   # see: KnowledgeBase.table_name.singularize
-  inflect.singular(%r{(knowledge_base)s$}i, '\1')
+  inflect.irregular 'base', 'bases'
   inflect.acronym 'SMIME'
   inflect.acronym 'GitLab'
   inflect.acronym 'GitHub'

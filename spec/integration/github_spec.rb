@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rails_helper'
-RSpec.describe GitHub, type: :integration, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do # rubocop:disable RSpec/FilePath
+RSpec.describe GitHub, type: :integration, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
 
   let(:instance) { described_class.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']) }
   let(:issue_data) do

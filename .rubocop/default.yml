@@ -6,6 +6,8 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-inflector
+  - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 
 inherit_from:
