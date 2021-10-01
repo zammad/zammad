@@ -75,6 +75,8 @@ class InitCoreWorkflow < ActiveRecord::Migration[5.2]
 
   def fix_pending_time
     pending_time = ObjectManager::Attribute.find_by(name: 'pending_time', object_lookup: ObjectLookup.find_by(name: 'Ticket'))
+    return if pending_time.blank?
+
     pending_time.data_option.delete('required_if')
     pending_time.data_option.delete('shown_if')
     pending_time.save
@@ -83,6 +85,8 @@ class InitCoreWorkflow < ActiveRecord::Migration[5.2]
   def fix_organization_screens
     %w[domain note].each do |name|
       field = ObjectManager::Attribute.find_by(name: name, object_lookup: ObjectLookup.find_by(name: 'Organization'))
+      next if field.blank?
+
       field.screens['create'] ||= {}
       field.screens['create']['-all-'] ||= {}
       field.screens['create']['-all-']['null'] = true
@@ -93,6 +97,8 @@ class InitCoreWorkflow < ActiveRecord::Migration[5.2]
   def fix_user_screens
     %w[email web phone mobile organization_id fax department street zip city country address password vip note role_ids].each do |name|
       field = ObjectManager::Attribute.find_by(name: name, object_lookup: ObjectLookup.find_by(name: 'User'))
+      next if field.blank?
+
       field.screens['create'] ||= {}
       field.screens['create']['-all-'] ||= {}
       field.screens['create']['-all-']['null'] = true
