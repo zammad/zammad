@@ -469,6 +469,36 @@ RSpec.describe 'Ticket Create', type: :system do
 
       expect(page).to have_no_selector(:task_with, task_key)
     end
+
+    it 'asks for confirmation if attachment was added' do
+      visit 'ticket/create'
+
+      within :active_content do
+        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        await_empty_ajax_queue
+
+        find('.js-cancel').click
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text 'Tab has changed'
+      end
+    end
+  end
+
+  context 'when uploading attachment' do
+    it 'shows an error if server throws an error' do
+      allow(Store).to receive(:add) { raise 'Error' }
+      visit 'ticket/create'
+
+      within :active_content do
+        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text 'Error'
+      end
+    end
   end
 
   context 'when closing taskbar tab for new ticket creation' do

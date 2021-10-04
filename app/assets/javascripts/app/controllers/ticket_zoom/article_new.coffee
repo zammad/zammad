@@ -117,7 +117,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @tokanice(@type)
 
-    if @defaults.body or @isIE10()
+    if @defaults.body or @attachments or @isIE10()
       @openTextarea(null, true)
 
   tokanice: (type = 'email') ->
@@ -191,82 +191,30 @@ class App.TicketZoomArticleNew extends App.Controller
       maxlength: 150000
     })
 
-    html5Upload.initialize(
-      uploadUrl:       "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
-      dropContainer:   @$('.article-add').get(0)
-      cancelContainer: @cancelContainer
-      inputField:      @$('.article-attachment input').get(0)
-      key:             'File'
-      maxSimultaneousUploads: 1
-      onFileAdded:            (file) =>
+    new App.Html5Upload(
+      uploadUrl:              "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
+      dropContainer:          @$('.article-add')
+      cancelContainer:        @cancelContainer
+      inputField:             @$('.article-attachment input')
 
-        file.on(
+      onFileStartCallback: =>
+        @callbackFileUploadStart?()
 
-          onStart: =>
-            @attachmentPlaceholder.addClass('hide')
-            @attachmentUpload.removeClass('hide')
-            @cancelContainer.removeClass('hide')
+      onFileCompletedCallback: (response) =>
+        @attachments.push response.data
+        @renderAttachment(response.data)
+        @$('.article-attachment input').val('')
 
-            if @callbackFileUploadStart
-              @callbackFileUploadStart()
+        @callbackFileUploadStop?()
 
-          onAborted: =>
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-            @$('.article-attachment input').val('')
+      onFileAbortedCallback: =>
+        @callbackFileUploadStop?()
 
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called after received response from the server
-          onCompleted: (response) =>
-
-            response = JSON.parse(response)
-            @attachments.push response.data
-
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-
-            # reset progress bar
-            @progressBar.width(parseInt(0) + '%')
-            @progressText.text('')
-
-            @renderAttachment(response.data)
-            @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called during upload progress, first parameter
-          # is decimal value from 0 to 100.
-          onProgress: (progress, fileSize, uploadedBytes) =>
-            @progressBar.width(parseInt(progress) + '%')
-            @progressText.text(parseInt(progress))
-            # hide cancel on 90%
-            if parseInt(progress) >= 90
-              @cancelContainer.addClass('hide')
-
-          # Called when upload failed
-          onError: (message) =>
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-            @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-            new App.ControllerModal(
-              head: 'Upload Failed'
-              buttonCancel: 'Cancel'
-              buttonCancelClass: 'btn--danger'
-              buttonSubmit: false
-              message: message
-              shown: true
-              small: true
-              container: @el.closest('.content')
-            )
-        )
-    )
+      attachmentPlaceholder: @attachmentPlaceholder
+      attachmentUpload:      @attachmentUpload
+      progressBar:           @progressBar
+      progressText:          @progressText
+    ).render()
 
     @bindAttachmentDelete()
 
