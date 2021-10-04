@@ -1678,4 +1678,43 @@ RSpec.describe CoreWorkflow, type: :model do
       end
     end
   end
+
+  describe 'Core Workflow: Add organization condition attributes for object User #3779' do
+    let(:organization) { create(:organization, note: 'hello') }
+    let!(:base_payload) do
+      {
+        'event'      => 'core_workflow',
+        'request_id' => 'default',
+        'class_name' => 'User',
+        'screen'     => 'create',
+        'params'     => {},
+      }
+    end
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'User',
+             condition_selected: {
+               'organization.note': {
+                 operator: 'is',
+                 value:    'hello',
+               },
+             })
+    end
+
+    context 'when new user has no organization' do
+      it 'does not match the workflow' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+
+    context 'when new user is part of the organization' do
+      let(:payload) do
+        base_payload.merge('params' => { 'organization_id' => organization.id.to_s })
+      end
+
+      it 'does match the workflow' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+  end
 end
