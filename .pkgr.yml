@@ -116,6 +116,6 @@ env:
   - ZAMMAD_RAILS_PORT=3000
   - ZAMMAD_WEBSOCKET_PORT=6042
 services:
-  - postgres
+  - postgres:13
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh
