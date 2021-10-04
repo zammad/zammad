@@ -8,7 +8,7 @@ class App.TicketCreate extends App.Controller
   events:
     'click .type-tabs .tab':   'changeFormType'
     'submit form':             'submit'
-    'click .js-cancel':        'cancel'
+    'click .form-controls .js-cancel':        'cancel'
     'click .js-active-toggle': 'toggleButton'
 
   types: {
@@ -184,8 +184,11 @@ class App.TicketCreate extends App.Controller
     @controllerUnbind('ticket_create_rerender', (template) => @renderQueue(template))
 
   changed: =>
+    return true if @hasAttachments()
+
     formCurrent = @formParam( @$('.ticket-create') )
     diff = difference(@formDefault, formCurrent)
+
     return false if !diff || _.isEmpty(diff)
     return true
 
@@ -461,6 +464,9 @@ class App.TicketCreate extends App.Controller
   params: =>
     params = @formParam(@$('.main form'))
 
+  hasAttachments: =>
+    @$('.richtext .attachments .attachment').length > 0
+
   submit: (e) =>
     e.preventDefault()
 
@@ -563,7 +569,7 @@ class App.TicketCreate extends App.Controller
     # save ticket, create article
     # check attachment
     if article['body']
-      if @$('.richtext .attachments .attachment').length < 1
+      if !@hasAttachments()
         matchingWord = App.Utils.checkAttachmentReference(article['body'])
         if matchingWord
           if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))

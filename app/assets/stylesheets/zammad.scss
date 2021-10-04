@@ -7063,6 +7063,11 @@ footer {
     .ticket-create .attachments:not(:empty) {
       margin-left: 0;
       margin-right: 0;
+      margin-bottom: 56px;
+    }
+
+    .ticket-create .attachment--row {
+      line-height: 1.45;
     }
 
     .attachment.attachment--row {

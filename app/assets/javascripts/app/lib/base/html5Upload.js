@@ -255,7 +255,7 @@
                     manager.ajaxUpload(manager.uploadsQueue.shift());
                 }
             };
-            xhr.abort = function (event) {
+            xhr.onabort = function (event) {
                 console.log('Upload abort');
 
                 // Reduce number of active uploads:
@@ -269,6 +269,7 @@
             // Triggered when upload fails:
             xhr.onerror = function () {
                 console.log('Upload failed: ', upload.fileName);
+                upload.events.onError('Upload failed: ' + upload.fileName);
             };
 
             // Append additional data if provided:
