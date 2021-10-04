@@ -5,6 +5,13 @@
 class Edit extends App.Controller
   constructor: (params) ->
     super
+    @controllerBind('ui::ticket::load', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+
+      @ticket   = App.Ticket.find(@ticket.id)
+      @formMeta = data.form_meta
+      @render()
+    )
     @render()
 
   render: =>
@@ -18,6 +25,9 @@ class Edit extends App.Controller
 
     if !_.isEmpty(taskState)
       defaults = _.extend(defaults, taskState)
+      # remove core workflow data because it should trigger a request to get data
+      # for the new ticket + eventually changed task state
+      @formMeta.core_workflow = undefined
 
     if followUpPossible == 'new_ticket' && ticketState != 'closed' ||
        followUpPossible != 'new_ticket' ||

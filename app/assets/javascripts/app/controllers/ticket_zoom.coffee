@@ -200,10 +200,10 @@ class App.TicketZoom extends App.Controller
     formMeta   = data.form_meta
 
     # on the following states we want to rerender the ticket:
-    # - if the object attribute configuration has changed (attribute values, restrictions, filters)
+    # - if the object attribute configuration has changed (attribute values, dependecies, filters)
     # - if the user view has changed (agent/customer)
     # - if the ticket permission has changed (read/write/full)
-    if @view && ( !_.isEqual(@formMeta, formMeta) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
+    if @view && ( !_.isEqual(@formMeta.configure_attributes, formMeta.configure_attributes) || !_.isEqual(@formMeta.dependencies, formMeta.dependencies) || !_.isEqual(@formMeta.filter, formMeta.filter) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
       @renderDone = false
 
     @view       = view
@@ -214,6 +214,7 @@ class App.TicketZoom extends App.Controller
 
     # render page
     @render(local)
+    App.Event.trigger('ui::ticket::load', data)
 
   meta: =>
 

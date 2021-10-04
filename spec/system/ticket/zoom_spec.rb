@@ -2134,4 +2134,63 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  context 'Basic sidebar handling because of regressions in #3757' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show up the new priority' do
+      high_prio = Ticket::Priority.find_by(name: '3 high')
+      ticket.update(priority: high_prio)
+      wait(10, interval: 0.5).until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
+      expect(page.find("select[name='priority_id']").value).to eq(high_prio.id.to_s)
+    end
+
+    it 'does show up the new state and pending time' do
+      pending_state = Ticket::State.find_by(name: 'pending reminder')
+      ticket.update(state: pending_state, pending_time: 1.day.from_now)
+      wait(10, interval: 0.5).until { page.find("select[name='state_id']").value == pending_state.id.to_s }
+      expect(page.find("select[name='state_id']").value).to eq(pending_state.id.to_s)
+      expect(page).to have_selector("div[data-name='pending_time']")
+    end
+
+    it 'does merge attributes with remote priority (ajax) and local state (user)' do
+      select 'closed', from: 'State'
+      high_prio = Ticket::Priority.find_by(name: '3 high')
+      closed_state = Ticket::State.find_by(name: 'closed')
+      ticket.update(priority: high_prio)
+      wait(10, interval: 0.5).until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
+      expect(page.find("select[name='priority_id']").value).to eq(high_prio.id.to_s)
+      expect(page.find("select[name='state_id']").value).to eq(closed_state.id.to_s)
+    end
+
+    context 'when 2 users are in 2 different tickets' do
+      let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let(:agent2) { create(:agent, password: 'test', groups: [Group.find_by(name: 'Users')]) }
+
+      before do
+        using_session(:second_browser) do
+          login(
+            username: agent2.login,
+            password: 'test',
+          )
+          visit "#ticket/zoom/#{ticket.id}"
+          visit "#ticket/zoom/#{ticket2.id}"
+        end
+      end
+
+      it 'does not make any changes to the second browser ticket' do
+        closed_state = Ticket::State.find_by(name: 'closed')
+        select 'closed', from: 'State'
+        find('.js-submit').click
+        using_session(:second_browser) do
+          sleep 3
+          expect(page.find("select[name='state_id']").value).not_to eq(closed_state.id.to_s)
+        end
+      end
+    end
+  end
 end
