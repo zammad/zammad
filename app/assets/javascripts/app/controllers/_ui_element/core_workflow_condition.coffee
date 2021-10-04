@@ -23,7 +23,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       organization:
         name: 'Organization'
         model: 'Organization'
-        model_show: ['Organization']
+        model_show: ['User', 'Organization']
       'customer.organization':
         name: 'Organization'
         model: 'Organization'
