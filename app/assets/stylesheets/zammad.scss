@@ -8447,6 +8447,10 @@ footer {
 
   .dropdown li.with-category, .dropdown.dropdown--actions li.with-category {
     line-height: 19.5px;
+
+    small {
+      color: #fff !important;
+    }
   }
 
   .dropdown.dropdown--actions li.with-category {
