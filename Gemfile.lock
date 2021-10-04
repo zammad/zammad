@@ -90,7 +90,7 @@ GEM
       activerecord (>= 4.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    argon2 (2.0.3)
+    argon2 (2.1.0)
       ffi (~> 1.14)
       ffi-compiler (~> 1.0)
     ast (2.4.2)
@@ -110,7 +110,7 @@ GEM
       faraday
     async-io (1.32.2)
       async
-    async-pool (0.3.8)
+    async-pool (0.3.9)
       async (>= 1.25)
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
@@ -293,7 +293,7 @@ GEM
     iniparse (1.5.0)
     interception (0.5)
     json (2.5.1)
-    jwt (2.2.3)
+    jwt (2.3.0)
     kgio (2.11.4)
     koala (3.0.0)
       addressable
@@ -498,7 +498,7 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
     rszr (0.5.2)
-    rubocop (1.22.0)
+    rubocop (1.22.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
