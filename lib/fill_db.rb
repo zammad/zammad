@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
-require 'faker'
-
 # rubocop:disable Rails/Output
 module FillDb
 
@@ -55,7 +53,7 @@ or if you only want to create 100 tickets
     else
       (1..organizations).each do
         ActiveRecord::Base.transaction do
-          organization = Organization.create!(name: "FillOrganization::#{Faker::Number.number(digits: 6)}", active: true)
+          organization = Organization.create!(name: "FillOrganization::#{counter}", active: true)
           organization_pool.push organization
         end
       end
@@ -72,7 +70,7 @@ or if you only want to create 100 tickets
 
       (1..agents).each do
         ActiveRecord::Base.transaction do
-          suffix = Faker::Number.number(digits: 5).to_s
+          suffix = counter.to_s
           user = User.create_or_update(
             login:     "filldb-agent-#{suffix}",
             firstname: "agent #{suffix}",
@@ -102,7 +100,7 @@ or if you only want to create 100 tickets
 
       (1..customers).each do
         ActiveRecord::Base.transaction do
-          suffix = Faker::Number.number(digits: 5).to_s
+          suffix = counter.to_s
           organization = nil
           if organization_pool.present? && true_or_false.sample
             organization = organization_pool.sample
@@ -132,7 +130,7 @@ or if you only want to create 100 tickets
     else
       (1..groups).each do
         ActiveRecord::Base.transaction do
-          group = Group.create!(name: "FillGroup::#{Faker::Number.number(digits: 6)}", active: true)
+          group = Group.create!(name: "FillGroup::#{counter}", active: true)
           group_pool.push group
           Role.where(name: 'Agent').first.users.where(active: true).each do |user|
             user_groups = user.groups
@@ -150,7 +148,7 @@ or if you only want to create 100 tickets
       (1..overviews).each do
         ActiveRecord::Base.transaction do
           Overview.create!(
-            name:      "Filloverview::#{Faker::Number.number(digits: 6)}",
+            name:      "Filloverview::#{counter}",
             role_ids:  [Role.find_by(name: 'Agent').id],
             condition: {
               'ticket.state_id' => {
@@ -185,7 +183,7 @@ or if you only want to create 100 tickets
         customer = customer_pool.sample
         agent    = agent_pool.sample
         ticket = Ticket.create!(
-          title:         "some title äöüß#{Faker::Number.number(digits: 6)}",
+          title:         "some title äöüß#{counter}",
           group:         group_pool.sample,
           customer:      customer,
           owner:         agent,
@@ -200,8 +198,8 @@ or if you only want to create 100 tickets
           ticket_id:     ticket.id,
           from:          customer.email,
           to:            'some_recipient@example.com',
-          subject:       "some subject#{Faker::Number.number(digits: 6)}",
-          message_id:    "some@id-#{Faker::Number.number(digits: 6)}",
+          subject:       "some subject#{counter}",
+          message_id:    "some@id-#{counter}",
           body:          'some message ...',
           internal:      false,
           sender:        Ticket::Article::Sender.where(name: 'Customer').first,
@@ -213,6 +211,11 @@ or if you only want to create 100 tickets
         sleep nice
       end
     end
+  end
+
+  def self.counter
+    @counter ||= SecureRandom.random_number(1_000_000)
+    @counter += 1
   end
 end
 # rubocop:enable Rails/Output
