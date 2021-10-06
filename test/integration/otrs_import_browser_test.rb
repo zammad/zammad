@@ -55,8 +55,8 @@ class OtrsImportBrowserTest < TestCase
     click(css: '.js-migration-start')
 
     watch_for(
-      css:     'body',
-      value:   'login',
+      css:     '#login',
+      value:   'username',
       timeout: 600,
     )
 

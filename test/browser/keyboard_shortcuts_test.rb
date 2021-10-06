@@ -221,10 +221,9 @@ class KeyboardShortcutsTest < TestCase
 
     shortcut(key: 'e')
     watch_for(
-      css:     'body',
-      value:   'login',
+      css:     '#login',
+      value:   'username',
       timeout: 4,
     )
-
   end
 end
