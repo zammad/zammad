@@ -98,7 +98,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui:rerender', =>
       @adjustedTextarea = false
       @defaults         = @ui.taskGet('article')
-      @attachments      = @defaults.attachments
+      @attachments      = @defaults.attachments || []
       @render()
     )
 
@@ -117,7 +117,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @tokanice(@type)
 
-    if @defaults.body or @attachments or @isIE10()
+    if @defaults.body or @attachments.length > 0 or @isIE10()
       @openTextarea(null, true)
 
   tokanice: (type = 'email') ->
