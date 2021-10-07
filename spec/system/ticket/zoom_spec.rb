@@ -2193,4 +2193,39 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  context 'Article box opening on tickets with no changes #3789' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does not expand the article box without changes' do
+      refresh
+      sleep 3
+      expect(page).to have_no_selector('form.article-add.is-open')
+    end
+
+    it 'does open and close by usage' do
+      find('.js-textarea').send_keys(' ')
+      expect(page).to have_selector('form.article-add.is-open')
+      find('input#global-search').click
+      expect(page).to have_no_selector('form.article-add.is-open')
+    end
+
+    it 'does open automatically when body is given from sidebar' do
+      find('.js-textarea').send_keys('test')
+      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").state.dig('article', 'body').present? }
+      refresh
+      expect(page).to have_selector('form.article-add.is-open')
+    end
+
+    it 'does open automatically when attachment is given from sidebar' do
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
+      refresh
+      expect(page).to have_selector('form.article-add.is-open')
+    end
+  end
 end
